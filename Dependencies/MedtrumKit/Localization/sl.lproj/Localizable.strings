@@ -1,0 +1,278 @@
+/* Generic loading text */
+"loading" = "nalaganje";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Odstranite črpalko";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Ste prepričani, da želite prenehati uporabljati zdravilo Medtrum TouchCare Nano 200u/300u?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Izbriši črpalko";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Trenutno uporabljate način srčnega utripa. Ta način je potreben, da %1$@ deluje v ozadju. To je lahko zanimivo, če vaš CGM že zagotavlja srčni utrip. Priporočljivo je, da ta funkcija ostane omogočena";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Trenutno NE uporabljate načina srčnega utripa. Srčni utrip je potreben, da %1$@ deluje v ozadju. Priporočljivo je, da še naprej omogočate to funkcijo";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Da, onemogočite način srčnega utripa";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Da, Omogočite način srčnega utripa";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Preklapljanje načina srčnega utripa";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "Ne, naj ostane takšna, kot je";
+
+/* Text for patch state */
+"Patch state" = "Stanje obliža";
+
+/* Text for last sync */
+"Last sync" = "Zadnja sinhronizacija";
+
+/* Text for status */
+"Status" = "Status";
+
+/* disconnect from patch */
+"Disconnect" = "Odklop";
+
+/* reconnect to patch */
+"Reconnect" = "Ponovna povezava";
+
+/* sync pump */
+"Sync patch data" = "Sinhronizacija podatkov o popravkih";
+
+/* label for activate patch */
+"Activate patch" = "Aktivacija obliža";
+
+/* deactivate patch */
+"Deactivate Patch" = "Deaktiviranje obliža";
+
+/* Configuration section */
+"Configuration" = "Konfiguracija";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "Vrsta insulina";
+
+/* Text for patch settings view */
+"Patch settings" = "Nastavitve popravkov";
+
+/* The title for patch/pump information */
+"Information" = "Informacije";
+
+/* Text for pumpSN */
+"Pump base SN" = "Osnova črpalke SN";
+
+/* Text for model */
+"Pump base model" = "Osnovni model črpalke";
+
+/* Text for patchId */
+"Patch ID" = "ID popravka";
+
+/* Text for activatedAt */
+"Patch activated at" = "Obliž se aktivira pri";
+
+/* Text for expiresAt */
+"Patch expires at" = "Obliž poteče pri";
+
+/* Text for battery voltageB */
+"Battery" = "Baterija";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Podrobnosti o prejšnjem popravku";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Deaktivirano pri";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Skupna raba dnevnikov popravkov Medtrum";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Izbriši črpalko";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Preostali inzulin";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Inzulin\nOdložen";
+
+/* Text shown when no patch active */
+"No active patch" = "Brez aktivnega obliža";
+
+/* Text shown while patch is active */
+"Age:" = "Starost:";
+
+/* Unit for singular day */
+"day" = "dan";
+
+/* Unit for plural days */
+"days" = "dni";
+
+/* Unit for singular hour */
+"hour" = "ura";
+
+/* Unit for plural hours */
+"hours" = "ure";
+
+/* Unit for singular minute */
+"minute" = "minuta";
+
+/* Unit for plural minutes */
+"minutes" = "minute";
+
+/* Text shown when patch expired */
+"Patch expired" = "Obliž se je iztekel";
+
+/* Button for closing settings */
+"Done" = "Končano";
+
+/* label for connected */
+"Connected" = "Povezano";
+
+/* label for reconnecting */
+"Reconnecting..." = "Ponovno povezovanje...";
+
+/* label for disconnected */
+"Disconnected" = "Odklopljena stran";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Načrtovana osnovna vrednost";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Temp Basal";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Dostava insulina";
+
+/* Continue */
+"Continue" = "Nadaljuj";
+
+/* Title for insulin type */
+"Select insulin type" = "Izberite vrsto insulina";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Izberite vrsto insulina, ki ga boste uporabljali";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Največji urni inzulin";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Največji dnevni inzulin";
+
+/* Label for alarm settings */
+"Alarm setting" = "Nastavitev alarma";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Svetloba, vibriranje in zvočni signal";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Svetloba in vibracija";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Svetloba in zvočni signal";
+
+/* Label for alarm options: light */
+"Light-only" = "Samo za svetlobo";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Vibriranje in piskanje";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Samo vibriranje";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Samo zvočni signal";
+
+/* Label for alarm options: none */
+"Silence" = "Tišina";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Življenjska doba obliža";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Uporabite podaljšano življenjsko dobo (nadaljujte, dokler se baterija ne izprazni)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Uporabite običajno življenjsko dobo (3d 8h)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Obvestilo za popravek za iztekanje";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Ko kliknete na gumb, se prikaže poziv za vnos biometričnih podatkov. Po zaključku se bo obliž deaktiviral in pozvan bo k seznanitvi z novim obližem.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Preverjanje pristnosti in deaktiviranje popravka";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Deaktiviranje obliža";
+
+/* Label for serial number */
+"Serial number" = "Serijska številka";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Pred priključitvijo na popravek se prepričajte, da je serijska številka pravilna.";
+
+/* Pump base settings header */
+"Pump base settings" = "Osnovne nastavitve črpalke";
+
+/* save and continue */
+"Save and continue" = "Shrani in nadaljuj";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Podstavek črpalke povežite z obližem.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Napolnite brizgo z inzulinom";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Injekcijsko brizgo vstavite v obliž in izvlecite 1 do 2 črtici zraka.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Napolnite obliž z insulinom. OPOMBA: Za aktivacijo je potrebnih najmanj 70 enot insulina.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "Pritisnite gumb za iglo in začnite postopek polnjenja.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Obliža še ne pritrdite na telo";
+
+/* label for prime start action */
+"Start priming" = "Začetek zalivanja";
+
+/* Priming header */
+"Patch priming" = "Osnova za obloge";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Z obliža odstranite varnostni pokrov.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Črpalko pritrdite na ohišje.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Pritisnite gumb za iglo, da vstavite iglo. Za dokončanje postopka aktivacije kliknite \"Activate\" (Aktiviraj).";
+
+/* Patch activation header */
+"Patch activation" = "Aktivacija obliža";
+
+/* welcome header*/
+"Welcome" = "Dobrodošli";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Preden boste aktivirali svoj obliž, boste najprej nastavili svojo vrsto insulina in osnovne nastavitve obliža.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Vrnite se v bazo črpalke";
+
+/* label for go to prime patch */
+"Go back to priming" = "Vrnite se k temeljnemu premazu";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "Vaš obliž bo kmalu potekel!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "Vaš popravek ima še %i ur.";

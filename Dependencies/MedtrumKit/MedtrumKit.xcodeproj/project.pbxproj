@@ -1,0 +1,1375 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3E0489052D74B82000E0B75A /* BasalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0489042D74B81D00E0B75A /* BasalType.swift */; };
+		3E1390102D6E534C00A146C1 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E13900F2D6E534600A146C1 /* BluetoothManager.swift */; };
+		3E1390122D6E59B500A146C1 /* MedtrumPumpState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1390112D6E59B000A146C1 /* MedtrumPumpState.swift */; };
+		3E1390152D6E5C5E00A146C1 /* MedtrumScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1390142D6E5C5200A146C1 /* MedtrumScanResult.swift */; };
+		3E1390172D6E5EA000A146C1 /* MedtrumConnectResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1390162D6E5E9A00A146C1 /* MedtrumConnectResult.swift */; };
+		3E1390192D6E5F3600A146C1 /* PeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1390182D6E5F2B00A146C1 /* PeripheralManager.swift */; };
+		3E1532422D6F93EF0020F015 /* BasePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1532412D6F93E70020F015 /* BasePacket.swift */; };
+		3E1532442D6F94E30020F015 /* AuthorizePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1532432D6F94E20020F015 /* AuthorizePacket.swift */; };
+		3E1532462D6F95AC0020F015 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1532452D6F95A70020F015 /* CommandType.swift */; };
+		3E1532482D6F98D20020F015 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1532472D6F98CF0020F015 /* Crypto.swift */; };
+		3E15324A2D6FA0080020F015 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1532492D6FA0060020F015 /* Data.swift */; };
+		3E15324C2D6FA4280020F015 /* Int64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15324B2D6FA4250020F015 /* Int64.swift */; };
+		3E15A4782DA2B6E6007F7D3C /* MedtrumReservoirView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15A4772DA2B6E6007F7D3C /* MedtrumReservoirView.swift */; };
+		3E15A47C2DA2B718007F7D3C /* IdentifiableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15A47B2DA2B718007F7D3C /* IdentifiableClass.swift */; };
+		3E15A47E2DA2B723007F7D3C /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E15A47D2DA2B723007F7D3C /* NibLoadable.swift */; };
+		3E15A4802DA2B857007F7D3C /* MedtrumReservoirView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E15A47F2DA2B857007F7D3C /* MedtrumReservoirView.xib */; };
+		3E24AEC02DA1639F00C7733C /* PumpImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24AEBF2DA1639F00C7733C /* PumpImage.swift */; };
+		3E24AEC22DA1727800C7733C /* PatchPrimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24AEC12DA1727800C7733C /* PatchPrimingView.swift */; };
+		3E24AEC42DA1729A00C7733C /* PatchPrimingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24AEC32DA1729A00C7733C /* PatchPrimingViewModel.swift */; };
+		3E24AEC82DA17B4900C7733C /* PatchActivationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24AEC72DA17B4900C7733C /* PatchActivationViewModel.swift */; };
+		3E24AECA2DA17B7F00C7733C /* PatchActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24AEC92DA17B7F00C7733C /* PatchActivationView.swift */; };
+		3E26BE0B2D9069A600E595B0 /* MedtrumKitSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E26BE0A2D9069A600E595B0 /* MedtrumKitSettings.swift */; };
+		3E26BE0D2D906A0D00E595B0 /* MedtrumUI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E26BE0C2D906A0D00E595B0 /* MedtrumUI.xcassets */; };
+		3E26BE0F2D906AEE00E595B0 /* MedtrumKitSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E26BE0E2D906AE500E595B0 /* MedtrumKitSettingsViewModel.swift */; };
+		3E26BE112D906E5700E595B0 /* ReservoirView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E26BE102D906E5700E595B0 /* ReservoirView.swift */; };
+		3E4566632D8371EC00FE1E0C /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4566622D8371EB00FE1E0C /* ActivityViewController.swift */; };
+		3E4566652D837A4900FE1E0C /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4566642D837A4800FE1E0C /* Bundle.swift */; };
+		3E5060142D70E5CB00376609 /* Crc8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5060132D70E5C900376609 /* Crc8.swift */; };
+		3E5060182D70EAF800376609 /* MedtrumWriteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5060172D70EAF400376609 /* MedtrumWriteResult.swift */; };
+		3E50601A2D70F2F500376609 /* GetDeviceTypePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5060192D70F2F300376609 /* GetDeviceTypePacket.swift */; };
+		3E50601C2D70F69900376609 /* GetTimePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50601B2D70F69800376609 /* GetTimePacket.swift */; };
+		3E50601E2D70F7A900376609 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50601D2D70F7A700376609 /* Date.swift */; };
+		3E5060202D70F97500376609 /* SetTimePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50601F2D70F97500376609 /* SetTimePacket.swift */; };
+		3E5060222D70FDA100376609 /* SetTimeZonePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5060212D70FDA000376609 /* SetTimeZonePacket.swift */; };
+		3E5060242D70FED500376609 /* SynchronizePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5060232D70FED500376609 /* SynchronizePacket.swift */; };
+		3E5060262D71035900376609 /* SubscribePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5060252D71035900376609 /* SubscribePacket.swift */; };
+		3E6A00EE2DA03FE00085E6A4 /* PatchDeactivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A00ED2DA03FE00085E6A4 /* PatchDeactivationView.swift */; };
+		3E6A00F02DA0421A0085E6A4 /* DeactivatePatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A00EF2DA042140085E6A4 /* DeactivatePatchViewModel.swift */; };
+		3E6A00F22DA0428E0085E6A4 /* MedtrumDeactivatePatchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6A00F12DA0428E0085E6A4 /* MedtrumDeactivatePatchResult.swift */; };
+		3E6B082D2DF2224900A484C6 /* BasalScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B082C2DF2224500A484C6 /* BasalScheduleTests.swift */; };
+		3E767D022D67B315004B1971 /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E767CFD2D67B192004B1971 /* LocalizedString.swift */; };
+		3E767D032D67B319004B1971 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E767CE42D67AF35004B1971 /* OSLog.swift */; };
+		3E767D042D67B3FC004B1971 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E767CFB2D67B13C004B1971 /* Localizable.strings */; };
+		3E767D4D2D67BA71004B1971 /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E767D4C2D67BA71004B1971 /* LoopKitUI.framework */; };
+		3E767D4F2D67BB72004B1971 /* MedtrumKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D3A8ED2C14F0EF002EE003 /* MedtrumKitPlugin.swift */; };
+		3E767D512D67BBF9004B1971 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E767D502D67BBF9004B1971 /* OSLog.swift */; };
+		3E767D522D67BC2E004B1971 /* MedtrumKitPumpManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E767CE22D67ADFA004B1971 /* MedtrumKitPumpManager+UI.swift */; };
+		3E767D532D67BC33004B1971 /* MedtrumHUDProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E767CFE2D67B1A9004B1971 /* MedtrumHUDProvider.swift */; };
+		3E767D562D67BCD6004B1971 /* MedtrumKitUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E767D552D67BCC9004B1971 /* MedtrumKitUICoordinator.swift */; };
+		3E77FEBA2D723AD400A15134 /* CryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E77FEB92D723AD200A15134 /* CryptoTests.swift */; };
+		3E77FEBC2D72F90000A15134 /* MedtrumBasePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E77FEBB2D72F8FC00A15134 /* MedtrumBasePacketTests.swift */; };
+		3E77FEBE2D7364AC00A15134 /* ActivatePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E77FEBD2D7364A300A15134 /* ActivatePacket.swift */; };
+		3E77FEC22D74B39800A15134 /* AlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E77FEC12D74B39300A15134 /* AlarmSettings.swift */; };
+		3E92D5232DA458EA00E22577 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E92D5222DA458E500E22577 /* NotificationManager.swift */; };
+		3E9547FB2D8D963600EEF259 /* MedtrumPrimePatchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9547FA2D8D962D00EEF259 /* MedtrumPrimePatchResult.swift */; };
+		3E9547FD2D8D9CD600EEF259 /* MedtrumActivatePatchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9547FC2D8D9CCE00EEF259 /* MedtrumActivatePatchResult.swift */; };
+		3E98B84B2D6BB12C00DD5123 /* MedtrumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D3A8D02C148CC4002EE003 /* MedtrumKit.framework */; platformFilter = ios; };
+		3E98B84C2D6BB12C00DD5123 /* MedtrumKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B7D3A8D02C148CC4002EE003 /* MedtrumKit.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3E98B8512D6BB2BC00DD5123 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E98B8502D6BB2B900DD5123 /* TimeInterval.swift */; };
+		3E9A5C962DA1460700A4102D /* PumpBaseSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A5C952DA1460700A4102D /* PumpBaseSettingsView.swift */; };
+		3E9A5C982DA1461700A4102D /* PumpBaseSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A5C972DA1461600A4102D /* PumpBaseSettingsViewModel.swift */; };
+		3E9D8B0C2D88A3FA00008AF2 /* MedtrumDoseProgressReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D8B0B2D88A3EF00008AF2 /* MedtrumDoseProgressReporter.swift */; };
+		3E9D8B0E2D88A59200008AF2 /* DoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D8B0D2D88A59000008AF2 /* DoseEntry.swift */; };
+		3E9D8B102D88A5F200008AF2 /* UnfinalizedDose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D8B0F2D88A5EC00008AF2 /* UnfinalizedDose.swift */; };
+		3E9D8B122D88A8F600008AF2 /* NewPumpEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D8B112D88A8F100008AF2 /* NewPumpEvent.swift */; };
+		3EA69F052D95E605002EEF9F /* InsulinTypeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA69F042D95E605002EEF9F /* InsulinTypeSelector.swift */; };
+		3EA69F072D95ECDE002EEF9F /* PatchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA69F062D95ECDE002EEF9F /* PatchSettingsView.swift */; };
+		3EA6C4512DA2947000963AAB /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6C4502DA2947000963AAB /* OnboardingWelcomeView.swift */; };
+		3EA87C3B2DAC2DBE00E897ED /* SynchronizeNotificationPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87C3A2DAC2DB300E897ED /* SynchronizeNotificationPacketTests.swift */; };
+		3EA87C3D2DAC2F9C00E897ED /* NotificationPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87C3C2DAC2F9700E897ED /* NotificationPacket.swift */; };
+		3EA87D4B2D7A2165007DD959 /* ActivatePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D4A2D7A214B007DD959 /* ActivatePacketTests.swift */; };
+		3EA87D4D2D7A25ED007DD959 /* AuthorizePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D4C2D7A25E5007DD959 /* AuthorizePacketTests.swift */; };
+		3EA87D4F2D7A2930007DD959 /* CancelBolusPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D4E2D7A292A007DD959 /* CancelBolusPacket.swift */; };
+		3EA87D512D7A29A4007DD959 /* CancelBolusPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D502D7A29A1007DD959 /* CancelBolusPacketTests.swift */; };
+		3EA87D532D7A2A31007DD959 /* CancelTempBasalPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D522D7A2A2B007DD959 /* CancelTempBasalPacket.swift */; };
+		3EA87D552D7A33AD007DD959 /* CancelTempBasalPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D542D7A33A6007DD959 /* CancelTempBasalPacketTests.swift */; };
+		3EA87D572D7A3573007DD959 /* ClearPumpAlarmPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D562D7A356E007DD959 /* ClearPumpAlarmPacket.swift */; };
+		3EA87D592D7A35D1007DD959 /* ClearAlarmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D582D7A35C7007DD959 /* ClearAlarmType.swift */; };
+		3EA87D5B2D7A3632007DD959 /* ClearPumpAlarmPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D5A2D7A3627007DD959 /* ClearPumpAlarmPacketTests.swift */; };
+		3EA87D5F2D7A36CB007DD959 /* GetDeviceTypePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D5E2D7A36C4007DD959 /* GetDeviceTypePacketTests.swift */; };
+		3EA87D612D7A3813007DD959 /* GetRecordPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D602D7A380D007DD959 /* GetRecordPacket.swift */; };
+		3EA87D632D7A3B9B007DD959 /* GetRecordPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D622D7A3B95007DD959 /* GetRecordPacketTests.swift */; };
+		3EA87D652D7A3DCE007DD959 /* GetTimePacketTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D642D7A3DCA007DD959 /* GetTimePacketTest.swift */; };
+		3EA87D672D7A3F8C007DD959 /* PollPatchPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D662D7A3F88007DD959 /* PollPatchPacket.swift */; };
+		3EA87D692D7A3FC2007DD959 /* PollPatchPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D682D7A3FBE007DD959 /* PollPatchPacketTests.swift */; };
+		3EA87D6B2D7A402C007DD959 /* PrimePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D6A2D7A4027007DD959 /* PrimePacket.swift */; };
+		3EA87D6D2D7A404C007DD959 /* PrimePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA87D6C2D7A4046007DD959 /* PrimePacketTests.swift */; };
+		3EB1A3B12D7784410031C044 /* BasalSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB1A3B02D77843E0031C044 /* BasalSchedule.swift */; };
+		3ED27C072DB67ED5001B7C95 /* MedtrumUpdatePatchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27C062DB67ED5001B7C95 /* MedtrumUpdatePatchResult.swift */; };
+		3ED27E072D80BA130026488B /* SetBolusPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E062D80BA130026488B /* SetBolusPacketTests.swift */; };
+		3ED27E092D80BACB0026488B /* SetPatchPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E082D80BAC50026488B /* SetPatchPacket.swift */; };
+		3ED27E0B2D80BC960026488B /* SetPatchPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E0A2D80BC900026488B /* SetPatchPacketTests.swift */; };
+		3ED27E0D2D80BD570026488B /* SetTempBasalPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E0C2D80BD4D0026488B /* SetTempBasalPacket.swift */; };
+		3ED27E0F2D80BFF90026488B /* SetTempBasalPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E0E2D80BFF40026488B /* SetTempBasalPacketTests.swift */; };
+		3ED27E112D80C4320026488B /* SetTimePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E102D80C42C0026488B /* SetTimePacketTests.swift */; };
+		3ED27E132D80C5BD0026488B /* SetTimeZonePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E122D80C5BB0026488B /* SetTimeZonePacketTests.swift */; };
+		3ED27E152D80C9010026488B /* StopPatchPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E142D80C8FD0026488B /* StopPatchPacket.swift */; };
+		3ED27E172D80C9ED0026488B /* StopPatchPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E162D80C9EC0026488B /* StopPatchPacketTests.swift */; };
+		3ED27E192D80CA3B0026488B /* SubscribePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E182D80CA350026488B /* SubscribePacketTests.swift */; };
+		3ED27E1B2D80CAC40026488B /* SynchronizePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E1A2D80CABB0026488B /* SynchronizePacketTests.swift */; };
+		3ED27E1D2D80D15E0026488B /* AlarmState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E1C2D80D15A0026488B /* AlarmState.swift */; };
+		3ED27E1F2D80D2660026488B /* PatchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED27E1E2D80D25D0026488B /* PatchState.swift */; };
+		3EDA29762D9B862E00895031 /* PatchSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA29752D9B862800895031 /* PatchSettingsViewModel.swift */; };
+		3EE2DAC52D8A076200EA2EAD /* SuspendPumpPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE2DAC42D8A075B00EA2EAD /* SuspendPumpPacket.swift */; };
+		3EEA51F72D7DF061000C9E1E /* ReadBolusStatePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA51F62D7DF061000C9E1E /* ReadBolusStatePacket.swift */; };
+		3EEA51F92D7E13E6000C9E1E /* ReadBolusStatePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA51F82D7E13E6000C9E1E /* ReadBolusStatePacketTests.swift */; };
+		3EEA51FB2D7E1BF8000C9E1E /* ResumePumpPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA51FA2D7E1BF2000C9E1E /* ResumePumpPacket.swift */; };
+		3EEA51FD2D7E1C27000C9E1E /* ResumePumpPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA51FC2D7E1C23000C9E1E /* ResumePumpPacketTests.swift */; };
+		3EEA51FF2D7E1D12000C9E1E /* SetBasalProfilePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA51FE2D7E1D0D000C9E1E /* SetBasalProfilePacket.swift */; };
+		3EEA52012D7E1E10000C9E1E /* SetBasalProfilePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA52002D7E1E0D000C9E1E /* SetBasalProfilePacketTests.swift */; };
+		3EEA52032D7E1F9F000C9E1E /* SetBolusMotorPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA52022D7E1F9D000C9E1E /* SetBolusMotorPacket.swift */; };
+		3EEA52052D7E21DB000C9E1E /* SetBolusMotorPacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA52042D7E21D9000C9E1E /* SetBolusMotorPacketTests.swift */; };
+		3EEA52072D7E2265000C9E1E /* SetBolusPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEA52062D7E2264000C9E1E /* SetBolusPacket.swift */; };
+		3EF31CC62DF5DC5500EA6300 /* StateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF31CC52DF5DC5200EA6300 /* StateSyncer.swift */; };
+		3EFBC4F42DFB527400E0E295 /* DeleteDriverActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFBC4F32DFB526900E0E295 /* DeleteDriverActionSheet.swift */; };
+		B7189AE72C15A52800703DE2 /* MedtrumPumpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7189AE52C15A52800703DE2 /* MedtrumPumpManager.swift */; };
+		B7189AEA2C15A8CE00703DE2 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7189AE92C15A8CE00703DE2 /* LoopKit.framework */; };
+		B7D3A8D52C148CC4002EE003 /* MedtrumKit.docc in Sources */ = {isa = PBXBuildFile; fileRef = B7D3A8D42C148CC4002EE003 /* MedtrumKit.docc */; };
+		B7D3A8DB2C148CC4002EE003 /* MedtrumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D3A8D02C148CC4002EE003 /* MedtrumKit.framework */; };
+		B7D3A8E12C148CC4002EE003 /* MedtrumKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D3A8D32C148CC4002EE003 /* MedtrumKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7D3A8F12C14F0EF002EE003 /* MedtrumKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D3A8ED2C14F0EF002EE003 /* MedtrumKitPlugin.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3E98B84D2D6BB12C00DD5123 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7D3A8C72C148CC4002EE003 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7D3A8CF2C148CC4002EE003;
+			remoteInfo = MedtrumKit;
+		};
+		B7D3A8DC2C148CC4002EE003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7D3A8C72C148CC4002EE003 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7D3A8CF2C148CC4002EE003;
+			remoteInfo = MedtrumKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E98B84F2D6BB12C00DD5123 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3E98B84C2D6BB12C00DD5123 /* MedtrumKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3E0489042D74B81D00E0B75A /* BasalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalType.swift; sourceTree = "<group>"; };
+		3E13900F2D6E534600A146C1 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		3E1390112D6E59B000A146C1 /* MedtrumPumpState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumPumpState.swift; sourceTree = "<group>"; };
+		3E1390142D6E5C5200A146C1 /* MedtrumScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumScanResult.swift; sourceTree = "<group>"; };
+		3E1390162D6E5E9A00A146C1 /* MedtrumConnectResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumConnectResult.swift; sourceTree = "<group>"; };
+		3E1390182D6E5F2B00A146C1 /* PeripheralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralManager.swift; sourceTree = "<group>"; };
+		3E1532412D6F93E70020F015 /* BasePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePacket.swift; sourceTree = "<group>"; };
+		3E1532432D6F94E20020F015 /* AuthorizePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizePacket.swift; sourceTree = "<group>"; };
+		3E1532452D6F95A70020F015 /* CommandType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
+		3E1532472D6F98CF0020F015 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
+		3E1532492D6FA0060020F015 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		3E15324B2D6FA4250020F015 /* Int64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int64.swift; sourceTree = "<group>"; };
+		3E15A4772DA2B6E6007F7D3C /* MedtrumReservoirView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumReservoirView.swift; sourceTree = "<group>"; };
+		3E15A47B2DA2B718007F7D3C /* IdentifiableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableClass.swift; sourceTree = "<group>"; };
+		3E15A47D2DA2B723007F7D3C /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		3E15A47F2DA2B857007F7D3C /* MedtrumReservoirView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MedtrumReservoirView.xib; sourceTree = "<group>"; };
+		3E24AEBF2DA1639F00C7733C /* PumpImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpImage.swift; sourceTree = "<group>"; };
+		3E24AEC12DA1727800C7733C /* PatchPrimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchPrimingView.swift; sourceTree = "<group>"; };
+		3E24AEC32DA1729A00C7733C /* PatchPrimingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchPrimingViewModel.swift; sourceTree = "<group>"; };
+		3E24AEC72DA17B4900C7733C /* PatchActivationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchActivationViewModel.swift; sourceTree = "<group>"; };
+		3E24AEC92DA17B7F00C7733C /* PatchActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchActivationView.swift; sourceTree = "<group>"; };
+		3E26BE0A2D9069A600E595B0 /* MedtrumKitSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumKitSettings.swift; sourceTree = "<group>"; };
+		3E26BE0C2D906A0D00E595B0 /* MedtrumUI.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MedtrumUI.xcassets; sourceTree = "<group>"; };
+		3E26BE0E2D906AE500E595B0 /* MedtrumKitSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumKitSettingsViewModel.swift; sourceTree = "<group>"; };
+		3E26BE102D906E5700E595B0 /* ReservoirView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservoirView.swift; sourceTree = "<group>"; };
+		3E4566622D8371EB00FE1E0C /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		3E4566642D837A4800FE1E0C /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		3E5060132D70E5C900376609 /* Crc8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crc8.swift; sourceTree = "<group>"; };
+		3E5060172D70EAF400376609 /* MedtrumWriteResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumWriteResult.swift; sourceTree = "<group>"; };
+		3E5060192D70F2F300376609 /* GetDeviceTypePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceTypePacket.swift; sourceTree = "<group>"; };
+		3E50601B2D70F69800376609 /* GetTimePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTimePacket.swift; sourceTree = "<group>"; };
+		3E50601D2D70F7A700376609 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		3E50601F2D70F97500376609 /* SetTimePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimePacket.swift; sourceTree = "<group>"; };
+		3E5060212D70FDA000376609 /* SetTimeZonePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeZonePacket.swift; sourceTree = "<group>"; };
+		3E5060232D70FED500376609 /* SynchronizePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizePacket.swift; sourceTree = "<group>"; };
+		3E5060252D71035900376609 /* SubscribePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePacket.swift; sourceTree = "<group>"; };
+		3E6A00ED2DA03FE00085E6A4 /* PatchDeactivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDeactivationView.swift; sourceTree = "<group>"; };
+		3E6A00EF2DA042140085E6A4 /* DeactivatePatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivatePatchViewModel.swift; sourceTree = "<group>"; };
+		3E6A00F12DA0428E0085E6A4 /* MedtrumDeactivatePatchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumDeactivatePatchResult.swift; sourceTree = "<group>"; };
+		3E6B082C2DF2224500A484C6 /* BasalScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalScheduleTests.swift; sourceTree = "<group>"; };
+		3E767CE22D67ADFA004B1971 /* MedtrumKitPumpManager+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MedtrumKitPumpManager+UI.swift"; sourceTree = "<group>"; };
+		3E767CE42D67AF35004B1971 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		3E767CE52D67B13C004B1971 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ../Localization/ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CE62D67B13C004B1971 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = ../Localization/cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CE72D67B13C004B1971 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = ../Localization/da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CE82D67B13C004B1971 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = ../Localization/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CE92D67B13C004B1971 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ../Localization/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CEA2D67B13C004B1971 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = ../Localization/es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CEB2D67B13C004B1971 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = ../Localization/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CEC2D67B13C004B1971 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = ../Localization/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CED2D67B13C004B1971 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = ../Localization/he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CEE2D67B13C004B1971 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = ../Localization/it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CEF2D67B13C004B1971 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ../Localization/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF02D67B13C004B1971 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = ../Localization/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF12D67B13C004B1971 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = ../Localization/nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF22D67B13C004B1971 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = ../Localization/pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF32D67B13C004B1971 /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = ../Localization/pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF42D67B13C004B1971 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ../Localization/ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF52D67B13C004B1971 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ../Localization/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF62D67B13C004B1971 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = ../Localization/sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF72D67B13C004B1971 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = ../Localization/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF82D67B13C004B1971 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = ../Localization/tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CF92D67B13C004B1971 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = ../Localization/vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3E767CFA2D67B13C004B1971 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "../Localization/zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3E767CFD2D67B192004B1971 /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
+		3E767CFE2D67B1A9004B1971 /* MedtrumHUDProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumHUDProvider.swift; sourceTree = "<group>"; };
+		3E767D052D67B4A0004B1971 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E767D072D67B63B004B1971 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3E767D432D67B790004B1971 /* MedtrumKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MedtrumKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E767D4C2D67BA71004B1971 /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E767D502D67BBF9004B1971 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		3E767D552D67BCC9004B1971 /* MedtrumKitUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumKitUICoordinator.swift; sourceTree = "<group>"; };
+		3E77FEB92D723AD200A15134 /* CryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTests.swift; sourceTree = "<group>"; };
+		3E77FEBB2D72F8FC00A15134 /* MedtrumBasePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumBasePacketTests.swift; sourceTree = "<group>"; };
+		3E77FEBD2D7364A300A15134 /* ActivatePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatePacket.swift; sourceTree = "<group>"; };
+		3E77FEC12D74B39300A15134 /* AlarmSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettings.swift; sourceTree = "<group>"; };
+		3E92D5222DA458E500E22577 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		3E9547FA2D8D962D00EEF259 /* MedtrumPrimePatchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumPrimePatchResult.swift; sourceTree = "<group>"; };
+		3E9547FC2D8D9CCE00EEF259 /* MedtrumActivatePatchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumActivatePatchResult.swift; sourceTree = "<group>"; };
+		3E98B8502D6BB2B900DD5123 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		3E9A5C952DA1460700A4102D /* PumpBaseSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpBaseSettingsView.swift; sourceTree = "<group>"; };
+		3E9A5C972DA1461600A4102D /* PumpBaseSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpBaseSettingsViewModel.swift; sourceTree = "<group>"; };
+		3E9D8B0B2D88A3EF00008AF2 /* MedtrumDoseProgressReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumDoseProgressReporter.swift; sourceTree = "<group>"; };
+		3E9D8B0D2D88A59000008AF2 /* DoseEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseEntry.swift; sourceTree = "<group>"; };
+		3E9D8B0F2D88A5EC00008AF2 /* UnfinalizedDose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfinalizedDose.swift; sourceTree = "<group>"; };
+		3E9D8B112D88A8F100008AF2 /* NewPumpEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPumpEvent.swift; sourceTree = "<group>"; };
+		3EA69F042D95E605002EEF9F /* InsulinTypeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinTypeSelector.swift; sourceTree = "<group>"; };
+		3EA69F062D95ECDE002EEF9F /* PatchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSettingsView.swift; sourceTree = "<group>"; };
+		3EA6C4502DA2947000963AAB /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
+		3EA87C3A2DAC2DB300E897ED /* SynchronizeNotificationPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizeNotificationPacketTests.swift; sourceTree = "<group>"; };
+		3EA87C3C2DAC2F9700E897ED /* NotificationPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPacket.swift; sourceTree = "<group>"; };
+		3EA87D4A2D7A214B007DD959 /* ActivatePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatePacketTests.swift; sourceTree = "<group>"; };
+		3EA87D4C2D7A25E5007DD959 /* AuthorizePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizePacketTests.swift; sourceTree = "<group>"; };
+		3EA87D4E2D7A292A007DD959 /* CancelBolusPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBolusPacket.swift; sourceTree = "<group>"; };
+		3EA87D502D7A29A1007DD959 /* CancelBolusPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBolusPacketTests.swift; sourceTree = "<group>"; };
+		3EA87D522D7A2A2B007DD959 /* CancelTempBasalPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTempBasalPacket.swift; sourceTree = "<group>"; };
+		3EA87D542D7A33A6007DD959 /* CancelTempBasalPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTempBasalPacketTests.swift; sourceTree = "<group>"; };
+		3EA87D562D7A356E007DD959 /* ClearPumpAlarmPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearPumpAlarmPacket.swift; sourceTree = "<group>"; };
+		3EA87D582D7A35C7007DD959 /* ClearAlarmType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearAlarmType.swift; sourceTree = "<group>"; };
+		3EA87D5A2D7A3627007DD959 /* ClearPumpAlarmPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearPumpAlarmPacketTests.swift; sourceTree = "<group>"; };
+		3EA87D5E2D7A36C4007DD959 /* GetDeviceTypePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceTypePacketTests.swift; sourceTree = "<group>"; };
+		3EA87D602D7A380D007DD959 /* GetRecordPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecordPacket.swift; sourceTree = "<group>"; };
+		3EA87D622D7A3B95007DD959 /* GetRecordPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecordPacketTests.swift; sourceTree = "<group>"; };
+		3EA87D642D7A3DCA007DD959 /* GetTimePacketTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTimePacketTest.swift; sourceTree = "<group>"; };
+		3EA87D662D7A3F88007DD959 /* PollPatchPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollPatchPacket.swift; sourceTree = "<group>"; };
+		3EA87D682D7A3FBE007DD959 /* PollPatchPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollPatchPacketTests.swift; sourceTree = "<group>"; };
+		3EA87D6A2D7A4027007DD959 /* PrimePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimePacket.swift; sourceTree = "<group>"; };
+		3EA87D6C2D7A4046007DD959 /* PrimePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimePacketTests.swift; sourceTree = "<group>"; };
+		3EB1A3B02D77843E0031C044 /* BasalSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalSchedule.swift; sourceTree = "<group>"; };
+		3ED27C062DB67ED5001B7C95 /* MedtrumUpdatePatchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumUpdatePatchResult.swift; sourceTree = "<group>"; };
+		3ED27E062D80BA130026488B /* SetBolusPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBolusPacketTests.swift; sourceTree = "<group>"; };
+		3ED27E082D80BAC50026488B /* SetPatchPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPatchPacket.swift; sourceTree = "<group>"; };
+		3ED27E0A2D80BC900026488B /* SetPatchPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPatchPacketTests.swift; sourceTree = "<group>"; };
+		3ED27E0C2D80BD4D0026488B /* SetTempBasalPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTempBasalPacket.swift; sourceTree = "<group>"; };
+		3ED27E0E2D80BFF40026488B /* SetTempBasalPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTempBasalPacketTests.swift; sourceTree = "<group>"; };
+		3ED27E102D80C42C0026488B /* SetTimePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimePacketTests.swift; sourceTree = "<group>"; };
+		3ED27E122D80C5BB0026488B /* SetTimeZonePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeZonePacketTests.swift; sourceTree = "<group>"; };
+		3ED27E142D80C8FD0026488B /* StopPatchPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPatchPacket.swift; sourceTree = "<group>"; };
+		3ED27E162D80C9EC0026488B /* StopPatchPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPatchPacketTests.swift; sourceTree = "<group>"; };
+		3ED27E182D80CA350026488B /* SubscribePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePacketTests.swift; sourceTree = "<group>"; };
+		3ED27E1A2D80CABB0026488B /* SynchronizePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizePacketTests.swift; sourceTree = "<group>"; };
+		3ED27E1C2D80D15A0026488B /* AlarmState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmState.swift; sourceTree = "<group>"; };
+		3ED27E1E2D80D25D0026488B /* PatchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchState.swift; sourceTree = "<group>"; };
+		3EDA29752D9B862800895031 /* PatchSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSettingsViewModel.swift; sourceTree = "<group>"; };
+		3EE2DAC42D8A075B00EA2EAD /* SuspendPumpPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuspendPumpPacket.swift; sourceTree = "<group>"; };
+		3EEA51F62D7DF061000C9E1E /* ReadBolusStatePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBolusStatePacket.swift; sourceTree = "<group>"; };
+		3EEA51F82D7E13E6000C9E1E /* ReadBolusStatePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBolusStatePacketTests.swift; sourceTree = "<group>"; };
+		3EEA51FA2D7E1BF2000C9E1E /* ResumePumpPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumePumpPacket.swift; sourceTree = "<group>"; };
+		3EEA51FC2D7E1C23000C9E1E /* ResumePumpPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumePumpPacketTests.swift; sourceTree = "<group>"; };
+		3EEA51FE2D7E1D0D000C9E1E /* SetBasalProfilePacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBasalProfilePacket.swift; sourceTree = "<group>"; };
+		3EEA52002D7E1E0D000C9E1E /* SetBasalProfilePacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBasalProfilePacketTests.swift; sourceTree = "<group>"; };
+		3EEA52022D7E1F9D000C9E1E /* SetBolusMotorPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBolusMotorPacket.swift; sourceTree = "<group>"; };
+		3EEA52042D7E21D9000C9E1E /* SetBolusMotorPacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBolusMotorPacketTests.swift; sourceTree = "<group>"; };
+		3EEA52062D7E2264000C9E1E /* SetBolusPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBolusPacket.swift; sourceTree = "<group>"; };
+		3EF31CC52DF5DC5200EA6300 /* StateSyncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSyncer.swift; sourceTree = "<group>"; };
+		3EFBC4F32DFB526900E0E295 /* DeleteDriverActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteDriverActionSheet.swift; sourceTree = "<group>"; };
+		B7189AE52C15A52800703DE2 /* MedtrumPumpManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedtrumPumpManager.swift; sourceTree = "<group>"; };
+		B7189AE92C15A8CE00703DE2 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7D3A8D02C148CC4002EE003 /* MedtrumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MedtrumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7D3A8D32C148CC4002EE003 /* MedtrumKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MedtrumKit.h; sourceTree = "<group>"; };
+		B7D3A8D42C148CC4002EE003 /* MedtrumKit.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = MedtrumKit.docc; sourceTree = "<group>"; };
+		B7D3A8DA2C148CC4002EE003 /* MedtrumKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MedtrumKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7D3A8ED2C14F0EF002EE003 /* MedtrumKitPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedtrumKitPlugin.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3E767D402D67B790004B1971 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E98B84B2D6BB12C00DD5123 /* MedtrumKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D3A8CD2C148CC4002EE003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E767D4D2D67BA71004B1971 /* LoopKitUI.framework in Frameworks */,
+				B7189AEA2C15A8CE00703DE2 /* LoopKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D3A8D72C148CC4002EE003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7D3A8DB2C148CC4002EE003 /* MedtrumKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3E1390132D6E5C4900A146C1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3ED27C062DB67ED5001B7C95 /* MedtrumUpdatePatchResult.swift */,
+				3E6A00F12DA0428E0085E6A4 /* MedtrumDeactivatePatchResult.swift */,
+				3E9547FC2D8D9CCE00EEF259 /* MedtrumActivatePatchResult.swift */,
+				3E9547FA2D8D962D00EEF259 /* MedtrumPrimePatchResult.swift */,
+				3EB1A3B02D77843E0031C044 /* BasalSchedule.swift */,
+				3E5060172D70EAF400376609 /* MedtrumWriteResult.swift */,
+				3E1390162D6E5E9A00A146C1 /* MedtrumConnectResult.swift */,
+				3E1390142D6E5C5200A146C1 /* MedtrumScanResult.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3E1532402D6F93DD0020F015 /* Packets */ = {
+			isa = PBXGroup;
+			children = (
+				3E77FEBD2D7364A300A15134 /* ActivatePacket.swift */,
+				3E1532432D6F94E20020F015 /* AuthorizePacket.swift */,
+				3EA87D4E2D7A292A007DD959 /* CancelBolusPacket.swift */,
+				3EA87D522D7A2A2B007DD959 /* CancelTempBasalPacket.swift */,
+				3EA87D562D7A356E007DD959 /* ClearPumpAlarmPacket.swift */,
+				3E5060192D70F2F300376609 /* GetDeviceTypePacket.swift */,
+				3EA87D602D7A380D007DD959 /* GetRecordPacket.swift */,
+				3E50601B2D70F69800376609 /* GetTimePacket.swift */,
+				3EA87D662D7A3F88007DD959 /* PollPatchPacket.swift */,
+				3EA87D6A2D7A4027007DD959 /* PrimePacket.swift */,
+				3EA87C3C2DAC2F9700E897ED /* NotificationPacket.swift */,
+				3EEA51F62D7DF061000C9E1E /* ReadBolusStatePacket.swift */,
+				3EEA51FA2D7E1BF2000C9E1E /* ResumePumpPacket.swift */,
+				3EEA51FE2D7E1D0D000C9E1E /* SetBasalProfilePacket.swift */,
+				3EEA52022D7E1F9D000C9E1E /* SetBolusMotorPacket.swift */,
+				3EEA52062D7E2264000C9E1E /* SetBolusPacket.swift */,
+				3ED27E082D80BAC50026488B /* SetPatchPacket.swift */,
+				3ED27E0C2D80BD4D0026488B /* SetTempBasalPacket.swift */,
+				3E50601F2D70F97500376609 /* SetTimePacket.swift */,
+				3E5060212D70FDA000376609 /* SetTimeZonePacket.swift */,
+				3ED27E142D80C8FD0026488B /* StopPatchPacket.swift */,
+				3E5060252D71035900376609 /* SubscribePacket.swift */,
+				3EE2DAC42D8A075B00EA2EAD /* SuspendPumpPacket.swift */,
+				3E5060232D70FED500376609 /* SynchronizePacket.swift */,
+				3E1532452D6F95A70020F015 /* CommandType.swift */,
+				3E1532412D6F93E70020F015 /* BasePacket.swift */,
+				3E77FEC02D74B38B00A15134 /* Enums */,
+			);
+			path = Packets;
+			sourceTree = "<group>";
+		};
+		3E24AEC52DA1733300C7733C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3E26BE0E2D906AE500E595B0 /* MedtrumKitSettingsViewModel.swift */,
+				3EDA29752D9B862800895031 /* PatchSettingsViewModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		3E24AEC62DA1733C00C7733C /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				3E24AEC72DA17B4900C7733C /* PatchActivationViewModel.swift */,
+				3E9A5C972DA1461600A4102D /* PumpBaseSettingsViewModel.swift */,
+				3E6A00EF2DA042140085E6A4 /* DeactivatePatchViewModel.swift */,
+				3E24AEC32DA1729A00C7733C /* PatchPrimingViewModel.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		3E26BE092D90698A00E595B0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3E26BE0A2D9069A600E595B0 /* MedtrumKitSettings.swift */,
+				3EA69F042D95E605002EEF9F /* InsulinTypeSelector.swift */,
+				3EA69F062D95ECDE002EEF9F /* PatchSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		3E45665A2D83712D00FE1E0C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E6A00EB2DA03FCA0085E6A4 /* Onboarding */,
+				3E26BE092D90698A00E595B0 /* Settings */,
+				3E15A4772DA2B6E6007F7D3C /* MedtrumReservoirView.swift */,
+				3E15A47F2DA2B857007F7D3C /* MedtrumReservoirView.xib */,
+				3E26BE102D906E5700E595B0 /* ReservoirView.swift */,
+				3E24AEBF2DA1639F00C7733C /* PumpImage.swift */,
+				3EFBC4F32DFB526900E0E295 /* DeleteDriverActionSheet.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3E45665F2D83719200FE1E0C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				3E24AEC62DA1733C00C7733C /* Onboarding */,
+				3E24AEC52DA1733300C7733C /* Settings */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		3E5060122D70E5B000376609 /* Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				3E5060132D70E5C900376609 /* Crc8.swift */,
+				3E1532472D6F98CF0020F015 /* Crypto.swift */,
+			);
+			path = Encryption;
+			sourceTree = "<group>";
+		};
+		3E6A00EB2DA03FCA0085E6A4 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				3E6A00ED2DA03FE00085E6A4 /* PatchDeactivationView.swift */,
+				3E9A5C952DA1460700A4102D /* PumpBaseSettingsView.swift */,
+				3E24AEC12DA1727800C7733C /* PatchPrimingView.swift */,
+				3E24AEC92DA17B7F00C7733C /* PatchActivationView.swift */,
+				3EA6C4502DA2947000963AAB /* OnboardingWelcomeView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		3E6B082B2DF2223E00A484C6 /* PumpManager */ = {
+			isa = PBXGroup;
+			children = (
+				3E6B082C2DF2224500A484C6 /* BasalScheduleTests.swift */,
+			);
+			path = PumpManager;
+			sourceTree = "<group>";
+		};
+		3E767CE12D67AD91004B1971 /* MedtrumKitUI */ = {
+			isa = PBXGroup;
+			children = (
+				3E45665F2D83719200FE1E0C /* ViewModels */,
+				3E767D542D67BCC3004B1971 /* ViewController */,
+				3E45665A2D83712D00FE1E0C /* Views */,
+				3E767CFE2D67B1A9004B1971 /* MedtrumHUDProvider.swift */,
+				3E767CE22D67ADFA004B1971 /* MedtrumKitPumpManager+UI.swift */,
+				3E767CFB2D67B13C004B1971 /* Localizable.strings */,
+				3E26BE0C2D906A0D00E595B0 /* MedtrumUI.xcassets */,
+			);
+			path = MedtrumKitUI;
+			sourceTree = "<group>";
+		};
+		3E767CE32D67AF2B004B1971 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				3E15A47D2DA2B723007F7D3C /* NibLoadable.swift */,
+				3E15A47B2DA2B718007F7D3C /* IdentifiableClass.swift */,
+				3E9D8B112D88A8F100008AF2 /* NewPumpEvent.swift */,
+				3E4566642D837A4800FE1E0C /* Bundle.swift */,
+				3E1532492D6FA0060020F015 /* Data.swift */,
+				3E50601D2D70F7A700376609 /* Date.swift */,
+				3E9D8B0D2D88A59000008AF2 /* DoseEntry.swift */,
+				3E15324B2D6FA4250020F015 /* Int64.swift */,
+				3E98B8502D6BB2B900DD5123 /* TimeInterval.swift */,
+				3E767CFD2D67B192004B1971 /* LocalizedString.swift */,
+				3E767CE42D67AF35004B1971 /* OSLog.swift */,
+				3E9D8B0F2D88A5EC00008AF2 /* UnfinalizedDose.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		3E767D542D67BCC3004B1971 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3E4566622D8371EB00FE1E0C /* ActivityViewController.swift */,
+				3E767D552D67BCC9004B1971 /* MedtrumKitUICoordinator.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		3E77FEB82D723ABF00A15134 /* Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				3E77FEB92D723AD200A15134 /* CryptoTests.swift */,
+			);
+			path = Encryption;
+			sourceTree = "<group>";
+		};
+		3E77FEBF2D74B16100A15134 /* Packets */ = {
+			isa = PBXGroup;
+			children = (
+				3EA87D4A2D7A214B007DD959 /* ActivatePacketTests.swift */,
+				3EA87D4C2D7A25E5007DD959 /* AuthorizePacketTests.swift */,
+				3EA87D502D7A29A1007DD959 /* CancelBolusPacketTests.swift */,
+				3EA87D542D7A33A6007DD959 /* CancelTempBasalPacketTests.swift */,
+				3EA87D5A2D7A3627007DD959 /* ClearPumpAlarmPacketTests.swift */,
+				3EA87D5E2D7A36C4007DD959 /* GetDeviceTypePacketTests.swift */,
+				3EA87D622D7A3B95007DD959 /* GetRecordPacketTests.swift */,
+				3EA87D642D7A3DCA007DD959 /* GetTimePacketTest.swift */,
+				3EA87D682D7A3FBE007DD959 /* PollPatchPacketTests.swift */,
+				3EA87D6C2D7A4046007DD959 /* PrimePacketTests.swift */,
+				3EEA51F82D7E13E6000C9E1E /* ReadBolusStatePacketTests.swift */,
+				3EEA51FC2D7E1C23000C9E1E /* ResumePumpPacketTests.swift */,
+				3EEA52002D7E1E0D000C9E1E /* SetBasalProfilePacketTests.swift */,
+				3EEA52042D7E21D9000C9E1E /* SetBolusMotorPacketTests.swift */,
+				3ED27E062D80BA130026488B /* SetBolusPacketTests.swift */,
+				3ED27E0A2D80BC900026488B /* SetPatchPacketTests.swift */,
+				3ED27E0E2D80BFF40026488B /* SetTempBasalPacketTests.swift */,
+				3ED27E102D80C42C0026488B /* SetTimePacketTests.swift */,
+				3ED27E122D80C5BB0026488B /* SetTimeZonePacketTests.swift */,
+				3ED27E162D80C9EC0026488B /* StopPatchPacketTests.swift */,
+				3ED27E182D80CA350026488B /* SubscribePacketTests.swift */,
+				3ED27E1A2D80CABB0026488B /* SynchronizePacketTests.swift */,
+				3EA87C3A2DAC2DB300E897ED /* SynchronizeNotificationPacketTests.swift */,
+				3E77FEBB2D72F8FC00A15134 /* MedtrumBasePacketTests.swift */,
+			);
+			path = Packets;
+			sourceTree = "<group>";
+		};
+		3E77FEC02D74B38B00A15134 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				3E77FEC12D74B39300A15134 /* AlarmSettings.swift */,
+				3ED27E1C2D80D15A0026488B /* AlarmState.swift */,
+				3E0489042D74B81D00E0B75A /* BasalType.swift */,
+				3EA87D582D7A35C7007DD959 /* ClearAlarmType.swift */,
+				3ED27E1E2D80D25D0026488B /* PatchState.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		B7189AE62C15A52800703DE2 /* PumpManager */ = {
+			isa = PBXGroup;
+			children = (
+				3E1390132D6E5C4900A146C1 /* Models */,
+				3E1390112D6E59B000A146C1 /* MedtrumPumpState.swift */,
+				B7189AE52C15A52800703DE2 /* MedtrumPumpManager.swift */,
+				3E13900F2D6E534600A146C1 /* BluetoothManager.swift */,
+				3E1390182D6E5F2B00A146C1 /* PeripheralManager.swift */,
+				3E9D8B0B2D88A3EF00008AF2 /* MedtrumDoseProgressReporter.swift */,
+				3E92D5222DA458E500E22577 /* NotificationManager.swift */,
+				3EF31CC52DF5DC5200EA6300 /* StateSyncer.swift */,
+			);
+			path = PumpManager;
+			sourceTree = "<group>";
+		};
+		B7189AE82C15A8CE00703DE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E767D4C2D67BA71004B1971 /* LoopKitUI.framework */,
+				B7189AE92C15A8CE00703DE2 /* LoopKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7D3A8C62C148CC4002EE003 = {
+			isa = PBXGroup;
+			children = (
+				3E767CE32D67AF2B004B1971 /* Common */,
+				B7D3A8D22C148CC4002EE003 /* MedtrumKit */,
+				3E767CE12D67AD91004B1971 /* MedtrumKitUI */,
+				B7D3A8EE2C14F0EF002EE003 /* MedtrumKitPlugin */,
+				B7D3A8DE2C148CC4002EE003 /* MedtrumKitTests */,
+				B7D3A8D12C148CC4002EE003 /* Products */,
+				B7189AE82C15A8CE00703DE2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B7D3A8D12C148CC4002EE003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7D3A8D02C148CC4002EE003 /* MedtrumKit.framework */,
+				B7D3A8DA2C148CC4002EE003 /* MedtrumKitTests.xctest */,
+				3E767D432D67B790004B1971 /* MedtrumKitPlugin.loopplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B7D3A8D22C148CC4002EE003 /* MedtrumKit */ = {
+			isa = PBXGroup;
+			children = (
+				3E5060122D70E5B000376609 /* Encryption */,
+				3E1532402D6F93DD0020F015 /* Packets */,
+				B7189AE62C15A52800703DE2 /* PumpManager */,
+				3E767D052D67B4A0004B1971 /* Info.plist */,
+				B7D3A8D32C148CC4002EE003 /* MedtrumKit.h */,
+				B7D3A8D42C148CC4002EE003 /* MedtrumKit.docc */,
+			);
+			path = MedtrumKit;
+			sourceTree = "<group>";
+		};
+		B7D3A8DE2C148CC4002EE003 /* MedtrumKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E6B082B2DF2223E00A484C6 /* PumpManager */,
+				3E77FEBF2D74B16100A15134 /* Packets */,
+				3E77FEB82D723ABF00A15134 /* Encryption */,
+			);
+			path = MedtrumKitTests;
+			sourceTree = "<group>";
+		};
+		B7D3A8EB2C14F0EF002EE003 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3E767D502D67BBF9004B1971 /* OSLog.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		B7D3A8EE2C14F0EF002EE003 /* MedtrumKitPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				3E767D072D67B63B004B1971 /* Info.plist */,
+				B7D3A8EB2C14F0EF002EE003 /* Extensions */,
+				B7D3A8ED2C14F0EF002EE003 /* MedtrumKitPlugin.swift */,
+			);
+			path = MedtrumKitPlugin;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3E767D3E2D67B790004B1971 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D3A8CB2C148CC4002EE003 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7D3A8E12C148CC4002EE003 /* MedtrumKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3E767D422D67B790004B1971 /* MedtrumKitPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E767D482D67B790004B1971 /* Build configuration list for PBXNativeTarget "MedtrumKitPlugin" */;
+			buildPhases = (
+				3E767D3E2D67B790004B1971 /* Headers */,
+				3E767D3F2D67B790004B1971 /* Sources */,
+				3E767D402D67B790004B1971 /* Frameworks */,
+				3E767D412D67B790004B1971 /* Resources */,
+				3E98B84F2D6BB12C00DD5123 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3E98B84E2D6BB12C00DD5123 /* PBXTargetDependency */,
+			);
+			name = MedtrumKitPlugin;
+			packageProductDependencies = (
+			);
+			productName = MedtrumKitPlugin;
+			productReference = 3E767D432D67B790004B1971 /* MedtrumKitPlugin.loopplugin */;
+			productType = "com.apple.product-type.framework";
+		};
+		B7D3A8CF2C148CC4002EE003 /* MedtrumKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7D3A8E42C148CC4002EE003 /* Build configuration list for PBXNativeTarget "MedtrumKit" */;
+			buildPhases = (
+				B7D3A8CB2C148CC4002EE003 /* Headers */,
+				B7D3A8CC2C148CC4002EE003 /* Sources */,
+				B7D3A8CD2C148CC4002EE003 /* Frameworks */,
+				B7D3A8CE2C148CC4002EE003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MedtrumKit;
+			productName = MedtrumKit;
+			productReference = B7D3A8D02C148CC4002EE003 /* MedtrumKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B7D3A8D92C148CC4002EE003 /* MedtrumKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7D3A8E72C148CC4002EE003 /* Build configuration list for PBXNativeTarget "MedtrumKitTests" */;
+			buildPhases = (
+				B7D3A8D62C148CC4002EE003 /* Sources */,
+				B7D3A8D72C148CC4002EE003 /* Frameworks */,
+				B7D3A8D82C148CC4002EE003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7D3A8DD2C148CC4002EE003 /* PBXTargetDependency */,
+			);
+			name = MedtrumKitTests;
+			productName = MedtrumKitTests;
+			productReference = B7D3A8DA2C148CC4002EE003 /* MedtrumKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B7D3A8C72C148CC4002EE003 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					3E767D422D67B790004B1971 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					B7D3A8CF2C148CC4002EE003 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					B7D3A8D92C148CC4002EE003 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = B7D3A8CA2C148CC4002EE003 /* Build configuration list for PBXProject "MedtrumKit" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				de,
+				"zh-Hans",
+				ja,
+				nb,
+				es,
+				da,
+				it,
+				sv,
+				pl,
+				"pt-BR",
+				vi,
+				ru,
+				fr,
+				fi,
+				nl,
+				ro,
+				he,
+				tr,
+				ar,
+				cs,
+				hi,
+				sk,
+				pt_BR,
+			);
+			mainGroup = B7D3A8C62C148CC4002EE003;
+			productRefGroup = B7D3A8D12C148CC4002EE003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B7D3A8CF2C148CC4002EE003 /* MedtrumKit */,
+				B7D3A8D92C148CC4002EE003 /* MedtrumKitTests */,
+				3E767D422D67B790004B1971 /* MedtrumKitPlugin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3E767D412D67B790004B1971 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D3A8CE2C148CC4002EE003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E26BE0D2D906A0D00E595B0 /* MedtrumUI.xcassets in Resources */,
+				3E767D042D67B3FC004B1971 /* Localizable.strings in Resources */,
+				3E15A4802DA2B857007F7D3C /* MedtrumReservoirView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D3A8D82C148CC4002EE003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E767D3F2D67B790004B1971 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E767D512D67BBF9004B1971 /* OSLog.swift in Sources */,
+				3E767D4F2D67BB72004B1971 /* MedtrumKitPlugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D3A8CC2C148CC4002EE003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E767D562D67BCD6004B1971 /* MedtrumKitUICoordinator.swift in Sources */,
+				3ED27E1D2D80D15E0026488B /* AlarmState.swift in Sources */,
+				3EDA29762D9B862E00895031 /* PatchSettingsViewModel.swift in Sources */,
+				3EEA52072D7E2265000C9E1E /* SetBolusPacket.swift in Sources */,
+				3E5060262D71035900376609 /* SubscribePacket.swift in Sources */,
+				3E5060202D70F97500376609 /* SetTimePacket.swift in Sources */,
+				3E9D8B122D88A8F600008AF2 /* NewPumpEvent.swift in Sources */,
+				3E9547FB2D8D963600EEF259 /* MedtrumPrimePatchResult.swift in Sources */,
+				3EA87D612D7A3813007DD959 /* GetRecordPacket.swift in Sources */,
+				3EA87D4F2D7A2930007DD959 /* CancelBolusPacket.swift in Sources */,
+				3E1390172D6E5EA000A146C1 /* MedtrumConnectResult.swift in Sources */,
+				3E26BE112D906E5700E595B0 /* ReservoirView.swift in Sources */,
+				3E98B8512D6BB2BC00DD5123 /* TimeInterval.swift in Sources */,
+				3E5060142D70E5CB00376609 /* Crc8.swift in Sources */,
+				3E5060222D70FDA100376609 /* SetTimeZonePacket.swift in Sources */,
+				3E1532442D6F94E30020F015 /* AuthorizePacket.swift in Sources */,
+				3E767D022D67B315004B1971 /* LocalizedString.swift in Sources */,
+				3E77FEC22D74B39800A15134 /* AlarmSettings.swift in Sources */,
+				3E767D522D67BC2E004B1971 /* MedtrumKitPumpManager+UI.swift in Sources */,
+				3E92D5232DA458EA00E22577 /* NotificationManager.swift in Sources */,
+				3E6A00EE2DA03FE00085E6A4 /* PatchDeactivationView.swift in Sources */,
+				3E6A00F22DA0428E0085E6A4 /* MedtrumDeactivatePatchResult.swift in Sources */,
+				3E1390192D6E5F3600A146C1 /* PeripheralManager.swift in Sources */,
+				3E1532422D6F93EF0020F015 /* BasePacket.swift in Sources */,
+				3E50601C2D70F69900376609 /* GetTimePacket.swift in Sources */,
+				3EA69F072D95ECDE002EEF9F /* PatchSettingsView.swift in Sources */,
+				3E26BE0F2D906AEE00E595B0 /* MedtrumKitSettingsViewModel.swift in Sources */,
+				3E4566652D837A4900FE1E0C /* Bundle.swift in Sources */,
+				3E1390102D6E534C00A146C1 /* BluetoothManager.swift in Sources */,
+				3EA87D6B2D7A402C007DD959 /* PrimePacket.swift in Sources */,
+				3E0489052D74B82000E0B75A /* BasalType.swift in Sources */,
+				3E15324C2D6FA4280020F015 /* Int64.swift in Sources */,
+				3E1532462D6F95AC0020F015 /* CommandType.swift in Sources */,
+				3E767D032D67B319004B1971 /* OSLog.swift in Sources */,
+				3E1390122D6E59B500A146C1 /* MedtrumPumpState.swift in Sources */,
+				3E4566632D8371EC00FE1E0C /* ActivityViewController.swift in Sources */,
+				3E1532482D6F98D20020F015 /* Crypto.swift in Sources */,
+				B7D3A8F12C14F0EF002EE003 /* MedtrumKitPlugin.swift in Sources */,
+				B7189AE72C15A52800703DE2 /* MedtrumPumpManager.swift in Sources */,
+				3E767D532D67BC33004B1971 /* MedtrumHUDProvider.swift in Sources */,
+				3E24AEC02DA1639F00C7733C /* PumpImage.swift in Sources */,
+				3E77FEBE2D7364AC00A15134 /* ActivatePacket.swift in Sources */,
+				3EFBC4F42DFB527400E0E295 /* DeleteDriverActionSheet.swift in Sources */,
+				3EA6C4512DA2947000963AAB /* OnboardingWelcomeView.swift in Sources */,
+				3E24AEC42DA1729A00C7733C /* PatchPrimingViewModel.swift in Sources */,
+				3EA87C3D2DAC2F9C00E897ED /* NotificationPacket.swift in Sources */,
+				3E26BE0B2D9069A600E595B0 /* MedtrumKitSettings.swift in Sources */,
+				3EA69F052D95E605002EEF9F /* InsulinTypeSelector.swift in Sources */,
+				3E15324A2D6FA0080020F015 /* Data.swift in Sources */,
+				3E9D8B102D88A5F200008AF2 /* UnfinalizedDose.swift in Sources */,
+				3E6A00F02DA0421A0085E6A4 /* DeactivatePatchViewModel.swift in Sources */,
+				3E9547FD2D8D9CD600EEF259 /* MedtrumActivatePatchResult.swift in Sources */,
+				3ED27E152D80C9010026488B /* StopPatchPacket.swift in Sources */,
+				3EEA51F72D7DF061000C9E1E /* ReadBolusStatePacket.swift in Sources */,
+				3EEA52032D7E1F9F000C9E1E /* SetBolusMotorPacket.swift in Sources */,
+				3EA87D672D7A3F8C007DD959 /* PollPatchPacket.swift in Sources */,
+				3E9D8B0E2D88A59200008AF2 /* DoseEntry.swift in Sources */,
+				3EF31CC62DF5DC5500EA6300 /* StateSyncer.swift in Sources */,
+				3E24AECA2DA17B7F00C7733C /* PatchActivationView.swift in Sources */,
+				3E15A47E2DA2B723007F7D3C /* NibLoadable.swift in Sources */,
+				3ED27C072DB67ED5001B7C95 /* MedtrumUpdatePatchResult.swift in Sources */,
+				3E50601A2D70F2F500376609 /* GetDeviceTypePacket.swift in Sources */,
+				3E15A4782DA2B6E6007F7D3C /* MedtrumReservoirView.swift in Sources */,
+				3E9A5C962DA1460700A4102D /* PumpBaseSettingsView.swift in Sources */,
+				B7D3A8D52C148CC4002EE003 /* MedtrumKit.docc in Sources */,
+				3E9D8B0C2D88A3FA00008AF2 /* MedtrumDoseProgressReporter.swift in Sources */,
+				3E15A47C2DA2B718007F7D3C /* IdentifiableClass.swift in Sources */,
+				3E24AEC82DA17B4900C7733C /* PatchActivationViewModel.swift in Sources */,
+				3E5060242D70FED500376609 /* SynchronizePacket.swift in Sources */,
+				3EEA51FF2D7E1D12000C9E1E /* SetBasalProfilePacket.swift in Sources */,
+				3E24AEC22DA1727800C7733C /* PatchPrimingView.swift in Sources */,
+				3ED27E0D2D80BD570026488B /* SetTempBasalPacket.swift in Sources */,
+				3ED27E1F2D80D2660026488B /* PatchState.swift in Sources */,
+				3EE2DAC52D8A076200EA2EAD /* SuspendPumpPacket.swift in Sources */,
+				3E5060182D70EAF800376609 /* MedtrumWriteResult.swift in Sources */,
+				3EA87D572D7A3573007DD959 /* ClearPumpAlarmPacket.swift in Sources */,
+				3EA87D592D7A35D1007DD959 /* ClearAlarmType.swift in Sources */,
+				3E50601E2D70F7A900376609 /* Date.swift in Sources */,
+				3E1390152D6E5C5E00A146C1 /* MedtrumScanResult.swift in Sources */,
+				3EB1A3B12D7784410031C044 /* BasalSchedule.swift in Sources */,
+				3E9A5C982DA1461700A4102D /* PumpBaseSettingsViewModel.swift in Sources */,
+				3ED27E092D80BACB0026488B /* SetPatchPacket.swift in Sources */,
+				3EEA51FB2D7E1BF8000C9E1E /* ResumePumpPacket.swift in Sources */,
+				3EA87D532D7A2A31007DD959 /* CancelTempBasalPacket.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D3A8D62C148CC4002EE003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ED27E132D80C5BD0026488B /* SetTimeZonePacketTests.swift in Sources */,
+				3EA87D512D7A29A4007DD959 /* CancelBolusPacketTests.swift in Sources */,
+				3ED27E0B2D80BC960026488B /* SetPatchPacketTests.swift in Sources */,
+				3EA87D6D2D7A404C007DD959 /* PrimePacketTests.swift in Sources */,
+				3EA87D652D7A3DCE007DD959 /* GetTimePacketTest.swift in Sources */,
+				3EA87D632D7A3B9B007DD959 /* GetRecordPacketTests.swift in Sources */,
+				3ED27E192D80CA3B0026488B /* SubscribePacketTests.swift in Sources */,
+				3ED27E112D80C4320026488B /* SetTimePacketTests.swift in Sources */,
+				3EA87D692D7A3FC2007DD959 /* PollPatchPacketTests.swift in Sources */,
+				3EA87C3B2DAC2DBE00E897ED /* SynchronizeNotificationPacketTests.swift in Sources */,
+				3E6B082D2DF2224900A484C6 /* BasalScheduleTests.swift in Sources */,
+				3ED27E0F2D80BFF90026488B /* SetTempBasalPacketTests.swift in Sources */,
+				3ED27E072D80BA130026488B /* SetBolusPacketTests.swift in Sources */,
+				3EEA51F92D7E13E6000C9E1E /* ReadBolusStatePacketTests.swift in Sources */,
+				3EEA52052D7E21DB000C9E1E /* SetBolusMotorPacketTests.swift in Sources */,
+				3EEA51FD2D7E1C27000C9E1E /* ResumePumpPacketTests.swift in Sources */,
+				3EA87D4B2D7A2165007DD959 /* ActivatePacketTests.swift in Sources */,
+				3EA87D552D7A33AD007DD959 /* CancelTempBasalPacketTests.swift in Sources */,
+				3E77FEBC2D72F90000A15134 /* MedtrumBasePacketTests.swift in Sources */,
+				3EA87D5B2D7A3632007DD959 /* ClearPumpAlarmPacketTests.swift in Sources */,
+				3E77FEBA2D723AD400A15134 /* CryptoTests.swift in Sources */,
+				3ED27E172D80C9ED0026488B /* StopPatchPacketTests.swift in Sources */,
+				3EEA52012D7E1E10000C9E1E /* SetBasalProfilePacketTests.swift in Sources */,
+				3EA87D5F2D7A36CB007DD959 /* GetDeviceTypePacketTests.swift in Sources */,
+				3ED27E1B2D80CAC40026488B /* SynchronizePacketTests.swift in Sources */,
+				3EA87D4D2D7A25ED007DD959 /* AuthorizePacketTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3E98B84E2D6BB12C00DD5123 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = B7D3A8CF2C148CC4002EE003 /* MedtrumKit */;
+			targetProxy = 3E98B84D2D6BB12C00DD5123 /* PBXContainerItemProxy */;
+		};
+		B7D3A8DD2C148CC4002EE003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7D3A8CF2C148CC4002EE003 /* MedtrumKit */;
+			targetProxy = B7D3A8DC2C148CC4002EE003 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3E767CFB2D67B13C004B1971 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3E767CE52D67B13C004B1971 /* ar */,
+				3E767CE62D67B13C004B1971 /* cs */,
+				3E767CE72D67B13C004B1971 /* da */,
+				3E767CE82D67B13C004B1971 /* de */,
+				3E767CE92D67B13C004B1971 /* en */,
+				3E767CEA2D67B13C004B1971 /* es */,
+				3E767CEB2D67B13C004B1971 /* fi */,
+				3E767CEC2D67B13C004B1971 /* fr */,
+				3E767CED2D67B13C004B1971 /* he */,
+				3E767CEE2D67B13C004B1971 /* it */,
+				3E767CEF2D67B13C004B1971 /* ja */,
+				3E767CF02D67B13C004B1971 /* nb */,
+				3E767CF12D67B13C004B1971 /* nl */,
+				3E767CF22D67B13C004B1971 /* pl */,
+				3E767CF32D67B13C004B1971 /* pt_BR */,
+				3E767CF42D67B13C004B1971 /* ro */,
+				3E767CF52D67B13C004B1971 /* ru */,
+				3E767CF62D67B13C004B1971 /* sk */,
+				3E767CF72D67B13C004B1971 /* sv */,
+				3E767CF82D67B13C004B1971 /* tr */,
+				3E767CF92D67B13C004B1971 /* vi */,
+				3E767CFA2D67B13C004B1971 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3E767D492D67B790004B1971 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MedtrumKit/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = org.nightscout.MedtrumKitPlugin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = loopplugin;
+			};
+			name = Debug;
+		};
+		3E767D4A2D67B790004B1971 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MedtrumKit/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = org.nightscout.MedtrumKitPlugin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = loopplugin;
+			};
+			name = Release;
+		};
+		B7D3A8E22C148CC4002EE003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B7D3A8E32C148CC4002EE003 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B7D3A8E52C148CC4002EE003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MedtrumKit/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = org.nightscout.MedtrumKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited) MEDTRUM_DEBUG_LOGS";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B7D3A8E62C148CC4002EE003 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MedtrumKit/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = org.nightscout.MedtrumKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		B7D3A8E82C148CC4002EE003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A754VLF58M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.nightscout.MedtrumKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B7D3A8E92C148CC4002EE003 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A754VLF58M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.nightscout.MedtrumKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3E767D482D67B790004B1971 /* Build configuration list for PBXNativeTarget "MedtrumKitPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E767D492D67B790004B1971 /* Debug */,
+				3E767D4A2D67B790004B1971 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7D3A8CA2C148CC4002EE003 /* Build configuration list for PBXProject "MedtrumKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7D3A8E22C148CC4002EE003 /* Debug */,
+				B7D3A8E32C148CC4002EE003 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7D3A8E42C148CC4002EE003 /* Build configuration list for PBXNativeTarget "MedtrumKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7D3A8E52C148CC4002EE003 /* Debug */,
+				B7D3A8E62C148CC4002EE003 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7D3A8E72C148CC4002EE003 /* Build configuration list for PBXNativeTarget "MedtrumKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7D3A8E82C148CC4002EE003 /* Debug */,
+				B7D3A8E92C148CC4002EE003 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B7D3A8C72C148CC4002EE003 /* Project object */;
+}
