@@ -48,6 +48,7 @@ Please understand that iAPS is:
   * **Dana:**
       * Dana-I
       * DanaRS (firmware 3 only)
+  * **Medtrum TouchCare nano**
   * **Medtronic:**
       * 515 or 715 (any firmware)
       * 522 or 722 (any firmware)
