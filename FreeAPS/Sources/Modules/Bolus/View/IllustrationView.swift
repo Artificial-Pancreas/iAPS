@@ -51,14 +51,23 @@ struct IllustrationView: View {
             ).foregroundStyle(by: .value("Agent", datapoint.agent))
         }
         .chartForegroundStyleScale(
-            [
-                NSLocalizedString("Carbs", comment: ""): Color(.loopYellow),
-                NSLocalizedString("IOB", comment: ""): Color(.insulin),
-                NSLocalizedString("Glucose", comment: ""): Color(.loopGreen),
-                NSLocalizedString("Trend", comment: ""): Color(.purple),
-                NSLocalizedString("Factors", comment: ""): .gray,
-                "": .clear
-            ]
+            data.count < 6 ?
+                [
+                    NSLocalizedString("Carbs", comment: ""): Color(.loopYellow),
+                    NSLocalizedString("IOB", comment: ""): Color(.insulin),
+                    NSLocalizedString("Glucose", comment: ""): Color(.loopGreen),
+                    NSLocalizedString("Factors", comment: ""): .gray,
+                    "": .clear
+                ]
+                :
+                [
+                    NSLocalizedString("Carbs", comment: ""): Color(.loopYellow),
+                    NSLocalizedString("IOB", comment: ""): Color(.insulin),
+                    NSLocalizedString("Glucose", comment: ""): Color(.loopGreen),
+                    NSLocalizedString("Trend", comment: ""): Color(.purple),
+                    NSLocalizedString("Factors", comment: ""): .gray,
+                    "": .clear
+                ]
         )
         .dynamicTypeSize(...DynamicTypeSize.large)
         .chartYAxisLabel(NSLocalizedString("Insulin", comment: "Insulin unit"))
@@ -81,7 +90,7 @@ struct IllustrationView: View {
     }
 
     @ViewBuilder private func BolusLegend() -> some View {
-        let entries = [
+        let entries = data.count > 5 ? [
             BolusSummary(
                 variable: NSLocalizedString("Carbs", comment: ""),
                 formula: "COB / CR",
@@ -118,7 +127,39 @@ struct IllustrationView: View {
                 insulin: data[5].amount,
                 color: .primary
             )
-        ]
+        ] :
+            [
+                BolusSummary(
+                    variable: NSLocalizedString("Carbs", comment: ""),
+                    formula: "COB / CR",
+                    insulin: data[0].amount,
+                    color: Color(.loopYellow)
+                ),
+                BolusSummary(
+                    variable: NSLocalizedString("IOB", comment: ""),
+                    formula: "- Active Insulin",
+                    insulin: data[1].amount,
+                    color: Color(.insulin)
+                ),
+                BolusSummary(
+                    variable: NSLocalizedString("Glucose", comment: ""),
+                    formula: "(BG - Target) / ISF",
+                    insulin: data[2].amount,
+                    color: Color(.loopGreen)
+                ),
+                BolusSummary(
+                    variable: NSLocalizedString("Factors", comment: ""),
+                    formula: "Ev. adjustments",
+                    insulin: data[3].amount,
+                    color: .gray
+                ),
+                BolusSummary(
+                    variable: "",
+                    formula: "",
+                    insulin: data[4].amount,
+                    color: .primary
+                )
+            ]
 
         Grid {
             ForEach(entries) { entry in
@@ -147,7 +188,7 @@ struct IllustrationView: View {
 // Live Preview
 #Preview {
     // Preview data
-    @State var testData = [
+    @Previewable @State var testData = [
         InsulinRequired(agent: "Carbs", amount: 2),
         InsulinRequired(agent: "IOB", amount: -0.5),
         InsulinRequired(agent: "Glucose", amount: -0.5),

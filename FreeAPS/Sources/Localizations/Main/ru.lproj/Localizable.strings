@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Нет предсказаний. Неудачное предложение цикла.";
 
 /* Bolus View */
-"New Glucose Missing" = "Отсутствует глюкоза";
+"New Glucose Missing" = "Новая глюкоза отсутствует";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Сохранить прием пищи без болюса";
@@ -1175,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "ВБС в Ед/ч";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
@@ -1631,16 +1634,16 @@ Enact a temp Basal or a temp target */
 "End the Override with next Meal" = "Завершить переопределение со следующим приемом пищи";
 
 /* */
-"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+"End the Override when Glucose is Trending Up" = "Завершить переопределение, когда уровень глюкозы имеет тенденцию к повышению";
 
 /* */
-"And when Glucose is higher than" = "And when Glucose is higher than";
+"And when Glucose is higher than" = "И когда уровень глюкозы выше, чем";
 
 /* */
-"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+"End the Override when Glucose is Lower ..." = "Завершить переопределение, когда уровень глюкозы ниже...";
 
 /* */
-"... than" = "... than";
+"... than" = "... чем";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Нормальный профиль";
@@ -1670,7 +1673,7 @@ Enact a temp Basal or a temp target */
 "Change CR" = "Изменить CR";
 
 /* */
-"Change Basal" = "Change Basal";
+"Change Basal" = "Изменить базал";
 
 /* */
 "SMB Minutes" = "SMB минуты";
@@ -1850,6 +1853,12 @@ Enact a temp Basal or a temp target */
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " без введения болюса помпой";
+
+/* */
+"Don't Use 15 min Trend" = "Не использовать 15-минутный тренд";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Не корректировать на основе тренда глюкозы за последние 15 минут.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3107,6 +3116,21 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Auto ISF Home View" = "Авто ISF на главном экране";
 
+/* UI/UX option */
+"Light" = "Светлый";
+
+/* UI/UX option */
+"Dark" = "Тёмная тема";
+
+/* UI/UX option */
+"Auto" = "Авто";
+
+/* UI/UX option */
+"Color Scheme" = "Режим темы";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Светлый/тёмный режим";
+
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";
 
@@ -3181,3 +3205,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Отменить переопределение";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "Чтобы включить настройки, перейдите в раздел Приложения в Настройках iPhone";

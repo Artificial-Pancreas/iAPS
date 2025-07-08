@@ -6,7 +6,7 @@ struct SuspendResumeIntent: AppIntent {
     static var title: LocalizedStringResource = "Pump Mode"
     static var description = IntentDescription("Suspend or Resume Pump.")
 
-    @Parameter(title: "Mode") var mode: String?
+    @Parameter(title: "Mode") var mode: PumpMode?
 
     @Parameter(
         title: "Confirm Before activating",
@@ -28,17 +28,20 @@ struct SuspendResumeIntent: AppIntent {
 
     @MainActor func perform() async throws -> some ProvidesDialog {
         do {
-            let modeToApply: String
+            let modeToApply: PumpMode
+            if let selection = mode {
+                modeToApply = selection
+            } else {
+                modeToApply = try await $mode.requestDisambiguation(
+                    among: whichMode(),
+                    dialog: "Choose what to do with your pump"
+                )
+            }
 
-            modeToApply = try await $mode.requestDisambiguation(
-                among: whichMode(),
-                dialog: "Choose what to do with your pump"
-            )
-
-            let displayName: String = modeToApply
+            let displayName: String = modeToApply.rawValue
             if confirmBeforeApplying {
                 try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to \(displayName) your pump?")
+                    result: .result(dialog: "Are you sure you want to \(displayName)?")
                 )
             }
 
@@ -51,19 +54,21 @@ struct SuspendResumeIntent: AppIntent {
         }
     }
 
-    private func whichMode() -> [String] {
-        [NSLocalizedString(PumpMode.suspend.rawValue, comment: ""), NSLocalizedString(PumpMode.resume.rawValue, comment: "")]
+    func whichMode() -> [PumpMode] {
+        [PumpMode.suspend, PumpMode.resume, PumpMode.cancel]
     }
 }
 
 final class SuspendResumeIntentRequest: BaseIntentsRequest {
-    func setMode(_ mode: String) throws -> String {
+    func setMode(_ mode: PumpMode) throws -> String {
         let resultDisplay: String =
-            NSLocalizedString("Pump command", comment: "") + " \(mode)" + NSLocalizedString("enacted in iAPS", comment: "")
-        if mode == PumpMode.resume.rawValue {
+            NSLocalizedString("Pump command", comment: "") + " \(mode) " + NSLocalizedString("enacted in iAPS", comment: "")
+        if mode == PumpMode.resume {
             apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:resume"))
-        } else if mode == PumpMode.suspend.rawValue {
+        } else if mode == PumpMode.suspend {
             apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:suspend"))
+        } else if mode == PumpMode.cancel {
+            apsManager.enactTempBasal(rate: 0, duration: 0)
         }
         return resultDisplay
     }
@@ -72,4 +77,15 @@ final class SuspendResumeIntentRequest: BaseIntentsRequest {
 enum PumpMode: String {
     case suspend = "Suspend"
     case resume = "Resume"
+    case cancel = "Cancel Temp"
+}
+
+extension PumpMode: AppEnum {
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "PumpMode"
+
+    static let caseDisplayRepresentations: [PumpMode: DisplayRepresentation] = [
+        .suspend: "Suspend",
+        .resume: "Resume",
+        .cancel: "Cancel Temp"
+    ]
 }

@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Geen voorspellingen. Mislukte loop suggestie.";
 
 /* Bolus View */
-"New Glucose Missing" = "Ontbrekende glucose";
+"New Glucose Missing" = "Nieuwe glucose ontbreekt";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
@@ -1176,6 +1176,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Tijdelijk basaal hoeveelheid in E/uur";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
@@ -1851,6 +1854,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " Zonder bolus";
+
+/* */
+"Don't Use 15 min Trend" = "Gebruik geen 15 min trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Niet aanpassen aan de glucose trend van de afgelopen 15 minuten.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3112,6 +3121,21 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* UI/UX option */
 "Auto ISF Home View" = "Auto ISF Home-weergave";
 
+/* UI/UX option */
+"Light" = "Licht";
+
+/* UI/UX option */
+"Dark" = "Donker";
+
+/* UI/UX option */
+"Auto" = "Automatisch";
+
+/* UI/UX option */
+"Color Scheme" = "Kleurenthema";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Lichte / Donkere modus";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
 
@@ -3186,3 +3210,6 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Annuleer tijdelijk programma";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "Om instellingen in te schakelen, ga naar de App Config sectie in de iOS systeemInstellingen App";

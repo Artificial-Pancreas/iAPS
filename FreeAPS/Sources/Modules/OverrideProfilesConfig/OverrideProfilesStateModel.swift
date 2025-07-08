@@ -258,7 +258,7 @@ extension OverrideProfilesConfig {
                 saveOverride.glucoseOverrideThreshold = (profile.glucoseOverrideThreshold ?? 100) as NSDecimalNumber
             }
 
-            if glucoseOverrideThresholdActiveDown {
+            if profile.glucoseOverrideThresholdActiveDown {
                 saveOverride.glucoseOverrideThresholdActiveDown = true
                 saveOverride.glucoseOverrideThresholdDown = (profile.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber
             }

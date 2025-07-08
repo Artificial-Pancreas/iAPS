@@ -20,13 +20,14 @@ extension Home {
         @State var animateTIR = Date.distantPast
         @State var showBolusActiveAlert = false
         @State var displayAutoHistory = false
+        @State var displayDynamicHistory = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
 
         @Environment(\.managedObjectContext) var moc
-        @Environment(\.colorScheme) var colorScheme
         @Environment(\.sizeCategory) private var fontSize
+        @Environment(\.colorScheme) var colorScheme
 
         @FetchRequest(
             entity: Override.entity(),
@@ -463,7 +464,11 @@ extension Home {
             addBackground()
                 .frame(minHeight: 200)
                 .overlay {
-                    PreviewChart(readings: $state.readings, lowLimit: $state.data.lowGlucose, highLimit: $state.data.highGlucose)
+                    PreviewChart(
+                        readings: $state.readings,
+                        lowLimit: $state.data.lowGlucose,
+                        highLimit: $state.data.highGlucose
+                    )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -646,8 +651,8 @@ extension Home {
                         }
 
                         Divider()
-
-                    }.padding(.top, geo.safeAreaInsets.top)
+                    }
+                    .padding(.top, geo.safeAreaInsets.top)
                 }
         }
 
@@ -721,6 +726,8 @@ extension Home {
                 .onTapGesture {
                     if state.autoisf {
                         displayAutoHistory.toggle()
+                    } else {
+                        displayDynamicHistory.toggle()
                     }
                 }
             }.offset(x: 130)
@@ -781,8 +788,8 @@ extension Home {
                                 if !state.iobData.isEmpty {
                                     activeIOBView
                                 }
-
-                            }.background {
+                            }
+                            .background {
                                 // Track vertical scroll
                                 GeometryReader { proxy in
                                     let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
@@ -833,6 +840,11 @@ extension Home {
             .ignoresSafeArea(.keyboard)
             .sheet(isPresented: $displayAutoHistory) {
                 AutoISFHistoryView(units: state.data.units)
+                    .environment(\.colorScheme, colorScheme)
+            }
+            .sheet(isPresented: $displayDynamicHistory) {
+                DynamicHistoryView(units: state.data.units)
+                    .environment(\.colorScheme, colorScheme)
             }
             .popup(isPresented: state.isStatusPopupPresented, alignment: .bottom, direction: .bottom) {
                 popup

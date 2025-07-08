@@ -98,5 +98,6 @@
   "displayExpiration": false,
   "anubis": false,
   "fpus": true,
-  "fpuAmounts": false
+  "fpuAmounts": false,
+  "lightMode": LightMode.auto
 }

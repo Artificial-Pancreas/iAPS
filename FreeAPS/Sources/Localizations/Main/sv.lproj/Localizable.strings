@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Inga blodsockerprognoser. Misslyckad loop.";
 
 /* Bolus View */
-"New Glucose Missing" = "Blodsocker saknas";
+"New Glucose Missing" = "Nytt blodsocker saknas";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Spara måltid utan bolus";
@@ -1175,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temporär basaldos i enheter per timme";
 
+/* */
+"Cancel Temp" = "Avbryt temporär basal";
+
 
 
 /* */
@@ -1851,6 +1854,12 @@ Enact a temp Basal or a temp target */
 /* Add insulin without bolusing alert */
 " without bolusing" = " utan att ge insulin";
 
+/* */
+"Don't Use 15 min Trend" = "Använd inte 15 min - trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Justera inte för de senaste 15 minuternas glukostrend.";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -2383,7 +2392,7 @@ Enact a temp Basal or a temp target */
 "WideFontTracking" = "Bred";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Lätt";
+"LightFontWeight" = "Ljus";
 
 /* Contact Image, settings, regular font weight */
 "RegularFontWeight" = "Reguljär";
@@ -3107,6 +3116,21 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Auto ISF Home View" = "Hemskärm Auto ISF";
 
+/* UI/UX option */
+"Light" = "Ljus";
+
+/* UI/UX option */
+"Dark" = "Mörk";
+
+/* UI/UX option */
+"Auto" = "Automatisk";
+
+/* UI/UX option */
+"Color Scheme" = "Färgschema";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Ljust / Mörkt";
+
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
 
@@ -3181,3 +3205,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Avbryt Undantag";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "För att aktivera inställningar, gå till iOS instllningar, under Appar/iAPS";

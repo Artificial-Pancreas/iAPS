@@ -12,6 +12,8 @@ extension AutotuneConfig {
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
         @Published var increment: Double = 0.1
+        @Published var running: Bool = false
+
         @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date() {
             didSet {
                 DispatchQueue.main.async {
@@ -55,6 +57,7 @@ extension AutotuneConfig {
         }
 
         func run() {
+            running.toggle()
             provider.runAutotune()
                 .receive(on: DispatchQueue.main)
                 .flatMap { [weak self] result -> AnyPublisher<Bool, Never> in
@@ -62,10 +65,25 @@ extension AutotuneConfig {
                         return Just(false).eraseToAnyPublisher()
                     }
                     self.autotune = result
+
+                    // Round
+                    if var tuned = self.autotune {
+                        let basal = tuned.basalProfile.map { basal in
+                            BasalProfileEntry(
+                                start: basal.start,
+                                minutes: basal.minutes,
+                                rate: basal.rate.roundBolusIncrements(increment: self.increment)
+                            )
+                        }
+                        tuned.basalProfile = basal
+                        self.autotune = tuned
+                    }
+
                     return self.apsManager.makeProfiles()
                 }
                 .sink { [weak self] _ in
                     self?.lastAutotuneDate = Date()
+                    self?.running.toggle()
                 }.store(in: &lifetime)
         }
 
@@ -84,7 +102,7 @@ extension AutotuneConfig {
                         BasalProfileEntry(
                             start: String(basal.start.prefix(5)),
                             minutes: basal.minutes,
-                            rate: basal.rate.roundBolus(increment: increment)
+                            rate: basal.rate.roundBolusIncrements(increment: increment)
                         )
                     }
                 guard let pump = apsManager.pumpManager else {
