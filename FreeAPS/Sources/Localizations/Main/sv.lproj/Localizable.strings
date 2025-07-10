@@ -3111,7 +3111,7 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Visa kvot och knapp för historikvisning";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Hemskärm Auto ISF";
+"Home View Ratio Button" = "Kvotknapp på hemvy";
 
 /* UI/UX option */
 "Light" = "Ljus";
