@@ -1178,6 +1178,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Cancel Temp" = "Hủy chế độ tạm thời";
 
+
+
 /* */
 "Schedule " = "Lịch trình ";
 
@@ -3109,7 +3111,7 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Hiển thị tỷ lệ và nút Xem lịch sử";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Xem trang chủ Auto ISF";
+"Home View Ratio Button" = "Home View Ratio Button";
 
 /* UI/UX option */
 "Light" = "Sáng";
