@@ -102,7 +102,7 @@ extension UIUX {
                     Toggle(isOn: $state.extendHomeView) {
                         Text("Display Ratio and a History View button")
                     }
-                } header: { Text("Auto ISF Home View") }
+                } header: { Text("Home View Ratio Button") }
 
                 Section {
                     Picker(selection: $state.lightMode, label: Text("Color Scheme")) {

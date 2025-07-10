@@ -111,13 +111,16 @@ extension OverrideProfilesConfig {
                 Section {
                     VStack {
                         Spacer()
-                        Text("\(state.percentage.formatted(.number)) %")
-                            .foregroundColor(
-                                state
-                                    .percentage >= 130 ? .red :
-                                    (isEditing ? .orange : .blue)
-                            )
-                            .font(.largeTitle)
+                        Text(
+                            (formatter.string(from: state.percentage as NSNumber) ?? "")
+                                + " %"
+                        )
+                        .foregroundColor(
+                            state
+                                .percentage >= 130 ? .red :
+                                (isEditing ? .orange : .blue)
+                        )
+                        .font(.largeTitle)
                         let max: Double = state.extended_overrides ? 400 : 200
                         Slider(
                             value: $state.percentage,
