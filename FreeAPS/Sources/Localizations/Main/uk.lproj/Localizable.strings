@@ -3112,7 +3112,7 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Відображати Співвідношення та Кнопку перегляду історії";
 
 /* UI/UX option */
-"Home View Ratio Button" = "Home View Ratio Button";
+"Home View Ratio Button" = "Кнопка співвідношення сторін головної сторінки";
 
 /* UI/UX option */
 "Light" = "Світлий";
