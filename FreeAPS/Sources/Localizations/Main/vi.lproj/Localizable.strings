@@ -3111,7 +3111,7 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Hiển thị tỷ lệ và nút Xem lịch sử";
 
 /* UI/UX option */
-"Home View Ratio Button" = "Home View Ratio Button";
+"Home View Ratio Button" = "Nút tỷ lệ trong giao diện chính";
 
 /* UI/UX option */
 "Light" = "Sáng";
