@@ -30,6 +30,27 @@ extension CGM {
             calendarIDs = calendarManager.calendarIDs()
             cgmTransmitterDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
 
+            switch cgm {
+            case .nightscout:
+                sensorDays = CGMType.nightscout.expiration
+            case .xdrip:
+                sensorDays = sensorDays
+            case .dexcomG5:
+                sensorDays = CGMType.dexcomG5.expiration
+            case .dexcomG6:
+                sensorDays = CGMType.dexcomG6.expiration
+            case .dexcomG7:
+                sensorDays = CGMType.dexcomG7.expiration
+            case .simulator:
+                sensorDays = sensorDays
+            case .libreTransmitter:
+                sensorDays = CGMType.libreTransmitter.expiration
+            case .glucoseDirect:
+                sensorDays = sensorDays
+            case .enlite:
+                sensorDays = CGMType.enlite.expiration
+            }
+
             subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
             subscribeSetting(\.displayCalendarIOBandCOB, on: $displayCalendarIOBandCOB) { displayCalendarIOBandCOB = $0 }
             subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { displayCalendarEmojis = $0 }

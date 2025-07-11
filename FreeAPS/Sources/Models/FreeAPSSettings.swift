@@ -92,7 +92,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var extendHomeView = true
     var displayExpiration = false
     var sensorDays: Double = 10
-    var anubis: Bool = false
     var fpus: Bool = true
     var fpuAmounts: Bool = false
     var carbButton: Bool = true
@@ -229,10 +228,6 @@ extension FreeAPSSettings: Decodable {
 
         if let useFPUconversion = try? container.decode(Bool.self, forKey: .useFPUconversion) {
             settings.useFPUconversion = useFPUconversion
-        }
-
-        if let anubis = try? container.decode(Bool.self, forKey: .anubis) {
-            settings.anubis = anubis
         }
 
         if let individualAdjustmentFactor = try? container.decode(Decimal.self, forKey: .individualAdjustmentFactor) {
