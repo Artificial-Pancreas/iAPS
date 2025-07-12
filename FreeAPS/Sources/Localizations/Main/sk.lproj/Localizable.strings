@@ -1177,7 +1177,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Temp basal Amount in U/h" = "Dočasné množstvo bazálu v U/h";
 
 /* */
-"Cancel Temp" = "Cancel Temp";
+"Cancel Temp" = "Zrušiť dočasné";
 
 
 
@@ -1859,7 +1859,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Neupravujte vývoj glykémie za posledných 15 minút.";
+"Don't adjust for past 15 minutes glucose trend." = "Nezohľadňovať vývoj glykémie za posledných 15 minút.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3115,7 +3115,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Display Ratio and a History View button" = "Zobraziť tlačidlo s výsledným pomerom a históriou";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF domovská obrazovka";
+"Home View Ratio Button" = "Home View Ratio Button";
 
 /* UI/UX option */
 "Light" = "Tenké";

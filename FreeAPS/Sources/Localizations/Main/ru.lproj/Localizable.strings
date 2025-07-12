@@ -1176,7 +1176,7 @@ Enact a temp Basal or a temp target */
 "Temp basal Amount in U/h" = "ВБС в Ед/ч";
 
 /* */
-"Cancel Temp" = "Cancel Temp";
+"Cancel Temp" = "Отменить ВБС";
 
 
 
@@ -3111,7 +3111,7 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Отображать соотношение и кнопку просмотра истории";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Авто ISF на главном экране";
+"Home View Ratio Button" = "Home View Ratio Button";
 
 /* UI/UX option */
 "Light" = "Светлый";
