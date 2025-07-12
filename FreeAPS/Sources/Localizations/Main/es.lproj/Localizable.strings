@@ -3228,7 +3228,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Display Ratio and a History View button" = "Display Ratio and a History View button";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Home View Ratio Button" = "Home View Ratio Button";
 
 /* UI/UX option */
 "Light" = "Suave";
