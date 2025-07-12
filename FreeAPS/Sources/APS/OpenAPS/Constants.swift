@@ -1,5 +1,6 @@
 extension OpenAPS {
     enum Bundle {
+        static let common = "bundle/common.js"
         static let iob = "bundle/iob.js"
         static let meal = "bundle/meal.js"
         static let autotunePrep = "bundle/autotune-prep.js"

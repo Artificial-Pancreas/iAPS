@@ -1,5 +1,5 @@
 
-function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = false, reservoir = null, clock = new Date()) {
+function generate(middleware, iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = false, reservoir = null, clock = new Date()) {
     var clock = new Date();
     var string = "";
     
