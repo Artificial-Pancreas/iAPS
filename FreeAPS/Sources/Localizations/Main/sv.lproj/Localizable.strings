@@ -2855,7 +2855,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Max mängd absorption av kolhydrater";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Mängd av maximala antal kolhydrater som vi antar kommer att absorberas över 4h om vi ännu inte ser 'carb absorption'.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Basalminuter för automatiska bolusar (SMB)";
