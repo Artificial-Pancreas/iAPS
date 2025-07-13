@@ -2856,7 +2856,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Remaining Carbs Cap" = "Resterende koolhydraten grens";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Dit is het maximale aantal koolhydraten waarvan we aannemen dat ze over een periode van 4 uur geabsorbeerd worden als we nog geen absorptie zien.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Max SMB basale minuten";
