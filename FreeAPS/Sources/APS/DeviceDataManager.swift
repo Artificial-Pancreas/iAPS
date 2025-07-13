@@ -4,8 +4,8 @@ import DanaKit
 import Foundation
 import LoopKit
 import LoopKitUI
-@preconcurrency import MinimedKit
 import MedtrumKit
+@preconcurrency import MinimedKit
 import MockKit
 import OmniBLE
 import OmniKit
