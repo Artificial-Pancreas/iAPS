@@ -2856,7 +2856,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Поглинання Вуглеводів, що залишилися";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Це значення максимальної кількості вуглеводів, яке імовірно буде поглинено через 4 години, якщо алгоритм не побачить поглинання вуглеводів.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Це значення максимальної кількості вуглеводів, яке імовірно буде поглинено через 4 години, якщо алгоритм не побачить поглинання вуглеводів.";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Максимум SMB Базальних Хвилин";
