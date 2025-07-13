@@ -47,6 +47,7 @@ class PatchPrimingViewModel: ObservableObject {
                 return
             }
 
+            isPriming = true
             primingError = ""
             pumpManager.primePatch { result in
                 if case let .failure(error) = result {
