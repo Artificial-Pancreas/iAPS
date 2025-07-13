@@ -60,3 +60,5 @@ files:
     translation: /FreeAPS/Sources/Localizations/WatchExtensionPlist/%osx_locale%.lproj/InfoPlist.strings
   - source: /Dependencies/G7SensorKit/en.lproj/Localizable.strings
     translation: /Dependencies/G7SensorKit/%osx_locale%.lproj/Localizable.strings
+  - source: /Settings.bundle/en.lproj/Root.strings
+    translation: /Settings.bundle/%osx_locale%.lproj/Root.strings

@@ -45,6 +45,9 @@ Please understand that iAPS is:
 
   * **Omnipod EROS**
   * **Omnipod DASH**
+  * **Dana:**
+      * Dana-I
+      * DanaRS (firmware 3 only)
   * **Medtronic:**
       * 515 or 715 (any firmware)
       * 522 or 722 (any firmware)

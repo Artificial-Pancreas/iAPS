@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Save Meal without bolus";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "设定时间";
+
+/* */
+"(standard units / hour)" = "(standard units / hour)";
 
 /*  */
 "starts at" = "开始于";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Display on Watch";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1169,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
@@ -1624,6 +1633,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "End the Override with next Meal";
 
+/* */
+"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+
+/* */
+"And when Glucose is higher than" = "And when Glucose is higher than";
+
+/* */
+"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+
+/* */
+"... than" = "... than";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profile";
 
@@ -1650,6 +1671,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Change CR";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "SMB Minutes";
@@ -1829,6 +1853,12 @@ Enact a temp Basal or a temp target */
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " without bolusing";
+
+/* */
+"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3083,7 +3113,22 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Display Ratio and a History View button";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Home View Ratio Button" = "Home View Ratio Button";
+
+/* UI/UX option */
+"Light" = "Light";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Auto";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
@@ -3159,3 +3204,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Cancel Override";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";

@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Inga blodsockerprognoser. Misslyckad loop.";
 
 /* Bolus View */
-"Missing Glucose" = "Blodsocker saknas";
+"New Glucose Missing" = "Nytt blodsocker saknas";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Spara måltid utan bolus";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Schema";
+
+/* */
+"(standard units / hour)" = "(standardenheter / timme)";
 
 /*  */
 "starts at" = "startar kl";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Visa på klocka";
+
+/* */
+"Display either Overrides or Temp Targets" = "Visa antingen knapp för profiler eller knapp för tillfälliga målvärden";
 
 /* */
 "Garmin Watch" = "Garmin - klocka";
@@ -1169,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temporär basaldos i enheter per timme";
 
+/* */
+"Cancel Temp" = "Avbryt temporär basal";
+
 
 
 /* */
@@ -1624,6 +1633,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Avsluta profilen med nästa måltid";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Avsluta profilen när blodsockret trendar uppåt";
+
+/* */
+"And when Glucose is higher than" = "Och när blodsockret är högre än";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Avsluta profilen när blodsockret är lägre ...";
+
+/* */
+"... than" = "... än";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profil";
 
@@ -1650,6 +1671,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Ändra CR";
+
+/* */
+"Change Basal" = "Ändra basal";
 
 /* */
 "SMB Minutes" = "SMB-minuter";
@@ -1829,6 +1853,12 @@ Enact a temp Basal or a temp target */
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " utan att ge insulin";
+
+/* */
+"Don't Use 15 min Trend" = "Använd inte 15 min - trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Justera inte för de senaste 15 minuternas glukostrend.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -2359,7 +2389,7 @@ Enact a temp Basal or a temp target */
 "WideFontTracking" = "Bred";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Lätt";
+"LightFontWeight" = "Ljus";
 
 /* Contact Image, settings, regular font weight */
 "RegularFontWeight" = "Reguljär";
@@ -3081,7 +3111,22 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Visa kvot och knapp för historikvisning";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Hemskärm Auto ISF";
+"Home View Ratio Button" = "Kvotknapp på hemvy";
+
+/* UI/UX option */
+"Light" = "Ljus";
+
+/* UI/UX option */
+"Dark" = "Mörk";
+
+/* UI/UX option */
+"Auto" = "Automatisk";
+
+/* UI/UX option */
+"Color Scheme" = "Färgschema";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Ljust / Mörkt";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
@@ -3157,3 +3202,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Avbryt Undantag";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "För att aktivera inställningar, gå till iOS instllningar, under Appar/iAPS";

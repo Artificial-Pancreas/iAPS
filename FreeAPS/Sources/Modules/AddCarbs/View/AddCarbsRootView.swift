@@ -20,9 +20,14 @@ extension AddCarbs {
 
         @FetchRequest(
             entity: Presets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate: NSPredicate(
-                format: "dish != %@", " " as String
+            sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate:
+            NSCompoundPredicate(
+                andPredicateWithSubpredicates: [
+                    NSPredicate(format: "dish != %@", " " as String),
+                    NSPredicate(format: "dish != %@", "Empty" as String)
+                ]
             )
+
         ) var carbPresets: FetchedResults<Presets>
 
         @Environment(\.managedObjectContext) var moc
@@ -237,6 +242,7 @@ extension AddCarbs {
                 }
             }
             .sheet(isPresented: $state.edit, content: { editView })
+            .environment(\.colorScheme, colorScheme)
         }
 
         private var editView: some View {
@@ -270,7 +276,7 @@ extension AddCarbs {
                         .tint(.white)
                         .disabled(disabled)
                 }
-            }
+            }.environment(\.colorScheme, colorScheme)
         }
 
         @ViewBuilder private func proteinAndFat() -> some View {

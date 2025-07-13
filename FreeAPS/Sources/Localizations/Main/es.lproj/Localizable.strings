@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Guardar comida sin bolo";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Programación";
+
+/* */
+"(standard units / hour)" = "(standard units / hour)";
 
 /*  */
 "starts at" = "desde las";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Mostrar en reloj";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Reloj Garmin";
@@ -1170,6 +1176,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
@@ -1635,6 +1644,18 @@ Ajustes predeterminados:\n
 /* */
 "End the Override with next Meal" = "End the Override with next Meal";
 
+/* */
+"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+
+/* */
+"And when Glucose is higher than" = "And when Glucose is higher than";
+
+/* */
+"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+
+/* */
+"... than" = "... than";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Perfil normal";
 
@@ -1661,6 +1682,9 @@ Ajustes predeterminados:\n
 
 /* */
 "Change CR" = "Cambiar Factor de Carbohidratos (CR)";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "Minutos de SMB";
@@ -1840,6 +1864,12 @@ Ajustes predeterminados:\n
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " sin bolo";
+
+/* */
+"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3198,7 +3228,22 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Display Ratio and a History View button" = "Display Ratio and a History View button";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Home View Ratio Button" = "Home View Ratio Button";
+
+/* UI/UX option */
+"Light" = "Suave";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Automático";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
@@ -3291,3 +3336,6 @@ Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o 
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Cancel Override";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";

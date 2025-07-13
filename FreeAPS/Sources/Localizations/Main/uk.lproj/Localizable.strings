@@ -17,13 +17,13 @@
 "Continue without bolus" = "Продовжити без болюсу";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Немає даних.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Немає прогнозів. Невдала пропозиція циклу.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"New Glucose Missing" = "Відсутня Нові показники Глюкози";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Зберегти Їжу без болюсу";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Розклад";
+
+/* */
+"(standard units / hour)" = "(стандартні одиниці/годину)";
 
 /*  */
 "starts at" = "Починається з";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Відображати на Годиннику";
+
+/* */
+"Display either Overrides or Temp Targets" = "Відображати або Перевизначення, або Тимчасові Цілі";
 
 /* */
 "Garmin Watch" = "GARMIN WATCH";
@@ -1169,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
 
+/* */
+"Cancel Temp" = "Скасувати тимчасове обмеження";
+
 
 
 /* */
@@ -1624,6 +1633,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Завершіть перевизначення наступним прийомом Їжі";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Завершіть перевизначення, коли рівень Глюкози має тенденцію до зростання";
+
+/* */
+"And when Glucose is higher than" = "А коли рівень глюкози вищий за";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Завершити перезапис, коли рівень глюкози знизиться ...";
+
+/* */
+"... than" = "... ніж";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Звичайний профіль";
 
@@ -1650,6 +1671,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Змінити CR";
+
+/* */
+"Change Basal" = "Зміна Базалу";
 
 /* */
 "SMB Minutes" = "Хвилини SMB";
@@ -1829,6 +1853,12 @@ Enact a temp Basal or a temp target */
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " без введення болюса помпою";
+
+/* */
+"Don't Use 15 min Trend" = "Не використовувати 15-хвилинний тренд";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Не коригувати на основі тренду глюкози протягом останніх 15 хвилин.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -2024,7 +2054,7 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 години";
 
 /* */
-"3 hours" = "3 hours";
+"3 hours" = "3 години";
 
 /* */
 "4 hours" = "4 години";
@@ -2033,7 +2063,7 @@ Enact a temp Basal or a temp target */
 "6 hours" = "6 годин";
 
 /* */
-"9 hours" = "9 hours";
+"9 hours" = "9 годин";
 
 /* */
 "12 hours" = "12 годин";
@@ -2993,7 +3023,7 @@ Enact a temp Basal or a temp target */
 "Extra Features" = "Додаткові функції";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "Налаштування UI/UX";
 
 /* UI/UX option */
 "Display Predictions" = "Показати передбачення";
@@ -3082,7 +3112,22 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Відображати Співвідношення та Кнопку перегляду історії";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Авто ISF на Головному екрані";
+"Home View Ratio Button" = "Кнопка співвідношення сторін головної сторінки";
+
+/* UI/UX option */
+"Light" = "Світлий";
+
+/* UI/UX option */
+"Dark" = "Темна";
+
+/* UI/UX option */
+"Auto" = "Авто";
+
+/* UI/UX option */
+"Color Scheme" = "Кольорова Схема";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Світло/Темний Режим";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
@@ -3158,3 +3203,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Скасувати перевизначення";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "Щоб увімкнути налаштування, перейдіть до розділу Програми в Налаштуваннях iPhone";

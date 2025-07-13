@@ -17,13 +17,13 @@
 "Continue without bolus" = "Pokračovať bez bolusu";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Žiadné údaje.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Žiadne predpovede. Neúspešný návrh slučky.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"New Glucose Missing" = "Chýba nová glykémia";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Uložiť jedlo bez bolusu";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Plán";
+
+/* */
+"(standard units / hour)" = "(predvolené jednotky / hodina)";
 
 /*  */
 "starts at" = "začína o";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Zobraziť na hodinkách";
+
+/* */
+"Display either Overrides or Temp Targets" = "Zobraziť tlačidlo upravenia profilu alebo dočasného cieľu";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1170,6 +1176,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Dočasné množstvo bazálu v U/h";
 
+/* */
+"Cancel Temp" = "Zrušiť dočasné";
+
 
 
 /* */
@@ -1625,6 +1634,18 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "End the Override with next Meal" = "Ukončiť upravenie pri nasledujúcom jedle";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Ukončiť profil, ak glykémia stúpa";
+
+/* */
+"And when Glucose is higher than" = "Ak je glykémia vyššia ako";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Ukončiť profil, ak je glykémia nižšia ...";
+
+/* */
+"... than" = "... ako";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
 
@@ -1651,6 +1672,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* */
 "Change CR" = "Zmena CR";
+
+/* */
+"Change Basal" = "Upraviť bazál";
 
 /* */
 "SMB Minutes" = "SMB minúty";
@@ -1830,6 +1854,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " pridanie bez použitia bolusu";
+
+/* */
+"Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Nezohľadňovať vývoj glykémie za posledných 15 minút.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -2638,7 +2668,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Final Ratio" = "Výsledný pomer";
 
 /* History of the adjustments */
-"Adjustments" = "Úpravy";
+"Adjustments" = "Výpočet";
 
 /* History of the adjustments */
 "Insulin" = "Inzulín";
@@ -3085,7 +3115,22 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Display Ratio and a History View button" = "Zobraziť tlačidlo s výsledným pomerom a históriou";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF domovská obrazovka";
+"Home View Ratio Button" = "Home View Ratio Button";
+
+/* UI/UX option */
+"Light" = "Tenké";
+
+/* UI/UX option */
+"Dark" = "Tmavý";
+
+/* UI/UX option */
+"Auto" = "Automatická ";
+
+/* UI/UX option */
+"Color Scheme" = "Farebný režim";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Svetlý / tmavý režim";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
@@ -3161,3 +3206,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Zrušiť profil";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "Na povolenie nastavení prejdite do sekcie Konfigurácia aplikácie v aplikácii Nastavenia iOS";

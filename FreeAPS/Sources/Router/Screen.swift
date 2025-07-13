@@ -103,7 +103,7 @@ extension Screen {
         case .statistics:
             Stat.RootView(resolver: resolver)
         case .statisticsConfig:
-            StatConfig.RootView(resolver: resolver)
+            UIUX.RootView(resolver: resolver)
         case .bolusCalculatorConfig:
             BolusCalculatorConfig.RootView(resolver: resolver)
         case .dynamicISF:
