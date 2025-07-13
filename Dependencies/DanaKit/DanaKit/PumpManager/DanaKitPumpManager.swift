@@ -715,13 +715,8 @@ extension DanaKitPumpManager: PumpManager {
     public func enactPrime(unit: Double, completion: @escaping (PumpManagerError?) -> Void) {
         isPriming = true
         enactBolus(units: unit, activationType: .manualNoRecommendation) { error in
-            if let error = error {
-                self.isPriming = false
-                completion(error)
-                return
-            }
-
-            completion(nil)
+            self.isPriming = false
+            completion(error)
         }
     }
 
