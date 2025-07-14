@@ -228,15 +228,9 @@ struct MainChartView: View {
                     overridesView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
                     if data.showInsulinActivity {
-                        legendPanel
-                            .frame(height: Config.activityChartTopGap)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
+                        legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                             .padding(.trailing, 20)
-                            .padding(
-                                .top,
-                                fullSize.height - Config.mainChartBottomPaddingWithActivity
-                            )
-
+                            .padding(.bottom, Config.bottomPadding + Config.legendBottomPadding + Config.activityChartHeight)
                     } else {
                         legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                             .padding(.trailing, 20)
