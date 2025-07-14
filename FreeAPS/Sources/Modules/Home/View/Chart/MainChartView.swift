@@ -344,7 +344,7 @@ struct MainChartView: View {
             let value = round(Double(range.maxValue) - Double(line) * valueStep) *
                 (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
 
-            return Text(glucoseFormatter.string(from: value as NSNumber) ?? "")
+            return Text(value == 0 ? "" : glucoseFormatter.string(from: value as NSNumber) ?? "")
                 .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
                 .font(.bolusDotFont)
                 .asAny()
