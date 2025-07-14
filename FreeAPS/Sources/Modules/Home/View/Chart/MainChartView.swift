@@ -108,6 +108,10 @@ struct MainChartView: View {
     @State private var activityChartMinMax: (Double, Double) = (0, 1)
     @State private var cobChartMinMax: (Double, Double) = (0, 1)
     @State private var maxCobInData: Decimal = 0.0
+    @State private var peakActivity_1unit: Double = 0.0
+    @State private var peakActivity_maxBolus: Double = 0.0
+    @State private var peakActivity_maxIOB: Double = 0.0
+    @State private var maxActivityInData: Decimal? = nil
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -301,13 +305,12 @@ struct MainChartView: View {
             }
 
             if data.showInsulinActivity {
-                ForEach([Decimal(0.0), Decimal(1.0), data.maxBolus], id: \.self) { bolus in
-                    let activity = maxInsulinActivity(forBolus: Double(bolus))
+                ForEach([0.0, peakActivity_1unit, peakActivity_maxBolus], id: \.self) { activity in
                     let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
                         path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                    }.stroke(Color.secondary, lineWidth: 0.15)
+                    }.stroke(Color.blue, lineWidth: 0.25)
                 }
             }
 
@@ -317,7 +320,7 @@ struct MainChartView: View {
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
                         path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                    }.stroke(Color.loopYellow, lineWidth: 0.15)
+                    }.stroke(Color.loopYellow, lineWidth: 0.25)
                 }
             }
 
@@ -364,8 +367,7 @@ struct MainChartView: View {
     }
 
     private func activityLabelsView(fullSize: CGSize) -> some View {
-        ForEach([Decimal(1.0), data.maxBolus], id: \.self) { bolus in
-            let activity = maxInsulinActivity(forBolus: Double(bolus))
+        ForEach([(Decimal(1.0), peakActivity_1unit), (data.maxBolus, peakActivity_maxBolus)], id: \.0) { bolus, activity in
             let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
 
             let value = bolus
@@ -388,7 +390,7 @@ struct MainChartView: View {
                 Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.bolusDotFont)
                 Text("g").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
             }.foregroundStyle(Color(.loopYellow).opacity(0.8))
-                .position(CGPoint(x: 12, y: yCoord))
+                .position(CGPoint(x: 16, y: yCoord))
                 .asAny()
         }
     }
@@ -945,6 +947,7 @@ struct MainChartView: View {
 
 extension MainChartView {
     private func update(fullSize: CGSize) {
+        calculatePeakActivities()
         calculateActivityChartMinMax()
         calculateCobChartMinMax()
         calculatePredictionDots(fullSize: fullSize, type: .iob)
@@ -965,6 +968,13 @@ extension MainChartView {
         calculateOverridesRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
         calculateSuspensions(fullSize: fullSize)
+    }
+
+    private func calculatePeakActivities() {
+        peakActivity_1unit = peakInsulinActivity(forBolus: 1.0)
+        peakActivity_maxBolus = peakInsulinActivity(forBolus: Double(data.maxBolus))
+        peakActivity_maxIOB = peakInsulinActivity(forBolus: Double(data.maxIOB))
+        maxActivityInData = data.activity.map { e in e.activity }.max()
     }
 
     private func calculateActivityDots(fullSize: CGSize) {
@@ -1654,16 +1664,15 @@ extension MainChartView {
     }
 
     private func calculateActivityChartMinMax() {
-        let maxActivityInData = data.activity.map { e in e.activity }.max()
-        let maxIOBPeakActivity = maxInsulinActivity(forBolus: Double(data.maxIOB) * 0.5)
-        let maxBolusPeakActivity = maxInsulinActivity(forBolus: Double(data.maxBolus) * 1.1)
+        let maxIOBPeakActivity = peakActivity_maxIOB * 0.5
+        let maxBolusPeakActivity = peakActivity_maxBolus * 1.1
         let maxValue = max(
             maxIOBPeakActivity,
             maxBolusPeakActivity,
             Double(maxActivityInData ?? Decimal(0))
         )
         activityChartMinMax = (
-            -maxInsulinActivity(forBolus: 1),
+            -peakActivity_1unit,
             maxValue
         )
     }
@@ -1679,7 +1688,7 @@ extension MainChartView {
 
     // function to calculate the maximum insulin activity for a given bolus size
     // used to scale the activity chart
-    private func maxInsulinActivity(forBolus: Double) -> Double {
+    private func peakInsulinActivity(forBolus: Double) -> Double {
         let peak = Double(data.insulinPeak)
         let dia = Double(data.insulinDIA)
         let end = dia * 60.0
