@@ -457,7 +457,6 @@ extension Home {
         private func setupCob() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                print("setup cob: \(self.iobData)")
                 self.data.cob = self.iobData
             }
         }
