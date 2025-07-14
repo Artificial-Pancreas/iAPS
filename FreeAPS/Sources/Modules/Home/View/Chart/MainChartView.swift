@@ -317,7 +317,7 @@ struct MainChartView: View {
                 }
             }
 
-            if data.showCobChart, self.cobDots.isNotEmpty, data.displayYgridLines {
+            if data.showCobChart, self.cobDots.isNotEmpty, data.displayYgridLines, maxCobInData > 0 {
                 ForEach([Decimal(0.0), self.maxCobInData], id: \.self) { cob in
                     let yCoord = cobToYCoordinate(cob, fullSize: fullSize)
                     Path { path in
@@ -385,7 +385,7 @@ struct MainChartView: View {
     }
 
     private func cobLabelsView(fullSize: CGSize) -> some View {
-        ForEach([maxCobInData], id: \.self) { cob in
+        ForEach([maxCobInData].filter { $0 > 0 }, id: \.self) { cob in
             let yCoord = cobToYCoordinate(cob, fullSize: fullSize)
             let value = cob
 
