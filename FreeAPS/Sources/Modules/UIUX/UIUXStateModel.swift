@@ -27,7 +27,8 @@ extension UIUX {
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
         @Published var lightMode: LightMode = .auto
-        @Published var showInsulinActivity: Bool = false
+        @Published var showInsulinActivity: Bool = true
+        @Published var showCobChart: Bool = true
 
         var units: GlucoseUnits = .mmolL
 
@@ -57,6 +58,7 @@ extension UIUX {
             subscribeSetting(\.profileButton, on: $profileButton) { profileButton = $0 }
             subscribeSetting(\.lightMode, on: $lightMode) { lightMode = $0 }
             subscribeSetting(\.showInsulinActivity, on: $showInsulinActivity) { showInsulinActivity = $0 }
+            subscribeSetting(\.showCobChart, on: $showCobChart) { showCobChart = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)

@@ -119,7 +119,8 @@ extension Home {
             screenHours: 6,
             fpus: true,
             fpuAmounts: false,
-            showInsulinActivity: true
+            showInsulinActivity: true,
+            showCobChart: true
         )
 
         override func subscribe() {
@@ -164,6 +165,7 @@ extension Home {
             data.displayYgridLines = settingsManager.settings.yGridLines
             data.thresholdLines = settingsManager.settings.rulerMarks
             data.showInsulinActivity = settingsManager.settings.showInsulinActivity
+            data.showCobChart = settingsManager.settings.showCobChart
             useTargetButton = settingsManager.settings.useTargetButton
             data.screenHours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
@@ -682,6 +684,7 @@ extension Home.StateModel:
         data.displayYgridLines = settingsManager.settings.yGridLines
         data.thresholdLines = settingsManager.settings.rulerMarks
         data.showInsulinActivity = settingsManager.settings.showInsulinActivity
+        data.showCobChart = settingsManager.settings.showCobChart
         useTargetButton = settingsManager.settings.useTargetButton
         data.screenHours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors

@@ -37,6 +37,7 @@ class ChartModel: ObservableObject {
     @Published var fpus: Bool
     @Published var fpuAmounts: Bool
     @Published var showInsulinActivity: Bool
+    @Published var showCobChart: Bool
 
     init(
         suggestion: Suggestion?,
@@ -74,7 +75,8 @@ class ChartModel: ObservableObject {
         screenHours: Int,
         fpus: Bool,
         fpuAmounts: Bool,
-        showInsulinActivity: Bool
+        showInsulinActivity: Bool,
+        showCobChart: Bool
     ) {
         self.suggestion = suggestion
         self.glucose = glucose
@@ -112,5 +114,6 @@ class ChartModel: ObservableObject {
         self.fpus = fpus
         self.fpuAmounts = fpuAmounts
         self.showInsulinActivity = showInsulinActivity
+        self.showCobChart = showCobChart
     }
 }
