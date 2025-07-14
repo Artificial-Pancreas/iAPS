@@ -65,7 +65,6 @@ extension Bolus {
         @Published var protein: Decimal = 0
         @Published var note: String = ""
         @Published var data = [InsulinRequired(agent: "Something", amount: 0)]
-        @Published var bolusIncrement: Decimal = 0.1
         @Published var eventualBG: Bool = false
         @Published var minimumPrediction: Bool = false
         @Published var closedLoop: Bool = false
@@ -74,8 +73,16 @@ extension Bolus {
         @Published var bolus: Decimal = 0
         @Published var carbToStore = [CarbsEntry]()
         @Published var history: [PumpHistoryEvent]?
+        @Published var disable15MinTrend: Bool = false
+        @Published var minBolus: Decimal = 0.05
 
+        var concentration: (concentration: Double, increment: Double) {
+            CoreDataStorage().insulinConcentration()
+        }
+
+        let bolusIncrement: Decimal = 0.05
         let loopReminder: CGFloat = 4
+        let oldGlucose: TimeInterval = -15
         let coreDataStorage = CoreDataStorage()
 
         private var loopFormatter: NumberFormatter {
@@ -99,9 +106,11 @@ extension Bolus {
             fattyMealFactor = settings.settings.fattyMealFactor
             eventualBG = settings.settings.eventualBG
             displayPredictions = settings.settings.displayPredictions
-            bolusIncrement = settings.preferences.bolusIncrement
             closedLoop = settings.settings.closedLoop
             loopDate = apsManager.lastLoopDate
+            disable15MinTrend = settings.settings.disable15MinTrend
+            minBolus = Decimal(apsManager.pumpManager?.supportedBolusVolumes.first ?? Double(bolusIncrement)) *
+                Decimal(concentration.concentration)
 
             if waitForSuggestionInitial {
                 if waitForCarbs {
@@ -132,14 +141,16 @@ extension Bolus {
 
         func getDeltaBG() {
             let glucose = provider.fetchGlucose()
-            guard let lastGlucose = glucose.first, glucose.count >= 4 else { return }
-            guard (lastGlucose.date ?? .distantPast).timeIntervalSinceNow > -7.minutes.timeInterval else {
+            guard let lastGlucose = glucose.first else { return }
+            guard (lastGlucose.date ?? .distantPast).timeIntervalSinceNow.minutes > oldGlucose else {
                 currentBG = 0
+                print("BG time ago: \((lastGlucose.date ?? .distantPast).timeIntervalSinceNow.minutes)")
                 return
             }
+            currentBG = Decimal(lastGlucose.glucose) * conversion
+            guard glucose.count >= 4 else { return }
             deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
                 (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
-            currentBG = Decimal(lastGlucose.glucose)
         }
 
         func calculateInsulin() -> Decimal {
@@ -151,20 +162,21 @@ extension Bolus {
                     // Use Oref0 predictions{
                     insulin = (evBG - target) / isf
                 } else { insulin = 0 }
-            } else if currentBG == 0, manualGlucose > 0 {
-                let targetDifference = manualGlucose - target
+            } else if manualGlucose > 0 {
+                let targetDifference = (units == .mmolL ? manualGlucose.asMmolL : manualGlucose) - target
                 targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
-                // print("Current BG: \(manualGlucose), Target: \(target), ISF: \(isf)")
-            } else if currentBG != 0 {
-                let targetDifference = currentBG - (units == .mmolL ? target.asMgdL : target)
-                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
-                // print("Current BG: \(currentBG), Target: \(target), ISF: \(units == .mmolL ? isf.asMgdL : isf)")
+            } else if currentBG > 0 {
+                let targetDifference = currentBG - target
+                print("BG: \(currentBG), target: \(target), isf: \(isf)")
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
             } else {
                 targetDifferenceInsulin = 0
+                print("BG: \(currentBG), target: \(target), isf: \(isf)")
             }
 
             // more or less insulin because of bg trend in the last 15 minutes
-            fifteenMinInsulin = isf == 0 ? 0 : (deltaBG * conversion) / isf
+            fifteenMinInsulin = (isf == 0 || disable15MinTrend) ? 0 : (deltaBG * conversion) / isf
+            print("fifteenMinInsulin isf: \(isf), deltaBG: \(deltaBG * conversion)")
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
             // If failed recent suggestion use recent carb entry
@@ -276,7 +288,6 @@ extension Bolus {
                     self.insulinRequired = suggestion.insulinReq ?? 0
                     self.evBG = Decimal(suggestion.eventualBG ?? 0) * conversion
                     self.iob = suggestion.iob ?? 0
-                    self.currentBG = (suggestion.bg ?? 0) * conversion
                     self.cob = suggestion.cob ?? 0
                 }
                 // Unwrap. We can't have NaN values.
@@ -286,6 +297,7 @@ extension Bolus {
                     self.target = target as Decimal
                     self.isf = isf as Decimal
                     self.carbRatio = carbRatio as Decimal
+
                     self.minPredBG = minPredBG as Decimal
                 }
 
@@ -354,7 +366,7 @@ extension Bolus {
         }
 
         func addManualGlucose() {
-            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
+            let glucose = manualGlucose
             let now = Date()
             let id = UUID().uuidString
 
@@ -375,18 +387,26 @@ extension Bolus {
 
         private func prepareData() {
             if !eventualBG {
-                var prepareData = [
+                var prepareData = !disable15MinTrend ? [
                     InsulinRequired(agent: NSLocalizedString("Carbs", comment: ""), amount: wholeCobInsulin),
                     InsulinRequired(agent: NSLocalizedString("IOB", comment: ""), amount: iobInsulinReduction),
                     InsulinRequired(agent: NSLocalizedString("Glucose", comment: ""), amount: targetDifferenceInsulin),
                     InsulinRequired(agent: NSLocalizedString("Trend", comment: ""), amount: fifteenMinInsulin),
                     InsulinRequired(agent: NSLocalizedString("Factors", comment: ""), amount: 0),
                     InsulinRequired(agent: NSLocalizedString("Amount", comment: ""), amount: insulinCalculated)
-                ]
+                ] :
+                    [
+                        InsulinRequired(agent: NSLocalizedString("Carbs", comment: ""), amount: wholeCobInsulin),
+                        InsulinRequired(agent: NSLocalizedString("IOB", comment: ""), amount: iobInsulinReduction),
+                        InsulinRequired(agent: NSLocalizedString("Glucose", comment: ""), amount: targetDifferenceInsulin),
+                        InsulinRequired(agent: NSLocalizedString("Factors", comment: ""), amount: 0),
+                        InsulinRequired(agent: NSLocalizedString("Amount", comment: ""), amount: insulinCalculated)
+                    ]
                 let total = prepareData.dropLast().map(\.amount).reduce(0, +)
                 if total > 0 {
                     let factor = -1 * (total - insulinCalculated)
-                    prepareData[4].amount = abs(factor) >= bolusIncrement ? factor : 0
+                    prepareData[!disable15MinTrend ? 4 : 3]
+                        .amount = abs(factor) >= minBolus ? factor : 0
                 }
                 data = prepareData
             }
@@ -403,7 +423,8 @@ extension Bolus {
 
         private func roundBolus(_ amount: Decimal) -> Decimal {
             // Account for increments (don't use the APSManager function as that gets too slow)
-            Decimal(round(Double(amount / bolusIncrement))) * bolusIncrement
+            let increment = minBolus
+            return Decimal(round(Double(amount / increment))) * increment
         }
 
         func setupBolusData() {
@@ -469,7 +490,7 @@ extension Bolus.StateModel: SuggestionObserver {
 
 extension Decimal {
     /// Account for increments
-    func roundBolus(increment: Double) -> Decimal {
+    func roundBolusIncrements(increment: Double) -> Decimal {
         Decimal(round(Double(self) / increment)) * Decimal(increment)
     }
 }

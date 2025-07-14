@@ -4,6 +4,7 @@ class ChartModel: ObservableObject {
     @Published var suggestion: Suggestion?
     @Published var glucose: [BloodGlucose]
     @Published var activity: [IOBTick0]
+    @Published var cob: [IOBData] // we already have IOBData in storage and it contains COB values
     @Published var isManual: [BloodGlucose]
     @Published var tempBasals: [PumpHistoryEvent]
     @Published var boluses: [PumpHistoryEvent]
@@ -30,16 +31,19 @@ class ChartModel: ObservableObject {
     @Published var maxBolus: Decimal
     @Published var maxBolusValue: Decimal
     @Published var maxIOB: Decimal
+    @Published var maxCOB: Decimal
     @Published var useInsulinBars: Bool
     @Published var screenHours: Int
     @Published var fpus: Bool
     @Published var fpuAmounts: Bool
     @Published var showInsulinActivity: Bool
+    @Published var showCobChart: Bool
 
     init(
         suggestion: Suggestion?,
         glucose: [BloodGlucose],
         activity: [IOBTick0],
+        cob: [IOBData],
         isManual: [BloodGlucose],
         tempBasals: [PumpHistoryEvent],
         boluses: [PumpHistoryEvent],
@@ -66,15 +70,18 @@ class ChartModel: ObservableObject {
         maxBolus: Decimal,
         maxBolusValue: Decimal,
         maxIOB: Decimal,
+        maxCOB: Decimal,
         useInsulinBars: Bool,
         screenHours: Int,
         fpus: Bool,
         fpuAmounts: Bool,
-        showInsulinActivity: Bool
+        showInsulinActivity: Bool,
+        showCobChart: Bool
     ) {
         self.suggestion = suggestion
         self.glucose = glucose
         self.activity = activity
+        self.cob = cob
         self.isManual = isManual
         self.tempBasals = tempBasals
         self.boluses = boluses
@@ -101,10 +108,12 @@ class ChartModel: ObservableObject {
         self.maxBolus = maxBolus
         self.maxBolusValue = maxBolusValue
         self.maxIOB = maxIOB
+        self.maxCOB = maxCOB
         self.useInsulinBars = useInsulinBars
         self.screenHours = screenHours
         self.fpus = fpus
         self.fpuAmounts = fpuAmounts
         self.showInsulinActivity = showInsulinActivity
+        self.showCobChart = showCobChart
     }
 }

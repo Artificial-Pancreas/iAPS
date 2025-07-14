@@ -68,7 +68,7 @@ extension Bolus {
                     }
                 }
 
-                if state.predictions == nil {
+                if state.predictions == nil || state.currentBG == 0 {
                     if state.currentBG == 0 {
                         Section {
                             HStack {
@@ -84,7 +84,7 @@ extension Bolus {
                             }.onChange(of: state.manualGlucose) {
                                 state.insulinCalculated = state.calculateInsulin()
                             }
-                        } header: { Text("Missing Glucose") }
+                        } header: { Text("New Glucose Missing") }
                     }
                 }
 
@@ -277,7 +277,8 @@ extension Bolus {
         }
 
         private var disabled: Bool {
-            state.amount <= 0 || state.amount > state.maxBolus
+            state.amount <= 0 || state.amount > state.maxBolus || state.amount <
+                state.minBolus || state.amount < state.bolusIncrement
         }
 
         var changed: Bool {
@@ -300,7 +301,6 @@ extension Bolus {
         private func illustrationView() -> some View {
             VStack {
                 IllustrationView(data: $state.data)
-
                 // Hide button
                 VStack {
                     Button { showInfo = false }

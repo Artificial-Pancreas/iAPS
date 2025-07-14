@@ -58,6 +58,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
+    var disable15MinTrend: Bool = false
     // Sounds
     var hypoSound: String = "Default"
     var hyperSound: String = "Default"
@@ -98,10 +99,13 @@ struct FreeAPSSettings: JSON, Equatable {
     var carbButton: Bool = true
     var profileButton: Bool = true
     var showInsulinActivity: Bool = true
+    var showCobChart: Bool = true
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
     var glucoseOverrideThresholdDown: Decimal = 100
+    // ColorScheme
+    var lightMode: LightMode = .light
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -266,6 +270,10 @@ extension FreeAPSSettings: Decodable {
             settings.carbsRequiredAlert = carbsRequiredAlert
         }
 
+        if let disable15MinTrend = try? container.decode(Bool.self, forKey: .disable15MinTrend) {
+            settings.disable15MinTrend = disable15MinTrend
+        }
+
         if let fattyMealFactor = try? container.decode(Decimal.self, forKey: .fattyMealFactor) {
             settings.fattyMealFactor = fattyMealFactor
         }
@@ -306,11 +314,19 @@ extension FreeAPSSettings: Decodable {
             settings.showInsulinActivity = showInsulinActivity
         }
 
+        if let showCobChart = try? container.decode(Bool.self, forKey: .showCobChart) {
+            settings.showCobChart = showCobChart
+        }
+
         if let addSourceInfoToGlucoseNotifications = try? container.decode(
             Bool.self,
             forKey: .addSourceInfoToGlucoseNotifications
         ) {
             settings.addSourceInfoToGlucoseNotifications = addSourceInfoToGlucoseNotifications
+        }
+
+        if let lightMode = try? container.decode(LightMode.self, forKey: .lightMode) {
+            settings.lightMode = lightMode
         }
 
         if let lowGlucose = try? container.decode(Decimal.self, forKey: .lowGlucose) {
@@ -654,4 +670,12 @@ extension FreeAPSSettings: Decodable {
 
         self = settings
     }
+}
+
+enum LightMode: String, JSON, Identifiable, CaseIterable {
+    case light = "Light"
+    case dark = "Dark"
+    case auto = "Auto"
+
+    var id: LightMode { self }
 }
