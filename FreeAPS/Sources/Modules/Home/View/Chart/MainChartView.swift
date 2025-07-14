@@ -38,7 +38,7 @@ struct MainChartView: View {
         static let topYPadding: CGFloat = 75
         static let bottomPadding: CGFloat = 20
         static let legendBottomPadding: CGFloat = 8 // without insulin activity: additional legend padding
-        static let activityChartHeight: CGFloat = 100
+        static let activityChartHeight: CGFloat = 80
         static let activityChartTopGap: CGFloat = 20 // gap between main chart and activity chart, with legend inside
         static let mainChartBottomPaddingWithActivity: CGFloat = Config.bottomPadding + Config.activityChartHeight + Config
             .activityChartTopGap
@@ -331,7 +331,7 @@ struct MainChartView: View {
                         ))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                }.fill(Color.blue).opacity(0.20)
+                }.fill(colorScheme == .light ? Color.gray.opacity(0.10) : Color(.systemGray6).opacity(0.6))
             }
         }
     }
@@ -361,9 +361,9 @@ struct MainChartView: View {
             return HStack(spacing: 2) {
                 Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.bolusDotFont)
                 Text("U").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
-            }
-            .position(CGPoint(x: fullSize.width - 12, y: yCoord))
-            .asAny()
+            }.foregroundStyle(Color(.insulin).opacity(0.8))
+                .position(CGPoint(x: fullSize.width - 12, y: yCoord))
+                .asAny()
         }
     }
 
