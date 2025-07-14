@@ -102,7 +102,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var glucoseOverrideThresholdActiveDown: Bool = false
     var glucoseOverrideThresholdDown: Decimal = 100
     // ColorScheme
-    var lightMode: LightMode = .light
+    var lightMode: LightMode = .auto
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
