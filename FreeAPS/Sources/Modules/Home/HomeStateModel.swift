@@ -87,6 +87,7 @@ extension Home {
             suggestion: nil,
             glucose: [],
             activity: [],
+            cob: [],
             isManual: [],
             tempBasals: [],
             boluses: [],
@@ -113,6 +114,7 @@ extension Home {
             maxBolus: 0,
             maxBolusValue: 1,
             maxIOB: 0,
+            maxCOB: 1,
             useInsulinBars: true,
             screenHours: 6,
             fpus: true,
@@ -137,6 +139,7 @@ extension Home {
             setupOverrideHistory()
             setupLoopStats()
             setupData()
+            setupCob()
 
             data.suggestion = provider.suggestion
             dynamicVariables = provider.dynamicVariables
@@ -172,6 +175,7 @@ extension Home {
 
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.maxIOB = settingsManager.preferences.maxIOB
+            data.maxCOB = settingsManager.preferences.maxCOB
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus
             data.fpuAmounts = settingsManager.settings.fpuAmounts
@@ -448,6 +452,14 @@ extension Home {
             }
         }
 
+        private func setupCob() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                print("setup cob: \(self.iobData)")
+                self.data.cob = self.iobData
+            }
+        }
+
         private func setupPumpSettings() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -652,6 +664,7 @@ extension Home.StateModel:
         setupLoopStats()
         setupData()
         setupActivity()
+        setupCob()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
