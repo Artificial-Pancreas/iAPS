@@ -107,6 +107,7 @@ struct MainChartView: View {
     @State private var cachedMaxBasalRate: Decimal?
     @State private var activityChartMinMax: (Double, Double) = (0, 1)
     @State private var cobChartMinMax: (Double, Double) = (0, 1)
+    @State private var maxCobInData: Decimal = 0.0
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -166,6 +167,9 @@ struct MainChartView: View {
                 glucoseLabelsView(fullSize: geo.size)
                 if data.showInsulinActivity {
                     activityLabelsView(fullSize: geo.size)
+                }
+                if data.showInsulinActivity, cobDots.isNotEmpty {
+                    cobLabelsView(fullSize: geo.size)
                 }
             }
             .onChange(of: hSizeClass) {
@@ -311,7 +315,20 @@ struct MainChartView: View {
                         path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
                     }.stroke(Color.secondary, lineWidth: 0.15)
                 }
+            }
 
+            if data.showInsulinActivity, self.cobDots.isNotEmpty {
+                ForEach([Decimal(0.0), self.maxCobInData], id: \.self) { cob in
+                    let yCoord = cobToYCoordinate(cob, fullSize: fullSize)
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: yCoord))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                    }.stroke(Color.loopYellow, lineWidth: 0.15)
+                }
+            }
+
+            // chart separator
+            if data.showInsulinActivity {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
                     path
@@ -321,6 +338,7 @@ struct MainChartView: View {
                         ))
                 }.stroke(Color.secondary, lineWidth: 0.40)
 
+                // background for COB/activity
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
                     path.addLine(to: CGPoint(x: fullSize.width, y: fullSize.height - Config.bottomPadding))
@@ -363,6 +381,20 @@ struct MainChartView: View {
                 Text("U").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
             }.foregroundStyle(Color(.insulin).opacity(0.8))
                 .position(CGPoint(x: fullSize.width - 12, y: yCoord))
+                .asAny()
+        }
+    }
+
+    private func cobLabelsView(fullSize: CGSize) -> some View {
+        ForEach([maxCobInData], id: \.self) { cob in
+            let yCoord = cobToYCoordinate(cob, fullSize: fullSize)
+            let value = cob
+
+            return HStack(spacing: 2) {
+                Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.bolusDotFont)
+                Text("g").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
+            }.foregroundStyle(Color(.loopYellow).opacity(0.8))
+                .position(CGPoint(x: 12, y: yCoord))
                 .asAny()
         }
     }
@@ -600,15 +632,6 @@ struct MainChartView: View {
 
     private func cobView(fullSize: CGSize) -> some View {
         ZStack {
-//            cobFillPath(fullSize: fullSize)
-//                .fill(Color.loopYellow.opacity(0.2))
-
-//            cobStrokePath()
-//                .stroke(
-//                    colorScheme == .dark ? Color.white.opacity(0.5) : Color.black.opacity(0.5),
-//                    style: StrokeStyle(lineWidth: 0.5)
-//                )
-
             cobStrokePath()
                 .stroke(
                     Color.loopYellow.opacity(0.5),
@@ -626,28 +649,23 @@ struct MainChartView: View {
         }
     }
 
-    private func cobFillPath(fullSize _: CGSize) -> Path {
-        Path { path in
-            guard cobDots.count >= 2 else { return }
-
-            path.move(to: cobDots.first! /* CGPoint(x: cobDots[0].x, y: zeroY) */ )
-
-            for point in cobDots.dropFirst() {
-                path.addLine(to: point)
-            }
-
-//            let lastPoint = cobDots.last!
-//            path.addLine(to: CGPoint(x: lastPoint.x, y: zeroY))
-//            path.closeSubpath()
-        }
-    }
-
     private func cobStrokePath() -> Path {
         Path { path in
-            guard cobDots.count >= 2 else { return }
-            path.move(to: cobDots[0])
-            for point in cobDots.dropFirst() {
-                path.addLine(to: point)
+            var isDrawing = false
+
+            for (point, cob) in zip(cobDots, data.cob).reversed() {
+                if cob.cob > 0 {
+                    if !isDrawing {
+                        path.move(to: point)
+                        isDrawing = true
+                    }
+                    path.addLine(to: point)
+                } else {
+                    if isDrawing {
+                        path.addLine(to: point)
+                        isDrawing = false
+                    }
+                }
             }
         }
     }
@@ -1658,6 +1676,7 @@ extension MainChartView {
 
     private func calculateCobChartMinMax() {
         let maxValue = data.maxCOB * 1.1
+        maxCobInData = data.cob.map { e in e.cob }.max() ?? 0.0
         cobChartMinMax = (
             0.0,
             Double(maxValue)
