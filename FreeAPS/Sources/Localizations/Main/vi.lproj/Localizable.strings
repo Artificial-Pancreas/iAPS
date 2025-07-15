@@ -2855,7 +2855,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Lượng carb còn lại";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Đây là lượng carbs tối đa mà hệ thống sẽ giả định sẽ được hấp thụ trong vòng 4 giờ nếu chưa phát hiện thấy sự hấp thụ carb. Tối đa là 90g";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Giới hạn liều nền qua SMB";
