@@ -1177,7 +1177,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Temp basal Amount in U/h" = "Tijdelijk basaal hoeveelheid in E/uur";
 
 /* */
-"Cancel Temp" = "Cancel Temp";
+"Cancel Temp" = "Annuleer tijdelijk doel";
 
 
 
@@ -2856,7 +2856,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Remaining Carbs Cap" = "Resterende koolhydraten grens";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Dit is het maximale aantal koolhydraten waarvan we aannemen dat ze over een periode van 4 uur geabsorbeerd worden als we nog geen absorptie zien.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Dit is het maximale aantal koolhydraten waarvan we aannemen dat het binnen 4 uur opgenomen zal worden, als er nog geen opname zichtbaar is. Maximum is 90 gram resterend.";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Max SMB basale minuten";
@@ -3116,7 +3116,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Ratio and a History View button" = "Weergave ratio en een weergave knop geschiedenis";
 
 /* UI/UX option */
-"Home View Ratio Button" = "Home View Ratio Button";
+"Home View Ratio Button" = "Home-weergave ratio knop";
 
 /* UI/UX option */
 "Light" = "Licht";

@@ -2856,7 +2856,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Verbleibende Kohlenhydrat-Kappung";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Dies ist die maximale Anzahl der geschätzten abgebauten Kohlenhydrate in 4 Stunden, wenn keine Kohlenhydrat-Resorption ersichtlich ist.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Max. SMB Basal Minuten";
