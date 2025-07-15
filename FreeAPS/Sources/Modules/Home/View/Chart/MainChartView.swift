@@ -313,7 +313,7 @@ struct MainChartView: View {
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
                         path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                    }.stroke(Color.blue, lineWidth: 0.25)
+                    }.stroke(useColour, lineWidth: 0.25)
                 }
             }
 
@@ -323,7 +323,7 @@ struct MainChartView: View {
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
                         path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                    }.stroke(Color.loopYellow, lineWidth: 0.25)
+                    }.stroke(useColour, lineWidth: 0.25)
                 }
             }
 
