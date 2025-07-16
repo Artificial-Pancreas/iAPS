@@ -52,7 +52,7 @@ class PatchPrimingViewModel: ObservableObject {
             pumpManager.primePatch { result in
                 if case let .failure(error) = result {
                     DispatchQueue.main.async {
-                        self.primingError = error.localizedDescription
+                        self.primingError = error.errorDescription ?? "EMPTY"
                         self.isPriming = false
                     }
                     return

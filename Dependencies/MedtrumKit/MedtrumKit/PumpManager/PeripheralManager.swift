@@ -53,6 +53,9 @@ class PeripheralManager: NSObject {
 
             let packages = packet.encode(sequenceNumber: self.writeSequence)
             self.writeSequence = UInt8(self.writeSequence + 1)
+            if self.writeSequence >= 254 {
+                self.writeSequence = 0
+            }
 
             for package in packages {
                 self.log.debug("Writing data: \(package.hexEncodedString())")
