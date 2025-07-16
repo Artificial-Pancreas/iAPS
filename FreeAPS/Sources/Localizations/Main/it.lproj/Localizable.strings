@@ -3103,12 +3103,6 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display carb equivalent amount" = "Mostra i carboidrati equivalenti";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Mostra Il Tempo Rimanente Del Sensore";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Visualizza l'età del sensore, ma non il tempo rimanente";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Mostra il rapporto e la visualizza lo storico dati";
 
 /* UI/UX option */
