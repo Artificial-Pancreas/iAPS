@@ -144,7 +144,7 @@ struct CurrentGlucoseView: View {
                 let sensorAge: TimeInterval = (-1 * date.timeIntervalSinceNow)
                 let expiration = sensordays - sensorAge
                 let secondsOfDay = 8.64E4
-                let colour: Color = colorScheme == .light ? .secondary : Color.black
+                let colour = Color.black
                 let lineColour: Color = sensorAge >= sensordays - secondsOfDay * 1 ? Color.red
                     .opacity(0.9) : sensorAge >= sensordays - secondsOfDay * 2 ? Color
                     .orange : Color.white
@@ -159,7 +159,7 @@ struct CurrentGlucoseView: View {
                                     .replacingOccurrences(of: ",", with: " ") :
                                     (remainingTimeFormatter.string(from: sensorAge) ?? "")
                                     .replacingOccurrences(of: ",", with: " ")
-                            ).foregroundStyle(colour)
+                            ).foregroundStyle(colour).fontWeight(colorScheme == .dark ? .semibold : .regular)
                         }
                     }
             }
