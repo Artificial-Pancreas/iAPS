@@ -103,7 +103,6 @@
   "extendHomeView": true,
   "extended_overrides": false,
   "displayExpiration": false,
-  "anubis": false,
   "fpus": true,
   "fpuAmounts": false
 }

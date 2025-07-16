@@ -5,8 +5,8 @@ import Swinject
 import UIKit
 
 protocol FetchGlucoseManager: SourceInfoProvider {
-    func updateGlucoseStore(newBloodGlucose: [BloodGlucose])
-    func refreshCGM()
+    func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) async
+    func refreshCGM() async
     func updateGlucoseSource()
     var glucoseSource: GlucoseSource! { get }
     var cgmGlucoseSourceType: CGMType? { get set }

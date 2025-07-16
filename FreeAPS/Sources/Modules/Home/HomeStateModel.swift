@@ -78,7 +78,6 @@ extension Home {
         @Published var displayExpiration = false
         @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
-        @Published var anubis: Bool = false
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
 
@@ -172,8 +171,17 @@ extension Home {
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
             cgm = settingsManager.settings.cgm
-            sensorDays = settingsManager.settings.sensorDays
-            anubis = settingsManager.settings.anubis
+
+            sensorDays = switch settingsManager.settings.cgm {
+            case .nightscout: CGMType.nightscout.expiration
+            case .dexcomG5: CGMType.dexcomG5.expiration
+            case .dexcomG6: CGMType.dexcomG6.expiration
+            case .dexcomG7: CGMType.dexcomG7.expiration
+            case .libreTransmitter: CGMType.libreTransmitter.expiration
+            case .enlite: CGMType.enlite.expiration
+            default: settingsManager.settings.sensorDays
+            }
+
             carbButton = settingsManager.settings.carbButton
             profileButton = settingsManager.settings.profileButton
 
@@ -666,10 +674,18 @@ extension Home.StateModel:
         hours = settingsManager.settings.hours
         displayExpiration = settingsManager.settings.displayExpiration
         cgm = settingsManager.settings.cgm
-        sensorDays = settingsManager.settings.sensorDays
-        anubis = settingsManager.settings.anubis
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton
+        sensorDays = switch settingsManager.settings.cgm {
+        case .nightscout: CGMType.nightscout.expiration
+        case .dexcomG5: CGMType.dexcomG5.expiration
+        case .dexcomG6: CGMType.dexcomG6.expiration
+        case .dexcomG7: CGMType.dexcomG7.expiration
+        case .libreTransmitter: CGMType.libreTransmitter.expiration
+        case .enlite: CGMType.enlite.expiration
+        default: settingsManager.settings.sensorDays
+        }
+
         setupGlucose()
         setupOverrideHistory()
         setupData()
