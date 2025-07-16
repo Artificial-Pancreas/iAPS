@@ -3104,12 +3104,6 @@ Enact a temp Basal or a temp target */
 "Display carb equivalent amount" = "Display carb equivalent amount";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Display Ratio and a History View button";
 
 /* UI/UX option */

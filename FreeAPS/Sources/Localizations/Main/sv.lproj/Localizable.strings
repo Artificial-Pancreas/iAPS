@@ -3102,12 +3102,6 @@ Enact a temp Basal or a temp target */
 "Display carb equivalent amount" = "Visa kolhydratekvivalentmängd";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Visa återstående tid för sensor";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Visa sensorålder, men inte tid kvar";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Visa kvot och knapp för historikvisning";
 
 /* UI/UX option */

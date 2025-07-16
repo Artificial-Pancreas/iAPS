@@ -3106,12 +3106,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Display carb equivalent amount" = "Zobraziť ekvivalentné množstvo sacharidov";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Zobraziť vek senzora, ale nie zostávajúci čas";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Zobraziť tlačidlo s výsledným pomerom a históriou";
 
 /* UI/UX option */
