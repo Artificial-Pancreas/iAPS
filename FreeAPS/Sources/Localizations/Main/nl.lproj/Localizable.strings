@@ -3107,12 +3107,6 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display carb equivalent amount" = "Toon hoeveelheid koolhydraten in gram";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Resterende sensortijd weergeven";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Sensor leeftijd weergeven, maar geen resterende tijd";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Weergave ratio en een weergave knop geschiedenis";
 
 /* UI/UX option */
