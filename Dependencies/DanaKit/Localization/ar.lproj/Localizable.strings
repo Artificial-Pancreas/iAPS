@@ -1,5 +1,5 @@
 /* Generic loading text */
-"loading" = "التحميل";
+"loading" = "جاري التحميل";
 
 /* Generic Continue text */
 "Continue" = "تابع";
@@ -17,13 +17,13 @@
 "DanaRS-v3" = "DanaRS-v3";
 
 /* dana-i option text for DanaKitSetupView */
-"Dana-i" = "دانا-أنا";
+"Dana-i" = "Dana-i";
 
 /* Title for danars v1 explaination */
 "Setting up DanaRS v1" = "إعداد DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "أثناء عملية الإقران، ستظهر رسالة تأكيد على جهاز DanaRS v1 الخاص بك، في حين سيظهر على جهاز iPhone الخاص بك مربع لإدخال رمز الإقران. على مضخة الإنسولين، اضغط على \"موافق\" ثم أدخل الرمز المعروض في جهاز iPhone. بعد ذلك، يصبح %1$@ جاهزًا للتواصل مع جهاز DanaRS v1 الخاص بك";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "قبل البدء بعملية الاقتران، يوصى بالتحقق من كلمة مرور المضخة وتحديثها إذا لزم الأمر. يمكنك القيام بذلك من خلال الانتقال إلى إعدادات المضخة -> إعدادات المستخدم -> كلمة المرور. كلمة المرور الافتراضية هي 1234، إذا كانت هذه هي كلمة المرور الخاصة بك، يُرجى التفكير في تغييرها";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "إعداد DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "أثناء عملية الإقران، ستظهر رسالة تأكيد على جهاز DanaRS v3 الخاص بك، بينما سيظهر على جهاز iPhone الخاص بك مربع لإدخال رمزَي إقران. على المضخة، اضغط على \"موافق\"، ثم أدخل الرمزين في جهاز iPhone. بعد ذلك، يصبح %1$@ جاهزًا للتواصل مع جهاز DanaRS v3 الخاص بك";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "إعداد دانا-i";
@@ -197,7 +197,7 @@
 "Insulin Delivery" = "توصيل الأنسولين";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "الإنسولين\nموقف مؤقتاً";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Unknown";
@@ -581,7 +581,7 @@
 "Failed to prime the tube. Please try again later" = "فشل تحضير الأنبوب. يرجى المحاولة مرة أخرى لاحقاً";
 
 /* Battery age */
-"Battery age" = "Battery age";
+"Battery age" = "عمر البطارية";
 
 /* advertise contact DanaRS v1 */
-"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!";
+"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "ملاحظة: جهاز DanaRS v1 غير مدعوم (حالياً). إذا كان لديك مضخة DanaRS v1 متوفرة للاختبار، يُرجى التواصل مع Bastiaan Verhaar!";
