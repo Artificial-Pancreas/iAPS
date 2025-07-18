@@ -63,10 +63,10 @@
 "Communication issue: Unacknowledged command pending." = "مشكلة إتصال: أمر غير معترف به معلق.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "ستصدر تذكيرات التأكيد عند تنفيذ الأوامر التي تبدأها بنفسك، مثل إعطاء البلعة، أو إلغاء البلعة، أو الإيقاف المؤقت، أو الاستئناف، أو حفظ تذكيرات الإشعارات، وغيرها. أما عند قيام التطبيق بضبط الجرعات تلقائيًا، فلن يتم استخدام تذكيرات التأكيد.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "ستصدر تذكيرات التأكيد عند قيام التطبيق بضبط الجرعات تلقائيًا، وكذلك عند تنفيذ الأوامر التي تبدأها بنفسك.";
 
 /* The title for AlarmCode.other notification */
 "Critical Pod Error" = "خطأ حرج في البود";
