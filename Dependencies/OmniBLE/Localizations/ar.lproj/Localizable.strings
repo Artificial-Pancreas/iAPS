@@ -580,7 +580,7 @@
 "Unknown Characteristic" = "خاصية غير معروفة";
 
 /* Error message description for PeripheralManagerError.nack */
-"Nack" = "Nack";
+"Nack" = "إشارة رفض";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "تذكيرات البود";
@@ -601,7 +601,7 @@
 "Critical Alerts" = "تنبيهات هامة";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "لن تصدر التذكيرات المذكورة أعلاه صوتاً إذا كان جهازك في وضع الصامت أو عدم الإزعاج.\n\nومع ذلك، هناك تنبيهات وإنذارات حرجة خاصة بالبود ستصدر صوتاً حتى لو كان جهازك في وضع الصامت أو عدم الإزعاج.";
 /* navigation title for notification settings */
 "Notification Settings" = "إعدادات الإشعارات";
 
@@ -632,10 +632,10 @@
 "No confidence reminders are used." = "No confidence reminders are used.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "ستصدر تذكيرات التأكيد عند تنفيذ الأوامر التي تبدأها بنفسك، مثل إعطاء البلعة، أو إلغاء البلعة، أو الإيقاف المؤقت، أو الاستئناف، أو حفظ تذكيرات الإشعارات، وغيرها. أما عند قيام التطبيق بضبط الجرعات تلقائيًا، فلن يتم استخدام تذكيرات التأكيد.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "ستصدر تذكيرات التأكيد عند قيام التطبيق بضبط الجرعات تلقائيًا، وكذلك عند تنفيذ الأوامر التي تبدأها بنفسك.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "معدّل";
@@ -647,7 +647,7 @@
 "%1$@ for %2$@" = "%1$@ for %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "لن يقوم تطبيق Loop بضبط توصيل الإنسولين تلقائيًا حتى تنتهي الجرعة القاعدية المؤقتة أو يتم إلغاؤها.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Set Temporary Basal";
 
@@ -676,7 +676,7 @@
 "Previous Pod Information" = "Previous Pod Information";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
-"No\nDelivery" = "No\nDelivery";
+"No\nDelivery" = "لا يوجد\nتسليم";
 
 /* description label for active time pod details row */
 "Active Time" = "Active Time";
@@ -685,7 +685,7 @@
 "Total Delivery" = "Total Delivery";
 
 /* description label for device name pod details row */
-"Device Name" = "Device Name";
+"Device Name" = "اسم الجهاز";
 
 /* description label for lot number pod details row */
 "Lot Number" = "Lot Number";
