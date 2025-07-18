@@ -361,7 +361,7 @@
 "Last Status" = "Last Status";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "لن يقوم تطبيق Loop بضبط توصيل الإنسولين تلقائيًا حتى تنتهي الجرعة القاعدية المؤقتة أو يتم إلغاؤها.";
 
 /* The title of the cell showing the pod lot id */
 "Lot" = "Lot";
@@ -402,7 +402,7 @@
 "No" = "لا";
 
 /* Text shown in insulin remaining space when no pod is paired */
-"No\nDelivery" = "No\nDelivery";
+"No\nDelivery" = "لا يوجد\nتسليم";
 
 /* Error message for reservoir view when reservoir empty */
 "No Insulin" = "لا يوجد إنسولين";
