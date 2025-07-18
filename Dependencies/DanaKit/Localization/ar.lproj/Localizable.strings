@@ -197,7 +197,7 @@
 "Insulin Delivery" = "توصيل الأنسولين";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "الإنسولين\nموقف مؤقتاً";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Unknown";
