@@ -3088,6 +3088,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display Sensor Age" = "Visualizza Età Sensore";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Nascondi Badge Concentrazione";
 
 /* UI/UX option */

@@ -3087,6 +3087,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Отображать возраст датчика";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Скрыть значок концентрации";
 
 /* UI/UX option */

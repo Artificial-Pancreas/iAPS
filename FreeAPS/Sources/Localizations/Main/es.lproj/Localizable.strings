@@ -3204,6 +3204,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Display Sensor Age" = "Display Sensor Age";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Hide Concentration Badge";
 
 /* UI/UX option */
