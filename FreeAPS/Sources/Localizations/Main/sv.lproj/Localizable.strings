@@ -3087,6 +3087,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Visa sensorålder";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Visa återstående tid för sensor";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Dölj koncentrationsmärke";
 
 /* UI/UX option */
