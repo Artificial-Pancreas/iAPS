@@ -109,7 +109,7 @@ extension Home {
                 highGlucose: $state.data.highGlucose,
                 alwaysUseColors: $state.alwaysUseColors,
                 displayDelta: $state.displayDelta,
-                scrolling: $displayGlucose,
+                scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
                 displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays
             )
             .onTapGesture {
@@ -778,6 +778,7 @@ extension Home {
                                 // Loops Chart
                                 loopPreview.padding(.vertical, 15)
 
+                                // COB Chart
                                 if state.carbData > 0 {
                                     activeCOBView
                                 }

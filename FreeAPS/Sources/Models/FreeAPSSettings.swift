@@ -91,11 +91,14 @@ struct FreeAPSSettings: JSON, Equatable {
     var extended_overrides = false
     var extendHomeView = true
     var displayExpiration = false
+    var displaySAGE = true
     var sensorDays: Double = 10
     var fpus: Bool = true
     var fpuAmounts: Bool = false
     var carbButton: Bool = true
     var profileButton: Bool = true
+    var showInsulinActivity: Bool = true
+    var showCobChart: Bool = true
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
@@ -300,6 +303,14 @@ extension FreeAPSSettings: Decodable {
 
         if let profileButton = try? container.decode(Bool.self, forKey: .profileButton) {
             settings.profileButton = profileButton
+        }
+
+        if let showInsulinActivity = try? container.decode(Bool.self, forKey: .showInsulinActivity) {
+            settings.showInsulinActivity = showInsulinActivity
+        }
+
+        if let showCobChart = try? container.decode(Bool.self, forKey: .showCobChart) {
+            settings.showCobChart = showCobChart
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(
@@ -519,6 +530,10 @@ extension FreeAPSSettings: Decodable {
 
         if let displayExpiration = try? container.decode(Bool.self, forKey: .displayExpiration) {
             settings.displayExpiration = displayExpiration
+        }
+
+        if let displaySAGE = try? container.decode(Bool.self, forKey: .displaySAGE) {
+            settings.displaySAGE = displaySAGE
         }
         // AutoISF
         if let autoisf = try? container.decode(Bool.self, forKey: .autoisf) {
