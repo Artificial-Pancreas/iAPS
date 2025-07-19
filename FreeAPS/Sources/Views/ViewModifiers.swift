@@ -186,7 +186,7 @@ struct Sage: View {
                                     location: fill
                                 ),
                                 Gradient.Stop(
-                                    color: colorScheme == .light ? Color.white : Color.white.opacity(0.8),
+                                    color: colorScheme == .light ? Color.white : Color.white.opacity(0.9),
                                     location: fill
                                 )
                             ]),
