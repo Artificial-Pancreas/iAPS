@@ -59,7 +59,7 @@ struct GlucoseData: Identifiable {
     let id = UUID()
 }
 
-struct IOBData: Identifiable, Equatable {
+struct IOBData: Identifiable {
     var date: Date
     var iob: Decimal
     var cob: Decimal

@@ -778,7 +778,6 @@ extension Home {
                                 // Loops Chart
                                 loopPreview.padding(.vertical, 15)
 
-                                // COB Chart
                                 if state.carbData > 0 {
                                     activeCOBView
                                 }
