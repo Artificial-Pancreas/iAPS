@@ -4,7 +4,6 @@ import Foundation
 import JavaScriptCore
 
 final class OpenAPS {
-    private let jsWorker = JavaScriptWorker()
     private let scriptExecutor: WebViewScriptExecutor
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
     private let storage: FileStorage
@@ -1153,17 +1152,6 @@ final class OpenAPS {
                 temptargets
             ]
         )
-    }
-
-    private func exportDefaultPreferences() -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-
-        jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Bundle.profile))
-            worker.evaluate(script: Script(name: Prepare.profile))
-            return worker.call(function: Function.exportDefaults, with: [])
-        }
     }
 
     private func makeProfile(
