@@ -3092,6 +3092,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Sensor Age" = "Sensor leeftijd tonen";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Verberg concentratie badge";
 
 /* UI/UX option */
