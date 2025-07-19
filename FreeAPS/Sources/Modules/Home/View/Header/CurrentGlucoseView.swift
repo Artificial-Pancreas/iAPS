@@ -10,6 +10,7 @@ struct CurrentGlucoseView: View {
     @Binding var alwaysUseColors: Bool
     @Binding var displayDelta: Bool
     @Binding var scrolling: Bool
+    @Binding var displaySAGE: Bool
     @Binding var displayExpiration: Bool
     @Binding var cgm: CGMType
     @Binding var sensordays: Double
@@ -96,7 +97,7 @@ struct CurrentGlucoseView: View {
             if let recent = recentGlucose {
                 if displayDelta, !scrolling, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
-                if displayExpiration {
+                if displayExpiration || displaySAGE {
                     sageView
                 }
                 VStack(spacing: 15) {
@@ -155,9 +156,9 @@ struct CurrentGlucoseView: View {
                         HStack {
                             Text(
                                 sensorAge >= 1 * 8.64E4 ?
-                                    (remainingTimeFormatterDays.string(from: sensorAge) ?? "")
+                                    (remainingTimeFormatterDays.string(from: displayExpiration ? sensorAge : expiration) ?? "")
                                     .replacingOccurrences(of: ",", with: " ") :
-                                    (remainingTimeFormatter.string(from: sensorAge) ?? "")
+                                    (remainingTimeFormatter.string(from: displayExpiration ? sensorAge : expiration) ?? "")
                                     .replacingOccurrences(of: ",", with: " ")
                             ).foregroundStyle(colour).fontWeight(colorScheme == .dark ? .semibold : .regular)
                         }
