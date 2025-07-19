@@ -3091,6 +3091,9 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Display Sensor Age" = "Zobraziť vek senzora";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Skryť informáciu o koncentrácií";
 
 /* UI/UX option */
