@@ -76,6 +76,7 @@ extension Home {
         @Published var maxCOB: Decimal = 0
         @Published var autoisf = false
         @Published var displayExpiration = false
+        @Published var displaySAGE = true
         @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
         @Published var carbButton: Bool = true
@@ -170,6 +171,7 @@ extension Home {
             autoisf = settingsManager.settings.autoisf
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
+            displaySAGE = settingsManager.settings.displaySAGE
             cgm = settingsManager.settings.cgm
 
             sensorDays = switch settingsManager.settings.cgm {
@@ -673,6 +675,7 @@ extension Home.StateModel:
         autoisf = settingsManager.settings.autoisf
         hours = settingsManager.settings.hours
         displayExpiration = settingsManager.settings.displayExpiration
+        displaySAGE = settingsManager.settings.displaySAGE
         cgm = settingsManager.settings.cgm
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton

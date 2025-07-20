@@ -103,6 +103,7 @@
   "extendHomeView": true,
   "extended_overrides": false,
   "displayExpiration": false,
+  "displaySAGE": true,
   "fpus": true,
   "fpuAmounts": false
 }

@@ -21,6 +21,7 @@ extension UIUX {
         @Published var hideInsulinBadge: Bool = false
         @Published var extendHomeView: Bool = true
         @Published var displayExpiration: Bool = false
+        @Published var displaySAGE: Bool = true
         @Published var fpus: Bool = true
         @Published var fpuAmounts: Bool = false
         @Published var carbButton: Bool = true
@@ -48,6 +49,7 @@ extension UIUX {
             subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { hideInsulinBadge = $0 }
             subscribeSetting(\.extendHomeView, on: $extendHomeView) { extendHomeView = $0 }
             subscribeSetting(\.displayExpiration, on: $displayExpiration) { displayExpiration = $0 }
+            subscribeSetting(\.displaySAGE, on: $displaySAGE) { displaySAGE = $0 }
             subscribeSetting(\.fpus, on: $fpus) { fpus = $0 }
             subscribeSetting(\.fpuAmounts, on: $fpuAmounts) { fpuAmounts = $0 }
             subscribeSetting(\.carbButton, on: $carbButton) { carbButton = $0 }

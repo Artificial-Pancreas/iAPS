@@ -91,6 +91,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var extended_overrides = false
     var extendHomeView = true
     var displayExpiration = false
+    var displaySAGE = true
     var sensorDays: Double = 10
     var fpus: Bool = true
     var fpuAmounts: Bool = false
@@ -519,6 +520,10 @@ extension FreeAPSSettings: Decodable {
 
         if let displayExpiration = try? container.decode(Bool.self, forKey: .displayExpiration) {
             settings.displayExpiration = displayExpiration
+        }
+
+        if let displaySAGE = try? container.decode(Bool.self, forKey: .displaySAGE) {
+            settings.displaySAGE = displaySAGE
         }
         // AutoISF
         if let autoisf = try? container.decode(Bool.self, forKey: .autoisf) {
