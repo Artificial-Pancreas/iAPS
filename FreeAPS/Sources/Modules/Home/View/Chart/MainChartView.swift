@@ -1764,42 +1764,6 @@ extension MainChartView {
         )
     }
 
-    // Inverse function to calculate the bolus size needed for a desired peak activity
-    // TODO: not tested
-    private func bolusForPeakActivity(desiredActivity: Double) -> Double {
-        let peak = Double(data.insulinPeak)
-        let dia = Double(data.insulinDIA)
-        let end = dia * 60.0
-
-        // Calculate tau (same as original function)
-        let peakOverEnd = peak / end
-        let tauNumerator = peak * (1.0 - peakOverEnd)
-        let tauDenominator = 1.0 - 2.0 * peakOverEnd
-        guard tauDenominator != 0 else {
-            return 0.0
-        }
-        let tau = tauNumerator / tauDenominator
-
-        // Calculate a (same as original function)
-        let a = 2.0 * tau / end
-
-        // Calculate S (same as original function)
-        let expNegEndOverTau = exp(-end / tau)
-        let S = 1.0 / (1.0 - a + (1.0 + a) * expNegEndOverTau)
-
-        // Calculate the scaling factor at peak time
-        let t = peak
-        let scalingFactor = (S / pow(tau, 2)) * t * (1.0 - t / end) * exp(-t / tau)
-
-        // Guard against division by zero
-        guard scalingFactor != 0 else {
-            return 0.0
-        }
-
-        // Since activity = forBolus * scalingFactor, then forBolus = activity / scalingFactor
-        return desiredActivity / scalingFactor
-    }
-
     private func timeToInterpolatedPoint(_ time: TimeInterval, fullSize: CGSize) -> CGPoint {
         var nextIndex = 0
         for (index, value) in data.glucose.enumerated() {
