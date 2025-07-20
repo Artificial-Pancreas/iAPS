@@ -164,7 +164,6 @@ extension Home {
                 impactHeavy.impactOccurred()
                 state.runLoop()
             }
-            .offset(y: 10)
         }
 
         var tempBasalString: String {
@@ -624,7 +623,14 @@ extension Home {
                         ZStack {
                             if !displayGlucose {
                                 glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
-                                loopView.frame(maxWidth: .infinity, alignment: .leading).offset(x: 40, y: -25)
+                                loopView
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        maxHeight: .infinity,
+                                        alignment: .topLeading
+                                    )
+                                    .padding(20)
+                                    .offset(x: 5, y: -10)
                             }
                             if displayGlucose {
                                 glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -10)
