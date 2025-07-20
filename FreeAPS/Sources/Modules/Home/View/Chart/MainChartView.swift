@@ -53,8 +53,8 @@ struct MainChartView: View {
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
-        static let carbsSizeSmall: CGFloat = 7
-        static let fpuSize: CGFloat = 5
+        static let carbsSizeSmall: CGFloat = 6
+        static let fpuSize: CGFloat = 4
         static let carbsScale: CGFloat = 0.3
         static let carbsScaleSmall: CGFloat = 0.15
         static let fpuScale: CGFloat = 1
@@ -310,7 +310,7 @@ struct MainChartView: View {
             }
 
             if data.showInsulinActivity, data.displayYgridLines {
-                ForEach([0.0, peakActivity_1unit, peakActivity_maxBolus], id: \.self) { activity in
+                ForEach([peakActivity_1unit, peakActivity_maxBolus], id: \.self) { activity in
                     let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
@@ -319,15 +319,13 @@ struct MainChartView: View {
                 }
             }
 
-//            if data.showCobChart, self.cobDots.isNotEmpty, data.displayYgridLines, maxCobInData > 0 {
-//                ForEach([data.maxCOB], id: \.self) { cob in
-//                    let yCoord = cobToYCoordinate(cob, fullSize: fullSize)
-//                    Path { path in
-//                        path.move(to: CGPoint(x: 0, y: yCoord))
-//                        path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-//                    }.stroke(useColour, lineWidth: 0.25)
-//                }
-//            }
+            // thicker zero guideline for activity/COB
+            if data.showInsulinActivity, data.displayYgridLines, let yCoord = activityZeroPointY {
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: yCoord))
+                    path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                }.stroke(useColour, lineWidth: 0.6)
+            }
 
             if data.showInsulinActivity || data.showCobChart {
                 // chart separator
@@ -338,7 +336,7 @@ struct MainChartView: View {
                             x: fullSize.width,
                             y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
                         ))
-                }.stroke(Color.secondary, lineWidth: 0.40)
+                }.stroke(Color.secondary, lineWidth: 1)
 
                 // background for COB/activity
                 Path { path in
@@ -385,20 +383,6 @@ struct MainChartView: View {
                 .asAny()
         }
     }
-
-//     private func cobLabelsView(fullSize: CGSize) -> some View {
-//         ForEach([data.maxCOB], id: \.self) { cob in
-//             let yCoord = cobToYCoordinate(cob, fullSize: fullSize)
-//             let value = cob
-//
-//             return HStack(spacing: 2) {
-//                 Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.carbsDotFont)
-//                 Text("g").font(.carbsDotFont) // .foregroundStyle(Color.secondary)
-//             }.foregroundStyle(Color(.loopYellow).opacity(colorScheme == .dark ? 0.6 : 1.0))
-//                 .position(CGPoint(x: 16, y: yCoord))
-//                 .asAny()
-//         }
-//     }
 
     private func basalView(fullSize: CGSize) -> some View {
         ZStack {
@@ -635,9 +619,10 @@ struct MainChartView: View {
         ZStack {
             cobStrokePath()
                 .stroke(
-                    Color.loopYellow.opacity(0.7),
-                    style: StrokeStyle(lineWidth: 2, lineCap: .round)
+                    Color.loopYellow,
+                    style: StrokeStyle(lineWidth: 1, lineCap: .round)
                 )
+                .opacity(0.7)
         }
         .onChange(of: data.cob) {
             update(fullSize: fullSize)
@@ -652,12 +637,13 @@ struct MainChartView: View {
 
     private func cobStrokePath() -> Path {
         Path { path in
+            guard let cobZeroPointY = self.cobZeroPointY else { return }
             var isDrawing = false
 
             for (point, cob) in cobDots.reversed() {
                 if cob.cob > 0 {
                     if !isDrawing {
-                        path.move(to: point)
+                        path.move(to: CGPoint(x: point.x, y: cobZeroPointY))
                         isDrawing = true
                     }
                     path.addLine(to: point)
@@ -843,7 +829,7 @@ struct MainChartView: View {
                     .position(position)
                     .foregroundStyle(
                         (data.showCobChart ? Color.loopYellow : Color.primary)
-                            .opacity(data.showCobChart && colorScheme == .dark ? 0.8 : 1.0)
+                            .opacity(data.showCobChart && colorScheme == .dark ? 0.9 : 1.0)
                     )
                     .asAny()
             }
@@ -1176,7 +1162,7 @@ extension MainChartView {
                     fullSize: fullSize
                 )
                 let carbsSize = data.showCobChart ? Config.carbsSizeSmall : Config.carbsSize
-                let carbsScale = data.showCobChart ? Config.carbsScaleSmall : Config.carbsScale
+                let carbsScale = data.showCobChart ? Config.carbsScaleSmall * 0 : Config.carbsScale
                 let size = carbsSize + CGFloat(value.carbs) * carbsScale
                 let x = center.x - size / 2
                 var y = Config.carbOffset + (center.y - size / 2) + (size / 2)
@@ -1735,7 +1721,7 @@ extension MainChartView {
         let maxValue = max(
             maxIOBPeakActivity,
             maxBolusPeakActivity,
-            Double(maxActivityInData ?? Decimal(0))
+            Double(maxActivityInData ?? Decimal(0)) * 1.05
         )
         activityChartMinMax = (
             -peakActivity_1unit,
