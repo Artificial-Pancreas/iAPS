@@ -32,7 +32,6 @@ enum InsulinCalculations {
 
         return activity
     }
-    
 
     // Inverse function to calculate the bolus size needed for a desired peak activity
     // TODO: not tested
@@ -71,6 +70,4 @@ enum InsulinCalculations {
         // Since activity = forBolus * scalingFactor, then forBolus = activity / scalingFactor
         return desiredActivity / scalingFactor
     }
-
-    
 }

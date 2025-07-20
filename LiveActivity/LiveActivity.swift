@@ -587,7 +587,7 @@ struct SampleData {
         )
 
         let (sampleActivity, activity1U, activityMax) = generateActivityCurve(
-            startValue: 0.001
+            startValue: -0.001
         )
 
         self.sampleActivity = sampleActivity

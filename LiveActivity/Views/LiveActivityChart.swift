@@ -294,6 +294,11 @@ struct LiveActivityChart: View {
                 }
             }
         }
+        .chartForegroundStyleScale([
+            "negativeActivity": Color.red,
+            "positiveActivity": Color.blue
+        ])
+        .chartLegend(.hidden)
     }
 
     private func activityAreaMarks(
@@ -308,9 +313,12 @@ struct LiveActivityChart: View {
                     yStart: .value("Baseline", zeroActivityToDomain),
                     yEnd: .value("Activity", point.1)
                 )
-                .foregroundStyle(point.2)
                 .opacity(opacity)
             }
+            .foregroundStyle(by: .value(
+                "ActivityType",
+                activityChunks[index].first?.2 == Color.red ? "negativeActivity" : "positiveActivity"
+            ))
         }
     }
 
