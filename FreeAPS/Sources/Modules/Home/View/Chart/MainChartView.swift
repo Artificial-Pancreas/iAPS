@@ -56,7 +56,6 @@ struct MainChartView: View {
         static let carbsSizeSmall: CGFloat = 6
         static let fpuSize: CGFloat = 4
         static let carbsScale: CGFloat = 0.3
-        static let carbsScaleSmall: CGFloat = 0.15
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
         static let announcementScale: CGFloat = 2.5
@@ -819,10 +818,10 @@ struct MainChartView: View {
         ZStack {
             carbsPath
                 .fill(Color.loopYellow)
-                .opacity(data.showCobChart ? 0.5 : 1.0)
+                .opacity(data.showCobChart ? 0.8 : 1.0)
             carbsPath
                 .stroke(Color.primary, lineWidth: 0.5)
-                .opacity(data.showCobChart ? 0.5 : 1.0)
+                .opacity(data.showCobChart ? 0.8 : 1.0)
 
             ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
                 let position = data.showCobChart ? CGPoint(x: info.rect.midX, y: info.rect.minY - 8) :
@@ -1165,7 +1164,7 @@ extension MainChartView {
                     fullSize: fullSize
                 )
                 let carbsSize = data.showCobChart ? Config.carbsSizeSmall : Config.carbsSize
-                let carbsScale = data.showCobChart ? Config.carbsScaleSmall * 0 : Config.carbsScale
+                let carbsScale = data.showCobChart ? 0 : Config.carbsScale
                 let size = carbsSize + CGFloat(value.carbs) * carbsScale
                 let x = center.x - size / 2
                 var y = Config.carbOffset + (center.y - size / 2) + (size / 2)
@@ -1711,7 +1710,7 @@ extension MainChartView {
     private func cobToYCoordinate(_ cobValue: Decimal, fullSize: CGSize) -> CGFloat {
         let bottomPadding = activityZeroPointY ?? (fullSize.height - Config.bottomPadding)
         let (minValue, maxValue) = cobChartMinMax
-        let circleHeight = (Config.carbsSizeSmall + Config.carbsScaleSmall * CGFloat(data.maxCOB) + 4.0 + 8.0)
+        let circleHeight = (Config.carbsSizeSmall + 4.0 + 8.0)
         let stepYFraction = (Config.cobChartHeight - circleHeight) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = bottomPadding - CGFloat(cobValue) * stepYFraction + yOffset
