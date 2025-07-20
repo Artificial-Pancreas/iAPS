@@ -156,9 +156,9 @@ struct CurrentGlucoseView: View {
                         HStack {
                             Text(
                                 sensorAge >= 1 * 8.64E4 ?
-                                    (remainingTimeFormatterDays.string(from: displayExpiration ? sensorAge : expiration) ?? "")
+                                    (remainingTimeFormatterDays.string(from: displayExpiration ? expiration : sensorAge) ?? "")
                                     .replacingOccurrences(of: ",", with: " ") :
-                                    (remainingTimeFormatter.string(from: displayExpiration ? sensorAge : expiration) ?? "")
+                                    (remainingTimeFormatter.string(from: displayExpiration ? expiration : sensorAge) ?? "")
                                     .replacingOccurrences(of: ",", with: " ")
                             ).foregroundStyle(colour).fontWeight(colorScheme == .dark ? .semibold : .regular)
                         }
