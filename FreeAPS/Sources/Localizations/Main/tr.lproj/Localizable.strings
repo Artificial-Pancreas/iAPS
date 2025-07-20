@@ -2855,7 +2855,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Kalan Karbonhidrat Sınırı";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Bu henüz karbonhidrat emilimini görmezsek, 4 saatten fazla emeceğini varsaydığımız maksimum karbonhidrat miktarıdır.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Bu henüz karbonhidrat emilimini görmezsek, 4 saatten fazla emeceğini varsaydığımız maksimum karbonhidrat miktarıdır.";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Maks SMB Bazal Dakika";

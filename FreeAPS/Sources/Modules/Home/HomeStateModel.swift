@@ -76,9 +76,9 @@ extension Home {
         @Published var maxCOB: Decimal = 0
         @Published var autoisf = false
         @Published var displayExpiration = false
+        @Published var displaySAGE = true
         @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
-        @Published var anubis: Bool = false
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
 
@@ -188,9 +188,19 @@ extension Home {
             autoisf = settingsManager.settings.autoisf
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
+            displaySAGE = settingsManager.settings.displaySAGE
             cgm = settingsManager.settings.cgm
-            sensorDays = settingsManager.settings.sensorDays
-            anubis = settingsManager.settings.anubis
+
+            sensorDays = switch settingsManager.settings.cgm {
+            case .nightscout: CGMType.nightscout.expiration
+            case .dexcomG5: CGMType.dexcomG5.expiration
+            case .dexcomG6: CGMType.dexcomG6.expiration
+            case .dexcomG7: CGMType.dexcomG7.expiration
+            case .libreTransmitter: CGMType.libreTransmitter.expiration
+            case .enlite: CGMType.enlite.expiration
+            default: settingsManager.settings.sensorDays
+            }
+
             carbButton = settingsManager.settings.carbButton
             profileButton = settingsManager.settings.profileButton
 
@@ -700,11 +710,20 @@ extension Home.StateModel:
         autoisf = settingsManager.settings.autoisf
         hours = settingsManager.settings.hours
         displayExpiration = settingsManager.settings.displayExpiration
+        displaySAGE = settingsManager.settings.displaySAGE
         cgm = settingsManager.settings.cgm
-        sensorDays = settingsManager.settings.sensorDays
-        anubis = settingsManager.settings.anubis
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton
+        sensorDays = switch settingsManager.settings.cgm {
+        case .nightscout: CGMType.nightscout.expiration
+        case .dexcomG5: CGMType.dexcomG5.expiration
+        case .dexcomG6: CGMType.dexcomG6.expiration
+        case .dexcomG7: CGMType.dexcomG7.expiration
+        case .libreTransmitter: CGMType.libreTransmitter.expiration
+        case .enlite: CGMType.enlite.expiration
+        default: settingsManager.settings.sensorDays
+        }
+
         setupGlucose()
         setupOverrideHistory()
         setupData()

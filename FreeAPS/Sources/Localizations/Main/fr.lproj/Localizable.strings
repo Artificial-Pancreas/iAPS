@@ -2855,7 +2855,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Plafond de Glucides restant";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Il s’agit de la quantité maximale de glucides que nous supposons absorber sur 4h si nous ne voyons pas encore d’absorption de glucides.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Il s’agit de la quantité maximale de glucides que nous supposons absorber sur 4h si nous ne voyons pas encore d’absorption de glucides.";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Minutes de Basal max SMB";

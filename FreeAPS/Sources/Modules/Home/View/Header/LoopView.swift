@@ -36,7 +36,7 @@ struct LoopView: View {
             .carvingOrRelief(carve: colorScheme == .light)
 
             LoopEllipse(stroke: color)
-                .frame(width: minutesAgo > 9 ? 60 * multiplyForLargeFonts : 60 * multiplyForLargeFonts, height: 27)
+                .frame(width: minutesAgo > 9 ? 50 * multiplyForLargeFonts : 50 * multiplyForLargeFonts, height: 27)
                 .overlay {
                     HStack {
                         ZStack {
@@ -61,7 +61,7 @@ struct LoopView: View {
                         }
                     }.dynamicTypeSize(...DynamicTypeSize.xLarge)
                 }
-        }.offset(y: 5)
+        }
     }
 
     private var minutesAgo: Int {
