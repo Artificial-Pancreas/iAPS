@@ -310,7 +310,7 @@ struct MainChartView: View {
             }
 
             if data.showInsulinActivity, data.displayYgridLines {
-                ForEach([peakActivity_1unit, peakActivity_maxBolus], id: \.self) { activity in
+                ForEach([(peakActivity_1unit, 1), (peakActivity_maxBolus, 2)], id: \.1) { activity, _ in
                     let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
@@ -370,7 +370,10 @@ struct MainChartView: View {
     }
 
     private func activityLabelsView(fullSize: CGSize) -> some View {
-        ForEach([(Decimal(1.0), peakActivity_1unit), (data.maxBolus, peakActivity_maxBolus)], id: \.0) { bolus, activity in
+        ForEach(
+            [(Decimal(1.0), peakActivity_1unit, 1), (data.maxBolus, peakActivity_maxBolus, 2)],
+            id: \.2
+        ) { bolus, activity, _ in
             let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
 
             let value = bolus
