@@ -3087,7 +3087,7 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Hiển thị thời gian cảm biến";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+"Display Sensor Time Remaining" = "Hiện thời gian còn lại của cảm biến";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Ẩn nhãn nồng độ Insulin";
