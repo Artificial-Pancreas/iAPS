@@ -420,7 +420,6 @@ struct MainChartView: View {
             VStack {
                 ZStack {
                     xGridView(fullSize: fullSize)
-                    carbsView(fullSize: fullSize)
                     bolusView(fullSize: fullSize)
                     if data.smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     else { connectingGlucoseLinesView(fullSize: fullSize) }
@@ -431,6 +430,7 @@ struct MainChartView: View {
                     if data.showCobChart {
                         cobView(fullSize: fullSize)
                     }
+                    carbsView(fullSize: fullSize) // has to be after activityView()
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
                     announcementView(fullSize: fullSize)
