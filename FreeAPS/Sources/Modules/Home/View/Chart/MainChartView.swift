@@ -327,16 +327,6 @@ struct MainChartView: View {
             }
 
             if data.showInsulinActivity || data.showCobChart {
-                // chart separator
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
-                    path
-                        .addLine(to: CGPoint(
-                            x: fullSize.width,
-                            y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
-                        ))
-                }.stroke(Color.secondary, lineWidth: 1)
-
                 // background for COB/activity
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
@@ -348,7 +338,7 @@ struct MainChartView: View {
                         ))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                }.fill(colorScheme == .light ? Color.gray.opacity(0.10) : Color(.systemGray6).opacity(0.6))
+                }.fill(Color(.systemGray5))
             }
         }
     }
