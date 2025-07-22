@@ -808,21 +808,16 @@ struct MainChartView: View {
         ZStack {
             carbsPath
                 .fill(Color.loopYellow)
-                .opacity(data.showCobChart ? 0.8 : 1.0)
             carbsPath
-                .stroke(Color.primary, lineWidth: 0.5)
-                .opacity(data.showCobChart ? 0.8 : 1.0)
+                .stroke(Color.primary, lineWidth: 0.4)
 
             ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
                 let position = data.showCobChart ? CGPoint(x: info.rect.midX, y: info.rect.minY - 8) :
                     CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
                 return Text((carbsFormatter.string(from: info.value as NSNumber) ?? "") + (data.showCobChart ? "g" : ""))
-                    .font(.carbsDotFont)
+                    .font(.system(size: 12, weight: data.showCobChart && colorScheme == .light ? .semibold : .regular))
                     .position(position)
-                    .foregroundStyle(
-                        (data.showCobChart ? Color.loopYellow : Color.primary)
-                            .opacity(data.showCobChart && colorScheme == .dark ? 0.9 : 1.0)
-                    )
+                    .foregroundStyle(data.showCobChart ? Color.loopYellow : Color.primary)
                     .asAny()
             }
         }
@@ -853,7 +848,6 @@ struct MainChartView: View {
                         .foregroundStyle(
                             data.showCobChart ? Color.loopYellow : Color.secondary
                         )
-                        .opacity(data.showCobChart && colorScheme == .dark ? 0.7 : 1.0)
                         .position(position)
                         .asAny()
                 }
