@@ -105,5 +105,7 @@
   "displayExpiration": false,
   "displaySAGE": true,
   "fpus": true,
-  "fpuAmounts": false
+  "fpuAmounts": false,
+  "showInsulinActivity": false,
+  "showCobChart": false
 }

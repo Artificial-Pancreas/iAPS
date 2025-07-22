@@ -119,8 +119,8 @@ extension Home {
             screenHours: 6,
             fpus: true,
             fpuAmounts: false,
-            showInsulinActivity: true,
-            showCobChart: true
+            showInsulinActivity: false,
+            showCobChart: false
         )
 
         override func subscribe() {

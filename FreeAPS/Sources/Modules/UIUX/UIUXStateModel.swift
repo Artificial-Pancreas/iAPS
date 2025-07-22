@@ -27,8 +27,8 @@ extension UIUX {
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
         @Published var lightMode: LightMode = .auto
-        @Published var showInsulinActivity: Bool = true
-        @Published var showCobChart: Bool = true
+        @Published var showInsulinActivity: Bool = false
+        @Published var showCobChart: Bool = false
 
         var units: GlucoseUnits = .mmolL
 

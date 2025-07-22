@@ -98,8 +98,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var fpuAmounts: Bool = false
     var carbButton: Bool = true
     var profileButton: Bool = true
-    var showInsulinActivity: Bool = true
-    var showCobChart: Bool = true
+    var showInsulinActivity: Bool = false
+    var showCobChart: Bool = false
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false

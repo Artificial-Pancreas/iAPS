@@ -327,16 +327,6 @@ struct MainChartView: View {
             }
 
             if data.showInsulinActivity || data.showCobChart {
-                // chart separator
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
-                    path
-                        .addLine(to: CGPoint(
-                            x: fullSize.width,
-                            y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
-                        ))
-                }.stroke(Color.secondary, lineWidth: 1)
-
                 // background for COB/activity
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
@@ -348,7 +338,7 @@ struct MainChartView: View {
                         ))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                }.fill(colorScheme == .light ? Color.gray.opacity(0.10) : Color(.systemGray6).opacity(0.6))
+                }.fill(Color(.systemGray5))
             }
         }
     }
@@ -420,7 +410,6 @@ struct MainChartView: View {
             VStack {
                 ZStack {
                     xGridView(fullSize: fullSize)
-                    carbsView(fullSize: fullSize)
                     bolusView(fullSize: fullSize)
                     if data.smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     else { connectingGlucoseLinesView(fullSize: fullSize) }
@@ -431,6 +420,7 @@ struct MainChartView: View {
                     if data.showCobChart {
                         cobView(fullSize: fullSize)
                     }
+                    carbsView(fullSize: fullSize) // has to be after activityView()
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
                     announcementView(fullSize: fullSize)
@@ -818,21 +808,16 @@ struct MainChartView: View {
         ZStack {
             carbsPath
                 .fill(Color.loopYellow)
-                .opacity(data.showCobChart ? 0.8 : 1.0)
             carbsPath
-                .stroke(Color.primary, lineWidth: 0.5)
-                .opacity(data.showCobChart ? 0.8 : 1.0)
+                .stroke(Color.primary, lineWidth: 0.4)
 
             ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
                 let position = data.showCobChart ? CGPoint(x: info.rect.midX, y: info.rect.minY - 8) :
                     CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
                 return Text((carbsFormatter.string(from: info.value as NSNumber) ?? "") + (data.showCobChart ? "g" : ""))
-                    .font(.carbsDotFont)
+                    .font(.system(size: 12, weight: data.showCobChart && colorScheme == .light ? .semibold : .regular))
                     .position(position)
-                    .foregroundStyle(
-                        (data.showCobChart ? Color.loopYellow : Color.primary)
-                            .opacity(data.showCobChart && colorScheme == .dark ? 0.9 : 1.0)
-                    )
+                    .foregroundStyle(data.showCobChart ? Color.loopYellow : Color.primary)
                     .asAny()
             }
         }
@@ -863,7 +848,6 @@ struct MainChartView: View {
                         .foregroundStyle(
                             data.showCobChart ? Color.loopYellow : Color.secondary
                         )
-                        .opacity(data.showCobChart && colorScheme == .dark ? 0.7 : 1.0)
                         .position(position)
                         .asAny()
                 }
