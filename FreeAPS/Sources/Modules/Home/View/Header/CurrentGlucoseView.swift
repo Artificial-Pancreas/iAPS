@@ -149,13 +149,14 @@ struct CurrentGlucoseView: View {
                 let lineColour: Color = sensorAge >= sensordays - secondsOfDay * 1 ? Color.red
                     .opacity(0.9) : sensorAge >= sensordays - secondsOfDay * 2 ? Color
                     .orange : Color.white
+                let minutesAndHours = (displayExpiration && expiration < 1 * 8.64E4) || (displaySAGE && sensorAge < 1 * 8.64E4)
 
                 Sage(amount: sensorAge, expiration: expiration, lineColour: lineColour, sensordays: sensordays)
                     .frame(width: 36, height: 36)
                     .overlay {
                         HStack {
                             Text(
-                                sensorAge >= 1 * 8.64E4 ?
+                                !minutesAndHours ?
                                     (remainingTimeFormatterDays.string(from: displayExpiration ? expiration : sensorAge) ?? "")
                                     .replacingOccurrences(of: ",", with: " ") :
                                     (remainingTimeFormatter.string(from: displayExpiration ? expiration : sensorAge) ?? "")
