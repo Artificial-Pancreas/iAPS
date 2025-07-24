@@ -3087,7 +3087,7 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Отображать возраст датчика";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+"Display Sensor Time Remaining" = "Отображать оставшееся время работы датчика";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Скрыть значок концентрации";
@@ -3108,7 +3108,7 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Отображать соотношение и кнопку просмотра истории";
 
 /* UI/UX option */
-"Home View Ratio Button" = "Home View Ratio Button";
+"Home View Ratio Button" = "Соотношение подачи на главном экране";
 
 /* UI/UX option */
 "Light" = "Светлый";
