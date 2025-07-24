@@ -2856,7 +2856,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Поглинання Вуглеводів, що залишилися";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Це значення максимальної кількості вуглеводів, яке імовірно буде поглинено через 4 години, якщо алгоритм не побачить поглинання вуглеводів.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Це максимальна кількість вуглеводів, яка, як ми припускаємо, засвоїться протягом 4 годин, якщо ми ще не спостерігаємо засвоєння вуглеводів. Максимум 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Максимум SMB Базальних Хвилин";
@@ -3088,6 +3088,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Показувати вік Сенсору";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Час Сенсора, що залишився ";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Сховати значок Концентрації";
 
 /* UI/UX option */
@@ -3101,12 +3104,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display carb equivalent amount" = "Показати еквівалентну кількість вуглеводів";
-
-/* UI/UX option */
-"Display Sensor Time Remaining" = "Відображати час Сенсору що залишився.";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Відображати вік Сенсору замість часу, що залишився.";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Відображати Співвідношення та Кнопку перегляду історії";
