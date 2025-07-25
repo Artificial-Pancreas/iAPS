@@ -5,25 +5,25 @@
 "Remove Pump" = "Thay bơm";
 
 /* Message for PumpManager deletion action sheet */
-"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?";
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Bạn có chắc chắn muốn ngừng sử dụng Medtrum TouchCare Nano 200u/300u không?";
 
 /* Button text to confirm PumpManager deletion */
 "Delete pump" = "Xóa bơm";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled";
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Hiện tại, bạn đang sử dụng chế độ nhịp tim (heartbeat mode). Chế độ này cần thiết để giữ cho %1$@ tiếp tục chạy trong nền. Điều này có thể hữu ích nếu CGM của bạn đã cung cấp nhịp tim. Khuyến nghị bạn nên giữ tính năng này được bật";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature";
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Hiện tại, bạn không sử dụng chế độ nhịp tim (heartbeat). Chế độ nhịp tim là cần thiết để giữ cho %1$@ tiếp tục chạy trong nền. Khuyến nghị bạn nên bật tính năng này";
 
 /* Button text to disable heartbeat mode */
-"Yes, Disable heartbeat mode" = "Yes, Disable heartbeat mode";
+"Yes, Disable heartbeat mode" = "Đồng ý, Tắt chế độ nhịp tim";
 
 /* Button text to enable heartbeat mode */
-"Yes, Enable heartbeat mode" = "Yes, Enable heartbeat mode";
+"Yes, Enable heartbeat mode" = "Đồng ý, Bật chế độ nhịp tim";
 
 /* Title for toggle heartbeat mode action sheet. */
-"Toggle heartbeat mode" = "Toggle heartbeat mode";
+"Toggle heartbeat mode" = "Chuyển đổi chế độ nhịp tim";
 
 /* Button text to cancel actionsheet */
 "No, Keep as is" = "Không, giữ nguyên như vậy";
@@ -38,10 +38,10 @@
 "Status" = "Tình trạng";
 
 /* disconnect from patch */
-"Disconnect" = "Disconnect";
+"Disconnect" = "Ngắt kết nối";
 
 /* reconnect to patch */
-"Reconnect" = "Reconnect";
+"Reconnect" = "Kết nối lại";
 
 /* sync pump */
 "Sync patch data" = "Sync patch data";
@@ -62,7 +62,7 @@
 "Patch settings" = "Patch settings";
 
 /* The title for patch/pump information */
-"Information" = "Information";
+"Information" = "Thông tin";
 
 /* Text for pumpSN */
 "Pump base SN" = "Pump base SN";
@@ -86,7 +86,7 @@
 "Previous Patch Details" = "Previous Patch Details";
 
 /* Text for deactivatedAt */
-"Deactivated at" = "Deactivated at";
+"Deactivated at" = "Đã hủy kích hoạt";
 
 /* Share logs */
 "Share Medtrum patch logs" = "Share Medtrum patch logs";
@@ -152,49 +152,49 @@
 "Continue" = "Tiếp tục";
 
 /* Title for insulin type */
-"Select insulin type" = "Select insulin type";
+"Select insulin type" = "Chọn loại insulin";
 
 /* Title text for insulin type confirmation page */
-"Select the type of insulin that you will be using" = "Select the type of insulin that you will be using";
+"Select the type of insulin that you will be using" = "Chọn loại insulin mà bạn sẽ sử dụng";
 
 /* Label for maximum hourly insulin delivery */
-"Max hourly insulin" = "Max hourly insulin";
+"Max hourly insulin" = "Lượng insulin tối đa mỗi giờ";
 
 /* Label for maximum daily insulin delivery */
-"Max daily insulin" = "Max daily insulin";
+"Max daily insulin" = "Lượng insulin tối đa mỗi ngày";
 
 /* Label for alarm settings */
-"Alarm setting" = "Alarm setting";
+"Alarm setting" = "Cài đặt cảnh báo";
 
 /* Label for alarm options: light, vibrate and beep */
-"Light, vibrate and, beep" = "Light, vibrate and, beep";
+"Light, vibrate and, beep" = "Đèn, rung và âm thanh";
 
 /* Label for alarm options: light and vibrate */
-"Light and vibrate" = "Light and vibrate";
+"Light and vibrate" = "Đèn và rung";
 
 /* Label for alarm options: light and beep */
-"Light and beep" = "Light and beep";
+"Light and beep" = "Đèn và âm thanh";
 
 /* Label for alarm options: light */
-"Light-only" = "Light-only";
+"Light-only" = "Chỉ đèn";
 
 /* Label for alarm options: vibrate and beep */
-"Vibrate and beep" = "Vibrate and beep";
+"Vibrate and beep" = "Rung và âm thanh";
 
 /* Label for alarm options: vibrate */
-"Vibrate-only" = "Vibrate-only";
+"Vibrate-only" = "Chỉ rung";
 
 /* Label for alarm options: beep */
-"Beep-only" = "Beep-only";
+"Beep-only" = "Chỉ âm thanh";
 
 /* Label for alarm options: none */
-"Silence" = "Silence";
+"Silence" = "Im lặng";
 
 /* Label for expiration alarm */
 "Patch lifetime" = "Patch lifetime";
 
 /* Label for extended lifetime */
-"Use extended lifetime (continue till battery empty)" = "Use extended lifetime (continue till battery empty)";
+"Use extended lifetime (continue till battery empty)" = "Sử dụng tối đa thời gian hoạt động (tiếp tục cho đến khi hết pin)";
 
 /* Label for normal patch lifetime */
 "Use normal lifetime (3d 8h)" = "Use normal lifetime (3d 8h)";
