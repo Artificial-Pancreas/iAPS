@@ -652,7 +652,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% Ghi đè";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Phải cài đặt ứng dụng Garmin Connect để sử dụng cho iAPS.\n Hãy truy cập App Store để tải xuống ứng dụng này";
@@ -2036,7 +2036,7 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Hiển thị biểu đồ dạng X-Grid";
+"Display Chart X - Grid lines" = "Hiển thị biểu đồ trục X";
 
 /* */
 "Display Chart Y - Grid lines" = "Hiển thị biểu đồ trục Y";
