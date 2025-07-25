@@ -5,25 +5,25 @@
 "Remove Pump" = "Зніміть Pod";
 
 /* Message for PumpManager deletion action sheet */
-"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?";
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Ви впевнені, що хочете припинити використання Medtrum TouchCare Nano 200u/300u?";
 
 /* Button text to confirm PumpManager deletion */
 "Delete pump" = "Видалити помпу";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled";
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Наразі ви використовуєте режим серцебиття. Це необхідно для того, щоб %1$@ працював у фоновому режимі. Це може бути цікаво, якщо ваш CGM вже забезпечує серцебиття. Рекомендується залишити цю функцію ввімкненою.";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature";
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Наразі ви НЕ використовуєте режим серцевого ритму. Серцевий ритм потрібен для того, щоб %1$@ працював у фоновому режимі. Рекомендується залишити цю функцію ввімкненою.";
 
 /* Button text to disable heartbeat mode */
-"Yes, Disable heartbeat mode" = "Yes, Disable heartbeat mode";
+"Yes, Disable heartbeat mode" = "Так, Вимкнути режим серцебиття";
 
 /* Button text to enable heartbeat mode */
-"Yes, Enable heartbeat mode" = "Yes, Enable heartbeat mode";
+"Yes, Enable heartbeat mode" = "Так, Увімкнути режим серцевого ритму";
 
 /* Title for toggle heartbeat mode action sheet. */
-"Toggle heartbeat mode" = "Toggle heartbeat mode";
+"Toggle heartbeat mode" = "Перемикання режиму серцебиття";
 
 /* Button text to cancel actionsheet */
 "No, Keep as is" = "Ні, залишити як є";
