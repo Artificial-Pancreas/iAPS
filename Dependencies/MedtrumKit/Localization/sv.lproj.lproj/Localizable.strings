@@ -1,0 +1,278 @@
+/* Generic loading text */
+"loading" = "lastning";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Ta bort podd";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Är du säker på att du vill sluta använda Medtrum TouchCare Nano 200u/300u?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Ta bort pumpen";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "För närvarande använder du ett hjärtslagsläge. Detta behövs för att hålla %1$@ igång i bakgrunden. Detta kan vara lämpligt om din CGM redan ger ett hjärtslag. Det rekommenderas att hålla denna funktion aktiverad";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "För närvarande använder du INTE ett hjärtslagsläge. Ett hjärtslag behövs för att hålla %1$@ igång i bakgrunden. Det rekommenderas att behålla den här funktionen";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Ja, inaktivera hjärtslagsläge";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Ja, aktivera hjärtslagsläge";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Hjärtslagsläge";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "Nej, behåll som den är";
+
+/* Text for patch state */
+"Patch state" = "Patch-status";
+
+/* Text for last sync */
+"Last sync" = "Senaste synkroniseringen";
+
+/* Text for status */
+"Status" = "Status";
+
+/* disconnect from patch */
+"Disconnect" = "Koppla från";
+
+/* reconnect to patch */
+"Reconnect" = "Återanslut";
+
+/* sync pump */
+"Sync patch data" = "Synkronisera patch-data";
+
+/* label for activate patch */
+"Activate patch" = "Aktivera patch";
+
+/* deactivate patch */
+"Deactivate Patch" = "Inaktivera patch";
+
+/* Configuration section */
+"Configuration" = "Konfiguration";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "Typ av insulin";
+
+/* Text for patch settings view */
+"Patch settings" = "Patch-inställningar";
+
+/* The title for patch/pump information */
+"Information" = "Information";
+
+/* Text for pumpSN */
+"Pump base SN" = "Pumpbas SN";
+
+/* Text for model */
+"Pump base model" = "Pumpbasmodell";
+
+/* Text for patchId */
+"Patch ID" = "Patch-ID";
+
+/* Text for activatedAt */
+"Patch activated at" = "Patch aktiverad";
+
+/* Text for expiresAt */
+"Patch expires at" = "Patchen går ut";
+
+/* Text for battery voltageB */
+"Battery" = "Batteri";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Detaljer om tidigare patch";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Deaktiverad";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Dela Medtrum-patch loggar";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Radera pump";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Insulin kvar";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Pump\npausad";
+
+/* Text shown when no patch active */
+"No active patch" = "Ingen aktiv patch";
+
+/* Text shown while patch is active */
+"Age:" = "Ålder:";
+
+/* Unit for singular day */
+"day" = "dag";
+
+/* Unit for plural days */
+"days" = "dagar";
+
+/* Unit for singular hour */
+"hour" = "timme";
+
+/* Unit for plural hours */
+"hours" = "timmar";
+
+/* Unit for singular minute */
+"minute" = "minut";
+
+/* Unit for plural minutes */
+"minutes" = "minuter";
+
+/* Text shown when patch expired */
+"Patch expired" = "Patchen har gått ut";
+
+/* Button for closing settings */
+"Done" = "Klar";
+
+/* label for connected */
+"Connected" = "Ansluten";
+
+/* label for reconnecting */
+"Reconnecting..." = "Återanslutning...";
+
+/* label for disconnected */
+"Disconnected" = "Frånkopplad";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Schemalagd basal";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Temporär basal";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Insulintillförsel";
+
+/* Continue */
+"Continue" = "Fortsätt";
+
+/* Title for insulin type */
+"Select insulin type" = "Välj insulintyp";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Välj vilken typ av insulin du kommer att använda";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Max mängd insulin per timme";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Max mängd insulin per dag";
+
+/* Label for alarm settings */
+"Alarm setting" = "Alarminställning";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Ljus, vibration och pip";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Ljus och vibrera";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Ljus och pip";
+
+/* Label for alarm options: light */
+"Light-only" = "Endast ljus";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Vibrera och pip";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Vibrera endast";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Endast pip";
+
+/* Label for alarm options: none */
+"Silence" = "Tystnad";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Patch-livslängd";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Använd förlängd livslängd (fortsätt tills batteriet är urladdat)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Använd normal livslängd (3d 8h)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Notis för utgående patch";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "När du klickar på knappen får du en Biometriprompt. När den är klar, kommer patchen att inaktiveras och du kommer att uppmanas att parkoppla en ny patch.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Autentisera och inaktivera patch";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Inaktivera patch";
+
+/* Label for serial number */
+"Serial number" = "Serienummer";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Se till att serienumret är korrekt innan du binder det till patchen.";
+
+/* Pump base settings header */
+"Pump base settings" = "Pumpbasinställningar";
+
+/* save and continue */
+"Save and continue" = "Spara och fortsätt";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Anslut din pumpbas till patchen.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Fyll sprutan med insulin";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Placera sprutan i plåstret och dra ut 1 till 2 streck luft.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Fyll patch-pumpen med insulin. OBS: för aktivering krävs minst 70U.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "Tryck på nålknappen och starta primingen.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Fäst inte patch-pumpen på kroppen ännu";
+
+/* label for prime start action */
+"Start priming" = "Börja primingen";
+
+/* Priming header */
+"Patch priming" = "Patch-priming";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Ta bort överdraget från patch-pumpen.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Fäst patch-pumpen på kroppen.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Tryck på nålknappen för att föra in nålen. Klicka på \"Aktivera\" för att slutföra aktivering.";
+
+/* Patch activation header */
+"Patch activation" = "Patch-aktivering";
+
+/* welcome header*/
+"Welcome" = "Välkommen";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Du kommer att börja med att konfigurera din insulintyp och grundläggande patch-inställningar innan du aktiverar din patch-pump.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Gå tillbaka till pumpbasen";
+
+/* label for go to prime patch */
+"Go back to priming" = "Gå tillbaka till att primingen";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "Din patch-pump löper snart ut!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "Patch-pumpen har %i timmar kvar";
