@@ -580,7 +580,7 @@
 "Unknown Characteristic" = "خاصية غير معروفة";
 
 /* Error message description for PeripheralManagerError.nack */
-"Nack" = "Nack";
+"Nack" = "إشارة رفض";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "تذكيرات البود";
@@ -601,7 +601,7 @@
 "Critical Alerts" = "تنبيهات هامة";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "لن تصدر التذكيرات المذكورة أعلاه صوتاً إذا كان جهازك في وضع الصامت أو عدم الإزعاج.\n\nومع ذلك، هناك تنبيهات وإنذارات حرجة خاصة بالبود ستصدر صوتاً حتى لو كان جهازك في وضع الصامت أو عدم الإزعاج.";
 /* navigation title for notification settings */
 "Notification Settings" = "إعدادات الإشعارات";
 
@@ -632,10 +632,10 @@
 "No confidence reminders are used." = "No confidence reminders are used.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "ستصدر تذكيرات التأكيد عند تنفيذ الأوامر التي تبدأها بنفسك، مثل إعطاء البلعة، أو إلغاء البلعة، أو الإيقاف المؤقت، أو الاستئناف، أو حفظ تذكيرات الإشعارات، وغيرها. أما عند قيام التطبيق بضبط الجرعات تلقائيًا، فلن يتم استخدام تذكيرات التأكيد.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "ستصدر تذكيرات التأكيد عند قيام التطبيق بضبط الجرعات تلقائيًا، وكذلك عند تنفيذ الأوامر التي تبدأها بنفسك.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "معدّل";
@@ -647,7 +647,7 @@
 "%1$@ for %2$@" = "%1$@ for %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "لن يقوم تطبيق Loop بضبط توصيل الإنسولين تلقائيًا حتى تنتهي الجرعة القاعدية المؤقتة أو يتم إلغاؤها.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Set Temporary Basal";
 
@@ -676,7 +676,7 @@
 "Previous Pod Information" = "Previous Pod Information";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
-"No\nDelivery" = "No\nDelivery";
+"No\nDelivery" = "لا يوجد\nتسليم";
 
 /* description label for active time pod details row */
 "Active Time" = "Active Time";
@@ -685,19 +685,19 @@
 "Total Delivery" = "Total Delivery";
 
 /* description label for device name pod details row */
-"Device Name" = "Device Name";
+"Device Name" = "اسم الجهاز";
 
 /* description label for lot number pod details row */
-"Lot Number" = "Lot Number";
+"Lot Number" = "رقم الدفعة";
 
 /* description label for sequence number pod details row */
-"Sequence Number" = "Sequence Number";
+"Sequence Number" = "الرقم التسلسلي";
 
 /* description label for firmware version pod details row */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "إصدار البرنامج الثابت";
 
 /* description label for ble firmware version pod details row */
-"BLE Firmware Version" = "BLE Firmware Version";
+"BLE Firmware Version" = "إصدار برنامج BLE الثابت";
 
 /* description label for activated at timne pod details row */
 "Pod Activated" = "تم تنشيط البود";
@@ -706,16 +706,16 @@
 "Active Time" = "Active Time";
 
 /* description label for last status date pod details row */
-"Last Status" = "Last Status";
+"Last Status" = "آخر حالة";
 
 /* description label for pod fault details */
-"Pod Fault Details" = "Pod Fault Details";
+"Pod Fault Details" = "تفاصيل خطأ البود";
 
 /* Title for PodSetupView */
-"Pod Setup" = "Pod Setup";
+"Pod Setup" = "تهيئة البود";
 
 /* bodyText for PodSetupView */
-"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "ستبدأ الآن عملية إعداد التذكيرات الخاصة بك، وملء البود بالإنسولين، وإقرانه بجهازك، ثم تثبيته على جسمك.";
 
 /* Cancel button title */
 "Cancel" = "إلغاء";
@@ -724,19 +724,19 @@
 "Continue" = "تابع";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "هل ترغب في تخطي عملية إعداد Omnipod؟";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "يبلغك التطبيق مسبقًا بقرب انتهاء صلاحية البود.\n\nقم بالتمرير لتحديد عدد الساعات التي تود أن تتلقى فيها إشعارًا مسبقًا.";
 
 /* Text of continue button on ExpirationReminderSetupView" */
-"Next" = "Next";
+"Next" = "التالي";
 
 /* */
 "Expiration Reminder" = "Expiration Reminder";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "يبلغك التطبيق عندما تصل كمية الإنسولين في البود إلى هذا المستوى (من 50-10 وحدة).\n\nقم بالتمرير لتحديد عدد الوحدات التي ترغب في أن يتم تذكيرك عند الوصول إليها.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Low Reservoir";
@@ -745,25 +745,25 @@
 "Save" = "إحفظ";
 
 /* hr (short for hour) */
-"hr" = "hr";
+"hr" = "ساعة";
 
 /* Button title to cancel manual basal */
-"Cancel Manual Basal" = "Cancel Manual Basal";
+"Cancel Manual Basal" = "إلغاء الجرعة القاعدية اليدوية";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "الإنسولين\nموقف مؤقتاً";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Resume Insulin Delivery";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
+"Make sure your pod is nearby and try again." = "تأكد من أن البود قريب منك ثم حاول مرة أخرى.";
 
 /* Error message shown when the pod is not connected */
-"Pod not connected" = "Pod not connected";
+"Pod not connected" = "البود غير متصل";
 
 /* Label for suspended at time */
-"Suspended At" = "Suspended At";
+"Suspended At" = "تم الإيقاف المؤقت في";
 
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Resuming insulin delivery...";
@@ -772,81 +772,81 @@
 "Suspending insulin delivery..." = "Suspending insulin delivery...";
 
 /* Error message for PodCommsError.noPodsFound */
-"No pods found" = "No pods found";
+"No pods found" = "لم يتم العثور على أي بود";
 
 /* Error message for PodCommsError.tooManyPodsFound */
-"Too many pods found" = "Too many pods found";
+"Too many pods found" = "تم العثور على عدد كبير من البودات";
 
 /* Recovery suggestion when no response is received from pod */
-"Make sure iPhone is nearby the active pod" = "Make sure iPhone is nearby the active pod";
+"Make sure iPhone is nearby the active pod" = "تأكد من أن جهاز iPhone قريب من البود النشط";
 
 /* Recovery suggestion when ack received instead of response */
-"Try again" = "Try again";
+"Try again" = "حاول مرة أخرى";
 
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
-"Move to a new area away from any other pods and try again." = "Move to a new area away from any other pods and try again.";
+"Move to a new area away from any other pods and try again." = "انتقل إلى منطقة جديدة بعيدًا عن أي بودات أخرى ثم حاول مرة أخرى.";
 
 /* Recovery suggestion for PodCommsError.noPodsFound */
-"Make sure your pod is filled and nearby." = "Make sure your pod is filled and nearby.";
+"Make sure your pod is filled and nearby." = "تأكد من أن البود ممتلئ وقريب منك.";
 
 /* Recovery suggestion when pairing signal strength is too high */
-"Please reposition iPhone further from the pod" = "Please reposition iPhone further from the pod";
+"Please reposition iPhone further from the pod" = "يرجى إبعاد جهاز iPhone عن البود";
 
 /* Recovery suggestion when pairing signal strength is too low */
-"Please reposition iPhone relative to the pod" = "Please reposition iPhone relative to the pod";
+"Please reposition iPhone relative to the pod" = "يرجى إعادة وضع جهاز iPhone بالنسبة للبود";
 
 /* Recovery suggestion on unexpected pod change */
-"Please bring only original pod in range or deactivate original pod" = "Please bring only original pod in range or deactivate original pod";
+"Please bring only original pod in range or deactivate original pod" = "يرجى إحضار البود الأصلي فقط إلى النطاق، أو قم بإلغاء تفعيل البود الأصلي";
 
 /* Recovery suggestion when unexpected address received */
-"Crosstalk possible. Please move to a new location" = "Crosstalk possible. Please move to a new location";
+"Crosstalk possible. Please move to a new location" = "هناك احتمال لتداخل الإشارات. يرجى الانتقال إلى موقع جديد";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
+"Make sure your pod is nearby and try again." = "تأكد من أن البود قريب منك ثم حاول مرة أخرى.";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
+"Wait for existing bolus to finish, or cancel bolus" = "انتظر حتى انتهاء البلعة الحالية، أو قم بإلغاء البلعة";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
+"Wait for existing bolus to finish, or cancel bolus" = "انتظر حتى انتهاء البلعة الحالية، أو قم بإلغاء البلعة";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
-"Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
+"Wait for existing temp basal to finish, or suspend to cancel" = "انتظر حتى انتهاء الجرعة القاعدية المؤقتة الحالية، أو أوقفها مؤقتًا لإلغائها";
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "منذ ‭%@";
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Silenced";
+"Silenced" = "تم كتم الصوت";
 
 /* Description for SilencePodPreference.disabled */
-"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "وضع التشغيل العادي حيث تُستخدم صفارات البود المسموعة لجميع تنبيهات البود وعند تفعيل تذكيرات التأكيد.";
 
 /* Description for SilencePodPreference.enabled */
-"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "جميع تنبيهات البود لا تصدر أي صفارات، ويتم تعطيل صفارات تذكيرات التأكيد. سيصدر البود صفارات فقط في حال حدوث أعطال حرجة أو عند تشغيل صفارات الاختبار.\n\n⚠️ تحذير: عند كتم صوت البود، يجب إبقاؤه ضمن نطاق البلوتوث لهذا الجهاز حتى تتمكن من استقبال إشعارات تنبيهات البود.";
 
 /* Help text for Silence Pod view */
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "وضع كتم صوت البود يقوم بإيقاف جميع صفارات تنبيهات البود وصفارات تذكيرات التأكيد.";
 
 /* navigation title for Silence Pod */
-"Silence Pod" = "Silence Pod";
+"Silence Pod" = "كتم صوت البود";
 
 /* title for pod details page */
-"Pod Details" = "Pod Details";
+"Pod Details" = "تفاصيل البود";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Previous Pod Details";
+"Previous Pod Details" = "تفاصيل البود السابق";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "تفاصيل مدير المضخة";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+"Retrieving Pump Manager Details..." = "جارٍ استرجاع تفاصيل مدير المضخة...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+"Refresh Pump Manager Details" = "تحديث تفاصيل مدير المضخة";
 
 /* Section header for diagnostic section */
-"Diagnostics" = "Diagnostics";
+"Diagnostics" = "تشخيص";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "قراءة حالة البود";

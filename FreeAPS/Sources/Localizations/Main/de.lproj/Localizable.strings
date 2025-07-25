@@ -2856,7 +2856,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Verbleibende Kohlenhydrat-Kappung";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Dies ist die maximale Anzahl der geschätzten abgebauten Kohlenhydrate in 4 Stunden, wenn keine Kohlenhydrat-Resorption ersichtlich ist.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Max. SMB Basal Minuten";
@@ -3088,6 +3088,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Sensoralter anzeigen";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Insulinkonzentrations ausblenden";
 
 /* UI/UX option */
@@ -3101,12 +3104,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display carb equivalent amount" = "Display carb equivalent amount";
-
-/* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Display Ratio and a History View button";

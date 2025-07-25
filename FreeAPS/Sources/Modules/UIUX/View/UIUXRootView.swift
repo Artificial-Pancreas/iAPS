@@ -102,12 +102,6 @@ extension UIUX {
                 } header: { Text("Add Meal View settings ") }
 
                 Section {
-                    Toggle(isOn: $state.extendHomeView) {
-                        Text("Display Ratio and a History View button")
-                    }
-                } header: { Text("Home View Ratio Button") }
-
-                Section {
                     Picker(selection: $state.lightMode, label: Text("Color Scheme")) {
                         ForEach(LightMode.allCases) { item in
                             Text(NSLocalizedString(item.rawValue, comment: "ColorScheme Selection"))
