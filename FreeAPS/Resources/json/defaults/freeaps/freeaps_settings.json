@@ -104,5 +104,6 @@
   "displayExpiration": false,
   "displaySAGE": true,
   "fpus": true,
-  "fpuAmounts": false
+  "fpuAmounts": false,
+  "noCarbs": false
 }
