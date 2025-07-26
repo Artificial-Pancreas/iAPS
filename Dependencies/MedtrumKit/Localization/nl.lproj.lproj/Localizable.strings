@@ -5,31 +5,31 @@
 "Remove Pump" = "Verwijder Pod";
 
 /* Message for PumpManager deletion action sheet */
-"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?";
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Weet je zeker dat je wilt stoppen met het gebruiken van Medtrum TouchCare Nano 200u/300u?";
 
 /* Button text to confirm PumpManager deletion */
 "Delete pump" = "Pomp verwijderen";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled";
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Op dit moment gebruik je een hartbeet modus. Dit is nodig om %1$@ actief te houden op de achtergrond. Dit kan interessant zijn als jouw CGM al een hartenslag biedt. Het wordt aangeraden om deze functie ingeschakeld te houden";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature";
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Op dit moment gebruik je GEEN hartslag modus. Een hartslag modus is nodig om %1$@ actief te houden op de achtergrond. Het is aanbevolen om deze functie in te schakelen";
 
 /* Button text to disable heartbeat mode */
-"Yes, Disable heartbeat mode" = "Yes, Disable heartbeat mode";
+"Yes, Disable heartbeat mode" = "Ja, schakel de hartslag modus uit";
 
 /* Button text to enable heartbeat mode */
-"Yes, Enable heartbeat mode" = "Yes, Enable heartbeat mode";
+"Yes, Enable heartbeat mode" = "Ja, hartslag modus inschakelen";
 
 /* Title for toggle heartbeat mode action sheet. */
-"Toggle heartbeat mode" = "Toggle heartbeat mode";
+"Toggle heartbeat mode" = "Schakel hartslag modus aan/uit";
 
 /* Button text to cancel actionsheet */
 "No, Keep as is" = "Nee, houden zoals het is";
 
 /* Text for patch state */
-"Patch state" = "Patch state";
+"Patch state" = "Patch status";
 
 /* Text for last sync */
 "Last sync" = "Laatste synchronisatie";
@@ -38,19 +38,19 @@
 "Status" = "Status";
 
 /* disconnect from patch */
-"Disconnect" = "Disconnect";
+"Disconnect" = "Verbinding verbreken";
 
 /* reconnect to patch */
-"Reconnect" = "Reconnect";
+"Reconnect" = "Opnieuw verbinding maken";
 
 /* sync pump */
-"Sync patch data" = "Sync patch data";
+"Sync patch data" = "Pompgegevens synchroniseren";
 
 /* label for activate patch */
-"Activate patch" = "Activate patch";
+"Activate patch" = "Activeer patch";
 
 /* deactivate patch */
-"Deactivate Patch" = "Deactivate Patch";
+"Deactivate Patch" = "Patch deactiveren";
 
 /* Configuration section */
 "Configuration" = "Instellingen";
@@ -59,37 +59,37 @@
 "Insulin Type" = "Insulinesoort";
 
 /* Text for patch settings view */
-"Patch settings" = "Patch settings";
+"Patch settings" = "Patch instellingen";
 
 /* The title for patch/pump information */
-"Information" = "Information";
+"Information" = "Info";
 
 /* Text for pumpSN */
-"Pump base SN" = "Pump base SN";
+"Pump base SN" = "Pomp basis SN";
 
 /* Text for model */
-"Pump base model" = "Pump base model";
+"Pump base model" = "Pomp basis model";
 
 /* Text for patchId */
 "Patch ID" = "Patch ID";
 
 /* Text for activatedAt */
-"Patch activated at" = "Patch activated at";
+"Patch activated at" = "Patch geactiveerd op";
 
 /* Text for expiresAt */
-"Patch expires at" = "Patch expires at";
+"Patch expires at" = "Patch verloopt op";
 
 /* Text for battery voltageB */
 "Battery" = "Batterij";
 
 /* label for previous patch details */
-"Previous Patch Details" = "Previous Patch Details";
+"Previous Patch Details" = "Details vorige patch";
 
 /* Text for deactivatedAt */
-"Deactivated at" = "Deactivated at";
+"Deactivated at" = "Gedeactiveerd op";
 
 /* Share logs */
-"Share Medtrum patch logs" = "Share Medtrum patch logs";
+"Share Medtrum patch logs" = "Deel Medtrum patch-logs";
 
 /* Label for PumpManager deletion button */
 "Delete Pump" = "Verwijder de pomp";
@@ -101,7 +101,7 @@
 "Insulin\nSuspended" = "Insuline\nopgeschort";
 
 /* Text shown when no patch active */
-"No active patch" = "No active patch";
+"No active patch" = "Geen actieve patch";
 
 /* Text shown while patch is active */
 "Age:" = "Age:";
