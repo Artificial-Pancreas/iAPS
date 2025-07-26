@@ -7,16 +7,19 @@ function generate(pumphistory_data, profile_data, clock_data, glucose_data, basa
 
     var carb_data = {};
     if (carbhistory) {
-        carb_data = carbhistory;
-        // Eventual Temporary data used only in bolus View
-        if (bolus_data && bolus_data.carbs > 0) {
-            console.log("Carb entries: " + carb_data.unshift(bolus_data));
+        /* Debug option to neglect all carbs */
+        if (!profile_data.iaps.noCarbs) {
+            carb_data = carbhistory;
+            // Eventual Temporary data used only in bolus View
+            if (bolus_data && bolus_data.carbs > 0) {
+                console.log("Carb entries: " + carb_data.unshift(bolus_data));
+            }
+            /* A fix to make all iAPS carb equivalents compatible with the Oref0 meal module. */
+            carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
+            carb_data.forEach( carb => console.log("Carb entry " + carb.created_at + ", carbs: " + carb.carbs + ", entered by: " + carb.enteredBy ));
+            carb_data = carb_data.filter((carb) => carb.carbs >= 1);
+            carb_data.sort((a, b) => b.created_at - a.created_at);
         }
-        /* A tempory fix to make all iAPS carb equivalents compatible with the Oref0 meal module. */
-        carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
-        carb_data.forEach( carb => console.log("Carb entry " + carb.created_at + ", carbs: " + carb.carbs + ", entered by: " + carb.enteredBy ));
-        carb_data = carb_data.filter((carb) => carb.carbs >= 1);
-        carb_data.sort((a, b) => b.created_at - a.created_at);
     }
 
     if (typeof basalprofile_data[0] === 'undefined') {
