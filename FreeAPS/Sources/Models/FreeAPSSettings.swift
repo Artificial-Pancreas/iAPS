@@ -90,7 +90,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var allowDilution: Bool = false
     var hideInsulinBadge: Bool = false
     var extended_overrides = false
-    var extendHomeView = true
     var displayExpiration = false
     var displaySAGE = true
     var sensorDays: Double = 10
@@ -527,10 +526,6 @@ extension FreeAPSSettings: Decodable {
 
         if let extended_overrides = try? container.decode(Bool.self, forKey: .extended_overrides) {
             settings.extended_overrides = extended_overrides
-        }
-
-        if let extendHomeView = try? container.decode(Bool.self, forKey: .extendHomeView) {
-            settings.extendHomeView = extendHomeView
         }
 
         if let displayExpiration = try? container.decode(Bool.self, forKey: .displayExpiration) {

@@ -308,24 +308,6 @@ struct MainChartView: View {
                 }
             }
 
-            if data.showInsulinActivity, data.displayYgridLines {
-                ForEach([(peakActivity_1unit, 1), (peakActivity_maxBolus, 2)], id: \.1) { activity, _ in
-                    let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
-                    Path { path in
-                        path.move(to: CGPoint(x: 0, y: yCoord))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                    }.stroke(useColour, lineWidth: 0.25)
-                }
-            }
-
-            // thicker zero guideline for activity/COB
-            if data.showInsulinActivity, data.displayYgridLines, let yCoord = activityZeroPointY {
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: yCoord))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                }.stroke(useColour, lineWidth: 0.6)
-            }
-
             if data.showInsulinActivity || data.showCobChart {
                 // background for COB/activity
                 Path { path in
@@ -339,6 +321,24 @@ struct MainChartView: View {
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
                 }.fill(Color(.systemGray5))
+            }
+
+            if data.showInsulinActivity, data.displayYgridLines {
+                ForEach([(peakActivity_1unit, 1), (peakActivity_maxBolus, 2)], id: \.1) { activity, _ in
+                    let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: yCoord))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                    }.stroke(useColour, lineWidth: 0.15)
+                }
+            }
+
+            // thicker zero guideline for activity/COB
+            if data.showInsulinActivity, data.displayYgridLines, let yCoord = activityZeroPointY {
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: yCoord))
+                    path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                }.stroke(useColour, lineWidth: 0.4)
             }
         }
     }
@@ -514,7 +514,7 @@ struct MainChartView: View {
 
             activityStrokePath()
                 .stroke(
-                    colorScheme == .dark ? Color.white.opacity(0.5) : Color.black.opacity(0.5),
+                    colorScheme == .dark ? Color.white.opacity(0.3) : Color.black.opacity(0.5),
                     style: StrokeStyle(lineWidth: 0.5)
                 )
         }
