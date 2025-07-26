@@ -89,7 +89,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var allowDilution: Bool = false
     var hideInsulinBadge: Bool = false
     var extended_overrides = false
-    var extendHomeView = true
     var displayExpiration = false
     var displaySAGE = true
     var sensorDays: Double = 10
@@ -101,6 +100,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
     var glucoseOverrideThresholdDown: Decimal = 100
+    var noCarbs: Bool = false
     // ColorScheme
     var lightMode: LightMode = .auto
     // Auto ISF
@@ -187,6 +187,10 @@ extension FreeAPSSettings: Decodable {
 
         if let skipBolusScreenAfterCarbs = try? container.decode(Bool.self, forKey: .skipBolusScreenAfterCarbs) {
             settings.skipBolusScreenAfterCarbs = skipBolusScreenAfterCarbs
+        }
+
+        if let noCarbs = try? container.decode(Bool.self, forKey: .noCarbs) {
+            settings.noCarbs = noCarbs
         }
 
         if let displayHR = try? container.decode(Bool.self, forKey: .displayHR) {
@@ -512,10 +516,6 @@ extension FreeAPSSettings: Decodable {
 
         if let extended_overrides = try? container.decode(Bool.self, forKey: .extended_overrides) {
             settings.extended_overrides = extended_overrides
-        }
-
-        if let extendHomeView = try? container.decode(Bool.self, forKey: .extendHomeView) {
-            settings.extendHomeView = extendHomeView
         }
 
         if let displayExpiration = try? container.decode(Bool.self, forKey: .displayExpiration) {

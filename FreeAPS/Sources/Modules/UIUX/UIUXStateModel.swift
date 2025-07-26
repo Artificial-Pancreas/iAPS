@@ -19,7 +19,6 @@ extension UIUX {
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var hideInsulinBadge: Bool = false
-        @Published var extendHomeView: Bool = true
         @Published var displayExpiration: Bool = false
         @Published var displaySAGE: Bool = true
         @Published var fpus: Bool = true
@@ -47,7 +46,6 @@ extension UIUX {
             subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
             subscribeSetting(\.displayDelta, on: $displayDelta) { displayDelta = $0 }
             subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { hideInsulinBadge = $0 }
-            subscribeSetting(\.extendHomeView, on: $extendHomeView) { extendHomeView = $0 }
             subscribeSetting(\.displayExpiration, on: $displayExpiration) { displayExpiration = $0 }
             subscribeSetting(\.displaySAGE, on: $displaySAGE) { displaySAGE = $0 }
             subscribeSetting(\.fpus, on: $fpus) { fpus = $0 }

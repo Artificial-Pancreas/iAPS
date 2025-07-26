@@ -90,10 +90,10 @@
 "Fetching pump model…" = "جاري جلب نموذج المضخة…";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "إصدار البرنامج الثابت";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "الإنسولين\nموقف مؤقتاً";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "توصيل الأنسولين";

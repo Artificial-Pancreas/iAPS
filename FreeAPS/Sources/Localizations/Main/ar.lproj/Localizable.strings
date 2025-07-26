@@ -17,13 +17,13 @@
 "Continue without bolus" = "متابعة دون ضخ جرعة";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "لا توجد بيانات.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "لا توجد توقعات. فشل اقتراح الحلقة.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "القراءة الجديدة للجلوكوز مفقودة";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "إضافة وجبة دون ضخ جرعة";
@@ -90,7 +90,7 @@
 "was delivered" = "تم تسليمها";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " قبل دقائق، تم تفعيلها عن بُعد من خلال Nightscout، بواسطة مقدم رعاية أو أحد الوالدين. هل لا تزال ترغب في إعطاء البلعة؟\n\nالقيمة المتوقعة للجلوكوز في النهاية، إذا لم تقم بالبلعة، هي ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "تم تسليم الجرعة عن بعد للتو!";
@@ -102,7 +102,7 @@
 "Suggested at" = "تم اقتراحه";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "الحالة عند";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "موجز الوجبة";
@@ -150,7 +150,7 @@
 "Home" = "الرئيسية";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "تشغيل الحلقة";
 
 /* min ago since last loop */
 "min ago" = "قبل دقيقة";
@@ -168,13 +168,13 @@
 "Add Carbs " = "إضافة كربونات ";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "تجاوز الإعدادات";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "لا توجد مضخة";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "فتح";
 
 /*  */
 "Amount Carbs" = "كمية الكاربوهيدرات";
@@ -201,7 +201,7 @@
 "Cancel Temp Target" = "إلغاء الهدف المؤقت";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "إلغاء الهدف المؤقت";
 
 /* Custom temp target */
 "Custom" = "مخصص";
@@ -234,7 +234,7 @@
 " Your setting: " = " الإعدادات الخاصة بك: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dL. تحدد Autosens.max الحد الأقصى للنقطة النهائية";
 
 /*  */
 "Enter preset name" = "أدخل اسم التعيين المسبق";
@@ -285,7 +285,7 @@
 "Autotune" = "ضبط الانسولين التلقائي";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "المتغيرات الديناميكية";
 
 /*  */
 "Basal profile" = "ملف الانسولين القاعدي";
@@ -324,7 +324,7 @@
 "Schedule" = "الجدول";
 
 /* */
-"(standard units / hour)" = "(standard units / hour)";
+"(standard units / hour)" = "(وحدات قياسية / ساعة)";
 
 /*  */
 "starts at" = "يبدأ عند";
@@ -394,43 +394,43 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "عنوان URL غير صحيح";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "مصدر الجلوكوز المحلي";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "تكوين Nightscout";
 
 /*  */
-"Port" = "Port";
+"Port" = "المنفذ";
 
 /*  */
 "URL" = "عنوان الرابط";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "استخدام خادم الجلوكوز المحلي";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "يُمكّن هذا من رفع ملف statistics.json إلى Nightscout، والذي يمكن استخدامه في مشروع إحصاءات وسكان المجتمع.\n\nالمشاركة في إحصاءات المجتمع اختيارية، وتتطلب تسجيلًا منفصلًا على الرابط التالي:\n";
 
 /*  */
 "Edit settings json" = "تحرير إعدادات json";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "وحدات الجلوكوز";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "التفضيلات";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "نسبة الأنسولين الموصى بها";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "تخطي شاشة البلعة بعد إدخال الكربوهيدرات";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "التحكم عن بعد";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "السماح بالتحكم عن بعد في iAPS";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.";
@@ -1909,10 +1909,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "No confidence reminders are used.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "ستصدر تذكيرات التأكيد عند تنفيذ الأوامر التي تبدأها بنفسك، مثل إعطاء البلعة، أو إلغاء البلعة، أو الإيقاف المؤقت، أو الاستئناف، أو حفظ تذكيرات الإشعارات، وغيرها. أما عند قيام التطبيق بضبط الجرعات تلقائيًا، فلن يتم استخدام تذكيرات التأكيد.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "ستصدر تذكيرات التأكيد عند قيام التطبيق بضبط الجرعات تلقائيًا، وكذلك عند تنفيذ الأوامر التي تبدأها بنفسك.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Expiration Reminder Default";
@@ -3088,6 +3088,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Display Sensor Age";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Hide Concentration Badge";
 
 /* UI/UX option */
@@ -3101,12 +3104,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display carb equivalent amount" = "Display carb equivalent amount";
-
-/* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Display Ratio and a History View button";

@@ -3134,6 +3134,9 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Light / Dark Mode" = "Light / Dark Mode";
 
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
 

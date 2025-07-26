@@ -164,7 +164,6 @@ extension Home {
                 impactHeavy.impactOccurred()
                 state.runLoop()
             }
-            .offset(y: 10)
         }
 
         var tempBasalString: String {
@@ -624,7 +623,14 @@ extension Home {
                         ZStack {
                             if !displayGlucose {
                                 glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
-                                loopView.frame(maxWidth: .infinity, alignment: .leading).offset(x: 40, y: -25)
+                                loopView
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        maxHeight: .infinity,
+                                        alignment: .topLeading
+                                    )
+                                    .padding(20)
+                                    .offset(x: 5, y: -10)
                             }
                             if displayGlucose {
                                 glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -10)
@@ -764,13 +770,9 @@ extension Home {
                             VStack {
                                 // Main Chart
                                 chart
-                                // Adjust hours visible (X-Axis) and optional ratio display
-                                if state.extended {
-                                    timeSetting
-                                        .overlay { isfView }
-                                } else {
-                                    timeSetting
-                                }
+                                // Adjust hours visible (X-Axis) and ratio display
+                                timeSetting
+                                    .overlay { isfView }
                                 // TIR Chart
                                 if !state.data.glucose.isEmpty {
                                     preview.padding(.top, 15)

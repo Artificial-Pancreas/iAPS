@@ -195,8 +195,6 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
             {
                 print("live activity settings changed")
                 forceActivityUpdate(force: true)
-            } else {
-                print("live activity settings unchanged")
             }
         }
         knownSettings = newSettings
