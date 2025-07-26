@@ -2855,7 +2855,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Cap Carbs Rimanenti";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Questa è la quantità massima di carboidrati che supponiamo verrà assorbita in 4h se non vediamo ancora l'assorbimento del carboidrato.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Minuti Basali Max SMB";
@@ -3088,6 +3088,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display Sensor Age" = "Visualizza Età Sensore";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Nascondi Badge Concentrazione";
 
 /* UI/UX option */
@@ -3101,12 +3104,6 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* UI/UX option */
 "Display carb equivalent amount" = "Mostra i carboidrati equivalenti";
-
-/* UI/UX option */
-"Display Sensor Time Remaining" = "Mostra Il Tempo Rimanente Del Sensore";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Visualizza l'età del sensore, ma non il tempo rimanente";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Mostra il rapporto e la visualizza lo storico dati";

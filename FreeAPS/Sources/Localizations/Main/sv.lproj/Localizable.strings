@@ -2855,7 +2855,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Max mängd absorption av kolhydrater";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Mängd av maximala antal kolhydrater som vi antar kommer att absorberas över 4h om vi ännu inte ser 'carb absorption'.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Mängd av maximala antal kolhydrater som vi antar kommer att absorberas över 4h om vi ännu inte ser någon absorption. Maxvärde 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Basalminuter för automatiska bolusar (SMB)";
@@ -3087,6 +3087,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Visa sensorålder";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Visa återstående tid för sensor";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Dölj koncentrationsmärke";
 
 /* UI/UX option */
@@ -3100,12 +3103,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display carb equivalent amount" = "Visa kolhydratekvivalentmängd";
-
-/* UI/UX option */
-"Display Sensor Time Remaining" = "Visa återstående tid för sensor";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Visa sensorålder, men inte tid kvar";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Visa kvot och knapp för historikvisning";
