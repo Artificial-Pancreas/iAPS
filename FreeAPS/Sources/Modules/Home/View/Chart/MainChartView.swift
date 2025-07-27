@@ -55,6 +55,7 @@ struct MainChartView: View {
         static let carbsSize: CGFloat = 10
         static let carbsSizeSmall: CGFloat = 10
         static let fpuSize: CGFloat = 8
+        static let fpuSizeSmall: CGFloat = 6
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
@@ -1197,7 +1198,7 @@ extension MainChartView {
                         .timeIntervalSince1970,
                     fullSize: fullSize
                 )
-                let size = Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
+                let size = data.showCobChart ? Config.fpuSizeSmall : Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
                 let x = center.x - size / 2
                 var y = center.y - size / 2
                 if data.showCobChart {
@@ -1699,8 +1700,9 @@ extension MainChartView {
     private func cobToYCoordinate(_ cobValue: Decimal, fullSize: CGSize) -> CGFloat {
         let bottomPadding = activityZeroPointY ?? (fullSize.height - Config.bottomPadding)
         let (minValue, maxValue) = cobChartMinMax
-        let circleHeight = (Config.carbsSizeSmall + 4.0 + 8.0)
-        let stepYFraction = (Config.cobChartHeight - circleHeight) / CGFloat(maxValue - minValue)
+        let circleHeight = Config.carbsSizeSmall
+        let spaceForLabels = 20.0
+        let stepYFraction = (Config.cobChartHeight - circleHeight - spaceForLabels) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = bottomPadding - CGFloat(cobValue) * stepYFraction + yOffset
         return y
