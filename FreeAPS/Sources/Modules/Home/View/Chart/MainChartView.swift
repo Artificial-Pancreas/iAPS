@@ -52,8 +52,9 @@ struct MainChartView: View {
         static let glucoseScale: CGFloat = 2 // default 2
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
-        static let carbsSize: CGFloat = 10
-        static let carbsSizeSmall: CGFloat = 10
+        static let carbsSize: CGFloat = 6
+        static let maxCarbSize: CGFloat = 45
+        static let carbsSizeSmall: CGFloat = 6
         static let fpuSize: CGFloat = 5
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
@@ -62,7 +63,7 @@ struct MainChartView: View {
         static let owlSeize: CGFloat = 20
         static let glucoseSize: CGFloat = 4
         static let owlOffset: CGFloat = 100
-        static let carbOffset: CGFloat = 15
+        static let carbOffset: CGFloat = 10
         static let insulinOffset: CGFloat = 15
         static let pointSizeHeight: Double = 5
         static let pointSizeHeightCarbs: Double = 5
@@ -1114,29 +1115,6 @@ extension MainChartView {
         }
     }
 
-    private func nearestCarbChartPoint(toDate: Date) -> CGPoint? {
-        guard !cobDots.isEmpty else { return nil }
-
-        let timeWindow: TimeInterval = 5 * 60 // 5 minutes in seconds
-        var maxCOBPoint: (CGPoint, IOBData)?
-        var maxCOB: Decimal = -1
-
-        for (point, data) in cobDots {
-            let timeDifference = abs(data.date.timeIntervalSince(toDate))
-
-            // Check if within 5-minute window
-            if timeDifference <= timeWindow {
-                // Find the point with maximum COB in this window
-                if data.cob > maxCOB {
-                    maxCOB = data.cob
-                    maxCOBPoint = (point, data)
-                }
-            }
-        }
-
-        return maxCOBPoint?.0 ?? cobDots.first?.0
-    }
-
     private func calculateCarbsDots(fullSize: CGSize) {
         calculationQueue.async {
             let realCarbs = data.carbs.filter { !($0.isFPU ?? false) }
@@ -1146,7 +1124,7 @@ extension MainChartView {
                         .timeIntervalSince1970,
                     fullSize: fullSize
                 )
-                let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
+                let size = min(Config.maxCarbSize, Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale)
                 let rect = CGRect(
                     x: center.x - size / 2,
                     y: (center.y - size / 2) + Config.carbOffset + (size / 2),
