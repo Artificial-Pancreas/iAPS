@@ -610,7 +610,7 @@ struct MainChartView: View {
             cobStrokePath(closed: false)
                 .stroke(
                     colorScheme == .light ? Color.brown : Color.loopYellow,
-                    style: StrokeStyle(lineWidth: 1.5, lineCap: .round)
+                    style: StrokeStyle(lineWidth: 0.5, lineCap: .round)
                 )
         }
         .onChange(of: data.cob) {
