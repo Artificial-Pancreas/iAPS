@@ -53,8 +53,8 @@ struct MainChartView: View {
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
-        static let carbsSizeSmall: CGFloat = 6
-        static let fpuSize: CGFloat = 4
+        static let carbsSizeSmall: CGFloat = 10
+        static let fpuSize: CGFloat = 8
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
@@ -108,7 +108,6 @@ struct MainChartView: View {
     @State private var cachedMaxBasalRate: Decimal?
     @State private var activityChartMinMax: (Double, Double) = (0, 1)
     @State private var cobChartMinMax: (Double, Double) = (0, 1)
-    @State private var maxCobInData: Decimal = 0.0
     @State private var peakActivity_1unit: Double = 0.0
     @State private var peakActivity_maxBolus: Double = 0.0
     @State private var peakActivity_maxIOB: Double = 0.0
@@ -606,8 +605,9 @@ struct MainChartView: View {
 
     private func cobView(fullSize: CGSize) -> some View {
         ZStack {
-            cobStrokePath()
+            cobStrokePath(closed: true)
                 .fill(colorScheme == .light ? Color.brown.opacity(0.3) : Color.loopYellow.opacity(0.3))
+            cobStrokePath(closed: false)
                 .stroke(
                     colorScheme == .light ? Color.brown : Color.loopYellow,
                     style: StrokeStyle(lineWidth: 1.5, lineCap: .round)
@@ -624,7 +624,7 @@ struct MainChartView: View {
         }
     }
 
-    private func cobStrokePath() -> Path {
+    private func cobStrokePath(closed: Bool) -> Path {
         Path { path in
             guard let cobZeroPointY = self.cobZeroPointY else { return }
             var isDrawing = false
@@ -632,10 +632,16 @@ struct MainChartView: View {
             for (point, cob) in cobDots.reversed() {
                 if cob.cob > 0 {
                     if !isDrawing {
-                        path.move(to: CGPoint(x: point.x, y: cobZeroPointY))
+                        if closed {
+                            path.move(to: CGPoint(x: point.x, y: cobZeroPointY))
+                            path.addLine(to: point)
+                        } else {
+                            path.move(to: point)
+                        }
                         isDrawing = true
+                    } else {
+                        path.addLine(to: point)
                     }
-                    path.addLine(to: point)
                 } else {
                     if isDrawing {
                         path.addLine(to: point)
@@ -644,8 +650,10 @@ struct MainChartView: View {
                 }
             }
 
-            if isDrawing, let (latest, _) = cobDots.first {
-                path.addLine(to: CGPoint(x: latest.x, y: cobZeroPointY))
+            if closed {
+                if isDrawing, let (latest, _) = cobDots.first {
+                    path.addLine(to: CGPoint(x: latest.x, y: cobZeroPointY))
+                }
             }
         }
     }
@@ -1713,11 +1721,14 @@ extension MainChartView {
     }
 
     private func calculateCobChartMinMax() {
-        let maxValue = data.maxCOB * 1.2
-        maxCobInData = data.cob.map { e in e.cob }.max() ?? 0.0
+        let dynamicScale = true
         cobChartMinMax = (
             0.0,
-            Double(maxValue)
+            (
+                dynamicScale ?
+                    Double(data.cob.map { $0.cob }.max() ?? 0.0) :
+                    Double(data.maxCOB)
+            ) * 1.2
         )
     }
 
