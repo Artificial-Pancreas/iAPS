@@ -607,7 +607,7 @@ struct MainChartView: View {
     private func cobView(fullSize: CGSize) -> some View {
         ZStack {
             cobStrokePath()
-                .fill(colorScheme == .light ? Color.brown : Color.loopYellow)
+                .fill(colorScheme == .light ? Color.brown.opacity(0.3) : Color.loopYellow.opacity(0.3))
                 .stroke(
                     colorScheme == .light ? Color.brown : Color.loopYellow,
                     style: StrokeStyle(lineWidth: 1.5, lineCap: .round)
@@ -642,6 +642,10 @@ struct MainChartView: View {
                         isDrawing = false
                     }
                 }
+            }
+
+            if isDrawing, let (latest, _) = cobDots.first {
+                path.addLine(to: CGPoint(x: latest.x, y: cobZeroPointY))
             }
         }
     }
