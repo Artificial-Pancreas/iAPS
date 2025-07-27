@@ -194,6 +194,10 @@ extension Settings {
                                 Text("Edit settings json")
                                     .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                             }
+
+                            HStack {
+                                Toggle("Neglect Carbohydrates in oref0", isOn: $state.noCarbs)
+                            }
                         }
                     } header: { Text("Developer") }
 

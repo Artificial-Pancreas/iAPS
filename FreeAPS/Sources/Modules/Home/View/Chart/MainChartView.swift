@@ -173,9 +173,6 @@ struct MainChartView: View {
                 if data.showInsulinActivity {
                     activityLabelsView(fullSize: geo.size)
                 }
-//                if data.showCobChart, cobDots.isNotEmpty {
-//                    cobLabelsView(fullSize: geo.size)
-//                }
             }
             .onChange(of: hSizeClass) {
                 update(fullSize: geo.size)
@@ -610,11 +607,11 @@ struct MainChartView: View {
     private func cobView(fullSize: CGSize) -> some View {
         ZStack {
             cobStrokePath()
+                .fill(colorScheme == .light ? Color.brown : Color.loopYellow)
                 .stroke(
-                    Color.loopYellow,
-                    style: StrokeStyle(lineWidth: 1, lineCap: .round)
+                    colorScheme == .light ? Color.brown : Color.loopYellow,
+                    style: StrokeStyle(lineWidth: 1.5, lineCap: .round)
                 )
-                .opacity(0.7)
         }
         .onChange(of: data.cob) {
             update(fullSize: fullSize)
@@ -807,9 +804,7 @@ struct MainChartView: View {
     private func carbsView(fullSize: CGSize) -> some View {
         ZStack {
             carbsPath
-                .fill(Color.loopYellow)
-            carbsPath
-                .stroke(Color.primary, lineWidth: 0.4)
+                .fill(colorScheme == .light ? Color.brown : Color.loopYellow)
 
             ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
                 let position = data.showCobChart ? CGPoint(x: info.rect.midX, y: info.rect.minY - 8) :
@@ -817,7 +812,7 @@ struct MainChartView: View {
                 return Text((carbsFormatter.string(from: info.value as NSNumber) ?? "") + (data.showCobChart ? "g" : ""))
                     .font(.system(size: 12, weight: data.showCobChart && colorScheme == .light ? .semibold : .regular))
                     .position(position)
-                    .foregroundStyle(data.showCobChart ? Color.loopYellow : Color.primary)
+                    .foregroundStyle(data.showCobChart ? (colorScheme == .light ? Color.brown : Color.loopYellow) : Color.primary)
                     .asAny()
             }
         }
@@ -832,11 +827,9 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(Color(.systemGray3))
-                .opacity(data.showCobChart ? 0.5 : 1.0)
+                .fill(Color.clear)
             fpuPath
-                .stroke(Color.loopYellow, lineWidth: 1)
-                .opacity(data.showCobChart ? 0.5 : 1.0)
+                .stroke(colorScheme == .light ? Color.brown : Color.loopYellow, lineWidth: 1)
 
             if data.fpuAmounts {
                 ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
