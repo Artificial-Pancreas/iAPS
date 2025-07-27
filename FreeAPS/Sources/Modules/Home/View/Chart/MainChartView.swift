@@ -1721,14 +1721,9 @@ extension MainChartView {
     }
 
     private func calculateCobChartMinMax() {
-        let dynamicScale = true
         cobChartMinMax = (
             0.0,
-            (
-                dynamicScale ?
-                    Double(data.cob.map { $0.cob }.max() ?? 0.0) :
-                    Double(data.maxCOB)
-            ) * 1.2
+            Double(data.cob.map(\.cob).max() ?? 0.0) * 1.2
         )
     }
 
