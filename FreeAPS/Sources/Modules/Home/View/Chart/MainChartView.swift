@@ -607,7 +607,7 @@ struct MainChartView: View {
     private func cobView(fullSize: CGSize) -> some View {
         ZStack {
             cobStrokePath(closed: true)
-                .fill(colorScheme == .light ? Color.brown.opacity(0.3) : Color.loopYellow.opacity(0.3))
+                .fill(Color.loopYellow.opacity(0.3))
             cobStrokePath(closed: false)
                 .stroke(
                     colorScheme == .light ? Color.brown : Color.loopYellow,
