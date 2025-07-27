@@ -2209,6 +2209,12 @@ Enact a temp Basal or a temp target */
 /* COB View */
 "Carbohydrates on Board" = "Carbohydrates on Board";
 
+/* UI/UX-setting */
+"Display COB Chart" = "Display COB Chart";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
+
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "CGM Configuration";
