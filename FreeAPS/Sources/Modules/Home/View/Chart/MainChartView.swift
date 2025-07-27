@@ -54,8 +54,7 @@ struct MainChartView: View {
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
         static let carbsSizeSmall: CGFloat = 10
-        static let fpuSize: CGFloat = 8
-        static let fpuSizeSmall: CGFloat = 6
+        static let fpuSize: CGFloat = 5
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
@@ -817,15 +816,14 @@ struct MainChartView: View {
     private func carbsView(fullSize: CGSize) -> some View {
         ZStack {
             carbsPath
-                .fill(colorScheme == .light ? Color.brown : Color.loopYellow)
+                .fill(Color.loopYellow)
+            carbsPath
+                .stroke(Color.primary, lineWidth: 0.5)
 
             ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
-                let position = data.showCobChart ? CGPoint(x: info.rect.midX, y: info.rect.minY - 8) :
-                    CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
-                return Text((carbsFormatter.string(from: info.value as NSNumber) ?? "") + (data.showCobChart ? "g" : ""))
-                    .font(.system(size: 12, weight: data.showCobChart && colorScheme == .light ? .semibold : .regular))
+                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
+                return Text(carbsFormatter.string(from: info.value as NSNumber) ?? "").font(.carbsDotFont)
                     .position(position)
-                    .foregroundStyle(data.showCobChart ? (colorScheme == .light ? Color.brown : Color.loopYellow) : Color.primary)
                     .asAny()
             }
         }
@@ -840,20 +838,16 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(Color.clear)
+                .fill(Color(.systemGray3))
             fpuPath
-                .stroke(colorScheme == .light ? Color.brown : Color.loopYellow, lineWidth: 1)
+                .stroke(Color.loopYellow, lineWidth: 1)
 
             if data.fpuAmounts {
                 ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
-                    let position =
-                        data.showCobChart ? CGPoint(x: info.rect.midX, y: info.rect.minY - 8) :
-                        CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
+                    let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
                     return Text(carbsFormatter.string(from: info.value as NSNumber) ?? "")
-                        .font(.system(size: data.showCobChart ? 10 : 12))
-                        .foregroundStyle(
-                            data.showCobChart ? Color.loopYellow : Color.secondary
-                        )
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
                         .position(position)
                         .asAny()
                 }
@@ -1147,28 +1141,15 @@ extension MainChartView {
         calculationQueue.async {
             let realCarbs = data.carbs.filter { !($0.isFPU ?? false) }
             let dots = realCarbs.map { value -> DotInfo in
-                let date = value.actualDate ?? Date()
                 let center = timeToInterpolatedPoint(
-                    value.actualDate != nil ? date.timeIntervalSince1970 : value.createdAt
+                    value.actualDate != nil ? (value.actualDate ?? Date()).timeIntervalSince1970 : value.createdAt
                         .timeIntervalSince1970,
                     fullSize: fullSize
                 )
-                let carbsSize = data.showCobChart ? Config.carbsSizeSmall : Config.carbsSize
-                let carbsScale = data.showCobChart ? 0 : Config.carbsScale
-                let size = carbsSize + CGFloat(value.carbs) * carbsScale
-                let x = center.x - size / 2
-                var y = Config.carbOffset + (center.y - size / 2) + (size / 2)
-                if data.showCobChart {
-                    if let nearestPoint = nearestCarbChartPoint(toDate: date) {
-                        y = nearestPoint.y - size - 4
-                    }
-                }
-
-                // let y = (center.y - size / 2) + Config.carbOffset + (size / 2)
-
+                let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
                 let rect = CGRect(
-                    x: x,
-                    y: y,
+                    x: center.x - size / 2,
+                    y: (center.y - size / 2) + Config.carbOffset + (size / 2),
                     width: size,
                     height: size // + CGFloat(value.carbs) * Config.carbsScale
                 )
@@ -1192,21 +1173,13 @@ extension MainChartView {
         calculationQueue.async {
             let fpus = data.carbs.filter { $0.isFPU ?? false }
             let dots = fpus.map { value -> DotInfo in
-                let date = value.actualDate ?? Date()
                 let center = timeToInterpolatedPoint(
-                    value.actualDate != nil ? date.timeIntervalSince1970 : value.createdAt
+                    value.actualDate != nil ? (value.actualDate ?? Date()).timeIntervalSince1970 : value.createdAt
                         .timeIntervalSince1970,
                     fullSize: fullSize
                 )
-                let size = data.showCobChart ? Config.fpuSizeSmall : Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
-                let x = center.x - size / 2
-                var y = center.y - size / 2
-                if data.showCobChart {
-                    if let nearestPoint = nearestCarbChartPoint(toDate: date) {
-                        y = nearestPoint.y - size - 4
-                    }
-                }
-                let rect = CGRect(x: x, y: y, width: size, height: size)
+                let size = Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
+                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
                 return DotInfo(rect: rect, value: value.carbs)
             }
 
@@ -1700,9 +1673,8 @@ extension MainChartView {
     private func cobToYCoordinate(_ cobValue: Decimal, fullSize: CGSize) -> CGFloat {
         let bottomPadding = activityZeroPointY ?? (fullSize.height - Config.bottomPadding)
         let (minValue, maxValue) = cobChartMinMax
-        let circleHeight = Config.carbsSizeSmall
-        let spaceForLabels = 20.0
-        let stepYFraction = (Config.cobChartHeight - circleHeight - spaceForLabels) / CGFloat(maxValue - minValue)
+        let circleHeight = (Config.carbsSizeSmall + 4.0 + 8.0)
+        let stepYFraction = (Config.cobChartHeight - circleHeight) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = bottomPadding - CGFloat(cobValue) * stepYFraction + yOffset
         return y
