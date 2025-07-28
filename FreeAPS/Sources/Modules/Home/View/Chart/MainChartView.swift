@@ -54,7 +54,6 @@ struct MainChartView: View {
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 6
         static let maxCarbSize: CGFloat = 45
-        static let carbsSizeSmall: CGFloat = 6
         static let fpuSize: CGFloat = 5
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
@@ -1651,7 +1650,7 @@ extension MainChartView {
     private func cobToYCoordinate(_ cobValue: Decimal, fullSize: CGSize) -> CGFloat {
         let bottomPadding = activityZeroPointY ?? (fullSize.height - Config.bottomPadding)
         let (minValue, maxValue) = cobChartMinMax
-        let circleHeight = (Config.carbsSizeSmall + 4.0 + 8.0)
+        let circleHeight = (Config.carbsSize + 4.0 + 8.0)
         let stepYFraction = (Config.cobChartHeight - circleHeight) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = bottomPadding - CGFloat(cobValue) * stepYFraction + yOffset
