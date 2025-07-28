@@ -2187,8 +2187,8 @@ Ajustes predeterminados:\n
 /* HbA1c for all glucose storage days */
 "all" = "todos";
 
-/* Active Insulin View */
-"Active Insulin" = "Active Insulin";
+/* IOB View */
+"Insulin on Board" = "Insulin on Board";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Time with negative insulin";
@@ -2211,8 +2211,14 @@ Ajustes predeterminados:\n
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD 3 days ago";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Active Carbohydrates";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrates on Board";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Display COB Chart";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3241,6 +3247,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* UI/UX option */
 "Light / Dark Mode" = "Light / Dark Mode";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
