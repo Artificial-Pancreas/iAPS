@@ -35,7 +35,7 @@ if #{APP_IDENTIFIER} != "ru.artpancreas.#{TEAMID}.FreeAPS"
 end
 
 if File.exist?(file_path)
-  contents = File.read('../ConfigOverride.xcconfig'))
+  contents = File.read('../ConfigOverride.xcconfig')
   puts "=== File Contents: ../ConfigOverride.xcconfig ==="
   puts contents
   puts "====================="
