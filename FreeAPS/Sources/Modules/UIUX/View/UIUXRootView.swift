@@ -37,6 +37,8 @@ extension UIUX {
                     Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
                     Toggle("Display Chart Threshold lines for Low and High", isOn: $state.rulerMarks)
+                    Toggle("Display Insulin Activity Chart", isOn: $state.showInsulinActivity)
+                    Toggle("Display COB Chart", isOn: $state.showCobChart)
                     Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
                     HStack {
                         Text("Horizontal Scroll View Visible hours")
@@ -100,12 +102,6 @@ extension UIUX {
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
                     Toggle("Display and allow Fat and Protein entries", isOn: $state.useFPUconversion)
                 } header: { Text("Add Meal View settings ") }
-
-                Section {
-                    Toggle(isOn: $state.extendHomeView) {
-                        Text("Display Ratio and a History View button")
-                    }
-                } header: { Text("Home View Ratio Button") }
 
                 Section {
                     Picker(selection: $state.lightMode, label: Text("Color Scheme")) {

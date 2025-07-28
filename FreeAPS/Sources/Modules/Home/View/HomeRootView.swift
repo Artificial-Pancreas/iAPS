@@ -770,13 +770,9 @@ extension Home {
                             VStack {
                                 // Main Chart
                                 chart
-                                // Adjust hours visible (X-Axis) and optional ratio display
-                                if state.extended {
-                                    timeSetting
-                                        .overlay { isfView }
-                                } else {
-                                    timeSetting
-                                }
+                                // Adjust hours visible (X-Axis) and ratio display
+                                timeSetting
+                                    .overlay { isfView }
                                 // TIR Chart
                                 if !state.data.glucose.isEmpty {
                                     preview.padding(.top, 15)
@@ -784,6 +780,7 @@ extension Home {
                                 // Loops Chart
                                 loopPreview.padding(.vertical, 15)
 
+                                // COB Chart
                                 if state.carbData > 0 {
                                     activeCOBView
                                 }

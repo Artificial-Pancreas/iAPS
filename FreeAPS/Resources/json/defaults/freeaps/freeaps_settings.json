@@ -100,10 +100,12 @@
   "ketoProtectBasalPercent": 20,
   "ketoProtectAbsolut": false,
   "ketoProtectBasalAbsolut": 0,
-  "extendHomeView": true,
   "extended_overrides": false,
   "displayExpiration": false,
   "displaySAGE": true,
   "fpus": true,
-  "fpuAmounts": false
+  "fpuAmounts": false,
+  "showInsulinActivity": false,
+  "showCobChart": false,
+  "noCarbs": false
 }
