@@ -34,7 +34,7 @@ if #{APP_IDENTIFIER} != "ru.artpancreas.#{TEAMID}.FreeAPS"
   File.write('../ConfigOverride.xcconfig', "BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}\n", mode: 'a')
 end
 
-if File.exist?(file_path)
+if File.exist?('../ConfigOverride.xcconfig')
   contents = File.read('../ConfigOverride.xcconfig')
   puts "=== File Contents: ../ConfigOverride.xcconfig ==="
   puts contents
