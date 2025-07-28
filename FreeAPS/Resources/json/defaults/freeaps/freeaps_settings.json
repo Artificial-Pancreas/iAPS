@@ -106,5 +106,6 @@
   "fpus": true,
   "fpuAmounts": false,
   "showInsulinActivity": false,
-  "showCobChart": false
+  "showCobChart": false,
+  "noCarbs": false
 }
