@@ -105,5 +105,7 @@
   "displaySAGE": true,
   "fpus": true,
   "fpuAmounts": false,
+  "showInsulinActivity": false,
+  "showCobChart": false,
   "noCarbs": false
 }

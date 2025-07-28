@@ -2182,8 +2182,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "all";
 
-/* Active Insulin View */
-"Active Insulin" = "Active Insulin";
+/* IOB View */
+"Insulin on Board" = "Insulin on Board";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Time with negative insulin";
@@ -2206,8 +2206,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD 3 days ago";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Active Carbohydrates";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrates on Board";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Display COB Chart";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
