@@ -2177,8 +2177,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* HbA1c for all glucose storage days */
 "all" = "všetko";
 
-/* Active Insulin View */
-"Active Insulin" = "Aktívny inzulín";
+/* IOB View */
+"Insulin on Board" = "Insulin on Board";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Čas s negatívnym inzulínom";
@@ -2201,8 +2201,14 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD pred 3 dňami";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Aktívne sacharidy";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrates on Board";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Display COB Chart";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3128,6 +3134,9 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* UI/UX option */
 "Light / Dark Mode" = "Svetlý / tmavý režim";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
