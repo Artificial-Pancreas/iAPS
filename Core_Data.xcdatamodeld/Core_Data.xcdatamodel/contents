@@ -58,6 +58,11 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="error" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="InsulinActivity" representedClassName="InsulinActivity" syncable="YES" codeGenerationType="class">
+        <attribute name="activity" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" attributeType="Date" defaultDateTimeInterval="770394900" usesScalarValueType="NO"/>
+        <attribute name="iob" attributeType="Decimal" defaultValueString="0.0"/>
+    </entity>
     <entity name="InsulinConcentration" representedClassName="InsulinConcentration" syncable="YES" codeGenerationType="class">
         <attribute name="concentration" optional="YES" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="752259840" usesScalarValueType="NO"/>

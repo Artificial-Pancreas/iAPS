@@ -96,10 +96,13 @@ struct FreeAPSSettings: JSON, Equatable {
     var fpuAmounts: Bool = false
     var carbButton: Bool = true
     var profileButton: Bool = true
+    var showInsulinActivity: Bool = false
+    var showCobChart: Bool = false
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
     var glucoseOverrideThresholdDown: Decimal = 100
+    var noCarbs: Bool = false
     // ColorScheme
     var lightMode: LightMode = .auto
     // Auto ISF
@@ -186,6 +189,10 @@ extension FreeAPSSettings: Decodable {
 
         if let skipBolusScreenAfterCarbs = try? container.decode(Bool.self, forKey: .skipBolusScreenAfterCarbs) {
             settings.skipBolusScreenAfterCarbs = skipBolusScreenAfterCarbs
+        }
+
+        if let noCarbs = try? container.decode(Bool.self, forKey: .noCarbs) {
+            settings.noCarbs = noCarbs
         }
 
         if let displayHR = try? container.decode(Bool.self, forKey: .displayHR) {
@@ -300,6 +307,14 @@ extension FreeAPSSettings: Decodable {
 
         if let profileButton = try? container.decode(Bool.self, forKey: .profileButton) {
             settings.profileButton = profileButton
+        }
+
+        if let showInsulinActivity = try? container.decode(Bool.self, forKey: .showInsulinActivity) {
+            settings.showInsulinActivity = showInsulinActivity
+        }
+
+        if let showCobChart = try? container.decode(Bool.self, forKey: .showCobChart) {
+            settings.showCobChart = showCobChart
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(
