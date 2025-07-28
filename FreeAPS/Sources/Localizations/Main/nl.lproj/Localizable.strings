@@ -2177,8 +2177,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* HbA1c for all glucose storage days */
 "all" = "alle ";
 
-/* Active Insulin View */
-"Active Insulin" = "Actieve insuline";
+/* IOB View */
+"Insulin on Board" = "Insulin on Board";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Tijd met negatieve insuline";
@@ -2201,8 +2201,14 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD 3 dagen terug";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Actieve koolhydraten";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrates on Board";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Display COB Chart";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3129,6 +3135,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Light / Dark Mode" = "Lichte / Donkere modus";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
