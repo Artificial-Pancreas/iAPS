@@ -29,7 +29,7 @@
 "No, Keep as is" = "Nie, nechajte tak, ako je";
 
 /* Text for patch state */
-"Patch state" = "Patch state";
+"Patch state" = "Stav pumpy";
 
 /* Text for last sync */
 "Last sync" = "Posledná synchronizácia";
@@ -38,10 +38,10 @@
 "Status" = "Stav";
 
 /* disconnect from patch */
-"Disconnect" = "Disconnect";
+"Disconnect" = "Odpojiť";
 
 /* reconnect to patch */
-"Reconnect" = "Reconnect";
+"Reconnect" = "Znova pripojiť";
 
 /* sync pump */
 "Sync patch data" = "Sync patch data";
@@ -62,7 +62,7 @@
 "Patch settings" = "Patch settings";
 
 /* The title for patch/pump information */
-"Information" = "Information";
+"Information" = "Informácie";
 
 /* Text for pumpSN */
 "Pump base SN" = "Pump base SN";
@@ -104,7 +104,7 @@
 "No active patch" = "No active patch";
 
 /* Text shown while patch is active */
-"Age:" = "Age:";
+"Age:" = "Vek:";
 
 /* Unit for singular day */
 "day" = "deň";
@@ -158,10 +158,10 @@
 "Select the type of insulin that you will be using" = "Select the type of insulin that you will be using";
 
 /* Label for maximum hourly insulin delivery */
-"Max hourly insulin" = "Max hourly insulin";
+"Max hourly insulin" = "Maximálna hodinová dávka";
 
 /* Label for maximum daily insulin delivery */
-"Max daily insulin" = "Max daily insulin";
+"Max daily insulin" = "Maximálna denná dávka";
 
 /* Label for alarm settings */
 "Alarm setting" = "Alarm setting";
@@ -194,10 +194,10 @@
 "Patch lifetime" = "Patch lifetime";
 
 /* Label for extended lifetime */
-"Use extended lifetime (continue till battery empty)" = "Use extended lifetime (continue till battery empty)";
+"Use extended lifetime (continue till battery empty)" = "Použiť predĺženú životnosť (pokračovať až do vybitia batérie)";
 
 /* Label for normal patch lifetime */
-"Use normal lifetime (3d 8h)" = "Use normal lifetime (3d 8h)";
+"Use normal lifetime (3d 8h)" = "Použiť štandardnú životnosť (3d 8h)";
 
 /* Label for expired patch notification */
 "Notification for expirate patch" = "Notification for expirate patch";
