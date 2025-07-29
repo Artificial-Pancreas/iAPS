@@ -432,7 +432,7 @@ extension Home {
 
                 // Insulin on Board
                 HStack {
-                    let substance = Double(state.data.suggestion?.iob ?? 0)
+                    let substance = Double(state.data.iob ?? 0)
                     let max = max(Double(state.maxIOB), 1)
                     let fraction: Double = 1 - abs(substance) / max
                     let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
@@ -445,7 +445,7 @@ extension Home {
                     .frame(width: 12, height: 38)
                     .offset(y: -5)
                     HStack(spacing: 0) {
-                        if let loop = state.data.suggestion, let iob = loop.iob {
+                        if let iob = state.data.iob {
                             Text(
                                 targetFormatter.string(from: iob as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
