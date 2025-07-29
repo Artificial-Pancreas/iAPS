@@ -2865,7 +2865,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Remaining Carbs Cap" = "Limit zostávajúcich sacharidov";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Toto je maximálne množstvo sacharidov, ktoré predpokladáme, že sa vstrebe počas 4 hodín, ak zatiaľ nevidíme známky vstrebávania. Maximum je 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Maximálny počet bazálnych minút pre SMB";
