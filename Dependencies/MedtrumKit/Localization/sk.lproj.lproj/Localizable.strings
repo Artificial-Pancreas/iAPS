@@ -5,7 +5,7 @@
 "Remove Pump" = "Odstrániť Pod";
 
 /* Message for PumpManager deletion action sheet */
-"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?";
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Naozaj chcete prestať používať Medtrum TouchCare Nano 200U/300U?";
 
 /* Button text to confirm PumpManager deletion */
 "Delete pump" = "Odstrániť pumpu";
@@ -44,13 +44,13 @@
 "Reconnect" = "Znova pripojiť";
 
 /* sync pump */
-"Sync patch data" = "Sync patch data";
+"Sync patch data" = "Synchronizovať dáta z pumpy";
 
 /* label for activate patch */
-"Activate patch" = "Activate patch";
+"Activate patch" = "Aktivovať pumpu";
 
 /* deactivate patch */
-"Deactivate Patch" = "Deactivate Patch";
+"Deactivate Patch" = "Deaktivovať pumpu";
 
 /* Configuration section */
 "Configuration" = "Nastavenie";
@@ -59,37 +59,37 @@
 "Insulin Type" = "Typ Inzulínu";
 
 /* Text for patch settings view */
-"Patch settings" = "Patch settings";
+"Patch settings" = "Nastavenia pumpy";
 
 /* The title for patch/pump information */
 "Information" = "Informácie";
 
 /* Text for pumpSN */
-"Pump base SN" = "Pump base SN";
+"Pump base SN" = "Sériové číslo základne pumpy";
 
 /* Text for model */
-"Pump base model" = "Pump base model";
+"Pump base model" = "Model základne pumpy";
 
 /* Text for patchId */
-"Patch ID" = "Patch ID";
+"Patch ID" = "Identifikátor pumpy";
 
 /* Text for activatedAt */
-"Patch activated at" = "Patch activated at";
+"Patch activated at" = "Pumpa aktivovaná o";
 
 /* Text for expiresAt */
-"Patch expires at" = "Patch expires at";
+"Patch expires at" = "Pumpa exspiruje o";
 
 /* Text for battery voltageB */
 "Battery" = "Batéria";
 
 /* label for previous patch details */
-"Previous Patch Details" = "Previous Patch Details";
+"Previous Patch Details" = "Podrobnosti o predchádzajúcej pumpe";
 
 /* Text for deactivatedAt */
-"Deactivated at" = "Deactivated at";
+"Deactivated at" = "Deaktivovaná o";
 
 /* Share logs */
-"Share Medtrum patch logs" = "Share Medtrum patch logs";
+"Share Medtrum patch logs" = "Zdieľať logy pumpy Medtrum";
 
 /* Label for PumpManager deletion button */
 "Delete Pump" = "Odstrániť pumpu";
@@ -101,7 +101,7 @@
 "Insulin\nSuspended" = "Inzulín\nPozastavený";
 
 /* Text shown when no patch active */
-"No active patch" = "No active patch";
+"No active patch" = "Žiadna aktívna pumpa";
 
 /* Text shown while patch is active */
 "Age:" = "Vek:";
@@ -125,7 +125,7 @@
 "minutes" = "minút";
 
 /* Text shown when patch expired */
-"Patch expired" = "Patch expired";
+"Patch expired" = "Pumpa exspirovala";
 
 /* Button for closing settings */
 "Done" = "Hotovo";
@@ -152,10 +152,10 @@
 "Continue" = "Pokračovať";
 
 /* Title for insulin type */
-"Select insulin type" = "Select insulin type";
+"Select insulin type" = "Vybrať typ inzulínu";
 
 /* Title text for insulin type confirmation page */
-"Select the type of insulin that you will be using" = "Select the type of insulin that you will be using";
+"Select the type of insulin that you will be using" = "Vyberte typ inzulínu, ktorý budete používať v tejto pumpe";
 
 /* Label for maximum hourly insulin delivery */
 "Max hourly insulin" = "Maximálna hodinová dávka";
@@ -164,34 +164,34 @@
 "Max daily insulin" = "Maximálna denná dávka";
 
 /* Label for alarm settings */
-"Alarm setting" = "Alarm setting";
+"Alarm setting" = "Nastavenia alarmov";
 
 /* Label for alarm options: light, vibrate and beep */
-"Light, vibrate and, beep" = "Light, vibrate and, beep";
+"Light, vibrate and, beep" = "Svetlo, vibrácie a zvukový signál";
 
 /* Label for alarm options: light and vibrate */
-"Light and vibrate" = "Light and vibrate";
+"Light and vibrate" = "Svetlo a vibrácie";
 
 /* Label for alarm options: light and beep */
-"Light and beep" = "Light and beep";
+"Light and beep" = "Svetlo a zvukový signál";
 
 /* Label for alarm options: light */
-"Light-only" = "Light-only";
+"Light-only" = "Iba svetlo";
 
 /* Label for alarm options: vibrate and beep */
-"Vibrate and beep" = "Vibrate and beep";
+"Vibrate and beep" = "Vibrácie a zvukový signál";
 
 /* Label for alarm options: vibrate */
-"Vibrate-only" = "Vibrate-only";
+"Vibrate-only" = "Iba vibrovať";
 
 /* Label for alarm options: beep */
-"Beep-only" = "Beep-only";
+"Beep-only" = "Iba zvukový signál";
 
 /* Label for alarm options: none */
-"Silence" = "Silence";
+"Silence" = "Stíšiť";
 
 /* Label for expiration alarm */
-"Patch lifetime" = "Patch lifetime";
+"Patch lifetime" = "Životnosť pumpy";
 
 /* Label for extended lifetime */
 "Use extended lifetime (continue till battery empty)" = "Použiť predĺženú životnosť (pokračovať až do vybitia batérie)";
@@ -200,7 +200,7 @@
 "Use normal lifetime (3d 8h)" = "Použiť štandardnú životnosť (3d 8h)";
 
 /* Label for expired patch notification */
-"Notification for expirate patch" = "Notification for expirate patch";
+"Notification for expirate patch" = "Upozornenie na exspirovanú pumpu";
 
 /* Instructions for deactivate patch */
 "When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch.";
