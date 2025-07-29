@@ -2177,7 +2177,7 @@ Enact a temp Basal or a temp target */
 "all" = "все";
 
 /* IOB View */
-"Insulin on Board" = "Insulin on Board";
+"Insulin on Board" = "Інсуліну на борту";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Час з негативним інсуліном";
@@ -2201,13 +2201,13 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "TDD 3 дні тому";
 
 /* COB View */
-"Carbohydrates on Board" = "Carbohydrates on Board";
+"Carbohydrates on Board" = "Вуглеводи на борту";
 
 /* UI/UX-setting */
-"Display COB Chart" = "Display COB Chart";
+"Display COB Chart" = "Відображення діаграми COB";
 
 /* UI/UX-setting */
-"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
+"Display Insulin Activity Chart" = "Відображення діаграми активності Інсуліну";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3133,7 +3133,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Світло/Темний Режим";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+"Neglect Carbohydrates in oref0" = "Не враховуйте вуглеводи в oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
