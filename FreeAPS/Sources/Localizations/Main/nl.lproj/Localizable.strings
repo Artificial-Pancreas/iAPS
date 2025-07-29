@@ -2205,7 +2205,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Carbohydrates on Board" = "Koolhydraten aan boord";
 
 /* UI/UX-setting */
-"Display COB Chart" = "";
+"Display COB Chart" = "Geef COB grafiek weer";
 
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Geef insuline activiteitenoverzicht weer";
