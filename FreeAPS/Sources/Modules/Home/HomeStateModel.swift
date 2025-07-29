@@ -747,6 +747,7 @@ extension Home.StateModel:
         setupSuspensions()
         setupAnnouncements()
         setupIOB()
+        setupActivity()
     }
 
     func pumpSettingsDidChange(_: PumpSettings) {
