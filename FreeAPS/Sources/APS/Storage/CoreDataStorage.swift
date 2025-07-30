@@ -56,17 +56,17 @@ final class CoreDataStorage {
         return result
     }
 
-    func saveInsulinData(iobEntries: [IOBTick0]) {
-        coredataContext.perform {
-            guard let firstDate = iobEntries.map(\.time).min() else { return }
+    func saveInsulinData(iobEntries: [IOBTick0]) -> Decimal? {
+        guard let firstDate = iobEntries.compactMap(\.time).min() else { return nil }
+        let iob = iobEntries[0].iob
 
+        coredataContext.perform {
             let deleteRequest = InsulinActivity.fetchRequest()
             deleteRequest.predicate = NSPredicate(
                 format: "date >= %@ OR date < %@",
                 firstDate.addingTimeInterval(-60) as NSDate, // delete previous "future" entries
                 firstDate.addingTimeInterval(-86400) as NSDate // delete entries older than 1 day
             )
-
             do {
                 let recordsToDelete = try self.coredataContext.fetch(deleteRequest)
                 for record in recordsToDelete {
@@ -80,9 +80,9 @@ final class CoreDataStorage {
                 record.iob = NSDecimalNumber(decimal: iobEntry.iob)
                 record.activity = NSDecimalNumber(decimal: iobEntry.activity)
             }
-
             try? self.coredataContext.save()
         }
+        return iob
     }
 
     func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
