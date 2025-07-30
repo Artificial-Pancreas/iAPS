@@ -1,10 +1,14 @@
 import Foundation
 
 // "0" for oref0
-struct IOBTick0: JSON, Equatable {
+struct IOBTick0: JSON, Equatable, Comparable {
     let time: Date
     let iob: Decimal
     let activity: Decimal
+
+    static func < (lhs: IOBTick0, rhs: IOBTick0) -> Bool {
+        rhs.time < lhs.time
+    }
 }
 
 extension JSONDecoder.DateDecodingStrategy {

@@ -33,6 +33,10 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
 
+        func iob() async throws -> Decimal? {
+            await apsManager.iobSync()
+        }
+
         func reasons() -> [IOBData]? {
             let reasons = CoreDataStorage().fetchReasons(interval: DateFilter().day)
 

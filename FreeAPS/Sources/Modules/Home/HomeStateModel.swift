@@ -119,7 +119,8 @@ extension Home {
             fpus: true,
             fpuAmounts: false,
             showInsulinActivity: false,
-            showCobChart: false
+            showCobChart: false,
+            iob: nil
         )
 
         override func subscribe() {
@@ -588,6 +589,19 @@ extension Home {
             }
         }
 
+        private func setupIOB() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                Task {
+                    do {
+                        if let sync = try await self.provider.iob() {
+                            self.data.iob = sync
+                        }
+                    } catch { debug(.apsManager, "Error - Couldn't update foreground IOB value.") }
+                }
+            }
+        }
+
         private func setupData() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -667,6 +681,7 @@ extension Home.StateModel:
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
         data.suggestion = suggestion
+        data.iob = data.suggestion?.iob
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
         setupOverrideHistory()
@@ -732,6 +747,8 @@ extension Home.StateModel:
         setupBoluses()
         setupSuspensions()
         setupAnnouncements()
+        setupIOB()
+        setupActivity()
     }
 
     func pumpSettingsDidChange(_: PumpSettings) {

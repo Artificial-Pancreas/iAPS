@@ -23,15 +23,21 @@ DEVICE_NAME = ENV["DEVICE_NAME"]
 DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
-BUILD_GROUP = ENV.fetch('BUILD_GROUP') { "" }
 APP_IDENTIFIER = ENV.fetch('APP_IDENTIFIER') { "ru.artpancreas.#{TEAMID}.FreeAPS" }
 
-if #{BUILD_GROUP} != ""
-  File.write('../ConfigOverride.xcconfig', "COPYRIGHT_NOTICE = #{BUILD_GROUP}\n", mode: 'a')
+if ENV['BUILD_GROUP']
+  File.write('../ConfigOverride.xcconfig', "COPYRIGHT_NOTICE = #{ENV['BUILD_GROUP']}\n", mode: 'a')
 end
 
 if #{APP_IDENTIFIER} != "ru.artpancreas.#{TEAMID}.FreeAPS"
   File.write('../ConfigOverride.xcconfig', "BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}\n", mode: 'a')
+end
+
+if File.exist?('../ConfigOverride.xcconfig')
+  contents = File.read('../ConfigOverride.xcconfig')
+  puts "=== File Contents: ../ConfigOverride.xcconfig ==="
+  puts contents
+  puts "====================="
 end
 
 platform :ios do
