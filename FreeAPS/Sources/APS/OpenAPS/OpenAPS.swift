@@ -1055,6 +1055,25 @@ final class OpenAPS {
         ])
     }
 
+    func iobSync() async -> RawJSON {
+        let (
+            autosens,
+            profile,
+            pumpHistory
+        ) = await (
+            autosensHistory(),
+            profileHistory(),
+            pumpHistory()
+        )
+
+        return await scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
+            pumpHistory,
+            profile,
+            Date(),
+            autosens
+        ])
+    }
+
     private func meal(
         pumphistory: JSON,
         profile: JSON,
