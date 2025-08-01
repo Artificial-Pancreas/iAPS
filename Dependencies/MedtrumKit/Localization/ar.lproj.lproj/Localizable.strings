@@ -116,7 +116,7 @@
 "hour" = "ساعة";
 
 /* Unit for plural hours */
-"hours" = "hours";
+"hours" = "ساعات";
 
 /* Unit for singular minute */
 "minute" = "دقيقة";
