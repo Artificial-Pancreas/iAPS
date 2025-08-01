@@ -35,7 +35,7 @@
 "Custom" = "مخصص";
 
 /* Title for Insulin Pump Simulator settings */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "إعدادات المضخة";
 
 /* The title of the current basal rate setting */
 "Current Basal Rate" = "معدل الجرعة القاعدية الحالي";

@@ -433,112 +433,116 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "السماح بالتحكم عن بعد في iAPS";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nالآن يرجى التحقق بدقة من جميع إعداداتك الجديدة:\n\n\\* إعدادات القاعدي (Basal Settings)\n \\* نسب الكربوهيدرات (Carb Ratios)\n \\* أهداف الجلوكوز (Glucose Targets)\n \\* حساسية الإنسولين (Insulin Sensitivities)\n \\* مدة فعالية الإنسولين (DIA)\n\n وذلك من خلال: إعدادات iAPS > التهيئة (Configuration).\n\nقد تؤدي إعدادات الملف الشخصي غير الصحيحة أو غير الصالحة إلى آثار خطيرة.";
 
 /* Profile Import Alert */
-"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?";
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "سيؤدي هذا إلى استبدال بعض أو كل إعدادات المضخة الحالية لديك. هل أنت متأكد أنك تريد استيراد إعدادات الملف الشخصي من Nightscout؟";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!";
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nإعدادات القاعدي (Basal) في Nightscout غير صالحة.\n\nتم إلغاء الاستيراد. يرجى التحقق من إعدادات القاعدي في ملفك الشخصي على Nightscout!";
 
 /* Import Error */
-"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings";
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nتم استيراد الإعدادات ولكن تعذّر حفظ القيم القاعدية (Basals) على المضخة (لا توجد مضخة).
+يرجى التحقق من إعدادات القاعدي والنقر على \"حفظ على المضخة\" (Save on Pump) لمزامنة الإعدادات القاعدية الجديدة";
 
 /* Import Error Headline */
-"Import Error" = "Import Error";
+"Import Error" = "فشل الاستيراد";
 
 /* */
-"Yes, Import" = "Yes, Import";
+"Yes, Import" = "نعم، استيراد";
 
 /* */
-"Import settings from Nightscout" = "Import settings from Nightscout";
+"Import settings from Nightscout" = "استيراد الإعدادات من Nightscout";
 
 /* */
-"Import settings?" = "Import settings?";
+"Import settings?" = "استيراد الإعدادات؟";
 
 /* */
-"Import from Nightscout" = "Import from Nightscout";
+"Import from Nightscout" = "استيراد من Nightscout";
 
 /* */
-"Settings imported" = "Settings imported";
+"Settings imported" = "تم استيراد الإعدادات";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nوحدات الجلوكوز غير متطابقة بين إعدادات Nightscout والمضخة.
+تم إلغاء عملية الاستيراد.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Can't find the default Nightscout Profile.";
+"Can't find the default Nightscout Profile." = "تعذّر العثور على الملف الشخصي الافتراضي في Nightscout.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Blood Glucose Test";
+"Blood Glucose Test" = "اختبار سكر الدم";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "إضافة Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "إضافة Omnipod";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "إضافة Dana-i/RS";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "إضافة محاكي";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "استبدال";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "الطراز";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "تهيئة المضخة (Pump Config)";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "حدود الجرعات (Delivery Limits)";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "مدة فعالية الإنسولين (Duration of Insulin Action)";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "ساعات";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "الحد الأقصى للقاعدي (Max Basal)";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "الحد الأقصى للبلعة (Max Bolus)";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "يرجى التأكد من أنك قد اخترت تركيز الإنسولين الصحيح قبل حفظ الإعدادات.
+يجب أن تشير قنينة الإنسولين أو القلم إلى التركيز بوحدات لكل ملليلتر (على سبيل المثال، U100 تعني 100 وحدة لكل ملليلتر، وهو التركيز القياسي).
+الاختيار الدقيق ضروري لضمان الجرعات الصحيحة.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "التركيز";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "تركيز الإنسولين";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "تغيير الإنسولين";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "تم تخفيف الإنسولين إلى";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "التركيز القياسي:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "وحدات لكل ملليلتر (وحدة/مل)";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "التركيز القياسي (U100): 100 وحدة لكل ملليلتر";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "تم رفع تركيز الإنسولين إلى:";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "تعذّر الحفظ على المضخة. حاول مرة أخرى عندما لا تكون المضخة مشغولة بإعطاء بلعة (Bolus).";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "تم الحفظ";
 
 /* Label inusulin concentration, units per ml */
 "U100" = "U100";
@@ -552,33 +556,33 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "السماح بإعدادات تركيز الإنسولين المخفف";
 /* Max setting */
-"Max Carbs" = "Max Carbs";
+"Max Carbs" = "الحد الأقصى للكربوهيدرات (Max Carbs)";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "الحد الأقصى لكمية الكربوهيدرات (غرام) التي يمكنك إضافتها في كل إدخال";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "إعدادات المضخة";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "وحدة لكل ساعة";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " وحدة";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/وحدة";
 
 /* Insulin unit */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " وحدة/ساعة";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ وحدة لكل ساعة";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -887,37 +891,37 @@ Enact a temp Basal or a temp target */
 "HIGHALERT!" = "HIGHALERT!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(مؤجل)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "جلوكوز: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "المرسل: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "لم يتم الكشف عن أي مستشعر";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "قد تكون هذه مشكلة متقطعة، ولكن يُرجى التحقق من أن المرسل مثبت بإحكام فوق المستشعر";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "تم اكتشاف مستشعر جديد";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "يرجى الانتظار حتى 30 دقيقة قبل أن تتوفر قراءات الجلوكوز!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "تم اكتشاف عينة جلوكوز غير صالحة، يرجى المحاولة مرة أخرى لاحقًا";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "قد يكون المستشعر قد توقف مؤقتًا، أو سقط، أو أنه بارد جدًا أو ساخن جدًا.";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "تم الكشف عن مستشعر غير صالح";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "المستشعر المُكتشف لا يبدو أنه من نوع Libre 1!";
 
 /* Detected sensor is invalid: %@ */
 "Detected sensor is invalid: %@" = "المستشعر المكتشف غير صالح: %@";
@@ -956,7 +960,7 @@ Enact a temp Basal or a temp target */
 "Last measurement" = "القياس الأخير";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "رمز التحقق من تذييل المستشعر (Sensor Footer Checksum)";
 
 /* */
 "Last Blood Sugar prediction" = "آخر تنبؤ بمستوى الجلوكوز في الدم";
@@ -968,10 +972,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "معلومات المستشعر";
 
 /* */
-"Sensor Life-Span" = "Sensor Life-Span";
+"Sensor Life-Span" = "عمر المستشعر (Sensor Life-Span)";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "عند استخدام %@، لا يمكن لتطبيق iAPS معرفة نوع المستشعر المستخدم أو عمره الافتراضي (عمر المستشعر).";
 
 /* */
 "Sensor Age Left" = "عمر المستشعر المتبقي";

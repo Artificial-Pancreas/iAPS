@@ -141,7 +141,7 @@
 "hour" = "ساعة";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "ساعات";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "دقيقة";
@@ -641,7 +641,7 @@
 "Rate" = "معدّل";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "وحدة لكل ساعة";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";

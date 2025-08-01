@@ -203,7 +203,7 @@
 "Unknown" = "Unknown";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "وحدة لكل ساعة";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "الأنسولين المتبقي";
