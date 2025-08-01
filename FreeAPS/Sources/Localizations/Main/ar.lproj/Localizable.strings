@@ -585,13 +585,13 @@ Enact a temp Basal or a temp target */
 "%@ U/hr" = "%@ وحدة لكل ساعة";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ وحدة";
 
 /*Carb ratio unit */
-"g/U" = "g/U";
+"g/U" = "غرام لكل وحدة";
 
 /* grams */
-" g" = " g";
+" g" = " ج";
 
 /* The short unit display string for grams */
 "g" = "ج";
@@ -633,7 +633,7 @@ Enact a temp Basal or a temp target */
 "Display on Watch" = "عرض على الساعة";
 
 /* */
-"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
+"Display either Overrides or Temp Targets" = "عرض إما التجاوزات أو الأهداف المؤقتة";
 
 /* */
 "Garmin Watch" = "ساعة جارمين";
@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "إضافة أجهزة";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "زر تجاوز الملف الشخصي / الهدف المؤقت";
 
 /* */
 "Glucose Target" = "هدف الجلوكوز";
@@ -657,7 +657,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "عامل حساسية الأنسولين";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% تجاوز الإعدادات";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
@@ -732,19 +732,19 @@ Enact a temp Basal or a temp target */
 "Treatments" = "العلاجات";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "إضافة إنسولين";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "إضافة جلوكوز";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "جلوكوز جديد";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "العلاج";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "الافتراضي";
 
 /* Hypo Treatment Default Value */
 "None" = "None";
@@ -774,7 +774,7 @@ Enact a temp Basal or a temp target */
 "Automatic" = "تلقائي";
 
 /* External insulin treatments */
-"External" = "External";
+"External" = "خارجي";
 
 /* */
 "Other" = "أخرى";
@@ -789,16 +789,16 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Transmitters";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "الطراز";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "حدد مرسل الطرف الثالث الذي تريد الاتصال به";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "تم استعادة الحالة";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -807,34 +807,34 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "إضافة معايرة";
 
 /* When adding capillary glucose meater reading */
 "Meter glucose" = "Meter glucose";
 
 /* */
-"Info" = "Info";
+"Info" = "معلومات";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "الميل";
 
 /* */
 "Intercept" = "Intercept";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "الرسم البياني";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "إزالة";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "إزالة الأخير";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "حذف الكل";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "حول هذه العملية";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
@@ -1017,13 +1017,13 @@ Enact a temp Basal or a temp target */
 "Edit calibrations" = "تعديل المعايرات";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "تم النقر على \"تعديل المعايرة\" (Edit Calibration)";
 
 /* */
 "Delete CGM" = "حذف المستشعر";
 
 /* */
-"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
+"Are you sure you want to remove this cgm from iAPS?" = "هل أنت متأكد أنك تريد إزالة جهاز مراقبة الجلوكوز المستمر (Cgm) هذا من iAPS؟";
 
 /* */
 "There is no undo" = "لا يوجد تراجع!";
@@ -1077,10 +1077,10 @@ Enact a temp Basal or a temp target */
 "Adds Transmitter Battery" = "إضافة بطارية جهاز الإرسال";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "اهتزاز أيضًا";
 
 /* */
-"Additional notification types" = "Additional notification types";
+"Additional notification types" = "أنواع الإشعارات الإضافية";
 
 /* */
 "Misc" = "Misc";
@@ -1530,7 +1530,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Info";
+"Info" = "معلومات";
 
 /* Warning title */
 "Warning" = "Warning";
