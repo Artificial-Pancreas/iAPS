@@ -2177,7 +2177,7 @@ Enact a temp Basal or a temp target */
 "all" = "Tất cả";
 
 /* IOB View */
-"Insulin on Board" = "Insulin on Board";
+"Insulin on Board" = "Insulin đang hoạt động";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Thời gian có Insulin âm tính";
@@ -2201,13 +2201,13 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
 /* COB View */
-"Carbohydrates on Board" = "Carbohydrates on Board";
+"Carbohydrates on Board" = "Carbohydrate đang hoạt động";
 
 /* UI/UX-setting */
-"Display COB Chart" = "Display COB Chart";
+"Display COB Chart" = "Hiển thị biểu đồ COB";
 
 /* UI/UX-setting */
-"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
+"Display Insulin Activity Chart" = "Hiển thị biểu đồ hoạt động của insulin";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3132,7 +3132,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Chế độ Sáng/Tối";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+"Neglect Carbohydrates in oref0" = "Bỏ qua carbohydrate trong oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";
