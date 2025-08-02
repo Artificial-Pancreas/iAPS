@@ -5,16 +5,16 @@
 "Remove Pump" = "Pumpe entfernen";
 
 /* Message for PumpManager deletion action sheet */
-"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?";
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Sind Sie sicher, dass Sie die Verwendung von Medtrum TouchCare Nano 200u/300u beenden möchten?";
 
 /* Button text to confirm PumpManager deletion */
 "Delete pump" = "Pumpe löschen";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled";
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Zurzeit verwenden Sie einen Herzschlag-Modus. Dieser wird benötigt, um %1$@ im Hintergrund laufen zu lassen. Dies könnte interessant sein, wenn Ihr CGM bereits einen Herzschlag liefert. Es wird empfohlen, diese Funktion aktiviert zu lassen";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature";
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Momentan verwenden Sie NICHT einen Herzschlag Modus. Ein Herzschlag wird benötigt, um %1$@ im Hintergrund laufen zu lassen. Es wird empfohlen, diese Funktion zu aktivieren.";
 
 /* Button text to disable heartbeat mode */
 "Yes, Disable heartbeat mode" = "Yes, Disable heartbeat mode";
