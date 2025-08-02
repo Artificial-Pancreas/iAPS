@@ -17,19 +17,19 @@
 "Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Momentan verwenden Sie NICHT einen Herzschlag Modus. Ein Herzschlag wird benötigt, um %1$@ im Hintergrund laufen zu lassen. Es wird empfohlen, diese Funktion zu aktivieren.";
 
 /* Button text to disable heartbeat mode */
-"Yes, Disable heartbeat mode" = "Yes, Disable heartbeat mode";
+"Yes, Disable heartbeat mode" = "Ja, Herzschlag-Modus deaktivieren";
 
 /* Button text to enable heartbeat mode */
-"Yes, Enable heartbeat mode" = "Yes, Enable heartbeat mode";
+"Yes, Enable heartbeat mode" = "Ja, Herzschlag-Modus aktivieren";
 
 /* Title for toggle heartbeat mode action sheet. */
-"Toggle heartbeat mode" = "Toggle heartbeat mode";
+"Toggle heartbeat mode" = "Herzschlag-Modus umschalten";
 
 /* Button text to cancel actionsheet */
 "No, Keep as is" = "Nein, so lassen wie es ist";
 
 /* Text for patch state */
-"Patch state" = "Patch state";
+"Patch state" = "Patch-Status";
 
 /* Text for last sync */
 "Last sync" = "Letzte Synchronisierung";
@@ -38,19 +38,19 @@
 "Status" = "Status";
 
 /* disconnect from patch */
-"Disconnect" = "Disconnect";
+"Disconnect" = "Verbindung trennen";
 
 /* reconnect to patch */
-"Reconnect" = "Reconnect";
+"Reconnect" = "Erneut verbinden";
 
 /* sync pump */
-"Sync patch data" = "Sync patch data";
+"Sync patch data" = "Patch-Daten synchronisieren";
 
 /* label for activate patch */
-"Activate patch" = "Activate patch";
+"Activate patch" = "Patch aktivieren";
 
 /* deactivate patch */
-"Deactivate Patch" = "Deactivate Patch";
+"Deactivate Patch" = "Patch deaktivieren";
 
 /* Configuration section */
 "Configuration" = "Konfiguration";
@@ -59,34 +59,34 @@
 "Insulin Type" = "Insulin Typ";
 
 /* Text for patch settings view */
-"Patch settings" = "Patch settings";
+"Patch settings" = "Patch Einstellungen";
 
 /* The title for patch/pump information */
-"Information" = "Information";
+"Information" = "Informationen";
 
 /* Text for pumpSN */
-"Pump base SN" = "Pump base SN";
+"Pump base SN" = "Pumpenbasis SN";
 
 /* Text for model */
-"Pump base model" = "Pump base model";
+"Pump base model" = "Pumpen-Basis Modell";
 
 /* Text for patchId */
 "Patch ID" = "Patch ID";
 
 /* Text for activatedAt */
-"Patch activated at" = "Patch activated at";
+"Patch activated at" = "Patch aktiviert um";
 
 /* Text for expiresAt */
-"Patch expires at" = "Patch expires at";
+"Patch expires at" = "Patch läuft ab um";
 
 /* Text for battery voltageB */
 "Battery" = "Batterie";
 
 /* label for previous patch details */
-"Previous Patch Details" = "Previous Patch Details";
+"Previous Patch Details" = "Vorherige Patchdetails";
 
 /* Text for deactivatedAt */
-"Deactivated at" = "Deactivated at";
+"Deactivated at" = "Deaktiviert um";
 
 /* Share logs */
 "Share Medtrum patch logs" = "Share Medtrum patch logs";
