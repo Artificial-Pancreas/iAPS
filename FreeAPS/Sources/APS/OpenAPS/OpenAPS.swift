@@ -458,6 +458,7 @@ final class OpenAPS {
         let startIndex = reasonString.startIndex
         var aisf = false
         var totalDailyDose: Decimal?
+        let or = OverrideStorage().fetchLatestOverride().first
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {
@@ -528,12 +529,12 @@ final class OpenAPS {
 
         // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
-        if targetGlucose != nil, let or = OverrideStorage().fetchLatestOverride().first, or.enabled {
+        if targetGlucose != nil, let override = or, override.enabled {
             var orString = ", Override:"
-            if or.percentage != 100 {
-                orString += " \(or.percentage.formatted()) %"
+            if override.percentage != 100 {
+                orString += " \(override.percentage.formatted()) %"
             }
-            if or.smbIsOff {
+            if override.smbIsOff {
                 orString += " SMBs off"
             }
             orString += " Target \(targetGlucose ?? 0)"
@@ -599,6 +600,11 @@ final class OpenAPS {
                 saveSuggestion.reasons = aisfReasons
                 saveSuggestion.glucose = (suggestion.bg ?? 0) as NSDecimalNumber
                 saveSuggestion.ratio = (suggestion.sensitivityRatio ?? 1) as NSDecimalNumber
+
+                if let override = or, override.enabled {
+                    saveSuggestion.override = true
+                }
+
                 saveSuggestion.date = Date.now
 
                 if let rate = suggestion.rate {
