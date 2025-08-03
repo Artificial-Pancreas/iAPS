@@ -159,7 +159,7 @@ struct DynamicHistoryView: View {
                                 ).foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }
-                        }
+                        }.listRowBackground(item.override ? Color.purpleOverrides : nil)
                     }
                 }
             }.font(.system(size: 12)).listStyle(.plain)
