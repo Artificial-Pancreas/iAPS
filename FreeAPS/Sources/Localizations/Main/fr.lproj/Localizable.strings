@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "Nouvelle glycémie manquante";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Enregistrer le repas sans bolus";
@@ -3120,16 +3120,16 @@ Enact a temp Basal or a temp target */
 "Light" = "Léger";
 
 /* UI/UX option */
-"Dark" = "Dark";
+"Dark" = "Sombre";
 
 /* UI/UX option */
 "Auto" = "Auto";
 
 /* UI/UX option */
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Préférence des couleurs";
 
 /* UI/UX option */
-"Light / Dark Mode" = "Light / Dark Mode";
+"Light / Dark Mode" = "Mode clair/sombre";
 
 /* Debug option */
 "Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
