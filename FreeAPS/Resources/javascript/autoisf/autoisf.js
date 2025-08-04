@@ -448,7 +448,6 @@ function b30(profile, pumpHistory, dynamicVariables, glucose_status) {
     if (!(profile.temptargetSet && profile.min_bg < profile.iaps.b30targetLevel || dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6 && dynamicVariables.overrideTarget < profile.iaps.b30targetLevel)) {
         return
     }
-    
     // In case override and temp target are used simultaneously - use temp target.
     if (profile.temptargetSet && profile.min_bg >= profile.iaps.b30targetLevel) {
         return
