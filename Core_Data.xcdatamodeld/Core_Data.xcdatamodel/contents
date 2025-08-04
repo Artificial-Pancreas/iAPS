@@ -208,6 +208,7 @@
         <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="mmol" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="override" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="ratio" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="reasons" optional="YES" attributeType="String" defaultValueString="empty"/>

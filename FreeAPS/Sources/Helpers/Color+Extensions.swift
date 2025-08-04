@@ -73,4 +73,5 @@ extension Color {
     static let popUpGray = Color("PopUpGray")
     static let darkChartBackground = Color("DarkChartBackground")
     static let violet = Color("Violet")
+    static let purpleOverrides = Color("PurpleOverrides")
 }
