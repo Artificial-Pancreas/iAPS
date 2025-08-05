@@ -11,19 +11,19 @@
 "Delete pump" = "Odstrániť pumpu";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled";
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "V súčasnosti používate režim heartbeat. Je to potrebné na to, aby %1$@ bežal na pozadí. To môže byť zaujímavé, ak Váš CGM už poskytuje heartbeat. Odporúča sa nechať túto funkciu zapnutú";
 
 /* Message warning heartbeat disable (1: app name) */
-"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature";
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "V súčasnosti NEPOUŽÍVATE režim heartbeat. Heartbeat je potrebný na to, aby %1$@ bežal na pozadí. Odporúča sa ponechať túto funkciu zapnutú";
 
 /* Button text to disable heartbeat mode */
-"Yes, Disable heartbeat mode" = "Yes, Disable heartbeat mode";
+"Yes, Disable heartbeat mode" = "Áno, vypnúť režim heartbeat";
 
 /* Button text to enable heartbeat mode */
-"Yes, Enable heartbeat mode" = "Yes, Enable heartbeat mode";
+"Yes, Enable heartbeat mode" = "Áno, zapnúť režim heartbeat";
 
 /* Title for toggle heartbeat mode action sheet. */
-"Toggle heartbeat mode" = "Toggle heartbeat mode";
+"Toggle heartbeat mode" = "Zapnutie/vypnutie režimu heartbeat";
 
 /* Button text to cancel actionsheet */
 "No, Keep as is" = "Nie, nechajte tak, ako je";
@@ -44,13 +44,13 @@
 "Reconnect" = "Znova pripojiť";
 
 /* sync pump */
-"Sync patch data" = "Synchronizovať dáta z pumpy";
+"Sync patch data" = "Synchronizovať dáta z náplasti";
 
 /* label for activate patch */
-"Activate patch" = "Aktivovať pumpu";
+"Activate patch" = "Aktivovať náplasť";
 
 /* deactivate patch */
-"Deactivate Patch" = "Deaktivovať pumpu";
+"Deactivate Patch" = "Deaktivovať náplasť";
 
 /* Configuration section */
 "Configuration" = "Nastavenie";
@@ -59,7 +59,7 @@
 "Insulin Type" = "Typ Inzulínu";
 
 /* Text for patch settings view */
-"Patch settings" = "Nastavenia pumpy";
+"Patch settings" = "Nastavenia náplaste";
 
 /* The title for patch/pump information */
 "Information" = "Informácie";
@@ -71,25 +71,25 @@
 "Pump base model" = "Model základne pumpy";
 
 /* Text for patchId */
-"Patch ID" = "Identifikátor pumpy";
+"Patch ID" = "Identifikátor náplaste";
 
 /* Text for activatedAt */
-"Patch activated at" = "Pumpa aktivovaná o";
+"Patch activated at" = "Náplasť aktivovaná o";
 
 /* Text for expiresAt */
-"Patch expires at" = "Pumpa exspiruje o";
+"Patch expires at" = "Náplasť exspiruje o";
 
 /* Text for battery voltageB */
 "Battery" = "Batéria";
 
 /* label for previous patch details */
-"Previous Patch Details" = "Podrobnosti o predchádzajúcej pumpe";
+"Previous Patch Details" = "Podrobnosti o predchádzajúcej náplasti";
 
 /* Text for deactivatedAt */
 "Deactivated at" = "Deaktivovaná o";
 
 /* Share logs */
-"Share Medtrum patch logs" = "Zdieľať logy pumpy Medtrum";
+"Share Medtrum patch logs" = "Zdieľať logy náplaste Medtrum";
 
 /* Label for PumpManager deletion button */
 "Delete Pump" = "Odstrániť pumpu";
@@ -101,7 +101,7 @@
 "Insulin\nSuspended" = "Inzulín\nPozastavený";
 
 /* Text shown when no patch active */
-"No active patch" = "Žiadna aktívna pumpa";
+"No active patch" = "Žiadna aktívna náplasť";
 
 /* Text shown while patch is active */
 "Age:" = "Vek:";
@@ -125,7 +125,7 @@
 "minutes" = "minút";
 
 /* Text shown when patch expired */
-"Patch expired" = "Pumpa exspirovala";
+"Patch expired" = "Náplasť exspirovala";
 
 /* Button for closing settings */
 "Done" = "Hotovo";
@@ -191,7 +191,7 @@
 "Silence" = "Stíšiť";
 
 /* Label for expiration alarm */
-"Patch lifetime" = "Životnosť pumpy";
+"Patch lifetime" = "Životnosť náplaste";
 
 /* Label for extended lifetime */
 "Use extended lifetime (continue till battery empty)" = "Použiť predĺženú životnosť (pokračovať až do vybitia batérie)";
@@ -200,13 +200,13 @@
 "Use normal lifetime (3d 8h)" = "Použiť štandardnú životnosť (3d 8h)";
 
 /* Label for expired patch notification */
-"Notification for expirate patch" = "Upozornenie na exspirovanú pumpu";
+"Notification for expirate patch" = "Upozornenie na exspiráciu náplaste";
 
 /* Instructions for deactivate patch */
-"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch.";
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Po kliknutí na tlačidlo sa zobrazí výzva na biometrickú identifikáciu. Po jej dokončení sa náplasť deaktivuje a zobrazí sa výzva na spárovanie novej náplasti.";
 
 /* Authenticate and deactivate label */
-"Authenticate & deactivate patch" = "Over a deaktivuj pumpu";
+"Authenticate & deactivate patch" = "Over a deaktivuj náplasť";
 
 /* Header deactivate patch */
 "Deactivate patch" = "Deaktivovať náplasť";
@@ -215,7 +215,7 @@
 "Serial number" = "Sériové číslo";
 
 /* Label for checking SN */
-"Make sure the Serial Number is correct before connecting it to the patch." = "Make sure the Serial Number is correct before connecting it to the patch.";
+"Make sure the Serial Number is correct before connecting it to the patch." = "Pred pripojením k náplasti sa uistite, že sériové číslo je správne.";
 
 /* Pump base settings header */
 "Pump base settings" = "Nastavenia základne pumpy";
@@ -224,7 +224,7 @@
 "Save and continue" = "Uložiť a pokračovať";
 
 /* Label for prime step 2.1 */
-"Connect your pump base to the patch." = "Pripoj základňu k pumpe.";
+"Connect your pump base to the patch." = "Pripoj základňu k náplasti.";
 
 /* Label for prime step 2.2 */
 "Fill the syringe with insulin" = "Naplň injekčnú striekačku inzulínom";
@@ -233,37 +233,37 @@
 "Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Vložte injekčnú striekačku do náplasti a vytiahnite 1 až 2 dávky vzduchu.";
 
 /* Label for prime step 2.4 */
-"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Fill the patch with insulin. NOTE: A minimum of 70U is required for activation.";
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Naplňte náplasť inzulínom. POZNÁMKA: Na aktiváciu je potrebných minimálne 70j.";
 
 /* Label for pressing needle button step 2.5 */
 "Press the needle button and start the priming process." = "Stlačte tlačidlo ihly a začnite proces napĺňania.";
 
 /* Label for warning priming */
-"Do not attach the patch to the body yet" = "Zatiaľ si nenasadzuj pumpu na telo";
+"Do not attach the patch to the body yet" = "Zatiaľ si nenasadzuj náplasť na telo";
 
 /* label for prime start action */
 "Start priming" = "Spustiť napĺňanie";
 
 /* Priming header */
-"Patch priming" = "Napĺňanie pumpy";
+"Patch priming" = "Napĺňanie náplasti";
 
 /* Label for inserting needle step 1 */
-"Remove the safety cover from the patch." = "Remove the safety cover from the patch.";
+"Remove the safety cover from the patch." = "Odstráňte bezpečnostný kryt z náplasti.";
 
 /* Label for inserting needle step 2 */
-"Attach the pump to the body." = "Attach the pump to the body.";
+"Attach the pump to the body." = "Pripevnite pumpu k telu.";
 
 /* Label for inserting needle step 3 */
-"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process.";
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Stlačte tlačidlo ihly, aby ste vložili ihlu. Kliknite na „Aktivovať“, aby ste dokončili proces aktivácie.";
 
 /* Patch activation header */
-"Patch activation" = "Aktivácia pumpy";
+"Patch activation" = "Aktivácia náplasti";
 
 /* welcome header*/
 "Welcome" = "Vitajte";
 
 /* Welcome text for MedtrumKit */
-"You will start by setting up your insulin type & basic patch settings before activating your patch." = "You will start by setting up your insulin type & basic patch settings before activating your patch.";
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Pred aktiváciou náplasti najskôr nastavíte typ inzulínu a základné nastavenia náplasti.";
 
 /* label for go to pump base patch */
 "Go back to pump base" = "Vrátiť sa k základni pumpy";
@@ -272,7 +272,7 @@
 "Go back to priming" = "Vrátiť sa k plneniu";
 
 /* Title expire reminder notification */
-"Your patch will expire soon!" = "Tvoja pumpa čoskoro exspiruje!";
+"Your patch will expire soon!" = "Tvoja náplasť čoskoro exspiruje!";
 
 /* Body expire reminder notification */
-"Your patch has %i hours left" = "Tvoja pumpa má zostávajúcich %i hodín";
+"Your patch has %i hours left" = "Tvoja náplasť má zostávajúcich %i hodín";
