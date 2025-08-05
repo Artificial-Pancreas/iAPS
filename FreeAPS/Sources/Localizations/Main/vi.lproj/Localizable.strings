@@ -2084,7 +2084,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings" = "Readings";
+"Readings" = "Chỉ số đo";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";
@@ -2117,7 +2117,7 @@ Enact a temp Basal or a temp target */
 "days" = "days";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Chu kỳ";
 
 /* Loop Errors in statPanel */
 "Errors" = "Lỗi";
@@ -2132,7 +2132,7 @@ Enact a temp Basal or a temp target */
 "Non-completed Loops" = "Vòng lặp chưa hoàn thành";
 
 /* Average loop interval */
-"Interval" = "Khoảng thời gian";
+"Interval" = "Interval";
 
 /* Median loop interval */
 "Duration" = "Duration";
