@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "Nouvelle glycémie manquante";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Enregistrer le repas sans bolus";
@@ -2176,8 +2176,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "toutes";
 
-/* Active Insulin View */
-"Active Insulin" = "Insuline active";
+/* IOB View */
+"Insulin on Board" = "Insulin on Board";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Durée avec insuline négative";
@@ -2200,8 +2200,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "DQT il y a 3 jours";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Glucides actifs";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrates on Board";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Display COB Chart";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3114,16 +3120,19 @@ Enact a temp Basal or a temp target */
 "Light" = "Léger";
 
 /* UI/UX option */
-"Dark" = "Dark";
+"Dark" = "Sombre";
 
 /* UI/UX option */
 "Auto" = "Auto";
 
 /* UI/UX option */
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Préférence des couleurs";
 
 /* UI/UX option */
-"Light / Dark Mode" = "Light / Dark Mode";
+"Light / Dark Mode" = "Mode clair/sombre";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";

@@ -12,7 +12,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ U";
+"%@ U" = "%@ وحدة";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ U (Finished)";
@@ -303,7 +303,7 @@
 "hour" = "ساعة";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "ساعات";
 
 /* Alert message body for confirm pod attachment */
 "If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "إذا قمت بإلغاء إعداد البود، سيتم إلغاء تنشيط البود الحالي وسيكون غير قابل للاستخدام.";
