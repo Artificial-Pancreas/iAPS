@@ -209,7 +209,7 @@
 "Authenticate & deactivate patch" = "Over a deaktivuj pumpu";
 
 /* Header deactivate patch */
-"Deactivate patch" = "Deactivate patch";
+"Deactivate patch" = "Deaktivovať náplasť";
 
 /* Label for serial number */
 "Serial number" = "Sériové číslo";
@@ -218,7 +218,7 @@
 "Make sure the Serial Number is correct before connecting it to the patch." = "Make sure the Serial Number is correct before connecting it to the patch.";
 
 /* Pump base settings header */
-"Pump base settings" = "Pump base settings";
+"Pump base settings" = "Nastavenia základne pumpy";
 
 /* save and continue */
 "Save and continue" = "Uložiť a pokračovať";
@@ -230,13 +230,13 @@
 "Fill the syringe with insulin" = "Naplň injekčnú striekačku inzulínom";
 
 /* Label for prime step 2.3 */
-"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Place the syringe in the patch and pull out 1 to 2 dashes of air.";
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Vložte injekčnú striekačku do náplasti a vytiahnite 1 až 2 dávky vzduchu.";
 
 /* Label for prime step 2.4 */
 "Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Fill the patch with insulin. NOTE: A minimum of 70U is required for activation.";
 
 /* Label for pressing needle button step 2.5 */
-"Press the needle button and start the priming process." = "Press the needle button and start the priming process.";
+"Press the needle button and start the priming process." = "Stlačte tlačidlo ihly a začnite proces napĺňania.";
 
 /* Label for warning priming */
 "Do not attach the patch to the body yet" = "Zatiaľ si nenasadzuj pumpu na telo";
@@ -260,16 +260,16 @@
 "Patch activation" = "Aktivácia pumpy";
 
 /* welcome header*/
-"Welcome" = "Welcome";
+"Welcome" = "Vitajte";
 
 /* Welcome text for MedtrumKit */
 "You will start by setting up your insulin type & basic patch settings before activating your patch." = "You will start by setting up your insulin type & basic patch settings before activating your patch.";
 
 /* label for go to pump base patch */
-"Go back to pump base" = "Go back to pump base";
+"Go back to pump base" = "Vrátiť sa k základni pumpy";
 
 /* label for go to prime patch */
-"Go back to priming" = "Go back to priming";
+"Go back to priming" = "Vrátiť sa k plneniu";
 
 /* Title expire reminder notification */
 "Your patch will expire soon!" = "Tvoja pumpa čoskoro exspiruje!";
