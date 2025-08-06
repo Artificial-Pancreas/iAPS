@@ -360,7 +360,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("Remaining Carbs Cap", comment: "Remaining Carbs Cap"),
                     type: .decimal(keypath: \.remainingCarbsCap),
                     infoText: NSLocalizedString(
-                        "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.",
+                        "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90",
                         comment: "Remaining Carbs Cap"
                     ),
                     settable: self

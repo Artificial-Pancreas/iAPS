@@ -41,7 +41,7 @@
 "Enact bolus" = "Tiêm liều Bolus";
 
 /*  */
-"Insulin recommended" = "Liều insulin được đề nghị";
+"Insulin recommended" = "Đề xuất tiêm insulin";
 
 /*  */
 "Insulin required" = "Liều insulin được yêu cầu";
@@ -420,7 +420,7 @@ Enact a temp Basal or a temp target */
 "Preferences" = "Preferences";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Tỷ lệ liều insulin khuyên dùng";
+"Recommended Insulin Fraction" = "Tỷ lệ insulin được đề xuất";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Bỏ qua màn hình bolus sau carbs";
@@ -652,7 +652,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% Ghi đè";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Phải cài đặt ứng dụng Garmin Connect để sử dụng cho iAPS.\n Hãy truy cập App Store để tải xuống ứng dụng này";
@@ -1176,7 +1176,7 @@ Enact a temp Basal or a temp target */
 "Temp basal Amount in U/h" = "Số lượng Temp Basal tính bằng U/h";
 
 /* */
-"Cancel Temp" = "Cancel Temp";
+"Cancel Temp" = "Hủy chế độ tạm thời";
 
 
 
@@ -1439,7 +1439,7 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Nhà phát triển";
 
 /* Debug option view NS Upload Profile */
 "NS Upload Profile and Settings" = "NS Upload Profile and Settings";
@@ -2036,7 +2036,7 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Hiển thị biểu đồ dạng X-Grid";
+"Display Chart X - Grid lines" = "Hiển thị biểu đồ trục X";
 
 /* */
 "Display Chart Y - Grid lines" = "Hiển thị biểu đồ trục Y";
@@ -2084,7 +2084,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings" = "Readings";
+"Readings" = "Chỉ số đo";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";
@@ -2117,7 +2117,7 @@ Enact a temp Basal or a temp target */
 "days" = "days";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Chu kỳ";
 
 /* Loop Errors in statPanel */
 "Errors" = "Lỗi";
@@ -2132,7 +2132,7 @@ Enact a temp Basal or a temp target */
 "Non-completed Loops" = "Vòng lặp chưa hoàn thành";
 
 /* Average loop interval */
-"Interval" = "Khoảng thời gian";
+"Interval" = "Interval";
 
 /* Median loop interval */
 "Duration" = "Duration";
@@ -2176,8 +2176,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "Tất cả";
 
-/* Active Insulin View */
-"Active Insulin" = "Hoạt động của Insulin";
+/* IOB View */
+"Insulin on Board" = "Insulin đang hoạt động";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Thời gian có Insulin âm tính";
@@ -2200,8 +2200,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Hoạt động của Carbohydrates";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrate đang hoạt động";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Hiển thị biểu đồ COB";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Hiển thị biểu đồ hoạt động của insulin";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2598,7 +2604,7 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio BG Range" = "Khoảng BG cho tỷ lệ phân phối SMB";
 
 /* SMB Delivery Ratio BG Range description */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0. Giá trị hợp lý nằm trong khoảng từ 40 mg/dL đến 120 mg/dL. Tỷ lệ phân phối SMB sẽ tăng tuyến tính theo mức đường huyết trong khoảng [target_bg, target_bg + bg_range]. Tại mức đường huyết target_bg, tỷ lệ SMB là smb_delivery_ratio_min; tại target_bg + bg_range, tỷ lệ SMB là smb_delivery_ratio_max. Nếu đặt là 0, cơ chế tăng tuyến tính của tỷ lệ SMB sẽ bị vô hiệu hóa và hệ thống sẽ sử dụng một tỷ lệ SMB cố định (smb_delivery_ratio).";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, giá trị hợp lý nằm trong khoảng từ 40 mg/dL đến 120 mg/dL. Tỷ lệ phân phối SMB tăng tuyến tính sẽ được ánh xạ theo khoảng glucose [target_bg, target_bg + bg_range]. Tại mức target_bg, tỷ lệ SMB là smb_delivery_ratio_min; tại mức target_bg + bg_range, tỷ lệ là smb_delivery_ratio_max. Nếu đặt giá trị là 0, tỷ lệ SMB tăng tuyến tính sẽ bị vô hiệu hóa và hệ thống sẽ sử dụng tỷ lệ SMB cố định (smb_delivery_ratio).";
 
 /* */
 "SMB Delivery Ratio Maximum" = "Tỷ lệ phân phối SMB tối đa";
@@ -2684,13 +2690,13 @@ Enact a temp Basal or a temp target */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại autosens ratio về mức trung hoà khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi điểm gắn có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình chỉ để thay đổi điểm gắn, bạn có thể cân nhắc việc tắt tính năng này.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
-"High Temptarget Raises Sensitivity" = "Mục tiêu tạm thời Cao sẽ làm Tăng độ nhạy";
+"High Temptarget Raises Sensitivity" = "Mục tiêu tạm thời Cao sẽ Tăng độ nhạy";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Mặc định là False. Khi được đặt thành True, sẽ tăng độ nhạy (tỷ lệ độ nhạy thấp hơn) cho các mục tiêu tạm thời được đặt thành >= 111. Từ đồng nghĩa với Chế độ thể dục. Mục tiêu tạm thời của bạn trên 110 càng cao sẽ dẫn đến tỷ lệ nhạy cảm hơn (thấp hơn), ví dụ: mục tiêu tạm thời là 120 dẫn đến tỷ lệ độ nhạy là 0,75, trong khi 140 dẫn đến tỷ lệ nhạy cảm là 0,6 (với một nửa mục tiêu với mặc định là 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
-"Low Temptarget Lowers Sensitivity" = "Mục tiêu tạm thời Thấp sẽ làm Giảm độ nhạy";
+"Low Temptarget Lowers Sensitivity" = "Mục tiêu tạm thời Thấp sẽ Giảm độ nhạy";
 
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Mặc định là False. Khi được đặt thành True, có thể giảm độ nhạy (tỷ lệ độ nhạy cao hơn) cho mục tiêu tạm thời <= 99. Mục tiêu tạm thời của bạn càng thấp dưới 100 sẽ dẫn đến tỷ lệ kém nhạy hơn (cao hơn), ví dụ: mục tiêu tạm thời là 95 dẫn đến tỷ lệ độ nhạy là 1,09, trong khi 85 kết quả là 1,33 (với Một nửa mục tiêu cơ bản mặc định là 160).";
@@ -2858,7 +2864,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Lượng carb còn lại";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Đây là lượng carb tối đa mà chúng tôi cho rằng sẽ hấp thụ trong 4 giờ nếu chúng tôi chưa thấy khả năng hấp thụ carb.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Đây là lượng carbs tối đa mà hệ thống sẽ giả định sẽ được hấp thụ trong vòng 4 giờ nếu chưa phát hiện thấy sự hấp thụ carb. Tối đa là 90g";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Giới hạn liều nền qua SMB";
@@ -3090,6 +3096,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Hiển thị thời gian cảm biến";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Hiện thời gian còn lại của cảm biến";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Ẩn nhãn nồng độ Insulin";
 
 /* UI/UX option */
@@ -3105,16 +3114,10 @@ Enact a temp Basal or a temp target */
 "Display carb equivalent amount" = "Hiển thị số lượng carb quy đổi";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Hiển thị thời gian còn lại của cảm biến";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Hiển thị tuổi cảm biến, không hiển thị thời gian còn lại";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Hiển thị tỷ lệ và nút Xem lịch sử";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Xem trang chủ Auto ISF";
+"Home View Ratio Button" = "Nút tỷ lệ trong giao diện chính";
 
 /* UI/UX option */
 "Light" = "Sáng";
@@ -3130,6 +3133,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Light / Dark Mode" = "Chế độ Sáng/Tối";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Bỏ qua carbohydrate trong oref0";
+
+/* Debug option */
+"Hide oref0 Predictions" = "Hide oref0 Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";

@@ -80,7 +80,7 @@ The iAPS app runs on your **iPhone** or **iPod**. An **iPhone 8 or newer** is re
 
 Connect with the iAPS community and find helpful resources here:
 
-  * **Discord iAPS Server:** [https://discord.gg/KT5ngzya5C](https://discord.gg/KT5ngzya5C)
+  * **Discord iAPS Server:** [https://discord.com/invite/ptkk2Y264Z](https://discord.com/invite/ptkk2Y264Z)
   * **Facebook Group:** [https://www.facebook.com/groups/403549385863967](https://www.facebook.com/groups/403549385863967)
   * **iAPS Statistics:** [https://open-iaps.org](https://open-iaps.org)
   * **iAPS Documentation (under development):** [https://iaps.readthedocs.io/en/latest/](https://iaps.readthedocs.io/en/latest/)

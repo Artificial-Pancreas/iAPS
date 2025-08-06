@@ -1,6 +1,6 @@
 import Foundation
 
-@dynamicMemberLookup protocol JSON: Codable {
+@dynamicMemberLookup protocol JSON: Codable, Sendable {
     var rawJSON: String { get }
     init?(from: String)
 }
@@ -18,8 +18,31 @@ extension JSON {
         do {
             let object = try JSONCoding.decoder.decode(Self.self, from: data)
             self = object
+        } catch let DecodingError.dataCorrupted(context) {
+            warning(.service, "Cannot decode JSON", error: context.underlyingError)
+            return nil
+        } catch let DecodingError.keyNotFound(key, context) {
+            warning(
+                .service,
+                "Key '\(key)' not found: " + context.debugDescription + "codingPath: " + context.codingPath.debugDescription
+            )
+            return nil
+        } catch let DecodingError.valueNotFound(value, context) {
+            warning(
+                .service,
+                "Value '\(value)' not found: " + context.debugDescription +
+                    "codingPath: " + context.codingPath.debugDescription
+            )
+            return nil
+        } catch let DecodingError.typeMismatch(type, context) {
+            warning(
+                .service,
+                "Type '\(type)' mismatch:" + context.debugDescription +
+                    "codingPath:" + context.codingPath.debugDescription
+            )
+            return nil
         } catch {
-            warning(.service, "Cannot decode JSON", error: error)
+            warning(.service, "error: \(error)")
             return nil
         }
     }

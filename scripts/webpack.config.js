@@ -25,8 +25,8 @@ module.exports = {
     },
     library: {
         type: 'var',
-        name: 'freeaps_[name]'
-    }
+        name: 'freeaps_[name]',
+    },
   },
   optimization: {
     minimize: true,

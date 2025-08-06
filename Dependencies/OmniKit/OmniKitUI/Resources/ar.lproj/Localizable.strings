@@ -12,7 +12,7 @@
 
 /* Format string for delivered insulin. (1: The localized amount)
    Format string for insulin remaining in reservoir. (1: The localized amount) */
-"%@ U" = "%@ U";
+"%@ U" = "%@ وحدة";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
 "%@ U (Finished)" = "%@ U (Finished)";
@@ -117,7 +117,7 @@
 "Cancel" = "إلغاء";
 
 /* Button title to cancel manual basal */
-"Cancel Manual Basal" = "Cancel Manual Basal";
+"Cancel Manual Basal" = "إلغاء الجرعة القاعدية اليدوية";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
 "Cannula inserted successfully. Continue." = "Cannula inserted successfully. Continue.";
@@ -303,7 +303,7 @@
 "hour" = "ساعة";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "ساعات";
 
 /* Alert message body for confirm pod attachment */
 "If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "إذا قمت بإلغاء إعداد البود، سيتم إلغاء تنشيط البود الحالي وسيكون غير قابل للاستخدام.";
@@ -327,7 +327,7 @@
 "Inserting..." = "جاري إدخال...";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "الإنسولين\nموقف مؤقتاً";
 
 /* The title of the cell showing delivered insulin */
 "Insulin Delivered" = "Insulin Delivered";
@@ -358,10 +358,10 @@
 "Keep the RileyLink about 6 inches from the pod during pairing." = "Keep the RileyLink about 6 inches from the pod during pairing.";
 
 /* description label for last status date pod details row */
-"Last Status" = "Last Status";
+"Last Status" = "آخر حالة";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "لن يقوم تطبيق Loop بضبط توصيل الإنسولين تلقائيًا حتى تنتهي الجرعة القاعدية المؤقتة أو يتم إلغاؤها.";
 
 /* The title of the cell showing the pod lot id */
 "Lot" = "Lot";
@@ -396,13 +396,13 @@
 "NA" = "NV";
 
 /* Text of continue button on ExpirationReminderSetupView */
-"Next" = "Next";
+"Next" = "التالي";
 
 /* Button label for user to answer cannula was not properly inserted */
 "No" = "لا";
 
 /* Text shown in insulin remaining space when no pod is paired */
-"No\nDelivery" = "No\nDelivery";
+"No\nDelivery" = "لا يوجد\nتسليم";
 
 /* Error message for reservoir view when reservoir empty */
 "No Insulin" = "لا يوجد إنسولين";
@@ -508,7 +508,7 @@
 "Pod expires in" = "تنتهي صلاحية البود في";
 
 /* description label for pod fault details */
-"Pod Fault Details" = "Pod Fault Details";
+"Pod Fault Details" = "تفاصيل خطأ البود";
 
 /* Error message for reservoir view when pod occlusion checks failed */
 "Pod Occlusion" = "انسداد البود";
@@ -520,7 +520,7 @@
 "Pod Settings" = "Pod Settings";
 
 /* Title for PodSetupView */
-"Pod Setup" = "Pod Setup";
+"Pod Setup" = "تهيئة البود";
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "تحضير الموقع.";
@@ -615,7 +615,7 @@
 "Select the type of insulin that you will be using in this pod." = "Select the type of insulin that you will be using in this pod.";
 
 /* description label for sequence number pod details row */
-"Sequence Number" = "Sequence Number";
+"Sequence Number" = "الرقم التسلسلي";
 
 /* Button text for setting manual temporary basal rate */
 "Set Temporary Basal" = "Set Temporary Basal";
@@ -633,7 +633,7 @@
 "Signal Loss" = "فقدان الإشارة";
 
 /* No comment provided by engineer. */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "هل ترغب في تخطي عملية إعداد Omnipod؟";
 
 /* The title of the status section in settings */
 "Status" = "الحالة";
@@ -651,7 +651,7 @@
 "Suspended" = "Suspended";
 
 /* Label for suspended at time */
-"Suspended At" = "Suspended At";
+"Suspended At" = "تم الإيقاف المؤقت في";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Suspending insulin delivery...";
@@ -687,10 +687,10 @@
 "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "يقوم التطبيق بتكوين تذكير على البود لتنبيهك مسبقًا قبل انتهاء صلاحية البود. قم بتحديد عدد الساعات التي تود تلقي إشعار مسبق بها بشكل افتراضي عند إقران بود جديد.";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "يبلغك التطبيق مسبقًا بقرب انتهاء صلاحية البود.\n\nقم بالتمرير لتحديد عدد الساعات التي تود أن تتلقى فيها إشعارًا مسبقًا.";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "يبلغك التطبيق عندما تصل كمية الإنسولين في البود إلى هذا المستوى (من 50-10 وحدة).\n\nقم بالتمرير لتحديد عدد الوحدات التي ترغب في أن يتم تذكيرك عند الوصول إليها.";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "يقوم التطبيق بإشعارك عندما يصل مقدار الأنسولين في البود إلى هذا المستوى.";
@@ -772,7 +772,7 @@
 "Yes, Sync to Current Time" = "نعم، المزامنة مع الوقت الحالي";
 
 /* bodyText for PodSetupView */
-"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "ستبدأ الآن عملية إعداد التذكيرات الخاصة بك، وملء البود بالإنسولين، وإقرانه بجهازك، ثم تثبيته على جسمك.";
 
 /* Format string for instructions for setup complete view. (1: app name) */
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "بودك جاهز للاستخدام.\n\n%1$@ سيذكرك بتغيير البود الخاص بك قبل انتهاء صلاحيته. يمكنك تغيير هذا إلى وقت مناسب لك.";
@@ -781,39 +781,39 @@
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "قد يكون البود لا يزال يقوم بتوصيل الأنسولين. \nقم بإزالته من جسمك، ثم اضغط على \"تابع\"";
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Silenced";
+"Silenced" = "تم كتم الصوت";
 
 /* Description for SilencePodPreference.disabled */
-"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "وضع التشغيل العادي حيث تُستخدم صفارات البود المسموعة لجميع تنبيهات البود وعند تفعيل تذكيرات التأكيد.";
 
 /* Description for SilencePodPreference.enabled */
-"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "جميع تنبيهات البود لا تصدر أي صفارات، ويتم تعطيل صفارات تذكيرات التأكيد. سيصدر البود صفارات فقط في حال حدوث أعطال حرجة أو عند تشغيل صفارات الاختبار.\n\n⚠️ تحذير: عند كتم صوت البود، يجب إبقاؤه ضمن نطاق البلوتوث لهذا الجهاز حتى تتمكن من استقبال إشعارات تنبيهات البود.";
 
 /* Help text for Silence Pod view  */
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "وضع كتم صوت البود يقوم بإيقاف جميع صفارات تنبيهات البود وصفارات تذكيرات التأكيد.";
 
 /* Navigation title for Silence Pod */
-"Silence Pod" = "Silence Pod";
+"Silence Pod" = "كتم صوت البود";
 
 /* title for pod details page */
-"Pod Details" = "Pod Details";
+"Pod Details" = "تفاصيل البود";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Previous Pod Details";
+"Previous Pod Details" = "تفاصيل البود السابق";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "تفاصيل مدير المضخة";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+"Retrieving Pump Manager Details..." = "جارٍ استرجاع تفاصيل مدير المضخة...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+"Refresh Pump Manager Details" = "تحديث تفاصيل مدير المضخة";
 
 /* Alert title for error when updating silence pod preference */
 "Failed to update silence pod preference." = "Failed to update silence pod preference.";
 
 /* Section header for diagnostic section */
-"Diagnostics" = "Diagnostics";
+"Diagnostics" = "تشخيص";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "قراءة حالة البود";
