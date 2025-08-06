@@ -2176,8 +2176,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "alle";
 
-/* Active Insulin View */
-"Active Insulin" = "Aktives Insulin";
+/* IOB View */
+"Insulin on Board" = "Aktives Insulin (IOB)";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Zeit mit negativem Insulin";
@@ -2201,8 +2201,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD vor 3 Tagen";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Aktive Kohlenhydrate";
+/* COB View */
+"Carbohydrates on Board" = "Aktive Kohlenhydrate (COB)";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Diagramm der Aktiven Kohlenhydrate (COB) anzeigen";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Insulin-Aktivitätsdiagramm anzeigen";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3125,6 +3131,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Light / Dark Mode" = "Light / Dark Mode";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Kohlenhydrate in oref0 vernachlässigen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
