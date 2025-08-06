@@ -2176,8 +2176,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "alle";
 
-/* Active Insulin View */
-"Active Insulin" = "Aktives Insulin";
+/* IOB View */
+"Insulin on Board" = "Aktives Insulin (IOB)";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Zeit mit negativem Insulin";
@@ -2201,8 +2201,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD vor 3 Tagen";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Aktive Kohlenhydrate";
+/* COB View */
+"Carbohydrates on Board" = "Aktive Kohlenhydrate (COB)";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Diagramm der Aktiven Kohlenhydrate (COB) anzeigen";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Insulin-Aktivitätsdiagramm anzeigen";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2859,7 +2865,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Verbleibende Kohlenhydrat-Kappung";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Dies ist die maximale Anzahl der geschätzten abgebauten Kohlenhydrate in 4 Stunden, wenn keine Kohlenhydrat-Resorption ersichtlich ist.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Max. SMB Basal Minuten";
@@ -3091,6 +3097,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Sensoralter anzeigen";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Insulinkonzentrations ausblenden";
 
 /* UI/UX option */
@@ -3106,16 +3115,10 @@ Enact a temp Basal or a temp target */
 "Display carb equivalent amount" = "Display carb equivalent amount";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Display Ratio and a History View button";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Home View Ratio Button" = "Home View Ratio Button";
 
 /* UI/UX option */
 "Light" = "Leicht";
@@ -3131,6 +3134,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Light / Dark Mode" = "Light / Dark Mode";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Kohlenhydrate in oref0 vernachlässigen";
+
+/* Debug option */
+"Hide oref0 Predictions" = "Hide oref0 Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";

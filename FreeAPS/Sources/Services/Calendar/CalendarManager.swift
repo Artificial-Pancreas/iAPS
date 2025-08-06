@@ -22,6 +22,8 @@ final class BaseCalendarManager: CalendarManager, Injectable {
     init(resolver: Resolver) {
         injectServices(resolver)
         broadcaster.register(GlucoseObserver.self, observer: self)
+        broadcaster.register(SuggestionObserver.self, observer: self)
+        broadcaster.register(PumpHistoryObserver.self, observer: self)
         setupGlucose()
     }
 
@@ -95,10 +97,10 @@ final class BaseCalendarManager: CalendarManager, Injectable {
 
         // Latest Loop data (from CoreData)
         var freshLoop: Double = 20
-        var lastLoop: LastLoop?
-        if displeyCOBandIOB || displayEmojis, let recentLoop = CoreDataStorage().fetchLastLoop() {
+        var lastLoop: Reasons?
+        if displeyCOBandIOB || displayEmojis, let recentLoop = CoreDataStorage().fetchReason() {
             lastLoop = recentLoop
-            freshLoop = -1 * (recentLoop.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
+            freshLoop = -1 * (recentLoop.date ?? .distantPast).timeIntervalSinceNow.minutes
         }
 
         var glucoseIcon = "🟢"
@@ -226,7 +228,15 @@ final class BaseCalendarManager: CalendarManager, Injectable {
     }
 }
 
-extension BaseCalendarManager: GlucoseObserver {
+extension BaseCalendarManager: GlucoseObserver, SuggestionObserver, PumpHistoryObserver {
+    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+        setupGlucose()
+    }
+
+    func suggestionDidUpdate(_: Suggestion) {
+        setupGlucose()
+    }
+
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }

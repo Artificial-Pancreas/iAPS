@@ -5,8 +5,8 @@ import Swinject
 import UIKit
 
 protocol FetchGlucoseManager: SourceInfoProvider {
-    func updateGlucoseStore(newBloodGlucose: [BloodGlucose])
-    func refreshCGM()
+    func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) async
+    func refreshCGM() async
     func updateGlucoseSource()
     var glucoseSource: GlucoseSource! { get }
     var cgmGlucoseSourceType: CGMType? { get set }
@@ -23,6 +23,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var healthKitManager: HealthKitManager!
     @Injected() var deviceDataManager: DeviceDataManager!
 
+    private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
     var cgmGlucoseSourceType: CGMType?
@@ -72,14 +73,14 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     }
 
     /// function called when a callback is fired by CGM BLE - no more used
-    public func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) {
+    @MainActor public func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) {
         let syncDate = glucoseStorage.syncDate()
         debug(.deviceManager, "CGM BLE FETCHGLUCOSE  : SyncDate is \(syncDate)")
         glucoseStoreAndHeartDecision(syncDate: syncDate, glucose: newBloodGlucose)
     }
 
     /// function to try to force the refresh of the CGM - generally provide by the pump heartbeat
-    public func refreshCGM() {
+    @MainActor public func refreshCGM() {
         debug(.deviceManager, "refreshCGM by pump")
         updateGlucoseSource()
         Publishers.CombineLatest3(
@@ -96,8 +97,12 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         .store(in: &lifetime)
     }
 
-    private func glucoseStoreAndHeartDecision(syncDate: Date, glucose: [BloodGlucose], glucoseFromHealth: [BloodGlucose] = []) {
-        let allGlucose = glucose + glucoseFromHealth
+    private func glucoseStoreAndHeartDecision(
+        syncDate: Date,
+        glucose: [BloodGlucose] = [],
+        glucoseFromHealth: [BloodGlucose] = []
+    ) {
+        let allGlucose = glucose
         var filteredByDate: [BloodGlucose] = []
         var filtered: [BloodGlucose] = []
 
@@ -145,10 +150,10 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             filtered = smoothedValues.filter { $0.dateString > syncDate }
         }
 
+        save(filtered)
+
         glucoseStorage.storeGlucose(filtered)
-
         deviceDataManager.heartbeat(date: Date())
-
         nightscoutManager.uploadGlucose()
 
         // end of the BG tasks
@@ -173,22 +178,23 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 self.updateGlucoseSource()
                 return self.glucoseSource.fetch(self.timer).eraseToAnyPublisher()
             }
-            .sink { glucose in
+            .receive(on: processQueue)
+            .flatMap { glucose in
                 debug(.nightscout, "FetchGlucoseManager callback sensor")
-                Publishers.CombineLatest3(
+                return Publishers.CombineLatest3(
                     Just(glucose),
                     Just(self.glucoseStorage.syncDate()),
                     self.healthKitManager.fetch(nil)
                 )
                 .eraseToAnyPublisher()
-                .sink { newGlucose, syncDate, glucoseFromHealth in
-                    self.glucoseStoreAndHeartDecision(
-                        syncDate: syncDate,
-                        glucose: newGlucose,
-                        glucoseFromHealth: glucoseFromHealth
-                    )
-                }
-                .store(in: &self.lifetime)
+            }
+            .receive(on: processQueue)
+            .sink { newGlucose, syncDate, glucoseFromHealth in
+                self.glucoseStoreAndHeartDecision(
+                    syncDate: syncDate,
+                    glucose: newGlucose,
+                    glucoseFromHealth: glucoseFromHealth
+                )
             }
             .store(in: &lifetime)
         timer.fire()
@@ -209,6 +215,19 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+    }
+
+    private func save(_ glucose: [BloodGlucose]) {
+        guard glucose.isNotEmpty, let first = glucose.first, let glucose = first.glucose, glucose != 0 else { return }
+
+        coredataContext.perform {
+            let dataForForStats = Readings(context: self.coredataContext)
+            dataForForStats.date = first.dateString
+            dataForForStats.glucose = Int16(glucose)
+            dataForForStats.id = first.id
+            dataForForStats.direction = first.direction?.symbol ?? "↔︎"
+            try? self.coredataContext.save()
+        }
     }
 
     func sourceInfo() -> [String: Any]? {

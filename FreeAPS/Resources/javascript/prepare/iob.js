@@ -11,5 +11,15 @@ function generate(pumphistory_data, profile_data, clock_data, autosens_data = nu
       if (autosens_data) {
         inputs.autosens = autosens_data;
       }
-      return freeaps_iob(inputs);
+    
+    // Adjust for eventual Overrides
+    const dynamicVariables = profile_data.dynamicVariables || { } ;
+        
+    if (dynamicVariables.useOverride) {
+        if (dynamicVariables.useOverride && dynamicVariables.overridePercentage != 100 && dynamicVariables.basal) {
+            profile_data.basalprofile.forEach( basal => basal.rate *= (dynamicVariables.overridePercentage / 100));
+        }
+    }
+    
+    return freeaps_iob(inputs);
 }

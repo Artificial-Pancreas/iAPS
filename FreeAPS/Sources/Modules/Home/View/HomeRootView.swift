@@ -109,8 +109,8 @@ extension Home {
                 highGlucose: $state.data.highGlucose,
                 alwaysUseColors: $state.alwaysUseColors,
                 displayDelta: $state.displayDelta,
-                scrolling: $displayGlucose,
-                displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays, anubis: $state.anubis
+                scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
+                displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -164,7 +164,6 @@ extension Home {
                 impactHeavy.impactOccurred()
                 state.runLoop()
             }
-            .offset(y: 10)
         }
 
         var tempBasalString: String {
@@ -416,7 +415,7 @@ extension Home {
                         materialOpacity: materialOpacity
                     )
                     .frame(width: 12, height: 38)
-                    .offset(x: 0, y: -5)
+                    .offset(y: -5)
                     HStack(spacing: 0) {
                         if let loop = state.data.suggestion, let cob = loop.cob {
                             Text(numberFormatter.string(from: cob as NSNumber) ?? "0")
@@ -426,14 +425,14 @@ extension Home {
                             Text("?").font(.statusFont).bold()
                         }
                         Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
-                    }.offset(x: 0, y: 5)
+                    }.offset(y: 5)
                 }
                 // Instead of Spacer
                 Text(" ")
 
                 // Insulin on Board
                 HStack {
-                    let substance = Double(state.data.suggestion?.iob ?? 0)
+                    let substance = Double(state.data.iob ?? 0)
                     let max = max(Double(state.maxIOB), 1)
                     let fraction: Double = 1 - abs(substance) / max
                     let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
@@ -444,9 +443,9 @@ extension Home {
                         materialOpacity: materialOpacity
                     )
                     .frame(width: 12, height: 38)
-                    .offset(x: 0, y: -5)
+                    .offset(y: -5)
                     HStack(spacing: 0) {
-                        if let loop = state.data.suggestion, let iob = loop.iob {
+                        if let iob = state.data.iob {
                             Text(
                                 targetFormatter.string(from: iob as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
@@ -454,10 +453,9 @@ extension Home {
                             Text("?").font(.statusFont).bold()
                         }
                         Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                    }.offset(x: 0, y: 5)
+                    }.offset(y: 5)
                 }
-            }
-            .offset(y: 5)
+            }.offset(x: 5, y: 5)
         }
 
         var preview: some View {
@@ -625,8 +623,15 @@ extension Home {
                     VStack {
                         ZStack {
                             if !displayGlucose {
-                                glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -10)
-                                loopView.frame(maxWidth: .infinity, alignment: .leading).offset(x: 40, y: -30)
+                                glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
+                                loopView
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        maxHeight: .infinity,
+                                        alignment: .topLeading
+                                    )
+                                    .padding(20)
+                                    .offset(x: 5, y: -10)
                             }
                             if displayGlucose {
                                 glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -10)
@@ -766,13 +771,9 @@ extension Home {
                             VStack {
                                 // Main Chart
                                 chart
-                                // Adjust hours visible (X-Axis) and optional ratio display
-                                if state.extended {
-                                    timeSetting
-                                        .overlay { isfView }
-                                } else {
-                                    timeSetting
-                                }
+                                // Adjust hours visible (X-Axis) and ratio display
+                                timeSetting
+                                    .overlay { isfView }
                                 // TIR Chart
                                 if !state.data.glucose.isEmpty {
                                     preview.padding(.top, 15)
@@ -780,6 +781,7 @@ extension Home {
                                 // Loops Chart
                                 loopPreview.padding(.vertical, 15)
 
+                                // COB Chart
                                 if state.carbData > 0 {
                                     activeCOBView
                                 }

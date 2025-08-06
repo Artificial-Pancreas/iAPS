@@ -63,16 +63,16 @@
 "Communication issue: Unacknowledged command pending." = "مشكلة إتصال: أمر غير معترف به معلق.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "ستصدر تذكيرات التأكيد عند تنفيذ الأوامر التي تبدأها بنفسك، مثل إعطاء البلعة، أو إلغاء البلعة، أو الإيقاف المؤقت، أو الاستئناف، أو حفظ تذكيرات الإشعارات، وغيرها. أما عند قيام التطبيق بضبط الجرعات تلقائيًا، فلن يتم استخدام تذكيرات التأكيد.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "ستصدر تذكيرات التأكيد عند قيام التطبيق بضبط الجرعات تلقائيًا، وكذلك عند تنفيذ الأوامر التي تبدأها بنفسك.";
 
 /* The title for AlarmCode.other notification */
 "Critical Pod Error" = "خطأ حرج في البود";
 
 /* Recovery suggestion when unexpected address received */
-"Crosstalk possible. Please move to a new location" = "Crosstalk possible. Please move to a new location";
+"Crosstalk possible. Please move to a new location" = "هناك احتمال لتداخل الإشارات. يرجى الانتقال إلى موقع جديد";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "تم إلغاء التنشيط";
@@ -171,7 +171,7 @@
 "Memory initialized" = "تم تهيئة الذاكرة";
 
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
-"Move to a new area away from any other pods and try again." = "Move to a new area away from any other pods and try again.";
+"Move to a new area away from any other pods and try again." = "انتقل إلى منطقة جديدة بعيدًا عن أي بودات أخرى ثم حاول مرة أخرى.";
 
 /* Alert content body for multiCommand pod alert
    Alert content title for multiCommand pod alert */
@@ -197,7 +197,7 @@
 "No pod paired" = "لا يوجد بود مقترن";
 
 /* Error message for PodCommsError.noPodsFound */
-"No pods found" = "No pods found";
+"No pods found" = "لم يتم العثور على أي بود";
 
 /* Error message shown when no response from pod was received */
 "No response from pod" = "لايوجد رد من الحجيرة";
@@ -228,7 +228,7 @@
 "Parsing Error: %1$@ in (%2$@)" = "Parsing Error: %1$@ in (%2$@)";
 
 /* Recovery suggestion on unexpected pod change */
-"Please bring only original pod in range or deactivate original pod" = "Please bring only original pod in range or deactivate original pod";
+"Please bring only original pod in range or deactivate original pod" = "يرجى إحضار البود الأصلي فقط إلى النطاق، أو قم بإلغاء تفعيل البود الأصلي";
 
 /* Recovery suggestion when no response is received from pod */
 "Please bring your pod closer to the RileyLink and try again" = "من فضلك قم بجعل المضخة أقرب إلى RileyLink ثم حاول مرة أخرى";
@@ -392,10 +392,10 @@
 "Time to replace your pod! Your pod will expire in %1$@" = "Time to replace your pod! Your pod will expire in %1$@";
 
 /* Error message for PodCommsError.tooManyPodsFound */
-"Too many pods found" = "Too many pods found";
+"Too many pods found" = "تم العثور على عدد كبير من البودات";
 
 /* Recovery suggestion when ack received instead of response */
-"Try again" = "Try again";
+"Try again" = "حاول مرة أخرى";
 
 /* String describing a dose that was possibly scheduled */
 "Uncertain" = "Uncertain";
@@ -419,10 +419,10 @@
 "Validation failed: %1$@" = "Validation failed: %1$@";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Wait for existing bolus to finish, or cancel bolus";
+"Wait for existing bolus to finish, or cancel bolus" = "انتظر حتى انتهاء البلعة الحالية، أو قم بإلغاء البلعة";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
-"Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
+"Wait for existing temp basal to finish, or suspend to cancel" = "انتظر حتى انتهاء الجرعة القاعدية المؤقتة الحالية، أو أوقفها مؤقتًا لإلغائها";
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "Waiting for pairing reminder";
