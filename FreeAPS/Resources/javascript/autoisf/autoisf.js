@@ -57,7 +57,7 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
 
     // B30
     if (profile.iaps.use_B30) {
-        aimi(profile, pumpHistory, dynamicVariables, glucose_status);
+        b30(profile, pumpHistory, dynamicVariables, glucose_status);
     }
     
     // Auto ISF ratio
@@ -439,13 +439,17 @@ function exercising(profile, dynamicVariables) {
 const MillisecondsPerMinute = 60 * 1000
 
 // B30
-function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
+function b30(profile, pumpHistory, dynamicVariables, glucose_status) {
     // Guards
     if (!profile.iaps.closedLoop) {
         return
     }
     // Needs either a TT or a profile override < the set B30 target level
     if (!(profile.temptargetSet && profile.min_bg < profile.iaps.b30targetLevel || dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6 && dynamicVariables.overrideTarget < profile.iaps.b30targetLevel)) {
+        return
+    }
+    // In case override and temp target are used simultaneously - use temp target.
+    if (profile.temptargetSet && profile.min_bg >= profile.iaps.b30targetLevel) {
         return
     }
     
