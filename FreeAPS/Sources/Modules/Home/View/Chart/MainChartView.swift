@@ -487,7 +487,7 @@ struct MainChartView: View {
     private func lowGlucoseView(fullSize: CGSize) -> some View {
         Path { path in
             for rect in glucoseDots {
-                if let glucose = rect.glucose, Decimal(glucose) < data.lowGlucose {
+                if let glucose = rect.glucose, Decimal(glucose) <= data.lowGlucose {
                     path.addEllipse(in: rect.rect)
                 }
             }
@@ -527,7 +527,7 @@ struct MainChartView: View {
     private func highGlucoseView(fullSize: CGSize) -> some View {
         Path { path in
             for rect in glucoseDots {
-                if let glucose = rect.glucose, Decimal(glucose) > data.highGlucose {
+                if let glucose = rect.glucose, Decimal(glucose) >= data.highGlucose {
                     path.addEllipse(in: rect.rect)
                 }
             }
