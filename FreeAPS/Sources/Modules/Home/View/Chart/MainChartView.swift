@@ -1587,7 +1587,7 @@ extension MainChartView {
             let uam = predictions.uam?.count ?? 0
             max = [iob, zt, cob, uam].max() ?? 0
         } else {
-            max = 0
+            max = 120 / 5 // multiplied by 5 below, so we get 120 minutes total and 90 minutes clearly visible
         }
 
         let lastDeltaTime = last.dateString.timeIntervalSince(deliveredAt)
