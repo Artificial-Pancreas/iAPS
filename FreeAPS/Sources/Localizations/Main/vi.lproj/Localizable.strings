@@ -652,7 +652,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% Ghi đè";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Phải cài đặt ứng dụng Garmin Connect để sử dụng cho iAPS.\n Hãy truy cập App Store để tải xuống ứng dụng này";
@@ -2036,7 +2036,7 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Hiển thị biểu đồ dạng X-Grid";
+"Display Chart X - Grid lines" = "Hiển thị biểu đồ trục X";
 
 /* */
 "Display Chart Y - Grid lines" = "Hiển thị biểu đồ trục Y";
@@ -2084,7 +2084,7 @@ Enact a temp Basal or a temp target */
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings" = "Readings";
+"Readings" = "Chỉ số đo";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";
@@ -2117,7 +2117,7 @@ Enact a temp Basal or a temp target */
 "days" = "days";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Chu kỳ";
 
 /* Loop Errors in statPanel */
 "Errors" = "Lỗi";
@@ -2132,7 +2132,7 @@ Enact a temp Basal or a temp target */
 "Non-completed Loops" = "Vòng lặp chưa hoàn thành";
 
 /* Average loop interval */
-"Interval" = "Khoảng thời gian";
+"Interval" = "Interval";
 
 /* Median loop interval */
 "Duration" = "Duration";
@@ -2176,8 +2176,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "Tất cả";
 
-/* Active Insulin View */
-"Active Insulin" = "Hoạt động của Insulin";
+/* IOB View */
+"Insulin on Board" = "Insulin đang hoạt động";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Thời gian có Insulin âm tính";
@@ -2200,8 +2200,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Hoạt động của Carbohydrates";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrate đang hoạt động";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Hiển thị biểu đồ COB";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Hiển thị biểu đồ hoạt động của insulin";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3124,6 +3130,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Light / Dark Mode" = "Chế độ Sáng/Tối";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Bỏ qua carbohydrate trong oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";
