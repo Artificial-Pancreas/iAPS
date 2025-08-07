@@ -1579,18 +1579,30 @@ extension MainChartView {
             return Config.minAdditionalWidth
         }
 
-        let iob = predictions.iob?.count ?? 0
-        let zt = predictions.zt?.count ?? 0
-        let cob = predictions.cob?.count ?? 0
-        let uam = predictions.uam?.count ?? 0
-        let max = [iob, zt, cob, uam].max() ?? 0
+        let max: Int
+        if !data.hidePredictions {
+            let iob = predictions.iob?.count ?? 0
+            let zt = predictions.zt?.count ?? 0
+            let cob = predictions.cob?.count ?? 0
+            let uam = predictions.uam?.count ?? 0
+            max = [iob, zt, cob, uam].max() ?? 0
+        } else {
+            max = 0
+        }
 
         let lastDeltaTime = last.dateString.timeIntervalSince(deliveredAt)
 
         let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
 
-        return Swift.min(Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth), 275)
+        return Swift.min(
+            Swift
+                .max(
+                    additionalTime * oneSecondWidth,
+                    data.hidePredictions ? Config.minAdditionalWidth / 2 : Config.minAdditionalWidth
+                ),
+            275
+        )
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {
