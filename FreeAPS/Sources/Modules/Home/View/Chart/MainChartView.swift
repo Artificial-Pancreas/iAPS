@@ -882,7 +882,7 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(Color(.systemGray3))
+                .fill(.clear)
             fpuPath
                 .stroke(Color.loopYellow, lineWidth: 1)
 
@@ -1200,7 +1200,12 @@ extension MainChartView {
                     fullSize: fullSize
                 )
                 let size = Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
-                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                let rect = CGRect(
+                    x: center.x - size / 2,
+                    y: center.y + Config.carbOffset - size / 2,
+                    width: size,
+                    height: size
+                )
                 return DotInfo(rect: rect, value: value.carbs)
             }
 
@@ -1815,7 +1820,7 @@ extension MainChartView {
 
     private func minMaxYValues() -> (min: Int, max: Int) {
         var maxValue = data.glucose.compactMap(\.glucose).max() ?? Config.maxGlucose
-        
+
         if let maxTargetValue = maxTargetValue() {
             maxValue = max(maxValue, maxTargetValue)
         }
