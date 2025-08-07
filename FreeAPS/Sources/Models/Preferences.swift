@@ -107,6 +107,15 @@ extension Preferences {
         case threshold_setting
         case updateInterval
     }
+
+    func effectiveInsulinPeakTime() -> Decimal {
+        if useCustomPeakTime { return insulinPeakTime }
+        switch curve {
+        case .bilinear: return 75
+        case .rapidActing: return 75
+        case .ultraRapid: return 55
+        }
+    }
 }
 
 enum InsulinCurve: String, JSON, Identifiable, CaseIterable {
