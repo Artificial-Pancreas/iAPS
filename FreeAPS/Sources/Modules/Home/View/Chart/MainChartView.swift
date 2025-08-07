@@ -81,7 +81,7 @@ struct MainChartView: View {
     }
 
     @State var didAppearTrigger = false
-    @State private var glucoseDots: [CGRect] = []
+    @State private var glucoseDots: [(rect: CGRect, glucose: Int?)] = []
     @State private var activityDots: [CGPoint] = []
     @State private var activityZeroPointY: CGFloat? = nil
     @State private var cobDots: [(CGPoint, IOBData)] = []
@@ -410,6 +410,8 @@ struct MainChartView: View {
                     if data.smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     else { connectingGlucoseLinesView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
+                    lowGlucoseView(fullSize: fullSize)
+                    highGlucoseView(fullSize: fullSize)
                     if data.showInsulinActivity {
                         activityView(fullSize: fullSize)
                     }
@@ -482,22 +484,64 @@ struct MainChartView: View {
         }.frame(maxHeight: 20)
     }
 
+    private func lowGlucoseView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in glucoseDots {
+                if let glucose = rect.glucose, Decimal(glucose) <= data.lowGlucose {
+                    path.addEllipse(in: rect.rect)
+                }
+            }
+        }.fill(Color.red)
+            .onChange(of: data.glucose) {
+                update(fullSize: fullSize)
+            }
+            .onChange(of: didAppearTrigger) {
+                update(fullSize: fullSize)
+            }
+            .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                update(fullSize: fullSize)
+            }
+    }
+
     private func glucoseView(fullSize: CGSize) -> some View {
         Path { path in
             for rect in glucoseDots {
-                path.addEllipse(in: rect)
+                if let glucose = rect.glucose, Decimal(glucose) > data.lowGlucose,
+                   Decimal(glucose) < data.highGlucose
+                {
+                    path.addEllipse(in: rect.rect)
+                }
             }
-        }
-        .fill(Color.darkGreen)
-        .onChange(of: data.glucose) {
-            update(fullSize: fullSize)
-        }
-        .onChange(of: didAppearTrigger) {
-            update(fullSize: fullSize)
-        }
-        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-            update(fullSize: fullSize)
-        }
+        }.fill(Color(.darkGreen))
+            .onChange(of: data.glucose) {
+                update(fullSize: fullSize)
+            }
+            .onChange(of: didAppearTrigger) {
+                update(fullSize: fullSize)
+            }
+            .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                update(fullSize: fullSize)
+            }
+    }
+
+    private func highGlucoseView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in glucoseDots {
+                if let glucose = rect.glucose, Decimal(glucose) >= data.highGlucose {
+                    path.addEllipse(in: rect.rect)
+                }
+            }
+        }.fill(.orange)
+
+            .onChange(of: data.glucose) {
+                update(fullSize: fullSize)
+            }
+            .onChange(of: didAppearTrigger) {
+                update(fullSize: fullSize)
+            }
+            .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                update(fullSize: fullSize)
+            }
     }
 
     private func activityView(fullSize: CGSize) -> some View {
@@ -662,11 +706,11 @@ struct MainChartView: View {
         Path { path in
             var lines: [CGPoint] = []
             for rect in glucoseDots {
-                lines.append(CGPoint(x: rect.midX, y: rect.midY))
+                lines.append(CGPoint(x: rect.rect.midX, y: rect.rect.midY))
             }
             path.addLines(lines)
         }
-        .stroke(Color.loopGreen, lineWidth: 0.5)
+        .stroke(Color.primary, lineWidth: 0.25)
         .onChange(of: data.glucose) {
             update(fullSize: fullSize)
         }
@@ -763,7 +807,7 @@ struct MainChartView: View {
             }
             path.addLines(lines)
         }
-        .stroke(Color.loopGray, lineWidth: 0.5)
+        .stroke(Color.secondary, lineWidth: 0.5)
         .onChange(of: data.glucose) {
             update(fullSize: fullSize)
         }
@@ -1005,9 +1049,9 @@ extension MainChartView {
 
     private func calculateGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = data.glucose.map { value -> CGRect in
+            let dots = data.glucose.map { value -> (CGRect, Int?) in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
-                return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: Config.glucoseSize)
+                return (CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: Config.glucoseSize), value.glucose)
             }
 
             let range = self.getGlucoseYRange(fullSize: fullSize)
