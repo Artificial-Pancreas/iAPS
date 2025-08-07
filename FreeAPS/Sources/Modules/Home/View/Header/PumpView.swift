@@ -103,7 +103,36 @@ struct PumpView: View {
                     NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: false)
                 }
                 let amountFraction = 1.0 - (Double(reservoir + 10) * 1.2 / 200)
-                if reservoir == 0xDEAD_BEEF {
+
+                // Medtrum nano pumps
+                if state.pumpName.contains("Medtrum") {
+                    if reservoir == 0xDEAD_BEEF {
+                        medtrumInsulinAmount(portion: amountFraction)
+                            .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                            .overlay {
+                                if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                                    ClockOffset(mdtPump: true)
+                                }
+                            }.offset(y: expiresAtDate == nil ? -4 : 0)
+                    } else {
+                        HStack(spacing: 0) {
+                            Text(
+                                reservoirFormatter
+                                    .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
+                            ).font(.statusFont)
+                            Text("U").font(.statusFont).foregroundStyle(.secondary)
+                        }
+                        .offset(y: 7)
+                        medtrumInsulinAmount(portion: amountFraction)
+                            .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                            .overlay {
+                                if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                                    ClockOffset(mdtPump: false)
+                                }
+                            }
+                    }
+                // Dana and MDT
+                } else if reservoir == 0xDEAD_BEEF {
                     pumpInsulinAmount(portion: amountFraction)
                         .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
                         .overlay {
@@ -267,6 +296,19 @@ struct PumpView: View {
                 .shadow(radius: 1, x: 2, y: 2)
                 .foregroundStyle(.white)
                 .padding(.bottom, 5)
+        }
+    }
+
+    private func medtrumInsulinAmount(portion: Double) -> some View {
+        ZStack {
+            UIImage(imageLiteralResourceName: "nano")
+                .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
+                .resizable()
+                .aspectRatio(0.7, contentMode: .fit)
+                .frame(height: IAPSconfig.iconSize)
+                .symbolRenderingMode(.palette)
+                .shadow(radius: 1, x: 2, y: 2)
+                .foregroundStyle(.white)
         }
     }
 }
