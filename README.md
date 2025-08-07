@@ -86,7 +86,7 @@ Connect with the iAPS community and find helpful resources here:
   * **iAPS Documentation (under development):** [https://iaps.readthedocs.io/en/latest/](https://iaps.readthedocs.io/en/latest/)
   * **OpenAPS Documentation:** [https://openaps.readthedocs.io/en/latest/](https://openaps.readthedocs.io/en/latest/)
   * **Crowdin Project for iAPS Translation:** [https://crowdin.com/project/iaps](https://crowdin.com/project/iaps)
-    [](https://crowdin.com/project/iaps)
+    [](https://crowdin.com/project/iaps) [![Crowdin](https://badges.crowdin.net/iaps/localized.svg)](https://crowdin.com/project/iaps)
   * **Middleware code for iAPS:** [https://github.com/Jon-b-m/middleware](https://github.com/Jon-b-m/middleware)
   * **Omnipod DASH Pump and Settings:** [https://loopkit.github.io/loopdocs/loop-3/omnipod/](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
 
