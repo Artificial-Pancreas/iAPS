@@ -120,7 +120,8 @@ extension Home {
             fpuAmounts: false,
             showInsulinActivity: false,
             showCobChart: false,
-            iob: nil
+            iob: nil,
+            hidePredictions: false
         )
 
         override func subscribe() {
@@ -181,6 +182,7 @@ extension Home {
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus
             data.fpuAmounts = settingsManager.settings.fpuAmounts
+            data.hidePredictions = settingsManager.settings.hidePredictions
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             maxIOB = settingsManager.preferences.maxIOB
@@ -716,6 +718,7 @@ extension Home.StateModel:
         data.useInsulinBars = settingsManager.settings.useInsulinBars
         data.fpus = settingsManager.settings.fpus
         data.fpuAmounts = settingsManager.settings.fpuAmounts
+        data.hidePredictions = settingsManager.settings.hidePredictions
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
         maxIOB = settingsManager.preferences.maxIOB

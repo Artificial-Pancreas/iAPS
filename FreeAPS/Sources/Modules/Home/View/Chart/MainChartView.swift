@@ -422,7 +422,7 @@ struct MainChartView: View {
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
                     announcementView(fullSize: fullSize)
-                    predictionsView(fullSize: fullSize)
+                    if !data.hidePredictions { predictionsView(fullSize: fullSize) }
                     if data.fpus { fpuView(fullSize: fullSize) }
                 }
                 timeLabelsView(fullSize: fullSize)
