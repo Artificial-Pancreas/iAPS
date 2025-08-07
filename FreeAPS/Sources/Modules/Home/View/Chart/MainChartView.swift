@@ -54,7 +54,7 @@ struct MainChartView: View {
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 6
         static let maxCarbSize: CGFloat = 45
-        static let fpuSize: CGFloat = 5
+        static let fpuSize: CGFloat = 4
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
@@ -882,9 +882,9 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(.clear)
+                .fill(Color.loopYellow)
             fpuPath
-                .stroke(Color.loopYellow, lineWidth: 1)
+                .stroke(Color.primary, lineWidth: 0.3)
 
             if data.fpuAmounts {
                 ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
