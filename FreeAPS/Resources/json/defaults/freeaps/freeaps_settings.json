@@ -107,5 +107,6 @@
   "fpuAmounts": false,
   "showInsulinActivity": false,
   "showCobChart": false,
-  "noCarbs": false
+  "noCarbs": false,
+  "hidePredictions": false
 }
