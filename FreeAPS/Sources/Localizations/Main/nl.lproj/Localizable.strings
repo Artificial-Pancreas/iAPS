@@ -3140,7 +3140,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Neglect Carbohydrates in oref0" = "Negeer koolhydraten in oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide oref0 Predictions" = "Verberg oref0 voorspellingen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
