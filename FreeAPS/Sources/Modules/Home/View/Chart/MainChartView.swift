@@ -200,29 +200,31 @@ struct MainChartView: View {
     var legendPanel: some View {
         ZStack {
             HStack {
-                Group {
-                    Circle().fill(Color.insulin).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("IOB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                }
-                Group {
-                    Circle().fill(Color.zt).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("ZT")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
-                }
-                Group {
-                    Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("COB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
-                }
-                Group {
-                    Circle().fill(Color.uam).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("UAM")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                if !data.hidePredictions {
+                    Group {
+                        Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("IOB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                    }
+                    Group {
+                        Circle().fill(Color.zt).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("ZT")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                    }
+                    Group {
+                        Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("COB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                    }
+                    Group {
+                        Circle().fill(Color.uam).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("UAM")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                    }
                 }
             }
         }
@@ -422,7 +424,7 @@ struct MainChartView: View {
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
                     announcementView(fullSize: fullSize)
-                    predictionsView(fullSize: fullSize)
+                    if !data.hidePredictions { predictionsView(fullSize: fullSize) }
                     if data.fpus { fpuView(fullSize: fullSize) }
                 }
                 timeLabelsView(fullSize: fullSize)
@@ -1579,18 +1581,30 @@ extension MainChartView {
             return Config.minAdditionalWidth
         }
 
-        let iob = predictions.iob?.count ?? 0
-        let zt = predictions.zt?.count ?? 0
-        let cob = predictions.cob?.count ?? 0
-        let uam = predictions.uam?.count ?? 0
-        let max = [iob, zt, cob, uam].max() ?? 0
+        let max: Int
+        if !data.hidePredictions {
+            let iob = predictions.iob?.count ?? 0
+            let zt = predictions.zt?.count ?? 0
+            let cob = predictions.cob?.count ?? 0
+            let uam = predictions.uam?.count ?? 0
+            max = [iob, zt, cob, uam].max() ?? 0
+        } else {
+            max = 120 / 5 // multiplied by 5 below, so we get 120 minutes total and 90 minutes clearly visible
+        }
 
         let lastDeltaTime = last.dateString.timeIntervalSince(deliveredAt)
 
         let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
 
-        return Swift.min(Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth), 275)
+        return Swift.min(
+            Swift
+                .max(
+                    additionalTime * oneSecondWidth,
+                    data.hidePredictions ? Config.minAdditionalWidth / 2 : Config.minAdditionalWidth
+                ),
+            275
+        )
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {
