@@ -35,7 +35,7 @@ struct MainChartView: View {
     private enum Config {
         static let endID = "End"
         static let basalHeight: CGFloat = 60
-        static let topYPadding: CGFloat = 75
+        static let topYPadding: CGFloat = 55
         static let bottomPadding: CGFloat = 20
         static let legendBottomPadding: CGFloat = 8 // without insulin activity: additional legend padding
         static let activityChartHeight: CGFloat = 80
@@ -54,7 +54,7 @@ struct MainChartView: View {
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 6
         static let maxCarbSize: CGFloat = 45
-        static let fpuSize: CGFloat = 5
+        static let fpuSize: CGFloat = 4
         static let carbsScale: CGFloat = 0.3
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
@@ -81,7 +81,7 @@ struct MainChartView: View {
     }
 
     @State var didAppearTrigger = false
-    @State private var glucoseDots: [CGRect] = []
+    @State private var glucoseDots: [(rect: CGRect, glucose: Int?)] = []
     @State private var activityDots: [CGPoint] = []
     @State private var activityZeroPointY: CGFloat? = nil
     @State private var cobDots: [(CGPoint, IOBData)] = []
@@ -410,6 +410,8 @@ struct MainChartView: View {
                     if data.smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     else { connectingGlucoseLinesView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
+                    lowGlucoseView(fullSize: fullSize)
+                    highGlucoseView(fullSize: fullSize)
                     if data.showInsulinActivity {
                         activityView(fullSize: fullSize)
                     }
@@ -420,7 +422,7 @@ struct MainChartView: View {
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
                     announcementView(fullSize: fullSize)
-                    predictionsView(fullSize: fullSize)
+                    if !data.hidePredictions { predictionsView(fullSize: fullSize) }
                     if data.fpus { fpuView(fullSize: fullSize) }
                 }
                 timeLabelsView(fullSize: fullSize)
@@ -482,22 +484,64 @@ struct MainChartView: View {
         }.frame(maxHeight: 20)
     }
 
+    private func lowGlucoseView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in glucoseDots {
+                if let glucose = rect.glucose, Decimal(glucose) <= data.lowGlucose {
+                    path.addEllipse(in: rect.rect)
+                }
+            }
+        }.fill(Color.red)
+            .onChange(of: data.glucose) {
+                update(fullSize: fullSize)
+            }
+            .onChange(of: didAppearTrigger) {
+                update(fullSize: fullSize)
+            }
+            .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                update(fullSize: fullSize)
+            }
+    }
+
     private func glucoseView(fullSize: CGSize) -> some View {
         Path { path in
             for rect in glucoseDots {
-                path.addEllipse(in: rect)
+                if let glucose = rect.glucose, Decimal(glucose) > data.lowGlucose,
+                   Decimal(glucose) < data.highGlucose
+                {
+                    path.addEllipse(in: rect.rect)
+                }
             }
-        }
-        .fill(Color.darkGreen)
-        .onChange(of: data.glucose) {
-            update(fullSize: fullSize)
-        }
-        .onChange(of: didAppearTrigger) {
-            update(fullSize: fullSize)
-        }
-        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-            update(fullSize: fullSize)
-        }
+        }.fill(Color(.darkGreen))
+            .onChange(of: data.glucose) {
+                update(fullSize: fullSize)
+            }
+            .onChange(of: didAppearTrigger) {
+                update(fullSize: fullSize)
+            }
+            .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                update(fullSize: fullSize)
+            }
+    }
+
+    private func highGlucoseView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in glucoseDots {
+                if let glucose = rect.glucose, Decimal(glucose) >= data.highGlucose {
+                    path.addEllipse(in: rect.rect)
+                }
+            }
+        }.fill(.orange)
+
+            .onChange(of: data.glucose) {
+                update(fullSize: fullSize)
+            }
+            .onChange(of: didAppearTrigger) {
+                update(fullSize: fullSize)
+            }
+            .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                update(fullSize: fullSize)
+            }
     }
 
     private func activityView(fullSize: CGSize) -> some View {
@@ -662,11 +706,11 @@ struct MainChartView: View {
         Path { path in
             var lines: [CGPoint] = []
             for rect in glucoseDots {
-                lines.append(CGPoint(x: rect.midX, y: rect.midY))
+                lines.append(CGPoint(x: rect.rect.midX, y: rect.rect.midY))
             }
             path.addLines(lines)
         }
-        .stroke(Color.loopGreen, lineWidth: 0.5)
+        .stroke(Color.primary, lineWidth: 0.25)
         .onChange(of: data.glucose) {
             update(fullSize: fullSize)
         }
@@ -763,7 +807,7 @@ struct MainChartView: View {
             }
             path.addLines(lines)
         }
-        .stroke(Color.loopGray, lineWidth: 0.5)
+        .stroke(Color.secondary, lineWidth: 0.5)
         .onChange(of: data.glucose) {
             update(fullSize: fullSize)
         }
@@ -838,9 +882,9 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(Color(.systemGray3))
+                .fill(Color.loopYellow)
             fpuPath
-                .stroke(Color.loopYellow, lineWidth: 1)
+                .stroke(Color.primary, lineWidth: 0.3)
 
             if data.fpuAmounts {
                 ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
@@ -1005,9 +1049,9 @@ extension MainChartView {
 
     private func calculateGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = data.glucose.map { value -> CGRect in
+            let dots = data.glucose.map { value -> (CGRect, Int?) in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
-                return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: Config.glucoseSize)
+                return (CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: Config.glucoseSize), value.glucose)
             }
 
             let range = self.getGlucoseYRange(fullSize: fullSize)
@@ -1156,7 +1200,12 @@ extension MainChartView {
                     fullSize: fullSize
                 )
                 let size = Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
-                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                let rect = CGRect(
+                    x: center.x - size / 2,
+                    y: center.y + Config.carbOffset - size / 2,
+                    width: size,
+                    height: size
+                )
                 return DotInfo(rect: rect, value: value.carbs)
             }
 
@@ -1530,18 +1579,30 @@ extension MainChartView {
             return Config.minAdditionalWidth
         }
 
-        let iob = predictions.iob?.count ?? 0
-        let zt = predictions.zt?.count ?? 0
-        let cob = predictions.cob?.count ?? 0
-        let uam = predictions.uam?.count ?? 0
-        let max = [iob, zt, cob, uam].max() ?? 0
+        let max: Int
+        if !data.hidePredictions {
+            let iob = predictions.iob?.count ?? 0
+            let zt = predictions.zt?.count ?? 0
+            let cob = predictions.cob?.count ?? 0
+            let uam = predictions.uam?.count ?? 0
+            max = [iob, zt, cob, uam].max() ?? 0
+        } else {
+            max = 120 / 5 // multiplied by 5 below, so we get 120 minutes total and 90 minutes clearly visible
+        }
 
         let lastDeltaTime = last.dateString.timeIntervalSince(deliveredAt)
 
         let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
 
-        return Swift.min(Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth), 275)
+        return Swift.min(
+            Swift
+                .max(
+                    additionalTime * oneSecondWidth,
+                    data.hidePredictions ? Config.minAdditionalWidth / 2 : Config.minAdditionalWidth
+                ),
+            275
+        )
     }
 
     private func oneSecondStep(viewWidth: CGFloat) -> CGFloat {
@@ -1771,9 +1832,7 @@ extension MainChartView {
 
     private func minMaxYValues() -> (min: Int, max: Int) {
         var maxValue = data.glucose.compactMap(\.glucose).max() ?? Config.maxGlucose
-        if let maxPredValue = maxPredValue() {
-            maxValue = max(maxValue, maxPredValue)
-        }
+
         if let maxTargetValue = maxTargetValue() {
             maxValue = max(maxValue, maxTargetValue)
         }

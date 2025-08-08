@@ -58,6 +58,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
     var disable15MinTrend: Bool = false
+    var hidePredictions: Bool = false
     // Sounds
     var hypoSound: String = "Default"
     var hyperSound: String = "Default"
@@ -177,6 +178,10 @@ extension FreeAPSSettings: Decodable {
 
         if let fpus = try? container.decode(Bool.self, forKey: .fpus) {
             settings.fpus = fpus
+        }
+
+        if let hidePredictions = try? container.decode(Bool.self, forKey: .hidePredictions) {
+            settings.hidePredictions = hidePredictions
         }
 
         if let fpuAmounts = try? container.decode(Bool.self, forKey: .fpuAmounts) {

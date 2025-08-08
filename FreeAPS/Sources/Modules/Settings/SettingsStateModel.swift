@@ -14,6 +14,7 @@ extension Settings {
         @Published var allowDilution = false
         @Published var extended_overrides = false
         @Published var noCarbs = false
+        @Published var hidePredictions = false
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -29,6 +30,7 @@ extension Settings {
             subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
             subscribeSetting(\.extended_overrides, on: $extended_overrides) { extended_overrides = $0 }
             subscribeSetting(\.noCarbs, on: $noCarbs) { noCarbs = $0 }
+            subscribeSetting(\.hidePredictions, on: $hidePredictions) { hidePredictions = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"

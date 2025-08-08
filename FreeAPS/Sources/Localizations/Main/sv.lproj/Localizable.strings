@@ -2207,7 +2207,7 @@ Enact a temp Basal or a temp target */
 "Display COB Chart" = "Visa COB-diagram";
 
 /* UI/UX-setting */
-"Display Insulin Activity Chart" = "Visa diagram för aktivt insulin";
+"Display Insulin Activity Chart" = "Visa diagram för insulinaktivitet";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
