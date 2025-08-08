@@ -318,7 +318,7 @@ struct MainChartView: View {
                         ))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                }.fill(Color(.systemGray5))
+                }.fill(IAPSconfig.activityBackground)
             }
 
             if data.showInsulinActivity, data.displayYgridLines {
