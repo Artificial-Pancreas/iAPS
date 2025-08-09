@@ -198,10 +198,6 @@ extension Settings {
                             HStack {
                                 Toggle("Neglect Carbohydrates in oref0", isOn: $state.noCarbs)
                             }
-
-                            HStack {
-                                Toggle("Hide oref0 Predictions", isOn: $state.hidePredictions)
-                            }
                         }
                     } header: { Text("Developer") }
 

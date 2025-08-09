@@ -57,6 +57,7 @@ extension UIUX {
                     if state.fpus {
                         Toggle("Display carb equivalent amount", isOn: $state.fpuAmounts)
                     }
+                    Toggle("Hide oref0 Predictions", isOn: $state.hidePredictions)
 
                 } header: { Text("Home Chart settings ") }
 

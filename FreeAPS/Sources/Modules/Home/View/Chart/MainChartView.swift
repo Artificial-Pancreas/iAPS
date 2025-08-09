@@ -200,29 +200,31 @@ struct MainChartView: View {
     var legendPanel: some View {
         ZStack {
             HStack {
-                Group {
-                    Circle().fill(Color.insulin).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("IOB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                }
-                Group {
-                    Circle().fill(Color.zt).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("ZT")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
-                }
-                Group {
-                    Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("COB")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
-                }
-                Group {
-                    Circle().fill(Color.uam).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("UAM")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                if !data.hidePredictions {
+                    Group {
+                        Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("IOB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                    }
+                    Group {
+                        Circle().fill(Color.zt).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("ZT")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                    }
+                    Group {
+                        Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("COB")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                    }
+                    Group {
+                        Circle().fill(Color.uam).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
+                        Text("UAM")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                    }
                 }
             }
         }
@@ -316,7 +318,7 @@ struct MainChartView: View {
                         ))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
                     path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                }.fill(Color(.systemGray5))
+                }.fill(IAPSconfig.activityBackground)
             }
 
             if data.showInsulinActivity, data.displayYgridLines {
