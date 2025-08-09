@@ -101,5 +101,6 @@
   "showInsulinActivity": false,
   "showCobChart": false,
   "noCarbs": false,
-  "hidePredictions": false
+  "hidePredictions": false,
+  "useCarbBars": false
 }
