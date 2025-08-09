@@ -2078,13 +2078,13 @@ Enact a temp Basal or a temp target */
 "Time In Range" = "Thời gian trong phạm vi";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Thời gian trung bình";
+"Average Interval" = "Chu kỳ trung bình";
 
 /* Median BG */
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings" = "Chỉ số đo";
+"Readings" = "Số lần đo";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";
@@ -2117,7 +2117,7 @@ Enact a temp Basal or a temp target */
 "days" = "days";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Chu kỳ";
+"Loops" = "Chu kỳ vòng lặp";
 
 /* Loop Errors in statPanel */
 "Errors" = "Lỗi";
@@ -3135,7 +3135,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Bỏ qua carbohydrate trong oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide oref0 Predictions" = "Ẩn dự đoán của oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";
