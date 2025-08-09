@@ -1,7 +1,7 @@
 import CGMBLEKit
 import Combine
 import Foundation
-import LoopKit
+@preconcurrency import LoopKit
 import LoopKitUI
 import ShareClient
 

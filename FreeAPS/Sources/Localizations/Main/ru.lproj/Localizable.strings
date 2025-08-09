@@ -1176,7 +1176,7 @@ Enact a temp Basal or a temp target */
 "Temp basal Amount in U/h" = "ВБС в Ед/ч";
 
 /* */
-"Cancel Temp" = "Cancel Temp";
+"Cancel Temp" = "Отменить ВБС";
 
 
 
@@ -2176,8 +2176,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "все";
 
-/* Active Insulin View */
-"Active Insulin" = "Активный инсулин";
+/* IOB View */
+"Insulin on Board" = "Активный инсулин";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Отрицательный инсулин";
@@ -2200,8 +2200,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD 3 дня назад";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Действующие углеводы";
+/* COB View */
+"Carbohydrates on Board" = "Активные углеводы";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Отображать график углеводов";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Отображать график активного инсулина";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2858,7 +2864,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Поглощение оставшихся углеводов";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Это значение максимального количества углеводов, которое предположительно будет поглощено спустя 4 часа, если алгоритм не увидит поглощения углеводов.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Это максимальное количество углеводов, которое мы предполагаем усвоится за 4 часа, если усвоение углеводов еще не началось. Максимум 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Максимум SMB базальных минут";
@@ -3090,6 +3096,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Отображать возраст датчика";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Отображать оставшееся время работы датчика";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Скрыть значок концентрации";
 
 /* UI/UX option */
@@ -3105,16 +3114,10 @@ Enact a temp Basal or a temp target */
 "Display carb equivalent amount" = "Отображать эквиваленты углеводов";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Отображать оставшееся время датчика";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Отображать возраст датчика, вместо оставшегося времени";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Отображать соотношение и кнопку просмотра истории";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Авто ISF на главном экране";
+"Home View Ratio Button" = "Соотношение подачи на главном экране";
 
 /* UI/UX option */
 "Light" = "Светлый";
@@ -3130,6 +3133,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Light / Dark Mode" = "Светлый/тёмный режим";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Игнорировать углеводы в oref0";
+
+/* Debug option */
+"Hide oref0 Predictions" = "Hide oref0 Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";

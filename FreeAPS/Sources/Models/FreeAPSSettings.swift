@@ -58,6 +58,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
     var disable15MinTrend: Bool = false
+    var hidePredictions: Bool = false
     // Alerts
     var lowAlert: Bool = true
     var highAlert: Bool = true
@@ -79,20 +80,23 @@ struct FreeAPSSettings: JSON, Equatable {
     var allowDilution: Bool = false
     var hideInsulinBadge: Bool = false
     var extended_overrides = false
-    var extendHomeView = true
     var displayExpiration = false
+    var displaySAGE = true
     var sensorDays: Double = 10
-    var anubis: Bool = false
     var fpus: Bool = true
     var fpuAmounts: Bool = false
     var carbButton: Bool = true
     var profileButton: Bool = true
+    var showInsulinActivity: Bool = false
+    var showCobChart: Bool = false
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
     var glucoseOverrideThresholdDown: Decimal = 100
+    var noCarbs: Bool = false
+    var useCarbBars: Bool = false
     // ColorScheme
-    var lightMode: LightMode = .light
+    var lightMode: LightMode = .auto
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -167,6 +171,14 @@ extension FreeAPSSettings: Decodable {
             settings.fpus = fpus
         }
 
+        if let hidePredictions = try? container.decode(Bool.self, forKey: .hidePredictions) {
+            settings.hidePredictions = hidePredictions
+        }
+
+        if let useCarbBars = try? container.decode(Bool.self, forKey: .useCarbBars) {
+            settings.useCarbBars = useCarbBars
+        }
+
         if let fpuAmounts = try? container.decode(Bool.self, forKey: .fpuAmounts) {
             settings.fpuAmounts = fpuAmounts
         }
@@ -177,6 +189,10 @@ extension FreeAPSSettings: Decodable {
 
         if let skipBolusScreenAfterCarbs = try? container.decode(Bool.self, forKey: .skipBolusScreenAfterCarbs) {
             settings.skipBolusScreenAfterCarbs = skipBolusScreenAfterCarbs
+        }
+
+        if let noCarbs = try? container.decode(Bool.self, forKey: .noCarbs) {
+            settings.noCarbs = noCarbs
         }
 
         if let displayHR = try? container.decode(Bool.self, forKey: .displayHR) {
@@ -219,10 +235,6 @@ extension FreeAPSSettings: Decodable {
 
         if let useFPUconversion = try? container.decode(Bool.self, forKey: .useFPUconversion) {
             settings.useFPUconversion = useFPUconversion
-        }
-
-        if let anubis = try? container.decode(Bool.self, forKey: .anubis) {
-            settings.anubis = anubis
         }
 
         if let individualAdjustmentFactor = try? container.decode(Decimal.self, forKey: .individualAdjustmentFactor) {
@@ -287,6 +299,14 @@ extension FreeAPSSettings: Decodable {
 
         if let profileButton = try? container.decode(Bool.self, forKey: .profileButton) {
             settings.profileButton = profileButton
+        }
+
+        if let showInsulinActivity = try? container.decode(Bool.self, forKey: .showInsulinActivity) {
+            settings.showInsulinActivity = showInsulinActivity
+        }
+
+        if let showCobChart = try? container.decode(Bool.self, forKey: .showCobChart) {
+            settings.showCobChart = showCobChart
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(
@@ -476,12 +496,12 @@ extension FreeAPSSettings: Decodable {
             settings.extended_overrides = extended_overrides
         }
 
-        if let extendHomeView = try? container.decode(Bool.self, forKey: .extendHomeView) {
-            settings.extendHomeView = extendHomeView
-        }
-
         if let displayExpiration = try? container.decode(Bool.self, forKey: .displayExpiration) {
             settings.displayExpiration = displayExpiration
+        }
+
+        if let displaySAGE = try? container.decode(Bool.self, forKey: .displaySAGE) {
+            settings.displaySAGE = displaySAGE
         }
         // AutoISF
         if let autoisf = try? container.decode(Bool.self, forKey: .autoisf) {

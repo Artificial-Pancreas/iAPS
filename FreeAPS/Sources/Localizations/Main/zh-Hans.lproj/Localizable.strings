@@ -2176,8 +2176,8 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "all";
 
-/* Active Insulin View */
-"Active Insulin" = "Active Insulin";
+/* IOB View */
+"Insulin on Board" = "Insulin on Board";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Time with negative insulin";
@@ -2200,8 +2200,14 @@ Enact a temp Basal or a temp target */
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD 3 days ago";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Active Carbohydrates";
+/* COB View */
+"Carbohydrates on Board" = "Carbohydrates on Board";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Display COB Chart";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Display Insulin Activity Chart";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2860,7 +2866,7 @@ Enact a temp Basal or a temp target */
 "Remaining Carbs Cap" = "Remaining Carbs Cap";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "这是我们假设在4小时内会吸收的最大数量的碳水化合物的量，如果我们还没有看到碳水化合物的吸收。";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Max SMB Basal Minutes";
@@ -3092,6 +3098,9 @@ Enact a temp Basal or a temp target */
 "Display Sensor Age" = "Display Sensor Age";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Hide Concentration Badge";
 
 /* UI/UX option */
@@ -3107,16 +3116,10 @@ Enact a temp Basal or a temp target */
 "Display carb equivalent amount" = "Display carb equivalent amount";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Display Ratio and a History View button";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Home View Ratio Button" = "Home View Ratio Button";
 
 /* UI/UX option */
 "Light" = "Light";
@@ -3132,6 +3135,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Light / Dark Mode" = "Light / Dark Mode";
+
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+
+/* Debug option */
+"Hide oref0 Predictions" = "Hide oref0 Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";

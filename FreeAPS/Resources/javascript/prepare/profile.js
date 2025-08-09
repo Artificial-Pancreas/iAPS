@@ -108,10 +108,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.settings = pumpsettings_data;
     inputs.targets = bgtargets_data;
     
-    if (dynamicVariables.useOverride && dynamicVariables.overridePercentage != 100 && dynamicVariables.basal) {
-        basalprofile_data.forEach( basal => basal.rate *= (dynamicVariables.overridePercentage / 100));
-    }
-    
     inputs.basals = basalprofile_data;
     inputs.isf = isf_data;
     inputs.carbratio = carbratio_data;
