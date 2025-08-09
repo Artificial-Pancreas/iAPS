@@ -177,7 +177,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchVersion() {
-        guard isStatsUploadEnabled || isNetworkReachable else {
+        guard isNetworkReachable else {
             return
         }
         let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
