@@ -190,6 +190,9 @@ struct MainChartView: View {
             .onChange(of: data.showCobChart) {
                 update(fullSize: geo.size)
             }
+            .onChange(of: data.useCarbBars) {
+                update(fullSize: geo.size)
+            }
             .onReceive(
                 Foundation.NotificationCenter.default
                     .publisher(for: UIDevice.orientationDidChangeNotification)
