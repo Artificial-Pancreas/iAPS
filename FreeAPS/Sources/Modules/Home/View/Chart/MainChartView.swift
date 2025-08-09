@@ -68,6 +68,7 @@ struct MainChartView: View {
         static let pointSizeHeightCarbs: Double = 5
         static let bolusHeight: Decimal = 45
         static let carbHeight: Decimal = 45
+        static let carbWidth: CGFloat = 5
     }
 
     private enum Command {
@@ -1957,8 +1958,8 @@ extension MainChartView {
             let height = carbHeight(amount: value.carbs)
             let rect = CGRect(
                 x: center.x,
-                y: center.y + Config.carbOffset,
-                width: width(value: value.carbs),
+                y: center.y + Config.insulinOffset,
+                width: min(width(value: value.carbs), Config.carbWidth),
                 height: height
             )
             return DotInfo(rect: rect, value: value.carbs)
