@@ -47,6 +47,7 @@ extension UIUX {
                         Text("hours").foregroundColor(.secondary)
                     }
                     Toggle("Use insulin bars", isOn: $state.useInsulinBars)
+                    Toggle("Use carb bars", isOn: $state.useCarbBars)
                     HStack {
                         Text("Hide the bolus amount strings when amount is under")
                         Spacer()
@@ -57,6 +58,7 @@ extension UIUX {
                     if state.fpus {
                         Toggle("Display carb equivalent amount", isOn: $state.fpuAmounts)
                     }
+                    Toggle("Hide oref0 Predictions", isOn: $state.hidePredictions)
 
                 } header: { Text("Home Chart settings ") }
 
