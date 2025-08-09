@@ -1959,7 +1959,7 @@ extension MainChartView {
             let height = carbHeight(amount: value.carbs)
             let rect = CGRect(
                 x: center.x,
-                y: center.y + Config.carbOffset,
+                y: center.y + Config.insulinOffset,
                 width: min(width(value: value.carbs), Config.carbWidth),
                 height: height
             )
