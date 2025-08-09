@@ -112,6 +112,7 @@ extension Home {
             insulinPeak: 75,
             maxBolus: 0,
             maxBolusValue: 1,
+            maxCarbsValue: 1,
             maxIOB: 0,
             maxCOB: 1,
             useInsulinBars: true,
@@ -121,7 +122,8 @@ extension Home {
             showInsulinActivity: false,
             showCobChart: false,
             iob: nil,
-            hidePredictions: false
+            hidePredictions: false,
+            useCarbBars: false
         )
 
         override func subscribe() {
@@ -183,6 +185,7 @@ extension Home {
             data.fpus = settingsManager.settings.fpus
             data.fpuAmounts = settingsManager.settings.fpuAmounts
             data.hidePredictions = settingsManager.settings.hidePredictions
+            data.useCarbBars = settingsManager.settings.useCarbBars
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             maxIOB = settingsManager.preferences.maxIOB
@@ -499,6 +502,7 @@ extension Home {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.data.carbs = self.provider.carbs(hours: self.filteredHours)
+                self.data.maxCarbsValue = self.data.carbs.compactMap(\.carbs).max() ?? 1
             }
         }
 
@@ -719,6 +723,7 @@ extension Home.StateModel:
         data.fpus = settingsManager.settings.fpus
         data.fpuAmounts = settingsManager.settings.fpuAmounts
         data.hidePredictions = settingsManager.settings.hidePredictions
+        data.useCarbBars = settingsManager.settings.useCarbBars
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
         maxIOB = settingsManager.preferences.maxIOB

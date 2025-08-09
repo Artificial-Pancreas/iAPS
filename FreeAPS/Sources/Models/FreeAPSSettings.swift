@@ -104,6 +104,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var glucoseOverrideThresholdActiveDown: Bool = false
     var glucoseOverrideThresholdDown: Decimal = 100
     var noCarbs: Bool = false
+    var useCarbBars: Bool = false
     // ColorScheme
     var lightMode: LightMode = .auto
     // Auto ISF
@@ -182,6 +183,10 @@ extension FreeAPSSettings: Decodable {
 
         if let hidePredictions = try? container.decode(Bool.self, forKey: .hidePredictions) {
             settings.hidePredictions = hidePredictions
+        }
+
+        if let useCarbBars = try? container.decode(Bool.self, forKey: .useCarbBars) {
+            settings.useCarbBars = useCarbBars
         }
 
         if let fpuAmounts = try? container.decode(Bool.self, forKey: .fpuAmounts) {
