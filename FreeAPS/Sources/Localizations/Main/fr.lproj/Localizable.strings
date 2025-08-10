@@ -3102,6 +3102,9 @@ Enact a temp Basal or a temp target */
 "Use insulin bars" = "Afficher l'insuline sous forme de barres";
 
 /* UI/UX option */
+"Use carb bars" = "Use carb bars";
+
+/* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Masquer les quantités de bolus si inférieures à";
 
 /* UI/UX option */

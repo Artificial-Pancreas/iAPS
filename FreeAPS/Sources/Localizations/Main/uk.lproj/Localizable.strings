@@ -3103,6 +3103,9 @@ Enact a temp Basal or a temp target */
 "Use insulin bars" = "Відображати інсулін вертикально";
 
 /* UI/UX option */
+"Use carb bars" = "Use carb bars";
+
+/* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Приховати рядки об'єм болюса, коли об'єм менший";
 
 /* UI/UX option */
