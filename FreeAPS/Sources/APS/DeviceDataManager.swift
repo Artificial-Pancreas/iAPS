@@ -111,6 +111,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                     }
                     pumpExpiresAtDate.send(endTime)
                 }
+
             } else {
                 pumpDisplayState.value = nil
                 pumpExpiresAtDate.send(nil)
