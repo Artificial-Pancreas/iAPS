@@ -3219,6 +3219,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Use insulin bars" = "Use insulin bars";
 
 /* UI/UX option */
+"Use carb bars" = "Use carb bars";
+
+/* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
 
 /* UI/UX option */
