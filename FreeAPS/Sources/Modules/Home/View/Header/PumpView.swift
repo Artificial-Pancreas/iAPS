@@ -180,8 +180,8 @@ struct PumpView: View {
                     .offset(y: -4)
             }
 
-            // MDT and Dana and Medtrum(?)
-            if let battery = battery, !state.pumpName.contains("Omni"), !(expiresAtDate == nil && nano) {
+            // MDT and Dana
+            if let battery = battery, !state.pumpName.contains("Omni"), !nano {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
                     (battery.percent ?? 100) >
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
@@ -190,7 +190,7 @@ struct PumpView: View {
                     .rotationEffect(.degrees(-90))
                     .frame(maxWidth: 32, maxHeight: 12)
                     .foregroundColor(batteryColor)
-                    .offset(x: nano ? -14 : -5, y: nano ? -2.5 : -0.7)
+                    .offset(x: -5, y: -0.7)
             }
         }
         .offset(x: (nano && expiresAtDate != nil) ? 25 : 0, y: (nano && expiresAtDate != nil) ? 10 : 5)
