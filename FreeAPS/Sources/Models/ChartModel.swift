@@ -30,6 +30,7 @@ class ChartModel: ObservableObject {
     @Published var insulinPeak: Decimal
     @Published var maxBolus: Decimal
     @Published var maxBolusValue: Decimal
+    @Published var maxCarbsValue: Decimal
     @Published var maxIOB: Decimal
     @Published var maxCOB: Decimal
     @Published var useInsulinBars: Bool
@@ -40,6 +41,7 @@ class ChartModel: ObservableObject {
     @Published var showCobChart: Bool
     @Published var iob: Decimal?
     @Published var hidePredictions: Bool
+    @Published var useCarbBars: Bool
 
     init(
         suggestion: Suggestion?,
@@ -71,6 +73,7 @@ class ChartModel: ObservableObject {
         insulinPeak: Decimal,
         maxBolus: Decimal,
         maxBolusValue: Decimal,
+        maxCarbsValue: Decimal,
         maxIOB: Decimal,
         maxCOB: Decimal,
         useInsulinBars: Bool,
@@ -80,7 +83,8 @@ class ChartModel: ObservableObject {
         showInsulinActivity: Bool,
         showCobChart: Bool,
         iob: Decimal?,
-        hidePredictions: Bool
+        hidePredictions: Bool,
+        useCarbBars: Bool
     ) {
         self.suggestion = suggestion
         self.glucose = glucose
@@ -111,6 +115,7 @@ class ChartModel: ObservableObject {
         self.insulinPeak = insulinPeak
         self.maxBolus = maxBolus
         self.maxBolusValue = maxBolusValue
+        self.maxCarbsValue = maxCarbsValue
         self.maxIOB = maxIOB
         self.maxCOB = maxCOB
         self.useInsulinBars = useInsulinBars
@@ -121,5 +126,6 @@ class ChartModel: ObservableObject {
         self.showCobChart = showCobChart
         self.iob = iob
         self.hidePredictions = hidePredictions
+        self.useCarbBars = useCarbBars
     }
 }

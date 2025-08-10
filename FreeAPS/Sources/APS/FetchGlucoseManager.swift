@@ -23,6 +23,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var healthKitManager: HealthKitManager!
     @Injected() var deviceDataManager: DeviceDataManager!
 
+    private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
     var cgmGlucoseSourceType: CGMType?
@@ -149,6 +150,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             filtered = smoothedValues.filter { $0.dateString > syncDate }
         }
 
+        save(filtered)
+
         glucoseStorage.storeGlucose(filtered)
 
         deviceDataManager.heartbeat(date: Date())
@@ -214,6 +217,19 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+    }
+
+    private func save(_ glucose: [BloodGlucose]) {
+        guard glucose.isNotEmpty, let first = glucose.first, let glucose = first.glucose, glucose != 0 else { return }
+
+        coredataContext.perform {
+            let dataForForStats = Readings(context: self.coredataContext)
+            dataForForStats.date = first.dateString
+            dataForForStats.glucose = Int16(glucose)
+            dataForForStats.id = first.id
+            dataForForStats.direction = first.direction?.symbol ?? "↔︎"
+            try? self.coredataContext.save()
+        }
     }
 
     func sourceInfo() -> [String: Any]? {

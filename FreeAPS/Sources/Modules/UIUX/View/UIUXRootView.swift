@@ -47,6 +47,7 @@ extension UIUX {
                         Text("hours").foregroundColor(.secondary)
                     }
                     Toggle("Use insulin bars", isOn: $state.useInsulinBars)
+                    Toggle("Use carb bars", isOn: $state.useCarbBars)
                     HStack {
                         Text("Hide the bolus amount strings when amount is under")
                         Spacer()

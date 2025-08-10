@@ -29,6 +29,7 @@ extension UIUX {
         @Published var showInsulinActivity: Bool = false
         @Published var showCobChart: Bool = false
         @Published var hidePredictions: Bool = false
+        @Published var useCarbBars: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -59,6 +60,7 @@ extension UIUX {
             subscribeSetting(\.showInsulinActivity, on: $showInsulinActivity) { showInsulinActivity = $0 }
             subscribeSetting(\.showCobChart, on: $showCobChart) { showCobChart = $0 }
             subscribeSetting(\.hidePredictions, on: $hidePredictions) { hidePredictions = $0 }
+            subscribeSetting(\.useCarbBars, on: $useCarbBars) { useCarbBars = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
