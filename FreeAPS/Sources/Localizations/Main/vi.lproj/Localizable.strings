@@ -2078,13 +2078,13 @@ Enact a temp Basal or a temp target */
 "Time In Range" = "Thời gian trong phạm vi";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Thời gian trung bình";
+"Average Interval" = "Khoảng đo trung bình";
 
 /* Median BG */
 "Median" = "Median";
 
 /* CGM readings in statView */
-"Readings" = "Chỉ số đo";
+"Readings" = "Số lần đo";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Readings / 24h";
@@ -2117,7 +2117,7 @@ Enact a temp Basal or a temp target */
 "days" = "days";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Chu kỳ";
+"Loops" = "Chu kỳ vòng lặp";
 
 /* Loop Errors in statPanel */
 "Errors" = "Lỗi";
@@ -2598,7 +2598,7 @@ Enact a temp Basal or a temp target */
 "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Tình trạng đường huyết cao kéo dài. Cứ mỗi giờ đường huyết duy trì ở mức cao, việc điều chỉnh này sẽ làm giảm ISF của bạn nhiều hơn.\n\nCông thức điều chỉnh ISF của Dura là:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
 
 /* */
-"SMB Delivery Ratio BG Range" = "Khoảng BG cho tỷ lệ phân phối SMB";
+"SMB Delivery Ratio BG Range" = "Khoảng BG cho tỉ lệ SMB";
 
 /* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, giá trị hợp lý nằm trong khoảng từ 40 mg/dL đến 120 mg/dL. Tỷ lệ phân phối SMB tăng tuyến tính sẽ được ánh xạ theo khoảng glucose [target_bg, target_bg + bg_range]. Tại mức target_bg, tỷ lệ SMB là smb_delivery_ratio_min; tại mức target_bg + bg_range, tỷ lệ là smb_delivery_ratio_max. Nếu đặt giá trị là 0, tỷ lệ SMB tăng tuyến tính sẽ bị vô hiệu hóa và hệ thống sẽ sử dụng tỷ lệ SMB cố định (smb_delivery_ratio).";
@@ -2753,7 +2753,7 @@ Enact a temp Basal or a temp target */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Điều này cho phép Super Micro Bolus (SMB) trong khi lượng carb đang hoạt động (COB) ở mức dương.";
 
 /* Headline "Enable SMB With Temptarget” */
-"Enable SMB With Temptarget" = "Kích hoạt SMB với liều Mục Tiêu Tạm Thời";
+"Enable SMB With Temptarget" = "Bật SMB với mục tiêu tạm thời";
 
 /* "Enable SMB With Temptarget” */
 "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép Super Micro Bolus (SMB) đạt được mục tiêu ăn sớm / liều tạm thời thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
@@ -2771,10 +2771,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật Super Micro Bolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Bật SMB với mục tiêu tạm cao";
+"Allow SMB With High Temptarget" = "Bật SMB với mục tiêu tạm thời cao";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Bật SMB với mục tiêu tạm cao";
+"Allow SMB With High Temptarget" = "Bật SMB với mục tiêu tạm thời cao";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được kích hoạt khác) ngay cả với mục tiêu tạm thời cao (> 100 mg/dl).";
@@ -2876,7 +2876,7 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa mà UAM có thể phân phối dưới dạng một SMB khi IOB vượt quá COB. Điều này mang lại khả năng khiến UAM trở nên hung hãn hơn hoặc ít hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Việc giảm giá trị sẽ khiến UAM giảm liều insulin cho mỗi SMB. Không nên đặt giá trị này cao hơn 60 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về liều tạm thời bằng 0 một cách an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "SMB Interval" */
-"SMB Interval" = "Chu kỳ SMB";
+"SMB Interval" = "Khoảng thời gian SMB";
 
 /* "SMB Interval" */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Thời lượng tối thiểu tính bằng phút cho SMB mới kể từ SMB cuối cùng hoặc liều Bolus thủ công";
@@ -3102,6 +3102,9 @@ Enact a temp Basal or a temp target */
 "Use insulin bars" = "Sử dụng thanh hiển thị insulin";
 
 /* UI/UX option */
+"Use carb bars" = "Use carb bars";
+
+/* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi ở dưới mức";
 
 /* UI/UX option */
@@ -3135,7 +3138,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Bỏ qua carbohydrate trong oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide oref0 Predictions" = "Ẩn dự đoán của oref0";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";
@@ -3156,7 +3159,7 @@ Enact a temp Basal or a temp target */
 "Show Predictions" = "Hiển thị dự đoán";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và động (nếu có)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa và động (nếu có)";
 
 /* Notification option */
 "Show Live activity" = "Hiển thị hoạt động trực tiếp";

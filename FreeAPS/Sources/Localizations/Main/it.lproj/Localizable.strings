@@ -3103,6 +3103,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Use insulin bars" = "Usa barre dell'insulina";
 
 /* UI/UX option */
+"Use carb bars" = "Use carb bars";
+
+/* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Nascondi le stringhe di quantità del bolo quando la quantità è inferiore";
 
 /* UI/UX option */
