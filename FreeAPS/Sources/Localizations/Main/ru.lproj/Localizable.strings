@@ -3102,7 +3102,7 @@ Enact a temp Basal or a temp target */
 "Use insulin bars" = "Отображать инсулин вертикально";
 
 /* UI/UX option */
-"Use carb bars" = "Use carb bars";
+"Use carb bars" = "Отображать углеводы вертикально";
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Скрыть строки объёма болюса, когда объём меньше";
@@ -3111,7 +3111,7 @@ Enact a temp Basal or a temp target */
 "Display carb equivalents" = "Отображать эквиваленты углеводов";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Отображать эквиваленты углеводов";
+"Display carb equivalent amount" = "Объём эквивалентов углеводов";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Отображать соотношение и кнопку просмотра истории";
@@ -3138,7 +3138,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Игнорировать углеводы в oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide oref0 Predictions" = "Скрыть oref0 предсказания";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";
