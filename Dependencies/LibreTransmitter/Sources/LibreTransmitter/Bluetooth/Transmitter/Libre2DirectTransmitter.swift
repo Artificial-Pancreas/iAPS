@@ -49,6 +49,30 @@ class Libre2DirectTransmitter: LibreTransmitterProxyProtocol {
     private var rxBuffer = Data()
     private var sensorData: SensorData?
     private var metadata: LibreTransmitterMetadata?
+    
+    class func canSupportPeripheral(_ peripheral: PeripheralProtocol) -> Bool {
+        // name can be one of the following formats:
+        // <description>: example
+        //ABBOT<SerialNumber>: ABBOTT3MH015PCNC4
+        // <MACADDRESS>: A4B7C9023F8D
+        
+        guard let name = peripheral.name else {
+            return false
+        }
+        
+        if name.lowercased().starts(with: "abbott") == true {
+            print("Libre 2 detected using legacy name format as matcher")
+            return true
+        }
+        
+        print("Libre 2 detection using MAC address as matcher: \(UserDefaults.standard.preSelectedSensor?.macAddress?.lowercased()) vs \(name.lowercased())")
+        if let sensor = UserDefaults.standard.preSelectedSensor, let macAddress = sensor.macAddress {
+            return name.lowercased().contains(macAddress.lowercased())
+        }
+        
+        
+        return false
+    }
 
     class func canSupportPeripheral(_ peripheral: CBPeripheral) -> Bool {
         peripheral.name?.lowercased().starts(with: "abbott") ?? false
@@ -76,8 +100,6 @@ class Libre2DirectTransmitter: LibreTransmitterProxyProtocol {
         if rxBuffer.count == expectedBufferSize {
             handleCompleteMessage()
         }
-
-
     }
 
 
@@ -140,8 +162,7 @@ class Libre2DirectTransmitter: LibreTransmitterProxyProtocol {
             let decryptedBLE = Data(try Libre2.decryptBLE(id: [UInt8](sensor.uuid), data: [UInt8](rxBuffer)))
             let sensorUpdate = Libre2.parseBLEData(decryptedBLE)
 
-            metadata = LibreTransmitterMetadata(hardware: "-", firmware: "-", battery: 100, name:  Self.shortTransmitterName, macAddress: nil, patchInfo: sensor.patchInfo.hexEncodedString().uppercased(), uid: [UInt8](sensor.uuid))
-
+            metadata = LibreTransmitterMetadata(hardware: "-", firmware: "-", battery: 100, name:  Self.shortTransmitterName, macAddress: sensor.macAddress, patchInfo: sensor.patchInfo.hexEncodedString().uppercased(), uid: [UInt8](sensor.uuid))
             delegate?.libreSensorDidUpdate(with: sensorUpdate, and: metadata!)
 
             print("libre2 got sensorupdate: \(String(describing: sensorUpdate))")
