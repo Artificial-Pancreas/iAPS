@@ -193,7 +193,7 @@ struct PumpView: View {
                     .offset(x: -5, y: -0.7)
             }
         }
-        .offset(x: (nano && expiresAtDate != nil) ? 25 : 0, y: (nano && expiresAtDate != nil) ? 10 : 5)
+        .offset(x: (nano && expiresAtDate != nil) ? 5 : 0, y: (nano && expiresAtDate != nil) ? 10 : 5)
     }
 
     private func remainingTime(time: TimeInterval) -> some View {
