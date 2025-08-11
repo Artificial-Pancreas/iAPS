@@ -3102,7 +3102,7 @@ Enact a temp Basal or a temp target */
 "Use insulin bars" = "Sử dụng thanh hiển thị insulin";
 
 /* UI/UX option */
-"Use carb bars" = "Use carb bars";
+"Use carb bars" = "Sử dụng thanh hiển thị carb";
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi ở dưới mức";
