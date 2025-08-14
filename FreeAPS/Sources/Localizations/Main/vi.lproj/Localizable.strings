@@ -2042,7 +2042,7 @@ Enact a temp Basal or a temp target */
 "Display Chart Y - Grid lines" = "Hiển thị biểu đồ trục Y";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Hiển thị các đường hiển thị Thấp và Cao";
+"Display Chart Threshold lines for Low and High" = "Hiển thị đường giới hạn Thấp và Cao";
 
 /* */
 "Standing / Laying TIR Chart" = "Biểu đồ TIR Đứng/Nằm";
@@ -3075,7 +3075,7 @@ Enact a temp Basal or a temp target */
 "Normally glucose is colored red only when over or under your notification limits for high/low" = "Thông thường glucose chỉ có màu đỏ khi vượt quá hoặc dưới giới hạn thông báo của bạn về mức cao";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Số giờ hiển thị trong chế độ cuộn ngang";
+"Horizontal Scroll View Visible hours" = "Giờ hiển thị trong chế độ cuộn ngang";
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Hiển thị nút cài đặt khoảng thời gian";
@@ -3102,7 +3102,7 @@ Enact a temp Basal or a temp target */
 "Use insulin bars" = "Sử dụng thanh hiển thị insulin";
 
 /* UI/UX option */
-"Use carb bars" = "Use carb bars";
+"Use carb bars" = "Sử dụng thanh hiển thị carb";
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi ở dưới mức";
