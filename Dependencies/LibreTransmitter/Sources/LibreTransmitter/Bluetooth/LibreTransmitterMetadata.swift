@@ -1,4 +1,4 @@
-//
+///
 //  MiaoMiao.swift
 //  LibreMonitor
 //
@@ -85,6 +85,7 @@ public enum SensorType: String, CustomStringConvertible {
     case libreUS14dayE6 = "E6"
     case libreProH = "70"
     case libre2Plus = "C6"
+    case libre2PlusNew = "F7"
 
     public var description: String {
         switch self {
@@ -92,7 +93,7 @@ public enum SensorType: String, CustomStringConvertible {
             return "Libre 1"
         case .libre1A2:
             return "Libre 1 A2"
-            case .libre2, .libre2C5, .libre2Plus:
+            case .libre2, .libre2C5, .libre2Plus, .libre2PlusNew:
             return "Libre 2"
         case .libreUS14day, .libreUS14dayE6:
             return "Libre US"
@@ -108,7 +109,7 @@ public extension SensorType {
 
         let start = patchInfo[0..<2].uppercased()
 
-        let choices: [String: SensorType] = ["DF": .libre1, "A2": .libre1A2, "9D": .libre2, "C5": .libre2C5, "C6": .libre2Plus, "E5": .libreUS14day, "E6": .libreUS14dayE6, "70": .libreProH]
+        let choices: [String: SensorType] = ["DF": .libre1, "A2": .libre1A2, "9D": .libre2, "C5": .libre2C5, "C6": .libre2Plus, "F7": .libre2PlusNew, "E5": .libreUS14day, "E6": .libreUS14dayE6, "70": .libreProH]
 
         if let res = choices[start] {
             self = res
