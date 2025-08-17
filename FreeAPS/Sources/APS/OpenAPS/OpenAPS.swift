@@ -91,7 +91,7 @@ final class OpenAPS {
 
                     if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
                         let cd = CoreDataStorage()
-                        cd.saveInsulinData(iobEntries: iobEntries)
+                        _ = cd.saveInsulinData(iobEntries: iobEntries)
                     }
 
                     print(
