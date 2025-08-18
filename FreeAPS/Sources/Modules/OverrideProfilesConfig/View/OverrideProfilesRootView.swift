@@ -68,6 +68,13 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var promilleFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 3
+            return formatter
+        }
+
         var body: some View {
             overridesView
                 .navigationBarTitle("Profiles")
@@ -418,7 +425,7 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.postMealISFweight,
-                                    formatter: higherPrecisionFormatter,
+                                    formatter: promilleFormatter
                                     liveEditing: true
                                 )
                             }
