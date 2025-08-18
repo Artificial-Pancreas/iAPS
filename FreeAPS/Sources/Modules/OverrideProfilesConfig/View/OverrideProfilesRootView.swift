@@ -71,7 +71,7 @@ extension OverrideProfilesConfig {
         private var promilleFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
+            formatter.maximumFractionDigits = 3
             return formatter
         }
 
