@@ -43,6 +43,11 @@ extension Encodable {
         String(data: try! JSONCoding.encoder.encode(self), encoding: .utf8)!
     }
 
+    func toJSONObject() throws -> Any {
+        let data = try JSONEncoder().encode(self)
+        return try JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])
+    }
+
     func asJavaScriptString() -> String {
         "\"" +
             rawJSON()

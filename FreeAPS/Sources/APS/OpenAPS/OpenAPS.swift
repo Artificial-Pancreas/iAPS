@@ -1133,7 +1133,7 @@ final class OpenAPS {
         autosens: Autosens?
     ) async throws -> [IOBItem] {
         try await scriptExecutor.callNew(
-            function: "iaps.oref0.iob",
+            function: "iob",
             with: IobInput(
                 pump_history: pumphistory,
                 profile: profile,
@@ -1158,7 +1158,7 @@ final class OpenAPS {
         )
 
         return try await scriptExecutor.callNew(
-            function: "iaps.oref0.iob",
+            function: "iob",
             with: IobInput(
                 pump_history: pumpHistory,
                 profile: profile,
@@ -1179,7 +1179,7 @@ final class OpenAPS {
         temporary: TemporaryData
     ) async throws -> RecentCarbs {
         try await scriptExecutor.callNew(
-            function: "iaps.oref0.meal",
+            function: "meal",
             with: MealInput(
                 pump_history: pumphistory,
                 profile: profile,
@@ -1204,7 +1204,7 @@ final class OpenAPS {
         previousAutotuneResult: Profile
     ) async throws -> Profile {
         try await scriptExecutor.callNew(
-            function: "iaps.oref0.autotune",
+            function: "autotune",
             with: AutotuneInput(
                 pump_history: pumphistory,
                 profile: profile,
@@ -1232,7 +1232,7 @@ final class OpenAPS {
         clock: Date
     ) async throws -> Suggestion {
         try await scriptExecutor.callNew(
-            function: "iaps.oref0.determine_basal",
+            function: "determine_basal",
             with: DetermineBasalInput(
                 glucose: glucose,
                 current_temp: currentTemp,
@@ -1258,7 +1258,7 @@ final class OpenAPS {
         temptargets: [TempTarget]
     ) async throws -> Autosens {
         try await scriptExecutor.callNew(
-            function: "iaps.oref0.autosens",
+            function: "autosens",
             with: AutosensInput(
                 glucose: glucose,
                 pump_history: pumpHistory,
@@ -1287,7 +1287,7 @@ final class OpenAPS {
     ) async throws -> Profile {
         let clock = Date.now
         let profile = try await scriptExecutor.callNew(
-            function: "iaps.profile",
+            function: "profile",
             with: PrepareProfileInput(
                 preferences: preferences,
                 pump_settings: pumpSettings,
@@ -1319,10 +1319,13 @@ final class OpenAPS {
         microBolusAllowed: Bool, // not passed to the middleware function
         reservoir: Double
     ) async throws -> Profile {
-        let script = try await middlewareScript(name: OpenAPS.Middleware.determineBasal)
-        return try await scriptExecutor.callMiddleware(
-            function: "iaps.middleware",
+        guard let script = try await middlewareScript(name: OpenAPS.Middleware.determineBasal)?.body else {
+            return profile
+        }
+        return try await scriptExecutor.callNew(
+            function: "middleware",
             with: MiddlewareInput(
+                middleware_fn: script,
                 glucose: glucose,
                 current_temp: currentTemp,
                 iob: iob,
@@ -1333,8 +1336,6 @@ final class OpenAPS {
                 reservoir: reservoir,
                 clock: Date.now
             ),
-            middleware: script?.body ?? "", // will create a script defining a "middleware" function
-            middlewareFnName: "middleware", // match the function created above
             as: Profile.self
         )
     }
@@ -1348,7 +1349,7 @@ final class OpenAPS {
         clock: Date
     ) async throws -> Profile {
         try await scriptExecutor.callNew(
-            function: "iaps.autoisf",
+            function: "autoisf",
             with: AutoIsfInput(
                 glucose: glucose,
                 iob: iob,

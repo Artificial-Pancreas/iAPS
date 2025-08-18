@@ -1,9 +1,9 @@
-const invoke = require('./utils').invoke
+const invoke = require('./native-bridge')
 
 const autosens = require('./autosens')
 const meal = require('./meal')
 const iob = require('./iob')
-const determineBasal = require('./determine-basal')
+const determine_basal = require('./determine-basal')
 const autotune = require('./autotune')
 const profile = require('./profile')
 const middleware = require('./middleware')
@@ -11,45 +11,31 @@ const autoisf = require('./autoisf')
 
 const iaps = {
 
-  oref0: {
+  invoke(functionName, iapsInput) {
+    switch (functionName) {
+      case 'autosens':
+        return invoke(iapsInput, autosens)
+      case 'meal':
+        return invoke(iapsInput, meal)
+      case 'iob':
+        return invoke(iapsInput, iob)
+      case 'determine_basal':
+        return invoke(iapsInput, determine_basal)
+      case 'autotune':
+        return invoke(iapsInput, autotune)
+      case 'profile':
+        return invoke(iapsInput, profile)
+      case 'middleware':
+        return invoke(iapsInput, middleware)
+      case 'autoisf':
+        return invoke(iapsInput, autoisf)
 
-    autosens(iapsInput) {
-      return invoke(iapsInput, autosens)
-    },
-
-    meal(iapsInput) {
-      return invoke(iapsInput, meal)
-    },
-
-    iob(iapsInput) {
-      return invoke(iapsInput, iob)
-    },
-
-    determine_basal(iapsInput) {
-      return invoke(iapsInput, determineBasal)
-    },
-
-    autotune(iapsInput) {
-      return invoke(iapsInput, autotune)
-    },
-
-    profile(iapsInput) {
-
-    },
-
-  }, // end oref0
-
-  profile(iapsInput) {
-    return invoke(iapsInput, profile)
-  },
-
-  middleware(iapsInput) {
-    return invoke(iapsInput, middleware)
-  },
-
-  autoisf(iapsInput) {
-    return invoke(iapsInput, autoisf)
-  },
+      default:
+        return JSON.stringify({
+          script_error: `unknown function: ${functionName}`
+        })
+    }
+  }
 
 }
 
@@ -64,3 +50,4 @@ const iaps = {
 module.exports = iaps;
 
 /// --------------
+

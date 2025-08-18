@@ -2,6 +2,7 @@
 import Foundation
 
 struct MiddlewareInput: Codable {
+    let middleware_fn: String
     let glucose: [GlucoseEntry0]
     let current_temp: TempBasal
     let iob: [IOBItem]
@@ -15,6 +16,7 @@ struct MiddlewareInput: Codable {
 
 extension MiddlewareInput {
     enum CodingKeys: String, CodingKey {
+        case middleware_fn
         case glucose
         case current_temp
         case iob

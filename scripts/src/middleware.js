@@ -1,5 +1,6 @@
 /*
 *   {
+*     middleware_fn: String,
 *     glucose: [GlucoseEntry0],
 *     current_temp: TempBasal,
 *     iob: [IOBItem],
@@ -18,7 +19,9 @@ module.exports = (iaps_input) => {
   var string = "";
 
   try {
-    string = iaps_input.middleware_fn(
+    eval(iaps_input.middleware_fn);
+    // the above eval should definde the middleware function
+    string = middleware(
       iaps_input.iob,
       iaps_input.current_temp,
       iaps_input.glucose,
@@ -27,7 +30,8 @@ module.exports = (iaps_input) => {
       iaps_input.meal,
       iaps_input.reservoir,
       clock
-    ) || "";
+    ) ?? ''
+
   } catch (error) {
     console.log("Invalid middleware: " + error);
     string = String(error);

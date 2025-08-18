@@ -1,23 +1,10 @@
-export function invoke(input, call) {
-  try {
-    const result = call(input)
-    return JSON.stringify(result)
-  } catch (e) {
-    console.log("INVOKE ERROR: ", e.toString(), e)
-    return JSON.stringify({
-      script_error: e.toString()
-    })
-  }
-}
-
-
-export function round(value, digits) {
+module.exports.round = (value, digits) => {
   if (! digits) { digits = 0; }
   var scale = Math.pow(10, digits);
   return Math.round(value * scale) / scale;
 }
 
-export function exercising(profile, dynamicVariables) {
+module.exports.exercising = (profile, dynamicVariables) => {
   // One of two exercise settings (they share the same purpose).
   if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {
     // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
@@ -28,7 +15,7 @@ export function exercising(profile, dynamicVariables) {
   return false
 }
 
-export function disableSMBs(dynamicVariables, now) {
+module.exports.disableSMBs = (dynamicVariables, now) => {
   if (dynamicVariables.smbIsOff) {
     // smbIsAlwaysOff=true means "SMB are scheduled, NOT always off"
     if (!dynamicVariables.smbIsAlwaysOff) { return true; }
