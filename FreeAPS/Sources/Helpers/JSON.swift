@@ -1,43 +1,5 @@
 import Foundation
 
-// a JSON string that we do not interact with, like AutotunePrepped
-struct RawJSONString: Codable, Sendable {
-    let value: String
-
-    init(_ value: String) {
-        self.value = value
-    }
-
-    init(from decoder: Decoder) throws {
-        // Grab the JSON source as raw data
-        let container = try decoder.singleValueContainer()
-        let data = try container.decode(Data.self)
-
-        guard let str = String(data: data, encoding: .utf8) else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Invalid UTF-8 in JSON"
-            )
-        }
-        value = str
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        // We assume `value` already contains valid JSON
-        guard let data = value.data(using: .utf8) else {
-            throw EncodingError.invalidValue(
-                value,
-                .init(
-                    codingPath: encoder.codingPath,
-                    debugDescription: "Invalid UTF-8 in stored JSON string"
-                )
-            )
-        }
-        try container.encode(data)
-    }
-}
-
 extension Encodable {
     func rawJSON() -> String {
         String(data: try! JSONCoding.encoder.encode(self), encoding: .utf8)!
@@ -61,7 +23,6 @@ extension Encodable {
 
 @dynamicMemberLookup protocol JSON: Codable, Sendable {
     var rawJSON: String { get }
-//    init?(from: String)
 }
 
 extension Decodable {

@@ -1,7 +1,5 @@
 import Foundation
 
-typealias AutotunePrepared = RawJSONString
-
 struct Autotune: JSON, Equatable {
     let createdAt: Date?
     let basalProfile: [BasalProfileEntry]

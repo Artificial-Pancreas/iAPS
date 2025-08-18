@@ -116,7 +116,7 @@ public extension WKWebView {
 
         #else
 
-            let result = try await self.callAsyncJavaScript(
+            let result = try await callAsyncJavaScript(
                 functionBody,
                 arguments: ["input": argument.toJSONObject()],
                 in: frame,
