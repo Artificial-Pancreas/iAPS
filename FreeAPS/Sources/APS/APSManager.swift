@@ -346,20 +346,21 @@ final class BaseAPSManager: APSManager, Injectable {
         return nil
     }
 
-    private func autosens() -> AnyPublisher<Bool, Never> {
+    private func autosens() -> AnyPublisher<Bool, Error> {
         guard let autosens = storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
               (autosens.timestamp ?? .distantPast).addingTimeInterval(30.minutes.timeInterval) > Date()
         else {
-            return openAPS.autosense()
+            return openAPS.autosens()
                 .map { $0 != nil }
                 .eraseToAnyPublisher()
         }
 
-        return Just(false).eraseToAnyPublisher()
+        return Just(false)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
-        let start = Date.now
         debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.isNotEmpty else {
             debug(.apsManager, "Not enough glucose data")
@@ -403,6 +404,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 return suggestion != nil
             }
+            .replaceError(with: false)
             .eraseToAnyPublisher()
 
         if temp.duration == 0,
@@ -421,10 +423,11 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func iobSync() async -> Decimal? {
-        let sync = await openAPS.iobSync()
-        guard let iobEntries = IOBTick0.parseArrayFromJSON(from: sync) else { return nil }
-
-        return CoreDataStorage().saveInsulinData(iobEntries: iobEntries)
+        if let iobEntries = try? await openAPS.iobSync(clock: Date()) {
+            return CoreDataStorage().saveInsulinData(iobEntries: iobEntries)
+        } else {
+            return nil
+        }
     }
 
     func determineBasalSync() {
@@ -444,6 +447,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 return tunedProfile != nil
             }
+            .replaceError(with: false)
             .eraseToAnyPublisher()
     }
 
@@ -569,7 +573,9 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func autotune() -> AnyPublisher<Autotune?, Never> {
-        openAPS.autotune().eraseToAnyPublisher()
+        openAPS.autotune()
+            .replaceError(with: nil)
+            .eraseToAnyPublisher()
     }
 
     func enactAnnouncement(_ announcement: Announcement) {

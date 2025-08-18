@@ -1,10 +1,21 @@
 import Foundation
 
+typealias AutotunePrepared = RawJSONString
+
 struct Autotune: JSON, Equatable {
-    var createdAt: Date?
-    var basalProfile: [BasalProfileEntry]
+    let createdAt: Date?
+    let basalProfile: [BasalProfileEntry]
     let sensitivity: Decimal
     let carbRatio: Decimal
+
+    static func from(profile: Profile) -> Autotune {
+        Autotune(
+            createdAt: nil,
+            basalProfile: profile.basalProfile,
+            sensitivity: Decimal(profile.sens),
+            carbRatio: Decimal(profile.carbRatio),
+        )
+    }
 }
 
 extension Autotune {

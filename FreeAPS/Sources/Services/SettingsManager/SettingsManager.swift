@@ -33,7 +33,7 @@ final class BaseSettingsManager: SettingsManager, Injectable {
     init(resolver: Resolver) {
         let storage = resolver.resolve(FileStorage.self)!
         settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
-            ?? FreeAPSSettings(from: OpenAPS.defaults(for: OpenAPS.FreeAPS.settings))
+            ?? (try? FreeAPSSettings.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.FreeAPS.settings)))
             ?? FreeAPSSettings()
 
         injectServices(resolver)
@@ -45,13 +45,13 @@ final class BaseSettingsManager: SettingsManager, Injectable {
 
     var preferences: Preferences {
         storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
-            ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
+            ?? (try? Preferences.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.preferences)))
             ?? Preferences()
     }
 
     var pumpSettings: PumpSettings {
         storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
-            ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
+            ?? (try? PumpSettings.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.settings)))
             ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
     }
 

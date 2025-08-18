@@ -1,9 +1,10 @@
 import Foundation
 
 protocol FileStorage {
-    func save<Value: JSON>(_ value: Value, as name: String)
-    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
-    func retrieveRaw(_ name: String) -> RawJSON?
+    func save<Value: Encodable>(_ value: Value, as name: String)
+    func retrieve<Value: Decodable>(_ name: String, as type: Value.Type) -> Value?
+    func retrieveRaw(_ name: String) -> String?
+    func retrieveDecimal(_ name: String) -> Decimal?
     func retrieveRawAsync(_ name: String) async -> RawJSON?
     func append<Value: JSON>(_ newValue: Value, to name: String)
     func append<Value: JSON>(_ newValues: [Value], to name: String)
@@ -12,7 +13,7 @@ protocol FileStorage {
     func remove(_ name: String)
     func rename(_ name: String, to newName: String)
     func transaction(_ exec: (FileStorage) -> Void)
-    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
+    func retrieveFile<Value: Decodable>(_ name: String, as type: Value.Type) -> Value?
 
     func urlFor(file: String) -> URL?
 }
@@ -38,28 +39,36 @@ final class BaseFileStorage: FileStorage, Injectable {
         }
     }
 
-    func save<Value: JSON>(_ value: Value, as name: String) {
+    func save<Value: Encodable>(_ value: Value, as name: String) {
         getQueue(for: name).sync {
-            if let value = value as? RawJSON, let data = value.data(using: .utf8) {
-                try? Disk.save(data, to: .documents, as: name)
-            } else {
-                try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
-            }
+//            if let value = value as? RawJSON, let data = value.data(using: .utf8) {
+//                try? Disk.save(data, to: .documents, as: name)
+//            } else {
+            try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
+//            }
         }
     }
 
-    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
+    func retrieve<Value: Decodable>(_ name: String, as type: Value.Type) -> Value? {
         getQueue(for: name).sync {
             try? Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
         }
     }
 
-    func retrieveRaw(_ name: String) -> RawJSON? {
+    func retrieveRaw(_ name: String) -> String? {
         getQueue(for: name).sync {
             guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
                 return nil
             }
             return String(data: data, encoding: .utf8)
+        }
+    }
+
+    func retrieveDecimal(_ name: String) -> Decimal? {
+        if let string = retrieveRaw(name) {
+            return Decimal(string: string)
+        } else {
+            return nil
         }
     }
 
@@ -76,7 +85,7 @@ final class BaseFileStorage: FileStorage, Injectable {
         }
     }
 
-    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
+    func retrieveFile<Value: Decodable>(_ name: String, as type: Value.Type) -> Value? {
         if let loaded = retrieve(name, as: type) {
             return loaded
         }

@@ -492,7 +492,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
 
-        var reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
+        var reservoir: Decimal? = storage.retrieveDecimal(OpenAPS.Monitor.reservoir) ?? 0.0
         if reservoir == 0xDEAD_BEEF {
             reservoir = nil
         }
@@ -818,7 +818,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     OpenAPS.Nightscout.uploadedTempTargetsDatabase,
                     as: [TempTarget].self
                 ),
-                    uploadedTempTargets.rawJSON.sorted() == tempTargets.rawJSON.sorted(), !force
+                    // TODO: what are these sorted() on Strings?
+                    uploadedTempTargets.rawJSON() /* .sorted() */ == tempTargets.rawJSON() /* .sorted() */, !force
                 {
                     NSLog("Temp targets unchanged")
                 } else { uploadTempTargetsToDatabase(tempTargets, token: token, name: name) }

@@ -28,7 +28,7 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     static let local = "iAPS"
     static let trio = "Trio"
 
-    static let empty = NigtscoutTreatment(from: "{}")!
+//    static let empty = NigtscoutTreatment(from: "{}")!
 
     static func == (lhs: NigtscoutTreatment, rhs: NigtscoutTreatment) -> Bool {
         (lhs.createdAt ?? Date()) == (rhs.createdAt ?? Date()) &&

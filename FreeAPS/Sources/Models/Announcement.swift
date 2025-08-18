@@ -17,20 +17,20 @@ struct Announcement: JSON, Equatable, Hashable {
         let arguments = String(components[1]).lowercased()
         switch command {
         case "bolus":
-            guard let amount = Decimal(from: arguments) else { return nil }
+            guard let amount = Decimal(string: arguments) else { return nil }
             return .bolus(amount)
         case "pump":
             guard let action = PumpAction(rawValue: arguments) else { return nil }
             return .pump(action)
         case "looping":
-            guard let looping = Bool(from: arguments) else { return nil }
+            guard let looping = Bool.fromString(arguments) else { return nil }
             return .looping(looping)
         case "tempbasal":
             let basalComponents = arguments.split(separator: ",")
             guard basalComponents.count == 2 else { return nil }
             let rateArg = String(basalComponents[0])
             let durationArg = String(basalComponents[1])
-            guard let rate = Decimal(from: rateArg), let duration = Decimal(from: durationArg) else { return nil }
+            guard let rate = Decimal(string: rateArg), let duration = Decimal(string: durationArg) else { return nil }
             return .tempbasal(rate: rate, duration: duration)
         case "meal":
             let mealComponents = arguments.split(separator: ",")
@@ -38,8 +38,8 @@ struct Announcement: JSON, Equatable, Hashable {
             let carbsArg = String(mealComponents[0])
             let fatArg = String(mealComponents[1])
             let proteinArg = String(mealComponents[2])
-            guard let carbs = Decimal(from: carbsArg), let fat = Decimal(from: fatArg),
-                  let protein = Decimal(from: proteinArg) else { return nil }
+            guard let carbs = Decimal(string: carbsArg), let fat = Decimal(string: fatArg),
+                  let protein = Decimal(string: proteinArg) else { return nil }
             return .meal(carbs: carbs, fat: fat, protein: protein)
         case "override":
             guard !name.isEmpty else { return nil }

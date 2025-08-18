@@ -10,7 +10,7 @@ struct NigtscoutExercise: JSON, Hashable, Equatable {
 
     static let local = "iAPS"
 
-    static let empty = NigtscoutExercise(from: "{}")!
+//    static let empty = NigtscoutExercise(from: "{}")!
 
     static func == (lhs: NigtscoutExercise, rhs: NigtscoutExercise) -> Bool {
         (lhs.createdAt) == rhs.createdAt

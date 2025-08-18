@@ -35,7 +35,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         broadcaster.register(SettingsObserver.self, observer: self)
 
         contacts = storage.retrieve(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self)
-            ?? [ContactTrickEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick))
+            ?? (try? [ContactTrickEntry].decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick)))
             ?? []
 
         knownIds = contacts.compactMap(\.contactId)

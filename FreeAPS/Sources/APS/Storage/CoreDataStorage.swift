@@ -56,7 +56,7 @@ final class CoreDataStorage {
         return result
     }
 
-    func saveInsulinData(iobEntries: [IOBTick0]) -> Decimal? {
+    func saveInsulinData(iobEntries: [IOBItem]) -> Decimal? {
         guard let firstDate = iobEntries.compactMap(\.time).min() else { return nil }
         let iob = iobEntries[0].iob
 

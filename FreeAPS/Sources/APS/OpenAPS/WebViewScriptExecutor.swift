@@ -1,31 +1,12 @@
 import WebKit
 
+struct ScriptError: Decodable, Error {
+    let script_error: String
+}
+
 @MainActor class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
     private var webView: WKWebView!
-    private var continuationStreams = [String: AsyncThrowingStream<RawJSON, Error>.Continuation]()
-    private var scripts = [
-        FunctionScript(name: OpenAPS.Bundle.autosens, function: "freeaps_autosens"),
-        FunctionScript(name: OpenAPS.Bundle.autotuneCore, function: "freeaps_autotuneCore"),
-        FunctionScript(name: OpenAPS.Bundle.autotunePrep, function: "freeaps_autotunePrep"),
-        FunctionScript(name: OpenAPS.Bundle.basalSetTemp, function: "freeaps_basalSetTemp"),
-        FunctionScript(name: OpenAPS.Bundle.determineBasal, function: "freeaps_determineBasal"),
-        FunctionScript(name: OpenAPS.Bundle.getLastGlucose, function: "freeaps_glucoseGetLast"),
-        FunctionScript(name: OpenAPS.Bundle.iob, function: "freeaps_iob"),
-        FunctionScript(name: OpenAPS.Bundle.meal, function: "freeaps_meal"),
-        FunctionScript(name: OpenAPS.Bundle.profile, function: "freeaps_profile"),
-        FunctionScript(name: OpenAPS.Prepare.autosens, function: "generate", variable: "iaps_autosens"),
-        FunctionScript(name: OpenAPS.Prepare.autotuneCore, function: "generate", variable: "iaps_autotuneCore"),
-        FunctionScript(name: OpenAPS.Prepare.autotunePrep, function: "generate", variable: "iaps_autotunePrep"),
-        FunctionScript(name: OpenAPS.Prepare.determineBasal, function: "generate", variable: "iaps_determineBasal"),
-        FunctionScript(name: OpenAPS.Prepare.iob, function: "generate", variable: "iaps_iob"),
-        FunctionScript(name: OpenAPS.Prepare.meal, function: "generate", variable: "iaps_meal"),
-        FunctionScript(name: OpenAPS.Prepare.profile, function: "generate", variable: "iaps_profile"),
-        FunctionScript(name: OpenAPS.Prepare.string, function: "generate", variable: "iaps_middleware"),
-        FunctionScript(name: OpenAPS.AutoISF.autoisf, for: [
-            Script(name: OpenAPS.AutoISF.getLastGlucose),
-            Script(name: OpenAPS.AutoISF.autoisf)
-        ], function: "generate", variable: "iaps_autoisf")
-    ]
+    private var continuationStreams = [String: AsyncThrowingStream<String, Error>.Continuation]()
 
     init(frame _: CGRect = .zero) {
         super.init()
@@ -45,7 +26,9 @@ import WebKit
         let webView = WKWebView(frame: .zero, configuration: config)
 
         injectConsoleLogHandler(webView: webView)
-        loadScripts(webView: webView)
+
+        includeScript(webView: webView, script: Script(name: OpenAPS.Prepare.log))
+        includeScript(webView: webView, script: Script(name: OpenAPS.Bundle.oref0))
 
         return webView
     }
@@ -63,82 +46,93 @@ import WebKit
         webView.evaluateJavaScript(consoleScript, completionHandler: nil)
     }
 
-    private func script(for name: String) -> FunctionScript? {
-        scripts.filter { $0.name == name }.first
-    }
-
-    private func loadScripts(webView: WKWebView) {
-        for script in scripts {
-            includeScript(webView: webView, script: script)
-        }
-
-        includeScript(webView: webView, script: Script(name: OpenAPS.Prepare.log))
-    }
-
-    private func includeScript(webView: WKWebView, script: FunctionScript) {
-        includeScript(webView: webView, script: Script(name: "Script", body: script.body))
-    }
-
     private func includeScript(webView: WKWebView, script: Script) {
         webView.evaluateJavaScript(script.body)
     }
 
-    func call(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
-        if let script = script(for: name) {
-            return await callFunctionAsync(function: script, with: arguments, withBody: body)
-        } else {
-            print("No script found for \"\(name)\"")
-            return ""
+    func callNew<I: Encodable, T: Decodable>(
+        function: String,
+        with input: I,
+        as _: T.Type
+    ) async throws -> T {
+        let inputJson = input.rawJSON()
+
+        let script = """
+        return \(function)(\(inputJson))
+        """
+
+        let resultString: String
+        do {
+            resultString = try await evaluateFunction(body: script)
+        } catch {
+            print("Javascript function (\(function)) failed with error: \(error)")
+            throw error
         }
+
+        let data = Data(resultString.utf8) // cache, will be used twice below
+        if let scriptError = try? JSONCoding.decoder.decode(ScriptError.self, from: data) {
+            throw scriptError
+        }
+
+        return try T.decodeFrom(jsonData: data)
     }
 
-    private func callFunctionAsync(
-        function: FunctionScript,
-        with arguments: [JSON],
-        withBody body: String = ""
-    ) async -> RawJSON {
-        await callFunctionAsync(function: function.variable, with: arguments, withBody: body)
-    }
-
-    private func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
-        let joined = arguments.map(\.rawJSON).joined(separator: ",")
+    func callMiddleware<I: Encodable, T: Decodable>(
+        function: String,
+        with input: I,
+        middleware body: String,
+        middlewareFnName: String,
+        as _: T.Type
+    ) async throws -> T {
+        let inputJson = input.rawJSON()
 
         let script = """
         \(body)
 
-        return JSON.stringify(\(function)(\(joined)) ?? "", null, 4);
+        let inputs = \(inputJson)
+
+        inputs.middleware_fn = \(middlewareFnName)
+
+        return \(function)(inputs)
         """
 
+        let resultString: String
         do {
-            let result = try await evaluateFunction(body: script)
-            return result
+            resultString = try await evaluateFunction(body: script)
         } catch {
-            print(error)
-            return ""
+            print("Javascript function (\(function)) failed with error: \(error)")
+            throw error
         }
+
+        let data = Data(resultString.utf8) // cache, will be used twice below
+        if let scriptError = try? JSONCoding.decoder.decode(ScriptError.self, from: data) {
+            throw scriptError
+        }
+
+        return try T.decodeFrom(jsonData: data)
     }
 
-    private func evaluateFunction(body: String, attempts: Int = 0) async throws -> RawJSON {
+    private func evaluateFunction(body: String, attempts: Int = 0) async throws -> String {
         let maxAttempts = 2
         let requestId = UUID().uuidString
 
         let script = """
-        (function () {
-            (async function () {
-                try {
-                    var result = await (function() {
-                        \(body)
-                    })();
-                    window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", value: result });
-                } catch (e) {
-                    window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", error: e.toString() });
+        (() => {
+            try {
+                var result = (function() {
+                    \(body)
+                })();
+                if (typeof result === 'undefined') {
+                    throw new Error('undefined result')
                 }
-            })();
-            return "";
+                window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", value: result });
+            } catch (e) {
+                window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", error: e.toString() });
+            }
         })();
         """
 
-        let stream = AsyncThrowingStream<RawJSON, Error> { continuation in
+        let stream = AsyncThrowingStream<String, Error> { continuation in
             continuationStreams[requestId] = continuation
         }
 
@@ -177,7 +171,7 @@ import WebKit
            let id = body["id"] as? String,
            let continuation = continuationStreams.removeValue(forKey: id)
         {
-            if let value = body["value"] as? RawJSON {
+            if let value = body["value"] as? String {
                 continuation.yield(value)
                 continuation.finish()
             } else if let error = body["error"] as? String {

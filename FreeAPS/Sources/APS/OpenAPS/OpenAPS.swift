@@ -25,137 +25,147 @@ final class OpenAPS {
         self.scriptExecutor = scriptExecutor
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: TemporaryData) -> Future<Suggestion?, Never> {
+    func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: TemporaryData) -> Future<Suggestion?, Error> {
         Future { promise in
             self.processQueue.async {
                 Task {
-                    // For debugging
-                    let start = Date.now
-                    var now = Date.now
+                    do {
+                        // For debugging
+                        let start = Date.now
+                        var now = Date.now
 
-                    debug(.openAPS, "Start determineBasal")
-                    self.storage.save(clock, as: Monitor.clock)
-                    let tempBasal = currentTemp.rawJSON
-                    self.storage.save(tempBasal, as: Monitor.tempBasal)
+                        debug(.openAPS, "Start determineBasal")
+                        self.storage.save(clock, as: Monitor.clock)
+                        let tempBasal = currentTemp
+                        self.storage.save(tempBasal, as: Monitor.tempBasal)
 
-                    let (
-                        pumpHistory,
-                        carbs,
-                        glucose,
-                        preferences,
-                        basalProfile,
-                        data,
-                        autosens,
-                        reservoir,
-                        storedProfile
-                    ) = await (
-                        self.pumpHistory(),
-                        self.carbHistory(),
-                        self.glucoseHistory(),
-                        self.preferencesHistory(),
-                        self.basalHistory(),
-                        self.dataHistory(),
-                        self.autosensHistory(),
-                        self.reservoirHistory(),
-                        self.profileHistory()
-                    )
+                        let (
+                            pumpHistory,
+                            carbs,
+                            glucose,
+                            preferences,
+                            basalProfile,
+                            data,
+                            autosens,
+                            reservoir,
+                            storedProfile,
+                            pumpSettings
+                        ) = try await (
+                            self.pumpHistory(),
+                            self.carbHistory(),
+                            self.glucoseHistory(),
+                            self.readPreferences(),
+                            self.readBasalSchedule(),
+                            self.readSettings(),
+                            self.readAutosens(),
+                            self.readReservoir(),
+                            self.profileHistory(),
+                            self.readPumpSettings()
+                        )
 
-                    let preferencesData = Preferences(from: preferences)
-                    let settings = FreeAPSSettings(from: data)
-                    var profile = storedProfile
-                    print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
+                        let preferencesData = preferences // TODO: is this correct? // Preferences(from: preferences)
+                        let settings = data // TODO: is this correct? // FreeAPSSettings(from: data)
+                        var profile = storedProfile
+                        print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
-                    now = Date.now
-                    let tdd = CoreDataStorage()
-                        .fetchInsulinDistribution().first
-                    print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
-
-                    now = Date.now
-                    let (meal, iob) = await (self.meal(
-                        pumphistory: pumpHistory,
-                        profile: storedProfile,
-                        basalProfile: basalProfile,
-                        clock: clock,
-                        carbs: carbs,
-                        glucose: glucose,
-                        temporary: temporary
-                    ), self.iob(
-                        pumphistory: pumpHistory,
-                        profile: storedProfile,
-                        clock: clock,
-                        autosens: autosens.isEmpty ? .null : autosens
-                    ))
-
-                    self.storage.save(meal, as: Monitor.meal)
-                    self.storage.save(iob, as: Monitor.iob)
-
-                    if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
-                        let cd = CoreDataStorage()
-                        cd.saveInsulinData(iobEntries: iobEntries)
-                    }
-
-                    print(
-                        "Time for Meal and IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
-
-                    // The Middleware layer.
-                    now = Date.now
-                    let alteredProfile = await self.middleware(
-                        glucose: glucose,
-                        currentTemp: tempBasal,
-                        iob: iob,
-                        profile: profile,
-                        autosens: autosens.isEmpty ? .null : autosens,
-                        meal: meal,
-                        microBolusAllowed: true,
-                        reservoir: reservoir
-                    )
-
-                    now = Date.now
-                    // Auto ISF Layer
-                    if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                         now = Date.now
-                        profile = await self.autosisf(
+                        let tdd = CoreDataStorage()
+                            .fetchInsulinDistribution().first
+                        print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
+
+                        now = Date.now
+                        let (meal, iob) = try await (self.meal(
+                            pumphistory: pumpHistory,
+                            profile: storedProfile,
+                            basalProfile: basalProfile,
+                            clock: clock,
+                            carbs: carbs,
                             glucose: glucose,
+                            temporary: temporary
+                        ), self.iob(
+                            pumphistory: pumpHistory,
+                            profile: storedProfile,
+                            clock: clock,
+                            autosens: autosens
+                        ))
+
+                        self.storage.save(meal, as: Monitor.meal)
+                        self.storage.save(iob, as: Monitor.iob)
+
+                        let cd = CoreDataStorage()
+                        _ = cd.saveInsulinData(iobEntries: iob)
+
+                        print(
+                            "Time for Meal and IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
+                        // The Middleware layer.
+                        now = Date.now
+                        let alteredProfile = try await self.middleware(
+                            glucose: glucose,
+                            currentTemp: tempBasal,
                             iob: iob,
-                            profile: alteredProfile,
-                            autosens: autosens.isEmpty ? .null : autosens,
-                            pumpHistory: pumpHistory
+                            profile: profile,
+                            autosens: autosens,
+                            meal: meal,
+                            microBolusAllowed: true,
+                            reservoir: reservoir
+                        )
+
+                        now = Date.now
+                        // Auto ISF Layer
+                        let freeAPSSettings = settings
+                        if freeAPSSettings.autoisf {
+                            now = Date.now
+                            profile = try await self.autosisf(
+                                glucose: glucose,
+                                iob: iob,
+                                profile: alteredProfile,
+                                autosens: autosens,
+                                pumpHistory: pumpHistory,
+                                clock: clock
+                            )
+                            print(
+                                "Time for AutoISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                            )
+                        } else { profile = alteredProfile }
+
+                        now = Date.now
+                        // The OpenAPS layer
+                        let suggested = try await self.determineBasal(
+                            glucose: glucose,
+                            currentTemp: tempBasal,
+                            iob: iob,
+                            profile: profile,
+                            autosens: autosens,
+                            meal: meal,
+                            microBolusAllowed: true,
+                            reservoir: reservoir,
+                            pumpHistory: pumpHistory, // TODO: not used
+                            clock: clock
                         )
                         print(
-                            "Time for AutoISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                            "Time for Determine Basal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                         )
-                    } else { profile = alteredProfile }
+                        debug(.openAPS, "SUGGESTED: \(suggested)")
 
-                    now = Date.now
-                    // The OpenAPS layer
-                    let suggested = await self.determineBasal(
-                        glucose: glucose,
-                        currentTemp: tempBasal,
-                        iob: iob,
-                        profile: profile,
-                        autosens: autosens.isEmpty ? .null : autosens,
-                        meal: meal,
-                        microBolusAllowed: true,
-                        reservoir: reservoir,
-                        pumpHistory: pumpHistory
-                    )
-                    print(
-                        "Time for Determine Basal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
-                    debug(.openAPS, "SUGGESTED: \(suggested)")
-
-                    // Update Suggestion, when applicable (middleware / dynamic ISF / Auto ISF)
-                    if var suggestion = Suggestion(from: suggested) {
+                        // Update Suggestion, when applicable (middleware / dynamic ISF / Auto ISF)
+                        var suggestion = suggested
+                        //            if var suggestion = suggested {
                         now = Date.now
 
                         // Auto ISF
-                        if let mySettings = settings, mySettings.autoisf, let iob = suggestion.iob {
+                        let mySettings = settings
+                        if mySettings.autoisf, let iob = suggestion.iob {
                             // If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate
                             if mySettings.ketoProtect, iob < 0,
                                let rate = suggestion.rate, rate <= 0,
                                let basal = self.readBasal(alteredProfile), iob < -basal, (suggestion.units ?? 0) <= 0,
-                               let basalRate = self.aisfBasal(mySettings, basal, oref0Suggestion: suggestion)
+                               let basalRate = self.aisfBasal(
+                                   mySettings,
+                                   basal,
+                                   pumpSettings: pumpSettings,
+                                   oref0Suggestion: suggestion
+                               )
                             {
                                 suggestion = basalRate
                             }
@@ -180,193 +190,234 @@ final class OpenAPS {
                         self.storage.save(suggestion, as: Enact.suggested)
 
                         promise(.success(suggestion))
-                    } else {
-                        promise(.success(nil))
+                    } catch {
+                        promise(.failure(error))
                     }
                 }
             }
         }
     }
 
-    func autosense() -> Future<Autosens?, Never> {
+    func autosens() -> Future<Autosens?, Error> {
         Future { promise in
             self.processQueue.async {
                 debug(.openAPS, "Start autosens")
-                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-                let profile = self.loadFileFromStorage(name: Settings.profile)
-                let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-                let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
-
                 Task {
-                    let autosensResult = await self.autosense(
-                        glucose: glucose,
-                        pumpHistory: pumpHistory,
-                        basalprofile: basalProfile,
-                        profile: profile,
-                        carbs: carbs,
-                        temptargets: tempTargets
-                    )
+                    do {
+                        let (
+                            pumpHistory,
+                            carbs,
+                            glucose,
+                            profile,
+                            basalProfile,
+                            tempTargets
+                        ) = try await (
+                            self.pumpHistory(),
+                            self.carbHistory(),
+                            self.glucoseHistory(),
+                            self.profileHistory(),
+                            self.readBasalSchedule(),
+                            self.readTempTargets()
+                        )
 
-                    debug(.openAPS, "AUTOSENS: \(autosensResult)")
-                    if var autosens = Autosens(from: autosensResult) {
+                        let autosensResult = try await self.autosens(
+                            glucose: glucose,
+                            pumpHistory: pumpHistory,
+                            basalprofile: basalProfile,
+                            profile: profile,
+                            carbs: carbs,
+                            temptargets: tempTargets
+                        )
+
+                        debug(.openAPS, "AUTOSENS: \(autosensResult)")
+                        var autosens = autosensResult
                         autosens.timestamp = Date()
                         self.storage.save(autosens, as: Settings.autosense)
                         promise(.success(autosens))
-                    } else {
-                        promise(.success(nil))
+                    } catch {
+                        promise(.failure(error))
                     }
                 }
             }
         }
     }
 
-    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Autotune?, Never> {
+    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Autotune?, Error> {
         Future { promise in
             self.processQueue.async {
                 debug(.openAPS, "Start autotune")
-                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-                let profile = self.loadFileFromStorage(name: Settings.profile)
-                let pumpProfile = self.loadFileFromStorage(name: Settings.pumpProfile)
-                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-
                 Task {
-                    let autotunePreppedGlucose = await self.autotunePrepare(
-                        pumphistory: pumpHistory,
-                        profile: profile,
-                        glucose: glucose,
-                        pumpprofile: pumpProfile,
-                        carbs: carbs,
-                        categorizeUamAsBasal: categorizeUamAsBasal,
-                        tuneInsulinCurve: tuneInsulinCurve
-                    )
-                    debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
+                    do {
+                        let (
+                            pumpHistory,
+                            carbs,
+                            glucose,
+                            //                        preferences,
+                            //                        basalProfile,
+                            //                        data,
+                            //                        autosens,
+                            //                        reservoir,
+                            profile,
+                            pumpProfile
+                        ) = try await (
+                            self.pumpHistory(),
+                            self.carbHistory(),
+                            self.glucoseHistory(),
+                            //                        self.readPreferences(),
+                            //                        self.readBasalSchedule(),
+                            //                        self.readSettings(),
+                            //                        self.readAutosens(),
+                            //                        self.readReservoir(),
+                            self.profileHistory(),
+                            self.readPumpProfile()
+                        )
 
-                    let previousAutotune = self.storage.retrieve(Settings.autotune, as: RawJSON.self)
+//                        let autotunePreppedGlucose = try await self.autotunePrepare(
+//                            pumphistory: pumpHistory,
+//                            profile: profile,
+//                            glucose: glucose,
+//                            pumpprofile: pumpProfile,
+//                            carbs: carbs,
+//                            categorizeUamAsBasal: categorizeUamAsBasal,
+//                            tuneInsulinCurve: tuneInsulinCurve
+//                        )
+//                        debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
+//
+                        let previousAutotune = try await self.readAutotuneAsProfile(useAutotune: true)
+//
+//                        let autotuneResult = try await self.autotuneRun(
+//                            autotunePreparedData: autotunePreppedGlucose,
+//                            previousAutotuneResult: previousAutotune ?? Autotune.from(profile: profile),
+//                            pumpProfile: pumpProfile
+//                        )
 
-                    let autotuneResult = await self.autotuneRun(
-                        autotunePreparedData: autotunePreppedGlucose,
-                        previousAutotuneResult: previousAutotune ?? profile,
-                        pumpProfile: pumpProfile
-                    )
+                        let autotuneResult = try await self.autotuneFull(
+                            pumphistory: pumpHistory,
+                            profile: profile,
+                            glucose: glucose,
+                            pumpprofile: pumpProfile,
+                            carbs: carbs,
+                            categorizeUamAsBasal: categorizeUamAsBasal,
+                            tuneInsulinCurve: tuneInsulinCurve,
+                            previousAutotuneResult: previousAutotune ?? profile,
+                        )
 
-                    debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
+                        debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
 
-                    if let autotune = Autotune(from: autotuneResult) {
+                        let autotune = Autotune.from(profile: autotuneResult)
                         self.storage.save(autotuneResult, as: Settings.autotune)
                         promise(.success(autotune))
-                    } else {
-                        promise(.success(nil))
+                    } catch {
+                        promise(.failure(error))
                     }
                 }
             }
         }
     }
 
-    func makeProfiles(useAutotune: Bool, settings: FreeAPSSettings) -> Future<Autotune?, Never> {
+    // TODO: settings is passed as an argument, but also is fetched from storage below
+    func makeProfiles(useAutotune: Bool, settings: FreeAPSSettings) -> Future<Profile?, Error> {
         Future { promise in
             debug(.openAPS, "Start makeProfiles")
             self.processQueue.async {
                 Task {
-                    let start = Date.now
-                    var now = Date.now
+                    do {
+                        let start = Date.now
+                        var now = Date.now
 
-                    let (
-                        preferencesResult,
-                        pumpSettings,
-                        bgTargets,
-                        basalProfile,
-                        isf,
-                        cr,
-                        tempTargets,
-                        model,
-                        autotune,
-                        freeaps
-                    ) = await (
-                        self.preferencesHistory(),
-                        self.pumpSettingsHistory(),
-                        self.bgTargetsHistory(),
-                        self.basalProfileHistory(),
-                        self.isfHistory(),
-                        self.crHistory(),
-                        self.tempTargetsHistory(),
-                        self.modelHistory(),
-                        self.autotuneHistory(useAutotune: useAutotune),
-                        self.settingsHistory()
-                    )
-                    print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
-
-                    let preferences = preferencesResult.isEmpty ? Preferences().rawJSON : preferencesResult
-                    let preferencesData = Preferences(from: preferences)
-                    let freeapsData = FreeAPSSettings(from: freeaps)
-
-                    now = Date.now
-                    let (
-                        tdd,
-                        dynamicVariables
-                    ) = await (
-                        self.tdd(preferencesData: preferencesData),
-                        self.dynamicVariables(preferencesData, freeapsData)
-                    )
-                    print(
-                        "Time for tdd and DynamicVariables \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
-
-                    if let insulin = tdd, insulin.hours > 0 {
-                        CoreDataStorage().saveTDD(insulin)
-                    }
-
-                    now = Date.now
-                    let (pumpProfile, profile) = await (
-                        self.makeProfileAsync(
-                            preferences: preferences,
-                            pumpSettings: pumpSettings,
-                            bgTargets: bgTargets,
-                            basalProfile: basalProfile,
-                            isf: isf,
-                            carbRatio: cr,
-                            tempTargets: tempTargets,
-                            model: model,
-                            autotune: RawJSON.null,
-                            freeaps: freeaps,
-                            dynamicVariables: dynamicVariables,
-                            settings: settings
-                        ),
-                        self.makeProfileAsync(
-                            preferences: preferences,
-                            pumpSettings: pumpSettings,
-                            bgTargets: bgTargets,
-                            basalProfile: basalProfile,
-                            isf: isf,
-                            carbRatio: cr,
-                            tempTargets: tempTargets,
-                            model: model,
-                            autotune: autotune.isEmpty ? .null : autotune,
-                            freeaps: freeaps,
-                            dynamicVariables: dynamicVariables,
-                            settings: settings
+                        let (
+                            preferencesResult,
+                            pumpSettings,
+                            bgTargets,
+                            basalProfile,
+                            isf,
+                            cr,
+                            tempTargets,
+                            model,
+                            autotune,
+                            freeaps
+                        ) = try await ( // TODO: handle errors
+                            self.readPreferences(),
+                            self.readPumpSettings(),
+                            self.bgTargetsHistory(),
+                            self.readBasalSchedule(),
+                            self.readIsfSchedule(),
+                            self.readCrSchedule(),
+                            self.readTempTargets(),
+                            self.readModel(),
+                            self.readAutotune(useAutotune: useAutotune),
+                            self.readSettings()
                         )
-                    )
-                    print(
-                        "MakeProfiles: Time for profile and pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
+                        print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
-                    now = Date.now
-                    self.storage.save(pumpProfile, as: Settings.pumpProfile)
-                    self.storage.save(profile, as: Settings.profile)
+                        let preferences = preferencesResult ?? Preferences()
+                        let preferencesData = preferences // TODO: is this correct? // Preferences(from: preferences)
+                        let freeapsData = freeaps // TODO: is this correct? // FreeAPSSettings(from: freeaps)
 
-                    print(
-                        "MakeProfiles: Time for save files \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
+                        now = Date.now
+                        let (
+                            tdd,
+                            dynamicVariables
+                        ) = try await (
+                            self.tdd(preferencesData: preferencesData),
+                            self.dynamicVariables(preferencesData, freeapsData)
+                        )
+                        print(
+                            "Time for tdd and DynamicVariables \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
 
-                    if let tunedProfile = Autotune(from: profile) {
-                        promise(.success(tunedProfile))
-                        return
+                        if let insulin = tdd, insulin.hours > 0 {
+                            CoreDataStorage().saveTDD(insulin)
+                        }
+
+                        now = Date.now
+                        let (pumpProfile, profile) = try await (
+                            self.makeProfileAsync(
+                                preferences: preferences,
+                                pumpSettings: pumpSettings,
+                                bgTargets: bgTargets,
+                                basalProfile: basalProfile,
+                                isf: isf,
+                                carbRatio: cr,
+                                tempTargets: tempTargets,
+                                model: model,
+                                autotune: nil,
+                                freeaps: freeaps,
+                                dynamicVariables: dynamicVariables,
+                                settings: settings
+                            ),
+                            self.makeProfileAsync(
+                                preferences: preferences,
+                                pumpSettings: pumpSettings,
+                                bgTargets: bgTargets,
+                                basalProfile: basalProfile,
+                                isf: isf,
+                                carbRatio: cr,
+                                tempTargets: tempTargets,
+                                model: model,
+                                autotune: autotune,
+                                freeaps: freeaps,
+                                dynamicVariables: dynamicVariables,
+                                settings: settings
+                            )
+                        )
+                        print(
+                            "MakeProfiles: Time for profile and pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
+
+                        now = Date.now
+                        self.storage.save(pumpProfile, as: Settings.pumpProfile)
+                        self.storage.save(profile, as: Settings.profile)
+
+                        print(
+                            "MakeProfiles: Time for save files \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
+
+                        let tunedProfile = Autotune.from(profile: profile)
+                        promise(.success(profile))
+                    } catch {
+                        promise(.failure(error))
                     }
-
-                    promise(.success(nil))
                 }
             }
         }
@@ -374,83 +425,94 @@ final class OpenAPS {
 
     // MARK: - Private
 
-    private func pumpHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory)
+    private func pumpHistory() async throws -> [PumpHistoryEvent] {
+        try await loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)
     }
 
-    private func carbHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Monitor.carbHistory)
+    private func carbHistory() async throws -> [CarbsEntry] {
+        try await loadFileFromStorageAsync(name: Monitor.carbHistory, as: [CarbsEntry].self)
     }
 
-    private func glucoseHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Monitor.glucose)
+    private func glucoseHistory() async throws -> [GlucoseEntry0] {
+        let glucose = try await loadFileFromStorageAsync(name: Monitor.glucose, as: [BloodGlucose].self)
+        return glucose.map { g in
+            GlucoseEntry0(
+                date: nil,
+                displayTime: nil,
+                dateString: g.dateString.ISO8601Format(),
+                sgv: g.sgv,
+                glucose: g.glucose,
+                type: g.type,
+                noise: g.noise,
+            )
+        }
     }
 
-    private func preferencesHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.preferences)
+    private func readPreferences() async throws -> Preferences? {
+        try await loadFileFromStorageAsyncOpt(name: Settings.preferences, as: Preferences.self)
     }
 
-    private func basalHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.basalProfile)
+    private func readBasalSchedule() async throws -> [BasalProfileEntry] {
+        try await loadFileFromStorageAsync(name: Settings.basalProfile, as: [BasalProfileEntry].self)
     }
 
-    private func dataHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: FreeAPS.settings)
+    private func readSettings() async throws -> FreeAPSSettings {
+        try await loadFileFromStorageAsync(name: FreeAPS.settings, as: FreeAPSSettings.self)
     }
 
-    private func autosensHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.autosense)
+    private func readAutosens() async throws -> Autosens? {
+        try await loadFileFromStorageAsyncOpt(name: Settings.autosense, as: Autosens.self)
     }
 
-    private func reservoirHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Monitor.reservoir)
+    private func readReservoir() async throws -> Double {
+        try await loadFileFromStorageAsync(name: Monitor.reservoir, as: Double.self)
     }
 
-    private func profileHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.profile)
+    private func profileHistory() async throws -> Profile {
+        try await loadFileFromStorageAsync(name: Settings.profile, as: Profile.self)
     }
 
-    private func pumpSettingsHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.settings)
+    private func readPumpProfile() async throws -> Profile {
+        try await loadFileFromStorageAsync(name: Settings.pumpProfile, as: Profile.self)
     }
 
-    private func bgTargetsHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.bgTargets)
+    private func readPumpSettings() async throws -> PumpSettings {
+        try await loadFileFromStorageAsync(name: Settings.settings, as: PumpSettings.self)
     }
 
-    private func basalProfileHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.basalProfile)
+    private func bgTargetsHistory() async throws -> BGTargets {
+        try await loadFileFromStorageAsync(name: Settings.bgTargets, as: BGTargets.self)
     }
 
-    private func isfHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.insulinSensitivities)
+    private func readIsfSchedule() async throws -> InsulinSensitivities {
+        try await loadFileFromStorageAsync(name: Settings.insulinSensitivities, as: InsulinSensitivities.self)
     }
 
-    private func crHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.carbRatios)
+    private func readCrSchedule() async throws -> CarbRatios {
+        try await loadFileFromStorageAsync(name: Settings.carbRatios, as: CarbRatios.self)
     }
 
-    private func tempTargetsHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.tempTargets)
+    private func readTempTargets() async throws -> [TempTarget] {
+        try await loadFileFromStorageAsync(name: Settings.tempTargets, as: [TempTarget].self)
     }
 
-    private func modelHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Settings.model)
+    private func readModel() async throws -> String {
+        try await loadFileFromStorageAsync(name: Settings.model, as: String.self)
     }
 
-    private func autotuneHistory(useAutotune: Bool) async -> RawJSON {
-        await useAutotune ? loadFileFromStorageAsync(name: Settings.autotune) : .empty
+    private func readAutotune(useAutotune: Bool) async throws -> Autotune? {
+        useAutotune ? try await loadFileFromStorageAsyncOpt(name: Settings.autotune, as: Autotune.self) : nil
     }
 
-    private func settingsHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: FreeAPS.settings)
+    private func readAutotuneAsProfile(useAutotune: Bool) async throws -> Profile? {
+        useAutotune ? try await loadFileFromStorageAsyncOpt(name: Settings.autotune, as: Profile.self) : nil
     }
 
     private func reasons(
         reason: String,
         suggestion: Suggestion,
         preferences: Preferences?,
-        profile: RawJSON,
+        profile: Profile,
         tdd: InsulinDistribution?,
         settings: FreeAPSSettings?
     ) -> String {
@@ -473,10 +535,10 @@ final class OpenAPS {
             }
             // Auto ISF
             if let freeAPSSettings = settings, freeAPSSettings.autoisf {
-                let reasons = profile.autoISFreasons ?? ""
+                let reasons = profile.autoISFReasons ?? ""
                 // If disabled in middleware or Auto ISF layer
-                if let disabled = readAndExclude(json: profile, variable: "autoisf", exclude: "autoisf_m"),
-                   let value = Bool(disabled), !value
+                if !profile.iaps.autoisf // readAndExclude(json: profile, variable: "autoisf", exclude: "autoisf_m"),
+//                   let value = Bool(disabled), !value
                 {
                     reasonString.insert(
                         contentsOf: "Autosens Ratio: \(isf)" + tddString + ", \(reasons), ",
@@ -511,17 +573,17 @@ final class OpenAPS {
             }
 
             // Include ISF before eventual adjustment
-            if let old = readMiddleware(json: profile, variable: "old_isf"),
+            if let old = profile.oldISF, //  readMiddleware(json: profile, variable: "old_isf"),
                let new = readReason(reason: reason, variable: "ISF"),
-               let oldISF = trimmedIsEqual(string: old, decimal: new)
+               let oldISF = trimmedIsEqual(string: "\(old)", decimal: new)
             {
                 reasonString = reasonString.replacingOccurrences(of: "ISF:", with: "ISF: \(oldISF) →")
             }
 
             // Include CR before eventual adjustment
-            if let old = readMiddleware(json: profile, variable: "old_cr"),
+            if let old = profile.oldCR, // readMiddleware(json: profile, variable: "old_cr"),
                let new = readReason(reason: reason, variable: "CR"),
-               let oldCR = trimmedIsEqual(string: old, decimal: new)
+               let oldCR = trimmedIsEqual(string: "\(old)", decimal: new)
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
@@ -549,27 +611,28 @@ final class OpenAPS {
         }
 
         // SMB Delivery ratio
-        if targetGlucose != nil, let smbRatio = readJSON(json: profile, variable: "smb_delivery_ratio"),
-           let value = Decimal(string: smbRatio), value != 0.5
+        if targetGlucose != nil, profile.smbDeliveryRatio != 0.5 //  readJSON(json: profile, variable: "smb_delivery_ratio"),
+//           let value = Decimal(string: smbRatio), value != 0.5
         {
             let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
-            reasonString.insert(contentsOf: ", SMB Ratio: \(smbRatio)", at: index)
+            reasonString.insert(contentsOf: ", SMB Ratio: \(profile.smbDeliveryRatio)", at: index)
         }
 
+        // TODO: decipher this
         // Middleware
-        if targetGlucose != nil, let middlewareString = readMiddleware(json: profile, variable: "mw"),
-           middlewareString.count > 2
-        {
-            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
-            if middlewareString != "Nothing changed" {
-                reasonString.insert(contentsOf: ", Middleware: \(middlewareString)", at: index)
-            }
-        }
+//        if targetGlucose != nil, let middlewareString = readMiddleware(json: profile, variable: "mw"),
+//           middlewareString.count > 2
+//        {
+//            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
+//            if middlewareString != "Nothing changed" {
+//                reasonString.insert(contentsOf: ", Middleware: \(middlewareString)", at: index)
+//            }
+//        }
 
         // Auto ISF additional comments
         if aisf {
             let index = reasonString.endIndex
-            reasonString.insert(contentsOf: "\n\nAuto ISF { \(profile.autoISFstring ?? "") }", at: index)
+            reasonString.insert(contentsOf: "\n\nAuto ISF { \(profile.autoISFString ?? "") }", at: index)
         }
 
         // Save Suggestion to CoreData
@@ -582,7 +645,7 @@ final class OpenAPS {
                 var aisfReasons: String?
                 if aisf {
                     // Save AISF output
-                    aisfReasons = "\(profile.autoISFreasons ?? "")"
+                    aisfReasons = "\(profile.autoISFReasons ?? "")"
                 }
 
                 let saveSuggestion = Reasons(context: coredataContext)
@@ -613,7 +676,9 @@ final class OpenAPS {
                     saveSuggestion.rate = rate as NSDecimalNumber
                 }
 
-                if let units = readJSON(json: profile, variable: "out_units"), units.contains("mmol/L") {
+                if profile.outUnits == GlucoseUnits
+                    .mmolL
+                { //  readJSON(json: profile, variable: "out_units"), units.contains("mmol/L")
                     saveSuggestion.mmol = true
                 } else {
                     saveSuggestion.mmol = false
@@ -635,12 +700,17 @@ final class OpenAPS {
         return old
     }
 
-    private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
-        guard let changeRate = readJSON(json: alteredProfile, variable: "set_basal"), Bool(changeRate) ?? false,
-              let basal_rate_is = readJSON(json: alteredProfile, variable: "basal_rate") else { return nil }
+    private func overrideBasal(
+        alteredProfile: Profile,
+        oref0Suggestion: Suggestion
+    ) -> Suggestion? {
+        guard alteredProfile.setBasal ?? false,
+              //  readJSON(json: alteredProfile, variable: "set_basal"), Bool(changeRate) ?? false,
+              let basal_rate_is = alteredProfile.basalRate // readJSON(json: alteredProfile, variable: "basal_rate")
+        else { return nil }
 
         var returnSuggestion = oref0Suggestion
-        let basal_rate = Decimal(string: basal_rate_is) ?? 0
+        let basal_rate = Decimal(basal_rate_is)
 
         returnSuggestion.rate = basal_rate
         returnSuggestion.duration = 30
@@ -657,6 +727,7 @@ final class OpenAPS {
     private func aisfBasal(
         _ settings: FreeAPSSettings,
         _ basal: Decimal,
+        pumpSettings: PumpSettings,
         oref0Suggestion: Suggestion
     ) -> Suggestion? {
         guard settings.closedLoop else {
@@ -667,9 +738,9 @@ final class OpenAPS {
             return nil
         }
 
-        guard let pumpSettings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self) else {
-            return nil
-        }
+//        guard let pumpSettings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self) else {
+//            return nil
+//        }
 
         var rate = basal
         var factor: Decimal = 1
@@ -748,18 +819,20 @@ final class OpenAPS {
         return nil
     }
 
-    private func readBasal(_ profile: String) -> Decimal? {
-        if let string = profile.components(separatedBy: ",")
-            .filter({ !$0.contains("current_basal_safety_multiplier") && $0.contains("current_basal") }).first
-        {
-            let targetComponents = string.components(separatedBy: ":")
-            if targetComponents.count == 2 {
-                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
-                let decimal = Decimal(string: trimmedString) ?? 0
-                return decimal
-            }
-        }
-        return nil
+    private func readBasal(_ profile: Profile) -> Decimal? {
+        Decimal(profile.currentBasal)
+//        return Decimal(profile.currentBasal)
+//        if let string = profile.components(separatedBy: ",")
+//            .filter({ !$0.contains("current_basal_safety_multiplier") && $0.contains("current_basal") }).first
+//        {
+//            let targetComponents = string.components(separatedBy: ":")
+//            if targetComponents.count == 2 {
+//                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
+//                let decimal = Decimal(string: trimmedString) ?? 0
+//                return decimal
+//            }
+//        }
+//        return nil
     }
 
     private func readMiddleware(json: RawJSON, variable: String) -> String? {
@@ -779,16 +852,17 @@ final class OpenAPS {
         return nil
     }
 
-    private func tdd(preferencesData: Preferences?) async -> (bolus: Decimal, basal: Decimal, hours: Double)? {
+    private func tdd(preferencesData: Preferences?) async throws -> (bolus: Decimal, basal: Decimal, hours: Double)? {
         let preferences = preferencesData
-        guard let pumpData = storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) else { return nil }
+        let pumpData =
+            try await pumpHistory() // storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) else { return nil }
 
         let tdd = TotalDailyDose().totalDailyDose(pumpData, increment: Double(preferences?.bolusIncrement ?? 0.1))
         return tdd
     }
 
-    func dynamicVariables(_ preferences: Preferences?, _ settingsData: FreeAPSSettings?) async -> DynamicVariables {
-        coredataContext.performAndWait {
+    func dynamicVariables(_ preferences: Preferences?, _ settingsData: FreeAPSSettings?) async throws -> DynamicVariables {
+        let averages = coredataContext.performAndWait {
             let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
@@ -1042,301 +1116,277 @@ final class OpenAPS {
                 autoISFoverrides: autoISFsettings,
                 aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
             )
-            self.storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
             return averages
         }
+        storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
+        return averages
     }
 
     private func unchanged(meal: Meals) -> Bool {
         meal.carbs <= 0 && meal.fat <= 0 && meal.protein <= 0
     }
 
-    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
-            pumphistory,
-            profile,
-            clock,
-            autosens
-        ])
+    private func iob(
+        pumphistory: [PumpHistoryEvent],
+        profile: Profile,
+        clock: Date,
+        autosens: Autosens?
+    ) async throws -> [IOBItem] {
+        try await scriptExecutor.callNew(
+            function: "iaps.oref0.iob",
+            with: IobInput(
+                pump_history: pumphistory,
+                profile: profile,
+                clock: clock,
+                autosens: autosens,
+            ),
+            as: [IOBItem].self
+        )
     }
 
-    func iobSync() async -> RawJSON {
+    func iobSync(
+        clock: Date,
+    ) async throws -> [IOBItem] {
         let (
             autosens,
             profile,
             pumpHistory
-        ) = await (
-            autosensHistory(),
+        ) = try await (
+            readAutosens(),
             profileHistory(),
             pumpHistory()
         )
 
-        return await scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
-            pumpHistory,
-            profile,
-            Date(),
-            autosens
-        ])
+        return try await scriptExecutor.callNew(
+            function: "iaps.oref0.iob",
+            with: IobInput(
+                pump_history: pumpHistory,
+                profile: profile,
+                clock: clock,
+                autosens: autosens
+            ),
+            as: [IOBItem].self
+        )
     }
 
     private func meal(
-        pumphistory: JSON,
-        profile: JSON,
-        basalProfile: JSON,
-        clock: JSON,
-        carbs: JSON,
-        glucose: JSON,
+        pumphistory: [PumpHistoryEvent],
+        profile: Profile,
+        basalProfile: [BasalProfileEntry],
+        clock: Date,
+        carbs: [CarbsEntry],
+        glucose: [GlucoseEntry0],
         temporary: TemporaryData
-    ) async -> RawJSON {
-        await scriptExecutor.call(name: OpenAPS.Prepare.meal, with: [
-            pumphistory,
-            profile,
-            clock,
-            glucose,
-            basalProfile,
-            carbs,
-            temporary.forBolusView
-        ])
+    ) async throws -> RecentCarbs {
+        try await scriptExecutor.callNew(
+            function: "iaps.oref0.meal",
+            with: MealInput(
+                pump_history: pumphistory,
+                profile: profile,
+                basal_profile: basalProfile,
+                clock: clock,
+                carbs: carbs,
+                glucose: glucose,
+                for_bolus_view: temporary.forBolusView
+            ),
+            as: RecentCarbs.self
+        )
     }
 
-    private func autotunePrepare(
-        pumphistory: JSON,
-        profile: JSON,
-        glucose: JSON,
-        pumpprofile: JSON,
-        carbs: JSON,
+    private func autotuneFull(
+        pumphistory: [PumpHistoryEvent],
+        profile: Profile,
+        glucose: [GlucoseEntry0],
+        pumpprofile: Profile,
+        carbs: [CarbsEntry],
         categorizeUamAsBasal: Bool,
-        tuneInsulinCurve: Bool
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.call(name: OpenAPS.Prepare.autotunePrep, with: [
-            pumphistory,
-            profile,
-            glucose,
-            pumpprofile,
-            carbs,
-            categorizeUamAsBasal,
-            tuneInsulinCurve
-        ])
-    }
-
-    private func autotuneRun(
-        autotunePreparedData: JSON,
-        previousAutotuneResult: JSON,
-        pumpProfile: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.call(name: OpenAPS.Prepare.autotuneCore, with: [
-            autotunePreparedData,
-            previousAutotuneResult,
-            pumpProfile
-        ])
+        tuneInsulinCurve: Bool,
+        previousAutotuneResult: Profile
+    ) async throws -> Profile {
+        try await scriptExecutor.callNew(
+            function: "iaps.oref0.autotune",
+            with: AutotuneInput(
+                pump_history: pumphistory,
+                profile: profile,
+                glucose: glucose,
+                pump_profile: pumpprofile,
+                carbs: carbs,
+                categorize_uam_as_basal: categorizeUamAsBasal,
+                tune_insulin_curve: tuneInsulinCurve,
+                previous_autotune_result: previousAutotuneResult
+            ),
+            as: Profile.self
+        )
     }
 
     private func determineBasal(
-        glucose: JSON,
-        currentTemp: JSON,
-        iob: JSON,
-        profile: JSON,
-        autosens: JSON,
-        meal: JSON,
+        glucose: [GlucoseEntry0],
+        currentTemp: TempBasal,
+        iob: [IOBItem],
+        profile: Profile,
+        autosens: Autosens?,
+        meal: RecentCarbs,
         microBolusAllowed: Bool,
-        reservoir: JSON,
-        pumpHistory: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-
-        await scriptExecutor.call(
-            name: OpenAPS.Prepare.determineBasal,
-            with: [
-                iob,
-                currentTemp,
-                glucose,
-                profile,
-                autosens,
-                meal,
-                microBolusAllowed,
-                reservoir,
-                Date(),
-                pumpHistory
-            ]
+        reservoir: Double,
+        pumpHistory: [PumpHistoryEvent], // TODO: pumpHistory not used in prepare
+        clock: Date
+    ) async throws -> Suggestion {
+        try await scriptExecutor.callNew(
+            function: "iaps.oref0.determine_basal",
+            with: DetermineBasalInput(
+                glucose: glucose,
+                current_temp: currentTemp,
+                iob: iob,
+                profile: profile,
+                autosens: autosens,
+                meal: meal,
+                microbolus_allowed: microBolusAllowed,
+                reservoir: reservoir,
+                pump_history: pumpHistory,
+                clock: clock
+            ),
+            as: Suggestion.self
         )
     }
 
-    private func autosense(
-        glucose: JSON,
-        pumpHistory: JSON,
-        basalprofile: JSON,
-        profile: JSON,
-        carbs: JSON,
-        temptargets: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.call(
-            name: OpenAPS.Prepare.autosens,
-            with: [
-                glucose,
-                pumpHistory,
-                basalprofile,
-                profile,
-                carbs,
-                temptargets
-            ]
-        )
-    }
-
-    private func exportDefaultPreferences() -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-
-        jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Bundle.profile))
-            worker.evaluate(script: Script(name: Prepare.profile))
-            return worker.call(function: Function.exportDefaults, with: [])
-        }
-    }
-
-    private func makeProfile(
-        preferences: JSON,
-        pumpSettings: JSON,
-        bgTargets: JSON,
-        basalProfile: JSON,
-        isf: JSON,
-        carbRatio: JSON,
-        tempTargets: JSON,
-        model: JSON,
-        autotune: JSON,
-        freeaps: JSON,
-        dynamicVariables: DynamicVariables,
-        settings: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.call(
-            name: OpenAPS.Prepare.profile,
-            with: [
-                pumpSettings,
-                bgTargets,
-                isf,
-                basalProfile,
-                preferences,
-                carbRatio,
-                tempTargets,
-                model,
-                autotune,
-                freeaps,
-                dynamicVariables,
-                settings
-            ]
+    private func autosens(
+        glucose: [GlucoseEntry0],
+        pumpHistory: [PumpHistoryEvent],
+        basalprofile: [BasalProfileEntry],
+        profile: Profile,
+        carbs: [CarbsEntry],
+        temptargets: [TempTarget]
+    ) async throws -> Autosens {
+        try await scriptExecutor.callNew(
+            function: "iaps.oref0.autosens",
+            with: AutosensInput(
+                glucose: glucose,
+                pump_history: pumpHistory,
+                basal_profile: basalprofile,
+                profile: profile,
+                carbs: carbs,
+                temp_targets: temptargets
+            ),
+            as: Autosens.self
         )
     }
 
     private func makeProfileAsync(
-        preferences: JSON,
-        pumpSettings: JSON,
-        bgTargets: JSON,
-        basalProfile: JSON,
-        isf: JSON,
-        carbRatio: JSON,
-        tempTargets: JSON,
-        model: JSON,
-        autotune: JSON,
-        freeaps: JSON,
-        dynamicVariables: JSON,
-        settings: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.call(
-            name: OpenAPS.Prepare.profile,
-            with: [
-                pumpSettings,
-                bgTargets,
-                isf,
-                basalProfile,
-                preferences,
-                carbRatio,
-                tempTargets,
-                model,
-                autotune,
-                freeaps,
-                dynamicVariables,
-                settings
-            ]
+        preferences: Preferences,
+        pumpSettings: PumpSettings,
+        bgTargets: BGTargets,
+        basalProfile: [BasalProfileEntry],
+        isf: InsulinSensitivities,
+        carbRatio: CarbRatios,
+        tempTargets: [TempTarget],
+        model: String,
+        autotune: Autotune?,
+        freeaps: FreeAPSSettings,
+        dynamicVariables: DynamicVariables,
+        settings: FreeAPSSettings
+    ) async throws -> Profile {
+        let clock = Date.now
+        let profile = try await scriptExecutor.callNew(
+            function: "iaps.profile",
+            with: PrepareProfileInput(
+                preferences: preferences,
+                pump_settings: pumpSettings,
+                bg_targets: bgTargets,
+                basal_profile: basalProfile,
+                isf: isf,
+                carb_ratio: carbRatio,
+                temp_targets: tempTargets,
+                model: model,
+                autotune: autotune,
+                freeaps: freeaps,
+                dynamic_variables: dynamicVariables,
+                settings: settings,
+                clock: clock
+            ),
+            as: Profile.self
         )
+
+        return profile
     }
 
     private func middleware(
-        glucose: JSON,
-        currentTemp: JSON,
-        iob: JSON,
-        profile: JSON,
-        autosens: JSON,
-        meal: JSON,
-        microBolusAllowed: Bool,
-        reservoir: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-
-        let script = middlewareScript(name: OpenAPS.Middleware.determineBasal)
-
-        return await scriptExecutor.call(
-            name: OpenAPS.Prepare.string,
-            with: [
-                "middleware",
-                iob,
-                currentTemp,
-                glucose,
-                profile,
-                autosens,
-                meal,
-                microBolusAllowed,
-                reservoir,
-                Date()
-            ],
-            withBody: script?.body ?? ""
+        glucose: [GlucoseEntry0],
+        currentTemp: TempBasal,
+        iob: [IOBItem],
+        profile: Profile,
+        autosens: Autosens?,
+        meal: RecentCarbs,
+        microBolusAllowed: Bool, // not passed to the middleware function
+        reservoir: Double
+    ) async throws -> Profile {
+        let script = try await middlewareScript(name: OpenAPS.Middleware.determineBasal)
+        return try await scriptExecutor.callMiddleware(
+            function: "iaps.middleware",
+            with: MiddlewareInput(
+                glucose: glucose,
+                current_temp: currentTemp,
+                iob: iob,
+                profile: profile,
+                autosens: autosens,
+                meal: meal,
+                microbolus_allowed: microBolusAllowed,
+                reservoir: reservoir,
+                clock: Date.now
+            ),
+            middleware: script?.body ?? "", // will create a script defining a "middleware" function
+            middlewareFnName: "middleware", // match the function created above
+            as: Profile.self
         )
     }
 
     private func autosisf(
-        glucose: JSON,
-        iob: JSON,
-        profile: JSON,
-        autosens: JSON,
-        pumpHistory: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-
-        await scriptExecutor.call(
-            name: OpenAPS.AutoISF.autoisf,
-            with: [
-                iob,
-                profile,
-                autosens,
-                glucose,
-                Date(),
-                pumpHistory
-            ]
+        glucose: [GlucoseEntry0],
+        iob: [IOBItem],
+        profile: Profile,
+        autosens: Autosens?,
+        pumpHistory: [PumpHistoryEvent],
+        clock: Date
+    ) async throws -> Profile {
+        try await scriptExecutor.callNew(
+            function: "iaps.autoisf",
+            with: AutoIsfInput(
+                glucose: glucose,
+                iob: iob,
+                profile: profile,
+                autosens: autosens,
+                pump_history: pumpHistory,
+                clock: clock,
+            ),
+            as: Profile.self
         )
     }
 
-    private func loadJSON(name: String) -> String {
-        try! String(contentsOf: Foundation.Bundle.main.url(forResource: "json/\(name)", withExtension: "json")!)
+    private func loadFileFromStorageAsync<T: Decodable>(name: String, as _: T.Type) async throws -> T {
+        let raw = await storage.retrieveRawAsync(name) ?? OpenAPS.defaults(for: name)
+
+        do {
+            return try T.decodeFrom(json: raw)
+        } catch {
+            print("failed to decode \(name)")
+            throw error
+        }
     }
 
-    private func loadFileFromStorage(name: String) -> RawJSON {
-        storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
+    private func loadFileFromStorageAsyncOpt<T: Decodable>(name: String, as _: T.Type) async throws -> T? {
+        let raw = await storage.retrieveRawAsync(name) ?? OpenAPS.defaults(for: name)
+
+        if raw == "" {
+            return nil
+        }
+        do {
+            return try T.decodeFrom(json: raw)
+        } catch {
+            print("failed to decode \(name)")
+            throw error
+        }
     }
 
-    private func saveAsync(_ file: JSON, name: String) async {
-        storage.save(file, as: name)
-    }
-
-    private func loadFileFromStorageAsync(name: String) async -> RawJSON {
-        let data = await storage.retrieveRawAsync(name)
-        return data ?? OpenAPS.defaults(for: name)
-    }
-
-    private func middlewareScript(name: String) -> Script? {
+    private func middlewareScript(name: String) async throws -> Script? {
         if let body = storage.retrieveRaw(name) {
             return Script(name: "Middleware", body: body)
         }
@@ -1348,7 +1398,7 @@ final class OpenAPS {
         return nil
     }
 
-    static func defaults(for file: String) -> RawJSON {
+    static func defaults(for file: String) -> String {
         let prefix = file.hasSuffix(".json") ? "json/defaults" : "javascript"
         guard let url = Foundation.Bundle.main.url(forResource: "\(prefix)/\(file)", withExtension: "") else {
             return ""
