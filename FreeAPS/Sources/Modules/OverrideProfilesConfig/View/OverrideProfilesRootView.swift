@@ -425,8 +425,7 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.postMealISFweight,
-                                    formatter: promilleFormatter
-                                    liveEditing: true
+                                    formatter: promilleFormatter, liveEditing: true
                                 )
                             }
 
