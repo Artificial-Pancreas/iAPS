@@ -527,14 +527,11 @@ final class OpenAPS {
             }
 
             // Before and after eventual Basal adjustment
-            if or?.enabled ?? false, (or?.percentage ?? 100) != 100, or?.basal ?? false,
-               let index = reasonString.firstIndex(of: ";"),
-               let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
-               let value = Decimal(string: new), value != value / (Decimal(or?.percentage ?? 100) / 100)
+            if let index = reasonString.firstIndex(of: ";"),
+               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf, or: or)
             {
-                let adjusted = (value / (Decimal(or?.percentage ?? 100) / 100).roundBolusIncrements(increment: 0.05))
                 reasonString.insert(
-                    contentsOf: ", Basal \(adjusted) → \(value.roundBolusIncrements(increment: 0.05))",
+                    contentsOf: basalAdjustment,
                     at: index
                 )
             }
@@ -646,6 +643,23 @@ final class OpenAPS {
         guard old != new else { return nil }
 
         return old
+    }
+
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal, or: Override?) -> String? {
+        guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
+              let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
+              let parseNew = Decimal(string: new) else { return nil }
+        let oldValue = value.roundBolusIncrements(increment: 0.05)
+        var adjusted = (parseNew * ratio)
+
+        if let override = or, override.basal, override.percentage != 100 {
+            adjusted *= Decimal(override.percentage) / 100
+        }
+
+        let newValue = adjusted.roundBolusIncrements(increment: 0.05)
+        guard oldValue != newValue else { return nil }
+
+        return ", Basal \(oldValue) → \(newValue)"
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {

@@ -3,6 +3,8 @@ function generate(middleware, iob, currenttemp, glucose, profile, autosens = nul
     var clock = new Date();
     var string = "";
     
+    profile.old_basal = profile.current_basal;
+    
     const factor = profile.dynamicVariables.overridePercentage / 100;
     if (factor != 1 && profile.dynamicVariables.useOverride && profile.dynamicVariables.basal) {
         profile.current_basal *= factor;
