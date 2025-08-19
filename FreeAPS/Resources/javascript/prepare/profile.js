@@ -107,7 +107,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     //set these after to make sure nothing happens if they are also set in preferences
     inputs.settings = pumpsettings_data;
     inputs.targets = bgtargets_data;
-    
     inputs.basals = basalprofile_data;
     inputs.isf = isf_data;
     inputs.carbratio = carbratio_data;
