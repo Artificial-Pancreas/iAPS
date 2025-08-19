@@ -1,13 +1,23 @@
-const invoke = require('./native-bridge')
+const autosens = require('prepare/autosens')
+const meal = require('prepare/meal')
+const iob = require('prepare/iob')
+const determine_basal = require('prepare/determine-basal')
+const autotune = require('prepare/autotune')
+const profile = require('prepare/profile')
+const middleware = require('prepare/middleware')
+const autoisf = require('autoisf/autoisf')
 
-const autosens = require('./autosens')
-const meal = require('./meal')
-const iob = require('./iob')
-const determine_basal = require('./determine-basal')
-const autotune = require('./autotune')
-const profile = require('./profile')
-const middleware = require('./middleware')
-const autoisf = require('./autoisf')
+const invoke = (input, call) => {
+  try {
+    const result = call(input)
+    return JSON.stringify(result)
+  } catch (e) {
+    console.log("INVOKE ERROR: ", e.toString(), e)
+    return JSON.stringify({
+      script_error: e.toString()
+    })
+  }
+}
 
 const iaps = {
 

@@ -1,6 +1,26 @@
-//для monitor/meal.json параметры: monitor/pumphistory-24h-zoned.json settings/profile.json monitor/clock-zoned.json monitor/glucose.json settings/basal_profile.json monitor/carbhistory.json
+// from OREF0_DIST_PATH
+const oref0_meal = require('oref0/meal/index.js')
 
-function generate(pumphistory_data, profile_data, clock_data, glucose_data, basalprofile_data, carbhistory, bolus_data) {
+/*
+*   {
+*     pump_history: [PumpHistoryEvent],
+*     profile: Profile,
+*     basal_profile: [BasalProfileEntry],
+*     clock: Date,
+*     carbs: [CarbsEntry],
+*     glucose: [GlucoseEntry0],
+*     for_bolus_view: CarbsEntry*
+*   }
+* */
+module.exports = (iaps_input) => {
+    const pumphistory_data = iaps_input.pump_history
+    const profile_data = iaps_input.profile
+    const clock_data = new Date(Date.parse(iaps_input.clock))
+    const glucose_data = iaps_input.glucose
+    const basalprofile_data = iaps_input.basal_profile
+    const carbhistory = iaps_input.carbs
+    const bolus_data = iaps_input.for_bolus_view
+
     if (typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 0.1) {
         return {"error":"Error: carb_ratio " + profile_data.carb_ratio + " out of bounds"};
     }
@@ -35,7 +55,7 @@ function generate(pumphistory_data, profile_data, clock_data, glucose_data, basa
     , glucose: glucose_data
     };
 
-    var recentCarbs = freeaps_meal(inputs);
+    var recentCarbs = oref0_meal(inputs);
 
     if (glucose_data.length < 4) {
         console.error("Not enough glucose data to calculate carb absorption; found:", glucose_data.length);

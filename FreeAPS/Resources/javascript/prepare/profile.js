@@ -1,7 +1,39 @@
-//для pumpprofile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json
-//для profile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json settings/autotune.json
+// from OREF0_DIST_PATH
+const oref0_profile = require('oref0/profile/index.js')
 
-function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data, preferences_input = false, carbratio_input = false, temptargets_input = false, model_input = false, autotune_input = false, freeaps_data, dynamicVariables_input, settings_input) {
+/*
+*   {
+*     preferences: Preferences
+*     pump_settings: PumpSettings
+*     bg_targets: BGTargets
+*     basal_profile: [BasalProfileEntry]
+*     isf: InsulinSensitivities
+*     carb_ratio: CarbRatios
+*     temp_targets: [TempTarget]
+*     model: String
+*     autotune: Autotune?
+*     freeaps: FreeAPSSettings
+*     dynamic_variables: DynamicVariables
+*     settings: FreeAPSSettings
+*     clock: Date
+*   }
+* */
+module.exports = (iaps_input) => {
+
+    const pumpsettings_data = iaps_input.pump_settings
+    const bgtargets_data = iaps_input.bg_targets
+    const isf_data = iaps_input.isf
+    const basalprofile_data = iaps_input.basal_profile
+    const preferences_input = iaps_input.preferences
+    const carbratio_input = iaps_input.carb_ratio
+    const temptargets_input = iaps_input.temp_targets
+    const model_input = iaps_input.model
+    const autotune_input  = iaps_input.autotune
+    const freeaps_data = iaps_input.freeaps
+    const dynamicVariables_input = iaps_input.dynamic_variables
+    const settings_input = iaps_input.settings
+    const clock = new Date(Date.parse(iaps_input.clock))
+
     if (bgtargets_data.units !== 'mg/dL') {
         if (bgtargets_data.units === 'mmol/L') {
             for (var i = 0, len = bgtargets_data.targets.length; i < len; i++) {
@@ -13,7 +45,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             return { "error" : 'BG Target data is expected to be expressed in mg/dL or mmol/L. Found '+ bgtargets_data.units };
         }
     }
-    
+
     if (isf_data.units !== 'mg/dL') {
         if (isf_data.units === 'mmol/L') {
             for (var i = 0, len = isf_data.sensitivities.length; i < len; i++) {
@@ -34,13 +66,13 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     if (temptargets_input) {
         temptargets_data = temptargets_input;
     }
-    
+
     var freeaps = { };
     if (freeaps_data) {
         freeaps = freeaps_data;
     }
 
-    var model_data = { };
+    var model_data = null;
     if (model_input) {
         model_data = model_input.replace(/"/gi, '');
     }
@@ -68,7 +100,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
                 preferences.insulinPeakTime =
                 Math.max(50, Math.min(preferences.insulinPeakTime, 120));
             } else { preferences.insulinPeakTime = 75; }
-        } 
+        }
         else if (preferences.curve === "ultra-rapid") {
             if (preferences.useCustomPeakTime) {
                 preferences.insulinPeakTime =
@@ -76,26 +108,25 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             } else { preferences.insulinPeakTime = 55; }
         }
     }
-    
+
     var iaps = { };
     if (settings_input) {
-        iaps = settings_input;
+      iaps = settings_input;
     }
-    
+
     let dynamicVariables = { };
     if (dynamicVariables_input) {
-        dynamicVariables = dynamicVariables_input;
+      dynamicVariables = dynamicVariables_input;
     }
-    
+
     var tdd_factor = { };
     var set_basal = false;
     var basal_rate = { };
     var old_isf = { };
     var aisf = { };
     var old_cr = { };
-    var old_basal = { };
     var microbolusAllowed = { };
-    
+
     var inputs = { };
     //add all preferences to the inputs
     for (var pref in preferences) {
@@ -103,7 +134,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
         inputs[pref] = preferences[pref];
       }
     }
-    
+
     inputs.max_iob = inputs.max_iob || 0;
     //set these after to make sure nothing happens if they are also set in preferences
     inputs.settings = pumpsettings_data;
@@ -119,12 +150,11 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.basal_rate = basal_rate;
     inputs.old_isf = old_isf;
     inputs.old_cr = old_cr;
-    inputs.old_basal = old_basal;
     inputs.iaps = iaps;
     inputs.aisf = aisf;
     inputs.microbolusAllowed = microbolusAllowed;
     inputs.dynamicVariables = dynamicVariables;
-    
+
     if (autotune_data) {
         if (autotune_data.basalprofile) { inputs.basals = autotune_data.basalprofile; }
         if (!freeaps.onlyAutotuneBasals) {
@@ -136,7 +166,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     // merge oref0 defaults with iAPS ones
     const defaults = Object.assign(
         {},
-        freeaps_profile.defaults(),
+        oref0_profile.defaults(),
         {
             type: 'iAPS', // attribute to override defaults
             // +++++ iAPS settings
@@ -158,7 +188,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     )
 
     var logs = { err: '', stdout: '', return_val: 0 };
-    var profile = freeaps_profile(logs, inputs, defaults);
+    var profile = oref0_profile(logs, inputs, defaults, clock);
     if (logs.err.length > 0) {
         console.error(logs.err);
     }

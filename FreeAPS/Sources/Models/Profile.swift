@@ -71,6 +71,7 @@ struct Profile: Codable {
     var sigmoid: Bool = false
     var adjustmentFactor: Double = 0
     var weightPercentage: Double = 0
+    var mw: String? // middleware return string
 }
 
 extension Profile {
@@ -145,5 +146,6 @@ extension Profile {
         case sigmoid
         case adjustmentFactor
         case weightPercentage
+        case mw
     }
 }

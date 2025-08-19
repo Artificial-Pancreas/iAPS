@@ -7,10 +7,12 @@ console.log('__dirname', __dirname)
 
 module.exports = {
   mode: 'production',
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: path.resolve(__dirname, '../FreeAPS/Resources/javascript/bridge/index.js'),
   resolve: {
     alias: {
       oref0: path.resolve(libPath),
+      prepare: path.resolve(__dirname, '../FreeAPS/Resources/javascript/prepare'),
+      autoisf: path.resolve(__dirname, '../FreeAPS/Resources/javascript/autoisf'),
     },
   },
   output: {

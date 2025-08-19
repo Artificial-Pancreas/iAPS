@@ -4,6 +4,12 @@ module.exports.round = (value, digits) => {
   return Math.round(value * scale) / scale;
 }
 
+
+module.exports.getDateFromGlucoseEntry = (entry) => {
+  return Date.parse(entry.dateString) || entry.date || Date.parse(entry.display_time); // prioritize dateString
+}
+
+
 module.exports.exercising = (profile, dynamicVariables) => {
   // One of two exercise settings (they share the same purpose).
   if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {

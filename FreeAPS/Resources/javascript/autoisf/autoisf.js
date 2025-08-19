@@ -1,5 +1,23 @@
-function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
-    clock = new Date();
+const getLastGlucose = require('./glucose-get-last-autoisf')
+
+/*
+*   {
+*     glucose: [GlucoseEntry0],
+*     iob: [IOBItem],
+*     profile: Profile,
+*     autosens: Autosens?,
+*     pump_history: [PumpHistoryEvent],
+*     clock: Date
+*   }
+* */
+module.exports = (iaps_input) =>  {
+    const iob = iaps_input.iob
+    const profile = iaps_input.profile
+    const autosens = iaps_input.autosens
+    const glucose = iaps_input.glucose
+    const clock = new Date(Date.parse(iaps_input.clock));
+    const pumpHistory = iaps_input.pump_history
+
     const autosens_data = autosens ? autosens : null;
     const dynamicVariables = profile.dynamicVariables || {} ;
 
@@ -26,7 +44,7 @@ function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
     // Auto ISF
     const glucose_status = getLastGlucose(glucose);
     aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, clock, pumpHistory);
-    
+
     return profile
 }
 
@@ -59,16 +77,16 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
     if (profile.iaps.use_B30) {
         b30(profile, pumpHistory, dynamicVariables, glucose_status);
     }
-    
+
     // Auto ISF ratio
     const ratio = aisf_ratio(profile, glucose_status, currentTime, autosens_data, 100,  dynamicVariables);
     profile.old_isf = convert_bg(profile.sens, profile);
     profile.aisf = round(ratio, 2);
-    
+
     if (ratio === autosens_data.ratio) {
         addMessage("Auto ISF = Autosens");
     }
-    
+
     // Change the SMB ratio, when applicable
     profile.smb_delivery_ratio = round(determine_varSMBratio(profile, glucose_status.glucose, dynamicVariables), 2);
 
@@ -187,11 +205,11 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     let pp_ISF = 1;
     let dura_ISF = 1;
     let final_ISF = 1;
-    
+
     // Log the glucose-get-last-autoisf.js output
     console.log("AutoISF bg_acceleration: " + round(bg_acce, 2) + ", PF-minutes: " + parabola_fit_minutes + ", PF-corr: " + round(parabola_fit_correlation, 4) + ", PF-nextDelta: " + convert_bg(parabola_fit_next_delta, profile) + ", PF-lastDelta: " + convert_bg(parabola_fit_last_delta, profile) +  ", regular Delta: " + convert_bg(glucose_status.delta, profile));
     console.error(glucose_status.pp_debug);
-    
+
     if (!profile.iaps.enableBGacceleration) {
         console.error("AutoISF BG acceleration adaption disabled in Preferences");
         addMessage("Auto ISF BG acceleration adaption disabled");
@@ -246,7 +264,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
                 acce_ISF = 0.1; //no negative acce_ISF ratios
             }
             console.error("Acceleration ISF adaptation is " + round(acce_ISF, 2));
-            
+
             if (acce_ISF !== 1) {
                 sens_modified = true;
                 console.log("Parabolic fit, acce-ISF: " + round(acce_ISF, 2));
@@ -273,10 +291,10 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         final_ISF = withinISFlimits(liftISF, profile, normalTarget);
         autoISFsens = Math.min(720, round(profile.sens / final_ISF, 1));
         console.log("Final ratio: " + round(final_ISF,2)  + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(autoISFsens, profile));
-        
+
         // iAPS pop-up reasons
         reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF);
-        
+
         return round(final_ISF,2);
     } else if (bg_ISF > 1) {
         sens_modified = true;
@@ -317,10 +335,10 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         console.log("dura_ISF adaptation is " + round(dura_ISF, 2) + " because ISF " + convert_bg(profile.sens, profile) + " did not do it for " + round(dura05, 1) + " min");
         addMessage(("Dura ISF adaptation: " + round(dura_ISF, 2) + " because ISF " + convert_bg(profile.sens, profile) + " did not do it for " + round(dura05, 1) + " min"));
     }
-    
+
     // Reasons for iAPS pop-up
     reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF);
-    
+
     if (sens_modified) {
         liftISF = Math.max(dura_ISF, bg_ISF, acce_ISF, pp_ISF);
         console.log("autoISF adaption ratios:");
@@ -328,7 +346,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         console.log("bg " + round(bg_ISF, 2));
         console.log("dura " + round(dura_ISF, 2));
         console.log("pp " + round(pp_ISF, 2));
-    
+
         if (acce_ISF < 1) {
             console.log("Strongest autoISF factor " + round(liftISF, 2) + " weakened to " + round(liftISF*acce_ISF, 2) + " as bg decelerates already");
             addMessage("Strongest autoISF factor " + round(liftISF, 2) + " weakened to " + round(liftISF * acce_ISF, 2) + " as bg decelerates already");
@@ -337,7 +355,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         final_ISF = withinISFlimits(liftISF, profile, 100);
         autoISFsens = round(final_ISF, 2);
         console.log("Auto ISF: new Ratio: " + round(final_ISF, 2) + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(profile.sens / autoISFsens, profile));
-        
+
         return round(final_ISF, 2)
     }
     console.log("autoISF does not modify");
@@ -351,7 +369,7 @@ function determine_varSMBratio(profile, bg, dynamicVariables) {
     if (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6) {
         target_bg = dynamicVariables.overrideTarget;
     }
-    
+
     if (!profile.iaps.autoisf) {
         console.log("autoISF disabled, don't adjust SMB Delivery Ratio");
         return 0.5;
@@ -370,7 +388,7 @@ function determine_varSMBratio(profile, bg, dynamicVariables) {
         new_SMB = lower_SMB + (higher_SMB - lower_SMB) * (bg - target_bg) / smb_delivery_ratio_bg_range;
         new_SMB = Math.max(lower_SMB, Math.min(higher_SMB, new_SMB));  // cap if outside target_bg--higher_bg
     }
-    
+
     if (smb_delivery_ratio_bg_range === 0) { // deactivated in Auto ISF setting
         return fix_SMB;
     }
@@ -382,7 +400,7 @@ function determine_varSMBratio(profile, bg, dynamicVariables) {
         console.error("SMB delivery ratio limited by maximum value " + round(higher_SMB, 2));
         return higher_SMB;
     }
-    
+
     console.error("SMB delivery ratio set to interpolated value " + round(new_SMB, 2));
     return new_SMB
 }
@@ -390,7 +408,7 @@ function determine_varSMBratio(profile, bg, dynamicVariables) {
 function withinISFlimits(liftISF, profile, normalTarget) {
     let origin_sens = " " + profile.sens;
     console.log("check ratio " + round(liftISF, 2) + " against autoISF min: " + profile.iaps.autoisf_min + " and autoISF max: " + profile.iaps.autoisf_max);
-    
+
     if (liftISF < profile.iaps.autoisf_min) {
         console.log("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autoisf_min);
         addMessage("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autoisf_min);
@@ -412,7 +430,7 @@ function convert_bg(value, profile) {
         return Math.round(value);
     }
 }
-    
+
 function round(value, digits) {
     if (! digits) { digits = 0; }
     const scale = Math.pow(10, digits);
@@ -452,24 +470,24 @@ function b30(profile, pumpHistory, dynamicVariables, glucose_status) {
     if (profile.temptargetSet && profile.min_bg >= profile.iaps.b30targetLevel) {
         return
     }
-    
+
     const allowed_duration = profile.iaps.b30_duration;
     let last_bolus_amount = 0;
     let minutes_ago = allowed_duration + 1;
     const minimal_bolus = profile.iaps.iTime_Start_Bolus;
     let rate = profile.current_basal;
     const now = new Date();
-    
+
     //Find Last Manual bolus
     let bolus = pumpHistory.find((element) => element._type === "Bolus" && !element.isSMB);
-    
+
     // Update bolus amount and bolus minutes ago
     if (bolus) {
         let bolusTime = new Date(bolus.timestamp);
         minutes_ago = round( (now - bolusTime) / MillisecondsPerMinute, 1);
         last_bolus_amount = bolus.amount;
     }
-    
+
     if (!(last_bolus_amount >= minimal_bolus && minutes_ago <= allowed_duration)) {
         return
     }

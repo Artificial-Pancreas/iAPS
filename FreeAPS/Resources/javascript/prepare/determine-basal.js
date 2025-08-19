@@ -1,26 +1,40 @@
-//для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
+// from OREF0_DIST_PATH
+const oref0_determineBasal = require('oref0/determine-basal/determine-basal.js')
+const oref0_basalFunctions = require('oref0/basal-set-temp.js')
+const oref0_glucoseGetLast = require('oref0/glucose-get-last.js')
 
-function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, pumpHistory) {
-    // Needs to be updated here due to time format).
-    clock = new Date();
-    
-    var autosens_data = null;
-    if (autosens) {
-        autosens_data = autosens;
-    }
-    
-    var reservoir_data = null;
-    if (reservoir) {
-        reservoir_data = reservoir;
-    }
+const round = require('./utils').round
+const disableSMBs = require('./utils').disableSMBs
+const exercising = require('./utils').exercising
+/*
+*   {
+*     glucose: [GlucoseEntry0],
+*     current_temp: TempBasal,
+*     iob: [IOBItem],
+*     profile: Profile,
+*     autosens: Autosens?,
+*     meal: RecentCarbs,
+*     microbolus_allowed: Bool,
+*     reservoir: Double,
+*     pump_history: [PumpHistoryEvent], // TODO pump_history not used
+*     clock: Date
+*   }
+* */
+module.exports = (iaps_input) => {
+    const iob = iaps_input.iob
+    const currenttemp = iaps_input.current_temp
+    const glucose = iaps_input.glucose
+    const profile = iaps_input.profile
+    const autosens_data = iaps_input.autosens ?? null
+    const meal_data = iaps_input.meal
+    let microbolusAllowed = iaps_input.microbolus_allowed
+    const reservoir_data = iaps_input.reservoir
+    // const pumpHistory = iaps_input.pump_history
 
-    var meal_data = {};
-    if (meal) {
-        meal_data = meal;
-    }
-    
-    const dynamicVariables = profile.dynamicVariables || { } ;
-    
+    const clock = new Date(Date.parse(iaps_input.clock));
+
+    const dynamicVariables = profile.dynamicVariables ?? {};
+
     // Overrides
     if (dynamicVariables.useOverride) {
         const factor = dynamicVariables.overridePercentage / 100;
@@ -63,33 +77,33 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
             profile.max_bg = profile.min_bg;
             console.log("Override Active, new glucose target: " + dynamicVariables.overrideTarget);
         }
-        
+
             //SMBs
         if (disableSMBs(dynamicVariables, clock)) {
             microbolusAllowed = false;
             console.error("SMBs disabled by Override");
         }
-        
+
         // Max IOB
         if (dynamicVariables.advancedSettings && dynamicVariables.overrideMaxIOB) {
             profile.max_iob = dynamicVariables.maxIOB;
             console.log("Override Active, new maxIOB: " + profile.max_iob);
         }
     }
-    
+
     // Half Basal Target
     if (dynamicVariables.isEnabled) {
         profile.half_basal_exercise_target = dynamicVariables.hbt;
         console.log("Temp Target active, half_basal_exercise_target: " + dynamicVariables.hbt);
     }
-    
+
     // Dynamic ISF
     if (profile.useNewFormula) {
         dynisf(profile, autosens_data, dynamicVariables, glucose);
     }
-    
-    var glucose_status = freeaps_glucoseGetLast(glucose)
-    
+
+    var glucose_status = oref0_glucoseGetLast(glucose)
+
     // Auto ISF
     if (profile.iaps.autoisf) {
         autosens_data.ratio = profile.aisf;
@@ -100,35 +114,35 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         }
     }
 
-    // In case Basal Rate been set in midleware or B30
+    // In case Basal Rate been set in middleware or B30
     if (profile.set_basal && profile.basal_rate) {
         console.log("Basal Rate set by middleware or B30 to " + profile.basal_rate + " U/h.");
     }
-    
-    /* For testing replace with:
+
+    /* For testing, replace with:
     return test(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock); */
-    return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
-}
+    return oref0_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, oref0_basalFunctions, microbolusAllowed, reservoir_data, clock);
+  }
 
 // The Dynamic ISF layer
 function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     console.log("Starting dynamic ISF layer.");
     var dynISFenabled = true;
-    
+
     //Turn off when Auto ISF is used
     if (profile.iaps.autoisf) {
         console.log("Dynamic ISF disabled due to Auto ISF.");
         return;
     }
-    
+
     // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
     if (exercising(profile, dynamicVariables)) {
         console.log("Dynamic ISF disabled due to a high temp target/exercise.");
         return;
     }
-    
+
     const target = profile.min_bg;
-    
+
     // In case the autosens.min/max limits are reversed:
     const autosens_min = Math.min(profile.autosens_min, profile.autosens_max);
     const autosens_max = Math.max(profile.autosens_min, profile.autosens_max);
@@ -154,7 +168,7 @@ function dynisf(profile, autosens_data, dynamicVariables, glucose) {
         insulinPA = 50;
         break;
     }
-        
+
     if (ucpk) {
         insulinFactor = 120 - ipt;
         console.log("Custom insulinpeakTime set to: " + ipt + ", " + "insulinFactor: " + insulinFactor);
@@ -179,13 +193,13 @@ function dynisf(profile, autosens_data, dynamicVariables, glucose) {
 
     // Account for TDD of insulin. Compare last 2 hours with total data (up to 10 days)
     var tdd_factor = weighted_average / average14; // weighted average TDD / total data average TDD
-    
+
     const enable_sigmoid = profile.sigmoid;
     var newRatio = 1;
 
     const sensitivity = profile.sens;
     const adjustmentFactor = profile.adjustmentFactor;
-    
+
     var BG = 100;
         if (glucose.length > 0) {
         BG = glucose[0].glucose;
@@ -240,39 +254,4 @@ function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     if (enable_sigmoid) {
         console.log("Dynamic ISF enabled. Dynamic Ratio (Sigmoid function): " + newRatio + ". New ISF = " + isf + " mg/dl / " + round(0.0555 * isf, 1) + " mmol/l.");
     }
-}
-
-function round(value, digits) {
-    if (! digits) { digits = 0; }
-    var scale = Math.pow(10, digits);
-    return Math.round(value * scale) / scale;
-}
- 
-function exercising(profile, dynamicVariables) {
-    // One of two exercise settings (they share the same purpose).
-    if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {
-        // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
-        if (profile.min_bg >= 118) {
-            return true
-        }
-    }
-    return false
-}
-
-function disableSMBs(dynamicVariables, now) {
-    if (dynamicVariables.smbIsOff) {
-        // smbIsAlwaysOff=true means "SMB are scheduled, NOT always off"
-        if (!dynamicVariables.smbIsAlwaysOff) { return true; }
-
-        var start = dynamicVariables.start;
-        var end = dynamicVariables.end;
-        var hour = now.getHours();
-
-        if (start <= end) {
-            return hour >= start && hour <= end;
-        } else {
-            return hour >= start || hour <= end;
-        }
-    }
-    return false
 }

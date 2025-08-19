@@ -2,6 +2,7 @@ import Foundation
 
 protocol FileStorage {
     func save<Value: Encodable>(_ value: Value, as name: String)
+    func save(_ value: String, as name: String) // save without JSON encoding
     func retrieve<Value: Decodable>(_ name: String, as type: Value.Type) -> Value?
     func retrieveRaw(_ name: String) -> String?
     func retrieveDecimal(_ name: String) -> Decimal?
@@ -41,11 +42,12 @@ final class BaseFileStorage: FileStorage, Injectable {
 
     func save<Value: Encodable>(_ value: Value, as name: String) {
         getQueue(for: name).sync {
-//            if let value = value as? RawJSON, let data = value.data(using: .utf8) {
-//                try? Disk.save(data, to: .documents, as: name)
-//            } else {
-            try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
-//            }
+            if let value = value as? String, let data = value.data(using: .utf8) {
+                // important - save strings without JSON encoding
+                try? Disk.save(data, to: .documents, as: name)
+            } else {
+                try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
+            }
         }
     }
 

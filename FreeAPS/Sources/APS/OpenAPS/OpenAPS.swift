@@ -51,20 +51,20 @@ final class OpenAPS {
                             storedProfile,
                             pumpSettings
                         ) = try await (
-                            self.pumpHistory(),
-                            self.carbHistory(),
-                            self.glucoseHistory(),
+                            self.readPumpHistory(),
+                            self.readCarbHistory(),
+                            self.readGlucoseHistory(),
                             self.readPreferences(),
                             self.readBasalSchedule(),
                             self.readSettings(),
                             self.readAutosens(),
                             self.readReservoir(),
-                            self.profileHistory(),
+                            self.readProfile(),
                             self.readPumpSettings()
                         )
 
-                        let preferencesData = preferences // TODO: is this correct? // Preferences(from: preferences)
-                        let settings = data // TODO: is this correct? // FreeAPSSettings(from: data)
+                        let preferencesData = preferences
+                        let settings = data
                         var profile = storedProfile
                         print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
@@ -146,7 +146,7 @@ final class OpenAPS {
                         print(
                             "Time for Determine Basal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                         )
-                        debug(.openAPS, "SUGGESTED: \(suggested)")
+                        debug(.openAPS, "SUGGESTED: \(suggested.rawJSON())")
 
                         // Update Suggestion, when applicable (middleware / dynamic ISF / Auto ISF)
                         var suggestion = suggested
@@ -157,9 +157,10 @@ final class OpenAPS {
                         let mySettings = settings
                         if mySettings.autoisf, let iob = suggestion.iob {
                             // If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate
+                            let basal = Decimal(profile.currentBasal)
                             if mySettings.ketoProtect, iob < 0,
                                let rate = suggestion.rate, rate <= 0,
-                               let basal = self.readBasal(alteredProfile), iob < -basal, (suggestion.units ?? 0) <= 0,
+                               iob < -basal, (suggestion.units ?? 0) <= 0,
                                let basalRate = self.aisfBasal(
                                    mySettings,
                                    basal,
@@ -212,10 +213,10 @@ final class OpenAPS {
                             basalProfile,
                             tempTargets
                         ) = try await (
-                            self.pumpHistory(),
-                            self.carbHistory(),
-                            self.glucoseHistory(),
-                            self.profileHistory(),
+                            self.readPumpHistory(),
+                            self.readCarbHistory(),
+                            self.readGlucoseHistory(),
+                            self.readProfile(),
                             self.readBasalSchedule(),
                             self.readTempTargets()
                         )
@@ -252,44 +253,17 @@ final class OpenAPS {
                             pumpHistory,
                             carbs,
                             glucose,
-                            //                        preferences,
-                            //                        basalProfile,
-                            //                        data,
-                            //                        autosens,
-                            //                        reservoir,
                             profile,
                             pumpProfile
                         ) = try await (
-                            self.pumpHistory(),
-                            self.carbHistory(),
-                            self.glucoseHistory(),
-                            //                        self.readPreferences(),
-                            //                        self.readBasalSchedule(),
-                            //                        self.readSettings(),
-                            //                        self.readAutosens(),
-                            //                        self.readReservoir(),
-                            self.profileHistory(),
+                            self.readPumpHistory(),
+                            self.readCarbHistory(),
+                            self.readGlucoseHistory(),
+                            self.readProfile(),
                             self.readPumpProfile()
                         )
 
-//                        let autotunePreppedGlucose = try await self.autotunePrepare(
-//                            pumphistory: pumpHistory,
-//                            profile: profile,
-//                            glucose: glucose,
-//                            pumpprofile: pumpProfile,
-//                            carbs: carbs,
-//                            categorizeUamAsBasal: categorizeUamAsBasal,
-//                            tuneInsulinCurve: tuneInsulinCurve
-//                        )
-//                        debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
-//
                         let previousAutotune = try await self.readAutotuneAsProfile(useAutotune: true)
-//
-//                        let autotuneResult = try await self.autotuneRun(
-//                            autotunePreparedData: autotunePreppedGlucose,
-//                            previousAutotuneResult: previousAutotune ?? Autotune.from(profile: profile),
-//                            pumpProfile: pumpProfile
-//                        )
 
                         let autotuneResult = try await self.autotuneFull(
                             pumphistory: pumpHistory,
@@ -302,7 +276,7 @@ final class OpenAPS {
                             previousAutotuneResult: previousAutotune ?? profile,
                         )
 
-                        debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
+                        debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult.rawJSON())")
 
                         let autotune = Autotune.from(profile: autotuneResult)
                         self.storage.save(autotuneResult, as: Settings.autotune)
@@ -336,7 +310,7 @@ final class OpenAPS {
                             model,
                             autotune,
                             freeaps
-                        ) = try await ( // TODO: handle errors
+                        ) = try await (
                             self.readPreferences(),
                             self.readPumpSettings(),
                             self.bgTargetsHistory(),
@@ -351,8 +325,8 @@ final class OpenAPS {
                         print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
                         let preferences = preferencesResult ?? Preferences()
-                        let preferencesData = preferences // TODO: is this correct? // Preferences(from: preferences)
-                        let freeapsData = freeaps // TODO: is this correct? // FreeAPSSettings(from: freeaps)
+                        let preferencesData = preferences
+                        let freeapsData = freeaps
 
                         now = Date.now
                         let (
@@ -413,7 +387,6 @@ final class OpenAPS {
                             "MakeProfiles: Time for save files \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                         )
 
-                        let tunedProfile = Autotune.from(profile: profile)
                         promise(.success(profile))
                     } catch {
                         promise(.failure(error))
@@ -425,15 +398,15 @@ final class OpenAPS {
 
     // MARK: - Private
 
-    private func pumpHistory() async throws -> [PumpHistoryEvent] {
+    private func readPumpHistory() async throws -> [PumpHistoryEvent] {
         try await loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)
     }
 
-    private func carbHistory() async throws -> [CarbsEntry] {
+    private func readCarbHistory() async throws -> [CarbsEntry] {
         try await loadFileFromStorageAsync(name: Monitor.carbHistory, as: [CarbsEntry].self)
     }
 
-    private func glucoseHistory() async throws -> [GlucoseEntry0] {
+    private func readGlucoseHistory() async throws -> [GlucoseEntry0] {
         let glucose = try await loadFileFromStorageAsync(name: Monitor.glucose, as: [BloodGlucose].self)
         return glucose.map { g in
             GlucoseEntry0(
@@ -468,7 +441,7 @@ final class OpenAPS {
         try await loadFileFromStorageAsync(name: Monitor.reservoir, as: Double.self)
     }
 
-    private func profileHistory() async throws -> Profile {
+    private func readProfile() async throws -> Profile {
         try await loadFileFromStorageAsync(name: Settings.profile, as: Profile.self)
     }
 
@@ -537,8 +510,7 @@ final class OpenAPS {
             if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                 let reasons = profile.autoISFReasons ?? ""
                 // If disabled in middleware or Auto ISF layer
-                if !profile.iaps.autoisf // readAndExclude(json: profile, variable: "autoisf", exclude: "autoisf_m"),
-//                   let value = Bool(disabled), !value
+                if !profile.iaps.autoisf
                 {
                     reasonString.insert(
                         contentsOf: "Autosens Ratio: \(isf)" + tddString + ", \(reasons), ",
@@ -573,7 +545,7 @@ final class OpenAPS {
             }
 
             // Include ISF before eventual adjustment
-            if let old = profile.oldISF, //  readMiddleware(json: profile, variable: "old_isf"),
+            if let old = profile.oldISF,
                let new = readReason(reason: reason, variable: "ISF"),
                let oldISF = trimmedIsEqual(string: "\(old)", decimal: new)
             {
@@ -581,7 +553,7 @@ final class OpenAPS {
             }
 
             // Include CR before eventual adjustment
-            if let old = profile.oldCR, // readMiddleware(json: profile, variable: "old_cr"),
+            if let old = profile.oldCR,
                let new = readReason(reason: reason, variable: "CR"),
                let oldCR = trimmedIsEqual(string: "\(old)", decimal: new)
             {
@@ -621,23 +593,18 @@ final class OpenAPS {
         }
 
         // SMB Delivery ratio
-        if targetGlucose != nil, profile.smbDeliveryRatio != 0.5 //  readJSON(json: profile, variable: "smb_delivery_ratio"),
-//           let value = Decimal(string: smbRatio), value != 0.5
+        if targetGlucose != nil, profile.smbDeliveryRatio != 0.5
         {
             let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
             reasonString.insert(contentsOf: ", SMB Ratio: \(profile.smbDeliveryRatio)", at: index)
         }
 
-        // TODO: decipher this
         // Middleware
-//        if targetGlucose != nil, let middlewareString = readMiddleware(json: profile, variable: "mw"),
-//           middlewareString.count > 2
-//        {
-//            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
-//            if middlewareString != "Nothing changed" {
-//                reasonString.insert(contentsOf: ", Middleware: \(middlewareString)", at: index)
-//            }
-//        }
+        if let mw = profile.mw, mw != "Nothing changed"
+        {
+            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
+            reasonString.insert(contentsOf: ", Middleware: \(mw)", at: index)
+        }
 
         // Auto ISF additional comments
         if aisf {
@@ -686,17 +653,19 @@ final class OpenAPS {
                     saveSuggestion.rate = rate as NSDecimalNumber
                 }
 
-                if profile.outUnits == GlucoseUnits
-                    .mmolL
-                { //  readJSON(json: profile, variable: "out_units"), units.contains("mmol/L")
+                if profile.outUnits == GlucoseUnits.mmolL {
                     saveSuggestion.mmol = true
                 } else {
                     saveSuggestion.mmol = false
                 }
 
-                try? coredataContext.save()
+                do {
+                    try coredataContext.save()
+                } catch {
+                    debug(.dynamic, "Couldn't save suggestion to CoreData: \(error.localizedDescription)")
+                }
             } else {
-                debug(.dynamic, "Couldn't save suggestion to CoreData")
+                debug(.dynamic, "not persisting the suggestion (missing data)")
             }
         }
         return reasonString
@@ -715,8 +684,7 @@ final class OpenAPS {
         oref0Suggestion: Suggestion
     ) -> Suggestion? {
         guard alteredProfile.setBasal ?? false,
-              //  readJSON(json: alteredProfile, variable: "set_basal"), Bool(changeRate) ?? false,
-              let basal_rate_is = alteredProfile.basalRate // readJSON(json: alteredProfile, variable: "basal_rate")
+              let basal_rate_is = alteredProfile.basalRate
         else { return nil }
 
         var returnSuggestion = oref0Suggestion
@@ -760,10 +728,6 @@ final class OpenAPS {
             return nil
         }
 
-//        guard let pumpSettings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self) else {
-//            return nil
-//        }
-
         var rate = basal
         var factor: Decimal = 1
 
@@ -793,31 +757,6 @@ final class OpenAPS {
         return returnSuggestion
     }
 
-    private func readJSON(json: RawJSON, variable: String) -> String? {
-        if let string = json.debugDescription.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
-            let targetComponents = string.components(separatedBy: ":")
-            if targetComponents.count == 2 {
-                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
-                return trimmedString
-            }
-        }
-        return nil
-    }
-
-    private func readAndExclude(json: RawJSON, variable: String, exclude: String) -> String? {
-        if let string = json.debugDescription.components(separatedBy: ",")
-            .filter({ $0.contains(variable) && !$0.contains(exclude) })
-            .first
-        {
-            let targetComponents = string.components(separatedBy: ":")
-            if targetComponents.count == 2 {
-                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
-                return trimmedString
-            }
-        }
-        return nil
-    }
-
     private func readReason(reason: String, variable: String) -> Decimal? {
         if let string = reason.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
             let targetComponents = string.components(separatedBy: ":")
@@ -830,6 +769,7 @@ final class OpenAPS {
         return nil
     }
 
+    // TODO: this looks the same as readReason above
     private func readRate(comment: String) -> Decimal? {
         if let string = comment.components(separatedBy: ", ").filter({ $0.contains("maxSafeBasal:") }).last {
             if let targetComponents = string.components(separatedBy: ":").last {
@@ -841,43 +781,9 @@ final class OpenAPS {
         return nil
     }
 
-    private func readBasal(_ profile: Profile) -> Decimal? {
-        Decimal(profile.currentBasal)
-//        return Decimal(profile.currentBasal)
-//        if let string = profile.components(separatedBy: ",")
-//            .filter({ !$0.contains("current_basal_safety_multiplier") && $0.contains("current_basal") }).first
-//        {
-//            let targetComponents = string.components(separatedBy: ":")
-//            if targetComponents.count == 2 {
-//                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
-//                let decimal = Decimal(string: trimmedString) ?? 0
-//                return decimal
-//            }
-//        }
-//        return nil
-    }
-
-    private func readMiddleware(json: RawJSON, variable: String) -> String? {
-        if let string = json.debugDescription.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
-            let trimmedString = string.suffix(max(string.count - 14, 0)).trimmingCharacters(in: .whitespacesAndNewlines)
-                .replacingOccurrences(of: "\\n", with: "")
-                .replacingOccurrences(of: "\\", with: "")
-                .replacingOccurrences(of: "}", with: "")
-                .replacingOccurrences(
-                    of: "\"",
-                    with: "",
-                    options: NSString.CompareOptions.literal,
-                    range: nil
-                )
-            return trimmedString
-        }
-        return nil
-    }
-
     private func tdd(preferencesData: Preferences?) async throws -> (bolus: Decimal, basal: Decimal, hours: Double)? {
         let preferences = preferencesData
-        let pumpData =
-            try await pumpHistory() // storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) else { return nil }
+        let pumpData = try await readPumpHistory()
 
         let tdd = TotalDailyDose().totalDailyDose(pumpData, increment: Double(preferences?.bolusIncrement ?? 0.1))
         return tdd
@@ -1175,8 +1081,8 @@ final class OpenAPS {
             pumpHistory
         ) = try await (
             readAutosens(),
-            profileHistory(),
-            pumpHistory()
+            readProfile(),
+            readPumpHistory()
         )
 
         return try await scriptExecutor.callNew(
