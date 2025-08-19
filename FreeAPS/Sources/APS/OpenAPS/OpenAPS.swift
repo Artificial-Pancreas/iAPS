@@ -528,7 +528,7 @@ final class OpenAPS {
 
             // Before and after eventual Basal adjustment
             if let index = reasonString.firstIndex(of: ";"),
-               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf, or: or)
+               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf)
             {
                 reasonString.insert(
                     contentsOf: basalAdjustment,
@@ -545,9 +545,9 @@ final class OpenAPS {
                 orString += " \(override.percentage.formatted()) %"
             }
             if override.smbIsOff {
-                orString += " SMBs off"
+                orString += ". SMBs off"
             }
-            orString += " Target \(targetGlucose ?? 0)"
+            orString += ". Target \(targetGlucose ?? 0)"
 
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: orString, at: index)
@@ -645,7 +645,7 @@ final class OpenAPS {
         return old
     }
 
-    private func basalAdjustment(profile: RawJSON, ratio: Decimal, or _: Override?) -> String? {
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal) -> String? {
         guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
               let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
               let parseNew = Decimal(string: new) else { return nil }
@@ -655,7 +655,7 @@ final class OpenAPS {
         let newValue = adjusted.roundBolusIncrements(increment: 0.05)
         guard oldValue != newValue else { return nil }
 
-        return ", Basal \(oldValue) → \(newValue)"
+        return ", Basal: \(oldValue) → \(newValue)"
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
