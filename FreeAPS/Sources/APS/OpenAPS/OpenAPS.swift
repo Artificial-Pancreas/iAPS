@@ -645,17 +645,13 @@ final class OpenAPS {
         return old
     }
 
-    private func basalAdjustment(profile: RawJSON, ratio: Decimal, or: Override?) -> String? {
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal, or _: Override?) -> String? {
         guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
               let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
               let parseNew = Decimal(string: new) else { return nil }
+
+        let adjusted = (parseNew * ratio)
         let oldValue = value.roundBolusIncrements(increment: 0.05)
-        var adjusted = (parseNew * ratio)
-
-        if let override = or, override.basal, override.percentage != 100 {
-            adjusted *= Decimal(override.percentage) / 100
-        }
-
         let newValue = adjusted.roundBolusIncrements(increment: 0.05)
         guard oldValue != newValue else { return nil }
 
