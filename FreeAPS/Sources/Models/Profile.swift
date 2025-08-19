@@ -58,6 +58,7 @@ struct Profile: Codable {
     var dynamicVariables: DynamicVariables
     var oldCR: Double?
     var oldISF: Double?
+    var old_basal: Double?
     var setBasal: Bool?
     var basalRate: Double?
     var smbDeliveryRatio: Double = 0
@@ -131,6 +132,7 @@ extension Profile {
         case dynamicVariables
         case oldCR = "old_cr"
         case oldISF = "old_isf"
+        case old_basal
         case setBasal = "set_basal"
         case basalRate = "basal_rate"
         case smbDeliveryRatio = "smb_delivery_ratio"
