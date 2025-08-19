@@ -587,6 +587,16 @@ final class OpenAPS {
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
+
+            // Before and after eventual Basal adjustment
+            if let index = reasonString.firstIndex(of: ";"),
+               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf, or: or)
+            {
+                reasonString.insert(
+                    contentsOf: basalAdjustment,
+                    at: index
+                )
+            }
         }
 
         // Display either Target or Override (where target is included).
@@ -708,6 +718,20 @@ final class OpenAPS {
               //  readJSON(json: alteredProfile, variable: "set_basal"), Bool(changeRate) ?? false,
               let basal_rate_is = alteredProfile.basalRate // readJSON(json: alteredProfile, variable: "basal_rate")
         else { return nil }
+    }
+
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal, or _: Override?) -> String? {
+        guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
+              let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
+              let parseNew = Decimal(string: new) else { return nil }
+
+        let adjusted = (parseNew * ratio)
+        let oldValue = value.roundBolusIncrements(increment: 0.05)
+        let newValue = adjusted.roundBolusIncrements(increment: 0.05)
+        guard oldValue != newValue else { return nil }
+
+        return ", Basal \(oldValue) → \(newValue)"
+    }
 
         var returnSuggestion = oref0Suggestion
         let basal_rate = Decimal(basal_rate_is)
