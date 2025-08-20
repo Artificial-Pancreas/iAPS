@@ -540,9 +540,9 @@ final class OpenAPS {
         // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
         if targetGlucose != nil, let override = or, override.enabled {
-            var orString = ", Override:"
+            var orString = ", Override: "
             if override.percentage != 100 {
-                orString += " \(override.percentage.formatted()) %"
+                orString += (formatter.string(from: override.percentage as NSNumber) ?? "")
             }
             if override.smbIsOff {
                 orString += ". SMBs off"
@@ -635,6 +635,13 @@ final class OpenAPS {
             }
         }
         return reasonString
+    }
+
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
     }
 
     private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {

@@ -567,7 +567,8 @@ extension Home {
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
                         } else if override.percentage != 100 {
-                            Text(override.percentage.formatted() + " %").font(.statusFont).foregroundStyle(.secondary)
+                            Text((tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
+                                .foregroundStyle(.secondary)
                         } else if override.smbIsOff, !override.smbIsAlwaysOff {
                             Text("No ").font(.statusFont).foregroundStyle(.secondary) // "No" as in no SMBs
                             Image(systemName: "syringe")
