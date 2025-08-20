@@ -583,9 +583,9 @@ final class OpenAPS {
                 orString += " \(override.percentage.formatted()) %"
             }
             if override.smbIsOff {
-                orString += " SMBs off"
+                orString += ". SMBs off"
             }
-            orString += " Target \(targetGlucose ?? 0)"
+            orString += ". Target \(targetGlucose ?? 0)"
 
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: orString, at: index)
@@ -717,7 +717,7 @@ final class OpenAPS {
         let newValue = adjusted.roundBolusIncrements(increment: 0.05)
         guard oldValue != newValue else { return nil }
 
-        return ", Basal \(oldValue) → \(newValue)"
+        return ", Basal: \(oldValue) → \(newValue)"
     }
 
     /// If iob is less than one hour of negative insulin and keto protection active, then enact a small keto protection basal rate
