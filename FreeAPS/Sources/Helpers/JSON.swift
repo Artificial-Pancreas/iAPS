@@ -6,7 +6,7 @@ extension Encodable {
     }
 
     func toJSONObject() throws -> Any {
-        let data = try JSONEncoder().encode(self)
+        let data = try JSONCoding.encoder.encode(self)
         return try JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])
     }
 

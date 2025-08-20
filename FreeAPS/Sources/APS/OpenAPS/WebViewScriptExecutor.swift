@@ -56,10 +56,8 @@ struct ScriptError: Decodable, Error {
         let resultString: String
         do {
             resultString = try await webView.callAsyncJavaScriptShim(
-                "(input) => iaps.invoke(\"\(function)\", input)",
+                "iaps.invoke(\"\(function)\", input)",
                 argument: input,
-                in: nil,
-                contentWorld: .page
             )
         } catch {
             print("Javascript function (\(function)) failed with error: \(error)")
@@ -91,15 +89,13 @@ public extension WKWebView {
     @MainActor @preconcurrency func callAsyncJavaScriptShim<I: Encodable>(
         _ functionBody: String,
         argument: I,
-        in frame: WKFrameInfo? = nil,
-        contentWorld: WKContentWorld
     ) async throws -> String {
         #if targetEnvironment(simulator)
             // callAsyncJavaScript crashes in the simulator: // https://developer.apple.com/forums/thread/779012
 
             let argJSON = argument.rawJSON()
             let wrapped = """
-              (\(functionBody))(\(argJSON));
+              ((input) => \(functionBody))(\(argJSON))
             """
 
             return try await withCheckedThrowingContinuation { cont in
@@ -115,12 +111,15 @@ public extension WKWebView {
             }
 
         #else
+            let wrapped = """
+              return \(functionBody)
+            """
 
             let result = try await callAsyncJavaScript(
-                functionBody,
+                wrapped,
                 arguments: ["input": argument.toJSONObject()],
-                in: frame,
-                contentWorld: contentWorld
+                in: nil,
+                contentWorld: .page
             )
 
             guard let string = result as? String else {
