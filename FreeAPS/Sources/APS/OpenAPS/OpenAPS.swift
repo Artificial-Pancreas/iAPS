@@ -525,6 +525,16 @@ final class OpenAPS {
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
+
+            // Before and after eventual Basal adjustment
+            if let index = reasonString.firstIndex(of: ";"),
+               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf)
+            {
+                reasonString.insert(
+                    contentsOf: basalAdjustment,
+                    at: index
+                )
+            }
         }
 
         // Display either Target or Override (where target is included).
@@ -535,9 +545,9 @@ final class OpenAPS {
                 orString += " \(override.percentage.formatted()) %"
             }
             if override.smbIsOff {
-                orString += " SMBs off"
+                orString += ". SMBs off"
             }
-            orString += " Target \(targetGlucose ?? 0)"
+            orString += ". Target \(targetGlucose ?? 0)"
 
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: orString, at: index)
@@ -633,6 +643,19 @@ final class OpenAPS {
         guard old != new else { return nil }
 
         return old
+    }
+
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal) -> String? {
+        guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
+              let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
+              let parseNew = Decimal(string: new) else { return nil }
+
+        let adjusted = (parseNew * ratio)
+        let oldValue = value.roundBolusIncrements(increment: 0.05)
+        let newValue = adjusted.roundBolusIncrements(increment: 0.05)
+        guard oldValue != newValue else { return nil }
+
+        return ", Basal: \(oldValue) → \(newValue)"
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
