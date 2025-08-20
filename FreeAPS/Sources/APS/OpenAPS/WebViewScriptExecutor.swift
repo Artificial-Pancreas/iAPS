@@ -48,7 +48,7 @@ struct ScriptError: Decodable, Error {
         webView.evaluateJavaScript(script.body)
     }
 
-    func callNew<I: Encodable, T: Decodable>(
+    func invoke<I: Encodable, T: Decodable>(
         function: String,
         with input: I,
         as _: T.Type

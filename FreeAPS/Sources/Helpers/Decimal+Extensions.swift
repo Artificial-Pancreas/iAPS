@@ -18,3 +18,9 @@ extension CGFloat {
         self.init(Double(decimal))
     }
 }
+
+extension String {
+    var toDecimal: Decimal? {
+        Decimal(string: self)
+    }
+}

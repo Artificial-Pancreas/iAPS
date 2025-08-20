@@ -182,6 +182,7 @@ final class OpenAPS {
                             suggestion: suggestion,
                             preferences: preferencesData,
                             profile: profile,
+                            currentTemp: currentTemp,
                             tdd: tdd,
                             settings: settings
                         )
@@ -486,6 +487,7 @@ final class OpenAPS {
         suggestion: Suggestion,
         preferences: Preferences?,
         profile: Profile,
+        currentTemp: TempBasal,
         tdd: InsulinDistribution?,
         settings: FreeAPSSettings?
     ) -> String {
@@ -544,9 +546,11 @@ final class OpenAPS {
                 }
             }
 
+            let parsedReason = parseReason(reason)
+
             // Include ISF before eventual adjustment
             if let old = profile.oldISF,
-               let new = readReason(reason: reason, variable: "ISF"),
+               let new = parsedReason["ISF"]?.toDecimal,
                let oldISF = trimmedIsEqual(string: "\(old)", decimal: new)
             {
                 reasonString = reasonString.replacingOccurrences(of: "ISF:", with: "ISF: \(oldISF) →")
@@ -554,7 +558,7 @@ final class OpenAPS {
 
             // Include CR before eventual adjustment
             if let old = profile.oldCR,
-               let new = readReason(reason: reason, variable: "CR"),
+               let new = parsedReason["CR"]?.toDecimal,
                let oldCR = trimmedIsEqual(string: "\(old)", decimal: new)
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
@@ -612,11 +616,13 @@ final class OpenAPS {
             reasonString.insert(contentsOf: "\n\nAuto ISF { \(profile.autoISFString ?? "") }", at: index)
         }
 
+        let parsedReason = parseReason(reason)
+
         // Save Suggestion to CoreData
         coredataContext.perform { [self] in
-            if let isf = readReason(reason: reason, variable: "ISF"),
-               let minPredBG = readReason(reason: reason, variable: "minPredBG"),
-               let cr = readReason(reason: reason, variable: "CR"),
+            if let isf = parsedReason["ISF"]?.toDecimal,
+               let minPredBG = parsedReason["minPredBG"]?.toDecimal,
+               let cr = parsedReason["CR"]?.toDecimal,
                let iob = suggestion.iob, let cob = suggestion.cob, let target = targetGlucose
             {
                 var aisfReasons: String?
@@ -649,8 +655,9 @@ final class OpenAPS {
 
                 if let rate = suggestion.rate {
                     saveSuggestion.rate = rate as NSDecimalNumber
-                } else if let rate = readRate(comment: suggestion.reason) {
-                    saveSuggestion.rate = rate as NSDecimalNumber
+                } else {
+                    // when suggestion.rate is not set, oref0 wants to keep the current temp as is
+                    saveSuggestion.rate = currentTemp.rate as NSDecimalNumber
                 }
 
                 if profile.outUnits == GlucoseUnits.mmolL {
@@ -757,28 +764,17 @@ final class OpenAPS {
         return returnSuggestion
     }
 
-    private func readReason(reason: String, variable: String) -> Decimal? {
-        if let string = reason.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
-            let targetComponents = string.components(separatedBy: ":")
-            if targetComponents.count == 2 {
-                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
-                let decimal = Decimal(string: trimmedString) ?? 0
-                return decimal
+    private func parseReason(_ reason: String) -> [String: String] {
+        reason
+            .split(separator: ",")
+            .flatMap { part in part.split(separator: ";") }
+            .reduce(into: [String: String]()) { acc, pair in
+                let parts = pair.split(separator: ":", maxSplits: 1).map { String($0) }
+                if parts.count == 2 {
+                    acc[parts[0].trimmingCharacters(in: .whitespaces)] =
+                        parts[1].trimmingCharacters(in: .whitespaces)
+                }
             }
-        }
-        return nil
-    }
-
-    // TODO: this looks the same as readReason above
-    private func readRate(comment: String) -> Decimal? {
-        if let string = comment.components(separatedBy: ", ").filter({ $0.contains("maxSafeBasal:") }).last {
-            if let targetComponents = string.components(separatedBy: ":").last {
-                let trimmedString = targetComponents.trimmingCharacters(in: .whitespaces)
-                let decimal = Decimal(string: trimmedString) ?? 0
-                return decimal
-            }
-        }
-        return nil
     }
 
     private func tdd(preferencesData: Preferences?) async throws -> (bolus: Decimal, basal: Decimal, hours: Double)? {
@@ -1060,7 +1056,7 @@ final class OpenAPS {
         clock: Date,
         autosens: Autosens?
     ) async throws -> [IOBItem] {
-        try await scriptExecutor.callNew(
+        try await scriptExecutor.invoke(
             function: "iob",
             with: IobInput(
                 pump_history: pumphistory,
@@ -1085,7 +1081,7 @@ final class OpenAPS {
             readPumpHistory()
         )
 
-        return try await scriptExecutor.callNew(
+        return try await scriptExecutor.invoke(
             function: "iob",
             with: IobInput(
                 pump_history: pumpHistory,
@@ -1106,7 +1102,7 @@ final class OpenAPS {
         glucose: [GlucoseEntry0],
         temporary: TemporaryData
     ) async throws -> RecentCarbs {
-        try await scriptExecutor.callNew(
+        try await scriptExecutor.invoke(
             function: "meal",
             with: MealInput(
                 pump_history: pumphistory,
@@ -1131,7 +1127,7 @@ final class OpenAPS {
         tuneInsulinCurve: Bool,
         previousAutotuneResult: Profile
     ) async throws -> Profile {
-        try await scriptExecutor.callNew(
+        try await scriptExecutor.invoke(
             function: "autotune",
             with: AutotuneInput(
                 pump_history: pumphistory,
@@ -1159,7 +1155,7 @@ final class OpenAPS {
         pumpHistory: [PumpHistoryEvent], // TODO: pumpHistory not used in prepare
         clock: Date
     ) async throws -> Suggestion {
-        try await scriptExecutor.callNew(
+        try await scriptExecutor.invoke(
             function: "determine_basal",
             with: DetermineBasalInput(
                 glucose: glucose,
@@ -1185,7 +1181,7 @@ final class OpenAPS {
         carbs: [CarbsEntry],
         temptargets: [TempTarget]
     ) async throws -> Autosens {
-        try await scriptExecutor.callNew(
+        try await scriptExecutor.invoke(
             function: "autosens",
             with: AutosensInput(
                 glucose: glucose,
@@ -1214,7 +1210,7 @@ final class OpenAPS {
         settings: FreeAPSSettings
     ) async throws -> Profile {
         let clock = Date.now
-        let profile = try await scriptExecutor.callNew(
+        let profile = try await scriptExecutor.invoke(
             function: "profile",
             with: PrepareProfileInput(
                 preferences: preferences,
@@ -1250,7 +1246,7 @@ final class OpenAPS {
         guard let script = try await middlewareScript(name: OpenAPS.Middleware.determineBasal)?.body else {
             return profile
         }
-        return try await scriptExecutor.callNew(
+        return try await scriptExecutor.invoke(
             function: "middleware",
             with: MiddlewareInput(
                 middleware_fn: script,
@@ -1276,7 +1272,7 @@ final class OpenAPS {
         pumpHistory: [PumpHistoryEvent],
         clock: Date
     ) async throws -> Profile {
-        try await scriptExecutor.callNew(
+        try await scriptExecutor.invoke(
             function: "autoisf",
             with: AutoIsfInput(
                 glucose: glucose,
