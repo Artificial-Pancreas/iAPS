@@ -528,7 +528,7 @@ final class OpenAPS {
 
             // Before and after eventual Basal adjustment
             if let index = reasonString.firstIndex(of: ";"),
-               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf, or: or)
+               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf)
             {
                 reasonString.insert(
                     contentsOf: basalAdjustment,
@@ -540,14 +540,14 @@ final class OpenAPS {
         // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
         if targetGlucose != nil, let override = or, override.enabled {
-            var orString = ", Override:"
+            var orString = ", Override: "
             if override.percentage != 100 {
-                orString += " \(override.percentage.formatted()) %"
+                orString += (formatter.string(from: override.percentage as NSNumber) ?? "")
             }
             if override.smbIsOff {
-                orString += " SMBs off"
+                orString += ". SMBs off"
             }
-            orString += " Target \(targetGlucose ?? 0)"
+            orString += ". Target \(targetGlucose ?? 0)"
 
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: orString, at: index)
@@ -637,6 +637,13 @@ final class OpenAPS {
         return reasonString
     }
 
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+
     private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
         let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
         let new = "\(decimal)"
@@ -645,7 +652,7 @@ final class OpenAPS {
         return old
     }
 
-    private func basalAdjustment(profile: RawJSON, ratio: Decimal, or _: Override?) -> String? {
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal) -> String? {
         guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
               let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
               let parseNew = Decimal(string: new) else { return nil }
@@ -655,7 +662,7 @@ final class OpenAPS {
         let newValue = adjusted.roundBolusIncrements(increment: 0.05)
         guard oldValue != newValue else { return nil }
 
-        return ", Basal \(oldValue) → \(newValue)"
+        return ", Basal: \(oldValue) → \(newValue)"
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
