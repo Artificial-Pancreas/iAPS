@@ -3,7 +3,7 @@ const getLastGlucose = require('./glucose-get-last-autoisf')
 /*
 *   {
 *     glucose: [GlucoseEntry0],
-*     iob: [IOBItem],
+*     iob: [IOBEntry],
 *     profile: Profile,
 *     autosens: Autosens?,
 *     pump_history: [PumpHistoryEvent],

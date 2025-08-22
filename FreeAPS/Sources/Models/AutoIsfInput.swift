@@ -3,7 +3,7 @@ import Foundation
 
 struct AutoIsfInput: Codable {
     let glucose: [GlucoseEntry0]
-    let iob: [IOBItem]
+    let iob: [IOBEntry]
     let profile: Profile
     let autosens: Autosens?
     let pump_history: [PumpHistoryEvent]

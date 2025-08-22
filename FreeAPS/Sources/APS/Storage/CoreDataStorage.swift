@@ -32,7 +32,7 @@ final class CoreDataStorage {
         return fetchGlucose.first
     }
 
-    func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
+    func fetchInsulinData(interval: NSDate) -> [IOBTick] {
         var fetchTicks = [InsulinActivity]()
         coredataContext.performAndWait {
             let requestTicks = InsulinActivity.fetchRequest()
@@ -43,11 +43,11 @@ final class CoreDataStorage {
             )
             try? fetchTicks = self.coredataContext.fetch(requestTicks)
         }
-        let result = fetchTicks.compactMap { tick -> IOBTick0? in
+        let result = fetchTicks.compactMap { tick -> IOBTick? in
             guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
                 return nil
             }
-            return IOBTick0(
+            return IOBTick(
                 time: date,
                 iob: iob as Decimal,
                 activity: activity as Decimal
@@ -56,7 +56,7 @@ final class CoreDataStorage {
         return result
     }
 
-    func saveInsulinData(iobEntries: [IOBItem]) -> Decimal? {
+    func saveInsulinData(iobEntries: [IOBEntry]) -> Decimal? {
         guard let firstDate = iobEntries.compactMap(\.time).min() else { return nil }
         let iob = iobEntries[0].iob
 

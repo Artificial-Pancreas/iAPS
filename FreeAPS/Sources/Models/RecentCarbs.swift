@@ -12,7 +12,7 @@ struct RecentCarbs: Codable, Sendable {
     var slopeFromMaxDeviation: Double
     var slopeFromMinDeviation: Double
     var allDeviations: [Double]
-    var lastCarbTime: Double? // Option<f64> -> Double?
+    var lastCarbTime: Double?
     var bwFound: Bool
 }
 

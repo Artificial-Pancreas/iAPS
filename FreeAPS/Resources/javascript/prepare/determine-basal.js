@@ -10,7 +10,7 @@ const exercising = require('./utils').exercising
 *   {
 *     glucose: [GlucoseEntry0],
 *     current_temp: TempBasal,
-*     iob: [IOBItem],
+*     iob: [IOBEntry],
 *     profile: Profile,
 *     autosens: Autosens?,
 *     meal: RecentCarbs,

@@ -1062,7 +1062,7 @@ final class OpenAPS {
         profile: Profile,
         clock: Date,
         autosens: Autosens?
-    ) async throws -> [IOBItem] {
+    ) async throws -> [IOBEntry] {
         try await scriptExecutor.invoke(
             function: "iob",
             with: IobInput(
@@ -1071,13 +1071,13 @@ final class OpenAPS {
                 clock: clock,
                 autosens: autosens,
             ),
-            as: [IOBItem].self
+            as: [IOBEntry].self
         )
     }
 
     func iobSync(
         clock: Date,
-    ) async throws -> [IOBItem] {
+    ) async throws -> [IOBEntry] {
         let (
             autosens,
             profile,
@@ -1096,7 +1096,7 @@ final class OpenAPS {
                 clock: clock,
                 autosens: autosens
             ),
-            as: [IOBItem].self
+            as: [IOBEntry].self
         )
     }
 
@@ -1153,7 +1153,7 @@ final class OpenAPS {
     private func determineBasal(
         glucose: [GlucoseEntry0],
         currentTemp: TempBasal,
-        iob: [IOBItem],
+        iob: [IOBEntry],
         profile: Profile,
         autosens: Autosens?,
         meal: RecentCarbs,
@@ -1243,7 +1243,7 @@ final class OpenAPS {
     private func middleware(
         glucose: [GlucoseEntry0],
         currentTemp: TempBasal,
-        iob: [IOBItem],
+        iob: [IOBEntry],
         profile: Profile,
         autosens: Autosens?,
         meal: RecentCarbs,
@@ -1273,7 +1273,7 @@ final class OpenAPS {
 
     private func autosisf(
         glucose: [GlucoseEntry0],
-        iob: [IOBItem],
+        iob: [IOBEntry],
         profile: Profile,
         autosens: Autosens?,
         pumpHistory: [PumpHistoryEvent],

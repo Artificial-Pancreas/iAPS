@@ -30,14 +30,18 @@ extension Formatter {
     }()
 }
 
+extension ParseStrategy where Self == Date.ISO8601FormatStyle {
+    static var iso8601withFractionalSeconds: Self { .init(includingFractionalSeconds: true) }
+}
+
 extension JSONDecoder.DateDecodingStrategy {
-    static let customISO8601 = custom {
-        let container = try $0.singleValueContainer()
-        let string = try container.decode(String.self)
-        if let date = Formatter.iso8601withFractionalSeconds.date(from: string) ?? Formatter.iso8601.date(from: string) {
-            return date
+    static let iso8601withOptionalFractionalSeconds = custom {
+        let string = try $0.singleValueContainer().decode(String.self)
+        do {
+            return try .init(string, strategy: .iso8601withFractionalSeconds)
+        } catch {
+            return try .init(string, strategy: .iso8601)
         }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date: \(string)")
     }
 }
 

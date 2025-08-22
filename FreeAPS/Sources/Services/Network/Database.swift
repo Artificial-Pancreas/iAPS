@@ -80,12 +80,9 @@ extension Database {
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .customISO8601
-
         return service.run(request)
             .retry(Config.retryCount)
-            .decode(type: FreeAPSSettings.self, decoder: decoder)
+            .decode(type: FreeAPSSettings.self, decoder: JSONCoding.decoder)
             .eraseToAnyPublisher()
     }
 

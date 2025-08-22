@@ -9,16 +9,6 @@ extension Encodable {
         let data = try JSONCoding.encoder.encode(self)
         return try JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])
     }
-
-    func asJavaScriptString() -> String {
-        "\"" +
-            rawJSON()
-            .replacingOccurrences(of: "\\", with: "\\\\")
-            .replacingOccurrences(of: "\"", with: "\\\"")
-            .replacingOccurrences(of: "\n", with: "\\n")
-            .replacingOccurrences(of: "\r", with: "\\r") +
-            "\""
-    }
 }
 
 @dynamicMemberLookup protocol JSON: Codable, Sendable {
@@ -68,43 +58,6 @@ extension JSON {
         String(data: try! JSONCoding.encoder.encode(self), encoding: .utf8)!
     }
 
-//    init?(from: String) {
-//        guard let data = from.data(using: .utf8) else {
-//            return nil
-//        }
-//
-//        do {
-//            let object = try JSONCoding.decoder.decode(Self.self, from: data)
-//            self = object
-//        } catch let DecodingError.dataCorrupted(context) {
-//            warning(.service, "Cannot decode JSON", error: context.underlyingError)
-//            return nil
-//        } catch let DecodingError.keyNotFound(key, context) {
-//            warning(
-//                .service,
-//                "Key '\(key)' not found: " + context.debugDescription + "codingPath: " + context.codingPath.debugDescription
-//            )
-//            return nil
-//        } catch let DecodingError.valueNotFound(value, context) {
-//            warning(
-//                .service,
-//                "Value '\(value)' not found: " + context.debugDescription +
-//                    "codingPath: " + context.codingPath.debugDescription
-//            )
-//            return nil
-//        } catch let DecodingError.typeMismatch(type, context) {
-//            warning(
-//                .service,
-//                "Type '\(type)' mismatch:" + context.debugDescription +
-//                    "codingPath:" + context.codingPath.debugDescription
-//            )
-//            return nil
-//        } catch {
-//            warning(.service, "error: \(error)")
-//            return nil
-//        }
-//    }
-
     var dictionaryRepresentation: [String: Any]? {
         guard let data = rawJSON.data(using: .utf8),
               let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
@@ -119,40 +72,12 @@ extension JSON {
     }
 }
 
-// extension String: JSON {
-//    var rawJSON: String { self }
-//    init?(from: String) { self = from }
-// }
-//
-// extension Double: JSON {}
-//
-// extension Int: JSON {}
-//
-// extension Bool: JSON {}
-//
-// extension Decimal: JSON {}
-
-// extension Date: JSON {
-//    init?(from: String) {
-//        let dateFormatter = Formatter.iso8601withFractionalSeconds
-//        let string = from.replacingOccurrences(of: "\"", with: "")
-//        if let date = dateFormatter.date(from: string) {
-//            self = date
-//        } else {
-//            return nil
-//        }
-//    }
-// }
-
 typealias RawJSON = String
 
 extension RawJSON {
     static let null = "null"
     static let empty = ""
 }
-
-// extension Array: JSON where Element: JSON {}
-// extension Dictionary: JSON where Key: JSON, Value: JSON {}
 
 extension Dictionary where Key == String {
     var rawJSON: RawJSON? {
@@ -171,7 +96,7 @@ enum JSONCoding {
 
     static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .customISO8601
+        decoder.dateDecodingStrategy = .iso8601withOptionalFractionalSeconds
         return decoder
     }
 }

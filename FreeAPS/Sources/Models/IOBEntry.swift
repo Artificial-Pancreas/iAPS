@@ -1,6 +1,6 @@
 import Foundation
 
-struct IOBEntry: JSON {
+struct IOBEntry: Codable {
     let iob: Decimal
     let activity: Decimal
     let basaliob: Decimal

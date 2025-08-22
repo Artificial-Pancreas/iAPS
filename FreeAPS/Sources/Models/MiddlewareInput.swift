@@ -5,7 +5,7 @@ struct MiddlewareInput: Codable {
     let middleware_fn: String
     let glucose: [GlucoseEntry0]
     let current_temp: TempBasal
-    let iob: [IOBItem]
+    let iob: [IOBEntry]
     let profile: Profile
     let autosens: Autosens?
     let meal: RecentCarbs
