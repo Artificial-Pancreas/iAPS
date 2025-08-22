@@ -45,7 +45,7 @@ final class OpenAPS {
                             glucose,
                             preferences,
                             basalProfile,
-                            data,
+                            settings,
                             autosens,
                             reservoir,
                             storedProfile,
@@ -63,8 +63,6 @@ final class OpenAPS {
                             self.readPumpSettings()
                         )
 
-                        let preferencesData = preferences
-                        let settings = data
                         var profile = storedProfile
                         print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
@@ -180,7 +178,7 @@ final class OpenAPS {
                         suggestion.reason = self.reasons(
                             reason: suggestion.reason,
                             suggestion: suggestion,
-                            preferences: preferencesData,
+                            preferences: preferences,
                             profile: profile,
                             currentTemp: currentTemp,
                             tdd: tdd,
@@ -489,8 +487,10 @@ final class OpenAPS {
         profile: Profile,
         currentTemp: TempBasal,
         tdd: InsulinDistribution?,
-        settings: FreeAPSSettings?
+        settings: FreeAPSSettings
     ) -> String {
+        guard let preferences = preferences else { return reason }
+
         var reasonString = reason
         let startIndex = reasonString.startIndex
         var aisf = false
@@ -509,7 +509,7 @@ final class OpenAPS {
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
             // Auto ISF
-            if let freeAPSSettings = settings, freeAPSSettings.autoisf {
+            if settings.autoisf {
                 let reasons = profile.autoISFReasons ?? ""
                 // If disabled in middleware or Auto ISF layer
                 if !profile.iaps.autoisf
@@ -523,17 +523,17 @@ final class OpenAPS {
                     reasonString.insert(contentsOf: insertedResons + tddString + ", \(reasons), ", at: startIndex)
                 }
                 aisf = true
-            } else if let settings = preferences {
+            } else {
                 // Dynamic
-                if settings.useNewFormula {
+                if preferences.useNewFormula {
                     var insertedResons = "Dynamic Ratio: \(isf)"
-                    if settings.sigmoid {
+                    if preferences.sigmoid {
                         insertedResons += ", Sigmoid function"
                     } else {
                         insertedResons += ", Logarithmic function"
                     }
-                    insertedResons += ", AF: \(settings.adjustmentFactor)"
-                    if settings.enableDynamicCR {
+                    insertedResons += ", AF: \(preferences.adjustmentFactor)"
+                    if preferences.enableDynamicCR {
                         insertedResons += ", Dynamic ISF/CR is: On/On"
                     } else {
                         insertedResons += ", Dynamic ISF/CR is: On/Off"
