@@ -52,7 +52,7 @@ final class BaseSettingsManager: SettingsManager, Injectable {
     var pumpSettings: PumpSettings {
         storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
             ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
-            ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
+            ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
     }
 
     func updateInsulinCurve(_ insulinType: InsulinType?) {

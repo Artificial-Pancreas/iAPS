@@ -93,7 +93,7 @@ extension Home {
             suspensions: [],
             announcement: [],
             hours: 24,
-            maxBasal: 2,
+            maxBasal: 4,
             autotunedBasalProfile: [],
             basalProfile: [],
             tempTargets: [],
