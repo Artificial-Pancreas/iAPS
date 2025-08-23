@@ -2,7 +2,7 @@
 //  MiaoMiaoManager.swift
 //  LibreMonitor
 //
-//  Created by Uwe Petersen on 10.03.18, heravily modified by Bjørn Berg.
+//  Created by Uwe Petersen on 10.03.18.
 //  Copyright © 2018 Uwe Petersen. All rights reserved.
 //
 
@@ -108,7 +108,6 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
     var shortTransmitterName: String? {
         activePluginType?.shortTransmitterName
     }
-
 
     fileprivate lazy var logger = Logger(forType: Self.self)
     var metadata: LibreTransmitterMetadata?
@@ -309,7 +308,6 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
 
             logger.debug("Central Manager was powered on")
 
-
             //not sure if needed, but can be helpful when state is restored
             if let peripheral = peripheral, delegate != nil {
                 // do not scan if already connected
@@ -326,7 +324,6 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
                     if self.activePlugin == nil || self.activePlugin?.canSupportPeripheral(peripheral) == false {
                         let plugin = LibreTransmitters.getSupportedPlugins(peripheral)?.first
                         self.activePlugin = plugin?.init(delegate: self, advertisementData: nil)
-
 
                         logger.debug("Central Manager was powered on, peripheral state is connected/connecting, stopping scan")
                         if central.isScanning && peripheral.state == .connected {
@@ -349,7 +346,6 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
                     logger.debug("Central Manager already connected")
                 }
             } else {
-
 
                 if let preselected = UserDefaults.standard.preSelectedDevice,
                    let uuid = UUID(uuidString: preselected),
@@ -435,47 +431,78 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
             fatalError("Failed due to unkown default, Uwe!")
         }
     }
+    
+   
+    private func verifyLibre2ManufacturerData(peripheral: CBPeripheral, selectedUid: Data ,advertisementData: [String: Any]) -> Bool {
+        guard let manufacturerData = advertisementData[CBAdvertisementDataManufacturerDataKey] as? Data else {
+            logger.debug("manufacturerData was not retrieved")
+            return false
+        }
 
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+        guard manufacturerData.count == 8 else {
+            logger.debug("manufacturerData was of incorrect size: \(manufacturerData.count)")
+            return false
+        }
+         logger.debug("manufacturerdata is: \(manufacturerData.hex)")
+
+        var foundUUID = manufacturerData.subdata(in: 2..<8)
+        foundUUID.append(contentsOf: [0x07, 0xe0])
+        
+        logger.debug("ManufacturerData: \(manufacturerData.hex), found uid: \(foundUUID.hex)")
+
+        guard foundUUID == selectedUid && Libre2DirectTransmitter.canSupportPeripheral(peripheral) else {
+            return false
+        }
+        
+        return true
+    }
+    
+    public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
         logger.debug("Did discover peripheral while state \(String(describing: self.state.rawValue)) with name: \(String(describing: peripheral.name)), wantstoterminate?: \(self.wantsToTerminate)")
-
 
         // Libre2:
         // during setup, we find the uid by scanning via nfc
         // first time connecting to a libre2 sensor via bluetooth we don't know its peripheral identifier
         // but since the uid is also part of the libre 2bluetooth advertismentdata we trade uid for
-        
+
          if let selectedUid = UserDefaults.standard.preSelectedUid {
             logger.debug("Was asked to connect preselected libre2 by uid: \(selectedUid.hex), discovered devicename is: \(String(describing: peripheral.name))")
 
-            guard let manufacturerData = advertisementData[CBAdvertisementDataManufacturerDataKey] as? Data else {
-                return
-            }
+             let sensor = UserDefaults.standard.preSelectedSensor
+             logger.debug("preselected sensor is: \(String(describing:sensor))")
+             
+             var verified = false
+             
+             // Starting in mid 2025, libre2 plus sensors in europe identify them self with
+             // their mac address in the device name
+             if let peripheralName = peripheral.name, let preselectedMac = sensor?.macAddress  {
+                 verified = peripheralName == preselectedMac
+                 logger.debug("Verifiying libre2 connection using mac address method:. \(verified)")
+             }
+             
+             if !verified {
+                 verified = verifyLibre2ManufacturerData(peripheral: peripheral, selectedUid: selectedUid, advertisementData: advertisementData)
+                 logger.debug("Verifiying libre2 connection using legacy manufacturerData method: \(verified)")
+                     
+             }
+             
+             if !verified {
+                 logger.debug("verification failed, not connecting")
+                 return
+             }
 
-            guard manufacturerData.count == 8 else {
-                return
-            }
-
-            var foundUUID = manufacturerData.subdata(in: 2..<8)
-            foundUUID.append(contentsOf: [0x07, 0xe0])
-
-            guard foundUUID == selectedUid && Libre2DirectTransmitter.canSupportPeripheral(peripheral) else {
-                return
-            }
-
-            //next time we search via bluetooth, let's identify the sensor with its bluetooth identifier
+            // next time we search via bluetooth, let's identify the sensor with its bluetooth identifier
             UserDefaults.standard.preSelectedUid = nil
             UserDefaults.standard.preSelectedDevice = peripheral.identifier.uuidString
 
-            logger.debug("ManufacturerData: \(manufacturerData), found uid: \(foundUUID)")
+
 
             logger.debug("Did connect to preselected \(String(describing: peripheral.name)) with identifier \(String(describing: peripheral.identifier.uuidString)) and uid \(selectedUid.hex)")
             self.peripheral = peripheral
 
             self.connect(force: true, advertisementData: advertisementData)
-
 
             return
 
@@ -488,7 +515,12 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
 
                 self.connect(force: true, advertisementData: advertisementData)
             } else {
-                logger.info("Did not connect to \(String(describing: peripheral.name)) with identifier \(String(describing: peripheral.identifier.uuidString)), because another device with identifier \(preselected) was selected")
+                logger.info(
+                """
+                Did not connect to \(String(describing: peripheral.name)),
+                with identifier \(String(describing: peripheral.identifier.uuidString)),
+                because another device with identifier \(preselected) was selected
+                """)
             }
 
             return
@@ -497,7 +529,7 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
         }
     }
 
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
         logger.debug("Did connect peripheral while state \(String(describing: self.state.rawValue)) with name: \(String(describing: peripheral.name))")
@@ -505,16 +537,16 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
             central.stopScan()
         }
         state = .Connected
-        //self.lastConnectedIdentifier = peripheral.identifier.uuidString
+        // self.lastConnectedIdentifier = peripheral.identifier.uuidString
         // Discover all Services. This might be helpful if writing is needed some time
         peripheral.discoverServices(serviceUUIDs)
     }
 
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+    public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
         logger.debug("Did fail to connect peripheral while state: \(String(describing: self.state.rawValue))")
-        if let error = error {
+        if let error {
             logger.error("Did fail to connect peripheral error: \(error.localizedDescription)")
         }
         state = .Disconnected
@@ -550,11 +582,11 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
         }
     }
 
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
         logger.debug("Did disconnect peripheral while state: \(String(describing: self.state.rawValue)))")
-        if let error = error {
+        if let error {
             logger.error("Did disconnect peripheral error: \(error.localizedDescription)")
         }
 
@@ -573,10 +605,10 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
 
     // MARK: - CBPeripheralDelegate
 
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         logger.debug("Did discover services. is plugin nil? \((self.activePlugin == nil ? "nil" : "not nil"))")
-        if let error = error {
+        if let error {
             logger.error("Did discover services error: \(error.localizedDescription)")
         }
 
@@ -595,32 +627,27 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
         }
     }
 
-    func didDiscoverNotificationCharacteristic(_ peripheral: CBPeripheral, notifyCharacteristic characteristic: CBCharacteristic){
-
+    func didDiscoverNotificationCharacteristic(_ peripheral: CBPeripheral, notifyCharacteristic characteristic: CBCharacteristic) {
 
         logger.debug("Did discover characteristic: \(String(describing: characteristic.debugDescription)) and asking activeplugin to handle it as a notification Characteristic")
 
         self.activePlugin?.didDiscoverNotificationCharacteristic(peripheral, notifyCharacteristic: characteristic)
 
-
-
-
     }
 
-    func didDiscoverWriteCharacteristic(_ peripheral: CBPeripheral, writeCharacteristic characteristic: CBCharacteristic){
+    func didDiscoverWriteCharacteristic(_ peripheral: CBPeripheral, writeCharacteristic characteristic: CBCharacteristic) {
         writeCharacteristic = characteristic
         logger.debug("Did discover characteristic: \(String(describing: characteristic.debugDescription)) and asking activeplugin to handle it as a write Characteristic")
         self.activePlugin?.didDiscoverWriteCharacteristics(peripheral, writeCharacteristics: characteristic)
 
-
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
         logger.debug("Did discover characteristics for service \(String(describing: peripheral.name))")
 
-        if let error = error {
+        if let error {
             logger.error("Did discover characteristics for service error: \(error.localizedDescription)")
         }
 
@@ -640,11 +667,11 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         logger.debug("Did update notification state for characteristic: \(String(describing: characteristic.debugDescription))")
 
-        if let error = error {
+        if let error {
             logger.error("Peripheral did update notification state for characteristic: \(error.localizedDescription) with error")
         } else {
             self.reset()
@@ -654,7 +681,7 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
     }
 
     private var lastNotifyUpdate: Date?
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
         let now = Date()
@@ -667,7 +694,7 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
         // By resetting here we ensure that the rxbuffer doesn't leak over into the next session
         // Leaking over into the next session, is however not a problem for consitency as we always check the CRC's anyway
         if let lastNotifyUpdate = self.lastNotifyUpdate, now > lastNotifyUpdate.addingTimeInterval(6) {
-            logger.debug("dabear:: there hasn't been any traffic to  the \((self.activePluginType?.shortTransmitterName).debugDescription) plugin for more than 10 seconds, so we reset now")
+            logger.debug("there hasn't been any traffic to  the \((self.activePluginType?.shortTransmitterName).debugDescription) plugin for more than 10 seconds, so we reset now")
             self.reset()
         }
 
@@ -675,7 +702,7 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
 
         self.lastNotifyUpdate = now
 
-        if let error = error {
+        if let error {
             logger.error("Characteristic update error: \(error.localizedDescription)")
         } else {
             if characteristic.uuid == notifyCharacteristicUUID, let value = characteristic.value {
@@ -687,7 +714,7 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+    public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         logger.debug("Did Write value \(String(describing: characteristic.value?.hexEncodedString())) for characteristic \(String(characteristic.debugDescription))")
         self.activePlugin?.didWrite(peripheral, characteristics: characteristic)
@@ -695,8 +722,8 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
     }
 
     func requestData() {
-       guard let peripheral = peripheral,
-            let writeCharacteristic = writeCharacteristic else {
+       guard let peripheral,
+            let writeCharacteristic else {
                 return
         }
         self.activePlugin?.requestData(writeCharacteristics: writeCharacteristic, peripheral: peripheral)
@@ -705,7 +732,7 @@ final class LibreTransmitterProxyManager: NSObject, CBCentralManagerDelegate, CB
     deinit {
         self.activePlugin = nil
         self.delegate = nil
-        logger.debug("dabear:: miaomiaomanager deinit called")
+        logger.debug("miaomiaomanager deinit called")
     }
 }
 
@@ -718,8 +745,8 @@ extension LibreTransmitterProxyManager {
         HKDevice(
             name: "MiaomiaoClient",
             manufacturer: manufacturer,
-            model: nil, //latestSpikeCollector,
-            hardwareVersion: self.metadata?.hardware ,
+            model: nil, // latestSpikeCollector,
+            hardwareVersion: self.metadata?.hardware,
             firmwareVersion: self.metadata?.firmware,
             softwareVersion: nil,
             localIdentifier: identifier?.uuidString,
