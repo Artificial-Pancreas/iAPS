@@ -6,7 +6,7 @@ import JavaScriptCore
 final class OpenAPS {
     private let jsWorker = JavaScriptWorker()
     private let scriptExecutor: WebViewScriptExecutor
-    private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
+    private let processQueue = AsyncSerial()
     private let storage: FileStorage
     private let nightscout: NightscoutManager
     private let pumpStorage: PumpHistoryStorage
@@ -26,9 +26,9 @@ final class OpenAPS {
     }
 
     func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: TemporaryData) -> Future<Suggestion?, Never> {
-        Future { promise in
-            self.processQueue.async {
-                Task {
+        return Future { promise in
+            Task {
+                await self.processQueue.runNoThrow {
                     // For debugging
                     let start = Date.now
                     var now = Date.now
@@ -190,16 +190,16 @@ final class OpenAPS {
 
     func autosense() -> Future<Autosens?, Never> {
         Future { promise in
-            self.processQueue.async {
-                debug(.openAPS, "Start autosens")
-                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-                let profile = self.loadFileFromStorage(name: Settings.profile)
-                let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-                let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
+            Task {
+                await self.processQueue.runNoThrow {
+                    debug(.openAPS, "Start autosens")
+                    let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+                    let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
+                    let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                    let profile = self.loadFileFromStorage(name: Settings.profile)
+                    let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
+                    let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
 
-                Task {
                     let autosensResult = await self.autosense(
                         glucose: glucose,
                         pumpHistory: pumpHistory,
@@ -224,15 +224,15 @@ final class OpenAPS {
 
     func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) -> Future<Autotune?, Never> {
         Future { promise in
-            self.processQueue.async {
-                debug(.openAPS, "Start autotune")
-                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
-                let profile = self.loadFileFromStorage(name: Settings.profile)
-                let pumpProfile = self.loadFileFromStorage(name: Settings.pumpProfile)
-                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
+            Task {
+                await self.processQueue.runNoThrow {
+                    debug(.openAPS, "Start autotune")
+                    let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+                    let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                    let profile = self.loadFileFromStorage(name: Settings.profile)
+                    let pumpProfile = self.loadFileFromStorage(name: Settings.pumpProfile)
+                    let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
 
-                Task {
                     let autotunePreppedGlucose = await self.autotunePrepare(
                         pumphistory: pumpHistory,
                         profile: profile,
@@ -267,9 +267,10 @@ final class OpenAPS {
 
     func makeProfiles(useAutotune: Bool, settings: FreeAPSSettings) -> Future<Autotune?, Never> {
         Future { promise in
-            debug(.openAPS, "Start makeProfiles")
-            self.processQueue.async {
-                Task {
+            Task {
+                let result = await self.processQueue.runNoThrow {
+                    debug(.openAPS, "Start makeProfiles")
+
                     let start = Date.now
                     var now = Date.now
 
@@ -362,12 +363,12 @@ final class OpenAPS {
                     )
 
                     if let tunedProfile = Autotune(from: profile) {
-                        promise(.success(tunedProfile))
-                        return
+                        return tunedProfile as Autotune?
+                    } else {
+                        return nil as Autotune?
                     }
-
-                    promise(.success(nil))
                 }
+                promise(.success(result))
             }
         }
     }
