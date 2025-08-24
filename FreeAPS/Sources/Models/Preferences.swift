@@ -31,7 +31,7 @@ struct Preferences: JSON {
     var enableSMBAfterCarbs: Bool = false
     var allowSMBWithHighTemptarget: Bool = false
     var maxSMBBasalMinutes: Decimal = 30
-    var maxUAMSMBBasalMinutes: Decimal = 30
+    var maxUAMSMBBasalMinutes: Decimal = 75
     var smbInterval: Decimal = 3
     var bolusIncrement: Decimal = 0.1
     var curve: InsulinCurve = .rapidActing
@@ -41,7 +41,7 @@ struct Preferences: JSON {
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = false
     var timestamp: Date?
-    var maxDeltaBGthreshold: Decimal = 0.2
+    var maxDeltaBGthreshold: Decimal = 0.3
     var adjustmentFactor: Decimal = 0.5
     var sigmoid: Bool = false
     var enableDynamicCR: Bool = false

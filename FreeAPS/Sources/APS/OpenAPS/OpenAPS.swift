@@ -91,7 +91,7 @@ final class OpenAPS {
 
                     if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
                         let cd = CoreDataStorage()
-                        cd.saveInsulinData(iobEntries: iobEntries)
+                        _ = cd.saveInsulinData(iobEntries: iobEntries)
                     }
 
                     print(
@@ -525,19 +525,29 @@ final class OpenAPS {
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
+
+            // Before and after eventual Basal adjustment
+            if let index = reasonString.firstIndex(of: ";"),
+               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf)
+            {
+                reasonString.insert(
+                    contentsOf: basalAdjustment,
+                    at: index
+                )
+            }
         }
 
         // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
         if targetGlucose != nil, let override = or, override.enabled {
-            var orString = ", Override:"
+            var orString = ", Override: "
             if override.percentage != 100 {
-                orString += " \(override.percentage.formatted()) %"
+                orString += (formatter.string(from: override.percentage as NSNumber) ?? "")
             }
             if override.smbIsOff {
-                orString += " SMBs off"
+                orString += ". SMBs off"
             }
-            orString += " Target \(targetGlucose ?? 0)"
+            orString += ". Target \(targetGlucose ?? 0)"
 
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: orString, at: index)
@@ -627,12 +637,32 @@ final class OpenAPS {
         return reasonString
     }
 
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+
     private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
         let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
         let new = "\(decimal)"
         guard old != new else { return nil }
 
         return old
+    }
+
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal) -> String? {
+        guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
+              let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
+              let parseNew = Decimal(string: new) else { return nil }
+
+        let adjusted = (parseNew * ratio)
+        let oldValue = value.roundBolusIncrements(increment: 0.05)
+        let newValue = adjusted.roundBolusIncrements(increment: 0.05)
+        guard oldValue != newValue else { return nil }
+
+        return ", Basal: \(oldValue) → \(newValue)"
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {

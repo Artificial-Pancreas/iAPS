@@ -20,7 +20,7 @@ enum PumpConfig {
 
         static let `default` = PumpInitialSettings(
             maxBolusUnits: 10,
-            maxBasalRateUnitsPerHour: 2,
+            maxBasalRateUnitsPerHour: 4,
             basalSchedule: BasalRateSchedule(dailyItems: [RepeatingScheduleValue(startTime: 0, value: 1.0)])!
         )
     }
