@@ -16,18 +16,33 @@ enum Formatters {
     }
 }
 
-extension Formatter {
-    static let iso8601withFractionalSeconds: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        return formatter
-    }()
+@available(iOS 15, *) enum ISO8601Parsing {
+    static let withFrac = Date.ISO8601FormatStyle(timeZone: .gmt)
+        .year()
+        .month()
+        .day()
+        .timeZone(separator: .omitted)
+        .time(includingFractionalSeconds: true)
 
-    static let iso8601: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-        return formatter
-    }()
+    static let noFrac = Date.ISO8601FormatStyle(timeZone: .gmt)
+        .year()
+        .month()
+        .day()
+        .timeZone(separator: .omitted)
+        .time(includingFractionalSeconds: false)
+
+    static func parse(_ s: String) -> Date? {
+        (try? withFrac.parse(s)) ?? (try? noFrac.parse(s))
+    }
+
+    static func format(_ d: Date) -> String {
+        let ms = Int(d.timeIntervalSince1970.truncatingRemainder(dividingBy: 1) * 1000)
+        if ms == 0 {
+            return d.formatted(noFrac)
+        } else {
+            return d.formatted(withFrac)
+        }
+    }
 }
 
 extension ParseStrategy where Self == Date.ISO8601FormatStyle {
@@ -35,19 +50,23 @@ extension ParseStrategy where Self == Date.ISO8601FormatStyle {
 }
 
 extension JSONDecoder.DateDecodingStrategy {
-    static let iso8601withOptionalFractionalSeconds = custom {
-        let string = try $0.singleValueContainer().decode(String.self)
-        do {
-            return try .init(string, strategy: .iso8601withFractionalSeconds)
-        } catch {
-            return try .init(string, strategy: .iso8601)
+    static var iso8601withOptionalFractionalSeconds: Self {
+        .custom { decoder in
+            let s = try decoder.singleValueContainer().decode(String.self)
+            if let d = ISO8601Parsing.parse(s) { return d }
+            throw DecodingError.dataCorrupted(.init(
+                codingPath: decoder.codingPath,
+                debugDescription: "Invalid ISO8601 date: \(s)"
+            ))
         }
     }
 }
 
 extension JSONEncoder.DateEncodingStrategy {
-    static let customISO8601 = custom {
-        var container = $1.singleValueContainer()
-        try container.encode(Formatter.iso8601withFractionalSeconds.string(from: $0))
+    static var iso8601withOptionalFractionalSeconds: Self {
+        .custom { date, encoder in
+            var c = encoder.singleValueContainer()
+            try c.encode(ISO8601Parsing.format(date))
+        }
     }
 }

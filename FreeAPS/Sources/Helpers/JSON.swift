@@ -90,7 +90,7 @@ enum JSONCoding {
     static var encoder: JSONEncoder {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-        encoder.dateEncodingStrategy = .customISO8601
+        encoder.dateEncodingStrategy = .iso8601withOptionalFractionalSeconds
         return encoder
     }
 
