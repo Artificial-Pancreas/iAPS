@@ -29,7 +29,7 @@ extension NightscoutConfig {
         @Published var localPort: Decimal = 0
         @Published var units: GlucoseUnits = .mmolL
         @Published var dia: Decimal = 6
-        @Published var maxBasal: Decimal = 2
+        @Published var maxBasal: Decimal = 4
         @Published var maxBolus: Decimal = 10
         @Published var allowAnnouncements: Bool = false
 
