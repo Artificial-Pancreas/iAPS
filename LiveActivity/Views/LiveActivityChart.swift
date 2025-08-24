@@ -87,7 +87,8 @@ struct LiveActivityChart: View {
             state.predictions?.cob?.dates.max(),
             state.predictions?.zt?.dates.max(),
             state.predictions?.uam?.dates.max(),
-            state.readings?.dates.max()
+            state.readings?.dates.max(),
+            state.activity?.dates.max()
         )
 
         // Min/max Predction values
@@ -119,9 +120,36 @@ struct LiveActivityChart: View {
             .number.precision(.fractionLength(1)).locale(Locale(identifier: "en_US")) :
             .number.precision(.fractionLength(0))
 
+        // Activity data
+        var activity: [Double] = state.activity?.values ?? []
+
+        // Min/max activity values
+        let minActivityValue = min(-0.001, activity.min() ?? 0)
+        let maxActivityValue = max(state.activityMax ?? 0.01, activity.max() ?? 0.01)
+
+        let bgDomainRange: Double = (yDomain.upperBound - yDomain.lowerBound)
+        let activityRange: Double = maxActivityValue - minActivityValue
+        let activityZeroPointInBgDomain: Double = lowThreshold // yDomain.lowerBound + bgDomainRange * 0.1
+
+        // transform activity data into the BG domain
+        // zero is at the bottom of the "green rectangle"
+        // the activity is squeezed to approx 1/3 of the y-domain
+        func activityToDomain(_ act: Double) -> Double {
+            let res =
+                activityZeroPointInBgDomain +
+                (
+                    (act - minActivityValue) / activityRange * bgDomainRange
+                ) / 3.0
+            return res
+        }
+
+        activity = activity.map(activityToDomain)
+        let zeroActivityToDomain = activityToDomain(0)
+
         let readingsSymbolSize = CGFloat(15)
 
         let bgOpacity: Double = 0.7
+        let activityBgOpacity: Double = 0.2
         let predictionsOpacity = 0.3
         let predictionsSymbolSize = CGFloat(10)
         let inRangeRectOpacity = 0.1
@@ -134,7 +162,17 @@ struct LiveActivityChart: View {
         let cobPoints = state.predictions?.cob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
         let uamPoints = state.predictions?.uam.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
 
+        let activityPoints = state.activity.map({
+            zip($0.dates, activity).map { ($0, $1) }
+        })
+
+        let activityChunks: [[(Date, Double, Color)]] = activityPoints.map { act in
+            activityChunkedByColor(act, baseline: zeroActivityToDomain)
+        } ?? []
+
         return Chart {
+            activityAreaMarks(activityChunks, zeroActivityToDomain, activityBgOpacity)
+
             if let bg = bgPoints {
                 ForEach(bg, id: \.date) {
                     if $0.value < lowThreshold {
@@ -256,6 +294,56 @@ struct LiveActivityChart: View {
                 }
             }
         }
+        .chartForegroundStyleScale([
+            "negativeActivity": Color.red,
+            "positiveActivity": Color.blue
+        ])
+        .chartLegend(.hidden)
+    }
+
+    private func activityAreaMarks(
+        _ activityChunks: [[(Date, Double, Color)]],
+        _ zeroActivityToDomain: Double,
+        _ opacity: Double
+    ) -> some ChartContent {
+        ForEach(activityChunks.indices, id: \.self) { index in
+            ForEach(activityChunks[index], id: \.0) { point in
+                AreaMark(
+                    x: .value("Time", point.0),
+                    yStart: .value("Baseline", zeroActivityToDomain),
+                    yEnd: .value("Activity", point.1)
+                )
+                .opacity(opacity)
+            }
+            .foregroundStyle(by: .value(
+                "ActivityType",
+                activityChunks[index].first?.2 == Color.red ? "negativeActivity" : "positiveActivity"
+            ))
+        }
+    }
+
+    func activityChunkedByColor(_ data: [(Date, Double)], baseline: Double) -> [[(Date, Double, Color)]] {
+        var result: [[(Date, Double, Color)]] = []
+        var currentChunk: [(Date, Double, Color)] = []
+        var currentColor: String?
+
+        for point in data {
+            let color = point.1 >= baseline ? "blue" : "red"
+            if color != currentColor {
+                if !currentChunk.isEmpty {
+                    result.append(currentChunk)
+                    currentChunk = []
+                }
+                currentColor = color
+            }
+            currentChunk.append((point.0, point.1, color == "blue" ? Color.blue : Color.red))
+        }
+
+        if !currentChunk.isEmpty {
+            result.append(currentChunk)
+        }
+
+        return result
     }
 
     @ViewBuilder private func chartRightHandView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
