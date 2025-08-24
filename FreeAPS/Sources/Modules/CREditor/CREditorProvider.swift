@@ -4,7 +4,7 @@ extension CREditor {
     final class Provider: BaseProvider, CREditorProvider {
         var profile: CarbRatios {
             storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self)
-                ?? CarbRatios(from: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios))
+                ?? (try? CarbRatios.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios)))
                 ?? CarbRatios(units: .grams, schedule: [])
         }
 

@@ -8,7 +8,7 @@ extension BasalProfileEditor {
 
         var profile: [BasalProfileEntry] {
             storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
+                ?? (try? [BasalProfileEntry].decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile)))
                 ?? []
         }
 

@@ -69,7 +69,7 @@ extension NightscoutAPI {
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[dateString][$gte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: ISO8601Parsing.format(date)
             )
             components.queryItems?.append(dateItem)
         }
@@ -124,7 +124,7 @@ extension NightscoutAPI {
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gt]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: ISO8601Parsing.format(date)
             )
             components.queryItems?.append(dateItem)
         }
@@ -155,7 +155,7 @@ extension NightscoutAPI {
         components.path = Config.treatmentsPath
 
         let arguments = "find[creation_date][$eq]"
-        let value = Formatter.iso8601withFractionalSeconds.string(from: date)
+        let value = ISO8601Parsing.format(date)
 
         components.queryItems = [
             URLQueryItem(name: "find[carbs][$exists]", value: "true"),
@@ -190,7 +190,7 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[glucose][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: ISO8601Parsing.format(date)
             )
         ]
 
@@ -219,7 +219,7 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[bolus][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: ISO8601Parsing.format(date)
             )
         ]
 
@@ -259,7 +259,7 @@ extension NightscoutAPI {
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gt]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: ISO8601Parsing.format(date)
             )
             components.queryItems?.append(dateItem)
         }
@@ -298,7 +298,7 @@ extension NightscoutAPI {
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: ISO8601Parsing.format(date)
             )
             components.queryItems?.append(dateItem)
         }
@@ -327,8 +327,7 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[eventType]", value: "Announcement"),
             URLQueryItem(
                 name: "find[created_at][$gte]",
-                value: Formatter.iso8601withFractionalSeconds
-                    .string(from: Date.now)
+                value: ISO8601Parsing.format(Date.now)
             )
         ]
         var request = URLRequest(url: components.url!)
@@ -380,7 +379,7 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[Exercise][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: ISO8601Parsing.format(date)
             )
         ]
         var request = URLRequest(url: components.url!)

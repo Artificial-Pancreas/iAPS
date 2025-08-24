@@ -75,7 +75,12 @@ extension AutotuneConfig {
                                 rate: basal.rate.roundBolusIncrements(increment: self.increment)
                             )
                         }
-                        tuned.basalProfile = basal
+                        tuned = Autotune(
+                            createdAt: tuned.createdAt,
+                            basalProfile: basal,
+                            sensitivity: tuned.sensitivity,
+                            carbRatio: tuned.carbRatio
+                        )
                         self.autotune = tuned
                     }
 

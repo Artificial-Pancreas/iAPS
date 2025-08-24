@@ -1,27 +1,37 @@
-// для settings/autosens.json параметры: monitor/glucose.json monitor/pumphistory-24h-zoned.json settings/basal_profile.json settings/profile.json monitor/carbhistory.json settings/temptargets.json
+// from OREF0_DIST_PATH
+const oref0_autosens = require('oref0/determine-basal/autosens.js')
 
-function generate(glucose_data, pumphistory_data, basalprofile, profile_data, carb_data = {}, temptarget_data = {}) {
-    if (glucose_data.length < 72) {
-        return { "ratio": 1, "error": "not enough glucose data to calculate autosens" };
-    };
-    
-    var iob_inputs = {
-        history: pumphistory_data,
-        profile: profile_data
+/*
+*   {
+*     glucose: [GlucoseEntry0],
+*     pump_history: [PumpHistoryEvent],
+*     basal_profile: [BasalProfileEntry],
+*     profile: Profile,
+*     carbs: [CarbsEntry],
+*     temp_targets: [TempTarget]
+*   }
+* */
+module.exports = ({ glucose, pump_history, basal_profile, profile, carbs, temp_targets }) => {
+    if (glucose.length < 72) {
+      return { "ratio": 1, "error": "not enough glucose data to calculate autosens" };
+    }
+    const iob_inputs = {
+      history: pump_history,
+      profile
     };
 
     var detection_inputs = {
-        iob_inputs: iob_inputs,
-        carbs: carb_data,
-        glucose_data: glucose_data,
-        basalprofile: basalprofile,
-        temptargets: temptarget_data
-    };
-    detection_inputs.deviations = 96;
-    var ratio8h = freeaps_autosens(detection_inputs);
-    detection_inputs.deviations = 288;
-    var ratio24h = freeaps_autosens(detection_inputs);
-    var lowestRatio = ratio8h.ratio < ratio24h.ratio ? ratio8h : ratio24h;
-    
-    return lowestRatio;
+      iob_inputs,
+      carbs,
+      glucose_data: glucose,
+      basalprofile: basal_profile,
+      temptargets: temp_targets
+    }
+
+    detection_inputs.deviations = 96
+    var ratio8h = oref0_autosens(detection_inputs)
+    detection_inputs.deviations = 288
+    var ratio24h = oref0_autosens(detection_inputs)
+
+    return ratio8h.ratio < ratio24h.ratio ? ratio8h : ratio24h
 }

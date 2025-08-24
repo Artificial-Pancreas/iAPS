@@ -10,6 +10,7 @@ extension OpenAPS {
         static let determineBasal = "bundle/determine-basal.js"
         static let autosens = "bundle/autosens.js"
         static let profile = "bundle/profile.js"
+        static let oref0 = "bundle/oref0-bridge.js"
     }
 
     enum Test {

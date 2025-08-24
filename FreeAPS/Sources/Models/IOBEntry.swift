@@ -1,6 +1,6 @@
 import Foundation
 
-struct IOBEntry: JSON {
+struct IOBEntry: Codable {
     let iob: Decimal
     let activity: Decimal
     let basaliob: Decimal
@@ -23,10 +23,10 @@ struct IOBEntry: JSON {
     }
 
     struct LastTemp: JSON {
-        let rate: Decimal
-        let timestamp: Date
-        let started_at: Date
-        let date: UInt64
-        let duration: Decimal
+        let rate: Decimal?
+        let timestamp: Date?
+        let started_at: Date?
+        let date: Decimal?
+        let duration: Decimal?
     }
 }

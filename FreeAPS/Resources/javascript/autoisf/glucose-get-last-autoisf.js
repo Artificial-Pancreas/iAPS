@@ -1,14 +1,9 @@
-function getDateFromEntry(entry) {
-    return entry.date || Date.parse(entry.display_time) || Date.parse(entry.dateString);
-}
+const round = require('../prepare/utils').round
+const getDateFromEntry = require('../prepare/utils').getDateFromGlucoseEntry
+const EMPTY = require('./constants').EMPTY_LAST_GLUCOSE
 
-function round(value, digits) {
-    if (! digits) { digits = 0; }
-    var scale = Math.pow(10, digits);
-    return Math.round(value * scale) / scale;
-}
-
-var getLastGlucose = function (data) {
+module.exports = (data) => {
+    if (data.length === 0) return EMPTY
     var now = undefined;
     var now_date = undefined;
     var sizeRecords = data.length;
@@ -22,28 +17,10 @@ var getLastGlucose = function (data) {
 
     if (sizeRecords == 1) {
         return {
-            glucose: now.glucose,
-            noise: 0,
-            delta: 0,
-            shortAvgDelta: 0,
-            longAvgDelta: 0,
-            date: nowDate,
-            // mod 7: append 2 variables for 5% range
-            dura_ISF_minutes: 0,
-            dura_ISF_average: now.glucose,
-            // mod 8: append 3 variables for deltas based on regression analysis
-            slope05: 0, // wait for longer history
-            slope15: 0, // wait for longer history
-            slope40: 0, // wait for longer history
-            // mod 14f: append results from best fitting parabola
-            dura_p: 0,
-            delta_pl: 0,
-            delta_pn: 0,
-            bg_acceleration: 0,
-            a_0: 0,
-            a_1: 0,
-            a_2: 0,
-            r_squ: 0
+          ...EMPTY,
+          glucose: data[0].glucose,
+          dura_ISF_average: data[0].glucose,
+          date: getDateFromEntry(data[0]),
         }
     }
 
@@ -405,4 +382,4 @@ var getLastGlucose = function (data) {
         , last_cal: last_cal
         , device: now.device
     };
-;}
+}

@@ -24,7 +24,7 @@ extension PreferencesEditor {
 
         private func migrateTargets() {
             let profile = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
-                ?? BGTargets(from: OpenAPS.defaults(for: OpenAPS.Settings.bgTargets))
+                ?? (try? BGTargets.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.bgTargets)))
                 ?? BGTargets(units: .mmolL, userPrefferedUnits: .mmolL, targets: [])
 
             let units = settingsManager.settings.units
@@ -54,7 +54,7 @@ extension PreferencesEditor {
 
         private func migrateISF() {
             let profile = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self)
-                ?? InsulinSensitivities(from: OpenAPS.defaults(for: OpenAPS.Settings.insulinSensitivities))
+                ?? (try? InsulinSensitivities.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.insulinSensitivities)))
                 ?? InsulinSensitivities(
                     units: .mmolL,
                     userPrefferedUnits: .mmolL,

@@ -1,25 +1,34 @@
-//для monitor/iob.json параметры: monitor/pumphistory-24h-zoned.json settings/profile.json monitor/clock-zoned.json settings/autosens.json
+// from OREF0_DIST_PATH
+const oref0_iob = require('oref0/iob/index.js')
 
-function generate(pumphistory_data, profile_data, clock_data, autosens_data = null) {
-    var inputs = {
-        history: pumphistory_data
-        , history24: null
-        , profile: profile_data
-        , clock: clock_data
-    };
-
-      if (autosens_data) {
-        inputs.autosens = autosens_data;
-      }
-    
-    // Adjust for eventual Overrides
-    const dynamicVariables = profile_data.dynamicVariables || { } ;
-        
-    if (dynamicVariables.useOverride) {
-        if (dynamicVariables.useOverride && dynamicVariables.overridePercentage != 100 && dynamicVariables.basal) {
-            profile_data.basalprofile.forEach( basal => basal.rate *= (dynamicVariables.overridePercentage / 100));
-        }
+/*
+*   {
+*     pump_history: [PumpHistoryEvent],
+*     profile: Profile,
+*     clock: Date,
+*     autosens: Autosens?
+*   }
+* */
+module.exports = ({ pump_history, profile, clock, autosens }) => {
+    let inputs = {
+      history: pump_history
+      , history24: null
+      , profile: profile
+      , clock: new Date(Date.parse(clock))
     }
-    
-    return freeaps_iob(inputs);
+
+    if (autosens) {
+      inputs.autosens = autosens
+    }
+
+    // Adjust for eventual Overrides
+    const dynamicVariables = profile.dynamicVariables || {} ;
+
+    if (dynamicVariables.useOverride) {
+      if (dynamicVariables.useOverride && dynamicVariables.overridePercentage != 100 && dynamicVariables.basal) {
+        inputs.profile.basalprofile.forEach( basal => basal.rate *= (dynamicVariables.overridePercentage / 100))
+      }
+    }
+
+    return oref0_iob(inputs)
 }
