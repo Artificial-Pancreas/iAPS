@@ -1,0 +1,3 @@
+[submodule "Dependencies/LoopKit"]
+	path = Dependencies/LoopKit
+	url = https://github.com/LoopKit/LoopKit.git
