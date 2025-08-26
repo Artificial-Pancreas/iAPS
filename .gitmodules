@@ -1,3 +1,27 @@
 [submodule "Dependencies/LoopKit"]
 	path = Dependencies/LoopKit
 	url = https://github.com/LoopKit/LoopKit.git
+[submodule "Dependencies/LibreTransmitter"]
+	path = Dependencies/LibreTransmitter
+	url = https://github.com/LoopKit/LibreTransmitter.git
+[submodule "Dependencies/G7SensorKit"]
+	path = Dependencies/G7SensorKit
+	url = https://github.com/LoopKit/G7SensorKit.git
+[submodule "Dependencies/CGMBLEKit"]
+	path = Dependencies/CGMBLEKit
+	url = https://github.com/LoopKit/CGMBLEKit.git
+[submodule "Dependencies/MinimedKit"]
+	path = Dependencies/MinimedKit
+	url = https://github.com/LoopKit/MinimedKit.git
+[submodule "Dependencies/OmniBLE"]
+	path = Dependencies/OmniBLE
+	url = https://github.com/LoopKit/OmniBLE.git
+[submodule "Dependencies/OmniKit"]
+	path = Dependencies/OmniKit
+	url = https://github.com/LoopKit/OmniKit.git
+[submodule "Dependencies/dexcom-share-client-swift"]
+	path = Dependencies/dexcom-share-client-swift
+	url = https://github.com/LoopKit/dexcom-share-client-swift.git
+[submodule "Dependencies/rileylink_ios"]
+	path = Dependencies/rileylink_ios
+	url = https://github.com/LoopKit/RileyLinkKit

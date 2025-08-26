@@ -40,11 +40,11 @@ private let staticPumpManagers: [PumpManagerUI.Type] = [
 ]
 
 private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
-    MinimedPumpManager.managerIdentifier: MinimedPumpManager.self,
+    MinimedPumpManager.pluginIdentifier: MinimedPumpManager.self, // TODO: managerIdentifier is gone, is this the same as pluginIdentifier? (at least the value is the same)
     OmnipodPumpManager.managerIdentifier: OmnipodPumpManager.self,
     OmniBLEPumpManager.managerIdentifier: OmniBLEPumpManager.self,
     DanaKitPumpManager.managerIdentifier: DanaKitPumpManager.self,
-    MockPumpManager.managerIdentifier: MockPumpManager.self
+    MockPumpManager.pluginIdentifier: MockPumpManager.self // TODO: managerIdentifier is gone, is this the same as pluginIdentifier? (at least the value is the same)
 ]
 
 // private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = staticPumpManagers.reduce(into: [:]) { map, Type in
@@ -297,6 +297,15 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 // MARK: - PumpManagerDelegate
 
 extension BaseDeviceDataManager: PumpManagerDelegate {
+    
+    func pumpManager(_ pumpManager: any LoopKit.PumpManager, didRequestBasalRateScheduleChange basalRateSchedule: LoopKit.BasalRateSchedule, completion: @escaping ((any Error)?) -> Void) {
+        <#code#>
+    }
+    
+    var automaticDosingEnabled: Bool {
+        <#code#>
+    }
+    
     func pumpManagerPumpWasReplaced(_: PumpManager) {
         debug(.deviceManager, "pumpManagerPumpWasReplaced")
     }
@@ -437,10 +446,11 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManager(
-        _: PumpManager,
-        hasNewPumpEvents events: [NewPumpEvent],
-        lastReconciliation _: Date?,
-        completion: @escaping (_ error: Error?) -> Void
+        _ pumpManager: any LoopKit.PumpManager,
+        hasNewPumpEvents events: [LoopKit.NewPumpEvent],
+        lastReconciliation: Date?,
+        replacePendingEvents: Bool, // TODO: this is new
+        completion: @escaping ((any Error)?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
@@ -574,11 +584,15 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
 // MARK: - CGMManagerDelegate
 
 extension BaseDeviceDataManager: CGMManagerDelegate {
+
+    // TODO: a new method here
+    func cgmManager(_ manager: any LoopKit.CGMManager, hasNew events: [LoopKit.PersistedCgmEvent]) {}
+    
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
         glucoseStorage.syncDate().addingTimeInterval(-10.minutes.timeInterval) // additional time to calculate directions
     }
 
-    func cgmManager(_: CGMManager, hasNew _: CGMReadingResult) {}
+    func cgmManager(_ manager: any LoopKit.CGMManager, hasNew readingResult: LoopKit.CGMReadingResult) {}
 
     func cgmManagerWantsDeletion(_: CGMManager) {}
 

@@ -353,6 +353,7 @@ extension DanaKitPumpManager: PumpManager {
                         self,
                         hasNewPumpEvents: events,
                         lastReconciliation: self.state.lastStatusDate,
+                        replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                         completion: { _ in }
                     )
                     delegate?.pumpManager(
@@ -675,6 +676,7 @@ extension DanaKitPumpManager: PumpManager {
                                                 )
                                         ],
                                         lastReconciliation: Date.now,
+                                        replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                         completion: { _ in
                                             continuation.resume()
                                         }
@@ -806,6 +808,7 @@ extension DanaKitPumpManager: PumpManager {
                     self,
                     hasNewPumpEvents: [NewPumpEvent.bolus(dose: dose, units: dose.deliveredUnits ?? 0, date: dose.startDate)],
                     lastReconciliation: Date.now,
+                    replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                     completion: { _ in }
                 )
             }
@@ -935,6 +938,7 @@ extension DanaKitPumpManager: PumpManager {
                                     self,
                                     hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)],
                                     lastReconciliation: Date.now,
+                                    replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                     completion: { _ in }
                                 )
                             }
@@ -982,6 +986,7 @@ extension DanaKitPumpManager: PumpManager {
                                             .tempBasal(dose: dose, units: unitsPerHour, duration: duration)
                                     ],
                                     lastReconciliation: Date.now,
+                                    replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                     completion: { _ in }
                                 )
                             }
@@ -1029,6 +1034,7 @@ extension DanaKitPumpManager: PumpManager {
                                             .tempBasal(dose: dose, units: unitsPerHour, duration: duration)
                                     ],
                                     lastReconciliation: Date.now,
+                                    replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                     completion: { _ in }
                                 )
                             }
@@ -1080,6 +1086,7 @@ extension DanaKitPumpManager: PumpManager {
                                             .tempBasal(dose: dose, units: unitsPerHour, duration: duration)
                                     ],
                                     lastReconciliation: Date.now,
+                                    replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                     completion: { _ in }
                                 )
                             }
@@ -1144,6 +1151,7 @@ extension DanaKitPumpManager: PumpManager {
                                 self,
                                 hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)],
                                 lastReconciliation: self.state.lastStatusDate,
+                                replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                 completion: { _ in }
                             )
                         }
@@ -1206,6 +1214,7 @@ extension DanaKitPumpManager: PumpManager {
                                 self,
                                 hasNewPumpEvents: [NewPumpEvent.resume(dose: dose)],
                                 lastReconciliation: self.state.lastStatusDate,
+                                replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                 completion: { _ in }
                             )
                         }
@@ -1289,6 +1298,7 @@ extension DanaKitPumpManager: PumpManager {
                                 self,
                                 hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)],
                                 lastReconciliation: Date.now,
+                                replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                                 completion: { _ in }
                             )
                         }
@@ -1585,6 +1595,7 @@ public extension DanaKitPumpManager {
                 self,
                 hasNewPumpEvents: [event],
                 lastReconciliation: Date.now,
+                replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                 completion: { _ in }
             )
         }
@@ -1693,6 +1704,7 @@ public extension DanaKitPumpManager {
                     self,
                     hasNewPumpEvents: [NewPumpEvent.bolus(dose: dose, units: deliveredUnits, date: dose.startDate)],
                     lastReconciliation: Date.now,
+                    replacePendingEvents: false, // TODO: [DANA] should it be true or false?
                     completion: { _ in }
                 )
             }

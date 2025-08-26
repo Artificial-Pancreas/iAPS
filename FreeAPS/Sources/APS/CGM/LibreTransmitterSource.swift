@@ -3,9 +3,10 @@ import Foundation
 import LibreTransmitter
 import LoopKitUI
 import Swinject
+import LoopKit
 
 protocol LibreTransmitterSource: GlucoseSource {
-    var manager: LibreTransmitterManager? { get set }
+    var manager: LibreTransmitterManagerV3? { get set }
 }
 
 final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
@@ -21,7 +22,7 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
 
     var glucoseManager: FetchGlucoseManager?
 
-    var manager: LibreTransmitterManager? {
+    var manager: LibreTransmitterManagerV3? {
         didSet {
             configured = manager != nil
             manager?.cgmManagerDelegate = self
@@ -32,7 +33,7 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
 
     init(resolver: Resolver) {
         if configured {
-            manager = LibreTransmitterManager()
+            manager = LibreTransmitterManagerV3()
             manager?.cgmManagerDelegate = self
         }
         injectServices(resolver)
@@ -53,21 +54,21 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
     }
 
     func sourceInfo() -> [String: Any]? {
-        if let battery = manager?.battery {
+        if let battery = manager?.batteryLevel {
             return ["transmitterBattery": battery]
         }
         return nil
     }
 }
 
-extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
+extension BaseLibreTransmitterSource: CGMManagerDelegate {
     var queue: DispatchQueue { processQueue }
 
-    func startDateToFilterNewData(for _: LibreTransmitterManager) -> Date? {
+    func startDateToFilterNewData(for _: LibreTransmitterManagerV3) -> Date? {
         glucoseStorage.syncDate()
     }
 
-    func cgmManager(_ manager: LibreTransmitterManager, hasNew result: Result<[LibreGlucose], Error>) {
+    func cgmManager(_ manager: LibreTransmitterManagerV3, hasNew result: Result<[LibreGlucose], Error>) {
         switch result {
         case let .success(newGlucose):
             let glucose = newGlucose.map { value -> BloodGlucose in
@@ -97,7 +98,7 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
         }
     }
 
-    func overcalibration(for _: LibreTransmitterManager) -> ((Double) -> (Double))? {
+    func overcalibration(for _: LibreTransmitterManagerV3) -> ((Double) -> (Double))? {
         calibrationService.calibrate
     }
 }

@@ -155,7 +155,6 @@
 		3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE725CA063400A708ED /* PersistedProperty.swift */; };
 		3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0125CA9FEA00A708ED /* Credentials.swift */; };
 		3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* APSManager.swift */; };
-		3818AA47274C255A00843DB3 /* LibreTransmitter in Frameworks */ = {isa = PBXBuildFile; productRef = 3818AA46274C255A00843DB3 /* LibreTransmitter */; };
 		3818AA4A274C267000843DB3 /* CGMBLEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA49274C267000843DB3 /* CGMBLEKit.framework */; };
 		3818AA4B274C267100843DB3 /* CGMBLEKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA49274C267000843DB3 /* CGMBLEKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3818AA5C274C26A300843DB3 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA4E274C26A300843DB3 /* MockKit.framework */; };
@@ -469,6 +468,14 @@
 		F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A562BA6239F00A0B716 /* ContactTrickManager.swift */; };
 		F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A582BA78B7400A0B716 /* ContactTrickState.swift */; };
 		F2159A5B2BA7939C00A0B716 /* ContactPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */; };
+		F226D4F12E5E0B1400F8F43C /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */; };
+		F226D4F22E5E0B1400F8F43C /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F226D4F32E5E0B1400F8F43C /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; };
+		F226D4F42E5E0B1400F8F43C /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F226D5002E5E111300F8F43C /* LibreTransmitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */; };
+		F226D5012E5E111400F8F43C /* LibreTransmitter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F226D5022E5E111400F8F43C /* LibreTransmitterUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */; };
+		F226D5032E5E111400F8F43C /* LibreTransmitterUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F270F68C2BAE374C00F6D8DD /* FontTracking.swift */; };
 		F273F9602DE73ABE00BF0FFC /* IOBTick0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */; };
 		F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */; };
@@ -535,14 +542,18 @@
 				CE79502F29980E5800FA576E /* ShareClientUI.framework in Embed Frameworks */,
 				CE79502C29980CB500FA576E /* G7SensorKitUI.framework in Embed Frameworks */,
 				CE51DD1D2A01970900F163F7 /* ConnectIQ 2.xcframework in Embed Frameworks */,
+				F226D4F22E5E0B1400F8F43C /* LoopKit.framework in Embed Frameworks */,
 				CE79502B29980CAF00FA576E /* CGMBLEKitUI.framework in Embed Frameworks */,
 				CE2FAD38297D69E1001A872C /* ShareClient.framework in Embed Frameworks */,
+				F226D4F42E5E0B1400F8F43C /* LoopKitUI.framework in Embed Frameworks */,
 				CE398D19297C9EFD00DF218F /* G7SensorKit.framework in Embed Frameworks */,
 				3818AA6F274C26A500843DB3 /* RileyLinkKitUI.framework in Embed Frameworks */,
 				3818AA4B274C267100843DB3 /* CGMBLEKit.framework in Embed Frameworks */,
 				CEB434E028B8F5C400B70274 /* OmniBLE.framework in Embed Frameworks */,
 				CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */,
 				CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */,
+				F226D5012E5E111400F8F43C /* LibreTransmitter.framework in Embed Frameworks */,
+				F226D5032E5E111400F8F43C /* LibreTransmitterUI.framework in Embed Frameworks */,
 				3818AA6B274C26A500843DB3 /* RileyLinkBLEKit.framework in Embed Frameworks */,
 				B8CB7F112B5EF22C00614051 /* DanaKit.framework in Embed Frameworks */,
 				3818AA72274C278200843DB3 /* LoopTestingKit.framework in Embed Frameworks */,
@@ -1117,6 +1128,12 @@
 		F2159A562BA6239F00A0B716 /* ContactTrickManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickManager.swift; sourceTree = "<group>"; };
 		F2159A582BA78B7400A0B716 /* ContactTrickState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickState.swift; sourceTree = "<group>"; };
 		F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPicture.swift; sourceTree = "<group>"; };
+		F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F226D4F82E5E109100F8F43C /* LibreTransmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F226D4F92E5E109100F8F43C /* LibreTransmitterUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitterUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitterUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F270F68C2BAE374C00F6D8DD /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBTick0.swift; sourceTree = "<group>"; };
 		F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTextField.swift; sourceTree = "<group>"; };
@@ -1142,6 +1159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC751D829D88262006E9D24 /* MinimedKitUI.framework in Frameworks */,
+				F226D5002E5E111300F8F43C /* LibreTransmitter.framework in Frameworks */,
 				D8DA5CD12B49EEF000C54E6C /* SlideButton in Frameworks */,
 				CEC751D629D88262006E9D24 /* MinimedKit.framework in Frameworks */,
 				CEC751D429D88257006E9D24 /* OmniKitUI.framework in Frameworks */,
@@ -1153,9 +1171,10 @@
 				CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */,
 				38E87403274F78C000975559 /* libswiftCoreNFC.tbd in Frameworks */,
 				38E87401274F77E400975559 /* CoreNFC.framework in Frameworks */,
+				F226D4F32E5E0B1400F8F43C /* LoopKitUI.framework in Frameworks */,
 				CEB434DF28B8F5C400B70274 /* OmniBLE.framework in Frameworks */,
+				F226D4F12E5E0B1400F8F43C /* LoopKit.framework in Frameworks */,
 				3818AA71274C278200843DB3 /* LoopTestingKit.framework in Frameworks */,
-				3818AA47274C255A00843DB3 /* LibreTransmitter in Frameworks */,
 				3818AA4A274C267000843DB3 /* CGMBLEKit.framework in Frameworks */,
 				CE51DD1C2A01970900F163F7 /* ConnectIQ 2.xcframework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
@@ -1164,6 +1183,7 @@
 				3818AA6C274C26A500843DB3 /* RileyLinkKit.framework in Frameworks */,
 				3818AA5E274C26A300843DB3 /* MockKitUI.framework in Frameworks */,
 				CE398D18297C9EE800DF218F /* G7SensorKit.framework in Frameworks */,
+				F226D5022E5E111400F8F43C /* LibreTransmitterUI.framework in Frameworks */,
 				CE398D1B297D69A900DF218F /* ShareClient.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
 				3833B46D26012030003021B3 /* Algorithms in Frameworks */,
@@ -1847,6 +1867,12 @@
 		3818AA48274C267000843DB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */,
+				F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */,
+				F226D4F82E5E109100F8F43C /* LibreTransmitter.framework */,
+				F226D4F92E5E109100F8F43C /* LibreTransmitterUI.framework */,
+				F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */,
+				F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */,
 				CE51DD1B2A01970800F163F7 /* ConnectIQ 2.xcframework */,
 				CE94597929E9DF7B0047C9C6 /* ConnectIQ.framework */,
 				CEC751D529D88262006E9D24 /* MinimedKit.framework */,
@@ -2828,7 +2854,6 @@
 				3811DE0F25C9D37700A708ED /* Swinject */,
 				38B17B6525DD90E0005CAE3D /* SwiftDate */,
 				3833B46C26012030003021B3 /* Algorithms */,
-				3818AA46274C255A00843DB3 /* LibreTransmitter */,
 				38DF1788276FC8C400B3528F /* SwiftMessages */,
 				CEB434FC28B90B7C00B70274 /* SwiftCharts */,
 				D8DA5CD02B49EEF000C54E6C /* SlideButton */,
@@ -4269,10 +4294,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
-		};
-		3818AA46274C255A00843DB3 /* LibreTransmitter */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LibreTransmitter;
 		};
 		3833B46C26012030003021B3 /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;
