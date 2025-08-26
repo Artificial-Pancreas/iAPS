@@ -61,7 +61,7 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
     }
 }
 
-extension BaseLibreTransmitterSource: CGMManagerDelegate {
+extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
     var queue: DispatchQueue { processQueue }
 
     func startDateToFilterNewData(for _: LibreTransmitterManagerV3) -> Date? {
