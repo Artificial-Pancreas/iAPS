@@ -70,6 +70,48 @@ extension CGM {
                         }
                     }
 
+                    if state.cgm == .nightscout {
+                        Section(header: Text("Remote notifications")) {
+                            TextField("Server URL", text: $state.nightscountHeartbeatServiceURL)
+                                .disableAutocorrection(true)
+                                .textContentType(.URL)
+                                .autocapitalization(.none)
+                                .keyboardType(.URL)
+                                .disabled(state.nightscountHeartbeatServiceEnabled)
+
+                            if state.nightscountHeartbeatServiceEnabled {
+                                Button("Unsubscribe") {
+                                    Task {
+                                        if let error = await state.remoteNotificationsManager.unsubscribe() {
+                                            state.nightscountHeartbeatServiceError = error
+                                        } else {
+                                            state.nightscountHeartbeatServiceEnabled = false
+                                        }
+                                    }
+                                }
+                            } else {
+                                Button("Subscribe") {
+                                    Task {
+                                        if let error = await state.remoteNotificationsManager.subscribe() {
+                                            state.nightscountHeartbeatServiceError = error
+                                        } else {
+                                            state.nightscountHeartbeatServiceEnabled = true
+                                        }
+                                    }
+                                }
+                                .disabled(
+                                    !(
+                                        state.nightscountHeartbeatServiceURL.starts(with: "http://") ||
+                                            state.nightscountHeartbeatServiceURL.starts(with: "https://")
+                                    )
+                                )
+                            }
+                            if let error = state.nightscountHeartbeatServiceError {
+                                Text(error).foregroundStyle(.red)
+                            }
+                        }
+                    }
+
                     if state.cgm == .libreTransmitter {
                         Button("Configure Libre Transmitter") {
                             state.showModal(for: .libreConfig)

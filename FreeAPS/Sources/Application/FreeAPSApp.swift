@@ -38,7 +38,7 @@ import Swinject
         resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
         _ = resolver.resolve(DeviceDataManager.self)!
         _ = resolver.resolve(APSManager.self)!
-        _ = resolver.resolve(FetchGlucoseManager.self)!
+        let fetchGlucoseManager = resolver.resolve(FetchGlucoseManager.self)!
         _ = resolver.resolve(FetchTreatmentsManager.self)!
         _ = resolver.resolve(FetchAnnouncementsManager.self)!
         _ = resolver.resolve(CalendarManager.self)!
@@ -47,6 +47,10 @@ import Swinject
         _ = resolver.resolve(HealthKitManager.self)!
         _ = resolver.resolve(BluetoothStateManager.self)!
         _ = resolver.resolve(LiveActivityBridge.self)!
+        _ = resolver.resolve(RemoteNotificationsManager.self)!
+        let remoteNotificationsManager = resolver.resolve(RemoteNotificationsManager.self)!
+        appDelegate.fetchGlucoseManager = fetchGlucoseManager
+        appDelegate.remoteNotificationsManager = remoteNotificationsManager
     }
 
     init() {
@@ -67,6 +71,9 @@ import Swinject
         }
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")
+            if scenePhase == .active {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
         }
     }
 

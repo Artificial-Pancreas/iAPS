@@ -9,6 +9,7 @@ extension CGM {
         @Injected() var libreSource: LibreTransmitterSource!
         @Injected() var cgmManager: FetchGlucoseManager!
         @Injected() var calendarManager: CalendarManager!
+        @Injected() var remoteNotificationsManager: RemoteNotificationsManager!
 
         @Published var setupCGM: Bool = false
         @Published var cgm: CGMType = .nightscout
@@ -23,6 +24,10 @@ extension CGM {
         @Persisted(key: "CalendarManager.currentCalendarID") var storedCalendarID: String? = nil
         @Published var cgmTransmitterDeviceAddress: String? = nil
         @Published var sensorDays: Double = 10
+        // remote notifications
+        @Published var nightscountHeartbeatServiceEnabled = false
+        @Published var nightscountHeartbeatServiceURL = ""
+        @Published var nightscountHeartbeatServiceError: String? = nil
 
         override func subscribe() {
             cgm = settingsManager.settings.cgm
@@ -56,6 +61,11 @@ extension CGM {
             subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { displayCalendarEmojis = $0 }
             subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
             subscribeSetting(\.sensorDays, on: $sensorDays) { sensorDays = $0 }
+
+            subscribeSetting(\.nightscountHeartbeatServiceEnabled, on: $nightscountHeartbeatServiceEnabled) {
+                nightscountHeartbeatServiceEnabled = $0 }
+            subscribeSetting(\.nightscountHeartbeatServiceURL, on: $nightscountHeartbeatServiceURL) {
+                nightscountHeartbeatServiceURL = $0 }
 
             $cgm
                 .removeDuplicates()
