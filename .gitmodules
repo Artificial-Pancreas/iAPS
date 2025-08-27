@@ -25,3 +25,7 @@
 [submodule "Dependencies/rileylink_ios"]
 	path = Dependencies/rileylink_ios
 	url = https://github.com/LoopKit/RileyLinkKit
+[submodule "Dependencies/TidepoolService"]
+	path = Dependencies/TidepoolService
+	url = https://github.com/LoopKit/TidepoolService.git
+	branch = dev
