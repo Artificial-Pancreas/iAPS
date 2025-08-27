@@ -162,7 +162,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="percentage" optional="YES" attributeType="Double" minValueString="10" maxValueString="400" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="percentage" optional="YES" attributeType="Double" minValueString="10" maxValueString="400" defaultValueString="100.0" usesScalarValueType="YES"/>
         <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="smbIsOff" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="smbMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
