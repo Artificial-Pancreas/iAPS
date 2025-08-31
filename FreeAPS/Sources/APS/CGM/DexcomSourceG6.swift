@@ -68,6 +68,8 @@ final class DexcomSourceG6: GlucoseSource {
 }
 
 extension DexcomSourceG6: CGMManagerDelegate {
+    func cgmManager(_: any LoopKit.CGMManager, hasNew _: [LoopKit.PersistedCgmEvent]) {}
+
     func deviceManager(
         _: LoopKit.DeviceManager,
         logEventForDeviceIdentifier deviceIdentifier: String?,
@@ -96,9 +98,9 @@ extension DexcomSourceG6: CGMManagerDelegate {
 
     func recordRetractedAlert(_: LoopKit.Alert, at _: Date) {}
 
-    func cgmManagerWantsDeletion(_ manager: CGMManager) {
+    func cgmManagerWantsDeletion(_: CGMManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        debug(.deviceManager, " CGM Manager with identifier \(manager.managerIdentifier) wants deletion")
+        debug(.deviceManager, " CGM Manager with identifier \(G6CGMManager.pluginIdentifier) wants deletion")
         glucoseManager?.cgmGlucoseSourceType = nil
     }
 

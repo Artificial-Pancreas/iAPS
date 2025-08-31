@@ -48,7 +48,7 @@ extension BloodGlucose.Direction {
         }
     }
 
-    init(trendType: LibreTransmitter.GlucoseTrend) {
+    init(trendType: GlucoseTrend) {
         switch trendType {
         case .upUpUp:
             self = .doubleUp
