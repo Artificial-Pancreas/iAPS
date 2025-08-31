@@ -15,12 +15,23 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
 
     private let processQueue = DispatchQueue(label: "BaseLibreTransmitterSource.processQueue")
 
-    @Injected() var glucoseStorage: GlucoseStorage!
-    @Injected() var calibrationService: CalibrationService!
-
+    private let glucoseStorage: GlucoseStorage
+    private let calibrationService: CalibrationService
+    var glucoseManager: (any FetchGlucoseManager)?
+    
+    @Persisted(key: "LibreTransmitterManager.configured") private(set) var configured = false
+    
+    init(
+      glucoseStorage: GlucoseStorage,
+      glucoseManager: FetchGlucoseManager,
+      calibrationService: CalibrationService
+    ) {
+        self.glucoseStorage = glucoseStorage
+        self.calibrationService = calibrationService
+        self.glucoseManager = glucoseManager
+    }
+    
     private var promise: Future<[BloodGlucose], Error>.Promise?
-
-    var glucoseManager: FetchGlucoseManager?
 
     var manager: LibreTransmitterManagerV3? {
         didSet {
@@ -28,8 +39,6 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
             manager?.cgmManagerDelegate = self
         }
     }
-
-    @Persisted(key: "LibreTransmitterManager.configured") private(set) var configured = false
 
     init(resolver: Resolver) {
         if configured {
@@ -61,7 +70,68 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
     }
 }
 
-extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
+extension BaseLibreTransmitterSource: CGMManagerDelegate {
+    func startDateToFilterNewData(for manager: any LoopKit.CGMManager) -> Date? {
+        <#code#>
+    }
+    
+    func cgmManager(_ manager: any LoopKit.CGMManager, hasNew readingResult: LoopKit.CGMReadingResult) {
+        <#code#>
+    }
+    
+    func cgmManager(_ manager: any LoopKit.CGMManager, hasNew events: [LoopKit.PersistedCgmEvent]) {
+        <#code#>
+    }
+    
+    func cgmManagerWantsDeletion(_ manager: any LoopKit.CGMManager) {
+        <#code#>
+    }
+    
+    func cgmManagerDidUpdateState(_ manager: any LoopKit.CGMManager) {
+        <#code#>
+    }
+    
+    func credentialStoragePrefix(for manager: any LoopKit.CGMManager) -> String {
+        <#code#>
+    }
+    
+    func deviceManager(_ manager: any LoopKit.DeviceManager, logEventForDeviceIdentifier deviceIdentifier: String?, type: LoopKit.DeviceLogEntryType, message: String, completion: (((any Error)?) -> Void)?) {
+        <#code#>
+    }
+    
+    func cgmManager(_ manager: any LoopKit.CGMManager, didUpdate status: LoopKit.CGMManagerStatus) {
+        <#code#>
+    }
+    
+    func issueAlert(_ alert: LoopKit.Alert) {
+        <#code#>
+    }
+    
+    func retractAlert(identifier: LoopKit.Alert.Identifier) {
+        <#code#>
+    }
+    
+    func doesIssuedAlertExist(identifier: LoopKit.Alert.Identifier, completion: @escaping (Result<Bool, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func lookupAllUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func lookupAllUnacknowledgedUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func recordRetractedAlert(_ alert: LoopKit.Alert, at date: Date) {
+        <#code#>
+    }
+    
+    
+}
+
+
+extension BaseLibreTransmitterSource {
     var queue: DispatchQueue { processQueue }
 
     func startDateToFilterNewData(for _: LibreTransmitterManagerV3) -> Date? {
@@ -84,9 +154,9 @@ extension BaseLibreTransmitterSource: LibreTransmitterManagerDelegate {
                     noise: nil,
                     glucose: Int(value.glucose),
                     type: "sgv",
-                    activationDate: value.sensorStartDate ?? manager.sensorStartDate,
-                    sessionStartDate: value.sensorStartDate ?? manager.sensorStartDate,
-                    transmitterID: manager.sensorSerialNumber
+                    activationDate: /*value.sensorStartDate ?? */ manager.sensorInfoObservable.activatedAt,
+                    sessionStartDate: /*value.sensorStartDate ?? */ manager.sensorInfoObservable.activatedAt,
+                    transmitterID: manager.sensorInfoObservable.sensorSerial
                 )
             }
             NSLog("Debug Libre \(glucose)")

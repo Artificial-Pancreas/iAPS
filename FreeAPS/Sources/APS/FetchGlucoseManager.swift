@@ -19,22 +19,29 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
     @Injected() var settingsManager: SettingsManager!
-    @Injected() var libreTransmitter: LibreTransmitterSource!
     @Injected() var healthKitManager: HealthKitManager!
     @Injected() var deviceDataManager: DeviceDataManager!
+    @Injected() var calibrationService: CalibrationService!
 
     private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
     var cgmGlucoseSourceType: CGMType?
 
-    private lazy var dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
-    private lazy var dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
-    private lazy var dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage, glucoseManager: self)
-    private lazy var simulatorSource = GlucoseSimulatorSource()
+    private let libreTransmitter: LibreTransmitterSource
+    private let dexcomSourceG5: DexcomSourceG5
+    private let dexcomSourceG6: DexcomSourceG6
+    private let dexcomSourceG7: DexcomSourceG7
+    private let simulatorSource: GlucoseSimulatorSource
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        self.libreTransmitter = BaseLibreTransmitterSource(glucoseStorage: glucoseStorage, glucoseManager: self, calibrationService: calibrationService)
+        self.dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
+        self.dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
+        self.dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage, glucoseManager: self)
+        self.simulatorSource = GlucoseSimulatorSource()
+
         updateGlucoseSource()
         subscribe()
     }
@@ -65,11 +72,11 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         // update the config
         cgmGlucoseSourceType = settingsManager.settings.cgm
 
-        if settingsManager.settings.cgm != .libreTransmitter {
-            libreTransmitter.manager = nil
-        } else {
-            libreTransmitter.glucoseManager = self
-        }
+//        if settingsManager.settings.cgm != .libreTransmitter {
+//            libreTransmitter.manager = nil
+//        } else {
+//            libreTransmitter.glucoseManager = self
+//        }
     }
 
     /// function called when a callback is fired by CGM BLE - no more used
@@ -208,11 +215,11 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             .sink { id in
                 if self.settingsManager.settings.cgm == .dexcomG5 {
                     if id != self.dexcomSourceG5.transmitterID {
-                        self.dexcomSourceG5 = DexcomSourceG5(glucoseStorage: self.glucoseStorage, glucoseManager: self)
+//                        self.dexcomSourceG5 = DexcomSourceG5(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
                     }
                 } else if self.settingsManager.settings.cgm == .dexcomG6 {
                     if id != self.dexcomSourceG6.transmitterID {
-                        self.dexcomSourceG6 = DexcomSourceG6(glucoseStorage: self.glucoseStorage, glucoseManager: self)
+//                        self.dexcomSourceG6 = DexcomSourceG6(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
                     }
                 }
             }
