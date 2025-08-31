@@ -1,9 +1,9 @@
 import Combine
 import Foundation
 import LibreTransmitter
+import LoopKit
 import LoopKitUI
 import Swinject
-import LoopKit
 
 protocol LibreTransmitterSource: GlucoseSource {
     var manager: LibreTransmitterManagerV3? { get set }
@@ -18,19 +18,19 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
     private let glucoseStorage: GlucoseStorage
     private let calibrationService: CalibrationService
     var glucoseManager: (any FetchGlucoseManager)?
-    
+
     @Persisted(key: "LibreTransmitterManager.configured") private(set) var configured = false
-    
+
     init(
-      glucoseStorage: GlucoseStorage,
-      glucoseManager: FetchGlucoseManager,
-      calibrationService: CalibrationService
+        glucoseStorage: GlucoseStorage,
+        glucoseManager: FetchGlucoseManager,
+        calibrationService: CalibrationService
     ) {
         self.glucoseStorage = glucoseStorage
         self.calibrationService = calibrationService
         self.glucoseManager = glucoseManager
     }
-    
+
     private var promise: Future<[BloodGlucose], Error>.Promise?
 
     var manager: LibreTransmitterManagerV3? {
@@ -71,65 +71,49 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
 }
 
 extension BaseLibreTransmitterSource: CGMManagerDelegate {
-    func startDateToFilterNewData(for manager: any LoopKit.CGMManager) -> Date? {
-        
-    }
-    
-    func cgmManager(_ manager: any LoopKit.CGMManager, hasNew readingResult: LoopKit.CGMReadingResult) {
-        
-    }
-    
-    func cgmManager(_ manager: any LoopKit.CGMManager, hasNew events: [LoopKit.PersistedCgmEvent]) {
-        
-    }
-    
-    func cgmManagerWantsDeletion(_ manager: any LoopKit.CGMManager) {
-        
-    }
-    
-    func cgmManagerDidUpdateState(_ manager: any LoopKit.CGMManager) {
-        
-    }
-    
-    func credentialStoragePrefix(for manager: any LoopKit.CGMManager) -> String {
-        
-    }
-    
-    func deviceManager(_ manager: any LoopKit.DeviceManager, logEventForDeviceIdentifier deviceIdentifier: String?, type: LoopKit.DeviceLogEntryType, message: String, completion: (((any Error)?) -> Void)?) {
-        
-    }
-    
-    func cgmManager(_ manager: any LoopKit.CGMManager, didUpdate status: LoopKit.CGMManagerStatus) {
-        
-    }
-    
-    func issueAlert(_ alert: LoopKit.Alert) {
-        
-    }
-    
-    func retractAlert(identifier: LoopKit.Alert.Identifier) {
-        
-    }
-    
-    func doesIssuedAlertExist(identifier: LoopKit.Alert.Identifier, completion: @escaping (Result<Bool, any Error>) -> Void) {
-        
-    }
-    
-    func lookupAllUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void) {
-        
-    }
-    
-    func lookupAllUnacknowledgedUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void) {
-        
-    }
-    
-    func recordRetractedAlert(_ alert: LoopKit.Alert, at date: Date) {
-        
-    }
-    
-    
-}
+    func startDateToFilterNewData(for _: any LoopKit.CGMManager) -> Date? {}
 
+    func cgmManager(_: any LoopKit.CGMManager, hasNew _: LoopKit.CGMReadingResult) {}
+
+    func cgmManager(_: any LoopKit.CGMManager, hasNew _: [LoopKit.PersistedCgmEvent]) {}
+
+    func cgmManagerWantsDeletion(_: any LoopKit.CGMManager) {}
+
+    func cgmManagerDidUpdateState(_: any LoopKit.CGMManager) {}
+
+    func credentialStoragePrefix(for _: any LoopKit.CGMManager) -> String {}
+
+    func deviceManager(
+        _: any LoopKit.DeviceManager,
+        logEventForDeviceIdentifier _: String?,
+        type _: LoopKit.DeviceLogEntryType,
+        message _: String,
+        completion _: (((any Error)?) -> Void)?
+    ) {}
+
+    func cgmManager(_: any LoopKit.CGMManager, didUpdate _: LoopKit.CGMManagerStatus) {}
+
+    func issueAlert(_: LoopKit.Alert) {}
+
+    func retractAlert(identifier _: LoopKit.Alert.Identifier) {}
+
+    func doesIssuedAlertExist(
+        identifier _: LoopKit.Alert.Identifier,
+        completion _: @escaping (Result<Bool, any Error>) -> Void
+    ) {}
+
+    func lookupAllUnretracted(
+        managerIdentifier _: String,
+        completion _: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void
+    ) {}
+
+    func lookupAllUnacknowledgedUnretracted(
+        managerIdentifier _: String,
+        completion _: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void
+    ) {}
+
+    func recordRetractedAlert(_: LoopKit.Alert, at _: Date) {}
+}
 
 extension BaseLibreTransmitterSource {
     var queue: DispatchQueue { processQueue }
@@ -154,8 +138,8 @@ extension BaseLibreTransmitterSource {
                     noise: nil,
                     glucose: Int(value.glucose),
                     type: "sgv",
-                    activationDate: /*value.sensorStartDate ?? */ manager.sensorInfoObservable.activatedAt,
-                    sessionStartDate: /*value.sensorStartDate ?? */ manager.sensorInfoObservable.activatedAt,
+                    activationDate: /* value.sensorStartDate ?? */ manager.sensorInfoObservable.activatedAt,
+                    sessionStartDate: /* value.sensorStartDate ?? */ manager.sensorInfoObservable.activatedAt,
                     transmitterID: manager.sensorInfoObservable.sensorSerial
                 )
             }
