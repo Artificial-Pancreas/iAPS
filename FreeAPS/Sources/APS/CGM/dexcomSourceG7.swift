@@ -63,7 +63,7 @@ final class DexcomSourceG7: GlucoseSource {
 
 extension DexcomSourceG7: CGMManagerDelegate {
     func cgmManager(_ manager: any LoopKit.CGMManager, hasNew events: [LoopKit.PersistedCgmEvent]) {
-        <#code#>
+        
     }
     
     func deviceManager(

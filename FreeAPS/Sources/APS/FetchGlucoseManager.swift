@@ -36,11 +36,15 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        self.libreTransmitter = BaseLibreTransmitterSource(glucoseStorage: glucoseStorage, glucoseManager: self, calibrationService: calibrationService)
-        self.dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
-        self.dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
-        self.dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage, glucoseManager: self)
-        self.simulatorSource = GlucoseSimulatorSource()
+        libreTransmitter = BaseLibreTransmitterSource(
+            glucoseStorage: glucoseStorage,
+            glucoseManager: self,
+            calibrationService: calibrationService
+        )
+        dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
+        dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
+        dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage, glucoseManager: self)
+        simulatorSource = GlucoseSimulatorSource()
 
         updateGlucoseSource()
         subscribe()

@@ -1,5 +1,5 @@
 {
-  "originHash" : "e597c01d51cfe0c23adde5772b1e8e4544711fe1b16ac6aa7309499bebd111f6",
+  "originHash" : "24492fcf885349a9fee28242aeb1e1b57c046520af57600aff6f428c559f6754",
   "pins" : [
     {
       "identity" : "cryptoswift",
@@ -71,6 +71,15 @@
       "state" : {
         "revision" : "8bc503e60965298984fb58cf47b71c541449fe2a",
         "version" : "2.8.3"
+      }
+    },
+    {
+      "identity" : "tidepoolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tidepool-org/TidepoolKit",
+      "state" : {
+        "branch" : "dev",
+        "revision" : "54045c2e7d720dcd8a0909037772dcd6f54f0158"
       }
     }
   ],

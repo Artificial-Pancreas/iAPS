@@ -154,8 +154,8 @@ final class Logger {
                  .dynamic,
                  .nightscout,
                  .openAPS,
-                 .service,
-                 .pluginManager:
+                 .pluginManager,
+                 .service:
                 return OSLog(subsystem: subsystem, category: name)
             }
         }

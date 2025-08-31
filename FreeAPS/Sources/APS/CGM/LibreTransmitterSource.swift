@@ -72,59 +72,59 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
 
 extension BaseLibreTransmitterSource: CGMManagerDelegate {
     func startDateToFilterNewData(for manager: any LoopKit.CGMManager) -> Date? {
-        <#code#>
+        
     }
     
     func cgmManager(_ manager: any LoopKit.CGMManager, hasNew readingResult: LoopKit.CGMReadingResult) {
-        <#code#>
+        
     }
     
     func cgmManager(_ manager: any LoopKit.CGMManager, hasNew events: [LoopKit.PersistedCgmEvent]) {
-        <#code#>
+        
     }
     
     func cgmManagerWantsDeletion(_ manager: any LoopKit.CGMManager) {
-        <#code#>
+        
     }
     
     func cgmManagerDidUpdateState(_ manager: any LoopKit.CGMManager) {
-        <#code#>
+        
     }
     
     func credentialStoragePrefix(for manager: any LoopKit.CGMManager) -> String {
-        <#code#>
+        
     }
     
     func deviceManager(_ manager: any LoopKit.DeviceManager, logEventForDeviceIdentifier deviceIdentifier: String?, type: LoopKit.DeviceLogEntryType, message: String, completion: (((any Error)?) -> Void)?) {
-        <#code#>
+        
     }
     
     func cgmManager(_ manager: any LoopKit.CGMManager, didUpdate status: LoopKit.CGMManagerStatus) {
-        <#code#>
+        
     }
     
     func issueAlert(_ alert: LoopKit.Alert) {
-        <#code#>
+        
     }
     
     func retractAlert(identifier: LoopKit.Alert.Identifier) {
-        <#code#>
+        
     }
     
     func doesIssuedAlertExist(identifier: LoopKit.Alert.Identifier, completion: @escaping (Result<Bool, any Error>) -> Void) {
-        <#code#>
+        
     }
     
     func lookupAllUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void) {
-        <#code#>
+        
     }
     
     func lookupAllUnacknowledgedUnretracted(managerIdentifier: String, completion: @escaping (Result<[LoopKit.PersistedAlert], any Error>) -> Void) {
-        <#code#>
+        
     }
     
     func recordRetractedAlert(_ alert: LoopKit.Alert, at date: Date) {
-        <#code#>
+        
     }
     
     
