@@ -850,6 +850,9 @@ extension OverrideProfilesConfig {
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
             if let dec = decimal as? Decimal, round(dec) != round(setting) {
+                guard label != "pp: " else {
+                    return Text(label + (promilleFormatter.string(from: decimal ?? 0) ?? ""))
+                }
                 return Text(label + "\(dec)")
             }
             return nil

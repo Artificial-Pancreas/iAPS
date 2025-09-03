@@ -575,5 +575,5 @@ function reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF) {
     }
     addReason("bg: " + roundedBg);
     addReason("dura: " + round(dura_ISF, 2));
-    addReason("pp: " + round(pp_ISF, 2));
+    addReason("pp: " + round(pp_ISF, 3));
 }
