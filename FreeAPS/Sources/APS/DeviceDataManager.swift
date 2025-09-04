@@ -305,7 +305,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         completion _: @escaping ((any Error)?) -> Void
     ) {}
 
-    var automaticDosingEnabled: Bool {}
+    var automaticDosingEnabled: Bool {
+        // TODO: [loopkit] fix this
+        true
+    }
 
     func pumpManagerPumpWasReplaced(_: PumpManager) {
         debug(.deviceManager, "pumpManagerPumpWasReplaced")

@@ -40,13 +40,14 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
         }
     }
 
-    init(resolver: Resolver) {
-        if configured {
-            manager = LibreTransmitterManagerV3()
-            manager?.cgmManagerDelegate = self
-        }
-        injectServices(resolver)
-    }
+//    init(resolver: Resolver) {
+    // TODO: [loopkit] fix this
+//        if configured {
+//            manager = LibreTransmitterManagerV3()
+//            manager?.cgmManagerDelegate = self
+//        }
+//        injectServices(resolver)
+//    }
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
         Future<[BloodGlucose], Error> { [weak self] promise in
@@ -71,7 +72,10 @@ final class BaseLibreTransmitterSource: LibreTransmitterSource, Injectable {
 }
 
 extension BaseLibreTransmitterSource: CGMManagerDelegate {
-    func startDateToFilterNewData(for _: any LoopKit.CGMManager) -> Date? {}
+    func startDateToFilterNewData(for _: any LoopKit.CGMManager) -> Date? {
+        // TODO: [loopkit] fix this
+        nil
+    }
 
     func cgmManager(_: any LoopKit.CGMManager, hasNew _: LoopKit.CGMReadingResult) {}
 
@@ -81,7 +85,10 @@ extension BaseLibreTransmitterSource: CGMManagerDelegate {
 
     func cgmManagerDidUpdateState(_: any LoopKit.CGMManager) {}
 
-    func credentialStoragePrefix(for _: any LoopKit.CGMManager) -> String {}
+    func credentialStoragePrefix(for _: any LoopKit.CGMManager) -> String {
+        // TODO: [loopkit] fix this
+        ""
+    }
 
     func deviceManager(
         _: any LoopKit.DeviceManager,

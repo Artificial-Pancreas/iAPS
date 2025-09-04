@@ -15,36 +15,46 @@ protocol FetchGlucoseManager: SourceInfoProvider {
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
-    @Injected() var glucoseStorage: GlucoseStorage!
-    @Injected() var nightscoutManager: NightscoutManager!
-    @Injected() var apsManager: APSManager!
-    @Injected() var settingsManager: SettingsManager!
-    @Injected() var healthKitManager: HealthKitManager!
-    @Injected() var deviceDataManager: DeviceDataManager!
-    @Injected() var calibrationService: CalibrationService!
+    private let glucoseStorage: GlucoseStorage!
+    private let nightscoutManager: NightscoutManager!
+    private let apsManager: APSManager!
+    let settingsManager: SettingsManager!
+    private let healthKitManager: HealthKitManager!
+    private let deviceDataManager: DeviceDataManager!
+    private let calibrationService: CalibrationService!
 
     private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
     var cgmGlucoseSourceType: CGMType?
 
-    private let libreTransmitter: LibreTransmitterSource
-    private let dexcomSourceG5: DexcomSourceG5
-    private let dexcomSourceG6: DexcomSourceG6
-    private let dexcomSourceG7: DexcomSourceG7
-    private let simulatorSource: GlucoseSimulatorSource
+    // TODO: [loopkit] fix this
+//    private let libreTransmitter: LibreTransmitterSource
+//    private let dexcomSourceG5: DexcomSourceG5
+//    private let dexcomSourceG6: DexcomSourceG6
+//    private let dexcomSourceG7: DexcomSourceG7
+//    private let simulatorSource: GlucoseSimulatorSource
 
     init(resolver: Resolver) {
-        injectServices(resolver)
-        libreTransmitter = BaseLibreTransmitterSource(
-            glucoseStorage: glucoseStorage,
-            glucoseManager: self,
-            calibrationService: calibrationService
-        )
-        dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
-        dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
-        dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage, glucoseManager: self)
-        simulatorSource = GlucoseSimulatorSource()
+        glucoseStorage = resolver.resolve(GlucoseStorage.self)!
+        nightscoutManager = resolver.resolve(NightscoutManager.self)!
+        apsManager = resolver.resolve(APSManager.self)!
+        settingsManager = resolver.resolve(SettingsManager.self)!
+        healthKitManager = resolver.resolve(HealthKitManager.self)!
+        deviceDataManager = resolver.resolve(DeviceDataManager.self)!
+        calibrationService = resolver.resolve(CalibrationService.self)!
+
+        // TODO: [loopkit] fix this
+//        dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
+//        dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
+//        dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage, glucoseManager: self)
+//        simulatorSource = GlucoseSimulatorSource()
+
+//        libreTransmitter = BaseLibreTransmitterSource(
+//            glucoseStorage: glucoseStorage,
+//            glucoseManager: self,
+//            calibrationService: calibrationService
+//        )
 
         updateGlucoseSource()
         subscribe()
@@ -53,26 +63,27 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     var glucoseSource: GlucoseSource!
 
     func updateGlucoseSource() {
-        switch settingsManager.settings.cgm {
-        case .xdrip:
-            glucoseSource = AppGroupSource(from: "xDrip", cgmType: .xdrip)
-        case .dexcomG5:
-            glucoseSource = dexcomSourceG5
-        case .dexcomG6:
-            glucoseSource = dexcomSourceG6
-        case .dexcomG7:
-            glucoseSource = dexcomSourceG7
-        case .nightscout:
-            glucoseSource = nightscoutManager
-        case .simulator:
-            glucoseSource = simulatorSource
-        case .libreTransmitter:
-            glucoseSource = libreTransmitter
-        case .glucoseDirect:
-            glucoseSource = AppGroupSource(from: "GlucoseDirect", cgmType: .glucoseDirect)
-        case .enlite:
-            glucoseSource = deviceDataManager
-        }
+        // TODO: [loopkit] fix this
+//        switch settingsManager.settings.cgm {
+//        case .xdrip:
+//            glucoseSource = AppGroupSource(from: "xDrip", cgmType: .xdrip)
+//        case .dexcomG5:
+//            glucoseSource = dexcomSourceG5
+//        case .dexcomG6:
+//            glucoseSource = dexcomSourceG6
+//        case .dexcomG7:
+//            glucoseSource = dexcomSourceG7
+//        case .nightscout:
+//            glucoseSource = nightscoutManager
+//        case .simulator:
+//            glucoseSource = simulatorSource
+//        case .libreTransmitter:
+//            glucoseSource = libreTransmitter
+//        case .glucoseDirect:
+//            glucoseSource = AppGroupSource(from: "GlucoseDirect", cgmType: .glucoseDirect)
+//        case .enlite:
+//            glucoseSource = deviceDataManager
+//        }
         // update the config
         cgmGlucoseSourceType = settingsManager.settings.cgm
 
@@ -216,16 +227,17 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         UserDefaults.standard
             .publisher(for: \.dexcomTransmitterID)
             .removeDuplicates()
-            .sink { id in
-                if self.settingsManager.settings.cgm == .dexcomG5 {
-                    if id != self.dexcomSourceG5.transmitterID {
-//                        self.dexcomSourceG5 = DexcomSourceG5(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
-                    }
-                } else if self.settingsManager.settings.cgm == .dexcomG6 {
-                    if id != self.dexcomSourceG6.transmitterID {
-//                        self.dexcomSourceG6 = DexcomSourceG6(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
-                    }
-                }
+            .sink { _ in
+                // TODO: [loopkit] fix this
+//                if self.settingsManager.settings.cgm == .dexcomG5 {
+//                    if id != self.dexcomSourceG5.transmitterID {
+                ////                        self.dexcomSourceG5 = DexcomSourceG5(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
+//                    }
+//                } else if self.settingsManager.settings.cgm == .dexcomG6 {
+//                    if id != self.dexcomSourceG6.transmitterID {
+                ////                        self.dexcomSourceG6 = DexcomSourceG6(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
+//                    }
+//                }
             }
             .store(in: &lifetime)
     }

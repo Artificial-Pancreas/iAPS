@@ -21,26 +21,26 @@ extension CGM {
                 CGMManagerUI
             >?
 
-            let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+            let displayGlucoseUnitObservable: DisplayGlucosePreference
             switch unit {
             case .mgdL:
-                displayGlucoseUnitObservable = DisplayGlucoseUnitObservable(displayGlucoseUnit: .milligramsPerDeciliter)
+                displayGlucoseUnitObservable = DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter)
             case .mmolL:
-                displayGlucoseUnitObservable = DisplayGlucoseUnitObservable(displayGlucoseUnit: .millimolesPerLiter)
+                displayGlucoseUnitObservable = DisplayGlucosePreference(displayGlucoseUnit: .millimolesPerLiter)
             }
 
             switch CGMType {
             case .dexcomG5:
                 setupViewController = G5CGMManager.setupViewController(
                     bluetoothProvider: bluetoothManager,
-                    displayGlucoseUnitObservable: displayGlucoseUnitObservable,
+                    displayGlucosePreference: displayGlucoseUnitObservable,
                     colorPalette: .default,
                     allowDebugFeatures: false
                 )
             case .dexcomG6:
                 setupViewController = G6CGMManager.setupViewController(
                     bluetoothProvider: bluetoothManager,
-                    displayGlucoseUnitObservable: displayGlucoseUnitObservable,
+                    displayGlucosePreference: displayGlucoseUnitObservable,
                     colorPalette: .default,
                     allowDebugFeatures: false
                 )
@@ -48,9 +48,10 @@ extension CGM {
                 setupViewController =
                     G7CGMManager.setupViewController(
                         bluetoothProvider: bluetoothManager,
-                        displayGlucoseUnitObservable: displayGlucoseUnitObservable,
+                        displayGlucosePreference: displayGlucoseUnitObservable,
                         colorPalette: .default,
-                        allowDebugFeatures: false
+                        allowDebugFeatures: false,
+                        prefersToSkipUserInteraction: false // TODO: [loopkit] fix this
                     )
             default:
                 break

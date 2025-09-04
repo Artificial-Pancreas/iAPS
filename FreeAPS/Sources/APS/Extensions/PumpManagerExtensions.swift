@@ -4,13 +4,14 @@ import LoopKitUI
 extension PumpManager {
     var rawValue: [String: Any] {
         [
-            "managerIdentifier": managerIdentifier, // "managerIdentifier": type(of: self).managerIdentifier,
+            "managerIdentifier": pluginIdentifier, // "managerIdentifier": type(of: self).managerIdentifier,
             "state": rawState
         ]
     }
 }
 
 extension PumpManagerUI {
+    // TODO: [loopkit] fix this
 //    static func setupViewController() -> PumpManagerSetupViewController & UIViewController & CompletionNotifying {
 //        setupViewController(
 //            insulinTintColor: .accentColor,
@@ -33,6 +34,7 @@ extension PumpManagerUI {
         return vc
     }
 
+    // TODO: [loopkit] fix this
 //    func settingsViewController() -> UIViewController & CompletionNotifying {
 //        settingsViewController(
 //            insulinTintColor: .accentColor,
