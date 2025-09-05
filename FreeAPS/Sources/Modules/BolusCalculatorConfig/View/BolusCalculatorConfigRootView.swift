@@ -81,11 +81,9 @@ extension BolusCalculatorConfig {
                             "Use this factor for meals with fast absorption (e.g. sugary drinks, white bread). Work with \"new\" calculator only."
                         )
                     }
-
                     Section {
                         Toggle("Display Predictions", isOn: $state.displayPredictions)
                     } header: { Text("Smaller iPhone Screens") }
-
                     Section {
                         Toggle(isOn: $state.eventualBG) {
                             HStack {
