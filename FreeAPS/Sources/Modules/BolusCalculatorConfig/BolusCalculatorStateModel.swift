@@ -50,10 +50,13 @@ extension BolusCalculatorConfig {
             }, map: {
                 $0
             })
+            
             subscribeSetting(\.allowedRemoteBolusAmount, on: $allowedRemoteBolusAmount, initial: {
                 let value = max(min($0, allowBolusShortcut ? settingsManager.pumpSettings.maxBolus : 0), 0)
                 allowedRemoteBolusAmount = value
-            }, map: { $0 })
+            }, map: {
+                $0
+            })
         }
     }
 }
