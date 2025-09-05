@@ -80,7 +80,7 @@
   "autoISFhourlyChange": 1,
   "higherISFrangeWeight": 0,
   "lowerISFrangeWeight": 0,
-  "postMealISFweight": 0.01,
+  "postMealISFweight": 0,
   "enableBGacceleration": true,
   "bgAccelISFweight": 0,
   "bgBrakeISFweight": 0.10,

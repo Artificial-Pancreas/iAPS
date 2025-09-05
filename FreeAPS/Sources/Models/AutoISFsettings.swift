@@ -8,7 +8,7 @@ struct AutoISFsettings: JSON, Codable {
     var autoISFhourlyChange: Decimal = 1
     var higherISFrangeWeight: Decimal = 0
     var lowerISFrangeWeight: Decimal = 0
-    var postMealISFweight: Decimal = 0.01
+    var postMealISFweight: Decimal = 0
     var enableBGacceleration: Bool = true
     var bgAccelISFweight: Decimal = 0
     var bgBrakeISFweight: Decimal = 0.10
