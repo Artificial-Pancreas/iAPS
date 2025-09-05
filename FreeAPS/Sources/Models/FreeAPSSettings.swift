@@ -50,6 +50,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var useCalc: Bool = true
     var fattyMeals: Bool = false
     var fattyMealFactor: Decimal = 0.7
+    var fastMeals: Bool = false
+    var fastMealFactor: Decimal = 1
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = false
     var liveActivityChart = false

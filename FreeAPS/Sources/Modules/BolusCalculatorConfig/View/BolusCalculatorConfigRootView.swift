@@ -66,6 +66,23 @@ extension BolusCalculatorConfig {
                     header: { Text("Fatty Meals") }
 
                     Section {
+                        Toggle("Apply factor for fast meals", isOn: $state.fastMeals)
+                        if state.fastMeals {
+                            HStack {
+                                Text("Override With A Factor Of ")
+                                Spacer()
+                                DecimalTextField("1.0", value: $state.fastMealFactor, formatter: conversionFormatter)
+                            }
+                        }
+                    }
+                    header: { Text("Fast Meals") }
+                    footer: {
+                        Text(
+                            "Use this factor for meals with fast absorption (e.g. sugary drinks, white bread). Work with \"new\" calculator only."
+                        )
+                    }
+
+                    Section {
                         Toggle("Display Predictions", isOn: $state.displayPredictions)
                     } header: { Text("Smaller iPhone Screens") }
 
