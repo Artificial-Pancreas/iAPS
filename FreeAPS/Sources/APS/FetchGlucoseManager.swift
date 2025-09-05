@@ -64,6 +64,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
     func updateGlucoseSource() {
         // TODO: [loopkit] fix this
+        glucoseSource = nightscoutManager
 //        switch settingsManager.settings.cgm {
 //        case .xdrip:
 //            glucoseSource = AppGroupSource(from: "xDrip", cgmType: .xdrip)
@@ -221,6 +222,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 )
             }
             .store(in: &lifetime)
+
         timer.fire()
         timer.resume()
 

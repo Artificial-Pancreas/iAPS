@@ -14,7 +14,7 @@ import Swinject
     // Dependencies Assembler
     // contain all dependencies Assemblies
     // TODO: Remove static key after update "Use Dependencies" logic
-    private static var assembler = Assembler([
+    private static let assembler = Assembler([
         StorageAssembly(),
         ServiceAssembly(),
         APSAssembly(),
@@ -23,30 +23,24 @@ import Swinject
         SecurityAssembly()
     ], parent: nil, defaultObjectScope: .container)
 
-    var resolver: Resolver {
-        FreeAPSApp.assembler.resolver
-    }
-
     // Temp static var
     // Use to backward compatibility with old Dependencies logic on Logger
     // TODO: Remove var after update "Use Dependencies" logic in Logger
-    static var resolver: Resolver {
-        FreeAPSApp.assembler.resolver
-    }
+    static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
     private func loadServices() {
-        resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
-        _ = resolver.resolve(DeviceDataManager.self)!
-        _ = resolver.resolve(APSManager.self)!
-        _ = resolver.resolve(FetchGlucoseManager.self)!
-        _ = resolver.resolve(FetchTreatmentsManager.self)!
-        _ = resolver.resolve(FetchAnnouncementsManager.self)!
-        _ = resolver.resolve(CalendarManager.self)!
-        _ = resolver.resolve(UserNotificationsManager.self)!
-        _ = resolver.resolve(WatchManager.self)!
-        _ = resolver.resolve(HealthKitManager.self)!
-        _ = resolver.resolve(BluetoothStateManager.self)!
-        _ = resolver.resolve(LiveActivityBridge.self)!
+        FreeAPSApp.resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
+        _ = FreeAPSApp.resolver.resolve(DeviceDataManager.self)!
+        _ = FreeAPSApp.resolver.resolve(APSManager.self)!
+        _ = FreeAPSApp.resolver.resolve(FetchGlucoseManager.self)!
+        _ = FreeAPSApp.resolver.resolve(FetchTreatmentsManager.self)!
+        _ = FreeAPSApp.resolver.resolve(FetchAnnouncementsManager.self)!
+        _ = FreeAPSApp.resolver.resolve(CalendarManager.self)!
+        _ = FreeAPSApp.resolver.resolve(UserNotificationsManager.self)!
+        _ = FreeAPSApp.resolver.resolve(WatchManager.self)!
+        _ = FreeAPSApp.resolver.resolve(HealthKitManager.self)!
+        _ = FreeAPSApp.resolver.resolve(BluetoothStateManager.self)!
+        _ = FreeAPSApp.resolver.resolve(LiveActivityBridge.self)!
     }
 
     init() {
@@ -56,11 +50,13 @@ import Swinject
         )
         isNewVersion()
         loadServices()
+        let pluginManager = PluginManager()
+        print("availableCGMManagers: \(pluginManager.availableCGMManagers)")
     }
 
     var body: some Scene {
         WindowGroup {
-            Main.RootView(resolver: resolver)
+            Main.RootView(resolver: FreeAPSApp.resolver)
                 .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
                 .environmentObject(Icons())
                 .onOpenURL(perform: handleURL)
@@ -75,7 +71,7 @@ import Swinject
 
         switch components?.host {
         case "device-select-resp":
-            resolver.resolve(NotificationCenter.self)!.post(name: .openFromGarminConnect, object: url)
+            FreeAPSApp.resolver.resolve(NotificationCenter.self)!.post(name: .openFromGarminConnect, object: url)
         default: break
         }
     }
