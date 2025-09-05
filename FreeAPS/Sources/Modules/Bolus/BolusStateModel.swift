@@ -58,7 +58,7 @@ extension Bolus {
         @Published var fattyMealFactor: Decimal = 0
         @Published var useFattyMealCorrectionFactor: Bool = false
         @Published var fastMeals: Bool = false
-        @Published var fastMealFactor: Decimal = 1
+        @Published var fastMealFactor: Decimal = 0
         @Published var useFastMealCorrectionFactor: Bool = false
         @Published var displayPredictions: Bool = true
 
@@ -206,7 +206,7 @@ extension Bolus {
 
             // apply custom factor if fatty meal toggle in bolus calc config settings is on and the box for fatty meals is checked (in RootView)
             if useFastMealCorrectionFactor {
-                insulinCalculated = wholeCalc
+                insulinCalculated = wholeCalc * fastMealFactor
             } else if useFattyMealCorrectionFactor {
                 insulinCalculated = result * fattyMealFactor
             } else {
