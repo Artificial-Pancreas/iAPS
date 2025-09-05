@@ -120,6 +120,17 @@ extension Bolus {
                                     state.insulinCalculated = state.calculateInsulin()
                                 }
                             }
+                            if state.fastMeals {
+                                Spacer()
+                                Toggle(isOn: $state.useFastMealCorrectionFactor) {
+                                    Text("Fast Meal")
+                                }
+                                .toggleStyle(CheckboxToggleStyle())
+                                .font(.footnote)
+                                .onChange(of: state.useFastMealCorrectionFactor) {
+                                    state.insulinCalculated = state.calculateInsulin()
+                                }
+                            }
                         }
                     }
 
