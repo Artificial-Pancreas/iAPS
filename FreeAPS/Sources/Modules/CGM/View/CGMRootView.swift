@@ -5,7 +5,7 @@ import Swinject
 extension CGM {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var setupCGM = false
 
         private var daysFormatter: NumberFormatter {
@@ -17,18 +17,32 @@ extension CGM {
 
         // @AppStorage(UserDefaults.BTKey.cgmTransmitterDeviceAddress.rawValue) private var cgmTransmitterDeviceAddress: String? = nil
 
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         var body: some View {
             NavigationView {
                 Form {
                     Section(header: Text("CGM")) {
-                        Picker("Type", selection: $state.cgm) {
-                            ForEach(CGMType.allCases) { type in
+                        Picker("Type", selection: $state.cgmIdentifier) {
+                            ForEach(state.deviceManager.availableCGMManagers, id: \.identifier) { cgm in
                                 VStack(alignment: .leading) {
-                                    Text(type.displayName)
-                                    Text(type.subtitle).font(.caption).foregroundColor(.secondary)
-                                }.tag(type)
+                                    Text(cgm.localizedTitle)
+                                    //                                    Text(type.subtitle).font(.caption).foregroundColor(.secondary)
+                                }.tag(cgm.identifier)
                             }
                         }
+
+//                        Picker("Type", selection: $state.cgm) {
+//                            ForEach(CGMType.allCases) { type in
+//                                VStack(alignment: .leading) {
+//                                    Text(type.displayName)
+//                                    Text(type.subtitle).font(.caption).foregroundColor(.secondary)
+//                                }.tag(type)
+//                            }
+//                        }
                         if let link = state.cgm.externalLink {
                             Button("About this source") {
                                 UIApplication.shared.open(link, options: [:], completionHandler: nil)
@@ -105,7 +119,7 @@ extension CGM {
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                .onAppear(perform: configureView)
+//                .onAppear(perform: configureView)
                 .navigationTitle("CGM")
                 .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $setupCGM) {

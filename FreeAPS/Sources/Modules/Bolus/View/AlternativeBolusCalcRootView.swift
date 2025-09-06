@@ -27,6 +27,23 @@ extension Bolus {
         let meal: FetchedResults<Meals>
         let mealEntries: any View
 
+        init(
+            resolver: Resolver,
+            waitForSuggestion: Bool,
+            fetch: Bool,
+//            state: StateModel,
+            meal: FetchedResults<Meals>,
+            mealEntries: any View
+        ) {
+            self.resolver = resolver
+            self.waitForSuggestion = waitForSuggestion
+            self.fetch = fetch
+//            self.state = state
+            self.meal = meal
+            self.mealEntries = mealEntries
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -253,13 +270,13 @@ extension Bolus {
                 label: { Text("Cancel") }
             )
             .onAppear {
-                configureView {
-                    state.viewActive()
-                    state.waitForCarbs = fetch
-                    state.waitForSuggestionInitial = waitForSuggestion
-                    state.waitForSuggestion = waitForSuggestion
-                    state.insulinCalculated = state.calculateInsulin()
-                }
+//                configureView {
+                state.viewActive()
+                state.waitForCarbs = fetch
+                state.waitForSuggestionInitial = waitForSuggestion
+                state.waitForSuggestion = waitForSuggestion
+                state.insulinCalculated = state.calculateInsulin()
+//                }
             }
             .popup(isPresented: showInfo, alignment: .bottom, direction: .center, type: .default) {
                 illustrationView()

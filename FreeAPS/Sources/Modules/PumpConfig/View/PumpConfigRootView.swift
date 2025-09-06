@@ -4,7 +4,12 @@ import Swinject
 extension PumpConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             NavigationView {
@@ -33,7 +38,7 @@ extension PumpConfig {
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                .onAppear(perform: configureView)
+//                .onAppear(perform: configureView)
                 .navigationTitle("Pump config")
                 .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $state.setupPump) {

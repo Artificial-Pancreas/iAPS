@@ -9,7 +9,7 @@ extension Home {
     struct RootView: BaseView {
         let resolver: Resolver
 
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
@@ -97,6 +97,11 @@ extension Home {
             scene.scaleMode = .resizeFill
             scene.backgroundColor = .clear
             return scene
+        }
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         var glucoseView: some View {
@@ -834,8 +839,7 @@ extension Home {
                 if onboarded.first?.firstRun ?? true {
                     state.fetchPreferences()
                 }
-
-                configureView()
+//                configureView()
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)

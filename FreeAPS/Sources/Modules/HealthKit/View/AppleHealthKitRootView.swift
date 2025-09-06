@@ -4,7 +4,12 @@ import Swinject
 extension AppleHealthKit {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -29,7 +34,7 @@ extension AppleHealthKit {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
+//            .onAppear(perform: configureView)
             .navigationTitle("Apple Health")
             .navigationBarTitleDisplayMode(.automatic)
         }

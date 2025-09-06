@@ -5,7 +5,12 @@ import Swinject
 extension LibreConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Group {
@@ -31,7 +36,7 @@ extension LibreConfig {
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationBarTitle("")
             .navigationBarHidden(true)
-            .onAppear(perform: configureView)
+//            .onAppear(perform: configureView)
         }
     }
 }

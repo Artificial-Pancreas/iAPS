@@ -28,20 +28,7 @@ import Swinject
     // TODO: Remove var after update "Use Dependencies" logic in Logger
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
-    private func loadServices() {
-        FreeAPSApp.resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
-        _ = FreeAPSApp.resolver.resolve(DeviceDataManager.self)!
-        _ = FreeAPSApp.resolver.resolve(APSManager.self)!
-        _ = FreeAPSApp.resolver.resolve(FetchGlucoseManager.self)!
-        _ = FreeAPSApp.resolver.resolve(FetchTreatmentsManager.self)!
-        _ = FreeAPSApp.resolver.resolve(FetchAnnouncementsManager.self)!
-        _ = FreeAPSApp.resolver.resolve(CalendarManager.self)!
-        _ = FreeAPSApp.resolver.resolve(UserNotificationsManager.self)!
-        _ = FreeAPSApp.resolver.resolve(WatchManager.self)!
-        _ = FreeAPSApp.resolver.resolve(HealthKitManager.self)!
-        _ = FreeAPSApp.resolver.resolve(BluetoothStateManager.self)!
-        _ = FreeAPSApp.resolver.resolve(LiveActivityBridge.self)!
-    }
+    @StateObject private var appServices = AppServices(assembler: assembler)
 
     init() {
         debug(
@@ -49,9 +36,7 @@ import Swinject
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
         isNewVersion()
-        loadServices()
-        let pluginManager = PluginManager()
-        print("availableCGMManagers: \(pluginManager.availableCGMManagers)")
+        appServices.appearanceManager.setupGlobalAppearance()
     }
 
     var body: some Scene {
@@ -60,6 +45,7 @@ import Swinject
                 .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
                 .environmentObject(Icons())
                 .onOpenURL(perform: handleURL)
+                .environmentObject(appServices)
         }
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")

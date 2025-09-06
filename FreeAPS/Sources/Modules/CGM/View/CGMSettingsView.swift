@@ -11,6 +11,7 @@ extension CGM {
         weak var completionDelegate: CompletionDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSettingsView>) -> UIViewController {
+            // TODO: [loopkit] inject DisplayGlucosePreference from assembly
             let displayGlucoseUnitObservable: DisplayGlucosePreference
             switch unit {
             case .mgdL:

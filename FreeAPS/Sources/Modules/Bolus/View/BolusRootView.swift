@@ -6,7 +6,7 @@ extension Bolus {
         let resolver: Resolver
         let waitForSuggestion: Bool
         let fetch: Bool
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @State private var keepForNextWiew: Bool = false
 
@@ -22,6 +22,17 @@ extension Bolus {
             sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]
         ) var meal: FetchedResults<Meals>
 
+        init(
+            resolver: Resolver,
+            waitForSuggestion: Bool,
+            fetch: Bool
+        ) {
+            self.resolver = resolver
+            self.waitForSuggestion = waitForSuggestion
+            self.fetch = fetch
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         var body: some View {
             if state.useCalc {
                 if state.eventualBG {
@@ -29,7 +40,7 @@ extension Bolus {
                         resolver: resolver,
                         waitForSuggestion: waitForSuggestion,
                         fetch: fetch,
-                        state: state,
+//                        state: state, // TODO: why was the @StateObject passed into the constructor?
                         meal: meal,
                         mealEntries: mealEntries
                     )
@@ -43,7 +54,7 @@ extension Bolus {
                         resolver: resolver,
                         waitForSuggestion: waitForSuggestion,
                         fetch: fetch,
-                        state: state,
+//                        state: state, // TODO: why was the @StateObject passed into the constructor?
                         meal: meal,
                         mealEntries: mealEntries
                     )

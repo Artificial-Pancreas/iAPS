@@ -16,7 +16,7 @@ extension Main {
             lightMode = settingsManager.settings.lightMode
 
             router.mainModalScreen
-                .map { $0?.modal(resolver: self.resolver!) }
+                .map { $0?.modal(resolver: self.resolver) }
                 .removeDuplicates { $0?.id == $1?.id }
                 .receive(on: DispatchQueue.main)
                 .sink { modal in

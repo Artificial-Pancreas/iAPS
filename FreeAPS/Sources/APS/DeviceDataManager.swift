@@ -14,7 +14,8 @@ import SwiftDate
 import Swinject
 import UserNotifications
 
-protocol DeviceDataManager: GlucoseSource {
+protocol DeviceDataManager {
+    var availableCGMManagers: [CGMManagerDescriptor] { get }
     var pumpManager: PumpManagerUI? { get set }
     var bluetoothManager: BluetoothStateManager { get }
     var loopInProgress: Bool { get set }
@@ -29,25 +30,25 @@ protocol DeviceDataManager: GlucoseSource {
     func heartbeat(date: Date)
     func createBolusProgressReporter() -> DoseProgressReporter?
     var alertHistoryStorage: AlertHistoryStorage! { get }
+
+    func cgmManagerTypeByIdentifier(_ identifier: String) -> CGMManagerUI.Type?
 }
 
-private let staticPumpManagers: [PumpManagerUI.Type] = [
-    MinimedPumpManager.self,
-    OmnipodPumpManager.self,
-    OmniBLEPumpManager.self,
-    DanaKitPumpManager.self,
-    MockPumpManager.self
-]
+// private let staticPumpManagers: [PumpManagerUI.Type] = [
+//    MinimedPumpManager.self,
+//    OmnipodPumpManager.self,
+//    OmniBLEPumpManager.self,
+//    DanaKitPumpManager.self,
+//    MockPumpManager.self
+// ]
 
-private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
-    MinimedPumpManager.pluginIdentifier: MinimedPumpManager.self,
-    // TODO: managerIdentifier is gone, is this the same as pluginIdentifier? (at least the value is the same)
-    OmnipodPumpManager.managerIdentifier: OmnipodPumpManager.self,
-    OmniBLEPumpManager.managerIdentifier: OmniBLEPumpManager.self,
-    DanaKitPumpManager.managerIdentifier: DanaKitPumpManager.self,
-    MockPumpManager.pluginIdentifier: MockPumpManager
-        .self // TODO: managerIdentifier is gone, is this the same as pluginIdentifier? (at least the value is the same)
-]
+// private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
+//    MinimedPumpManager.pluginIdentifier: MinimedPumpManager.self,
+//    OmnipodPumpManager.managerIdentifier: OmnipodPumpManager.self,
+//    OmniBLEPumpManager.managerIdentifier: OmniBLEPumpManager.self,
+//    DanaKitPumpManager.managerIdentifier: DanaKitPumpManager.self,
+//    MockPumpManager.pluginIdentifier: MockPumpManager.self
+// ]
 
 // private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = staticPumpManagers.reduce(into: [:]) { map, Type in
 //    map[Type.managerIdentifier] = Type
@@ -65,6 +66,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var bluetoothProvider: BluetoothStateManager!
 
+    private let pluginManager = PluginManager()
+
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
     @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
         .distantPast
@@ -79,6 +82,60 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
     private var pumpUpdatePromise: Future<Bool, Never>.Promise?
     @SyncAccess var loopInProgress: Bool = false
+
+    var availableCGMManagers: [CGMManagerDescriptor] {
+        var availableCGMManagers = pluginManager.availableCGMManagers + availableStaticCGMManagers
+        if let pumpManagerAsCGMManager = pumpManager as? CGMManager {
+            availableCGMManagers.append(CGMManagerDescriptor(
+                identifier: pumpManagerAsCGMManager.pluginIdentifier,
+                localizedTitle: pumpManagerAsCGMManager.localizedTitle
+            ))
+        }
+
+        availableCGMManagers = availableCGMManagers.filter({ _ in
+//            guard !deviceWhitelist.cgmDevices.isEmpty else {
+            true
+//            }
+
+//            return deviceWhitelist.cgmDevices.contains(cgmManager.identifier)
+        })
+
+        print("availableCGMManagers: \(availableCGMManagers)")
+
+        return availableCGMManagers
+    }
+
+    public func cgmManagerTypeByIdentifier(_ identifier: String) -> CGMManagerUI.Type? {
+        pluginManager.getCGMManagerTypeByIdentifier(identifier) ?? staticCGMManagersByIdentifier[identifier] as? CGMManagerUI.Type
+    }
+
+//    public func setupCGMManagerFromPumpManager(withIdentifier identifier: String) -> CGMManager? {
+//        guard identifier == pumpManager?.pluginIdentifier, let cgmManager = pumpManager as? CGMManager else {
+//            return nil
+//        }
+//
+//        // We have a pump that is a CGM!
+//        self.cgmManager = cgmManager
+//        return cgmManager
+//    }
+
+    private func cgmManagerTypeFromRawValue(_ rawValue: [String: Any]) -> CGMManager.Type? {
+        guard let managerIdentifier = rawValue["managerIdentifier"] as? String else {
+            return nil
+        }
+
+        return cgmManagerTypeByIdentifier(managerIdentifier)
+    }
+
+    func cgmManagerFromRawValue(_ rawValue: [String: Any]) -> CGMManagerUI? {
+        guard let rawState = rawValue["state"] as? CGMManager.RawStateValue,
+              let Manager = cgmManagerTypeFromRawValue(rawValue)
+        else {
+            return nil
+        }
+
+        return Manager.init(rawState: rawState) as? CGMManagerUI
+    }
 
     var pumpManager: PumpManagerUI? {
         didSet {
@@ -200,7 +257,19 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         self.recommendsLoop.send()
     }
 
-    private func pumpManagerFromRawValue(_ rawValue: [String: Any]) -> PumpManagerUI? {
+    public func pumpManagerTypeByIdentifier(_ identifier: String) -> PumpManagerUI.Type? {
+        pluginManager.getPumpManagerTypeByIdentifier(identifier) ?? staticPumpManagersByIdentifier[identifier]
+    }
+
+    private func pumpManagerTypeFromRawValue(_ rawValue: [String: Any]) -> PumpManager.Type? {
+        guard let managerIdentifier = rawValue["managerIdentifier"] as? String else {
+            return nil
+        }
+
+        return pumpManagerTypeByIdentifier(managerIdentifier)
+    }
+
+    func pumpManagerFromRawValue(_ rawValue: [String: Any]) -> PumpManagerUI? {
         guard let rawState = rawValue["state"] as? PumpManager.RawStateValue,
               let Manager = pumpManagerTypeFromRawValue(rawValue)
         else {
@@ -210,90 +279,26 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         return Manager.init(rawState: rawState) as? PumpManagerUI
     }
 
-    private func pumpManagerTypeFromRawValue(_ rawValue: [String: Any]) -> PumpManager.Type? {
-        guard let managerIdentifier = rawValue["managerIdentifier"] as? String else {
-            return nil
-        }
-
-        return staticPumpManagersByIdentifier[managerIdentifier]
-    }
-
-    // MARK: - GlucoseSource
-
-    @Persisted(key: "BaseDeviceDataManager.lastFetchGlucoseDate") private var lastFetchGlucoseDate: Date = .distantPast
-
-    var glucoseManager: FetchGlucoseManager?
-    var cgmManager: CGMManagerUI?
-    var cgmType: CGMType = .enlite
-
-    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-        fetch(nil)
-    }
-
-    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        guard let medtronic = pumpManager as? MinimedPumpManager else {
-            warning(.deviceManager, "Fetch minilink glucose failed: Pump is not Medtronic")
-            return Just([]).eraseToAnyPublisher()
-        }
-
-        guard lastFetchGlucoseDate.addingTimeInterval(5.minutes.timeInterval) < Date() else {
-            return Just([]).eraseToAnyPublisher()
-        }
-
-        medtronic.cgmManagerDelegate = self
-
-        return Future<[BloodGlucose], Error> { promise in
-            self.processQueue.async {
-                medtronic.fetchNewDataIfNeeded { result in
-                    switch result {
-                    case .noData:
-                        debug(.deviceManager, "Minilink glucose is empty")
-                        promise(.success([]))
-                    case .unreliableData:
-                        debug(.deviceManager, "Unreliable data received")
-                        promise(.success([]))
-                    case let .newData(glucose):
-                        let directions: [BloodGlucose.Direction?] = [nil]
-                            + glucose.windows(ofCount: 2).map { window -> BloodGlucose.Direction? in
-                                let pair = Array(window)
-                                guard pair.count == 2 else { return nil }
-                                let firstValue = Int(pair[0].quantity.doubleValue(for: .milligramsPerDeciliter))
-                                let secondValue = Int(pair[1].quantity.doubleValue(for: .milligramsPerDeciliter))
-                                return .init(trend: secondValue - firstValue)
-                            }
-
-                        let results = glucose.enumerated().map { index, sample -> BloodGlucose in
-                            let value = Int(sample.quantity.doubleValue(for: .milligramsPerDeciliter))
-                            return BloodGlucose(
-                                _id: sample.syncIdentifier,
-                                sgv: value,
-                                direction: directions[index],
-                                date: Decimal(Int(sample.date.timeIntervalSince1970 * 1000)),
-                                dateString: sample.date,
-                                unfiltered: Decimal(value),
-                                filtered: nil,
-                                noise: nil,
-                                glucose: value,
-                                type: "sgv"
-                            )
-                        }
-                        if let lastDate = results.last?.dateString {
-                            self.lastFetchGlucoseDate = lastDate
-                        }
-
-                        promise(.success(results))
-                    case let .error(error):
-                        warning(.deviceManager, "Fetch minilink glucose failed", error: error)
-                        promise(.failure(error))
-                    }
-                }
-            }
-        }
-        .timeout(60 * 3, scheduler: processQueue, options: nil, customError: nil)
-        .replaceError(with: [])
-        .replaceEmpty(with: [])
-        .eraseToAnyPublisher()
-    }
+//
+//
+//    private func pumpManagerFromRawValue(_ rawValue: [String: Any]) -> PumpManagerUI? {
+//        print("pumpManagerFromRawValue: \(rawValue)")
+//        guard let rawState = rawValue["state"] as? PumpManager.RawStateValue,
+//              let Manager = pumpManagerTypeFromRawValue(rawValue)
+//        else {
+//            return nil
+//        }
+//
+//        return Manager.init(rawState: rawState) as? PumpManagerUI
+//    }
+//
+//    private func pumpManagerTypeFromRawValue(_ rawValue: [String: Any]) -> PumpManager.Type? {
+//        guard let managerIdentifier = rawValue["managerIdentifier"] as? String else {
+//            return nil
+//        }
+//
+//        return staticPumpManagersByIdentifier[managerIdentifier]
+//    }
 }
 
 // MARK: - PumpManagerDelegate

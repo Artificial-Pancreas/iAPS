@@ -6,12 +6,22 @@ import SwiftUI
 
 extension CGM {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var libreSource: LibreTransmitterSource!
+//        @Injected() var libreSource: LibreTransmitterSource!
+
         @Injected() var cgmManager: FetchGlucoseManager!
+
         @Injected() var calendarManager: CalendarManager!
+        @Injected() var deviceManager: DeviceDataManager!
+
+//        @Published var cgmManager: CGMManagerUI?
+//        @Published var selectedCGMDescriptor: CGMManagerDescriptor?
 
         @Published var setupCGM: Bool = false
         @Published var cgm: CGMType = .nightscout
+
+        // TODO: temp hack
+        @Published var cgmIdentifier: String = ""
+
         // @Published var transmitterID = ""
         @Published var uploadGlucose = true
         @Published var smoothGlucose = false
@@ -29,6 +39,13 @@ extension CGM {
             currentCalendarID = storedCalendarID ?? ""
             calendarIDs = calendarManager.calendarIDs()
             cgmTransmitterDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
+
+//            if let pluginId = cgm.pluginIdentifier,
+//               let selectedCGMDescriptor = deviceManager.availableCGMManagers.first(where: { $0.identifier == pluginId })
+//            {
+//                   self.selectedCGMDescriptor = selectedCGMDescriptor
+//                   cgmIdentifier = pluginId
+//            }
 
             switch cgm {
             case .nightscout:
