@@ -190,7 +190,7 @@ extension Home {
         }
 
         var info: some View {
-            VStack(spacing: 6) {
+            HStack(spacing: 10) {
                 HStack {
                     if state.pumpSuspended {
                         Text("Pump suspended")
@@ -203,73 +203,54 @@ extension Home {
                             .bold()
                             .foregroundColor(.insulin)
                     }
-
-                    Spacer()
-
-                    HStack(spacing: 4) {
-                        Text("⇢")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                HStack(spacing: 6) {
+                    if fetchedPercent.first?.enabled ?? false {
+                        profileView
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .foregroundColor(.purple)
+                    }
+                    if (fetchedPercent.first?.enabled ?? false) && tempTargetString != nil {
+                        Divider()
+                            .frame(height: 14)
+                            .overlay(Color.secondary)
+                    }
+                    if let tempTargetStr = tempTargetString {
+                        Text(tempTargetStr)
+                            .font(.buttonFont)
+                            .foregroundColor(.loopGreen)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                HStack(spacing: 4) {
+                    Text("⇢")
+                        .font(.statusFont)
+                        .foregroundStyle(.secondary)
+                    if let eventualBG = state.eventualBG {
+                        Text(
+                            fetchedTargetFormatter.string(
+                                from: (state.data.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                            ) ?? ""
+                        )
+                        .font(.statusFont)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                    } else {
+                        Text("?")
                             .font(.statusFont)
                             .foregroundStyle(.secondary)
-
-                        if let eventualBGInt = state.eventualBG {
-                            let eventualBG = Decimal(eventualBGInt)
-                            let value: NSDecimalNumber = state.data.units == .mmolL
-                                ? NSDecimalNumber(decimal: eventualBG.asMmolL)
-                                : NSDecimalNumber(decimal: eventualBG)
-
-                            Text(fetchedTargetFormatter.string(from: value) ?? "")
-                                .font(.statusFont)
-                                .bold()
-                                .foregroundColor(colorScheme == .dark ? .white : .black)
-                        } else {
-                            Text("?")
-                                .font(.statusFont)
-                                .foregroundStyle(.secondary)
-                        }
-
-                        Text(state.data.units.rawValue)
-                            .font(.system(size: 12))
-                            .foregroundStyle(.secondary)
                     }
+                    Text(state.data.units.rawValue)
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
                 }
-
-                if (fetchedPercent.first?.enabled ?? false) || tempTargetString != nil {
-                    HStack(spacing: 6) {
-                        if fetchedPercent.first?.enabled ?? false {
-                            HStack(spacing: 4) {
-                                Image(systemName: "person.fill") //
-                                    .foregroundColor(.purple)
-                                profileView
-                            }
-                        }
-
-                        if fetchedPercent.first?.enabled ?? false, let tempTargetStr = tempTargetString {
-                            Divider()
-                                .frame(height: 14)
-                                .overlay(Color.secondary)
-
-                            HStack(spacing: 4) {
-                                Image(systemName: "target")
-                                    .foregroundColor(.loopGreen)
-                                Text(tempTargetStr)
-                                    .font(.buttonFont)
-                                    .foregroundColor(.secondary)
-                            }
-                        } else if !(fetchedPercent.first?.enabled ?? false), let tempTargetStr = tempTargetString {
-                            HStack(spacing: 4) {
-                                Image(systemName: "smallcircle.filled.circle") //
-                                    .foregroundColor(.loopGreen)
-                                Text(tempTargetStr)
-                                    .font(.buttonFont)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .padding(.vertical, 8)
             .padding(.horizontal, 8)
+            .padding(.vertical, 6)
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
@@ -522,10 +503,8 @@ extension Home {
         }
 
         var infoPanelView: some View {
-            let hasExtraInfo = (fetchedPercent.first?.enabled ?? false) || tempTargetString != nil
-
-            return addBackground()
-                .frame(height: hasExtraInfo ? 48 : 30)
+            addBackground()
+                .frame(height: 30)
                 .overlay {
                     HStack {
                         info
