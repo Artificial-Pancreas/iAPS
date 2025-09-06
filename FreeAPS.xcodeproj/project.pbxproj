@@ -359,8 +359,6 @@
 		A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */; };
 		AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF65DA88F972B56090AD6AC3 /* PumpConfigDataFlow.swift */; };
 		B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA241FB1663EC96FDBE64C8A /* CalibrationsDataFlow.swift */; };
-		B8CB7F102B5EF22C00614051 /* DanaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B817FA092B5EE8E0009DC94F /* DanaKit.framework */; };
-		B8CB7F112B5EF22C00614051 /* DanaKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B817FA092B5EE8E0009DC94F /* DanaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B8CB7F152B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CB7F142B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift */; };
 		B9CAAEFC2AE70836000F68BC /* branch.txt in Resources */ = {isa = PBXBuildFile; fileRef = B9CAAEFB2AE70836000F68BC /* branch.txt */; };
 		BA00D96F7B2FF169A06FB530 /* CGMStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C018D1680307A31C9ED7120 /* CGMStateModel.swift */; };
@@ -479,6 +477,10 @@
 		F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F270F68C2BAE374C00F6D8DD /* FontTracking.swift */; };
 		F273F9602DE73ABE00BF0FFC /* IOBTick0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */; };
 		F2A4B7922E64985F000E0E85 /* PluiginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7912E64985F000E0E85 /* PluiginManager.swift */; };
+		F2A4B7C32E6C8CA7000E0E85 /* CGMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C22E6C8CA7000E0E85 /* CGMManager.swift */; };
+		F2A4B7C62E6C9180000E0E85 /* CGMGlucoseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* CGMGlucoseSource.swift */; };
+		F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */; };
+		F2A4B7CD2E6CF68C000E0E85 /* PumpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CC2E6CF68C000E0E85 /* PumpManager.swift */; };
 		F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */; };
 		F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */; };
 		F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */; };
@@ -556,7 +558,6 @@
 				F226D5012E5E111400F8F43C /* LibreTransmitter.framework in Embed Frameworks */,
 				F226D5032E5E111400F8F43C /* LibreTransmitterUI.framework in Embed Frameworks */,
 				3818AA6B274C26A500843DB3 /* RileyLinkBLEKit.framework in Embed Frameworks */,
-				B8CB7F112B5EF22C00614051 /* DanaKit.framework in Embed Frameworks */,
 				3818AA72274C278200843DB3 /* LoopTestingKit.framework in Embed Frameworks */,
 				3818AA6D274C26A500843DB3 /* RileyLinkKit.framework in Embed Frameworks */,
 				3818AA5D274C26A300843DB3 /* MockKit.framework in Embed Frameworks */,
@@ -1138,6 +1139,10 @@
 		F270F68C2BAE374C00F6D8DD /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBTick0.swift; sourceTree = "<group>"; };
 		F2A4B7912E64985F000E0E85 /* PluiginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluiginManager.swift; sourceTree = "<group>"; };
+		F2A4B7C22E6C8CA7000E0E85 /* CGMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManager.swift; sourceTree = "<group>"; };
+		F2A4B7C52E6C9180000E0E85 /* CGMGlucoseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMGlucoseSource.swift; sourceTree = "<group>"; };
+		F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
+		F2A4B7CC2E6CF68C000E0E85 /* PumpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManager.swift; sourceTree = "<group>"; };
 		F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTextField.swift; sourceTree = "<group>"; };
 		F816825D28DB441200054060 /* HeartBeatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		F816825F28DB441800054060 /* BluetoothTransmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothTransmitter.swift; sourceTree = "<group>"; };
@@ -1165,7 +1170,6 @@
 				D8DA5CD12B49EEF000C54E6C /* SlideButton in Frameworks */,
 				CEC751D629D88262006E9D24 /* MinimedKit.framework in Frameworks */,
 				CEC751D429D88257006E9D24 /* OmniKitUI.framework in Frameworks */,
-				B8CB7F102B5EF22C00614051 /* DanaKit.framework in Frameworks */,
 				CEC751D229D88257006E9D24 /* OmniKit.framework in Frameworks */,
 				CE79502E29980E4D00FA576E /* ShareClientUI.framework in Frameworks */,
 				CE79502A29980C9F00FA576E /* G7SensorKitUI.framework in Frameworks */,
@@ -1829,6 +1833,7 @@
 			children = (
 				38E4451D274DB04600EC9A94 /* AppDelegate.swift */,
 				388E595B25AD948C0019842D /* FreeAPSApp.swift */,
+				F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1856,6 +1861,7 @@
 				38A504F625DDA0E200C5B9E8 /* Extensions */,
 				388E5A5825B6F0070019842D /* OpenAPS */,
 				38A0362725ECF05300FCBB52 /* Storage */,
+				F2A4B7CC2E6CF68C000E0E85 /* PumpManager.swift */,
 			);
 			path = APS;
 			sourceTree = "<group>";
@@ -1944,6 +1950,8 @@
 				38FEF407273B011A00574A46 /* LibreTransmitterSource.swift */,
 				3862CC03273D150600BF832C /* Calibrations */,
 				CECA4774298DA8310095139F /* DexcomSourceG5.swift */,
+				F2A4B7C22E6C8CA7000E0E85 /* CGMManager.swift */,
+				F2A4B7C52E6C9180000E0E85 /* CGMGlucoseSource.swift */,
 			);
 			path = CGM;
 			sourceTree = "<group>";
@@ -3135,7 +3143,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"SRCROOT: ${SRCROOT}\"\n\"${SRCROOT}/FreeAPS/Scripts/copy-plugins.sh\"\n";
+			shellScript = "\"${SRCROOT}/FreeAPS/Scripts/copy-plugins.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3241,6 +3249,7 @@
 				1901412F2CDB92F200ABD925 /* RestoreProvider.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */,
+				F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */,
 				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
 				190EBCC629FF138000BA767D /* UIUXProvider.swift in Sources */,
 				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
@@ -3336,6 +3345,7 @@
 				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
 				E39E418C56A5A46B61D960EE /* ConfigEditorStateModel.swift in Sources */,
 				45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */,
+				F2A4B7CD2E6CF68C000E0E85 /* PumpManager.swift in Sources */,
 				CE7CA3532A064973004BE681 /* tempPresetIntent.swift in Sources */,
 				D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */,
 				38E98A3025F52FF700C0CED0 /* Config.swift in Sources */,
@@ -3423,6 +3433,7 @@
 				9702FF92A09C53942F20D7EA /* TargetsEditorRootView.swift in Sources */,
 				1967DFBE29D052C200759F30 /* Icons.swift in Sources */,
 				38E8754F275556FA00975559 /* WatchManager.swift in Sources */,
+				F2A4B7C32E6C8CA7000E0E85 /* CGMManager.swift in Sources */,
 				A228DF96647338139F152B15 /* PreferencesEditorDataFlow.swift in Sources */,
 				19229B962AFBB84800CD91CA /* Predictions.swift in Sources */,
 				389ECE052601144100D86C4F /* ConcurrentMap.swift in Sources */,
@@ -3450,6 +3461,7 @@
 				E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */,
 				919DBD08F13BAFB180DF6F47 /* AddTempTargetStateModel.swift in Sources */,
 				F2159A4A2BA60A6000A0B716 /* ContactTrickDataFlow.swift in Sources */,
+				F2A4B7C62E6C9180000E0E85 /* CGMGlucoseSource.swift in Sources */,
 				8BC2F5A29AD1ED08AC0EE013 /* AddTempTargetRootView.swift in Sources */,
 				38A00B1F25FC00F7006BC0B0 /* Autotune.swift in Sources */,
 				38AAF85525FFF846004AF583 /* CurrentGlucoseView.swift in Sources */,

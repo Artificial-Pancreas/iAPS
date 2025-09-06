@@ -9,3 +9,4 @@
 --exclude DanaKit/
 --exclude TidepoolService/
 --exclude rileylink_ios/
+--exclude NightscoutRemoteCGM/

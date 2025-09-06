@@ -29,3 +29,6 @@
 	path = TidepoolService
 	url = https://github.com/LoopKit/TidepoolService.git
 	branch = dev
+[submodule "NightscoutRemoteCGM"]
+	path = NightscoutRemoteCGM
+	url = https://github.com/LoopKit/NightscoutRemoteCGM.git

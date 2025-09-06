@@ -226,6 +226,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F2A4B7992E6BA83E000E0E85"
+               BuildableName = "DanaKitPlugin.loopplugin"
+               BlueprintName = "DanaKitPlugin"
+               ReferencedContainer = "container:DanaKit/DanaKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A9BAC72626CDB7A5001C9493"
+               BuildableName = "NightscoutRemoteCGMPlugin.loopplugin"
+               BlueprintName = "NightscoutRemoteCGMPlugin"
+               ReferencedContainer = "container:NightscoutRemoteCGM/NightscoutRemoteCGM.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "388E595725AD948C0019842D"
                BuildableName = "FreeAPS.app"
                BlueprintName = "FreeAPS"
