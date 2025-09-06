@@ -190,54 +190,92 @@ extension Home {
         }
 
         var info: some View {
-            HStack(spacing: 10) {
-                ZStack {
-                    HStack {
-                        if state.pumpSuspended {
-                            Text("Pump suspended")
-                                .font(.extraSmall).bold().foregroundColor(.loopGray)
+            VStack(spacing: 6) {
+                HStack {
+                    if state.pumpSuspended {
+                        Text("Pump suspended")
+                            .font(.extraSmall)
+                            .bold()
+                            .foregroundColor(.loopGray)
+                    } else {
+                        Text(tempBasalString)
+                            .font(.statusFont)
+                            .bold()
+                            .foregroundColor(.insulin)
+                    }
+
+                    Spacer()
+
+                    HStack(spacing: 4) {
+                        Text("⇢")
+                            .font(.statusFont)
+                            .foregroundStyle(.secondary)
+
+                        if let eventualBGInt = state.eventualBG {
+                            let eventualBG = Decimal(eventualBGInt)
+                            let value: NSDecimalNumber = state.data.units == .mmolL
+                                ? NSDecimalNumber(decimal: eventualBG.asMmolL)
+                                : NSDecimalNumber(decimal: eventualBG)
+
+                            Text(fetchedTargetFormatter.string(from: value) ?? "")
+                                .font(.statusFont)
+                                .bold()
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                         } else {
-                            Text(tempBasalString)
-                                .font(.statusFont).bold()
-                                .foregroundColor(.insulin)
+                            Text("?")
+                                .font(.statusFont)
+                                .foregroundStyle(.secondary)
                         }
+
+                        Text(state.data.units.rawValue)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
                     }
                 }
-                .padding(.leading, 8)
-                .frame(maxWidth: .infinity, alignment: .leading)
 
-                if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
-                    Text(tempTargetString)
-                        .font(.buttonFont)
-                        .foregroundColor(.secondary)
-                } else {
-                    profileView
-                }
-
-                ZStack {
-                    HStack {
-                        Text("⇢").font(.statusFont).foregroundStyle(.secondary)
-
-                        if let eventualBG = state.eventualBG {
-                            Text(
-                                fetchedTargetFormatter.string(
-                                    from: (state.data.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
-                                ) ?? ""
-                            ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
-                        } else {
-                            Text("?").font(.statusFont).foregroundStyle(.secondary)
+                if (fetchedPercent.first?.enabled ?? false) || tempTargetString != nil {
+                    HStack(spacing: 6) {
+                        if fetchedPercent.first?.enabled ?? false {
+                            HStack(spacing: 4) {
+                                Image(systemName: "person.fill") //
+                                    .foregroundColor(.purple)
+                                profileView
+                            }
                         }
-                        Text(state.data.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
+
+                        if fetchedPercent.first?.enabled ?? false, let tempTargetStr = tempTargetString {
+                            Divider()
+                                .frame(height: 14)
+                                .overlay(Color.secondary)
+
+                            HStack(spacing: 4) {
+                                Image(systemName: "target")
+                                    .foregroundColor(.loopGreen)
+                                Text(tempTargetStr)
+                                    .font(.buttonFont)
+                                    .foregroundColor(.secondary)
+                            }
+                        } else if !(fetchedPercent.first?.enabled ?? false), let tempTargetStr = tempTargetString {
+                            HStack(spacing: 4) {
+                                Image(systemName: "smallcircle.filled.circle") //
+                                    .foregroundColor(.loopGreen)
+                                Text(tempTargetStr)
+                                    .font(.buttonFont)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 8)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 8)
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var infoPanel: some View {
-            info.frame(height: 26)
+            info
+                .frame(height: 45)
                 .background {
                     InfoPanelBackground(colorScheme: colorScheme)
                 }
@@ -484,8 +522,10 @@ extension Home {
         }
 
         var infoPanelView: some View {
-            addBackground()
-                .frame(height: 30)
+            let hasExtraInfo = (fetchedPercent.first?.enabled ?? false) || tempTargetString != nil
+
+            return addBackground()
+                .frame(height: hasExtraInfo ? 48 : 30)
                 .overlay {
                     HStack {
                         info
@@ -560,9 +600,9 @@ extension Home {
                                 {
                                     if name.count > 15 {
                                         let shortened = name.prefix(15)
-                                        Text(shortened).font(.statusFont).foregroundStyle(.secondary)
+                                        Text(shortened).font(.buttonFont).foregroundStyle(.secondary)
                                     } else {
-                                        Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                        Text(name).font(.buttonFont).foregroundStyle(.secondary)
                                     }
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
