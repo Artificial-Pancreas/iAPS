@@ -453,6 +453,17 @@ extension AutoISF {
                             Text(">").foregroundStyle(.secondary)
                         }.onTapGesture { presentHistory.toggle() }
                     } header: { Text("History") }
+
+                    Section {
+                        Button(role: .destructive) {
+                            state.resetToDefaults()
+                        } label: {
+                            Text("Rset to defaults")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                    } header: {
+                        Text("Reset")
+                    }
                 }
             }
             .blur(radius: isPresented ? 5 : 0)
