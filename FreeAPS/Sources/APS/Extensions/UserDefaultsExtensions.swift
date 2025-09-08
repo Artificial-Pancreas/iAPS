@@ -30,4 +30,9 @@ extension UserDefaults {
             set(newValue?.rawValue, forKey: Key.rileyLinkConnectionManagerState.rawValue)
         }
     }
+
+    var cgmManagerRawValue: CGMManager.RawStateValue? {
+        get { object(forKey: "cgmManagerRawValue") as? CGMManager.RawStateValue }
+        set { set(newValue, forKey: "cgmManagerRawValue") }
+    }
 }

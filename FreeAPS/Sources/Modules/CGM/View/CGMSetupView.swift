@@ -8,66 +8,33 @@ import SwiftUI
 import UIKit
 
 extension CGM {
-    struct CGMSetupView: UIViewControllerRepresentable {
-        let CGMType: CGMType
-        let bluetoothManager: BluetoothStateManager
-        let unit: GlucoseUnits
+    struct CGMSetupView: UIViewControllerRepresentable, CompletionNotifying {
+        let cgmIdentifier: String
+        let deviceManager: DeviceDataManager
+//        let bluetoothManager: BluetoothStateManager
+//        let unit: GlucoseUnits
         weak var completionDelegate: CompletionDelegate?
-        weak var setupDelegate: CGMManagerOnboardingDelegate?
+        weak var onboardingDelegate: CGMManagerOnboardingDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSetupView>) -> UIViewController {
-            var setupViewController: SetupUIResult<
-                CGMManagerViewController,
-                CGMManagerUI
-            >?
-
-            let displayGlucoseUnitObservable: DisplayGlucosePreference
-            switch unit {
-            case .mgdL:
-                displayGlucoseUnitObservable = DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter)
-            case .mmolL:
-                displayGlucoseUnitObservable = DisplayGlucosePreference(displayGlucoseUnit: .millimolesPerLiter)
-            }
-
-            switch CGMType {
-            case .dexcomG5:
-                setupViewController = G5CGMManager.setupViewController(
-                    bluetoothProvider: bluetoothManager,
-                    displayGlucosePreference: displayGlucoseUnitObservable,
-                    colorPalette: .default,
-                    allowDebugFeatures: false
+            switch deviceManager.setupCGMManager(withIdentifier: cgmIdentifier) {
+            case let .failure(error):
+                warning(
+                    .deviceManager,
+                    "Failure to setup CGM manager with identifier '\(cgmIdentifier)': \(String(describing: error))"
                 )
-            case .dexcomG6:
-                setupViewController = G6CGMManager.setupViewController(
-                    bluetoothProvider: bluetoothManager,
-                    displayGlucosePreference: displayGlucoseUnitObservable,
-                    colorPalette: .default,
-                    allowDebugFeatures: false
-                )
-            case .dexcomG7:
-                setupViewController =
-                    G7CGMManager.setupViewController(
-                        bluetoothProvider: bluetoothManager,
-                        displayGlucosePreference: displayGlucoseUnitObservable,
-                        colorPalette: .default,
-                        allowDebugFeatures: false,
-                        prefersToSkipUserInteraction: false // TODO: [loopkit] fix this
-                    )
-            default:
-                break
-            }
-
-            switch setupViewController {
-            case var .userInteractionRequired(setupViewControllerUI):
-                setupViewControllerUI.cgmManagerOnboardingDelegate = setupDelegate
-                setupViewControllerUI.completionDelegate = completionDelegate
-                return setupViewControllerUI
-            case let .createdAndOnboarded(cgmManagerUI):
-                debug(.default, "CGM manager  created and onboarded")
-                setupDelegate?.cgmManagerOnboarding(didCreateCGMManager: cgmManagerUI)
                 return UIViewController()
-            case .none:
-                return UIViewController()
+            case let .success(success):
+                switch success {
+                case var .userInteractionRequired(setupViewControllerUI):
+                    setupViewControllerUI.cgmManagerOnboardingDelegate = onboardingDelegate
+                    setupViewControllerUI.completionDelegate = completionDelegate
+                    return setupViewControllerUI
+                case .createdAndOnboarded:
+                    info(.deviceManager, "CGM manager with identifier '\(cgmIdentifier)' created and onboarded")
+                    completionDelegate?.completionNotifyingDidComplete(self)
+                    return UIViewController()
+                }
             }
         }
 

@@ -9,6 +9,7 @@ extension CGM {
         let bluetoothManager: BluetoothStateManager
         let unit: GlucoseUnits
         weak var completionDelegate: CompletionDelegate?
+        weak var onboardingDelegate: CGMManagerOnboardingDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSettingsView>) -> UIViewController {
             // TODO: [loopkit] inject DisplayGlucosePreference from assembly
@@ -24,11 +25,10 @@ extension CGM {
                 bluetoothProvider: bluetoothManager,
                 displayGlucosePreference: displayGlucoseUnitObservable,
                 colorPalette: .default,
-                allowDebugFeatures: false
+                allowDebugFeatures: true
             )
-            // vc.cgmManagerOnboardingDelegate =
-            // vc.completionDelegate = self
             vc.completionDelegate = completionDelegate
+            vc.cgmManagerOnboardingDelegate = onboardingDelegate
 
             return vc
         }

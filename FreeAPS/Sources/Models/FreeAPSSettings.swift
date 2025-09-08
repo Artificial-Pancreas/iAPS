@@ -12,7 +12,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var insulinReqPercentage: Decimal = 70
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
-    var cgm: CGMType = .nightscout
+    // TODO: [loopkit] clean up
+//    var cgm: CGMType = .nightscout
     var uploadGlucose: Bool = true
     var useCalendar: Bool = false
     var displayCalendarIOBandCOB: Bool = false
@@ -215,9 +216,10 @@ extension FreeAPSSettings: Decodable {
             settings.displayOnWatch = displayOnWatch
         }
 
-        if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {
-            settings.cgm = cgm
-        }
+        // TODO: [loopkit] clean up
+//        if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {
+//            settings.cgm = cgm
+//        }
 
         if let uploadGlucose = try? container.decode(Bool.self, forKey: .uploadGlucose) {
             settings.uploadGlucose = uploadGlucose

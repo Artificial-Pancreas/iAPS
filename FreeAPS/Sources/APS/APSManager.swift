@@ -11,7 +11,6 @@ protocol APSManager {
     func heartbeat(date: Date)
     func autotune() -> AnyPublisher<Autotune?, Never>
     func enactBolus(amount: Double, isSMB: Bool)
-    var pumpManager: PumpManagerUI? { get set }
     var bluetoothManager: BluetoothStateManager? { get }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
@@ -105,10 +104,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var backGroundTaskID: UIBackgroundTaskIdentifier?
 
-    var pumpManager: PumpManagerUI? {
-        get { deviceDataManager.pumpManager }
-        set { deviceDataManager.pumpManager = newValue }
-    }
+    var pumpManager: PumpManagerUI? { deviceDataManager.pumpManager }
 
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
@@ -1110,7 +1106,7 @@ final class BaseAPSManager: APSManager, Injectable {
             let branch = branch()
             let copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
             let pump_ = pumpManager?.localizedTitle ?? ""
-            let cgm = settings.cgm
+//            let cgm = settings.cgm
             let file = OpenAPS.Monitor.statistics
             var iPa: Decimal = 75
             if preferences.useCustomPeakTime {
@@ -1291,7 +1287,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 Algorithm: algo_,
                 AdjustmentFactor: af,
                 Pump: pump_,
-                CGM: cgm.rawValue,
+                // TODO: [loopkit] update this?
+                CGM: deviceDataManager.cgmManager?.pluginIdentifier ?? "",
                 insulinType: insulin_type.rawValue,
                 peakActivityTime: iPa,
                 Carbs_24h: carbTotal,

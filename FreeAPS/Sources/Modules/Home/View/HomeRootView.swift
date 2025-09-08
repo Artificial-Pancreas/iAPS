@@ -115,7 +115,10 @@ extension Home {
                 alwaysUseColors: $state.alwaysUseColors,
                 displayDelta: $state.displayDelta,
                 scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
-                displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays
+                displayExpiration: $state.displayExpiration,
+                // TODO: [loopkit] fix this
+//                cgm: $state.cgm,
+                sensordays: $state.sensorDays
             )
             .onTapGesture {
                 if state.alarm == nil {

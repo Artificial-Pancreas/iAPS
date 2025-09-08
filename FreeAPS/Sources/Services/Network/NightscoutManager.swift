@@ -4,7 +4,7 @@ import LoopKitUI
 import Swinject
 import UIKit
 
-protocol NightscoutManager: GlucoseSource {
+protocol NightscoutManager {
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
@@ -105,9 +105,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     var cgmURL: URL? {
-        if let url = settingsManager.settings.cgm.appURL {
-            return url
-        }
+        // TODO: [loopkit] fix this
+//        if let url = settingsManager.settings.cgm.appURL {
+//            return url
+//        }
 
         let useLocal = settingsManager.settings.useLocalGlucoseSource
 
@@ -151,19 +152,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    // MARK: - GlucoseSource
-
-    var glucoseManager: FetchGlucoseManager?
-    var cgmManager: CGMManagerUI?
-    var cgmType: CGMType = .nightscout
-
-    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        fetchGlucose(since: glucoseStorage.syncDate())
-    }
-
-    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-        fetch(nil)
-    }
+//    var glucoseManager: FetchGlucoseManager?
+//    var cgmManager: CGMManagerUI?
+//    var cgmType: CGMType = .nightscout
 
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never> {
         guard let nightscout = nightscoutAPI, isNetworkReachable else {

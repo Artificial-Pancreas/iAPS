@@ -3,26 +3,16 @@ import Combine
 import G7SensorKit
 import LoopKitUI
 import SwiftUI
+import UIKit
 
 extension CGM {
     final class StateModel: BaseStateModel<Provider> {
-//        @Injected() var libreSource: LibreTransmitterSource!
-
-        @Injected() var cgmManager: FetchGlucoseManager!
-
-        @Injected() var calendarManager: CalendarManager!
         @Injected() var deviceManager: DeviceDataManager!
+        @Injected() var calendarManager: CalendarManager!
 
-//        @Published var cgmManager: CGMManagerUI?
-//        @Published var selectedCGMDescriptor: CGMManagerDescriptor?
+        @Published var cgmIdentifierToSetUp: String? = nil
 
-        @Published var setupCGM: Bool = false
-        @Published var cgm: CGMType = .nightscout
-
-        // TODO: temp hack
-        @Published var cgmIdentifier: String = ""
-
-        // @Published var transmitterID = ""
+        @Published var transmitterID = ""
         @Published var uploadGlucose = true
         @Published var smoothGlucose = false
         @Published var createCalendarEvents = false
@@ -35,56 +25,36 @@ extension CGM {
         @Published var sensorDays: Double = 10
 
         override func subscribe() {
-            cgm = settingsManager.settings.cgm
             currentCalendarID = storedCalendarID ?? ""
             calendarIDs = calendarManager.calendarIDs()
             cgmTransmitterDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
 
-//            if let pluginId = cgm.pluginIdentifier,
-//               let selectedCGMDescriptor = deviceManager.availableCGMManagers.first(where: { $0.identifier == pluginId })
-//            {
-//                   self.selectedCGMDescriptor = selectedCGMDescriptor
-//                   cgmIdentifier = pluginId
+//            switch cgm {
+//            case .nightscout:
+//                sensorDays = CGMType.nightscout.expiration
+//            case .xdrip:
+//                sensorDays = sensorDays
+//            case .dexcomG5:
+//                sensorDays = CGMType.dexcomG5.expiration
+//            case .dexcomG6:
+//                sensorDays = CGMType.dexcomG6.expiration
+//            case .dexcomG7:
+//                sensorDays = CGMType.dexcomG7.expiration
+//            case .simulator:
+//                sensorDays = sensorDays
+//            case .libreTransmitter:
+//                sensorDays = CGMType.libreTransmitter.expiration
+//            case .glucoseDirect:
+//                sensorDays = sensorDays
+//            case .enlite:
+//                sensorDays = CGMType.enlite.expiration
 //            }
-
-            switch cgm {
-            case .nightscout:
-                sensorDays = CGMType.nightscout.expiration
-            case .xdrip:
-                sensorDays = sensorDays
-            case .dexcomG5:
-                sensorDays = CGMType.dexcomG5.expiration
-            case .dexcomG6:
-                sensorDays = CGMType.dexcomG6.expiration
-            case .dexcomG7:
-                sensorDays = CGMType.dexcomG7.expiration
-            case .simulator:
-                sensorDays = sensorDays
-            case .libreTransmitter:
-                sensorDays = CGMType.libreTransmitter.expiration
-            case .glucoseDirect:
-                sensorDays = sensorDays
-            case .enlite:
-                sensorDays = CGMType.enlite.expiration
-            }
 
             subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
             subscribeSetting(\.displayCalendarIOBandCOB, on: $displayCalendarIOBandCOB) { displayCalendarIOBandCOB = $0 }
             subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { displayCalendarEmojis = $0 }
             subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
             subscribeSetting(\.sensorDays, on: $sensorDays) { sensorDays = $0 }
-
-            $cgm
-                .removeDuplicates()
-                .sink { [weak self] value in
-                    guard let self = self else { return }
-                    guard self.cgmManager.cgmGlucoseSourceType != nil else {
-                        self.settingsManager.settings.cgm = .nightscout
-                        return
-                    }
-                    self.settingsManager.settings.cgm = value
-                }
-                .store(in: &lifetime)
 
             $createCalendarEvents
                 .removeDuplicates()
@@ -116,30 +86,26 @@ extension CGM {
 
 extension CGM.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
-        setupCGM = false
-        // if CGM was deleted
-        if cgmManager.cgmGlucoseSourceType == nil {
-            cgm = .nightscout
-        }
+        cgmIdentifierToSetUp = nil
         // refresh the upload options
         uploadGlucose = settingsManager.settings.uploadGlucose
-        cgmManager.updateGlucoseSource()
     }
 }
 
-extension CGM.StateModel: CGMManagerOnboardingDelegate {
-    func cgmManagerOnboarding(didCreateCGMManager manager: LoopKitUI.CGMManagerUI) {
-        // Possibility add the dexcom number !
-        if let dexcomG6Manager: G6CGMManager = manager as? G6CGMManager {
-            UserDefaults.standard.dexcomTransmitterID = dexcomG6Manager.transmitter.ID
-
-        } else if let dexcomG5Manager: G5CGMManager = manager as? G5CGMManager {
-            UserDefaults.standard.dexcomTransmitterID = dexcomG5Manager.transmitter.ID
-        }
-        cgmManager.updateGlucoseSource()
-    }
-
-    func cgmManagerOnboarding(didOnboardCGMManager _: LoopKitUI.CGMManagerUI) {
-        // nothing to do ?
-    }
-}
+//
+// extension CGM.StateModel: CGMManagerOnboardingDelegate {
+//    func cgmManagerOnboarding(didCreateCGMManager manager: LoopKitUI.CGMManagerUI) {
+//        // Possibility add the dexcom number !
+//        if let dexcomG6Manager: G6CGMManager = manager as? G6CGMManager {
+//            UserDefaults.standard.dexcomTransmitterID = dexcomG6Manager.transmitter.ID
+//
+//        } else if let dexcomG5Manager: G5CGMManager = manager as? G5CGMManager {
+//            UserDefaults.standard.dexcomTransmitterID = dexcomG5Manager.transmitter.ID
+//        }
+////        cgmManager.updateGlucoseSource()
+//    }
+//
+//    func cgmManagerOnboarding(didOnboardCGMManager _: LoopKitUI.CGMManagerUI) {
+//        // nothing to do ?
+//    }
+// }

@@ -76,7 +76,7 @@ extension Home {
         @Published var autoisf = false
         @Published var displayExpiration = false
         @Published var displaySAGE = true
-        @Published var cgm: CGMType = .nightscout
+//        @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
@@ -194,17 +194,19 @@ extension Home {
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
             displaySAGE = settingsManager.settings.displaySAGE
-            cgm = settingsManager.settings.cgm
+//            cgm = settingsManager.settings.cgm
 
-            sensorDays = switch settingsManager.settings.cgm {
-            case .nightscout: CGMType.nightscout.expiration
-            case .dexcomG5: CGMType.dexcomG5.expiration
-            case .dexcomG6: CGMType.dexcomG6.expiration
-            case .dexcomG7: CGMType.dexcomG7.expiration
-            case .libreTransmitter: CGMType.libreTransmitter.expiration
-            case .enlite: CGMType.enlite.expiration
-            default: settingsManager.settings.sensorDays
-            }
+            // TODO: [loopkit] fix this, use CGM pluginIdentifier instead
+//            sensorDays = switch settingsManager.settings.cgm {
+//            case .nightscout: CGMType.nightscout.expiration
+//            case .dexcomG5: CGMType.dexcomG5.expiration
+//            case .dexcomG6: CGMType.dexcomG6.expiration
+//            case .dexcomG7: CGMType.dexcomG7.expiration
+//            case .libreTransmitter: CGMType.libreTransmitter.expiration
+//            case .enlite: CGMType.enlite.expiration
+//            default: settingsManager.settings.sensorDays
+//            }
+            sensorDays = settingsManager.settings.sensorDays
 
             carbButton = settingsManager.settings.carbButton
             profileButton = settingsManager.settings.profileButton
@@ -306,14 +308,14 @@ extension Home {
             $setupPump
                 .sink { [weak self] show in
                     guard let self = self else { return }
-                    if show, let pumpManager = self.provider.apsManager.pumpManager,
+                    if show, let pumpManager = self.provider.deviceManager.pumpManager,
                        let bluetoothProvider = self.provider.apsManager.bluetoothManager
                     {
                         let view = PumpConfig.PumpSettingsView(
                             pumpManager: pumpManager,
                             bluetoothManager: bluetoothProvider,
                             completionDelegate: self,
-                            setupDelegate: self
+                            onboardingDelegate: self.provider.deviceManager
                         ).asAny()
                         self.router.mainSecondaryModalView.send(view)
                     } else {
@@ -732,18 +734,20 @@ extension Home.StateModel:
         hours = settingsManager.settings.hours
         displayExpiration = settingsManager.settings.displayExpiration
         displaySAGE = settingsManager.settings.displaySAGE
-        cgm = settingsManager.settings.cgm
+//        cgm = settingsManager.settings.cgm
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton
-        sensorDays = switch settingsManager.settings.cgm {
-        case .nightscout: CGMType.nightscout.expiration
-        case .dexcomG5: CGMType.dexcomG5.expiration
-        case .dexcomG6: CGMType.dexcomG6.expiration
-        case .dexcomG7: CGMType.dexcomG7.expiration
-        case .libreTransmitter: CGMType.libreTransmitter.expiration
-        case .enlite: CGMType.enlite.expiration
-        default: settingsManager.settings.sensorDays
-        }
+        // TODO: [loopkit] fix this, use CGM pluginIdentifier instead
+//        sensorDays = switch settingsManager.settings.cgm {
+//        case .nightscout: CGMType.nightscout.expiration
+//        case .dexcomG5: CGMType.dexcomG5.expiration
+//        case .dexcomG6: CGMType.dexcomG6.expiration
+//        case .dexcomG7: CGMType.dexcomG7.expiration
+//        case .libreTransmitter: CGMType.libreTransmitter.expiration
+//        case .enlite: CGMType.enlite.expiration
+//        default: settingsManager.settings.sensorDays
+//        }
+        sensorDays = settingsManager.settings.sensorDays
 
         setupGlucose()
         setupOverrideHistory()
@@ -803,19 +807,19 @@ extension Home.StateModel: CompletionDelegate {
     }
 }
 
-extension Home.StateModel: PumpManagerOnboardingDelegate {
-    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
-        provider.apsManager.pumpManager = pumpManager
-        if let insulinType = pumpManager.status.insulinType {
-            settingsManager.updateInsulinCurve(insulinType)
-        }
-    }
-
-    func pumpManagerOnboarding(didOnboardPumpManager _: PumpManagerUI) {
-        // nothing to do
-    }
-
-    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {
-        // TODO:
-    }
-}
+// extension Home.StateModel: PumpManagerOnboardingDelegate {
+//    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
+//        provider.deviceManager.pumpManager = pumpManager
+//        if let insulinType = pumpManager.status.insulinType {
+//            settingsManager.updateInsulinCurve(insulinType)
+//        }
+//    }
+//
+//    func pumpManagerOnboarding(didOnboardPumpManager _: PumpManagerUI) {
+//        // nothing to do
+//    }
+//
+//    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {
+//        // TODO:
+//    }
+// }

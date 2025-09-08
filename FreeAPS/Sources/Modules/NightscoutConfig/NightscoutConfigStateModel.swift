@@ -12,9 +12,11 @@ extension NightscoutConfig {
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var healthKitManager: HealthKitManager!
-        @Injected() private var cgmManager: FetchGlucoseManager!
+        // TODO: [loopkit] update this
+//        @Injected() private var cgmManager: FetchGlucoseManager!
         @Injected() private var storage: FileStorage!
         @Injected() var apsManager: APSManager!
+        @Injected() var deviceManager: DeviceDataManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -45,17 +47,18 @@ extension NightscoutConfig {
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
             subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
             subscribeSetting(\.localGlucosePort, on: $localPort.map(Int.init)) { localPort = Decimal($0) }
-            subscribeSetting(\.uploadGlucose, on: $uploadGlucose, initial: { uploadGlucose = $0 }, didSet: { val in
-                if let cgmManagerG5 = self.cgmManager.glucoseSource.cgmManager as? G5CGMManager {
-                    cgmManagerG5.shouldSyncToRemoteService = val
-                }
-                if let cgmManagerG6 = self.cgmManager.glucoseSource.cgmManager as? G6CGMManager {
-                    cgmManagerG6.shouldSyncToRemoteService = val
-                }
-                if let cgmManagerG7 = self.cgmManager.glucoseSource.cgmManager as? G7CGMManager {
-                    cgmManagerG7.uploadReadings = val
-                }
-            })
+            // TODO: [loopkit] update this
+//            subscribeSetting(\.uploadGlucose, on: $uploadGlucose, initial: { uploadGlucose = $0 }, didSet: { val in
+//                if let cgmManagerG5 = self.cgmManager.glucoseSource.cgmManager as? G5CGMManager {
+//                    cgmManagerG5.shouldSyncToRemoteService = val
+//                }
+//                if let cgmManagerG6 = self.cgmManager.glucoseSource.cgmManager as? G6CGMManager {
+//                    cgmManagerG6.shouldSyncToRemoteService = val
+//                }
+//                if let cgmManagerG7 = self.cgmManager.glucoseSource.cgmManager as? G7CGMManager {
+//                    cgmManagerG7.uploadReadings = val
+//                }
+//            })
         }
 
         func connect() {
@@ -242,7 +245,7 @@ extension NightscoutConfig {
                             targets: targets
                         )
                         // IS THERE A PUMP?
-                        guard let pump = self.apsManager.pumpManager else {
+                        guard let pump = self.deviceManager.pumpManager else {
                             self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
                             self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
                             self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)

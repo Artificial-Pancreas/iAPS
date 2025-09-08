@@ -5,7 +5,7 @@ import LoopKit
 import LoopKitUI
 import Swinject
 
-protocol HealthKitManager: GlucoseSource {
+protocol HealthKitManager {
     /// Check all needed permissions
     /// Return false if one or more permissions are deny or not choosen
     var areAllowAllPermissions: Bool { get }
@@ -29,6 +29,8 @@ protocol HealthKitManager: GlucoseSource {
     func deleteCarbs(date: Date)
     /// delete insulin with syncID
     func deleteInsulin(syncID: String)
+
+    func fetch() -> AnyPublisher<[BloodGlucose], Never>
 }
 
 final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, PumpHistoryObserver {
@@ -522,11 +524,11 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
 
     // MARK: - GlucoseSource
 
-    var glucoseManager: FetchGlucoseManager?
+//    var glucoseManager: FetchGlucoseManager?
     var cgmManager: CGMManagerUI?
     var cgmType: CGMType = .nightscout
 
-    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
         guard settingsManager.settings.useAppleHealth else {
             return Just([]).eraseToAnyPublisher()
         }
@@ -548,9 +550,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
         .eraseToAnyPublisher()
     }
 
-    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-        fetch(nil)
-    }
+//    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+//        fetch(nil)
+//    }
 
     func deleteGlucose(syncID: String) {
         guard settingsManager.settings.useAppleHealth,

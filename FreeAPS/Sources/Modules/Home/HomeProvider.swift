@@ -55,7 +55,7 @@ extension Home {
         }
 
         func pumpTimeZone() -> TimeZone? {
-            apsManager.pumpManager?.status.timeZone
+            deviceManager.pumpManager?.status.timeZone
         }
 
         func heartbeatNow() {

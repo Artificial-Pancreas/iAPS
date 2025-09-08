@@ -20,19 +20,19 @@ extension PumpManagerUI {
 //        )
 //    }
 
-    func settingsViewController(
-        bluetoothProvider: BluetoothProvider,
-        pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
-    ) -> UIViewController & CompletionNotifying {
-        var vc = settingsViewController(
-            bluetoothProvider: bluetoothProvider,
-            colorPalette: .default,
-            allowDebugFeatures: false,
-            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
-        )
-        vc.pumpManagerOnboardingDelegate = pumpManagerOnboardingDelegate
-        return vc
-    }
+//    func settingsViewController(
+//        bluetoothProvider: BluetoothProvider,
+//        pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
+//    ) -> UIViewController & CompletionNotifying {
+//        var vc = settingsViewController(
+//            bluetoothProvider: bluetoothProvider,
+//            colorPalette: .default,
+//            allowDebugFeatures: false,
+//            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
+//        )
+//        vc.pumpManagerOnboardingDelegate = pumpManagerOnboardingDelegate
+//        return vc
+//    }
 
     // TODO: [loopkit] fix this
 //    func settingsViewController() -> UIViewController & CompletionNotifying {
@@ -44,6 +44,6 @@ extension PumpManagerUI {
 //    }
 }
 
-protocol PumpSettingsBuilder {
-    func settingsViewController() -> UIViewController & CompletionNotifying
-}
+// protocol PumpSettingsBuilder {
+//    func settingsViewController() -> UIViewController & CompletionNotifying
+// }
