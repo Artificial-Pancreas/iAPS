@@ -55,6 +55,8 @@
   "useCalc" : true,
   "fattyMeals" : false,
   "fattyMealFactor" : 0.7,
+  "fastMeals" : false,
+  "fastMealFactor" : 1,
   "displayPredictions" : true,
   "useLiveActivity" : false,
   "liveActivityChart": false,
