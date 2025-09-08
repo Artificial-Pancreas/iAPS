@@ -548,11 +548,9 @@ extension AutoISF {
                     }.listRowSpacing(10)
                 }
             }
+            
             .padding(.all, 20)
-            .foregroundStyle(
-                colorScheme == .dark ? IAPSconfig.previewBackgroundLight : IAPSconfig
-                    .previewBackgroundDark
-            )
+            .foregroundStyle(colorScheme == .dark ? IAPSconfig.previewBackgroundLight : IAPSconfig.previewBackgroundDark)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(colorScheme == .dark ? Color(.black).opacity(0.3) : Color(.white))
