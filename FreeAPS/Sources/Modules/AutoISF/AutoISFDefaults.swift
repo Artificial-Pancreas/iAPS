@@ -3,10 +3,10 @@ extension AutoISF.StateModel {
         // Bools
         autoisf = true
         enableBGacceleration = true
-        use_B30 = false
-        ketoProtect = false
-        variableKetoProtect = false
-        ketoProtectAbsolut = false
+        // use_B30 = false
+        // ketoProtect = false
+        // variableKetoProtect = false
+        // ketoProtectAbsolut = false
 
         // Decimals
         autoisf_min = 0.8
@@ -22,17 +22,17 @@ extension AutoISF.StateModel {
         bgBrakeISFweight = 0.10
         iobThresholdPercent = 100
 
-        iTime_Start_Bolus = 1.5
-        b30targetLevel = 100
-        b30upperLimit = 130
-        b30upperdelta = 8
-        b30factor = 5
-        b30_duration = 30
+        // iTime_Start_Bolus = 1.5
+        // b30targetLevel = 100
+        // b30upperLimit = 130
+        // b30upperdelta = 8
+        // b30factor = 5
+        // b30_duration = 30
 
-        ketoProtectBasalPercent = 20
-        ketoProtectBasalAbsolut = 0
+        // ketoProtectBasalPercent = 20
+        // ketoProtectBasalAbsolut = 0
 
         // Units
-        units = .mgdL
+        // units = .mgdL
     }
 }

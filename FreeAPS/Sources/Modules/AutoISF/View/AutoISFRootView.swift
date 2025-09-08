@@ -13,6 +13,7 @@ extension AutoISF {
         @State var scrollView = false
         @State var graphics: (any View)?
         @State var presentHistory = false
+        @State private var showResetDialog = false
 
         @Environment(\.colorScheme) var colorScheme
         @Environment(\.sizeCategory) private var fontSize
@@ -255,6 +256,13 @@ extension AutoISF {
                             DecimalTextField("0", value: $state.iobThresholdPercent, formatter: formatter)
                                 .disabled(isPresented)
                         }
+                        Button(role: .destructive) {
+                            showResetDialog = true
+                        } label: {
+                            Text("Reset AutoISF defaults")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+
                     } header: { Text("Settings") }
 
                     Section {
@@ -453,17 +461,6 @@ extension AutoISF {
                             Text(">").foregroundStyle(.secondary)
                         }.onTapGesture { presentHistory.toggle() }
                     } header: { Text("History") }
-
-                    Section {
-                        Button(role: .destructive) {
-                            state.resetToDefaults()
-                        } label: {
-                            Text("Rset to defaults")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                        }
-                    } header: {
-                        Text("Reset")
-                    }
                 }
             }
             .blur(radius: isPresented ? 5 : 0)
@@ -477,6 +474,14 @@ extension AutoISF {
             .sheet(isPresented: $presentHistory) {
                 AutoISFHistoryView(units: state.units)
                     .environment(\.colorScheme, colorScheme)
+            }
+            .confirmationDialog("Are you sure?", isPresented: $showResetDialog, titleVisibility: .visible) {
+                Button("Reset", role: .destructive) {
+                    state.resetToDefaults()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will restore all AutoISF settings to their default values.")
             }
         }
 
@@ -543,9 +548,11 @@ extension AutoISF {
                     }.listRowSpacing(10)
                 }
             }
-
             .padding(.all, 20)
-            .foregroundStyle(colorScheme == .dark ? IAPSconfig.previewBackgroundLight : IAPSconfig.previewBackgroundDark)
+            .foregroundStyle(
+                colorScheme == .dark ? IAPSconfig.previewBackgroundLight : IAPSconfig
+                    .previewBackgroundDark
+            )
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(colorScheme == .dark ? Color(.black).opacity(0.3) : Color(.white))
