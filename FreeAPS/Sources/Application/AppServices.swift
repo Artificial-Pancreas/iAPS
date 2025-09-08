@@ -12,16 +12,6 @@ class AppServices: ObservableObject {
     let resolver: Resolver
 
     init(assembler: Assembler) {
-        // Set up Swinject (your existing code)
-        let assembler = Assembler([
-            StorageAssembly(),
-            ServiceAssembly(),
-            APSAssembly(),
-            NetworkAssembly(),
-            UIAssembly(),
-            SecurityAssembly()
-        ])
-
         resolver = assembler.resolver
 
         appearanceManager = FreeAPSApp.resolver.resolve(AppearanceManager.self)!

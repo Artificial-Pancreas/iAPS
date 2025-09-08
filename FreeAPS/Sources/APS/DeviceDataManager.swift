@@ -137,6 +137,9 @@ final class DeviceDataManager: Injectable {
 
         UIDevice.current.isBatteryMonitoringEnabled = true
         broadcaster.register(AlertObserver.self, observer: self)
+
+        setupPump()
+        setupCGM()
     }
 
     private(set) var cgmManager: CGMManager? {

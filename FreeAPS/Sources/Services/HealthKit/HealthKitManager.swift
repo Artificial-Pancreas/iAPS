@@ -30,7 +30,7 @@ protocol HealthKitManager {
     /// delete insulin with syncID
     func deleteInsulin(syncID: String)
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never>
+    func fetch() -> Future<[BloodGlucose], Never>
 }
 
 final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, PumpHistoryObserver {
@@ -528,9 +528,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
     var cgmManager: CGMManagerUI?
     var cgmType: CGMType = .nightscout
 
-    func fetch() -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch() -> Future<[BloodGlucose], Never> {
         guard settingsManager.settings.useAppleHealth else {
-            return Just([]).eraseToAnyPublisher()
+            return Future { promise in promise(.success([])) }
         }
 
         return Future { promise in
@@ -547,7 +547,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 promise(.success(actualGlucose))
             }
         }
-        .eraseToAnyPublisher()
     }
 
 //    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {

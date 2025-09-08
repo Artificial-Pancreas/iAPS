@@ -19,56 +19,79 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
     private let processQueue = DispatchQueue(label: "BaseCGMPluginManager.processQueue")
     private let glucoseStorage: GlucoseStorage
     private let settingsManager: SettingsManager
-    private let nightscoutManager: NightscoutManager!
+    private let nightscoutManager: NightscoutManager
     private let healthKitManager: HealthKitManager
-    private let calibrationService: CalibrationService
 
     private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-    private var lifetime = Lifetime()
-    private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     init(resolver: Resolver) {
         glucoseStorage = resolver.resolve(GlucoseStorage.self)!
         settingsManager = resolver.resolve(SettingsManager.self)!
         nightscoutManager = resolver.resolve(NightscoutManager.self)!
         healthKitManager = resolver.resolve(HealthKitManager.self)!
-        calibrationService = resolver.resolve(CalibrationService.self)!
-        subscribe()
     }
 
-//    var cgmType: CGMType = .nightscout
-//    var cgmHasValidSensorSession: Bool = false
-
-    private var promise: Future<[BloodGlucose], Error>.Promise?
-
-    deinit {
-        // TODO: [loopkit] is something like this needed for plugins?
-        // dexcomManager.transmitter.stopScanning()
+    func bloodGlucoseFailed(error _: Error) {
+//        promise?(.failure(error))
     }
 
     func bloodGlucoseReceived(bloodGlucose: [BloodGlucose]) {
-        promise?(.success(bloodGlucose))
+//        promise?(.success(bloodGlucose))
+        let syncDate = glucoseStorage.syncDate()
+
+        glucoseStoreAndHeartDecision(
+            syncDate: syncDate,
+            glucose: bloodGlucose,
+            // TODO: [loopkit] figure out HealthKit fetching
+            glucoseFromHealth: [] // glucoseFromHealth
+        )
     }
 
-    func bloodGlucoseFailed(error: Error) {
-        promise?(.failure(error))
-    }
+//    private func subscribe() {
+//        timer.publisher
+//            .receive(on: processQueue)
+//            .flatMap { _ -> AnyPublisher<[BloodGlucose], Never> in
+//                debug(.nightscout, "FetchGlucoseManager timer heartbeat")
+    ////                self.updateGlucoseSource()
+//                return self.fetch(self.timer).eraseToAnyPublisher()
+//            }
+//            .receive(on: processQueue)
+//            .flatMap { glucose in
+//                debug(.nightscout, "FetchGlucoseManager callback sensor")
+//                return Publishers.CombineLatest3(
+//                    Just(glucose),
+//                    Just(self.glucoseStorage.syncDate()),
+//                    self.healthKitManager.fetch()
+//                )
+//                .eraseToAnyPublisher()
+//            }
+//            .receive(on: processQueue)
+//            .sink { newGlucose, syncDate, glucoseFromHealth in
+//                self.glucoseStoreAndHeartDecision(
+//                    syncDate: syncDate,
+//                    glucose: newGlucose,
+//                    glucoseFromHealth: glucoseFromHealth
+//                )
+//            }
+//            .store(in: &lifetime)
+//
+//        timer.fire()
+//        timer.resume()
+//    }
 
-    // MARK: GlucoseSource
-
-    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        Future<[BloodGlucose], Error> { [weak self] promise in
-            self?.promise = promise
-        }
-        .timeout(60 * 5, scheduler: processQueue, options: nil, customError: nil)
-        .replaceError(with: [])
-        .replaceEmpty(with: [])
-        .eraseToAnyPublisher()
-    }
+//    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
+//        Future<[BloodGlucose], Error> { [weak self] promise in
+//            self?.promise = promise
+//        }
+//        .timeout(60 * 5, scheduler: processQueue, options: nil, customError: nil)
+//        .replaceError(with: [])
+//        .replaceEmpty(with: [])
+//        .eraseToAnyPublisher()
+//    }
 
     // TODO: [loopkit] fix this
-    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-        Just([]).eraseToAnyPublisher()
+//    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
+//        Just([]).eraseToAnyPublisher()
 //        Future<[BloodGlucose], Error> { _ in
 //            self.processQueue.async {
 //                guard let cgmManager = self.cgmManager else { return }
@@ -83,7 +106,7 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
 //        .replaceError(with: [])
 //        .replaceEmpty(with: [])
 //        .eraseToAnyPublisher()
-    }
+//    }
 
     private func glucoseStoreAndHeartDecision(
         syncDate: Date,
@@ -157,56 +180,6 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
             return
         }
         healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
-    }
-
-    /// The function used to start the timer sync - Function of the variable defined in config
-    private func subscribe() {
-        timer.publisher
-            .receive(on: processQueue)
-            .flatMap { _ -> AnyPublisher<[BloodGlucose], Never> in
-                debug(.nightscout, "FetchGlucoseManager timer heartbeat")
-//                self.updateGlucoseSource()
-                return self.fetch(self.timer).eraseToAnyPublisher()
-            }
-            .receive(on: processQueue)
-            .flatMap { glucose in
-                debug(.nightscout, "FetchGlucoseManager callback sensor")
-                return Publishers.CombineLatest3(
-                    Just(glucose),
-                    Just(self.glucoseStorage.syncDate()),
-                    self.healthKitManager.fetch()
-                )
-                .eraseToAnyPublisher()
-            }
-            .receive(on: processQueue)
-            .sink { newGlucose, syncDate, glucoseFromHealth in
-                self.glucoseStoreAndHeartDecision(
-                    syncDate: syncDate,
-                    glucose: newGlucose,
-                    glucoseFromHealth: glucoseFromHealth
-                )
-            }
-            .store(in: &lifetime)
-
-        timer.fire()
-        timer.resume()
-
-//        UserDefaults.standard
-//            .publisher(for: \.dexcomTransmitterID)
-//            .removeDuplicates()
-//            .sink { _ in
-        // TODO: [loopkit] fix this
-//                if self.settingsManager.settings.cgm == .dexcomG5 {
-//                    if id != self.dexcomSourceG5.transmitterID {
-        ////                        self.dexcomSourceG5 = DexcomSourceG5(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
-//                    }
-//                } else if self.settingsManager.settings.cgm == .dexcomG6 {
-//                    if id != self.dexcomSourceG6.transmitterID {
-        ////                        self.dexcomSourceG6 = DexcomSourceG6(glucoseStorage: self.glucoseStorage, glucoseManager: self) // TODO: fix this
-//                    }
-//                }
-//            }
-//            .store(in: &lifetime)
     }
 
     private func save(_ glucose: [BloodGlucose]) {
