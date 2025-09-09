@@ -463,7 +463,6 @@
 		E3A08AAE59538BC8A8ABE477 /* NotificationsConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3260468377DA9DB4DEE9AF6D /* NotificationsConfigDataFlow.swift */; };
 		E4984C5262A90469788754BB /* PreferencesEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8BA8533F56BC55748CA877 /* PreferencesEditorProvider.swift */; };
 		E5D43A702E709F4500DCB4EA /* RadioButtonToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43A6F2E709F4300DCB4EA /* RadioButtonToggleStyle.swift */; };
-		E5D43A6E2E6E37AE00DCB4EA /* AutoISFDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D43A6D2E6E37AB00DCB4EA /* AutoISFDefaults.swift */; };
 		E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */; };
 		E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */; };
 		F2159A4A2BA60A6000A0B716 /* ContactTrickDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */; };
@@ -1117,7 +1116,6 @@
 		E26904AACA8D9C15D229D675 /* SnoozeStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnoozeStateModel.swift; sourceTree = "<group>"; };
 		E2EBA7C03C26FCC67E16D798 /* LibreConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LibreConfigProvider.swift; sourceTree = "<group>"; };
 		E5D43A6F2E709F4300DCB4EA /* RadioButtonToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonToggleStyle.swift; sourceTree = "<group>"; };
-		E5D43A6D2E6E37AB00DCB4EA /* AutoISFDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoISFDefaults.swift; sourceTree = "<group>"; };
 		E625985B47742D498CB1681A /* NotificationsConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationsConfigProvider.swift; sourceTree = "<group>"; };
 		E68CDC1E5C438D1BEAD4CF24 /* LibreConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LibreConfigStateModel.swift; sourceTree = "<group>"; };
 		E9AAB83FB6C3B41EFD1846A0 /* AddTempTargetRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetRootView.swift; sourceTree = "<group>"; };
@@ -1428,7 +1426,6 @@
 		198F67B42CFCBD5D00E538CB /* AutoISF */ = {
 			isa = PBXGroup;
 			children = (
-				E5D43A6D2E6E37AB00DCB4EA /* AutoISFDefaults.swift */,
 				198F67B12CFCBD5D00E538CB /* AutoISFDataFlow.swift */,
 				198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */,
 				198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */,
@@ -3213,7 +3210,6 @@
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
 				388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */,
-				E5D43A6E2E6E37AE00DCB4EA /* AutoISFDefaults.swift in Sources */,
 				3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */,
 				3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */,
 				CE1856F52ADC4858007E39C7 /* AddCarbPresetIntent.swift in Sources */,
