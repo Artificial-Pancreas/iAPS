@@ -191,53 +191,72 @@ extension Home {
 
         var info: some View {
             HStack(spacing: 10) {
-                ZStack {
-                    HStack {
-                        if state.pumpSuspended {
-                            Text("Pump suspended")
-                                .font(.extraSmall).bold().foregroundColor(.loopGray)
-                        } else {
-                            Text(tempBasalString)
-                                .font(.statusFont).bold()
-                                .foregroundColor(.insulin)
-                        }
+                HStack {
+                    if state.pumpSuspended {
+                        Text("Pump suspended")
+                            .font(.extraSmall)
+                            .bold()
+                            .foregroundColor(.loopGray)
+                    } else {
+                        Text(tempBasalString)
+                            .font(.statusFont)
+                            .bold()
+                            .foregroundColor(.insulin)
                     }
                 }
-                .padding(.leading, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
-
-                if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
-                    Text(tempTargetString)
-                        .font(.buttonFont)
-                        .foregroundColor(.secondary)
-                } else {
-                    profileView
-                }
-
-                ZStack {
-                    HStack {
-                        Text("⇢").font(.statusFont).foregroundStyle(.secondary)
-
-                        if let eventualBG = state.eventualBG {
-                            Text(
-                                fetchedTargetFormatter.string(
-                                    from: (state.data.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
-                                ) ?? ""
-                            ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
-                        } else {
-                            Text("?").font(.statusFont).foregroundStyle(.secondary)
-                        }
-                        Text(state.data.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
+                HStack(spacing: 6) {
+                    if fetchedPercent.first?.enabled ?? false {
+                        profileView
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .foregroundColor(.purple)
                     }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 8)
+                    if (fetchedPercent.first?.enabled ?? false) && tempTargetString != nil {
+                        Divider()
+                            .frame(height: 14)
+                            .overlay(Color.secondary)
+                    }
+                    if let tempTargetStr = tempTargetString {
+                        Text(tempTargetStr)
+                            .font(.buttonFont)
+                            .foregroundColor(.loopGreen)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
+                HStack(spacing: 4) {
+                    Text("⇢")
+                        .font(.statusFont)
+                        .foregroundStyle(.secondary)
+                    if let eventualBG = state.eventualBG {
+                        Text(
+                            fetchedTargetFormatter.string(
+                                from: (state.data.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                            ) ?? ""
+                        )
+                        .font(.statusFont)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                    } else {
+                        Text("?")
+                            .font(.statusFont)
+                            .foregroundStyle(.secondary)
+                    }
+                    Text(state.data.units.rawValue)
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var infoPanel: some View {
-            info.frame(height: 26)
+            info
+                .frame(height: 45)
                 .background {
                     InfoPanelBackground(colorScheme: colorScheme)
                 }
@@ -560,9 +579,9 @@ extension Home {
                                 {
                                     if name.count > 15 {
                                         let shortened = name.prefix(15)
-                                        Text(shortened).font(.statusFont).foregroundStyle(.secondary)
+                                        Text(shortened).font(.buttonFont).foregroundStyle(.secondary)
                                     } else {
-                                        Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                        Text(name).font(.buttonFont).foregroundStyle(.secondary)
                                     }
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
@@ -903,3 +922,4 @@ extension Home {
         }
     }
 }
+

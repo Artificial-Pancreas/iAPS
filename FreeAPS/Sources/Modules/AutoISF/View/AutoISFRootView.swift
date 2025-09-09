@@ -13,6 +13,7 @@ extension AutoISF {
         @State var scrollView = false
         @State var graphics: (any View)?
         @State var presentHistory = false
+        @State private var showResetDialog = false
 
         @Environment(\.colorScheme) var colorScheme
         @Environment(\.sizeCategory) private var fontSize
@@ -255,6 +256,13 @@ extension AutoISF {
                             DecimalTextField("0", value: $state.iobThresholdPercent, formatter: formatter)
                                 .disabled(isPresented)
                         }
+                        Button(role: .destructive) {
+                            showResetDialog = true
+                        } label: {
+                            Text("Reset AutoISF defaults")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+
                     } header: { Text("Settings") }
 
                     Section {
@@ -467,6 +475,14 @@ extension AutoISF {
                 AutoISFHistoryView(units: state.units)
                     .environment(\.colorScheme, colorScheme)
             }
+            .confirmationDialog("Are you sure?", isPresented: $showResetDialog, titleVisibility: .visible) {
+                Button("Reset", role: .destructive) {
+                    state.resetToDefaults()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will restore all AutoISF settings to their default values.")
+            }
         }
 
         private func info(header: String, body: String, useGraphics: (any View)?) {
@@ -532,7 +548,7 @@ extension AutoISF {
                     }.listRowSpacing(10)
                 }
             }
-
+            
             .padding(.all, 20)
             .foregroundStyle(colorScheme == .dark ? IAPSconfig.previewBackgroundLight : IAPSconfig.previewBackgroundDark)
             .background(
