@@ -260,7 +260,7 @@ extension FreeAPSSettings: Decodable {
         if let fattyMeals = try? container.decode(Bool.self, forKey: .fattyMeals) {
             settings.fattyMeals = fattyMeals
         }
-        
+
         if let fastMeals = try? container.decode(Bool.self, forKey: .fastMeals) {
             settings.fastMeals = fastMeals
         }
@@ -292,7 +292,7 @@ extension FreeAPSSettings: Decodable {
         if let fattyMealFactor = try? container.decode(Decimal.self, forKey: .fattyMealFactor) {
             settings.fattyMealFactor = fattyMealFactor
         }
-        
+
         if let fastMealFactor = try? container.decode(Decimal.self, forKey: .fastMealFactor) {
             settings.fastMealFactor = fastMealFactor
         }
