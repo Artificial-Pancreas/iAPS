@@ -155,18 +155,10 @@
 		3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DEE725CA063400A708ED /* PersistedProperty.swift */; };
 		3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0125CA9FEA00A708ED /* Credentials.swift */; };
 		3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DF0F25CAAAE200A708ED /* APSManager.swift */; };
-		3818AA4A274C267000843DB3 /* CGMBLEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA49274C267000843DB3 /* CGMBLEKit.framework */; };
-		3818AA4B274C267100843DB3 /* CGMBLEKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA49274C267000843DB3 /* CGMBLEKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3818AA5C274C26A300843DB3 /* MockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA4E274C26A300843DB3 /* MockKit.framework */; };
 		3818AA5D274C26A300843DB3 /* MockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA4E274C26A300843DB3 /* MockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3818AA5E274C26A300843DB3 /* MockKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA4F274C26A300843DB3 /* MockKitUI.framework */; };
 		3818AA5F274C26A300843DB3 /* MockKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA4F274C26A300843DB3 /* MockKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3818AA6A274C26A500843DB3 /* RileyLinkBLEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA55274C26A300843DB3 /* RileyLinkBLEKit.framework */; };
-		3818AA6B274C26A500843DB3 /* RileyLinkBLEKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA55274C26A300843DB3 /* RileyLinkBLEKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3818AA6C274C26A500843DB3 /* RileyLinkKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA56274C26A300843DB3 /* RileyLinkKit.framework */; };
-		3818AA6D274C26A500843DB3 /* RileyLinkKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA56274C26A300843DB3 /* RileyLinkKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3818AA6E274C26A500843DB3 /* RileyLinkKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA57274C26A300843DB3 /* RileyLinkKitUI.framework */; };
-		3818AA6F274C26A500843DB3 /* RileyLinkKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA57274C26A300843DB3 /* RileyLinkKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3818AA71274C278200843DB3 /* LoopTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA70274C278200843DB3 /* LoopTestingKit.framework */; };
 		3818AA72274C278200843DB3 /* LoopTestingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3818AA70274C278200843DB3 /* LoopTestingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38192E03261B82FA0094D973 /* ReachabilityManager.swift */; };
@@ -378,12 +370,8 @@
 		CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */; };
 		CE1856F52ADC4858007E39C7 /* AddCarbPresetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1856F42ADC4858007E39C7 /* AddCarbPresetIntent.swift */; };
 		CE1856F72ADC4869007E39C7 /* CarbPresetIntentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1856F62ADC4869007E39C7 /* CarbPresetIntentRequest.swift */; };
-		CE2FAD38297D69E1001A872C /* ShareClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D1A297D69A900DF218F /* ShareClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */; };
 		CE398D16297C9D1D00DF218F /* dexcomSourceG7.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE398D15297C9D1D00DF218F /* dexcomSourceG7.swift */; };
-		CE398D18297C9EE800DF218F /* G7SensorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D17297C9EE800DF218F /* G7SensorKit.framework */; };
-		CE398D19297C9EFD00DF218F /* G7SensorKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D17297C9EE800DF218F /* G7SensorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CE398D1B297D69A900DF218F /* ShareClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE398D1A297D69A900DF218F /* ShareClient.framework */; };
 		CE48C86428CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */; };
 		CE48C86628CA6B48007C0598 /* OmniPodManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */; };
 		CE51DD1C2A01970900F163F7 /* ConnectIQ 2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE51DD1B2A01970800F163F7 /* ConnectIQ 2.xcframework */; };
@@ -391,12 +379,6 @@
 		CE6B025728F350FF000C5502 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6B025628F350FF000C5502 /* HealthKit.framework */; };
 		CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7950232997D81700FA576E /* CGMSettingsView.swift */; };
 		CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7950252998056D00FA576E /* CGMSetupView.swift */; };
-		CE79502829980C9600FA576E /* CGMBLEKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502729980C9600FA576E /* CGMBLEKitUI.framework */; };
-		CE79502A29980C9F00FA576E /* G7SensorKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502929980C9F00FA576E /* G7SensorKitUI.framework */; };
-		CE79502B29980CAF00FA576E /* CGMBLEKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502729980C9600FA576E /* CGMBLEKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CE79502C29980CB500FA576E /* G7SensorKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502929980C9F00FA576E /* G7SensorKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CE79502E29980E4D00FA576E /* ShareClientUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502D29980E4D00FA576E /* ShareClientUI.framework */; };
-		CE79502F29980E5800FA576E /* ShareClientUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE79502D29980E4D00FA576E /* ShareClientUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE7CA34E2A064973004BE681 /* AppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CA3432A064973004BE681 /* AppShortcuts.swift */; };
 		CE7CA34F2A064973004BE681 /* BaseIntentsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CA3442A064973004BE681 /* BaseIntentsRequest.swift */; };
 		CE7CA3502A064973004BE681 /* CancelTempPresetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CA3462A064973004BE681 /* CancelTempPresetIntent.swift */; };
@@ -417,21 +399,11 @@
 		CEA4F62329BE10F70011ADF7 /* SavitzkyGolayFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */; };
 		CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; };
 		CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DB28B8F5B900B70274 /* MKRingProgressView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CEB434DF28B8F5C400B70274 /* OmniBLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DE28B8F5C400B70274 /* OmniBLE.framework */; };
-		CEB434E028B8F5C400B70274 /* OmniBLE.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB434DE28B8F5C400B70274 /* OmniBLE.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E228B8F9DB00B70274 /* BluetoothStateManager.swift */; };
 		CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E428B8FF5D00B70274 /* UIColor.swift */; };
 		CEB434E728B9053300B70274 /* LoopUIColorPalette+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */; };
 		CEB434FD28B90B7C00B70274 /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = CEB434FC28B90B7C00B70274 /* SwiftCharts */; };
 		CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = CEB434FC28B90B7C00B70274 /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CEC751D229D88257006E9D24 /* OmniKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D129D88257006E9D24 /* OmniKit.framework */; };
-		CEC751D429D88257006E9D24 /* OmniKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D329D88257006E9D24 /* OmniKitUI.framework */; };
-		CEC751D629D88262006E9D24 /* MinimedKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D529D88262006E9D24 /* MinimedKit.framework */; };
-		CEC751D829D88262006E9D24 /* MinimedKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D729D88262006E9D24 /* MinimedKitUI.framework */; };
-		CEC751D929D8827A006E9D24 /* OmniKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D129D88257006E9D24 /* OmniKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CEC751DA29D8827A006E9D24 /* OmniKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D329D88257006E9D24 /* OmniKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CEC751DB29D88280006E9D24 /* MinimedKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D529D88262006E9D24 /* MinimedKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CEC751DC29D88280006E9D24 /* MinimedKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEC751D729D88262006E9D24 /* MinimedKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CECA4775298DA8310095139F /* DexcomSourceG5.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA4774298DA8310095139F /* DexcomSourceG5.swift */; };
 		D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A42073A2D03A278914448 /* AddTempTargetDataFlow.swift */; };
 		D6D02515BBFBE64FEBE89856 /* DataTableRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881E04BA5E0A003DE8E0A9C6 /* DataTableRootView.swift */; };
@@ -470,10 +442,6 @@
 		F226D4F22E5E0B1400F8F43C /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F226D4F32E5E0B1400F8F43C /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; };
 		F226D4F42E5E0B1400F8F43C /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F226D5002E5E111300F8F43C /* LibreTransmitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */; };
-		F226D5012E5E111400F8F43C /* LibreTransmitter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F226D5022E5E111400F8F43C /* LibreTransmitterUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */; };
-		F226D5032E5E111400F8F43C /* LibreTransmitterUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F270F68C2BAE374C00F6D8DD /* FontTracking.swift */; };
 		F273F9602DE73ABE00BF0FFC /* IOBTick0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */; };
 		F2A4B7922E64985F000E0E85 /* PluiginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7912E64985F000E0E85 /* PluiginManager.swift */; };
@@ -539,28 +507,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CEC751DB29D88280006E9D24 /* MinimedKit.framework in Embed Frameworks */,
-				CEC751DC29D88280006E9D24 /* MinimedKitUI.framework in Embed Frameworks */,
-				CEC751D929D8827A006E9D24 /* OmniKit.framework in Embed Frameworks */,
-				CEC751DA29D8827A006E9D24 /* OmniKitUI.framework in Embed Frameworks */,
-				CE79502F29980E5800FA576E /* ShareClientUI.framework in Embed Frameworks */,
-				CE79502C29980CB500FA576E /* G7SensorKitUI.framework in Embed Frameworks */,
 				CE51DD1D2A01970900F163F7 /* ConnectIQ 2.xcframework in Embed Frameworks */,
 				F226D4F22E5E0B1400F8F43C /* LoopKit.framework in Embed Frameworks */,
-				CE79502B29980CAF00FA576E /* CGMBLEKitUI.framework in Embed Frameworks */,
-				CE2FAD38297D69E1001A872C /* ShareClient.framework in Embed Frameworks */,
 				F226D4F42E5E0B1400F8F43C /* LoopKitUI.framework in Embed Frameworks */,
-				CE398D19297C9EFD00DF218F /* G7SensorKit.framework in Embed Frameworks */,
-				3818AA6F274C26A500843DB3 /* RileyLinkKitUI.framework in Embed Frameworks */,
-				3818AA4B274C267100843DB3 /* CGMBLEKit.framework in Embed Frameworks */,
-				CEB434E028B8F5C400B70274 /* OmniBLE.framework in Embed Frameworks */,
 				CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */,
 				CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */,
-				F226D5012E5E111400F8F43C /* LibreTransmitter.framework in Embed Frameworks */,
-				F226D5032E5E111400F8F43C /* LibreTransmitterUI.framework in Embed Frameworks */,
-				3818AA6B274C26A500843DB3 /* RileyLinkBLEKit.framework in Embed Frameworks */,
 				3818AA72274C278200843DB3 /* LoopTestingKit.framework in Embed Frameworks */,
-				3818AA6D274C26A500843DB3 /* RileyLinkKit.framework in Embed Frameworks */,
 				3818AA5D274C26A300843DB3 /* MockKit.framework in Embed Frameworks */,
 				3818AA5F274C26A300843DB3 /* MockKitUI.framework in Embed Frameworks */,
 			);
@@ -1167,38 +1119,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEC751D829D88262006E9D24 /* MinimedKitUI.framework in Frameworks */,
-				F226D5002E5E111300F8F43C /* LibreTransmitter.framework in Frameworks */,
 				D8DA5CD12B49EEF000C54E6C /* SlideButton in Frameworks */,
-				CEC751D629D88262006E9D24 /* MinimedKit.framework in Frameworks */,
-				CEC751D429D88257006E9D24 /* OmniKitUI.framework in Frameworks */,
-				CEC751D229D88257006E9D24 /* OmniKit.framework in Frameworks */,
-				CE79502E29980E4D00FA576E /* ShareClientUI.framework in Frameworks */,
-				CE79502A29980C9F00FA576E /* G7SensorKitUI.framework in Frameworks */,
-				CE79502829980C9600FA576E /* CGMBLEKitUI.framework in Frameworks */,
 				CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */,
 				38E87403274F78C000975559 /* libswiftCoreNFC.tbd in Frameworks */,
 				38E87401274F77E400975559 /* CoreNFC.framework in Frameworks */,
 				F226D4F32E5E0B1400F8F43C /* LoopKitUI.framework in Frameworks */,
-				CEB434DF28B8F5C400B70274 /* OmniBLE.framework in Frameworks */,
 				F226D4F12E5E0B1400F8F43C /* LoopKit.framework in Frameworks */,
 				3818AA71274C278200843DB3 /* LoopTestingKit.framework in Frameworks */,
-				3818AA4A274C267000843DB3 /* CGMBLEKit.framework in Frameworks */,
 				CE51DD1C2A01970900F163F7 /* ConnectIQ 2.xcframework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				3818AA5C274C26A300843DB3 /* MockKit.framework in Frameworks */,
-				3818AA6A274C26A500843DB3 /* RileyLinkBLEKit.framework in Frameworks */,
-				3818AA6C274C26A500843DB3 /* RileyLinkKit.framework in Frameworks */,
 				3818AA5E274C26A300843DB3 /* MockKitUI.framework in Frameworks */,
-				CE398D18297C9EE800DF218F /* G7SensorKit.framework in Frameworks */,
-				F226D5022E5E111400F8F43C /* LibreTransmitterUI.framework in Frameworks */,
-				CE398D1B297D69A900DF218F /* ShareClient.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
 				3833B46D26012030003021B3 /* Algorithms in Frameworks */,
 				CEB434FD28B90B7C00B70274 /* SwiftCharts in Frameworks */,
 				38DF1789276FC8C400B3528F /* SwiftMessages in Frameworks */,
 				E0CC2C5C275B9F0F00A7BC71 /* HealthKit.framework in Frameworks */,
-				3818AA6E274C26A500843DB3 /* RileyLinkKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

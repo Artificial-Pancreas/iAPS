@@ -4,9 +4,8 @@
    wasCreatedForAppExtension = "YES"
    version = "1.7">
    <BuildAction
-      parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES"
-      buildArchitectures = "Automatic">
+      parallelizeBuildables = "NO"
+      buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -142,6 +141,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3E6007862D0C5D0C00B186D1"
+               BuildableName = "DanaKitPlugin.loopplugin"
+               BlueprintName = "DanaKitPlugin"
+               ReferencedContainer = "container:DanaKit/DanaKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "B40BF25D23ABD47400A43CEE"
                BuildableName = "ShareClientPlugin.loopplugin"
                BlueprintName = "ShareClientPlugin"
@@ -226,10 +239,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3E6007862D0C5D0C00B186D1"
-               BuildableName = "DanaKitPlugin.loopplugin"
-               BlueprintName = "DanaKitPlugin"
-               ReferencedContainer = "container:DanaKit/DanaKit.xcodeproj">
+               BlueprintIdentifier = "C1BDBAE72A4397E200A787D1"
+               BuildableName = "LibreDemoPlugin.loopplugin"
+               BlueprintName = "LibreDemoPlugin"
+               ReferencedContainer = "container:LibreTransmitter/LibreTransmitter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -258,6 +271,20 @@
                BuildableName = "FreeAPS.app"
                BlueprintName = "FreeAPS"
                ReferencedContainer = "container:FreeAPS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "84752E8A26ED0FFE009FD801"
+               BuildableName = "OmniBLETests.xctest"
+               BlueprintName = "OmniBLETests"
+               ReferencedContainer = "container:OmniBLE/OmniBLE.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
