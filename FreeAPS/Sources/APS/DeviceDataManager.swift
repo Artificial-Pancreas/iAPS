@@ -72,7 +72,10 @@ final class DeviceDataManager: Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var bluetoothProvider: BluetoothStateManager!
     @Injected() private var router: Router!
-    @Injected() private var glucoseSource: PluginGlucoseSource!
+
+    @Injected() private var appCoordinator: AppCoordinator!
+
+    private var lifetime = Lifetime()
 
     private let pluginManager = PluginManager()
 
@@ -84,14 +87,12 @@ final class DeviceDataManager: Injectable {
     @SyncAccess(lock: accessLock) @Persisted(key: "DeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
         .distantPast
 
-    let recommendsLoop = PassthroughSubject<Void, Never>()
+    // TODO: move to AppCoordinator (?)
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
     let pumpNewStatus = PassthroughSubject<Void, Never>()
     let manualTempBasal = PassthroughSubject<Bool, Never>()
 
-    @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
-    private var pumpUpdatePromise: Future<Bool, Never>.Promise?
     @SyncAccess var loopInProgress: Bool = false
 
     @Published var cgmHasValidSensorSession: Bool = false
@@ -140,6 +141,12 @@ final class DeviceDataManager: Injectable {
 
         setupPump()
         setupCGM()
+
+        appCoordinator.heartbeat
+            .sink { [weak self] date in
+                self?.heartbeat(date: date)
+            }
+            .store(in: &lifetime)
     }
 
     private(set) var cgmManager: CGMManager? {
@@ -329,19 +336,13 @@ final class DeviceDataManager: Injectable {
         pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
     }
 
-    func heartbeat(date: Date) {
-        guard pumpUpdateCancellable == nil else {
-            warning(.deviceManager, "Pump updating already in progress. Skip updating.")
-            return
-        }
-
-        guard !loopInProgress else {
-            warning(.deviceManager, "Loop in progress. Skip updating.")
-            return
-        }
-
-        func update(_: Future<Bool, Never>.Promise?) {}
-
+    private func heartbeat(date: Date) {
+//        TODO: [loopkit] this check is skipped in updatePumpData, is it okay to skip here as well?
+//        directly in loop() function
+//        guard !loopInProgress else {
+//            warning(.deviceManager, "Loop in progress. Skip updating.")
+//            return
+//        }
         processQueue.safeSync {
             lastHeartBeatTime = date
             updatePumpData()
@@ -370,7 +371,6 @@ final class DeviceDataManager: Injectable {
     private func updatePumpData() {
         guard let pumpManager = pumpManager, pumpManager.isOnboarded else {
             debug(.deviceManager, "Pump is not set, skip updating")
-            updateUpdateFinished(false)
             return
         }
 
@@ -378,38 +378,14 @@ final class DeviceDataManager: Injectable {
         processQueue.safeSync {
             pumpManager.ensureCurrentPumpData { _ in
                 debug(.deviceManager, "Pump data updated.")
-                self.updateUpdateFinished(true)
+                // directly in loop() function
+                //        guard !loopInProgress else {
+                //            warning(.deviceManager, "Loop already in progress. Skip recommendation.")
+                //            return
+                //        }
+                self.appCoordinator.sendRecommendsLoop()
             }
         }
-
-//        pumpUpdateCancellable = Future<Bool, Never> { [unowned self] promise in
-//            pumpUpdatePromise = promise
-//            debug(.deviceManager, "Waiting for pump update and loop recommendation")
-//            processQueue.safeSync {
-//                pumpManager.ensureCurrentPumpData { _ in
-//                    debug(.deviceManager, "Pump data updated.")
-//                }
-//            }
-//        }
-//        .timeout(30, scheduler: processQueue)
-//        .replaceError(with: false)
-//        .replaceEmpty(with: false)
-//        .sink(receiveValue: updateUpdateFinished)
-    }
-
-    private func updateUpdateFinished(_ recommendsLoop: Bool) {
-        pumpUpdateCancellable = nil
-        pumpUpdatePromise = nil
-        if !recommendsLoop {
-            warning(.deviceManager, "Loop recommendation time out or got error. Trying to loop right now.")
-        }
-
-        // directly in loop() function
-//        guard !loopInProgress else {
-//            warning(.deviceManager, "Loop already in progress. Skip recommendation.")
-//            return
-//        }
-        self.recommendsLoop.send()
     }
 
     public func pumpManagerTypeByIdentifier(_ identifier: String) -> PumpManagerUI.Type? {
@@ -467,6 +443,9 @@ private extension DeviceDataManager {
 
         if let cgmManagerUI = cgmManager as? CGMManagerUI {
             addDisplayGlucoseUnitObserver(cgmManagerUI)
+            appCoordinator.setShouldUploadGlucose(cgmManagerUI.shouldSyncToRemoteService)
+        } else {
+            appCoordinator.setShouldUploadGlucose(false)
         }
     }
 
@@ -848,16 +827,6 @@ extension DeviceDataManager: PumpManagerDelegate {
         )))
     }
 
-    func pumpManagerRecommendsLoop(_: PumpManager) {
-        dispatchPrecondition(condition: .onQueue(processQueue))
-        debug(.deviceManager, "Pump recommends loop")
-        guard let promise = pumpUpdatePromise else {
-            warning(.deviceManager, "We do not waiting for loop recommendation at this time.")
-            return
-        }
-        promise(.success(true))
-    }
-
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
         lastEventDate?.addingTimeInterval(-15.minutes.timeInterval) ?? Date().addingTimeInterval(-2.hours.timeInterval)
     }
@@ -956,8 +925,7 @@ extension DeviceDataManager: CGMManagerDelegate {
         // TODO: [loopkit] verify this
         dispatchPrecondition(condition: .onQueue(processQueue))
         UserDefaults.standard.cgmManagerRawValue = manager.rawValue
-        // TODO: [loopkit] is this correct?
-        settingsManager.settings.uploadGlucose = manager.shouldSyncToRemoteService
+        appCoordinator.setShouldUploadGlucose(manager.shouldSyncToRemoteService)
     }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {
@@ -987,7 +955,7 @@ extension DeviceDataManager: CGMManagerDelegate {
     func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         processCGMReadingResult(manager, readingResult: readingResult) {
-            debug(.deviceManager, "\(manager.pluginIdentifier) - Direct return done")
+//            debug(.deviceManager, "\(manager.pluginIdentifier) - Direct return done")
         }
     }
 
@@ -1000,11 +968,11 @@ extension DeviceDataManager: CGMManagerDelegate {
     }
 
     private func processCGMReadingResult(
-        _: CGMManager,
+        _ manager: CGMManager,
         readingResult: CGMReadingResult,
         completion: @escaping () -> Void
     ) {
-        debug(.deviceManager, "Process CGM Reading Result launched")
+//        debug(.deviceManager, "Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
 
@@ -1035,18 +1003,20 @@ extension DeviceDataManager: CGMManagerDelegate {
                 )
             }
 
-            glucoseSource.bloodGlucoseReceived(bloodGlucose: bloodGlucose)
-
+            appCoordinator.sendBloodGlucose(bloodGlucose: bloodGlucose)
             completion()
         case .unreliableData:
             // loopManager.receivedUnreliableCGMReading()
-            glucoseSource.bloodGlucoseFailed(error: GlucoseDataError.unreliableData)
+            warning(.deviceManager, "CGM Manager with identifier \(manager.pluginIdentifier) unreliable data")
             completion()
         case .noData:
-            glucoseSource.bloodGlucoseFailed(error: GlucoseDataError.noData)
             completion()
         case let .error(error):
-            glucoseSource.bloodGlucoseFailed(error: error)
+            warning(
+                .deviceManager,
+                "CGM Manager with identifier \(manager.pluginIdentifier) reading error: \(String(describing: error))"
+            )
+            setLastError(error: error)
             completion()
         }
     }

@@ -30,6 +30,7 @@ protocol NightscoutManager {
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var keychain: Keychain!
+    @Injected() private var appCoordinator: AppCoordinator!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var carbsStorage: CarbsStorage!
@@ -61,7 +62,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private var isUploadGlucoseEnabled: Bool {
-        settingsManager.settings.uploadGlucose
+        appCoordinator.shouldUploadGlucose
     }
 
     private var name: String {

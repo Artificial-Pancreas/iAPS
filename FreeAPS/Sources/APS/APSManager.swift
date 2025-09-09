@@ -8,7 +8,6 @@ import SwiftUI
 import Swinject
 
 protocol APSManager {
-    func heartbeat(date: Date)
     func autotune() -> AnyPublisher<Autotune?, Never>
     func enactBolus(amount: Double, isSMB: Bool)
     var bluetoothManager: BluetoothStateManager? { get }
@@ -74,6 +73,7 @@ enum APSError: LocalizedError {
 
 final class BaseAPSManager: APSManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseAPSManager.processQueue")
+    @Injected() private var appCoordinator: AppCoordinator!
     @Injected() private var storage: FileStorage!
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var alertHistoryStorage: AlertHistoryStorage!
@@ -155,7 +155,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func subscribe() {
-        deviceDataManager.recommendsLoop
+        appCoordinator.recommendsLoop
             .receive(on: processQueue)
             .sink { [weak self] in
                 self?.loop()
@@ -196,10 +196,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             .store(in: &lifetime)
-    }
-
-    func heartbeat(date: Date) {
-        deviceDataManager.heartbeat(date: date)
     }
 
     // Loop entry point

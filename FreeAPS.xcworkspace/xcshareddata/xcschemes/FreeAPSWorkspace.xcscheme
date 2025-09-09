@@ -260,34 +260,6 @@
                ReferencedContainer = "container:FreeAPS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6B1A8D162B14D91500E76752"
-               BuildableName = "LiveActivityExtension.appex"
-               BlueprintName = "LiveActivityExtension"
-               ReferencedContainer = "container:FreeAPS.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "38E8752327554D5700975559"
-               BuildableName = "FreeAPSWatch WatchKit Extension.appex"
-               BlueprintName = "FreeAPSWatch WatchKit Extension"
-               ReferencedContainer = "container:FreeAPS.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

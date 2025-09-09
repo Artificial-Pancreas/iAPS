@@ -6,8 +6,8 @@ import LoopKitUI
 import Swinject
 
 protocol PluginGlucoseSource {
-    func bloodGlucoseReceived(bloodGlucose: [BloodGlucose])
-    func bloodGlucoseFailed(error: Error)
+//    func bloodGlucoseReceived(bloodGlucose: [BloodGlucose])
+//    func bloodGlucoseFailed(error: Error)
 
 //    func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) async
 //    func refreshCGM() async
@@ -21,30 +21,46 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
     private let settingsManager: SettingsManager
     private let nightscoutManager: NightscoutManager
     private let healthKitManager: HealthKitManager
+    private let appCoordinator: AppCoordinator
 
+    // TODO: [loopkit]
     private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+
+    private var lifetime = Lifetime()
 
     init(resolver: Resolver) {
         glucoseStorage = resolver.resolve(GlucoseStorage.self)!
         settingsManager = resolver.resolve(SettingsManager.self)!
         nightscoutManager = resolver.resolve(NightscoutManager.self)!
         healthKitManager = resolver.resolve(HealthKitManager.self)!
+        appCoordinator = resolver.resolve(AppCoordinator.self)!
+
+        subscribe()
     }
 
-    func bloodGlucoseFailed(error _: Error) {
-//        promise?(.failure(error))
-    }
-
-    func bloodGlucoseReceived(bloodGlucose: [BloodGlucose]) {
-//        promise?(.success(bloodGlucose))
+    private func bloodGlucoseReceived(
+        bloodGlucose: [BloodGlucose],
+        glucoseFromHealth: [BloodGlucose]
+    ) {
         let syncDate = glucoseStorage.syncDate()
 
         glucoseStoreAndHeartDecision(
             syncDate: syncDate,
             glucose: bloodGlucose,
-            // TODO: [loopkit] figure out HealthKit fetching
-            glucoseFromHealth: [] // glucoseFromHealth
+            glucoseFromHealth: glucoseFromHealth
         )
+    }
+
+    private func subscribe() {
+        appCoordinator.bloodGlucose
+            .flatMap { glucose in
+                self.healthKitManager.fetch().map { glucoseFromHealth in (glucose, glucoseFromHealth) }.eraseToAnyPublisher()
+            }
+            .receive(on: processQueue)
+            .sink { glucose, glucoseFromHealth in
+                self.bloodGlucoseReceived(bloodGlucose: glucose, glucoseFromHealth: glucoseFromHealth)
+            }
+            .store(in: &lifetime)
     }
 
 //    private func subscribe() {
@@ -110,8 +126,8 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
 
     private func glucoseStoreAndHeartDecision(
         syncDate: Date,
-        glucose: [BloodGlucose] = [],
-        glucoseFromHealth: [BloodGlucose] = []
+        glucose: [BloodGlucose],
+        glucoseFromHealth: [BloodGlucose]
     ) {
         let allGlucose = glucose + glucoseFromHealth
         var filteredByDate: [BloodGlucose] = []
@@ -165,7 +181,7 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
 
         glucoseStorage.storeGlucose(filtered)
 
-//        deviceDataManager.heartbeat(date: Date())
+        appCoordinator.sendHeartbeat(date: Date())
 
         nightscoutManager.uploadGlucose()
 

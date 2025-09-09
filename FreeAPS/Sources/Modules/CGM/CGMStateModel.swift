@@ -13,7 +13,6 @@ extension CGM {
         @Published var cgmIdentifierToSetUp: String? = nil
 
         @Published var transmitterID = ""
-        @Published var uploadGlucose = true
         @Published var smoothGlucose = false
         @Published var createCalendarEvents = false
         @Published var displayCalendarIOBandCOB = false
@@ -87,8 +86,6 @@ extension CGM {
 extension CGM.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         cgmIdentifierToSetUp = nil
-        // refresh the upload options
-        uploadGlucose = settingsManager.settings.uploadGlucose
     }
 }
 
