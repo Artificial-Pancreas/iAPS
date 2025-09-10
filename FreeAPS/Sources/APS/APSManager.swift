@@ -151,7 +151,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func subscribe() {
-        appCoordinator.recommendsLoop
+        deviceDataManager.recommendsLoop
             .receive(on: processQueue)
             .sink { [weak self] in
                 self?.loop()
@@ -285,10 +285,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if let apsError = error {
             warning(.apsManager, "Loop failed with error: \(apsError.localizedDescription)")
-            if let backgroundTask = backGroundTaskID {
-                UIApplication.shared.endBackgroundTask(backgroundTask)
-                backGroundTaskID = .invalid
-            }
+//            TODO: [loopkit] was this necessary here? the task is ended at the end of this method
+
+//            if let backgroundTask = backGroundTaskID {
+//                UIApplication.shared.endBackgroundTask(backgroundTask)
+//                backGroundTaskID = .invalid
+//            }
             processError(apsError)
             loopStats(loopStatRecord: loopStatRecord, error: apsError)
         } else {

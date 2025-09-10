@@ -25,6 +25,7 @@ protocol DeviceDataManager {
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
+    var recommendsLoop: AnyPublisher<Void, Never> { get }
 
     func createBolusProgressReporter() -> DoseProgressReporter?
     var alertHistoryStorage: AlertHistoryStorage! { get }
@@ -61,10 +62,17 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var settingsManager: SettingsManager!
+    @Injected() private var bloodGlucoseManager: BloodGlucoseManager!
     @Injected() private var bluetoothProvider: BluetoothStateManager!
     @Injected() private var router: Router!
 
     @Injected() private var appCoordinator: AppCoordinator!
+
+    private let _recommendsLoop = PassthroughSubject<Void, Never>()
+
+    var recommendsLoop: AnyPublisher<Void, Never> {
+        _recommendsLoop.eraseToAnyPublisher()
+    }
 
     private var lifetime = Lifetime()
 
@@ -152,8 +160,8 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         setupCGM()
 
         appCoordinator.heartbeat
-            .sink { [weak self] date in
-                self?.heartbeat(date: date)
+            .sink { [weak self] _ in
+                self?.heartbeat()
             }
             .store(in: &lifetime)
 
@@ -271,9 +279,10 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         return Manager.init(rawState: rawState) as? PumpManagerUI
     }
 
-    private func updatePumpData() {
+    private func updatePumpData(completion: @escaping () -> Void) {
         guard let pumpManager = pumpManager, pumpManager.isOnboarded else {
             debug(.deviceManager, "Pump is not set, skip updating")
+            completion()
             return
         }
 
@@ -286,15 +295,15 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                 //            warning(.deviceManager, "Loop already in progress. Skip recommendation.")
                 //            return
                 //        }
-                self.appCoordinator.sendRecommendsLoop()
+
+                completion()
             }
         }
     }
 
     private func processCGMReadingResult(
-        _ manager: CGMManager,
         readingResult: CGMReadingResult,
-        completion: @escaping () -> Void
+        completion: @escaping ([BloodGlucose]) -> Void
     ) {
 //        debug(.deviceManager, "Process CGM Reading Result launched")
         switch readingResult {
@@ -328,22 +337,21 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                 )
             }
 
-            appCoordinator.sendBloodGlucose(bloodGlucose: bloodGlucose)
-            completion()
+            completion(bloodGlucose)
         case .unreliableData:
             // TODO: [loopkit] do something about unreliable readings?
             // loopManager.receivedUnreliableCGMReading()
-            warning(.deviceManager, "CGM Manager with identifier \(manager.pluginIdentifier) unreliable data")
-            completion()
+            warning(.deviceManager, "CGM Manager - unreliable data")
+            completion([])
         case .noData:
-            completion()
+            completion([])
         case let .error(error):
             warning(
                 .deviceManager,
-                "CGM Manager with identifier \(manager.pluginIdentifier) reading error: \(String(describing: error))"
+                "CGM Manager - reading error: \(String(describing: error))"
             )
             errorSubject.send(error)
-            completion()
+            completion([])
         }
         updatePumpManagerBLEHeartbeatPreference()
     }
@@ -449,49 +457,48 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         pumpManager?.createBolusProgressReporter(reportingOn: processQueue)
     }
 
-    private func heartbeat(date: Date) {
-//        TODO: [loopkit] this check is skipped in updatePumpData, is it okay to skip here as well?
-//        directly in loop() function
-//        guard !loopInProgress else {
-//            warning(.deviceManager, "Loop in progress. Skip updating.")
-//            return
-//        }
+    // MARK: loop
+
+    private func heartbeat() {
         processQueue.safeSync {
-            lastHeartBeatTime = date
-            updatePumpData()
+            fetchNewDataFromCgm { readingResult in
+                self.processCGMReadingResultAndLoop(readingResult: readingResult)
+            }
         }
     }
 
-    private func refreshCGM(_ completion: (() -> Void)? = nil) {
-        guard let cgmManager = cgmManager else {
-            completion?()
-            return
-        }
+    private func processCGMReadingResultAndLoop(readingResult: CGMReadingResult) {
+        processQueue.safeSync {
+            lastHeartBeatTime = Date()
 
-        cgmManager.fetchNewDataIfNeeded { result in
-            self.processQueue.async {
-                self.processCGMReadingResult(cgmManager, readingResult: result) {
-//                    if self.loopManager.lastLoopCompleted == nil || self.loopManager.lastLoopCompleted!.timeIntervalSinceNow < -.minutes(4.2) {
-//                        self.log.default("Triggering Loop from refreshCGM()")
-//                        self.checkPumpDataAndLoop()
-//                    }
-                    completion?()
+            self.processCGMReadingResult(readingResult: readingResult) { bloodGlucose in
+                self.bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose)
+                self.updatePumpData {
+                    self._recommendsLoop.send(())
                 }
             }
         }
+    }
+
+    private func fetchNewDataFromCgm(_ completion: @escaping (CGMReadingResult) -> Void) {
+        guard let cgmManager = cgmManager else {
+            completion(.noData)
+            return
+        }
+        cgmManager.fetchNewDataIfNeeded(completion)
     }
 
     func refreshDeviceData() {
-        refreshCGM {
-            // TODO: [loopkit] verify this
-            self.processQueue.async {
-                guard let pumpManager = self.pumpManager, pumpManager.isOnboarded else {
-                    return
-                }
-
-                self.updatePumpData()
+        // TODO: [loopkit] do we want to poke there CGM here as well? (after cgm/pump onboarding?)
+//        fetchNewDataFromCgm { _ in
+        processQueue.async {
+            guard let pumpManager = self.pumpManager, pumpManager.isOnboarded else {
+                return
             }
+
+            self.updatePumpData {}
         }
+//        }
     }
 }
 
@@ -663,11 +670,9 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         }
     }
 
-    func cgmManager(_ manager: CGMManager, hasNew readingResult: CGMReadingResult) {
+    func cgmManager(_: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        processCGMReadingResult(manager, readingResult: readingResult) {
-//            debug(.deviceManager, "\(manager.pluginIdentifier) - Direct return done")
-        }
+        processCGMReadingResultAndLoop(readingResult: readingResult)
     }
 
     func cgmManager(_: LoopKit.CGMManager, hasNew _: [PersistedCgmEvent]) {
@@ -754,7 +759,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         // TODO: [loopkit] is this correct?
         info(.deviceManager, "PumpManager:\(String(describing: type(of: pumpManager))) did fire heartbeat")
-        refreshCGM()
+        appCoordinator.sendHeartbeat(date: Date())
+//        refreshCGM()
     }
 
     func pumpManagerPumpWasReplaced(_: PumpManager) {
@@ -835,15 +841,6 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
         // TODO: [loopkit] why is omnible treated separately?
         if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
-            let reservoirVal = omnipodBLE.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
-            // TODO: find the value Pod.maximumReservoirReading
-            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
-
-            storage.save(Decimal(reservoir), as: OpenAPS.Monitor.reservoir)
-            broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
-                $0.pumpReservoirDidChange(Decimal(reservoir))
-            }
-
             // manual temp basal on
             if let tempBasal = omnipodBLE.state.podState?.unfinalizedTempBasal, !tempBasal.isFinished(),
                !tempBasal.automatic
@@ -890,11 +887,14 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         }
     }
 
-    func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents _: Bool) {
-        // TODO: [loopkit] from loop:
+    func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents pumpRecordsBasalProfileStartEvents: Bool) {
 //        dispatchPrecondition(condition: .onQueue(queue))
-//        log.default("PumpManager:%{public}@ did update pumpRecordsBasalProfileStartEvents to %{public}@", String(describing: type(of: pumpManager)), String(describing: pumpRecordsBasalProfileStartEvents))
-//
+        debug(
+            .deviceManager,
+            "PumpManager:\(String(describing: type(of: pumpManager))) did update pumpRecordsBasalProfileStartEvents to \(String(describing: pumpRecordsBasalProfileStartEvents))"
+        )
+
+        // TODO: [loopkit] from loop:
 //        doseStore.pumpRecordsBasalProfileStartEvents = pumpRecordsBasalProfileStartEvents
     }
 
@@ -915,6 +915,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
 
+        // TODO: [loopkit] is this filtering still needed?
         // filter buggy TBRs > maxBasal from MDT
         let events = events.filter {
             // type is optional...
@@ -954,6 +955,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     var automaticDosingEnabled: Bool {
+        // TODO: [loopkit] does this affect anything?
+        // none of the actual pump plugins seem to even read this var
         true
     }
 }
@@ -1003,21 +1006,7 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
         alertHistoryStorage.deleteAlert(identifier: identifier.alertIdentifier)
     }
 
-    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {
-        debug(.deviceManager, "doesIssueAlertExist")
-    }
-
-    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {
-        debug(.deviceManager, "lookupAllUnretracted")
-    }
-
-    func lookupAllUnacknowledgedUnretracted(
-        managerIdentifier _: String,
-        completion _: @escaping (Result<[PersistedAlert], Error>) -> Void
-    ) {}
-
-    func recordRetractedAlert(_: Alert, at _: Date) {}
-
+    // TODO: [loopkit] this is commented out, fix or remove it?
     //    func scheduleNotification(
     //        for _: DeviceManager,
     //        identifier: String,
@@ -1055,6 +1044,39 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
         completion _: ((Error?) -> Void)?
     ) {
         debug(.deviceManager, "device Manager for \(String(describing: deviceIdentifier)) : \(message)")
+    }
+}
+
+// MARK: - PersistedAlertStore
+
+extension BaseDeviceDataManager: PersistedAlertStore {
+    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {
+        debug(.deviceManager, "doesIssueAlertExist")
+        // TODO: [loopkit] from loop:
+//        precondition(alertManager != nil)
+//        alertManager.doesIssuedAlertExist(identifier: identifier, completion: completion)
+    }
+
+    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {
+        debug(.deviceManager, "lookupAllUnretracted")
+        // TODO: [loopkit] from loop:
+//        precondition(alertManager != nil)
+//        alertManager.lookupAllUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+    }
+
+    func lookupAllUnacknowledgedUnretracted(
+        managerIdentifier _: String,
+        completion _: @escaping (Result<[PersistedAlert], Error>) -> Void
+    ) {
+        // TODO: [loopkit] from loop:
+//        precondition(alertManager != nil)
+//        alertManager.lookupAllUnacknowledgedUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+    }
+
+    func recordRetractedAlert(_: Alert, at _: Date) {
+        // TODO: [loopkit] implement this? from loop:
+//        precondition(alertManager != nil)
+//        alertManager.recordRetractedAlert(alert, at: date)
     }
 }
 

@@ -30,7 +30,7 @@ protocol HealthKitManager {
     /// delete insulin with syncID
     func deleteInsulin(syncID: String)
 
-    func fetch() -> Future<[BloodGlucose], Never>
+    func fetch() -> [BloodGlucose]
 }
 
 final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, PumpHistoryObserver {
@@ -528,24 +528,25 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
     var cgmManager: CGMManagerUI?
     var cgmType: CGMType = .nightscout
 
-    func fetch() -> Future<[BloodGlucose], Never> {
+    func fetch() -> [BloodGlucose] {
         guard settingsManager.settings.useAppleHealth else {
-            return Future { promise in promise(.success([])) }
+            return []
         }
 
-        return Future { promise in
-            self.processQueue.async {
-                // Remove old BGs
-                self.newGlucose = self.newGlucose
-                    .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
-                // Get actual BGs (beetwen Date() - 1 day and Date())
-                let actualGlucose = self.newGlucose
-                    .filter { $0.dateString <= Date() }
-                // Update newGlucose
-                self.newGlucose = self.newGlucose
-                    .filter { !actualGlucose.contains($0) }
-                promise(.success(actualGlucose))
-            }
+        // TODO: [loopkit] this was processQueue.async + Future, is this okay to do sync instead?
+        // it looks like we're just reading and writing a var here, nothing async
+        return processQueue.safeSync {
+            // Remove old BGs
+            self.newGlucose = self.newGlucose
+                .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
+            // Get actual BGs (beetwen Date() - 1 day and Date())
+            let actualGlucose = self.newGlucose
+                .filter { $0.dateString <= Date() }
+            // Update newGlucose
+            self.newGlucose = self.newGlucose
+                .filter { !actualGlucose.contains($0) }
+
+            return actualGlucose
         }
     }
 

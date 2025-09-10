@@ -5,7 +5,6 @@ import LoopKit
 import LoopKitUI
 import Swinject
 
-// TODO: better name?
 final class BloodGlucoseManager {
     private let processQueue = DispatchQueue(label: "BaseCGMPluginManager.processQueue")
     private let glucoseStorage: GlucoseStorage
@@ -24,26 +23,19 @@ final class BloodGlucoseManager {
         nightscoutManager = resolver.resolve(NightscoutManager.self)!
         healthKitManager = resolver.resolve(HealthKitManager.self)!
         appCoordinator = resolver.resolve(AppCoordinator.self)!
-
-        subscribe()
     }
 
-    private func subscribe() {
-        appCoordinator.bloodGlucose
-            .flatMap { bloodGlucose in
-                self.healthKitManager.fetch().map { glucoseFromHealth in (bloodGlucose, glucoseFromHealth) }.eraseToAnyPublisher()
-            }
-            .receive(on: processQueue)
-            .sink { bloodGlucose, glucoseFromHealth in
-                let syncDate = self.glucoseStorage.syncDate()
+    func storeNewBloodGlucose(
+        bloodGlucose: [BloodGlucose],
+    ) {
+        let glucoseFromHealth = healthKitManager.fetch()
+        let syncDate = glucoseStorage.syncDate()
 
-                self.glucoseStoreAndHeartDecision(
-                    syncDate: syncDate,
-                    glucose: bloodGlucose,
-                    glucoseFromHealth: glucoseFromHealth
-                )
-            }
-            .store(in: &lifetime)
+        glucoseStoreAndHeartDecision(
+            syncDate: syncDate,
+            glucose: bloodGlucose,
+            glucoseFromHealth: glucoseFromHealth
+        )
     }
 
     private func glucoseStoreAndHeartDecision(
@@ -51,6 +43,7 @@ final class BloodGlucoseManager {
         glucose: [BloodGlucose],
         glucoseFromHealth: [BloodGlucose]
     ) {
+        // TODO: [loopkit] use processQueue here?
         let allGlucose = glucose + glucoseFromHealth
         var filteredByDate: [BloodGlucose] = []
         var filtered: [BloodGlucose] = []
@@ -103,10 +96,11 @@ final class BloodGlucoseManager {
 
         glucoseStorage.storeGlucose(filtered)
 
-        appCoordinator.sendHeartbeat(date: Date())
+        // TODO: [loopkit] the code below used to be executed in parallel with the rest of the loop
 
         nightscoutManager.uploadGlucose()
 
+        // TODO: [loopkit] why background task is not covering the "save to healthkit" part?
         // end of the BG tasks
         if let backgroundTask = backGroundFetchBGTaskID {
             UIApplication.shared.endBackgroundTask(backgroundTask)
