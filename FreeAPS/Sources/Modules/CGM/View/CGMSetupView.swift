@@ -17,7 +17,7 @@ extension CGM {
         weak var onboardingDelegate: CGMManagerOnboardingDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSetupView>) -> UIViewController {
-            switch deviceManager.setupCGMManager(withIdentifier: cgmIdentifier) {
+            switch deviceManager.setupCGMManager(withIdentifier: cgmIdentifier, prefersToSkipUserInteraction: false) {
             case let .failure(error):
                 warning(
                     .deviceManager,

@@ -5,17 +5,8 @@ import LoopKit
 import LoopKitUI
 import Swinject
 
-protocol PluginGlucoseSource {
-//    func bloodGlucoseReceived(bloodGlucose: [BloodGlucose])
-//    func bloodGlucoseFailed(error: Error)
-
-//    func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) async
-//    func refreshCGM() async
-//    func updateGlucoseSource()
-//    var cgmGlucoseSourceType: CGMType? { get set }
-}
-
-final class BasePluginGlucoseSource: PluginGlucoseSource {
+// TODO: better name?
+final class BloodGlucoseManager {
     private let processQueue = DispatchQueue(label: "BaseCGMPluginManager.processQueue")
     private let glucoseStorage: GlucoseStorage
     private let settingsManager: SettingsManager
@@ -23,7 +14,6 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
     private let healthKitManager: HealthKitManager
     private let appCoordinator: AppCoordinator
 
-    // TODO: [loopkit]
     private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     private var lifetime = Lifetime()
@@ -38,91 +28,23 @@ final class BasePluginGlucoseSource: PluginGlucoseSource {
         subscribe()
     }
 
-    private func bloodGlucoseReceived(
-        bloodGlucose: [BloodGlucose],
-        glucoseFromHealth: [BloodGlucose]
-    ) {
-        let syncDate = glucoseStorage.syncDate()
-
-        glucoseStoreAndHeartDecision(
-            syncDate: syncDate,
-            glucose: bloodGlucose,
-            glucoseFromHealth: glucoseFromHealth
-        )
-    }
-
     private func subscribe() {
         appCoordinator.bloodGlucose
-            .flatMap { glucose in
-                self.healthKitManager.fetch().map { glucoseFromHealth in (glucose, glucoseFromHealth) }.eraseToAnyPublisher()
+            .flatMap { bloodGlucose in
+                self.healthKitManager.fetch().map { glucoseFromHealth in (bloodGlucose, glucoseFromHealth) }.eraseToAnyPublisher()
             }
             .receive(on: processQueue)
-            .sink { glucose, glucoseFromHealth in
-                self.bloodGlucoseReceived(bloodGlucose: glucose, glucoseFromHealth: glucoseFromHealth)
+            .sink { bloodGlucose, glucoseFromHealth in
+                let syncDate = self.glucoseStorage.syncDate()
+
+                self.glucoseStoreAndHeartDecision(
+                    syncDate: syncDate,
+                    glucose: bloodGlucose,
+                    glucoseFromHealth: glucoseFromHealth
+                )
             }
             .store(in: &lifetime)
     }
-
-//    private func subscribe() {
-//        timer.publisher
-//            .receive(on: processQueue)
-//            .flatMap { _ -> AnyPublisher<[BloodGlucose], Never> in
-//                debug(.nightscout, "FetchGlucoseManager timer heartbeat")
-    ////                self.updateGlucoseSource()
-//                return self.fetch(self.timer).eraseToAnyPublisher()
-//            }
-//            .receive(on: processQueue)
-//            .flatMap { glucose in
-//                debug(.nightscout, "FetchGlucoseManager callback sensor")
-//                return Publishers.CombineLatest3(
-//                    Just(glucose),
-//                    Just(self.glucoseStorage.syncDate()),
-//                    self.healthKitManager.fetch()
-//                )
-//                .eraseToAnyPublisher()
-//            }
-//            .receive(on: processQueue)
-//            .sink { newGlucose, syncDate, glucoseFromHealth in
-//                self.glucoseStoreAndHeartDecision(
-//                    syncDate: syncDate,
-//                    glucose: newGlucose,
-//                    glucoseFromHealth: glucoseFromHealth
-//                )
-//            }
-//            .store(in: &lifetime)
-//
-//        timer.fire()
-//        timer.resume()
-//    }
-
-//    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-//        Future<[BloodGlucose], Error> { [weak self] promise in
-//            self?.promise = promise
-//        }
-//        .timeout(60 * 5, scheduler: processQueue, options: nil, customError: nil)
-//        .replaceError(with: [])
-//        .replaceEmpty(with: [])
-//        .eraseToAnyPublisher()
-//    }
-
-    // TODO: [loopkit] fix this
-//    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-//        Just([]).eraseToAnyPublisher()
-//        Future<[BloodGlucose], Error> { _ in
-//            self.processQueue.async {
-//                guard let cgmManager = self.cgmManager else { return }
-//                cgmManager.fetchNewDataIfNeeded { result in
-//                    self.processCGMReadingResult(cgmManager, readingResult: result) {
-//                        // nothing to do
-//                    }
-//                }
-//            }
-//        }
-//        .timeout(60, scheduler: processQueue, options: nil, customError: nil)
-//        .replaceError(with: [])
-//        .replaceEmpty(with: [])
-//        .eraseToAnyPublisher()
-//    }
 
     private func glucoseStoreAndHeartDecision(
         syncDate: Date,

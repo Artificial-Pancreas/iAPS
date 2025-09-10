@@ -17,7 +17,7 @@ class AppServices: ObservableObject {
         appearanceManager = FreeAPSApp.resolver.resolve(AppearanceManager.self)!
         deviceManager = resolver.resolve(DeviceDataManager.self)!
         apsManager = resolver.resolve(APSManager.self)!
-        _ = FreeAPSApp.resolver.resolve(PluginGlucoseSource.self)!
+        _ = FreeAPSApp.resolver.resolve(BloodGlucoseManager.self)!
         _ = FreeAPSApp.resolver.resolve(FetchTreatmentsManager.self)!
         _ = FreeAPSApp.resolver.resolve(FetchAnnouncementsManager.self)!
         _ = FreeAPSApp.resolver.resolve(CalendarManager.self)!

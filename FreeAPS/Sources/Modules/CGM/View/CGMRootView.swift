@@ -5,6 +5,7 @@ import Swinject
 extension CGM {
     struct RootView: BaseView {
         let resolver: Resolver
+        let displayGlucosePreference: DisplayGlucosePreference
         @StateObject var state: StateModel
 
         private var isCGMSetupPresented: Binding<Bool> {
@@ -26,16 +27,17 @@ extension CGM {
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+            displayGlucosePreference = resolver.resolve(DisplayGlucosePreference.self)!
         }
 
         var body: some View {
             NavigationView {
                 Form {
-                    Section(header: Text("CGM")) {
+                    Section {
                         if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI
                         {
                             HStack {
-                                Text("Type").font(.caption)
+                                Text("Type")
                                 Spacer()
                                 Text(cgmManager.localizedTitle)
                             }
@@ -147,16 +149,16 @@ extension CGM {
                             CGMSettingsView(
                                 cgmManager: cgmManager,
                                 bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                                unit: state.settingsManager.settings.units,
+                                displayGlucosePreference: displayGlucosePreference,
                                 completionDelegate: state,
-                                onboardingDelegate: state.deviceManager
+                                onboardingDelegate: state.deviceManager.cgmManagerOnboardingDelegate
                             )
                         } else {
                             CGMSetupView(
                                 cgmIdentifier: identifier,
                                 deviceManager: state.deviceManager,
                                 completionDelegate: state,
-                                onboardingDelegate: state.deviceManager
+                                onboardingDelegate: state.deviceManager.cgmManagerOnboardingDelegate
                             )
                         }
                     }

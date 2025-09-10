@@ -315,7 +315,7 @@ extension Home {
                             pumpManager: pumpManager,
                             bluetoothManager: bluetoothProvider,
                             completionDelegate: self,
-                            onboardingDelegate: self.provider.deviceManager
+                            onboardingDelegate: self.provider.deviceManager.pumpManagerOnboardingDelegate
                         ).asAny()
                         self.router.mainSecondaryModalView.send(view)
                     } else {

@@ -104,7 +104,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var backGroundTaskID: UIBackgroundTaskIdentifier?
 
-    var pumpManager: PumpManagerUI? { deviceDataManager.pumpManager }
+    private var pumpManager: PumpManagerUI? { deviceDataManager.pumpManager }
 
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
@@ -148,10 +148,6 @@ final class BaseAPSManager: APSManager, Injectable {
         )
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
-
-        isLooping
-            .weakAssign(to: \.deviceDataManager.loopInProgress, on: self)
-            .store(in: &lifetime)
     }
 
     private func subscribe() {

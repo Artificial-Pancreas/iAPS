@@ -549,10 +549,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
         }
     }
 
-//    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-//        fetch(nil)
-//    }
-
     func deleteGlucose(syncID: String) {
         guard settingsManager.settings.useAppleHealth,
               let sampleType = Config.healthBGObject,

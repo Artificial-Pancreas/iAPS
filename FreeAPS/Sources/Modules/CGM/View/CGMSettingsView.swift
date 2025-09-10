@@ -7,23 +7,14 @@ extension CGM {
     struct CGMSettingsView: UIViewControllerRepresentable {
         let cgmManager: CGMManagerUI
         let bluetoothManager: BluetoothStateManager
-        let unit: GlucoseUnits
+        let displayGlucosePreference: DisplayGlucosePreference
         weak var completionDelegate: CompletionDelegate?
         weak var onboardingDelegate: CGMManagerOnboardingDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSettingsView>) -> UIViewController {
-            // TODO: [loopkit] inject DisplayGlucosePreference from assembly
-            let displayGlucoseUnitObservable: DisplayGlucosePreference
-            switch unit {
-            case .mgdL:
-                displayGlucoseUnitObservable = DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter)
-            case .mmolL:
-                displayGlucoseUnitObservable = DisplayGlucosePreference(displayGlucoseUnit: .millimolesPerLiter)
-            }
-
             var vc = cgmManager.settingsViewController(
                 bluetoothProvider: bluetoothManager,
-                displayGlucosePreference: displayGlucoseUnitObservable,
+                displayGlucosePreference: displayGlucosePreference,
                 colorPalette: .default,
                 allowDebugFeatures: true
             )

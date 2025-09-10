@@ -446,7 +446,7 @@
 		F273F9602DE73ABE00BF0FFC /* IOBTick0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */; };
 		F2A4B7922E64985F000E0E85 /* PluiginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7912E64985F000E0E85 /* PluiginManager.swift */; };
 		F2A4B7C32E6C8CA7000E0E85 /* CGMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C22E6C8CA7000E0E85 /* CGMManager.swift */; };
-		F2A4B7C62E6C9180000E0E85 /* PluginGlucoseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* PluginGlucoseSource.swift */; };
+		F2A4B7C62E6C9180000E0E85 /* BloodGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */; };
 		F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */; };
 		F2A4B7CD2E6CF68C000E0E85 /* PumpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CC2E6CF68C000E0E85 /* PumpManager.swift */; };
 		F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */; };
@@ -1093,7 +1093,7 @@
 		F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBTick0.swift; sourceTree = "<group>"; };
 		F2A4B7912E64985F000E0E85 /* PluiginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluiginManager.swift; sourceTree = "<group>"; };
 		F2A4B7C22E6C8CA7000E0E85 /* CGMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManager.swift; sourceTree = "<group>"; };
-		F2A4B7C52E6C9180000E0E85 /* PluginGlucoseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginGlucoseSource.swift; sourceTree = "<group>"; };
+		F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucoseManager.swift; sourceTree = "<group>"; };
 		F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
 		F2A4B7CC2E6CF68C000E0E85 /* PumpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManager.swift; sourceTree = "<group>"; };
 		F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -1890,7 +1890,7 @@
 				3862CC03273D150600BF832C /* Calibrations */,
 				CECA4774298DA8310095139F /* DexcomSourceG5.swift */,
 				F2A4B7C22E6C8CA7000E0E85 /* CGMManager.swift */,
-				F2A4B7C52E6C9180000E0E85 /* PluginGlucoseSource.swift */,
+				F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */,
 			);
 			path = CGM;
 			sourceTree = "<group>";
@@ -3401,7 +3401,7 @@
 				E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */,
 				919DBD08F13BAFB180DF6F47 /* AddTempTargetStateModel.swift in Sources */,
 				F2159A4A2BA60A6000A0B716 /* ContactTrickDataFlow.swift in Sources */,
-				F2A4B7C62E6C9180000E0E85 /* PluginGlucoseSource.swift in Sources */,
+				F2A4B7C62E6C9180000E0E85 /* BloodGlucoseManager.swift in Sources */,
 				8BC2F5A29AD1ED08AC0EE013 /* AddTempTargetRootView.swift in Sources */,
 				38A00B1F25FC00F7006BC0B0 /* Autotune.swift in Sources */,
 				38AAF85525FFF846004AF583 /* CurrentGlucoseView.swift in Sources */,

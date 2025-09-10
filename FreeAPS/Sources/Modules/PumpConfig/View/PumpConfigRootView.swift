@@ -85,7 +85,7 @@ extension PumpConfig {
                                 pumpManager: pumpManager,
                                 bluetoothManager: state.provider.apsManager.bluetoothManager!,
                                 completionDelegate: state,
-                                onboardingDelegate: state.deviceManager
+                                onboardingDelegate: state.deviceManager.pumpManagerOnboardingDelegate
                             )
                         } else {
                             PumpSetupView(
@@ -94,7 +94,7 @@ extension PumpConfig {
                                 deviceManager: state.deviceManager,
                                 bluetoothManager: state.provider.apsManager.bluetoothManager!,
                                 completionDelegate: state,
-                                onboardingDelegate: state.deviceManager
+                                onboardingDelegate: state.deviceManager.pumpManagerOnboardingDelegate
                             )
                         }
                     }

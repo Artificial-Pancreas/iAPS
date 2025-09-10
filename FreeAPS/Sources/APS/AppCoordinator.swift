@@ -33,7 +33,6 @@ final class AppCoordinator {
     }
 
     func setShouldUploadGlucose(_ shouldUpload: Bool) {
-        print("shouldUploadGlucose: \(shouldUpload)")
         shouldUploadGlucose = shouldUpload
     }
 }
