@@ -80,6 +80,10 @@ extension CGM {
                 }
                 .store(in: &lifetime)
         }
+
+        func removePumpAsCGM() {
+            deviceManager.removePumpAsCGM()
+        }
     }
 }
 

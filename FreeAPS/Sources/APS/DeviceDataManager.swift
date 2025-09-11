@@ -28,6 +28,9 @@ protocol DeviceDataManager {
     var recommendsLoop: AnyPublisher<Void, Never> { get }
 
     func createBolusProgressReporter() -> DoseProgressReporter?
+
+    func removePumpAsCGM()
+
     var alertHistoryStorage: AlertHistoryStorage! { get }
 
     var cgmManager: CGMManager? { get }
@@ -396,6 +399,12 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         }
     }
 
+    func removePumpAsCGM() {
+        if cgmManager is PumpManagerUI, cgmManager?.pluginIdentifier == pumpManager?.pluginIdentifier {
+            cgmManager = nil
+        }
+    }
+
     struct UnknownCGMManagerIdentifierError: Error {}
 
     fileprivate func setupCGMManagerUI(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool) -> Swift
@@ -567,18 +576,10 @@ private extension BaseDeviceDataManager {
 
             // TODO: [loopkit] is there a generic way to get the expiration date?
             if let omnipod = pumpManager as? OmnipodPumpManager {
-                guard let endTime = omnipod.state.podState?.expiresAt else {
-                    pumpExpiresAtDate.send(nil)
-                    return
-                }
-                pumpExpiresAtDate.send(endTime)
+                pumpExpiresAtDate.send(omnipod.state.podState?.expiresAt)
             }
             if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
-                guard let endTime = omnipodBLE.state.podState?.expiresAt else {
-                    pumpExpiresAtDate.send(nil)
-                    return
-                }
-                pumpExpiresAtDate.send(endTime)
+                pumpExpiresAtDate.send(omnipodBLE.state.podState?.expiresAt)
             }
         } else {
             pumpDisplayState.value = nil

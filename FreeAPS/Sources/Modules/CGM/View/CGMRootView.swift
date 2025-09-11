@@ -49,7 +49,15 @@ extension CGM {
                             Button("Configure CGM") {
                                 state.cgmIdentifierToSetUp = cgmManager.pluginIdentifier
                             }
-
+                        } else if let pumpManager = state.deviceManager.cgmManager as? PumpManagerUI {
+                            HStack {
+                                Text("Pump+CGM")
+                                Spacer()
+                                Text(pumpManager.localizedTitle)
+                            }
+                            Button("Stop using the pump as CGM") {
+                                state.removePumpAsCGM()
+                            }
                         } else {
                             ForEach(state.deviceManager.availableCGMManagers, id: \.identifier) { cgm in
                                 VStack(alignment: .leading) {
