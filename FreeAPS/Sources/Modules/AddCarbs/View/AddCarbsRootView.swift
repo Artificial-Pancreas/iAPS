@@ -64,23 +64,6 @@ extension AddCarbs {
             Form {
                 foodSearchSection
 
-                Section {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Image(systemName: "exclamationmark.circle")
-                            Text("Notice")
-                        }
-                        .font(.headline)
-                        .foregroundColor(.blue)
-                        Text(
-                            "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
-                        )
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
-                    }
-                    .padding(.vertical, 4)
-                }
-
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
                         HStack {
@@ -851,9 +834,25 @@ struct FoodSearchView: View {
                     isActive: $navigateToAICamera,
                     label: { EmptyView() }
                 )
+
+                // Section {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Image(systemName: "exclamationmark.circle")
+                        Text("Notice")
+                    }
+                    .font(.headline)
+                    .foregroundColor(.blue)
+                    Text(
+                        "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
+                    )
+                    .font(.subheadline)
+                    .foregroundColor(.blue)
+                }.padding(20)
+                // }
             }
             .navigationTitle("Food Search")
-            .navigationBarItems(trailing: Button("Fertig") { dismiss() })
+            .navigationBarItems(trailing: Button("Done") { dismiss() })
         }
     }
 
@@ -876,7 +875,7 @@ struct FoodSearchView: View {
                 name: foodItem.name,
                 brand: nil,
                 calories: foodItem.calories ?? 0,
-                carbs: foodItem.carbohydrates ?? analysisResult.totalCarbohydrates,
+                carbs: foodItem.carbohydrates,
                 protein: foodItem.protein ?? analysisResult.totalProtein ?? 0,
                 fat: foodItem.fat ?? analysisResult.totalFat ?? 0
             )
