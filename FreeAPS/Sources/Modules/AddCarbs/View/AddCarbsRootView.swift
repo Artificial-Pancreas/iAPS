@@ -615,37 +615,6 @@ private func searchFoodProducts(query: String, completion: @escaping ([AIFoodIte
     }
 }
 
-// Erweiterung für AIConfidenceLevel
-extension AIConfidenceLevel {
-    var color: Color {
-        switch self {
-        case .high: return .green
-        case .medium: return .orange
-        case .low: return .red
-        }
-    }
-
-    var description: String {
-        switch self {
-        case .high: return "Hoch"
-        case .medium: return "Mittel"
-        case .low: return "Niedrig"
-        }
-    }
-}
-
-extension OpenFoodFactsProduct {
-    func toFoodItem() -> FoodItem {
-        FoodItem(
-            name: productName ?? "Unknown",
-            carbs: Decimal(nutriments.carbohydrates),
-            fat: Decimal(nutriments.fat ?? 0),
-            protein: Decimal(nutriments.proteins ?? 0),
-            source: brands ?? "OpenFoodFacts"
-        )
-    }
-}
-
 public extension Color {
     static func randomGreen(randomOpacity: Bool = false) -> Color {
         Color(
