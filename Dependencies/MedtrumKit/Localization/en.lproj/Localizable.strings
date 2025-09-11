@@ -266,7 +266,7 @@
 "You will start by setting up your insulin type & basic patch settings before activating your patch." = "You will start by setting up your insulin type & basic patch settings before activating your patch.";
 
 /* label for go to pump base patch */
-"Go back to pump base" = "Go back to pump base";"Replace your patch now!"
+"Go back to pump base" = "Go back to pump base";
 
 /* label for go to prime patch */
 "Go back to priming" = "Go back to priming";
