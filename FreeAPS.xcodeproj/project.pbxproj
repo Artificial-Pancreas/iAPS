@@ -39,6 +39,14 @@
 		193339772E05BC8400E80EF5 /* DynamicHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193339762E05BC7700E80EF5 /* DynamicHistoryView.swift */; };
 		1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Dynamic structs.swift */; };
 		19389E552D69393900636E49 /* TemporaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19389E542D69393900636E49 /* TemporaryData.swift */; };
+		193C21742E736730009FD9AA /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C21732E736730009FD9AA /* FoodSearchView.swift */; };
+		193C21762E73680D009FD9AA /* FoodItemCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C21752E73680D009FD9AA /* FoodItemCard.swift */; };
+		193C21782E736862009FD9AA /* AIAnalysisResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C21772E736862009FD9AA /* AIAnalysisResultsView.swift */; };
+		193C217A2E7368C4009FD9AA /* NutritionBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C21792E7368C4009FD9AA /* NutritionBadge.swift */; };
+		193C217C2E7368EA009FD9AA /* ConfidenceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C217B2E7368EA009FD9AA /* ConfidenceBadge.swift */; };
+		193C217E2E73690A009FD9AA /* NutritionSummaryBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C217D2E73690A009FD9AA /* NutritionSummaryBadge.swift */; };
+		193C21802E7369F4009FD9AA /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C217F2E7369EE009FD9AA /* FoodItem.swift */; };
+		193C21822E736ABA009FD9AA /* FoodSearchStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C21812E736AAE009FD9AA /* FoodSearchStateModel.swift */; };
 		193CA2DA2E1E72B200DF9998 /* WebViewScriptExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193CA2D92E1E72A500DF9998 /* WebViewScriptExecutor.swift */; };
 		193CA2DC2E1E743500DF9998 /* FunctionScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193CA2DB2E1E742C00DF9998 /* FunctionScript.swift */; };
 		193F6CDD2A512C8F001240FD /* Loops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193F6CDC2A512C8F001240FD /* Loops.swift */; };
@@ -656,6 +664,14 @@
 		193339762E05BC7700E80EF5 /* DynamicHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHistoryView.swift; sourceTree = "<group>"; };
 		1935363F28496F7D001E0B16 /* Dynamic structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dynamic structs.swift"; sourceTree = "<group>"; };
 		19389E542D69393900636E49 /* TemporaryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryData.swift; sourceTree = "<group>"; };
+		193C21732E736730009FD9AA /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
+		193C21752E73680D009FD9AA /* FoodItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemCard.swift; sourceTree = "<group>"; };
+		193C21772E736862009FD9AA /* AIAnalysisResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAnalysisResultsView.swift; sourceTree = "<group>"; };
+		193C21792E7368C4009FD9AA /* NutritionBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionBadge.swift; sourceTree = "<group>"; };
+		193C217B2E7368EA009FD9AA /* ConfidenceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfidenceBadge.swift; sourceTree = "<group>"; };
+		193C217D2E73690A009FD9AA /* NutritionSummaryBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionSummaryBadge.swift; sourceTree = "<group>"; };
+		193C217F2E7369EE009FD9AA /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
+		193C21812E736AAE009FD9AA /* FoodSearchStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchStateModel.swift; sourceTree = "<group>"; };
 		193CA2D92E1E72A500DF9998 /* WebViewScriptExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptExecutor.swift; sourceTree = "<group>"; };
 		193CA2DB2E1E742C00DF9998 /* FunctionScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionScript.swift; sourceTree = "<group>"; };
 		193F1E392B44C13B00525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2079,6 +2095,8 @@
 				1935363F28496F7D001E0B16 /* Dynamic structs.swift */,
 				F270F68C2BAE374C00F6D8DD /* FontTracking.swift */,
 				F2159A512BA60F7A00A0B716 /* FontWeight.swift */,
+				193C217F2E7369EE009FD9AA /* FoodItem.swift */,
+				193C21812E736AAE009FD9AA /* FoodSearchStateModel.swift */,
 				38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */,
 				383948D925CD64D500E91849 /* Glucose.swift */,
 				E0D4F80427513ECF00BDF1FE /* HealthKitSample.swift */,
@@ -2394,6 +2412,12 @@
 			isa = PBXGroup;
 			children = (
 				86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */,
+				193C21772E736862009FD9AA /* AIAnalysisResultsView.swift */,
+				193C217B2E7368EA009FD9AA /* ConfidenceBadge.swift */,
+				193C21752E73680D009FD9AA /* FoodItemCard.swift */,
+				193C21732E736730009FD9AA /* FoodSearchView.swift */,
+				193C21792E7368C4009FD9AA /* NutritionBadge.swift */,
+				193C217D2E73690A009FD9AA /* NutritionSummaryBadge.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3174,6 +3198,7 @@
 				38FEF408273B011A00574A46 /* LibreTransmitterSource.swift in Sources */,
 				79A058EE2E6C960600D9A275 /* BarcodeScanResult.swift in Sources */,
 				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
+				193C21782E736862009FD9AA /* AIAnalysisResultsView.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				386A124F271707F000DDC61C /* DexcomSourceG6.swift in Sources */,
 				CE94598429E9E3E60047C9C6 /* WatchConfigStateModel.swift in Sources */,
@@ -3216,6 +3241,7 @@
 				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				1901412D2CDB92D600ABD925 /* RestoreDataFlow.swift in Sources */,
+				193C21802E7369F4009FD9AA /* FoodItem.swift in Sources */,
 				19CE0E592DD9F30D0050FC89 /* Configuration.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
 				CE94598229E9E3D30047C9C6 /* WatchConfigProvider.swift in Sources */,
@@ -3229,6 +3255,7 @@
 				389A572026079BAA00BC102F /* Interpolation.swift in Sources */,
 				19A910382A24EF3200C8951B /* ChartsView.swift in Sources */,
 				38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */,
+				193C217C2E7368EA009FD9AA /* ConfidenceBadge.swift in Sources */,
 				1947541C2D470F0500A89AD1 /* SuspendResumeShortcut.swift in Sources */,
 				19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */,
 				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
@@ -3245,6 +3272,7 @@
 				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
 				E00EEC0427368630002FF094 /* SecurityAssembly.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
+				193C21742E736730009FD9AA /* FoodSearchView.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
 				388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */,
@@ -3286,6 +3314,7 @@
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,
 				3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */,
+				193C21822E736ABA009FD9AA /* FoodSearchStateModel.swift in Sources */,
 				FEFA5C11299F814A00765C17 /* CoreDataStack.swift in Sources */,
 				3811DEAB25C9D88300A708ED /* HTTPResponseStatus.swift in Sources */,
 				FEB27EA62E07D9310047CB66 /* NSUserDefaults.swift in Sources */,
@@ -3301,6 +3330,7 @@
 				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
+				193C217E2E73690A009FD9AA /* NutritionSummaryBadge.swift in Sources */,
 				FE66D16B291F74F8005D6F77 /* Bundle+Extensions.swift in Sources */,
 				3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */,
 				6B1A8D2E2B156EEF00E76752 /* LiveActivityBridge.swift in Sources */,
@@ -3326,6 +3356,7 @@
 				79A058FA2E6C98FD00D9A275 /* OpenFoodFactsService.swift in Sources */,
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
 				F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */,
+				193C217A2E7368C4009FD9AA /* NutritionBadge.swift in Sources */,
 				193339772E05BC8400E80EF5 /* DynamicHistoryView.swift in Sources */,
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
@@ -3522,6 +3553,7 @@
 				BA90041DC8991147E5C8C3AA /* CalibrationsRootView.swift in Sources */,
 				E3A08AAE59538BC8A8ABE477 /* NotificationsConfigDataFlow.swift in Sources */,
 				1956FB212AFF79E200C7B4FF /* CoreDataStorage.swift in Sources */,
+				193C21762E73680D009FD9AA /* FoodItemCard.swift in Sources */,
 				0F7A65FBD2CD8D6477ED4539 /* NotificationsConfigProvider.swift in Sources */,
 				3171D2818C7C72CD1584BB5E /* NotificationsConfigStateModel.swift in Sources */,
 				CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */,
