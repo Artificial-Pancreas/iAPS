@@ -853,7 +853,7 @@ struct FoodSearchView: View {
                 )
             }
             .navigationTitle("Food Search")
-            .navigationBarItems(trailing: Button("Fertig") { dismiss() })
+            .navigationBarItems(trailing: Button("Done") { dismiss() })
         }
     }
 
