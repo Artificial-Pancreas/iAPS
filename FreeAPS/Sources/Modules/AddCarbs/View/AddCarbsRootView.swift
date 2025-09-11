@@ -835,25 +835,28 @@ struct FoodSearchView: View {
                     label: { EmptyView() }
                 )
 
-                // Section {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Image(systemName: "exclamationmark.circle")
-                        Text("Notice")
-                    }
-                    .font(.headline)
-                    .foregroundColor(.blue)
-                    Text(
-                        "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
-                    )
-                    .font(.subheadline)
-                    .foregroundColor(.blue)
-                }.padding(20)
-                // }
+                footerNotice
             }
             .navigationTitle("Food Search")
             .navigationBarItems(trailing: Button("Done") { dismiss() })
         }
+    }
+
+    private var footerNotice: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: "exclamationmark.circle")
+                Text("Notice")
+            }
+            .font(.headline)
+            .foregroundColor(.blue)
+            Text(
+                "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
+            )
+            .font(.subheadline)
+            .foregroundColor(.blue)
+        }
+        .padding(20)
     }
 
     private func handleBarcodeScan(_ barcode: String) {
