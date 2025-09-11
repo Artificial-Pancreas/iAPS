@@ -5,6 +5,11 @@ class NotificationManager {
 
     private enum Identifiers: String {
         case patchExpiredNotification = "com.nightscout.medtrumkit.patch-expired"
+        case patchDailyMaxNotification = "com.nightscout.medtrumkit.patch-daily-limit"
+        case patchHourlyMaxNotification = "com.nightscout.medtrumkit.patch-hourly-limit"
+        case occlusionNotification = "com.nightscout.medtrumkit.patch-occlussion"
+        case patchFaultNotification = "com.nightscout.medtrumkit.patch-fault"
+        case reservoirEmptyNotification = "com.nightscout.medtrumkit.patch-empty"
     }
 
     public static func activatePatchExpiredNotification(after: TimeInterval) {
@@ -17,6 +22,66 @@ class NotificationManager {
             )
 
             addRequest(identifier: .patchExpiredNotification, content: content, triggerAfter: after, deleteOld: true)
+        }
+    }
+    
+    public static func clearPendingNotifications() {
+        let center = UNUserNotificationCenter.current()
+        
+        // Can be extended with more scheduled notifications
+        for identifier in [Identifiers.patchExpiredNotification] {
+            center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+            center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+        }
+    }
+
+    public static func patchDailyMaxNotification() {
+        ensureCanSendNotification {
+            let content = UNMutableNotificationContent()
+            content.title = LocalizedString("Insulin has been suspended!", comment: "Title insulin suspended notification")
+            content.body = LocalizedString("Your patch has reached its daily maximum!", comment: "Body daily max notification")
+
+            addRequest(identifier: .patchDailyMaxNotification, content: content, triggerAfter: nil, deleteOld: true)
+        }
+    }
+
+    public static func patchHourlyMaxNotification() {
+        ensureCanSendNotification {
+            let content = UNMutableNotificationContent()
+            content.title = LocalizedString("Insulin has been suspended!", comment: "Title insulin suspended notification")
+            content.body = LocalizedString("Your patch has reached its hourly maximum!", comment: "Body hourly max notification")
+
+            addRequest(identifier: .patchHourlyMaxNotification, content: content, triggerAfter: nil, deleteOld: true)
+        }
+    }
+
+    public static func occlusionNotification() {
+        ensureCanSendNotification {
+            let content = UNMutableNotificationContent()
+            content.title = LocalizedString("Replace your patch now!", comment: "Title replace patch notification")
+            content.body = LocalizedString("Your patch has detected an occlussion!", comment: "Body occlussion notification")
+
+            addRequest(identifier: .occlusionNotification, content: content, triggerAfter: nil, deleteOld: true)
+        }
+    }
+
+    public static func patchFaultNotification() {
+        ensureCanSendNotification {
+            let content = UNMutableNotificationContent()
+            content.title = LocalizedString("Replace your patch now!", comment: "Title replace patch notification")
+            content.body = LocalizedString("Your patch is in Fault state!", comment: "Body fault notification")
+
+            addRequest(identifier: .patchFaultNotification, content: content, triggerAfter: nil, deleteOld: true)
+        }
+    }
+
+    public static func reservoirEmptyNotification() {
+        ensureCanSendNotification {
+            let content = UNMutableNotificationContent()
+            content.title = LocalizedString("Replace your patch now!", comment: "Title replace patch notification")
+            content.body = LocalizedString("Your patch is out of insulin!", comment: "Body reservoir empty notification")
+
+            addRequest(identifier: .reservoirEmptyNotification, content: content, triggerAfter: nil, deleteOld: true)
         }
     }
 

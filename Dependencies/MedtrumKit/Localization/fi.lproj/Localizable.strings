@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "Laastariasi on jäljellä %i tuntia";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Insuliini on keskeytetty!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Laastarisi on saavuttanut päivittäisen enimmäismääränsä!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Laastarisi on saavuttanut tuntikohtaisen maksimiarvonsa!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Vaihda laastari nyt!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Laastarisi on havainnut poikkeaman!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Laastarisi on vikatilassa!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Laastarisi on insuliinin loppu!";
+
+/* Force remove */
+"Force remove" = "Poista väkisin";
+
+/* title force remove */
+"Are you sure?" = "Oletko varma?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "On suositeltavaa poistaa ensin käytöstä";
+
+/* confirm force remove */
+"Confirm" = "Vahvista";
+
+/* cancel force remove */
+"Cancel" = "Peruuta";

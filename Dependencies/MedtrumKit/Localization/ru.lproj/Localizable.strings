@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "У вашего патча осталось %i часов.";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Действие инсулина приостановлено!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Ваш патч достиг дневного максимума!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Ваш патч достиг своего часового максимума!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Замените патч прямо сейчас!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Ваш патч обнаружил окклюзию!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Ваш патч находится в состоянии неисправности!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "В вашем пластыре закончился инсулин!";
+
+/* Force remove */
+"Force remove" = "Принудительное удаление";
+
+/* title force remove */
+"Are you sure?" = "Вы уверены?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Рекомендуется сначала деактивировать";
+
+/* confirm force remove */
+"Confirm" = "Подтвердите";
+
+/* cancel force remove */
+"Cancel" = "Отмена";

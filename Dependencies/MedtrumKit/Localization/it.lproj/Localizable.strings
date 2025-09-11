@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "La vostra patch ha %i ore rimanenti";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "L'insulina è stata sospesa!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Il cerotto ha raggiunto il suo massimo giornaliero!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "La patch ha raggiunto il suo massimo orario!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Sostituite subito la vostra patch!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "La patch ha rilevato un'occlusione!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "La patch è in stato di errore!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Il vostro cerotto ha finito l'insulina!";
+
+/* Force remove */
+"Force remove" = "Rimuovere con forza";
+
+/* title force remove */
+"Are you sure?" = "Sei sicuro?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Si consiglia di disattivare prima";
+
+/* confirm force remove */
+"Confirm" = "Confermare";
+
+/* cancel force remove */
+"Cancel" = "Annullamento";

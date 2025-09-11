@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "Vaš popravek ima še %i ur.";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Inzulin je bil ukinjen!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Vaš obliž je dosegel dnevni maksimum!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Vaš obliž je dosegel svoj urni maksimum!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Zamenjajte svoj obliž zdaj!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Vaš popravek je odkril okluzijo!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Vaš popravek je v stanju napake!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "V vašem obližu ni inzulina!";
+
+/* Force remove */
+"Force remove" = "Za silo odstranite";
+
+/* title force remove */
+"Are you sure?" = "Ste prepričani?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Priporočljivo je, da najprej deaktivirate";
+
+/* confirm force remove */
+"Confirm" = "Potrdite";
+
+/* cancel force remove */
+"Cancel" = "Prekliči";

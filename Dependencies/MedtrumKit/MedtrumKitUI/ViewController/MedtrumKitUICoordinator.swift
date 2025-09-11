@@ -133,16 +133,8 @@ class MedtrumKitUICoordinator: UINavigationController, PumpManagerOnboarding, Co
 
         case .pumpBaseSettingsScreen:
             let nextStep = { self.navigateTo(.patchPrimingScreen) }
-            let pumpRemoval = {
-                guard let completionDelegate = self.completionDelegate, let pumpManager = self.pumpManager else {
-                    return
-                }
-                pumpManager.notifyDelegateOfDeactivation {
-                    completionDelegate.completionNotifyingDidComplete(self)
-                }
-            }
-
             let viewModel = PumpBaseSettingsViewModel(pumpManager, nextStep, pumpRemoval)
+
             return hostingController(rootView: PumpBaseSettingsView(viewModel: viewModel))
 
         case .patchPrimingScreen:
@@ -169,15 +161,6 @@ class MedtrumKitUICoordinator: UINavigationController, PumpManagerOnboarding, Co
             let toActivation: (Bool) -> Void = { alreadyPrimed in
                 self.navigateTo(alreadyPrimed ? .patchActivationScreen : .patchPrimingScreen)
             }
-            let pumpRemoval = {
-                guard let completionDelegate = self.completionDelegate, let pumpManager = self.pumpManager else {
-                    return
-                }
-
-                pumpManager.notifyDelegateOfDeactivation {
-                    completionDelegate.completionNotifyingDidComplete(self)
-                }
-            }
 
             let viewModel = MedtrumKitSettingsViewModel(pumpManager, toDeactivation, toActivation, pumpRemoval)
             return hostingController(rootView: MedtrumKitSettings(
@@ -196,6 +179,17 @@ class MedtrumKitUICoordinator: UINavigationController, PumpManagerOnboarding, Co
     var pumpManagerOnboardingDelegate: (any LoopKitUI.PumpManagerOnboardingDelegate)?
 
     var completionDelegate: (any LoopKitUI.CompletionDelegate)?
+
+    private func pumpRemoval() {
+        NotificationManager.clearPendingNotifications()
+        guard let completionDelegate = self.completionDelegate, let pumpManager = self.pumpManager else {
+            return
+        }
+
+        pumpManager.notifyDelegateOfDeactivation {
+            completionDelegate.completionNotifyingDidComplete(self)
+        }
+    }
 }
 
 extension MedtrumKitUICoordinator {

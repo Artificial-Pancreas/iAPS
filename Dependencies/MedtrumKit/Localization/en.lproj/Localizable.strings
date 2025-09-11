@@ -266,7 +266,7 @@
 "You will start by setting up your insulin type & basic patch settings before activating your patch." = "You will start by setting up your insulin type & basic patch settings before activating your patch.";
 
 /* label for go to pump base patch */
-"Go back to pump base" = "Go back to pump base";
+"Go back to pump base" = "Go back to pump base";"Replace your patch now!"
 
 /* label for go to prime patch */
 "Go back to priming" = "Go back to priming";
@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "Your patch has %i hours left";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Insulin has been suspended!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Your patch has reached its daily maximum!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Your patch has reached its hourly maximum!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Replace your patch now!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Your patch has detected an occlussion!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Your patch is in Fault state!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Your patch is out of insulin!";
+
+/* Force remove */
+"Force remove" = "Force remove";
+
+/* title force remove */
+"Are you sure?" = "Are you sure?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "It is recommended to deactivate first";
+
+/* confirm force remove */
+"Confirm" = "Confirm";
+
+/* cancel force remove */
+"Cancel" = "Cancel";

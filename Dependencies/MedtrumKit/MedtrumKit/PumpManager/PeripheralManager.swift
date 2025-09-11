@@ -221,7 +221,7 @@ extension PeripheralManager {
             log.warning("State update: Failed to encode JSON - \(error)")
         }
 
-        syncState(
+        StateSyncer.sync(
             syncResponse: syncResponse,
             state: pumpManager.state,
             delegate: nil,
