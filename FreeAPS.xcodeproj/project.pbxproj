@@ -344,19 +344,6 @@
 		6FFAE524D1D9C262F2407CAE /* SnoozeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAE81192B118804DCD23034 /* SnoozeProvider.swift */; };
 		711C0CB42CAABE788916BC9D /* ManualTempBasalDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96653287EDB276A111288305 /* ManualTempBasalDataFlow.swift */; };
 		72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */; };
-		79A058EE2E6C960600D9A275 /* BarcodeScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058ED2E6C960600D9A275 /* BarcodeScanResult.swift */; };
-		79A058F02E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058EF2E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift */; };
-		79A058F22E6C977F00D9A275 /* UserDefaults+Loop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058F12E6C976000D9A275 /* UserDefaults+Loop.swift */; };
-		79A058F42E6C984C00D9A275 /* AIFoodAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058F32E6C983900D9A275 /* AIFoodAnalysis.swift */; };
-		79A058F62E6C989C00D9A275 /* BarcodeScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058F52E6C989C00D9A275 /* BarcodeScannerService.swift */; };
-		79A058F82E6C98D900D9A275 /* FoodSearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058F72E6C98D900D9A275 /* FoodSearchRouter.swift */; };
-		79A058FA2E6C98FD00D9A275 /* OpenFoodFactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058F92E6C98FD00D9A275 /* OpenFoodFactsService.swift */; };
-		79A058FC2E6C99A400D9A275 /* AICameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058FB2E6C99A400D9A275 /* AICameraView.swift */; };
-		79A058FE2E6C99F500D9A275 /* AISettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058FD2E6C99E000D9A275 /* AISettingsView.swift */; };
-		79A059002E6C9A2200D9A275 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A058FF2E6C9A2200D9A275 /* BarcodeScannerView.swift */; };
-		79A059022E6C9A6C00D9A275 /* CarbEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A059012E6C9A5100D9A275 /* CarbEntryViewModel.swift */; };
-		79A059042E6C9AF600D9A275 /* FoodSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A059032E6C9AF600D9A275 /* FoodSearchBar.swift */; };
-		79A059062E6C9B1800D9A275 /* FoodSearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A059052E6C9B1800D9A275 /* FoodSearchResultsView.swift */; };
 		7BCFACB97C821041BA43A114 /* ManualTempBasalRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C377490C77661D75E8C50649 /* ManualTempBasalRootView.swift */; };
 		7F7B756BE8543965D9FDF1A2 /* DataTableDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401509D21F7F35D4E109EDA /* DataTableDataFlow.swift */; };
 		8194B80890CDD6A3C13B0FEE /* SnoozeStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26904AACA8D9C15D229D675 /* SnoozeStateModel.swift */; };
@@ -1023,19 +1010,6 @@
 		6BCF84DC2B16843A003AD46E /* LiveActitiyShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActitiyShared.swift; sourceTree = "<group>"; };
 		6F8BA8533F56BC55748CA877 /* PreferencesEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorProvider.swift; sourceTree = "<group>"; };
 		72778B68C3004F71F6E79BDC /* PumpSettingsEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorStateModel.swift; sourceTree = "<group>"; };
-		79A058ED2E6C960600D9A275 /* BarcodeScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScanResult.swift; sourceTree = "<group>"; };
-		79A058EF2E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsSearchResponse.swift; sourceTree = "<group>"; };
-		79A058F12E6C976000D9A275 /* UserDefaults+Loop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Loop.swift"; sourceTree = "<group>"; };
-		79A058F32E6C983900D9A275 /* AIFoodAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysis.swift; sourceTree = "<group>"; };
-		79A058F52E6C989C00D9A275 /* BarcodeScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerService.swift; sourceTree = "<group>"; };
-		79A058F72E6C98D900D9A275 /* FoodSearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchRouter.swift; sourceTree = "<group>"; };
-		79A058F92E6C98FD00D9A275 /* OpenFoodFactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsService.swift; sourceTree = "<group>"; };
-		79A058FB2E6C99A400D9A275 /* AICameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICameraView.swift; sourceTree = "<group>"; };
-		79A058FD2E6C99E000D9A275 /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
-		79A058FF2E6C9A2200D9A275 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
-		79A059012E6C9A5100D9A275 /* CarbEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbEntryViewModel.swift; sourceTree = "<group>"; };
-		79A059032E6C9AF600D9A275 /* FoodSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchBar.swift; sourceTree = "<group>"; };
-		79A059052E6C9B1800D9A275 /* FoodSearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchResultsView.swift; sourceTree = "<group>"; };
 		79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorDataFlow.swift; sourceTree = "<group>"; };
 		7E22146D3DF4853786C78132 /* CREditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorDataFlow.swift; sourceTree = "<group>"; };
 		86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsRootView.swift; sourceTree = "<group>"; };
@@ -1746,10 +1720,6 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				79A058F32E6C983900D9A275 /* AIFoodAnalysis.swift */,
-				79A058F52E6C989C00D9A275 /* BarcodeScannerService.swift */,
-				79A058F72E6C98D900D9A275 /* FoodSearchRouter.swift */,
-				79A058F92E6C98FD00D9A275 /* OpenFoodFactsService.swift */,
 				F2159A552BA6238D00A0B716 /* ContactTrick */,
 				6B1A8D2C2B156EC100E76752 /* LiveActivity */,
 				CEB434E128B8F9BC00B70274 /* Bluetooth */,
@@ -1982,20 +1952,14 @@
 		3883582E25EEAFC000E024B2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				79A058FB2E6C99A400D9A275 /* AICameraView.swift */,
-				79A058FD2E6C99E000D9A275 /* AISettingsView.swift */,
-				79A058FF2E6C9A2200D9A275 /* BarcodeScannerView.swift */,
 				F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */,
-				38EA05FF262091870064E39B /* BolusProgressViewStyle.swift */,
-				79A059012E6C9A5100D9A275 /* CarbEntryViewModel.swift */,
-				3883581B25EE79BB00E024B2 /* DecimalTextField.swift */,
-				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
-				79A059032E6C9AF600D9A275 /* FoodSearchBar.swift */,
-				79A059052E6C9B1800D9A275 /* FoodSearchResultsView.swift */,
-				383420D825FFEB3F002D46C1 /* Popup.swift */,
-				38DF1785276A73D400B3528F /* TagCloudView.swift */,
-				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
 				3811DE5925C9D4D500A708ED /* ViewModifiers.swift */,
+				3883581B25EE79BB00E024B2 /* DecimalTextField.swift */,
+				383420D825FFEB3F002D46C1 /* Popup.swift */,
+				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
+				38EA05FF262091870064E39B /* BolusProgressViewStyle.swift */,
+				38DF1785276A73D400B3528F /* TagCloudView.swift */,
+				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2062,7 +2026,6 @@
 				19DB781C2D332F73007BBB54 /* AutoISFsettings.swift */,
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
 				38A00B1E25FC00F7006BC0B0 /* Autotune.swift */,
-				79A058ED2E6C960600D9A275 /* BarcodeScanResult.swift */,
 				19F191E32BE686AE00F6297E /* BareMinimum.swift */,
 				388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */,
 				38D0B3B525EBE24900CB6E88 /* Battery.swift */,
@@ -2085,13 +2048,11 @@
 				1967DFBD29D052C200759F30 /* Icons.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
 				38887CCD25F5725200944304 /* IOBEntry.swift */,
-				F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */,
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
 				19012CDB291D2CB900FB8210 /* LoopStats.swift */,
 				192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */,
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */,
-				79A058EF2E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
@@ -2104,8 +2065,8 @@
 				19389E542D69393900636E49 /* TemporaryData.swift */,
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
-				79A058F12E6C976000D9A275 /* UserDefaults+Loop.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
+				F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3172,7 +3133,6 @@
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
 				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
 				38FEF408273B011A00574A46 /* LibreTransmitterSource.swift in Sources */,
-				79A058EE2E6C960600D9A275 /* BarcodeScanResult.swift in Sources */,
 				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				386A124F271707F000DDC61C /* DexcomSourceG6.swift in Sources */,
@@ -3198,7 +3158,6 @@
 				19F191E42BE686AE00F6297E /* BareMinimum.swift in Sources */,
 				CE94597E29E9E1EE0047C9C6 /* GarminManager.swift in Sources */,
 				3883583425EEB38000E024B2 /* PumpSettings.swift in Sources */,
-				79A059042E6C9AF600D9A275 /* FoodSearchBar.swift in Sources */,
 				38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */,
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
@@ -3252,7 +3211,6 @@
 				3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */,
 				CE1856F52ADC4858007E39C7 /* AddCarbPresetIntent.swift in Sources */,
 				38569347270B5DFB0002C50D /* CGMType.swift in Sources */,
-				79A059002E6C9A2200D9A275 /* BarcodeScannerView.swift in Sources */,
 				3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */,
 				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
@@ -3314,7 +3272,6 @@
 				38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */,
 				38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */,
 				BDFD165A2AE40438007F0DDA /* AlternativeBolusCalcRootView.swift in Sources */,
-				79A058FE2E6C99F500D9A275 /* AISettingsView.swift in Sources */,
 				38E98A2525F52C9300C0CED0 /* IssueReporter.swift in Sources */,
 				190EBCC429FF136900BA767D /* UIUXDataFlow.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
@@ -3323,7 +3280,6 @@
 				45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */,
 				3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */,
 				CE7CA34E2A064973004BE681 /* AppShortcuts.swift in Sources */,
-				79A058FA2E6C98FD00D9A275 /* OpenFoodFactsService.swift in Sources */,
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
 				F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */,
 				193339772E05BC8400E80EF5 /* DynamicHistoryView.swift in Sources */,
@@ -3332,7 +3288,6 @@
 				195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */,
 				19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */,
 				1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */,
-				79A058F62E6C989C00D9A275 /* BarcodeScannerService.swift in Sources */,
 				F2159A522BA60F7A00A0B716 /* FontWeight.swift in Sources */,
 				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,
 				38E4453A274E411700EC9A94 /* Disk+[UIImage].swift in Sources */,
@@ -3393,7 +3348,6 @@
 				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
 				198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */,
-				79A058F22E6C977F00D9A275 /* UserDefaults+Loop.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */,
 				E00EEC0327368630002FF094 /* ServiceAssembly.swift in Sources */,
@@ -3403,7 +3357,6 @@
 				DBA5254DBB2586C98F61220C /* ISFEditorProvider.swift in Sources */,
 				1BBB001DAD60F3B8CEA4B1C7 /* ISFEditorStateModel.swift in Sources */,
 				F816826028DB441800054060 /* BluetoothTransmitter.swift in Sources */,
-				79A058F42E6C984C00D9A275 /* AIFoodAnalysis.swift in Sources */,
 				BD7DA9A72AE06E2B00601B20 /* BolusCalculatorConfigProvider.swift in Sources */,
 				38192E0D261BAF980094D973 /* ConvenienceExtensions.swift in Sources */,
 				FEFA5C0F299F810B00765C17 /* Core_Data.xcdatamodeld in Sources */,
@@ -3421,7 +3374,6 @@
 				CE7CA3542A064973004BE681 /* TempPresetsIntentRequest.swift in Sources */,
 				F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */,
 				5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */,
-				79A059062E6C9B1800D9A275 /* FoodSearchResultsView.swift in Sources */,
 				E13B7DAB2A435F57066AF02E /* TargetsEditorStateModel.swift in Sources */,
 				19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */,
 				1948C0662D35A8350032B6A2 /* AutoISFHistoryView.swift in Sources */,
@@ -3436,14 +3388,12 @@
 				DD399FB31EACB9343C944C4C /* PreferencesEditorStateModel.swift in Sources */,
 				F2159A4E2BA60AC000A0B716 /* ContactTrickProvider.swift in Sources */,
 				19E1F7EA29D082ED005C8D20 /* IconConfigProvider.swift in Sources */,
-				79A058F82E6C98D900D9A275 /* FoodSearchRouter.swift in Sources */,
 				44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */,
 				E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */,
 				19493A3D2C59987700EC83A7 /* DatabaseModels.swift in Sources */,
 				CE48C86428CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift in Sources */,
 				38E8755427561E9800975559 /* DataFlow.swift in Sources */,
 				38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */,
-				79A059022E6C9A6C00D9A275 /* CarbEntryViewModel.swift in Sources */,
 				CE7CA34F2A064973004BE681 /* BaseIntentsRequest.swift in Sources */,
 				A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */,
 				33E198D3039045D98C3DC5D4 /* AddCarbsStateModel.swift in Sources */,
@@ -3483,7 +3433,6 @@
 				38E4453B274E411700EC9A94 /* Disk+VolumeInformation.swift in Sources */,
 				7BCFACB97C821041BA43A114 /* ManualTempBasalRootView.swift in Sources */,
 				38E44534274E411700EC9A94 /* Disk+InternalHelpers.swift in Sources */,
-				79A058F02E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift in Sources */,
 				F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */,
 				38A00B2325FC2B55006BC0B0 /* LRUCache.swift in Sources */,
 				1924F72C2BA35AE5006644EE /* TotalDailyDose.swift in Sources */,
@@ -3493,7 +3442,6 @@
 				A05235B9112E677ED03B6E8E /* AutotuneConfigRootView.swift in Sources */,
 				19389E552D69393900636E49 /* TemporaryData.swift in Sources */,
 				7F7B756BE8543965D9FDF1A2 /* DataTableDataFlow.swift in Sources */,
-				79A058FC2E6C99A400D9A275 /* AICameraView.swift in Sources */,
 				1D845DF2E3324130E1D95E67 /* DataTableProvider.swift in Sources */,
 				198FA7BA2D380790006858FD /* ChartModel.swift in Sources */,
 				19F95FFA29F1102A00314DDC /* StatRootView.swift in Sources */,

@@ -1,6 +1,4 @@
-import Combine
 import CoreData
-import OSLog
 import SwiftUI
 import Swinject
 
@@ -9,10 +7,7 @@ extension AddCarbs {
         let resolver: Resolver
         let editMode: Bool
         let override: Bool
-
         @StateObject var state = StateModel()
-        @StateObject var foodSearchState = FoodSearchStateModel()
-
         @State var dish: String = ""
         @State var isPromptPresented = false
         @State var saved = false
@@ -23,22 +18,6 @@ extension AddCarbs {
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
 
-        // Food Search States
-        @State private var showingFoodSearch = false
-        @State private var showAISettings = false
-        @State private var showingAICamera = false
-        @State private var foodSearchText = ""
-        @State private var searchResults: [FoodItem] = []
-        @State private var isLoading = false
-        @State private var errorMessage: String?
-        @State private var showingBarcodeScanner = false
-
-        init(resolver: Resolver, editMode: Bool, override: Bool) {
-            self.resolver = resolver
-            self.editMode = editMode
-            self.override = override
-        }
-
         @FetchRequest(
             entity: Presets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate:
@@ -48,6 +27,7 @@ extension AddCarbs {
                     NSPredicate(format: "dish != %@", "Empty" as String)
                 ]
             )
+
         ) var carbPresets: FetchedResults<Presets>
 
         @Environment(\.managedObjectContext) var moc
@@ -62,25 +42,6 @@ extension AddCarbs {
 
         var body: some View {
             Form {
-                foodSearchSection
-
-                Section {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Image(systemName: "exclamationmark.circle")
-                            Text("Notice")
-                        }
-                        .font(.headline)
-                        .foregroundColor(.blue)
-                        Text(
-                            "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
-                        )
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
-                    }
-                    .padding(.vertical, 4)
-                }
-
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
                         HStack {
@@ -152,7 +113,6 @@ extension AddCarbs {
                         }
                     }
                 }
-
                 // Optional Hypo Treatment
                 if state.carbs > 0, let profile = state.id, profile != "None", state.carbsRequired != nil {
                     Section {
@@ -192,110 +152,11 @@ extension AddCarbs {
             }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                // leading: foodSearchButton,
-                trailing: Button("Cancel", action: {
-                    state.hideModal()
-                    if editMode { state.apsManager.determineBasalSync() }
-                })
-            )
-            .sheet(isPresented: $showingAICamera) {
-                AICameraView(
-                    onFoodAnalyzed: { _, _ in
-                        Task { @MainActor in
-                            // TODO: Ergebnis in dein StateModel übertragen
-                            showingAICamera = false
-                        }
-                    },
-                    onCancel: { showingAICamera = false }
-                )
-            }
+            .navigationBarItems(trailing: Button("Cancel", action: {
+                state.hideModal()
+                if editMode { state.apsManager.determineBasalSync() }
+            }))
             .sheet(isPresented: $presentPresets, content: { presetView })
-            .sheet(isPresented: $showingFoodSearch) {
-                FoodSearchView(
-                    state: foodSearchState,
-                    onSelect: { selectedFood in
-                        handleSelectedFood(selectedFood)
-                    }
-                )
-            }
-        }
-
-        // MARK: - Helper Functions
-
-        @ViewBuilder private func proteinAndFat() -> some View {
-            HStack {
-                Text("Fat").foregroundColor(.orange)
-                Spacer()
-                DecimalTextField(
-                    "0",
-                    value: $state.fat,
-                    formatter: formatter,
-                    autofocus: false,
-                    liveEditing: true
-                )
-                Text("grams").foregroundColor(.secondary)
-            }
-            HStack {
-                Text("Protein").foregroundColor(.red)
-                Spacer()
-                DecimalTextField(
-                    "0",
-                    value: $state.protein,
-                    formatter: formatter,
-                    autofocus: false,
-                    liveEditing: true
-                )
-                Text("grams").foregroundColor(.secondary)
-            }
-        }
-
-        // MARK: - Food Search Section
-
-        private var foodSearchSection: some View {
-            Section(header: Text("AI Food Search")) {
-                Button {
-                    showingFoodSearch = true
-                } label: {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        Text("Search Food Database")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                    }
-                    .foregroundColor(.blue)
-                }
-
-                NavigationLink(destination: AISettingsView()) {
-                    HStack {
-                        Image(systemName: "gearshape")
-                        Text("AI Settings")
-                        Spacer()
-                    }
-                    .foregroundColor(.blue)
-                }
-                .overlay(
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.blue)
-                        .font(.system(size: 14, weight: .semibold)),
-                    alignment: .trailing
-                )
-            }
-        }
-
-        private var foodSearchButton: some View {
-            Button {
-                showingFoodSearch.toggle()
-            } label: {
-                Image(systemName: "magnifyingglass")
-                    .font(.title3)
-            }
-        }
-
-        private func handleSelectedFood(_ food: FoodItem) {
-            state.carbs = food.carbs
-            state.fat = food.fat
-            state.protein = food.protein
         }
 
         private var empty: Bool {
@@ -332,30 +193,6 @@ extension AddCarbs {
             }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
-        private var minusButton: some View {
-            Button {
-                state.subtract()
-                if empty {
-                    state.selection = nil
-                    state.combinedPresets = []
-                }
-            }
-            label: { Image(systemName: "minus.circle.fill")
-            }
-            .buttonStyle(.borderless)
-            .disabled(state.selection == nil)
-        }
-
-        private var plusButton: some View {
-            Button {
-                state.plus()
-            }
-            label: { Image(systemName: "plus.circle.fill")
-            }
-            .buttonStyle(.borderless)
-            .disabled(state.selection == nil)
-        }
-
         private var presetView: some View {
             Form {
                 Section {} header: {
@@ -379,7 +216,8 @@ extension AddCarbs {
                     header: { Text("Save") }
                 }
 
-                let filtered = carbPresets.filter { ($0.dish ?? "").count > 1 }.removeDublicates()
+                let filtered = carbPresets.filter { !($0.dish ?? "").isEmpty && ($0.dish ?? "Empty") != "Empty" }
+                    .removeDublicates()
                 if filtered.count > 4 {
                     Section {
                         TextField("Search", text: $string)
@@ -406,99 +244,6 @@ extension AddCarbs {
             }
             .sheet(isPresented: $state.edit, content: { editView })
             .environment(\.colorScheme, colorScheme)
-        }
-
-        @ViewBuilder private func presetsList(for preset: Presets) -> some View {
-            let dish = preset.dish ?? ""
-
-            if !preset.hasChanges {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(dish)
-                        HStack {
-                            Text("Carbs")
-                            Text("\(preset.carbs ?? 0)")
-                            Spacer()
-                            Text("Fat")
-                            Text("\(preset.fat ?? 0)")
-                            Spacer()
-                            Text("Protein")
-                            Text("\(preset.protein ?? 0)")
-                        }.foregroundStyle(.secondary).font(.caption).padding(.top, 2)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        state.selection = preset
-                        state.addU(state.selection)
-                        reset()
-                    }
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            state.edit = true
-                            state.presetToEdit = preset
-                            update()
-                        } label: {
-                            Label("Edit", systemImage: "pencil.line")
-                        }
-                    }
-                }
-            }
-        }
-
-        private func delete(at offsets: IndexSet) {
-            for index in offsets {
-                let preset = carbPresets[index]
-                moc.delete(preset)
-            }
-            do {
-                try moc.save()
-            } catch {
-                // Error handling
-            }
-        }
-
-        private func save() {
-            if let preset = state.presetToEdit {
-                preset.dish = newPreset.dish
-                preset.carbs = newPreset.carbs as NSDecimalNumber
-                preset.fat = newPreset.fat as NSDecimalNumber
-                preset.protein = newPreset.protein as NSDecimalNumber
-            } else if !disabled {
-                let preset = Presets(context: moc)
-                preset.carbs = newPreset.carbs as NSDecimalNumber
-                preset.fat = newPreset.fat as NSDecimalNumber
-                preset.protein = newPreset.protein as NSDecimalNumber
-                preset.dish = newPreset.dish
-            }
-
-            if moc.hasChanges {
-                do {
-                    try moc.save()
-                } catch {}
-            }
-            state.edit = false
-        }
-
-        private func update() {
-            newPreset.dish = state.presetToEdit?.dish ?? ""
-            newPreset.carbs = (state.presetToEdit?.carbs ?? 0) as Decimal
-            newPreset.fat = (state.presetToEdit?.fat ?? 0) as Decimal
-            newPreset.protein = (state.presetToEdit?.protein ?? 0) as Decimal
-        }
-
-        private func addfromCarbsView() {
-            newPreset = (NSLocalizedString("New", comment: ""), state.carbs, state.fat, state.protein)
-            state.edit = true
-        }
-
-        private func reset() {
-            presentPresets = false
-            string = ""
-        }
-
-        private var disabled: Bool {
-            (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
-                (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
         }
 
         private var editView: some View {
@@ -534,830 +279,154 @@ extension AddCarbs {
                 }
             }.environment(\.colorScheme, colorScheme)
         }
-    }
-}
 
-class FoodSearchStateModel: ObservableObject {
-    @Published var foodSearchText = ""
-    @Published var searchResults: [OpenFoodFactsProduct] = []
-    @Published var aiSearchResults: [AIFoodItem] = []
-    @Published var isLoading = false
-    @Published var errorMessage: String?
-
-    private var cancellables = Set<AnyCancellable>()
-    private var searchTask: Task<Void, Never>?
-
-    init() {
-        print("🔍 FoodSearchStateModel initialized")
-
-        // Debounced search
-        $foodSearchText
-            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
-            .removeDuplicates()
-            .sink { [weak self] query in
-                self?.performSearch(query: query)
-            }
-            .store(in: &cancellables)
-    }
-
-    deinit {
-        print("🔍 FoodSearchStateModel deinitialized")
-        searchTask?.cancel()
-    }
-
-    func performSearch(query: String) {
-        guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
-            searchResults = []
-            aiSearchResults = []
-            return
-        }
-
-        searchTask?.cancel()
-        isLoading = true
-        errorMessage = nil
-
-        searchTask = Task { @MainActor in
-            do {
-                let openFoodProducts = try await FoodSearchRouter.shared.searchFoodsByText(query)
-
-                if !Task.isCancelled {
-                    // ✅ KEINE map MEHR - direkt die originalen Produkte verwenden
-                    self.searchResults = openFoodProducts
-                    self.isLoading = false
-                    print("✅ Search completed: \(self.searchResults.count) results")
-                }
-            } catch {
-                if !Task.isCancelled {
-                    self.errorMessage = error.localizedDescription
-                    self.isLoading = false
-                    self.searchResults = []
-                    print("❌ Search failed: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-
-    func searchWithOpenFoodFacts(barcode: String) {
-        isLoading = true
-        errorMessage = nil
-        foodSearchText = barcode
-
-        Task {
-            do {
-                print("🔍 Searching OpenFoodFacts for barcode: \(barcode)")
-
-                // ✅ DIREKT den Shared Router verwenden
-                if let product = try await FoodSearchRouter.shared.searchFoodByBarcode(barcode) {
-                    await MainActor.run {
-                        self.searchResults = [product] // ← Das ist jetzt [OpenFoodFactsProduct]
-                        print("✅ OpenFoodFacts found product: \(product.displayName)")
-                        self.isLoading = false
-
-                        // ✅ DEBUG: Prüfe ob URLs vorhanden sind
-                        print("🖼️ Barcode Product URLs: \(product.imageURL ?? "nil"), \(product.imageFrontURL ?? "nil")")
-                    }
-                } else {
-                    // Kein Produkt gefunden → Fallback zu normaler Suche
-                    await MainActor.run {
-                        print("⚠️ No OpenFoodFacts results, using normal search")
-                        self.performSearch(query: barcode)
-                    }
-                }
-            } catch {
-                await MainActor.run {
-                    print("❌ OpenFoodFacts search failed: \(error), using normal search")
-                    self.errorMessage = "OpenFoodFacts search failed: \(error.localizedDescription)"
-                    self.performSearch(query: barcode)
-                }
-            }
-        }
-    }
-
-    func addAISearchResults(_ results: [AIFoodItem]) {
-        aiSearchResults = results
-    }
-
-    func clearAISearchResults() {
-        aiSearchResults = []
-    }
-}
-
-private func searchFoodProducts(query: String) async throws -> [FoodItem] {
-    print("🔍 Starting search for: '\(query)'")
-    let openFoodProducts = try await FoodSearchRouter.shared.searchFoodsByText(query)
-
-    return openFoodProducts.map { openFoodProduct in
-        FoodItem(
-            name: openFoodProduct.productName ?? "Unknown",
-            carbs: Decimal(openFoodProduct.nutriments.carbohydrates),
-            fat: Decimal(openFoodProduct.nutriments.fat ?? 0),
-            protein: Decimal(openFoodProduct.nutriments.proteins ?? 0),
-            source: openFoodProduct.brands ?? "OpenFoodFacts"
-        )
-    }
-}
-
-private func searchOpenFoodFactsByBarcode(_ barcode: String) async throws -> [FoodItem] {
-    let urlString = "https://world.openfoodfacts.org/api/v2/product/\(barcode).json"
-    print("🌐 OpenFoodFacts API Call: \(urlString)")
-
-    guard let url = URL(string: urlString) else {
-        throw NSError(domain: "OpenFoodFactsError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
-    }
-
-    let (data, response) = try await URLSession.shared.data(from: url)
-
-    guard let httpResponse = response as? HTTPURLResponse else {
-        throw NSError(domain: "OpenFoodFactsError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
-    }
-
-    guard httpResponse.statusCode == 200 else {
-        print("❌ OpenFoodFacts API Error: Status \(httpResponse.statusCode)")
-        return [] // Leeres Array für "nicht gefunden"
-    }
-
-    // Parse die Response
-    let productResponse = try JSONDecoder().decode(OpenFoodFactsProductResponse.self, from: data)
-
-    if productResponse.status == 1, let product = productResponse.product {
-        // Produkt gefunden
-        let foodItem = FoodItem(
-            name: product.productName ?? "Unknown",
-            carbs: Decimal(product.nutriments.carbohydrates),
-            fat: Decimal(product.nutriments.fat ?? 0),
-            protein: Decimal(product.nutriments.proteins ?? 0),
-            source: product.brands ?? "OpenFoodFacts"
-        )
-        return [foodItem]
-    } else {
-        // Kein Produkt gefunden
-        print("ℹ️ OpenFoodFacts: No product found for barcode \(barcode)")
-        return []
-    }
-}
-
-private func searchFoodProducts(query: String, completion: @escaping ([AIFoodItem]) -> Void) async throws -> [FoodItem] {
-    do {
-        print("🔍 Starting AI search for: '\(query)'")
-
-        // Use the FoodSearchRouter to handle the search
-        let openFoodProducts = try await FoodSearchRouter.shared.searchFoodsByText(query)
-
-        print("✅ AI search completed, found \(openFoodProducts.count) products")
-
-        // Konvertiert OpenFoodFactsProduct zu AIFoodItem
-        let aiProducts = openFoodProducts.map { openFoodProduct in
-            AIFoodItem(
-                name: openFoodProduct.productName ?? "Unknown",
-                brand: openFoodProduct.brands,
-                calories: 0,
-                carbs: openFoodProduct.nutriments.carbohydrates,
-                protein: openFoodProduct.nutriments.proteins ?? 0,
-                fat: openFoodProduct.nutriments.fat ?? 0
-            )
-        }
-
-        // Rückgabe der AI-Ergebnisse via Completion Handler
-        completion(aiProducts)
-
-        // Konvertiere zu FoodItem für Rückgabe
-        return openFoodProducts.map { openFoodProduct in
-            FoodItem(
-                name: openFoodProduct.productName ?? "Unknown",
-                carbs: Decimal(openFoodProduct.nutriments.carbohydrates),
-                fat: Decimal(openFoodProduct.nutriments.fat ?? 0),
-                protein: Decimal(openFoodProduct.nutriments.proteins ?? 0),
-                source: openFoodProduct.brands ?? "OpenFoodFacts"
-            )
-        }
-    } catch {
-        print("❌ AI Search failed: \(error.localizedDescription)")
-        completion([])
-        return []
-    }
-}
-
-struct FoodSearchView: View {
-    @ObservedObject var state: FoodSearchStateModel
-    var onSelect: (FoodItem) -> Void
-    @Environment(\.dismiss) var dismiss
-
-    // Navigation States
-    @State private var navigateToBarcode = false
-    @State private var navigateToAICamera = false
-    @State private var showingAIAnalysisResults = false
-    @State private var aiAnalysisResult: AIFoodAnalysisResult?
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                // Suchfeld + Buttons
-                HStack(spacing: 8) {
-                    TextField("Food Search...", text: $state.foodSearchText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                        .submitLabel(.search)
-                        .onSubmit {
-                            state.performSearch(query: state.foodSearchText)
-                        }
-                    // Barcode Button
-                    Button {
-                        navigateToBarcode = true
-                    } label: {
-                        Image(systemName: "barcode.viewfinder")
-                            .font(.title2)
-                            .foregroundColor(.blue)
-                            .padding(8)
-                            .background(Color.blue.opacity(0.1))
-                            .cornerRadius(8)
-                    }
-
-                    // AI Kamera Button
-                    Button {
-                        navigateToAICamera = true
-                    } label: {
-                        AICameraIcon()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                            .background(Color.purple.opacity(0.1))
-                            .cornerRadius(8)
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top, 8)
-
-                ScrollView {
-                    // Zeige entweder normale Suchergebnisse oder AI-Analyse-Ergebnisse an
-                    if showingAIAnalysisResults, let result = aiAnalysisResult {
-                        AIAnalysisResultsView(
-                            analysisResult: result,
-                            onFoodItemSelected: { foodItem in
-                                onSelect(foodItem)
-                                dismiss()
-                            },
-                            onCompleteMealSelected: { totalMeal in
-                                onSelect(totalMeal)
-                                dismiss()
-                            }
-                        )
-                    } else {
-                        FoodSearchResultsView(
-                            searchResults: state.searchResults,
-                            aiSearchResults: state.aiSearchResults,
-                            isSearching: state.isLoading,
-                            errorMessage: state.errorMessage,
-                            onProductSelected: { selectedProduct in
-                                let foodItem = selectedProduct.toFoodItem()
-                                onSelect(foodItem)
-                                dismiss()
-                            },
-                            onAIProductSelected: { aiProduct in
-                                let foodItem = FoodItem(
-                                    name: aiProduct.name,
-                                    carbs: Decimal(aiProduct.carbs),
-                                    fat: Decimal(aiProduct.fat),
-                                    protein: Decimal(aiProduct.protein),
-                                    source: "AI Analyse"
-                                )
-                                onSelect(foodItem)
-                                dismiss()
-                            }
-                        )
-                    }
-                }
-                .padding(.top, 8)
-                // Navigation-Ziele
-                NavigationLink(
-                    destination: BarcodeScannerView(
-                        onBarcodeScanned: { barcode in
-                            handleBarcodeScan(barcode)
-                            navigateToBarcode = false
-                        },
-                        onCancel: { navigateToBarcode = false }
-                    ),
-                    isActive: $navigateToBarcode,
-                    label: { EmptyView() }
+        @ViewBuilder private func proteinAndFat() -> some View {
+            HStack {
+                Text("Fat").foregroundColor(.orange)
+                Spacer()
+                DecimalTextField(
+                    "0",
+                    value: $state.fat,
+                    formatter: formatter,
+                    autofocus: false,
+                    liveEditing: true
                 )
-
-                NavigationLink(
-                    destination: AICameraView(
-                        onFoodAnalyzed: { analysisResult, image in
-                            handleAIAnalysis(analysisResult, image: image)
-                            navigateToAICamera = false
-                        },
-                        onCancel: { navigateToAICamera = false }
-                    ),
-                    isActive: $navigateToAICamera,
-                    label: { EmptyView() }
-                )
+                Text("grams").foregroundColor(.secondary)
             }
-            .navigationTitle("Food Search")
-            .navigationBarItems(trailing: Button("Fertig") { dismiss() })
+            HStack {
+                Text("Protein").foregroundColor(.red)
+                Spacer()
+                DecimalTextField(
+                    "0",
+                    value: $state.protein,
+                    formatter: formatter,
+                    autofocus: false,
+                    liveEditing: true
+                ).foregroundColor(.loopRed)
+
+                Text("grams").foregroundColor(.secondary)
+            }
         }
-    }
 
-    private func handleBarcodeScan(_ barcode: String) {
-        print("📦 Barcode gescannt: \(barcode)")
-        navigateToBarcode = false
-        state.foodSearchText = barcode
-        state.performSearch(query: barcode)
-        print("🔍 Suche nach Barcode: \(barcode)")
-    }
+        @ViewBuilder private func presetsList(for preset: Presets) -> some View {
+            let dish = preset.dish ?? ""
 
-    private func handleAIAnalysis(_ analysisResult: AIFoodAnalysisResult, image _: UIImage?) {
-        // Speichere das vollständige Analyse-Ergebnis
-        aiAnalysisResult = analysisResult
-        showingAIAnalysisResults = true
-
-        // Füge auch die einfachen Ergebnisse zum State hinzu (für Rückwärtskompatibilität)
-        let aiFoodItems = analysisResult.foodItemsDetailed.map { foodItem in
-            AIFoodItem(
-                name: foodItem.name,
-                brand: nil,
-                calories: foodItem.calories ?? 0,
-                carbs: foodItem.carbohydrates ?? analysisResult.totalCarbohydrates,
-                protein: foodItem.protein ?? analysisResult.totalProtein ?? 0,
-                fat: foodItem.fat ?? analysisResult.totalFat ?? 0
-            )
-        }
-        state.aiSearchResults = aiFoodItems
-    }
-}
-
-struct FoodItemCard: View {
-    let foodItem: FoodItemAnalysis
-    let onSelect: () -> Void
-
-    @State private var isExpanded = false
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Kopfbereich mit Tap-Gesture für Auswahl
-            VStack(alignment: .leading, spacing: 8) {
+            // Only list saved entries
+            if !preset.hasChanges {
                 HStack {
-                    Text(foodItem.name)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-
-                    Spacer()
-
-                    // Expand/Collapse Button
-                    Button(action: {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                            isExpanded.toggle()
-                        }
-                    }) {
-                        Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.gray)
-                            .padding(6)
-                            .background(Color.gray.opacity(0.1))
-                            .clipShape(Circle())
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-
-                // Auswahl-Button
-                Button(action: onSelect) {
-                    HStack {
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                        Text("Hinzufügen")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.green.opacity(0.1))
-                    .cornerRadius(8)
-                }
-                .buttonStyle(PlainButtonStyle())
-
-                // Portionsinformationen (immer sichtbar)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Portion: \(foodItem.portionEstimate)")
-                        .font(.subheadline)
-
-                    if let usdaSize = foodItem.usdaServingSize {
-                        Text("USDA Standard: \(usdaSize)")
-                            .font(.caption)
-                    }
-
-                    if foodItem.servingMultiplier != 1.0 {
-                        Text("Multiplikator: \(foodItem.servingMultiplier, specifier: "%.1f")x")
-                            .font(.caption)
-                    }
-                }
-                .foregroundColor(.secondary)
-
-                // Nährwert-Badges (immer sichtbar)
-                HStack(spacing: 8) {
-                    NutritionBadge(value: foodItem.carbohydrates, unit: "g", label: "KH", color: .blue)
-
-                    if let protein = foodItem.protein, protein > 0 {
-                        NutritionBadge(value: protein, unit: "g", label: "P", color: .green)
-                    }
-
-                    if let fat = foodItem.fat, fat > 0 {
-                        NutritionBadge(value: fat, unit: "g", label: "F", color: .orange)
-                    }
-                }
-            }
-
-            // Erweiterter Bereich (expandable)
-            if isExpanded {
-                VStack(alignment: .leading, spacing: 8) {
-                    // Detaillierte Nährwerte
-                    if let calories = foodItem.calories, calories > 0 {
+                    VStack(alignment: .leading) {
+                        Text(dish)
                         HStack {
-                            NutritionBadge(value: calories, unit: "kcal", label: "Energie", color: .red)
-
-                            if let fiber = foodItem.fiber, fiber > 0 {
-                                NutritionBadge(value: fiber, unit: "g", label: "Faser", color: .purple)
-                            }
+                            Text("Carbs")
+                            Text("\(preset.carbs ?? 0)")
+                            Spacer()
+                            Text("Fat")
+                            Text("\(preset.fat ?? 0)")
+                            Spacer()
+                            Text("Protein")
+                            Text("\(preset.protein ?? 0)")
+                        }.foregroundStyle(.secondary).font(.caption).padding(.top, 2)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        state.selection = preset
+                        state.addU(state.selection)
+                        reset()
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            state.edit = true
+                            state.presetToEdit = preset
+                            update()
+                        } label: {
+                            Label("Edit", systemImage: "pencil.line")
                         }
                     }
-
-                    // Zusätzliche Informationen
-                    VStack(alignment: .leading, spacing: 4) {
-                        if let preparation = foodItem.preparationMethod, !preparation.isEmpty {
-                            HStack(alignment: .top) {
-                                Image(systemName: "flame.fill")
-                                    .foregroundColor(.orange)
-                                    .font(.caption)
-                                Text("Zubereitung: \(preparation)")
-                                    .font(.caption)
-                            }
-                        }
-
-                        if let visualCues = foodItem.visualCues, !visualCues.isEmpty {
-                            HStack(alignment: .top) {
-                                Image(systemName: "eye.fill")
-                                    .foregroundColor(.blue)
-                                    .font(.caption)
-                                Text("Visuelle Hinweise: \(visualCues)")
-                                    .font(.caption)
-                            }
-                        }
-
-                        if let notes = foodItem.assessmentNotes, !notes.isEmpty {
-                            HStack(alignment: .top) {
-                                Image(systemName: "note.text")
-                                    .foregroundColor(.gray)
-                                    .font(.caption)
-                                Text("Bewertung: \(notes)")
-                                    .font(.caption)
-                            }
-                        }
-                    }
-                    .foregroundColor(.secondary)
-                }
-                .transition(.opacity.combined(with: .move(edge: .top)))
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.systemBackground))
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-        )
-        .padding(.horizontal)
-    }
-}
-
-struct NutritionBadge: View {
-    let value: Double
-    let unit: String
-    let label: String
-    let color: Color
-
-    var body: some View {
-        VStack(spacing: 2) {
-            Text("\(value, specifier: "%.0f")\(unit)")
-                .font(.system(size: 12, weight: .bold))
-                .minimumScaleFactor(0.8)
-            Text(label)
-                .font(.system(size: 9, weight: .medium))
-                .minimumScaleFactor(0.7)
-        }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 6)
-        .background(color.opacity(0.15))
-        .foregroundColor(color)
-        .cornerRadius(8)
-    }
-}
-
-struct AIAnalysisResultsView: View {
-    let analysisResult: AIFoodAnalysisResult
-    let onFoodItemSelected: (FoodItem) -> Void
-    let onCompleteMealSelected: (FoodItem) -> Void
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            // Header mit Gesamtübersicht
-            VStack(alignment: .leading, spacing: 12) {
-                Text("🧠 AI Lebensmittelanalyse")
-                    .font(.title2)
-                    .fontWeight(.bold)
-
-                if let description = analysisResult.overallDescription {
-                    Text(description)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-
-                // Konfidenz-Level
-                HStack {
-                    Text("Konfidenz:")
-                    ConfidenceBadge(level: analysisResult.confidence)
-                    Spacer()
-                    if let portions = analysisResult.totalFoodPortions {
-                        Text("\(portions) Portionen")
-                            .font(.caption)
-                    }
-                }
-                .font(.subheadline)
-            }
-            .padding(.horizontal)
-
-            // Gesamt-Nährwerte der Mahlzeit
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    Text("📊 Gesamtnährwerte der Mahlzeit")
-                        .font(.headline)
-
-                    Spacer()
-
-                    // ERWEITERTER Gesamtmahlzeit-Button (HIER EINFÜGEN)
-                    Button(action: {
-                        let mealName = analysisResult.foodItemsDetailed.count == 1 ?
-                            analysisResult.foodItemsDetailed.first?.name ?? "Mahlzeit" :
-                            "Komplette Mahlzeit"
-
-                        let totalMeal = FoodItem(
-                            name: mealName,
-                            carbs: Decimal(analysisResult.totalCarbohydrates),
-                            fat: Decimal(analysisResult.totalFat ?? 0),
-                            protein: Decimal(analysisResult.totalProtein ?? 0),
-                            source: "AI Gesamtanalyse • \(analysisResult.foodItemsDetailed.count) Lebensmittel"
-                        )
-                        onCompleteMealSelected(totalMeal)
-                    }) {
-                        HStack(spacing: 6) {
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.green)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Gesamt hinzufügen")
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                Text("\(analysisResult.foodItemsDetailed.count) Lebensmittel")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(Color.green.opacity(0.1))
-                        .cornerRadius(8)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 10) {
-                    NutritionSummaryBadge(
-                        value: analysisResult.totalCarbohydrates,
-                        unit: "g",
-                        label: "Kohlenhydrate",
-                        color: .blue
-                    )
-
-                    if let protein = analysisResult.totalProtein {
-                        NutritionSummaryBadge(value: protein, unit: "g", label: "Protein", color: .green)
-                    }
-
-                    if let fat = analysisResult.totalFat {
-                        NutritionSummaryBadge(value: fat, unit: "g", label: "Fett", color: .orange)
-                    }
-
-                    if let fiber = analysisResult.totalFiber {
-                        NutritionSummaryBadge(value: fiber, unit: "g", label: "Ballaststoffe", color: .purple)
-                    }
-
-                    if let calories = analysisResult.totalCalories {
-                        NutritionSummaryBadge(value: calories, unit: "kcal", label: "Kalorien", color: .red)
-                    }
-
-                    if let servings = analysisResult.totalUsdaServings {
-                        NutritionSummaryBadge(value: servings, unit: "", label: "USDA Portionen", color: .indigo)
-                    }
                 }
             }
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(12)
-            .padding(.horizontal)
+        }
 
-            // Einzelne Lebensmittel
-            Text("🍽️ Einzelne Lebensmittel")
-                .font(.headline)
-                .padding(.horizontal)
-
-            ForEach(analysisResult.foodItemsDetailed, id: \.name) { foodItem in
-                FoodItemCard(
-                    foodItem: foodItem,
-                    onSelect: {
-                        let selectedFood = FoodItem(
-                            name: foodItem.name,
-                            carbs: Decimal(foodItem.carbohydrates),
-                            fat: Decimal(foodItem.fat ?? 0),
-                            protein: Decimal(foodItem.protein ?? 0),
-                            source: "AI Analyse"
-                        )
-                        onFoodItemSelected(selectedFood)
-                    }
-                )
-            }
-
-            // Diabetes-spezifische Empfehlungen
-            if let diabetesInfo = analysisResult.diabetesConsiderations {
-                VStack(alignment: .leading, spacing: 8) {
-                    Label("💉 Diabetes Empfehlungen", systemImage: "cross.case.fill")
-                        .font(.headline)
-                    Text(diabetesInfo)
-                        .font(.subheadline)
+        private var minusButton: some View {
+            Button {
+                state.subtract()
+                if empty {
+                    state.selection = nil
+                    state.combinedPresets = []
                 }
-                .padding()
-                .background(Color.blue.opacity(0.1))
-                .cornerRadius(12)
-                .padding(.horizontal)
+            }
+            label: { Image(systemName: "minus.circle.fill")
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
+        }
+
+        private var plusButton: some View {
+            Button {
+                state.plus()
+            }
+            label: { Image(systemName: "plus.circle.fill")
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
+        }
+
+        private func delete(at offsets: IndexSet) {
+            for index in offsets {
+                let preset = carbPresets[index]
+                moc.delete(preset)
+            }
+            do {
+                try moc.save()
+            } catch {
+                // To do: add error
+            }
+        }
+
+        private func save() {
+            if let preset = state.presetToEdit {
+                preset.dish = newPreset.dish
+                preset.carbs = newPreset.carbs as NSDecimalNumber
+                preset.fat = newPreset.fat as NSDecimalNumber
+                preset.protein = newPreset.protein as NSDecimalNumber
+            } else if !disabled {
+                let preset = Presets(context: moc)
+                preset.carbs = newPreset.carbs as NSDecimalNumber
+                preset.fat = newPreset.fat as NSDecimalNumber
+                preset.protein = newPreset.protein as NSDecimalNumber
+                preset.dish = newPreset.dish
             }
 
-            // Zusätzliche Hinweise
-            if let notes = analysisResult.notes {
-                VStack(alignment: .leading, spacing: 8) {
-                    Label("📝 Hinweise", systemImage: "note.text")
-                        .font(.headline)
-                    Text(notes)
-                        .font(.subheadline)
-                }
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(12)
-                .padding(.horizontal)
+            if moc.hasChanges {
+                do {
+                    try moc.save()
+                } catch { /* To do: add error */ }
             }
+            state.edit = false
         }
-        .padding(.vertical)
-    }
-}
 
-struct ConfidenceBadge: View {
-    let level: AIConfidenceLevel
-
-    var body: some View {
-        HStack(spacing: 4) {
-            Circle()
-                .fill(level.color)
-                .frame(width: 8, height: 8)
-            Text(level.description)
-                .font(.caption)
-                .fontWeight(.medium)
+        private func update() {
+            newPreset.dish = state.presetToEdit?.dish ?? ""
+            newPreset.carbs = (state.presetToEdit?.carbs ?? 0) as Decimal
+            newPreset.fat = (state.presetToEdit?.fat ?? 0) as Decimal
+            newPreset.protein = (state.presetToEdit?.protein ?? 0) as Decimal
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(level.color.opacity(0.2))
-        .foregroundColor(level.color)
-        .cornerRadius(6)
-    }
-}
 
-struct NutritionSummaryBadge: View {
-    let value: Double
-    let unit: String
-    let label: String
-    let color: Color
-
-    var body: some View {
-        VStack(spacing: 4) {
-            Text("\(value, specifier: "%.0f")")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(color)
-            Text(unit)
-                .font(.system(size: 10))
-            Text(label)
-                .font(.system(size: 10, weight: .medium))
-                .multilineTextAlignment(.center)
+        private func addfromCarbsView() {
+            newPreset = (NSLocalizedString("New", comment: ""), state.carbs, state.fat, state.protein)
+            state.edit = true
         }
-        .frame(maxWidth: .infinity)
-        .padding(8)
-        .background(color.opacity(0.1))
-        .cornerRadius(8)
-    }
-}
 
-// Erweiterung für AIConfidenceLevel
-extension AIConfidenceLevel {
-    var color: Color {
-        switch self {
-        case .high: return .green
-        case .medium: return .orange
-        case .low: return .red
+        private func reset() {
+            presentPresets = false
+            string = ""
+            state.presetToEdit = nil // Probably not needed
+            state.edit = false // Probably not needed
         }
-    }
 
-    var description: String {
-        switch self {
-        case .high: return "Hoch"
-        case .medium: return "Mittel"
-        case .low: return "Niedrig"
+        private var disabled: Bool {
+            (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
+                (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
         }
-    }
-}
-
-extension OpenFoodFactsProduct {
-    func toFoodItem() -> FoodItem {
-        FoodItem(
-            name: productName ?? "Unknown",
-            carbs: Decimal(nutriments.carbohydrates),
-            fat: Decimal(nutriments.fat ?? 0),
-            protein: Decimal(nutriments.proteins ?? 0),
-            source: brands ?? "OpenFoodFacts"
-        )
-    }
-}
-
-struct FoodItem: Identifiable, Equatable {
-    let id = UUID()
-    let name: String
-    let carbs: Decimal
-    let fat: Decimal
-    let protein: Decimal
-    let source: String
-
-    static func == (lhs: FoodItem, rhs: FoodItem) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-extension FoodItem {
-    func toAIFoodItem() -> AIFoodItem {
-        AIFoodItem(
-            name: name,
-            brand: source,
-            calories: Double(truncating: carbs as NSNumber) * 4 + Double(truncating: protein as NSNumber) * 4 +
-                Double(truncating: fat as NSNumber) * 9,
-            carbs: Double(truncating: carbs as NSNumber),
-            protein: Double(truncating: protein as NSNumber),
-            fat: Double(truncating: fat as NSNumber)
-        )
-    }
-}
-
-extension AIFoodItem {
-    func toCarbsEntry(servingSize: Double = 100.0) -> CarbsEntry {
-        // Berechne die Nährwerte basierend auf der Portionsgröße
-        let scalingFactor = servingSize / 100.0
-
-        return CarbsEntry(
-            id: UUID().uuidString,
-            createdAt: Date(),
-            actualDate: Date(),
-            carbs: Decimal(carbs * scalingFactor),
-            fat: Decimal(fat * scalingFactor),
-            protein: Decimal(protein * scalingFactor),
-            note: "\(name)\(brand != nil ? " (\(brand!))" : "") - AI detected",
-            enteredBy: CarbsEntry.manual,
-            isFPU: false
-        )
-    }
-}
-
-struct NutrientBadge: View {
-    let value: Decimal
-    let unit: String
-    let label: String
-    let color: Color
-
-    var body: some View {
-        VStack(spacing: 2) {
-            // Text("\(value, specifier: "%.1f")\(unit)")
-            Text("\(Double(truncating: value as NSNumber), specifier: "%.1f")\(unit)")
-                .font(.system(.subheadline, design: .rounded))
-                .fontWeight(.semibold)
-                .foregroundColor(color)
-
-            Text(label)
-                .font(.caption2)
-                .foregroundColor(.secondary)
-        }
-        .frame(minWidth: 50)
-        .padding(6)
-        .background(color.opacity(0.1))
-        .cornerRadius(8)
     }
 }
 
