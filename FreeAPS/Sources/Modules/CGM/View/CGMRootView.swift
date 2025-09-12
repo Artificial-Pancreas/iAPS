@@ -82,7 +82,7 @@ extension CGM {
                             VStack(alignment: .leading) {
                                 if let cgmTransmitterDeviceAddress = state.cgmTransmitterDeviceAddress {
                                     Text("CGM address :")
-                                    Text(cgmTransmitterDeviceAddress)
+                                    Text(cgmTransmitterDeviceAddress).font(.caption)
                                 } else {
                                     Text("CGM is not used as heartbeat.")
                                 }

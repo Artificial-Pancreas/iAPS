@@ -65,6 +65,7 @@ final class BloodGlucoseManager {
             return false
         }
 
+        // TODO: [loopkit] allow saving readings that are older than the latest, but are missing in the storage?
         filteredByDate = allGlucose.filter { $0.dateString > syncDate }
         filtered = glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
 
@@ -112,7 +113,7 @@ final class BloodGlucoseManager {
         if glucoseForHealth.isNotEmpty {
             healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
         }
-        return true // TODO: [loopkit] perform the actual check if any new glucose was seen and stored
+        return true
     }
 
     private func save(_ glucose: [BloodGlucose]) {

@@ -27,6 +27,9 @@ protocol DeviceDataManager {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var recommendsLoop: AnyPublisher<Void, Never> { get }
 
+    // can be called by external blood glucose sources (like AppGroupSource) to trigger the loop
+    func bloodGlucoseReadingsReceived(bloodGlucose: [BloodGlucose])
+
     func createBolusProgressReporter() -> DoseProgressReporter?
 
     func removePumpAsCGM()
@@ -86,8 +89,6 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     @Injected() private var displayGlucosePreference: DisplayGlucosePreference!
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
-    @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
-        .distantPast
 
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
@@ -468,6 +469,10 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     // MARK: loop
 
+    func bloodGlucoseReadingsReceived(bloodGlucose: [BloodGlucose]) {
+        processReceivedBloodGlucose(bloodGlucose: bloodGlucose)
+    }
+
     private func heartbeat() {
         processQueue.safeSync {
             fetchNewDataFromCgm { readingResult in
@@ -478,13 +483,16 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     private func processCGMReadingResultAndLoop(readingResult: CGMReadingResult) {
         processQueue.safeSync {
-            lastHeartBeatTime = Date()
-
             self.processCGMReadingResult(readingResult: readingResult) { bloodGlucose in
-                self.bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose)
-                self.updatePumpData {
-                    self._recommendsLoop.send(())
-                }
+                self.processReceivedBloodGlucose(bloodGlucose: bloodGlucose)
+            }
+        }
+    }
+
+    private func processReceivedBloodGlucose(bloodGlucose: [BloodGlucose]) {
+        if bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) {
+            updatePumpData {
+                self._recommendsLoop.send(())
             }
         }
     }

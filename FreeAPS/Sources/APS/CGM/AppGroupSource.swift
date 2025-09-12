@@ -10,8 +10,7 @@ final class AppGroupSource: SettingsObserver {
 
     private let settingsManager: SettingsManager
     private let broadcaster: Broadcaster
-    private let bloodGlucoseManager: BloodGlucoseManager
-    private let appCoordinator: AppCoordinator
+    private let deviceDataManager: DeviceDataManager
 
     private var appGroupSourceType: AppGroupSourceType?
 
@@ -21,8 +20,7 @@ final class AppGroupSource: SettingsObserver {
     init(resolver: Resolver) {
         settingsManager = resolver.resolve(SettingsManager.self)!
         broadcaster = resolver.resolve(Broadcaster.self)!
-        bloodGlucoseManager = resolver.resolve(BloodGlucoseManager.self)!
-        appCoordinator = resolver.resolve(AppCoordinator.self)!
+        deviceDataManager = resolver.resolve(DeviceDataManager.self)!
 
         subscribe()
     }
@@ -52,11 +50,10 @@ final class AppGroupSource: SettingsObserver {
         timer.publisher
             .receive(on: processQueue)
             .sink { _ in
-                debug(.nightscout, "AppGroupSource timer heartbeat")
-                if let bloodGlucose = self.fetch(),
-                   self.bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose)
-                {
-                    self.appCoordinator.sendHeartbeat()
+                // debug(.nightscout, "AppGroupSource timer heartbeat")
+                if let bloodGlucose = self.fetch() {
+                    debug(.nightscout, "AppGroupSource found new blood glucose data")
+                    self.deviceDataManager.bloodGlucoseReadingsReceived(bloodGlucose: bloodGlucose)
                 }
             }
             .store(in: &lifetime)
@@ -80,16 +77,20 @@ final class AppGroupSource: SettingsObserver {
         return fetchLastBGs(60, sharedDefaults)
     }
 
-    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> [BloodGlucose] {
+    private var previouslySeenSharedData: Data?
+
+    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> [BloodGlucose]? {
         guard let appGroupSourceType = self.appGroupSourceType,
-              let sharedData = sharedDefaults.data(forKey: "latestReadings")
+              let sharedData = sharedDefaults.data(forKey: "latestReadings"),
+              previouslySeenSharedData != sharedData // don't do anything if nothing changed since the last heartbeat
         else {
-            return []
+            return nil
         }
+        previouslySeenSharedData = sharedData
 
         // make sure HeartBeatManager is setup, it will be firing our timer on BT activity
         HeartBeatManager.shared.checkCGMBluetoothTransmitter(sharedUserDefaults: sharedDefaults, heartbeat: timer)
-        debug(.deviceManager, "APPGROUP : START FETCH LAST BG ")
+//        debug(.deviceManager, "APPGROUP : START FETCH LAST BG ")
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {
             return []
