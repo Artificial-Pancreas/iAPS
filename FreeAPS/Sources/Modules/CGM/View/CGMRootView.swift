@@ -110,9 +110,9 @@ extension CGM {
 //                        Text("Calibrations").navigationLink(to: .calibrations, from: self)
 //                    }
 
-//                    Section(header: Text("Experimental")) {
-//                        Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
-//                    }
+                    Section(header: Text("Experimental")) {
+                        Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
+                    }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .navigationTitle("CGM")
