@@ -91,6 +91,7 @@ extension Settings {
                         Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                         Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                         Text("Sharing").navigationLink(to: .sharing, from: self)
+                        Text("Calendar").navigationLink(to: .calendar, from: self)
                         Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                         Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
                         Text("Auto ISF").navigationLink(to: .autoISF, from: self)

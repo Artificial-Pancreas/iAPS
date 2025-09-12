@@ -35,6 +35,7 @@ enum Screen: Identifiable, Hashable {
     case statisticsConfig
     case bolusCalculatorConfig
     case dynamicISF
+    case calendar
     case contactTrick
     case sharing
     case autoISF
@@ -108,6 +109,8 @@ extension Screen {
             BolusCalculatorConfig.RootView(resolver: resolver)
         case .dynamicISF:
             Dynamic.RootView(resolver: resolver)
+        case .calendar:
+            CalendarShare.RootView(resolver: resolver)
         case .contactTrick:
             ContactTrick.RootView(resolver: resolver)
         case .sharing:

@@ -63,8 +63,6 @@ extension CGM {
                                 VStack(alignment: .leading) {
                                     Button(cgm.localizedTitle) {
                                         state.cgmIdentifierToSetUp = cgm.identifier
-                                        //                                        state.createCGM(identifier: cgm.identifier)
-                                        //                                            state.deviceManager.setupCGMManager(withIdentifier: cgm.identifier, prefersToSkipUserInteraction: false)
                                     }
                                 }
                             }
@@ -77,13 +75,6 @@ extension CGM {
                         }
                     }
 
-//                    if [.dexcomG5, .dexcomG6, .dexcomG7].contains(state.cgm) {
-//                        Section {
-//                            Button("CGM Configuration") {
-//                                setupCGM.toggle()
-//                            }
-//                        }
-//                    }
 //                    if state.cgm == .xdrip {
 //                        Section(header: Text("Heartbeat")) {
 //                            VStack(alignment: .leading) {
@@ -117,29 +108,6 @@ extension CGM {
 //                            state.showModal(for: .libreConfig)
 //                        }
 //                        Text("Calibrations").navigationLink(to: .calibrations, from: self)
-//                    }
-//                    Section(header: Text("Calendar")) {
-//                        Toggle("Create Events in Calendar", isOn: $state.createCalendarEvents)
-//                        if state.calendarIDs.isNotEmpty {
-//                            Picker("Calendar", selection: $state.currentCalendarID) {
-//                                ForEach(state.calendarIDs, id: \.self) {
-//                                    Text($0).tag($0)
-//                                }
-//                            }
-//                            Toggle("Display Emojis as Labels", isOn: $state.displayCalendarEmojis)
-//                            Toggle("Display IOB and COB", isOn: $state.displayCalendarIOBandCOB)
-//                        } else if state.createCalendarEvents {
-//                            Text(
-//                                "If you are not seeing calendars to choose here, please go to Settings -> iAPS -> Calendars and change permissions to \"Full Access\""
-//                            ).font(.footnote)
-//
-//                            Button("Open Settings") {
-//                                // Get the settings URL and open it
-//                                if let url = URL(string: UIApplication.openSettingsURLString) {
-//                                    UIApplication.shared.open(url)
-//                                }
-//                            }
-//                        }
 //                    }
 
 //                    Section(header: Text("Experimental")) {

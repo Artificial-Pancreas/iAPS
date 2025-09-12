@@ -450,6 +450,10 @@
 		F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */; };
 		F2A4B7CD2E6CF68C000E0E85 /* PumpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CC2E6CF68C000E0E85 /* PumpManager.swift */; };
 		F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */; };
+		F2EE83BF2E739AD200D7177E /* CalendarShareRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */; };
+		F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */; };
+		F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */; };
+		F2EE83C52E739B0100D7177E /* CalendarShareStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */; };
 		F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */; };
 		F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */; };
 		F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */; };
@@ -1097,6 +1101,10 @@
 		F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
 		F2A4B7CC2E6CF68C000E0E85 /* PumpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManager.swift; sourceTree = "<group>"; };
 		F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareRootView.swift; sourceTree = "<group>"; };
+		F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareDataFlow.swift; sourceTree = "<group>"; };
+		F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareProvider.swift; sourceTree = "<group>"; };
+		F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareStateModel.swift; sourceTree = "<group>"; };
 		F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTextField.swift; sourceTree = "<group>"; };
 		F816825D28DB441200054060 /* HeartBeatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		F816825F28DB441800054060 /* BluetoothTransmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothTransmitter.swift; sourceTree = "<group>"; };
@@ -1540,6 +1548,7 @@
 				E8176B120B55CE89F1591542 /* Calibrations */,
 				F75CB57ED6971B46F8756083 /* CGM */,
 				0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */,
+				F2EE83BC2E739A9300D7177E /* CalendarShare */,
 				F2159A472BA60A0300A0B716 /* ContactTrick */,
 				E42231DBF0DBE2B4B92D1B15 /* CREditor */,
 				9E56E3626FAD933385101B76 /* DataTable */,
@@ -2728,6 +2737,25 @@
 			path = Plugins;
 			sourceTree = "<group>";
 		};
+		F2EE83BC2E739A9300D7177E /* CalendarShare */ = {
+			isa = PBXGroup;
+			children = (
+				F2EE83BD2E739A9D00D7177E /* View */,
+				F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */,
+				F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */,
+				F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */,
+			);
+			path = CalendarShare;
+			sourceTree = "<group>";
+		};
+		F2EE83BD2E739A9D00D7177E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F5DE2E6D7B2133BBD3353DC7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -3094,6 +3122,7 @@
 				3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */,
 				3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */,
 				38E44537274E411700EC9A94 /* Disk+Helpers.swift in Sources */,
+				F2EE83C52E739B0100D7177E /* CalendarShareStateModel.swift in Sources */,
 				196809E22D46E7B300BA566F /* OpenClosedShortcuts.swift in Sources */,
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
@@ -3120,6 +3149,7 @@
 				19493A3B2C5997AD00EC83A7 /* Database.swift in Sources */,
 				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
+				F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */,
 				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
 				38FEF408273B011A00574A46 /* LibreTransmitterSource.swift in Sources */,
 				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
@@ -3277,6 +3307,7 @@
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
 				195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */,
+				F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */,
 				19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */,
 				1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */,
 				F2159A522BA60F7A00A0B716 /* FontWeight.swift in Sources */,
@@ -3303,6 +3334,7 @@
 				53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */,
 				5D16287A969E64D18CE40E44 /* PumpConfigStateModel.swift in Sources */,
 				19D466AA29AA3099004D5F33 /* FPUConfigRootView.swift in Sources */,
+				F2EE83BF2E739AD200D7177E /* CalendarShareRootView.swift in Sources */,
 				E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */,
 				CE7CA3522A064973004BE681 /* ListTempPresetsIntent.swift in Sources */,
 				448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */,
