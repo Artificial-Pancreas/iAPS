@@ -49,6 +49,18 @@ extension NotificationsConfig {
                     Toggle("Show glucose on the app badge", isOn: $state.glucoseBadge)
                     Toggle("Always Notify Glucose", isOn: $state.glucoseNotificationsAlways)
                     Toggle("Also play alert sound", isOn: $state.useAlarmSound)
+                     if state.useAlarmSound {
+                        Picker("High alert sound", selection: $state.highAlertSound) {
+                            ForEach(AlertSound.allCases) { sound in
+                                Text(sound.description).tag(sound)
+                            }
+                        }
+                        Picker("Low alert sound", selection: $state.lowAlertSound) {
+                            ForEach(AlertSound.allCases) { sound in
+                                Text(sound.description).tag(sound)
+                            }
+                        }
+                    }
                     Toggle("Also add source info", isOn: $state.addSourceInfoToGlucoseNotifications)
 
                     HStack {

@@ -106,7 +106,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else {
                 content.sound = .default
-                self.playSoundIfNeeded()
+                self.playSoundIfNeeded(for: .low)
             }
 
             titles.append(String(format: NSLocalizedString("Carbs required: %d g", comment: "Carbs required"), carbs))
@@ -223,8 +223,9 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 content.body = body
 
                 if notificationAlarm {
-                    self.playSoundIfNeeded()
-                    content.sound = .default
+                    if let alarm = self.glucoseStorage.alarm {
+                        self.playSoundIfNeeded(for: alarm)
+                    }                    content.sound = .default
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
                 }
 
@@ -349,28 +350,36 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
-    private func playSoundIfNeeded() {
+    private func playSoundIfNeeded(for alarm: GlucoseAlarm) {
         guard settingsManager.settings.useAlarmSound, snoozeUntilDate < Date() else { return }
         Self.stopPlaying = false
-        playSound()
+        let soundID: UInt32
+        switch alarm {
+        case .high:
+            soundID = UInt32(settingsManager.settings.highAlertSound.rawValue)
+        case .low:
+            soundID = UInt32(settingsManager.settings.lowAlertSound.rawValue)
+        }
+        Self.currentSoundID = soundID
+        playSound(soundID: soundID)
     }
 
-    static let soundID: UInt32 = 1336
+    private static var currentSoundID: UInt32 = 1336
     private static var stopPlaying = false
 
-    private func playSound(times: Int = 1) {
+    private func playSound(soundID: UInt32, times: Int = 1) {
         guard times > 0, !Self.stopPlaying else {
             return
         }
 
-        AudioServicesPlaySystemSoundWithCompletion(Self.soundID) {
-            self.playSound(times: times - 1)
+        AudioServicesPlaySystemSoundWithCompletion(soundID) {
+            self.playSound(soundID: soundID, times: times - 1)
         }
     }
 
     static func stopSound() {
         stopPlaying = true
-        AudioServicesDisposeSystemSoundID(soundID)
+        AudioServicesDisposeSystemSoundID(currentSoundID)
     }
 
     private var glucoseFormatter: NumberFormatter {
