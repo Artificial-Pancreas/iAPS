@@ -60,6 +60,22 @@ protocol DeviceDataManager {
 
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
 
+private let staticCGMManagers: [CGMManagerDescriptor] = [
+    CGMManagerDescriptor(identifier: MockCGMManager.pluginIdentifier, localizedTitle: MockCGMManager.localizedTitle)
+]
+
+private let staticCGMManagersByIdentifier: [String: CGMManager.Type] = [
+    MockCGMManager.pluginIdentifier: MockCGMManager.self
+]
+
+private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
+    MockPumpManager.pluginIdentifier: MockPumpManager.self
+]
+
+private let availableStaticPumpManagers: [PumpManagerDescriptor] = [
+    PumpManagerDescriptor(identifier: MockPumpManager.pluginIdentifier, localizedTitle: MockPumpManager.localizedTitle)
+]
+
 final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
@@ -313,14 +329,10 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         switch readingResult {
         case let .newData(values):
 
-            // TODO: [loopkit] fix or remove this
-//            var activationDate: Date = .distantPast
-//            var sessionStart: Date = .distantPast
-//            if let cgmG7Manager = cgmManager as? G7CGMManager {
-//                activationDate = cgmG7Manager.sensorActivatedAt ?? .distantPast
-//                sessionStart = cgmG7Manager.sensorFinishesWarmupAt ?? .distantPast
-//                print("Activastion date: " + activationDate.description)
-//            }
+            var sessionStart: Date = .distantPast
+            if let cgmManager = cgmManager {
+                sessionStart = KnownPlugins.sessionStart(cgmManager: cgmManager) ?? .distantPast
+            }
 
             let bloodGlucose = values.map { newGlucoseSample -> BloodGlucose in
                 let quantity = newGlucoseSample.quantity
@@ -337,7 +349,8 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                     glucose: value,
                     type: "sgv",
 //                    activationDate: activationDate,
-//                    sessionStartDate: sessionStart
+                    sessionStartDate: sessionStart,
+//                    transmitterID: transmitterID // TODO: do we need this? (for G6/G5)
                 )
             }
 
@@ -361,22 +374,13 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     var availableCGMManagers: [CGMManagerDescriptor] {
-        var availableCGMManagers = pluginManager.availableCGMManagers + availableStaticCGMManagers
+        var availableCGMManagers = pluginManager.availableCGMManagers + staticCGMManagers
         if let pumpManagerAsCGMManager = pumpManager as? CGMManager {
             availableCGMManagers.append(CGMManagerDescriptor(
                 identifier: pumpManagerAsCGMManager.pluginIdentifier,
                 localizedTitle: pumpManagerAsCGMManager.localizedTitle
             ))
         }
-
-        availableCGMManagers = availableCGMManagers.filter({ _ in
-//            guard !deviceWhitelist.cgmDevices.isEmpty else {
-            true
-//            }
-
-//            return deviceWhitelist.cgmDevices.contains(cgmManager.identifier)
-        })
-
         return availableCGMManagers
     }
 
@@ -506,16 +510,12 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     func refreshDeviceData() {
-        // TODO: [loopkit] do we want to poke there CGM here as well? (after cgm/pump onboarding?)
-//        fetchNewDataFromCgm { _ in
         processQueue.async {
             guard let pumpManager = self.pumpManager, pumpManager.isOnboarded else {
                 return
             }
-
             self.updatePumpData {}
         }
-//        }
     }
 }
 
@@ -545,11 +545,11 @@ private extension BaseDeviceDataManager {
         }
 
         if let cgmManagerUI = cgmManager as? CGMManagerUI {
-            addDisplayGlucoseUnitObserver(cgmManagerUI)
             appCoordinator.setShouldUploadGlucose(cgmManagerUI.shouldSyncToRemoteService)
-        } else {
-            appCoordinator.setShouldUploadGlucose(false)
         }
+
+        appCoordinator.setShouldUploadGlucose(cgmManager?.shouldSyncToRemoteService ?? false)
+        appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager))
     }
 
     func setupPump() {
@@ -581,14 +581,7 @@ private extension BaseDeviceDataManager {
 
             pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
             pumpName.send(pumpManager.localizedTitle)
-
-            // TODO: [loopkit] is there a generic way to get the expiration date?
-            if let omnipod = pumpManager as? OmnipodPumpManager {
-                pumpExpiresAtDate.send(omnipod.state.podState?.expiresAt)
-            }
-            if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
-                pumpExpiresAtDate.send(omnipodBLE.state.podState?.expiresAt)
-            }
+            pumpExpiresAtDate.send(KnownPlugins.pumpExpiration(pumpManager: pumpManager))
         } else {
             pumpDisplayState.value = nil
             pumpExpiresAtDate.send(nil)
@@ -603,36 +596,12 @@ extension BaseDeviceDataManager {
     func reportPluginInitializationComplete() {
         let allActivePlugins = self.allActivePlugins
 
-//        for plugin in servicesManager.activeServices {
-//            plugin.initializationComplete(for: allActivePlugins)
-//        }
-//
-//        for plugin in statefulPluginManager.activeStatefulPlugins {
-//            plugin.initializationComplete(for: allActivePlugins)
-//        }
-//
-//        for plugin in availableSupports {
-//            plugin.initializationComplete(for: allActivePlugins)
-//        }
-
         cgmManager?.initializationComplete(for: allActivePlugins)
         pumpManager?.initializationComplete(for: allActivePlugins)
     }
 
     var allActivePlugins: [Pluggable] {
-        var allActivePlugins: [Pluggable] = [] // servicesManager.activeServices
-
-//        for plugin in statefulPluginManager.activeStatefulPlugins {
-//            if !allActivePlugins.contains(where: { $0.pluginIdentifier == plugin.pluginIdentifier }) {
-//                allActivePlugins.append(plugin)
-//            }
-//        }
-//
-//        for plugin in availableSupports {
-//            if !allActivePlugins.contains(where: { $0.pluginIdentifier == plugin.pluginIdentifier }) {
-//                allActivePlugins.append(plugin)
-//            }
-//        }
+        var allActivePlugins: [Pluggable] = []
 
         if let cgmManager = cgmManager {
             if !allActivePlugins.contains(where: { $0.pluginIdentifier == cgmManager.pluginIdentifier }) {

@@ -116,8 +116,6 @@ extension Home {
                 displayDelta: $state.displayDelta,
                 scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
                 displayExpiration: $state.displayExpiration,
-                // TODO: [loopkit] fix this
-//                cgm: $state.cgm,
                 sensordays: $state.sensorDays
             )
             .onTapGesture {

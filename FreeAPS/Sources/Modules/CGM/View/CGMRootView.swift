@@ -89,19 +89,6 @@ extension CGM {
                             }
                         }
 
-                        Section {
-                            HStack {
-                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
-                                Text("days").foregroundStyle(.secondary)
-                            }
-                        }
-                        header: { Text("Sensor Life-Span") }
-                        footer: {
-                            Text(
-                                "When using \(appGroupSourceType.displayName) iAPS doesn't know the type of sensor used or the sensor life-span."
-                            )
-                        }
-
                         Button(
                             NSLocalizedString("Disconnect", comment: "Disconnect from App Group Source button")
                         ) {
@@ -141,6 +128,30 @@ extension CGM {
                        cgmManager.pluginIdentifier == KnownPlugins.Ids.libreTransmitter
                     {
                         Text("Calibrations").navigationLink(to: .calibrations, from: self)
+                    }
+
+                    // if CGM/App is selected but sensor life-span is not known...
+                    if (state.deviceManager.cgmManager != nil || state.appGroupSourceType != nil) &&
+                        KnownPlugins.cgmExpirationByPluginIdentifier(state.deviceManager.cgmManager) == nil
+                    {
+                        Section {
+                            HStack {
+                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
+                                Text("days").foregroundStyle(.secondary)
+                            }
+                        }
+                        header: { Text("Sensor Life-Span") }
+                        footer: {
+                            if let appGroupSourceType = state.appGroupSourceType {
+                                Text(
+                                    "When using \(appGroupSourceType.displayName) iAPS doesn't know the type of sensor used or the sensor life-span."
+                                )
+                            } else if let cgmManager = state.deviceManager.cgmManager {
+                                Text(
+                                    "When using \(cgmManager.localizedTitle) iAPS doesn't know the type of sensor used or the sensor life-span."
+                                )
+                            }
+                        }
                     }
 
                     Section(header: Text("Experimental")) {

@@ -7,6 +7,7 @@ import SwiftUI
 extension Home {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
+        @Injected() var appCoordinator: AppCoordinator!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
         @Injected() var storage: TempTargetsStorage!
@@ -196,17 +197,12 @@ extension Home {
             displaySAGE = settingsManager.settings.displaySAGE
 //            cgm = settingsManager.settings.cgm
 
-            // TODO: [loopkit] fix this, use CGM pluginIdentifier instead
-//            sensorDays = switch settingsManager.settings.cgm {
-//            case .nightscout: CGMType.nightscout.expiration
-//            case .dexcomG5: CGMType.dexcomG5.expiration
-//            case .dexcomG6: CGMType.dexcomG6.expiration
-//            case .dexcomG7: CGMType.dexcomG7.expiration
-//            case .libreTransmitter: CGMType.libreTransmitter.expiration
-//            case .enlite: CGMType.enlite.expiration
-//            default: settingsManager.settings.sensorDays
-//            }
-            sensorDays = settingsManager.settings.sensorDays
+            updateSensorDays()
+
+            appCoordinator.$sensorDays
+                .receive(on: DispatchQueue.main)
+                .sink { _ in self.updateSensorDays() }
+                .store(in: &lifetime)
 
             carbButton = settingsManager.settings.carbButton
             profileButton = settingsManager.settings.profileButton
@@ -323,6 +319,10 @@ extension Home {
                     }
                 }
                 .store(in: &lifetime)
+        }
+
+        private func updateSensorDays() {
+            sensorDays = appCoordinator.sensorDays ?? settingsManager.settings.sensorDays
         }
 
         func addCarbs() {
@@ -737,17 +737,7 @@ extension Home.StateModel:
 //        cgm = settingsManager.settings.cgm
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton
-        // TODO: [loopkit] fix this, use CGM pluginIdentifier instead
-//        sensorDays = switch settingsManager.settings.cgm {
-//        case .nightscout: CGMType.nightscout.expiration
-//        case .dexcomG5: CGMType.dexcomG5.expiration
-//        case .dexcomG6: CGMType.dexcomG6.expiration
-//        case .dexcomG7: CGMType.dexcomG7.expiration
-//        case .libreTransmitter: CGMType.libreTransmitter.expiration
-//        case .enlite: CGMType.enlite.expiration
-//        default: settingsManager.settings.sensorDays
-//        }
-        sensorDays = settingsManager.settings.sensorDays
+        updateSensorDays()
 
         setupGlucose()
         setupOverrideHistory()
