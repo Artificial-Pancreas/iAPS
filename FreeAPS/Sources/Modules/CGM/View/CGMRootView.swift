@@ -108,6 +108,7 @@ extension CGM {
                             // TODO: better label?
                             state.appGroupSourceType = nil
                         }
+                        .tint(.red)
 
                     } else {
                         Section(header: Text("Add CGM")) {
