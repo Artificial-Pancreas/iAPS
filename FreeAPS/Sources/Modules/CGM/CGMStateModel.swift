@@ -16,8 +16,11 @@ extension CGM {
         @Published var cgmTransmitterDeviceAddress: String? = nil
         @Published var sensorDays: Double = 10
 
+        @Published var appGroupSourceType: AppGroupSourceType? = nil
+
         override func subscribe() {
             cgmTransmitterDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
+            appGroupSourceType = settingsManager.settings.appGroupSourceType
 
 //            switch cgm {
 //            case .nightscout:
@@ -42,6 +45,7 @@ extension CGM {
 
             subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
             subscribeSetting(\.sensorDays, on: $sensorDays) { sensorDays = $0 }
+            subscribeSetting(\.appGroupSourceType, on: $appGroupSourceType) { appGroupSourceType = $0 }
         }
 
         func removePumpAsCGM() {

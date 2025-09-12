@@ -60,7 +60,7 @@ extension Home {
         }
 
         func heartbeatNow() {
-            appCoordinator.sendHeartbeat(date: Date())
+            appCoordinator.sendHeartbeat()
         }
 
         func filteredGlucose(hours: Int) -> [BloodGlucose] {

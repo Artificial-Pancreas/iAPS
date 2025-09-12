@@ -25,13 +25,14 @@ final class BloodGlucoseManager {
         appCoordinator = resolver.resolve(AppCoordinator.self)!
     }
 
+    /// return true if new blood glucose record was detected and stored
     func storeNewBloodGlucose(
         bloodGlucose: [BloodGlucose],
-    ) {
+    ) -> Bool {
         let glucoseFromHealth = healthKitManager.fetch()
         let syncDate = glucoseStorage.syncDate()
 
-        glucoseStoreAndHeartDecision(
+        return glucoseStoreAndHeartDecision(
             syncDate: syncDate,
             glucose: bloodGlucose,
             glucoseFromHealth: glucoseFromHealth
@@ -42,7 +43,7 @@ final class BloodGlucoseManager {
         syncDate: Date,
         glucose: [BloodGlucose],
         glucoseFromHealth: [BloodGlucose]
-    ) {
+    ) -> Bool {
         // TODO: [loopkit] use processQueue here?
         let allGlucose = glucose + glucoseFromHealth
         var filteredByDate: [BloodGlucose] = []
@@ -61,7 +62,7 @@ final class BloodGlucoseManager {
                 UIApplication.shared.endBackgroundTask(backgroundTask)
                 backGroundFetchBGTaskID = .invalid
             }
-            return
+            return false
         }
 
         filteredByDate = allGlucose.filter { $0.dateString > syncDate }
@@ -73,7 +74,7 @@ final class BloodGlucoseManager {
                 UIApplication.shared.endBackgroundTask(backgroundTask)
                 backGroundFetchBGTaskID = .invalid
             }
-            return
+            return false
         }
         debug(.deviceManager, "New glucose found")
 
@@ -108,10 +109,10 @@ final class BloodGlucoseManager {
         }
 
         let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
-        guard glucoseForHealth.isNotEmpty else {
-            return
+        if glucoseForHealth.isNotEmpty {
+            healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
         }
-        healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
+        return true // TODO: [loopkit] perform the actual check if any new glucose was seen and stored
     }
 
     private func save(_ glucose: [BloodGlucose]) {

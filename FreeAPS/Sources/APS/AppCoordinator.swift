@@ -2,16 +2,16 @@ import Combine
 import Foundation
 
 final class AppCoordinator {
-    private let _heartbeat = PassthroughSubject<Date, Never>()
+    private let _heartbeat = PassthroughSubject<Void, Never>()
 
     @Published private(set) var shouldUploadGlucose: Bool = false
 
-    var heartbeat: AnyPublisher<Date, Never> {
+    var heartbeat: AnyPublisher<Void, Never> {
         _heartbeat.eraseToAnyPublisher()
     }
 
-    func sendHeartbeat(date: Date) {
-        _heartbeat.send(date)
+    func sendHeartbeat() {
+        _heartbeat.send(())
     }
 
     func setShouldUploadGlucose(_ shouldUpload: Bool) {

@@ -22,8 +22,6 @@ extension CGM {
             return formatter
         }
 
-        // @AppStorage(UserDefaults.BTKey.cgmTransmitterDeviceAddress.rawValue) private var cgmTransmitterDeviceAddress: String? = nil
-
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -57,7 +55,7 @@ extension CGM {
                     } else if let pumpManager = state.deviceManager.cgmManager as? PumpManagerUI {
                         Section(header: Text("Active CGM")) {
                             HStack {
-                                Text("Pump+CGM")
+                                Text("Pump/CGM")
                                 Spacer()
                                 Text(pumpManager.localizedTitle)
                             }
@@ -65,6 +63,52 @@ extension CGM {
                                 state.removePumpAsCGM()
                             }
                         }
+                    } else if let appGroupSourceType = state.appGroupSourceType {
+                        Section(header: Text("Shared App Group Source")) {
+                            HStack {
+                                Text("Reading from")
+                                Spacer()
+                                Text(appGroupSourceType.displayName)
+                            }
+                        }
+
+                        if let link = appGroupSourceType.externalLink {
+                            Button("About this source") {
+                                UIApplication.shared.open(link, options: [:], completionHandler: nil)
+                            }
+                        }
+
+                        Section(header: Text("Heartbeat")) {
+                            VStack(alignment: .leading) {
+                                if let cgmTransmitterDeviceAddress = state.cgmTransmitterDeviceAddress {
+                                    Text("CGM address :")
+                                    Text(cgmTransmitterDeviceAddress)
+                                } else {
+                                    Text("CGM is not used as heartbeat.")
+                                }
+                            }
+                        }
+
+                        Section {
+                            HStack {
+                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
+                                Text("days").foregroundStyle(.secondary)
+                            }
+                        }
+                        header: { Text("Sensor Life-Span") }
+                        footer: {
+                            Text(
+                                "When using \(appGroupSourceType.displayName) iAPS doesn't know the type of sensor used or the sensor life-span."
+                            )
+                        }
+
+                        Button(
+                            NSLocalizedString("Disconnect", comment: "Disconnect from App Group Source button")
+                        ) {
+                            // TODO: better label?
+                            state.appGroupSourceType = nil
+                        }
+
                     } else {
                         Section(header: Text("Add CGM")) {
                             ForEach(state.deviceManager.availableCGMManagers, id: \.identifier) { cgm in
@@ -75,42 +119,23 @@ extension CGM {
                                 }
                             }
                         }
+                        Section(header: Text("Shared App Group Source")) { // TODO: better title?
+                            Text("Read BG from an external CGM app using a shared app group.").font(.caption)
+                                .foregroundColor(.secondary)
 
-                        //                        if let link = state.cgm.externalLink {
-                        //                            Button("About this source") {
-                        //                                UIApplication.shared.open(link, options: [:], completionHandler: nil)
-                        //                            }
-                        //                        }
+                            ForEach(AppGroupSourceType.allCases) { type in
+                                VStack(alignment: .leading) {
+                                    Button(
+                                        NSLocalizedString("Read from ", comment: "Read from App Group Source button") + type
+                                            .displayName
+                                    ) {
+                                        state.appGroupSourceType = type
+                                    }
+                                }
+                            }
+                        }
                     }
 
-//                    if state.cgm == .xdrip {
-//                        Section(header: Text("Heartbeat")) {
-//                            VStack(alignment: .leading) {
-//                                if let cgmTransmitterDeviceAddress = state.cgmTransmitterDeviceAddress {
-//                                    Text("CGM address :")
-//                                    Text(cgmTransmitterDeviceAddress)
-//                                } else {
-//                                    Text("CGM is not used as heartbeat.")
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    if state.cgm == .xdrip || state.cgm == .glucoseDirect {
-//                        Section {
-//                            HStack {
-//                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
-//                                Text("days").foregroundStyle(.secondary)
-//                            }
-//                        }
-//                        header: { Text("Sensor Life-Span") }
-//                        footer: {
-//                            Text(
-//                                "When using \(state.cgm.rawValue) iAPS doesn't know the type of sensor used or the sensor life-span."
-//                            )
-//                        }
-//                    }
-//
                     if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
                        cgmManager.pluginIdentifier == KnownPlugins.Ids.libreTransmitter
                     {

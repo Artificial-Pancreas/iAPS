@@ -760,8 +760,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         // TODO: [loopkit] is this correct?
         info(.deviceManager, "PumpManager:\(String(describing: type(of: pumpManager))) did fire heartbeat")
-        appCoordinator.sendHeartbeat(date: Date())
-//        refreshCGM()
+        appCoordinator.sendHeartbeat()
     }
 
     func pumpManagerPumpWasReplaced(_: PumpManager) {

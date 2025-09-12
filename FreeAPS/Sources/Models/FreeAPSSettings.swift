@@ -12,6 +12,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var insulinReqPercentage: Decimal = 70
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
+    var appGroupSourceType: AppGroupSourceType? = nil
     var useCalendar: Bool = false
     var displayCalendarIOBandCOB: Bool = false
     var displayCalendarEmojis: Bool = false
@@ -140,6 +141,7 @@ struct FreeAPSSettings: JSON, Equatable {
 extension FreeAPSSettings: Decodable {
     // Needed to decode incomplete JSON
     init(from decoder: Decoder) throws {
+        let dynContainer = try decoder.container(keyedBy: AnyCodingKey.self)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         var settings = FreeAPSSettings()
 
@@ -211,6 +213,17 @@ extension FreeAPSSettings: Decodable {
 
         if let displayOnWatch = try? container.decode(AwConfig.self, forKey: .displayOnWatch) {
             settings.displayOnWatch = displayOnWatch
+        }
+
+        if let appGroupSourceType = try? container.decode(AppGroupSourceType.self, forKey: .appGroupSourceType) {
+            settings.appGroupSourceType = appGroupSourceType
+        } else if let appGroupSourceTypeFromCgm = try? dynContainer.decode(
+            AppGroupSourceType.self,
+            forKey: AnyCodingKey(stringValue: "cgm")!
+        ) {
+            // fallback to reading the old .cgm key which would have contained the app group source name if it was selected
+            // if it contains the real CGM name - it will not be decoded into AppGroupSourceType and we'll just ignore it
+            settings.appGroupSourceType = appGroupSourceTypeFromCgm
         }
 
         if let useCalendar = try? container.decode(Bool.self, forKey: .useCalendar) {
