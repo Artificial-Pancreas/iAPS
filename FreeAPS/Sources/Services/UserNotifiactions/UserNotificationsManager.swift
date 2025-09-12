@@ -225,7 +225,8 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 if notificationAlarm {
                     if let alarm = self.glucoseStorage.alarm {
                         self.playSoundIfNeeded(for: alarm)
-                    }                    content.sound = .default
+                    }
+                    content.sound = .default
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
                 }
 
