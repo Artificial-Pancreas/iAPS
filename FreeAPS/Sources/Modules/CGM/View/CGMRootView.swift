@@ -33,23 +33,29 @@ extension CGM {
         var body: some View {
             NavigationView {
                 Form {
-                    Section {
-                        if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI
-                        {
+                    if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI
+                    {
+                        Section(header: Text("Active CGM")) {
                             HStack {
                                 Text("Type")
                                 Spacer()
                                 Text(cgmManager.localizedTitle)
                             }
+                        }
+                        Section {
                             if let status = cgmManager.cgmStatusHighlight?.localizedMessage {
                                 HStack {
                                     Text(status.replacingOccurrences(of: "\n", with: " ")).font(.caption)
                                 }
                             }
-                            Button("Configure CGM") {
+                        }
+                        Section {
+                            Button("CGM Configuration") {
                                 state.cgmIdentifierToSetUp = cgmManager.pluginIdentifier
                             }
-                        } else if let pumpManager = state.deviceManager.cgmManager as? PumpManagerUI {
+                        }
+                    } else if let pumpManager = state.deviceManager.cgmManager as? PumpManagerUI {
+                        Section(header: Text("Active CGM")) {
                             HStack {
                                 Text("Pump+CGM")
                                 Spacer()
@@ -58,7 +64,9 @@ extension CGM {
                             Button("Stop using the pump as CGM") {
                                 state.removePumpAsCGM()
                             }
-                        } else {
+                        }
+                    } else {
+                        Section(header: Text("Add CGM")) {
                             ForEach(state.deviceManager.availableCGMManagers, id: \.identifier) { cgm in
                                 VStack(alignment: .leading) {
                                     Button(cgm.localizedTitle) {
@@ -66,13 +74,13 @@ extension CGM {
                                     }
                                 }
                             }
-
-                            //                        if let link = state.cgm.externalLink {
-                            //                            Button("About this source") {
-                            //                                UIApplication.shared.open(link, options: [:], completionHandler: nil)
-                            //                            }
-                            //                        }
                         }
+
+                        //                        if let link = state.cgm.externalLink {
+                        //                            Button("About this source") {
+                        //                                UIApplication.shared.open(link, options: [:], completionHandler: nil)
+                        //                            }
+                        //                        }
                     }
 
 //                    if state.cgm == .xdrip {
@@ -103,12 +111,11 @@ extension CGM {
 //                        }
 //                    }
 //
-//                    if state.cgm == .libreTransmitter {
-//                        Button("Configure Libre Transmitter") {
-//                            state.showModal(for: .libreConfig)
-//                        }
-//                        Text("Calibrations").navigationLink(to: .calibrations, from: self)
-//                    }
+                    if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
+                       cgmManager.pluginIdentifier == KnownPlugins.Ids.libreTransmitter
+                    {
+                        Text("Calibrations").navigationLink(to: .calibrations, from: self)
+                    }
 
                     Section(header: Text("Experimental")) {
                         Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
