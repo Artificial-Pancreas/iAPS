@@ -115,6 +115,22 @@ struct FoodSearchView: View {
                     label: { EmptyView() }
                 )
 
+                // Settings
+                NavigationLink(destination: AISettingsView()) {
+                    HStack {
+                        Image(systemName: "gearshape")
+                        Text("AI Settings")
+                        Spacer()
+                    }
+                }
+                .foregroundStyle(.primary)
+                .overlay(
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 14, weight: .semibold)), alignment: .trailing
+                ).padding(.horizontal, 20)
+
+                // Footer
                 footerNotice
             }
             .navigationTitle("Food Search")
@@ -129,12 +145,12 @@ struct FoodSearchView: View {
                 Text("Notice")
             }
             .font(.headline)
-            .foregroundColor(.blue)
+            .foregroundColor(.orange)
             Text(
                 "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
             )
             .font(.subheadline)
-            .foregroundColor(.blue)
+            .foregroundColor(.secondary)
         }
         .padding(20)
     }

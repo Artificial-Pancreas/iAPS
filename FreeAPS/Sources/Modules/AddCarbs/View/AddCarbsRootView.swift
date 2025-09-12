@@ -62,7 +62,7 @@ extension AddCarbs {
 
         var body: some View {
             Form {
-                foodSearchSection
+                // foodSearchSection
 
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
@@ -289,6 +289,14 @@ extension AddCarbs {
             Section {
                 HStack {
                     if state.selection == nil {
+                        Button { showingFoodSearch = true }
+                        label: {
+                            Image(systemName: "network")
+                        }.foregroundStyle(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 20)
+                            .buttonStyle(.borderless)
+
                         Button { presentPresets.toggle() }
                         label: {
                             HStack {
@@ -297,6 +305,7 @@ extension AddCarbs {
                             }
                         }.foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .trailing)
+                            .buttonStyle(.borderless)
                     } else {
                         minusButton
                         Spacer()
