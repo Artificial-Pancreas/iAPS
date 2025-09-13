@@ -14,7 +14,7 @@ extension ConfigEditor {
         ) {
             self.resolver = resolver
             self.file = file
-            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver, file: file))
         }
 
         var body: some View {
@@ -41,11 +41,6 @@ extension ConfigEditor {
                         ShareSheet(activityItems: [state.provider.urlFor(file: state.file)!])
                     }
                     .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                    .onAppear {
-//                        configureView {
-                        state.file = file
-//                        }
-                    }
                     .navigationTitle(file)
                     .navigationBarTitleDisplayMode(.inline)
                     .padding()
