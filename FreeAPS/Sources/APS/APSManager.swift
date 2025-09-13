@@ -1281,8 +1281,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 Algorithm: algo_,
                 AdjustmentFactor: af,
                 Pump: pump_,
-                // TODO: [loopkit] update this?
-                CGM: deviceDataManager.cgmManager?.pluginIdentifier ?? "",
+                // TODO: [loopkit] double-check this
+                CGM: deviceDataManager.cgmManager?.pluginIdentifier ?? settingsManager.settings.appGroupSourceType?
+                    .rawValue ?? "",
                 insulinType: insulin_type.rawValue,
                 peakActivityTime: iPa,
                 Carbs_24h: carbTotal,

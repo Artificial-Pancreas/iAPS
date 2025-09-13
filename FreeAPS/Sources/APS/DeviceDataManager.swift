@@ -262,9 +262,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             initialSettings: settings,
             bluetoothProvider: bluetoothProvider,
             colorPalette: .default,
-            // TODO: [loopkit] FeatureFlags?
             allowDebugFeatures: true,
-//            allowDebugFeatures: FeatureFlags.allowDebugFeatures,
             prefersToSkipUserInteraction: prefersToSkipUserInteraction,
             allowedInsulinTypes: allowedInsulinTypes
         )
@@ -423,7 +421,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             bluetoothProvider: bluetoothProvider,
             displayGlucosePreference: displayGlucosePreference,
             colorPalette: .default,
-            allowDebugFeatures: false,
+            allowDebugFeatures: true,
             prefersToSkipUserInteraction: prefersToSkipUserInteraction
         )
 
@@ -525,7 +523,6 @@ private extension BaseDeviceDataManager {
 
         cgmManager?.cgmManagerDelegate = self
         cgmManager?.delegateQueue = processQueue
-        // TODO: [loopkit] do we need this?
         reportPluginInitializationComplete()
 
 //        glucoseStore.managedDataInterval = cgmManager?.managedDataInterval
@@ -542,10 +539,8 @@ private extension BaseDeviceDataManager {
             cgmHasValidSensorSession = cgmManager.cgmManagerStatus.hasValidSensorSession
 
 //            analyticsServicesManager.identifyCGMType(cgmManager.pluginIdentifier)
-        }
-
-        if let cgmManagerUI = cgmManager as? CGMManagerUI {
-            appCoordinator.setShouldUploadGlucose(cgmManagerUI.shouldSyncToRemoteService)
+        } else {
+            cgmHasValidSensorSession = false
         }
 
         appCoordinator.setShouldUploadGlucose(cgmManager?.shouldSyncToRemoteService ?? false)

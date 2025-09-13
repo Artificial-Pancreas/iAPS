@@ -233,7 +233,6 @@
 		38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3B525EBE24900CB6E88 /* Battery.swift */; };
 		38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */; };
 		38DAB280260CBB7F00F74C1A /* PumpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DAB27F260CBB7F00F74C1A /* PumpView.swift */; };
-		38DAB28A260D349500F74C1A /* FetchGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DAB289260D349500F74C1A /* FetchGlucoseManager.swift */; };
 		38DF1786276A73D400B3528F /* TagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF1785276A73D400B3528F /* TagCloudView.swift */; };
 		38DF1789276FC8C400B3528F /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 38DF1788276FC8C400B3528F /* SwiftMessages */; };
 		38DF178D27733E6800B3528F /* snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 38DF178B27733E6800B3528F /* snow.sks */; };
@@ -860,7 +859,6 @@
 		38D0B3B525EBE24900CB6E88 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		38D0B3D825EC07C400CB6E88 /* CarbsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsEntry.swift; sourceTree = "<group>"; };
 		38DAB27F260CBB7F00F74C1A /* PumpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpView.swift; sourceTree = "<group>"; };
-		38DAB289260D349500F74C1A /* FetchGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGlucoseManager.swift; sourceTree = "<group>"; };
 		38DF1785276A73D400B3528F /* TagCloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCloudView.swift; sourceTree = "<group>"; };
 		38DF178B27733E6800B3528F /* snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = snow.sks; sourceTree = "<group>"; };
 		38DF178C27733E6800B3528F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1786,7 +1784,6 @@
 				3811DF0F25CAAAE200A708ED /* APSManager.swift */,
 				38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */,
 				38A43597262E0E4900E80935 /* FetchAnnouncementsManager.swift */,
-				38DAB289260D349500F74C1A /* FetchGlucoseManager.swift */,
 				38192E06261BA9960094D973 /* FetchTreatmentsManager.swift */,
 				3856933F270B57A00002C50D /* CGM */,
 				38A504F625DDA0E200C5B9E8 /* Extensions */,
@@ -3254,7 +3251,6 @@
 				FE66D16B291F74F8005D6F77 /* Bundle+Extensions.swift in Sources */,
 				3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */,
 				6B1A8D2E2B156EEF00E76752 /* LiveActivityBridge.swift in Sources */,
-				38DAB28A260D349500F74C1A /* FetchGlucoseManager.swift in Sources */,
 				38F37828261260DC009DB701 /* Color+Extensions.swift in Sources */,
 				1982F7DB2BA6509D00EAFADE /* PumpStorage.swift in Sources */,
 				3811DE3F25C9D4A100A708ED /* SettingsStateModel.swift in Sources */,

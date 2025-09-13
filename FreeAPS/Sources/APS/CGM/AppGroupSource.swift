@@ -5,6 +5,15 @@ import LoopKit
 import LoopKitUI
 import Swinject
 
+//    xDrip payload example:
+//    --------------
+//    DT = "/Date(1757767879000)/";
+//    ST = "/Date(1757767879000)/";
+//    Trend = 5;
+//    Value = 106;
+//    direction = FortyFiveDown;
+//    from = xDrip;
+
 final class AppGroupSource: SettingsObserver {
     private let processQueue = DispatchQueue(label: "AppGroupSource.processQueue")
 
@@ -46,7 +55,7 @@ final class AppGroupSource: SettingsObserver {
 
     private func startFetching() {
         debug(.nightscout, "AppGroupSource - starting heartbeat")
-        lifetime = [] // cancel the previous one if any, just in case
+        lifetime = [] // cancel the previous one, if any - just in case
         timer.publisher
             .receive(on: processQueue)
             .sink { _ in
@@ -100,34 +109,30 @@ final class AppGroupSource: SettingsObserver {
 
         for sgv in sgvs.prefix(count) {
             guard
+                let from = sgv["from"] as? String,
+                from == appGroupSourceType.sgvFromValue,
                 let glucose = sgv["Value"] as? Int,
                 let timestamp = sgv["DT"] as? String,
                 let date = parseDate(timestamp)
             else { continue }
 
-            var direction: String?
+            var direction: BloodGlucose.Direction?
 
             // Dexcom changed the format of trend in 2021 so we accept both String/Int types
             if let directionString = sgv["direction"] as? String {
-                direction = directionString
+                direction = .init(rawValue: directionString)
             } else if let intTrend = sgv["trend"] as? Int {
-                direction = GlucoseTrend(rawValue: intTrend)?.direction
+                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
             } else if let intTrend = sgv["Trend"] as? Int {
-                direction = GlucoseTrend(rawValue: intTrend)?.direction
+                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
             } else if let stringTrend = sgv["trend"] as? String, let intTrend = Int(stringTrend) {
-                direction = GlucoseTrend(rawValue: intTrend)?.direction
-            }
-
-            guard let direction = direction else { continue }
-
-            if let from = sgv["from"] as? String {
-                guard from == appGroupSourceType.sgvFromValue else { continue }
+                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
             }
 
             results.append(
                 BloodGlucose(
                     sgv: glucose,
-                    direction: BloodGlucose.Direction(rawValue: direction),
+                    direction: direction ?? BloodGlucose.Direction.none,
                     date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
                     dateString: date,
                     unfiltered: Decimal(glucose),
@@ -162,28 +167,6 @@ final class AppGroupSource: SettingsObserver {
 public extension Bundle {
     var appGroupSuiteName: String? {
         object(forInfoDictionaryKey: "AppGroupID") as? String
-    }
-}
-
-// TODO: [loopkit] this no longer exists in loopkit?
-public extension GlucoseTrend {
-    var direction: String {
-        switch self {
-        case .upUpUp:
-            return "DoubleUp"
-        case .upUp:
-            return "SingleUp"
-        case .up:
-            return "FortyFiveUp"
-        case .flat:
-            return "Flat"
-        case .down:
-            return "FortyFiveDown"
-        case .downDown:
-            return "SingleDown"
-        case .downDownDown:
-            return "DoubleDown"
-        }
     }
 }
 
