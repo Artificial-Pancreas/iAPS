@@ -72,12 +72,11 @@ extension Main {
                         view.buttonTapHandler = { _ in
                             SwiftMessages.hide()
                             // display the pump configuration immediatly
-                            if let pump = self.provider.deviceManager.pumpManager,
-                               let bluetooth = self.provider.bluetoothProvider
+                            if let pump = self.provider.deviceManager.pumpManager
                             {
                                 let view = PumpConfig.PumpSettingsView(
                                     pumpManager: pump,
-                                    bluetoothManager: bluetooth,
+                                    deviceManager: self.provider.deviceManager,
                                     completionDelegate: self
                                 ).asAny()
                                 self.router.mainSecondaryModalView.send(view)

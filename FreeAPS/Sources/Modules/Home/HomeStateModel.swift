@@ -1,5 +1,6 @@
 import Combine
 import CoreData
+import LibreTransmitter
 import LoopKitUI
 import SwiftDate
 import SwiftUI
@@ -304,14 +305,12 @@ extension Home {
             $setupPump
                 .sink { [weak self] show in
                     guard let self = self else { return }
-                    if show, let pumpManager = self.provider.deviceManager.pumpManager,
-                       let bluetoothProvider = self.provider.apsManager.bluetoothManager
+                    if show, let pumpManager = self.provider.deviceManager.pumpManager
                     {
                         let view = PumpConfig.PumpSettingsView(
                             pumpManager: pumpManager,
-                            bluetoothManager: bluetoothProvider,
+                            deviceManager: self.provider.deviceManager,
                             completionDelegate: self,
-                            onboardingDelegate: self.provider.deviceManager.pumpManagerOnboardingDelegate
                         ).asAny()
                         self.router.mainSecondaryModalView.send(view)
                     } else {
@@ -643,18 +642,46 @@ extension Home {
         }
 
         func openCGM() {
-            guard var url = nightscoutManager.cgmURL else { return }
+            var url: URL?
+            if let cgm = provider.deviceManager.cgmManager {
+                if let cgm = cgm as? CGMManagerUI {
+                    let view = CGM.CGMSettingsView(
+                        cgmManager: cgm,
+                        deviceManager: provider.deviceManager,
+                        completionDelegate: self
+                    ).asAny()
+                    router.mainSecondaryModalView.send(view)
+                    return
+                }
 
-            switch url.absoluteString {
-            case "http://127.0.0.1:1979":
-                url = URL(string: "spikeapp://")!
-            case "http://127.0.0.1:17580":
-                url = URL(string: "diabox://")!
-            case CGMType.libreTransmitter.appURL?.absoluteString:
-                showModal(for: .libreConfig)
-            default: break
+                if let url = cgm.appURL {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+                return
             }
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+            switch settingsManager.settings.appGroupSourceType {
+            case .xdrip:
+                url = URL(string: "xdripswift://")!
+            case .glucoseDirect:
+                url = URL(string: "glucosedirect://")!
+            default: url = nil
+            }
+
+            if url == nil, settingsManager.settings.useLocalGlucoseSource {
+                switch settingsManager.settings.localGlucosePort {
+                case 1979:
+                    url = URL(string: "spikeapp://")!
+                case 17580:
+                    url = URL(string: "diabox://")!
+                default:
+                    url = nil
+                }
+            }
+
+            if let url {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
 
         func infoPanelTTPercentage(_ hbt_: Double, _ target: Decimal) -> Decimal {
@@ -797,6 +824,7 @@ extension Home.StateModel: CompletionDelegate {
     }
 }
 
+// TODO: [loopkit] move this
 // extension Home.StateModel: PumpManagerOnboardingDelegate {
 //    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
 //        provider.deviceManager.pumpManager = pumpManager

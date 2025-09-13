@@ -25,7 +25,6 @@ protocol NightscoutManager {
     func deleteOverride()
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date)
     func fetchVersion()
-    var cgmURL: URL? { get }
 }
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
@@ -103,21 +102,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return [GlucoseSourceKey.nightscoutPing.rawValue: ping]
         }
         return nil
-    }
-
-    var cgmURL: URL? {
-        // TODO: [loopkit] fix this
-//        if let url = settingsManager.settings.cgm.appURL {
-//            return url
-//        }
-
-        let useLocal = settingsManager.settings.useLocalGlucoseSource
-
-        let maybeNightscout = useLocal
-            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort)")!)
-            : nightscoutAPI
-
-        return maybeNightscout?.url
     }
 
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never> {

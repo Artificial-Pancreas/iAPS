@@ -23,12 +23,6 @@ extension PumpConfig {
                 Form {
                     Section(header: Text("Model")) {
                         if let pumpManager = state.deviceManager.pumpManager {
-//                            TODO: [loopkit] fix this
-//                            if state.alertNotAck {
-//                                Spacer()
-//                                Button("Acknowledge all alerts") { state.ack() }
-//                            }
-
                             Button {
                                 state.pumpIdentifierToSetUp = pumpManager.pluginIdentifier
                             } label: {
@@ -42,7 +36,11 @@ extension PumpConfig {
                                     }
                                 }
                             }
-
+                            //                            TODO: [loopkit] fix this
+                            if state.alertNotAck {
+                                Spacer()
+                                Button("Acknowledge all alerts") { state.ack() }
+                            }
                         } else {
                             ForEach(state.deviceManager.availablePumpManagers, id: \.identifier) { cgm in
                                 VStack(alignment: .leading) {
@@ -52,27 +50,6 @@ extension PumpConfig {
                                 }
                             }
                         }
-
-//                        if let pumpState = state.pumpState {
-//                            Button {
-//                                state.setupPump = true
-//                            } label: {
-//                                HStack {
-//                                    Image(uiImage: pumpState.image ?? UIImage()).padding()
-//                                    Text(pumpState.name)
-//                                }
-//                            }
-//                            if state.alertNotAck {
-//                                Spacer()
-//                                Button("Acknowledge all alerts") { state.ack() }
-//                            }
-//                        } else {
-//                            Button("Add Medtronic") { state.addPump(.minimed) }
-//                            Button("Add Omnipod") { state.addPump(.omnipod) }
-//                            Button("Add Omnipod Dash") { state.addPump(.omnipodBLE) }
-//                            Button("Add Dana-i/RS") { state.addPump(.dana) }
-//                            Button("Add Simulator") { state.addPump(.simulator) }
-//                        }
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
@@ -83,18 +60,15 @@ extension PumpConfig {
                         if let pumpManager = state.deviceManager.pumpManager {
                             PumpSettingsView(
                                 pumpManager: pumpManager,
-                                bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                                completionDelegate: state,
-                                onboardingDelegate: state.deviceManager.pumpManagerOnboardingDelegate
+                                deviceManager: state.deviceManager,
+                                completionDelegate: state
                             )
                         } else {
                             PumpSetupView(
                                 pumpIdentifier: pumpIdentifier,
                                 pumpInitialSettings: state.initialSettings,
                                 deviceManager: state.deviceManager,
-                                bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                                completionDelegate: state,
-                                onboardingDelegate: state.deviceManager.pumpManagerOnboardingDelegate
+                                completionDelegate: state
                             )
                         }
                     }

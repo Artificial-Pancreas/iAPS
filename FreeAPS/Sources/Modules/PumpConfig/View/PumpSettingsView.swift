@@ -5,19 +5,11 @@ import UIKit
 extension PumpConfig {
     struct PumpSettingsView: UIViewControllerRepresentable {
         let pumpManager: PumpManagerUI
-        let bluetoothManager: BluetoothStateManager
+        let deviceManager: DeviceDataManager
         weak var completionDelegate: CompletionDelegate?
-        weak var onboardingDelegate: PumpManagerOnboardingDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<PumpSettingsView>) -> UIViewController {
-            var vc = pumpManager.settingsViewController(
-                bluetoothProvider: bluetoothManager,
-                colorPalette: .default,
-                // TODO: [loopkit] not sure debug should be true, but with false - pump simulator settings are not available, cannot remove once added
-                allowDebugFeatures: true,
-                allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
-            )
-            vc.pumpManagerOnboardingDelegate = onboardingDelegate
+            var vc = deviceManager.pumpManagerSettingsView(pumpManager: pumpManager)
             vc.completionDelegate = completionDelegate
             return vc
         }

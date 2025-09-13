@@ -45,17 +45,15 @@ protocol DeviceDataManager {
         prefersToSkipUserInteraction: Bool
     ) -> Swift.Result<SetupUIResult<CGMManagerViewController, CGMManager>, Error>
 
+    func cgmManagerSettingsView(cgmManager: CGMManagerUI) -> CGMManagerViewController
+    func pumpManagerSettingsView(pumpManager: PumpManagerUI) -> PumpManagerViewController
+
     func setupPumpManager(
         withIdentifier identifier: String,
         initialSettings settings: PumpManagerSetupSettings,
         allowedInsulinTypes: [InsulinType],
         prefersToSkipUserInteraction: Bool
     ) -> Swift.Result<SetupUIResult<PumpManagerViewController, PumpManager>, Error>
-
-    // DeviceDataManager needs to be assigned as a delegate to the Pump/CGM UI components
-    // instead of making this protocol extends the delegate protocols, the BaseDeviceDataManager will return 'self' here
-    var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate { get }
-    var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate { get }
 }
 
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
@@ -150,9 +148,6 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         }
     }
 
-    var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate { self }
-    var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate { self }
-
     init(resolver: Resolver) {
         injectServices(resolver)
 
@@ -238,7 +233,8 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             return .failure(error)
         case let .success(success):
             switch success {
-            case let .userInteractionRequired(viewController):
+            case var .userInteractionRequired(viewController):
+                viewController.pumpManagerOnboardingDelegate = self
                 return .success(.userInteractionRequired(viewController))
             case let .createdAndOnboarded(pumpManagerUI):
                 return .success(.createdAndOnboarded(pumpManagerUI))
@@ -394,12 +390,35 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             return .failure(error)
         case let .success(success):
             switch success {
-            case let .userInteractionRequired(viewController):
+            case var .userInteractionRequired(viewController):
+                viewController.cgmManagerOnboardingDelegate = self
                 return .success(.userInteractionRequired(viewController))
             case let .createdAndOnboarded(cgmManagerUI):
                 return .success(.createdAndOnboarded(cgmManagerUI))
             }
         }
+    }
+
+    func cgmManagerSettingsView(cgmManager: CGMManagerUI) -> CGMManagerViewController {
+        var vc = cgmManager.settingsViewController(
+            bluetoothProvider: bluetoothManager,
+            displayGlucosePreference: displayGlucosePreference,
+            colorPalette: .default,
+            allowDebugFeatures: true
+        )
+        vc.cgmManagerOnboardingDelegate = self
+        return vc
+    }
+
+    func pumpManagerSettingsView(pumpManager: PumpManagerUI) -> PumpManagerViewController {
+        var vc = pumpManager.settingsViewController(
+            bluetoothProvider: bluetoothManager,
+            colorPalette: .default,
+            allowDebugFeatures: true,
+            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
+        )
+        vc.pumpManagerOnboardingDelegate = self
+        return vc
     }
 
     func removePumpAsCGM() {

@@ -50,4 +50,16 @@ enum KnownPlugins {
             return nil
         }
     }
+
+    static func appURLByPluginIdentifier(pluginIdentifier: String) -> URL? {
+        switch pluginIdentifier {
+        case G5CGMManager.pluginIdentifier:
+            URL(string: "dexcomgcgm://")!
+        case G6CGMManager.pluginIdentifier:
+            URL(string: "dexcomg6://")!
+        case G7CGMManager.pluginIdentifier:
+            URL(string: "dexcomg7://")!
+        default: nil
+        }
+    }
 }

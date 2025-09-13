@@ -14,7 +14,6 @@ extension CGM {
 //        let bluetoothManager: BluetoothStateManager
 //        let unit: GlucoseUnits
         weak var completionDelegate: CompletionDelegate?
-        weak var onboardingDelegate: CGMManagerOnboardingDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSetupView>) -> UIViewController {
             switch deviceManager.setupCGMManager(withIdentifier: cgmIdentifier, prefersToSkipUserInteraction: false) {
@@ -27,7 +26,6 @@ extension CGM {
             case let .success(success):
                 switch success {
                 case var .userInteractionRequired(setupViewControllerUI):
-                    setupViewControllerUI.cgmManagerOnboardingDelegate = onboardingDelegate
                     setupViewControllerUI.completionDelegate = completionDelegate
                     return setupViewControllerUI
                 case .createdAndOnboarded:

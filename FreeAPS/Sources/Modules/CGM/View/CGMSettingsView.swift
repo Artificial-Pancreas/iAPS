@@ -6,20 +6,12 @@ import UIKit
 extension CGM {
     struct CGMSettingsView: UIViewControllerRepresentable {
         let cgmManager: CGMManagerUI
-        let bluetoothManager: BluetoothStateManager
-        let displayGlucosePreference: DisplayGlucosePreference
+        let deviceManager: DeviceDataManager
         weak var completionDelegate: CompletionDelegate?
-        weak var onboardingDelegate: CGMManagerOnboardingDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSettingsView>) -> UIViewController {
-            var vc = cgmManager.settingsViewController(
-                bluetoothProvider: bluetoothManager,
-                displayGlucosePreference: displayGlucosePreference,
-                colorPalette: .default,
-                allowDebugFeatures: true
-            )
+            var vc = deviceManager.cgmManagerSettingsView(cgmManager: cgmManager)
             vc.completionDelegate = completionDelegate
-            vc.cgmManagerOnboardingDelegate = onboardingDelegate
 
             return vc
         }

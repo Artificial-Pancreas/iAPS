@@ -168,17 +168,14 @@ extension CGM {
                         {
                             CGMSettingsView(
                                 cgmManager: cgmManager,
-                                bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                                displayGlucosePreference: displayGlucosePreference,
+                                deviceManager: state.deviceManager,
                                 completionDelegate: state,
-                                onboardingDelegate: state.deviceManager.cgmManagerOnboardingDelegate
                             )
                         } else {
                             CGMSetupView(
                                 cgmIdentifier: identifier,
                                 deviceManager: state.deviceManager,
                                 completionDelegate: state,
-                                onboardingDelegate: state.deviceManager.cgmManagerOnboardingDelegate
                             )
                         }
                     }
