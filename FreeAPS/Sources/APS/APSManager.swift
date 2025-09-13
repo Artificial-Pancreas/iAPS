@@ -10,7 +10,6 @@ import Swinject
 protocol APSManager {
     func autotune() -> AnyPublisher<Autotune?, Never>
     func enactBolus(amount: Double, isSMB: Bool)
-    var bluetoothManager: BluetoothStateManager? { get }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var isLooping: CurrentValueSubject<Bool, Never> { get }
@@ -105,8 +104,6 @@ final class BaseAPSManager: APSManager, Injectable {
     private var backGroundTaskID: UIBackgroundTaskIdentifier?
 
     private var pumpManager: PumpManagerUI? { deviceDataManager.pumpManager }
-
-    var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
     @Persisted(key: "temporary") var temporaryData = TemporaryData()

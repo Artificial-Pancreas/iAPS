@@ -18,7 +18,6 @@ import UserNotifications
 protocol DeviceDataManager {
     var availableCGMManagers: [CGMManagerDescriptor] { get }
     var pumpManager: PumpManagerUI? { get }
-    var bluetoothManager: BluetoothStateManager { get }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var bolusTrigger: PassthroughSubject<Bool, Never> { get }
     var manualTempBasal: PassthroughSubject<Bool, Never> { get }
@@ -112,8 +111,6 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     @Published var cgmHasValidSensorSession: Bool = false
 
-    var bluetoothManager: BluetoothStateManager { bluetoothProvider }
-
     var hasBLEHeartbeat: Bool {
         (pumpManager as? MockPumpManager) == nil
     }
@@ -127,6 +124,8 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     private(set) var cgmManager: CGMManager? {
         didSet {
             dispatchPrecondition(condition: .onQueue(.main))
+            oldValue?.cgmManagerDelegate = nil
+            oldValue?.delegateQueue = nil
             setupCGM()
             UserDefaults.standard.cgmManagerRawValue = cgmManager?.rawValue
         }
@@ -137,6 +136,8 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     private(set) var pumpManager: PumpManagerUI? {
         didSet {
             dispatchPrecondition(condition: .onQueue(.main))
+            oldValue?.pumpManagerDelegate = nil
+            oldValue?.delegateQueue = nil
 
             // If the current CGMManager is a PumpManager, we clear it out.
             if cgmManager is PumpManagerUI {
@@ -401,7 +402,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     func cgmManagerSettingsView(cgmManager: CGMManagerUI) -> CGMManagerViewController {
         var vc = cgmManager.settingsViewController(
-            bluetoothProvider: bluetoothManager,
+            bluetoothProvider: bluetoothProvider,
             displayGlucosePreference: displayGlucosePreference,
             colorPalette: .default,
             allowDebugFeatures: true
@@ -412,7 +413,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     func pumpManagerSettingsView(pumpManager: PumpManagerUI) -> PumpManagerViewController {
         var vc = pumpManager.settingsViewController(
-            bluetoothProvider: bluetoothManager,
+            bluetoothProvider: bluetoothProvider,
             colorPalette: .default,
             allowDebugFeatures: true,
             allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
