@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "Yamanızın %i saati kaldı";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "İnsülin askıya alındı!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Yamanız günlük maksimum değerine ulaştı!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Yamanız saatlik maksimum değerine ulaştı!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Yamanızı şimdi değiştirin!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Yamanız bir tıkanıklık tespit etti!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Yamanız Hata durumunda!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Yamanda insülin kalmamış!";
+
+/* Force remove */
+"Force remove" = "Kaldırmaya zorla";
+
+/* title force remove */
+"Are you sure?" = "Emin misin?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Önce devre dışı bırakılması önerilir";
+
+/* confirm force remove */
+"Confirm" = "Onaylayın";
+
+/* cancel force remove */
+"Cancel" = "İptal";

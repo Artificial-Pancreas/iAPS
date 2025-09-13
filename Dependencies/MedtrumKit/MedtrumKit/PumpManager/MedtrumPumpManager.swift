@@ -258,7 +258,7 @@ public extension MedtrumPumpManager {
                 }
 
                 self.pumpDelegate.notify { delegate in
-                    syncState(
+                    StateSyncer.sync(
                         syncResponse: syncResponse,
                         state: self.state,
                         delegate: delegate,

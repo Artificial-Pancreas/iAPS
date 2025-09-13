@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "Your patch has %i hours left";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Insulin đã bị ngừng!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Bản vá của bạn đã đạt đến giới hạn tối đa hàng ngày!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Bản vá của bạn đã đạt đến giới hạn tối đa hàng giờ!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Hãy thay miếng dán ngay bây giờ!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Bản vá của bạn đã phát hiện ra một trường hợp che khuất!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Bản vá của bạn đang ở trạng thái Lỗi!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Miếng dán insulin của bạn đã hết!";
+
+/* Force remove */
+"Force remove" = "Buộc gỡ bỏ";
+
+/* title force remove */
+"Are you sure?" = "Bạn có chắc không?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Nên tắt trước.";
+
+/* confirm force remove */
+"Confirm" = "Xác nhận";
+
+/* cancel force remove */
+"Cancel" = "Hủy";

@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "Your patch has %i hours left";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Insulin har blitt suspendert!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Plasteret ditt har nådd maksimum!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Depotplasteret ditt har nådd maksimum timeliss!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Erstatt depotplasteret ditt nå!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Patchen har oppdaget en okklusjon!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Patchen er i gjeldende status!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Plasteret ditt er tom for insulin!";
+
+/* Force remove */
+"Force remove" = "Tving fjerning";
+
+/* title force remove */
+"Are you sure?" = "Er du sikker?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Det anbefales å deaktivere første gang.";
+
+/* confirm force remove */
+"Confirm" = "Bekreft";
+
+/* cancel force remove */
+"Cancel" = "Avbryt";

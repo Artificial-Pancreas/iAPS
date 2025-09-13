@@ -276,3 +276,39 @@
 
 /* Body expire reminder notification */
 "Your patch has %i hours left" = "您的补丁还剩 %i 小时";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "胰岛素已暂停使用！";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "您的补丁已达到每日最大值！";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "您的补丁已达到每小时最大值！";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "现在就更换补丁！";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "您的补丁检测到了异常！";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "您的补丁处于故障状态！";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "你的胰岛素补丁用完了";
+
+/* Force remove */
+"Force remove" = "强制移除";
+
+/* title force remove */
+"Are you sure?" = "你确定吗？";
+
+/* body force remove */
+"It is recommended to deactivate first" = "建议先停用";
+
+/* confirm force remove */
+"Confirm" = "确认";
+
+/* cancel force remove */
+"Cancel" = "取消";
