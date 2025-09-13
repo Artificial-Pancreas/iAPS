@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class HeartBeatManager {
     private let keyForcgmTransmitterDeviceAddress = "cgmTransmitterDeviceAddress"
@@ -57,7 +58,25 @@ class HeartBeatManager {
                     CBUUID_Receive: cgmTransmitter_CBUUID_Receive,
                     heartbeat: {
                         if let heartbeatAvailable = heartbeat {
-                            heartbeatAvailable.fire()
+                            print("!! setting delay before heartbeat")
+                            var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
+                            backGroundFetchBGTaskID = UIApplication.shared
+                                .beginBackgroundTask(withName: "heartbeat-manager-delay") {
+                                    print("!! heartbeat delay task cancelled")
+                                    guard let bg = backGroundFetchBGTaskID else { return }
+                                    UIApplication.shared.endBackgroundTask(bg)
+                                    backGroundFetchBGTaskID = nil
+                                }
+
+                            // give xdrip a few seconds to read from sensor and put into shared data
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                print("!!! executing heartbeat")
+                                heartbeatAvailable.fire()
+                                if let backgroundTask = backGroundFetchBGTaskID {
+                                    UIApplication.shared.endBackgroundTask(backgroundTask)
+                                    backGroundFetchBGTaskID = .invalid
+                                }
+                            }
                         }
                     }
                 )
