@@ -685,13 +685,13 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
 
 extension BaseDeviceDataManager: CGMManagerOnboardingDelegate {
     func cgmManagerOnboarding(didCreateCGMManager cgmManager: CGMManagerUI) {
-        info(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' created")
+        debug(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' created")
         self.cgmManager = cgmManager
     }
 
     func cgmManagerOnboarding(didOnboardCGMManager cgmManager: CGMManagerUI) {
         precondition(cgmManager.isOnboarded)
-        info(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' onboarded")
+        debug(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' onboarded")
 
         // TODO: [loopkit] is this correct?
         DispatchQueue.main.async {
@@ -731,7 +731,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         // TODO: [loopkit] is this correct?
-        info(.deviceManager, "PumpManager:\(String(describing: type(of: pumpManager))) did fire heartbeat")
+        debug(.deviceManager, "PumpManager:\(String(describing: type(of: pumpManager))) did fire heartbeat")
         appCoordinator.sendHeartbeat()
     }
 
@@ -850,7 +850,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
     func pumpManagerWillDeactivate(_ pumpManager: PumpManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        info(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' will deactivate")
+        debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' will deactivate")
 
         DispatchQueue.main.async {
             self.pumpManager = nil
@@ -937,7 +937,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
 extension BaseDeviceDataManager: PumpManagerOnboardingDelegate {
     func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
-        info(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' created")
+        debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' created")
         self.pumpManager = pumpManager
         if let insulinType = pumpManager.status.insulinType {
             settingsManager.updateInsulinCurve(insulinType)
@@ -946,7 +946,7 @@ extension BaseDeviceDataManager: PumpManagerOnboardingDelegate {
 
     func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {
         precondition(pumpManager.isOnboarded)
-        info(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' onboarded")
+        debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' onboarded")
 
         DispatchQueue.main.async {
             self.refreshDeviceData()
