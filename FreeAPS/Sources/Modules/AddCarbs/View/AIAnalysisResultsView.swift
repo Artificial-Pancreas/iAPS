@@ -9,7 +9,7 @@ struct AIAnalysisResultsView: View {
         VStack(alignment: .leading, spacing: 20) {
             // Header mit Gesamtübersicht
             VStack(alignment: .leading, spacing: 12) {
-                Text("🧠 AI Lebensmittelanalyse")
+                Text("🧠 AI food analysis")
                     .font(.title2)
                     .fontWeight(.bold)
 
@@ -21,7 +21,7 @@ struct AIAnalysisResultsView: View {
 
                 // Konfidenz-Level
                 HStack {
-                    Text("Konfidenz:")
+                    Text("Confidence:")
                     ConfidenceBadge(level: analysisResult.confidence)
                     Spacer()
                     if let portions = analysisResult.totalFoodPortions {
@@ -36,7 +36,7 @@ struct AIAnalysisResultsView: View {
             // Gesamt-Nährwerte der Mahlzeit
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Text("📊 Gesamtnährwerte der Mahlzeit")
+                    Text("📊 Total nutritional values of the meal")
                         .font(.headline)
 
                     Spacer()
@@ -44,15 +44,15 @@ struct AIAnalysisResultsView: View {
                     // ERWEITERTER Gesamtmahlzeit-Button (HIER EINFÜGEN)
                     Button(action: {
                         let mealName = analysisResult.foodItemsDetailed.count == 1 ?
-                            analysisResult.foodItemsDetailed.first?.name ?? "Mahlzeit" :
-                            "Komplette Mahlzeit"
+                            analysisResult.foodItemsDetailed.first?.name ?? "Meal" :
+                            "Complete Meal"
 
                         let totalMeal = FoodItem(
                             name: mealName,
                             carbs: Decimal(analysisResult.totalCarbohydrates),
                             fat: Decimal(analysisResult.totalFat ?? 0),
                             protein: Decimal(analysisResult.totalProtein ?? 0),
-                            source: "AI Gesamtanalyse • \(analysisResult.foodItemsDetailed.count) Lebensmittel"
+                            source: "AI food analysis • \(analysisResult.foodItemsDetailed.count) Food"
                         )
                         onCompleteMealSelected(totalMeal)
                     }) {
