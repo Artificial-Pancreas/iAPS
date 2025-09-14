@@ -28,6 +28,8 @@ import Swinject
     // TODO: Remove var after update "Use Dependencies" logic in Logger
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
+    // TODO: do we want this? will this work with the Router?
+    // can be shared with the rest of the views with @EnvironmentObject
     @StateObject private var appServices = AppServices(assembler: assembler)
 
     init() {
@@ -36,7 +38,7 @@ import Swinject
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
         isNewVersion()
-        appServices.appearanceManager.setupGlobalAppearance()
+        AppearanceManager.setupGlobalAppearance()
     }
 
     var body: some Scene {
