@@ -74,7 +74,7 @@ struct FoodItemCard: View {
                     NutritionBadge(
                         value: foodItem.carbohydrates,
                         unit: "g",
-                        label: NSLocalizedString("KH", comment: "Carbohydrates abbreviation"),
+                        label: NSLocalizedString("CH", comment: "Carbohydrates abbreviation"),
                         color: .blue
                     )
 
