@@ -25,6 +25,27 @@ struct BarcodeScannerView: View {
         case lookingUp = "Looking up product..."
         case found = "Product found!"
         case error = "Scan failed"
+
+        var localizedString: String {
+            switch self {
+            case .initializing:
+                return NSLocalizedString("Initializing camera...", comment: "Camera initialization status")
+            case .positioning:
+                return NSLocalizedString("Position camera over barcode or QR code", comment: "Instruction to position camera")
+            case .scanning:
+                return NSLocalizedString("Scanning for barcode or QR code...", comment: "Scanning in progress status")
+            case .detected:
+                return NSLocalizedString("Code detected!", comment: "Code detection success message")
+            case .validating:
+                return NSLocalizedString("Validating format...", comment: "Code validation status")
+            case .lookingUp:
+                return NSLocalizedString("Looking up product...", comment: "Product lookup status")
+            case .found:
+                return NSLocalizedString("Product found!", comment: "Product found success message")
+            case .error:
+                return NSLocalizedString("Scan failed", comment: "Scan failure message")
+            }
+        }
     }
 
     var body: some View {
@@ -44,11 +65,11 @@ struct BarcodeScannerView: View {
             }
         }
         .ignoresSafeArea(.container, edges: .bottom)
-        .navigationBarTitle("Scan Barcode", displayMode: .inline)
+        .navigationBarTitle(NSLocalizedString("Scan Barcode", comment: "Barcode scanner navigation title"), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel") {
+                Button(NSLocalizedString("Cancel", comment: "Cancel button")) {
                     print("🎥 ========== Cancel button tapped ==========")
                     print("🎥 Stopping scanner...")
                     scannerService.stopScanning()
@@ -74,7 +95,7 @@ struct BarcodeScannerView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack {
-                    Button("Retry") {
+                    Button(NSLocalizedString("Retry", comment: "Retry button")) {
                         print("🎥 Retry button tapped")
                         scannerService.resetSession()
                         setupScanner()
@@ -198,7 +219,7 @@ struct BarcodeScannerView: View {
                 Spacer()
 
                 VStack(spacing: 8) {
-                    Text(scanningStage.rawValue)
+                    Text(scanningStage.localizedString)
                         .font(.headline)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
@@ -206,12 +227,15 @@ struct BarcodeScannerView: View {
 
                     if scanningStage == .positioning || scanningStage == .scanning {
                         VStack(spacing: 4) {
-                            Text("Hold steady for best results")
+                            Text(NSLocalizedString("Hold steady for best results", comment: "Instruction for steady camera hold"))
                                 .font(.caption)
                                 .foregroundColor(.white.opacity(0.8))
                                 .multilineTextAlignment(.center)
 
-                            Text("Supports traditional barcodes and QR codes")
+                            Text(NSLocalizedString(
+                                "Supports traditional barcodes and QR codes",
+                                comment: "Supported barcode types info"
+                            ))
                                 .font(.caption2)
                                 .foregroundColor(.white.opacity(0.6))
                                 .multilineTextAlignment(.center)
@@ -289,7 +313,7 @@ struct BarcodeScannerView: View {
 
             HStack(spacing: 16) {
                 if error == .cameraPermissionDenied {
-                    Button("Settings") {
+                    Button(NSLocalizedString("Settings", comment: "Settings button")) {
                         print("🎥 Settings button tapped")
                         openSettings()
                     }
@@ -297,13 +321,13 @@ struct BarcodeScannerView: View {
                 }
 
                 VStack(spacing: 8) {
-                    Button("Try Again") {
+                    Button(NSLocalizedString("Try Again", comment: "Try Again button")) {
                         print("🎥 Try Again button tapped in error overlay")
                         scannerService.resetSession()
                         setupScanner()
                     }
 
-                    Button("Check Permissions") {
+                    Button(NSLocalizedString("Check Permissions", comment: "Check Permissions button")) {
                         print("🎥 Check Permissions button tapped")
                         let status = AVCaptureDevice.authorizationStatus(for: .video)
                         print("🎥 Current system status: \(status)")
@@ -348,9 +372,12 @@ struct BarcodeScannerView: View {
 
     private var permissionAlert: Alert {
         Alert(
-            title: Text("Camera Access Required"),
-            message: Text("Loop needs camera access to scan barcodes. Please enable camera access in Settings."),
-            primaryButton: .default(Text("Settings")) {
+            title: Text(NSLocalizedString("Camera Access Required", comment: "Camera access required alert title")),
+            message: Text(NSLocalizedString(
+                "Loop needs camera access to scan barcodes. Please enable camera access in Settings.",
+                comment: "Camera access required alert message"
+            )),
+            primaryButton: .default(Text(NSLocalizedString("Settings", comment: "Settings button"))) {
                 openSettings()
             },
             secondaryButton: .cancel()

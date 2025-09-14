@@ -180,16 +180,16 @@ struct FoodSearchResultsView: View {
 
             // Helpful suggestions
             VStack(spacing: 4) {
-                Text("💡 Search Tips:")
+                Text(NSLocalizedString("💡 Search Tips:", comment: "Search tips header"))
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .fontWeight(.medium)
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("• Use simple, common food names")
-                    Text("• Try brand names (e.g., \"Cheerios\")")
-                    Text("• Check spelling carefully")
-                    Text("• Use the barcode scanner for packaged foods")
+                    Text(NSLocalizedString("• Use simple, common food names", comment: "Search tip 1"))
+                    Text(NSLocalizedString("• Try brand names (e.g., \"Cheerios\")", comment: "Search tip 2"))
+                    Text(NSLocalizedString("• Check spelling carefully", comment: "Search tip 3"))
+                    Text(NSLocalizedString("• Use the barcode scanner for packaged foods", comment: "Search tip 4"))
                 }
                 .font(.caption2)
                 .foregroundColor(.secondary)
@@ -206,7 +206,7 @@ struct FoodSearchResultsView: View {
                 // AI Results Section
                 if !aiSearchResults.isEmpty {
                     Section {
-                        Text("🤖 AI Search Results")
+                        Text(NSLocalizedString("🤖 AI Search Results", comment: "Section header for AI search results"))
                             .font(.headline)
                             .foregroundColor(.purple)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -234,7 +234,7 @@ struct FoodSearchResultsView: View {
                 // Traditional Results Section
                 if !searchResults.isEmpty {
                     Section {
-                        Text("📦 Database Results")
+                        Text(NSLocalizedString("📦 Database Results", comment: "Section header for database search results"))
                             .font(.headline)
                             .foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -299,22 +299,30 @@ private struct AIFoodSearchResultRow: View {
 
                 // Nutrition info
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(String(format: "%.1fg carbs per 100g", product.carbs))
-                        .font(.caption)
-                        .foregroundColor(.blue)
-                        .lineLimit(1)
+                    Text(
+                        String(
+                            format: NSLocalizedString("%.1fg carbs per 100g", comment: "Carbs per 100g format for AI results"),
+                            product.carbs
+                        )
+                    )
+                    .font(.caption)
+                    .foregroundColor(.blue)
+                    .lineLimit(1)
 
                     // Additional nutrition
                     HStack(spacing: 8) {
-                        Text(String(format: "%.1fg protein", product.protein))
+                        Text(String(
+                            format: NSLocalizedString("%.1fg protein", comment: "Protein amount format"),
+                            product.protein
+                        ))
                             .font(.caption2)
                             .foregroundColor(.secondary)
 
-                        Text(String(format: "%.1fg fat", product.fat))
+                        Text(String(format: NSLocalizedString("%.1fg fat", comment: "Fat amount format"), product.fat))
                             .font(.caption2)
                             .foregroundColor(.secondary)
 
-                        Text(String(format: "%.0f kcal", product.calories))
+                        Text(String(format: NSLocalizedString("%.0f kcal", comment: "Calories format"), product.calories))
                             .font(.caption2)
                             .foregroundColor(.secondary)
 
@@ -385,7 +393,7 @@ private struct FoodSearchResultRow: View {
                             VStack {
                                 Image(systemName: "exclamationmark.triangle")
                                     .foregroundColor(.orange)
-                                Text("Failed to load")
+                                Text(NSLocalizedString("Failed to load", comment: "Image loading failure message"))
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             }
@@ -436,13 +444,20 @@ private struct FoodSearchResultRow: View {
                     VStack(alignment: .leading, spacing: 1) {
                         // Carbs per serving or per 100g
                         if let carbsPerServing = product.carbsPerServing {
-                            Text(String(format: "%.1fg carbs per %@", carbsPerServing, product.servingSizeDisplay))
+                            Text(String(
+                                format: NSLocalizedString("%.1fg carbs per %@", comment: "Carbs per serving format"),
+                                carbsPerServing,
+                                product.servingSizeDisplay
+                            ))
                                 .font(.caption)
                                 .foregroundColor(.blue)
                                 .lineLimit(2)
                                 .fixedSize(horizontal: false, vertical: true)
                         } else {
-                            Text(String(format: "%.1fg carbs per 100g", product.nutriments.carbohydrates))
+                            Text(String(
+                                format: NSLocalizedString("%.1fg carbs per 100g", comment: "Carbs per 100g format"),
+                                product.nutriments.carbohydrates
+                            ))
                                 .font(.caption)
                                 .foregroundColor(.blue)
                                 .lineLimit(1)
@@ -452,13 +467,13 @@ private struct FoodSearchResultRow: View {
                     // Additional nutrition if available
                     HStack(spacing: 8) {
                         if let protein = product.nutriments.proteins {
-                            Text(String(format: "%.1fg protein", protein))
+                            Text(String(format: NSLocalizedString("%.1fg protein", comment: "Protein amount format"), protein))
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
 
                         if let fat = product.nutriments.fat {
-                            Text(String(format: "%.1fg fat", fat))
+                            Text(String(format: NSLocalizedString("%.1fg fat", comment: "Fat amount format"), fat))
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }

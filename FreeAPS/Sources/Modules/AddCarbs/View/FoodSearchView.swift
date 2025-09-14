@@ -16,14 +16,17 @@ struct FoodSearchView: View {
             VStack {
                 // Suchfeld + Buttons
                 HStack(spacing: 8) {
-                    TextField("Food Search...", text: $state.foodSearchText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                        .submitLabel(.search)
-                        .onSubmit {
-                            state.performSearch(query: state.foodSearchText)
-                        }
+                    TextField(
+                        NSLocalizedString("Food Search...", comment: "Food search placeholder text"),
+                        text: $state.foodSearchText
+                    )
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .submitLabel(.search)
+                    .onSubmit {
+                        state.performSearch(query: state.foodSearchText)
+                    }
                     // Barcode Button
                     Button {
                         navigateToBarcode = true
@@ -81,7 +84,7 @@ struct FoodSearchView: View {
                                     carbs: Decimal(aiProduct.carbs),
                                     fat: Decimal(aiProduct.fat),
                                     protein: Decimal(aiProduct.protein),
-                                    source: "AI Analyse"
+                                    source: NSLocalizedString("AI Analyse", comment: "AI Analysis source label")
                                 )
                                 onSelect(foodItem)
                                 dismiss()
@@ -119,7 +122,7 @@ struct FoodSearchView: View {
                 NavigationLink(destination: AISettingsView()) {
                     HStack {
                         Image(systemName: "gearshape")
-                        Text("AI Settings")
+                        Text(NSLocalizedString("AI Settings", comment: "AI Settings navigation link"))
                         Spacer()
                     }
                 }
@@ -133,8 +136,8 @@ struct FoodSearchView: View {
                 // Footer
                 footerNotice
             }
-            .navigationTitle("Food Search")
-            .navigationBarItems(trailing: Button("Done") { dismiss() })
+            .navigationTitle(NSLocalizedString("Food Search", comment: "Food Search navigation title"))
+            .navigationBarItems(trailing: Button(NSLocalizedString("Done", comment: "Done button")) { dismiss() })
         }
     }
 
@@ -142,12 +145,15 @@ struct FoodSearchView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: "exclamationmark.circle")
-                Text("Notice")
+                Text(NSLocalizedString("Notice", comment: "Notice header"))
             }
             .font(.headline)
             .foregroundColor(.orange)
             Text(
-                "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
+                NSLocalizedString(
+                    "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis.",
+                    comment: "Footer notice about food data units"
+                )
             )
             .font(.subheadline)
             .foregroundColor(.secondary)

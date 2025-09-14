@@ -38,7 +38,7 @@ struct FoodItemCard: View {
                     HStack {
                         Image(systemName: "plus.circle.fill")
                             .foregroundColor(.green)
-                        Text("Add")
+                        Text(NSLocalizedString("Add", comment: "Add food item button"))
                             .font(.subheadline)
                             .fontWeight(.medium)
                     }
@@ -51,16 +51,19 @@ struct FoodItemCard: View {
 
                 // Portionsinformationen (immer sichtbar)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Portion: \(foodItem.portionEstimate)")
+                    Text(NSLocalizedString("Portion: ", comment: "Portion label") + "\(foodItem.portionEstimate)")
                         .font(.subheadline)
 
                     if let usdaSize = foodItem.usdaServingSize {
-                        Text("USDA Standard: \(usdaSize)")
+                        Text(NSLocalizedString("USDA Standard: ", comment: "USDA Standard label") + "\(usdaSize)")
                             .font(.caption)
                     }
 
                     if foodItem.servingMultiplier != 1.0 {
-                        Text("Multiplier: \(foodItem.servingMultiplier, specifier: "%.1f")x")
+                        Text(String(
+                            format: NSLocalizedString("Multiplier: %.1fx", comment: "Multiplier label with value"),
+                            foodItem.servingMultiplier
+                        ))
                             .font(.caption)
                     }
                 }
@@ -68,14 +71,29 @@ struct FoodItemCard: View {
 
                 // Nährwert-Badges (immer sichtbar)
                 HStack(spacing: 8) {
-                    NutritionBadge(value: foodItem.carbohydrates, unit: "g", label: "KH", color: .blue)
+                    NutritionBadge(
+                        value: foodItem.carbohydrates,
+                        unit: "g",
+                        label: NSLocalizedString("KH", comment: "Carbohydrates abbreviation"),
+                        color: .blue
+                    )
 
                     if let protein = foodItem.protein, protein > 0 {
-                        NutritionBadge(value: protein, unit: "g", label: "P", color: .green)
+                        NutritionBadge(
+                            value: protein,
+                            unit: "g",
+                            label: NSLocalizedString("P", comment: "Protein abbreviation"),
+                            color: .green
+                        )
                     }
 
                     if let fat = foodItem.fat, fat > 0 {
-                        NutritionBadge(value: fat, unit: "g", label: "F", color: .orange)
+                        NutritionBadge(
+                            value: fat,
+                            unit: "g",
+                            label: NSLocalizedString("F", comment: "Fat abbreviation"),
+                            color: .orange
+                        )
                     }
                 }
             }
@@ -86,10 +104,20 @@ struct FoodItemCard: View {
                     // Detaillierte Nährwerte
                     if let calories = foodItem.calories, calories > 0 {
                         HStack {
-                            NutritionBadge(value: calories, unit: "kcal", label: "Energy", color: .red)
+                            NutritionBadge(
+                                value: calories,
+                                unit: "kcal",
+                                label: NSLocalizedString("Energy", comment: "Energy/Calories label"),
+                                color: .red
+                            )
 
                             if let fiber = foodItem.fiber, fiber > 0 {
-                                NutritionBadge(value: fiber, unit: "g", label: "Fiber", color: .purple)
+                                NutritionBadge(
+                                    value: fiber,
+                                    unit: "g",
+                                    label: NSLocalizedString("Fiber", comment: "Fiber label"),
+                                    color: .purple
+                                )
                             }
                         }
                     }
@@ -101,7 +129,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "flame.fill")
                                     .foregroundColor(.orange)
                                     .font(.caption)
-                                Text("Zubereitung: \(preparation)")
+                                Text(NSLocalizedString("Preparation: ", comment: "Preparation method label") + "\(preparation)")
                                     .font(.caption)
                             }
                         }
@@ -111,7 +139,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "eye.fill")
                                     .foregroundColor(.blue)
                                     .font(.caption)
-                                Text("Visual Cues: \(visualCues)")
+                                Text(NSLocalizedString("Visual Cues: ", comment: "Visual cues label") + "\(visualCues)")
                                     .font(.caption)
                             }
                         }
@@ -121,7 +149,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "note.text")
                                     .foregroundColor(.gray)
                                     .font(.caption)
-                                Text("Rating: \(notes)")
+                                Text(NSLocalizedString("Rating: ", comment: "Assessment rating label") + "\(notes)")
                                     .font(.caption)
                             }
                         }

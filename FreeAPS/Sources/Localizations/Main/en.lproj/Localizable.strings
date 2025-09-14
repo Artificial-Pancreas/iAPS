@@ -3226,3 +3226,291 @@ Enact a temp Basal or a temp target */
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+
+/* AI */
+"AI Food Analysis" = "AI Food Analysis";
+"Camera will open to analyze your food" = "Camera will open to analyze your food";
+"Analyze with AI" = "Analyze with AI";
+"Choose from Library" = "Choose from Library";
+"Analyzing food with AI..." = "Analyzing food with AI...";
+"Use Cancel to retake photo" = "Use Cancel to retake photo";
+"Cancel" = "Cancel";
+"Analysis Error" = "Analysis Error";
+"Check Account" = "Check Account";
+"Try Different Provider" = "Try Different Provider";
+"Retake Photo" = "Retake Photo";
+"Wait and Retry" = "Wait and Retry";
+"Retry Analysis" = "Retry Analysis";
+"Reset to Default" = "Reset to Default";
+"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
+"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.";
+"Too many requests sent to your AI provider. Please wait a moment before trying again." = "Too many requests sent to your AI provider. Please wait a moment before trying again.";
+"Unknown error occurred" = "Unknown error occurred";
+"Initializing AI food analysis..." = "Initializing AI food analysis...";
+"Processing image data..." = "Processing image data...";
+"Optimizing image quality..." = "Optimizing image quality...";
+"Connecting to AI provider..." = "Connecting to AI provider...";
+"Uploading image for analysis..." = "Uploading image for analysis...";
+"Analyzing nutritional content..." = "Analyzing nutritional content...";
+"Identifying food portions..." = "Identifying food portions...";
+"Calculating serving sizes..." = "Calculating serving sizes...";
+"Comparing to USDA standards..." = "Comparing to USDA standards...";
+"Running AI vision analysis..." = "Running AI vision analysis...";
+"Processing analysis results..." = "Processing analysis results...";
+"Generating nutrition summary..." = "Generating nutrition summary...";
+"Analysis complete!" = "Analysis complete!";
+"Connection interrupted..." = "Connection interrupted...";
+"Analysis failed" = "Analysis failed";
+"Tips: Take overhead photos • Include size reference • Good lighting" = "Tips: Take overhead photos • Include size reference • Good lighting";
+"Analysis Status" = "Analysis Status";
+
+/* AISettingsView.swift Localization Strings for Crowdin */
+
+/* Section Headers */
+"Food Search Feature" = "Food Search Feature";
+"OpenAI GPT-5 (Latest)" = "OpenAI GPT-5 (Latest)";
+"Food Search Provider Configuration" = "Food Search Provider Configuration";
+"AI Analysis Mode" = "AI Analysis Mode";
+"Anthropic (Claude API) Configuration" = "Anthropic (Claude API) Configuration";
+"Provider Information" = "Provider Information";
+"Search Type Recommendations" = "Search Type Recommendations";
+"Medical Disclaimer" = "Medical Disclaimer";
+
+/* Settings Labels and Options */
+"Food Search" = "Food Search";
+"Use GPT-5 for Latest Models" = "Use GPT-5 for Latest Models";
+"Text/Voice Search" = "Text/Voice Search";
+"Barcode Scanning" = "Barcode Scanning";
+"AI Image Analysis" = "AI Image Analysis";
+"Claude API Key" = "Claude API Key";
+"Analysis Mode" = "Analysis Mode";
+"Current Mode: " = "Current Mode: ";
+"Models Used:" = "Models Used:";
+
+/* Provider Labels */
+"Google Gemini:" = "Google Gemini:";
+"OpenAI:" = "OpenAI:";
+"Claude:" = "Claude:";
+
+/* Navigation and Buttons */
+"Food Search Settings" = "Food Search Settings";
+"Cancel" = "Cancel";
+"Save" = "Save";
+"OK" = "OK";
+
+/* Descriptions and Help Text */
+"Enable AI-powered food search with camera analysis, voice queries, and barcode scanning. Configure multiple providers for optimal results." = "Enable AI-powered food search with camera analysis, voice queries, and barcode scanning. Configure multiple providers for optimal results.";
+
+"When enabled, OpenAI API calls will use GPT-5 models (o1-preview, o1-mini) for the latest capabilities. Disable to use standard GPT-4 models for cost savings." = "When enabled, OpenAI API calls will use GPT-5 models (o1-preview, o1-mini) for the latest capabilities. Disable to use standard GPT-4 models for cost savings.";
+
+"Configure which provider to use for each type of food search. You can use different providers for different search methods." = "Configure which provider to use for each type of food search. You can use different providers for different search methods.";
+
+"Choose between Fast mode for quick responses or Detailed mode for comprehensive analysis with reasoning." = "Choose between Fast mode for quick responses or Detailed mode for comprehensive analysis with reasoning.";
+
+"Configure your Anthropic Claude API key for advanced AI analysis. Claude excels at detailed reasoning and food analysis." = "Configure your Anthropic Claude API key for advanced AI analysis. Claude excels at detailed reasoning and food analysis.";
+
+"Camera Food Analysis" = "Camera Food Analysis";
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.";
+
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys";
+
+"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI";
+
+"Available Search Providers:" = "Available Search Providers:";
+
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens).";
+
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost.";
+
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries.";
+
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches.";
+
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.";
+
+/* Search Type Recommendations */
+"**Text/Voice Search:**" = "**Text/Voice Search:**";
+"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
+"**Barcode Scanning:**" = "**Barcode Scanning:**";
+"OpenFoodFacts" = "OpenFoodFacts";
+"**AI Image Analysis:**" = "**AI Image Analysis:**";
+"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
+
+/* Medical Disclaimer */
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
+
+/* API Key Input */
+"Enter your Claude API key" = "Enter your Claude API key";
+
+/* Alert Messages */
+"API Key Required" = "API Key Required";
+"This AI provider requires an API key. Please enter your API key in the settings below." = "This AI provider requires an API key. Please enter your API key in the settings below.";
+
+/* AddCarbsRootView.swift Localization Strings for Crowdin */
+
+/* Main UI Labels */
+"Carbs required" = "Carbs required";
+"Carbs" = "Carbs";
+"Fat" = "Fat";
+"Protein" = "Protein";
+"grams" = "grams";
+"Time" = "Time";
+"Total" = "Total";
+
+/* Time Controls */
+"Now" = "Now";
+
+/* Action Buttons */
+"Save" = "Save";
+"Continue" = "Continue";
+"Cancel" = "Cancel";
+"Hypo Treatment" = "Hypo Treatment";
+"Back" = "Back";
+"Edit" = "Edit";
+
+/* Navigation */
+"Add Meal" = "Add Meal";
+
+/* AI Food Search Section */
+"AI Food Search" = "AI Food Search";
+"Search Food Database" = "Search Food Database";
+"AI Settings" = "AI Settings";
+
+/* Preset Management */
+"Save as Preset" = "Save as Preset";
+"Saved Food" = "Saved Food";
+"Search" = "Search";
+"New" = "New";
+
+/* Form Labels - used in different contexts */
+"Carbs" = "Carbs"; /* Carbs input label */
+"Fat" = "Fat"; /* Fat input label */
+"Protein" = "Protein"; /* Protein input label */
+"grams" = "grams"; /* Grams unit label */
+
+/* Time Picker */
+"Time" = "Time"; /* Time picker accessibility label */
+
+/* Preset List Labels */
+"Carbs" = "Carbs"; /* Carbs label in preset list */
+"Fat" = "Fat"; /* Fat label in preset list */
+"Protein" = "Protein"; /* Protein label in preset list */
+
+/* Edit Form Labels */
+"Carbs" = "Carbs"; /* Carbs label in edit form */
+"Fat" = "Fat"; /* Fat label in edit form */
+"Protein" = "Protein"; /* Protein label in edit form */
+"Saved Food" = "Saved Food"; /* Saved Food section header in edit form */
+
+/* Section Headers */
+"Save" = "Save"; /* Save section header */
+"Search" = "Search"; /* Search section header */
+"Saved Food" = "Saved Food"; /* Saved Food section header */
+
+/* Action Labels */
+"Edit" = "Edit"; /* Edit action label */
+"Save" = "Save"; /* Save button in edit form */
+
+/* Placeholders */
+"New" = "New"; /* New preset placeholder */
+"Search" = "Search"; /* Search field placeholder */
+
+/* FoodItemCard.swift Localization Strings for Crowdin */
+
+/* Action Buttons */
+"Add" = "Add";
+
+/* Portion Information */
+"Portion: " = "Portion: ";
+"USDA Standard: " = "USDA Standard: ";
+"Multiplier: " = "Multiplier: ";
+
+/* Nutrition Badge Labels */
+"KH" = "KH"; /* Carbohydrates abbreviation */
+"P" = "P"; /* Protein abbreviation */
+"F" = "F"; /* Fat abbreviation */
+"Energy" = "Energy"; /* Energy/Calories label */
+"Fiber" = "Fiber"; /* Fiber label */
+
+/* Food Analysis Details */
+"Preparation: " = "Preparation: "; /* Preparation method label */
+"Visual Cues: " = "Visual Cues: "; /* Visual cues label */
+"Rating: " = "Rating: "; /* Assessment rating label */
+
+/* FoodSearchView.swift Localization Strings for Crowdin */
+
+/* Search Interface */
+"Food Search..." = "Food Search...";
+"Food Search" = "Food Search";
+"Done" = "Done";
+
+/* Navigation */
+"AI Settings" = "AI Settings";
+
+/* Data Source Labels */
+"AI Analyse" = "AI Analysis";
+
+/* Footer Notice */
+"Notice" = "Notice";
+"The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis." = "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis.";
+
+/* BarcodeScannerView.swift Localization Strings for Crowdin */
+
+/* Navigation and Buttons */
+"Scan Barcode" = "Scan Barcode";
+"Cancel" = "Cancel";
+"Retry" = "Retry";
+"Settings" = "Settings";
+"Try Again" = "Try Again";
+"Check Permissions" = "Check Permissions";
+
+/* Scanning Stages */
+"Initializing camera..." = "Initializing camera...";
+"Position camera over barcode or QR code" = "Position camera over barcode or QR code";
+"Scanning for barcode or QR code..." = "Scanning for barcode or QR code...";
+"Code detected!" = "Code detected!";
+"Validating format..." = "Validating format...";
+"Looking up product..." = "Looking up product...";
+"Product found!" = "Product found!";
+"Scan failed" = "Scan failed";
+
+/* Instructions */
+"Hold steady for best results" = "Hold steady for best results";
+"Supports traditional barcodes and QR codes" = "Supports traditional barcodes and QR codes";
+
+/* Permission Alert */
+"Camera Access Required" = "Camera Access Required";
+"Loop needs camera access to scan barcodes. Please enable camera access in Settings." = "Loop needs camera access to scan barcodes. Please enable camera access in Settings.";
+
+/* FoodSearchResultsView.swift Localization Strings for Crowdin */
+
+/* Search Status Messages */
+"Searching foods" = "Searching foods";
+"Finding the best matches for you" = "Finding the best matches for you";
+"Search Error" = "Search Error";
+"No Foods Found" = "No Foods Found";
+
+/* Search Suggestions */
+"Check your spelling and try again" = "Check your spelling and try again";
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
+
+/* Search Tips */
+"💡 Search Tips:" = "💡 Search Tips:";
+"• Use simple, common food names" = "• Use simple, common food names";
+"• Try brand names (e.g., \"Cheerios\")" = "• Try brand names (e.g., \"Cheerios\")";
+"• Check spelling carefully" = "• Check spelling carefully";
+"• Use the barcode scanner for packaged foods" = "• Use the barcode scanner for packaged foods";
+
+/* Section Headers */
+"🤖 AI Search Results" = "🤖 AI Search Results";
+"📦 Database Results" = "📦 Database Results";
+
+/* Nutrition Information Formats */
+"%.1fg carbs per 100g" = "%.1fg carbs per 100g";
+"%.1fg carbs per %@" = "%.1fg carbs per %@";
+"%.1fg protein" = "%.1fg protein";
+"%.1fg fat" = "%.1fg fat";
+"%.0f kcal" = "%.0f kcal";
+
+/* Error Messages */
+"Failed to load" = "Failed to load";

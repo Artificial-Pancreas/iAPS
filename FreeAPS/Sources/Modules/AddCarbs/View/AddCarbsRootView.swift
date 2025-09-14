@@ -67,7 +67,7 @@ extension AddCarbs {
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
                         HStack {
-                            Text("Carbs required")
+                            Text(NSLocalizedString("Carbs required", comment: "Label showing required carbs amount"))
                             Spacer()
                             Text((formatter.string(from: carbsReq as NSNumber) ?? "") + " g")
                         }
@@ -79,7 +79,7 @@ extension AddCarbs {
                     mealPresets.padding(.vertical, 9)
 
                     HStack {
-                        Text("Carbs").fontWeight(.semibold)
+                        Text(NSLocalizedString("Carbs", comment: "Carbs input label")).fontWeight(.semibold)
                         Spacer()
                         DecimalTextField(
                             "0",
@@ -88,7 +88,7 @@ extension AddCarbs {
                             autofocus: true,
                             liveEditing: true
                         )
-                        Text("grams").foregroundColor(.secondary)
+                        Text(NSLocalizedString("grams", comment: "Grams unit label")).foregroundColor(.secondary)
                     }
 
                     if state.useFPUconversion {
@@ -100,7 +100,7 @@ extension AddCarbs {
                         let summary = state.waitersNotepad()
                         if summary.isNotEmpty {
                             HStack {
-                                Text("Total")
+                                Text(NSLocalizedString("Total", comment: "Total label for combined presets"))
                                 HStack(spacing: 0) {
                                     ForEach(summary, id: \.self) {
                                         Text($0).foregroundStyle(Color.randomGreen()).font(.footnote)
@@ -113,17 +113,18 @@ extension AddCarbs {
 
                     // Time
                     HStack {
-                        Text("Time")
+                        Text(NSLocalizedString("Time", comment: "Time input label"))
                         Spacer()
                         if !pushed {
                             Button {
                                 pushed = true
-                            } label: { Text("Now") }.buttonStyle(.borderless).foregroundColor(.secondary).padding(.trailing, 5)
+                            } label: { Text(NSLocalizedString("Now", comment: "Now button for current time")) }
+                                .buttonStyle(.borderless).foregroundColor(.secondary).padding(.trailing, 5)
                         } else {
                             Button { state.date = state.date.addingTimeInterval(-15.minutes.timeInterval) }
                             label: { Image(systemName: "minus.circle") }.tint(.blue).buttonStyle(.borderless)
                             DatePicker(
-                                "Time",
+                                NSLocalizedString("Time", comment: "Time picker accessibility label"),
                                 selection: $state.date,
                                 displayedComponents: [.hourAndMinute]
                             ).controlSize(.mini)
@@ -145,7 +146,7 @@ extension AddCarbs {
                             if button { state.add(override, fetch: editMode) }
                         }
                         label: {
-                            Text("Hypo Treatment")
+                            Text(NSLocalizedString("Hypo Treatment", comment: "Hypo Treatment button"))
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                     }.listRowBackground(Color(.orange).opacity(0.9)).tint(.white)
@@ -158,8 +159,9 @@ extension AddCarbs {
                     }
                     label: {
                         Text(
-                            ((state.skipBolus && !override && !editMode) || state.carbs <= 0) ? "Save" :
-                                "Continue"
+                            ((state.skipBolus && !override && !editMode) || state.carbs <= 0) ?
+                                NSLocalizedString("Save", comment: "Save button") :
+                                NSLocalizedString("Continue", comment: "Continue button")
                         ) }
                         .disabled(empty)
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -173,11 +175,11 @@ extension AddCarbs {
                     state.loadEntries(editMode)
                 }
             }
-            .navigationTitle("Add Meal")
+            .navigationTitle(NSLocalizedString("Add Meal", comment: "Navigation title for adding meals"))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 // leading: foodSearchButton,
-                trailing: Button("Cancel", action: {
+                trailing: Button(NSLocalizedString("Cancel", comment: "Cancel button"), action: {
                     state.hideModal()
                     if editMode { state.apsManager.determineBasalSync() }
                 })
@@ -208,7 +210,7 @@ extension AddCarbs {
 
         @ViewBuilder private func proteinAndFat() -> some View {
             HStack {
-                Text("Fat").foregroundColor(.orange)
+                Text(NSLocalizedString("Fat", comment: "Fat input label")).foregroundColor(.orange)
                 Spacer()
                 DecimalTextField(
                     "0",
@@ -217,10 +219,10 @@ extension AddCarbs {
                     autofocus: false,
                     liveEditing: true
                 )
-                Text("grams").foregroundColor(.secondary)
+                Text(NSLocalizedString("grams", comment: "Grams unit label")).foregroundColor(.secondary)
             }
             HStack {
-                Text("Protein").foregroundColor(.red)
+                Text(NSLocalizedString("Protein", comment: "Protein input label")).foregroundColor(.red)
                 Spacer()
                 DecimalTextField(
                     "0",
@@ -229,20 +231,20 @@ extension AddCarbs {
                     autofocus: false,
                     liveEditing: true
                 )
-                Text("grams").foregroundColor(.secondary)
+                Text(NSLocalizedString("grams", comment: "Grams unit label")).foregroundColor(.secondary)
             }
         }
 
         // MARK: - Food Search Section
 
         private var foodSearchSection: some View {
-            Section(header: Text("AI Food Search")) {
+            Section(header: Text(NSLocalizedString("AI Food Search", comment: "AI Food Search section header"))) {
                 Button {
                     showingFoodSearch = true
                 } label: {
                     HStack {
                         Image(systemName: "magnifyingglass")
-                        Text("Search Food Database")
+                        Text(NSLocalizedString("Search Food Database", comment: "Search Food Database button"))
                         Spacer()
                         Image(systemName: "chevron.right")
                     }
@@ -252,7 +254,7 @@ extension AddCarbs {
                 NavigationLink(destination: AISettingsView()) {
                     HStack {
                         Image(systemName: "gearshape")
-                        Text("AI Settings")
+                        Text(NSLocalizedString("AI Settings", comment: "AI Settings button"))
                         Spacer()
                     }
                     .foregroundColor(.blue)
@@ -351,7 +353,8 @@ extension AddCarbs {
         private var presetView: some View {
             Form {
                 Section {} header: {
-                    Text("Back").textCase(nil).foregroundStyle(.blue).font(.system(size: 16))
+                    Text(NSLocalizedString("Back", comment: "Back button")).textCase(nil).foregroundStyle(.blue)
+                        .font(.system(size: 16))
                         .onTapGesture { reset() } }
 
                 if !empty {
@@ -361,21 +364,21 @@ extension AddCarbs {
                         }
                         label: {
                             HStack {
-                                Text("Save as Preset")
+                                Text(NSLocalizedString("Save as Preset", comment: "Save as Preset button"))
                                 Spacer()
                                 Text("[\(state.carbs), \(state.fat), \(state.protein)]")
                             }
                         }.frame(maxWidth: .infinity, alignment: .center)
                             .listRowBackground(Color(.systemBlue)).tint(.white)
                     }
-                    header: { Text("Save") }
+                    header: { Text(NSLocalizedString("Save", comment: "Save section header")) }
                 }
 
                 let filtered = carbPresets.filter { ($0.dish ?? "").count > 1 }.removeDublicates()
                 if filtered.count > 4 {
                     Section {
-                        TextField("Search", text: $string)
-                    } header: { Text("Search") }
+                        TextField(NSLocalizedString("Search", comment: "Search field placeholder"), text: $string)
+                    } header: { Text(NSLocalizedString("Search", comment: "Search section header")) }
                 }
                 let data = string.isEmpty ? filtered : carbPresets
                     .filter { ($0.dish ?? "").localizedCaseInsensitiveContains(string) }
@@ -386,10 +389,10 @@ extension AddCarbs {
                     }.onDelete(perform: delete)
                 } header: {
                     HStack {
-                        Text("Saved Food")
+                        Text(NSLocalizedString("Saved Food", comment: "Saved Food section header"))
                         Button {
                             state.presetToEdit = Presets(context: moc)
-                            newPreset = (NSLocalizedString("New", comment: ""), 0, 0, 0)
+                            newPreset = (NSLocalizedString("New", comment: "New preset placeholder"), 0, 0, 0)
                             state.edit = true
                         } label: { Image(systemName: "plus").font(.system(size: 22)) }
                             .buttonStyle(.borderless).frame(maxWidth: .infinity, alignment: .trailing)
@@ -408,13 +411,13 @@ extension AddCarbs {
                     VStack(alignment: .leading) {
                         Text(dish)
                         HStack {
-                            Text("Carbs")
+                            Text(NSLocalizedString("Carbs", comment: "Carbs label in preset list"))
                             Text("\(preset.carbs ?? 0)")
                             Spacer()
-                            Text("Fat")
+                            Text(NSLocalizedString("Fat", comment: "Fat label in preset list"))
                             Text("\(preset.fat ?? 0)")
                             Spacer()
-                            Text("Protein")
+                            Text(NSLocalizedString("Protein", comment: "Protein label in preset list"))
                             Text("\(preset.protein ?? 0)")
                         }.foregroundStyle(.secondary).font(.caption).padding(.top, 2)
                     }
@@ -430,7 +433,7 @@ extension AddCarbs {
                             state.presetToEdit = preset
                             update()
                         } label: {
-                            Label("Edit", systemImage: "pencil.line")
+                            Label(NSLocalizedString("Edit", comment: "Edit action label"), systemImage: "pencil.line")
                         }
                     }
                 }
@@ -479,7 +482,7 @@ extension AddCarbs {
         }
 
         private func addfromCarbsView() {
-            newPreset = (NSLocalizedString("New", comment: ""), state.carbs, state.fat, state.protein)
+            newPreset = (NSLocalizedString("New", comment: "New preset placeholder"), state.carbs, state.fat, state.protein)
             state.edit = true
         }
 
@@ -489,7 +492,7 @@ extension AddCarbs {
         }
 
         private var disabled: Bool {
-            (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
+            (newPreset == (NSLocalizedString("New", comment: "New preset placeholder"), 0, 0, 0)) || (newPreset.dish == "") ||
                 (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
         }
 
@@ -500,25 +503,25 @@ extension AddCarbs {
                         TextField("", text: $newPreset.dish)
                     }
                     HStack {
-                        Text("Carbs").foregroundStyle(.secondary)
+                        Text(NSLocalizedString("Carbs", comment: "Carbs label in edit form")).foregroundStyle(.secondary)
                         Spacer()
                         DecimalTextField("0", value: $newPreset.carbs, formatter: formatter, liveEditing: true)
                     }
                     HStack {
-                        Text("Fat").foregroundStyle(.secondary)
+                        Text(NSLocalizedString("Fat", comment: "Fat label in edit form")).foregroundStyle(.secondary)
                         Spacer()
                         DecimalTextField("0", value: $newPreset.fat, formatter: formatter, liveEditing: true)
                     }
                     HStack {
-                        Text("Protein").foregroundStyle(.secondary)
+                        Text(NSLocalizedString("Protein", comment: "Protein label in edit form")).foregroundStyle(.secondary)
                         Spacer()
                         DecimalTextField("0", value: $newPreset.protein, formatter: formatter, liveEditing: true)
                     }
-                } header: { Text("Saved Food") }
+                } header: { Text(NSLocalizedString("Saved Food", comment: "Saved Food section header in edit form")) }
 
                 Section {
                     Button { save() }
-                    label: { Text("Save") }
+                    label: { Text(NSLocalizedString("Save", comment: "Save button in edit form")) }
                         .frame(maxWidth: .infinity, alignment: .center)
                         .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
                         .tint(.white)
