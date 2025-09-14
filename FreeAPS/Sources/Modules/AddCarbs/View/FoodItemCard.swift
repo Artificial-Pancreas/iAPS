@@ -38,7 +38,7 @@ struct FoodItemCard: View {
                     HStack {
                         Image(systemName: "plus.circle.fill")
                             .foregroundColor(.green)
-                        Text("Hinzufügen")
+                        Text("Add")
                             .font(.subheadline)
                             .fontWeight(.medium)
                     }
