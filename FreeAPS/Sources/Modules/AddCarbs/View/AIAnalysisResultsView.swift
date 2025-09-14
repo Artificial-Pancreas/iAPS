@@ -9,7 +9,7 @@ struct AIAnalysisResultsView: View {
         VStack(alignment: .leading, spacing: 20) {
             // Header mit Gesamtübersicht
             VStack(alignment: .leading, spacing: 12) {
-                Text("🧠 AI food analysis")
+                Text("🧠 " + NSLocalizedString("AI food analysis", comment: "AI food analysis header"))
                     .font(.title2)
                     .fontWeight(.bold)
 
@@ -21,11 +21,11 @@ struct AIAnalysisResultsView: View {
 
                 // Konfidenz-Level
                 HStack {
-                    Text("Confidence:")
+                    Text(NSLocalizedString("Confidence:", comment: "Confidence label"))
                     ConfidenceBadge(level: analysisResult.confidence)
                     Spacer()
                     if let portions = analysisResult.totalFoodPortions {
-                        Text("\(portions) Portions")
+                        Text("\(portions) " + NSLocalizedString("Portions", comment: "Portions label"))
                             .font(.caption)
                     }
                 }
@@ -36,8 +36,11 @@ struct AIAnalysisResultsView: View {
             // Gesamt-Nährwerte der Mahlzeit
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Text("📊 Total nutritional values of the meal")
-                        .font(.headline)
+                    Text(
+                        "📊 " +
+                            NSLocalizedString("Total nutritional values of the meal", comment: "Total nutritional values header")
+                    )
+                    .font(.headline)
 
                     Spacer()
 
@@ -80,28 +83,53 @@ struct AIAnalysisResultsView: View {
                     NutritionSummaryBadge(
                         value: analysisResult.totalCarbohydrates,
                         unit: "g",
-                        label: "Carbs",
+                        label: NSLocalizedString("Carbs", comment: "Carbohydrates label"),
                         color: .blue
                     )
 
                     if let protein = analysisResult.totalProtein {
-                        NutritionSummaryBadge(value: protein, unit: "g", label: "Protein", color: .green)
+                        NutritionSummaryBadge(
+                            value: protein,
+                            unit: "g",
+                            label: NSLocalizedString("Protein", comment: "Protein label"),
+                            color: .green
+                        )
                     }
 
                     if let fat = analysisResult.totalFat {
-                        NutritionSummaryBadge(value: fat, unit: "g", label: "Fat", color: .orange)
+                        NutritionSummaryBadge(
+                            value: fat,
+                            unit: "g",
+                            label: NSLocalizedString("Fat", comment: "Fat label"),
+                            color: .orange
+                        )
                     }
 
                     if let fiber = analysisResult.totalFiber {
-                        NutritionSummaryBadge(value: fiber, unit: "g", label: "Fiber", color: .purple)
+                        NutritionSummaryBadge(
+                            value: fiber,
+                            unit: "g",
+                            label: NSLocalizedString("Fiber", comment: "Fiber label"),
+                            color: .purple
+                        )
                     }
 
                     if let calories = analysisResult.totalCalories {
-                        NutritionSummaryBadge(value: calories, unit: "kcal", label: "Calories", color: .red)
+                        NutritionSummaryBadge(
+                            value: calories,
+                            unit: "kcal",
+                            label: NSLocalizedString("Calories", comment: "Calories label"),
+                            color: .red
+                        )
                     }
 
                     if let servings = analysisResult.totalUsdaServings {
-                        NutritionSummaryBadge(value: servings, unit: "", label: "USDA Servings", color: .indigo)
+                        NutritionSummaryBadge(
+                            value: servings,
+                            unit: "",
+                            label: NSLocalizedString("USDA Servings", comment: "USDA Servings label"),
+                            color: .indigo
+                        )
                     }
                 }
             }
@@ -111,7 +139,7 @@ struct AIAnalysisResultsView: View {
             .padding(.horizontal)
 
             // Einzelne Lebensmittel
-            Text("🍽️ Individual Foods")
+            Text("🍽️ " + NSLocalizedString("Individual Foods", comment: "Individual Foods header"))
                 .font(.headline)
                 .padding(.horizontal)
 
@@ -124,7 +152,7 @@ struct AIAnalysisResultsView: View {
                             carbs: Decimal(foodItem.carbohydrates),
                             fat: Decimal(foodItem.fat ?? 0),
                             protein: Decimal(foodItem.protein ?? 0),
-                            source: "AI Analyse"
+                            source: NSLocalizedString("AI Analyse", comment: "AI analysis source")
                         )
                         onFoodItemSelected(selectedFood)
                     }
@@ -134,8 +162,11 @@ struct AIAnalysisResultsView: View {
             // Diabetes-spezifische Empfehlungen
             if let diabetesInfo = analysisResult.diabetesConsiderations {
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("💉 Diabetes Recommendations", systemImage: "cross.case.fill")
-                        .font(.headline)
+                    Label(
+                        "💉 " + NSLocalizedString("Diabetes Recommendations", comment: "Diabetes recommendations header"),
+                        systemImage: "cross.case.fill"
+                    )
+                    .font(.headline)
                     Text(diabetesInfo)
                         .font(.subheadline)
                 }
@@ -148,7 +179,7 @@ struct AIAnalysisResultsView: View {
             // Zusätzliche Hinweise
             if let notes = analysisResult.notes {
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("📝 Notes", systemImage: "note.text")
+                    Label("📝 " + NSLocalizedString("Notes", comment: "Notes header"), systemImage: "note.text")
                         .font(.headline)
                     Text(notes)
                         .font(.subheadline)

@@ -29,11 +29,11 @@ struct AICameraView: View {
                                 .font(.system(size: 64))
                                 .foregroundColor(.accentColor)
 
-                            Text("AI Food Analysis")
+                            Text("🧠 " + NSLocalizedString("AI Food Analysis", comment: "AI Food Analysis title"))
                                 .font(.title2)
                                 .fontWeight(.semibold)
 
-                            Text("Camera will open to analyze your food")
+                            Text(NSLocalizedString("Camera will open to analyze your food", comment: "Camera launch message"))
                                 .font(.body)
                                 .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
@@ -51,7 +51,7 @@ struct AICameraView: View {
                                 HStack {
                                     Image(systemName: "sparkles")
                                         .font(.system(size: 14))
-                                    Text("Analyze with AI")
+                                    Text("✨ " + NSLocalizedString("Analyze with AI", comment: "Analyze with AI button"))
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -67,7 +67,7 @@ struct AICameraView: View {
                             }) {
                                 HStack {
                                     Image(systemName: "photo.fill")
-                                    Text("Choose from Library")
+                                    Text("📷 " + NSLocalizedString("Choose from Library", comment: "Choose from Library button"))
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -102,13 +102,16 @@ struct AICameraView: View {
                             ProgressView()
                                 .scaleEffect(1.2)
 
-                            Text("Analyzing food with AI...")
+                            Text("🤖 " + NSLocalizedString("Analyzing food with AI...", comment: "Analyzing food with AI message"))
                                 .font(.body)
                                 .foregroundColor(.secondary)
 
-                            Text("Use Cancel to retake photo")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                            Text(
+                                "📷 " +
+                                    NSLocalizedString("Use Cancel to retake photo", comment: "Use Cancel to retake photo message")
+                            )
+                            .font(.caption)
+                            .foregroundColor(.secondary)
 
                             // Telemetry window
                             if showTelemetry && !telemetryLogs.isEmpty {
@@ -129,12 +132,12 @@ struct AICameraView: View {
                     }
                 }
             }
-            .navigationTitle("AI Food Analysis")
+            .navigationTitle("🧠 " + NSLocalizedString("AI Food Analysis", comment: "AI Food Analysis navigation title"))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
+                    Button(NSLocalizedString("Cancel", comment: "Cancel button")) {
                         onCancel()
                     }
                 }
@@ -144,76 +147,91 @@ struct AICameraView: View {
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $capturedImage, sourceType: imageSourceType)
         }
-        .alert("Analysis Error", isPresented: $showingErrorAlert) {
+        .alert(
+            "⚠️ " + NSLocalizedString("Analysis Error", comment: "Analysis Error alert title"),
+            isPresented: $showingErrorAlert
+        ) {
             // Credit/quota exhaustion errors - provide direct guidance
             if analysisError?.contains("credits exhausted") == true || analysisError?.contains("quota exceeded") == true {
-                Button("Check Account") {
+                Button("💳 " + NSLocalizedString("Check Account", comment: "Check Account button")) {
                     // This could open settings or provider website in future enhancement
                     analysisError = nil
                 }
-                Button("Try Different Provider") {
+                Button("🔄 " + NSLocalizedString("Try Different Provider", comment: "Try Different Provider button")) {
                     ConfigurableAIService.shared.resetToDefault()
                     analysisError = nil
                     analyzeImage()
                 }
-                Button("Retake Photo") {
+                Button("📷 " + NSLocalizedString("Retake Photo", comment: "Retake Photo button")) {
                     capturedImage = nil
                     analysisError = nil
                 }
-                Button("Cancel", role: .cancel) {
+                Button(NSLocalizedString("Cancel", comment: "Cancel button"), role: .cancel) {
                     analysisError = nil
                 }
             }
             // Rate limit errors - suggest waiting
             else if analysisError?.contains("rate limit") == true {
-                Button("Wait and Retry") {
+                Button("⏳ " + NSLocalizedString("Wait and Retry", comment: "Wait and Retry button")) {
                     Task {
                         try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
                         analyzeImage()
                     }
                 }
-                Button("Try Different Provider") {
+                Button("🔄 " + NSLocalizedString("Try Different Provider", comment: "Try Different Provider button")) {
                     ConfigurableAIService.shared.resetToDefault()
                     analysisError = nil
                     analyzeImage()
                 }
-                Button("Retake Photo") {
+                Button("📷 " + NSLocalizedString("Retake Photo", comment: "Retake Photo button")) {
                     capturedImage = nil
                     analysisError = nil
                 }
-                Button("Cancel", role: .cancel) {
+                Button(NSLocalizedString("Cancel", comment: "Cancel button"), role: .cancel) {
                     analysisError = nil
                 }
             }
             // General errors - provide standard options
             else {
-                Button("Retry Analysis") {
+                Button("🔄 " + NSLocalizedString("Retry Analysis", comment: "Retry Analysis button")) {
                     analyzeImage()
                 }
-                Button("Retake Photo") {
+                Button("📷 " + NSLocalizedString("Retake Photo", comment: "Retake Photo button")) {
                     capturedImage = nil
                     analysisError = nil
                 }
                 if analysisError?.contains("404") == true || analysisError?.contains("service error") == true {
-                    Button("Reset to Default") {
+                    Button("🔧 " + NSLocalizedString("Reset to Default", comment: "Reset to Default button")) {
                         ConfigurableAIService.shared.resetToDefault()
                         analysisError = nil
                         analyzeImage()
                     }
                 }
-                Button("Cancel", role: .cancel) {
+                Button(NSLocalizedString("Cancel", comment: "Cancel button"), role: .cancel) {
                     analysisError = nil
                 }
             }
         } message: {
             if analysisError?.contains("credits exhausted") == true {
-                Text("Your AI provider has run out of credits. Please check your account billing or try a different provider.")
+                Text("💳 " + NSLocalizedString(
+                    "Your AI provider has run out of credits. Please check your account billing or try a different provider.",
+                    comment: "AI provider credits exhausted message"
+                ))
             } else if analysisError?.contains("quota exceeded") == true {
-                Text("Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.")
+                Text("📊 " + NSLocalizedString(
+                    "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.",
+                    comment: "AI provider quota exceeded message"
+                ))
             } else if analysisError?.contains("rate limit") == true {
-                Text("Too many requests sent to your AI provider. Please wait a moment before trying again.")
+                Text("⏳ " + NSLocalizedString(
+                    "Too many requests sent to your AI provider. Please wait a moment before trying again.",
+                    comment: "AI provider rate limit message"
+                ))
             } else {
-                Text(analysisError ?? "Unknown error occurred")
+                Text(
+                    "❌ " +
+                        (analysisError ?? NSLocalizedString("Unknown error occurred", comment: "Unknown error occurred message"))
+                )
             }
         }
     }
@@ -235,56 +253,92 @@ struct AICameraView: View {
         showTelemetry = true
 
         // Start telemetry logging with progressive steps
-        addTelemetryLog("🔍 Initializing AI food analysis...")
+        addTelemetryLog(
+            "🔍 " +
+                NSLocalizedString("Initializing AI food analysis...", comment: "Telemetry: Initializing AI food analysis")
+        )
 
         Task {
             do {
                 // Step 1: Image preparation
                 await MainActor.run {
-                    addTelemetryLog("📱 Processing image data...")
+                    addTelemetryLog(
+                        "📱 " +
+                            NSLocalizedString("Processing image data...", comment: "Telemetry: Processing image data")
+                    )
                 }
                 try await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("💼 Optimizing image quality...")
+                    addTelemetryLog(
+                        "💼 " +
+                            NSLocalizedString("Optimizing image quality...", comment: "Telemetry: Optimizing image quality")
+                    )
                 }
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
                 // Step 2: AI connection
                 await MainActor.run {
-                    addTelemetryLog("🧠 Connecting to AI provider...")
+                    addTelemetryLog(
+                        "🧠 " +
+                            NSLocalizedString("Connecting to AI provider...", comment: "Telemetry: Connecting to AI provider")
+                    )
                 }
                 try await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("📡 Uploading image for analysis...")
+                    addTelemetryLog(
+                        "📡 " +
+                            NSLocalizedString(
+                                "Uploading image for analysis...",
+                                comment: "Telemetry: Uploading image for analysis"
+                            )
+                    )
                 }
                 try await Task.sleep(nanoseconds: 250_000_000) // 0.25 seconds
 
                 // Step 3: Analysis stages
                 await MainActor.run {
-                    addTelemetryLog("📊 Analyzing nutritional content...")
+                    addTelemetryLog(
+                        "📊 " +
+                            NSLocalizedString(
+                                "Analyzing nutritional content...",
+                                comment: "Telemetry: Analyzing nutritional content"
+                            )
+                    )
                 }
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("🔬 Identifying food portions...")
+                    addTelemetryLog(
+                        "🔬 " +
+                            NSLocalizedString("Identifying food portions...", comment: "Telemetry: Identifying food portions")
+                    )
                 }
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("📏 Calculating serving sizes...")
+                    addTelemetryLog(
+                        "📏 " +
+                            NSLocalizedString("Calculating serving sizes...", comment: "Telemetry: Calculating serving sizes")
+                    )
                 }
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("⚖️ Comparing to USDA standards...")
+                    addTelemetryLog(
+                        "⚖️ " +
+                            NSLocalizedString("Comparing to USDA standards...", comment: "Telemetry: Comparing to USDA standards")
+                    )
                 }
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
                 // Step 4: AI processing (actual call)
                 await MainActor.run {
-                    addTelemetryLog("🤖 Running AI vision analysis...")
+                    addTelemetryLog(
+                        "🤖 " +
+                            NSLocalizedString("Running AI vision analysis...", comment: "Telemetry: Running AI vision analysis")
+                    )
                 }
 
                 let result = try await aiService.analyzeFoodImage(image) { telemetryMessage in
@@ -295,17 +349,26 @@ struct AICameraView: View {
 
                 // Step 5: Results processing
                 await MainActor.run {
-                    addTelemetryLog("📊 Processing analysis results...")
+                    addTelemetryLog(
+                        "📊 " +
+                            NSLocalizedString("Processing analysis results...", comment: "Telemetry: Processing analysis results")
+                    )
                 }
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("🍽️ Generating nutrition summary...")
+                    addTelemetryLog(
+                        "🍽️ " +
+                            NSLocalizedString(
+                                "Generating nutrition summary...",
+                                comment: "Telemetry: Generating nutrition summary"
+                            )
+                    )
                 }
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("✅ Analysis complete!")
+                    addTelemetryLog("✅ " + NSLocalizedString("Analysis complete!", comment: "Telemetry: Analysis complete"))
 
                     // Hide telemetry after a brief moment
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -316,12 +379,15 @@ struct AICameraView: View {
                 }
             } catch {
                 await MainActor.run {
-                    addTelemetryLog("⚠️ Connection interrupted...")
+                    addTelemetryLog(
+                        "⚠️ " +
+                            NSLocalizedString("Connection interrupted...", comment: "Telemetry: Connection interrupted")
+                    )
                 }
                 try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
 
                 await MainActor.run {
-                    addTelemetryLog("❌ Analysis failed")
+                    addTelemetryLog("❌ " + NSLocalizedString("Analysis failed", comment: "Telemetry: Analysis failed"))
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         showTelemetry = false
@@ -409,7 +475,9 @@ struct ImagePicker: UIViewControllerRepresentable {
 
         // Create tips text (simplified to prevent taking too much space)
         let tipsLabel = UILabel()
-        tipsLabel.text = "📸 Tips: Take overhead photos • Include size reference • Good lighting"
+        tipsLabel
+            .text = "📸 " +
+            NSLocalizedString("Tips: Take overhead photos • Include size reference • Good lighting", comment: "Camera tips label")
         tipsLabel.textColor = UIColor.white
         tipsLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         tipsLabel.numberOfLines = 2
@@ -519,7 +587,7 @@ struct TelemetryWindow: View {
                 Image(systemName: "antenna.radiowaves.left.and.right")
                     .foregroundColor(.green)
                     .font(.caption2)
-                Text("Analysis Status")
+                Text("📡 " + NSLocalizedString("Analysis Status", comment: "Analysis Status header"))
                     .font(.caption2)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)

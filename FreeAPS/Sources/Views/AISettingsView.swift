@@ -62,25 +62,34 @@ struct AISettingsView: View {
             Form {
                 // Feature Toggle Section
                 Section(
-                    header: Text("Food Search Feature"),
+                    header: Text(NSLocalizedString("Food Search Feature", comment: "Food Search Feature section header")),
 
                     footer: Text(
-                        "Enable this to edit the Food Search Settings. When disabled, the feature is hidden but all your settings are preserved."
+                        NSLocalizedString(
+                            "Enable this to edit the Food Search Settings. When disabled, the feature is hidden but all your settings are preserved.",
+                            comment: "Food Search Feature section footer"
+                        )
                     )
                 ) {
-                    Toggle("Enable Food Search Settings", isOn: $foodSearchEnabled)
+                    Toggle(
+                        NSLocalizedString("Enable Food Search Settings", comment: "Enable Food Search Settings toggle"),
+                        isOn: $foodSearchEnabled
+                    )
                 }
 
                 // GPT-5 Feature Section - Only show when OpenAI is selected for AI Image Analysis
                 if aiService.aiImageSearchProvider.rawValue.contains("OpenAI") {
                     Section(
-                        header: Text("OpenAI GPT-5 (Latest)"),
+                        header: Text(NSLocalizedString("OpenAI GPT-5 (Latest)", comment: "OpenAI GPT-5 section header")),
 
                         footer: Text(
-                            "Enable GPT-5, GPT-5-mini, and GPT-5-nano models for OpenAI analysis. Standard Quality uses GPT-5, Fast Mode uses GPT-5-nano for ultra-fast analysis. GPT-5 takes longer to perform analysis but these are the latest models with some improvements in health advisory accuracy. Fallback to GPT-4o if unavailable."
+                            NSLocalizedString(
+                                "Enable GPT-5, GPT-5-mini, and GPT-5-nano models for OpenAI analysis. Standard Quality uses GPT-5, Fast Mode uses GPT-5-nano for ultra-fast analysis. GPT-5 takes longer to perform analysis but these are the latest models with some improvements in health advisory accuracy. Fallback to GPT-4o if unavailable.",
+                                comment: "OpenAI GPT-5 section footer"
+                            )
                         )
                     ) {
-                        Toggle("Use GPT-5 Models", isOn: $useGPT5ForOpenAI)
+                        Toggle(NSLocalizedString("Use GPT-5 Models", comment: "Use GPT-5 Models toggle"), isOn: $useGPT5ForOpenAI)
                             .disabled(!foodSearchEnabled)
                             .onChange(of: useGPT5ForOpenAI) { _ in
                                 // Trigger view refresh to update Analysis Mode descriptions
@@ -92,10 +101,16 @@ struct AISettingsView: View {
                 // Only show configuration sections if feature is enabled
                 if foodSearchEnabled {
                     Section(
-                        header: Text("Food Search Provider Configuration"),
+                        header: Text(NSLocalizedString(
+                            "Food Search Provider Configuration",
+                            comment: "Food Search Provider Configuration section header"
+                        )),
 
                         footer: Text(
-                            "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods."
+                            NSLocalizedString(
+                                "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods.",
+                                comment: "Food Search Provider Configuration section footer"
+                            )
                         )
                     ) {
                         ForEach(SearchType.allCases, id: \.self) { searchType in
@@ -123,10 +138,13 @@ struct AISettingsView: View {
 
                     // Analysis Mode Configuration
                     Section(
-                        header: Text("AI Analysis Mode"),
+                        header: Text(NSLocalizedString("AI Analysis Mode", comment: "AI Analysis Mode section header")),
 
                         footer: Text(
-                            "Choose between speed and accuracy. Fast mode uses lighter AI models for 2-3x faster analysis with slightly reduced accuracy (~5-10% trade-off). Standard mode uses full AI models for maximum accuracy."
+                            NSLocalizedString(
+                                "Choose between speed and accuracy. Fast mode uses lighter AI models for 2-3x faster analysis with slightly reduced accuracy (~5-10% trade-off). Standard mode uses full AI models for maximum accuracy.",
+                                comment: "AI Analysis Mode section footer"
+                            )
                         )
                     ) {
                         analysisModeSection
@@ -134,16 +152,22 @@ struct AISettingsView: View {
 
                     // Claude API Configuration
                     Section(
-                        header: Text("Anthropic (Claude API) Configuration"),
+                        header: Text(NSLocalizedString(
+                            "Anthropic (Claude API) Configuration",
+                            comment: "Claude API Configuration section header"
+                        )),
 
                         footer: Text(
-                            "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model."
+                            NSLocalizedString(
+                                "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model.",
+                                comment: "Claude API Configuration section footer"
+                            )
                         )
                     ) {
                         VStack(spacing: 12) {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
-                                    Text("Claude API Key")
+                                    Text(NSLocalizedString("Claude API Key", comment: "Claude API Key label"))
                                         .font(.headline)
                                     Spacer()
                                     Button(action: {
@@ -156,7 +180,10 @@ struct AISettingsView: View {
 
                                 HStack {
                                     StableSecureField(
-                                        placeholder: "Enter your Claude API key",
+                                        placeholder: NSLocalizedString(
+                                            "Enter your Claude API key",
+                                            comment: "Claude API key placeholder"
+                                        ),
                                         text: $claudeKey,
                                         isSecure: !showClaudeKey
                                     )
@@ -353,80 +380,125 @@ struct AISettingsView: View {
                             HStack {
                                 Image(systemName: "camera.fill")
                                     .foregroundColor(.blue)
-                                Text("Camera Food Analysis")
+                                Text(NSLocalizedString("Camera Food Analysis", comment: "Camera Food Analysis section header"))
                                     .font(.headline)
                             }
 
                             Text(
-                                "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above."
+                                NSLocalizedString(
+                                    "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.",
+                                    comment: "Explanation of camera food analysis provider selection"
+                                )
                             )
                             .font(.caption)
                             .foregroundColor(.secondary)
 
                             Text(
-                                "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys"
+                                NSLocalizedString(
+                                    "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys",
+                                    comment: "Instruction for selecting AI providers for image analysis"
+                                )
                             )
                             .font(.caption)
                             .foregroundColor(.blue)
 
                             Text(
-                                "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI"
+                                NSLocalizedString(
+                                    "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI",
+                                    comment: "Warning about basic estimation for free providers"
+                                )
                             )
                             .font(.caption)
                             .foregroundColor(.orange)
                         }
                     }
 
-                    Section(header: Text("Provider Information")) {
+                    Section(header: Text(NSLocalizedString(
+                        "Provider Information",
+                        comment: "Section header for provider information"
+                    ))) {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Available Search Providers:")
+                            Text(NSLocalizedString("Available Search Providers:", comment: "Available Search Providers heading"))
                                 .font(.headline)
 
                             Text(
-                                "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)."
+                                NSLocalizedString(
+                                    "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens).",
+                                    comment: "Description of Anthropic Claude API provider"
+                                )
                             )
 
                             Text(
-                                "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost."
+                                NSLocalizedString(
+                                    "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost.",
+                                    comment: "Description of Google Gemini API provider"
+                                )
                             )
 
                             Text(
-                                "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries."
+                                NSLocalizedString(
+                                    "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries.",
+                                    comment: "Description of OpenAI ChatGPT API provider"
+                                )
                             )
 
                             Text(
-                                "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches."
+                                NSLocalizedString(
+                                    "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches.",
+                                    comment: "Description of OpenFoodFacts provider"
+                                )
                             )
 
                             Text(
-                                "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat."
+                                NSLocalizedString(
+                                    "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.",
+                                    comment: "Description of USDA FoodData Central provider"
+                                )
                             )
                         }
                         .font(.caption)
                         .foregroundColor(.secondary)
                     }
 
-                    Section(header: Text("Search Type Recommendations")) {
+                    Section(header: Text(NSLocalizedString(
+                        "Search Type Recommendations",
+                        comment: "Section header for search type recommendations"
+                    ))) {
                         VStack(alignment: .leading, spacing: 6) {
                             Group {
-                                Text("**Text/Voice Search:**")
+                                Text(NSLocalizedString(
+                                    "**Text/Voice Search:**",
+                                    comment: "Text/Voice Search recommendation category"
+                                ))
                                     .font(.caption)
                                     .fontWeight(.bold)
-                                Text("USDA FoodData Central → OpenFoodFacts")
+                                Text(NSLocalizedString(
+                                    "USDA FoodData Central → OpenFoodFacts",
+                                    comment: "Recommended order for text/voice search"
+                                ))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
 
-                                Text("**Barcode Scanning:**")
+                                Text(NSLocalizedString(
+                                    "**Barcode Scanning:**",
+                                    comment: "Barcode Scanning recommendation category"
+                                ))
                                     .font(.caption)
                                     .fontWeight(.bold)
-                                Text("OpenFoodFacts")
+                                Text(NSLocalizedString("OpenFoodFacts", comment: "Recommended provider for barcode scanning"))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
 
-                                Text("**AI Image Analysis:**")
+                                Text(NSLocalizedString(
+                                    "**AI Image Analysis:**",
+                                    comment: "AI Image Analysis recommendation category"
+                                ))
                                     .font(.caption)
                                     .fontWeight(.bold)
-                                Text("Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)")
+                                Text(NSLocalizedString(
+                                    "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)",
+                                    comment: "Recommended order for AI image analysis"
+                                ))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -434,18 +506,21 @@ struct AISettingsView: View {
                     }
                 } // End if foodSearchEnabled
 
-                Section(header: Text("Medical Disclaimer")) {
+                Section(header: Text(NSLocalizedString("Medical Disclaimer", comment: "Section header for medical disclaimer"))) {
                     Text(
-                        "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk."
+                        NSLocalizedString(
+                            "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.",
+                            comment: "Medical disclaimer text for AI nutritional estimates"
+                        )
                     )
                     .font(.caption)
                     .foregroundColor(.secondary)
                 }
             }
-            .navigationTitle("Food Search Settings")
+            .navigationTitle(NSLocalizedString("Food Search Settings", comment: "Navigation title for food search settings"))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
-                leading: Button("Cancel") {
+                leading: Button(NSLocalizedString("Cancel", comment: "Cancel button")) {
                     // Restore original values (discard changes)
                     claudeKey = ConfigurableAIService.shared.getAPIKey(for: .claude) ?? ""
                     claudeQuery = ConfigurableAIService.shared.getQuery(for: .claude) ?? ""
@@ -457,24 +532,27 @@ struct AISettingsView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
                 .foregroundColor(.secondary),
-                trailing: Button("Save") {
+                trailing: Button(NSLocalizedString("Save", comment: "Save button")) {
                     saveSettings()
                 }
                 .font(.headline)
                 .foregroundColor(.accentColor)
             )
         }
-        .alert("API Key Required", isPresented: $showingAPIKeyAlert) {
-            Button("OK") {}
+        .alert(NSLocalizedString("API Key Required", comment: "API Key Required alert title"), isPresented: $showingAPIKeyAlert) {
+            Button(NSLocalizedString("OK", comment: "OK button")) {}
         } message: {
-            Text("This AI provider requires an API key. Please enter your API key in the settings below.")
+            Text(NSLocalizedString(
+                "This AI provider requires an API key. Please enter your API key in the settings below.",
+                comment: "API key required alert message"
+            ))
         }
     }
 
     @ViewBuilder private var analysisModeSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             // Mode picker
-            Picker("Analysis Mode", selection: Binding(
+            Picker(NSLocalizedString("Analysis Mode", comment: "Analysis Mode picker label"), selection: Binding(
                 get: { aiService.analysisMode },
                 set: { newMode in aiService.setAnalysisMode(newMode) }
             )) {
@@ -494,7 +572,7 @@ struct AISettingsView: View {
             HStack {
                 Image(systemName: aiService.analysisMode.iconName)
                     .foregroundColor(aiService.analysisMode.iconColor)
-                Text("Current Mode: \(aiService.analysisMode.displayName)")
+                Text(NSLocalizedString("Current Mode: ", comment: "Current Mode label") + "\(aiService.analysisMode.displayName)")
                     .font(.subheadline)
                     .fontWeight(.medium)
             }
@@ -511,22 +589,22 @@ struct AISettingsView: View {
 
     @ViewBuilder private var modelInformation: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Models Used:")
+            Text(NSLocalizedString("Models Used:", comment: "Models Used heading"))
                 .font(.caption)
                 .fontWeight(.medium)
                 .foregroundColor(.secondary)
 
             VStack(alignment: .leading, spacing: 4) {
                 modelRow(
-                    provider: "Google Gemini:",
+                    provider: NSLocalizedString("Google Gemini:", comment: "Google Gemini provider label"),
                     model: ConfigurableAIService.optimalModel(for: .googleGemini, mode: aiService.analysisMode)
                 )
                 modelRow(
-                    provider: "OpenAI:",
+                    provider: NSLocalizedString("OpenAI:", comment: "OpenAI provider label"),
                     model: ConfigurableAIService.optimalModel(for: .openAI, mode: aiService.analysisMode)
                 )
                 modelRow(
-                    provider: "Claude:",
+                    provider: NSLocalizedString("Claude:", comment: "Claude provider label"),
                     model: ConfigurableAIService.optimalModel(for: .claude, mode: aiService.analysisMode)
                 )
             }
