@@ -853,10 +853,13 @@ extension OverrideProfilesConfig {
         }
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal as? Decimal, round(dec) != round(setting) {
-                return Text(label + "\(dec)")
+            guard let dec = decimal as? Decimal, round(dec) != round(setting) else { return nil }
+
+            guard label != "pp: " else {
+                return Text(label + (promilleFormatter.string(from: decimal ?? 0) ?? ""))
             }
-            return nil
+
+            return Text(label + "\(dec)")
         }
 
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {

@@ -225,7 +225,8 @@ extension AddCarbs {
                     header: { Text("Save") }
                 }
 
-                let filtered = carbPresets.filter { ($0.dish ?? "").count > 1 }.removeDublicates()
+                let filtered = carbPresets.filter { !($0.dish ?? "").isEmpty && ($0.dish ?? "Empty") != "Empty" }
+                    .removeDublicates()
                 if filtered.count > 4 {
                     Section {
                         TextField("Search", text: $string)
