@@ -83,31 +83,37 @@ resolve_reference_repo() {
 }
 
 # Enumerate submodules recorded at HEAD in a repo
-# Output: PATH<TAB>COMMIT  (COMMIT may be empty if the path isn't present at this HEAD)
+# Output: PATH<TAB>COMMIT  (COMMIT empty if the path isn't present at this HEAD)
 map_submodules() {
   local repo="$1"
   local gm="$repo/.gitmodules"
 
   if [[ -f "$gm" ]]; then
-    # Read paths from .gitmodules (authoritative list)
-    # Each line: "<key> <path>", we only need the path (2nd field)
+    # Paths from .gitmodules (authoritative list)
     git -C "$repo" config -f "$gm" --get-regexp '^submodule\..*\.path$' 2>/dev/null \
       | awk '{print $2}' \
       | while IFS= read -r path; do
-          # Try to get the gitlink SHA recorded at HEAD for this path
-          # On a proper submodule entry, this returns the submodule commit id.
-          sha="$(git -C "$repo" rev-parse -q --verify "HEAD:$path" 2>/dev/null || true)"
-          printf "%s\t%s\n" "$path" "$sha"
+          # Ask the tree for exactly this path; grab gitlink (mode 160000, type commit)
+          local line
+          line="$(git -C "$repo" ls-tree -z HEAD -- "$path" | tr -d '\0')"
+          if [[ "$line" =~ ^160000[[:space:]]+commit[[:space:]]+([0-9a-f]{40})[[:space:]] ]]; then
+            printf "%s\t%s\n" "$path" "${BASH_REMATCH[1]}"
+          else
+            # path not present at this HEAD (or not a submodule)
+            printf "%s\t\n" "$path"
+          fi
         done
     return
   fi
 
-  # Fallback: scan the tree for gitlink entries (works when gitlinks are visible)
+  # Fallback: scan entire tree for gitlinks
   git -C "$repo" ls-tree -z HEAD \
     | awk -v RS='\0' '$0 ~ /^160000 commit/ {print $4 "\t" $3}'
 }
 
-short() { echo "$1" | cut -c1-12; }
+short() {
+    git rev-parse --short=12 "$1" 2>/dev/null || echo "$1"
+}
 
 print_header() {
   printf "%-40s  %-14s  %-14s  %-11s  %-18s\n" "PATH" "THIS_REPO" "LOOP" "STATUS" "HEAD"
@@ -197,9 +203,8 @@ update_one_submodule() {
     return 1
   fi
 
-  # unecho this
-  echo git -C "$path" checkout --detach "$target_commit" >/dev/null
-  echo git add "$path"
+  git -C "$path" checkout --detach "$target_commit" >/dev/null
+  git add "$path"
 
   echo "  ✓ Staged $path to $(short "$target_commit")"
 }
@@ -286,7 +291,7 @@ if [[ "$cmd" == "update" ]]; then
     echo "Path: $path"
     echo "This repo : $(short "$this")  (HEAD=$(submodule_head_mode "$path")$(submodule_dirty_flag "$path"))"
     echo "Loop repo : $(short "$ref")"
-    read -r -p "Update this submodule to reference's commit? [y/N] " ans
+    read -r -p "Update this submodule to match the commit in LoopWorkspace? [y/N] " ans
     case "$ans" in
       y|Y|yes|YES)
         if update_one_submodule "$path" "$ref"; then
