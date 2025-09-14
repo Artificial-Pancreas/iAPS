@@ -5,7 +5,7 @@
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:rileylink_ios/RileyLinkKit.xcodeproj">
+      location = "group:RileyLinkKit/RileyLinkKit.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:OmniKit/OmniKit.xcodeproj">

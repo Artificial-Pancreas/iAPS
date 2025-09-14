@@ -22,8 +22,8 @@
 [submodule "dexcom-share-client-swift"]
 	path = dexcom-share-client-swift
 	url = https://github.com/LoopKit/dexcom-share-client-swift.git
-[submodule "rileylink_ios"]
-	path = rileylink_ios
+[submodule "RileyLinkKit"]
+	path = RileyLinkKit
 	url = https://github.com/LoopKit/RileyLinkKit
 [submodule "TidepoolService"]
 	path = TidepoolService
