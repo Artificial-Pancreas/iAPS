@@ -429,6 +429,7 @@
 		F226D4F22E5E0B1400F8F43C /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F226D4F32E5E0B1400F8F43C /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; };
 		F226D4F42E5E0B1400F8F43C /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F227E1FD2E76515C0076BADA /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */; };
 		F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F270F68C2BAE374C00F6D8DD /* FontTracking.swift */; };
 		F273F9602DE73ABE00BF0FFC /* IOBTick0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */; };
 		F2A4B7922E64985F000E0E85 /* PluiginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7912E64985F000E0E85 /* PluiginManager.swift */; };
@@ -1067,6 +1068,7 @@
 		F226D4F92E5E109100F8F43C /* LibreTransmitterUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitterUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitterUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		F270F68C2BAE374C00F6D8DD /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBTick0.swift; sourceTree = "<group>"; };
 		F2A4B7912E64985F000E0E85 /* PluiginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluiginManager.swift; sourceTree = "<group>"; };
@@ -2067,6 +2069,7 @@
 				CEB434E628B9053300B70274 /* LoopUIColorPalette+Default.swift */,
 				CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */,
 				F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */,
+				F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3390,6 +3393,7 @@
 				194C32772B93A9BF0016FB2A /* OverrideShortcuts.swift in Sources */,
 				196809E52D4702AD00BA566F /* TempBasalShortcut.swift in Sources */,
 				711C0CB42CAABE788916BC9D /* ManualTempBasalDataFlow.swift in Sources */,
+				F227E1FD2E76515C0076BADA /* NotificationExtensions.swift in Sources */,
 				BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */,
 				F90692D6274B9A450037068D /* HealthKitStateModel.swift in Sources */,
 				C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */,

@@ -52,12 +52,11 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     }
 
     private func subscribe() {
-        // TODO: [loopkit] fix this
-//        notificationCenter.publisher(for: .newSensorDetected)
-//            .sink { [weak self] _ in
-//                self?.removeAllCalibrations()
-//            }
-//            .store(in: &lifetime)
+        notificationCenter.publisher(for: .newSensorDetected)
+            .sink { [weak self] _ in
+                self?.removeAllCalibrations()
+            }
+            .store(in: &lifetime)
     }
 
     var slope: Double {

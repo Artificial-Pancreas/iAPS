@@ -107,7 +107,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     let errorSubject = PassthroughSubject<Error, Never>()
     let manualTempBasal = PassthroughSubject<Bool, Never>()
 
-    @SyncAccess var loopInProgress: Bool = false
+    private var seenCGMDeviceId: String?
 
     @Published var cgmHasValidSensorSession: Bool = false
 
@@ -541,12 +541,17 @@ private extension BaseDeviceDataManager {
     func setupCGM() {
         dispatchPrecondition(condition: .onQueue(.main))
 
+        // TODO: [loopkit] is this the right way to detect a new sensor?
+        // currently, the calibration service subscribes to this event to clear calibrations
+        let previous = seenCGMDeviceId
+        seenCGMDeviceId = cgmManager?.cgmManagerStatus.device?.localIdentifier
+        if previous != nil, previous != seenCGMDeviceId {
+            UserNotifications.NotificationCenter.default.post(name: .newSensorDetected, object: nil)
+        }
+
         cgmManager?.cgmManagerDelegate = self
         cgmManager?.delegateQueue = processQueue
         reportPluginInitializationComplete()
-
-//        glucoseStore.managedDataInterval = cgmManager?.managedDataInterval
-//        glucoseStore.healthKitStorageDelay = cgmManager.map{ type(of: $0).healthKitStorageDelay } ?? 0
 
         updatePumpManagerBLEHeartbeatPreference()
         if let cgmManager = cgmManager {
@@ -557,8 +562,6 @@ private extension BaseDeviceDataManager {
 //            alertManager?.addAlertSoundVendor(managerIdentifier: cgmManager.pluginIdentifier,
 //                                              soundVendor: cgmManager)
             cgmHasValidSensorSession = cgmManager.cgmManagerStatus.hasValidSensorSession
-
-//            analyticsServicesManager.identifyCGMType(cgmManager.pluginIdentifier)
         } else {
             cgmHasValidSensorSession = false
         }
@@ -575,9 +578,9 @@ private extension BaseDeviceDataManager {
         // TODO: [loopkit] do we need this?
         reportPluginInitializationComplete()
 
-//        doseStore.device = pumpManager?.status.device
 //        pumpManagerHUDProvider = pumpManager?.hudProvider(bluetoothProvider: bluetoothProvider, colorPalette: .default, allowedInsulinTypes: allowedInsulinTypes)
 
+        // TODO: [loopkit] do we need this?
         // Proliferate PumpModel preferences to DoseStore
 //        if let pumpRecordsBasalProfileStartEvents = pumpManager?.pumpRecordsBasalProfileStartEvents {
 //            doseStore.pumpRecordsBasalProfileStartEvents = pumpRecordsBasalProfileStartEvents
