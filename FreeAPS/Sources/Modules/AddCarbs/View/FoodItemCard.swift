@@ -60,7 +60,7 @@ struct FoodItemCard: View {
                     }
 
                     if foodItem.servingMultiplier != 1.0 {
-                        Text("Multiplikator: \(foodItem.servingMultiplier, specifier: "%.1f")x")
+                        Text("Multiplier: \(foodItem.servingMultiplier, specifier: "%.1f")x")
                             .font(.caption)
                     }
                 }
@@ -86,10 +86,10 @@ struct FoodItemCard: View {
                     // Detaillierte Nährwerte
                     if let calories = foodItem.calories, calories > 0 {
                         HStack {
-                            NutritionBadge(value: calories, unit: "kcal", label: "Energie", color: .red)
+                            NutritionBadge(value: calories, unit: "kcal", label: "Energy", color: .red)
 
                             if let fiber = foodItem.fiber, fiber > 0 {
-                                NutritionBadge(value: fiber, unit: "g", label: "Faser", color: .purple)
+                                NutritionBadge(value: fiber, unit: "g", label: "Fiber", color: .purple)
                             }
                         }
                     }
@@ -111,7 +111,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "eye.fill")
                                     .foregroundColor(.blue)
                                     .font(.caption)
-                                Text("Visuelle Hinweise: \(visualCues)")
+                                Text("Visual Cues: \(visualCues)")
                                     .font(.caption)
                             }
                         }
@@ -121,7 +121,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "note.text")
                                     .foregroundColor(.gray)
                                     .font(.caption)
-                                Text("Bewertung: \(notes)")
+                                Text("Rating: \(notes)")
                                     .font(.caption)
                             }
                         }
