@@ -3426,7 +3426,7 @@ Enact a temp Basal or a temp target */
 "Multiplier: " = "Multiplier: ";
 
 /* Nutrition Badge Labels */
-"KH" = "KH"; /* Carbohydrates abbreviation */
+"CH" = "CH"; /* Carbohydrates abbreviation */
 "P" = "P"; /* Protein abbreviation */
 "F" = "F"; /* Fat abbreviation */
 "Energy" = "Energy"; /* Energy/Calories label */
