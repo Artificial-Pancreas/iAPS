@@ -45,7 +45,6 @@ extension WatchConfig {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Watch Configuration")
             .navigationBarTitleDisplayMode(.automatic)
         }

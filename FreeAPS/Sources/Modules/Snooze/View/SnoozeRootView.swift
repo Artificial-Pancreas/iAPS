@@ -129,7 +129,6 @@ extension Snooze {
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-//                configureView()
                 snoozeDescription = getSnoozeDescription()
             }
         }

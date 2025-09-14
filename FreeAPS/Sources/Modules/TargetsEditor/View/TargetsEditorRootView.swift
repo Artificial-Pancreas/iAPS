@@ -44,7 +44,6 @@ extension TargetsEditor {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Target Glucose")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

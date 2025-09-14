@@ -26,7 +26,6 @@ extension Main {
                 .sheet(isPresented: $state.isSecondaryModalPresented) {
                     state.secondaryModalView ?? EmptyView().asAny()
                 }
-//                .onAppear(perform: configureView)
                 .environment(\.colorScheme, colorScheme)
         }
     }

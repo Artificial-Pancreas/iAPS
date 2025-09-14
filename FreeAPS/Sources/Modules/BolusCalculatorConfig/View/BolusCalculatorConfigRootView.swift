@@ -139,7 +139,6 @@ extension BolusCalculatorConfig {
                 } header: { Text("iOS Shortcuts") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationBarTitle("Bolus Calculator")
             .navigationBarTitleDisplayMode(.automatic)
             .blur(radius: isPresented ? 5 : 0)

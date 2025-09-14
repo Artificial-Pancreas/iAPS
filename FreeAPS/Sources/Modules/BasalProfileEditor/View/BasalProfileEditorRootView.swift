@@ -52,7 +52,6 @@ extension BasalProfileEditor {
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-//                configureView()
                 set = Decimal(concentration.last?.concentration ?? 1)
             }
             .navigationTitle(saveNewConcentration ? "Insulin Concentration" : "Basal Profile")

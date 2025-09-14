@@ -193,7 +193,6 @@ extension AutotuneConfig {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Autotune")
             .navigationBarTitleDisplayMode(.automatic)
             .alert(Text("Are you sure?"), isPresented: $replaceAlert) {

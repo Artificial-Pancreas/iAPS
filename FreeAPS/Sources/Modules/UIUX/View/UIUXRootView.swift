@@ -119,7 +119,6 @@ extension UIUX {
                 } header: { Text("Light / Dark Mode") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationBarTitle("UI/UX")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))

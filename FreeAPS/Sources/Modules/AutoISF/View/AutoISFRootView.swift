@@ -465,7 +465,6 @@ extension AutoISF {
                 if scrollView { infoScrollView() } else { infoView() }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationBarTitle("Auto ISF")
             .navigationBarTitleDisplayMode(.automatic)
             .sheet(isPresented: $presentHistory) {

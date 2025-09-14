@@ -840,7 +840,6 @@ extension Home {
                 if onboarded.first?.firstRun ?? true {
                     state.fetchPreferences()
                 }
-//                configureView()
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)

@@ -215,7 +215,6 @@ extension Dynamic {
                 if scrollView { infoScrollView() } else { infoView() }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")
             .navigationBarTitleDisplayMode(.automatic)
             .onDisappear {

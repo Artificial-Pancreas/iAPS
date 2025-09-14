@@ -31,7 +31,6 @@ extension Restore {
             Form {
                 importResetSettingsView
             }
-//            .onAppear(perform: configureView)
             .navigationTitle("Restore OpenAPS Settings")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Cancel") {

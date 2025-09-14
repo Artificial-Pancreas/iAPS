@@ -14,7 +14,6 @@ extension IconConfig {
         var body: some View {
             IconSelection()
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//                .onAppear(perform: configureView)
         }
     }
 }

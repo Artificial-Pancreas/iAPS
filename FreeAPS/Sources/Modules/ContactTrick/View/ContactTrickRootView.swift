@@ -86,7 +86,6 @@ extension ContactTrick {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Contact Image")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

@@ -157,9 +157,7 @@ extension AddCarbs {
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-//                configureView {
                 state.loadEntries(editMode)
-//                }
             }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)

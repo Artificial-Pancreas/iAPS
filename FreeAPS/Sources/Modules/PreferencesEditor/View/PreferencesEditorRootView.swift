@@ -106,7 +106,6 @@ extension PreferencesEditor {
                 Section {} footer: { Text("").padding(.bottom, 300) }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Preferences")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

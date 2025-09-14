@@ -54,7 +54,6 @@ extension CREditor {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Carb Ratios")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

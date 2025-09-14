@@ -101,7 +101,6 @@ extension Calibrations {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Calibrations")
             .navigationBarItems(trailing: EditButton().disabled(state.calibrations.isEmpty))
             .navigationBarTitleDisplayMode(.automatic)

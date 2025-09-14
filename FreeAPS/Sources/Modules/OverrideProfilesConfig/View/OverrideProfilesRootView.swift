@@ -87,7 +87,6 @@ extension OverrideProfilesConfig {
                 .navigationBarItems(trailing: Button("Close", action: state.hideModal))
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .onAppear {
-//                    configureView()
                     state.savedSettings(edit: false, identifier: nil)
                 }
                 .alert(

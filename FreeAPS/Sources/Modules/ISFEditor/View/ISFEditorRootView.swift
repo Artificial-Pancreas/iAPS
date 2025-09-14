@@ -89,7 +89,6 @@ extension ISFEditor {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-//            .onAppear(perform: configureView)
             .navigationTitle("Insulin Sensitivities")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

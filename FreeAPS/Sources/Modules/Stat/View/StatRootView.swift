@@ -152,7 +152,6 @@ extension Stat {
                 stats()
             }
             .dynamicTypeSize(...DynamicTypeSize.xLarge)
-//            .onAppear(perform: configureView)
             .navigationBarTitle("Statistics")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))

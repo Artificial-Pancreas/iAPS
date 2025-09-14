@@ -96,7 +96,6 @@ extension DataTable {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.large)
-//            .onAppear(perform: configureView)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
@@ -222,7 +221,6 @@ extension DataTable {
                         }
                     }
                 }
-//                .onAppear(perform: configureView)
                 .navigationTitle("Add Glucose")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showManualGlucose = false }))
@@ -419,7 +417,6 @@ extension DataTable {
                         )
                     }
                 }
-//                .onAppear(perform: configureView)
                 .navigationTitle("External Insulin")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showExternalInsulin = false

@@ -101,7 +101,6 @@ extension Sharing {
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-//                configureView()
                 state.savedSettings()
             }
             .navigationBarTitle("Share and Backup")
