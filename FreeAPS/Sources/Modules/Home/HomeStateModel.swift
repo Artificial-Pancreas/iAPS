@@ -660,13 +660,7 @@ extension Home {
                 return
             }
 
-            switch settingsManager.settings.appGroupSourceType {
-            case .xdrip:
-                url = URL(string: "xdripswift://")!
-            case .glucoseDirect:
-                url = URL(string: "glucosedirect://")!
-            default: url = nil
-            }
+            url = settingsManager.settings.appGroupSourceType?.appURL
 
             if url == nil, settingsManager.settings.useLocalGlucoseSource {
                 switch settingsManager.settings.localGlucosePort {
