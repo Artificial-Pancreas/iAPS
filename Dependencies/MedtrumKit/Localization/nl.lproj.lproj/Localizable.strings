@@ -278,34 +278,34 @@
 "Your patch has %i hours left" = "Je patch heeft nog %i uur over";
 
 /* Title insulin suspended notification */
-"Insulin has been suspended!" = "Insulin has been suspended!";
+"Insulin has been suspended!" = "Insuline is opgeschort!";
 
 /* Body daily max notification */
-"Your patch has reached its daily maximum!" = "Your patch has reached its daily maximum!";
+"Your patch has reached its daily maximum!" = "Je patch heeft zijn dagelijkse maximum bereikt!";
 
 /* Body hourly max notification */
-"Your patch has reached its hourly maximum!" = "Your patch has reached its hourly maximum!";
+"Your patch has reached its hourly maximum!" = "Je patch heeft het maximum per uur bereikt!";
 
 /* Title replace patch notification */
-"Replace your patch now!" = "Replace your patch now!";
+"Replace your patch now!" = "Vervang je patch nu!";
 
 /* Body occlussion notification */
-"Your patch has detected an occlussion!" = "Your patch has detected an occlussion!";
+"Your patch has detected an occlussion!" = "Je patch heeft een error gedetecteerd!";
 
 /* Body fault notification */
-"Your patch is in Fault state!" = "Your patch is in Fault state!";
+"Your patch is in Fault state!" = "Je patch staat in foutstand!";
 
 /* Body reservoir empty notification */
-"Your patch is out of insulin!" = "Your patch is out of insulin!";
+"Your patch is out of insulin!" = "Je patch heeft geen insuline meer!";
 
 /* Force remove */
-"Force remove" = "Force remove";
+"Force remove" = "Geforceerd verwijderen";
 
 /* title force remove */
 "Are you sure?" = "Weet je het zeker?";
 
 /* body force remove */
-"It is recommended to deactivate first" = "It is recommended to deactivate first";
+"It is recommended to deactivate first" = "Het is aanbevolen om eerst te deactiveren";
 
 /* confirm force remove */
 "Confirm" = "Bevestig";
