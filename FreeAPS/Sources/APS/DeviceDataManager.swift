@@ -537,196 +537,18 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 }
 
-private extension BaseDeviceDataManager {
-    func setupCGM() {
-        dispatchPrecondition(condition: .onQueue(.main))
-
-        // TODO: [loopkit] is this the right way to detect a new sensor?
-        // currently, the calibration service subscribes to this event to clear calibrations
-        let previous = seenCGMDeviceId
-        seenCGMDeviceId = cgmManager?.cgmManagerStatus.device?.localIdentifier
-        if previous != nil, previous != seenCGMDeviceId {
-            UserNotifications.NotificationCenter.default.post(name: .newSensorDetected, object: nil)
-        }
-
-        cgmManager?.cgmManagerDelegate = self
-        cgmManager?.delegateQueue = processQueue
-        reportPluginInitializationComplete()
-
-        updatePumpManagerBLEHeartbeatPreference()
-        if let cgmManager = cgmManager {
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertResponder(managerIdentifier: cgmManager.pluginIdentifier,
-//                                            alertResponder: cgmManager)
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertSoundVendor(managerIdentifier: cgmManager.pluginIdentifier,
-//                                              soundVendor: cgmManager)
-            cgmHasValidSensorSession = cgmManager.cgmManagerStatus.hasValidSensorSession
-        } else {
-            cgmHasValidSensorSession = false
-        }
-
-        appCoordinator.setShouldUploadGlucose(cgmManager?.shouldSyncToRemoteService ?? false)
-        appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager))
-    }
-
-    func setupPump() {
-        dispatchPrecondition(condition: .onQueue(.main))
-
-        pumpManager?.pumpManagerDelegate = self
-        pumpManager?.delegateQueue = processQueue
-        // TODO: [loopkit] do we need this?
-        reportPluginInitializationComplete()
-
-//        pumpManagerHUDProvider = pumpManager?.hudProvider(bluetoothProvider: bluetoothProvider, colorPalette: .default, allowedInsulinTypes: allowedInsulinTypes)
-
-        // TODO: [loopkit] do we need this?
-        // Proliferate PumpModel preferences to DoseStore
-//        if let pumpRecordsBasalProfileStartEvents = pumpManager?.pumpRecordsBasalProfileStartEvents {
-//            doseStore.pumpRecordsBasalProfileStartEvents = pumpRecordsBasalProfileStartEvents
-//        }
-        if let pumpManager = pumpManager {
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertResponder(managerIdentifier: pumpManager.pluginIdentifier,
-//                                                  alertResponder: pumpManager)
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertSoundVendor(managerIdentifier: pumpManager.pluginIdentifier,
-//                                                    soundVendor: pumpManager)
-            // TODO: [loopkit] uncertainty alert manager
-//            deliveryUncertaintyAlertManager = DeliveryUncertaintyAlertManager(pumpManager: pumpManager, alertPresenter: alertPresenter)
-
-            updatePumpManagerBLEHeartbeatPreference()
-
-            pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
-            pumpName.send(pumpManager.localizedTitle)
-            pumpExpiresAtDate.send(KnownPlugins.pumpExpiration(pumpManager: pumpManager))
-        } else {
-            pumpDisplayState.value = nil
-            pumpExpiresAtDate.send(nil)
-            pumpName.send("")
-        }
-    }
-}
-
-// MARK: - Plugins
-
-extension BaseDeviceDataManager {
-    func reportPluginInitializationComplete() {
-        let allActivePlugins = self.allActivePlugins
-
-        cgmManager?.initializationComplete(for: allActivePlugins)
-        pumpManager?.initializationComplete(for: allActivePlugins)
-    }
-
-    var allActivePlugins: [Pluggable] {
-        var allActivePlugins: [Pluggable] = []
-
-        if let cgmManager = cgmManager {
-            if !allActivePlugins.contains(where: { $0.pluginIdentifier == cgmManager.pluginIdentifier }) {
-                allActivePlugins.append(cgmManager)
-            }
-        }
-
-        if let pumpManager = pumpManager {
-            if !allActivePlugins.contains(where: { $0.pluginIdentifier == pumpManager.pluginIdentifier }) {
-                allActivePlugins.append(pumpManager)
-            }
-        }
-
-        return allActivePlugins
-    }
-}
-
-// MARK: - Client API
-
-extension BaseDeviceDataManager {
-    // TODO: [loopkit] should call this when app goes active?
-    func didBecomeActive() {
-        updatePumpManagerBLEHeartbeatPreference()
-    }
-
-    func updatePumpManagerBLEHeartbeatPreference() {
-        pumpManager?.setMustProvideBLEHeartbeat(pumpManagerMustProvideBLEHeartbeat)
-    }
-}
-
-// MARK: - CGMManagerDelegate
-
-extension BaseDeviceDataManager: CGMManagerDelegate {
-    func cgmManagerWantsDeletion(_ manager: CGMManager) {
-        dispatchPrecondition(condition: .onQueue(processQueue))
-        debug(.deviceManager, "CGM Manager with identifier \(manager.pluginIdentifier) wants deletion")
-        DispatchQueue.main.async {
-            if let cgmManagerUI = self.cgmManager as? CGMManagerUI {
-                self.removeDisplayGlucoseUnitObserver(cgmManagerUI)
-            }
-            self.cgmManager = nil
-            self.displayGlucoseUnitObservers.cleanupDeallocatedElements()
-//            self.settingsManager.storeSettings()
-        }
-    }
-
-    func cgmManager(_: CGMManager, hasNew readingResult: CGMReadingResult) {
-        dispatchPrecondition(condition: .onQueue(processQueue))
-        processCGMReadingResultAndLoop(readingResult: readingResult)
-    }
-
-    func cgmManager(_: LoopKit.CGMManager, hasNew _: [PersistedCgmEvent]) {
-        // TODO: [loopkit] implement this?
-    }
-
-    func startDateToFilterNewData(for _: CGMManager) -> Date? {
-        dispatchPrecondition(condition: .onQueue(processQueue))
-
-        // TODO: [loopkit] in the FetchGlucoseManager it was this:
-        // return glucoseStorage.lastGlucoseDate()
-
-        return glucoseStorage.syncDate().addingTimeInterval(-10.minutes.timeInterval) // additional time to calculate directions
-    }
-
-    func cgmManagerDidUpdateState(_ manager: CGMManager) {
-        dispatchPrecondition(condition: .onQueue(processQueue))
-        UserDefaults.standard.cgmManagerRawValue = manager.rawValue
-        appCoordinator.setShouldUploadGlucose(manager.shouldSyncToRemoteService)
-    }
-
-    func credentialStoragePrefix(for _: CGMManager) -> String {
-        // return string unique to this instance of the CGMManager
-        UUID().uuidString
-    }
-
-    func cgmManager(_: CGMManager, didUpdate status: CGMManagerStatus) {
-        DispatchQueue.main.async {
-            if self.cgmHasValidSensorSession != status.hasValidSensorSession {
-                self.cgmHasValidSensorSession = status.hasValidSensorSession
-            }
-        }
-    }
-}
-
-// MARK: - CGMManagerOnboardingDelegate
-
-extension BaseDeviceDataManager: CGMManagerOnboardingDelegate {
-    func cgmManagerOnboarding(didCreateCGMManager cgmManager: CGMManagerUI) {
-        debug(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' created")
-        self.cgmManager = cgmManager
-    }
-
-    func cgmManagerOnboarding(didOnboardCGMManager cgmManager: CGMManagerUI) {
-        precondition(cgmManager.isOnboarded)
-        debug(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' onboarded")
-
-        // TODO: [loopkit] is this correct?
-        DispatchQueue.main.async {
-            self.refreshDeviceData()
-//            self.settingsManager.storeSettings()
-        }
-    }
-}
-
 // MARK: - PumpManagerDelegate
 
 extension BaseDeviceDataManager: PumpManagerDelegate {
+    func pumpManagerPumpWasReplaced(_: PumpManager) {
+        debug(.deviceManager, "pumpManagerPumpWasReplaced")
+    }
+
+    var detectedSystemTimeOffset: TimeInterval {
+        // trustedTimeChecker.detectedSystemTimeOffset
+        0
+    }
+
     func pumpManager(_ pumpManager: PumpManager, didAdjustPumpClockBy adjustment: TimeInterval) {
         debug(.deviceManager, "PumpManager \(pumpManager.pluginIdentifier) didAdjustPumpClockBy \(adjustment)")
     }
@@ -739,17 +561,6 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         pumpName.send(pumpManager.localizedTitle)
     }
 
-    func pumpManager(
-        _: any LoopKit.PumpManager,
-        didRequestBasalRateScheduleChange _: LoopKit.BasalRateSchedule,
-        completion: @escaping ((any Error)?) -> Void
-    ) {
-        // TODO: [loopkit] should we do anything here?
-        // from loop:
-        // saveUpdatedBasalRateSchedule(basalRateSchedule)
-        completion(nil)
-    }
-
     /// heartbeat with pump occurs some issues in the backgroundtask - so never used
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
@@ -758,26 +569,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         appCoordinator.sendHeartbeat()
     }
 
-    func pumpManagerPumpWasReplaced(_: PumpManager) {
-        debug(.deviceManager, "pumpManagerPumpWasReplaced")
-    }
-
-    var detectedSystemTimeOffset: TimeInterval {
-        // trustedTimeChecker.detectedSystemTimeOffset
-        0
-    }
-
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return pumpManagerMustProvideBLEHeartbeat
-    }
-
-    private var pumpManagerMustProvideBLEHeartbeat: Bool {
-        /// Controls the management of the RileyLink timer tick, which is a reliably-changing BLE
-        /// characteristic which can cause the app to wake. For most users, the G5 Transmitter and
-        /// G4 Receiver are reliable as hearbeats, but users who find their resources extremely constrained
-        /// due to greedy apps or older devices may choose to always enable the timer by always setting `true`
-        !(cgmManager?.providesBLEHeartbeat == true)
     }
 
     func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus: PumpManagerStatus) {
@@ -896,7 +690,6 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(_: PumpManager, didError error: PumpManagerError) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "error: \(error.localizedDescription), reason: \(String(describing: error.failureReason))")
-
         errorSubject.send(error)
     }
 
@@ -945,6 +738,25 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         )))
     }
 
+    func pumpManager(
+        _: any LoopKit.PumpManager,
+        didRequestBasalRateScheduleChange _: LoopKit.BasalRateSchedule,
+        completion: @escaping ((any Error)?) -> Void
+    ) {
+        // TODO: [loopkit] should we do anything here?
+        // from loop:
+        // saveUpdatedBasalRateSchedule(basalRateSchedule)
+        completion(nil)
+    }
+
+    private var pumpManagerMustProvideBLEHeartbeat: Bool {
+        /// Controls the management of the RileyLink timer tick, which is a reliably-changing BLE
+        /// characteristic which can cause the app to wake. For most users, the G5 Transmitter and
+        /// G4 Receiver are reliable as hearbeats, but users who find their resources extremely constrained
+        /// due to greedy apps or older devices may choose to always enable the timer by always setting `true`
+        !(cgmManager?.providesBLEHeartbeat == true)
+    }
+
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
         lastEventDate?.addingTimeInterval(-15.minutes.timeInterval) ?? Date().addingTimeInterval(-2.hours.timeInterval)
     }
@@ -954,29 +766,6 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         // none of the actual pump plugins seem to even read this var
         true
     }
-}
-
-// MARK: - PumpManagerOnboardingDelegate
-
-extension BaseDeviceDataManager: PumpManagerOnboardingDelegate {
-    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
-        debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' created")
-        self.pumpManager = pumpManager
-        if let insulinType = pumpManager.status.insulinType {
-            settingsManager.updateInsulinCurve(insulinType)
-        }
-    }
-
-    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {
-        precondition(pumpManager.isOnboarded)
-        debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' onboarded")
-
-        DispatchQueue.main.async {
-            self.refreshDeviceData()
-        }
-    }
-
-    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {}
 }
 
 // MARK: - DeviceManagerDelegate
@@ -1042,36 +831,57 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     }
 }
 
-// MARK: - PersistedAlertStore
+// MARK: - CGMManagerDelegate
 
-extension BaseDeviceDataManager: PersistedAlertStore {
-    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {
-        debug(.deviceManager, "doesIssueAlertExist")
-        // TODO: [loopkit] from loop:
-//        precondition(alertManager != nil)
-//        alertManager.doesIssuedAlertExist(identifier: identifier, completion: completion)
+extension BaseDeviceDataManager: CGMManagerDelegate {
+    func startDateToFilterNewData(for _: CGMManager) -> Date? {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+
+        // TODO: [loopkit] in the FetchGlucoseManager it was this:
+        // return glucoseStorage.lastGlucoseDate()
+
+        return glucoseStorage.syncDate().addingTimeInterval(-10.minutes.timeInterval) // additional time to calculate directions
     }
 
-    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {
-        debug(.deviceManager, "lookupAllUnretracted")
-        // TODO: [loopkit] from loop:
-//        precondition(alertManager != nil)
-//        alertManager.lookupAllUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+    func cgmManagerWantsDeletion(_ manager: CGMManager) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        debug(.deviceManager, "CGM Manager with identifier \(manager.pluginIdentifier) wants deletion")
+        DispatchQueue.main.async {
+            if let cgmManagerUI = self.cgmManager as? CGMManagerUI {
+                self.removeDisplayGlucoseUnitObserver(cgmManagerUI)
+            }
+            self.cgmManager = nil
+            self.displayGlucoseUnitObservers.cleanupDeallocatedElements()
+//            self.settingsManager.storeSettings()
+        }
     }
 
-    func lookupAllUnacknowledgedUnretracted(
-        managerIdentifier _: String,
-        completion _: @escaping (Result<[PersistedAlert], Error>) -> Void
-    ) {
-        // TODO: [loopkit] from loop:
-//        precondition(alertManager != nil)
-//        alertManager.lookupAllUnacknowledgedUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+    func cgmManager(_: CGMManager, hasNew readingResult: CGMReadingResult) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        processCGMReadingResultAndLoop(readingResult: readingResult)
     }
 
-    func recordRetractedAlert(_: Alert, at _: Date) {
-        // TODO: [loopkit] implement this? from loop:
-//        precondition(alertManager != nil)
-//        alertManager.recordRetractedAlert(alert, at: date)
+    func cgmManager(_: LoopKit.CGMManager, hasNew _: [PersistedCgmEvent]) {
+        // TODO: [loopkit] implement this?
+    }
+
+    func cgmManagerDidUpdateState(_ manager: CGMManager) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        UserDefaults.standard.cgmManagerRawValue = manager.rawValue
+        appCoordinator.setShouldUploadGlucose(manager.shouldSyncToRemoteService)
+    }
+
+    func credentialStoragePrefix(for _: CGMManager) -> String {
+        // return string unique to this instance of the CGMManager
+        UUID().uuidString
+    }
+
+    func cgmManager(_: CGMManager, didUpdate status: CGMManagerStatus) {
+        DispatchQueue.main.async {
+            if self.cgmHasValidSensorSession != status.hasValidSensorSession {
+                self.cgmHasValidSensorSession = status.hasValidSensorSession
+            }
+        }
     }
 }
 
@@ -1131,6 +941,209 @@ extension BaseDeviceDataManager: AlertObserver {
     }
 }
 
+// MARK: Others
+
+protocol PumpReservoirObserver {
+    func pumpReservoirDidChange(_ reservoir: Decimal)
+}
+
+protocol PumpBatteryObserver {
+    func pumpBatteryDidChange(_ battery: Battery)
+}
+
+protocol PumpTimeZoneObserver {
+    func pumpTimeZoneDidChange(_ timezone: TimeZone)
+}
+
+// MARK: - Plugins
+
+extension BaseDeviceDataManager {
+    func reportPluginInitializationComplete() {
+        let allActivePlugins = self.allActivePlugins
+
+        cgmManager?.initializationComplete(for: allActivePlugins)
+        pumpManager?.initializationComplete(for: allActivePlugins)
+    }
+
+    var allActivePlugins: [Pluggable] {
+        var allActivePlugins: [Pluggable] = []
+
+        if let cgmManager = cgmManager {
+            if !allActivePlugins.contains(where: { $0.pluginIdentifier == cgmManager.pluginIdentifier }) {
+                allActivePlugins.append(cgmManager)
+            }
+        }
+
+        if let pumpManager = pumpManager {
+            if !allActivePlugins.contains(where: { $0.pluginIdentifier == pumpManager.pluginIdentifier }) {
+                allActivePlugins.append(pumpManager)
+            }
+        }
+
+        return allActivePlugins
+    }
+}
+
+// MARK: - Client API
+
+extension BaseDeviceDataManager {
+    // TODO: [loopkit] should call this when app goes active?
+    func didBecomeActive() {
+        updatePumpManagerBLEHeartbeatPreference()
+    }
+
+    func updatePumpManagerBLEHeartbeatPreference() {
+        pumpManager?.setMustProvideBLEHeartbeat(pumpManagerMustProvideBLEHeartbeat)
+    }
+}
+
+// MARK: - CGMManagerOnboardingDelegate
+
+extension BaseDeviceDataManager: CGMManagerOnboardingDelegate {
+    func cgmManagerOnboarding(didCreateCGMManager cgmManager: CGMManagerUI) {
+        debug(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' created")
+        self.cgmManager = cgmManager
+    }
+
+    func cgmManagerOnboarding(didOnboardCGMManager cgmManager: CGMManagerUI) {
+        precondition(cgmManager.isOnboarded)
+        debug(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' onboarded")
+
+        // TODO: [loopkit] is this correct?
+        DispatchQueue.main.async {
+            self.refreshDeviceData()
+//            self.settingsManager.storeSettings()
+        }
+    }
+}
+
+// MARK: - PumpManagerOnboardingDelegate
+
+extension BaseDeviceDataManager: PumpManagerOnboardingDelegate {
+    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
+        debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' created")
+        self.pumpManager = pumpManager
+        if let insulinType = pumpManager.status.insulinType {
+            settingsManager.updateInsulinCurve(insulinType)
+        }
+    }
+
+    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {
+        precondition(pumpManager.isOnboarded)
+        debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' onboarded")
+
+        DispatchQueue.main.async {
+            self.refreshDeviceData()
+        }
+    }
+
+    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {}
+}
+
+// MARK: - PersistedAlertStore
+
+extension BaseDeviceDataManager: PersistedAlertStore {
+    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {
+        debug(.deviceManager, "doesIssueAlertExist")
+        // TODO: [loopkit] from loop:
+//        precondition(alertManager != nil)
+//        alertManager.doesIssuedAlertExist(identifier: identifier, completion: completion)
+    }
+
+    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {
+        debug(.deviceManager, "lookupAllUnretracted")
+        // TODO: [loopkit] from loop:
+//        precondition(alertManager != nil)
+//        alertManager.lookupAllUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+    }
+
+    func lookupAllUnacknowledgedUnretracted(
+        managerIdentifier _: String,
+        completion _: @escaping (Result<[PersistedAlert], Error>) -> Void
+    ) {
+        // TODO: [loopkit] from loop:
+//        precondition(alertManager != nil)
+//        alertManager.lookupAllUnacknowledgedUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+    }
+
+    func recordRetractedAlert(_: Alert, at _: Date) {
+        // TODO: [loopkit] implement this? from loop:
+//        precondition(alertManager != nil)
+//        alertManager.recordRetractedAlert(alert, at: date)
+    }
+}
+
+private extension BaseDeviceDataManager {
+    func setupCGM() {
+        dispatchPrecondition(condition: .onQueue(.main))
+
+        // TODO: [loopkit] is this the right way to detect a new sensor?
+        // currently, the calibration service subscribes to this event to clear calibrations
+        let previous = seenCGMDeviceId
+        seenCGMDeviceId = cgmManager?.cgmManagerStatus.device?.localIdentifier
+        if previous != nil, previous != seenCGMDeviceId {
+            UserNotifications.NotificationCenter.default.post(name: .newSensorDetected, object: nil)
+        }
+
+        cgmManager?.cgmManagerDelegate = self
+        cgmManager?.delegateQueue = processQueue
+        reportPluginInitializationComplete()
+
+        updatePumpManagerBLEHeartbeatPreference()
+        if let cgmManager = cgmManager {
+            // TODO: [loopkit] alert manager
+//            alertManager?.addAlertResponder(managerIdentifier: cgmManager.pluginIdentifier,
+//                                            alertResponder: cgmManager)
+            // TODO: [loopkit] alert manager
+//            alertManager?.addAlertSoundVendor(managerIdentifier: cgmManager.pluginIdentifier,
+//                                              soundVendor: cgmManager)
+            cgmHasValidSensorSession = cgmManager.cgmManagerStatus.hasValidSensorSession
+        } else {
+            cgmHasValidSensorSession = false
+        }
+
+        appCoordinator.setShouldUploadGlucose(cgmManager?.shouldSyncToRemoteService ?? false)
+        appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager))
+    }
+
+    func setupPump() {
+        dispatchPrecondition(condition: .onQueue(.main))
+
+        pumpManager?.pumpManagerDelegate = self
+        pumpManager?.delegateQueue = processQueue
+        // TODO: [loopkit] do we need this?
+        reportPluginInitializationComplete()
+
+//        pumpManagerHUDProvider = pumpManager?.hudProvider(bluetoothProvider: bluetoothProvider, colorPalette: .default, allowedInsulinTypes: allowedInsulinTypes)
+
+        // TODO: [loopkit] do we need this?
+        // Proliferate PumpModel preferences to DoseStore
+//        if let pumpRecordsBasalProfileStartEvents = pumpManager?.pumpRecordsBasalProfileStartEvents {
+//            doseStore.pumpRecordsBasalProfileStartEvents = pumpRecordsBasalProfileStartEvents
+//        }
+        if let pumpManager = pumpManager {
+            // TODO: [loopkit] alert manager
+//            alertManager?.addAlertResponder(managerIdentifier: pumpManager.pluginIdentifier,
+//                                                  alertResponder: pumpManager)
+            // TODO: [loopkit] alert manager
+//            alertManager?.addAlertSoundVendor(managerIdentifier: pumpManager.pluginIdentifier,
+//                                                    soundVendor: pumpManager)
+            // TODO: [loopkit] uncertainty alert manager
+//            deliveryUncertaintyAlertManager = DeliveryUncertaintyAlertManager(pumpManager: pumpManager, alertPresenter: alertPresenter)
+
+            updatePumpManagerBLEHeartbeatPreference()
+
+            pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
+            pumpName.send(pumpManager.localizedTitle)
+            pumpExpiresAtDate.send(KnownPlugins.pumpExpiration(pumpManager: pumpManager))
+        } else {
+            pumpDisplayState.value = nil
+            pumpExpiresAtDate.send(nil)
+            pumpName.send("")
+        }
+    }
+}
+
 extension BaseDeviceDataManager {
     func addDisplayGlucoseUnitObserver(_ observer: DisplayGlucoseUnitObserver) {
         let queue = DispatchQueue.main
@@ -1149,18 +1162,4 @@ extension BaseDeviceDataManager {
             $0.unitDidChange(to: displayGlucoseUnit)
         }
     }
-}
-
-// MARK: Others
-
-protocol PumpReservoirObserver {
-    func pumpReservoirDidChange(_ reservoir: Decimal)
-}
-
-protocol PumpBatteryObserver {
-    func pumpBatteryDidChange(_ battery: Battery)
-}
-
-protocol PumpTimeZoneObserver {
-    func pumpTimeZoneDidChange(_ timezone: TimeZone)
 }
