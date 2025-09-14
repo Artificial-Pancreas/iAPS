@@ -9,7 +9,7 @@ extension Bolus {
         let waitForSuggestion: Bool
         let fetch: Bool
 
-        @StateObject var state: StateModel
+        @EnvironmentObject var state: StateModel
 
         let meal: FetchedResults<Meals>
         let mealEntries: any View
@@ -65,7 +65,6 @@ extension Bolus {
 //            self.state = state
             self.meal = meal
             self.mealEntries = mealEntries
-            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         var body: some View {
@@ -214,12 +213,11 @@ extension Bolus {
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-//                configureView {
                 state.viewActive()
                 state.waitForCarbs = fetch
                 state.waitForSuggestionInitial = waitForSuggestion
                 state.waitForSuggestion = waitForSuggestion
-//                }
+                state.start()
             }
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)

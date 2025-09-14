@@ -112,7 +112,9 @@ extension Bolus {
             disable15MinTrend = settings.settings.disable15MinTrend
             minBolus = Decimal(deviceManager.pumpManager?.supportedBolusVolumes.first ?? Double(bolusIncrement)) *
                 Decimal(concentration.concentration)
+        }
 
+        func start() {
             if waitForSuggestionInitial {
                 if waitForCarbs {
                     setupBolusData()

@@ -8,7 +8,7 @@ extension Bolus {
         let resolver: Resolver
         let waitForSuggestion: Bool
         let fetch: Bool
-        @StateObject var state: StateModel
+        @EnvironmentObject var state: StateModel
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
         @State private var keepForNextWiew: Bool = false
@@ -41,7 +41,6 @@ extension Bolus {
 //            self.state = state
             self.meal = meal
             self.mealEntries = mealEntries
-            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         private var formatter: NumberFormatter {
@@ -270,13 +269,12 @@ extension Bolus {
                 label: { Text("Cancel") }
             )
             .onAppear {
-//                configureView {
                 state.viewActive()
                 state.waitForCarbs = fetch
                 state.waitForSuggestionInitial = waitForSuggestion
                 state.waitForSuggestion = waitForSuggestion
                 state.insulinCalculated = state.calculateInsulin()
-//                }
+                state.start()
             }
             .popup(isPresented: showInfo, alignment: .bottom, direction: .center, type: .default) {
                 illustrationView()

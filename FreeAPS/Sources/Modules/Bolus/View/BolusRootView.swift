@@ -40,7 +40,6 @@ extension Bolus {
                         resolver: resolver,
                         waitForSuggestion: waitForSuggestion,
                         fetch: fetch,
-//                        state: state, // TODO: why was the @StateObject passed into the constructor?
                         meal: meal,
                         mealEntries: mealEntries
                     )
@@ -49,12 +48,12 @@ extension Bolus {
                             state.notActive()
                         }
                     }
+                    .environmentObject(state)
                 } else {
                     AlternativeBolusCalcRootView(
                         resolver: resolver,
                         waitForSuggestion: waitForSuggestion,
                         fetch: fetch,
-//                        state: state, // TODO: why was the @StateObject passed into the constructor?
                         meal: meal,
                         mealEntries: mealEntries
                     )
@@ -63,6 +62,7 @@ extension Bolus {
                             state.notActive()
                         }
                     }
+                    .environmentObject(state)
                 }
             } else {
                 cleanBolusView
