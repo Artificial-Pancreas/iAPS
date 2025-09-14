@@ -817,21 +817,3 @@ extension Home.StateModel: CompletionDelegate {
         setupPump = false
     }
 }
-
-// TODO: [loopkit] move this
-// extension Home.StateModel: PumpManagerOnboardingDelegate {
-//    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
-//        provider.deviceManager.pumpManager = pumpManager
-//        if let insulinType = pumpManager.status.insulinType {
-//            settingsManager.updateInsulinCurve(insulinType)
-//        }
-//    }
-//
-//    func pumpManagerOnboarding(didOnboardPumpManager _: PumpManagerUI) {
-//        // nothing to do
-//    }
-//
-//    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {
-//        // TODO:
-//    }
-// }
