@@ -230,11 +230,16 @@ for k in "${!THIS_MAP[@]}"; do UNION["$k"]=1; done
 for k in "${!REF_MAP[@]}";  do UNION["$k"]=1; done
 
 cmd="${1:-}"
+filter_path=""
+if [[ "$cmd" == "update" ]]; then
+  filter_path="${2:-}"   # optional: path/to/submodule
+fi
+
 if [[ "$cmd" != "compare" && "$cmd" != "update" ]]; then
   cat >&2 <<EOF
 Usage:
   REF_REPO=<path-or-https-url> [REF_BRANCH=<branch>] $0 compare
-  REF_REPO=<path-or-https-url> [REF_BRANCH=<branch>] $0 update
+  REF_REPO=<path-or-https-url> [REF_BRANCH=<branch>] $0 update [path/to/submodule]
 
 If REF_REPO is not set, defaults will be used:
   URL   : $DEFAULT_REF_URL
@@ -248,7 +253,16 @@ print_header
 # Collect DIFFs for update phase
 declare -a DIFF_PATHS DIFF_THIS DIFF_REF
 
+declare -a DIFF_PATHS=()
+declare -a DIFF_THIS=()
+declare -a DIFF_REF=()
+
 for path in "${!UNION[@]}"; do
+  # If update was called with a specific path, skip others
+  if [[ "$cmd" == "update" && -n "$filter_path" && "$path" != "$filter_path" ]]; then
+    continue
+  fi
+
   this="${THIS_MAP[$path]:-}"
   ref="${REF_MAP[$path]:-}"
   status="$(classify "$this" "$ref")"
@@ -276,12 +290,6 @@ for path in "${!UNION[@]}"; do
 done
 
 if [[ "$cmd" == "update" ]]; then
-  echo
-  if [[ ${#DIFF_PATHS[@]} -eq 0 ]]; then
-    echo "No differences to update."
-    exit 0
-  fi
-
   for i in "${!DIFF_PATHS[@]}"; do
     path="${DIFF_PATHS[$i]}"
     this="${DIFF_THIS[$i]}"
@@ -306,7 +314,14 @@ if [[ "$cmd" == "update" ]]; then
     esac
   done
 
+fi
+
+echo
+if [[ ${#DIFF_PATHS[@]} -eq 0 ]]; then
+  echo "No differences to update."
+  exit 0
+else
   echo
   echo "Done. If you accepted updates, they're staged. Next:"
-  echo "  git commit -m \"Sync submodules to reference\""
+  echo "  git commit -m \"Sync submodules to WorkspaceLoop\""
 fi
