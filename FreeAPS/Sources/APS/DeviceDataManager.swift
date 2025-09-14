@@ -26,6 +26,9 @@ protocol DeviceDataManager {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var recommendsLoop: AnyPublisher<Void, Never> { get }
 
+    // notify device manager when the app becomes active
+    func didBecomeActive()
+
     // can be called by external blood glucose sources (like AppGroupSource) to trigger the loop
     func bloodGlucoseReadingsReceived(bloodGlucose: [BloodGlucose])
 
@@ -1111,6 +1114,7 @@ private extension BaseDeviceDataManager {
 
         pumpManager?.pumpManagerDelegate = self
         pumpManager?.delegateQueue = processQueue
+
         // TODO: [loopkit] do we need this?
         reportPluginInitializationComplete()
 
