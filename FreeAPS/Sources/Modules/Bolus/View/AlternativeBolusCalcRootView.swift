@@ -109,15 +109,44 @@ extension Bolus {
                                 .font(.footnote)
                                 .buttonStyle(PlainButtonStyle())
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            if state.fattyMeals {
-                                Spacer()
-                                Toggle(isOn: $state.useFattyMealCorrectionFactor) {
-                                    Text("Fatty Meal")
-                                }
-                                .toggleStyle(CheckboxToggleStyle())
-                                .font(.footnote)
-                                .onChange(of: state.useFattyMealCorrectionFactor) {
-                                    state.insulinCalculated = state.calculateInsulin()
+                            if state.fattyMeals || state.fastMeals {
+                                HStack(spacing: 10) {
+                                    if state.fattyMeals {
+                                        Toggle(isOn: Binding(
+                                            get: { state.useFattyMealCorrectionFactor },
+                                            set: { newValue in
+                                                if newValue {
+                                                    state.useFastMealCorrectionFactor = false
+                                                }
+                                                state.useFattyMealCorrectionFactor = newValue
+                                                state.insulinCalculated = state.calculateInsulin()
+                                            }
+                                        )) {
+                                            Text("Fatty Meal")
+                                                .lineLimit(1)
+                                                .fixedSize()
+                                        }
+                                        .toggleStyle(RadioButtonToggleStyle())
+                                        .font(.footnote)
+                                    }
+                                    if state.fastMeals {
+                                        Toggle(isOn: Binding(
+                                            get: { state.useFastMealCorrectionFactor },
+                                            set: { newValue in
+                                                if newValue {
+                                                    state.useFattyMealCorrectionFactor = false
+                                                }
+                                                state.useFastMealCorrectionFactor = newValue
+                                                state.insulinCalculated = state.calculateInsulin()
+                                            }
+                                        )) {
+                                            Text("Fast Meal")
+                                                .lineLimit(1)
+                                                .fixedSize()
+                                        }
+                                        .toggleStyle(RadioButtonToggleStyle())
+                                        .font(.footnote)
+                                    }
                                 }
                             }
                         }
@@ -315,3 +344,4 @@ extension Bolus {
         }
     }
 }
+ 
