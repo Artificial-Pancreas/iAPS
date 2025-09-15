@@ -278,34 +278,34 @@
 "Your patch has %i hours left" = "У патча осталось %i часов";
 
 /* Title insulin suspended notification */
-"Insulin has been suspended!" = "Insulin has been suspended!";
+"Insulin has been suspended!" = "Подача инсулина остановлена!";
 
 /* Body daily max notification */
-"Your patch has reached its daily maximum!" = "Your patch has reached its daily maximum!";
+"Your patch has reached its daily maximum!" = "У патча закончился срок!";
 
 /* Body hourly max notification */
-"Your patch has reached its hourly maximum!" = "Your patch has reached its hourly maximum!";
+"Your patch has reached its hourly maximum!" = "Время жизни патча закончилось!";
 
 /* Title replace patch notification */
-"Replace your patch now!" = "Replace your patch now!";
+"Replace your patch now!" = "Замените патч прямо сейчас!";
 
 /* Body occlussion notification */
-"Your patch has detected an occlussion!" = "Your patch has detected an occlussion!";
+"Your patch has detected an occlussion!" = "Обнаружена закупорка патча!";
 
 /* Body fault notification */
-"Your patch is in Fault state!" = "Your patch is in Fault state!";
+"Your patch is in Fault state!" = "Ошибка патча!";
 
 /* Body reservoir empty notification */
-"Your patch is out of insulin!" = "Your patch is out of insulin!";
+"Your patch is out of insulin!" = "Закончился инсулин!";
 
 /* Force remove */
-"Force remove" = "Force remove";
+"Force remove" = "Удалить принудительно";
 
 /* title force remove */
 "Are you sure?" = "Вы уверены?";
 
 /* body force remove */
-"It is recommended to deactivate first" = "It is recommended to deactivate first";
+"It is recommended to deactivate first" = "Сначала деактивируйте патч, затем снимите";
 
 /* confirm force remove */
 "Confirm" = "Подтверждаю";
