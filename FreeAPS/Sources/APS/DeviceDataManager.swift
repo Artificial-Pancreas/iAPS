@@ -326,10 +326,9 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 //        debug(.deviceManager, "Process CGM Reading Result launched")
         switch readingResult {
         case let .newData(values):
-
-            var sessionStart: Date = .distantPast
+            var sessionStart: Date?
             if let cgmManager = cgmManager {
-                sessionStart = KnownPlugins.sessionStart(cgmManager: cgmManager) ?? .distantPast
+                sessionStart = KnownPlugins.sessionStart(cgmManager: cgmManager)
             }
 
             let bloodGlucose = values.map { newGlucoseSample -> BloodGlucose in
