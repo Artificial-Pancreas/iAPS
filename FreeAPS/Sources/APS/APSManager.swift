@@ -149,7 +149,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func subscribe() {
         deviceDataManager.recommendsLoop
-            // because of backfill, the recommendsLoop might trigger multiple times, we let it settle down before running the loop
+            // because of backfill, the recommendation might trigger before the backfill is received
+            // debounce for 1 second to give the CGM a chance to send in the backfill
             .debounce(for: .seconds(1), scheduler: processQueue)
             .receive(on: processQueue)
             .sink { [weak self] in

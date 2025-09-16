@@ -509,6 +509,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     private func processReceivedBloodGlucose(bloodGlucose: [BloodGlucose]) {
+        // storeNewBloodGlucose runs in queue.async with callback so that we don't block the CGM manager
         bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) { newGlucoseStored in
             if newGlucoseStored {
                 self.processQueue.safeSync {
