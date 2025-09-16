@@ -29,7 +29,7 @@ extension CGM {
                     setupViewControllerUI.completionDelegate = completionDelegate
                     return setupViewControllerUI
                 case .createdAndOnboarded:
-                    info(.deviceManager, "CGM manager with identifier '\(cgmIdentifier)' created and onboarded")
+                    debug(.deviceManager, "CGM manager with identifier '\(cgmIdentifier)' created and onboarded")
                     completionDelegate?.completionNotifyingDidComplete(self)
                     return UIViewController()
                 }

@@ -25,8 +25,6 @@ extension NightscoutConfig {
         @Published var backfilling = false
         @Published var isUploadEnabled = false // Allow uploads
         @Published var uploadGlucose = true // Upload Glucose
-        @Published var useLocalSource = false
-        @Published var localPort: Decimal = 0
         @Published var units: GlucoseUnits = .mmolL
         @Published var dia: Decimal = 6
         @Published var maxBasal: Decimal = 4
@@ -43,8 +41,6 @@ extension NightscoutConfig {
 
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
-            subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
-            subscribeSetting(\.localGlucosePort, on: $localPort.map(Int.init)) { localPort = Decimal($0) }
         }
 
         func connect() {

@@ -6,13 +6,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var allowAnnouncements: Bool = false
     var useAutotune: Bool = false
     var isUploadEnabled: Bool = false
-    var useLocalGlucoseSource: Bool = false
-    var localGlucosePort: Int = 8080
     var debugOptions: Bool = false
     var insulinReqPercentage: Decimal = 70
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
-    var appGroupSourceType: AppGroupSourceType? = nil
     var useCalendar: Bool = false
     var displayCalendarIOBandCOB: Bool = false
     var displayCalendarEmojis: Bool = false
@@ -141,7 +138,6 @@ struct FreeAPSSettings: JSON, Equatable {
 extension FreeAPSSettings: Decodable {
     // Needed to decode incomplete JSON
     init(from decoder: Decoder) throws {
-        let dynContainer = try decoder.container(keyedBy: AnyCodingKey.self)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         var settings = FreeAPSSettings()
 
@@ -163,14 +159,6 @@ extension FreeAPSSettings: Decodable {
 
         if let isUploadEnabled = try? container.decode(Bool.self, forKey: .isUploadEnabled) {
             settings.isUploadEnabled = isUploadEnabled
-        }
-
-        if let useLocalGlucoseSource = try? container.decode(Bool.self, forKey: .useLocalGlucoseSource) {
-            settings.useLocalGlucoseSource = useLocalGlucoseSource
-        }
-
-        if let localGlucosePort = try? container.decode(Int.self, forKey: .localGlucosePort) {
-            settings.localGlucosePort = localGlucosePort
         }
 
         if let debugOptions = try? container.decode(Bool.self, forKey: .debugOptions) {
@@ -213,17 +201,6 @@ extension FreeAPSSettings: Decodable {
 
         if let displayOnWatch = try? container.decode(AwConfig.self, forKey: .displayOnWatch) {
             settings.displayOnWatch = displayOnWatch
-        }
-
-        if let appGroupSourceType = try? container.decode(AppGroupSourceType.self, forKey: .appGroupSourceType) {
-            settings.appGroupSourceType = appGroupSourceType
-        } else if let appGroupSourceTypeFromCgm = try? dynContainer.decode(
-            AppGroupSourceType.self,
-            forKey: AnyCodingKey(stringValue: "cgm")!
-        ) {
-            // fallback to reading the old .cgm key which would have contained the app group source name if it was selected
-            // if it contains the real CGM name - it will not be decoded into AppGroupSourceType and we'll just ignore it
-            settings.appGroupSourceType = appGroupSourceTypeFromCgm
         }
 
         if let useCalendar = try? container.decode(Bool.self, forKey: .useCalendar) {

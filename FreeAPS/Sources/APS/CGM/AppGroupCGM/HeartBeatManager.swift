@@ -23,7 +23,10 @@ class HeartBeatManager {
     /// verifies if local copy of cgmTransmitterDeviceAddress  is different than the one stored in shared User Defaults
     /// - parameters:
     ///     - sharedData : shared User Defaults
-    public func checkCGMBluetoothTransmitter(sharedUserDefaults: UserDefaults, heartbeat: DispatchTimer?) {
+    public func checkCGMBluetoothTransmitter(
+        sharedUserDefaults: UserDefaults,
+        heartbeat: AppGroupCGMHeartBeatDelegate?
+    ) -> String? {
         if !initialSetupDone {
             initialSetupDone = true
 
@@ -40,7 +43,10 @@ class HeartBeatManager {
 
             // assign new bluetoothTransmitter. If return value is nil, and if it was not nil before, and if it was currently connected then it will disconnect automatically, because there's no other reference to it, hence deinit will be called
             bluetoothTransmitter = setupBluetoothTransmitter(sharedData: sharedUserDefaults, heartbeat: heartbeat)
+        } else {
+            disconnectBluetoothTransmitter()
         }
+        return bluetoothTransmitter?.deviceAddress
     }
 
     public func disconnectBluetoothTransmitter() {
@@ -49,7 +55,10 @@ class HeartBeatManager {
         bluetoothTransmitter = nil
     }
 
-    private func setupBluetoothTransmitter(sharedData: UserDefaults, heartbeat: DispatchTimer?) -> BluetoothTransmitter? {
+    private func setupBluetoothTransmitter(
+        sharedData: UserDefaults,
+        heartbeat: AppGroupCGMHeartBeatDelegate?
+    ) -> BluetoothTransmitter? {
         // if sharedUserDefaults.cgmTransmitterDeviceAddress is not nil then, create a new bluetoothTranmsitter instance
         if let cgmTransmitterDeviceAddress = sharedData.string(forKey: keyForcgmTransmitterDeviceAddress) {
             // unwrap cgmTransmitter_CBUUID_Service and cgmTransmitter_CBUUID_Receive
@@ -71,11 +80,10 @@ class HeartBeatManager {
                                     UIApplication.shared.endBackgroundTask(bg)
                                     backGroundFetchBGTaskID = nil
                                 }
-                            let box = WeakBox(heartbeatAvailable)
 
                             // give xdrip a few seconds to read from sensor and put into shared data
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                box.value?.fire()
+                                heartbeatAvailable.heartbeat()
                                 if let backgroundTask = backGroundFetchBGTaskID {
                                     UIApplication.shared.endBackgroundTask(backgroundTask)
                                     backGroundFetchBGTaskID = .invalid
@@ -97,6 +105,3 @@ class HeartBeatManager {
         return nil
     }
 }
-
-private final class WeakBox<T: AnyObject>: @unchecked Sendable { weak var value: T?
-    init(_ v: T?) { value = v } }

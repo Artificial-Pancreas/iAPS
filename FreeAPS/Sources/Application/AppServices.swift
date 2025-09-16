@@ -27,6 +27,5 @@ class AppServices: ObservableObject {
         settingsManager = resolver.resolve(SettingsManager.self)!
         carbsStorage = resolver.resolve(CarbsStorage.self)!
         calendarManager = resolver.resolve(CalendarManager.self)!
-        _ = FreeAPSApp.resolver.resolve(AppGroupSource.self)!
     }
 }

@@ -4,12 +4,14 @@ import G7SensorKit
 import LibreTransmitter
 import LoopKit
 import MinimedKit
+import MockKit
+import NightscoutRemoteCGM
 import OmniBLE
 import OmniKit
 
 enum KnownPlugins {
-    enum Ids {
-        static let libreTransmitter = LibreTransmitterManagerV3.pluginIdentifier
+    static func allowCalibrations(for cgmManager: CGMManager) -> Bool {
+        cgmManager.pluginIdentifier == LibreTransmitterManagerV3.pluginIdentifier
     }
 
     static func cgmExpirationByPluginIdentifier(_ cgmManager: CGMManager?) -> TimeInterval? {
@@ -60,6 +62,27 @@ enum KnownPlugins {
         case G7CGMManager.pluginIdentifier:
             URL(string: "dexcomg7://")!
         default: nil
+        }
+    }
+
+    static func cgmIdForStatistics(for cgmManager: CGMManager?) -> String? {
+        guard let cgmManager else { return nil }
+
+        switch cgmManager.pluginIdentifier {
+        case G5CGMManager.pluginIdentifier: return CGMType.dexcomG5.rawValue
+        case G6CGMManager.pluginIdentifier: return CGMType.dexcomG6.rawValue
+        case G7CGMManager.pluginIdentifier: return CGMType.dexcomG7.rawValue
+        case LibreTransmitterManagerV3.pluginIdentifier: return CGMType.libreTransmitter.rawValue
+        case NightscoutRemoteCGM.pluginIdentifier: return CGMType.nightscout.rawValue
+        case MockCGMManager.pluginIdentifier: return CGMType.simulator.rawValue
+        case MinimedPumpManager.pluginIdentifier: return CGMType.enlite.rawValue
+        case AppGroupCGM.pluginIdentifier:
+            guard let cgmManager = cgmManager as? AppGroupCGM else {
+                return nil
+            }
+            return cgmManager.appGroupSource.latestReadingFrom?.rawValue ??
+                cgmManager.appGroupSource.latestReadingFromOther
+        default: return cgmManager.pluginIdentifier
         }
     }
 }

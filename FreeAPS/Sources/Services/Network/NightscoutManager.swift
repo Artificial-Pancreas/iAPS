@@ -108,15 +108,11 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         let useLocal = settingsManager.settings.useLocalGlucoseSource
         ping = nil
 
-        if !useLocal {
-            guard isNetworkReachable else {
-                return Just([]).eraseToAnyPublisher()
-            }
+        guard isNetworkReachable else {
+            return Just([]).eraseToAnyPublisher()
         }
 
-        let maybeNightscout = useLocal
-            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort)")!)
-            : nightscoutAPI
+        let maybeNightscout = nightscoutAPI
 
         guard let nightscout = maybeNightscout else {
             return Just([]).eraseToAnyPublisher()

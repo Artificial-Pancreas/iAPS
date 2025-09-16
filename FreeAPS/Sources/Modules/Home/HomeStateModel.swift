@@ -78,7 +78,6 @@ extension Home {
         @Published var autoisf = false
         @Published var displayExpiration = false
         @Published var displaySAGE = true
-//        @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
@@ -196,7 +195,6 @@ extension Home {
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
             displaySAGE = settingsManager.settings.displaySAGE
-//            cgm = settingsManager.settings.cgm
 
             updateSensorDays()
 
@@ -642,39 +640,18 @@ extension Home {
         }
 
         func openCGM() {
-            var url: URL?
             if let cgm = provider.deviceManager.cgmManager {
-                if let cgm = cgm as? CGMManagerUI {
+                if let url = cgm.appURL {
+                    // if app url is provided (nightscout, xDrip) - open it
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else if let cgm = cgm as? CGMManagerUI {
                     let view = CGM.CGMSettingsView(
                         cgmManager: cgm,
                         deviceManager: provider.deviceManager,
                         completionDelegate: self
                     ).asAny()
                     router.mainSecondaryModalView.send(view)
-                    return
                 }
-
-                if let url = cgm.appURL {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-                return
-            }
-
-            url = settingsManager.settings.appGroupSourceType?.appURL
-
-            if url == nil, settingsManager.settings.useLocalGlucoseSource {
-                switch settingsManager.settings.localGlucosePort {
-                case 1979:
-                    url = URL(string: "spikeapp://")!
-                case 17580:
-                    url = URL(string: "diabox://")!
-                default:
-                    url = nil
-                }
-            }
-
-            if let url {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
 

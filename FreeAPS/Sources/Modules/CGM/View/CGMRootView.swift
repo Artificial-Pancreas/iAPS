@@ -8,13 +8,6 @@ extension CGM {
         let displayGlucosePreference: DisplayGlucosePreference
         @StateObject var state: StateModel
 
-        private var isCGMSetupPresented: Binding<Bool> {
-            Binding<Bool>(
-                get: { state.cgmIdentifierToSetUp != nil },
-                set: { if !$0 { state.cgmIdentifierToSetUp = nil } }
-            )
-        }
-
         private var daysFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -43,19 +36,24 @@ extension CGM {
                         Section {
                             if let status = cgmManager.cgmStatusHighlight?.localizedMessage {
                                 HStack {
-                                    Text(status.replacingOccurrences(of: "\n", with: " ")).font(.caption)
+                                    Text(status.replacingOccurrences(of: "\n", with: " "))
+                                }
+                            }
+                            if !cgmManager.providesBLEHeartbeat {
+                                HStack {
+                                    Text("CGM is not used as heartbeat.")
                                 }
                             }
                         }
                         Section {
                             Button("CGM Configuration") {
-                                state.cgmIdentifierToSetUp = cgmManager.pluginIdentifier
+                                state.setupCGM(cgmManager.pluginIdentifier)
                             }
                         }
                     } else if let pumpManager = state.deviceManager.cgmManager as? PumpManagerUI {
                         Section(header: Text("Active CGM")) {
                             HStack {
-                                Text("Pump/CGM")
+                                Text("Pump+CGM")
                                 Spacer()
                                 Text(pumpManager.localizedTitle)
                             }
@@ -63,76 +61,36 @@ extension CGM {
                                 state.removePumpAsCGM()
                             }
                         }
-                    } else if let appGroupSourceType = state.appGroupSourceType {
-                        Section(header: Text("Shared App Group Source")) {
-                            HStack {
-                                Text("Reading from")
-                                Spacer()
-                                Text(appGroupSourceType.displayName)
-                            }
-                        }
-
-                        if let link = appGroupSourceType.externalLink {
-                            Button("About this source") {
-                                UIApplication.shared.open(link, options: [:], completionHandler: nil)
-                            }
-                        }
-
-                        Section(header: Text("Heartbeat")) {
-                            VStack(alignment: .leading) {
-                                if let cgmTransmitterDeviceAddress = state.cgmTransmitterDeviceAddress {
-                                    Text("CGM address :")
-                                    Text(cgmTransmitterDeviceAddress).font(.caption)
-                                } else {
-                                    Text("CGM is not used as heartbeat.")
-                                }
-                            }
-                        }
-
-                        Button(
-                            NSLocalizedString("Disconnect", comment: "Disconnect from App Group Source button")
-                        ) {
-                            // TODO: better label?
-                            state.appGroupSourceType = nil
-                        }
-                        .tint(.red)
-
                     } else {
-                        Section(header: Text("Add CGM")) {
+                        Section {
                             ForEach(state.deviceManager.availableCGMManagers, id: \.identifier) { cgm in
                                 VStack(alignment: .leading) {
                                     Button(cgm.localizedTitle) {
-                                        state.cgmIdentifierToSetUp = cgm.identifier
+                                        state.setupCGM(cgm.identifier)
                                     }
                                 }
                             }
                         }
-                        Section(header: Text("Shared App Group Source")) { // TODO: better title?
-                            Text("Read BG from an external CGM app using a shared app group.").font(.caption)
-                                .foregroundColor(.secondary)
-
-                            ForEach(AppGroupSourceType.allCases) { type in
-                                VStack(alignment: .leading) {
-                                    Button(
-                                        NSLocalizedString("Read from ", comment: "Read from App Group Source button") + type
-                                            .displayName
-                                    ) {
-                                        state.appGroupSourceType = type
-                                    }
-                                }
-                            }
+                        header: {
+                            Text("Connect to CGM")
+                        }
+                        footer: {
+                            Text(
+                                "To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM."
+                            )
+                            .font(.caption)
                         }
                     }
 
                     if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
-                       cgmManager.pluginIdentifier == KnownPlugins.Ids.libreTransmitter
+                       KnownPlugins.allowCalibrations(for: cgmManager)
                     {
                         Text("Calibrations").navigationLink(to: .calibrations, from: self)
                     }
 
                     // if CGM/App is selected but sensor life-span is not known...
-                    if (state.deviceManager.cgmManager != nil || state.appGroupSourceType != nil) &&
-                        KnownPlugins.cgmExpirationByPluginIdentifier(state.deviceManager.cgmManager) == nil
+                    if let cgmManager = state.deviceManager.cgmManager,
+                       KnownPlugins.cgmExpirationByPluginIdentifier(state.deviceManager.cgmManager) == nil
                     {
                         Section {
                             HStack {
@@ -142,15 +100,9 @@ extension CGM {
                         }
                         header: { Text("Sensor Life-Span") }
                         footer: {
-                            if let appGroupSourceType = state.appGroupSourceType {
-                                Text(
-                                    "When using \(appGroupSourceType.displayName) iAPS doesn't know the type of sensor used or the sensor life-span."
-                                )
-                            } else if let cgmManager = state.deviceManager.cgmManager {
-                                Text(
-                                    "When using \(cgmManager.localizedTitle) iAPS doesn't know the type of sensor used or the sensor life-span."
-                                )
-                            }
+                            Text(
+                                "When using \(cgmManager.localizedTitle) iAPS doesn't know the type of sensor used or the sensor life-span."
+                            )
                         }
                     }
 
@@ -161,7 +113,7 @@ extension CGM {
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .navigationTitle("CGM")
                 .navigationBarTitleDisplayMode(.inline)
-                .sheet(isPresented: isCGMSetupPresented) {
+                .sheet(isPresented: $state.cgmSetupPresented) {
                     if let identifier = state.cgmIdentifierToSetUp {
                         if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
                            cgmManager.pluginIdentifier == identifier

@@ -114,13 +114,6 @@ extension NightscoutConfig {
                     }
 
                 Section {
-                    Toggle("Use local glucose server", isOn: $state.useLocalSource)
-                    HStack {
-                        Text("Port")
-                        DecimalTextField("", value: $state.localPort, formatter: portFormater)
-                    }
-                } header: { Text("Local glucose source") }
-                Section {
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
                 }

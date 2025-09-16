@@ -29,9 +29,6 @@ protocol DeviceDataManager {
     // notify device manager when the app becomes active
     func didBecomeActive()
 
-    // can be called by external blood glucose sources (like AppGroupSource) to trigger the loop
-    func bloodGlucoseReadingsReceived(bloodGlucose: [BloodGlucose])
-
     func createBolusProgressReporter() -> DoseProgressReporter?
 
     func removePumpAsCGM()
@@ -61,11 +58,13 @@ protocol DeviceDataManager {
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
 
 private let staticCGMManagers: [CGMManagerDescriptor] = [
-    CGMManagerDescriptor(identifier: MockCGMManager.pluginIdentifier, localizedTitle: MockCGMManager.localizedTitle)
+    CGMManagerDescriptor(identifier: MockCGMManager.pluginIdentifier, localizedTitle: MockCGMManager.localizedTitle),
+    CGMManagerDescriptor(identifier: AppGroupCGM.pluginIdentifier, localizedTitle: AppGroupCGM.localizedTitle)
 ]
 
 private let staticCGMManagersByIdentifier: [String: CGMManager.Type] = [
-    MockCGMManager.pluginIdentifier: MockCGMManager.self
+    MockCGMManager.pluginIdentifier: MockCGMManager.self,
+    AppGroupCGM.pluginIdentifier: AppGroupCGM.self
 ]
 
 private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
@@ -492,10 +491,6 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     // MARK: loop
-
-    func bloodGlucoseReadingsReceived(bloodGlucose: [BloodGlucose]) {
-        processReceivedBloodGlucose(bloodGlucose: bloodGlucose)
-    }
 
     private func heartbeat() {
         processQueue.safeSync {
