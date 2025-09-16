@@ -164,6 +164,11 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate {
             manager.cancelPeripheralConnection(peripheral)
         }
     }
+    
+    func clearPeripheral() {
+        peripheral = nil
+        peripheralManager = nil
+    }
 }
 
 extension BluetoothManager {
