@@ -28,15 +28,19 @@ final class BloodGlucoseManager {
     /// return true if new blood glucose record was detected and stored
     func storeNewBloodGlucose(
         bloodGlucose: [BloodGlucose],
-    ) -> Bool {
-        let glucoseFromHealth = healthKitManager.fetch()
-        let syncDate = glucoseStorage.syncDate()
+        completion: @escaping (Bool) -> Void
+    ) {
+        processQueue.async {
+            let glucoseFromHealth = self.healthKitManager.fetch()
+            let syncDate = self.glucoseStorage.syncDate()
 
-        return glucoseStoreAndHeartDecision(
-            syncDate: syncDate,
-            glucose: bloodGlucose,
-            glucoseFromHealth: glucoseFromHealth
-        )
+            let newBloodGlucoseStored = self.glucoseStoreAndHeartDecision(
+                syncDate: syncDate,
+                glucose: bloodGlucose,
+                glucoseFromHealth: glucoseFromHealth
+            )
+            completion(newBloodGlucoseStored)
+        }
     }
 
     private func glucoseStoreAndHeartDecision(
@@ -44,11 +48,6 @@ final class BloodGlucoseManager {
         glucose: [BloodGlucose],
         glucoseFromHealth: [BloodGlucose]
     ) -> Bool {
-        // TODO: [loopkit] use processQueue here?
-        let allGlucose = glucose + glucoseFromHealth
-        var filteredByDate: [BloodGlucose] = []
-        var filtered: [BloodGlucose] = []
-
         // start background time extension
         var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
         backGroundFetchBGTaskID = UIApplication.shared.beginBackgroundTask(withName: "save BG starting") {
@@ -56,6 +55,8 @@ final class BloodGlucoseManager {
             UIApplication.shared.endBackgroundTask(bg)
             backGroundFetchBGTaskID = .invalid
         }
+
+        let allGlucose = glucose + glucoseFromHealth
 
         guard allGlucose.isNotEmpty else {
             if let backgroundTask = backGroundFetchBGTaskID {
@@ -65,9 +66,12 @@ final class BloodGlucoseManager {
             return false
         }
 
-        // TODO: [loopkit] allow saving readings that are older than the latest, but are missing in the storage?
-        filteredByDate = allGlucose.filter { $0.dateString > syncDate }
-        filtered = glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
+        var filtered: [BloodGlucose] = []
+
+        let recentGlucose = glucoseStorage.recent()
+
+        filtered = allGlucose
+//        filtered = glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
 
         guard filtered.isNotEmpty else {
             // end of the BG tasks
@@ -99,21 +103,34 @@ final class BloodGlucoseManager {
         glucoseStorage.storeGlucose(filtered)
 
         // TODO: [loopkit] the code below used to be executed in parallel with the rest of the loop
-
         nightscoutManager.uploadGlucose()
 
-        // TODO: [loopkit] why background task is not covering the "save to healthkit" part?
+        let glucoseForHealth = allGlucose.filter { !glucoseFromHealth.contains($0) }
+        if glucoseForHealth.isNotEmpty {
+            healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
+        }
+
+        let updatedGlucose = glucoseStorage.recent()
+
+        // if a newer blood glucose record was stored - we will return `true`
+        // this will tell the DeviceDataMager to trigger a loop recommendation
+        let previousLatestBG = recentGlucose.map(\.dateString).max()
+        let updatedLatestBG = updatedGlucose.map(\.dateString).max()
+
+        var newGlucoseStored = false
+        if let previousLatestBG, let updatedLatestBG {
+            newGlucoseStored = updatedLatestBG > previousLatestBG
+        } else {
+            newGlucoseStored = previousLatestBG == nil && updatedLatestBG != nil
+        }
+
         // end of the BG tasks
         if let backgroundTask = backGroundFetchBGTaskID {
             UIApplication.shared.endBackgroundTask(backgroundTask)
             backGroundFetchBGTaskID = .invalid
         }
 
-        let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
-        if glucoseForHealth.isNotEmpty {
-            healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
-        }
-        return true
+        return newGlucoseStored
     }
 
     private func save(_ glucose: [BloodGlucose]) {

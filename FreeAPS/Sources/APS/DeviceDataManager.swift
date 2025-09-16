@@ -509,9 +509,13 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     private func processReceivedBloodGlucose(bloodGlucose: [BloodGlucose]) {
-        if bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) {
-            updatePumpData {
-                self._recommendsLoop.send(())
+        bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) { newGlucoseStored in
+            if newGlucoseStored {
+                self.processQueue.safeSync {
+                    self.updatePumpData {
+                        self._recommendsLoop.send(())
+                    }
+                }
             }
         }
     }
@@ -855,6 +859,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
 
     func cgmManager(_: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(processQueue))
+        // TODO: [loopkit] remove this debug log?
+        debug(.deviceManager, "hasNew readingResult: \(readingResult)")
         processCGMReadingResultAndLoop(readingResult: readingResult)
     }
 
