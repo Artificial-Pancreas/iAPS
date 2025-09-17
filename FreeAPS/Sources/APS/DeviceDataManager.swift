@@ -179,7 +179,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
         appCoordinator.heartbeat
             .sink { [weak self] _ in
-                self?.heartbeat()
+                self?.heartbeat(forceRecommendLoop: true)
             }
             .store(in: &lifetime)
 
@@ -492,26 +492,26 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     // MARK: loop
 
-    private func heartbeat() {
+    private func heartbeat(forceRecommendLoop: Bool) {
         processQueue.safeSync {
             fetchNewDataFromCgm { readingResult in
-                self.processCGMReadingResultAndLoop(readingResult: readingResult)
+                self.processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: forceRecommendLoop)
             }
         }
     }
 
-    private func processCGMReadingResultAndLoop(readingResult: CGMReadingResult) {
+    private func processCGMReadingResultAndLoop(readingResult: CGMReadingResult, forceRecommendLoop: Bool) {
         processQueue.safeSync {
             self.processCGMReadingResult(readingResult: readingResult) { bloodGlucose in
-                self.processReceivedBloodGlucose(bloodGlucose: bloodGlucose)
+                self.processReceivedBloodGlucose(bloodGlucose: bloodGlucose, forceRecommendLoop: forceRecommendLoop)
             }
         }
     }
 
-    private func processReceivedBloodGlucose(bloodGlucose: [BloodGlucose]) {
+    private func processReceivedBloodGlucose(bloodGlucose: [BloodGlucose], forceRecommendLoop: Bool) {
         // storeNewBloodGlucose runs in queue.async with callback so that we don't block the CGM manager
         bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) { newGlucoseStored in
-            if newGlucoseStored {
+            if newGlucoseStored || forceRecommendLoop {
                 self.processQueue.safeSync {
                     self.updatePumpData {
                         self._recommendsLoop.send(())
@@ -568,7 +568,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         // TODO: [loopkit] is this correct?
         debug(.deviceManager, "PumpManager:\(String(describing: type(of: pumpManager))) did fire heartbeat")
-        appCoordinator.sendHeartbeat()
+        heartbeat(forceRecommendLoop: false)
     }
 
     func pumpManagerMustProvideBLEHeartbeat(_: PumpManager) -> Bool {
@@ -862,7 +862,7 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         // TODO: [loopkit] remove this debug log?
         debug(.deviceManager, "hasNew readingResult: \(readingResult)")
-        processCGMReadingResultAndLoop(readingResult: readingResult)
+        processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: false)
     }
 
     func cgmManager(_: LoopKit.CGMManager, hasNew _: [PersistedCgmEvent]) {

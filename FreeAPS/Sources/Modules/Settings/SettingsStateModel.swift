@@ -14,6 +14,8 @@ extension Settings {
         @Published var allowDilution = false
         @Published var extended_overrides = false
         @Published var noCarbs = false
+        @Published var allowOneMinuteLoop = false
+        @Published var allowOneMinuteGlucose = false
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -29,6 +31,8 @@ extension Settings {
             subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
             subscribeSetting(\.extended_overrides, on: $extended_overrides) { extended_overrides = $0 }
             subscribeSetting(\.noCarbs, on: $noCarbs) { noCarbs = $0 }
+            subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { allowOneMinuteLoop = $0 }
+            subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { allowOneMinuteGlucose = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"

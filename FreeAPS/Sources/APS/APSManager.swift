@@ -139,6 +139,7 @@ final class BaseAPSManager: APSManager, Injectable {
         injectServices(resolver)
         openAPS = OpenAPS(
             storage: storage,
+            glucoseStorage: glucoseStorage,
             nightscout: nightscout,
             pumpStorage: pumpHistoryStorage,
             scriptExecutor: scriptExecutor
@@ -198,7 +199,9 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loop() {
         // check the last start of looping is more the loopInterval but the previous loop was completed
         if lastLoopDate > lastStartLoopDate {
-            guard lastStartLoopDate.addingTimeInterval(Config.loopInterval) < Date() else {
+            let loopInterval = settingsManager.settings.allowOneMinuteLoop ? Config.loopIntervalOneMinute : Config
+                .loopIntervalFiveMinutes
+            guard Date().timeIntervalSince(lastStartLoopDate) >= loopInterval else {
                 debug(.apsManager, "too close to do a loop : \(lastStartLoopDate)")
                 return
             }

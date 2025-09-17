@@ -7,14 +7,14 @@ extension PumpConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var deviceManager: DeviceDataManager!
 
-        @Published var pumpIdentifierToSetUp: String? = nil
-
-//        @Published var pumpState: PumpDisplayState?
+        @Published var pumpSetupPresented: Bool = false
+        @Published private(set) var pumpIdentifierToSetUp: String? = nil
 
         private(set) var initialSettings: PumpInitialSettings = .default
         @Published var alertNotAck: Bool = false
 
         override func subscribe() {
+            // TODO: [loopkit] fix/remove this
 //            provider.pumpDisplayState
 //                .receive(on: DispatchQueue.main)
 //                .assign(to: \.pumpState, on: self)
@@ -39,6 +39,11 @@ extension PumpConfig {
                 maxBasalRateUnitsPerHour: Double(pumpSettings.maxBasal),
                 basalSchedule: basalSchedule!
             )
+        }
+
+        func setupPump(_ identifier: String?) {
+            pumpIdentifierToSetUp = identifier
+            pumpSetupPresented = identifier != nil
         }
 
         func ack() {

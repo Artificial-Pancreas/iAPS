@@ -10,8 +10,6 @@ final class BloodGlucoseManager {
     private let glucoseStorage: GlucoseStorage
     private let settingsManager: SettingsManager
     private let nightscoutManager: NightscoutManager
-    private let healthKitManager: HealthKitManager
-    private let appCoordinator: AppCoordinator
 
     private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -21,23 +19,19 @@ final class BloodGlucoseManager {
         glucoseStorage = resolver.resolve(GlucoseStorage.self)!
         settingsManager = resolver.resolve(SettingsManager.self)!
         nightscoutManager = resolver.resolve(NightscoutManager.self)!
-        healthKitManager = resolver.resolve(HealthKitManager.self)!
-        appCoordinator = resolver.resolve(AppCoordinator.self)!
     }
 
-    /// return true if new blood glucose record was detected and stored
+    /// return true if a newer blood glucose record was detected and stored
     func storeNewBloodGlucose(
         bloodGlucose: [BloodGlucose],
         completion: @escaping (Bool) -> Void
     ) {
         processQueue.async {
-            let glucoseFromHealth = self.healthKitManager.fetch()
             let syncDate = self.glucoseStorage.syncDate()
 
             let newBloodGlucoseStored = self.glucoseStoreAndHeartDecision(
                 syncDate: syncDate,
-                glucose: bloodGlucose,
-                glucoseFromHealth: glucoseFromHealth
+                glucose: bloodGlucose
             )
             completion(newBloodGlucoseStored)
         }
@@ -45,8 +39,7 @@ final class BloodGlucoseManager {
 
     private func glucoseStoreAndHeartDecision(
         syncDate: Date,
-        glucose: [BloodGlucose],
-        glucoseFromHealth: [BloodGlucose]
+        glucose: [BloodGlucose]
     ) -> Bool {
         // start background time extension
         var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
@@ -56,7 +49,7 @@ final class BloodGlucoseManager {
             backGroundFetchBGTaskID = .invalid
         }
 
-        let allGlucose = glucose + glucoseFromHealth
+        let allGlucose = glucose
 
         guard allGlucose.isNotEmpty else {
             if let backgroundTask = backGroundFetchBGTaskID {
@@ -71,7 +64,6 @@ final class BloodGlucoseManager {
         let recentGlucose = glucoseStorage.recent()
 
         filtered = allGlucose
-//        filtered = glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
 
         guard filtered.isNotEmpty else {
             // end of the BG tasks
@@ -83,11 +75,12 @@ final class BloodGlucoseManager {
         }
         debug(.deviceManager, "New glucose found")
 
-        // filter the data if it is the case
+        // TODO: [loopkit] revisit this (we now have backfill)
         if settingsManager.settings.smoothGlucose {
             // limit to 30 minutes of previous BG Data
-            let oldGlucoses = glucoseStorage.recent().filter {
-                $0.dateString.addingTimeInterval(31 * 60) > Date()
+            let now = Date()
+            let oldGlucoses = recentGlucose.filter {
+                $0.dateString.addingTimeInterval(31 * 60) > now
             }
             var smoothedValues = oldGlucoses + filtered
             // smooth with 3 repeats
@@ -95,6 +88,7 @@ final class BloodGlucoseManager {
                 smoothedValues.smoothSavitzkyGolayQuaDratic(withFilterWidth: 3)
             }
             // find the new values only
+            // TODO: [loopkit] fix this filter
             filtered = smoothedValues.filter { $0.dateString > syncDate }
         }
 
@@ -102,18 +96,15 @@ final class BloodGlucoseManager {
 
         glucoseStorage.storeGlucose(filtered)
 
-        // TODO: [loopkit] the code below used to be executed in parallel with the rest of the loop
-        nightscoutManager.uploadGlucose()
+        // TODO: do not commit this!
+        glucoseStorage.storeGlucose(filtered)
 
-        let glucoseForHealth = allGlucose.filter { !glucoseFromHealth.contains($0) }
-        if glucoseForHealth.isNotEmpty {
-            healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
-        }
+        // TODO: [loopkit] move this out of the main loop, upload in the background
+        nightscoutManager.uploadGlucose()
 
         let updatedGlucose = glucoseStorage.recent()
 
-        // if a newer blood glucose record was stored - we will return `true`
-        // this will tell the DeviceDataMager to trigger a loop recommendation
+        // recommend a loop only if a newer blood glucose record was stored
         let previousLatestBG = recentGlucose.map(\.dateString).max()
         let updatedLatestBG = updatedGlucose.map(\.dateString).max()
 

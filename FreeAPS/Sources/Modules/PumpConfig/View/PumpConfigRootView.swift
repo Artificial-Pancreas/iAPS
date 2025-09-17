@@ -6,13 +6,6 @@ extension PumpConfig {
         let resolver: Resolver
         @StateObject var state: StateModel
 
-        private var isPumpSetupPresented: Binding<Bool> {
-            Binding<Bool>(
-                get: { state.pumpIdentifierToSetUp != nil },
-                set: { if !$0 { state.pumpIdentifierToSetUp = nil } }
-            )
-        }
-
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -24,7 +17,7 @@ extension PumpConfig {
                     Section(header: Text("Model")) {
                         if let pumpManager = state.deviceManager.pumpManager {
                             Button {
-                                state.pumpIdentifierToSetUp = pumpManager.pluginIdentifier
+                                state.setupPump(pumpManager.pluginIdentifier)
                             } label: {
                                 HStack {
                                     Image(uiImage: pumpManager.smallImage ?? UIImage()).padding()
@@ -42,10 +35,10 @@ extension PumpConfig {
                                 Button("Acknowledge all alerts") { state.ack() }
                             }
                         } else {
-                            ForEach(state.deviceManager.availablePumpManagers, id: \.identifier) { cgm in
+                            ForEach(state.deviceManager.availablePumpManagers, id: \.identifier) { pump in
                                 VStack(alignment: .leading) {
-                                    Button("Add " + cgm.localizedTitle) {
-                                        state.pumpIdentifierToSetUp = cgm.identifier
+                                    Button("Add " + pump.localizedTitle) {
+                                        state.setupPump(pump.identifier)
                                     }
                                 }
                             }
@@ -55,7 +48,7 @@ extension PumpConfig {
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .navigationTitle("Pump config")
                 .navigationBarTitleDisplayMode(.inline)
-                .sheet(isPresented: isPumpSetupPresented) {
+                .sheet(isPresented: $state.pumpSetupPresented) {
                     if let pumpIdentifier = state.pumpIdentifierToSetUp {
                         if let pumpManager = state.deviceManager.pumpManager {
                             PumpSettingsView(

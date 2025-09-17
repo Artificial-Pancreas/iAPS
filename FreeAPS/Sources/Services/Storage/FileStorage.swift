@@ -9,6 +9,7 @@ protocol FileStorage {
     func append<Value: JSON>(_ newValues: [Value], to name: String)
     func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>)
     func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqBy keyPath: KeyPath<Value, T>)
+    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqByProj proj: (Value) -> T)
     func remove(_ name: String)
     func rename(_ name: String, to newName: String)
     func transaction(_ exec: (FileStorage) -> Void)
@@ -122,6 +123,27 @@ final class BaseFileStorage: FileStorage, Injectable {
         } else if var values = retrieve(name, as: [Value].self) {
             for newValue in newValues {
                 if let index = values.firstIndex(where: { $0[keyPath: keyPath] == newValue[keyPath: keyPath] }) {
+                    values[index] = newValue
+                } else {
+                    values.append(newValue)
+                }
+                save(values, as: name)
+            }
+        } else {
+            save(newValues, as: name)
+        }
+    }
+
+    func append<Value: JSON, T: Equatable>(_ newValues: [Value], to name: String, uniqByProj proj: (Value) -> T) {
+        if let value = retrieve(name, as: Value.self) {
+            if newValues.firstIndex(where: { proj($0) == proj(value) }) != nil {
+                save(newValues, as: name)
+                return
+            }
+            append(newValues, to: name)
+        } else if var values = retrieve(name, as: [Value].self) {
+            for newValue in newValues {
+                if let index = values.firstIndex(where: { proj($0) == proj(newValue) }) {
                     values[index] = newValue
                 } else {
                     values.append(newValue)
