@@ -279,34 +279,34 @@ LƯU Ý: Cần tối thiểu 70 đơn vị (70U) để kích hoạt.";
 "Your patch has %i hours left" = "Patch của bạn còn lại %i giờ sử dụng";
 
 /* Title insulin suspended notification */
-"Insulin has been suspended!" = "Insulin has been suspended!";
+"Insulin has been suspended!" = "Insulin đã ngưng!";
 
 /* Body daily max notification */
-"Your patch has reached its daily maximum!" = "Your patch has reached its daily maximum!";
+"Your patch has reached its daily maximum!" = "Miếng bơm của bạn đã đạt giới hạn tối đa trong ngày!";
 
 /* Body hourly max notification */
-"Your patch has reached its hourly maximum!" = "Your patch has reached its hourly maximum!";
+"Your patch has reached its hourly maximum!" = "Miếng bơm của bạn đã đạt giới hạn tối đa theo giờ!";
 
 /* Title replace patch notification */
-"Replace your patch now!" = "Replace your patch now!";
+"Replace your patch now!" = "Hãy thay miếng bơm ngay bây giờ!";
 
 /* Body occlussion notification */
-"Your patch has detected an occlussion!" = "Your patch has detected an occlussion!";
+"Your patch has detected an occlussion!" = "Phát hiện tắc nghẽn trong miếng bơm!";
 
 /* Body fault notification */
-"Your patch is in Fault state!" = "Your patch is in Fault state!";
+"Your patch is in Fault state!" = "Miếng bơm lỗi!";
 
 /* Body reservoir empty notification */
-"Your patch is out of insulin!" = "Your patch is out of insulin!";
+"Your patch is out of insulin!" = "Miếng bơm hết insulin!";
 
 /* Force remove */
-"Force remove" = "Force remove";
+"Force remove" = "Bắt buộc gỡ bỏ";
 
 /* title force remove */
 "Are you sure?" = "Bạn có chắc chắn không?";
 
 /* body force remove */
-"It is recommended to deactivate first" = "It is recommended to deactivate first";
+"It is recommended to deactivate first" = "Khuyến nghị nên hủy kích hoạt trước";
 
 /* confirm force remove */
 "Confirm" = "Xác nhận";
