@@ -8,6 +8,7 @@ final class OpenAPS {
     private let scriptExecutor: WebViewScriptExecutor
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
     private let storage: FileStorage
+    private let glucoseStorage: GlucoseStorage
     private let nightscout: NightscoutManager
     private let pumpStorage: PumpHistoryStorage
 
@@ -15,11 +16,13 @@ final class OpenAPS {
 
     init(
         storage: FileStorage,
+        glucoseStorage: GlucoseStorage,
         nightscout: NightscoutManager,
         pumpStorage: PumpHistoryStorage,
         scriptExecutor: WebViewScriptExecutor
     ) {
         self.storage = storage
+        self.glucoseStorage = glucoseStorage
         self.nightscout = nightscout
         self.pumpStorage = pumpStorage
         self.scriptExecutor = scriptExecutor
@@ -194,7 +197,7 @@ final class OpenAPS {
                 debug(.openAPS, "Start autosens")
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
                 let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                let glucose = self.glucoseStorage.retrieveFiltered()
                 let profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
                 let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
@@ -227,7 +230,7 @@ final class OpenAPS {
             self.processQueue.async {
                 debug(.openAPS, "Start autotune")
                 let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                let glucose = self.glucoseStorage.retrieveFiltered()
                 let profile = self.loadFileFromStorage(name: Settings.profile)
                 let pumpProfile = self.loadFileFromStorage(name: Settings.pumpProfile)
                 let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
@@ -382,8 +385,9 @@ final class OpenAPS {
         await loadFileFromStorageAsync(name: Monitor.carbHistory)
     }
 
-    private func glucoseHistory() async -> RawJSON {
-        await loadFileFromStorageAsync(name: Monitor.glucose)
+    private func glucoseHistory() async -> [BloodGlucose] {
+        // TODO: not async
+        glucoseStorage.retrieveFiltered()
     }
 
     private func preferencesHistory() async -> RawJSON {

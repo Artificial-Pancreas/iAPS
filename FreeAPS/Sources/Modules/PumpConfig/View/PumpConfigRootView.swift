@@ -4,54 +4,66 @@ import Swinject
 extension PumpConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             NavigationView {
                 Form {
                     Section(header: Text("Model")) {
-                        if let pumpState = state.pumpState {
+                        if let pumpManager = state.deviceManager.pumpManager {
                             Button {
-                                state.setupPump = true
+                                state.setupPump(pumpManager.pluginIdentifier)
                             } label: {
                                 HStack {
-                                    Image(uiImage: pumpState.image ?? UIImage()).padding()
-                                    Text(pumpState.name)
+                                    Image(uiImage: pumpManager.smallImage ?? UIImage()).padding()
+                                    Text(pumpManager.localizedTitle)
+                                }
+                                if let status = pumpManager.pumpStatusHighlight?.localizedMessage {
+                                    HStack {
+                                        Text(status.replacingOccurrences(of: "\n", with: " ")).font(.caption)
+                                    }
                                 }
                             }
+                            //                            TODO: [loopkit] fix this
                             if state.alertNotAck {
                                 Spacer()
                                 Button("Acknowledge all alerts") { state.ack() }
                             }
                         } else {
-                            Button("Add Medtronic") { state.addPump(.minimed) }
-                            Button("Add Omnipod") { state.addPump(.omnipod) }
-                            Button("Add Omnipod Dash") { state.addPump(.omnipodBLE) }
-                            Button("Add Dana-i/RS") { state.addPump(.dana) }
-                            Button("Add Simulator") { state.addPump(.simulator) }
+                            ForEach(state.deviceManager.availablePumpManagers, id: \.identifier) { pump in
+                                VStack(alignment: .leading) {
+                                    Button("Add " + pump.localizedTitle) {
+                                        state.setupPump(pump.identifier)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                .onAppear(perform: configureView)
                 .navigationTitle("Pump config")
                 .navigationBarTitleDisplayMode(.inline)
-                .sheet(isPresented: $state.setupPump) {
-                    if let pumpManager = state.provider.apsManager.pumpManager {
-                        PumpSettingsView(
-                            pumpManager: pumpManager,
-                            bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                            completionDelegate: state,
-                            setupDelegate: state
-                        )
-                    } else {
-                        PumpSetupView(
-                            pumpType: state.setupPumpType,
-                            pumpInitialSettings: state.initialSettings,
-                            bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                            completionDelegate: state,
-                            setupDelegate: state
-                        )
+                .sheet(isPresented: $state.pumpSetupPresented) {
+                    if let pumpIdentifier = state.pumpIdentifierToSetUp {
+                        if let pumpManager = state.deviceManager.pumpManager {
+                            PumpSettingsView(
+                                pumpManager: pumpManager,
+                                deviceManager: state.deviceManager,
+                                completionDelegate: state
+                            )
+                        } else {
+                            PumpSetupView(
+                                pumpIdentifier: pumpIdentifier,
+                                pumpInitialSettings: state.initialSettings,
+                                deviceManager: state.deviceManager,
+                                completionDelegate: state
+                            )
+                        }
                     }
                 }
             }

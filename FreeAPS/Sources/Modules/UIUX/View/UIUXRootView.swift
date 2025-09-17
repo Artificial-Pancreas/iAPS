@@ -4,7 +4,12 @@ import Swinject
 extension UIUX {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -114,7 +119,6 @@ extension UIUX {
                 } header: { Text("Light / Dark Mode") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("UI/UX")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))

@@ -4,6 +4,7 @@ import SwiftDate
 
 extension Home {
     final class Provider: BaseProvider, HomeProvider {
+        @Injected() var appCoordinator: AppCoordinator!
         @Injected() var apsManager: APSManager!
         @Injected() var glucoseStorage: GlucoseStorage!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
@@ -55,11 +56,11 @@ extension Home {
         }
 
         func pumpTimeZone() -> TimeZone? {
-            apsManager.pumpManager?.status.timeZone
+            deviceManager.pumpManager?.status.timeZone
         }
 
         func heartbeatNow() {
-            apsManager.heartbeat(date: Date())
+            appCoordinator.sendHeartbeat()
         }
 
         func filteredGlucose(hours: Int) -> [BloodGlucose] {

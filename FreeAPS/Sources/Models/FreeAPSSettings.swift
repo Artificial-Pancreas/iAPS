@@ -6,14 +6,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var allowAnnouncements: Bool = false
     var useAutotune: Bool = false
     var isUploadEnabled: Bool = false
-    var useLocalGlucoseSource: Bool = false
-    var localGlucosePort: Int = 8080
     var debugOptions: Bool = false
     var insulinReqPercentage: Decimal = 70
     var skipBolusScreenAfterCarbs: Bool = false
     var displayHR: Bool = false
-    var cgm: CGMType = .nightscout
-    var uploadGlucose: Bool = true
     var useCalendar: Bool = false
     var displayCalendarIOBandCOB: Bool = false
     var displayCalendarEmojis: Bool = false
@@ -137,6 +133,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var ketoProtectBasalPercent: Decimal = 20
     var ketoProtectAbsolut: Bool = false
     var ketoProtectBasalAbsolut: Decimal = 0
+    // 1-min loops
+    var allowOneMinuteLoop: Bool = false
+    var allowOneMinuteGlucose: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -163,14 +162,6 @@ extension FreeAPSSettings: Decodable {
 
         if let isUploadEnabled = try? container.decode(Bool.self, forKey: .isUploadEnabled) {
             settings.isUploadEnabled = isUploadEnabled
-        }
-
-        if let useLocalGlucoseSource = try? container.decode(Bool.self, forKey: .useLocalGlucoseSource) {
-            settings.useLocalGlucoseSource = useLocalGlucoseSource
-        }
-
-        if let localGlucosePort = try? container.decode(Int.self, forKey: .localGlucosePort) {
-            settings.localGlucosePort = localGlucosePort
         }
 
         if let debugOptions = try? container.decode(Bool.self, forKey: .debugOptions) {
@@ -213,14 +204,6 @@ extension FreeAPSSettings: Decodable {
 
         if let displayOnWatch = try? container.decode(AwConfig.self, forKey: .displayOnWatch) {
             settings.displayOnWatch = displayOnWatch
-        }
-
-        if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {
-            settings.cgm = cgm
-        }
-
-        if let uploadGlucose = try? container.decode(Bool.self, forKey: .uploadGlucose) {
-            settings.uploadGlucose = uploadGlucose
         }
 
         if let useCalendar = try? container.decode(Bool.self, forKey: .useCalendar) {
@@ -671,6 +654,14 @@ extension FreeAPSSettings: Decodable {
 
         if let ketoProtectAbsolut = try? container.decode(Bool.self, forKey: .ketoProtectAbsolut) {
             settings.ketoProtectAbsolut = ketoProtectAbsolut
+        }
+
+        // 1-minute loops
+        if let allowOneMinuteLoop = try? container.decode(Bool.self, forKey: .allowOneMinuteLoop) {
+            settings.allowOneMinuteLoop = allowOneMinuteLoop
+        }
+        if let allowOneMinuteGlucose = try? container.decode(Bool.self, forKey: .allowOneMinuteGlucose) {
+            settings.allowOneMinuteGlucose = allowOneMinuteGlucose
         }
 
         self = settings

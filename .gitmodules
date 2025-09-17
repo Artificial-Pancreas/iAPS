@@ -1,0 +1,37 @@
+[submodule "LoopKit"]
+	path = LoopKit
+	url = https://github.com/LoopKit/LoopKit.git
+[submodule "LibreTransmitter"]
+	path = LibreTransmitter
+	url = https://github.com/LoopKit/LibreTransmitter.git
+[submodule "G7SensorKit"]
+	path = G7SensorKit
+	url = https://github.com/LoopKit/G7SensorKit.git
+[submodule "CGMBLEKit"]
+	path = CGMBLEKit
+	url = https://github.com/LoopKit/CGMBLEKit.git
+[submodule "MinimedKit"]
+	path = MinimedKit
+	url = https://github.com/LoopKit/MinimedKit.git
+[submodule "OmniBLE"]
+	path = OmniBLE
+	url = https://github.com/LoopKit/OmniBLE.git
+[submodule "OmniKit"]
+	path = OmniKit
+	url = https://github.com/LoopKit/OmniKit.git
+[submodule "dexcom-share-client-swift"]
+	path = dexcom-share-client-swift
+	url = https://github.com/LoopKit/dexcom-share-client-swift.git
+[submodule "RileyLinkKit"]
+	path = RileyLinkKit
+	url = https://github.com/LoopKit/RileyLinkKit
+[submodule "TidepoolService"]
+	path = TidepoolService
+	url = https://github.com/LoopKit/TidepoolService.git
+	branch = dev
+[submodule "NightscoutRemoteCGM"]
+	path = NightscoutRemoteCGM
+	url = https://github.com/LoopKit/NightscoutRemoteCGM.git
+[submodule "DanaKit"]
+	path = DanaKit
+	url = https://github.com/loopandlearn/DanaKit

@@ -6,7 +6,7 @@ extension OverrideProfilesConfig {
     struct RootView: BaseView {
         let resolver: Resolver
 
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var isEditing = false
         @State private var showAlert = false
         @State private var showingDetail = false
@@ -75,6 +75,11 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         var body: some View {
             overridesView
                 .navigationBarTitle("Profiles")
@@ -82,7 +87,6 @@ extension OverrideProfilesConfig {
                 .navigationBarItems(trailing: Button("Close", action: state.hideModal))
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .onAppear {
-                    configureView()
                     state.savedSettings(edit: false, identifier: nil)
                 }
                 .alert(

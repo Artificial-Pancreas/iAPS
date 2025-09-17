@@ -5,7 +5,7 @@ import Swinject
 extension NightscoutConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
         @State var importedHasRun = false
@@ -17,6 +17,11 @@ extension NightscoutConfig {
                 format: "date > %@", Date().addingTimeInterval(-1.minutes.timeInterval) as NSDate
             )
         ) var fetchedErrors: FetchedResults<ImportError>
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
@@ -109,13 +114,6 @@ extension NightscoutConfig {
                     }
 
                 Section {
-                    Toggle("Use local glucose server", isOn: $state.useLocalSource)
-                    HStack {
-                        Text("Port")
-                        DecimalTextField("", value: $state.localPort, formatter: portFormater)
-                    }
-                } header: { Text("Local glucose source") }
-                Section {
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
                 }
@@ -125,7 +123,6 @@ extension NightscoutConfig {
                 } header: { Text("Allow Remote control of iAPS") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("Nightscout Config")
             .navigationBarTitleDisplayMode(.automatic)
             .alert(isPresented: $isImportAlertPresented) {

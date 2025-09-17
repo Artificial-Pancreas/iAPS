@@ -4,7 +4,7 @@ import Swinject
 extension ISFEditor {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var editMode = EditMode.inactive
 
         private var dateFormatter: DateFormatter {
@@ -19,6 +19,11 @@ extension ISFEditor {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             return formatter
+        }
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         var body: some View {
@@ -84,7 +89,6 @@ extension ISFEditor {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Insulin Sensitivities")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

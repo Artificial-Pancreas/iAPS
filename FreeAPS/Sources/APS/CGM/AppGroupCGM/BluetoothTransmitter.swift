@@ -11,7 +11,7 @@ class BluetoothTransmitter: NSObject, CBCentralManagerDelegate, CBPeripheralDele
     // MARK: - private properties
 
     /// the address of the transmitter.
-    private let deviceAddress: String
+    let deviceAddress: String
 
     /// services to be discovered
     private let servicesCBUUIDs: [CBUUID]

@@ -9,10 +9,10 @@ protocol GlucoseStorage {
     func storeGlucose(_ glucose: [BloodGlucose])
     func removeGlucose(ids: [String])
     func recent() -> [BloodGlucose]
+    /// retrieve glucose from storage, filter by frequency (1-min / 5-min, according to settings.allowOneMinuteGlucose)
+    func retrieveFiltered() -> [BloodGlucose]
     func syncDate() -> Date
-    func filterTooFrequentGlucose(_ glucose: [BloodGlucose], at: Date) -> [BloodGlucose]
     func lastGlucoseDate() -> Date
-    func isGlucoseFresh() -> Bool
     func isGlucoseNotFlat() -> Bool
     func nightscoutGlucoseNotUploaded() -> [BloodGlucose]
     func nightscoutCGMStateNotUploaded() -> [NigtscoutTreatment]
@@ -27,7 +27,8 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     @Injected() private var settingsManager: SettingsManager!
 
     private enum Config {
-        static let filterTime: TimeInterval = 4.5 * 60
+        static let filterTimeFiveMinutes: TimeInterval = 4.5 * 60
+        static let filterTimeOneMinute: TimeInterval = 0.8 * 60
     }
 
     init(resolver: Resolver) {
@@ -50,7 +51,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
             debug(.deviceManager, "start storage glucose")
             let file = OpenAPS.Monitor.glucose
             self.storage.transaction { storage in
-                storage.append(glucose, to: file, uniqBy: \.dateString)
+                storage.append(glucose, to: file, uniqByProj: { $0.dateRoundedTo1Second })
 
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > Date() }
@@ -155,25 +156,31 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
     }
 
+    func retrieveFiltered() -> [BloodGlucose] {
+        let retrieved = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
+        let minInterval = settingsManager.settings.allowOneMinuteGlucose ? Config.filterTimeOneMinute : Config
+            .filterTimeFiveMinutes
+        return filterFrequentGlucose(retrieved, interval: minInterval)
+    }
+
     func lastGlucoseDate() -> Date {
         recent().last?.dateString ?? .distantPast
     }
 
-    func isGlucoseFresh() -> Bool {
-        Date().timeIntervalSince(lastGlucoseDate()) <= Config.filterTime
-    }
+    private func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
+        // for oref, newest-to-oldest
+        let sorted = glucose.sorted { $0.date > $1.date }
+        guard let latest = sorted.first else { return [] }
 
-    func filterTooFrequentGlucose(_ glucose: [BloodGlucose], at date: Date) -> [BloodGlucose] {
-        var lastDate = date
-        var filtered: [BloodGlucose] = []
-        let sorted = glucose.sorted { $0.date < $1.date }
+        var lastDate = latest.dateString
+        // always keep the latest
+        var filtered: [BloodGlucose] = [latest]
 
-        for entry in sorted {
-            guard entry.dateString.addingTimeInterval(-Config.filterTime) > lastDate else {
-                continue
+        for entry in sorted.dropFirst() {
+            if lastDate.timeIntervalSince(entry.dateString) >= interval {
+                filtered.append(entry)
+                lastDate = entry.dateString
             }
-            filtered.append(entry)
-            lastDate = entry.dateString
         }
 
         return filtered

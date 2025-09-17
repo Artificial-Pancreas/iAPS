@@ -5,7 +5,7 @@ import Swinject
 extension Settings {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var showShareSheet = false
 
         @FetchRequest(
@@ -21,6 +21,11 @@ extension Settings {
                 format: "name != %@", "" as String
             )
         ) var fetchedProfiles: FetchedResults<OverridePresets>
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -86,6 +91,7 @@ extension Settings {
                         Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                         Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                         Text("Sharing").navigationLink(to: .sharing, from: self)
+                        Text("Calendar").navigationLink(to: .calendar, from: self)
                         Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                         Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
                         Text("Auto ISF").navigationLink(to: .autoISF, from: self)
@@ -133,6 +139,12 @@ extension Settings {
 
                                 HStack {
                                     Toggle("Max Override 400%", isOn: $state.extended_overrides)
+                                }
+                                HStack {
+                                    Toggle("Allow 1-minute loops", isOn: $state.allowOneMinuteLoop)
+                                }
+                                HStack {
+                                    Toggle("Allow 1-minute glucose", isOn: $state.allowOneMinuteGlucose)
                                 }
                             }
                             Group {
@@ -217,7 +229,6 @@ extension Settings {
                 ShareSheet(activityItems: state.logItems())
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.inline)

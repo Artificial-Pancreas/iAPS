@@ -117,3 +117,10 @@ enum JSONCoding {
         return decoder
     }
 }
+
+struct AnyCodingKey: CodingKey {
+    var stringValue: String
+    init?(stringValue: String) { self.stringValue = stringValue }
+    var intValue: Int? { nil }
+    init?(intValue _: Int) { nil }
+}

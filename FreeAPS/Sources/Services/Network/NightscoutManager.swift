@@ -4,7 +4,7 @@ import LoopKitUI
 import Swinject
 import UIKit
 
-protocol NightscoutManager: GlucoseSource {
+protocol NightscoutManager {
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
@@ -25,11 +25,11 @@ protocol NightscoutManager: GlucoseSource {
     func deleteOverride()
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date)
     func fetchVersion()
-    var cgmURL: URL? { get }
 }
 
 final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var keychain: Keychain!
+    @Injected() private var appCoordinator: AppCoordinator!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var carbsStorage: CarbsStorage!
@@ -61,7 +61,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private var isUploadGlucoseEnabled: Bool {
-        settingsManager.settings.uploadGlucose
+        appCoordinator.shouldUploadGlucose
     }
 
     private var name: String {
@@ -104,33 +104,15 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         return nil
     }
 
-    var cgmURL: URL? {
-        if let url = settingsManager.settings.cgm.appURL {
-            return url
-        }
-
-        let useLocal = settingsManager.settings.useLocalGlucoseSource
-
-        let maybeNightscout = useLocal
-            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort)")!)
-            : nightscoutAPI
-
-        return maybeNightscout?.url
-    }
-
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never> {
         let useLocal = settingsManager.settings.useLocalGlucoseSource
         ping = nil
 
-        if !useLocal {
-            guard isNetworkReachable else {
-                return Just([]).eraseToAnyPublisher()
-            }
+        guard isNetworkReachable else {
+            return Just([]).eraseToAnyPublisher()
         }
 
-        let maybeNightscout = useLocal
-            ? NightscoutAPI(url: URL(string: "http://127.0.0.1:\(settingsManager.settings.localGlucosePort)")!)
-            : nightscoutAPI
+        let maybeNightscout = nightscoutAPI
 
         guard let nightscout = maybeNightscout else {
             return Just([]).eraseToAnyPublisher()
@@ -151,19 +133,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
-    // MARK: - GlucoseSource
-
-    var glucoseManager: FetchGlucoseManager?
-    var cgmManager: CGMManagerUI?
-    var cgmType: CGMType = .nightscout
-
-    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        fetchGlucose(since: glucoseStorage.syncDate())
-    }
-
-    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-        fetch(nil)
-    }
+//    var glucoseManager: FetchGlucoseManager?
+//    var cgmManager: CGMManagerUI?
+//    var cgmType: CGMType = .nightscout
 
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never> {
         guard let nightscout = nightscoutAPI, isNetworkReachable else {

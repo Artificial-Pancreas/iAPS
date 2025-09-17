@@ -5,7 +5,7 @@ import LoopKit
 import LoopKitUI
 import Swinject
 
-protocol HealthKitManager: GlucoseSource {
+protocol HealthKitManager {
     /// Check all needed permissions
     /// Return false if one or more permissions are deny or not choosen
     var areAllowAllPermissions: Bool { get }
@@ -29,6 +29,8 @@ protocol HealthKitManager: GlucoseSource {
     func deleteCarbs(date: Date)
     /// delete insulin with syncID
     func deleteInsulin(syncID: String)
+
+    func fetch() -> [BloodGlucose]
 }
 
 final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, PumpHistoryObserver {
@@ -522,34 +524,30 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
 
     // MARK: - GlucoseSource
 
-    var glucoseManager: FetchGlucoseManager?
+//    var glucoseManager: FetchGlucoseManager?
     var cgmManager: CGMManagerUI?
     var cgmType: CGMType = .nightscout
 
-    func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
+    func fetch() -> [BloodGlucose] {
         guard settingsManager.settings.useAppleHealth else {
-            return Just([]).eraseToAnyPublisher()
+            return []
         }
 
-        return Future { promise in
-            self.processQueue.async {
-                // Remove old BGs
-                self.newGlucose = self.newGlucose
-                    .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
-                // Get actual BGs (beetwen Date() - 1 day and Date())
-                let actualGlucose = self.newGlucose
-                    .filter { $0.dateString <= Date() }
-                // Update newGlucose
-                self.newGlucose = self.newGlucose
-                    .filter { !actualGlucose.contains($0) }
-                promise(.success(actualGlucose))
-            }
-        }
-        .eraseToAnyPublisher()
-    }
+        // TODO: [loopkit] this was processQueue.async + Future, is this okay to do sync instead?
+        // it looks like we're just reading and writing a var here, nothing async
+        return processQueue.safeSync {
+            // Remove old BGs
+            self.newGlucose = self.newGlucose
+                .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
+            // Get actual BGs (beetwen Date() - 1 day and Date())
+            let actualGlucose = self.newGlucose
+                .filter { $0.dateString <= Date() }
+            // Update newGlucose
+            self.newGlucose = self.newGlucose
+                .filter { !actualGlucose.contains($0) }
 
-    func fetchIfNeeded() -> AnyPublisher<[BloodGlucose], Never> {
-        fetch(nil)
+            return actualGlucose
+        }
     }
 
     func deleteGlucose(syncID: String) {
