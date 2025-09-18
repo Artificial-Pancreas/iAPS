@@ -12,14 +12,10 @@ Ready to explore iAPS? Here's how you can download and build the repository:
 
   * **Using Terminal:**
 
+    clone and open branch plugins in Xcode
     ```bash
-    git clone --branch=main https://github.com/artificial-pancreas/iaps.git
-    cd iaps
-    xed .
+    git clone --branch=plugins --recurse-submodules https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
     ```
-
-  * **Using the GitHub Interface:**
-    Simply navigate to the iAPS GitHub page, click the green **"Code"** button, and select **"Open with Xcode."**
 
 ### Build Without Xcode (Directly in GitHub)
 
