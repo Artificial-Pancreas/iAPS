@@ -64,27 +64,32 @@ extension Home {
         }
 
         func filteredGlucose(hours: Int) -> [BloodGlucose] {
-            glucoseStorage.recent().filter {
-                $0.dateString.addingTimeInterval(hours.hours.timeInterval) > Date()
+            let now = Date()
+            // .retrieve() will read glucose from storage and apply smoothing if needed
+            return glucoseStorage.retrieve().filter {
+                $0.dateString.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
         func manualGlucose(hours: Int) -> [BloodGlucose] {
-            glucoseStorage.recent().filter {
+            let now = Date()
+            return glucoseStorage.retrieve().filter {
                 $0.type == GlucoseType.manual.rawValue &&
-                    $0.dateString.addingTimeInterval(hours.hours.timeInterval) > Date()
+                    $0.dateString.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
         func pumpHistory(hours: Int) -> [PumpHistoryEvent] {
-            pumpHistoryStorage.recent().filter {
-                $0.timestamp.addingTimeInterval(hours.hours.timeInterval) > Date()
+            let now = Date()
+            return pumpHistoryStorage.recent().filter {
+                $0.timestamp.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
         func tempTargets(hours: Int) -> [TempTarget] {
-            tempTargetsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+            let now = Date()
+            return tempTargetsStorage.recent().filter {
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
@@ -93,14 +98,16 @@ extension Home {
         }
 
         func carbs(hours: Int) -> [CarbsEntry] {
-            carbsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date() && $0.carbs > 0
+            let now = Date()
+            return carbsStorage.recent().filter {
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now && $0.carbs > 0
             }
         }
 
         func announcement(_ hours: Int) -> [Announcement] {
-            announcementStorage.validate().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+            let now = Date()
+            return announcementStorage.validate().filter {
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 

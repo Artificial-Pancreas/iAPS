@@ -821,14 +821,13 @@ final class OpenAPS {
         return tdd
     }
 
-    func dynamicVariables(_ preferences: Preferences?, _ settingsData: FreeAPSSettings?) async -> DynamicVariables {
+    func dynamicVariables(_ preferences: Preferences?, _: FreeAPSSettings?) async -> DynamicVariables {
         coredataContext.performAndWait {
             let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
             let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
             let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30) as NSDecimalNumber
-            let disableCGMError = settingsData?.disableCGMError ?? true
 
             let cd = CoreDataStorage()
             let os = OverrideStorage()
@@ -1071,7 +1070,6 @@ final class OpenAPS {
                 uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal,
                 maxIOB: maxIOB as Decimal,
                 overrideMaxIOB: overrideMaxIOB,
-                disableCGMError: disableCGMError,
                 preset: name,
                 autoISFoverrides: autoISFsettings,
                 aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
