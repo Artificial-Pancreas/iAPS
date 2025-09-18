@@ -14,8 +14,8 @@ extension PumpConfig {
         var body: some View {
             NavigationView {
                 Form {
-                    Section(header: Text("Model")) {
-                        if let pumpManager = state.deviceManager.pumpManager {
+                    if let pumpManager = state.deviceManager.pumpManager {
+                        Section(header: Text("Model")) {
                             Button {
                                 state.setupPump(pumpManager.pluginIdentifier)
                             } label: {
@@ -23,18 +23,26 @@ extension PumpConfig {
                                     Image(uiImage: pumpManager.smallImage ?? UIImage()).padding()
                                     Text(pumpManager.localizedTitle)
                                 }
-                                if let status = pumpManager.pumpStatusHighlight?.localizedMessage {
-                                    HStack {
-                                        Text(status.replacingOccurrences(of: "\n", with: " ")).font(.caption)
-                                    }
+                            }
+                        }
+                        Section {
+                            if let status = pumpManager.pumpStatusHighlight?.localizedMessage {
+                                HStack {
+                                    Text(status.replacingOccurrences(of: "\n", with: " "))
                                 }
                             }
-                            //                            TODO: [loopkit] fix this
+                            if state.pumpManagerStatus?.deliveryIsUncertain ?? false {
+                                HStack {
+                                    Text("Pump delivery uncertain").foregroundColor(.red)
+                                }
+                            }
                             if state.alertNotAck {
                                 Spacer()
                                 Button("Acknowledge all alerts") { state.ack() }
                             }
-                        } else {
+                        }
+                    } else {
+                        Section {
                             ForEach(state.deviceManager.availablePumpManagers, id: \.identifier) { pump in
                                 VStack(alignment: .leading) {
                                     Button("Add " + pump.localizedTitle) {

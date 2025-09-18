@@ -19,6 +19,7 @@ protocol DeviceDataManager {
     var availableCGMManagers: [CGMManagerDescriptor] { get }
     var pumpManager: PumpManagerUI? { get }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
+    var pumpManagerStatus: CurrentValueSubject<PumpManagerStatus?, Never> { get }
     var bolusTrigger: PassthroughSubject<Bool, Never> { get }
     var manualTempBasal: PassthroughSubject<Bool, Never> { get }
     var errorSubject: PassthroughSubject<Error, Never> { get }
@@ -118,6 +119,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     let pumpDisplayState = CurrentValueSubject<PumpDisplayState?, Never>(nil)
+    let pumpManagerStatus = CurrentValueSubject<PumpManagerStatus?, Never>(nil)
     let pumpExpiresAtDate = CurrentValueSubject<Date?, Never>(nil)
     let pumpName = CurrentValueSubject<String, Never>("Pump")
 
@@ -183,40 +185,16 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             }
             .store(in: &lifetime)
 
-        //        TODO: [loopkit] is this correct? the notifyObserversOfDisplayGlucoseUnitChange part
         displayGlucosePreference.$unit
             .receive(on: DispatchQueue.main)
             .sink { unit in
                 self.notifyObserversOfDisplayGlucoseUnitChange(to: unit)
             }
             .store(in: &lifetime)
-
-        // from loop:
-//        NotificationCenter.default.addObserver(forName: .HealthStorePreferredGlucoseUnitDidChange, object: healthStore, queue: nil) { [weak self] _ in
-//            guard let self else {
-//                return
-//            }
-//
-//            Task { @MainActor in
-//                if let unit = await self.healthStore.cachedPreferredUnits(for: .bloodGlucose) {
-//                    self.displayGlucosePreference.unitDidChange(to: unit)
-//                    self.notifyObserversOfDisplayGlucoseUnitChange(to: unit)
-//                }
-//            }
-//        }
     }
 
     var availablePumpManagers: [PumpManagerDescriptor] {
-        var pumpManagers = pluginManager.availablePumpManagers + availableStaticPumpManagers
-
-        pumpManagers = pumpManagers.filter({ _ in
-//            guard !deviceWhitelist.pumpDevices.isEmpty else {
-            true
-//            }
-
-//            return deviceWhitelist.pumpDevices.contains(pumpManager.identifier)
-        })
-
+        let pumpManagers = pluginManager.availablePumpManagers + availableStaticPumpManagers
         return pumpManagers
     }
 
@@ -346,14 +324,12 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                     type: "sgv",
 //                    activationDate: activationDate,
                     sessionStartDate: sessionStart,
-//                    transmitterID: transmitterID // TODO: do we need this? (for G6/G5)
+//                    transmitterID: transmitterID // TODO: do we need this?
                 )
             }
 
             completion(bloodGlucose)
         case .unreliableData:
-            // TODO: [loopkit] do something about unreliable readings?
-            // loopManager.receivedUnreliableCGMReading()
             warning(.deviceManager, "CGM Manager - unreliable data")
             completion([])
         case .noData:
@@ -547,7 +523,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     var detectedSystemTimeOffset: TimeInterval {
+        // TODO: [loopkit] loop has this:
         // trustedTimeChecker.detectedSystemTimeOffset
+        // but is it even used by any real device manager?
         0
     }
 
@@ -563,10 +541,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         pumpName.send(pumpManager.localizedTitle)
     }
 
-    /// heartbeat with pump occurs some issues in the backgroundtask - so never used
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        // TODO: [loopkit] is this correct?
         debug(.deviceManager, "PumpManager:\(String(describing: type(of: pumpManager))) did fire heartbeat")
         heartbeat(forceRecommendLoop: false)
     }
@@ -606,65 +582,24 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             $0.pumpTimeZoneDidChange(status.timeZone)
         }
 
-        // TODO: [loopkit] why is omnipod treated separately?
-        if let omnipod = pumpManager as? OmnipodPumpManager {
-            if let tempBasal = omnipod.state.podState?.unfinalizedTempBasal, !tempBasal.isFinished(),
-               !tempBasal.automatic
-            {
-                // the manual basal temp is launch - block every thing
-                debug(.deviceManager, "manual temp basal")
-                manualTempBasal.send(true)
-            } else {
-                // no more manual Temp Basal !
-                manualTempBasal.send(false)
-            }
-
-            guard let endTime = omnipod.state.podState?.expiresAt else {
-                pumpExpiresAtDate.send(nil)
-                return
-            }
-            pumpExpiresAtDate.send(endTime)
-
-            if let startTime = omnipod.state.podState?.activatedAt {
-                storage.save(startTime, as: OpenAPS.Monitor.podAge)
-            }
+        if KnownPlugins.isManualTempBasalActive(pumpManager) ?? false {
+            debug(.deviceManager, "manual temp basal")
+            manualTempBasal.send(true)
+        } else {
+            manualTempBasal.send(false)
         }
 
-        // TODO: [loopkit] why is omnible treated separately?
-        if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
-            // manual temp basal on
-            if let tempBasal = omnipodBLE.state.podState?.unfinalizedTempBasal, !tempBasal.isFinished(),
-               !tempBasal.automatic
-            {
-                // the manual basal temp is launch - block every thing
-                debug(.deviceManager, "manual temp basal")
-                manualTempBasal.send(true)
-            } else {
-                // no more manual Temp Basal !
-                manualTempBasal.send(false)
-            }
+        let endTime = KnownPlugins.pumpExpirationDate(pumpManager)
+        pumpExpiresAtDate.send(endTime)
 
-            guard let endTime = omnipodBLE.state.podState?.expiresAt else {
-                pumpExpiresAtDate.send(nil)
-                return
-            }
-            pumpExpiresAtDate.send(endTime)
-
-            if let startTime = omnipodBLE.state.podState?.activatedAt {
-                storage.save(startTime, as: OpenAPS.Monitor.podAge)
-            }
+        if let startTime = KnownPlugins.pumpActivationDate(pumpManager) {
+            storage.save(startTime, as: OpenAPS.Monitor.podAge)
         }
 
-        // TODO: [loopkit] from loop:
-//        if status.deliveryIsUncertain != oldStatus.deliveryIsUncertain {
-//            DispatchQueue.main.async {
-//                if status.deliveryIsUncertain {
-//                    self.deliveryUncertaintyAlertManager?.showAlert()
-//                } else {
-//                    self.deliveryUncertaintyAlertManager?.clearAlert()
-//                }
-//            }
-//        }
+        pumpManagerStatus.value = status
+        if status.deliveryIsUncertain != oldStatus.deliveryIsUncertain {
+            debug(.deviceManager, "delivery is uncertain: \(status)")
+        }
     }
 
     func pumpManagerWillDeactivate(_ pumpManager: PumpManager) {
@@ -673,20 +608,14 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
         DispatchQueue.main.async {
             self.pumpManager = nil
-//            self.deliveryUncertaintyAlertManager = nil
-//            self.settingsManager.storeSettings()
         }
     }
 
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents pumpRecordsBasalProfileStartEvents: Bool) {
-//        dispatchPrecondition(condition: .onQueue(queue))
         debug(
             .deviceManager,
             "PumpManager:\(String(describing: type(of: pumpManager))) did update pumpRecordsBasalProfileStartEvents to \(String(describing: pumpRecordsBasalProfileStartEvents))"
         )
-
-        // TODO: [loopkit] from loop:
-//        doseStore.pumpRecordsBasalProfileStartEvents = pumpRecordsBasalProfileStartEvents
     }
 
     func pumpManager(_: PumpManager, didError error: PumpManagerError) {
@@ -764,7 +693,6 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     var automaticDosingEnabled: Bool {
-        // TODO: [loopkit] does this affect anything?
         // none of the actual pump plugins seem to even read this var
         true
     }
@@ -775,51 +703,15 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 extension BaseDeviceDataManager: DeviceManagerDelegate {
     func issueAlert(_ alert: Alert) {
         alertHistoryStorage.storeAlert(
-            AlertEntry(
-                alertIdentifier: alert.identifier.alertIdentifier,
-                primitiveInterruptionLevel: alert.interruptionLevel.storedValue as? Decimal,
-                issuedDate: Date(),
-                managerIdentifier: alert.identifier.managerIdentifier,
-                triggerType: alert.trigger.storedType,
-                triggerInterval: alert.trigger.storedInterval as? Decimal,
-                contentTitle: alert.foregroundContent?.title,
-                contentBody: alert.foregroundContent?.body
-            )
+            AlertEntry(from: alert)
         )
     }
 
     func retractAlert(identifier: Alert.Identifier) {
-        alertHistoryStorage.deleteAlert(identifier: identifier.alertIdentifier)
-    }
-
-    // TODO: [loopkit] this is commented out, fix or remove it?
-    //    func scheduleNotification(
-    //        for _: DeviceManager,
-    //        identifier: String,
-    //        content: UNNotificationContent,
-    //        trigger: UNNotificationTrigger?
-    //    ) {
-    //        let request = UNNotificationRequest(
-    //            identifier: identifier,
-    //            content: content,
-    //            trigger: trigger
-    //        )
-    //
-    //        DispatchQueue.main.async {
-    //            UNUserNotificationCenter.current().add(request)
-    //        }
-    //    }
-    //
-    //    func clearNotification(for _: DeviceManager, identifier: String) {
-    //        DispatchQueue.main.async {
-    //            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
-    //        }
-    //    }
-
-    func removeNotificationRequests(for _: DeviceManager, identifiers: [String]) {
-        DispatchQueue.main.async {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
-        }
+        alertHistoryStorage.deleteAlert(
+            managerIdentifier: identifier.managerIdentifier,
+            alertIdentifier: identifier.alertIdentifier
+        )
     }
 
     func deviceManager(
@@ -827,9 +719,10 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
         logEventForDeviceIdentifier deviceIdentifier: String?,
         type _: LoopKit.DeviceLogEntryType,
         message: String,
-        completion _: ((Error?) -> Void)?
+        completion: ((Error?) -> Void)?
     ) {
         debug(.deviceManager, "device Manager for \(String(describing: deviceIdentifier)) : \(message)")
+        completion?(nil)
     }
 }
 
@@ -853,7 +746,6 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
             }
             self.cgmManager = nil
             self.displayGlucoseUnitObservers.cleanupDeallocatedElements()
-//            self.settingsManager.storeSettings()
         }
     }
 
@@ -891,7 +783,7 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
 // MARK: - AlertPresenter
 
 extension BaseDeviceDataManager: AlertObserver {
-    func AlertDidUpdate(_ alerts: [AlertEntry]) {
+    func alertDidUpdate(_ alerts: [AlertEntry]) {
         alerts.forEach { alert in
             if alert.acknowledgedDate == nil {
                 ackAlert(alert: alert)
@@ -909,35 +801,36 @@ extension BaseDeviceDataManager: AlertObserver {
         }
 
         let messageCont = MessageContent(content: alert.contentBody ?? "Unknown", type: typeMessage)
-        let alertIssueDate = alert.issuedDate
 
         processQueue.async {
-            // if not alert in OmniPod/BLE, the acknowledgeAlert didn't do callbacks- Hack to manage this case
-            if let omnipodBLE = self.pumpManager as? OmniBLEPumpManager {
-                if omnipodBLE.state.activeAlerts.isEmpty {
-                    // force to ack alert in the alertStorage
-                    self.alertHistoryStorage.ackAlert(alertIssueDate, nil)
-                }
-            }
+            // we cannot rely on completion callback to be always called, so...
+            // present the alert and acknowledge in the storage upfront
+            // and store the error in case the manager completes with error
+            self.alertHistoryStorage.ackAlert(
+                managerIdentifier: alert.managerIdentifier,
+                alertIdentifier: alert.alertIdentifier,
+                error: nil
+            )
+            self.router.alertMessage.send(messageCont)
 
-            if let omniPod = self.pumpManager as? OmnipodPumpManager {
-                if omniPod.state.activeAlerts.isEmpty {
-                    // force to ack alert in the alertStorage
-                    self.alertHistoryStorage.ackAlert(alertIssueDate, nil)
-                }
+            var alertResponder: AlertResponder?
+            if let pumpManager = self.pumpManager, alert.managerIdentifier == pumpManager.pluginIdentifier {
+                alertResponder = pumpManager
+            } else if let cgmManager = self.cgmManager, alert.managerIdentifier == cgmManager.pluginIdentifier {
+                alertResponder = cgmManager
             }
-
-            self.pumpManager?.acknowledgeAlert(alertIdentifier: alert.alertIdentifier) { error in
-                self.router.alertMessage.send(messageCont)
+            alertResponder?.acknowledgeAlert(alertIdentifier: alert.alertIdentifier) { error in
                 if let error = error {
-                    self.alertHistoryStorage.ackAlert(alertIssueDate, error.localizedDescription)
-                    debug(.deviceManager, "acknowledge not succeeded with error \(error.localizedDescription)")
-                } else {
-                    self.alertHistoryStorage.ackAlert(alertIssueDate, nil)
+                    self.alertHistoryStorage.ackAlert(
+                        managerIdentifier: alert.managerIdentifier,
+                        alertIdentifier: alert.alertIdentifier,
+                        error: error.localizedDescription
+                    )
+                    debug(.deviceManager, "acknowledge failed with error \(error.localizedDescription)")
                 }
             }
 
-            self.broadcaster.notify(pumpNotificationObserver.self, on: self.processQueue) {
+            self.broadcaster.notify(PumpNotificationObserver.self, on: self.processQueue) {
                 $0.pumpNotification(alert: alert)
             }
         }
@@ -958,39 +851,8 @@ protocol PumpTimeZoneObserver {
     func pumpTimeZoneDidChange(_ timezone: TimeZone)
 }
 
-// MARK: - Plugins
-
 extension BaseDeviceDataManager {
-    func reportPluginInitializationComplete() {
-        let allActivePlugins = self.allActivePlugins
-
-        cgmManager?.initializationComplete(for: allActivePlugins)
-        pumpManager?.initializationComplete(for: allActivePlugins)
-    }
-
-    var allActivePlugins: [Pluggable] {
-        var allActivePlugins: [Pluggable] = []
-
-        if let cgmManager = cgmManager {
-            if !allActivePlugins.contains(where: { $0.pluginIdentifier == cgmManager.pluginIdentifier }) {
-                allActivePlugins.append(cgmManager)
-            }
-        }
-
-        if let pumpManager = pumpManager {
-            if !allActivePlugins.contains(where: { $0.pluginIdentifier == pumpManager.pluginIdentifier }) {
-                allActivePlugins.append(pumpManager)
-            }
-        }
-
-        return allActivePlugins
-    }
-}
-
-// MARK: - Client API
-
-extension BaseDeviceDataManager {
-    // TODO: [loopkit] should call this when app goes active?
+    // TODO: [loopkit] should call this when app goes active
     func didBecomeActive() {
         updatePumpManagerBLEHeartbeatPreference()
     }
@@ -1015,7 +877,6 @@ extension BaseDeviceDataManager: CGMManagerOnboardingDelegate {
         // TODO: [loopkit] is this correct?
         DispatchQueue.main.async {
             self.refreshDeviceData()
-//            self.settingsManager.storeSettings()
         }
     }
 }
@@ -1046,34 +907,24 @@ extension BaseDeviceDataManager: PumpManagerOnboardingDelegate {
 // MARK: - PersistedAlertStore
 
 extension BaseDeviceDataManager: PersistedAlertStore {
-    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion _: @escaping (Result<Bool, Error>) -> Void) {
-        debug(.deviceManager, "doesIssueAlertExist")
-        // TODO: [loopkit] from loop:
-//        precondition(alertManager != nil)
-//        alertManager.doesIssuedAlertExist(identifier: identifier, completion: completion)
+    // none of the device managers ever calls any of these functions ¯\_(ツ)_/¯
+
+    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion: @escaping (Result<Bool, Error>) -> Void) {
+        completion(.success(false))
     }
 
-    func lookupAllUnretracted(managerIdentifier _: String, completion _: @escaping (Result<[PersistedAlert], Error>) -> Void) {
-        debug(.deviceManager, "lookupAllUnretracted")
-        // TODO: [loopkit] from loop:
-//        precondition(alertManager != nil)
-//        alertManager.lookupAllUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+    func lookupAllUnretracted(managerIdentifier _: String, completion: @escaping (Result<[PersistedAlert], Error>) -> Void) {
+        completion(.success([]))
     }
 
     func lookupAllUnacknowledgedUnretracted(
         managerIdentifier _: String,
-        completion _: @escaping (Result<[PersistedAlert], Error>) -> Void
+        completion: @escaping (Result<[PersistedAlert], Error>) -> Void
     ) {
-        // TODO: [loopkit] from loop:
-//        precondition(alertManager != nil)
-//        alertManager.lookupAllUnacknowledgedUnretracted(managerIdentifier: managerIdentifier, completion: completion)
+        completion(.success([]))
     }
 
-    func recordRetractedAlert(_: Alert, at _: Date) {
-        // TODO: [loopkit] implement this? from loop:
-//        precondition(alertManager != nil)
-//        alertManager.recordRetractedAlert(alert, at: date)
-    }
+    func recordRetractedAlert(_: Alert, at _: Date) {}
 }
 
 private extension BaseDeviceDataManager {
@@ -1090,16 +941,9 @@ private extension BaseDeviceDataManager {
 
         cgmManager?.cgmManagerDelegate = self
         cgmManager?.delegateQueue = processQueue
-        reportPluginInitializationComplete()
 
         updatePumpManagerBLEHeartbeatPreference()
         if let cgmManager = cgmManager {
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertResponder(managerIdentifier: cgmManager.pluginIdentifier,
-//                                            alertResponder: cgmManager)
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertSoundVendor(managerIdentifier: cgmManager.pluginIdentifier,
-//                                              soundVendor: cgmManager)
             cgmHasValidSensorSession = cgmManager.cgmManagerStatus.hasValidSensorSession
         } else {
             cgmHasValidSensorSession = false
@@ -1115,33 +959,16 @@ private extension BaseDeviceDataManager {
         pumpManager?.pumpManagerDelegate = self
         pumpManager?.delegateQueue = processQueue
 
-        // TODO: [loopkit] do we need this?
-        reportPluginInitializationComplete()
-
-//        pumpManagerHUDProvider = pumpManager?.hudProvider(bluetoothProvider: bluetoothProvider, colorPalette: .default, allowedInsulinTypes: allowedInsulinTypes)
-
-        // TODO: [loopkit] do we need this?
-        // Proliferate PumpModel preferences to DoseStore
-//        if let pumpRecordsBasalProfileStartEvents = pumpManager?.pumpRecordsBasalProfileStartEvents {
-//            doseStore.pumpRecordsBasalProfileStartEvents = pumpRecordsBasalProfileStartEvents
-//        }
         if let pumpManager = pumpManager {
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertResponder(managerIdentifier: pumpManager.pluginIdentifier,
-//                                                  alertResponder: pumpManager)
-            // TODO: [loopkit] alert manager
-//            alertManager?.addAlertSoundVendor(managerIdentifier: pumpManager.pluginIdentifier,
-//                                                    soundVendor: pumpManager)
-            // TODO: [loopkit] uncertainty alert manager
-//            deliveryUncertaintyAlertManager = DeliveryUncertaintyAlertManager(pumpManager: pumpManager, alertPresenter: alertPresenter)
-
             updatePumpManagerBLEHeartbeatPreference()
 
             pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
+            pumpManagerStatus.value = pumpManager.status
             pumpName.send(pumpManager.localizedTitle)
             pumpExpiresAtDate.send(KnownPlugins.pumpExpiration(pumpManager: pumpManager))
         } else {
             pumpDisplayState.value = nil
+            pumpManagerStatus.value = nil
             pumpExpiresAtDate.send(nil)
             pumpName.send("")
         }
