@@ -201,7 +201,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     private func sendGlucoseNotification() {
         addAppBadge(glucose: nil)
 
-        let glucose = glucoseStorage.recent()
+        let glucose = glucoseStorage.retrieveRaw()
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
 
         addAppBadge(glucose: lastGlucose.glucose)

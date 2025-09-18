@@ -352,7 +352,6 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
-        let start = Date.now
         debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.isNotEmpty else {
             debug(.apsManager, "Not enough glucose data")
@@ -360,20 +359,11 @@ final class BaseAPSManager: APSManager, Injectable {
             return Just(false).eraseToAnyPublisher()
         }
 
-        let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
+        let lastGlucoseDate = glucoseStorage.latestDate() ?? .distantPast
         guard lastGlucoseDate > Date().addingTimeInterval(-12.minutes.timeInterval) else {
             debug(.apsManager, "Glucose data is stale")
             processError(APSError.glucoseError(message: "Glucose data is stale"))
             return Just(false).eraseToAnyPublisher()
-        }
-
-        // Only let glucose be flat when 400 mg/dl
-        if (glucoseStorage.recent().last?.glucose ?? 100) != 400 {
-            guard glucoseStorage.isGlucoseNotFlat() else {
-                debug(.apsManager, "Glucose data is too flat")
-                processError(APSError.glucoseError(message: "Glucose data is too flat"))
-                return Just(false).eraseToAnyPublisher()
-            }
         }
 
         let now = Date()

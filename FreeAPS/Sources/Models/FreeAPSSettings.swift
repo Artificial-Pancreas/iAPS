@@ -77,7 +77,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var minumimPrediction: Bool = false
     var minimumSMB: Decimal = 0.3
     var useInsulinBars: Bool = false
-    var disableCGMError: Bool = true
     var skipGlucoseChart: Bool = false
     var birthDate = Date.distantPast
     var sexSetting: Int = 3
@@ -483,10 +482,6 @@ extension FreeAPSSettings: Decodable {
 
         if let useInsulinBars = try? container.decode(Bool.self, forKey: .useInsulinBars) {
             settings.useInsulinBars = useInsulinBars
-        }
-
-        if let disableCGMError = try? container.decode(Bool.self, forKey: .disableCGMError) {
-            settings.disableCGMError = disableCGMError
         }
 
         if let skipGlucoseChart = try? container.decode(Bool.self, forKey: .skipGlucoseChart) {

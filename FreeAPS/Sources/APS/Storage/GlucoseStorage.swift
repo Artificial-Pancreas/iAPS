@@ -8,12 +8,16 @@ import Swinject
 protocol GlucoseStorage {
     func storeGlucose(_ glucose: [BloodGlucose])
     func removeGlucose(ids: [String])
-    func recent() -> [BloodGlucose]
-    /// retrieve glucose from storage, filter by frequency (1-min / 5-min, according to settings.allowOneMinuteGlucose)
+    /// retrieves raw glucose from storage - no smoothing
+    func retrieveRaw() -> [BloodGlucose]
+    /// retrieves glucose from storage
+    /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
+    func retrieve() -> [BloodGlucose]
+    /// retrieves glucose from storage
+    /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
+    /// filters records by frequency - at most "1 per minute" or "1 per 5 minutes" (according to settings.allowOneMinuteGlucose)
     func retrieveFiltered() -> [BloodGlucose]
-    func syncDate() -> Date
-    func lastGlucoseDate() -> Date
-    func isGlucoseNotFlat() -> Bool
+    func latestDate() -> Date?
     func nightscoutGlucoseNotUploaded() -> [BloodGlucose]
     func nightscoutCGMStateNotUploaded() -> [NigtscoutTreatment]
     func nightscoutManualGlucoseNotUploaded() -> [NigtscoutTreatment]
@@ -143,32 +147,44 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         }
     }
 
-    func syncDate() -> Date {
+    func latestDate() -> Date? {
         guard let events = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
               let recent = events.first
         else {
-            return Date().addingTimeInterval(-1.days.timeInterval)
+            return nil
         }
         return recent.dateString
     }
 
-    func recent() -> [BloodGlucose] {
+    func retrieveRaw() -> [BloodGlucose] {
         storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
     }
 
+    func retrieve() -> [BloodGlucose] {
+        // newest-to-oldest
+        var retrieved = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
+        guard !retrieved.isEmpty else {
+            return []
+        }
+        if settingsManager.settings.smoothGlucose {
+            // smooth with 3 repeats
+            for _ in 1 ... 3 {
+                retrieved.smoothSavitzkyGolayQuaDratic(withFilterWidth: 3)
+            }
+        }
+        return retrieved
+    }
+
     func retrieveFiltered() -> [BloodGlucose] {
-        let retrieved = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
+        let retrieved = retrieve() // smoothed already
+
         let minInterval = settingsManager.settings.allowOneMinuteGlucose ? Config.filterTimeOneMinute : Config
             .filterTimeFiveMinutes
         return filterFrequentGlucose(retrieved, interval: minInterval)
     }
 
-    func lastGlucoseDate() -> Date {
-        recent().last?.dateString ?? .distantPast
-    }
-
     private func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
-        // for oref, newest-to-oldest
+        // glucose is already sorted newest-to-oldest in retrieve
         let sorted = glucose.sorted { $0.date > $1.date }
         guard let latest = sorted.first else { return [] }
 
@@ -186,18 +202,9 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         return filtered
     }
 
-    func isGlucoseNotFlat() -> Bool {
-        guard !settingsManager.settings.disableCGMError else { return true }
-        let count = 3 // check last 3 readings
-        let lastReadings = Array(recent().suffix(count))
-        let filtered = lastReadings.compactMap(\.filtered).filter { $0 != 0 }
-        guard lastReadings.count == count, filtered.count == count else { return true }
-        return Array(filtered.uniqued()).count != 1
-    }
-
     func nightscoutGlucoseNotUploaded() -> [BloodGlucose] {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
-        let recentGlucose = recent()
+        let recentGlucose = retrieveRaw()
 
         return Array(Set(recentGlucose).subtracting(Set(uploaded)))
     }
@@ -211,7 +218,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     func nightscoutManualGlucoseNotUploaded() -> [NigtscoutTreatment] {
         let uploaded = (storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? [])
             .filter({ $0.type == GlucoseType.manual.rawValue })
-        let recent = recent().filter({ $0.type == GlucoseType.manual.rawValue })
+        let recent = retrieveRaw().filter({ $0.type == GlucoseType.manual.rawValue })
         let filtered = Array(Set(recent).subtracting(Set(uploaded)))
         let manualReadings = filtered.map { item -> NigtscoutTreatment in
             NigtscoutTreatment(
@@ -229,7 +236,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     var alarm: GlucoseAlarm? {
-        guard let glucose = recent().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
+        guard let glucose = retrieveRaw().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 
         if Decimal(glucoseValue) <= settingsManager.settings.lowGlucose {
