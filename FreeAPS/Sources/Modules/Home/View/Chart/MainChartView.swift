@@ -1025,9 +1025,7 @@ extension MainChartView {
         calculateManualGlucoseDots(fullSize: fullSize)
         calculateManualGlucoseDotsCenter(fullSize: fullSize)
         calculateAnnouncementDots(fullSize: fullSize)
-        if data.smooth {
-            calculateUnSmoothedGlucoseDots(fullSize: fullSize)
-        }
+        calculateUnSmoothedGlucoseDots(fullSize: fullSize)
         calculateBolusDots(fullSize: fullSize)
         calculateCarbsDots(fullSize: fullSize)
         calculateFPUsDots(fullSize: fullSize)
