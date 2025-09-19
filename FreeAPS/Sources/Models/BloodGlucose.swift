@@ -95,6 +95,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
     var direction: Direction?
     let date: Decimal
     let dateString: Date
+    /// raw, un-smoothed value
     let unfiltered: Decimal?
     let filtered: Decimal?
     let noise: Int?
