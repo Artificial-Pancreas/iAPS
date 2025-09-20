@@ -27,7 +27,7 @@ class PeripheralManager: NSObject {
     private let WRITE_CHAR_UUID = CBUUID(string: "FFF2")
     private var writeCharacteristic: CBCharacteristic?
 
-    private var writeQueue: [UInt8: AsyncThrowingStream<any DanaParsePacketProtocol, Error>.Continuation] = [:]
+    private var writeQueue: (AsyncThrowingStream<any DanaParsePacketProtocol, Error>.Continuation)? = nil
     private var writeTimeoutTask: Task<Void, Never>?
     private let writeSemaphore = DispatchSemaphore(value: 1)
 
@@ -55,19 +55,19 @@ class PeripheralManager: NSObject {
 
     deinit {
         self.writeTimeoutTask?.cancel()
-
-        for (opCode, stream) in self.writeQueue {
+        
+        if let stream = self.writeQueue {
             stream.finish()
         }
     }
 
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol) {
-        guard writeQueue[packet.opCode] == nil else {
-            throw NSError(domain: "Command already running", code: 0, userInfo: nil)
+        guard self.writeQueue == nil else {
+            throw NSError(domain: "A command is already running", code: 0, userInfo: nil)
         }
 
         let stream = AsyncThrowingStream<any DanaParsePacketProtocol, Error> { continuation in
-            writeQueue[packet.opCode] = continuation
+            self.writeQueue = continuation
             self.write(packet)
         }
 
@@ -121,7 +121,7 @@ class PeripheralManager: NSObject {
         writeTimeoutTask = Task {
             do {
                 try await Task.sleep(nanoseconds: UInt64(!isHistoryPacket ? .seconds(4) : .seconds(21)) * 1_000_000_000)
-                guard let stream = self.writeQueue[packet.opCode] else {
+                guard let stream = self.writeQueue else {
                     // We did what we must, so exist and be happy :)
                     return
                 }
@@ -132,7 +132,7 @@ class PeripheralManager: NSObject {
                 self.bluetoothManager.manager.cancelPeripheralConnection(self.connectedDevice)
                 stream.finish()
 
-                self.writeQueue.removeValue(forKey: packet.opCode)
+                self.writeQueue = nil
                 self.writeTimeoutTask = nil
                 self.writeSemaphore.signal()
             } catch {
@@ -656,7 +656,7 @@ extension PeripheralManager {
         }
 
         // Message received and dequeueing timeout
-        guard let opCode = message.opCode, let stream = writeQueue[opCode] else {
+        guard let stream = writeQueue else {
             log.error("No stream found to send this message back...")
             writeSemaphore.signal()
             return
@@ -671,7 +671,7 @@ extension PeripheralManager {
                 ))
                 stream.finish()
 
-                writeQueue.removeValue(forKey: opCode)
+                writeQueue = nil
                 writeTimeoutTask?.cancel()
                 writeTimeoutTask = nil
                 historyLog = []
@@ -686,7 +686,7 @@ extension PeripheralManager {
         stream.yield(message)
         stream.finish()
 
-        writeQueue.removeValue(forKey: opCode)
+        writeQueue = nil
         writeTimeoutTask?.cancel()
         writeTimeoutTask = nil
         writeSemaphore.signal()
