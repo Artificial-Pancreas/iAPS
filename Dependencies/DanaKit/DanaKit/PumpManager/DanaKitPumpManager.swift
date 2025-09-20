@@ -877,7 +877,7 @@ extension DanaKitPumpManager: PumpManager {
                             }
                         }
 
-                        guard let percentage = self.absoluteBasalRateToPercentage(
+                        guard var percentage = self.absoluteBasalRateToPercentage(
                             absoluteValue: unitsPerHour,
                             basalSchedule: self.state.basalSchedule
                         ) else {
@@ -897,6 +897,14 @@ extension DanaKitPumpManager: PumpManager {
                         // Floor it down to 15min
                         if percentage > 200, duration != .minutes(15) {
                             duration = .minutes(15)
+                        }
+                        
+                        var unitsPerHour = unitsPerHour
+                        if percentage > 500 {
+                            // The pump does not support temp basals over 500%
+                            // Limiting the percentage and update the correct abosulute temp basal rate
+                            percentage = 500
+                            unitsPerHour = self.currentBaseBasalRate * 5
                         }
 
                         if self.state.isTempBasalInProgress {
