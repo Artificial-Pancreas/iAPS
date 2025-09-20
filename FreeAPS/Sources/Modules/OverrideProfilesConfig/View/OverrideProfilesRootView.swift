@@ -68,6 +68,13 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var promilleFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 3
+            return formatter
+        }
+
         var body: some View {
             overridesView
                 .navigationBarTitle("Profiles")
@@ -418,8 +425,7 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.postMealISFweight,
-                                    formatter: higherPrecisionFormatter,
-                                    liveEditing: true
+                                    formatter: promilleFormatter, liveEditing: true
                                 )
                             }
 
@@ -843,10 +849,13 @@ extension OverrideProfilesConfig {
         }
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal as? Decimal, round(dec) != round(setting) {
-                return Text(label + "\(dec)")
+            guard let dec = decimal as? Decimal, round(dec) != round(setting) else { return nil }
+
+            guard label != "pp: " else {
+                return Text(label + (promilleFormatter.string(from: decimal ?? 0) ?? ""))
             }
-            return nil
+
+            return Text(label + "\(dec)")
         }
 
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {

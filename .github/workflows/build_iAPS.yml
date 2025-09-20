@@ -77,6 +77,9 @@ jobs:
           if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
             echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
           fi
+          if [ ! -z ${{ vars.BUILD_GROUP }}  ]; then
+            echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> $GITHUB_ENV
+          fi
 
       - name: Select Xcode version
         run: "sudo xcode-select --switch /Applications/Xcode_16.3.app/Contents/Developer"

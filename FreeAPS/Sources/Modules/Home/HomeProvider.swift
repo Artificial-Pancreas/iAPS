@@ -33,6 +33,10 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
 
+        func iob() async throws -> Decimal? {
+            await apsManager.iobSync()
+        }
+
         func reasons() -> [IOBData]? {
             let reasons = CoreDataStorage().fetchReasons(interval: DateFilter().day)
 
@@ -102,7 +106,7 @@ extension Home {
         func pumpSettings() -> PumpSettings {
             storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
                 ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
-                ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
+                ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
         }
 
         func pumpBattery() -> Battery? {

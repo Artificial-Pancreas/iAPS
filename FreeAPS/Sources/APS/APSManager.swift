@@ -28,6 +28,7 @@ protocol APSManager {
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
     func determineBasalSync()
+    func iobSync() async -> Decimal?
     func roundBolus(amount: Decimal) -> Decimal
     var lastError: CurrentValueSubject<Error?, Never> { get }
     func cancelBolus()
@@ -417,6 +418,13 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         return mainPublisher
+    }
+
+    func iobSync() async -> Decimal? {
+        let sync = await openAPS.iobSync()
+        guard let iobEntries = IOBTick0.parseArrayFromJSON(from: sync) else { return nil }
+
+        return CoreDataStorage().saveInsulinData(iobEntries: iobEntries)
     }
 
     func determineBasalSync() {

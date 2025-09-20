@@ -40,16 +40,10 @@ extension Settings {
                             )
                         }
 
-                        if let latest = fetchedVersionNumber.first,
-                           ((latest.nr ?? "") > state.versionNumber) ||
-                           ((latest.nr ?? "") < state.versionNumber && (latest.dev ?? "") > state.versionNumber)
-                        {
-                            Text(
-                                "Latest version on GitHub: " +
-                                    ((latest.nr ?? "") < state.versionNumber ? (latest.dev ?? "") : (latest.nr ?? "")) + "\n"
-                            )
-                            .foregroundStyle(.orange).bold()
-                            .multilineTextAlignment(.leading)
+                        if let latest = fetchedVersionNumber.first, let nr = latest.nr, nr > state.versionNumber {
+                            Text("Newer release availabe at GitHub: " + nr)
+                                .foregroundStyle(.orange).bold()
+                                .multilineTextAlignment(.leading)
                         }
                     }
                 }
@@ -199,6 +193,10 @@ extension Settings {
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
                                 Text("Edit settings json")
                                     .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
+                            }
+
+                            HStack {
+                                Toggle("Neglect Carbohydrates in oref0", isOn: $state.noCarbs)
                             }
                         }
                     } header: { Text("Developer") }

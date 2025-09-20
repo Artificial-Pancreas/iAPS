@@ -80,7 +80,7 @@
   "autoISFhourlyChange": 1,
   "higherISFrangeWeight": 0,
   "lowerISFrangeWeight": 0,
-  "postMealISFweight": 0.01,
+  "postMealISFweight": 0,
   "enableBGacceleration": true,
   "bgAccelISFweight": 0,
   "bgBrakeISFweight": 0.10,
@@ -100,11 +100,14 @@
   "ketoProtectBasalPercent": 20,
   "ketoProtectAbsolut": false,
   "ketoProtectBasalAbsolut": 0,
-  "extendHomeView": true,
   "extended_overrides": false,
   "displayExpiration": false,
-  "anubis": false,
+  "displaySAGE": true,
   "fpus": true,
   "fpuAmounts": false,
-  "lightMode": LightMode.auto
+  "showInsulinActivity": false,
+  "showCobChart": false,
+  "noCarbs": false,
+  "hidePredictions": false,
+  "useCarbBars": false
 }

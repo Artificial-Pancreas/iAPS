@@ -182,7 +182,7 @@ struct AutoISFHistoryView: View {
                                     .foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                            }
+                            }.listRowBackground(item.override ? Color.purpleOverrides : nil)
                         }
                     }
                 }

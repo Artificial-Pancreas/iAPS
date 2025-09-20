@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES" codeGenerationType="class">
         <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -57,6 +57,11 @@
     <entity name="ImportError" representedClassName="ImportError" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="error" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="InsulinActivity" representedClassName="InsulinActivity" syncable="YES" codeGenerationType="class">
+        <attribute name="activity" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" attributeType="Date" defaultDateTimeInterval="770394900" usesScalarValueType="NO"/>
+        <attribute name="iob" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="InsulinConcentration" representedClassName="InsulinConcentration" syncable="YES" codeGenerationType="class">
         <attribute name="concentration" optional="YES" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
@@ -157,7 +162,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="100" usesScalarValueType="YES"/>
         <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="smbIsOff" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="smbMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
@@ -203,6 +208,7 @@
         <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="mmol" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="override" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="ratio" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="reasons" optional="YES" attributeType="String" defaultValueString="empty"/>

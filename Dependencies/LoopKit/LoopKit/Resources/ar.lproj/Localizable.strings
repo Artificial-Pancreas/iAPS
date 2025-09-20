@@ -7,25 +7,25 @@
 */
 /* Description for novolog insulin type */
 
-"NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk" = "NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk";
+"NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk" = "NovoLog (الأنسولين أسبارت) هو أنسولين سريع المفعول من إنتاج شركة Novo Nordisk";
 
 /* Description for humalog insulin type */
-"Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly" = "Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly";
+"Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly" = "Humalog (الأنسولين ليزبرو) هو أنسولين سريع المفعول من إنتاج شركة Eli Lilly";
 
 /* Description for apidra insulin type */
-"Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis " = "Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis";
+"Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis " = "Apidra (الأنسولين جلوليسين) هو أنسولين سريع المفعول من إنتاج شركة Sanofi-aventis";
 
 /* Description for fiasp insulin type */
-"Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk" = "Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk";
+"Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk" = "Fiasp هو تركيبة من أنسولين أسبارت مخصصة لوقت الوجبات، مع إضافة النيكوتيناميد (فيتامين B3)، من إنتاج شركة Novo Nordisk";
 
 /* Description for lyumjev insulin type */
-"Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly" = "Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly";
+"Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly" = "Lyumjev هو تركيبة من أنسولين ليزبرو مخصصة لوقت الوجبات، مع إضافة السيترات والتريبروستينيل، من إنتاج شركة Eli Lilly";
 
 /* Description for afrezza insulin type */
-"Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind" = "Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind";
+"Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind" = "Afrezza هو أنسولين فائق السرعة يُستخدم في أوقات الوجبات، ويُستَنشَق عن طريق الرئتين باستخدام جهاز استنشاق فموي، من إنتاج شركة MannKind";
 
 /* Title for Unset insulin type */
-"Unset" = "Unset";
+"Unset" = "غير معيَّن";
 
 /* Description for Unset insulin type */
-"The currently selected fast acting insulin model will be used as a default." = "The currently selected fast acting insulin model will be used as a default.";
+"The currently selected fast acting insulin model will be used as a default." = "سيتم استخدام نموذج الأنسولين سريع المفعول المحدد حالياً كافتراضي.";

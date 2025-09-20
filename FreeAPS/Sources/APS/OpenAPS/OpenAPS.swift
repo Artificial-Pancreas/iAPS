@@ -88,6 +88,12 @@ final class OpenAPS {
 
                     self.storage.save(meal, as: Monitor.meal)
                     self.storage.save(iob, as: Monitor.iob)
+
+                    if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
+                        let cd = CoreDataStorage()
+                        _ = cd.saveInsulinData(iobEntries: iobEntries)
+                    }
+
                     print(
                         "Time for Meal and IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                     )
@@ -452,6 +458,7 @@ final class OpenAPS {
         let startIndex = reasonString.startIndex
         var aisf = false
         var totalDailyDose: Decimal?
+        let or = OverrideStorage().fetchLatestOverride().first
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {
@@ -518,19 +525,29 @@ final class OpenAPS {
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
+
+            // Before and after eventual Basal adjustment
+            if let index = reasonString.firstIndex(of: ";"),
+               let basalAdjustment = basalAdjustment(profile: profile, ratio: isf)
+            {
+                reasonString.insert(
+                    contentsOf: basalAdjustment,
+                    at: index
+                )
+            }
         }
 
         // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
-        if targetGlucose != nil, let or = OverrideStorage().fetchLatestOverride().first, or.enabled {
-            var orString = ", Override:"
-            if or.percentage != 100 {
-                orString += " \(or.percentage.formatted()) %"
+        if targetGlucose != nil, let override = or, override.enabled {
+            var orString = ", Override: "
+            if override.percentage != 100 {
+                orString += (formatter.string(from: override.percentage as NSNumber) ?? "")
             }
-            if or.smbIsOff {
-                orString += " SMBs off"
+            if override.smbIsOff {
+                orString += ". SMBs off"
             }
-            orString += " Target \(targetGlucose ?? 0)"
+            orString += ". Target \(targetGlucose ?? 0)"
 
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: orString, at: index)
@@ -593,6 +610,11 @@ final class OpenAPS {
                 saveSuggestion.reasons = aisfReasons
                 saveSuggestion.glucose = (suggestion.bg ?? 0) as NSDecimalNumber
                 saveSuggestion.ratio = (suggestion.sensitivityRatio ?? 1) as NSDecimalNumber
+
+                if let override = or, override.enabled {
+                    saveSuggestion.override = true
+                }
+
                 saveSuggestion.date = Date.now
 
                 if let rate = suggestion.rate {
@@ -615,12 +637,32 @@ final class OpenAPS {
         return reasonString
     }
 
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+
     private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
         let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
         let new = "\(decimal)"
         guard old != new else { return nil }
 
         return old
+    }
+
+    private func basalAdjustment(profile: RawJSON, ratio: Decimal) -> String? {
+        guard let new = readAndExclude(json: profile, variable: "current_basal", exclude: "current_basal_safety_multiplier"),
+              let old = readJSON(json: profile, variable: "old_basal"), let value = Decimal(string: old),
+              let parseNew = Decimal(string: new) else { return nil }
+
+        let adjusted = (parseNew * ratio)
+        let oldValue = value.roundBolusIncrements(increment: 0.05)
+        let newValue = adjusted.roundBolusIncrements(increment: 0.05)
+        guard oldValue != newValue else { return nil }
+
+        return ", Basal: \(oldValue) → \(newValue)"
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
@@ -1045,6 +1087,25 @@ final class OpenAPS {
             pumphistory,
             profile,
             clock,
+            autosens
+        ])
+    }
+
+    func iobSync() async -> RawJSON {
+        let (
+            autosens,
+            profile,
+            pumpHistory
+        ) = await (
+            autosensHistory(),
+            profileHistory(),
+            pumpHistory()
+        )
+
+        return await scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
+            pumpHistory,
+            profile,
+            Date(),
             autosens
         ])
     }

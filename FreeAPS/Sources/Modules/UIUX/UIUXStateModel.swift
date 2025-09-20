@@ -19,14 +19,17 @@ extension UIUX {
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var hideInsulinBadge: Bool = false
-        @Published var extendHomeView: Bool = true
         @Published var displayExpiration: Bool = false
-        @Published var anubis: Bool = false
+        @Published var displaySAGE: Bool = true
         @Published var fpus: Bool = true
         @Published var fpuAmounts: Bool = false
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
         @Published var lightMode: LightMode = .auto
+        @Published var showInsulinActivity: Bool = false
+        @Published var showCobChart: Bool = false
+        @Published var hidePredictions: Bool = false
+        @Published var useCarbBars: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -47,14 +50,17 @@ extension UIUX {
             subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
             subscribeSetting(\.displayDelta, on: $displayDelta) { displayDelta = $0 }
             subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { hideInsulinBadge = $0 }
-            subscribeSetting(\.extendHomeView, on: $extendHomeView) { extendHomeView = $0 }
             subscribeSetting(\.displayExpiration, on: $displayExpiration) { displayExpiration = $0 }
-            subscribeSetting(\.anubis, on: $anubis) { anubis = $0 }
+            subscribeSetting(\.displaySAGE, on: $displaySAGE) { displaySAGE = $0 }
             subscribeSetting(\.fpus, on: $fpus) { fpus = $0 }
             subscribeSetting(\.fpuAmounts, on: $fpuAmounts) { fpuAmounts = $0 }
             subscribeSetting(\.carbButton, on: $carbButton) { carbButton = $0 }
             subscribeSetting(\.profileButton, on: $profileButton) { profileButton = $0 }
             subscribeSetting(\.lightMode, on: $lightMode) { lightMode = $0 }
+            subscribeSetting(\.showInsulinActivity, on: $showInsulinActivity) { showInsulinActivity = $0 }
+            subscribeSetting(\.showCobChart, on: $showCobChart) { showCobChart = $0 }
+            subscribeSetting(\.hidePredictions, on: $hidePredictions) { hidePredictions = $0 }
+            subscribeSetting(\.useCarbBars, on: $useCarbBars) { useCarbBars = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
