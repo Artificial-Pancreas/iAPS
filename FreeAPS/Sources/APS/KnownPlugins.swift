@@ -85,4 +85,50 @@ enum KnownPlugins {
         default: return cgmManager.pluginIdentifier
         }
     }
+
+    static func isManualTempBasalActive(_ pumpManager: PumpManager) -> Bool? {
+        switch pumpManager.pluginIdentifier {
+        case OmnipodPumpManager.pluginIdentifier:
+            if let omnipod = pumpManager as? OmnipodPumpManager,
+               let tempBasal = omnipod.state.podState?.unfinalizedTempBasal,
+               !tempBasal.isFinished(),
+               !tempBasal.automatic
+            {
+                return true
+            } else {
+                return false
+            }
+        case OmniBLEPumpManager.pluginIdentifier:
+            if let omnipodBLE = pumpManager as? OmniBLEPumpManager,
+               let tempBasal = omnipodBLE.state.podState?.unfinalizedTempBasal,
+               !tempBasal.isFinished(),
+               !tempBasal.automatic
+            {
+                return true
+            } else {
+                return false
+            }
+        default: return nil
+        }
+    }
+
+    static func pumpActivationDate(_ pumpManager: PumpManager) -> Date? {
+        switch pumpManager.pluginIdentifier {
+        case OmnipodPumpManager.pluginIdentifier:
+            return (pumpManager as? OmnipodPumpManager)?.state.podState?.activatedAt
+        case OmniBLEPumpManager.pluginIdentifier:
+            return (pumpManager as? OmniBLEPumpManager)?.state.podState?.activatedAt
+        default: return nil
+        }
+    }
+
+    static func pumpExpirationDate(_ pumpManager: PumpManager) -> Date? {
+        switch pumpManager.pluginIdentifier {
+        case OmnipodPumpManager.pluginIdentifier:
+            return (pumpManager as? OmnipodPumpManager)?.state.podState?.expiresAt
+        case OmniBLEPumpManager.pluginIdentifier:
+            return (pumpManager as? OmniBLEPumpManager)?.state.podState?.expiresAt
+        default: return nil
+        }
+    }
 }

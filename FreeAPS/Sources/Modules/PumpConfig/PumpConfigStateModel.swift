@@ -9,21 +9,21 @@ extension PumpConfig {
 
         @Published var pumpSetupPresented: Bool = false
         @Published private(set) var pumpIdentifierToSetUp: String? = nil
+        @Published private(set) var pumpManagerStatus: PumpManagerStatus? = nil
 
         private(set) var initialSettings: PumpInitialSettings = .default
         @Published var alertNotAck: Bool = false
 
         override func subscribe() {
-            // TODO: [loopkit] fix/remove this
-//            provider.pumpDisplayState
-//                .receive(on: DispatchQueue.main)
-//                .assign(to: \.pumpState, on: self)
-//                .store(in: &lifetime)
-
             alertNotAck = provider.initialAlertNotAck()
             provider.alertNotAck
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.alertNotAck, on: self)
+                .store(in: &lifetime)
+
+            deviceManager.pumpManagerStatus
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.pumpManagerStatus, on: self)
                 .store(in: &lifetime)
 
             let basalSchedule = BasalRateSchedule(
@@ -54,6 +54,8 @@ extension PumpConfig {
 
 extension PumpConfig.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
-        pumpIdentifierToSetUp = nil
+        Task { @MainActor in
+            setupPump(nil)
+        }
     }
 }

@@ -24,7 +24,7 @@ protocol BolusFailureObserver {
     func bolusDidFail()
 }
 
-protocol pumpNotificationObserver {
+protocol PumpNotificationObserver {
     func pumpNotification(alert: AlertEntry)
     func pumpRemoveNotification()
 }
@@ -59,7 +59,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(BolusFailureObserver.self, observer: self)
-        broadcaster.register(pumpNotificationObserver.self, observer: self)
+        broadcaster.register(PumpNotificationObserver.self, observer: self)
 
         requestNotificationPermissionsIfNeeded()
         sendGlucoseNotification()
@@ -444,7 +444,7 @@ extension BaseUserNotificationsManager: GlucoseObserver {
     }
 }
 
-extension BaseUserNotificationsManager: pumpNotificationObserver {
+extension BaseUserNotificationsManager: PumpNotificationObserver {
     func pumpNotification(alert: AlertEntry) {
         ensureCanSendNotification {
             let content = UNMutableNotificationContent()
