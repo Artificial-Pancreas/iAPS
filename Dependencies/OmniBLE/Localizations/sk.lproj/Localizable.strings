@@ -387,7 +387,7 @@
 "Sync to Current Time" = "Synchronizácia s aktuálnym časom";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Pozastavenie dodávky";
+"Suspend Delivery" = "Pozastaviť dávkovanie";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Podávanie inzulínu bude zastavené, kým ho manuálne neobnovíte. Kedy chcete, aby vám slučka pripomenula obnovenie podávania?";
