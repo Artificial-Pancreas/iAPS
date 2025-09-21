@@ -436,6 +436,8 @@
 		F2941FA52E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA42E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift */; };
 		F2941FA72E78806800A9DD5D /* AppGroupCGMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA62E78806800A9DD5D /* AppGroupCGMSettingsView.swift */; };
 		F2941FA92E78823C00A9DD5D /* AppGroupCGMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA82E78823C00A9DD5D /* AppGroupCGMPlugin.swift */; };
+		F29FC35D2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29FC35C2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift */; };
+		F29FC35F2E7F6EF800DC04FE /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29FC35E2E7F6EF800DC04FE /* DateExtensions.swift */; };
 		F2A4B7922E64985F000E0E85 /* PluiginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7912E64985F000E0E85 /* PluiginManager.swift */; };
 		F2A4B7C32E6C8CA7000E0E85 /* CGMManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */; };
 		F2A4B7C62E6C9180000E0E85 /* BloodGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */; };
@@ -1079,6 +1081,8 @@
 		F2941FA42E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMSettingsViewController.swift; sourceTree = "<group>"; };
 		F2941FA62E78806800A9DD5D /* AppGroupCGMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMSettingsView.swift; sourceTree = "<group>"; };
 		F2941FA82E78823C00A9DD5D /* AppGroupCGMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMPlugin.swift; sourceTree = "<group>"; };
+		F29FC35C2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageGlucoseSaver.swift; sourceTree = "<group>"; };
+		F29FC35E2E7F6EF800DC04FE /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		F2A4B7912E64985F000E0E85 /* PluiginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluiginManager.swift; sourceTree = "<group>"; };
 		F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerExtensions.swift; sourceTree = "<group>"; };
 		F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucoseManager.swift; sourceTree = "<group>"; };
@@ -2062,6 +2066,7 @@
 				1956FB202AFF79E200C7B4FF /* CoreDataStorage.swift */,
 				198CED9C2B2E62940073032D /* OverrideStorage.swift */,
 				1982F7DA2BA6509D00EAFADE /* PumpStorage.swift */,
+				F29FC35C2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -2075,6 +2080,7 @@
 				CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */,
 				F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */,
 				F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */,
+				F29FC35E2E7F6EF800DC04FE /* DateExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3188,6 +3194,7 @@
 				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
 				190EBCC629FF138000BA767D /* UIUXProvider.swift in Sources */,
 				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
+				F29FC35F2E7F6EF800DC04FE /* DateExtensions.swift in Sources */,
 				E00EEC0427368630002FF094 /* SecurityAssembly.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
@@ -3363,6 +3370,7 @@
 				F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */,
 				5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */,
 				E13B7DAB2A435F57066AF02E /* TargetsEditorStateModel.swift in Sources */,
+				F29FC35D2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift in Sources */,
 				19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */,
 				1948C0662D35A8350032B6A2 /* AutoISFHistoryView.swift in Sources */,
 				9702FF92A09C53942F20D7EA /* TargetsEditorRootView.swift in Sources */,

@@ -469,4 +469,34 @@ final class CoreDataStorage {
         let recent = conc.first
         return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
     }
+
+    func saveGlucoseInBackground(bloodGlucose: [BloodGlucose]) {
+        guard let earliestDate = bloodGlucose.min(by: { $0.dateString < $1.dateString }).map(\.dateString) else { return }
+
+        CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let requestReadings = Readings.fetchRequest()
+            requestReadings.predicate = NSPredicate(
+                format: "date >= %@", earliestDate.addingTimeInterval(5.minutes) as NSDate
+            )
+            guard let existing = try? context.fetch(requestReadings) else {
+                return
+            }
+
+            for bg in bloodGlucose {
+                guard let glucose = bg.glucose,
+                      !existing.contains(where: { old in
+                          old.date?.roundedTo1Second == bg.dateString.roundedTo1Second
+                      })
+                else {
+                    continue
+                }
+                let dataForForStats = Readings(context: context)
+                dataForForStats.date = bg.dateString
+                dataForForStats.glucose = Int16(glucose)
+                dataForForStats.id = bg.id
+                dataForForStats.direction = bg.direction?.symbol ?? "↔︎"
+            }
+            try? context.save()
+        }
+    }
 }

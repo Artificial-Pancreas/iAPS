@@ -11,7 +11,6 @@ extension NightscoutConfig {
         @Injected() private var keychain: Keychain!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
-        @Injected() private var healthKitManager: HealthKitManager!
         @Injected() private var storage: FileStorage!
         @Injected() var apsManager: APSManager!
         @Injected() var deviceManager: DeviceDataManager!
@@ -315,8 +314,7 @@ extension NightscoutConfig {
                     }
 
                     guard glucose.isNotEmpty else { return }
-                    self.healthKitManager.saveIfNeeded(bloodGlucose: glucose)
-                    self.glucoseStorage.storeGlucose(glucose)
+                    _ = self.glucoseStorage.storeGlucose(glucose)
                 }
                 .store(in: &lifetime)
         }

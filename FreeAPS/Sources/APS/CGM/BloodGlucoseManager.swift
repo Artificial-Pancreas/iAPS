@@ -1,24 +1,16 @@
 import Combine
 import Foundation
-import G7SensorKit
-import LoopKit
-import LoopKitUI
 import Swinject
+import UIKit
 
 final class BloodGlucoseManager {
     private let processQueue = DispatchQueue(label: "BaseCGMPluginManager.processQueue")
     private let glucoseStorage: GlucoseStorage
-    private let settingsManager: SettingsManager
-    private let nightscoutManager: NightscoutManager
-
-    private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-
-    private var lifetime = Lifetime()
+    private let broadcaster: Broadcaster
 
     init(resolver: Resolver) {
         glucoseStorage = resolver.resolve(GlucoseStorage.self)!
-        settingsManager = resolver.resolve(SettingsManager.self)!
-        nightscoutManager = resolver.resolve(NightscoutManager.self)!
+        broadcaster = resolver.resolve(Broadcaster.self)!
     }
 
     /// return true if a newer blood glucose record was detected and stored
@@ -45,11 +37,9 @@ final class BloodGlucoseManager {
             backGroundFetchBGTaskID = .invalid
         }
 
-        save(glucose)
-
         let previousLatestBG = glucoseStorage.latestDate()
-        glucoseStorage.storeGlucose(glucose)
-        let updatedLatestBG = glucoseStorage.latestDate()
+        let storedGlucose = glucoseStorage.storeGlucose(glucose)
+        let updatedLatestBG = storedGlucose.first?.dateString
 
         var newGlucoseStored = false
         if let previousLatestBG, let updatedLatestBG {
@@ -57,9 +47,6 @@ final class BloodGlucoseManager {
         } else {
             newGlucoseStored = previousLatestBG == nil && updatedLatestBG != nil
         }
-
-        // TODO: [loopkit] move this out of the main loop, upload in the background
-        nightscoutManager.uploadGlucose()
 
         if newGlucoseStored {
             debug(.deviceManager, "New glucose found")
@@ -72,18 +59,5 @@ final class BloodGlucoseManager {
         }
 
         return newGlucoseStored
-    }
-
-    private func save(_ glucose: [BloodGlucose]) {
-        guard glucose.isNotEmpty, let first = glucose.first, let glucose = first.glucose, glucose != 0 else { return }
-
-        coredataContext.perform {
-            let dataForForStats = Readings(context: self.coredataContext)
-            dataForForStats.date = first.dateString
-            dataForForStats.glucose = Int16(glucose)
-            dataForForStats.id = first.id
-            dataForForStats.direction = first.direction?.symbol ?? "↔︎"
-            try? self.coredataContext.save()
-        }
     }
 }
