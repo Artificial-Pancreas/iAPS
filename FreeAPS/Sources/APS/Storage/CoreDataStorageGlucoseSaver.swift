@@ -26,7 +26,7 @@ final class CoreDataStorageGlucoseSaver: NewGlucoseObserver {
             do {
                 let requestReadings = Readings.fetchRequest()
                 requestReadings.predicate = NSPredicate(
-                    format: "date >= %@", earliestDate.addingTimeInterval(-5.minutes) as NSDate
+                    format: "%K >= %@", #keyPath(Readings.date), earliestDate.addingTimeInterval(-60) as NSDate
                 )
 
                 let existing = try self.backgroundContext.fetch(requestReadings)
