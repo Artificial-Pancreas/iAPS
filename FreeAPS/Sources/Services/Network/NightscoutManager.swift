@@ -847,11 +847,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func nightscoutGlucoseNotUploaded(bloodGlucose: [BloodGlucose]) -> [BloodGlucose] {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
+        debug(.nightscout, "previously uploaded: \(uploaded.count) glucose records")
         let recentGlucose = bloodGlucose.filter({ $0.type != GlucoseType.manual.rawValue })
+        debug(.nightscout, "stored glucose: \(recentGlucose.count) records")
         let uploadedDates = Set(uploaded.map(\.dateString.roundedTo1Second))
 
         let glucoseToUpload = recentGlucose.filter { bg in !uploadedDates.contains(bg.dateString.roundedTo1Second) }
-
+        debug(.nightscout, "glucose to upload: \(glucoseToUpload.count) records")
         return glucoseToUpload
     }
 
@@ -1058,7 +1060,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         processQueue.async {
             glucoseWithoutCorrectID.chunks(ofCount: 100)
                 .map { chunk -> AnyPublisher<Void, Error> in
-                    nightscout.uploadGlucose(Array(chunk))
+                    debug(.nightscout, "uploading glucose, chunk of \(chunk.count) records...")
+                    return nightscout.uploadGlucose(Array(chunk))
                 }
                 .reduce(
                     Just(()).setFailureType(to: Error.self)

@@ -484,11 +484,23 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
+        debug(.nightscout, "NS Client: uploading \(glucose.count) records, first 5:")
+        for bg in glucose.prefix(5) {
+            debug(.nightscout, "NS Client: BG: \(bg)")
+        }
         request.httpBody = try! JSONCoding.encoder.encode(glucose)
         request.httpMethod = "POST"
 
+        debug(.nightscout, "NS Client: payload length: \(request.httpBody!.count)")
+        if let body = request.httpBody,
+           let bodyString = String(data: body, encoding: .utf8)
+        {
+            let preview = bodyString.prefix(1000)
+            debug(.nightscout, "NS Client: payload preview: \(preview)")
+        }
+
         return service.run(request)
-            .retry(Config.retryCount)
+            .retry(1 /* Config.retryCount */ )
             .map { _ in () }
             .eraseToAnyPublisher()
     }

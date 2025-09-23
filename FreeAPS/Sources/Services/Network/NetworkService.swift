@@ -20,6 +20,12 @@ struct NetworkService {
             .tryMap { data, response in
                 let code = (response as! HTTPURLResponse).statusCode
                 guard 200 ..< 300 ~= code else {
+                    if let body = String(data: data, encoding: .utf8) {
+                        debug(
+                            .nightscout,
+                            "network client error response for \(request.httpMethod!) \(request.url) - status: \(code), body: \(body)"
+                        )
+                    }
                     throw NetworkError.badStatusCode(.init(statusCode: code))
                 }
                 return data
