@@ -582,6 +582,13 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             $0.pumpTimeZoneDidChange(status.timeZone)
         }
 
+        if let reservoir = KnownPlugins.pumpReservoir(pumpManager) {
+            storage.save(reservoir, as: OpenAPS.Monitor.reservoir)
+            broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
+                $0.pumpReservoirDidChange(reservoir)
+            }
+        }
+
         if KnownPlugins.isManualTempBasalActive(pumpManager) ?? false {
             debug(.deviceManager, "manual temp basal")
             manualTempBasal.send(true)

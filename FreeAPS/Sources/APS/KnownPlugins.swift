@@ -131,4 +131,22 @@ enum KnownPlugins {
         default: return nil
         }
     }
+
+    static func pumpReservoir(_ pumpManager: PumpManager) -> Decimal? {
+        switch pumpManager.pluginIdentifier {
+        case OmnipodPumpManager.pluginIdentifier:
+            let reservoirVal = (pumpManager as? OmnipodPumpManager)?.state.podState?.lastInsulinMeasurements?
+                .reservoirLevel ?? 0xDEAD_BEEF
+            // TODO: find the value Pod.maximumReservoirReading
+            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
+            return Decimal(reservoir)
+        case OmniBLEPumpManager.pluginIdentifier:
+            let reservoirVal = (pumpManager as? OmniBLEPumpManager)?.state.podState?.lastInsulinMeasurements?
+                .reservoirLevel ?? 0xDEAD_BEEF
+            // TODO: find the value Pod.maximumReservoirReading
+            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
+            return Decimal(reservoir)
+        default: return nil
+        }
+    }
 }
