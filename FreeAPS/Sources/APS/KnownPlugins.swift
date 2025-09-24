@@ -3,6 +3,7 @@ import Foundation
 import G7SensorKit
 import LibreTransmitter
 import LoopKit
+import MedtrumKit
 import MinimedKit
 import MockKit
 import NightscoutRemoteCGM
@@ -118,6 +119,8 @@ enum KnownPlugins {
             return (pumpManager as? OmnipodPumpManager)?.state.podState?.activatedAt
         case OmniBLEPumpManager.pluginIdentifier:
             return (pumpManager as? OmniBLEPumpManager)?.state.podState?.activatedAt
+        case MedtrumPumpManager.pluginIdentifier:
+            return (pumpManager as? MedtrumPumpManager)?.state.patchActivatedAt
         default: return nil
         }
     }
@@ -128,6 +131,8 @@ enum KnownPlugins {
             return (pumpManager as? OmnipodPumpManager)?.state.podState?.expiresAt
         case OmniBLEPumpManager.pluginIdentifier:
             return (pumpManager as? OmniBLEPumpManager)?.state.podState?.expiresAt
+        case MedtrumPumpManager.pluginIdentifier:
+            return (pumpManager as? MedtrumPumpManager)?.state.patchExpiresAt
         default: return nil
         }
     }
