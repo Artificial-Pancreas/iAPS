@@ -492,12 +492,6 @@ extension NightscoutAPI {
         request.httpMethod = "POST"
 
         debug(.nightscout, "NS Client: payload length: \(request.httpBody!.count)")
-        if let body = request.httpBody,
-           let bodyString = String(data: body, encoding: .utf8)
-        {
-            let preview = bodyString.prefix(1000)
-            debug(.nightscout, "NS Client: payload preview: \(preview)")
-        }
 
         return service.run(request)
             .retry(1 /* Config.retryCount */ )

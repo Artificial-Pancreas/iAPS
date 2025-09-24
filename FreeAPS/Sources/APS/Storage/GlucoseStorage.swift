@@ -43,8 +43,12 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
             var stored: [BloodGlucose] = []
             self.storage.transaction { storage in
                 let existing = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
+                let existingDates = Set(existing.map(\.dateString))
+                let newRecords = glucose.filter { bg in
+                    !existingDates.contains(bg.dateString)
+                }
 
-                storage.append(glucose, to: file, uniqByProj: { $0.dateRoundedTo1Second })
+                storage.append(newRecords, to: file, uniqBy: \.dateString)
 
                 let now = Date()
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
@@ -53,11 +57,6 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 let glucose = Array(uniqEvents)
                 storage.save(glucose, as: file)
                 stored = glucose
-
-                let existingDates = Set(existing.map(\.dateString.roundedTo1Second))
-                let newRecords = glucose.filter { bg in
-                    !existingDates.contains(bg.dateString.roundedTo1Second)
-                }
 
                 DispatchQueue.main.async {
                     self.broadcaster.notify(GlucoseObserver.self, on: .main) {

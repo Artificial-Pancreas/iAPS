@@ -167,9 +167,3 @@ extension BloodGlucose: SavitzkyGolaySmoothable {
         }
     }
 }
-
-extension BloodGlucose {
-    var dateRoundedTo1Second: Date {
-        dateString.roundedTo1Second
-    }
-}
