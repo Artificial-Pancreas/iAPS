@@ -847,12 +847,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func nightscoutGlucoseNotUploaded(bloodGlucose: [BloodGlucose]) -> [BloodGlucose] {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
-        debug(.nightscout, "previously uploaded: \(uploaded.count) glucose records")
         let recentGlucose = bloodGlucose.filter({ $0.type != GlucoseType.manual.rawValue })
-        debug(.nightscout, "stored glucose: \(recentGlucose.count) records")
 
         let glucoseToUpload = Array(Set(recentGlucose).subtracting(Set(uploaded)))
-        debug(.nightscout, "glucose to upload: \(glucoseToUpload.count) records")
+
         return glucoseToUpload
     }
 
