@@ -380,7 +380,7 @@ extension Home {
                 }
             }
             .confirmationDialog("Bolus already in Progress", isPresented: $showBolusActiveAlert) {
-                Button("Bolus already in Progress!", role: .cancel) {
+                Button("Bolus already in Progress!", role: .destructive) {
                     showBolusActiveAlert = false
                 }
             }
