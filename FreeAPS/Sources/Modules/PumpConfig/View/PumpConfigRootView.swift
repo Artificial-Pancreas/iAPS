@@ -20,7 +20,11 @@ extension PumpConfig {
                                 state.setupPump(pumpManager.pluginIdentifier)
                             } label: {
                                 HStack {
-                                    Image(uiImage: pumpManager.smallImage ?? UIImage()).padding()
+                                    Image(uiImage: pumpManager.smallImage ?? UIImage())
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding()
+                                        .frame(maxWidth: 100)
                                     Text(pumpManager.localizedTitle)
                                 }
                             }

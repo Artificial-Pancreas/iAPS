@@ -3,6 +3,7 @@ import Foundation
 import G7SensorKit
 import LibreTransmitter
 import LoopKit
+import MedtrumKit
 import MinimedKit
 import MockKit
 import NightscoutRemoteCGM
@@ -118,6 +119,8 @@ enum KnownPlugins {
             return (pumpManager as? OmnipodPumpManager)?.state.podState?.activatedAt
         case OmniBLEPumpManager.pluginIdentifier:
             return (pumpManager as? OmniBLEPumpManager)?.state.podState?.activatedAt
+        case MedtrumPumpManager.pluginIdentifier:
+            return (pumpManager as? MedtrumPumpManager)?.state.patchActivatedAt
         default: return nil
         }
     }
@@ -128,6 +131,26 @@ enum KnownPlugins {
             return (pumpManager as? OmnipodPumpManager)?.state.podState?.expiresAt
         case OmniBLEPumpManager.pluginIdentifier:
             return (pumpManager as? OmniBLEPumpManager)?.state.podState?.expiresAt
+        case MedtrumPumpManager.pluginIdentifier:
+            return (pumpManager as? MedtrumPumpManager)?.state.patchExpiresAt
+        default: return nil
+        }
+    }
+
+    static func pumpReservoir(_ pumpManager: PumpManager) -> Decimal? {
+        switch pumpManager.pluginIdentifier {
+        case OmnipodPumpManager.pluginIdentifier:
+            let reservoirVal = (pumpManager as? OmnipodPumpManager)?.state.podState?.lastInsulinMeasurements?
+                .reservoirLevel ?? 0xDEAD_BEEF
+            // TODO: find the value Pod.maximumReservoirReading
+            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
+            return Decimal(reservoir)
+        case OmniBLEPumpManager.pluginIdentifier:
+            let reservoirVal = (pumpManager as? OmniBLEPumpManager)?.state.podState?.lastInsulinMeasurements?
+                .reservoirLevel ?? 0xDEAD_BEEF
+            // TODO: find the value Pod.maximumReservoirReading
+            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
+            return Decimal(reservoir)
         default: return nil
         }
     }

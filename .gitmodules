@@ -35,3 +35,6 @@
 [submodule "DanaKit"]
 	path = DanaKit
 	url = https://github.com/loopandlearn/DanaKit
+[submodule "MedtrumKit"]
+	path = MedtrumKit
+	url = https://github.com/loopandlearn/MedtrumKit.git
