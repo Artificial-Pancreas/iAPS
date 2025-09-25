@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 
 struct FoodSearchView: View {
@@ -12,9 +13,8 @@ struct FoodSearchView: View {
     @State private var aiAnalysisResult: AIFoodAnalysisResult?
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                // Suchfeld + Buttons
                 HStack(spacing: 8) {
                     TextField("Food Search...", text: $state.foodSearchText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -24,6 +24,7 @@ struct FoodSearchView: View {
                         .onSubmit {
                             state.performSearch(query: state.foodSearchText)
                         }
+
                     // Barcode Button
                     Button {
                         navigateToBarcode = true
@@ -40,18 +41,20 @@ struct FoodSearchView: View {
                     Button {
                         navigateToAICamera = true
                     } label: {
-                        AICameraIcon()
+                        Image(systemName: "camera")
+                            .resizable()
+                            .scaledToFit()
                             .frame(width: 24, height: 24)
                             .padding(8)
                             .background(Color.purple.opacity(0.1))
                             .cornerRadius(8)
+                            .foregroundColor(.purple)
                     }
                 }
                 .padding(.horizontal)
                 .padding(.top, 8)
 
                 ScrollView {
-                    // Zeige entweder normale Suchergebnisse oder AI-Analyse-Ergebnisse an
                     if showingAIAnalysisResults, let result = aiAnalysisResult {
                         AIAnalysisResultsView(
                             analysisResult: result,
@@ -81,7 +84,8 @@ struct FoodSearchView: View {
                                     carbs: Decimal(aiProduct.carbs),
                                     fat: Decimal(aiProduct.fat),
                                     protein: Decimal(aiProduct.protein),
-                                    source: "AI Analyse"
+                                    source: "AI Analyse",
+                                    imageURL: aiProduct.imageURL
                                 )
                                 onSelect(foodItem)
                                 dismiss()
@@ -90,69 +94,30 @@ struct FoodSearchView: View {
                     }
                 }
                 .padding(.top, 8)
-                // Navigation-Ziele
-                NavigationLink(
-                    destination: BarcodeScannerView(
-                        onBarcodeScanned: { barcode in
-                            handleBarcodeScan(barcode)
-                            navigateToBarcode = false
-                        },
-                        onCancel: { navigateToBarcode = false }
-                    ),
-                    isActive: $navigateToBarcode,
-                    label: { EmptyView() }
-                )
-
-                NavigationLink(
-                    destination: AICameraView(
-                        onFoodAnalyzed: { analysisResult, image in
-                            handleAIAnalysis(analysisResult, image: image)
-                            navigateToAICamera = false
-                        },
-                        onCancel: { navigateToAICamera = false }
-                    ),
-                    isActive: $navigateToAICamera,
-                    label: { EmptyView() }
-                )
-
-                // Settings
-                NavigationLink(destination: AISettingsView()) {
-                    HStack {
-                        Image(systemName: "gearshape")
-                        Text("AI Settings")
-                        Spacer()
-                    }
-                }
-                .foregroundStyle(.primary)
-                .overlay(
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.blue)
-                        .font(.system(size: 14, weight: .semibold)), alignment: .trailing
-                ).padding(.horizontal, 20)
-
-                // Footer
-                footerNotice
             }
             .navigationTitle("Food Search")
-            .navigationBarItems(trailing: Button("Done") { dismiss() })
-        }
-    }
-
-    private var footerNotice: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: "exclamationmark.circle")
-                Text("Notice")
+            .navigationBarItems(trailing: Button("Fertig") { dismiss() })
+            .navigationDestination(isPresented: $navigateToBarcode) {
+                BarcodeScannerView(
+                    onBarcodeScanned: { barcode in
+                        handleBarcodeScan(barcode)
+                        navigateToBarcode = false
+                    },
+                    onCancel: { navigateToBarcode = false }
+                )
             }
-            .font(.headline)
-            .foregroundColor(.orange)
-            Text(
-                "The food data loaded via OpenFoodFacts always refer to 100g/100ml. This does not apply to values provided by AI Food Analysis."
-            )
-            .font(.subheadline)
-            .foregroundColor(.secondary)
+            .navigationDestination(isPresented: $navigateToAICamera) {
+                AICameraView(
+                    onFoodAnalyzed: { analysisResult, image in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            handleAIAnalysis(analysisResult, image: image)
+                            navigateToAICamera = false
+                        }
+                    },
+                    onCancel: { navigateToAICamera = false }
+                )
+            }
         }
-        .padding(20)
     }
 
     private func handleBarcodeScan(_ barcode: String) {
@@ -164,11 +129,9 @@ struct FoodSearchView: View {
     }
 
     private func handleAIAnalysis(_ analysisResult: AIFoodAnalysisResult, image _: UIImage?) {
-        // Speichere das vollständige Analyse-Ergebnis
         aiAnalysisResult = analysisResult
         showingAIAnalysisResults = true
 
-        // Füge auch die einfachen Ergebnisse zum State hinzu (für Rückwärtskompatibilität)
         let aiFoodItems = analysisResult.foodItemsDetailed.map { foodItem in
             AIFoodItem(
                 name: foodItem.name,
@@ -176,7 +139,8 @@ struct FoodSearchView: View {
                 calories: foodItem.calories ?? 0,
                 carbs: foodItem.carbohydrates,
                 protein: foodItem.protein ?? analysisResult.totalProtein ?? 0,
-                fat: foodItem.fat ?? analysisResult.totalFat ?? 0
+                fat: foodItem.fat ?? analysisResult.totalFat ?? 0,
+                imageURL: nil
             )
         }
         state.aiSearchResults = aiFoodItems

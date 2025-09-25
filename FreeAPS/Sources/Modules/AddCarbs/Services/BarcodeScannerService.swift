@@ -41,6 +41,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private let videoOutput = AVCaptureVideoDataOutput()
     private let sessionQueue = DispatchQueue(label: "barcode.scanner.session", qos: .userInitiated)
+    private var _previewLayer: AVCaptureVideoPreviewLayer?
 
     // Vision request for barcode detection
     private lazy var barcodeRequest: VNDetectBarcodesRequest = {
@@ -348,6 +349,8 @@ class BarcodeScannerService: NSObject, ObservableObject {
             )
 
             os_log("Barcode scanning session stopped and cleaned", log: self.log, type: .info)
+
+            _previewLayer = nil // ✅ Wichtig für Cleanup
         }
     }
 
@@ -615,16 +618,26 @@ class BarcodeScannerService: NSObject, ObservableObject {
     }
 
     /// Get video preview layer for UI integration
+    /*   func getPreviewLayer() -> AVCaptureVideoPreviewLayer? {
+         // Always create a new preview layer to avoid conflicts
+         // Each view should have its own preview layer instance
+         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+         previewLayer.videoGravity = .resizeAspectFill
+         print("🎥 Created preview layer for session: \(captureSession)")
+         print(
+             "🎥 Session running: \(captureSession.isRunning), inputs: \(captureSession.inputs.count), outputs: \(captureSession.outputs.count)"
+         )
+         return previewLayer
+     }*/
+
+    /// Get shared video preview layer
     func getPreviewLayer() -> AVCaptureVideoPreviewLayer? {
-        // Always create a new preview layer to avoid conflicts
-        // Each view should have its own preview layer instance
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.videoGravity = .resizeAspectFill
-        print("🎥 Created preview layer for session: \(captureSession)")
-        print(
-            "🎥 Session running: \(captureSession.isRunning), inputs: \(captureSession.inputs.count), outputs: \(captureSession.outputs.count)"
-        )
-        return previewLayer
+        if _previewLayer == nil {
+            _previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            _previewLayer?.videoGravity = .resizeAspectFill
+            print("🎥 Created SINGLETON preview layer")
+        }
+        return _previewLayer
     }
 
     // MARK: - Private Methods
@@ -670,15 +683,22 @@ class BarcodeScannerService: NSObject, ObservableObject {
         print("🎥 Finding best available camera device...")
 
         // Try to get the best available camera (like AI camera does)
+        /*  let discoverySession = AVCaptureDevice.DiscoverySession(
+             deviceTypes: [
+                // .builtInTripleCamera, // iPhone Pro models
+                 .builtInDualWideCamera, // iPhone models with dual camera
+                 .builtInWideAngleCamera, // Standard camera
+                 .builtInUltraWideCamera // Ultra-wide as fallback
+             ],
+             mediaType: .video,
+             position: .back // Prefer back camera for scanning
+         )*/
         let discoverySession = AVCaptureDevice.DiscoverySession(
             deviceTypes: [
-                .builtInTripleCamera, // iPhone Pro models
-                .builtInDualWideCamera, // iPhone models with dual camera
-                .builtInWideAngleCamera, // Standard camera
-                .builtInUltraWideCamera // Ultra-wide as fallback
+                .builtInWideAngleCamera // ✅ Nur Wide Angle - zuverlässigste
             ],
             mediaType: .video,
-            position: .back // Prefer back camera for scanning
+            position: .back
         )
 
         guard let videoCaptureDevice = discoverySession.devices.first else {

@@ -7,9 +7,8 @@ struct AIAnalysisResultsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            // Header mit Gesamtübersicht
             VStack(alignment: .leading, spacing: 12) {
-                Text("🧠 AI food analysis")
+                Text("🧠 AI Food analysis")
                     .font(.title2)
                     .fontWeight(.bold)
 
@@ -19,9 +18,8 @@ struct AIAnalysisResultsView: View {
                         .foregroundColor(.secondary)
                 }
 
-                // Konfidenz-Level
                 HStack {
-                    Text("Confidence:")
+                    Text("Confidence level:")
                     ConfidenceBadge(level: analysisResult.confidence)
                     Spacer()
                     if let portions = analysisResult.totalFoodPortions {
@@ -33,7 +31,6 @@ struct AIAnalysisResultsView: View {
             }
             .padding(.horizontal)
 
-            // Gesamt-Nährwerte der Mahlzeit
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
                     Text("📊 Total nutritional values of the meal")
@@ -41,7 +38,6 @@ struct AIAnalysisResultsView: View {
 
                     Spacer()
 
-                    // ERWEITERTER Gesamtmahlzeit-Button (HIER EINFÜGEN)
                     Button(action: {
                         let mealName = analysisResult.foodItemsDetailed.count == 1 ?
                             analysisResult.foodItemsDetailed.first?.name ?? "Meal" :
@@ -52,7 +48,8 @@ struct AIAnalysisResultsView: View {
                             carbs: Decimal(analysisResult.totalCarbohydrates),
                             fat: Decimal(analysisResult.totalFat ?? 0),
                             protein: Decimal(analysisResult.totalProtein ?? 0),
-                            source: "AI food analysis • \(analysisResult.foodItemsDetailed.count) Food"
+                            source: "AI overall analysis • \(analysisResult.foodItemsDetailed.count) Food",
+                            imageURL: nil
                         )
                         onCompleteMealSelected(totalMeal)
                     }) {
@@ -60,10 +57,10 @@ struct AIAnalysisResultsView: View {
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(.green)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("Add Total")
+                                Text("Add all")
                                     .font(.subheadline)
                                     .fontWeight(.medium)
-                                Text("\(analysisResult.foodItemsDetailed.count) Foods")
+                                Text("\(analysisResult.foodItemsDetailed.count) Food")
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             }
@@ -81,7 +78,7 @@ struct AIAnalysisResultsView: View {
                         value: analysisResult.totalCarbohydrates,
                         unit: "g",
                         label: "Carbs",
-                        color: .blue
+                        color: .orange
                     )
 
                     if let protein = analysisResult.totalProtein {
@@ -89,19 +86,7 @@ struct AIAnalysisResultsView: View {
                     }
 
                     if let fat = analysisResult.totalFat {
-                        NutritionSummaryBadge(value: fat, unit: "g", label: "Fat", color: .orange)
-                    }
-
-                    if let fiber = analysisResult.totalFiber {
-                        NutritionSummaryBadge(value: fiber, unit: "g", label: "Fiber", color: .purple)
-                    }
-
-                    if let calories = analysisResult.totalCalories {
-                        NutritionSummaryBadge(value: calories, unit: "kcal", label: "Calories", color: .red)
-                    }
-
-                    if let servings = analysisResult.totalUsdaServings {
-                        NutritionSummaryBadge(value: servings, unit: "", label: "USDA Servings", color: .indigo)
+                        NutritionSummaryBadge(value: fat, unit: "g", label: "Fat", color: .loopRed)
                     }
                 }
             }
@@ -110,8 +95,7 @@ struct AIAnalysisResultsView: View {
             .cornerRadius(12)
             .padding(.horizontal)
 
-            // Einzelne Lebensmittel
-            Text("🍽️ Individual Foods")
+            Text("🍽️ Seperat Foods")
                 .font(.headline)
                 .padding(.horizontal)
 
@@ -124,17 +108,17 @@ struct AIAnalysisResultsView: View {
                             carbs: Decimal(foodItem.carbohydrates),
                             fat: Decimal(foodItem.fat ?? 0),
                             protein: Decimal(foodItem.protein ?? 0),
-                            source: "AI Analyse"
+                            source: "AI Analysis",
+                            imageURL: nil
                         )
                         onFoodItemSelected(selectedFood)
                     }
                 )
             }
 
-            // Diabetes-spezifische Empfehlungen
             if let diabetesInfo = analysisResult.diabetesConsiderations {
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("💉 Diabetes Recommendations", systemImage: "cross.case.fill")
+                    Label("💉 Diabetes recommendations", systemImage: "cross.case.fill")
                         .font(.headline)
                     Text(diabetesInfo)
                         .font(.subheadline)
@@ -145,7 +129,6 @@ struct AIAnalysisResultsView: View {
                 .padding(.horizontal)
             }
 
-            // Zusätzliche Hinweise
             if let notes = analysisResult.notes {
                 VStack(alignment: .leading, spacing: 8) {
                     Label("📝 Notes", systemImage: "note.text")

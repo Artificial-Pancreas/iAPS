@@ -25,18 +25,22 @@ extension AddCarbs {
 
         // Food Search States
         @State private var showingFoodSearch = false
-        @State private var showAISettings = false
-        @State private var showingAICamera = false
         @State private var foodSearchText = ""
         @State private var searchResults: [FoodItem] = []
         @State private var isLoading = false
         @State private var errorMessage: String?
-        @State private var showingBarcodeScanner = false
+        @State private var selectedFoodItem: AIFoodItem? = nil
+        @State private var showMultiplierEditor: Bool = false
+        @State private var portionGrams: Double = 100.0
 
         init(resolver: Resolver, editMode: Bool, override: Bool) {
             self.resolver = resolver
             self.editMode = editMode
             self.override = override
+        }
+
+        private func isAIAnalysisProduct(_ food: AIFoodItem) -> Bool {
+            food.brand == "AI Analysis" || food.brand == nil || food.brand?.contains("AI") == true
         }
 
         @FetchRequest(
@@ -62,7 +66,29 @@ extension AddCarbs {
 
         var body: some View {
             Form {
-                // foodSearchSection
+                foodSearchSection
+
+                if let selectedFood = selectedFoodItem {
+                    SelectedFoodView(
+                        food: selectedFood,
+                        portionGrams: $portionGrams,
+                        onChange: {
+                            selectedFoodItem = nil
+                            showingFoodSearch = true
+                        },
+                        onTakeOver: { food in
+                            if isAIAnalysisProduct(food) {
+                                state.carbs = Decimal(food.carbs)
+                                state.fat = Decimal(food.fat)
+                                state.protein = Decimal(food.protein)
+                            } else {
+                                state.carbs = Decimal(food.carbs)
+                                state.fat = Decimal(food.fat)
+                                state.protein = Decimal(food.protein)
+                            }
+                        }
+                    )
+                }
 
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
@@ -79,7 +105,7 @@ extension AddCarbs {
                     mealPresets.padding(.vertical, 9)
 
                     HStack {
-                        Text("Carbs").fontWeight(.semibold)
+                        Text("Carbs").fontWeight(.semibold).foregroundColor(.orange)
                         Spacer()
                         DecimalTextField(
                             "0",
@@ -176,23 +202,11 @@ extension AddCarbs {
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
-                // leading: foodSearchButton,
                 trailing: Button("Cancel", action: {
                     state.hideModal()
                     if editMode { state.apsManager.determineBasalSync() }
                 })
             )
-            .sheet(isPresented: $showingAICamera) {
-                AICameraView(
-                    onFoodAnalyzed: { _, _ in
-                        Task { @MainActor in
-                            // TODO: Ergebnis in dein StateModel übertragen
-                            showingAICamera = false
-                        }
-                    },
-                    onCancel: { showingAICamera = false }
-                )
-            }
             .sheet(isPresented: $presentPresets, content: { presetView })
             .sheet(isPresented: $showingFoodSearch) {
                 FoodSearchView(
@@ -208,7 +222,7 @@ extension AddCarbs {
 
         @ViewBuilder private func proteinAndFat() -> some View {
             HStack {
-                Text("Fat").foregroundColor(.orange)
+                Text("Fat").foregroundColor(.blue)
                 Spacer()
                 DecimalTextField(
                     "0",
@@ -220,7 +234,7 @@ extension AddCarbs {
                 Text("grams").foregroundColor(.secondary)
             }
             HStack {
-                Text("Protein").foregroundColor(.red)
+                Text("Protein").foregroundColor(.green)
                 Spacer()
                 DecimalTextField(
                     "0",
@@ -237,18 +251,6 @@ extension AddCarbs {
 
         private var foodSearchSection: some View {
             Section(header: Text("AI Food Search")) {
-                Button {
-                    showingFoodSearch = true
-                } label: {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        Text("Search Food Database")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                    }
-                    .foregroundColor(.blue)
-                }
-
                 NavigationLink(destination: AISettingsView()) {
                     HStack {
                         Image(systemName: "gearshape")
@@ -257,28 +259,52 @@ extension AddCarbs {
                     }
                     .foregroundColor(.blue)
                 }
-                .overlay(
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.blue)
-                        .font(.system(size: 14, weight: .semibold)),
-                    alignment: .trailing
-                )
+                .buttonStyle(PlainButtonStyle())
+
+                // Suche in der Food-Datenbank
+                Button {
+                    showingFoodSearch = true
+                } label: {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        Text("Search Food Database")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.popUpGray)
+                            .font(.system(size: 14, weight: .semibold))
+                    }
+                    .foregroundColor(.blue)
+                }
+                .buttonStyle(PlainButtonStyle())
             }
         }
 
-        private var foodSearchButton: some View {
-            Button {
-                showingFoodSearch.toggle()
-            } label: {
-                Image(systemName: "magnifyingglass")
-                    .font(.title3)
-            }
-        }
+        /*   private func handleSelectedFood(_ food: FoodItem) {
+             state.carbs = food.carbs
+             state.fat = food.fat
+             state.protein = food.protein
+         }*/
 
-        private func handleSelectedFood(_ food: FoodItem) {
-            state.carbs = food.carbs
-            state.fat = food.fat
-            state.protein = food.protein
+        private func handleSelectedFood(_ foodItem: FoodItem) {
+            let calculatedCalories = Double(truncating: foodItem.carbs as NSNumber) * 4 +
+                Double(truncating: foodItem.protein as NSNumber) * 4 +
+                Double(truncating: foodItem.fat as NSNumber) * 9
+
+            let aiFoodItem = AIFoodItem(
+                name: foodItem.name,
+                brand: foodItem.source,
+                calories: calculatedCalories,
+                carbs: Double(truncating: foodItem.carbs as NSNumber),
+                protein: Double(truncating: foodItem.protein as NSNumber),
+                fat: Double(truncating: foodItem.fat as NSNumber),
+                imageURL: foodItem.imageURL
+            )
+            selectedFoodItem = aiFoodItem
+
+            // Gramm zurücksetzen (100g für normale Produkte)
+            portionGrams = 100.0
+
+            showingFoodSearch = false
         }
 
         private var empty: Bool {
@@ -289,14 +315,6 @@ extension AddCarbs {
             Section {
                 HStack {
                     if state.selection == nil {
-                        Button { showingFoodSearch = true }
-                        label: {
-                            Image(systemName: "network")
-                        }.foregroundStyle(.blue)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 20)
-                            .buttonStyle(.borderless)
-
                         Button { presentPresets.toggle() }
                         label: {
                             HStack {
@@ -305,7 +323,6 @@ extension AddCarbs {
                             }
                         }.foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                            .buttonStyle(.borderless)
                     } else {
                         minusButton
                         Spacer()
@@ -526,101 +543,6 @@ extension AddCarbs {
                 }
             }.environment(\.colorScheme, colorScheme)
         }
-    }
-}
-
-private func searchFoodProducts(query: String) async throws -> [FoodItem] {
-    print("🔍 Starting search for: '\(query)'")
-    let openFoodProducts = try await FoodSearchRouter.shared.searchFoodsByText(query)
-
-    return openFoodProducts.map { openFoodProduct in
-        FoodItem(
-            name: openFoodProduct.productName ?? "Unknown",
-            carbs: Decimal(openFoodProduct.nutriments.carbohydrates),
-            fat: Decimal(openFoodProduct.nutriments.fat ?? 0),
-            protein: Decimal(openFoodProduct.nutriments.proteins ?? 0),
-            source: openFoodProduct.brands ?? "OpenFoodFacts"
-        )
-    }
-}
-
-private func searchOpenFoodFactsByBarcode(_ barcode: String) async throws -> [FoodItem] {
-    let urlString = "https://world.openfoodfacts.org/api/v2/product/\(barcode).json"
-    print("🌐 OpenFoodFacts API Call: \(urlString)")
-
-    guard let url = URL(string: urlString) else {
-        throw NSError(domain: "OpenFoodFactsError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
-    }
-
-    let (data, response) = try await URLSession.shared.data(from: url)
-
-    guard let httpResponse = response as? HTTPURLResponse else {
-        throw NSError(domain: "OpenFoodFactsError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
-    }
-
-    guard httpResponse.statusCode == 200 else {
-        print("❌ OpenFoodFacts API Error: Status \(httpResponse.statusCode)")
-        return [] // Leeres Array für "nicht gefunden"
-    }
-
-    // Parse die Response
-    let productResponse = try JSONDecoder().decode(OpenFoodFactsProductResponse.self, from: data)
-
-    if productResponse.status == 1, let product = productResponse.product {
-        // Produkt gefunden
-        let foodItem = FoodItem(
-            name: product.productName ?? "Unknown",
-            carbs: Decimal(product.nutriments.carbohydrates),
-            fat: Decimal(product.nutriments.fat ?? 0),
-            protein: Decimal(product.nutriments.proteins ?? 0),
-            source: product.brands ?? "OpenFoodFacts"
-        )
-        return [foodItem]
-    } else {
-        // Kein Produkt gefunden
-        print("ℹ️ OpenFoodFacts: No product found for barcode \(barcode)")
-        return []
-    }
-}
-
-private func searchFoodProducts(query: String, completion: @escaping ([AIFoodItem]) -> Void) async throws -> [FoodItem] {
-    do {
-        print("🔍 Starting AI search for: '\(query)'")
-
-        // Use the FoodSearchRouter to handle the search
-        let openFoodProducts = try await FoodSearchRouter.shared.searchFoodsByText(query)
-
-        print("✅ AI search completed, found \(openFoodProducts.count) products")
-
-        // Konvertiert OpenFoodFactsProduct zu AIFoodItem
-        let aiProducts = openFoodProducts.map { openFoodProduct in
-            AIFoodItem(
-                name: openFoodProduct.productName ?? "Unknown",
-                brand: openFoodProduct.brands,
-                calories: 0,
-                carbs: openFoodProduct.nutriments.carbohydrates,
-                protein: openFoodProduct.nutriments.proteins ?? 0,
-                fat: openFoodProduct.nutriments.fat ?? 0
-            )
-        }
-
-        // Rückgabe der AI-Ergebnisse via Completion Handler
-        completion(aiProducts)
-
-        // Konvertiere zu FoodItem für Rückgabe
-        return openFoodProducts.map { openFoodProduct in
-            FoodItem(
-                name: openFoodProduct.productName ?? "Unknown",
-                carbs: Decimal(openFoodProduct.nutriments.carbohydrates),
-                fat: Decimal(openFoodProduct.nutriments.fat ?? 0),
-                protein: Decimal(openFoodProduct.nutriments.proteins ?? 0),
-                source: openFoodProduct.brands ?? "OpenFoodFacts"
-            )
-        }
-    } catch {
-        print("❌ AI Search failed: \(error.localizedDescription)")
-        completion([])
-        return []
     }
 }
 

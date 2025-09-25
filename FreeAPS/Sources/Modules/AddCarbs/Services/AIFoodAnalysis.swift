@@ -4183,22 +4183,3 @@ class ClaudeFoodAnalysisService {
         return .medium // Default to medium instead of assuming high
     }
 }
-
-// Erweiterung für AIConfidenceLevel
-extension AIConfidenceLevel {
-    var color: Color {
-        switch self {
-        case .high: return .green
-        case .medium: return .orange
-        case .low: return .red
-        }
-    }
-
-    var description: String {
-        switch self {
-        case .high: return "High"
-        case .medium: return "Medium"
-        case .low: return "Low"
-        }
-    }
-}

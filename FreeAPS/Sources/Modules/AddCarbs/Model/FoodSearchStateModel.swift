@@ -1,5 +1,5 @@
 import Combine
-import Foundation
+import SwiftUI
 
 class FoodSearchStateModel: ObservableObject {
     @Published var foodSearchText = ""
@@ -14,7 +14,6 @@ class FoodSearchStateModel: ObservableObject {
     init() {
         print("🔍 FoodSearchStateModel initialized")
 
-        // Debounced search
         $foodSearchText
             .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
             .removeDuplicates()
@@ -45,7 +44,6 @@ class FoodSearchStateModel: ObservableObject {
                 let openFoodProducts = try await FoodSearchRouter.shared.searchFoodsByText(query)
 
                 if !Task.isCancelled {
-                    // ✅ KEINE map MEHR - direkt die originalen Produkte verwenden
                     self.searchResults = openFoodProducts
                     self.isLoading = false
                     print("✅ Search completed: \(self.searchResults.count) results")
@@ -70,18 +68,15 @@ class FoodSearchStateModel: ObservableObject {
             do {
                 print("🔍 Searching OpenFoodFacts for barcode: \(barcode)")
 
-                // ✅ DIREKT den Shared Router verwenden
                 if let product = try await FoodSearchRouter.shared.searchFoodByBarcode(barcode) {
                     await MainActor.run {
-                        self.searchResults = [product] // ← Das ist jetzt [OpenFoodFactsProduct]
+                        self.searchResults = [product]
                         print("✅ OpenFoodFacts found product: \(product.displayName)")
                         self.isLoading = false
 
-                        // ✅ DEBUG: Prüfe ob URLs vorhanden sind
                         print("🖼️ Barcode Product URLs: \(product.imageURL ?? "nil"), \(product.imageFrontURL ?? "nil")")
                     }
                 } else {
-                    // Kein Produkt gefunden → Fallback zu normaler Suche
                     await MainActor.run {
                         print("⚠️ No OpenFoodFacts results, using normal search")
                         self.performSearch(query: barcode)

@@ -60,22 +60,21 @@ struct FoodItemCard: View {
                     }
 
                     if foodItem.servingMultiplier != 1.0 {
-                        Text("Multiplier: \(foodItem.servingMultiplier, specifier: "%.1f")x")
+                        Text("Multiplikator: \(foodItem.servingMultiplier, specifier: "%.1f")x")
                             .font(.caption)
                     }
                 }
                 .foregroundColor(.secondary)
 
-                // Nährwert-Badges (immer sichtbar)
                 HStack(spacing: 8) {
-                    NutritionBadge(value: foodItem.carbohydrates, unit: "g", label: "KH", color: .blue)
+                    NutritionBadge(value: foodItem.carbohydrates, unit: "g", label: "KH", color: .orange)
 
                     if let protein = foodItem.protein, protein > 0 {
                         NutritionBadge(value: protein, unit: "g", label: "P", color: .green)
                     }
 
                     if let fat = foodItem.fat, fat > 0 {
-                        NutritionBadge(value: fat, unit: "g", label: "F", color: .orange)
+                        NutritionBadge(value: fat, unit: "g", label: "F", color: .blue)
                     }
                 }
             }
@@ -86,15 +85,14 @@ struct FoodItemCard: View {
                     // Detaillierte Nährwerte
                     if let calories = foodItem.calories, calories > 0 {
                         HStack {
-                            NutritionBadge(value: calories, unit: "kcal", label: "Energy", color: .red)
+                            NutritionBadge(value: calories, unit: "kcal", label: "Calories", color: .red)
 
                             if let fiber = foodItem.fiber, fiber > 0 {
-                                NutritionBadge(value: fiber, unit: "g", label: "Fiber", color: .purple)
+                                NutritionBadge(value: fiber, unit: "g", label: "Faser", color: .purple)
                             }
                         }
                     }
 
-                    // Zusätzliche Informationen
                     VStack(alignment: .leading, spacing: 4) {
                         if let preparation = foodItem.preparationMethod, !preparation.isEmpty {
                             HStack(alignment: .top) {
@@ -111,7 +109,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "eye.fill")
                                     .foregroundColor(.blue)
                                     .font(.caption)
-                                Text("Visual Cues: \(visualCues)")
+                                Text("Visuelle Hinweise: \(visualCues)")
                                     .font(.caption)
                             }
                         }
@@ -121,7 +119,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "note.text")
                                     .foregroundColor(.gray)
                                     .font(.caption)
-                                Text("Rating: \(notes)")
+                                Text("Bewertung: \(notes)")
                                     .font(.caption)
                             }
                         }
@@ -141,5 +139,41 @@ struct FoodItemCard: View {
                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
         )
         .padding(.horizontal)
+    }
+
+    private struct NutritionBadge: View {
+        let value: Double
+        let unit: String
+        let label: String
+        let color: Color
+        let icon: String
+
+        init(value: Double, unit: String, label: String, color: Color, icon: String? = nil) {
+            self.value = value
+            self.unit = unit
+            self.label = label
+            self.color = color
+            self.icon = icon ?? ""
+        }
+
+        var body: some View {
+            HStack(spacing: 4) {
+                if !icon.isEmpty {
+                    Image(systemName: icon)
+                        .font(.system(size: 10))
+                }
+                VStack(spacing: 2) {
+                    Text("\(value, specifier: "%.1f")\(unit)")
+                        .font(.system(size: 12, weight: .bold))
+                    Text(label)
+                        .font(.system(size: 10, weight: .medium))
+                }
+            }
+            .foregroundColor(color)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+            .background(color.opacity(0.15))
+            .cornerRadius(8)
+        }
     }
 }

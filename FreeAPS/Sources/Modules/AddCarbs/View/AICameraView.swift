@@ -1,7 +1,8 @@
+import PhotosUI
 import SwiftUI
 import UIKit
 
-/// Camera view for AI-powered food analysis
+/// Camera view for AI-powered food analysis - iOS 26 COMPATIBLE
 struct AICameraView: View {
     let onFoodAnalyzed: (AIFoodAnalysisResult, UIImage?) -> Void
     let onCancel: () -> Void
@@ -11,12 +12,19 @@ struct AICameraView: View {
     @State private var isAnalyzing = false
     @State private var analysisError: String?
     @State private var showingErrorAlert = false
-    @State private var imageSourceType: UIImagePickerController.SourceType = .camera
+    @State private var imageSourceType: ImageSourceType = .camera
     @State private var telemetryLogs: [String] = []
     @State private var showTelemetry = false
+    @State private var showingTips = false
+    @State private var selectedPhotoItem: PhotosPickerItem?
+
+    enum ImageSourceType {
+        case camera
+        case photoLibrary
+    }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 // Auto-launch camera interface
                 if capturedImage == nil {
@@ -29,20 +37,47 @@ struct AICameraView: View {
                                 .font(.system(size: 64))
                                 .foregroundColor(.accentColor)
 
-                            Text("AI Food Analysis")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-
-                            Text("Camera will open to analyze your food")
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal)
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Better photos = better estimates")
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                VStack(alignment: .leading, spacing: 8) {
+                                    CameraTipRow(
+                                        icon: "sun.max.fill",
+                                        title: "Use bright, even light",
+                                        detail: "Harsh shadows confuse the AI and dim light can hide textures."
+                                    )
+                                    CameraTipRow(
+                                        icon: "arrow.2.circlepath",
+                                        title: "Clear the area",
+                                        detail: "Remove napkins, lids, or packaging that may be misidentified as food."
+                                    )
+                                    CameraTipRow(
+                                        icon: "square.dashed",
+                                        title: "Frame the full meal",
+                                        detail: "Make sure every food item is in the frame."
+                                    )
+                                    CameraTipRow(
+                                        icon: "ruler",
+                                        title: "Add a size reference",
+                                        detail: "Forks, cups, or hands help AI calculate realistic portions."
+                                    )
+                                    CameraTipRow(
+                                        icon: "camera.metering.spot",
+                                        title: "Shoot from slightly above",
+                                        detail: "Keep the camera level to reduce distortion and keep portions proportional."
+                                    )
+                                }
+                            }
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                         }
 
                         Spacer()
 
-                        // Quick action buttons
+                        // Quick action buttons - iOS 26 COMPATIBLE
                         VStack(spacing: 12) {
                             Button(action: {
                                 imageSourceType = .camera
@@ -51,7 +86,7 @@ struct AICameraView: View {
                                 HStack {
                                     Image(systemName: "sparkles")
                                         .font(.system(size: 14))
-                                    Text("Analyze with AI")
+                                    Text("Take a Photo")
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -60,11 +95,12 @@ struct AICameraView: View {
                                 .cornerRadius(12)
                             }
 
-                            Button(action: {
-                                // Allow selecting from photo library
-                                imageSourceType = .photoLibrary
-                                showingImagePicker = true
-                            }) {
+                            // ✅ PhotosPicker statt UIImagePickerController
+                            PhotosPicker(
+                                selection: $selectedPhotoItem,
+                                matching: .images,
+                                photoLibrary: .shared()
+                            ) {
                                 HStack {
                                     Image(systemName: "photo.fill")
                                     Text("Choose from Library")
@@ -75,16 +111,21 @@ struct AICameraView: View {
                                 .foregroundColor(.primary)
                                 .cornerRadius(12)
                             }
+                            .onChange(of: selectedPhotoItem) { newItem in
+                                Task {
+                                    if let data = try? await newItem?.loadTransferable(type: Data.self),
+                                       let uiImage = UIImage(data: data)
+                                    {
+                                        await MainActor.run {
+                                            capturedImage = uiImage
+                                            selectedPhotoItem = nil // Reset selection
+                                        }
+                                    }
+                                }
+                            }
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 30)
-                    }
-                    .onAppear {
-                        // Auto-launch camera when view appears
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            imageSourceType = .camera
-                            showingImagePicker = true
-                        }
                     }
                 } else {
                     // Show captured image and auto-start analysis
@@ -122,9 +163,10 @@ struct AICameraView: View {
                     }
                     .padding(.top)
                     .onAppear {
-                        // Auto-start analysis when image appears
-                        if !isAnalyzing && analysisError == nil {
-                            analyzeImage()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            if !isAnalyzing, analysisError == nil {
+                                analyzeImage()
+                            }
                         }
                     }
                 }
@@ -132,23 +174,23 @@ struct AICameraView: View {
             .navigationTitle("AI Food Analysis")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
-            .toolbar(content: {
+            .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         onCancel()
                     }
                 }
-            })
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $capturedImage, sourceType: imageSourceType)
+        .fullScreenCover(isPresented: $showingImagePicker) {
+            if imageSourceType == .camera {
+                ModernCameraView(image: $capturedImage, isPresented: $showingImagePicker)
+            }
         }
         .alert("Analysis Error", isPresented: $showingErrorAlert) {
             // Credit/quota exhaustion errors - provide direct guidance
             if analysisError?.contains("credits exhausted") == true || analysisError?.contains("quota exceeded") == true {
                 Button("Check Account") {
-                    // This could open settings or provider website in future enhancement
                     analysisError = nil
                 }
                 Button("Try Different Provider") {
@@ -168,7 +210,7 @@ struct AICameraView: View {
             else if analysisError?.contains("rate limit") == true {
                 Button("Wait and Retry") {
                     Task {
-                        try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
+                        try? await Task.sleep(nanoseconds: 3_000_000_000)
                         analyzeImage()
                     }
                 }
@@ -243,44 +285,44 @@ struct AICameraView: View {
                 await MainActor.run {
                     addTelemetryLog("📱 Processing image data...")
                 }
-                try await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
+                try await Task.sleep(nanoseconds: 300_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("💼 Optimizing image quality...")
                 }
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(nanoseconds: 200_000_000)
 
                 // Step 2: AI connection
                 await MainActor.run {
                     addTelemetryLog("🧠 Connecting to AI provider...")
                 }
-                try await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
+                try await Task.sleep(nanoseconds: 300_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("📡 Uploading image for analysis...")
                 }
-                try await Task.sleep(nanoseconds: 250_000_000) // 0.25 seconds
+                try await Task.sleep(nanoseconds: 250_000_000)
 
                 // Step 3: Analysis stages
                 await MainActor.run {
                     addTelemetryLog("📊 Analyzing nutritional content...")
                 }
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(nanoseconds: 200_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("🔬 Identifying food portions...")
                 }
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(nanoseconds: 200_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("📏 Calculating serving sizes...")
                 }
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(nanoseconds: 200_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("⚖️ Comparing to USDA standards...")
                 }
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(nanoseconds: 200_000_000)
 
                 // Step 4: AI processing (actual call)
                 await MainActor.run {
@@ -297,18 +339,16 @@ struct AICameraView: View {
                 await MainActor.run {
                     addTelemetryLog("📊 Processing analysis results...")
                 }
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(nanoseconds: 200_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("🍽️ Generating nutrition summary...")
                 }
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(nanoseconds: 200_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("✅ Analysis complete!")
-
-                    // Hide telemetry after a brief moment
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         showTelemetry = false
                         isAnalyzing = false
                         onFoodAnalyzed(result, capturedImage)
@@ -318,12 +358,13 @@ struct AICameraView: View {
                 await MainActor.run {
                     addTelemetryLog("⚠️ Connection interrupted...")
                 }
-                try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
+                try? await Task.sleep(nanoseconds: 300_000_000)
 
                 await MainActor.run {
                     addTelemetryLog("❌ Analysis failed")
 
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    // ✅ VERBESSERT: Stabilere Fehlerbehandlung
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         showTelemetry = false
                         isAnalyzing = false
                         analysisError = error.localizedDescription
@@ -336,144 +377,31 @@ struct AICameraView: View {
 
     private func addTelemetryLog(_ message: String) {
         telemetryLogs.append(message)
-
-        // Keep only the last 5 messages to prevent overflow
-        if telemetryLogs.count > 5 {
+        if telemetryLogs.count > 10 {
             telemetryLogs.removeFirst()
         }
     }
 }
 
-// MARK: - Image Picker
-
-struct ImagePicker: UIViewControllerRepresentable {
+struct ModernCameraView: UIViewControllerRepresentable {
     @Binding var image: UIImage?
-    let sourceType: UIImagePickerController.SourceType
-    @Environment(\.presentationMode) var presentationMode
+    @Binding var isPresented: Bool
+    @Environment(\.dismiss) private var dismiss
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.sourceType = sourceType
-        picker.allowsEditing = sourceType == .camera // Only enable editing for camera, not photo library
-
-        // Style the navigation bar and buttons to be blue with AI branding
-        if let navigationBar = picker.navigationBar as UINavigationBar? {
-            navigationBar.tintColor = UIColor.systemBlue
-            navigationBar.titleTextAttributes = [
-                .foregroundColor: UIColor.systemBlue,
-                .font: UIFont.boldSystemFont(ofSize: 17)
-            ]
-        }
-
-        // Apply comprehensive UI styling for AI branding
-        picker.navigationBar.tintColor = UIColor.systemBlue
-
-        // Style all buttons in the camera interface to be blue with appearance proxies
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIImagePickerController.self]).tintColor = UIColor.systemBlue
-        UIButton.appearance(whenContainedInInstancesOf: [UIImagePickerController.self]).tintColor = UIColor.systemBlue
-        UILabel.appearance(whenContainedInInstancesOf: [UIImagePickerController.self]).tintColor = UIColor.systemBlue
-
-        // Style toolbar buttons (including "Use Photo" button)
-        picker.toolbar?.tintColor = UIColor.systemBlue
-        UIToolbar.appearance(whenContainedInInstancesOf: [UIImagePickerController.self]).tintColor = UIColor.systemBlue
-        UIToolbar.appearance(whenContainedInInstancesOf: [UIImagePickerController.self]).barTintColor = UIColor.systemBlue
-            .withAlphaComponent(0.1)
-
-        // Apply blue styling to all UI elements in camera
-        picker.view.tintColor = UIColor.systemBlue
-
-        // Set up custom button styling with multiple attempts
-        setupCameraButtonStyling(picker)
-
-        // Add combined camera overlay for AI analysis and tips
-        if sourceType == .camera {
-            picker.cameraFlashMode = .auto
-            addCombinedCameraOverlay(to: picker)
-        }
+        picker.sourceType = .camera
+        picker.allowsEditing = false
+        picker.navigationBar.tintColor = .systemBlue
+        picker.view.tintColor = .systemBlue
 
         return picker
     }
 
-    private func addCombinedCameraOverlay(to picker: UIImagePickerController) {
-        // Create main overlay view
-        let overlayView = UIView()
-        overlayView.backgroundColor = UIColor.clear
-        overlayView.translatesAutoresizingMaskIntoConstraints = false
-
-        // Create photo tips container (positioned at bottom to avoid viewfinder interference)
-        let tipsContainer = UIView()
-        tipsContainer.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-        tipsContainer.layer.cornerRadius = 12
-        tipsContainer.translatesAutoresizingMaskIntoConstraints = false
-
-        // Create tips text (simplified to prevent taking too much space)
-        let tipsLabel = UILabel()
-        tipsLabel.text = "📸 Tips: Take overhead photos • Include size reference • Good lighting"
-        tipsLabel.textColor = UIColor.white
-        tipsLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        tipsLabel.numberOfLines = 2
-        tipsLabel.textAlignment = .center
-        tipsLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Add views to overlay
-        overlayView.addSubview(tipsContainer)
-        tipsContainer.addSubview(tipsLabel)
-
-        // Set up constraints - position tips at bottom to avoid interfering with viewfinder
-        NSLayoutConstraint.activate([
-            // Tips container at bottom, above the camera controls
-            tipsContainer.bottomAnchor.constraint(equalTo: overlayView.safeAreaLayoutGuide.bottomAnchor, constant: -120),
-            tipsContainer.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor, constant: 20),
-            tipsContainer.trailingAnchor.constraint(equalTo: overlayView.trailingAnchor, constant: -20),
-
-            // Tips label within container
-            tipsLabel.topAnchor.constraint(equalTo: tipsContainer.topAnchor, constant: 8),
-            tipsLabel.leadingAnchor.constraint(equalTo: tipsContainer.leadingAnchor, constant: 12),
-            tipsLabel.trailingAnchor.constraint(equalTo: tipsContainer.trailingAnchor, constant: -12),
-            tipsLabel.bottomAnchor.constraint(equalTo: tipsContainer.bottomAnchor, constant: -8)
-        ])
-
-        // Set overlay as camera overlay
-        picker.cameraOverlayView = overlayView
-    }
-
-    private func setupCameraButtonStyling(_ picker: UIImagePickerController) {
-        // Apply basic blue theme to navigation elements only
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.applyBasicBlueStyling(to: picker.view)
-        }
-    }
-
-    private func applyBasicBlueStyling(to view: UIView) {
-        // Apply only basic blue theme to navigation elements
-        for subview in view.subviews {
-            if let toolbar = subview as? UIToolbar {
-                toolbar.tintColor = UIColor.systemBlue
-                toolbar.barTintColor = UIColor.systemBlue.withAlphaComponent(0.1)
-
-                // Style toolbar items but don't modify text
-                toolbar.items?.forEach { item in
-                    item.tintColor = UIColor.systemBlue
-                }
-            }
-
-            if let navBar = subview as? UINavigationBar {
-                navBar.tintColor = UIColor.systemBlue
-                navBar.titleTextAttributes = [.foregroundColor: UIColor.systemBlue]
-            }
-
-            applyBasicBlueStyling(to: subview)
-        }
-    }
-
-    // Button styling methods removed - keeping native Use Photo button as-is
-
     func updateUIViewController(_ uiViewController: UIImagePickerController, context _: Context) {
-        // Apply basic styling only
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.applyBasicBlueStyling(to: uiViewController.view)
-        }
+        uiViewController.navigationBar.tintColor = .systemBlue
+        uiViewController.view.tintColor = .systemBlue
     }
 
     func makeCoordinator() -> Coordinator {
@@ -481,9 +409,9 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
 
     class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: ImagePicker
+        let parent: ModernCameraView
 
-        init(_ parent: ImagePicker) {
+        init(_ parent: ModernCameraView) {
             self.parent = parent
         }
 
@@ -491,22 +419,42 @@ struct ImagePicker: UIViewControllerRepresentable {
             _: UIImagePickerController,
             didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
         ) {
-            // Use edited image if available, otherwise fall back to original
-            if let uiImage = info[.editedImage] as? UIImage {
-                parent.image = uiImage
-            } else if let uiImage = info[.originalImage] as? UIImage {
+            if let uiImage = info[.originalImage] as? UIImage {
                 parent.image = uiImage
             }
-            parent.presentationMode.wrappedValue.dismiss()
+            parent.dismiss()
         }
 
         func imagePickerControllerDidCancel(_: UIImagePickerController) {
-            parent.presentationMode.wrappedValue.dismiss()
+            parent.dismiss()
         }
     }
 }
 
-// MARK: - Telemetry Window
+private struct CameraTipRow: View {
+    let icon: String
+    let title: String
+    let detail: String
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: icon)
+                .foregroundColor(.orange)
+                .font(.system(size: 20, weight: .semibold))
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                Text(detail)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
 
 struct TelemetryWindow: View {
     let logs: [String]
@@ -544,12 +492,9 @@ struct TelemetryWindow: View {
                             .padding(.vertical, 2)
                             .id(index)
                         }
-
-                        // Add bottom padding to prevent cutoff
-                        Spacer(minLength: 24)
+                        Color.clear.frame(height: 56)
                     }
                     .onAppear {
-                        // Auto-scroll to latest log
                         if !logs.isEmpty {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 proxy.scrollTo(logs.count - 1, anchor: .bottom)
@@ -557,7 +502,6 @@ struct TelemetryWindow: View {
                         }
                     }
                     .onChange(of: logs.count) { _ in
-                        // Auto-scroll to latest log when new ones are added
                         if !logs.isEmpty {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 proxy.scrollTo(logs.count - 1, anchor: .bottom)
@@ -566,7 +510,8 @@ struct TelemetryWindow: View {
                     }
                 }
             }
-            .frame(height: 210)
+            .padding(.bottom, 14)
+            .frame(height: 320)
             .background(Color(.systemBackground))
         }
         .background(Color(.systemGray6))
@@ -578,37 +523,3 @@ struct TelemetryWindow: View {
         .padding(.top, 8)
     }
 }
-
-// MARK: - Preview
-
-#if DEBUG
-    struct AICameraView_Previews: PreviewProvider {
-        static var previews: some View {
-            AICameraView(
-                onFoodAnalyzed: { result, _ in
-                    print("Food analyzed: \(result)")
-                },
-                onCancel: {
-                    print("Cancelled")
-                }
-            )
-        }
-    }
-
-    struct TelemetryWindow_Previews: PreviewProvider {
-        static var previews: some View {
-            VStack {
-                TelemetryWindow(logs: [
-                    "🔍 Initializing AI food analysis...",
-                    "📱 Processing image data...",
-                    "🧠 Connecting to AI provider...",
-                    "📊 Analyzing nutritional content...",
-                    "✅ Analysis complete!"
-                ])
-                Spacer()
-            }
-            .padding()
-            .background(Color(.systemGroupedBackground))
-        }
-    }
-#endif

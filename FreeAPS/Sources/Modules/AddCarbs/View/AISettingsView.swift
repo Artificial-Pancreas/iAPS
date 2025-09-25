@@ -445,7 +445,7 @@ struct AISettingsView: View {
             .navigationTitle("Food Search Settings")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
-                leading: Button("Cancel") {
+                leading: Button("Exit") {
                     // Restore original values (discard changes)
                     claudeKey = ConfigurableAIService.shared.getAPIKey(for: .claude) ?? ""
                     claudeQuery = ConfigurableAIService.shared.getQuery(for: .claude) ?? ""

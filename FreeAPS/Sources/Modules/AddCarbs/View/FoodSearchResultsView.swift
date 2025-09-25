@@ -4,11 +4,11 @@ import SwiftUI
 /// View displaying search results from both OpenFoodFacts and AI food database
 struct FoodSearchResultsView: View {
     let searchResults: [OpenFoodFactsProduct]
-    let aiSearchResults: [AIFoodItem] // GEÄNDERT: Umbenannt zu AIFoodItem
+    let aiSearchResults: [AIFoodItem]
     let isSearching: Bool
     let errorMessage: String?
     let onProductSelected: (OpenFoodFactsProduct) -> Void
-    let onAIProductSelected: (AIFoodItem) -> Void // GEÄNDERT: Umbenannt zu AIFoodItem
+    let onAIProductSelected: (AIFoodItem) -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -47,7 +47,6 @@ struct FoodSearchResultsView: View {
 
     private var searchingView: some View {
         VStack(spacing: 16) {
-            // Animated search icon with pulsing effect
             ZStack {
                 // Outer pulsing ring
                 Circle()
@@ -258,19 +257,17 @@ struct FoodSearchResultsView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .frame(maxHeight: 400)
     }
 }
 
 // MARK: - AI Food Search Result Row
 
 private struct AIFoodSearchResultRow: View {
-    let product: AIFoodItem // GEÄNDERT: Umbenannt zu AIFoodItem
+    let product: AIFoodItem
     let onSelected: () -> Void
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            // AI Icon instead of image
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.purple.opacity(0.1))
                 .frame(width: 50, height: 50)
@@ -325,7 +322,6 @@ private struct AIFoodSearchResultRow: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
             .onTapGesture {
-                print("🔍 User tapped on AI food result: \(product.name)")
                 onSelected()
             }
 
@@ -371,16 +367,10 @@ private struct FoodSearchResultRow: View {
                         case .empty:
                             ProgressView()
                                 .scaleEffect(0.7)
-                                .onAppear {
-                                    print("🖼️ Loading image from URL: \(url.absoluteString)")
-                                }
                         case let .success(image):
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .onAppear {
-                                    print("✅ Image loaded successfully: \(url.lastPathComponent)")
-                                }
                         case let .failure(error):
                             VStack {
                                 Image(systemName: "exclamationmark.triangle")
@@ -388,9 +378,6 @@ private struct FoodSearchResultRow: View {
                                 Text("Failed to load")
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
-                            }
-                            .onAppear {
-                                print("❌ Image failed to load: \(error.localizedDescription)")
                             }
                         @unknown default:
                             EmptyView()
@@ -407,11 +394,6 @@ private struct FoodSearchResultRow: View {
                                 .font(.title3)
                                 .foregroundColor(.secondary)
                         )
-                        .onAppear {
-                            print("🖼️ No valid image URL for product: \(product.displayName)")
-                            print("   - imageFrontURL: \(product.imageFrontURL ?? "nil")")
-                            print("   - imageURL: \(product.imageURL ?? "nil")")
-                        }
                 }
             }
             // Product details
@@ -484,8 +466,6 @@ private struct FoodSearchResultRow: View {
     }
 }
 
-// MARK: - AIFoodItem Model (NEU mit geändertem Namen)
-
 struct AIFoodItem: Identifiable, Codable, Equatable {
     var id: String {
         "\(name)-\(brand ?? "")-\(calories)-\(carbs)"
@@ -497,6 +477,7 @@ struct AIFoodItem: Identifiable, Codable, Equatable {
     let carbs: Double
     let protein: Double
     let fat: Double
+    let imageURL: String?
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -505,58 +486,10 @@ struct AIFoodItem: Identifiable, Codable, Equatable {
         case carbs
         case protein
         case fat
+        case imageURL
     }
 
     static func == (lhs: AIFoodItem, rhs: AIFoodItem) -> Bool {
         lhs.id == rhs.id
     }
 }
-
-// MARK: - Preview
-
-#if DEBUG
-    struct FoodSearchResultsView_Previews: PreviewProvider {
-        static var previews: some View {
-            VStack {
-                // AI Results only
-                FoodSearchResultsView(
-                    searchResults: [],
-                    aiSearchResults: [
-                        AIFoodItem(
-                            name: "AI Detected Bread",
-                            brand: "Baker's Choice",
-                            calories: 250,
-                            carbs: 45,
-                            protein: 8,
-                            fat: 2
-                        ),
-                        AIFoodItem(name: "AI Detected Yogurt", brand: "Dairy Fresh", calories: 150, carbs: 20, protein: 5, fat: 3)
-                    ],
-                    isSearching: false,
-                    errorMessage: nil,
-                    onProductSelected: { _ in },
-                    onAIProductSelected: { _ in }
-                )
-                .frame(height: 200)
-
-                Divider()
-
-                // Mixed results
-                FoodSearchResultsView(
-                    searchResults: [
-                        OpenFoodFactsProduct.sample(name: "Whole Wheat Bread", carbs: 45.0, servingSize: "2 slices (60g)")
-                    ],
-                    aiSearchResults: [
-                        AIFoodItem(name: "AI Detected Yogurt", brand: "Dairy Fresh", calories: 150, carbs: 20, protein: 5, fat: 3)
-                    ],
-                    isSearching: false,
-                    errorMessage: nil,
-                    onProductSelected: { _ in },
-                    onAIProductSelected: { _ in }
-                )
-                .frame(height: 200)
-            }
-            .previewLayout(.sizeThatFits)
-        }
-    }
-#endif
