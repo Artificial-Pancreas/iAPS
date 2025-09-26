@@ -311,12 +311,13 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             let bloodGlucose = values.map { newGlucoseSample -> BloodGlucose in
                 let quantity = newGlucoseSample.quantity
                 let value = Int(quantity.doubleValue(for: .milligramsPerDeciliter))
+                let dateRoundedTo1Second = newGlucoseSample.date.roundedTo1Second
                 return BloodGlucose(
                     _id: UUID().uuidString,
                     sgv: value,
                     direction: .init(trendType: newGlucoseSample.trend),
-                    date: Decimal(Int(newGlucoseSample.date.timeIntervalSince1970 * 1000)),
-                    dateString: newGlucoseSample.date,
+                    date: Decimal(Int(dateRoundedTo1Second.timeIntervalSince1970 * 1000)),
+                    dateString: dateRoundedTo1Second,
                     unfiltered: Decimal(value),
                     filtered: nil,
                     noise: nil,

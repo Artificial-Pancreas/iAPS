@@ -13,8 +13,6 @@ protocol NightscoutManager {
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
     func uploadStatus()
-    func uploadGlucose()
-    func uploadManualGlucose()
     func uploadStatistics(dailystat: Statistics)
     func uploadVersion(json: BareMinimum)
     func uploadPreferences(_ preferences: NightscoutPreferences)
@@ -832,20 +830,75 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func uploadGlucose() {
-        uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
-        uploadTreatments(glucoseStorage.nightscoutCGMStateNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCGMState)
-    }
-
     private func getIdentifier() -> String {
         keychain.getIdentifier()
     }
 
-    func uploadManualGlucose() {
-        uploadTreatments(
-            glucoseStorage.nightscoutManualGlucoseNotUploaded(),
-            fileToSave: OpenAPS.Nightscout.uploadedManualGlucose
-        )
+    private var glucoseFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        if settingsManager.settings.units == .mmolL {
+            formatter.maximumFractionDigits = 1
+        }
+        formatter.decimalSeparator = "."
+        return formatter
+    }
+
+    private func nightscoutGlucoseNotUploaded(bloodGlucose: [BloodGlucose]) -> [BloodGlucose] {
+        let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
+        let recentGlucose = bloodGlucose.filter({ $0.type != GlucoseType.manual.rawValue })
+
+        let glucoseToUpload = Array(Set(recentGlucose).subtracting(Set(uploaded)))
+
+        return glucoseToUpload
+    }
+
+    private func nightscoutCGMStateNotUploaded() -> [NigtscoutTreatment] {
+        let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedCGMState, as: [NigtscoutTreatment].self) ?? []
+        let recent = storage.retrieve(OpenAPS.Monitor.cgmState, as: [NigtscoutTreatment].self) ?? []
+        return Array(Set(recent).subtracting(Set(uploaded)))
+    }
+
+    private func nightscoutManualGlucoseNotUploaded(bloodGlucose: [BloodGlucose]) -> [NigtscoutTreatment] {
+        let uploaded = (storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? [])
+            .filter({ $0.type == GlucoseType.manual.rawValue })
+        let recent = bloodGlucose.filter({ $0.type == GlucoseType.manual.rawValue })
+        let filtered = Array(Set(recent).subtracting(Set(uploaded)))
+        let manualReadings = filtered.map { item -> NigtscoutTreatment in
+            NigtscoutTreatment(
+                duration: nil, rawDuration: nil, rawRate: nil, absolute: nil, rate: nil, eventType: .capillaryGlucose,
+                createdAt: item.dateString, enteredBy: "iAPS", bolus: nil, insulin: nil, notes: "iAPS User", carbs: nil,
+                fat: nil,
+                protein: nil, foodType: nil, targetTop: nil, targetBottom: nil, glucoseType: "Manual",
+                glucose: settingsManager.settings
+                    .units == .mgdL ? (glucoseFormatter.string(from: Int(item.glucose ?? 100) as NSNumber) ?? "")
+                    : (glucoseFormatter.string(from: Decimal(item.glucose ?? 100).asMmolL as NSNumber) ?? ""),
+                units: settingsManager.settings.units == .mmolL ? "mmol" : "mg/dl"
+            )
+        }
+        return manualReadings
+    }
+
+    private func uploadGlucose(bloodGlucose: [BloodGlucose]) {
+        guard !bloodGlucose.isEmpty, nightscoutAPI != nil, isUploadEnabled else {
+            return
+        }
+
+        processQueue.async {
+            let glucoseNotYetUploaded = self.nightscoutGlucoseNotUploaded(bloodGlucose: bloodGlucose)
+            self.uploadGlucose(
+                upload: glucoseNotYetUploaded,
+                allGlucose: bloodGlucose,
+                fileToSave: OpenAPS.Nightscout.uploadedGlucose
+            )
+
+            let cgmStateNotUploaded = self.nightscoutCGMStateNotUploaded()
+            self.uploadTreatments(cgmStateNotUploaded, fileToSave: OpenAPS.Nightscout.uploadedCGMState)
+
+            let manualGlucoseNotYetUploaded = self.nightscoutManualGlucoseNotUploaded(bloodGlucose: bloodGlucose)
+            self.uploadTreatments(manualGlucoseNotYetUploaded, fileToSave: OpenAPS.Nightscout.uploadedManualGlucose)
+        }
     }
 
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date) {
@@ -992,7 +1045,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         uploadTreatments(tempTargetsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedTempTargets)
     }
 
-    private func uploadGlucose(_ glucose: [BloodGlucose], fileToSave: String) {
+    /// upload `glucose` to nightscout, upon success - save `allGlucose` to storage so we don't upload any of it next time
+    private func uploadGlucose(upload glucose: [BloodGlucose], allGlucose: [BloodGlucose], fileToSave: String) {
         guard !glucose.isEmpty, let nightscout = nightscoutAPI, isUploadEnabled, isUploadGlucoseEnabled else {
             return
         }
@@ -1015,7 +1069,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        self.storage.save(glucose, as: fileToSave)
+                        self.storage.save(allGlucose, as: fileToSave)
                         debug(.nightscout, "Glucose uploaded")
 
                         // self.checkForNoneUploadedOverides() // To do : Move somewhere else
@@ -1085,7 +1139,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        self.storage.save(treatments, as: fileToSave)
+                        let oldUploaded = self.storage.retrieve(fileToSave, as: [NigtscoutTreatment].self) ?? []
+                        let cutoff = Date().addingTimeInterval(-TimeInterval(hours: 30))
+                        let oldAndNewUploaded = (oldUploaded + treatments).filter { treatment in
+                            guard let createdAt = treatment.createdAt else { return false }
+                            return createdAt >= cutoff
+                        }
+                        self.storage.save(oldAndNewUploaded, as: fileToSave)
                         debug(.nightscout, "Treatments uploaded")
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
@@ -1115,7 +1175,7 @@ extension BaseNightscoutManager: TempTargetsObserver {
 }
 
 extension BaseNightscoutManager: GlucoseObserver {
-    func glucoseDidUpdate(_: [BloodGlucose]) {
-        uploadManualGlucose()
+    func glucoseDidUpdate(_ bloodGlucose: [BloodGlucose]) {
+        uploadGlucose(bloodGlucose: bloodGlucose)
     }
 }

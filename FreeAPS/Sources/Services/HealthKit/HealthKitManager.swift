@@ -118,6 +118,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
 
         broadcaster.register(CarbsObserver.self, observer: self)
         broadcaster.register(PumpHistoryObserver.self, observer: self)
+        broadcaster.register(NewGlucoseObserver.self, observer: self)
 
         debug(.service, "HealthKitManager did create")
     }
@@ -622,6 +623,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                     debug(.service, "\(int) insulin entries with ID: \(syncID) deleted from Health Store", printToConsole: true)
                 }
             }
+        }
+    }
+}
+
+extension BaseHealthKitManager: NewGlucoseObserver {
+    func newGlucoseStored(_ bloodGlucose: [BloodGlucose]) {
+        processQueue.async {
+            self.saveIfNeeded(bloodGlucose: bloodGlucose)
         }
     }
 }

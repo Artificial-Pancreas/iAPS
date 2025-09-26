@@ -167,10 +167,3 @@ extension BloodGlucose: SavitzkyGolaySmoothable {
         }
     }
 }
-
-extension BloodGlucose {
-    var dateRoundedTo1Second: Date {
-        let interval = dateString.timeIntervalSinceReferenceDate
-        return Date(timeIntervalSinceReferenceDate: interval.rounded())
-    }
-}
