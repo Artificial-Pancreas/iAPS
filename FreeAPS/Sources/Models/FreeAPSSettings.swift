@@ -137,21 +137,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var ketoProtectBasalPercent: Decimal = 20
     var ketoProtectAbsolut: Bool = false
     var ketoProtectBasalAbsolut: Decimal = 0
-    // AI Food Search Variablen
-    var aiProvider: String = "Basic Analysis (Free)"
-    var claudeAPIKey: String = ""
-    var claudeQuery: String = ""
-    var openAIQuery: String = ""
-    var openAIAPIKey: String = ""
-    var googleGeminiAPIKey: String = ""
-    var googleGeminiQuery: String = ""
-    var textSearchProvider: String = "USDA FoodData Central"
-    var barcodeSearchProvider: String = "OpenFoodFacts"
-    var aiImageProvider: String = "OpenAI (ChatGPT API)"
-    var analysisMode: String = "standard"
-    var foodSearchEnabled: Bool = false
-    var advancedDosingRecommendationsEnabled: Bool = false
-    var useGPT5ForOpenAI: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -686,65 +671,6 @@ extension FreeAPSSettings: Decodable {
 
         if let ketoProtectAbsolut = try? container.decode(Bool.self, forKey: .ketoProtectAbsolut) {
             settings.ketoProtectAbsolut = ketoProtectAbsolut
-        }
-
-        if let aiProvider = try? container.decode(String.self, forKey: .aiProvider) {
-            settings.aiProvider = aiProvider
-        }
-
-        if let claudeAPIKey = try? container.decode(String.self, forKey: .claudeAPIKey) {
-            settings.claudeAPIKey = claudeAPIKey
-        }
-
-        if let claudeQuery = try? container.decode(String.self, forKey: .claudeQuery) {
-            settings.claudeQuery = claudeQuery
-        }
-
-        if let openAIAPIKey = try? container.decode(String.self, forKey: .openAIAPIKey) {
-            settings.openAIAPIKey = openAIAPIKey
-        }
-
-        if let openAIQuery = try? container.decode(String.self, forKey: .openAIQuery) {
-            settings.openAIQuery = openAIQuery
-        }
-
-        if let googleGeminiAPIKey = try? container.decode(String.self, forKey: .googleGeminiAPIKey) {
-            settings.googleGeminiAPIKey = googleGeminiAPIKey
-        }
-
-        if let googleGeminiQuery = try? container.decode(String.self, forKey: .googleGeminiQuery) {
-            settings.googleGeminiQuery = googleGeminiQuery
-        }
-
-        if let textSearchProvider = try? container.decode(String.self, forKey: .textSearchProvider) {
-            settings.textSearchProvider = textSearchProvider
-        }
-
-        if let barcodeSearchProvider = try? container.decode(String.self, forKey: .barcodeSearchProvider) {
-            settings.barcodeSearchProvider = barcodeSearchProvider
-        }
-
-        if let aiImageProvider = try? container.decode(String.self, forKey: .aiImageProvider) {
-            settings.aiImageProvider = aiImageProvider
-        }
-
-        if let analysisMode = try? container.decode(String.self, forKey: .analysisMode) {
-            settings.analysisMode = analysisMode
-        }
-
-        if let foodSearchEnabled = try? container.decode(Bool.self, forKey: .foodSearchEnabled) {
-            settings.foodSearchEnabled = foodSearchEnabled
-        }
-
-        if let advancedDosingRecommendationsEnabled = try? container.decode(
-            Bool.self,
-            forKey: .advancedDosingRecommendationsEnabled
-        ) {
-            settings.advancedDosingRecommendationsEnabled = advancedDosingRecommendationsEnabled
-        }
-
-        if let useGPT5ForOpenAI = try? container.decode(Bool.self, forKey: .useGPT5ForOpenAI) {
-            settings.useGPT5ForOpenAI = useGPT5ForOpenAI
         }
 
         self = settings

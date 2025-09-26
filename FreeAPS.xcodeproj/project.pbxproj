@@ -2005,9 +2005,10 @@
 				3883581B25EE79BB00E024B2 /* DecimalTextField.swift */,
 				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
 				383420D825FFEB3F002D46C1 /* Popup.swift */,
-				38DF1785276A73D400B3528F /* TagCloudView.swift */,
 				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
-				3811DE5925C9D4D500A708ED /* ViewModifiers.swift */,
+				38EA05FF262091870064E39B /* BolusProgressViewStyle.swift */,
+				38DF1785276A73D400B3528F /* TagCloudView.swift */,
+				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2074,7 +2075,6 @@
 				19DB781C2D332F73007BBB54 /* AutoISFsettings.swift */,
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
 				38A00B1E25FC00F7006BC0B0 /* Autotune.swift */,
-				79A058ED2E6C960600D9A275 /* BarcodeScanResult.swift */,
 				19F191E32BE686AE00F6297E /* BareMinimum.swift */,
 				388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */,
 				38D0B3B525EBE24900CB6E88 /* Battery.swift */,
@@ -2097,13 +2097,11 @@
 				1967DFBD29D052C200759F30 /* Icons.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
 				38887CCD25F5725200944304 /* IOBEntry.swift */,
-				F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */,
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
 				19012CDB291D2CB900FB8210 /* LoopStats.swift */,
 				192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */,
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */,
-				79A058EF2E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
@@ -2116,8 +2114,8 @@
 				19389E542D69393900636E49 /* TemporaryData.swift */,
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
-				79A058F12E6C976000D9A275 /* UserDefaults+Loop.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
+				F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3237,7 +3235,6 @@
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
 				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
 				38FEF408273B011A00574A46 /* LibreTransmitterSource.swift in Sources */,
-				79A058EE2E6C960600D9A275 /* BarcodeScanResult.swift in Sources */,
 				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				386A124F271707F000DDC61C /* DexcomSourceG6.swift in Sources */,
@@ -3467,7 +3464,6 @@
 				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
 				198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */,
-				79A058F22E6C977F00D9A275 /* UserDefaults+Loop.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */,
 				E00EEC0327368630002FF094 /* ServiceAssembly.swift in Sources */,

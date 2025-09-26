@@ -1,6 +1,4 @@
-import Combine
 import CoreData
-import OSLog
 import SwiftUI
 import Swinject
 
@@ -9,10 +7,7 @@ extension AddCarbs {
         let resolver: Resolver
         let editMode: Bool
         let override: Bool
-
         @StateObject var state = StateModel()
-        @StateObject var foodSearchState = FoodSearchStateModel()
-
         @State var dish: String = ""
         @State var isPromptPresented = false
         @State var saved = false
@@ -42,7 +37,6 @@ extension AddCarbs {
         private func isAIAnalysisProduct(_ food: AIFoodItem) -> Bool {
             food.brand == "AI Analysis" || food.brand == nil || food.brand?.contains("AI") == true
         }
-
         @FetchRequest(
             entity: Presets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate:
@@ -52,6 +46,7 @@ extension AddCarbs {
                     NSPredicate(format: "dish != %@", "Empty" as String)
                 ]
             )
+
         ) var carbPresets: FetchedResults<Presets>
 
         @Environment(\.managedObjectContext) var moc
@@ -161,7 +156,6 @@ extension AddCarbs {
                         }
                     }
                 }
-
                 // Optional Hypo Treatment
                 if state.carbs > 0, let profile = state.id, profile != "None", state.carbsRequired != nil {
                     Section {
@@ -341,30 +335,6 @@ extension AddCarbs {
             }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
-        private var minusButton: some View {
-            Button {
-                state.subtract()
-                if empty {
-                    state.selection = nil
-                    state.combinedPresets = []
-                }
-            }
-            label: { Image(systemName: "minus.circle.fill")
-            }
-            .buttonStyle(.borderless)
-            .disabled(state.selection == nil)
-        }
-
-        private var plusButton: some View {
-            Button {
-                state.plus()
-            }
-            label: { Image(systemName: "plus.circle.fill")
-            }
-            .buttonStyle(.borderless)
-            .disabled(state.selection == nil)
-        }
-
         private var presetView: some View {
             Form {
                 Section {} header: {
@@ -388,7 +358,8 @@ extension AddCarbs {
                     header: { Text("Save") }
                 }
 
-                let filtered = carbPresets.filter { ($0.dish ?? "").count > 1 }.removeDublicates()
+                let filtered = carbPresets.filter { !($0.dish ?? "").isEmpty && ($0.dish ?? "Empty") != "Empty" }
+                    .removeDublicates()
                 if filtered.count > 4 {
                     Section {
                         TextField("Search", text: $string)
@@ -417,9 +388,72 @@ extension AddCarbs {
             .environment(\.colorScheme, colorScheme)
         }
 
+        private var editView: some View {
+            Form {
+                Section {
+                    HStack {
+                        TextField("", text: $newPreset.dish)
+                    }
+                    HStack {
+                        Text("Carbs").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter, liveEditing: true)
+                    }
+                    HStack {
+                        Text("Fat").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter, liveEditing: true)
+                    }
+                    HStack {
+                        Text("Protein").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter, liveEditing: true)
+                    }
+                } header: { Text("Saved Food") }
+
+                Section {
+                    Button { save() }
+                    label: { Text("Save") }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
+                        .tint(.white)
+                        .disabled(disabled)
+                }
+            }.environment(\.colorScheme, colorScheme)
+        }
+
+        @ViewBuilder private func proteinAndFat() -> some View {
+            HStack {
+                Text("Fat").foregroundColor(.orange)
+                Spacer()
+                DecimalTextField(
+                    "0",
+                    value: $state.fat,
+                    formatter: formatter,
+                    autofocus: false,
+                    liveEditing: true
+                )
+                Text("grams").foregroundColor(.secondary)
+            }
+            HStack {
+                Text("Protein").foregroundColor(.red)
+                Spacer()
+                DecimalTextField(
+                    "0",
+                    value: $state.protein,
+                    formatter: formatter,
+                    autofocus: false,
+                    liveEditing: true
+                ).foregroundColor(.loopRed)
+
+                Text("grams").foregroundColor(.secondary)
+            }
+        }
+
         @ViewBuilder private func presetsList(for preset: Presets) -> some View {
             let dish = preset.dish ?? ""
 
+            // Only list saved entries
             if !preset.hasChanges {
                 HStack {
                     VStack(alignment: .leading) {
@@ -454,6 +488,30 @@ extension AddCarbs {
             }
         }
 
+        private var minusButton: some View {
+            Button {
+                state.subtract()
+                if empty {
+                    state.selection = nil
+                    state.combinedPresets = []
+                }
+            }
+            label: { Image(systemName: "minus.circle.fill")
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
+        }
+
+        private var plusButton: some View {
+            Button {
+                state.plus()
+            }
+            label: { Image(systemName: "plus.circle.fill")
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
+        }
+
         private func delete(at offsets: IndexSet) {
             for index in offsets {
                 let preset = carbPresets[index]
@@ -462,7 +520,7 @@ extension AddCarbs {
             do {
                 try moc.save()
             } catch {
-                // Error handling
+                // To do: add error
             }
         }
 
@@ -483,7 +541,7 @@ extension AddCarbs {
             if moc.hasChanges {
                 do {
                     try moc.save()
-                } catch {}
+                } catch { /* To do: add error */ }
             }
             state.edit = false
         }
@@ -503,6 +561,8 @@ extension AddCarbs {
         private func reset() {
             presentPresets = false
             string = ""
+            state.presetToEdit = nil // Probably not needed
+            state.edit = false // Probably not needed
         }
 
         private var disabled: Bool {

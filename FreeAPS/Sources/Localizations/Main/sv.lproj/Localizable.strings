@@ -3216,4 +3216,4 @@ Enact a temp Basal or a temp target */
 "Cancel Override" = "Avbryt Undantag";
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
-"To enable settings, go to the App Config section in iOS Settings App" = "För att aktivera inställningar, gå till iOS instllningar, under Appar/iAPS";
+"To enable settings, go to the App Config section in iOS Settings App" = "För att visa inställningar gå till iOS-inställningar, under Appar/iAPS";

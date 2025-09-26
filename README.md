@@ -13,9 +13,7 @@ Ready to explore iAPS? Here's how you can download and build the repository:
   * **Using Terminal:**
 
     ```bash
-    git clone --branch=main https://github.com/artificial-pancreas/iaps.git
-    cd iaps
-    xed .
+    git clone --branch=main https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
     ```
 
   * **Using the GitHub Interface:**
