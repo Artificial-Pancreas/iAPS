@@ -84,7 +84,7 @@ struct FoodSearchView: View {
                                     carbs: Decimal(aiProduct.carbs),
                                     fat: Decimal(aiProduct.fat),
                                     protein: Decimal(aiProduct.protein),
-                                    source: "AI Analyse",
+                                    source: "AI Analysis",
                                     imageURL: aiProduct.imageURL
                                 )
                                 onSelect(foodItem)
@@ -96,7 +96,7 @@ struct FoodSearchView: View {
                 .padding(.top, 8)
             }
             .navigationTitle("Food Search")
-            .navigationBarItems(trailing: Button("Fertig") { dismiss() })
+            .navigationBarItems(trailing: Button("Done") { dismiss() })
             .navigationDestination(isPresented: $navigateToBarcode) {
                 BarcodeScannerView(
                     onBarcodeScanned: { barcode in
@@ -121,11 +121,11 @@ struct FoodSearchView: View {
     }
 
     private func handleBarcodeScan(_ barcode: String) {
-        print("📦 Barcode gescannt: \(barcode)")
+        print("📦 Barcode: \(barcode)")
         navigateToBarcode = false
         state.foodSearchText = barcode
         state.performSearch(query: barcode)
-        print("🔍 Suche nach Barcode: \(barcode)")
+        print("🔍 Search for Barcode: \(barcode)")
     }
 
     private func handleAIAnalysis(_ analysisResult: AIFoodAnalysisResult, image _: UIImage?) {
