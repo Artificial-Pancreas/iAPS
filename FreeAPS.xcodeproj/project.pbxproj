@@ -2103,7 +2103,6 @@
 				192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */,
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */,
-				79A058EF2E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
@@ -2116,7 +2115,6 @@
 				19389E542D69393900636E49 /* TemporaryData.swift */,
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
-				79A058F12E6C976000D9A275 /* UserDefaults+Loop.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
 			);
 			path = Models;
@@ -2497,7 +2495,7 @@
 			isa = PBXGroup;
 			children = (
 				797D92522E85AA10001B9E44 /* Components */,
-				797D92512E85A9E6001B9E44 /* Model */,
+				797D92512E85A9E6001B9E44 /* Models */,
 				797D92542E85AA5D001B9E44 /* Services */,
 				50E85421406582CF9D321A20 /* View */,
 				5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */,
@@ -2507,14 +2505,16 @@
 			path = AddCarbs;
 			sourceTree = "<group>";
 		};
-		797D92512E85A9E6001B9E44 /* Model */ = {
+		797D92512E85A9E6001B9E44 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				797D92532E85AA44001B9E44 /* Extensions */,
 				797D925F2E85AAD9001B9E44 /* FoodItem.swift */,
 				797D92612E85AAE0001B9E44 /* FoodSearchStateModel.swift */,
+				79A058EF2E6C971900D9A275 /* OpenFoodFactsSearchResponse.swift */,
+				79A058F12E6C976000D9A275 /* UserDefaults+Loop.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		797D92522E85AA10001B9E44 /* Components */ = {

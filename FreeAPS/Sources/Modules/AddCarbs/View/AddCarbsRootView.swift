@@ -32,6 +32,7 @@ extension AddCarbs {
         @State private var selectedFoodItem: AIFoodItem? = nil
         @State private var showMultiplierEditor: Bool = false
         @State private var portionGrams: Double = 100.0
+        @State private var selectedFoodImage: UIImage? = nil
 
         init(resolver: Resolver, editMode: Bool, override: Bool) {
             self.resolver = resolver
@@ -71,9 +72,11 @@ extension AddCarbs {
                 if let selectedFood = selectedFoodItem {
                     SelectedFoodView(
                         food: selectedFood,
+                        foodImage: selectedFoodImage, // ✅ NEU: Bild übergeben
                         portionGrams: $portionGrams,
                         onChange: {
                             selectedFoodItem = nil
+                            selectedFoodImage = nil // ✅ NEU: Bild zurücksetzen
                             showingFoodSearch = true
                         },
                         onTakeOver: { food in
@@ -208,11 +211,19 @@ extension AddCarbs {
                 })
             )
             .sheet(isPresented: $presentPresets, content: { presetView })
+            /* .sheet(isPresented: $showingFoodSearch) {
+                 FoodSearchView(
+                     state: foodSearchState,
+                     onSelect: { selectedFood in
+                         handleSelectedFood(selectedFood)
+                     }
+                 )
+             }*/
             .sheet(isPresented: $showingFoodSearch) {
                 FoodSearchView(
                     state: foodSearchState,
-                    onSelect: { selectedFood in
-                        handleSelectedFood(selectedFood)
+                    onSelect: { selectedFood, image in
+                        handleSelectedFood(selectedFood, image: image)
                     }
                 )
             }
@@ -508,6 +519,14 @@ extension AddCarbs {
         private var disabled: Bool {
             (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
                 (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
+        }
+
+        private func handleSelectedFood(_ foodItem: FoodItem, image: UIImage? = nil) {
+            let aiFoodItem = foodItem.toAIFoodItem()
+            selectedFoodItem = aiFoodItem
+            selectedFoodImage = image
+            portionGrams = 100.0
+            showingFoodSearch = false
         }
 
         private var editView: some View {
