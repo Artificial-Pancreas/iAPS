@@ -107,6 +107,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var useCarbBars: Bool = false
     // ColorScheme
     var lightMode: LightMode = .auto
+    // Nightscout remote notifications
+    var nightscountHeartbeatServiceEnabled: Bool = false
+    var nightscountHeartbeatServiceURL: String = ""
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -336,6 +339,16 @@ extension FreeAPSSettings: Decodable {
 
         if let lightMode = try? container.decode(LightMode.self, forKey: .lightMode) {
             settings.lightMode = lightMode
+        }
+
+        if let nightscountHeartbeatServiceEnabled = try? container
+            .decode(Bool.self, forKey: .nightscountHeartbeatServiceEnabled)
+        {
+            settings.nightscountHeartbeatServiceEnabled = nightscountHeartbeatServiceEnabled
+        }
+
+        if let nightscountHeartbeatServiceURL = try? container.decode(String.self, forKey: .nightscountHeartbeatServiceURL) {
+            settings.nightscountHeartbeatServiceURL = nightscountHeartbeatServiceURL
         }
 
         if let lowGlucose = try? container.decode(Decimal.self, forKey: .lowGlucose) {
