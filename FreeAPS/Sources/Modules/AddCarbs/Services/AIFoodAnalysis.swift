@@ -1484,10 +1484,10 @@ class ConfigurableAIService: ObservableObject {
             switch self {
             case .standard:
                 let openAIModel = gpt5Enabled ? "GPT-5" : "GPT-4o"
-                return "Uses full AI models (\(openAIModel), Gemini-1.5-Pro, Claude-3.5-Sonnet) for maximum accuracy. Best for complex meals with multiple components."
+                return "Uses full AI models (\(openAIModel), Gemini-2.0-Pro, Claude-3.5-Sonnet) for maximum accuracy. Best for complex meals with multiple components."
             case .fast:
                 let openAIModel = gpt5Enabled ? "GPT-5-nano" : "GPT-4o-mini"
-                return "Uses optimized models (\(openAIModel), Gemini-1.5-Flash) for faster analysis. 2-3x faster with ~5-10% accuracy trade-off. Great for simple meals."
+                return "Uses optimized models (\(openAIModel), Gemini-2.0-Flash) for faster analysis. 2-3x faster with ~5-10% accuracy trade-off. Great for simple meals."
             }
         }
 
@@ -1552,9 +1552,9 @@ class ConfigurableAIService: ObservableObject {
     static func optimalModel(for provider: SearchProvider, mode: AnalysisMode) -> String {
         switch (provider, mode) {
         case (.googleGemini, .standard):
-            return "gemini-1.5-pro"
+            return "gemini-2.0-pro"
         case (.googleGemini, .fast):
-            return "gemini-1.5-flash" // ~2x faster
+            return "gemini-2.0-flash" // ~2x faster
         case (.openAI, .standard):
             // Use GPT-5 if user enabled it, otherwise use GPT-4o
             return UserDefaults.standard.useGPT5ForOpenAI ? "gpt-5" : "gpt-4o"

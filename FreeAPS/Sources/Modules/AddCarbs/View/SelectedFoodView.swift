@@ -2,22 +2,15 @@ import SwiftUI
 
 struct SelectedFoodView: View {
     let food: AIFoodItem
+    let foodImage: UIImage?
     @Binding var portionGrams: Double
     var onChange: () -> Void
     var onTakeOver: (AIFoodItem) -> Void
 
     @State private var showMultiplierEditor = false
 
-    /* private var isAIProduct: Bool {
-         (food.brand ?? "")
-             .lowercased()
-             .contains("ai")
-     }*/
-
     private var isAIProduct: Bool {
-        (food.brand ?? "")
-            .lowercased()
-            .contains("ai overall analysis")
+        (food.brand ?? "").lowercased().contains("ai overall analysis")
     }
 
     private var displayCarbs: Double {
@@ -37,47 +30,52 @@ struct SelectedFoodView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Header mit Bild und Produktinfo
+        VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .top, spacing: 12) {
-                // Produktbild
-                if let imageURLString = food.imageURL, let imageURL = URL(string: imageURLString) {
-                    AsyncImage(url: imageURL) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                                .frame(width: 50, height: 50)
-                        case let .success(image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 50, height: 50)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                        case .failure:
-                            Image(systemName: "photo")
-                                .frame(width: 50, height: 50)
-                                .background(Color.gray.opacity(0.2))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                        @unknown default:
-                            EmptyView()
+                Group {
+                    if let foodImage = foodImage {
+                        Image(uiImage: foodImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 75, height: 75)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                            )
+                    } else if let imageURLString = food.imageURL,
+                              let imageURL = URL(string: imageURLString)
+                    {
+                        AsyncImage(url: imageURL) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 75, height: 75)
+                            case let .success(image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 75, height: 75)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            case .failure:
+                                placeholderImage
+                            @unknown default:
+                                placeholderImage
+                            }
                         }
+                    } else {
+                        placeholderImage
                     }
-                } else {
-                    /*   Image(systemName: "photo")
-                     .frame(width: 50, height: 50)
-                     .background(Color.gray.opacity(0.2))
-                     .clipShape(RoundedRectangle(cornerRadius: 8))*/
                 }
 
-                VStack(alignment: .leading, spacing: 4) {
-                    // Produktname
+                VStack(alignment: .leading, spacing: 6) {
                     Text(food.name)
                         .font(.headline)
                         .fontWeight(.medium)
                         .foregroundColor(.primary)
                         .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
 
-                    // AI-Badge
                     HStack(spacing: 4) {
                         Image(systemName: isAIAnalysisProduct(food) ? "brain" : "scalemass")
                             .font(.caption)
@@ -113,7 +111,6 @@ struct SelectedFoodView: View {
                 }
             }
 
-            // Amount-Sektion (nur für nicht-AI-Produkte)
             if !isAIAnalysisProduct(food) {
                 HStack {
                     Text("Amount:")
@@ -128,7 +125,7 @@ struct SelectedFoodView: View {
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                             Image(systemName: "pencil")
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.system(size: 14, weight: .bold))
                         }
                         .foregroundColor(.blue)
                         .padding(.horizontal, 8)
@@ -142,37 +139,39 @@ struct SelectedFoodView: View {
                 }
             }
 
-            // Nährwert-Badges
             HStack(spacing: 8) {
                 NutritionBadge(
                     value: displayCarbs,
                     unit: "g",
                     label: "Carbs",
-                    color: .orange
+                    color: .orange,
+                    // icon: "c.square"
                 )
                 NutritionBadge(
                     value: displayFat,
                     unit: "g",
-                    label: "Fat",
-                    color: .loopRed
+                    label: "Fett",
+                    color: .blue,
+                    // icon: "f.square"
                 )
                 NutritionBadge(
                     value: displayProtein,
                     unit: "g",
                     label: "Protein",
-                    color: .green
+                    color: .green,
+                    // icon: "p.square"
                 )
                 if food.calories > 0 {
                     NutritionBadge(
                         value: displayCalories,
                         unit: "kcal",
-                        label: "Calories",
-                        color: .red
+                        label: "Cal",
+                        color: .red,
+                        // icon: "flame"
                     )
                 }
             }
 
-            // Button-Row
             HStack(spacing: 12) {
                 Button(action: onChange) {
                     HStack {
@@ -197,13 +196,10 @@ struct SelectedFoodView: View {
                         imageURL: food.imageURL
                     )
                     onTakeOver(adjustedFood)
-
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.success)
                 } label: {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
-                        Text("Take over")
+                        Text("Take Over")
                     }
                     .font(.subheadline)
                     .fontWeight(.semibold)
@@ -215,10 +211,20 @@ struct SelectedFoodView: View {
             }
         }
         .padding()
-        .padding(.vertical, 8)
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        // .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
         .sheet(isPresented: $showMultiplierEditor) {
             MultiplierEditorView(grams: $portionGrams)
         }
+    }
+
+    private var placeholderImage: some View {
+        Image(systemName: "photo")
+            .frame(width: 60, height: 60)
+            .background(Color.gray.opacity(0.2))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .foregroundColor(.secondary)
     }
 
     private struct NutritionBadge: View {

@@ -3,7 +3,7 @@ import SwiftUI
 
 struct FoodSearchView: View {
     @ObservedObject var state: FoodSearchStateModel
-    var onSelect: (FoodItem) -> Void
+    var onSelect: (FoodItem, UIImage?) -> Void
     @Environment(\.dismiss) var dismiss
 
     // Navigation States
@@ -11,6 +11,7 @@ struct FoodSearchView: View {
     @State private var navigateToAICamera = false
     @State private var showingAIAnalysisResults = false
     @State private var aiAnalysisResult: AIFoodAnalysisResult?
+    @State private var aiAnalysisImage: UIImage?
 
     var body: some View {
         NavigationStack {
@@ -25,7 +26,6 @@ struct FoodSearchView: View {
                             state.performSearch(query: state.foodSearchText)
                         }
 
-                    // Barcode Button
                     Button {
                         navigateToBarcode = true
                     } label: {
@@ -37,7 +37,6 @@ struct FoodSearchView: View {
                             .cornerRadius(8)
                     }
 
-                    // AI Kamera Button
                     Button {
                         navigateToAICamera = true
                     } label: {
@@ -59,11 +58,18 @@ struct FoodSearchView: View {
                         AIAnalysisResultsView(
                             analysisResult: result,
                             onFoodItemSelected: { foodItem in
-                                onSelect(foodItem)
-                                dismiss()
+                                let selectedFood = FoodItem(
+                                    name: foodItem.name,
+                                    carbs: foodItem.carbs,
+                                    fat: foodItem.fat,
+                                    protein: foodItem.protein,
+                                    source: "AI Analysis",
+                                    imageURL: nil
+                                )
+                                handleFoodItemSelection(selectedFood, image: aiAnalysisImage)
                             },
                             onCompleteMealSelected: { totalMeal in
-                                onSelect(totalMeal)
+                                onSelect(totalMeal, aiAnalysisImage)
                                 dismiss()
                             }
                         )
@@ -75,8 +81,7 @@ struct FoodSearchView: View {
                             errorMessage: state.errorMessage,
                             onProductSelected: { selectedProduct in
                                 let foodItem = selectedProduct.toFoodItem()
-                                onSelect(foodItem)
-                                dismiss()
+                                handleFoodItemSelection(foodItem, image: nil)
                             },
                             onAIProductSelected: { aiProduct in
                                 let foodItem = FoodItem(
@@ -87,14 +92,14 @@ struct FoodSearchView: View {
                                     source: "AI Analyse",
                                     imageURL: aiProduct.imageURL
                                 )
-                                onSelect(foodItem)
-                                dismiss()
+                                handleFoodItemSelection(foodItem, image: nil)
                             }
                         )
                     }
                 }
                 .padding(.top, 8)
             }
+
             .navigationTitle("Food Search")
             .navigationBarItems(trailing: Button("Fertig") { dismiss() })
             .navigationDestination(isPresented: $navigateToBarcode) {
@@ -128,9 +133,10 @@ struct FoodSearchView: View {
         print("🔍 Suche nach Barcode: \(barcode)")
     }
 
-    private func handleAIAnalysis(_ analysisResult: AIFoodAnalysisResult, image _: UIImage?) {
+    private func handleAIAnalysis(_ analysisResult: AIFoodAnalysisResult, image: UIImage?) { // ✅ Parameter name korrigiert
         aiAnalysisResult = analysisResult
         showingAIAnalysisResults = true
+        aiAnalysisImage = image // ✅ Bild speichern
 
         let aiFoodItems = analysisResult.foodItemsDetailed.map { foodItem in
             AIFoodItem(
@@ -144,5 +150,10 @@ struct FoodSearchView: View {
             )
         }
         state.aiSearchResults = aiFoodItems
+    }
+
+    private func handleFoodItemSelection(_ foodItem: FoodItem, image: UIImage?) {
+        onSelect(foodItem, image)
+        dismiss()
     }
 }
