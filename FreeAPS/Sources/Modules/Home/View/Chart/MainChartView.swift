@@ -1036,9 +1036,21 @@ extension MainChartView {
     }
 
     private func calculatePeakActivities() {
-        peakActivity_1unit = peakInsulinActivity(forBolus: 1.0)
-        peakActivity_maxBolus = peakInsulinActivity(forBolus: Double(data.maxBolus))
-        peakActivity_maxIOB = peakInsulinActivity(forBolus: Double(data.maxIOB))
+        peakActivity_1unit = InsulinCalculations.peakInsulinActivity(
+            forBolus: 1.0,
+            peak: Double(data.insulinPeak),
+            dia: Double(data.insulinDIA)
+        )
+        peakActivity_maxBolus = InsulinCalculations.peakInsulinActivity(
+            forBolus: Double(data.maxBolus),
+            peak: Double(data.insulinPeak),
+            dia: Double(data.insulinDIA)
+        )
+        peakActivity_maxIOB = InsulinCalculations.peakInsulinActivity(
+            forBolus: Double(data.maxIOB),
+            peak: Double(data.insulinPeak),
+            dia: Double(data.insulinDIA)
+        )
         maxActivityInData = data.activity.map { e in e.activity }.max()
     }
 
@@ -1766,72 +1778,6 @@ extension MainChartView {
             0.0,
             Double(data.cob.map(\.cob).max() ?? 0.0) * 1.2
         )
-    }
-
-    // function to calculate the maximum insulin activity for a given bolus size
-    // used to scale the activity chart
-    private func peakInsulinActivity(forBolus: Double) -> Double {
-        let peak = Double(data.insulinPeak)
-        let dia = Double(data.insulinDIA)
-        let end = dia * 60.0
-
-        // Calculate tau
-        let peakOverEnd = peak / end
-        let tauNumerator = peak * (1.0 - peakOverEnd)
-        let tauDenominator = 1.0 - 2.0 * peakOverEnd
-        guard tauDenominator != 0 else {
-            return 0.1
-        }
-        let tau = tauNumerator / tauDenominator
-
-        // Calculate a
-        let a = 2.0 * tau / end
-
-        // Calculate S
-        let expNegEndOverTau = exp(-end / tau)
-        let S = 1.0 / (1.0 - a + (1.0 + a) * expNegEndOverTau)
-
-        // Calculate activity at peak time
-        let t = peak
-        let activity = forBolus * (S / pow(tau, 2)) * t * (1.0 - t / end) * exp(-t / tau)
-
-        return activity
-    }
-
-    // Inverse function to calculate the bolus size needed for a desired peak activity
-    // TODO: not tested
-    private func bolusForPeakActivity(desiredActivity: Double) -> Double {
-        let peak = Double(data.insulinPeak)
-        let dia = Double(data.insulinDIA)
-        let end = dia * 60.0
-
-        // Calculate tau (same as original function)
-        let peakOverEnd = peak / end
-        let tauNumerator = peak * (1.0 - peakOverEnd)
-        let tauDenominator = 1.0 - 2.0 * peakOverEnd
-        guard tauDenominator != 0 else {
-            return 0.0
-        }
-        let tau = tauNumerator / tauDenominator
-
-        // Calculate a (same as original function)
-        let a = 2.0 * tau / end
-
-        // Calculate S (same as original function)
-        let expNegEndOverTau = exp(-end / tau)
-        let S = 1.0 / (1.0 - a + (1.0 + a) * expNegEndOverTau)
-
-        // Calculate the scaling factor at peak time
-        let t = peak
-        let scalingFactor = (S / pow(tau, 2)) * t * (1.0 - t / end) * exp(-t / tau)
-
-        // Guard against division by zero
-        guard scalingFactor != 0 else {
-            return 0.0
-        }
-
-        // Since activity = forBolus * scalingFactor, then forBolus = activity / scalingFactor
-        return desiredActivity / scalingFactor
     }
 
     private func timeToInterpolatedPoint(_ time: TimeInterval, fullSize: CGSize) -> CGPoint {

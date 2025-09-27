@@ -473,6 +473,7 @@
 		F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A562BA6239F00A0B716 /* ContactTrickManager.swift */; };
 		F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A582BA78B7400A0B716 /* ContactTrickState.swift */; };
 		F2159A5B2BA7939C00A0B716 /* ContactPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */; };
+		F232F3182DF387C80072AC68 /* InsulinCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F232F3172DF387C80072AC68 /* InsulinCalculations.swift */; };
 		F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F270F68C2BAE374C00F6D8DD /* FontTracking.swift */; };
 		F273F9602DE73ABE00BF0FFC /* IOBTick0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */; };
 		F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */; };
@@ -1126,6 +1127,7 @@
 		F2159A562BA6239F00A0B716 /* ContactTrickManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickManager.swift; sourceTree = "<group>"; };
 		F2159A582BA78B7400A0B716 /* ContactTrickState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickState.swift; sourceTree = "<group>"; };
 		F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPicture.swift; sourceTree = "<group>"; };
+		F232F3172DF387C80072AC68 /* InsulinCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinCalculations.swift; sourceTree = "<group>"; };
 		F270F68C2BAE374C00F6D8DD /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBTick0.swift; sourceTree = "<group>"; };
 		F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTextField.swift; sourceTree = "<group>"; };
@@ -2102,6 +2104,7 @@
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
 				056EB47D2B4C8B3D00CDE36E /* SystemSoundsManager.swift */,
+				F232F3172DF387C80072AC68 /* InsulinCalculations.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3283,6 +3286,7 @@
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
 				F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */,
 				193339772E05BC8400E80EF5 /* DynamicHistoryView.swift in Sources */,
+				F232F3182DF387C80072AC68 /* InsulinCalculations.swift in Sources */,
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
 				195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */,

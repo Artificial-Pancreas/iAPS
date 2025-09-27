@@ -54,6 +54,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useLiveActivity: Bool = false
     var liveActivityChart = false
     var liveActivityChartShowPredictions = true
+    var liveActivityChartShowInsulin = true
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
@@ -430,6 +431,10 @@ extension FreeAPSSettings: Decodable {
 
         if let liveActivityChartShowPredictions = try? container.decode(Bool.self, forKey: .liveActivityChartShowPredictions) {
             settings.liveActivityChartShowPredictions = liveActivityChartShowPredictions
+        }
+
+        if let liveActivityChartShowInsulin = try? container.decode(Bool.self, forKey: .liveActivityChartShowInsulin) {
+            settings.liveActivityChartShowInsulin = liveActivityChartShowInsulin
         }
 
         // ----
