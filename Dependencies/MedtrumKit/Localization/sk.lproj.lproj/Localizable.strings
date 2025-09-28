@@ -278,34 +278,34 @@
 "Your patch has %i hours left" = "Tvoja náplasť má zostávajúcich %i hodín";
 
 /* Title insulin suspended notification */
-"Insulin has been suspended!" = "Insulin has been suspended!";
+"Insulin has been suspended!" = "Podávanie inzulínu bolo pozastavené!";
 
 /* Body daily max notification */
-"Your patch has reached its daily maximum!" = "Your patch has reached its daily maximum!";
+"Your patch has reached its daily maximum!" = "Tvoja náplasť dosiahla svoj denný limit!";
 
 /* Body hourly max notification */
-"Your patch has reached its hourly maximum!" = "Your patch has reached its hourly maximum!";
+"Your patch has reached its hourly maximum!" = "Tvoja náplasť dosiahla svoj hodinový limit!";
 
 /* Title replace patch notification */
-"Replace your patch now!" = "Replace your patch now!";
+"Replace your patch now!" = "Teraz si vymeň náplasť!";
 
 /* Body occlussion notification */
-"Your patch has detected an occlussion!" = "Your patch has detected an occlussion!";
+"Your patch has detected an occlussion!" = "Tvoja náplasť zistila oklúziu!";
 
 /* Body fault notification */
-"Your patch is in Fault state!" = "Your patch is in Fault state!";
+"Your patch is in Fault state!" = "Tvoja náplasť je v chybnom stave!";
 
 /* Body reservoir empty notification */
-"Your patch is out of insulin!" = "Your patch is out of insulin!";
+"Your patch is out of insulin!" = "Tvojej náplasti došiel inzulín!";
 
 /* Force remove */
-"Force remove" = "Force remove";
+"Force remove" = "Vynútiť odstránenie";
 
 /* title force remove */
 "Are you sure?" = "Ste si istý?";
 
 /* body force remove */
-"It is recommended to deactivate first" = "It is recommended to deactivate first";
+"It is recommended to deactivate first" = "Odporúča sa najskôr deaktivovať";
 
 /* confirm force remove */
 "Confirm" = "Potvrdiť";
