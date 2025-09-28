@@ -1,6 +1,6 @@
 # iAPS: Your Experimental Artificial Pancreas System for iOS
 
-iAPS is an advanced artificial pancreas system for iOS, built upon the foundation of Ivan Valkou's original `freeaps.git` Swift repository and powered by the **OpenAPS Reference (Master 0.7.1)** algorithms. After thousands of commits and the addition of many unique features, the app has been rebranded as iAPS under the new organization, Artificial Pancreas. We also leverage numerous frameworks published by the **Loop community** to bring you this robust system.
+iAPS is an advanced artificial pancreas system for iOS, built upon the foundation of Ivan Valkou's original `freeaps.git` Swift repository and powered by the **OpenAPS Reference (Master 0.7.1)** algorithms. After thousands of commits and the addition of many unique features, the app has been rebranded as iAPS (*i* as in *Ivan* and *iOS*) under the new organization, Artificial Pancreas. We also leverage numerous frameworks published by the **Loop community** to bring you this robust system.
 
 -----
 
@@ -13,9 +13,7 @@ Ready to explore iAPS? Here's how you can download and build the repository:
   * **Using Terminal:**
 
     ```bash
-    git clone --branch=main https://github.com/artificial-pancreas/iaps.git
-    cd iaps
-    xed .
+    git clone --branch=main https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
     ```
 
   * **Using the GitHub Interface:**
