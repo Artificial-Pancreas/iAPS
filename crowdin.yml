@@ -64,6 +64,8 @@ files:
     translation: /FreeAPS/Sources/Localizations/WatchExtensionPlist/%osx_locale%.lproj/InfoPlist.strings
   - source: /Dependencies/G7SensorKit/en.lproj/Localizable.strings
     translation: /Dependencies/G7SensorKit/%osx_locale%.lproj/Localizable.strings
+  - source: /MedtrumKit/Localization/en.lproj/Localizable.strings
+    translation: /MedtrumKit/Localization//%osx_locale%.lproj//Localizable.strings
   - source: /RileyLinkKit/RileyLinkKitUI/Localizable.xcstrings
     translation: /RileyLinkKit/RileyLinkKitUI/Localizable.xcstrings
     multilingual: true
@@ -127,5 +129,3 @@ files:
   - source: /TidepoolService/TidepoolServiceKit/Localizable.xcstrings
     translation: /TidepoolService/TidepoolServiceKit/Localizable.xcstrings
     multilingual: true
-  - source: /MedtrumKit/Localization/en.lproj/Localizable.strings
-    translation: /MedtrumKit/Localization//%osx_locale%.lproj//Localizable.strings
