@@ -1879,7 +1879,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Zvukové upozornenia Podu";
 
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Zvukové upozornenia Podu, ktoré môžu slúžiť na potvrdenie vybraných príkazov ak Pod nie je stíšený.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Ukladanie...";
@@ -1909,10 +1909,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "No confidence reminders are used." = "Nepoužívajú sa žiadne oznámenia.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Upozornenia budú znieť pri príkazoch, ktoré iniciujete, ako napríklad bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie pripomienok upozornení atď. Keď aplikácia automaticky upravuje podávanie, nepoužívajú sa žiadne pripomenutia dôvery.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Potvrdzujúce upozornenie budú znieť pri príkazoch, ktoré iniciujete, ako sú bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie upozornení atď. Keď aplikácia automaticky upravuje podávanie inzulínu, potvrdzujúce notifikácie sa nepoužívajú.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Upozornenia zaznejú, keď aplikácia automaticky upraví doručenie a na príkazy, ktoré sami zadáte.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Potvrdzujúce pripomienky budú znieť, keď aplikácia automaticky upraví podávanie inzulínu, ako aj pri príkazoch, ktoré iniciujete.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Predvolené pripomenutie o exspirácii";
@@ -3221,3 +3221,29 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "Na povolenie nastavení prejdite do sekcie Konfigurácia aplikácie v aplikácii Nastavenia iOS";
+
+/* Section header in CGM view */
+"Active CGM" = "Active CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pump/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Stop using the pump as CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Shared App Group Source";
+
+/* prefix for the shared app group application */
+"Reading from" = "Reading from";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Odpojiť";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Read BG from an external CGM app using a shared app group.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Read from ";
