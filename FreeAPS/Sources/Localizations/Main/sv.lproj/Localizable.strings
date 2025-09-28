@@ -1878,7 +1878,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekräftelseljud";
 
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden (när den inte är tystad) som kan användas som bekräftelser på utförda kommandon";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden (när den inte är tystad) som kan användas som bekräftelser på utförda kommandon.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Sparar...";
@@ -3216,4 +3216,30 @@ Enact a temp Basal or a temp target */
 "Cancel Override" = "Avbryt Undantag";
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
-"To enable settings, go to the App Config section in iOS Settings App" = "För att aktivera inställningar, gå till iOS instllningar, under Appar/iAPS";
+"To enable settings, go to the App Config section in iOS Settings App" = "För att visa inställningar gå till iOS-inställningar, under Appar/iAPS";
+
+/* Section header in CGM view */
+"Active CGM" = "Active CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pump/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Stop using the pump as CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Shared App Group Source";
+
+/* prefix for the shared app group application */
+"Reading from" = "Reading from";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Koppla från";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Read BG from an external CGM app using a shared app group.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Read from ";
