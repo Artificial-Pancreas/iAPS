@@ -3219,19 +3219,19 @@ Enact a temp Basal or a temp target */
 "To enable settings, go to the App Config section in iOS Settings App" = "För att visa inställningar gå till iOS-inställningar, under Appar/iAPS";
 
 /* Section header in CGM view */
-"Active CGM" = "Active CGM";
+"Active CGM" = "Aktiv CGM";
 
 /* pump name label, when pump is a cgm "Pump/CGM" */
 "Pump/CGM" = "Pump/CGM";
 
 /* Button "Stop using the pump as CGM" */
-"Stop using the pump as CGM" = "Stop using the pump as CGM";
+"Stop using the pump as CGM" = "Sluta att använda pumpen som CGM";
 
 /* Section header in CGM view */
-"Shared App Group Source" = "Shared App Group Source";
+"Shared App Group Source" = "Källa för delad appgrupp";
 
 /* prefix for the shared app group application */
-"Reading from" = "Reading from";
+"Reading from" = "Läser från";
 
 /* button to disconnect from the shared app group "Disconnect" */
 "Disconnect" = "Koppla från";
