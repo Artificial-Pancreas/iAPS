@@ -21,111 +21,198 @@ export_languages:
   - sk
   - vi
   - hu
-files:
-  - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
+files: [
+  { 
+    source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings,
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
-  - source: /FreeAPS/Resources/Base.lproj/InfoPlist.strings
+  },
+  {
+    source: /FreeAPS/Resources/Base.lproj/InfoPlist.strings,
     translation: /FreeAPS/Resources/%osx_locale%.lproj/InfoPlist.strings
-  - source: /Settings.bundle/en.lproj/Root.strings
+  },
+  {
+    source: /Settings.bundle/en.lproj/Root.strings,
     translation: /Settings.bundle/%osx_locale%.lproj/Root.strings
-  - source: /FreeAPS/Sources/Localizations/Shortcuts/en.lproj/AppShortcuts.strings
+  },
+  {
+    source: /FreeAPS/Sources/Localizations/Shortcuts/en.lproj/AppShortcuts.strings,
     translation: /FreeAPS/Sources//Localizations/Shortcuts/%osx_locale%.lproj/AppShortcuts.strings
-  - source: /FreeAPS/Sources/Localizations/WatchExtensionPlist/en.lproj/InfoPlist.strings
+  },
+  {
+    source: /FreeAPS/Sources/Localizations/WatchExtensionPlist/en.lproj/InfoPlist.strings,
     translation: /FreeAPS/Sources/Localizations/WatchExtensionPlist/%osx_locale%.lproj/InfoPlist.strings
-  - source: /Dependencies/rileylink_ios/RileyLinkKitUI/Base.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/rileylink_ios/RileyLinkKitUI/Base.lproj/Localizable.strings,
     translation: /Dependencies/rileylink_ios/RileyLinkKitUI/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/OmniBLE/Localizations/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/OmniBLE/Localizations/en.lproj/Localizable.strings,
     translation: /Dependencies/OmniBLE/Localizations/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings,
     translation: /Dependencies/G7SensorKit/G7SensorKitUI/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/OmniKit/OmniKit/Resources/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/OmniKit/OmniKit/Resources/en.lproj/Localizable.strings,
     translation: /Dependencies/OmniKit/OmniKit/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/OmniKit/OmniKitUI/Resources/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/OmniKit/OmniKitUI/Resources/en.lproj/Localizable.strings,
     translation: /Dependencies/OmniKit/OmniKitUI/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/MinimedKit/MinimedKit/Resources/Base.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/MinimedKit/MinimedKit/Resources/Base.lproj/Localizable.strings,
     translation: /Dependencies/MinimedKit/MinimedKit/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/MinimedKit/MinimedKitUI/Resources/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/MinimedKit/MinimedKitUI/Resources/en.lproj/Localizable.strings,
     translation: /Dependencies/MinimedKit/MinimedKitUI/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/CGMBLEKit/CGMBLEKitUI/Base.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/CGMBLEKit/CGMBLEKitUI/Base.lproj/Localizable.strings,
     translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/CGMBLEKit/CGMBLEKit/Base.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/CGMBLEKit/CGMBLEKit/Base.lproj/Localizable.strings,
     translation: /Dependencies/CGMBLEKit/CGMBLEKit/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/CGMBLEKit/CGMBLEKitUI/en.lproj/TransmitterManagerSetup.strings
+  },
+  {
+    source: /Dependencies/CGMBLEKit/CGMBLEKitUI/en.lproj/TransmitterManagerSetup.strings,
     translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/TransmitterManagerSetup.strings
-  - source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings,
     translation: /Dependencies/G7SensorKit/G7SensorKitUI/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/DanaKit/Localization/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/DanaKit/Localization/en.lproj/Localizable.strings,
     translation: /Dependencies/DanaKit/Localization/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/LoopKit/LoopKit/Resources/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/LoopKit/LoopKit/Resources/en.lproj/Localizable.strings,
     translation: /Dependencies/LoopKit/LoopKit/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/LoopKit/MockKitUI/Resources/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/LoopKit/MockKitUI/Resources/en.lproj/Localizable.strings,
     translation: /Dependencies/LoopKit/MockKitUI/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /FreeAPS/Sources/Localizations/WatchExtensionPlist/en.lproj/InfoPlist.strings
+  },
+  {
+    source: /FreeAPS/Sources/Localizations/WatchExtensionPlist/en.lproj/InfoPlist.strings,
     translation: /FreeAPS/Sources/Localizations/WatchExtensionPlist/%osx_locale%.lproj/InfoPlist.strings
-  - source: /Dependencies/G7SensorKit/en.lproj/Localizable.strings
+  },
+  {
+    source: /Dependencies/G7SensorKit/en.lproj/Localizable.strings,
     translation: /Dependencies/G7SensorKit/%osx_locale%.lproj/Localizable.strings
-  - source: /MedtrumKit/Localization/en.lproj/Localizable.strings
+  },
+  {
+    source: /MedtrumKit/Localization/en.lproj/Localizable.strings,
     translation: /MedtrumKit/Localization//%osx_locale%.lproj//Localizable.strings
-  - source: /RileyLinkKit/RileyLinkKitUI/Localizable.xcstrings
-    translation: /RileyLinkKit/RileyLinkKitUI/Localizable.xcstrings
+  },
+  {
+    source: /RileyLinkKit/RileyLinkKitUI/Localizable.xcstrings,
+    translation: /RileyLinkKit/RileyLinkKitUI/Localizable.xcstrings,
     multilingual: true
-  - source: /OmniBLE/Localizable.xcstrings
-    translation: /OmniBLE/Localizable.xcstrings
+  },
+  {
+    source: /OmniBLE/Localizable.xcstrings,
+    translation: OmniBLE/Localizable.xcstrings,
     multilingual: true
-  - source: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings
-    translation: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings
+  },
+  {
+    source: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings,
+    translation: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings,
     multilingual: true
- - source: /G7SensorKit/G7SensorKit/Localizable.xcstrings
-    translation: /G7SensorKit/G7SensorKit/Localizable.xcstrings
+  },
+  {
+   source: /G7SensorKit/G7SensorKit/Localizable.xcstrings,
+    translation: /G7SensorKit/G7SensorKit/Localizable.xcstrings,
     multilingual: true
- - source: /G7SensorKit/G7SensorKit/Localizable.xcstrings
-    translation: /G7SensorKit/G7SensorKit/Localizable.xcstrings
+  },
+  {
+   source: /G7SensorKit/G7SensorKit/Localizable.xcstrings,
+    translation: /G7SensorKit/G7SensorKit/Localizable.xcstrings,
     multilingual: true
-  - source: /OmniKit/OmniKitUI/Resources/Localizable.xcstrings
-    translation: /OmniKit/OmniKitUI/Resources/Localizable.xcstrings
+  },
+  {
+    source: /OmniKit/OmniKitUI/Resources/Localizable.xcstrings,
+    translation: /OmniKit/OmniKitUI/Resources/Localizable.xcstrings,
     multilingual: true
- - source: /OmniKit/OmniKit/Localizable.xcstrings
-    translation: /OmniKit/Localizable.xcstrings
+  },
+  {
+   source: /OmniKit/OmniKit/Localizable.xcstrings,
+    translation: /OmniKit/Localizable.xcstrings,
     multilingual: true
- - source: /MinimedKit/MinimedKit/Resources/Localizable.xcstrings
-    translation: /MinimedKit/MinimedKit/Resources/Localizable.xcstrings
+  },
+  {
+   source: /MinimedKit/MinimedKit/Resources/Localizable.xcstrings,
+    translation: /MinimedKit/MinimedKit/Resources/Localizable.xcstrings,
     multilingual: true
-  - source: /MinimedKit/MinimedKitUI/Resources/Localizable.xcstrings
-    translation: /MinimedKit/MinimedKitUI/Resources/Localizable.xcstrings
+  },
+  {
+    source: /MinimedKit/MinimedKitUI/Resources/Localizable.xcstrings,
+    translation: /MinimedKit/MinimedKitUI/Resources/Localizable.xcstrings,
     multilingual: true
-  - source: /CGMBLEKit/CGMBLEKit/Localizable.xcstrings
-    translation: /CGMBLEKit/CGMBLEKit/Localizable.xcstrings
+  },
+  {
+    source: /CGMBLEKit/CGMBLEKit/Localizable.xcstrings,
+    translation: CGMBLEKit/CGMBLEKit/Localizable.xcstrings,
     multilingual: true
-  - source: /CGMBLEKit/CGMBLEKitUI/Localizable.xcstrings
-    translation: /CGMBLEKit/CGMBLEKitUI/Localizable.xcstrings
+  },
+  {
+    source: /CGMBLEKit/CGMBLEKitUI/Localizable.xcstrings,
+    translation: /CGMBLEKit/CGMBLEKitUI/Localizable.xcstrings,
     multilingual: true
-  - source: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings
-    translation: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings
+  },
+  {
+    source: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings,
+    translation: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings,
     multilingual: true
-  - source: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings
-    translation: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings
+  },
+  {
+    source: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings,
+    translation: /CGMBLEKit/CGMBLEKitUI/mul.lproj/TransmitterManagerSetup.xcstrings,
     multilingual: true
-  - source: /G7SensorKit/G7SensorKit/Localizable.xcstrings
-    translation: /G7SensorKit/G7SensorKit/Localizable.xcstrings
+  },
+  {
+    source: /G7SensorKit/G7SensorKit/Localizable.xcstrings,
+    translation: /G7SensorKit/G7SensorKit/Localizable.xcstrings,
     multilingual: true
-  - source: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings
-    translation: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings
+  },
+  {
+    source: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings,
+    translation: /G7SensorKit/G7SensorKitUI/Localizable.xcstrings,
     multilingual: true
-  - source: /DanaKit/Localization/Localizable.xcstrings
-    translation: /DanaKit/Localization/Localizable.xcstrings
+  },
+  {
+    source: /DanaKit/Localization/Localizable.xcstrings,
+    translation: /DanaKit/Localization/Localizable.xcstrings,
     multilingual: true
-  - source: /LoopKit/LoopKit/Resources/Localizable.xcstrings
-    translation: /LoopKit/LoopKit/Resources/Localizable.xcstrings
+  },
+  {
+    source: /LoopKit/LoopKit/Resources/Localizable.xcstrings,
+    translation: /LoopKit/LoopKit/Resources/Localizable.xcstrings,
     multilingual: true
-  - source: /LoopKit/MockKit/Resources/Localizable.xcstrings
-    translation: /LoopKit/MockKit/Resources/Localizable.xcstrings
+  },
+  {
+    source: /LoopKit/MockKit/Resources/Localizable.xcstrings,
+    translation: /LoopKit/MockKit/Resources/Localizable.xcstrings,
     multilingual: true
-  - source: /LoopKit/LoopKitUI/Resources/Localizable.xcstrings
-    translation: /LoopKit/LoopKitUI/Resources/Localizable.xcstrings
+  },
+  {
+    source: /LoopKit/LoopKitUI/Resources/Localizable.xcstrings,
+    translation: /LoopKit/LoopKitUI/Resources/Localizable.xcstrings,
     multilingual: true
-  - source: /TidepoolService/TidepoolServiceKitUI/Localizable.xcstrings
-    translation: /TidepoolService/TidepoolServiceKitUI/Localizable.xcstrings
+  },
+  {
+    source: /TidepoolService/TidepoolServiceKitUI/Localizable.xcstrings,
+    translation: /TidepoolService/TidepoolServiceKitUI/Localizable.xcstrings,
     multilingual: true
-  - source: /TidepoolService/TidepoolServiceKit/Localizable.xcstrings
-    translation: /TidepoolService/TidepoolServiceKit/Localizable.xcstrings
+  },
+  {
+    source: /TidepoolService/TidepoolServiceKit/Localizable.xcstrings,
+    translation: /TidepoolService/TidepoolServiceKit/Localizable.xcstrings,
     multilingual: true
+  }
+]
