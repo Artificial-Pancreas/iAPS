@@ -1878,7 +1878,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Lời nhắc độ tin cậy";
 
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Lời nhắc về độ tin cậy là những tiếng bíp từ Pod có thể được sử dụng để xác nhận các lệnh đã chọn khi Pod không ở chế độ im lặng.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Lời nhắc là những tiếng bíp từ Pod có thể được sử dụng để xác nhận các lệnh đã chọn khi Pod không ở chế độ im lặng.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Đang lưu...";
@@ -2917,7 +2917,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
+"Adjust Dynamic ISF constant" = "Điều chỉnh hằng số Dynamic ISF";
 
 /* Enable Dynamic ISF, Headline */
 "Enable Dynamic ISF" = "Kích hoạt Dynamic ISF";
@@ -3165,7 +3165,7 @@ Enact a temp Basal or a temp target */
 "Show Live activity" = "Hiển thị hoạt động trực tiếp";
 
 /* Live Activity Footer */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và động (nếu có)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa và động (nếu có)";
 
 /* Live Activity Footer when off */
 "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Các hoạt động trực tiếp được TẮT trong cài đặt hệ thống. Để bật các hoạt động trực tiếp, hãy đi tới ứng dụng Cài đặt -> iAPS -> BẬT Hoạt động trực tiếp.\n\n";
@@ -3218,3 +3218,29 @@ Enact a temp Basal or a temp target */
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "Để bật các cài đặt, hãy vào phần Cấu hình ứng dụng trong ứng dụng Cài đặt của iOS";
+
+/* Section header in CGM view */
+"Active CGM" = "Active CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pump/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Stop using the pump as CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Shared App Group Source";
+
+/* prefix for the shared app group application */
+"Reading from" = "Reading from";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Ngắt kết nối";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Read BG from an external CGM app using a shared app group.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Read from ";
