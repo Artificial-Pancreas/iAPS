@@ -1878,7 +1878,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekreftelseslyder";
 
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påminnelser er pipelyder fra Pod'en som kan brukes som bekreftelse for bestemte kommandoer når Pod'en ikke er satt i stille-modus.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påminnelsesvarsler er pipelyder fra Pod'en som kan brukes til å bekrefte valgte kommandoer når Pod'en ikke er i stillemodus.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Lagrer...";
@@ -1908,10 +1908,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Påminnelser vil høres for kommandoer du starter, slik som bolus, stopp bolus, pause, gjenoppta, osv. Når appen automatisk justerer insulintilførsel, lages det ingen lyd.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Du vil høre påminnelseslyder for kommandoer du starter, slik som bolus, avbryt bolus, pause, gjenoppta, lagre innstillinger, osv. Når appen automatisk justerer insulinlevering hører du ingen påminnelseslyder.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Påminnelser vil høres når appen automatisk justerer insulintilførsel og for kommandoer du starter.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Du vil høre påminnelseslyder når appen automatisk justerer insulinlevering, og for kommandoer du starter.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Utløpspåminnelse";
@@ -3217,3 +3217,29 @@ Enact a temp Basal or a temp target */
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+
+/* Section header in CGM view */
+"Active CGM" = "Active CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pump/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Stop using the pump as CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Shared App Group Source";
+
+/* prefix for the shared app group application */
+"Reading from" = "Reading from";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Disconnect";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Read BG from an external CGM app using a shared app group.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Read from ";
