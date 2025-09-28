@@ -29,7 +29,7 @@
 "Save Meal without bolus" = "Mentsd el az ételt bólusz nélkül";
 
 /* Predictions and Meal summary part of the Bolus View. */
-"Status" = "Állapot";
+"Status" = "Status";
 
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount több mint a Max Bólus beállítás! \nBiztos, hogy hozzá szeretnéd adni ";
@@ -143,7 +143,7 @@
 "Your entered amount was limited by your max Bolus setting of %d%@" = "A beadott értek limitálva lett a max Bólus beállítással, ami %d%@";
 
 /* Bolus View Continue Button */
-"Continue" = "Tovább";
+"Continue" = "Continue";
 
 /* Home title */
 "Home" = "Kezdőlap";
@@ -3217,3 +3217,29 @@ Enact a temp Basal or a temp target */
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+
+/* Section header in CGM view */
+"Active CGM" = "Active CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pump/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Stop using the pump as CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Shared App Group Source";
+
+/* prefix for the shared app group application */
+"Reading from" = "Reading from";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Disconnect";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Read BG from an external CGM app using a shared app group.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Read from ";
