@@ -19,6 +19,7 @@ Ready to explore iAPS? Here's how you can download and build the repository:
 ### Update the submodules in your local clone 
 
   * **Using Terminal:**
+  * 
     ```bash
     git submodule update --recursive --remote
     ```
@@ -26,6 +27,7 @@ Ready to explore iAPS? Here's how you can download and build the repository:
 ### Update the iaps project in your local clone 
 
   * **Using Terminal:**
+  * 
     ```bash
     git pull
     ```
