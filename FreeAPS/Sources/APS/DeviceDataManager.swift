@@ -86,6 +86,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var bloodGlucoseManager: BloodGlucoseManager!
     @Injected() private var bluetoothProvider: BluetoothStateManager!
+    @Injected() private var calibrationService: CalibrationService!
     @Injected() private var router: Router!
 
     @Injected() private var appCoordinator: AppCoordinator!
@@ -304,13 +305,23 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         switch readingResult {
         case let .newData(values):
             var sessionStart: Date?
+            var allowCalibrations: Bool
             if let cgmManager = cgmManager {
                 sessionStart = KnownPlugins.sessionStart(cgmManager: cgmManager)
+                allowCalibrations = KnownPlugins.allowCalibrations(for: cgmManager) && !calibrationService.calibrations.isEmpty
+            } else {
+                allowCalibrations = false
             }
 
             let bloodGlucose = values.map { newGlucoseSample -> BloodGlucose in
                 let quantity = newGlucoseSample.quantity
-                let value = Int(quantity.doubleValue(for: .milligramsPerDeciliter))
+                let mgdl = quantity.doubleValue(for: .milligramsPerDeciliter)
+                let uncalibrated = Int(mgdl)
+
+                let value = allowCalibrations ?
+                    Int(calibrationService.calibrate(value: mgdl)) :
+                    Int(mgdl)
+
                 let dateRoundedTo1Second = newGlucoseSample.date.roundedTo1Second
                 return BloodGlucose(
                     _id: UUID().uuidString,
@@ -319,6 +330,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                     date: Decimal(Int(dateRoundedTo1Second.timeIntervalSince1970 * 1000)),
                     dateString: dateRoundedTo1Second,
                     unfiltered: Decimal(value),
+                    uncalibrated: Decimal(uncalibrated),
                     filtered: nil,
                     noise: nil,
                     glucose: value,
