@@ -722,9 +722,15 @@ extension Home {
 
         private var isfView: some View {
             ZStack {
-                HStack {
-                    Image(systemName: "divide").font(.system(size: 16)).foregroundStyle(.teal)
-                    Text("\(state.data.suggestion?.sensitivityRatio ?? 1)").foregroundStyle(.primary)
+                HStack(spacing: 4) {
+                    Image(systemName: "divide")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.teal)
+
+                    Text("\(state.data.suggestion?.sensitivityRatio ?? 1)")
+                        .foregroundStyle(.primary)
+                        .lineLimit(1) // maximum 1 row
+                        .fixedSize(horizontal: true, vertical: false) // Prevent wrapping
                 }
                 .font(.timeSettingFont)
                 .background(TimeEllipse(characters: 10))
@@ -735,7 +741,8 @@ extension Home {
                         displayDynamicHistory.toggle()
                     }
                 }
-            }.offset(x: 130)
+            }
+            .offset(x: 130)
         }
 
         private var animateLoopView: Bool {
