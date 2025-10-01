@@ -39,7 +39,7 @@ extension NotificationsConfig {
         private func liveActivityFooterText() -> String {
             let footer = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)"
 
-            guard !systemLiveActivitySetting else {
+            guard systemLiveActivitySetting else {
                 return NSLocalizedString(
                     "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n",
                     comment: "footer"
