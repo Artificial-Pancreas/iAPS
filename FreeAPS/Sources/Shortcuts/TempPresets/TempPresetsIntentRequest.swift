@@ -8,7 +8,8 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
     }
 
     private func convert(tt: [TempTarget]) -> [tempPreset] {
-        tt.map { tempPreset.convert($0) }
+        let presets = tt + [TempTarget.cancel(at: Date())]
+        return presets.map { tempPreset.convert($0) }
     }
 
     func fetchAll() -> [tempPreset] {
@@ -68,17 +69,18 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
 
     func cancelTempTarget() throws {
         storage.storeTempTargets([TempTarget.cancel(at: Date())])
-        try coredataContext.performAndWait {
+        try coredataContext.perform {
             let saveToCoreData = TempTargets(context: self.coredataContext)
             saveToCoreData.active = false
-            saveToCoreData.date = Date()
-            try self.coredataContext.save()
 
             let setHBT = TempTargetsSlider(context: self.coredataContext)
             setHBT.enabled = false
-            setHBT.date = Date()
 
-            try self.coredataContext.save()
+            if self.coredataContext.hasChanges {
+                saveToCoreData.date = Date()
+                setHBT.date = Date()
+                try self.coredataContext.save()
+            }
         }
     }
 }

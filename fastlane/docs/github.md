@@ -22,18 +22,23 @@ To generate a new PAT:
 Follow these steps to fork the repository:
 
 1.  **Fork** `https://github.com/Artificial-Pancreas/iAPS` into your GitHub account.
-2.  In your newly forked iAPS repository, navigate to **Settings > Secrets and Variables > Actions**.
-3.  Add the following secrets by clicking **"New repository secret"** for each one. Enter the secret name and its corresponding value:
+2.  If you are using an organization, do this step at the organization level, e.g., username-org. If you are not using an organization, do this step at the repository level, e.g., username/iAPS:
+    * Go to Settings -> Secrets and variables -> Actions and make sure the Secrets tab is open. 
+3. For each of the following secrets, tap on "New organization secret" or "New repository secret", then add the name of the secret, along with the value you recorded for it:
     * `TEAMID`
     * `FASTLANE_KEY_ID`
     * `FASTLANE_ISSUER_ID`
     * `FASTLANE_KEY`
     * `GH_PAT` (This is the token you generated earlier)
     * `MATCH_PASSWORD` (Just create a new, strong password for this)
-4.  Under the **Variables** tab (also within Secrets and Variables), set the following two variables:
+4. If you are using an organization, do this step at the organization level, e.g., username-org. If you are not using an organization, do this step at the repository level, e.g., username/iAPS:
+    * Go to Settings -> Secrets and variables -> Actions and make sure the Variables tab is open
+4. Tap on "Create new organization variable" or "Create new repository variable", then add the name below and enter the value *true*. Unlike secrets these variables are visible and can be edited.
+    * `ENABLE_NUKE_CERTS`
+5.  Under the **Variables** tab, set the following two variables:
     * `APP_IDENTIFIER`: This defaults to `ru.artpancreas.#{TEAMID}.FreeAPS` if you don't set it.
     * `BUILD_GROUP`: This variable is typically left blank unless you're labeling a distribution or build shared by multiple users.
-
+      
 ---
 
 ### Keep Your Fork Up to Date

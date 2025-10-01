@@ -8,9 +8,9 @@ enum StateIntentError: Error {
 }
 
 struct StateiAPSResults: AppEntity {
-    static var defaultQuery = StateBGQuery()
+    static let defaultQuery = StateBGQuery()
 
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "iAPS State Result"
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "iAPS State Result"
 
     var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: "\(glucose)")
