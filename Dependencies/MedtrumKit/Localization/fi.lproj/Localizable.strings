@@ -1,0 +1,314 @@
+/* Generic loading text */
+"loading" = "lastaus";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Poista Pumppu";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Oletko varma, että haluat lopettaa Medtrum TouchCare Nano 200u/300u?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Poista pumppu";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Tällä hetkellä käytät syke tilaa. Tämä on tarpeen pitää %1$@ käynnissä taustalla. Tämä saattaa olla mielenkiintoista, jos CGM jo tarjoaa sykkeen. On suositeltavaa pitää tämä ominaisuus käytössä";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Tällä hetkellä et käytä sydämen syke tilaa. Sydämen syke tarvitaan pitämään %1$@ käynnissä taustalla. On suositeltavaa ottaa tämä ominaisuus käyttöön";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Kyllä, Poista syke tila käytöstä";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Kyllä, Ota syke käyttöön";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Vaihda sykkeen tilaa";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "Ei, pidä sellaisena kuin se on";
+
+/* Text for patch state */
+"Patch state" = "Erän tila";
+
+/* Text for last sync */
+"Last sync" = "Viimeisin synkronointi";
+
+/* Text for status */
+"Status" = "Tila";
+
+/* disconnect from patch */
+"Disconnect" = "Katkaise";
+
+/* reconnect to patch */
+"Reconnect" = "Yhdistä Uudelleen";
+
+/* sync pump */
+"Sync patch data" = "Synkronoi korjaustiedot";
+
+/* label for activate patch */
+"Activate patch" = "Aktivoi laastari";
+
+/* deactivate patch */
+"Deactivate Patch" = "Poista Paikkaus Käytöstä";
+
+/* Configuration section */
+"Configuration" = "Asetukset";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "Insuliinityyppi";
+
+/* Text for patch settings view */
+"Patch settings" = "Paikan asetukset";
+
+/* The title for patch/pump information */
+"Information" = "Tiedot";
+
+/* Text for pumpSN */
+"Pump base SN" = "Pumpun pohja SN";
+
+/* Text for model */
+"Pump base model" = "Pumpun perusmalli";
+
+/* Text for patchId */
+"Patch ID" = "Paikan Tunnus";
+
+/* Text for activatedAt */
+"Patch activated at" = "Erä aktivoitu";
+
+/* Text for expiresAt */
+"Patch expires at" = "Paikan voimassaolo päättyy";
+
+/* Text for battery voltageB */
+"Battery" = "Akku";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Edellisen Paikan Tiedot";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Deaktivoitu klo";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Jaa Medtrum laastari lokit";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Poista Pumppu";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Jäljellä Oleva Insuliini";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Insuliini\nKeskeytetään";
+
+/* Text shown when no patch active */
+"No active patch" = "Ei aktiivista laastaria";
+
+/* Text shown while patch is active */
+"Age:" = "Ikä:";
+
+/* Unit for singular day */
+"day" = "päivä";
+
+/* Unit for plural days */
+"days" = "päivää";
+
+/* Unit for singular hour */
+"hour" = "tunti";
+
+/* Unit for plural hours */
+"hours" = "tuntia";
+
+/* Unit for singular minute */
+"minute" = "minuutti";
+
+/* Unit for plural minutes */
+"minutes" = "minuuttia";
+
+/* Text shown when patch expired */
+"Patch expired" = "Paikka vanhentunut";
+
+/* Button for closing settings */
+"Done" = "Valmis";
+
+/* label for connected */
+"Connected" = "Yhdistetty";
+
+/* label for reconnecting */
+"Reconnecting..." = "Yhdistetään Uudelleen...";
+
+/* label for disconnected */
+"Disconnected" = "Yhteys Katkaistu";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Ajastettu Basaali";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Väliaikainen Basaali";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Insuliinin Toimitus";
+
+/* Continue */
+"Continue" = "Jatka";
+
+/* Title for insulin type */
+"Select insulin type" = "Valitse insuliinityyppi";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Valitse insuliinin tyyppi, jota aiot käyttää";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Insuliinin maksimi tuntimäärä";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Suurin päivittäinen insuliini";
+
+/* Label for alarm settings */
+"Alarm setting" = "Hälytyksen asetus";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Valo, väriset ja äänimerkki";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Vaalea ja värinä";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Vaalea ja äänimerkki";
+
+/* Label for alarm options: light */
+"Light-only" = "Vain valolle";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Värinä ja äänimerkki";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Vain Värinä";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Vain Äänimerkki";
+
+/* Label for alarm options: none */
+"Silence" = "Hiljaisuus";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Erän käyttöikä";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Käytä pidennettyä käyttöikää (jatka kunnes akku tyhjä)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Käytä normaalia käyttöikää (3d 8h)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Ilmoitus vanhentuneelle korjaukselle";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Kun napsautat painiketta, saat Biometricsin kehotuksen. Kun laastari on valmis, se poistetaan käytöstä ja sinua kehotetaan yhdistämään uusi laastar.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Todenna ja poista paikannus käytöstä";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Poista paikannus käytöstä";
+
+/* Label for serial number */
+"Serial number" = "Sarjanumero";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Varmista, että sarjanumero on oikein ennen kuin yhdistät sen laastariin.";
+
+/* Pump base settings header */
+"Pump base settings" = "Pumpun perusasetukset";
+
+/* save and continue */
+"Save and continue" = "Tallenna ja jatka";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Liitä pumpun tukikohta laastariin.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Täytä ruisku insuliinilla";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Laita ruisku laastariin ja vedä ulos 1 - 2 ilman välipalaa.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Täytä laastari insuliinilla. HUOMAUTUS: Aktivointia varten tarvitaan vähintään 70U.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "Paina neula-nappia ja aloita valmistelu uudelleen.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Älä kiinnitä laastaria vielä kehoon";
+
+/* label for prime start action */
+"Start priming" = "Aloita alustus";
+
+/* Priming header */
+"Patch priming" = "Paikan alustus";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Poista turvasuojus laastarin kohdalta.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Kiinnitä pumppu kehoon.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Paina neulan nappia lisätäksesi neulaa. Napsauta \"Aktivoi\" saadaksesi aktivointiprosessin valmiiksi.";
+
+/* Patch activation header */
+"Patch activation" = "Paikan aktivointi";
+
+/* welcome header*/
+"Welcome" = "Tervetuloa";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Aloitat asettamalla insuliinityypin ja laastarin perusasetukset ennen kuin otat laastarin käyttöön.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Palaa takaisin pumppupohjaan";
+
+/* label for go to prime patch */
+"Go back to priming" = "Palaa takaisin pohjustukseen";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "Laastarin voimassaolo päättyy pian!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "Laastariasi on jäljellä %i tuntia";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Insuliini on keskeytetty!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Laastarisi on saavuttanut päivittäisen enimmäismääränsä!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Laastarisi on saavuttanut tuntikohtaisen maksimiarvonsa!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Vaihda laastari nyt!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Laastarisi on havainnut poikkeaman!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Laastarisi on vikatilassa!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Laastarisi on insuliinin loppu!";
+
+/* Force remove */
+"Force remove" = "Poista väkisin";
+
+/* title force remove */
+"Are you sure?" = "Oletko varma?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "On suositeltavaa poistaa ensin käytöstä";
+
+/* confirm force remove */
+"Confirm" = "Vahvista";
+
+/* cancel force remove */
+"Cancel" = "Peruuta";

@@ -1,0 +1,314 @@
+/* Generic loading text */
+"loading" = "yükleme";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Pompayı Çıkarın";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Medtrum TouchCare Nano 200u/300u kullanmayı bırakmak istediğinizden emin misiniz?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Pompayı sil";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Şu anda bir kalp atışı modu kullanıyorsunuz. Bu, %1$@ adresini arka planda çalışır durumda tutmak için gereklidir. CGM'niz zaten bir kalp atışı sağlıyorsa bu ilginç olabilir. Bu özelliğin etkin tutulması tavsiye edilir";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Şu anda bir kalp atışı modu KULLANMIYORSUNUZ. %1$@ 'un arka planda çalışmaya devam etmesi için bir kalp atışı gereklidir. Bu özelliği etkinleştirmeye devam etmeniz önerilir";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Evet, Kalp atışı modunu devre dışı bırak";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Evet, Kalp atışı modunu etkinleştir";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Kalp atışı modunu değiştir";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "Hayır, olduğu gibi kalsın";
+
+/* Text for patch state */
+"Patch state" = "Yama durumu";
+
+/* Text for last sync */
+"Last sync" = "Son senkronizasyon";
+
+/* Text for status */
+"Status" = "Durum";
+
+/* disconnect from patch */
+"Disconnect" = "Bağlantıyı Kes";
+
+/* reconnect to patch */
+"Reconnect" = "Yeniden Bağlan";
+
+/* sync pump */
+"Sync patch data" = "Yama verilerini senkronize et";
+
+/* label for activate patch */
+"Activate patch" = "Yamayı etkinleştir";
+
+/* deactivate patch */
+"Deactivate Patch" = "Yamayı Devre Dışı Bırak";
+
+/* Configuration section */
+"Configuration" = "Konfigürasyon";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "İnsülin Tipi";
+
+/* Text for patch settings view */
+"Patch settings" = "Yama ayarları";
+
+/* The title for patch/pump information */
+"Information" = "Bilgi";
+
+/* Text for pumpSN */
+"Pump base SN" = "Pompa tabanı SN";
+
+/* Text for model */
+"Pump base model" = "Pompa temel modeli";
+
+/* Text for patchId */
+"Patch ID" = "Yama Kimliği";
+
+/* Text for activatedAt */
+"Patch activated at" = "Yama şu adreste etkinleştirildi";
+
+/* Text for expiresAt */
+"Patch expires at" = "Yama şu tarihte sona eriyor";
+
+/* Text for battery voltageB */
+"Battery" = "Akü";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Önceki Yama Ayrıntıları";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Şu adreste devre dışı bırakıldı";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Medtrum yama günlüklerini paylaşın";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Pompayı Sil";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Kalan İnsülin";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "İnsülin\nAskıya Alındı";
+
+/* Text shown when no patch active */
+"No active patch" = "Aktif yama yok";
+
+/* Text shown while patch is active */
+"Age:" = "Yaş:";
+
+/* Unit for singular day */
+"day" = "gün";
+
+/* Unit for plural days */
+"days" = "günler";
+
+/* Unit for singular hour */
+"hour" = "saat";
+
+/* Unit for plural hours */
+"hours" = "saatler";
+
+/* Unit for singular minute */
+"minute" = "dakika";
+
+/* Unit for plural minutes */
+"minutes" = "dakika";
+
+/* Text shown when patch expired */
+"Patch expired" = "Yama süresi doldu";
+
+/* Button for closing settings */
+"Done" = "Bitti";
+
+/* label for connected */
+"Connected" = "Bağlı";
+
+/* label for reconnecting */
+"Reconnecting..." = "Yeniden bağlanıyor...";
+
+/* label for disconnected */
+"Disconnected" = "Bağlantı kesildi";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Planlanmış Bazal";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Sıcaklık Bazal";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "İnsülin Dağıtımı";
+
+/* Continue */
+"Continue" = "Devam et";
+
+/* Title for insulin type */
+"Select insulin type" = "İnsülin tipini seçin";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Kullanacağınız insülin türünü seçin";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Maksimum saatlik insülin";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Maksimum günlük insülin";
+
+/* Label for alarm settings */
+"Alarm setting" = "Alarm ayarı";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Işık, titreşim ve bip sesi";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Işık ve titreşim";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Işık ve bip sesi";
+
+/* Label for alarm options: light */
+"Light-only" = "Yalnızca ışık";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Titreşim ve bip sesi";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Yalnızca titreşim";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Yalnızca bip sesi";
+
+/* Label for alarm options: none */
+"Silence" = "Sessizlik";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Yama ömrü";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Uzatılmış kullanım ömrü kullanın (pil bitene kadar devam edin)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Normal kullanım ömrünü kullanın (3d 8h)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Expirate yaması için bildirim";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Düğmeye tıkladığınızda bir Biyometri istemi alacaksınız. Tamamlandığında, yama devre dışı bırakılacak ve yeni bir yama eşleştirmeniz istenecektir.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Kimlik doğrulama ve yamayı devre dışı bırakma";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Yamayı devre dışı bırak";
+
+/* Label for serial number */
+"Serial number" = "Seri numarası";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Eke bağlamadan önce Seri Numarasının doğru olduğundan emin olun.";
+
+/* Pump base settings header */
+"Pump base settings" = "Pompa tabanı ayarları";
+
+/* save and continue */
+"Save and continue" = "Kaydet ve devam et";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Pompa tabanınızı yamaya bağlayın.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Şırıngayı insülin ile doldurun";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Şırıngayı banda yerleştirin ve 1 ila 2 çizgi hava çekin.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Bandı insülin ile doldurun. NOT: Aktivasyon için minimum 70U gereklidir.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "İğne düğmesine basın ve hazırlama işlemini başlatın.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Yamayı henüz gövdeye takmayın";
+
+/* label for prime start action */
+"Start priming" = "Hazırlamaya başlayın";
+
+/* Priming header */
+"Patch priming" = "Yama hazırlama";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Güvenlik kapağını yamadan çıkarın.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Pompayı gövdeye takın.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "İğneyi yerleştirmek için iğne düğmesine basın. Etkinleştirme işlemini tamamlamak için \"Etkinleştir\" üzerine tıklayın.";
+
+/* Patch activation header */
+"Patch activation" = "Yama aktivasyonu";
+
+/* welcome header*/
+"Welcome" = "Hoş geldiniz";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Yamanızı etkinleştirmeden önce insülin tipinizi ve temel yama ayarlarınızı yaparak başlayacaksınız.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Pompa tabanına geri dönün";
+
+/* label for go to prime patch */
+"Go back to priming" = "Hazırlamaya geri dönün";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "Yamanızın süresi yakında dolacak!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "Yamanızın %i saati kaldı";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "İnsülin askıya alındı!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Yamanız günlük maksimum değerine ulaştı!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Yamanız saatlik maksimum değerine ulaştı!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Yamanızı şimdi değiştirin!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Yamanız bir tıkanıklık tespit etti!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Yamanız Hata durumunda!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Yamanda insülin kalmamış!";
+
+/* Force remove */
+"Force remove" = "Kaldırmaya zorla";
+
+/* title force remove */
+"Are you sure?" = "Emin misin?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Önce devre dışı bırakılması önerilir";
+
+/* confirm force remove */
+"Confirm" = "Onaylayın";
+
+/* cancel force remove */
+"Cancel" = "İptal";

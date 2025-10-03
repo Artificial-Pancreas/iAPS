@@ -1,0 +1,314 @@
+/* Generic loading text */
+"loading" = "caricamento";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Rimuovi Pompa";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Sei sicuro di voler smettere di usare Medtrum TouchCare Nano 200u/300u?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Elimina micro";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Attualmente, stai usando una modalità battito cardiaco. Questo è necessario per mantenere %1$@ in esecuzione in background. Questo potrebbe essere interessante se il vostro CGM fornisce già un battito cardiaco. Si consiglia di mantenere questa funzione abilitata";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Attualmente, NON stai usando una modalità battito cardiaco. È necessario un battito cardiaco per mantenere %1$@ in esecuzione sullo sfondo. Si consiglia di mantenere attiva questa funzione";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Sì, Disabilita la modalità battito cardiaco";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Sì, Abilita la modalità battito cardiaco";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Attiva/Disattiva modalità battito cardiaco";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "No, tieni come è";
+
+/* Text for patch state */
+"Patch state" = "Stato patch";
+
+/* Text for last sync */
+"Last sync" = "Ultima sincronizzazione";
+
+/* Text for status */
+"Status" = "Stato";
+
+/* disconnect from patch */
+"Disconnect" = "Disconnetti";
+
+/* reconnect to patch */
+"Reconnect" = "Riconnetti";
+
+/* sync pump */
+"Sync patch data" = "Sincronizza dati patch";
+
+/* label for activate patch */
+"Activate patch" = "Attiva patch";
+
+/* deactivate patch */
+"Deactivate Patch" = "Disattiva Patch";
+
+/* Configuration section */
+"Configuration" = "Configurazione";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "Tipo Di Insulina";
+
+/* Text for patch settings view */
+"Patch settings" = "Impostazioni patch";
+
+/* The title for patch/pump information */
+"Information" = "Informazioni";
+
+/* Text for pumpSN */
+"Pump base SN" = "Base microinfusore SN";
+
+/* Text for model */
+"Pump base model" = "Modello base pompa";
+
+/* Text for patchId */
+"Patch ID" = "ID Patch";
+
+/* Text for activatedAt */
+"Patch activated at" = "Patch attivato alle";
+
+/* Text for expiresAt */
+"Patch expires at" = "La patch scade alle";
+
+/* Text for battery voltageB */
+"Battery" = "Batteria";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Dettagli Patch Precedente";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Disattivato il";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Condividi i log delle patch Medtrum";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Elimina Pompa";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Insulina Rimanente";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Insulina\nSospesa";
+
+/* Text shown when no patch active */
+"No active patch" = "Nessuna patch attiva";
+
+/* Text shown while patch is active */
+"Age:" = "Età:";
+
+/* Unit for singular day */
+"day" = "giorno";
+
+/* Unit for plural days */
+"days" = "giorni";
+
+/* Unit for singular hour */
+"hour" = "ora";
+
+/* Unit for plural hours */
+"hours" = "ore";
+
+/* Unit for singular minute */
+"minute" = "minuto";
+
+/* Unit for plural minutes */
+"minutes" = "minuti";
+
+/* Text shown when patch expired */
+"Patch expired" = "Patch scaduta";
+
+/* Button for closing settings */
+"Done" = "Fatto";
+
+/* label for connected */
+"Connected" = "Connesso";
+
+/* label for reconnecting */
+"Reconnecting..." = "Riconnessione...";
+
+/* label for disconnected */
+"Disconnected" = "Disconnesso";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Base Pianificata";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Basale Temporanea";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Consegna Di Insulina";
+
+/* Continue */
+"Continue" = "Continua";
+
+/* Title for insulin type */
+"Select insulin type" = "Seleziona tipo di insulina";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Seleziona il tipo di insulina che utilizzerai";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Max insulina oraria";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Insulina massima giornaliera";
+
+/* Label for alarm settings */
+"Alarm setting" = "Impostazioni allarme";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Luce, vibrare e, beep";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Luce e vibrazione";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Luce e segnale acustico";
+
+/* Label for alarm options: light */
+"Light-only" = "Sola Luce";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Vibra e segnale acustico";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Solo Vibrazione";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Unicamente Beep";
+
+/* Label for alarm options: none */
+"Silence" = "Silenzio";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Durata patch";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Usa durata prolungata (continua fino al vuoto della batteria)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Usa vita normale (3d 8h)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Notifica per la patch di scadenza";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Quando si fa clic sul pulsante, si otterrà un prompt Biometrica. Una volta completato, il cerotto sarà disattivato e le verrà chiesto di abbinare un nuovo cerotto.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Autenticazione e disattivazione patch";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Disattiva patch";
+
+/* Label for serial number */
+"Serial number" = "Numero d’ordine";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Assicurarsi che il Numero di serie sia corretto prima di collegarlo al cerotto.";
+
+/* Pump base settings header */
+"Pump base settings" = "Impostazioni base micro";
+
+/* save and continue */
+"Save and continue" = "Salva e continua";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Collega la base della pompa al cerotto.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Riempire la siringa con insulina";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Posizionare la siringa nel cerotto e tirare fuori da 1 a 2 trattini d’aria.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Riempire il cerotto con insulina. NOTA: per l’attivazione è richiesto un minimo di 70U.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "Premere il pulsante dell’ago e avviare il processo di innescatura.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Non collegare ancora il cerotto al corpo";
+
+/* label for prime start action */
+"Start priming" = "Inizia ad innescare";
+
+/* Priming header */
+"Patch priming" = "Blocco patch";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Rimuovere il coperchio di sicurezza dal cerotto.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Collegare la pompa al corpo.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Premere il pulsante dell’ago per inserire l’ago. Fare clic su \"Attiva\" per completare il processo di attivazione.";
+
+/* Patch activation header */
+"Patch activation" = "Attivazione patch";
+
+/* welcome header*/
+"Welcome" = "Benvenuto";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Inizierà impostando il tipo di insulina e le impostazioni base del cerotto prima di attivare il cerotto.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Tornare alla base della pompa";
+
+/* label for go to prime patch */
+"Go back to priming" = "Tornare al priming";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "La tua patch scadrà presto!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "La vostra patch ha %i ore rimanenti";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "L'insulina è stata sospesa!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Il cerotto ha raggiunto il suo massimo giornaliero!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "La patch ha raggiunto il suo massimo orario!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Sostituite subito la vostra patch!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "La patch ha rilevato un'occlusione!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "La patch è in stato di errore!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Il vostro cerotto ha finito l'insulina!";
+
+/* Force remove */
+"Force remove" = "Rimuovere con forza";
+
+/* title force remove */
+"Are you sure?" = "Sei sicuro?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Si consiglia di disattivare prima";
+
+/* confirm force remove */
+"Confirm" = "Confermare";
+
+/* cancel force remove */
+"Cancel" = "Annullamento";
