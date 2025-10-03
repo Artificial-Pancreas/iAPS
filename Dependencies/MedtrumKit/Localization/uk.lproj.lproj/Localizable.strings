@@ -1,0 +1,314 @@
+/* Generic loading text */
+"loading" = "завантаження";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Зніміть Pod";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Ви впевнені, що хочете припинити використання Medtrum TouchCare Nano 200u/300u?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Видалити помпу";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Наразі ви використовуєте режим серцебиття. Це необхідно для того, щоб %1$@ працював у фоновому режимі. Це може бути цікаво, якщо ваш CGM вже забезпечує серцебиття. Рекомендується залишити цю функцію ввімкненою.";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Наразі ви НЕ використовуєте режим серцевого ритму. Серцевий ритм потрібен для того, щоб %1$@ працював у фоновому режимі. Рекомендується залишити цю функцію ввімкненою.";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Так, Вимкнути режим серцебиття";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Так, Увімкнути режим серцевого ритму";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Перемикання режиму серцебиття";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "Ні, залишити як є";
+
+/* Text for patch state */
+"Patch state" = "Стан Патча";
+
+/* Text for last sync */
+"Last sync" = "Остання синхронізація";
+
+/* Text for status */
+"Status" = "Статус";
+
+/* disconnect from patch */
+"Disconnect" = "Роз'єднати";
+
+/* reconnect to patch */
+"Reconnect" = "Перез'єднати";
+
+/* sync pump */
+"Sync patch data" = "Синхронізація даних Патчів";
+
+/* label for activate patch */
+"Activate patch" = "Активувати Патч";
+
+/* deactivate patch */
+"Deactivate Patch" = "Деактивувати Патч";
+
+/* Configuration section */
+"Configuration" = "Налаштування";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "Тип Інсуліну";
+
+/* Text for patch settings view */
+"Patch settings" = "Налаштування Патчів";
+
+/* The title for patch/pump information */
+"Information" = "Інформація";
+
+/* Text for pumpSN */
+"Pump base SN" = "База помпи SN";
+
+/* Text for model */
+"Pump base model" = "Базова модель помпи";
+
+/* Text for patchId */
+"Patch ID" = "ID Патчу";
+
+/* Text for activatedAt */
+"Patch activated at" = "Патч активовано о";
+
+/* Text for expiresAt */
+"Patch expires at" = "Патч закінчується о ";
+
+/* Text for battery voltageB */
+"Battery" = "Акумулятор";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Деталі попереднього Патча";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Деактивовано о";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Поділитися журналами Патчів Medtrum";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Видалити помпу";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Залишок Інсуліну";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Інсулін\nПризупинено";
+
+/* Text shown when no patch active */
+"No active patch" = "Немає активного Патчу";
+
+/* Text shown while patch is active */
+"Age:" = "Вік:";
+
+/* Unit for singular day */
+"day" = "день";
+
+/* Unit for plural days */
+"days" = "дні";
+
+/* Unit for singular hour */
+"hour" = "годин";
+
+/* Unit for plural hours */
+"hours" = "годин";
+
+/* Unit for singular minute */
+"minute" = "хвилин";
+
+/* Unit for plural minutes */
+"minutes" = "хвилин";
+
+/* Text shown when patch expired */
+"Patch expired" = "Термін дії Патча закінчився";
+
+/* Button for closing settings */
+"Done" = "Готово";
+
+/* label for connected */
+"Connected" = "Під'єднаний";
+
+/* label for reconnecting */
+"Reconnecting..." = "Повторне підключення...";
+
+/* label for disconnected */
+"Disconnected" = "Від’єднано";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Запланований Базал";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Тимчасовий  Базал";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Подання Інсуліну";
+
+/* Continue */
+"Continue" = "Продовжити";
+
+/* Title for insulin type */
+"Select insulin type" = "Виберіть тип Інсуліну";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Виберіть тип Інсуліну, який ви використовуватимете";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Максимальний погодинний рівень Інсуліну";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Максимальна добова норма Інсуліну";
+
+/* Label for alarm settings */
+"Alarm setting" = "Налаштування Будильника";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Світло, вібрація та звуковий сигнал";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Світло та вібрація";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Світло та звуковий сигнал";
+
+/* Label for alarm options: light */
+"Light-only" = "Тільки світло";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Вібрація та звуковий сигнал";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Тільки вібрація";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Тільки звуковий сигнал";
+
+/* Label for alarm options: none */
+"Silence" = "Тиша";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Термін служби Патча";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Використовуйте збільшений термін служби (продовжуйте, поки батарея не розрядиться)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Використовувати звичайний термін служби (3 дні 8 годин)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Повідомлення про закінчення терміну дії Патча";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Після натискання кнопки ви отримаєте запит на біометричні дані. Після завершення Патч буде деактивовано, і вам буде запропоновано підключити новий Патч.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Автентифікація та деактивація Патча";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Деактивувати Патч";
+
+/* Label for serial number */
+"Serial number" = "Серійний номер";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Перед підключенням до Патча переконайтеся, що Серійний номер правильний.";
+
+/* Pump base settings header */
+"Pump base settings" = "Налаштування бази помпи";
+
+/* save and continue */
+"Save and continue" = "Зберегти та продовжити";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Підключіть базу помпи до Патчу.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Наповніть шприц Інсуліном";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Вставте шприц у Патч і витягніть 1-2 краплі повітря.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Заповніть Патч Інсуліном. ПРИМІТКА. Для активації потрібно щонайменше 70 одиниць.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "Натисніть кнопку голки та розпочніть процес заправки.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Поки що не прикріплюйте Патч до тіла";
+
+/* label for prime start action */
+"Start priming" = "Почати праймінг";
+
+/* Priming header */
+"Patch priming" = "Патч-прайм";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Зніміть захисну кришку з Патчу.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Прикріпіть помпу до тіла.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Натисніть кнопку голки, щоб ввести голку. Натисніть кнопку «Активувати», щоб завершити процес активації.";
+
+/* Patch activation header */
+"Patch activation" = "Активація Патча";
+
+/* welcome header*/
+"Welcome" = "Ласкаво просимо";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Ви почнете з налаштування типу інсуліну та основних параметрів Патчу перед його активацією.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Поверніться до бази помпи";
+
+/* label for go to prime patch */
+"Go back to priming" = "На початок";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "Термін дії вашого Патча скоро закінчиться!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "Термін дії вашо Патчу закінчеться через %i годин";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "подачу Інсуліну призупинено!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Ваш патч досяг свого денного максимуму!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Ваш патч досяг свого годинного максимуму!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Замініть патч зараз!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Ваш патч виявив оклюзію!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Ваш патч у стані «Несправність»!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "У вашому патчи закінчився інсулін!";
+
+/* Force remove */
+"Force remove" = "Примусове видалення";
+
+/* title force remove */
+"Are you sure?" = "Ви впевнені?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Рекомендується спочатку деактивувати";
+
+/* confirm force remove */
+"Confirm" = "Підтвердити";
+
+/* cancel force remove */
+"Cancel" = "Відмінити";

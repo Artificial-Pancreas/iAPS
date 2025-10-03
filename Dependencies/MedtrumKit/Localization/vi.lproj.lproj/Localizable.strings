@@ -1,0 +1,315 @@
+/* Generic loading text */
+"loading" = "đang tải";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Thay bơm";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Bạn có chắc chắn muốn ngừng sử dụng Medtrum TouchCare Nano 200u/300u không?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Xóa bơm";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "Hiện tại, bạn đang sử dụng chế độ nhịp tim (heartbeat mode). Chế độ này cần thiết để giữ cho %1$@ tiếp tục chạy trong nền. Điều này có thể hữu ích nếu CGM của bạn đã cung cấp nhịp tim. Khuyến nghị bạn nên giữ tính năng này được bật";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "Hiện tại, bạn không sử dụng chế độ nhịp tim (heartbeat). Chế độ nhịp tim là cần thiết để giữ cho %1$@ tiếp tục chạy trong nền. Khuyến nghị bạn nên bật tính năng này";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Đồng ý, Tắt chế độ nhịp tim";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Đồng ý, Bật chế độ nhịp tim";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Chuyển đổi chế độ nhịp tim";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "Không, giữ nguyên như vậy";
+
+/* Text for patch state */
+"Patch state" = "Trạng thái Patch";
+
+/* Text for last sync */
+"Last sync" = "Lần đồng bộ gần đây nhất";
+
+/* Text for status */
+"Status" = "Tình trạng";
+
+/* disconnect from patch */
+"Disconnect" = "Ngắt kết nối";
+
+/* reconnect to patch */
+"Reconnect" = "Kết nối lại";
+
+/* sync pump */
+"Sync patch data" = "Đồng bộ dữ liệu Patch";
+
+/* label for activate patch */
+"Activate patch" = "Kích hoạt Patch";
+
+/* deactivate patch */
+"Deactivate Patch" = "Huỷ kích hoạt Patch";
+
+/* Configuration section */
+"Configuration" = "Cấu hình";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "Loại Insulin";
+
+/* Text for patch settings view */
+"Patch settings" = "Các cài đặt Pump-Patch";
+
+/* The title for patch/pump information */
+"Information" = "Thông tin";
+
+/* Text for pumpSN */
+"Pump base SN" = "Số sê-ri đế bơm";
+
+/* Text for model */
+"Pump base model" = "Model đế bơm";
+
+/* Text for patchId */
+"Patch ID" = "Patch ID";
+
+/* Text for activatedAt */
+"Patch activated at" = "Đã kích hoạt Patch lúc";
+
+/* Text for expiresAt */
+"Patch expires at" = "Patch hết hạn lúc";
+
+/* Text for battery voltageB */
+"Battery" = "Pin";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Thông tin của Patch trước đó";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Đã hủy kích hoạt lúc";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Chia sẻ nhật ký Medtrum Patch";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Xóa bơm";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Insulin còn lại";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Insulin\n Đã tạm ngưng";
+
+/* Text shown when no patch active */
+"No active patch" = "Không có Patch hoạt động";
+
+/* Text shown while patch is active */
+"Age:" = "Age:";
+
+/* Unit for singular day */
+"day" = "ngày";
+
+/* Unit for plural days */
+"days" = "days";
+
+/* Unit for singular hour */
+"hour" = "hours";
+
+/* Unit for plural hours */
+"hours" = "hours";
+
+/* Unit for singular minute */
+"minute" = "minute";
+
+/* Unit for plural minutes */
+"minutes" = "phút";
+
+/* Text shown when patch expired */
+"Patch expired" = "Patch đã hết hạn";
+
+/* Button for closing settings */
+"Done" = "Xong";
+
+/* label for connected */
+"Connected" = "Đã kết nối";
+
+/* label for reconnecting */
+"Reconnecting..." = "Đang kết nối lại...";
+
+/* label for disconnected */
+"Disconnected" = "Đã ngắt kết nối";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Đã lên chương trình cho liều Basal";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Temp Basal";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Khối lượng tiêm insulin";
+
+/* Continue */
+"Continue" = "Tiếp tục";
+
+/* Title for insulin type */
+"Select insulin type" = "Chọn loại insulin";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Chọn loại insulin mà bạn sẽ sử dụng";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Lượng insulin tối đa mỗi giờ";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Lượng insulin tối đa mỗi ngày";
+
+/* Label for alarm settings */
+"Alarm setting" = "Cài đặt cảnh báo";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Đèn, rung và âm thanh";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Đèn và rung";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Đèn và âm thanh";
+
+/* Label for alarm options: light */
+"Light-only" = "Chỉ đèn";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Rung và âm thanh";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Chỉ rung";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Chỉ âm thanh";
+
+/* Label for alarm options: none */
+"Silence" = "Im lặng";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Thời gian sử dụng Patch";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Sử dụng tối đa thời gian hoạt động (tiếp tục cho đến khi hết pin)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Sử dụng thời gian tiêu chuẩn (3 ngày 8 giờ)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Cảnh báo Patch sắp hết hạn";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Khi nhấn vào nút, bạn sẽ được yêu cầu xác thực sinh trắc học. Sau khi hoàn tất, Patch sẽ được hủy kích hoạt và bạn sẽ được nhắc ghép nối một Patch mới.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Xác thực & hủy kích hoạt Patch";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Huỷ kích hoatj Patch";
+
+/* Label for serial number */
+"Serial number" = "Số sê-ri";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Đảm bảo rằng Số sê-ri là chính xác trước khi kết nối với Patch.";
+
+/* Pump base settings header */
+"Pump base settings" = "Cài đặt đế Patch";
+
+/* save and continue */
+"Save and continue" = "Lưu và tiếp tục";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Kết nối đế bơm với miếng bơm.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Bơm insulin vào ống tiêm";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Đặt xi lanh vào Patch và rút ra khoảng 1–2 vạch khí.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Bơm insulin vào Patch.
+LƯU Ý: Cần tối thiểu 70 đơn vị (70U) để kích hoạt.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "Nhấn nút kim và bắt đầu quá trình mồi insulin.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Chưa gắn Patch lên cơ thể";
+
+/* label for prime start action */
+"Start priming" = "Bắt đầu mồi insulin";
+
+/* Priming header */
+"Patch priming" = "Đang mồi Patch";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Tháo nắp an toàn khỏi Patch.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Gắn bơm lên cơ thể.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Nhấn nút kim để đưa kim vào. Nhấn \"Kích hoạt\" để hoàn tất quá trình kích hoạt.";
+
+/* Patch activation header */
+"Patch activation" = "Kích hoạt Patch";
+
+/* welcome header*/
+"Welcome" = "Chào mừng";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Bạn sẽ bắt đầu bằng cách thiết lập loại insulin và các cài đặt cơ bản của patch trước khi kích hoạt patch.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Quay lại phần đế bơm";
+
+/* label for go to prime patch */
+"Go back to priming" = "Quay lại bước đẩy khí";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "Patch-Pump của bạn sắp hết hạn!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "Patch của bạn còn lại %i giờ sử dụng";
+
+/* Title insulin suspended notification */
+"Insulin has been suspended!" = "Insulin đã ngưng!";
+
+/* Body daily max notification */
+"Your patch has reached its daily maximum!" = "Miếng bơm của bạn đã đạt giới hạn tối đa trong ngày!";
+
+/* Body hourly max notification */
+"Your patch has reached its hourly maximum!" = "Miếng bơm của bạn đã đạt giới hạn tối đa theo giờ!";
+
+/* Title replace patch notification */
+"Replace your patch now!" = "Hãy thay miếng bơm ngay bây giờ!";
+
+/* Body occlussion notification */
+"Your patch has detected an occlussion!" = "Phát hiện tắc nghẽn trong miếng bơm!";
+
+/* Body fault notification */
+"Your patch is in Fault state!" = "Miếng bơm lỗi!";
+
+/* Body reservoir empty notification */
+"Your patch is out of insulin!" = "Miếng bơm hết insulin!";
+
+/* Force remove */
+"Force remove" = "Bắt buộc gỡ bỏ";
+
+/* title force remove */
+"Are you sure?" = "Bạn có chắc chắn không?";
+
+/* body force remove */
+"It is recommended to deactivate first" = "Khuyến nghị nên hủy kích hoạt trước";
+
+/* confirm force remove */
+"Confirm" = "Xác nhận";
+
+/* cancel force remove */
+"Cancel" = "Hủy bỏ";

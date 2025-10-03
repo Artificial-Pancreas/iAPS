@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "press_needle_kr.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -61,6 +61,7 @@ public struct MockPumpManagerState: Equatable {
             }
         }
         
+        
         var supportedBasalRates: [Double]? {
             switch self {
             case .omnipod:
