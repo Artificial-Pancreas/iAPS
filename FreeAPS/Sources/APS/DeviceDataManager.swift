@@ -874,7 +874,6 @@ protocol PumpTimeZoneObserver {
 }
 
 extension BaseDeviceDataManager {
-    // TODO: [loopkit] should call this when app goes active
     func didBecomeActive() {
         updatePumpManagerBLEHeartbeatPreference()
     }
