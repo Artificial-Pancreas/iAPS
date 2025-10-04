@@ -51,6 +51,9 @@ import Swinject
         }
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")
+            if scenePhase == .active {
+                appServices.deviceManager.didBecomeActive()
+            }
         }
     }
 
