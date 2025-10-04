@@ -69,10 +69,8 @@ struct ListStateView: View {
             }
             Spacer()
             HStack {
-                Text(
-                    state.glucose
-                )
-                .font(.title).fontWeight(.bold).foregroundColor(.loopGreen)
+                Text(state.glucose)
+                    .font(.title).fontWeight(.bold).foregroundStyle(Color(.loopGreen))
                 image
             }
             HStack {
@@ -83,13 +81,9 @@ struct ListStateView: View {
                         text + " " +
                             NSLocalizedString("min", comment: "Short form for minutes") + " "
                     )
-                )
-                .font(.caption2).foregroundColor(.secondary)
+                ).font(.caption2).foregroundColor(.secondary)
 
-                Text(
-                    state.delta
-                )
-                .font(.caption2).foregroundColor(.secondary)
+                Text(state.delta).font(.caption2).foregroundColor(.secondary)
             }
             Spacer()
         }

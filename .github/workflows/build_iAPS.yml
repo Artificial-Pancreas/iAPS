@@ -39,16 +39,16 @@ jobs:
       - name: Show Auto Build Status
         run: |
           echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
-
-  validate:
-    name: Validate
+    # Checks if Distribution certificate is present and valid, optionally nukes and
+    # creates new certs if the repository variable ENABLE_NUKE_CERTS == 'true'
+  check_certs: 
     needs: auto_build_check
+    name: Check certificates
     if: needs.auto_build_check.outputs.AUTO_BUILD_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
-    uses: ./.github/workflows/validate_secrets.yml
+    uses: ./.github/workflows/create_certs.yml
     secrets: inherit
-
   check_latest_from_upstream:
-    needs: [validate]
+    needs: [check_certs]
     runs-on: ubuntu-latest
     name: Check upstream
     outputs: 
@@ -67,7 +67,7 @@ jobs:
   # Builds iAPS
   build:
     name: Build
-    needs: [validate,check_latest_from_upstream]
+    needs: [check_certs,check_latest_from_upstream]
     runs-on: macos-15
     permissions:
       contents: write

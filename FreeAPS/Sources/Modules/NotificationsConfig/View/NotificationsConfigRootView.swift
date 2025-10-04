@@ -42,18 +42,15 @@ extension NotificationsConfig {
         }
 
         private func liveActivityFooterText() -> String {
-            var footer =
-                "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)"
+            let footer = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)"
 
-            if !systemLiveActivitySetting {
-                footer =
-                    NSLocalizedString(
-                        "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n",
-                        comment: "footer"
-                    ) + NSLocalizedString(footer, comment: "Footer")
+            guard systemLiveActivitySetting else {
+                return NSLocalizedString(
+                    "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n",
+                    comment: "footer"
+                ) + NSLocalizedString(footer, comment: "Footer")
             }
-
-            return footer
+            return NSLocalizedString(footer, comment: "Footer")
         }
 
         private func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
