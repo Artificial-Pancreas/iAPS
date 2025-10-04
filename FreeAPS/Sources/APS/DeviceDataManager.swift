@@ -111,8 +111,6 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     let errorSubject = PassthroughSubject<Error, Never>()
     let manualTempBasal = PassthroughSubject<Bool, Never>()
 
-    private var seenCGMDeviceId: String?
-
     @Published var cgmHasValidSensorSession: Bool = false
 
     var hasBLEHeartbeat: Bool {
@@ -335,9 +333,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                     noise: nil,
                     glucose: value,
                     type: "sgv",
-//                    activationDate: activationDate,
                     sessionStartDate: sessionStart,
-//                    transmitterID: transmitterID // TODO: do we need this?
                 )
             }
 
@@ -776,8 +772,14 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: false)
     }
 
-    func cgmManager(_: LoopKit.CGMManager, hasNew _: [PersistedCgmEvent]) {
-        // TODO: [loopkit] implement this?
+    func cgmManager(_: LoopKit.CGMManager, hasNew events: [PersistedCgmEvent]) {
+        for event in events {
+            if event.type == .sensorStart {
+                // libre manager emits sensorStart when it detects a new sensor
+                // the calibration service subscribes to this event to clear calibrations
+                UserNotifications.NotificationCenter.default.post(name: .newSensorDetected, object: nil)
+            }
+        }
     }
 
     func cgmManagerDidUpdateState(_ manager: CGMManager) {
@@ -950,14 +952,6 @@ extension BaseDeviceDataManager: PersistedAlertStore {
 private extension BaseDeviceDataManager {
     func setupCGM() {
         dispatchPrecondition(condition: .onQueue(.main))
-
-        // TODO: [loopkit] is this the right way to detect a new sensor?
-        // currently, the calibration service subscribes to this event to clear calibrations
-        let previous = seenCGMDeviceId
-        seenCGMDeviceId = cgmManager?.cgmManagerStatus.device?.localIdentifier
-        if previous != nil, previous != seenCGMDeviceId {
-            UserNotifications.NotificationCenter.default.post(name: .newSensorDetected, object: nil)
-        }
 
         cgmManager?.cgmManagerDelegate = self
         cgmManager?.delegateQueue = processQueue
