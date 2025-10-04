@@ -133,7 +133,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var ketoProtectAbsolut: Bool = false
     var ketoProtectBasalAbsolut: Decimal = 0
     // 1-min loops
-    var allowOneMinuteReadings: Bool = false // allow 1-minute readings from libre sensors
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
     var allowOneMinuteGlucose: Bool = false // allow sending 1-minute readings to oref, even if loops are with 5-minute intervals
 }
@@ -653,9 +652,6 @@ extension FreeAPSSettings: Decodable {
         }
 
         // 1-minute loops
-        if let allowOneMinuteReadings = try? container.decode(Bool.self, forKey: .allowOneMinuteReadings) {
-            settings.allowOneMinuteReadings = allowOneMinuteReadings
-        }
         if let allowOneMinuteLoop = try? container.decode(Bool.self, forKey: .allowOneMinuteLoop) {
             settings.allowOneMinuteLoop = allowOneMinuteLoop
         }

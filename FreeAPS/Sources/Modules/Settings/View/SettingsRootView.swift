@@ -136,14 +136,6 @@ extension Settings {
                                 HStack {
                                     Toggle("Max Override 400%", isOn: $state.extended_overrides)
                                 }
-                                if state.allowOneMinuteReadings {
-                                    HStack {
-                                        Toggle("Allow 1-minute loops", isOn: $state.allowOneMinuteLoop)
-                                    }
-                                    HStack {
-                                        Toggle("Allow 1-minute glucose", isOn: $state.allowOneMinuteGlucose)
-                                    }
-                                }
                             }
                             Group {
                                 Text("Preferences")

@@ -13,7 +13,6 @@ extension Settings {
         @Published var allowDilution = false
         @Published var extended_overrides = false
         @Published var noCarbs = false
-        @Published var allowOneMinuteReadings = false
         @Published var allowOneMinuteLoop = false
         @Published var allowOneMinuteGlucose = false
 
@@ -30,7 +29,6 @@ extension Settings {
             subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
             subscribeSetting(\.extended_overrides, on: $extended_overrides) { extended_overrides = $0 }
             subscribeSetting(\.noCarbs, on: $noCarbs) { noCarbs = $0 }
-            subscribeSetting(\.allowOneMinuteReadings, on: $allowOneMinuteReadings) { allowOneMinuteReadings = $0 }
             subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { allowOneMinuteLoop = $0 }
             subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { allowOneMinuteGlucose = $0 }
 
