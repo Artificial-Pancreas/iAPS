@@ -5,10 +5,15 @@ import Swinject
 extension Snooze {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @State private var selectedInterval = 0
         @State private var snoozeDescription = "nothing to see here"
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var pickerTimes: [TimeInterval] {
             var arr: [TimeInterval] = []
@@ -124,7 +129,6 @@ extension Snooze {
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-                configureView()
                 snoozeDescription = getSnoozeDescription()
             }
         }

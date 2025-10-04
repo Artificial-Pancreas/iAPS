@@ -27,7 +27,6 @@ struct DynamicVariables: JSON, Codable {
     var uamMinutes: Decimal
     var maxIOB: Decimal
     var overrideMaxIOB: Bool
-    var disableCGMError: Bool
     var preset: String
     var autoISFoverrides: AutoISFsettings
     var aisfOverridden: Bool
@@ -59,7 +58,6 @@ struct DynamicVariables: JSON, Codable {
         uamMinutes: Decimal,
         maxIOB: Decimal,
         overrideMaxIOB: Bool,
-        disableCGMError: Bool,
         preset: String,
         autoISFoverrides: AutoISFsettings,
         aisfOverridden: Bool
@@ -90,7 +88,6 @@ struct DynamicVariables: JSON, Codable {
         self.uamMinutes = uamMinutes
         self.maxIOB = maxIOB
         self.overrideMaxIOB = overrideMaxIOB
-        self.disableCGMError = disableCGMError
         self.preset = preset
         self.autoISFoverrides = autoISFoverrides
         self.aisfOverridden = aisfOverridden
@@ -125,7 +122,6 @@ extension DynamicVariables {
         case uamMinutes
         case maxIOB
         case overrideMaxIOB
-        case disableCGMError
         case preset
         case autoISFoverrides
         case aisfOverridden

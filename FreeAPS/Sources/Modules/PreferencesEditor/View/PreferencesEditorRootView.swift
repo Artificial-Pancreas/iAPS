@@ -10,7 +10,7 @@ struct InfoText: Identifiable {
 extension PreferencesEditor {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -19,6 +19,11 @@ extension PreferencesEditor {
         }
 
         @State private var infoButtonPressed: InfoText?
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -101,7 +106,6 @@ extension PreferencesEditor {
                 Section {} footer: { Text("").padding(.bottom, 300) }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Preferences")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

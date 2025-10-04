@@ -62,7 +62,6 @@
   "useTargetButton" : false,
   "alwaysUseColors" : true,
   "timeSettings" : true,
-  "disableCGMError" : true,
   "allowBolusShortcut": false,
   "profilesOrTempTargets": true,
   "allowedRemoteBolusAmount": 0.0,

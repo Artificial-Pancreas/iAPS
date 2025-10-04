@@ -41,15 +41,15 @@ extension Calibrations {
                 glucose = newCalibration.asMgdL
             }
 
-            guard let lastGlucose = glucoseStorage.recent().last,
+            guard let lastGlucose = glucoseStorage.retrieveRaw().last,
                   lastGlucose.dateString.addingTimeInterval(60 * 4.5) > Date(),
-                  let unfiltered = lastGlucose.unfiltered
+                  let uncalibrated = lastGlucose.uncalibrated
             else {
                 info(.service, "Glucose is stale for calibration")
                 return
             }
 
-            let calibration = Calibration(x: Double(unfiltered), y: Double(glucose))
+            let calibration = Calibration(x: Double(uncalibrated), y: Double(glucose))
 
             calibrationService.addCalibration(calibration)
         }

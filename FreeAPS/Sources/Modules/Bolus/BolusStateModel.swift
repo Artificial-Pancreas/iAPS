@@ -6,6 +6,7 @@ import Swinject
 extension Bolus {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var unlockmanager: UnlockManager!
+        @Injected() var deviceManager: DeviceDataManager!
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
         // added for bolus calculator
@@ -109,9 +110,11 @@ extension Bolus {
             closedLoop = settings.settings.closedLoop
             loopDate = apsManager.lastLoopDate
             disable15MinTrend = settings.settings.disable15MinTrend
-            minBolus = Decimal(apsManager.pumpManager?.supportedBolusVolumes.first ?? Double(bolusIncrement)) *
+            minBolus = Decimal(deviceManager.pumpManager?.supportedBolusVolumes.first ?? Double(bolusIncrement)) *
                 Decimal(concentration.concentration)
+        }
 
+        func start() {
             if waitForSuggestionInitial {
                 if waitForCarbs {
                     setupBolusData()

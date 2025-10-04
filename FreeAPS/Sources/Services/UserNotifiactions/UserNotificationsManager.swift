@@ -24,7 +24,7 @@ protocol BolusFailureObserver {
     func bolusDidFail()
 }
 
-protocol pumpNotificationObserver {
+protocol PumpNotificationObserver {
     func pumpNotification(alert: AlertEntry)
     func pumpRemoveNotification()
 }
@@ -45,7 +45,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     @Injected() private var apsManager: APSManager!
     @Injected() private var router: Router!
 
-    @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
+//    @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
 
@@ -59,7 +59,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(BolusFailureObserver.self, observer: self)
-        broadcaster.register(pumpNotificationObserver.self, observer: self)
+        broadcaster.register(PumpNotificationObserver.self, observer: self)
 
         requestNotificationPermissionsIfNeeded()
         sendGlucoseNotification()
@@ -201,7 +201,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     private func sendGlucoseNotification() {
         addAppBadge(glucose: nil)
 
-        let glucose = glucoseStorage.recent()
+        let glucose = glucoseStorage.retrieveRaw()
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
 
         addAppBadge(glucose: lastGlucose.glucose)
@@ -286,36 +286,37 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     private func infoBody() -> String {
         var body = ""
 
-        if settingsManager.settings.addSourceInfoToGlucoseNotifications,
-           let info = sourceInfoProvider.sourceInfo()
-        {
-            // Description
-            if let description = info[GlucoseSourceKey.description.rawValue] as? String {
-                body.append("\n" + description)
-            }
-
-            // NS ping
-            if let ping = info[GlucoseSourceKey.nightscoutPing.rawValue] as? TimeInterval {
-                body.append(
-                    "\n"
-                        + String(
-                            format: NSLocalizedString("Nightscout ping: %d ms", comment: "Nightscout ping"),
-                            Int(ping * 1000)
-                        )
-                )
-            }
-
-            // Transmitter battery
-            if let transmitterBattery = info[GlucoseSourceKey.transmitterBattery.rawValue] as? Int {
-                body.append(
-                    "\n"
-                        + String(
-                            format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"),
-                            "\(transmitterBattery)"
-                        )
-                )
-            }
-        }
+        // TODO: [loopkit] update this
+//        if settingsManager.settings.addSourceInfoToGlucoseNotifications,
+//           let info = sourceInfoProvider.sourceInfo()
+//        {
+//            // Description
+//            if let description = info[GlucoseSourceKey.description.rawValue] as? String {
+//                body.append("\n" + description)
+//            }
+//
+//            // NS ping
+//            if let ping = info[GlucoseSourceKey.nightscoutPing.rawValue] as? TimeInterval {
+//                body.append(
+//                    "\n"
+//                        + String(
+//                            format: NSLocalizedString("Nightscout ping: %d ms", comment: "Nightscout ping"),
+//                            Int(ping * 1000)
+//                        )
+//                )
+//            }
+//
+//            // Transmitter battery
+//            if let transmitterBattery = info[GlucoseSourceKey.transmitterBattery.rawValue] as? Int {
+//                body.append(
+//                    "\n"
+//                        + String(
+//                            format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"),
+//                            "\(transmitterBattery)"
+//                        )
+//                )
+//            }
+//        }
         return body
     }
 
@@ -443,7 +444,7 @@ extension BaseUserNotificationsManager: GlucoseObserver {
     }
 }
 
-extension BaseUserNotificationsManager: pumpNotificationObserver {
+extension BaseUserNotificationsManager: PumpNotificationObserver {
     func pumpNotification(alert: AlertEntry) {
         ensureCanSendNotification {
             let content = UNMutableNotificationContent()

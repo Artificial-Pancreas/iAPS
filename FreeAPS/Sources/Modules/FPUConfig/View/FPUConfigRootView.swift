@@ -4,7 +4,12 @@ import Swinject
 extension FPUConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var conversionFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -59,7 +64,6 @@ extension FPUConfig {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("Fat and Protein")
             .navigationBarTitleDisplayMode(.automatic)
         }

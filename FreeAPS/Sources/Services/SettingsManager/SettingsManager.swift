@@ -1,5 +1,6 @@
 import Foundation
 import LoopKit
+import LoopKitUI
 import Swinject
 
 protocol SettingsManager: AnyObject {
@@ -14,6 +15,7 @@ protocol SettingsObserver {
 }
 
 final class BaseSettingsManager: SettingsManager, Injectable {
+    @Injected() var displayGlucosePreference: DisplayGlucosePreference!
     @Injected() var broadcaster: Broadcaster!
     @Injected() var storage: FileStorage!
 
@@ -21,6 +23,9 @@ final class BaseSettingsManager: SettingsManager, Injectable {
         didSet {
             if oldValue != settings {
                 save()
+                if oldValue.units != settings.units {
+                    updateDisplayGlucosePreference()
+                }
                 DispatchQueue.main.async {
                     self.broadcaster.notify(SettingsObserver.self, on: .main) {
                         $0.settingsDidChange(self.settings)
@@ -37,6 +42,11 @@ final class BaseSettingsManager: SettingsManager, Injectable {
             ?? FreeAPSSettings()
 
         injectServices(resolver)
+        updateDisplayGlucosePreference()
+    }
+
+    private func updateDisplayGlucosePreference() {
+        displayGlucosePreference.unitDidChange(to: settings.units == .mmolL ? .millimolesPerLiter : .milligramsPerDeciliter)
     }
 
     private func save() {

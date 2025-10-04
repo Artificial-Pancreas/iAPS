@@ -7,7 +7,7 @@ import Swinject
 extension NotificationsConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var currentSoundID: SystemSoundID = 1336
         @State private var isPlay = false
         @State private var currentName: String = ""
@@ -34,6 +34,11 @@ extension NotificationsConfig {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             return formatter
+        }
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         private func liveActivityFooterText() -> String {
@@ -205,7 +210,6 @@ extension NotificationsConfig {
                 })
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("Notifications")
             .navigationBarTitleDisplayMode(.automatic)
         }

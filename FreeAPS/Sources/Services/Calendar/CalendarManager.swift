@@ -216,7 +216,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
     }
 
     func setupGlucose() {
-        let glucose = glucoseStorage.recent()
+        let glucose = glucoseStorage.retrieveRaw()
         let recentGlucose = glucose.last
         let glucoseDelta: Int?
         if glucose.count >= 2 {

@@ -12,7 +12,6 @@ struct CurrentGlucoseView: View {
     @Binding var scrolling: Bool
     @Binding var displaySAGE: Bool
     @Binding var displayExpiration: Bool
-    @Binding var cgm: CGMType
     @Binding var sensordays: Double
 
     @Environment(\.colorScheme) var colorScheme

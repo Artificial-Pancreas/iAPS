@@ -16,7 +16,7 @@ extension Main {
             lightMode = settingsManager.settings.lightMode
 
             router.mainModalScreen
-                .map { $0?.modal(resolver: self.resolver!) }
+                .map { $0?.modal(resolver: self.resolver) }
                 .removeDuplicates { $0?.id == $1?.id }
                 .receive(on: DispatchQueue.main)
                 .sink { modal in
@@ -72,12 +72,11 @@ extension Main {
                         view.buttonTapHandler = { _ in
                             SwiftMessages.hide()
                             // display the pump configuration immediatly
-                            if let pump = self.provider.deviceManager.pumpManager,
-                               let bluetooth = self.provider.bluetoothProvider
+                            if let pump = self.provider.deviceManager.pumpManager
                             {
                                 let view = PumpConfig.PumpSettingsView(
                                     pumpManager: pump,
-                                    bluetoothManager: bluetooth,
+                                    deviceManager: self.provider.deviceManager,
                                     completionDelegate: self
                                 ).asAny()
                                 self.router.mainSecondaryModalView.send(view)

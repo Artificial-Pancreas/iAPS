@@ -7,7 +7,7 @@ import Swinject
 extension Stat {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @FetchRequest(
             entity: TDD.entity(),
@@ -34,6 +34,11 @@ extension Stat {
         @State var days: Double = 0
         @State var pointSize: CGFloat = 3
         @State var conversionFactor = 0.0555
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         @ViewBuilder func stats() -> some View {
             ZStack {
@@ -147,7 +152,6 @@ extension Stat {
                 stats()
             }
             .dynamicTypeSize(...DynamicTypeSize.xLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("Statistics")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))

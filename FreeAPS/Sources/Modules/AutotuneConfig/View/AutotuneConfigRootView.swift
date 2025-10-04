@@ -4,7 +4,7 @@ import Swinject
 extension AutotuneConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State var replaceAlert = false
 
         private var isfFormatter: NumberFormatter {
@@ -64,6 +64,11 @@ extension AutotuneConfig {
 
                 return currentEntry.minutes <= suggested.minutes && suggestedEnds <= nextOffset
             })?.element
+        }
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         var body: some View {
@@ -188,7 +193,6 @@ extension AutotuneConfig {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Autotune")
             .navigationBarTitleDisplayMode(.automatic)
             .alert(Text("Are you sure?"), isPresented: $replaceAlert) {

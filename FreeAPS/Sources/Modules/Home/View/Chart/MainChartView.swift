@@ -1151,7 +1151,7 @@ extension MainChartView {
     private func calculateUnSmoothedGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
             let dots = data.glucose.map { value -> CGRect in
-                let position = UnSmoothedGlucoseToCoordinate(value, fullSize: fullSize)
+                let position = unSmoothedGlucoseToCoordinate(value, fullSize: fullSize)
                 return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
             }
 
@@ -1689,7 +1689,7 @@ extension MainChartView {
         return CGPoint(x: x, y: y)
     }
 
-    private func UnSmoothedGlucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
+    private func unSmoothedGlucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
         let glucoseValue: Decimal = glucoseEntry.unfiltered ?? Decimal(glucoseEntry.glucose ?? 0)
         let y = glucoseToYCoordinate(Int(glucoseValue), fullSize: fullSize)

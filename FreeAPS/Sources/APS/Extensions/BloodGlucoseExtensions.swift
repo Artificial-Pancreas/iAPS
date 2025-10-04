@@ -1,5 +1,4 @@
 import Foundation
-import LibreTransmitter
 import LoopKit
 
 extension BloodGlucose.Direction {
@@ -45,25 +44,6 @@ extension BloodGlucose.Direction {
             self = .doubleDown
         default:
             self = .none
-        }
-    }
-
-    init(trendType: LibreTransmitter.GlucoseTrend) {
-        switch trendType {
-        case .upUpUp:
-            self = .doubleUp
-        case .upUp:
-            self = .singleUp
-        case .up:
-            self = .fortyFiveUp
-        case .flat:
-            self = .flat
-        case .down:
-            self = .fortyFiveDown
-        case .downDown:
-            self = .singleDown
-        case .downDownDown:
-            self = .doubleDown
         }
     }
 }

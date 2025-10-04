@@ -5,22 +5,25 @@ import SwiftUI
 
 extension PumpConfig {
     final class StateModel: BaseStateModel<Provider> {
-        @Published var setupPump = false
-        private(set) var setupPumpType: PumpType = .minimed
-        @Published var pumpState: PumpDisplayState?
+        @Injected() var deviceManager: DeviceDataManager!
+
+        @Published var pumpSetupPresented: Bool = false
+        @Published private(set) var pumpIdentifierToSetUp: String? = nil
+        @Published private(set) var pumpManagerStatus: PumpManagerStatus? = nil
+
         private(set) var initialSettings: PumpInitialSettings = .default
         @Published var alertNotAck: Bool = false
 
         override func subscribe() {
-            provider.pumpDisplayState
-                .receive(on: DispatchQueue.main)
-                .assign(to: \.pumpState, on: self)
-                .store(in: &lifetime)
-
             alertNotAck = provider.initialAlertNotAck()
             provider.alertNotAck
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.alertNotAck, on: self)
+                .store(in: &lifetime)
+
+            deviceManager.pumpManagerStatus
+                .receive(on: DispatchQueue.main)
+                .assign(to: \.pumpManagerStatus, on: self)
                 .store(in: &lifetime)
 
             let basalSchedule = BasalRateSchedule(
@@ -38,9 +41,9 @@ extension PumpConfig {
             )
         }
 
-        func addPump(_ type: PumpType) {
-            setupPump = true
-            setupPumpType = type
+        func setupPump(_ identifier: String?) {
+            pumpIdentifierToSetUp = identifier
+            pumpSetupPresented = identifier != nil
         }
 
         func ack() {
@@ -51,28 +54,8 @@ extension PumpConfig {
 
 extension PumpConfig.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
-        setupPump = false
-    }
-}
-
-extension PumpConfig.StateModel: PumpManagerOnboardingDelegate {
-    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
-        provider.setPumpManager(pumpManager)
-        if let insulinType = pumpManager.status.insulinType {
-            settingsManager.updateInsulinCurve(insulinType)
+        Task { @MainActor in
+            setupPump(nil)
         }
     }
-
-    func pumpManagerOnboarding(didOnboardPumpManager _: PumpManagerUI) {
-        // nothing to do
-    }
-
-    func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {
-        // TODO:
-    }
-
-//    func pumpManagerSetupViewController(_: PumpManagerSetupViewController, didSetUpPumpManager pumpManager: PumpManagerUI) {
-//        provider.setPumpManager(pumpManager)
-//        setupPump = false
-//    }
 }

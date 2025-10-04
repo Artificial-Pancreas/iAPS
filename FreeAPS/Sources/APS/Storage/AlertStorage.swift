@@ -4,15 +4,15 @@ import SwiftDate
 import Swinject
 
 protocol AlertObserver {
-    func AlertDidUpdate(_ alerts: [AlertEntry])
+    func alertDidUpdate(_ alerts: [AlertEntry])
 }
 
 protocol AlertHistoryStorage {
     func storeAlert(_ alerts: AlertEntry)
     func syncDate() -> Date
     func recentNotAck() -> [AlertEntry]
-    func deleteAlert(identifier: String)
-    func ackAlert(_ alert: Date, _ error: String?)
+    func deleteAlert(managerIdentifier: String, alertIdentifier: String)
+    func ackAlert(managerIdentifier: String, alertIdentifier: String, error: String?)
     func forceNotification()
     var alertNotAck: PassthroughSubject<Bool, Never> { get }
 }
@@ -42,7 +42,7 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage, Injectable {
             }
             alertNotAck.send(self.recentNotAck().isNotEmpty)
             broadcaster.notify(AlertObserver.self, on: processQueue) {
-                $0.AlertDidUpdate(uniqEvents)
+                $0.alertDidUpdate(uniqEvents)
             }
         }
     }
@@ -57,10 +57,12 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage, Injectable {
             .sorted { $0.issuedDate > $1.issuedDate } ?? []
     }
 
-    func ackAlert(_ alert: Date, _ error: String?) {
+    func ackAlert(managerIdentifier: String, alertIdentifier: String, error: String?) {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self) ?? []
-            guard let entryIndex = allValues.firstIndex(where: { $0.issuedDate == alert }) else {
+            guard let entryIndex = allValues
+                .firstIndex(where: { $0.managerIdentifier == managerIdentifier && $0.alertIdentifier == alertIdentifier })
+            else {
                 return
             }
 
@@ -74,17 +76,19 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage, Injectable {
         }
     }
 
-    func deleteAlert(identifier: String) {
+    func deleteAlert(managerIdentifier: String, alertIdentifier: String) {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self) ?? []
-            guard let entryIndex = allValues.firstIndex(where: { $0.alertIdentifier == identifier }) else {
+            guard let entryIndex = allValues
+                .firstIndex(where: { $0.managerIdentifier == managerIdentifier && $0.alertIdentifier == alertIdentifier })
+            else {
                 return
             }
             allValues.remove(at: entryIndex)
             storage.save(allValues, as: OpenAPS.Monitor.alertHistory)
             alertNotAck.send(self.recentNotAck().isNotEmpty)
             broadcaster.notify(AlertObserver.self, on: processQueue) {
-                $0.AlertDidUpdate(allValues)
+                $0.alertDidUpdate(allValues)
             }
         }
     }
@@ -96,7 +100,7 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage, Injectable {
                 .sorted { $0.issuedDate > $1.issuedDate } ?? []
             alertNotAck.send(self.recentNotAck().isNotEmpty)
             broadcaster.notify(AlertObserver.self, on: processQueue) {
-                $0.AlertDidUpdate(uniqEvents)
+                $0.alertDidUpdate(uniqEvents)
             }
         }
     }

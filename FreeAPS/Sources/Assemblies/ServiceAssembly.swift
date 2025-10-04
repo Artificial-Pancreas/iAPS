@@ -1,9 +1,14 @@
 import Foundation
 import HealthKit
+import LoopKitUI
 import Swinject
 
 final class ServiceAssembly: Assembly {
     func assemble(container: Container) {
+        container.register(AppCoordinator.self) { _ in AppCoordinator() }
+        container
+            .register(DisplayGlucosePreference.self) { _ in
+                DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter) }
         container.register(NotificationCenter.self) { _ in Foundation.NotificationCenter.default }
         container.register(Broadcaster.self) { _ in BaseBroadcaster() }
         container.register(GroupedIssueReporter.self) { _ in
@@ -22,5 +27,6 @@ final class ServiceAssembly: Assembly {
         container.register(GarminManager.self) { r in BaseGarminManager(resolver: r) }
         container.register(ContactTrickManager.self) { r in BaseContactTrickManager(resolver: r) }
         container.register(LiveActivityBridge.self) { r in LiveActivityBridge(resolver: r) }
+        container.register(CoreDataStorageGlucoseSaver.self) { r in CoreDataStorageGlucoseSaver(resolver: r) }
     }
 }
