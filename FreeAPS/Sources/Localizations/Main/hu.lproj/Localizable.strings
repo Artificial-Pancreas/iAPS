@@ -17,13 +17,13 @@
 "Continue without bolus" = "Folytatás bólus nélkül";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Nincs adat.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Nincsenek előrejelzések. Sikertelen ciklusjavaslat.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "Új glükóz hiányzik";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Mentsd el az ételt bólusz nélkül";
@@ -56,16 +56,16 @@
 "Done" = "Kész";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Az utolsó ciklus %@ perce volt. Fejezze be vagy törölje ezt az étkezés/bolus tranzakciót, hogy a következő ciklus lefuthasson";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Emojik megjelenítése címkeként";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "IOB és COB megjelenítése";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Bolus gyorsabb megerősítése";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -77,7 +77,7 @@
 "Agree and continue" = "Elfogadás és folytatás";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Külső inzulin naplózása";
 
 /* Bolus progress view */
 "of" = "-ból";
@@ -89,10 +89,10 @@
 "was delivered" = "volt beadva";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " perce, távolról indítva a Nightscoutból, egy gondozó vagy szülő által. Még mindig szeretne boluszni?\n\nHa nem boluszik, a várható végső glükóz szint: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "Távoli bolus éppen most lett leadva!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Beadva";
@@ -101,7 +101,7 @@
 "Suggested at" = "Ajánlva";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Állapot dátuma";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Étel összegzése";
@@ -122,7 +122,7 @@
 "Fatty Meal" = "Zsíros étel";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Hipó kezelése";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Teljes bólus";
@@ -134,7 +134,7 @@
 "Fatty Meal Factor" = "Zsíros étel faktor";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "A szénhidrátok és az előző inzulin bele vannak számítva a várható glükóz előrejelzésbe.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Eredmény";
@@ -167,13 +167,13 @@
 "Add Carbs " = "Szénhidrát hozzáadása ";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "Felülbírálás";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Nincs pumpa";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Nyitva";
 
 /*  */
 "Amount Carbs" = "Szénhidrát mennyiség";
@@ -200,7 +200,7 @@
 "Cancel Temp Target" = "Átmeneti cél kikapcsolása";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Átmeneti cél kikapcsolása";
 
 /* Custom temp target */
 "Custom" = "Egyéni";
@@ -251,7 +251,7 @@
 "Save" = "Elment";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Szűrőbeállítás mentése";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Előbeállítás törlése";
@@ -284,7 +284,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Dinamikus változók";
 
 /*  */
 "Basal profile" = "Bázis profil";
@@ -323,7 +323,7 @@
 "Schedule" = "Ütemezés";
 
 /* */
-"(standard units / hour)" = "(standard units / hour)";
+"(standard units / hour)" = "(standard egységek / óra)";
 
 /*  */
 "starts at" = "kezdődik";
@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Lokális glukóz szerver használata";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Ez lehetővé teszi a statistics.json fájl feltöltését a Nightscout rendszerbe, amelyet a Community Statistics and Demographics Project használhat.\n\nA Community Statistics projektben való részvétel önkéntes, és külön regisztrációt igényel a következő címen:\n";
 
 /*  */
 "Edit settings json" = "Json beállítások javítása";
@@ -1769,7 +1769,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Szűrőbeállítás mentése";
 
 /* */
 "Predictions" = "Predictions";
