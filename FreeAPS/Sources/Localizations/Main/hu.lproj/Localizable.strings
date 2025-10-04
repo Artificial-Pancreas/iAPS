@@ -429,7 +429,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Távirányítás";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Távoli vezérlés engedélyezése az iAPS számára";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nMost kérlek alaposan nézd át a beállításokat:\n\n* Bázis Ceállítások\n * Szénhidrát Arány\n * Cukorszint Célpont\n * Inzulin Érzékenység\n * DIA\n\n iAPS beállítások > Konfiguráció.\n\nHelytelen vagy rossz beállításoknak halálos következményei lehetnek.";
@@ -477,13 +477,13 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Omnipod hozzáadása";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Dana-i/RS hozzáadása";
 
 /* Add Simulator pump */
 "Add Simulator" = "Szimulátor hozzáadása";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Kicserélni";
 
 /* Insulin model */
 "Model" = "Típus";
@@ -507,22 +507,22 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Maximum bólus";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Kérjük, ellenőrizze, hogy a helyes inzulinkoncentrációt választotta-e ki a beállításai mentése előtt.\n\nAz inzulin tartályán vagy tollán fel kell tüntetni a koncentrációt egységben milliliterenként (például az U100 azt jelenti, hogy 100 egység inzulin van milliliterenként, ami az általános koncentráció).\n\nA pontos kiválasztás létfontosságú a megfelelő adagoláshoz.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Koncentráció";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Inzulin Koncentráció";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Inzulin Csere";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Inzlin feloldasa";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "standard koncentráció:";
 
 /* Insulin Concentration View */
 "units per ml" = "units per ml";
