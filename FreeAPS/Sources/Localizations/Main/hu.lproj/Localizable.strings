@@ -525,19 +525,19 @@ Enact a temp Basal or a temp target */
 "standard concentration:" = "standard koncentráció:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "egyseg per ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Standard koncentráció (U100)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Az inzulin koncentrációjának növekedése";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Nem sikerült elmenteni a pumpába. Próbálja újra, amikor a pumpa nem ad bolust.";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "Elmentve";
 
 /* Label inusulin concentration, units per ml */
 "U100" = "U100";
@@ -551,12 +551,12 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Engedélyezze a hígított inzulin koncentráció beállításokat";
 /* Max setting */
 "Max Carbs" = "Maximum szénhidrát";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "Minden bejegyzéshez hozzáadható maximális szénhidrátmennyiség (g)";
 
 /* */
 "Pump Settings" = "Pumpa beállítások";
@@ -628,7 +628,7 @@ Enact a temp Basal or a temp target */
 "Display on Watch" = "Megjelenítés az órán";
 
 /* */
-"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
+"Display either Overrides or Temp Targets" = "Megjelenítés: vagy felülbírálatok, vagy ideiglenes célértékek";
 
 /* */
 "Garmin Watch" = "Garmin Óra";
@@ -637,7 +637,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Eszköz hozzáadása";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Megjelenítés: vagy felülbírálatok, vagy ideiglenes célértékek";
 
 /* */
 "Glucose Target" = "Glukóz cél";
@@ -652,7 +652,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% Felülbírálat";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Az iAPS használatához telepíteni kell a Garmin Connect alkalmazást.\n A letöltéshez látogasson el az App Store áruházba";
@@ -727,19 +727,19 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Kezelések";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Inzulin hozzáadása";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Glükóz hozzáadása";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Új glükóz";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Kezelés";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Alapértelmezett";
 
 /* Hypo Treatment Default Value */
 "None" = "None";
@@ -808,7 +808,7 @@ Enact a temp Basal or a temp target */
 "Meter glucose" = "Cukor mérő";
 
 /* */
-"Info" = "Info";
+"Info" = "Infó";
 
 /*v*/
 "Slope" = "Lejtő";
@@ -1229,52 +1229,52 @@ Enact a temp Basal or a temp target */
 "will snooze for %@ until %@" = "will snooze for %@ until %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Kattintson az értesítések elhalasztásához";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Erősség";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Tartsa iPhone-ja tetejét a szenzor közelébe a párosításhoz";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "Szenzor nem található";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Játssza le az értesítő hangot is";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Értesítési beállítások";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "Található eszközök: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Visszatöltési beállítások";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
+"Backfilling from trend is currently not well supported by iAPS" = "A trendből történő visszatöltés jelenleg nem támogatott jól az iAPS által";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Visszatöltés a történetből";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Visszatöltés a trend alapján";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Debug opciók";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Sok adatot ad hozzá a hibajelentéshez";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Szenzoradatok megtartása";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Töltöttség";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Adja hozzá a forrásinformációkat is";
 
 /* */
 "Carbs Required Threshold" = "Carbs Required Threshold";
@@ -1525,7 +1525,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Info";
+"Info" = "Infó";
 
 /* Warning title */
 "Warning" = "Warning";
