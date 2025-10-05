@@ -17,13 +17,13 @@
 "Continue without bolus" = "Folytatás bólus nélkül";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Nincs adat.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Nincsenek előrejelzések. Sikertelen ciklusjavaslat.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "Új glükóz hiányzik";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Mentsd el az ételt bólusz nélkül";
@@ -56,16 +56,16 @@
 "Done" = "Kész";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Az utolsó ciklus %@ perce volt. Fejezze be vagy törölje ezt az étkezés/bolus tranzakciót, hogy a következő ciklus lefuthasson";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Emojik megjelenítése címkeként";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "IOB és COB megjelenítése";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Bolus gyorsabb megerősítése";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -77,7 +77,7 @@
 "Agree and continue" = "Elfogadás és folytatás";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Külső inzulin naplózása";
 
 /* Bolus progress view */
 "of" = "-ból";
@@ -89,10 +89,10 @@
 "was delivered" = "volt beadva";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " perce, távolról indítva a Nightscoutból, egy gondozó vagy szülő által. Még mindig szeretne boluszni?\n\nHa nem boluszik, a várható végső glükóz szint: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "Távoli bolus éppen most lett leadva!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Beadva";
@@ -101,7 +101,7 @@
 "Suggested at" = "Ajánlva";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Állapot dátuma";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Étel összegzése";
@@ -122,7 +122,7 @@
 "Fatty Meal" = "Zsíros étel";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Hipó kezelése";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Teljes bólus";
@@ -134,7 +134,7 @@
 "Fatty Meal Factor" = "Zsíros étel faktor";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "A szénhidrátok és az előző inzulin bele vannak számítva a várható glükóz előrejelzésbe.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Eredmény";
@@ -167,13 +167,13 @@
 "Add Carbs " = "Szénhidrát hozzáadása ";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "Felülbírálás";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Nincs pumpa";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Nyitva";
 
 /*  */
 "Amount Carbs" = "Szénhidrát mennyiség";
@@ -200,7 +200,7 @@
 "Cancel Temp Target" = "Átmeneti cél kikapcsolása";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Átmeneti cél kikapcsolása";
 
 /* Custom temp target */
 "Custom" = "Egyéni";
@@ -251,7 +251,7 @@
 "Save" = "Elment";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Szűrőbeállítás mentése";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Előbeállítás törlése";
@@ -284,7 +284,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Dinamikus változók";
 
 /*  */
 "Basal profile" = "Bázis profil";
@@ -323,7 +323,7 @@
 "Schedule" = "Ütemezés";
 
 /* */
-"(standard units / hour)" = "(standard units / hour)";
+"(standard units / hour)" = "(standard egységek / óra)";
 
 /*  */
 "starts at" = "kezdődik";
@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Lokális glukóz szerver használata";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Ez lehetővé teszi a statistics.json fájl feltöltését a Nightscout rendszerbe, amelyet a Community Statistics and Demographics Project használhat.\n\nA Community Statistics projektben való részvétel önkéntes, és külön regisztrációt igényel a következő címen:\n";
 
 /*  */
 "Edit settings json" = "Json beállítások javítása";
@@ -429,7 +429,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Távirányítás";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Távoli vezérlés engedélyezése az iAPS számára";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nMost kérlek alaposan nézd át a beállításokat:\n\n* Bázis Ceállítások\n * Szénhidrát Arány\n * Cukorszint Célpont\n * Inzulin Érzékenység\n * DIA\n\n iAPS beállítások > Konfiguráció.\n\nHelytelen vagy rossz beállításoknak halálos következményei lehetnek.";
@@ -477,13 +477,13 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Omnipod hozzáadása";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Dana-i/RS hozzáadása";
 
 /* Add Simulator pump */
 "Add Simulator" = "Szimulátor hozzáadása";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Kicserélni";
 
 /* Insulin model */
 "Model" = "Típus";
@@ -507,37 +507,37 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Maximum bólus";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Kérjük, ellenőrizze, hogy a helyes inzulinkoncentrációt választotta-e ki a beállításai mentése előtt.\n\nAz inzulin tartályán vagy tollán fel kell tüntetni a koncentrációt egységben milliliterenként (például az U100 azt jelenti, hogy 100 egység inzulin van milliliterenként, ami az általános koncentráció).\n\nA pontos kiválasztás létfontosságú a megfelelő adagoláshoz.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Koncentráció";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Inzulin Koncentráció";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Inzulin Csere";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Inzlin feloldasa";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "standard koncentráció:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "egyseg per ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Standard koncentráció (U100)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Az inzulin koncentrációjának növekedése";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Nem sikerült elmenteni a pumpába. Próbálja újra, amikor a pumpa nem ad bolust.";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "Elmentve";
 
 /* Label inusulin concentration, units per ml */
 "U100" = "U100";
@@ -551,12 +551,12 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Engedélyezze a hígított inzulin koncentráció beállításokat";
 /* Max setting */
 "Max Carbs" = "Maximum szénhidrát";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "Minden bejegyzéshez hozzáadható maximális szénhidrátmennyiség (g)";
 
 /* */
 "Pump Settings" = "Pumpa beállítások";
@@ -628,7 +628,7 @@ Enact a temp Basal or a temp target */
 "Display on Watch" = "Megjelenítés az órán";
 
 /* */
-"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
+"Display either Overrides or Temp Targets" = "Megjelenítés: vagy felülbírálatok, vagy ideiglenes célértékek";
 
 /* */
 "Garmin Watch" = "Garmin Óra";
@@ -637,7 +637,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Eszköz hozzáadása";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Megjelenítés: vagy felülbírálatok, vagy ideiglenes célértékek";
 
 /* */
 "Glucose Target" = "Glukóz cél";
@@ -652,7 +652,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% Felülbírálat";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Az iAPS használatához telepíteni kell a Garmin Connect alkalmazást.\n A letöltéshez látogasson el az App Store áruházba";
@@ -727,19 +727,19 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Kezelések";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Inzulin hozzáadása";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Glükóz hozzáadása";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Új glükóz";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Kezelés";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Alapértelmezett";
 
 /* Hypo Treatment Default Value */
 "None" = "None";
@@ -808,7 +808,7 @@ Enact a temp Basal or a temp target */
 "Meter glucose" = "Cukor mérő";
 
 /* */
-"Info" = "Info";
+"Info" = "Infó";
 
 /*v*/
 "Slope" = "Lejtő";
@@ -1229,52 +1229,52 @@ Enact a temp Basal or a temp target */
 "will snooze for %@ until %@" = "will snooze for %@ until %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Kattintson az értesítések elhalasztásához";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Erősség";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Tartsa iPhone-ja tetejét a szenzor közelébe a párosításhoz";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "Szenzor nem található";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Játssza le az értesítő hangot is";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Értesítési beállítások";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "Található eszközök: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Visszatöltési beállítások";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
+"Backfilling from trend is currently not well supported by iAPS" = "A trendből történő visszatöltés jelenleg nem támogatott jól az iAPS által";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Visszatöltés a történetből";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Visszatöltés a trend alapján";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Debug opciók";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Sok adatot ad hozzá a hibajelentéshez";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Szenzoradatok megtartása";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Töltöttség";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Adja hozzá a forrásinformációkat is";
 
 /* */
 "Carbs Required Threshold" = "Carbs Required Threshold";
@@ -1525,7 +1525,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Info";
+"Info" = "Infó";
 
 /* Warning title */
 "Warning" = "Warning";
@@ -1769,7 +1769,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Szűrőbeállítás mentése";
 
 /* */
 "Predictions" = "Predictions";

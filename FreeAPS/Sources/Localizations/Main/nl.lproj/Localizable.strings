@@ -1429,7 +1429,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Online or internal server" = "Online of interne server";
 
 /* Pump Error Message */
-"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loopcyclus advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende cyclus";
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loop advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende loop";
 
 /* Pump Error */
 "Pump is Busy." = "Je pomp is bezig.";
@@ -2799,16 +2799,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB is de maximale hoeveelheid insuline in je lichaam vanuit alle bronnen – dus zowel basale insuline (of automatische correcties) als bolussen – die iAPS mag geven om je glucosewaarde naar beneden te brengen. In tegenstelling tot de andere twee veiligheidsinstellingen (max_daily_safety_multiplier en current_basal_safety_multiplier) geef je hier een vast aantal eenheden insuline op. Let op: deze instelling geldt niet voor handmatig gegeven bolussen.\n\nWil je ’s nachts je basaal waardes testen? Zet deze instelling dan tijdelijk op 0 tijdens een gesloten Loop. Hierdoor wordt ‘stop voor laag’ automatisch geactiveerd, zodat je veilig kunt testen.\n\n(Tip van: https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
-"Max Daily Safety Multiplier" = "Maximale dagelijkse veiligheidsvermenigvuldiger";
+"Max Daily Safety Multiplier" = "Maximum vermenigvuldiger dagelijkse insulineafgifte";
 
 /* "Max Daily Safety Multiplier" */
-"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is een belangrijke OpenAPS veiligheidslimiet. De standaardinstelling (die waarschijnlijk geen aanpassingen nodig zal hebben) is 3. Dit betekent dat OpenAPS nooit zal worden toegestaan om een tijdelijke basaalstand in te stellen die groter is dan 3 x de hoogste basaalstand per uur, geprogrammeerd in een gebruikerspomp, of indien ingeschakeld, bepaald door autotune.";
+"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is een belangrijke OpenAPS-veiligheidsinstelling. Standaard staat deze op 3 en dat is meestal prima. Dat betekent dat OpenAPS nooit een tijdelijke basaal hoger mag zetten dan 3 keer je hoogste ingestelde basaalstand per uur (of, als autotune aanstaat, de door autotune bepaalde waarde).";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Huidige basale veiligheidsvermenigvuldiger";
+"Current Basal Safety Multiplier" = "Huidige basale maximum vermenigvuldiger";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is ook een belangrijke OpenAPS veiligheidslimiet. De standaard instelling (die waarschijnlijk niet aangepast hoeft te worden) is 4. Dit betekend dat OpenAPS niet een hoger tijdelijk basaal waarde mag instellen dan 4 keer het huidige basaal van dit uur ingesteld in de pomp, of als dit is ingesteld bepaald door autotune.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Ook dit is een belangrijke OpenAPS-veiligheidsinstelling. Standaard staat deze op 4. Dat betekent dat OpenAPS nooit een tijdelijke basaal hoger mag zetten dan 4 keer je huidige basaal van dat uur (of de waarde bepaald door autotune als ingeschakeld).";
 
 /* Headline "Autosens Max" */
 "Autosens Max" = "Autosens max";
