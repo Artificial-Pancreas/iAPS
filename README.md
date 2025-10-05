@@ -48,6 +48,9 @@ Please understand that iAPS is:
   * **Highly experimental and rapidly evolving.**
   * **Not CE or FDA approved for therapy.**
 
+The Near Field Communication (NFC) capability requires a paid Apple developer membership, however if using Dexcon sensors with iAPS you don't need the NFC capability enabled in Xcode capability settings.
+Distributing and building TestFlight apps also requires a paid membership.
+
 -----
 
 ## Compatible Devices
