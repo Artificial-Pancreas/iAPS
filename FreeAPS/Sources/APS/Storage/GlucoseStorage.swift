@@ -54,9 +54,17 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
                     .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > now }
                     .sorted { $0.dateString > $1.dateString } ?? []
-                let glucose = Array(uniqEvents)
-                storage.save(glucose, as: file)
-                stored = glucose
+                let newGlucoseData = Array(uniqEvents)
+
+                storage.save(newGlucoseData, as: file)
+
+                // Only log once
+                debug(
+                    .deviceManager,
+                    "storeGlucose \(newRecords.count) new entries saved. Latest Glucose: \(glucose.last?.glucose, default: "None") mg/Dl, date: \(glucose.last?.dateString, default: "No Date") saved."
+                )
+
+                stored = newGlucoseData
 
                 DispatchQueue.main.async {
                     self.broadcaster.notify(GlucoseObserver.self, on: .main) {
@@ -68,31 +76,20 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 }
             }
 
-            debug(.deviceManager, "start storage cgmState")
-            self.storage.transaction { storage in
-                let file = OpenAPS.Monitor.cgmState
-                var treatments = storage.retrieve(file, as: [NigtscoutTreatment].self) ?? []
-                var updated = false
-                for x in glucose {
-                    debug(.deviceManager, "storeGlucose \(x)")
-                    guard let sessionStartDate = x.sessionStartDate else {
-                        continue
-                    }
-                    if let lastTreatment = treatments.last,
-                       let createdAt = lastTreatment.createdAt,
-                       // When a new Dexcom sensor is started, it produces multiple consequetive
-                       // startDates. Disambiguate them by only allowing a session start per minute.
-                       abs(createdAt.timeIntervalSince(sessionStartDate)) < TimeInterval(60)
-                    {
-                        continue
-                    }
+            // Do we have a sensor session start?
+            if let sensorSessionStart = glucose.first(where: { $0.sessionStartDate != nil }) {
+                debug(.deviceManager, "start storage cgmState")
+                self.storage.transaction { storage in
+                    let file = OpenAPS.Monitor.cgmState
+                    var treatments = storage.retrieve(file, as: [NigtscoutTreatment].self) ?? []
                     var notes = ""
-                    if let t = x.transmitterID {
+                    if let t = sensorSessionStart.transmitterID {
                         notes = t
                     }
-                    if let a = x.activationDate {
+                    if let a = sensorSessionStart.activationDate {
                         notes = "\(notes) activated on \(a)"
                     }
+
                     let treatment = NigtscoutTreatment(
                         duration: nil,
                         rawDuration: nil,
@@ -100,7 +97,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         absolute: nil,
                         rate: nil,
                         eventType: .nsSensorChange,
-                        createdAt: sessionStartDate,
+                        createdAt: sensorSessionStart.sessionStartDate,
                         enteredBy: NigtscoutTreatment.local,
                         bolus: nil,
                         insulin: nil,
@@ -111,11 +108,9 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         targetTop: nil,
                         targetBottom: nil
                     )
-                    debug(.deviceManager, "CGM sensor change \(treatment)")
                     treatments.append(treatment)
-                    updated = true
-                }
-                if updated {
+                    debug(.deviceManager, "CGM sensor change \(sensorSessionStart.sessionStartDate, default: "None")")
+
                     // We have to keep quite a bit of history as sensors start only every 10 days.
                     storage.save(
                         treatments.filter
