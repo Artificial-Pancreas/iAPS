@@ -75,7 +75,7 @@ extension NightscoutAPI {
         }
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
+        request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         if let secret = secret {

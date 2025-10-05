@@ -29,6 +29,12 @@ extension NightscoutConfig {
             return formatter
         }
 
+        private var daysFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -114,9 +120,16 @@ extension NightscoutConfig {
                     }
 
                 Section {
+                    HStack {
+                        Text("Days").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("1", value: $state.backFillIntervall, formatter: daysFormatter, liveEditing: true)
+                    }
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
                 }
+                header: { Text("Backfill glucose") }
+                footer: { Text("Fetches old glucose readings from Nightscout") }
 
                 Section {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)

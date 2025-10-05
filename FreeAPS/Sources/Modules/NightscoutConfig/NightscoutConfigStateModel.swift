@@ -29,6 +29,7 @@ extension NightscoutConfig {
         @Published var maxBasal: Decimal = 4
         @Published var maxBolus: Decimal = 10
         @Published var allowAnnouncements: Bool = false
+        @Published var backFillIntervall: Decimal = 1
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -40,6 +41,12 @@ extension NightscoutConfig {
 
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
+            subscribeSetting(\.backFillIntervall, on: $backFillIntervall.map(Int.init), initial: {
+                let value = max(min($0, 90), 1)
+                backFillIntervall = Decimal(value)
+            }, map: {
+                $0
+            })
         }
 
         func connect() {
@@ -306,7 +313,7 @@ extension NightscoutConfig {
 
         func backfillGlucose() {
             backfilling = true
-            nightscoutManager.fetchGlucose(since: Date().addingTimeInterval(-1.days.timeInterval))
+            nightscoutManager.fetchGlucose(since: Date().addingTimeInterval(-Int(backFillIntervall).days.timeInterval))
                 .sink { [weak self] glucose in
                     guard let self = self else { return }
                     DispatchQueue.main.async {

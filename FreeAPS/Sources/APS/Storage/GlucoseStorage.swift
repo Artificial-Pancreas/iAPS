@@ -56,6 +56,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     .sorted { $0.dateString > $1.dateString } ?? []
                 let newGlucoseData = Array(uniqEvents)
 
+                // FileStorage
                 storage.save(newGlucoseData, as: file)
 
                 // Only log once
