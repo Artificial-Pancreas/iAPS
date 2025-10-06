@@ -59,6 +59,7 @@ Distributing and building TestFlight apps also requires a paid membership.
 
   * **Omnipod EROS**
   * **Omnipod DASH**
+  * **Medtrum TouchCare Nano**
   * **Dana:**
       * Dana-I
       * DanaRS (firmware 3 only)
@@ -68,7 +69,6 @@ Distributing and building TestFlight apps also requires a paid membership.
       * 523 or 723 (firmware 2.4 or lower)
       * Worldwide Veo 554 or 754 (firmware 2.6A or lower)
       * Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)
-   * **Medtrum TouchCare Nano**
 
 ### CGM Sensors
 
