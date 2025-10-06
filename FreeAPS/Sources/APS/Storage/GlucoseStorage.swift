@@ -62,14 +62,14 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 // Only log once
                 debug(
                     .deviceManager,
-                    "storeGlucose \(newRecords.count) new entries saved. Latest Glucose: \(glucose.last?.glucose, default: "None") mg/Dl, date: \(glucose.last?.dateString, default: "No Date") saved."
+                    "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(glucose.last?.glucose, default: "None") mg/Dl, date: \(glucose.last?.dateString, default: "No Date")."
                 )
 
                 stored = newGlucoseData
 
                 DispatchQueue.main.async {
                     self.broadcaster.notify(GlucoseObserver.self, on: .main) {
-                        $0.glucoseDidUpdate(glucose.reversed())
+                        $0.glucoseDidUpdate(newGlucoseData.reversed())
                     }
                     self.broadcaster.notify(NewGlucoseObserver.self, on: .main) {
                         $0.newGlucoseStored(newRecords)
