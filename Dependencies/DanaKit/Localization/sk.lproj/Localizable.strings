@@ -110,13 +110,13 @@
 "Delivery speed" = "Rýchlosť dávkovania";
 
 /* Dana bolus speed 12u per min */
-"12 sec/U" = "12 sek/U";
+"12 sec/U" = "12 sek/J";
 
 /* Dana bolus speed 30u per min */
-"30 sec/U" = "30 sek/U";
+"30 sec/U" = "30 sek/J";
 
 /* Dana bolus speed 60u per min */
-"60 sec/U" = "60 sek/U";
+"60 sec/U" = "60 sek/J";
 
 /* Dana delivery speed body */
 "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávkovania. Môžete to nastaviť tu alebo aj v ponuke nastavení";
@@ -241,7 +241,7 @@
 "Time Change Detected" = "Zistila sa zmena času";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na Vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe s aktuálnym čas?";
 
 /* description for time change detected notice */
 "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpe je iný ako aktuálny čas. Čas pumpy riadi vaše naplánované liečebné nastavenia. Prejdite nadol na riadok Čas pumpy, pozrite si časový rozdiel a nakonfigurujte pumpu.";
@@ -388,7 +388,7 @@
 "Missed Blood glucose check" = "Chybajúca kontrola glykémie v krvi";
 
 /* Alert body for bloodSugarCheckMiss */
-"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump";
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Pripomienka kontroly glykémie bola vo vašej pumpe nastavená a práve sa spustila. Prosím, odstráňte ju alebo zadajte do pumpy svoju hodnotu glykémie";
 
 /* Alert title for unknown */
 "Unknown error" = "Neznáma chyba";
