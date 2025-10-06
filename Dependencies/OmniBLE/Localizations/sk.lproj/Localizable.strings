@@ -838,12 +838,12 @@
 "Previous Pod Details" = "Podrobnosti predchádzajúceho Podu";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Podrobnosti o manažérovi čerpadla";
+"Pump Manager Details" = "Podrobnosti o správcovi pumpy";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Získanie údajov o správcovi čerpadla...";
+"Retrieving Pump Manager Details..." = "Načítavajú sa podrobnosti o správcovi pumpy...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Podrobnosti o manažérovi čerpadla";
+"Refresh Pump Manager Details" = "Obnoviť podrobnosti o správcovi pumpy";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostiky";
