@@ -51,7 +51,7 @@
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Obdobie pozastavenia inzulínu skončilo.\n\nMôžete obnoviť podávanie z banneru na domovskej obrazovke alebo z nastavení vašej pumpy. Pripomenutie dostanete znova o 15 minút.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Dokončite párovanie Vášho Podu.";
+"Please finish pairing your pod." = "Dokončite párovanie vášho Podu.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Čas na Vašej pumpe sa líši od aktuálneho času. Môžete skontrolovať čas pumpy a synchronizovať ho s aktuálnym časom v nastaveniach.";
