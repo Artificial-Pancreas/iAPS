@@ -23,7 +23,7 @@
 "Sensor is warming up" = "Senzor sa zahrieva";
 
 /* The description of sensor algorithm state when sensor is expired. */
-"Sensor expired" = "Platnosť senzora vypršala";
+"Sensor expired" = "Platnosť senzora exspirovala";
 
 /* The description of sensor algorithm state when sensor failed. */
 "Sensor failed" = "Senzor zlyhal";
@@ -93,7 +93,7 @@
 "Searching for sensor" = "Vyhľadávam nový senzor";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Platnosť senzora vypršala";
+"Sensor expired" = "Platnosť senzora exspirovala";
 
 /* G7 Progress bar label when sensor in warmup */
 "Warmup completes" = "Zahrievanie senzora dokončené";
