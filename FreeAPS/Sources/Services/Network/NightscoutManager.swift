@@ -103,7 +103,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never> {
-        let useLocal = settingsManager.settings.useLocalGlucoseSource
         ping = nil
 
         guard isNetworkReachable else {
