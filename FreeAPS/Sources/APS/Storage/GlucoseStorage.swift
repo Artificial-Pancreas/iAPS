@@ -62,7 +62,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 // Only log once
                 debug(
                     .deviceManager,
-                    "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(glucose.last?.glucose, default: "None") mg/Dl, date: \(glucose.last?.dateString, default: "No Date")."
+                    "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(String(describing: glucose.last?.glucose)) mg/Dl, date: \(String(describing: glucose.last?.dateString))."
                 )
 
                 stored = newGlucoseData
@@ -110,7 +110,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         targetBottom: nil
                     )
                     treatments.append(treatment)
-                    debug(.deviceManager, "CGM sensor change \(sensorSessionStart.sessionStartDate, default: "None")")
+                    debug(.deviceManager, "CGM sensor change \(String(describing: sensorSessionStart.sessionStartDate))")
 
                     // We have to keep quite a bit of history as sensors start only every 10 days.
                     storage.save(

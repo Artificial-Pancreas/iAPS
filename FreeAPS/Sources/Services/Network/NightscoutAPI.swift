@@ -59,16 +59,30 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func fetchLastGlucose(sinceDate: Date? = nil) -> AnyPublisher<[BloodGlucose], Swift.Error> {
+    /// fetch glucose with [ date >= sinceDate AND date < untilDate ]
+    func fetchLastGlucose(sinceDate: Date? = nil, untilDate: Date? = nil) -> AnyPublisher<[BloodGlucose], Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.entriesPath
-        components.queryItems = [URLQueryItem(name: "count", value: "\(1600)")]
+        components.queryItems = [
+            URLQueryItem(name: "count", value: "\(500)"),
+            URLQueryItem(
+                name: "sort$desc",
+                value: "dateString"
+            ) // "date descending" should be the default sorting, but we're specifying it explicitly here, just in case
+        ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[dateString][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+            )
+            components.queryItems?.append(dateItem)
+        }
+        if let date = untilDate {
+            let dateItem = URLQueryItem(
+                name: "find[dateString][$lt]",
                 value: Formatter.iso8601withFractionalSeconds.string(from: date)
             )
             components.queryItems?.append(dateItem)

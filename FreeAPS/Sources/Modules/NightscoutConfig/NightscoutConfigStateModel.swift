@@ -12,8 +12,10 @@ extension NightscoutConfig {
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var storage: FileStorage!
+        @Injected() private var coreDataStorageGlucoseSaver: CoreDataStorageGlucoseSaver!
         @Injected() var apsManager: APSManager!
         @Injected() var deviceManager: DeviceDataManager!
+        private let processQueue = DispatchQueue(label: "NightscoutConfig.StateModel.processQueue")
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -22,6 +24,7 @@ extension NightscoutConfig {
         @Published var message = ""
         @Published var connecting = false
         @Published var backfilling = false
+        @Published var backfillingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
         @Published var uploadGlucose = true // Upload Glucose
         @Published var units: GlucoseUnits = .mmolL
@@ -313,17 +316,39 @@ extension NightscoutConfig {
 
         func backfillGlucose() {
             backfilling = true
-            nightscoutManager.fetchGlucose(since: Date().addingTimeInterval(-Int(backFillIntervall).days.timeInterval))
-                .sink { [weak self] glucose in
-                    guard let self = self else { return }
+            backfillingProgress = 0.0
+            nightscoutManager.fetchGlucose(
+                since: Date().addingTimeInterval(-Int(backFillIntervall).days.timeInterval),
+                progress: { progress in
+                    DispatchQueue.main.async {
+                        self.backfillingProgress = progress
+                    }
+                }
+            )
+            .receive(on: processQueue)
+            .sink { [weak self] glucose in
+                guard let self = self else { return }
+                debug(.nightscout, "fetched \(glucose.count) glucose records from nightscout")
+
+                guard glucose.isNotEmpty else {
                     DispatchQueue.main.async {
                         self.backfilling = false
                     }
-
-                    guard glucose.isNotEmpty else { return }
-                    _ = self.glucoseStorage.storeGlucose(glucose)
+                    return
                 }
-                .store(in: &lifetime)
+                // glucose storage - store only last 24 hours
+                let cutOffDate = Date().addingTimeInterval(-1.days.timeInterval)
+                let recent = glucose.filter { $0.dateString >= cutOffDate }
+                _ = self.glucoseStorage.storeGlucose(recent)
+
+                // core date - store everything
+                coreDataStorageGlucoseSaver.storeGlucose(glucose) {
+                    DispatchQueue.main.async {
+                        self.backfilling = false
+                    }
+                }
+            }
+            .store(in: &lifetime)
         }
 
         func delete() {
