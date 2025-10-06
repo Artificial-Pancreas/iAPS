@@ -288,7 +288,7 @@
 "Pod sent ack instead of response" = "Pod poslal potvrdenie namiesto odpovede ";
 
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
-"Pod setup window expired" = "Okno nastavenia podov vypršalo";
+"Pod setup window expired" = "Okno nastavenia Podu exspirovalo";
 
 /* Description for pod suspended reminder */
 "Pod suspended reminder" = "Pripomenutie pozastaveného podu";
@@ -347,7 +347,7 @@
 "Suspend In Progress Reminder" = "Pripomienka prebiehajúceho pozastavenia";
 
 /* Description for suspend time expired */
-"Suspend time expired" = "Čas pozastavenia vypršal";
+"Suspend time expired" = "Čas pozastavenia exspiroval";
 
 /* Delivery status when insulin delivery is suspended */
 "Suspended" = "Pozastavené";
