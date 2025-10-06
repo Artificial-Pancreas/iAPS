@@ -12,7 +12,7 @@
 "Pod Expiration Reminder" = "Pripomienka o expirácii";
 
 /* Alert content title for podExpiring pod alert */
-"Pod Expired" = "Pod expiroval";
+"Pod Expired" = "Pod exspiroval";
 
 /* Alert content title for lowReservoir pod alert */
 "Low Reservoir" = "Nízka hladina v rezervoári";
@@ -87,10 +87,10 @@
 "Pod Reminders" = "Upozornenia Podu";
 
 /* Footer text for pod reminders section */
-"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Aplikácia nastaví pripomienku na Pode, aby Vás vopred upozornila na jeho vypršanie. Vopred nastavte počet hodín, kedy chcete byť upozornení. Táto hodnota sa použije ako predvolená pri párovaní nového Podu.";
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Aplikácia nastaví pripomienku na Pod, aby vás vopred upozornila na exspiráciu Podu. Nastavte počet hodín vopred, ktorý chcete mať predvolene nastavený pri párovaní nového Podu.";
 
 /* Footer text for scheduled reminder area */
-"The expiration reminder time for the current Pod." = "Pripomenutie vypršania času platnosti pre aktuálny Pod.";
+"The expiration reminder time for the current Pod." = "Čas pripomienky exspirácie pre aktuálny Pod.";
 
 /* Footer text for low reservoir value row */
 "The app notifies you when the amount of insulin in the Pod reaches this level." = "Aplikácia Vás bude notifikovať, ak zostatok inzulínu v Pode dosiahne túto úroveň.";
@@ -102,7 +102,7 @@
 "Suspend Insulin Delivery" = "Pozastaviť podávanie inzulínu";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod vypršal";
+"Pod expired" = "Pod exspiroval";
 
 /* Label for pod life state when pod not fully deactivated */
 "Unfinished deactivation" = "Deaktivácia neukončená";
@@ -183,7 +183,7 @@
 "Pod expires in" = "Pod exspiruje o";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod vypršal";
+"Pod expired" = "Pod exspiroval";
 
 /* Label for pod life state when pod not fully deactivated */
 "Unfinished deactivation" = "Deaktivácia neukončená";
@@ -240,7 +240,7 @@
 "No Insulin" = "Žiadny inzulín";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "Pod expiroval";
+"Pod Expired" = "Pod exspiroval";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Oklúzia podu";
@@ -571,7 +571,7 @@
 "Incorrect Response" = "Nesprávna odpoveď";
 
 /* Error message description for PeripheralManagerError.timeout */
-"Timeout" = "Časový limit vypršal";
+"Timeout" = "Časový limit";
 
 /* Error message description for PeripheralManagerError.emptyValue */
 "Empty Value" = "Prázdna hodnota";
