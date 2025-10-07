@@ -54,7 +54,7 @@ struct InsulinTypeConfirmation: View {
     
     @ViewBuilder
     private var title: some View {
-        Text(LocalizedString("Select insulin type", comment: "Title for insulin type"))
+        Text(LocalizedString("Select insulin Type", comment: "Title for insulin type"))
             .font(.title)
             .bold()
             .padding([.bottom, .horizontal])

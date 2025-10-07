@@ -26,8 +26,6 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settingsManager: SettingsManager!
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-
     private enum Config {
         static let filterTime: TimeInterval = 4.5 * 60
     }
@@ -63,31 +61,6 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 DispatchQueue.main.async {
                     self.broadcaster.notify(GlucoseObserver.self, on: .main) {
                         $0.glucoseDidUpdate(glucose.reversed())
-                    }
-                }
-
-                // MARK: Save to CoreData.
-
-                var bg_ = 0
-                var bgDate = Date()
-                var id = ""
-                var direction = ""
-
-                if glucose.isNotEmpty {
-                    bg_ = glucose[0].glucose ?? 0
-                    bgDate = glucose[0].dateString
-                    id = glucose[0].id
-                    direction = glucose[0].direction?.symbol ?? "↔︎"
-                }
-
-                if bg_ != 0 {
-                    self.coredataContext.perform {
-                        let dataForForStats = Readings(context: self.coredataContext)
-                        dataForForStats.date = bgDate
-                        dataForForStats.glucose = Int16(bg_)
-                        dataForForStats.id = id
-                        dataForForStats.direction = direction
-                        try? self.coredataContext.save()
                     }
                 }
             }

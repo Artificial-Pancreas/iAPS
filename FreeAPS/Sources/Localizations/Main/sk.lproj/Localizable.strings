@@ -1177,7 +1177,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Temp basal Amount in U/h" = "Dočasné množstvo bazálu v U/h";
 
 /* */
-"Cancel Temp" = "Cancel Temp";
+"Cancel Temp" = "Zrušiť dočasné";
 
 
 
@@ -1859,7 +1859,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Neupravujte vývoj glykémie za posledných 15 minút.";
+"Don't adjust for past 15 minutes glucose trend." = "Nezohľadňovať vývoj glykémie za posledných 15 minút.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -2177,8 +2177,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* HbA1c for all glucose storage days */
 "all" = "všetko";
 
-/* Active Insulin View */
-"Active Insulin" = "Aktívny inzulín";
+/* IOB View */
+"Insulin on Board" = "Aktívny inzulín";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Čas s negatívnym inzulínom";
@@ -2201,8 +2201,14 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Active Insulin View */
 "TDD 3 days ago" = "TDD pred 3 dňami";
 
-/* Active Carbohydrates View */
-"Active Carbohydrates" = "Aktívne sacharidy";
+/* COB View */
+"Carbohydrates on Board" = "Aktívne sacharidy";
+
+/* UI/UX-setting */
+"Display COB Chart" = "Zobraziť graf zostávajúcich sacharidov";
+
+/* UI/UX-setting */
+"Display Insulin Activity Chart" = "Zobraziť graf aktivity inzulínu";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2862,7 +2868,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Remaining Carbs Cap" = "Limit zostávajúcich sacharidov";
 
 /* "Remaining Carbs Cap" */
-"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Toto je množstvo maximálneho počtu sacharidov, o ktorom predpokladáme, že sa vstrebe v priebehu 4 hodín, ak ešte nevidíme vstrebávanie sacharidov.";
+"This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption. Maximum 90" = "Toto je maximálne množstvo sacharidov, ktoré predpokladáme, že sa vstrebe počas 4 hodín, ak zatiaľ nevidíme známky vstrebávania. Maximum je 90";
 
 /* Headline ”Max SMB Basal Minutes" */
 "Max SMB Basal Minutes" = "Maximálny počet bazálnych minút pre SMB";
@@ -3094,6 +3100,9 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Display Sensor Age" = "Zobraziť vek senzora";
 
 /* UI/UX option */
+"Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Skryť informáciu o koncentrácií";
 
 /* UI/UX option */
@@ -3109,16 +3118,10 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Display carb equivalent amount" = "Zobraziť ekvivalentné množstvo sacharidov";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";
-
-/* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Zobraziť vek senzora, ale nie zostávajúci čas";
-
-/* UI/UX option */
 "Display Ratio and a History View button" = "Zobraziť tlačidlo s výsledným pomerom a históriou";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF domovská obrazovka";
+"Home View Ratio Button" = "Tlačidlo pomeru na domovskej obrazovke";
 
 /* UI/UX option */
 "Light" = "Tenké";
@@ -3135,8 +3138,14 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* UI/UX option */
 "Light / Dark Mode" = "Svetlý / tmavý režim";
 
+/* Debug option */
+"Neglect Carbohydrates in oref0" = "Ignorovať sacharidy v oref0";
+
+/* Debug option */
+"Hide oref0 Predictions" = "Skryť predpovede oref0";
+
 /* Setting title */
-"Bolus Calculator" = "Kalkulátor bolusu";
+"Bolus Calculator" = "Kalkulačka bolusu";
 
 /* Setting title */
 "Dynamic ISF" = "Dynamická ISF";

@@ -10,10 +10,10 @@ struct CurrentGlucoseView: View {
     @Binding var alwaysUseColors: Bool
     @Binding var displayDelta: Bool
     @Binding var scrolling: Bool
+    @Binding var displaySAGE: Bool
     @Binding var displayExpiration: Bool
     @Binding var cgm: CGMType
     @Binding var sensordays: Double
-    @Binding var anubis: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
@@ -97,7 +97,7 @@ struct CurrentGlucoseView: View {
             if let recent = recentGlucose {
                 if displayDelta, !scrolling, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
-                if displayExpiration || anubis {
+                if displayExpiration || displaySAGE {
                     sageView
                 }
                 VStack(spacing: 15) {
@@ -136,34 +136,40 @@ struct CurrentGlucoseView: View {
                 .offset(x: offset, y: 10)
         }
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 140.5, y: displayExpiration ? -34 : -7)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 110.5, y: -9)
     }
 
     private var sageView: some View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
-                let expiration = (cgm == .xdrip || cgm == .glucoseDirect) ? sensordays * 8.64E4 : cgm.expiration
-                let remainingTime: TimeInterval = anubis ? (-1 * date.timeIntervalSinceNow) : expiration -
-                    (-1 * date.timeIntervalSinceNow)
+                let sensorAge: TimeInterval = (-1 * date.timeIntervalSinceNow)
+                let expiration = sensordays - sensorAge
+                let secondsOfDay = 8.64E4
+                let colour: Color = colorScheme == .light ? .secondary : Color.black
+                let lineColour: Color = sensorAge >= sensordays - secondsOfDay * 1 ? Color.red
+                    .opacity(0.9) : sensorAge >= sensordays - secondsOfDay * 2 ? Color
+                    .orange : Color.white
+                let minutesAndHours = (displayExpiration && expiration < 1 * 8.64E4) || (displaySAGE && sensorAge < 1 * 8.64E4)
 
-                Sage(amount: remainingTime, expiration: anubis ? remainingTime : expiration)
-                    .frame(width: 59, height: 26)
+                Sage(amount: sensorAge, expiration: expiration, lineColour: lineColour, sensordays: sensordays)
+                    .frame(width: 36, height: 36)
                     .overlay {
                         HStack {
                             Text(
-                                remainingTime >= 1 * 8.64E4 ?
-                                    (remainingTimeFormatterDays.string(from: remainingTime) ?? "")
+                                !minutesAndHours ?
+                                    (remainingTimeFormatterDays.string(from: displayExpiration ? expiration : sensorAge) ?? "")
                                     .replacingOccurrences(of: ",", with: " ") :
-                                    (remainingTimeFormatter.string(from: remainingTime) ?? "")
+                                    (remainingTimeFormatter.string(from: displayExpiration ? expiration : sensorAge) ?? "")
                                     .replacingOccurrences(of: ",", with: " ")
-                            )
+                            ).foregroundStyle(colour)
                         }
                     }
             }
         }
         .font(.footnote)
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 140.5, y: 3)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(20)
+        .offset(x: -5)
     }
 
     private var adjustments: (degree: Double, x: CGFloat, y: CGFloat) {

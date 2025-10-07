@@ -57,7 +57,7 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
 
     // B30
     if (profile.iaps.use_B30) {
-        aimi(profile, pumpHistory, dynamicVariables, glucose_status);
+        b30(profile, pumpHistory, dynamicVariables, glucose_status);
     }
     
     // Auto ISF ratio
@@ -270,7 +270,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
             console.log("liftISF: " + round(liftISF, 2) + "(minimal)");
             addMessage("liftISF: " + round(liftISF, 2) + "(minimal)");
         }
-        final_ISF = withinISFlimits(liftISF, sensitivityRatio, profile, normalTarget);
+        final_ISF = withinISFlimits(liftISF, profile, normalTarget);
         autoISFsens = Math.min(720, round(profile.sens / final_ISF, 1));
         console.log("Final ratio: " + round(final_ISF,2)  + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(autoISFsens, profile));
         
@@ -334,7 +334,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
             addMessage("Strongest autoISF factor " + round(liftISF, 2) + " weakened to " + round(liftISF * acce_ISF, 2) + " as bg decelerates already");
             liftISF *= acce_ISF; // brakes on for otherwise stronger or stable ISF
         }
-        final_ISF = withinISFlimits(liftISF, sensitivityRatio, profile, 100);
+        final_ISF = withinISFlimits(liftISF, profile, 100);
         autoISFsens = round(final_ISF, 2);
         console.log("Auto ISF: new Ratio: " + round(final_ISF, 2) + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(profile.sens / autoISFsens, profile));
         
@@ -387,7 +387,7 @@ function determine_varSMBratio(profile, bg, dynamicVariables) {
     return new_SMB
 }
 
-function withinISFlimits(liftISF, sensitivityRatio, profile, normalTarget) {
+function withinISFlimits(liftISF, profile, normalTarget) {
     let origin_sens = " " + profile.sens;
     console.log("check ratio " + round(liftISF, 2) + " against autoISF min: " + profile.iaps.autoisf_min + " and autoISF max: " + profile.iaps.autoisf_max);
     
@@ -400,21 +400,8 @@ function withinISFlimits(liftISF, sensitivityRatio, profile, normalTarget) {
         addMessage("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.iaps.autoisf_max);
         liftISF = profile.iaps.autoisf_max;
     }
-    let final_ISF = 1;
-    // SensitivityRatio = Autosens ratio
-    if (liftISF >= 1) {
-        final_ISF = Math.max(liftISF, sensitivityRatio);
-        if (liftISF >= sensitivityRatio) {
-            origin_sens = ""; // autoISF dominates
-        }
-    } else {
-        final_ISF = Math.min(liftISF, sensitivityRatio);
-        if (liftISF <= sensitivityRatio) {
-            origin_sens = "";  // autoISF dominates
-        }
-    }
-    console.log("final ISF factor " + round(final_ISF,2) + origin_sens);
-    return final_ISF
+    console.log("final ISF factor " + liftISF);
+    return liftISF
 }
 
 function convert_bg(value, profile) {
@@ -452,13 +439,17 @@ function exercising(profile, dynamicVariables) {
 const MillisecondsPerMinute = 60 * 1000
 
 // B30
-function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
+function b30(profile, pumpHistory, dynamicVariables, glucose_status) {
     // Guards
     if (!profile.iaps.closedLoop) {
         return
     }
     // Needs either a TT or a profile override < the set B30 target level
     if (!(profile.temptargetSet && profile.min_bg < profile.iaps.b30targetLevel || dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6 && dynamicVariables.overrideTarget < profile.iaps.b30targetLevel)) {
+        return
+    }
+    // In case override and temp target are used simultaneously - use temp target as glucose target.
+    if (profile.temptargetSet && profile.min_bg >= profile.iaps.b30targetLevel) {
         return
     }
     

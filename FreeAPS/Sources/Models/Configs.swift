@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 struct DateFilter {
+    var oneHour = Date().addingTimeInterval(-1.hours.timeInterval) as NSDate
     var twoHours = Date().addingTimeInterval(-2.hours.timeInterval) as NSDate
     var threeHours = Date().addingTimeInterval(-3.hours.timeInterval) as NSDate
     var today = Calendar.current.startOfDay(for: Date()) as NSDate
@@ -37,6 +38,7 @@ public enum IAPSconfig {
     static let previewBackgroundDark = Color.black
     static let homeViewBackgroundLight = Color(.systemGray5) // Color.gray.opacity(IAPSconfig.backgroundOpacity * 2)
     static let homeViewBackgrundDark = Color(.systemGray5) // Color.header2.opacity(0.95)
+    static let activityBackground = Color(.systemGray5)
 }
 
 extension Font {
