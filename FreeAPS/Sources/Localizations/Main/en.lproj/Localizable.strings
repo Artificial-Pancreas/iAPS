@@ -189,6 +189,18 @@
 
 /* */
 "Are you sure?" = "Are you sure?";
+ 
+/* */
+"All records will be deleted!" = "All records will be deleted!";
+
+/* */
+"Clear Records" = "Clear Records";
+
+/* */
+"Delete CoreData database records" = "Delete CoreData database records";
+
+/* */
+"Delete NS records" = "Delete NS records";
 
 /* Bottom target temp */
 "Bottom target" = "Bottom target";

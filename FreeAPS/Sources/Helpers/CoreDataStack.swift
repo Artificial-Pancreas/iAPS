@@ -35,10 +35,10 @@ class CoreDataStack: ObservableObject {
     func delete(obj: NSManagedObject) {
         persistentContainer.viewContext.delete(obj)
     }
-    
+
     func deleteBatch(entity: String) {
         let context = persistentContainer.viewContext
-        
+
         context.performAndWait {
             let fetchRequest: NSFetchRequest<NSFetchRequestResult>
             fetchRequest = NSFetchRequest(entityName: entity)
