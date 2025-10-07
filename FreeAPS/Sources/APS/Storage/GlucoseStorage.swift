@@ -18,6 +18,7 @@ protocol GlucoseStorage {
     /// filters records by frequency - at most "1 per minute" or "1 per 5 minutes" (according to settings.allowOneMinuteGlucose)
     func retrieveFiltered() -> [BloodGlucose]
     func latestDate() -> Date?
+    func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose]
     var alarm: GlucoseAlarm? { get }
 }
 
@@ -178,7 +179,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         return filterFrequentGlucose(retrieved, interval: minInterval)
     }
 
-    private func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
+    func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
         // glucose is already sorted newest-to-oldest in retrieve
         let sorted = glucose.sorted { $0.date > $1.date }
         guard let latest = sorted.first else { return [] }
