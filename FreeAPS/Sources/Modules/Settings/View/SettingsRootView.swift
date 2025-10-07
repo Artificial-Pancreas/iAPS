@@ -207,6 +207,7 @@ extension Settings {
                         Button("Clear Records") { deletionAlert.toggle() }
                             .buttonStyle(.borderedProminent)
                             .disabled(entity == "Entity")
+                            .frame(maxWidth: .infinity, alignment: .trailing)
 
                     } header: { Text("Delete CoreData database records") }
 
