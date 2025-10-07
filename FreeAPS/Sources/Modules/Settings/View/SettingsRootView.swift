@@ -1,3 +1,4 @@
+import CoreData
 import HealthKit
 import SwiftUI
 import Swinject
@@ -7,6 +8,8 @@ extension Settings {
         let resolver: Resolver
         @StateObject var state: StateModel
         @State private var showShareSheet = false
+        @State private var entity = "Entity"
+        @State private var deletionAlert = false
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -120,15 +123,6 @@ extension Settings {
                                         .buttonStyle(.borderedProminent)
                                 }
 
-                                // Test code
-                                HStack {
-                                    Text("Delete All NS Overrides")
-                                    Button("Delete") { state.deleteOverrides() }
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .buttonStyle(.borderedProminent)
-                                        .tint(.red)
-                                }
-
                                 HStack {
                                     Toggle("Allow diluted insulin concentration settings", isOn: $state.allowDilution)
                                 }
@@ -204,6 +198,29 @@ extension Settings {
                     } header: { Text("Developer") }
 
                     Section {
+                        Picker("Entity", selection: $entity) {
+                            ForEach(entities, id: \.self) { e in
+                                Text(e)
+                            }
+                        }.pickerStyle(.menu)
+
+                        Button("Clear Records") { deletionAlert.toggle() }
+                            .buttonStyle(.borderedProminent)
+                            .disabled(entity == "Entity")
+
+                    } header: { Text("Delete CoreData database records") }
+
+                    Section {
+                        HStack {
+                            Text("Delete All NS Overrides")
+                            Button("Delete") { state.deleteOverrides() }
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .buttonStyle(.borderedProminent)
+                                .tint(.red)
+                        }
+                    } header: { Text("Delete NS records") }
+
+                    Section {
                         Toggle("Animated Background", isOn: $state.animatedBackground)
                     }
 
@@ -218,11 +235,36 @@ extension Settings {
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(activityItems: state.logItems())
             }
+            .alert(isPresented: $deletionAlert) {
+                alert(entity: entity)
+            }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.inline)
             .onDisappear(perform: { state.uploadProfileAndSettings(false) })
+        }
+
+        private var entities: [String] {
+            CoreDataStack.shared.persistentContainer.managedObjectModel.entities.compactMap(\.name)
+        }
+
+        private func clearEntity(entity: String) {
+            CoreDataStack.shared.deleteBatch(entity: entity)
+            clear()
+        }
+
+        private func clear() {
+            entity = "Entity"
+        }
+
+        private func alert(entity: String) -> Alert {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("All records will be deleted!"),
+                primaryButton: .destructive(Text("Yes"), action: { clearEntity(entity: entity) }),
+                secondaryButton: .cancel()
+            )
         }
     }
 }
