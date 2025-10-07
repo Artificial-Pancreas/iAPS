@@ -739,7 +739,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Aplikácia vás upozorní, keď množstvo inzulínu v Pode dosiahne túto úroveň (50 – 10 J). \n\nRolovaním nastavte počet jednotiek, pri ktorých chcete byť upozornení.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Nízka hladina v rezervoári";
+"Low Reservoir" = "Nízka hladina v zásobníku";
 
 /* */
 "Save" = "Uložiť";

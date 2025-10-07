@@ -279,7 +279,7 @@
 "Failed to Update Expiration Reminder" = "Nepodarilo sa aktualizovať pripomenutie o exspirácii";
 
 /* Alert title for error when updating low reservoir reminder */
-"Failed to Update Low Reservoir Reminder" = "Nepodarilo sa aktualizovať pripomienku nízkej hladiny v rezervoári";
+"Failed to Update Low Reservoir Reminder" = "Nepodarilo sa aktualizovať pripomienku nízkej hladiny zásobníka";
 
 /* Pod life HUD view label */
 "Fault" = "Chyba";
@@ -569,7 +569,7 @@
 "Replace Pod Now" = "Ihneď vymeňte pod";
 
 /* The title of the cell showing reservoir status */
-"Reservoir" = "Rezervoár";
+"Reservoir" = "Zásobník";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Obnoviť podávanie inzulínu";
