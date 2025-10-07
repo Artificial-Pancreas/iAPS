@@ -197,29 +197,31 @@ extension Settings {
                         }
                     } header: { Text("Developer") }
 
-                    Section {
-                        Picker("Entity", selection: $entity) {
-                            ForEach(entities, id: \.self) { e in
-                                Text(e)
-                            }
-                        }.pickerStyle(.menu)
+                    if state.debugOptions {
+                        Section {
+                            Picker("Entity", selection: $entity) {
+                                ForEach(entities, id: \.self) { e in
+                                    Text(e)
+                                }
+                            }.pickerStyle(.menu)
 
-                        Button("Clear Records") { deletionAlert.toggle() }
-                            .buttonStyle(.borderedProminent)
-                            .disabled(entity == "Entity")
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-
-                    } header: { Text("Delete CoreData database records") }
-
-                    Section {
-                        HStack {
-                            Text("Delete All NS Overrides")
-                            Button("Delete") { state.deleteOverrides() }
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                            Button("Clear Records") { deletionAlert.toggle() }
                                 .buttonStyle(.borderedProminent)
-                                .tint(.red)
-                        }
-                    } header: { Text("Delete NS records") }
+                                .disabled(entity == "Entity")
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+
+                        } header: { Text("Delete CoreData database records") }
+
+                        Section {
+                            HStack {
+                                Text("Delete All NS Overrides")
+                                Button("Delete") { state.deleteOverrides() }
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                            }
+                        } header: { Text("Delete NS records") }
+                    }
 
                     Section {
                         Toggle("Animated Background", isOn: $state.animatedBackground)
