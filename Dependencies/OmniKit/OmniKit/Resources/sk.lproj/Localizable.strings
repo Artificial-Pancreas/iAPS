@@ -135,7 +135,7 @@
 "Internal pod fault %1$03d" = "Interná chyba podu %1$03d";
 
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
-"InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "PrerušenýBolus: %1$@ j (%2$@ j naplánované) %3$@ %4$@ %5$@";
+"InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "PrerušenýBolus: %1$@ J (%2$@ J naplánované) %3$@ %4$@ %5$@";
 
 /* Error message for when unexpected address is received (1: received address) (2: expected address) */
 "Invalid address 0x%x. Expected 0x%x" = "Neplatná adresa 0x %1$x . Očakáva sa 0x %2$x";
@@ -153,7 +153,7 @@
 "Low Reservoir" = "Nízka hladina v rezervoári";
 
 /* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Nízka hladina v zásobníku (%1$gU)";
+"Low reservoir advisory (%1$gU)" = "Nízka hladina v zásobníku (%1$gJ)";
 
 /* Description for low reservoir alarm */
 "Low reservoir advisory alarm" = "Nízka hladina v zásobníku";
@@ -288,7 +288,7 @@
 "Pod sent ack instead of response" = "Pod poslal potvrdenie namiesto odpovede ";
 
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
-"Pod setup window expired" = "Okno nastavenia podov vypršalo";
+"Pod setup window expired" = "Okno nastavenia Podu exspirovalo";
 
 /* Description for pod suspended reminder */
 "Pod suspended reminder" = "Pripomenutie pozastaveného podu";
@@ -347,7 +347,7 @@
 "Suspend In Progress Reminder" = "Pripomienka prebiehajúceho pozastavenia";
 
 /* Description for suspend time expired */
-"Suspend time expired" = "Čas pozastavenia vypršal";
+"Suspend time expired" = "Čas pozastavenia exspiroval";
 
 /* Delivery status when insulin delivery is suspended */
 "Suspended" = "Pozastavené";
@@ -377,7 +377,7 @@
 "Temp basal running" = "Prebieha dočasný bazál";
 
 /* The format string describing a temp basal. (1: The rate)(2: Start time)(3: duration)(4: volume)(5: scheduled certainty */
-"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "DočasBazál: %1$@ j/hod %2$@ %3$@ %4$@ j %5$@";
+"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "DočasBazál: %1$@ J/hod %2$@ %3$@ %4$@ j %5$@";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Obdobie pozastavenia inzulínu sa skončilo.\n\nPodávanie inzulínu môžete obnoviť z bannera na domovskej obrazovke alebo z obrazovky nastavení pumpy. Pripomienka sa vám znova zobrazí o 15 minút.";

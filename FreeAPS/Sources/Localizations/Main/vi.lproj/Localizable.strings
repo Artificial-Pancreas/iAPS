@@ -4,7 +4,7 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Tự thêm liều insulin và bỏ qua liều bolus thực tế";
+"Add insulin without actually bolusing" = "Thêm liều insulin và bỏ qua liều bolus thực tế";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Thêm %@ và bỏ qua liều bolus";

@@ -12,7 +12,7 @@
 "Pod Expiration Reminder" = "Pripomienka o expirácii";
 
 /* Alert content title for podExpiring pod alert */
-"Pod Expired" = "Pod expiroval";
+"Pod Expired" = "Pod exspiroval";
 
 /* Alert content title for lowReservoir pod alert */
 "Low Reservoir" = "Nízka hladina v rezervoári";
@@ -51,10 +51,10 @@
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Obdobie pozastavenia inzulínu skončilo.\n\nMôžete obnoviť podávanie z banneru na domovskej obrazovke alebo z nastavení vašej pumpy. Pripomenutie dostanete znova o 15 minút.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Dokončite párovanie Vášho Podu.";
+"Please finish pairing your pod." = "Dokončite párovanie vášho Podu.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
-"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Čas na Vašej pumpe sa líši od aktuálneho času. Môžete skontrolovať čas pumpy a synchronizovať ho s aktuálnym časom v nastaveniach.";
+"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Čas na vašej pumpe sa líši od aktuálneho času. Môžete skontrolovať čas pumpy a synchronizovať ho s aktuálnym časom v nastaveniach.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
 "Suspension time is up. Open the app and resume." = "Čas pozastavenia uplynul. Otvorte aplikáciu a obnovte podávanie.";
@@ -87,10 +87,10 @@
 "Pod Reminders" = "Upozornenia Podu";
 
 /* Footer text for pod reminders section */
-"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Aplikácia nastaví pripomienku na Pode, aby Vás vopred upozornila na jeho vypršanie. Vopred nastavte počet hodín, kedy chcete byť upozornení. Táto hodnota sa použije ako predvolená pri párovaní nového Podu.";
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Aplikácia nastaví pripomienku na Pod, aby vás vopred upozornila na exspiráciu Podu. Nastavte počet hodín vopred, ktorý chcete mať predvolene nastavený pri párovaní nového Podu.";
 
 /* Footer text for scheduled reminder area */
-"The expiration reminder time for the current Pod." = "Pripomenutie vypršania času platnosti pre aktuálny Pod.";
+"The expiration reminder time for the current Pod." = "Čas pripomienky exspirácie pre aktuálny Pod.";
 
 /* Footer text for low reservoir value row */
 "The app notifies you when the amount of insulin in the Pod reaches this level." = "Aplikácia Vás bude notifikovať, ak zostatok inzulínu v Pode dosiahne túto úroveň.";
@@ -102,7 +102,7 @@
 "Suspend Insulin Delivery" = "Pozastaviť podávanie inzulínu";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod vypršal";
+"Pod expired" = "Pod exspiroval";
 
 /* Label for pod life state when pod not fully deactivated */
 "Unfinished deactivation" = "Deaktivácia neukončená";
@@ -183,7 +183,7 @@
 "Pod expires in" = "Pod exspiruje o";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod vypršal";
+"Pod expired" = "Pod exspiroval";
 
 /* Label for pod life state when pod not fully deactivated */
 "Unfinished deactivation" = "Deaktivácia neukončená";
@@ -240,7 +240,7 @@
 "No Insulin" = "Žiadny inzulín";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "Pod expiroval";
+"Pod Expired" = "Pod exspiroval";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Oklúzia podu";
@@ -363,7 +363,7 @@
 "Switch to other insulin delivery device" = "Prechod na iné zariadenie na podávanie inzulínu";
 
 /* Title for pod sync time action sheet. */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na Vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe s aktuálnym čas?";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Áno, zosynchronizovať s aktuálnym časom";
@@ -460,7 +460,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Vymeňte Pod. Podávanie inzulínu sa zastaví 8 hodín po uplynutí platnosti Podu alebo ak v ňom nezostane žiadny inzulín.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Naplňte nový Pod s inzulínom U-100 (na Pode nechajte nasadený modrý uzáver ihly).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Naplňte nový Pod s inzulínom 100 J (na Pode nechajte nasadený modrý uzáver ihly).";
 
 /* Label text for step 1 of pair pod instructions */
 "Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Odstráňte modrý kryt ihly z Podu a skontrolujte kanylu. Potom odstráňte papierový podklad.";
@@ -547,7 +547,7 @@
 "Deactivated" = "Deaktivované";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Váš pod je pripravený na použitie.\n\n%1$@ Vám pripomenie, aby ste si vymenili pod pred uplynutím jeho platnosti. Môžete to zmeniť na čas, ktorý vám vyhovuje.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Váš pod je pripravený na použitie.\n\n%1$@ vám pripomenie, aby ste si vymenili Pod pred uplynutím jeho platnosti. Môžete to zmeniť na čas, ktorý vám vyhovuje.";
 
 /* */
 "Scheduled Reminder" = "Naplánovaná pripomienka";
@@ -571,7 +571,7 @@
 "Incorrect Response" = "Nesprávna odpoveď";
 
 /* Error message description for PeripheralManagerError.timeout */
-"Timeout" = "Časový limit vypršal";
+"Timeout" = "Časový limit";
 
 /* Error message description for PeripheralManagerError.emptyValue */
 "Empty Value" = "Prázdna hodnota";
@@ -736,10 +736,10 @@
 "Expiration Reminder" = "Pripomienka Expirácie";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Aplikácia vás upozorní, keď množstvo inzulínu v Pode dosiahne túto úroveň (50 – 10 U). \n\nRolovaním nastavte počet jednotiek, pri ktorých chcete byť upozornení.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Aplikácia vás upozorní, keď množstvo inzulínu v Pode dosiahne túto úroveň (50 – 10 J). \n\nRolovaním nastavte počet jednotiek, pri ktorých chcete byť upozornení.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Nízka hladina v rezervoári";
+"Low Reservoir" = "Nízka hladina v zásobníku";
 
 /* */
 "Save" = "Uložiť";
@@ -838,12 +838,12 @@
 "Previous Pod Details" = "Podrobnosti predchádzajúceho Podu";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Podrobnosti o manažérovi čerpadla";
+"Pump Manager Details" = "Podrobnosti o správcovi pumpy";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Získanie údajov o správcovi čerpadla...";
+"Retrieving Pump Manager Details..." = "Načítavajú sa podrobnosti o správcovi pumpy...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Podrobnosti o manažérovi čerpadla";
+"Refresh Pump Manager Details" = "Obnoviť podrobnosti o správcovi pumpy";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostiky";

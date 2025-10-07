@@ -17,7 +17,7 @@
 "Continue without bolus" = "Continue without bolus";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "אין מידע ";
 
 /* Bolus View */
 "No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";

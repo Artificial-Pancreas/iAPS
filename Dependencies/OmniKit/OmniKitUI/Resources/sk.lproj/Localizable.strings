@@ -15,13 +15,13 @@
 "%@ U" = "%@ j";
 
 /* Format string for bolus progress when finished. (1: The localized amount) */
-"%@ U (Finished)" = "%@ j (Dokončené)";
+"%@ U (Finished)" = "%@ J (Dokončené)";
 
 /* Format string for bolus progress. (1: The delivered amount) (2: The programmed amount) (3: the percent progress) */
-"%@ U of %@ U (%@)" = "%1$@ j z %2$@ j ( %3$@ )";
+"%@ U of %@ U (%@)" = "%1$@ J z %2$@ J (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
-"%@ U/hour" = "%@ j/hod";
+"%@ U/hour" = "%@ J/hod";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@ .";
@@ -30,10 +30,10 @@
 "%@%%" = "%@ %%";
 
 /* Format string for reservoir reading when above or equal to maximum reading. (1: The localized amount) */
-"%@+ U" = "%@+ j";
+"%@+ U" = "%@+ J";
 
 /* Format string for reservoir volume. (1: The localized volume) */
-"%@U" = "%@ j";
+"%@U" = "%@ J";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "1 pre 2";
@@ -54,7 +54,7 @@
 "%1$@+ %2$@" = "%1$@ + %2$@";
 
 /* Format string for total delivery on pod details screen */
-"%g U" = "%g j";
+"%g U" = "%g J";
 
 /* Button text for 1 hour suspend duration */
 "1 hour" = "1 hodina";
@@ -279,13 +279,13 @@
 "Failed to Update Expiration Reminder" = "Nepodarilo sa aktualizovať pripomenutie o exspirácii";
 
 /* Alert title for error when updating low reservoir reminder */
-"Failed to Update Low Reservoir Reminder" = "Nepodarilo sa aktualizovať pripomienku nízkej hladiny v rezervoári";
+"Failed to Update Low Reservoir Reminder" = "Nepodarilo sa aktualizovať pripomienku nízkej hladiny zásobníka";
 
 /* Pod life HUD view label */
 "Fault" = "Chyba";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Naplňte nový pod inzulínom U-100 (kryt ihly ponechajte nasadený). Budete počuť 2 pípnutia.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Naplňte nový Pod inzulínom 100 J (kryt ihly ponechajte nasadený). Budete počuť 2 pípnutia.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Dokončiť deaktiváciu";
@@ -569,7 +569,7 @@
 "Replace Pod Now" = "Ihneď vymeňte pod";
 
 /* The title of the cell showing reservoir status */
-"Reservoir" = "Rezervoár";
+"Reservoir" = "Zásobník";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Obnoviť podávanie inzulínu";
