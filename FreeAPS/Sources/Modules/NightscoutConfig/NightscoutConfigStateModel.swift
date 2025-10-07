@@ -326,9 +326,15 @@ extension NightscoutConfig {
                 }
             )
             .receive(on: processQueue)
+            .map { glucose in
+                let onePer5Min = glucose.keepingAtMostOne(every: TimeInterval(minutes: 4.5))
+                debug(.nightscout, "fetched \(glucose.count) (filtered: \(onePer5Min.count)) glucose records from nightscout")
+                return onePer5Min
+            }
             .sink { [weak self] glucose in
-                guard let self = self else { return }
-                debug(.nightscout, "fetched \(glucose.count) glucose records from nightscout")
+                guard let self = self else {
+                    return
+                }
 
                 guard glucose.isNotEmpty else {
                     DispatchQueue.main.async {
@@ -357,5 +363,28 @@ extension NightscoutConfig {
             url = ""
             secret = ""
         }
+    }
+}
+
+extension Array where Element == BloodGlucose {
+    /// Keep at most one reading per `window` (sliding), preferring earlier readings.
+    func keepingAtMostOne(every window: TimeInterval) -> [BloodGlucose] {
+        let sorted = self.sorted { $0.dateString < $1.dateString }
+        var kept: [BloodGlucose] = []
+        kept.reserveCapacity(sorted.count)
+
+        var lastKeptTime: Date?
+        for bg in sorted {
+            if let last = lastKeptTime {
+                if bg.dateString.timeIntervalSince(last) >= window {
+                    kept.append(bg)
+                    lastKeptTime = bg.dateString
+                }
+            } else {
+                kept.append(bg)
+                lastKeptTime = bg.dateString
+            }
+        }
+        return kept
     }
 }

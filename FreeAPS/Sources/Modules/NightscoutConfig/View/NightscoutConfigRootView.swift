@@ -126,7 +126,7 @@ extension NightscoutConfig {
                         DecimalTextField("1", value: $state.backFillIntervall, formatter: daysFormatter, liveEditing: true)
                     }
                     if state.backfilling {
-                        ProgressView(value: Double(state.backfillingProgress), total: 1.0)
+                        ProgressView(value: min(max(state.backfillingProgress, 0), 1), total: 1.0)
                             .progressViewStyle(BackfillProgressViewStyle())
                     }
                     Button("Backfill glucose") { state.backfillGlucose() }
