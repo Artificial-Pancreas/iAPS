@@ -1093,7 +1093,7 @@ Enact a temp Basal or a temp target */
 "Very High" = "Veľmi vysoké";
 
 /* TIR Chart */
-"Very Low" = "Veľmi nízke";
+"Very Low" = "Veľmi nízka";
 
 /* */
 "glucose" = "glykémia";
@@ -1120,7 +1120,7 @@ Enact a temp Basal or a temp target */
 "Bolus Amount in U" = "Veľkosť bolusu v J";
 
 /* Bolus shortcut. Setting */
-"Allow iOS Bolus Shortcuts" = "Povoliť iOS Bolus Skratky";
+"Allow iOS Bolus Shortcuts" = "Povoliť bolus v Skratkách iOS";
 
 /* Bolus shortcut setting. Header */
 "iOS Shortcuts" = "iOS Skratky";
@@ -1921,7 +1921,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Expiration Reminder" = "Pripomienka exspirácie";
 
 /* */
-"Low Reservoir" = "Nízka hladina v rezervoári";
+"Low Reservoir" = "Nízka hladina v zásobníku";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "Žiadna pripomienka";
@@ -1930,7 +1930,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Scheduled Reminder" = "Naplánovaná pripomienka";
 
 /* */
-"Low Reservoir Reminder" = "Pripomienka Nízka hladina v rezervoári";
+"Low Reservoir Reminder" = "Pripomienka nízkej hladiny zásobníka";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Uistite sa, že iPhone a Pod sú blízko seba. Ak problémy s komunikáciou pretrvávajú, presuňte sa do inej oblasti.";
