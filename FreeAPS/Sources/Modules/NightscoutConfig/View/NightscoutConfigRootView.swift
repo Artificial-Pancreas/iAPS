@@ -29,6 +29,12 @@ extension NightscoutConfig {
             return formatter
         }
 
+        private var daysFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -114,9 +120,20 @@ extension NightscoutConfig {
                     }
 
                 Section {
+                    HStack {
+                        Text("Days").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("1", value: $state.backFillIntervall, formatter: daysFormatter, liveEditing: true)
+                    }
+                    if state.backfilling {
+                        ProgressView(value: min(max(state.backfillingProgress, 0), 1), total: 1.0)
+                            .progressViewStyle(BackfillProgressViewStyle())
+                    }
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
                 }
+                header: { Text("Backfill glucose") }
+                footer: { Text("Fetches old glucose readings from Nightscout") }
 
                 Section {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
@@ -128,6 +145,20 @@ extension NightscoutConfig {
             .alert(isPresented: $isImportAlertPresented) {
                 importAlert!
             }
+        }
+    }
+}
+
+public struct BackfillProgressViewStyle: ProgressViewStyle {
+    @Environment(\.colorScheme) var colorScheme
+
+    public func makeBody(configuration: LinearProgressViewStyle.Configuration) -> some View {
+        @State var progress = CGFloat(configuration.fractionCompleted ?? 0)
+        ZStack {
+            ProgressView(value: progress)
+                .tint(Color.loopGreen)
+                .scaleEffect(y: 5.5)
+                .frame(height: 10)
         }
     }
 }

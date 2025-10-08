@@ -5,7 +5,7 @@ import Swinject
 import UIKit
 
 protocol NightscoutManager {
-    func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never>
+    func fetchGlucose(since date: Date, progress: ((Double) -> Void)?) -> AnyPublisher<[BloodGlucose], Never>
     func fetchCarbs() -> AnyPublisher<[CarbsEntry], Never>
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
@@ -102,7 +102,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         return nil
     }
 
-    func fetchGlucose(since date: Date) -> AnyPublisher<[BloodGlucose], Never> {
+    func fetchGlucose(since date: Date, progress: ((Double) -> Void)?) -> AnyPublisher<[BloodGlucose], Never> {
         ping = nil
 
         guard isNetworkReachable else {
@@ -116,8 +116,28 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         let startDate = Date()
+        let secondsToFetch = Double(startDate.timeIntervalSince1970 - date.timeIntervalSince1970)
+        func paginate(until: Date?, acc: [BloodGlucose]) -> AnyPublisher<[BloodGlucose], Error> {
+            debug(.nightscout, "requesting glucose records page from nightscout: \(date) .. \(String(describing: until))")
+            return nightscout.fetchLastGlucose(sinceDate: date, untilDate: until)
+                .flatMap { chunk -> AnyPublisher<[BloodGlucose], Error> in
+                    guard let oldest = chunk.min(by: { $0.dateString < $1.dateString }) else {
+                        // empty chunk, nothing more to request
+                        progress?(100.0)
+                        return Just(acc).setFailureType(to: Error.self).eraseToAnyPublisher()
+                    }
 
-        return nightscout.fetchLastGlucose(sinceDate: date)
+                    let secondsFetched = Double(startDate.timeIntervalSince1970 - oldest.dateString.timeIntervalSince1970)
+                    if secondsToFetch > 0 {
+                        progress?((secondsFetched / secondsToFetch).clamped(0.0 ... 100.0))
+                    }
+
+                    return paginate(until: oldest.dateString, acc: acc + chunk)
+                }
+                .eraseToAnyPublisher()
+        }
+
+        return paginate(until: nil, acc: []) // start with no upper bound on date
             .tryCatch({ (error) -> AnyPublisher<[BloodGlucose], Error> in
                 print(error.localizedDescription)
                 return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()

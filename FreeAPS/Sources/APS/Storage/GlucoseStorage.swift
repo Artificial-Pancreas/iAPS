@@ -18,6 +18,7 @@ protocol GlucoseStorage {
     /// filters records by frequency - at most "1 per minute" or "1 per 5 minutes" (according to settings.allowOneMinuteGlucose)
     func retrieveFiltered() -> [BloodGlucose]
     func latestDate() -> Date?
+    func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose]
     var alarm: GlucoseAlarm? { get }
 }
 
@@ -56,12 +57,13 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     .sorted { $0.dateString > $1.dateString } ?? []
                 let newGlucoseData = Array(uniqEvents)
 
+                // FileStorage
                 storage.save(newGlucoseData, as: file)
 
                 // Only log once
                 debug(
                     .deviceManager,
-                    "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(glucose.last?.glucose, default: "None") mg/Dl, date: \(glucose.last?.dateString, default: "No Date")."
+                    "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(String(describing: glucose.last?.glucose)) mg/Dl, date: \(String(describing: glucose.last?.dateString))."
                 )
 
                 stored = newGlucoseData
@@ -109,7 +111,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         targetBottom: nil
                     )
                     treatments.append(treatment)
-                    debug(.deviceManager, "CGM sensor change \(sensorSessionStart.sessionStartDate, default: "None")")
+                    debug(.deviceManager, "CGM sensor change \(String(describing: sensorSessionStart.sessionStartDate))")
 
                     // We have to keep quite a bit of history as sensors start only every 10 days.
                     storage.save(
@@ -177,7 +179,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         return filterFrequentGlucose(retrieved, interval: minInterval)
     }
 
-    private func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
+    func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
         // glucose is already sorted newest-to-oldest in retrieve
         let sorted = glucose.sorted { $0.date > $1.date }
         guard let latest = sorted.first else { return [] }

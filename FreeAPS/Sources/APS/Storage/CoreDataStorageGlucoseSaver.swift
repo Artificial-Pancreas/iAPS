@@ -20,9 +20,13 @@ final class CoreDataStorageGlucoseSaver: NewGlucoseObserver {
         broadcaster.register(NewGlucoseObserver.self, observer: self)
     }
 
-    func newGlucoseStored(_ bloodGlucose: [BloodGlucose]) {
+    // nightscout backfill calls this version and waits for the `completion` callback
+    func storeGlucose(_ bloodGlucose: [BloodGlucose], completion: (() -> Void)? = nil) {
         backgroundContext.perform {
-            guard let earliestDate = bloodGlucose.min(by: { $0.dateString < $1.dateString }).map(\.dateString) else { return }
+            guard let earliestDate = bloodGlucose.min(by: { $0.dateString < $1.dateString }).map(\.dateString) else {
+                completion?()
+                return
+            }
             do {
                 let requestReadings = Readings.fetchRequest()
                 requestReadings.predicate = NSPredicate(
@@ -45,9 +49,15 @@ final class CoreDataStorageGlucoseSaver: NewGlucoseObserver {
                     dataForForStats.direction = bg.direction?.symbol ?? "↔︎"
                 }
                 try self.backgroundContext.save()
+                completion?()
             } catch {
                 debug(.service, "failed to save glucose to core data: \(error)")
+                completion?()
             }
         }
+    }
+
+    func newGlucoseStored(_ bloodGlucose: [BloodGlucose]) {
+        storeGlucose(bloodGlucose)
     }
 }
