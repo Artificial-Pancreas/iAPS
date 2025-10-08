@@ -10,7 +10,6 @@ extension Settings {
         @State private var showShareSheet = false
         @State private var entity: String = "Readings"
         @State private var deletionAlert = false
-        @State private var disable = false
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -195,38 +194,22 @@ extension Settings {
                             HStack {
                                 Toggle("Neglect Carbohydrates in oref0", isOn: $state.noCarbs)
                             }
+
+                            Group {
+                                HStack {
+                                    Text("Delete All NS Overrides")
+                                    Button("Delete") { state.deleteOverrides() }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.red)
+                                }
+                            }
+
+                            Group {
+                                NavigationLink("Delete CoreData database records", destination: clearView)
+                            }
                         }
                     } header: { Text("Developer") }
-
-                    if state.debugOptions {
-                        Section {
-                            Picker("Pick Entity", selection: $entity) {
-                                ForEach(state.entities, id: \.self) {
-                                    Text($0)
-                                }
-                            }.pickerStyle(.automatic)
-
-                            Button("Clear Records") { deletionAlert.toggle() }
-                                .buttonStyle(.borderedProminent)
-                                .disabled(disable)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-
-                        } header: { Text("Delete CoreData database records") }
-
-                        Section {
-                            HStack {
-                                Text("Delete All NS Overrides")
-                                Button("Delete") { state.deleteOverrides() }
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .buttonStyle(.borderedProminent)
-                                    .tint(.red)
-                            }
-                        } header: { Text("Delete NS records") }
-                    }
-
-                    Section {
-                        Toggle("Animated Background", isOn: $state.animatedBackground)
-                    }
 
                     Section {
                         Text("Share logs")
@@ -251,11 +234,13 @@ extension Settings {
 
         private func clearEntity(entity: String) {
             CoreDataStack.shared.deleteBatch(entity: entity)
-            clear()
+            clear(entity)
         }
 
-        private func clear() {
-            disable.toggle()
+        private func clear(_ clear: String) {
+            if let edit = state.entities.firstIndex(where: { $0.entity == clear }) {
+                state.entities[edit].deleted.toggle()
+            }
         }
 
         private func alert(entity: String) -> Alert {
@@ -268,6 +253,31 @@ extension Settings {
                 primaryButton: .destructive(Text("Yes"), action: { clearEntity(entity: entity) }),
                 secondaryButton: .cancel()
             )
+        }
+
+        private func deleted(_ entity: String) -> Bool {
+            state.entities.first(where: { $0.entity == entity && $0.deleted }) != nil
+        }
+
+        private var clearView: some View {
+            Form {
+                Section {
+                    List {
+                        ForEach(state.entities, id: \.id) { item in
+                            HStack {
+                                Text(item.entity)
+                                Spacer()
+                                Button {
+                                    entity = item.entity
+                                    deletionAlert.toggle()
+                                }
+                                label: { Image(systemName: "trash") }
+                                    .disabled(deleted(item.entity))
+                            }
+                        }
+                    }
+                } header: { Text("Delete CoreData database records") }
+            }
         }
     }
 }
