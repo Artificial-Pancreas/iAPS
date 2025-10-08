@@ -8,8 +8,9 @@ extension Settings {
         let resolver: Resolver
         @StateObject var state: StateModel
         @State private var showShareSheet = false
-        @State private var entity = "Entity"
+        @State private var entity: String = "Readings"
         @State private var deletionAlert = false
+        @State private var disable = false
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -199,15 +200,15 @@ extension Settings {
 
                     if state.debugOptions {
                         Section {
-                            Picker("Entity", selection: $entity) {
-                                ForEach(entities, id: \.self) { e in
-                                    Text(e)
+                            Picker("Pick Entity", selection: $entity) {
+                                ForEach(state.entities, id: \.self) {
+                                    Text($0)
                                 }
-                            }.pickerStyle(.menu)
+                            }.pickerStyle(.automatic)
 
                             Button("Clear Records") { deletionAlert.toggle() }
                                 .buttonStyle(.borderedProminent)
-                                .disabled(entity == "Entity")
+                                .disabled(disable)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
 
                         } header: { Text("Delete CoreData database records") }
@@ -248,23 +249,22 @@ extension Settings {
             .onDisappear(perform: { state.uploadProfileAndSettings(false) })
         }
 
-        private var entities: [String] {
-            CoreDataStack.shared.persistentContainer.managedObjectModel.entities.compactMap(\.name)
-        }
-
         private func clearEntity(entity: String) {
             CoreDataStack.shared.deleteBatch(entity: entity)
             clear()
         }
 
         private func clear() {
-            entity = "Entity"
+            disable.toggle()
         }
 
         private func alert(entity: String) -> Alert {
             Alert(
                 title: Text("Are you sure?"),
-                message: Text("All records will be deleted!"),
+                message: Text(
+                    NSLocalizedString("All records in ", comment: "") + entity +
+                        NSLocalizedString(" will be deleted!", comment: "")
+                ),
                 primaryButton: .destructive(Text("Yes"), action: { clearEntity(entity: entity) }),
                 secondaryButton: .cancel()
             )

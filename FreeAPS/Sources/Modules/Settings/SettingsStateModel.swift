@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 
 extension Settings {
@@ -15,6 +16,8 @@ extension Settings {
         @Published var noCarbs = false
         @Published var allowOneMinuteLoop = false
         @Published var allowOneMinuteGlucose = false
+
+        let entities: [String] = CoreDataStack.shared.persistentContainer.managedObjectModel.entities.compactMap(\.name)
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
