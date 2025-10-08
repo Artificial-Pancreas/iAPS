@@ -16,8 +16,10 @@ extension Settings {
         @Published var noCarbs = false
         @Published var allowOneMinuteLoop = false
         @Published var allowOneMinuteGlucose = false
-
-        let entities: [String] = CoreDataStack.shared.persistentContainer.managedObjectModel.entities.compactMap(\.name)
+        @Published var entities: [Cleared] = CoreDataStack.shared.persistentContainer.managedObjectModel.entities
+            .compactMap(\.name).map {
+                Cleared(entity: $0, deleted: false)
+            }
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -100,4 +102,10 @@ extension Settings.StateModel: SettingsObserver {
         debugOptions = settings.debugOptions
         allowDilution = settings.allowDilution
     }
+}
+
+struct Cleared {
+    var entity: String = "Readings"
+    var deleted: Bool = false
+    let id = UUID()
 }
