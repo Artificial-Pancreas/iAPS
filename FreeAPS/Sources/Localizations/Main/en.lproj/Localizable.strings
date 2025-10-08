@@ -189,9 +189,6 @@
 
 /* */
 "Are you sure?" = "Are you sure?";
- 
-/* */
-"All records will be deleted!" = "All records will be deleted!";
 
 /* */
 "Clear Records" = "Clear Records";
@@ -201,6 +198,12 @@
 
 /* */
 "Delete NS records" = "Delete NS records";
+
+/* */
+"All records in " = "All records in ";
+
+/* */
+" will be deleted!" = " will be deleted!";
 
 /* Bottom target temp */
 "Bottom target" = "Bottom target";
