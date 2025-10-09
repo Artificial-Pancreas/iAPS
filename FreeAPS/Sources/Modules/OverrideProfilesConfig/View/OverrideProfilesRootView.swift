@@ -589,7 +589,7 @@ extension OverrideProfilesConfig {
                             Button("Start") {
                                 showAlert.toggle()
                                 let duration = TimeInterval(state.duration * 60)
-                                alertSring = "\(state.percentage.formatted(.number)) %, " +
+                                alertSring = (formatter.string(from: state.percentage as NSNumber) ?? "100") + "%, " +
                                     (
                                         state.duration > 0 && !state._indefinite ? (
                                             dateFormatter
@@ -911,7 +911,7 @@ extension OverrideProfilesConfig {
 
             saveOverride.duration = state.duration as NSDecimalNumber
             saveOverride.indefinite = state._indefinite
-            saveOverride.percentage = state.percentage
+            saveOverride.percentage = state.percentage.rounded()
             saveOverride.smbIsOff = state.smbIsOff
             saveOverride.name = state.profileName
             saveOverride.emoji = state.emoji
