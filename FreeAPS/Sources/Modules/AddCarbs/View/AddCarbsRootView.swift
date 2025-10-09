@@ -1,4 +1,6 @@
+import Combine
 import CoreData
+import OSLog
 import SwiftUI
 import Swinject
 
@@ -8,6 +10,8 @@ extension AddCarbs {
         let editMode: Bool
         let override: Bool
         @StateObject var state: StateModel
+        @StateObject var foodSearchState = FoodSearchStateModel()
+
         @State var dish: String = ""
         @State var isPromptPresented = false
         @State var saved = false
@@ -17,6 +21,17 @@ extension AddCarbs {
         @State private var presentPresets = false
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
+        // Food Search States
+        @State private var showingFoodSearch = false
+        @State private var foodSearchText = ""
+        @State private var searchResults: [FoodItem] = []
+        @State private var isLoading = false
+        @State private var errorMessage: String?
+        @State private var selectedFoodItem: AIFoodItem?
+        @State private var showMultiplierEditor: Bool = false
+        @State private var portionGrams: Double = 100.0
+        @State private var selectedFoodImage: UIImage?
+        @State private var saveAlert = false
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -27,7 +42,6 @@ extension AddCarbs {
                     NSPredicate(format: "dish != %@", "Empty" as String)
                 ]
             )
-
         ) var carbPresets: FetchedResults<Presets>
 
         @Environment(\.managedObjectContext) var moc
@@ -53,6 +67,9 @@ extension AddCarbs {
 
         var body: some View {
             Form {
+                // AI Food Search
+                state.ai ? foodSearch : nil
+
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
                         HStack {
@@ -166,6 +183,148 @@ extension AddCarbs {
                 if editMode { state.apsManager.determineBasalSync() }
             }))
             .sheet(isPresented: $presentPresets, content: { presetView })
+            .sheet(isPresented: $showingFoodSearch) {
+                FoodSearchView(
+                    state: foodSearchState,
+                    onSelect: { selectedFood, image in
+                        handleSelectedFood(selectedFood, image: image)
+                    }
+                )
+            }
+            .alert(isPresented: $saveAlert) { alert(food: selectedFoodItem) }
+        }
+
+        // MARK: - Helper Functions
+
+        @ViewBuilder private func proteinAndFat() -> some View {
+            HStack {
+                Text("Fat").foregroundColor(.blue)
+                Spacer()
+                DecimalTextField(
+                    "0",
+                    value: $state.fat,
+                    formatter: formatter,
+                    autofocus: false,
+                    liveEditing: true
+                )
+                Text("grams").foregroundColor(.secondary)
+            }
+            HStack {
+                Text("Protein").foregroundColor(.green)
+                Spacer()
+                DecimalTextField(
+                    "0",
+                    value: $state.protein,
+                    formatter: formatter,
+                    autofocus: false,
+                    liveEditing: true
+                )
+                Text("grams").foregroundColor(.secondary)
+            }
+        }
+
+        // MARK: - Food Search Section
+
+        private var foodSearch: some View {
+            Group {
+                foodSearchSection
+
+                if let selectedFood = selectedFoodItem {
+                    SelectedFoodView(
+                        food: selectedFood,
+                        foodImage: selectedFoodImage,
+                        portionGrams: $portionGrams,
+                        onChange: {
+                            selectedFoodItem = nil
+                            selectedFoodImage = nil
+                            showingFoodSearch = true
+                        },
+                        onTakeOver: { food in
+                            state.carbs += Decimal(max(food.carbs, 0))
+                            state.fat += Decimal(max(food.fat, 0))
+                            state.protein += Decimal(fmax(food.protein, 0))
+
+                            selectedFoodImage = nil
+                            showingFoodSearch = false
+                            saveAlert.toggle()
+                        }
+                    )
+                }
+            }
+        }
+
+        private var foodSearchSection: some View {
+            Section {
+                // Search in Food Database
+                Button {
+                    showingFoodSearch = true
+                } label: {
+                    HStack {
+                        Image(systemName: "network")
+                        Text("Search Food Database")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.popUpGray)
+                            .font(.system(size: 14, weight: .semibold))
+                    }
+                    .foregroundColor(.blue)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            // Settings
+            header: {
+                HStack {
+                    Text("AI Food Search")
+                    Spacer()
+                    NavigationLink(destination: AISettingsView()) {
+                        Image(systemName: "gearshape")
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .foregroundColor(.blue)
+                }
+            }
+        }
+
+        private func addToPresetsIfNew(food: AIFoodItem) {
+            let preset = Presets(context: moc)
+            preset.carbs = Decimal(max(food.carbs, 0)) as NSDecimalNumber
+            preset.fat = Decimal(max(food.fat, 0)) as NSDecimalNumber
+            preset.protein = Decimal(fmax(food.protein, 0)) as NSDecimalNumber
+            preset.dish = food.name + " \(portionGrams) g"
+            if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
+                do {
+                    try moc.save()
+                    state.selection = preset
+                    state.addPresetToNewMeal()
+                    selectedFoodItem = nil
+                } catch { print("Couldn't save " + (preset.dish ?? "new preset.")) }
+            }
+        }
+
+        private func isAIAnalysisProduct(_ food: AIFoodItem) -> Bool {
+            food.brand == "AI Analysis" || food.brand == nil || food.brand?.contains("AI") == true
+        }
+
+        private func handleSelectedFood(_ foodItem: FoodItem) {
+            let calculatedCalories = Double(truncating: foodItem.carbs as NSNumber) * 4 +
+                Double(truncating: foodItem.protein as NSNumber) * 4 +
+                Double(truncating: foodItem.fat as NSNumber) * 9
+
+            let aiFoodItem = AIFoodItem(
+                name: foodItem.name,
+                brand: foodItem.source,
+                calories: calculatedCalories,
+                carbs: Double(truncating: foodItem.carbs as NSNumber),
+                protein: Double(truncating: foodItem.protein as NSNumber),
+                fat: Double(truncating: foodItem.fat as NSNumber),
+                imageURL: foodItem.imageURL
+            )
+            selectedFoodItem = aiFoodItem
+
+            // Gramm zurücksetzen (100g für normale Produkte)
+            portionGrams = 100.0
+
+            showingFoodSearch = false
         }
 
         private var empty: Bool {
@@ -202,6 +361,30 @@ extension AddCarbs {
             }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
+        private var minusButton: some View {
+            Button {
+                state.subtract()
+                if empty {
+                    state.selection = nil
+                    state.combinedPresets = []
+                }
+            }
+            label: { Image(systemName: "minus.circle.fill")
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
+        }
+
+        private var plusButton: some View {
+            Button {
+                state.plus()
+            }
+            label: { Image(systemName: "plus.circle.fill")
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
+        }
+
         private var presetView: some View {
             Form {
                 Section {} header: {
@@ -217,7 +400,11 @@ extension AddCarbs {
                             HStack {
                                 Text("Save as Preset")
                                 Spacer()
-                                Text("[\(state.carbs), \(state.fat), \(state.protein)]")
+                                Text(
+                                    "[Carbs: " + (formatter.string(from: state.carbs as NSNumber) ?? "") + ", Fat: " +
+                                        (formatter.string(from: state.fat as NSNumber) ?? "") + ", Protein: " +
+                                        (formatter.string(from: state.protein as NSNumber) ?? "") + "]"
+                                )
                             }
                         }.frame(maxWidth: .infinity, alignment: .center)
                             .listRowBackground(Color(.systemBlue)).tint(.white)
@@ -255,72 +442,27 @@ extension AddCarbs {
             .environment(\.colorScheme, colorScheme)
         }
 
-        private var editView: some View {
-            Form {
-                Section {
-                    HStack {
-                        TextField("", text: $newPreset.dish)
-                    }
-                    HStack {
-                        Text("Carbs").foregroundStyle(.secondary)
-                        Spacer()
-                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter, liveEditing: true)
-                    }
-                    HStack {
-                        Text("Fat").foregroundStyle(.secondary)
-                        Spacer()
-                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter, liveEditing: true)
-                    }
-                    HStack {
-                        Text("Protein").foregroundStyle(.secondary)
-                        Spacer()
-                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter, liveEditing: true)
-                    }
-                } header: { Text("Saved Food") }
-
-                Section {
-                    Button { save() }
-                    label: { Text("Save") }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
-                        .tint(.white)
-                        .disabled(disabled)
-                }
-            }.environment(\.colorScheme, colorScheme)
-        }
-
-        @ViewBuilder private func proteinAndFat() -> some View {
-            HStack {
-                Text("Fat").foregroundColor(.orange)
-                Spacer()
-                DecimalTextField(
-                    "0",
-                    value: $state.fat,
-                    formatter: formatter,
-                    autofocus: false,
-                    liveEditing: true
+        private func alert(food: AIFoodItem?) -> Alert {
+            if let food = food {
+                return Alert(
+                    title: Text("Save \"" + food.name + "\" as new Meal Preset?"),
+                    message: Text("To avoid having to search for same food on web again."),
+                    primaryButton: .destructive(Text("Yes"), action: { addToPresetsIfNew(food: food) }),
+                    secondaryButton: .cancel()
                 )
-                Text("grams").foregroundColor(.secondary)
             }
-            HStack {
-                Text("Protein").foregroundColor(.red)
-                Spacer()
-                DecimalTextField(
-                    "0",
-                    value: $state.protein,
-                    formatter: formatter,
-                    autofocus: false,
-                    liveEditing: true
-                ).foregroundColor(.loopRed)
 
-                Text("grams").foregroundColor(.secondary)
-            }
+            return Alert(
+                title: Text("Oops!"),
+                message: Text("Something isnt't working with food item \"" + (food?.name ?? "nil")),
+                primaryButton: .cancel(Text("OK")),
+                secondaryButton: .cancel()
+            )
         }
 
         @ViewBuilder private func presetsList(for preset: Presets) -> some View {
             let dish = preset.dish ?? ""
 
-            // Only list saved entries
             if !preset.hasChanges {
                 HStack {
                     VStack(alignment: .leading) {
@@ -355,30 +497,6 @@ extension AddCarbs {
             }
         }
 
-        private var minusButton: some View {
-            Button {
-                state.subtract()
-                if empty {
-                    state.selection = nil
-                    state.combinedPresets = []
-                }
-            }
-            label: { Image(systemName: "minus.circle.fill")
-            }
-            .buttonStyle(.borderless)
-            .disabled(state.selection == nil)
-        }
-
-        private var plusButton: some View {
-            Button {
-                state.plus()
-            }
-            label: { Image(systemName: "plus.circle.fill")
-            }
-            .buttonStyle(.borderless)
-            .disabled(state.selection == nil)
-        }
-
         private func delete(at offsets: IndexSet) {
             for index in offsets {
                 let preset = carbPresets[index]
@@ -387,7 +505,7 @@ extension AddCarbs {
             do {
                 try moc.save()
             } catch {
-                // To do: add error
+                // Error handling
             }
         }
 
@@ -408,7 +526,7 @@ extension AddCarbs {
             if moc.hasChanges {
                 do {
                     try moc.save()
-                } catch { /* To do: add error */ }
+                } catch {}
             }
             state.edit = false
         }
@@ -421,20 +539,65 @@ extension AddCarbs {
         }
 
         private func addfromCarbsView() {
-            newPreset = (NSLocalizedString("New", comment: ""), state.carbs, state.fat, state.protein)
+            newPreset = (
+                NSLocalizedString("New", comment: ""),
+                state.carbs.rounded(to: 1),
+                state.fat.rounded(to: 1),
+                state.protein.rounded(to: 1)
+            )
             state.edit = true
         }
 
         private func reset() {
             presentPresets = false
             string = ""
-            state.presetToEdit = nil // Probably not needed
-            state.edit = false // Probably not needed
         }
 
         private var disabled: Bool {
             (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
                 (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
+        }
+
+        private func handleSelectedFood(_ foodItem: FoodItem, image: UIImage? = nil) {
+            let aiFoodItem = foodItem.toAIFoodItem()
+            selectedFoodItem = aiFoodItem
+            selectedFoodImage = image
+            portionGrams = 100.0
+            showingFoodSearch = false
+        }
+
+        private var editView: some View {
+            Form {
+                Section {
+                    HStack {
+                        TextField("", text: $newPreset.dish)
+                    }
+                    HStack {
+                        Text("Carbs").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter, liveEditing: true)
+                    }
+                    HStack {
+                        Text("Fat").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter, liveEditing: true)
+                    }
+                    HStack {
+                        Text("Protein").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter, liveEditing: true)
+                    }
+                } header: { Text("Saved Food") }
+
+                Section {
+                    Button { save() }
+                    label: { Text("Save") }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
+                        .tint(.white)
+                        .disabled(disabled)
+                }
+            }.environment(\.colorScheme, colorScheme)
         }
     }
 }

@@ -25,6 +25,7 @@ extension AddCarbs {
         @Published var hypoTreatment = false
         @Published var presetToEdit: Presets?
         @Published var edit = false
+        @Published var ai = false
 
         @Published var combinedPresets: [(preset: Presets?, portions: Int)] = []
 
@@ -39,6 +40,7 @@ extension AddCarbs {
             maxCarbs = settings.settings.maxCarbs
             skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
             useFPUconversion = settingsManager.settings.useFPUconversion
+            ai = settingsManager.settings.ai
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
