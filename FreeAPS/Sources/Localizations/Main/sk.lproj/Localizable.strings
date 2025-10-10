@@ -1985,7 +1985,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Setup Complete" = "Nastavenie je dokončené";
 
 /* */
-"Insulin Suspended" = "Inzulín Suspendovaný";
+"Insulin Suspended" = "Inzulín pozastavený";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Pozastavenie podávania inzulínu...";
