@@ -434,7 +434,7 @@ final class OverrideStorage {
                         into: [coredataContext]
                     )
                 }
-            } catch { /* To do: handle any eventual errors. */ }
+            } catch { debug(.apsManager, entity + "records failed to delete in batch.") }
         }
     }
 }

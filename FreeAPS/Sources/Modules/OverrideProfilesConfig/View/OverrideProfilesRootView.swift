@@ -902,7 +902,7 @@ extension OverrideProfilesConfig {
             do {
                 try moc.save()
             } catch {
-                // To do: add error
+                debug(.apsManager, "Couldn't profile preset at \(offsets).")
             }
         }
 
@@ -967,7 +967,7 @@ extension OverrideProfilesConfig {
             do {
                 try moc.save()
             } catch {
-                // To do: add error
+                debug(.apsManager, "Failed to save \(moc.updatedObjects)")
             }
         }
     }

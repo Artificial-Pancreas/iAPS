@@ -1090,9 +1090,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         self.storage.save(allGlucose, as: fileToSave)
                         debug(.nightscout, "Glucose uploaded")
-
-                        // self.checkForNoneUploadedOverides() // To do : Move somewhere else
-
                     case let .failure(error):
                         debug(.nightscout, "Upload of glucose failed: " + error.localizedDescription)
                     }
