@@ -750,9 +750,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
-        // TODO: [loopkit] do we need to add -10 minutes? Does it do anything?
         return glucoseStorage.latestDate()
-            .map { $0.addingTimeInterval(-10.minutes.timeInterval) } // additional time to calculate directions
+//            .map { $0.addingTimeInterval(-10.minutes.timeInterval) } // additional time to calculate directions
     }
 
     func cgmManagerWantsDeletion(_ manager: CGMManager) {
