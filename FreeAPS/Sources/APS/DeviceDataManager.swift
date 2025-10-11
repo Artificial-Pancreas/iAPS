@@ -30,6 +30,8 @@ protocol DeviceDataManager {
     // notify device manager when the app becomes active
     func didBecomeActive()
 
+    func cgmInfo() -> GlucoseSourceInfo?
+
     func createBolusProgressReporter() -> DoseProgressReporter?
 
     func removePumpAsCGM()
@@ -880,6 +882,11 @@ extension BaseDeviceDataManager {
 
     func updatePumpManagerBLEHeartbeatPreference() {
         pumpManager?.setMustProvideBLEHeartbeat(pumpManagerMustProvideBLEHeartbeat)
+    }
+
+    func cgmInfo() -> GlucoseSourceInfo? {
+        guard let cgmManager = self.cgmManager else { return nil }
+        return KnownPlugins.cgmInfo(for: cgmManager)
     }
 }
 

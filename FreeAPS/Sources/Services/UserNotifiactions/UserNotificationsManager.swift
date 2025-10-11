@@ -43,9 +43,8 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var apsManager: APSManager!
+    @Injected() private var deviceDataManager: DeviceDataManager!
     @Injected() private var router: Router!
-
-//    @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
 
@@ -244,7 +243,6 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else if alert {
-                titles.append(body)
                 let content = UNMutableNotificationContent()
                 content.title = titles.joined(separator: " ")
                 content.body = body
@@ -284,39 +282,30 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private func infoBody() -> String {
+        guard settingsManager.settings.addSourceInfoToGlucoseNotifications,
+              let info = deviceDataManager.cgmInfo()
+        else {
+            return ""
+        }
+
         var body = ""
 
-        // TODO: [loopkit] update this
-//        if settingsManager.settings.addSourceInfoToGlucoseNotifications,
-//           let info = sourceInfoProvider.sourceInfo()
-//        {
-//            // Description
-//            if let description = info[GlucoseSourceKey.description.rawValue] as? String {
-//                body.append("\n" + description)
-//            }
-//
-//            // NS ping
-//            if let ping = info[GlucoseSourceKey.nightscoutPing.rawValue] as? TimeInterval {
-//                body.append(
-//                    "\n"
-//                        + String(
-//                            format: NSLocalizedString("Nightscout ping: %d ms", comment: "Nightscout ping"),
-//                            Int(ping * 1000)
-//                        )
-//                )
-//            }
-//
-//            // Transmitter battery
-//            if let transmitterBattery = info[GlucoseSourceKey.transmitterBattery.rawValue] as? Int {
-//                body.append(
-//                    "\n"
-//                        + String(
-//                            format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"),
-//                            "\(transmitterBattery)"
-//                        )
-//                )
-//            }
-//        }
+        // Description
+        if let description = info.description {
+            body.append("\n" + description)
+        }
+
+        // Transmitter battery
+        if let transmitterBattery = info.transmitterBattery {
+            body.append(
+                "\n"
+                    + String(
+                        format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"),
+                        "\(transmitterBattery)"
+                    )
+            )
+        }
+
         return body
     }
 
