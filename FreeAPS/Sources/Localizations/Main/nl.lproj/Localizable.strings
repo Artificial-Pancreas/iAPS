@@ -190,6 +190,21 @@
 /* */
 "Are you sure?" = "Weet je het zeker?";
 
+/* */
+"Clear Records" = "Clear Records";
+
+/* */
+"Delete CoreData database records" = "Delete CoreData database records";
+
+/* */
+"Delete NS records" = "Delete NS records";
+
+/* */
+"All records in " = "All records in ";
+
+/* */
+" will be deleted!" = " will be deleted!";
+
 /* Bottom target temp */
 "Bottom target" = "Ondergrens doel";
 
@@ -3222,3 +3237,29 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "Om instellingen in te schakelen, ga naar de App Config sectie in de iOS systeemInstellingen App";
+
+/* Section header in CGM view */
+"Active CGM" = "Actieve CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pomp/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "De pomp niet langer als CGM gebruiken";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Gedeelde App groep bron";
+
+/* prefix for the shared app group application */
+"Reading from" = "Lezen van";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Verbinding verbreken";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Lees BG van een externe CGM app met behulp van een gedeelde app groep.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Lezen van ";
