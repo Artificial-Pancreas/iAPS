@@ -23,7 +23,7 @@ export_languages:
   - hu
 files:
   - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
-   translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
+    translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
   - source: /FreeAPS/Resources/Base.lproj/InfoPlist.strings
     translation: /FreeAPS/Resources/%osx_locale%.lproj/InfoPlist.strings
   - source: FreeAPS/Sources/Localizations/Shortcuts/en.lproj/AppShortcuts.strings
