@@ -190,6 +190,21 @@
 /* */
 "Are you sure?" = "Är du säker?";
 
+/* */
+"Clear Records" = "Clear Records";
+
+/* */
+"Delete CoreData database records" = "Delete CoreData database records";
+
+/* */
+"Delete NS records" = "Delete NS records";
+
+/* */
+"All records in " = "All records in ";
+
+/* */
+" will be deleted!" = " will be deleted!";
+
 /* Bottom target temp */
 "Bottom target" = "Nedre målvärde";
 
@@ -3217,3 +3232,29 @@ Enact a temp Basal or a temp target */
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "För att visa inställningar gå till iOS-inställningar, under Appar/iAPS";
+
+/* Section header in CGM view */
+"Active CGM" = "Aktiv CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pump/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Sluta att använda pumpen som CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Källa för delad appgrupp";
+
+/* prefix for the shared app group application */
+"Reading from" = "Läser från";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Koppla från";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Läs BG från en extern CGM-app med hjälp av en delad appgrupp.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Läs från ";
