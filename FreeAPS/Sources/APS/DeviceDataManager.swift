@@ -196,7 +196,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     var availablePumpManagers: [PumpManagerDescriptor] {
         let pumpManagers = pluginManager.availablePumpManagers + availableStaticPumpManagers
-        return pumpManagers
+        return pumpManagers.sorted(by: { $0.localizedTitle < $1.localizedTitle })
     }
 
     func setupPumpManager(
@@ -364,7 +364,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                 localizedTitle: pumpManagerAsCGMManager.localizedTitle
             ))
         }
-        return availableCGMManagers
+        return availableCGMManagers.sorted(by: { $0.localizedTitle < $1.localizedTitle })
     }
 
     func setupCGMManager(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool = false) -> Swift
