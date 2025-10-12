@@ -9,7 +9,7 @@ extension Home {
     struct RootView: BaseView {
         let resolver: Resolver
 
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
@@ -99,6 +99,11 @@ extension Home {
             return scene
         }
 
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         var glucoseView: some View {
             CurrentGlucoseView(
                 recentGlucose: $state.recentGlucose,
@@ -110,7 +115,8 @@ extension Home {
                 alwaysUseColors: $state.alwaysUseColors,
                 displayDelta: $state.displayDelta,
                 scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
-                displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays
+                displayExpiration: $state.displayExpiration,
+                sensordays: $state.sensorDays
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -841,8 +847,6 @@ extension Home {
                 if onboarded.first?.firstRun ?? true {
                     state.fetchPreferences()
                 }
-
-                configureView()
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)

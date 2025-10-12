@@ -6,14 +6,6 @@ extension PumpConfig {
     final class Provider: BaseProvider, PumpConfigProvider {
         @Injected() var apsManager: APSManager!
 
-        func setPumpManager(_ manager: PumpManagerUI) {
-            apsManager.pumpManager = manager
-        }
-
-        var pumpDisplayState: AnyPublisher<PumpDisplayState?, Never> {
-            apsManager.pumpDisplayState.eraseToAnyPublisher()
-        }
-
         func basalProfile() -> [BasalProfileEntry] {
             storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
                 ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]

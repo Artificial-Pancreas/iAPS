@@ -64,6 +64,8 @@ extension OverrideProfilesConfig {
             // Is other override already active?
             let last = OverrideStorage().fetchLatestOverride().last
 
+            percentage.round()
+
             // Is other already active?
             if let active = last, active.enabled {
                 if let preset = OverrideStorage().isPresetName(), let duration = OverrideStorage().cancelProfile() {
@@ -143,7 +145,7 @@ extension OverrideProfilesConfig {
                 let saveOverride = OverridePresets(context: coredataContext)
                 saveOverride.duration = duration as NSDecimalNumber
                 saveOverride.indefinite = _indefinite
-                saveOverride.percentage = percentage
+                saveOverride.percentage = percentage.rounded()
                 saveOverride.smbIsOff = smbIsOff
                 saveOverride.name = profileName
                 saveOverride.emoji = emoji

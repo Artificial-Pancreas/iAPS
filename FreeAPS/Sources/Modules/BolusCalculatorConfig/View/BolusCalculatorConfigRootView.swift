@@ -4,13 +4,18 @@ import Swinject
 extension BolusCalculatorConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @State var isPresented = false
         @State var description = Text("")
         @State var descriptionHeader = Text("")
         @State var confirm = false
         @State var graphics: (any View)?
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var conversionFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -134,7 +139,6 @@ extension BolusCalculatorConfig {
                 } header: { Text("iOS Shortcuts") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("Bolus Calculator")
             .navigationBarTitleDisplayMode(.automatic)
             .blur(radius: isPresented ? 5 : 0)
