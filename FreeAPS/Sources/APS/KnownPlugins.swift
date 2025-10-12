@@ -154,4 +154,40 @@ enum KnownPlugins {
         default: return nil
         }
     }
+
+    static func cgmInfo(for cgmManager: CGMManager) -> GlucoseSourceInfo? {
+        switch cgmManager.pluginIdentifier {
+        case G5CGMManager.pluginIdentifier:
+            guard let cgmManager = cgmManager as? G5CGMManager else { return nil }
+            let description = "Dexcom tramsmitter ID: \(cgmManager.transmitter.ID)"
+            return GlucoseSourceInfo(description: description, transmitterBattery: nil)
+
+        case G6CGMManager.pluginIdentifier:
+            guard let cgmManager = cgmManager as? G6CGMManager else { return nil }
+            let description = "Dexcom tramsmitter ID: \(cgmManager.transmitter.ID)"
+            return GlucoseSourceInfo(description: description, transmitterBattery: nil)
+
+        case LibreTransmitterManagerV3.pluginIdentifier:
+            guard let cgmManager = cgmManager as? LibreTransmitterManagerV3,
+                  let batteryLevel = cgmManager.batteryLevel else { return nil }
+            return GlucoseSourceInfo(description: nil, transmitterBattery: batteryLevel)
+
+        case AppGroupCGM.pluginIdentifier:
+            var description = "Group ID: \(Bundle.main.appGroupSuiteName ?? "Not set")"
+            if let cgmManager = cgmManager as? AppGroupCGM,
+               let app = cgmManager.appGroupSource.latestReadingFrom?.displayName ?? cgmManager.appGroupSource
+               .latestReadingFromOther
+            {
+                description = "\(description), app: \(app)"
+            }
+            return GlucoseSourceInfo(description: description, transmitterBattery: nil)
+
+        default: return nil
+        }
+    }
+}
+
+struct GlucoseSourceInfo {
+    let description: String?
+    let transmitterBattery: Double?
 }

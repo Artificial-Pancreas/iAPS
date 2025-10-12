@@ -30,6 +30,8 @@ protocol DeviceDataManager {
     // notify device manager when the app becomes active
     func didBecomeActive()
 
+    func cgmInfo() -> GlucoseSourceInfo?
+
     func createBolusProgressReporter() -> DoseProgressReporter?
 
     func removePumpAsCGM()
@@ -194,7 +196,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     var availablePumpManagers: [PumpManagerDescriptor] {
         let pumpManagers = pluginManager.availablePumpManagers + availableStaticPumpManagers
-        return pumpManagers
+        return pumpManagers.sorted(by: { $0.localizedTitle < $1.localizedTitle })
     }
 
     func setupPumpManager(
@@ -362,7 +364,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                 localizedTitle: pumpManagerAsCGMManager.localizedTitle
             ))
         }
-        return availableCGMManagers
+        return availableCGMManagers.sorted(by: { $0.localizedTitle < $1.localizedTitle })
     }
 
     func setupCGMManager(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool = false) -> Swift
@@ -748,9 +750,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
-        // TODO: [loopkit] do we need to add -10 minutes? Does it do anything?
         return glucoseStorage.latestDate()
-            .map { $0.addingTimeInterval(-10.minutes.timeInterval) } // additional time to calculate directions
+//            .map { $0.addingTimeInterval(-10.minutes.timeInterval) } // additional time to calculate directions
     }
 
     func cgmManagerWantsDeletion(_ manager: CGMManager) {
@@ -880,6 +881,11 @@ extension BaseDeviceDataManager {
 
     func updatePumpManagerBLEHeartbeatPreference() {
         pumpManager?.setMustProvideBLEHeartbeat(pumpManagerMustProvideBLEHeartbeat)
+    }
+
+    func cgmInfo() -> GlucoseSourceInfo? {
+        guard let cgmManager = self.cgmManager else { return nil }
+        return KnownPlugins.cgmInfo(for: cgmManager)
     }
 }
 

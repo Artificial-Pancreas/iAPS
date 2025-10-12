@@ -505,7 +505,7 @@ extension AddCarbs {
             do {
                 try moc.save()
             } catch {
-                // Error handling
+                debug(.apsManager, "Couldn't delete meal preset at \(offsets).")
             }
         }
 
@@ -526,7 +526,7 @@ extension AddCarbs {
             if moc.hasChanges {
                 do {
                     try moc.save()
-                } catch {}
+                } catch { debug(.apsManager, "Failed to save \(moc.updatedObjects)") }
             }
             state.edit = false
         }
