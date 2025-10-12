@@ -3,8 +3,8 @@ import SwiftUI
 import Swinject
 
 protocol StateModel: ObservableObject {
-    var resolver: Resolver? { get set }
-    var isInitial: Bool { get set }
+    var resolver: Resolver { get }
+//    var isInitial: Bool { get set }
     func subscribe()
     func showModal(for screen: Screen?)
     func hideModal()
@@ -12,19 +12,23 @@ protocol StateModel: ObservableObject {
 }
 
 class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.Provider {
-    @Injected() var router: Router!
-    @Injected() var settingsManager: SettingsManager!
-    var isInitial: Bool = true
-    private(set) var provider: Provider!
+    let router: Router
+    let settingsManager: SettingsManager!
 
-    var resolver: Resolver? {
-        didSet {
-            if let resolver = resolver {
-                injectServices(resolver)
-                provider = Provider(resolver: resolver)
-                subscribe()
-            }
-        }
+//    var isInitial: Bool = true
+
+    let provider: Provider
+
+    let resolver: Resolver
+
+    init(resolver: Resolver) {
+        self.resolver = resolver
+        router = resolver.resolve(Router.self)!
+        settingsManager = resolver.resolve(SettingsManager.self)!
+        provider = Provider(resolver: resolver)
+        injectServices(resolver)
+//        self.isInitial = false
+        subscribe()
     }
 
     var lifetime = Lifetime()

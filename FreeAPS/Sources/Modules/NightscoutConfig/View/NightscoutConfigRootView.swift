@@ -5,7 +5,7 @@ import Swinject
 extension NightscoutConfig {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
         @State var importedHasRun = false
@@ -18,9 +18,20 @@ extension NightscoutConfig {
             )
         ) var fetchedErrors: FetchedResults<ImportError>
 
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         private var portFormater: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.allowsFloats = false
+            return formatter
+        }
+
+        private var daysFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 0
             return formatter
         }
 
@@ -109,28 +120,45 @@ extension NightscoutConfig {
                     }
 
                 Section {
-                    Toggle("Use local glucose server", isOn: $state.useLocalSource)
                     HStack {
-                        Text("Port")
-                        DecimalTextField("", value: $state.localPort, formatter: portFormater)
+                        Text("Days").foregroundStyle(.secondary)
+                        Spacer()
+                        DecimalTextField("1", value: $state.backFillIntervall, formatter: daysFormatter, liveEditing: true)
                     }
-                } header: { Text("Local glucose source") }
-                Section {
+                    if state.backfilling {
+                        ProgressView(value: min(max(state.backfillingProgress, 0), 1), total: 1.0)
+                            .progressViewStyle(BackfillProgressViewStyle())
+                    }
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
                 }
+                header: { Text("Backfill glucose") }
+                footer: { Text("Fetches old glucose readings from Nightscout") }
 
                 Section {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
                 } header: { Text("Allow Remote control of iAPS") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("Nightscout Config")
             .navigationBarTitleDisplayMode(.automatic)
             .alert(isPresented: $isImportAlertPresented) {
                 importAlert!
             }
+        }
+    }
+}
+
+public struct BackfillProgressViewStyle: ProgressViewStyle {
+    @Environment(\.colorScheme) var colorScheme
+
+    public func makeBody(configuration: LinearProgressViewStyle.Configuration) -> some View {
+        @State var progress = CGFloat(configuration.fractionCompleted ?? 0)
+        ZStack {
+            ProgressView(value: progress)
+                .tint(Color.loopGreen)
+                .scaleEffect(y: 5.5)
+                .frame(height: 10)
         }
     }
 }

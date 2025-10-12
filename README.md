@@ -12,13 +12,26 @@ Ready to explore iAPS? Here's how you can download and build the repository:
 
   * **Using Terminal:**
 
+    clone and open workspace project in Xcode
     ```bash
-    git clone --branch=main https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
+    git clone --recurse-submodules --branch=dev https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
+    ```
+### Update the submodules in your local (old) clone 
+
+  * **Using Terminal:**
+  * 
+    ```bash
+    git submodule update --recursive
     ```
 
-  * **Using the GitHub Interface:**
-    Simply navigate to the iAPS GitHub page, click the green **"Code"** button, and select **"Open with Xcode."**
+### Update the iaps project in your local clone 
 
+  * **Using Terminal:**
+  * 
+    ```bash
+    git pull
+    ```
+  
 ### Build Without Xcode (Directly in GitHub)
 
 For instructions on how to build iAPS directly within GitHub, refer to these resources:
@@ -35,6 +48,9 @@ Please understand that iAPS is:
   * **Highly experimental and rapidly evolving.**
   * **Not CE or FDA approved for therapy.**
 
+The Near Field Communication (NFC) capability requires a paid Apple developer membership, however if using Dexcom sensors with iAPS you don't need the NFC capability enabled in Xcode capability settings.
+Distributing and building TestFlight apps also requires a paid membership.
+
 -----
 
 ## Compatible Devices
@@ -43,6 +59,7 @@ Please understand that iAPS is:
 
   * **Omnipod EROS**
   * **Omnipod DASH**
+  * **Medtrum TouchCare Nano**
   * **Dana:**
       * Dana-I
       * DanaRS (firmware 3 only)

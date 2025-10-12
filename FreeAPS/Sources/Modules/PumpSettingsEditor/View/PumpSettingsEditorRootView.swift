@@ -4,7 +4,7 @@ import Swinject
 extension PumpSettingsEditor {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -15,6 +15,11 @@ extension PumpSettingsEditor {
         @FetchRequest(
             entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
         ) var concentration: FetchedResults<InsulinConcentration>
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -68,7 +73,6 @@ extension PumpSettingsEditor {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Pump Settings")
             .navigationBarTitleDisplayMode(.inline)
         }

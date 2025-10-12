@@ -6,7 +6,7 @@ extension OverrideProfilesConfig {
     struct RootView: BaseView {
         let resolver: Resolver
 
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var isEditing = false
         @State private var showAlert = false
         @State private var showingDetail = false
@@ -75,6 +75,11 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         var body: some View {
             overridesView
                 .navigationBarTitle("Profiles")
@@ -82,7 +87,6 @@ extension OverrideProfilesConfig {
                 .navigationBarItems(trailing: Button("Close", action: state.hideModal))
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .onAppear {
-                    configureView()
                     state.savedSettings(edit: false, identifier: nil)
                 }
                 .alert(
@@ -585,7 +589,7 @@ extension OverrideProfilesConfig {
                             Button("Start") {
                                 showAlert.toggle()
                                 let duration = TimeInterval(state.duration * 60)
-                                alertSring = "\(state.percentage.formatted(.number)) %, " +
+                                alertSring = (formatter.string(from: state.percentage as NSNumber) ?? "100") + "%, " +
                                     (
                                         state.duration > 0 && !state._indefinite ? (
                                             dateFormatter
@@ -898,7 +902,7 @@ extension OverrideProfilesConfig {
             do {
                 try moc.save()
             } catch {
-                // To do: add error
+                debug(.apsManager, "Couldn't profile preset at \(offsets).")
             }
         }
 
@@ -907,7 +911,7 @@ extension OverrideProfilesConfig {
 
             saveOverride.duration = state.duration as NSDecimalNumber
             saveOverride.indefinite = state._indefinite
-            saveOverride.percentage = state.percentage
+            saveOverride.percentage = state.percentage.rounded()
             saveOverride.smbIsOff = state.smbIsOff
             saveOverride.name = state.profileName
             saveOverride.emoji = state.emoji
@@ -963,7 +967,7 @@ extension OverrideProfilesConfig {
             do {
                 try moc.save()
             } catch {
-                // To do: add error
+                debug(.apsManager, "Failed to save \(moc.updatedObjects)")
             }
         }
     }

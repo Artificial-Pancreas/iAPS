@@ -43,7 +43,7 @@ extension DataTable {
         }
 
         func glucose() -> [BloodGlucose] {
-            glucoseStorage.recent().sorted { $0.date > $1.date }
+            glucoseStorage.retrieveRaw().sorted { $0.date > $1.date }
         }
 
         func deleteGlucose(id: String) {
