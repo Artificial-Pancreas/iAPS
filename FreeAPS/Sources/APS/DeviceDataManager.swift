@@ -30,6 +30,8 @@ protocol DeviceDataManager {
     // notify device manager when the app becomes active
     func didBecomeActive()
 
+    func cgmInfo() -> GlucoseSourceInfo?
+
     func createBolusProgressReporter() -> DoseProgressReporter?
 
     func removePumpAsCGM()
@@ -748,9 +750,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
-        // TODO: [loopkit] do we need to add -10 minutes? Does it do anything?
         return glucoseStorage.latestDate()
-            .map { $0.addingTimeInterval(-10.minutes.timeInterval) } // additional time to calculate directions
+//            .map { $0.addingTimeInterval(-10.minutes.timeInterval) } // additional time to calculate directions
     }
 
     func cgmManagerWantsDeletion(_ manager: CGMManager) {
@@ -880,6 +881,11 @@ extension BaseDeviceDataManager {
 
     func updatePumpManagerBLEHeartbeatPreference() {
         pumpManager?.setMustProvideBLEHeartbeat(pumpManagerMustProvideBLEHeartbeat)
+    }
+
+    func cgmInfo() -> GlucoseSourceInfo? {
+        guard let cgmManager = self.cgmManager else { return nil }
+        return KnownPlugins.cgmInfo(for: cgmManager)
     }
 }
 
