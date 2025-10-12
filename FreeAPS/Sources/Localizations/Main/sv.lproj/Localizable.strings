@@ -191,19 +191,19 @@
 "Are you sure?" = "Är du säker?";
 
 /* */
-"Clear Records" = "Clear Records";
+"Clear Records" = "Rensa data";
 
 /* */
-"Delete CoreData database records" = "Delete CoreData database records";
+"Delete CoreData database records" = "Ta bort CoreData - data";
 
 /* */
-"Delete NS records" = "Delete NS records";
+"Delete NS records" = "Radera NS-data";
 
 /* */
-"All records in " = "All records in ";
+"All records in " = "Alla data i ";
 
 /* */
-" will be deleted!" = " will be deleted!";
+" will be deleted!" = " kommer att raderas!";
 
 /* Bottom target temp */
 "Bottom target" = "Nedre målvärde";
