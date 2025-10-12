@@ -190,6 +190,21 @@
 /* */
 "Are you sure?" = "Ste si istý?";
 
+/* */
+"Clear Records" = "Clear Records";
+
+/* */
+"Delete CoreData database records" = "Delete CoreData database records";
+
+/* */
+"Delete NS records" = "Delete NS records";
+
+/* */
+"All records in " = "All records in ";
+
+/* */
+" will be deleted!" = " will be deleted!";
+
 /* Bottom target temp */
 "Bottom target" = "Spodný cieľ";
 
@@ -3221,3 +3236,29 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "Na povolenie nastavení prejdite do sekcie Konfigurácia aplikácie v aplikácii Nastavenia iOS";
+
+/* Section header in CGM view */
+"Active CGM" = "Aktívne CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pumpa/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Prestať používať pumpu ako CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Zdroj zdieľanej skupiny aplikácie";
+
+/* prefix for the shared app group application */
+"Reading from" = "Čítanie z";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Odpojiť";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Čítať glykémiu z externej CGM aplikácie pomocou zdieľanej skupiny aplikácie.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Čítať z ";
