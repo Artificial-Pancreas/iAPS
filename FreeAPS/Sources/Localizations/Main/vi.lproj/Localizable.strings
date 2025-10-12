@@ -190,6 +190,21 @@
 /* */
 "Are you sure?" = "Bạn có chắc chắn không?";
 
+/* */
+"Clear Records" = "Clear Records";
+
+/* */
+"Delete CoreData database records" = "Delete CoreData database records";
+
+/* */
+"Delete NS records" = "Delete NS records";
+
+/* */
+"All records in " = "All records in ";
+
+/* */
+" will be deleted!" = " will be deleted!";
+
 /* Bottom target temp */
 "Bottom target" = "Mục tiêu thấp nhất";
 
@@ -3218,3 +3233,29 @@ Enact a temp Basal or a temp target */
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "Để bật các cài đặt, hãy vào phần Cấu hình ứng dụng trong ứng dụng Cài đặt của iOS";
+
+/* Section header in CGM view */
+"Active CGM" = "Thêm CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pump/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "Ngừng sử dụng pump như CGM";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Nguồn Nhóm Ứng dụng Dùng Chung";
+
+/* prefix for the shared app group application */
+"Reading from" = "Đang đọc từ";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Ngắt kết nối";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Đọc đường huyết từ ứng dụng CGM bên ngoài thông qua nhóm ứng dụng dùng chung.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Đọc từ ";
