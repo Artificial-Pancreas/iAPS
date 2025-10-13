@@ -4,7 +4,12 @@ import Swinject
 extension AppleHealthKit {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -13,7 +18,7 @@ extension AppleHealthKit {
                     HStack {
                         Image(systemName: "pencil.circle.fill")
                         Text(
-                            "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up."
+                            "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access."
                         )
                         .font(.caption)
                     }
@@ -21,15 +26,16 @@ extension AppleHealthKit {
                     if state.needShowInformationTextForSetPermissions {
                         HStack {
                             Image(systemName: "exclamationmark.circle.fill")
-                            Text("For write data to Apple Health you must give permissions in Settings > Health > Data Access")
-                                .font(.caption)
+                            Text(
+                                "To allow iAPS to write data to Apple Health, you must grant permission in Settings > Health > Data Access."
+                            )
+                            .font(.caption)
                         }
                         .foregroundColor(Color.secondary)
                     }
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Apple Health")
             .navigationBarTitleDisplayMode(.automatic)
         }

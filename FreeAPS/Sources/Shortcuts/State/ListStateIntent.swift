@@ -3,12 +3,12 @@ import Foundation
 
 struct ListStateIntent: AppIntent {
     // Title of the action in the Shortcuts app
-    static var title: LocalizedStringResource = "List last state available with iAPS"
+    static let title: LocalizedStringResource = "List last state available with iAPS"
 
     var stateIntent = StateIntentRequest()
 
     // Description of the action in the Shortcuts app
-    static var description = IntentDescription(
+    static let description = IntentDescription(
         "Allow to list the last Blood Glucose, trends, IOB and COB available in iAPS"
     )
 

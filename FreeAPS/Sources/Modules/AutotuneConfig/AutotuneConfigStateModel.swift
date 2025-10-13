@@ -4,6 +4,7 @@ import SwiftUI
 
 extension AutotuneConfig {
     final class StateModel: BaseStateModel<Provider> {
+        @Injected() var deviceManager: DeviceDataManager!
         @Injected() var apsManager: APSManager!
         @Injected() private var storage: FileStorage!
         @Published var useAutotune = false
@@ -105,7 +106,7 @@ extension AutotuneConfig {
                             rate: basal.rate.roundBolusIncrements(increment: increment)
                         )
                     }
-                guard let pump = apsManager.pumpManager else {
+                guard let pump = deviceManager.pumpManager else {
                     storage.save(basals, as: OpenAPS.Settings.basalProfile)
                     debug(.service, "Basals have been replaced with Autotuned Basals by user.")
                     return

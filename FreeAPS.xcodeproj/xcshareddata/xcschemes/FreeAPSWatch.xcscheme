@@ -20,20 +20,6 @@
                ReferencedContainer = "container:FreeAPS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "388E595725AD948C0019842D"
-               BuildableName = "FreeAPS.app"
-               BlueprintName = "FreeAPS"
-               ReferencedContainer = "container:FreeAPS.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

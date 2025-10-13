@@ -4,7 +4,7 @@ import Swinject
 extension Dynamic {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @State var isPresented = false
         @State var description = Text("")
@@ -44,6 +44,11 @@ extension Dynamic {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
             return formatter
+        }
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         var body: some View {
@@ -210,7 +215,6 @@ extension Dynamic {
                 if scrollView { infoScrollView() } else { infoView() }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")
             .navigationBarTitleDisplayMode(.automatic)
             .onDisappear {

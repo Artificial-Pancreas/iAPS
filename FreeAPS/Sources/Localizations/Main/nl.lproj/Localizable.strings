@@ -190,6 +190,21 @@
 /* */
 "Are you sure?" = "Weet je het zeker?";
 
+/* */
+"Clear Records" = "Records wissen";
+
+/* */
+"Delete CoreData database records" = "Verwijder CoreData database records";
+
+/* */
+"Delete NS records" = "NS records verwijderen";
+
+/* */
+"All records in " = "Alle gegevens in ";
+
+/* */
+" will be deleted!" = " wordt verwijderd!";
+
 /* Bottom target temp */
 "Bottom target" = "Ondergrens doel";
 
@@ -1429,7 +1444,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Online or internal server" = "Online of interne server";
 
 /* Pump Error Message */
-"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loopcyclus advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende cyclus";
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loop advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende loop";
 
 /* Pump Error */
 "Pump is Busy." = "Je pomp is bezig.";
@@ -1519,10 +1534,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Connect to Apple Health" = "Verbinden met Apple Gezondheid";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Als je gegevens wilt opslaan met Apple Gezondheid, moet je de juiste machtigingen verlenen in Instellingen > Gezondheid > Gegevenstoegang en apparaten";
+"To allow iAPS to write data to Apple Health, you must grant permission in Settings > Health > Data Access." = "Als je gegevens wilt opslaan met Apple Gezondheid, moet je de juiste machtigingen verlenen in Instellingen > Gezondheid > Gegevenstoegang en apparaten";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Hiermee kan iAPS lezen van en schrijven naar Apple Heath. Je moet ook machtigingen geven in Instellingen > Gezondheid > Gegevenstoegang. Als je een glucosewaarde invoert in Apple Health, open je iAPS om te bevestigen dat deze wordt weergegeven.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access." = "Hiermee kan iAPS lezen van en schrijven naar Apple Heath. Je moet ook machtigingen geven in Instellingen > Gezondheid > Gegevenstoegang.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -2802,16 +2817,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB is de maximale hoeveelheid insuline in je lichaam vanuit alle bronnen – dus zowel basale insuline (of automatische correcties) als bolussen – die iAPS mag geven om je glucosewaarde naar beneden te brengen. In tegenstelling tot de andere twee veiligheidsinstellingen (max_daily_safety_multiplier en current_basal_safety_multiplier) geef je hier een vast aantal eenheden insuline op. Let op: deze instelling geldt niet voor handmatig gegeven bolussen.\n\nWil je ’s nachts je basaal waardes testen? Zet deze instelling dan tijdelijk op 0 tijdens een gesloten Loop. Hierdoor wordt ‘stop voor laag’ automatisch geactiveerd, zodat je veilig kunt testen.\n\n(Tip van: https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
-"Max Daily Safety Multiplier" = "Maximale dagelijkse veiligheidsvermenigvuldiger";
+"Max Daily Safety Multiplier" = "Maximum vermenigvuldiger dagelijkse insulineafgifte";
 
 /* "Max Daily Safety Multiplier" */
-"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is een belangrijke OpenAPS veiligheidslimiet. De standaardinstelling (die waarschijnlijk geen aanpassingen nodig zal hebben) is 3. Dit betekent dat OpenAPS nooit zal worden toegestaan om een tijdelijke basaalstand in te stellen die groter is dan 3 x de hoogste basaalstand per uur, geprogrammeerd in een gebruikerspomp, of indien ingeschakeld, bepaald door autotune.";
+"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is een belangrijke OpenAPS-veiligheidsinstelling. Standaard staat deze op 3 en dat is meestal prima. Dat betekent dat OpenAPS nooit een tijdelijke basaal hoger mag zetten dan 3 keer je hoogste ingestelde basaalstand per uur (of, als autotune aanstaat, de door autotune bepaalde waarde).";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Huidige basale veiligheidsvermenigvuldiger";
+"Current Basal Safety Multiplier" = "Huidige basale maximum vermenigvuldiger";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Dit is ook een belangrijke OpenAPS veiligheidslimiet. De standaard instelling (die waarschijnlijk niet aangepast hoeft te worden) is 4. Dit betekend dat OpenAPS niet een hoger tijdelijk basaal waarde mag instellen dan 4 keer het huidige basaal van dit uur ingesteld in de pomp, of als dit is ingesteld bepaald door autotune.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Ook dit is een belangrijke OpenAPS-veiligheidsinstelling. Standaard staat deze op 4. Dat betekent dat OpenAPS nooit een tijdelijke basaal hoger mag zetten dan 4 keer je huidige basaal van dat uur (of de waarde bepaald door autotune als ingeschakeld).";
 
 /* Headline "Autosens Max" */
 "Autosens Max" = "Autosens max";
@@ -3110,6 +3125,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Use insulin bars" = "Gebruik insulinebalken";
 
 /* UI/UX option */
+"Use carb bars" = "Gebruik koolhydraten balken";
+
+/* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Verberg de bolus hoeveelheid als de hoeveelheid lager is dan";
 
 /* UI/UX option */
@@ -3222,3 +3240,57 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
 "To enable settings, go to the App Config section in iOS Settings App" = "Om instellingen in te schakelen, ga naar de App Config sectie in de iOS systeemInstellingen App";
+
+/* Section header in CGM view */
+"Active CGM" = "Actieve CGM";
+
+/* pump name label, when pump is a cgm "Pump/CGM" */
+"Pump/CGM" = "Pomp/CGM";
+
+/* Button "Stop using the pump as CGM" */
+"Stop using the pump as CGM" = "De pomp niet langer als CGM gebruiken";
+
+/* Section header in CGM view */
+"Shared App Group Source" = "Gedeelde App groep bron";
+
+/* prefix for the shared app group application */
+"Reading from" = "Lezen van";
+
+/* button to disconnect from the shared app group "Disconnect" */
+"Disconnect" = "Verbinding verbreken";
+
+
+/* description for Shared App Group Source section */
+"Read BG from an external CGM app using a shared app group." = "Lees BG van een externe CGM app met behulp van een gedeelde app groep.";
+
+
+/* prefix before the app name on the button to start reading from shared app group */
+"Read from " = "Lezen van ";
+
+/* description for the backfill section in Nightscout settings screen */
+"Fetches old glucose readings from Nightscout" = "Haalt oude glucosewaardes van Nightscout op";
+
+/* header and button label for the 'upload old glucose' action in Nightscout settings screen */
+"Upload glucose" = "Upload glucosewaarde";
+
+/* description for the 'upload old glucose' section in Nightscout settings screen */
+"Uploads old glucose readings to Nightscout" = "Upload oude glucosewaardes naar Nightscout";
+
+/* message when uploads are enabled, but glucose uploads are disabled, in Nightscout settings screen */
+"Glucose upload disabled in CGM settings" = "Glucose upload uitgeschakeld in CGM-instellingen";
+
+/* header for the CGM list in CGM settings screen */
+"Connect to CGM" = "Verbinden met CGM";
+
+
+/* message displayed when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
+"Pump+CGM" = "Pomp+CGM";
+
+/* label for the button to remove the CGM when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
+"Stop using the pump as CGM" = "De pomp niet langer als CGM gebruiken";
+
+/* hint under the CGM list in CGM settings screen */
+"To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM." = "Om waarden te ontvangen van xDrip4iOS, Glucose Direct of een andere compatibele app, selecteer Shared App Group CGM.";
+
+/* message displayed in pump settings screen when the pump manager reports uncertain delivery */
+"Pump delivery uncertain" = "Pomp insulinelevering onzeker";

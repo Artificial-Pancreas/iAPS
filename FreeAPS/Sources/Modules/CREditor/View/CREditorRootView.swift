@@ -4,7 +4,7 @@ import Swinject
 extension CREditor {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var editMode = EditMode.inactive
 
         private var dateFormatter: DateFormatter {
@@ -18,6 +18,11 @@ extension CREditor {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             return formatter
+        }
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         var body: some View {
@@ -49,7 +54,6 @@ extension CREditor {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Carb Ratios")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

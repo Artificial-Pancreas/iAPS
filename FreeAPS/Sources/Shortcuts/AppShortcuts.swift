@@ -4,8 +4,8 @@ import Foundation
 struct AppShortcuts: AppShortcutsProvider {
     @AppShortcutsBuilder static var appShortcuts: [AppShortcut] {
         AppShortcut(intent: ApplyTempPresetIntent(), phrases: [
-            "Activate \(.applicationName) temporary target",
-            "\(.applicationName) apply a temporary target"
+            "\(.applicationName) temporary target",
+            "\(.applicationName) apply or cancel a temporary target"
         ], shortTitle: "Temorary Target", systemImageName: "scope")
         AppShortcut(
             intent: ListStateIntent(),

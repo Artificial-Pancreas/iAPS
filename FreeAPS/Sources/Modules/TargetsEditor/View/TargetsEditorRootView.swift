@@ -4,8 +4,13 @@ import Swinject
 extension TargetsEditor {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var editMode = EditMode.inactive
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var dateFormatter: DateFormatter {
             let formatter = DateFormatter()
@@ -39,7 +44,6 @@ extension TargetsEditor {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Target Glucose")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
