@@ -127,26 +127,35 @@ extension AutotuneConfig {
                             ForEach(0 ..< autotune.basalProfile.count, id: \.self) { index in
                                 GridRow {
                                     if let date = timeFormatter.date(from: autotune.basalProfile[index].start) {
-                                        Text(outputTimeFormatter.string(from: date)).foregroundColor(.secondary)
+                                        Text(outputTimeFormatter.string(from: date))
+                                            .foregroundColor(.secondary)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     } else {
-                                        Text(autotune.basalProfile[index].start).foregroundColor(.secondary)
+                                        Text(autotune.basalProfile[index].start)
+                                            .foregroundColor(.secondary)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
 
                                     if let current = matchingProfileEntry(forSuggestedIndex: index) {
-                                        Text(rateFormatter.string(from: current.rate as NSNumber) ?? "0")
+                                        let oldRate = current.rate
+                                        let newRate = autotune.basalProfile[index].rate
+                                        let difference = newRate - oldRate
+
+                                        Text(rateFormatter.string(from: oldRate as NSNumber) ?? "0")
                                             .foregroundColor(.secondary)
                                         Text("⇢").foregroundColor(.secondary)
+                                        Text(rateFormatter.string(from: newRate as NSNumber) ?? "0")
+                                            .foregroundColor(
+                                                difference > 0.0001 ? .darkGreen :
+                                                    difference < -0.0001 ? .darkRed : .primary
+                                            )
                                     } else {
                                         Text("") // Empty cells if no match
                                         Text("")
+                                        Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
+                                            .foregroundColor(.primary)
                                     }
 
-                                    Text(
-                                        rateFormatter
-                                            .string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0"
-                                    )
                                     Text("U/hr").foregroundColor(.secondary)
                                 }
                                 .padding(.vertical, 4)
