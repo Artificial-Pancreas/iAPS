@@ -276,8 +276,13 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     private func updatePumpData(completion: @escaping () -> Void) {
-        guard let pumpManager = pumpManager, pumpManager.isOnboarded else {
+        guard let pumpManager = pumpManager else {
             debug(.deviceManager, "Pump is not set, skip updating")
+            completion()
+            return
+        }
+        guard pumpManager.isOnboarded else {
+            debug(.deviceManager, "Pump is not onboarded, skip updating")
             completion()
             return
         }

@@ -30,6 +30,11 @@ extension PumpConfig {
                             }
                         }
                         Section {
+                            if !pumpManager.isOnboarded {
+                                HStack {
+                                    Text("Pump setup incomplete").foregroundColor(.red)
+                                }
+                            }
                             if let status = pumpManager.pumpStatusHighlight?.localizedMessage {
                                 HStack {
                                     Text(status.replacingOccurrences(of: "\n", with: " "))
