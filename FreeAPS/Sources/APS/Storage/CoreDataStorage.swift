@@ -233,16 +233,16 @@ final class CoreDataStorage {
     }
 
     func saveVNr(_ versions: Version?) {
-        if let version = versions {
-            coredataContext.perform { [self] in
-                let saveNr = VNr(context: self.coredataContext)
-                saveNr.nr = version.main
-                saveNr.dev = version.dev
+        guard let version = versions else { return }
+        guard version.main != "" else { return }
+        coredataContext.perform { [self] in
+            let saveNr = VNr(context: self.coredataContext)
+            saveNr.nr = version.main
+            saveNr.dev = version.dev
 
-                if coredataContext.hasChanges {
-                    saveNr.date = Date.now
-                    try? self.coredataContext.save()
-                }
+            if coredataContext.hasChanges {
+                saveNr.date = Date.now
+                try? self.coredataContext.save()
             }
         }
     }

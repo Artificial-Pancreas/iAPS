@@ -14,7 +14,7 @@ extension PumpConfig {
         var body: some View {
             NavigationView {
                 Form {
-                    if let pumpManager = state.deviceManager.pumpManager {
+                    if let pumpManager = state.deviceManager.pumpManager, pumpManager.isOnboarded {
                         Section(header: Text("Model")) {
                             Button {
                                 state.setupPump(pumpManager.pluginIdentifier)
@@ -62,7 +62,7 @@ extension PumpConfig {
                 .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $state.pumpSetupPresented) {
                     if let pumpIdentifier = state.pumpIdentifierToSetUp {
-                        if let pumpManager = state.deviceManager.pumpManager {
+                        if let pumpManager = state.deviceManager.pumpManager, pumpManager.isOnboarded {
                             PumpSettingsView(
                                 pumpManager: pumpManager,
                                 deviceManager: state.deviceManager,
