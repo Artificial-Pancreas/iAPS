@@ -28,7 +28,6 @@ extension AddCarbs {
         @State private var isLoading = false
         @State private var errorMessage: String?
         @State private var selectedFoodItem: AIFoodItem?
-        @State private var showMultiplierEditor: Bool = false
         @State private var portionGrams: Double = 100.0
         @State private var selectedFoodImage: UIImage?
         @State private var saveAlert = false
@@ -287,9 +286,9 @@ extension AddCarbs {
 
         private func addToPresetsIfNew(food: AIFoodItem) {
             let preset = Presets(context: moc)
-            preset.carbs = Decimal(max(food.carbs, 0)) as NSDecimalNumber
-            preset.fat = Decimal(max(food.fat, 0)) as NSDecimalNumber
-            preset.protein = Decimal(fmax(food.protein, 0)) as NSDecimalNumber
+            preset.carbs = Decimal(max(food.carbs * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
+            preset.fat = Decimal(max(food.fat * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
+            preset.protein = Decimal(fmax(food.protein * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
             preset.dish = food.name + " \(portionGrams) g"
             if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
                 do {
