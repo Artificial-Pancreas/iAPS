@@ -19,8 +19,8 @@ struct ContactPicture: View {
         contact: ContactTrickEntry,
         state: ContactTrickState
     ) -> UIImage {
-        let width = 256.0
-        let height = 256.0
+        let width = 1024.0
+        let height = 1024.0
         var rect = CGRect(x: 0, y: 0, width: width, height: height)
         let textColor: Color = contact.darkMode ?
             Color(red: 250 / 256, green: 250 / 256, blue: 250 / 256) :
