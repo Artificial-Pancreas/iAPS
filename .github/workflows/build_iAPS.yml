@@ -68,7 +68,7 @@ jobs:
   build:
     name: Build
     needs: [check_certs,check_latest_from_upstream]
-    runs-on: macos-15
+    runs-on: macos-latest
     permissions:
       contents: write
     steps:
@@ -82,7 +82,7 @@ jobs:
           fi
 
       - name: Select Xcode version
-        run: "sudo xcode-select --switch /Applications/Xcode_16.3.app/Contents/Developer"
+        run: "sudo xcode-select --switch /Applications/Xcode_26.0.1.app/Contents/Developer"
       
       - name: Checkout Repo for syncing
         if: |
