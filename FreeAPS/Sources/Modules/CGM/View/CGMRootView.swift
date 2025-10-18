@@ -39,6 +39,18 @@ extension CGM {
                                     Text(status.replacingOccurrences(of: "\n", with: " "))
                                 }
                             }
+                            if !cgmManager.isOnboarded {
+                                HStack {
+                                    Text("CGM setup not completed").foregroundStyle(.red)
+                                }
+                            }
+                            if KnownPlugins.glucoseUploadingAvailable(for: cgmManager) {
+                                HStack {
+                                    cgmManager.shouldSyncToRemoteService ?
+                                        Text("Glucose upload enabled") :
+                                        Text("Glucose upload disabled").foregroundStyle(.red)
+                                }
+                            }
                             if !cgmManager.providesBLEHeartbeat {
                                 HStack {
                                     Text("CGM is not used as heartbeat.")
@@ -115,21 +127,23 @@ extension CGM {
                 .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $state.cgmSetupPresented) {
                     if let identifier = state.cgmIdentifierToSetUp {
-                        if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
-                           cgmManager.pluginIdentifier == identifier
-                        {
-                            CGMSettingsView(
-                                cgmManager: cgmManager,
-                                deviceManager: state.deviceManager,
-                                completionDelegate: state,
-                            )
-                        } else {
-                            CGMSetupView(
-                                cgmIdentifier: identifier,
-                                deviceManager: state.deviceManager,
-                                completionDelegate: state,
-                            )
-                        }
+                        CGMSetupView(
+                            cgmIdentifier: identifier,
+                            deviceManager: state.deviceManager,
+                            completionDelegate: state,
+                        )
+                    }
+                }
+                .sheet(isPresented: $state.cgmSettingsPresented) {
+                    if let identifier = state.cgmIdentifierToSetUp,
+                       let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
+                       cgmManager.pluginIdentifier == identifier
+                    {
+                        CGMSettingsView(
+                            cgmManager: cgmManager,
+                            deviceManager: state.deviceManager,
+                            completionDelegate: state,
+                        )
                     }
                 }
             }

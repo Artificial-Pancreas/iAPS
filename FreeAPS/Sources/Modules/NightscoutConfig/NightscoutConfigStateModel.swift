@@ -25,6 +25,8 @@ extension NightscoutConfig {
         @Published var connecting = false
         @Published var backfilling = false
         @Published var backfillingProgress = 0.0
+        @Published var uploading = false
+        @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
         @Published var uploadGlucose = true // Upload Glucose
         @Published var units: GlucoseUnits = .mmolL
@@ -33,6 +35,7 @@ extension NightscoutConfig {
         @Published var maxBolus: Decimal = 10
         @Published var allowAnnouncements: Bool = false
         @Published var backFillIntervall: Decimal = 1
+        @Published var uploadIntervall: Decimal = 1
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -355,6 +358,53 @@ extension NightscoutConfig {
                 }
             }
             .store(in: &lifetime)
+        }
+
+        func uploadOldGlucose() {
+            uploading = true
+            uploadingProgress = 0.0
+
+            processQueue.async {
+                let readings = CoreDataStorage()
+                    .fetchGlucose(interval: Date().addingTimeInterval(-Int(self.uploadIntervall).days.timeInterval) as NSDate)
+                let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
+                    guard let date = reading.date,
+                          let id = reading.id
+                    else {
+                        return nil
+                    }
+                    return BloodGlucose(
+                        _id: id,
+                        sgv: Int(reading.glucose),
+                        direction: nil,
+                        date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
+                        dateString: date,
+                        unfiltered: nil,
+                        uncalibrated: nil,
+                        filtered: nil,
+                        noise: nil,
+                        glucose: Int(reading.glucose),
+                        type: "sgv",
+                        activationDate: nil,
+                        sessionStartDate: nil,
+                        transmitterID: nil
+                    )
+                }
+
+                self.nightscoutManager.uploadOldGlucose(
+                    bloodGlucose: bloodGlucose,
+                    completion: {
+                        DispatchQueue.main.async {
+                            self.uploading = false
+                        }
+                    },
+                    progress: { progress in
+                        DispatchQueue.main.async {
+                            self.uploadingProgress = progress
+                        }
+                    }
+                )
+            }
         }
 
         func delete() {

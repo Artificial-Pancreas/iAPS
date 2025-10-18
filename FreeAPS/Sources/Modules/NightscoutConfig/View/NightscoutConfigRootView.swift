@@ -5,6 +5,7 @@ import Swinject
 extension NightscoutConfig {
     struct RootView: BaseView {
         let resolver: Resolver
+        let appCoordinator: AppCoordinator
         @StateObject var state: StateModel
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
@@ -20,6 +21,7 @@ extension NightscoutConfig {
 
         init(resolver: Resolver) {
             self.resolver = resolver
+            appCoordinator = resolver.resolve(AppCoordinator.self)!
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
@@ -134,6 +136,24 @@ extension NightscoutConfig {
                 }
                 header: { Text("Backfill glucose") }
                 footer: { Text("Fetches old glucose readings from Nightscout") }
+
+                if state.isUploadEnabled, appCoordinator.shouldUploadGlucose {
+                    Section {
+                        HStack {
+                            Text("Days").foregroundStyle(.secondary)
+                            Spacer()
+                            DecimalTextField("1", value: $state.uploadIntervall, formatter: daysFormatter, liveEditing: true)
+                        }
+                        if state.uploading {
+                            ProgressView(value: min(max(state.uploadingProgress, 0), 1), total: 1.0)
+                                .progressViewStyle(BackfillProgressViewStyle())
+                        }
+                        Button("Upload glucose") { state.uploadOldGlucose() }
+                            .disabled(state.url.isEmpty || state.connecting || state.uploading)
+                    }
+                    header: { Text("Upload glucose") }
+                    footer: { Text("Uploads old glucose readings to Nightscout") }
+                }
 
                 Section {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
