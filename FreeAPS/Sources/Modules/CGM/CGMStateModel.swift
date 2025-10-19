@@ -28,7 +28,8 @@ extension CGM {
         func setupCGM(_ identifier: String?) {
             cgmIdentifierToSetUp = identifier
             cgmSetupPresented = identifier != nil && deviceManager.cgmManager == nil
-            cgmSettingsPresented = identifier != nil && deviceManager.cgmManager?.pluginIdentifier == identifier
+            cgmSettingsPresented = identifier != nil && deviceManager.cgmManager?.pluginIdentifier == identifier && deviceManager
+                .cgmManager?.isOnboarded == true
         }
     }
 }

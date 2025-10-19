@@ -70,11 +70,20 @@ extension NightscoutConfig {
 
                 Section {
                     Toggle("Upload", isOn: $state.isUploadEnabled)
-                    if state.isUploadEnabled {
-                        Toggle("Glucose", isOn: $state.uploadGlucose)
-                    }
                 } header: {
                     Text("Allow Uploads")
+                }
+
+                if let cgmManager = state.deviceManager.cgmManager,
+                   KnownPlugins.glucoseUploadingAvailable(for: cgmManager),
+                   !cgmManager.shouldSyncToRemoteService,
+                   state.isUploadEnabled
+                {
+                    Section {
+                        HStack {
+                            Text("Glucose upload disabled in CGM settings").foregroundStyle(.red)
+                        }
+                    }
                 }
 
                 Section {
@@ -125,7 +134,7 @@ extension NightscoutConfig {
                     HStack {
                         Text("Days").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("1", value: $state.backFillIntervall, formatter: daysFormatter, liveEditing: true)
+                        DecimalTextField("1", value: $state.backFillInterval, formatter: daysFormatter, liveEditing: true)
                     }
                     if state.backfilling {
                         ProgressView(value: min(max(state.backfillingProgress, 0), 1), total: 1.0)
@@ -142,7 +151,7 @@ extension NightscoutConfig {
                         HStack {
                             Text("Days").foregroundStyle(.secondary)
                             Spacer()
-                            DecimalTextField("1", value: $state.uploadIntervall, formatter: daysFormatter, liveEditing: true)
+                            DecimalTextField("1", value: $state.uploadInterval, formatter: daysFormatter, liveEditing: true)
                         }
                         if state.uploading {
                             ProgressView(value: min(max(state.uploadingProgress, 0), 1), total: 1.0)

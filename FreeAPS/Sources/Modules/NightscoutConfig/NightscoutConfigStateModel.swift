@@ -28,14 +28,28 @@ extension NightscoutConfig {
         @Published var uploading = false
         @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
-        @Published var uploadGlucose = true // Upload Glucose
         @Published var units: GlucoseUnits = .mmolL
         @Published var dia: Decimal = 6
         @Published var maxBasal: Decimal = 4
         @Published var maxBolus: Decimal = 10
         @Published var allowAnnouncements: Bool = false
-        @Published var backFillIntervall: Decimal = 1
-        @Published var uploadIntervall: Decimal = 1
+        @Published var backFillInterval: Decimal = 1 {
+            didSet {
+                let clamped = min(max(backFillInterval, 1), 90)
+                if backFillInterval != clamped {
+                    backFillInterval = clamped
+                }
+            }
+        }
+
+        @Published var uploadInterval: Decimal = 1 {
+            didSet {
+                let clamped = min(max(uploadInterval, 1), 90)
+                if uploadInterval != clamped {
+                    uploadInterval = clamped
+                }
+            }
+        }
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -47,12 +61,6 @@ extension NightscoutConfig {
 
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
-            subscribeSetting(\.backFillIntervall, on: $backFillIntervall.map(Int.init), initial: {
-                let value = max(min($0, 90), 1)
-                backFillIntervall = Decimal(value)
-            }, map: {
-                $0
-            })
         }
 
         func connect() {
@@ -321,7 +329,7 @@ extension NightscoutConfig {
             backfilling = true
             backfillingProgress = 0.0
             nightscoutManager.fetchGlucose(
-                since: Date().addingTimeInterval(-Int(backFillIntervall).days.timeInterval),
+                since: Date().addingTimeInterval(-Int(backFillInterval).days.timeInterval),
                 progress: { progress in
                     DispatchQueue.main.async {
                         self.backfillingProgress = progress
@@ -366,7 +374,7 @@ extension NightscoutConfig {
 
             processQueue.async {
                 let readings = CoreDataStorage()
-                    .fetchGlucose(interval: Date().addingTimeInterval(-Int(self.uploadIntervall).days.timeInterval) as NSDate)
+                    .fetchGlucose(interval: Date().addingTimeInterval(-Int(self.uploadInterval).days.timeInterval) as NSDate)
                 let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
                     guard let date = reading.date,
                           let id = reading.id
