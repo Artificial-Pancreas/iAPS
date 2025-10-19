@@ -149,7 +149,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var barcodeSearchProvider: String = "OpenFoodFacts"
     var aiImageProvider: String = "OpenAI (ChatGPT API)"
     var analysisMode: String = "standard"
-    var foodSearchEnabled: Bool = false
     var advancedDosingRecommendationsEnabled: Bool = false
     var useGPT5ForOpenAI: Bool = false
     var ai: Bool = true
@@ -723,10 +722,6 @@ extension FreeAPSSettings: Decodable {
 
         if let analysisMode = try? container.decode(String.self, forKey: .analysisMode) {
             settings.analysisMode = analysisMode
-        }
-
-        if let foodSearchEnabled = try? container.decode(Bool.self, forKey: .foodSearchEnabled) {
-            settings.foodSearchEnabled = foodSearchEnabled
         }
 
         if let advancedDosingRecommendationsEnabled = try? container.decode(

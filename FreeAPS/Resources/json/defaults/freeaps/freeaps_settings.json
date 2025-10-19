@@ -120,7 +120,6 @@
     "barcodeSearchProvider": "OpenFoodFacts",
     "aiImageProvider": "OpenAI (ChatGPT API)",
     "analysisMode": "standard",
-    "foodSearchEnabled": false,
     "advancedDosingRecommendationsEnabled": false,
     "useGPT5ForOpenAI": false,
     "ai": true

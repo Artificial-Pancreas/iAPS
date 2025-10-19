@@ -90,7 +90,7 @@ extension AddCarbs {
                             "0",
                             value: $state.carbs,
                             formatter: formatter,
-                            autofocus: true,
+                            autofocus: false,
                             liveEditing: true
                         )
                         Text("grams").foregroundColor(.secondary)
@@ -386,9 +386,7 @@ extension AddCarbs {
 
         private var presetView: some View {
             Form {
-                Section {} header: {
-                    Text("Back").textCase(nil).foregroundStyle(.blue).font(.system(size: 16))
-                        .onTapGesture { reset() } }
+                Section {} header: { back }
 
                 if !empty {
                     Section {
@@ -439,6 +437,16 @@ extension AddCarbs {
             }
             .sheet(isPresented: $state.edit, content: { editView })
             .environment(\.colorScheme, colorScheme)
+        }
+
+        private var back: some View {
+            Button { reset() }
+            label: { Image(systemName: "chevron.backward").font(.system(size: 22)).padding(5) }
+                .foregroundStyle(.primary)
+                .buttonBorderShape(.circle)
+                .buttonStyle(.borderedProminent)
+                .tint(colorScheme == .light ? Color.white.opacity(0.5) : Color(.systemGray5))
+                .offset(x: -10)
         }
 
         private func alert(food: AIFoodItem?) -> Alert {

@@ -38,9 +38,6 @@ struct AISettingsView: View {
     @State private var showOpenAIKey: Bool = false
     @State private var showGoogleGeminiKey: Bool = false
 
-    // Feature flag for Food Search - MIT @AppStorage für sofortiges Speichern
-    @AppStorage("foodSearchEnabled") private var foodSearchEnabled: Bool = UserDefaults.standard.foodSearchEnabled
-
     // Feature flag for Advanced Dosing Recommendations - MIT @AppStorage
     @AppStorage("advancedDosingRecommendationsEnabled") private var advancedDosingRecommendationsEnabled: Bool = UserDefaults
         .standard.advancedDosingRecommendationsEnabled
@@ -60,17 +57,6 @@ struct AISettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                // Feature Toggle Section
-                Section(
-                    header: Text("Food Search Feature"),
-
-                    footer: Text(
-                        "Enable this to edit the Food Search Settings. When disabled, the feature is hidden but all your settings are preserved."
-                    )
-                ) {
-                    Toggle("Enable Food Search Settings", isOn: $foodSearchEnabled)
-                }
-
                 // GPT-5 Feature Section - Only show when OpenAI is selected for AI Image Analysis
                 if aiService.aiImageSearchProvider.rawValue.contains("OpenAI") {
                     Section(
@@ -81,8 +67,7 @@ struct AISettingsView: View {
                         )
                     ) {
                         Toggle("Use GPT-5 Models", isOn: $useGPT5ForOpenAI)
-                            .disabled(!foodSearchEnabled)
-                            .onChange(of: useGPT5ForOpenAI) { _ in
+                            .onChange(of: useGPT5ForOpenAI) {
                                 // Trigger view refresh to update Analysis Mode descriptions
                                 aiService.objectWillChange.send()
                             }
@@ -90,349 +75,348 @@ struct AISettingsView: View {
                 }
 
                 // Only show configuration sections if feature is enabled
-                if foodSearchEnabled {
-                    Section(
-                        header: Text("Food Search Provider Configuration"),
 
-                        footer: Text(
-                            "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods."
-                        )
-                    ) {
-                        ForEach(SearchType.allCases, id: \.self) { searchType in
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text(searchType.rawValue)
-                                        .font(.headline)
-                                    Spacer()
-                                }
+                Section(
+                    header: Text("Food Search Provider Configuration"),
 
-                                Text(searchType.description)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-
-                                Picker("Provider for \(searchType.rawValue)", selection: getBindingForSearchType(searchType)) {
-                                    ForEach(aiService.getAvailableProvidersForSearchType(searchType), id: \.self) { provider in
-                                        Text(provider.rawValue).tag(provider)
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle())
+                    footer: Text(
+                        "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods."
+                    )
+                ) {
+                    ForEach(SearchType.allCases, id: \.self) { searchType in
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text(searchType.rawValue)
+                                    .font(.headline)
+                                Spacer()
                             }
-                            .padding(.vertical, 4)
+
+                            Text(searchType.description)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+
+                            Picker("Provider for \(searchType.rawValue)", selection: getBindingForSearchType(searchType)) {
+                                ForEach(aiService.getAvailableProvidersForSearchType(searchType), id: \.self) { provider in
+                                    Text(provider.rawValue).tag(provider)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
                         }
+                        .padding(.vertical, 4)
                     }
+                }
 
-                    // Analysis Mode Configuration
-                    Section(
-                        header: Text("AI Analysis Mode"),
+                // Analysis Mode Configuration
+                Section(
+                    header: Text("AI Analysis Mode"),
 
-                        footer: Text(
-                            "Choose between speed and accuracy. Fast mode uses lighter AI models for 2-3x faster analysis with slightly reduced accuracy (~5-10% trade-off). Standard mode uses full AI models for maximum accuracy."
-                        )
-                    ) {
-                        analysisModeSection
-                    }
+                    footer: Text(
+                        "Choose between speed and accuracy. Fast mode uses lighter AI models for 2-3x faster analysis with slightly reduced accuracy (~5-10% trade-off). Standard mode uses full AI models for maximum accuracy."
+                    )
+                ) {
+                    analysisModeSection
+                }
 
-                    // Claude API Configuration
-                    Section(
-                        header: Text("Anthropic (Claude API) Configuration"),
+                // Claude API Configuration
+                Section(
+                    header: Text("Anthropic (Claude API) Configuration"),
 
-                        footer: Text(
-                            "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model."
-                        )
-                    ) {
-                        VStack(spacing: 12) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                HStack {
-                                    Text("Claude API Key")
-                                        .font(.headline)
-                                    Spacer()
-                                    Button(action: {
-                                        showClaudeKey.toggle()
-                                    }) {
-                                        Image(systemName: showClaudeKey ? "eye.slash" : "eye")
-                                            .foregroundColor(.blue)
-                                    }
-                                }
-
-                                HStack {
-                                    StableSecureField(
-                                        placeholder: "Enter your Claude API key",
-                                        text: $claudeKey,
-                                        isSecure: !showClaudeKey
-                                    )
-                                }
-                            }
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text("AI Prompt for Enhanced Results")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-
-                                    Spacer()
-
-                                    Menu("Examples") {
-                                        Button("Default Query") {
-                                            claudeQuery =
-                                                "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
-                                        }
-
-                                        Button("Detailed Visual Analysis") {
-                                            claudeQuery =
-                                                "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
-                                        }
-
-                                        Button("Diabetes Focus") {
-                                            claudeQuery =
-                                                "Focus specifically on carbohydrate analysis for Type 1 diabetes management. Identify all carb sources, estimate absorption timing, and provide detailed carb counts with confidence levels."
-                                        }
-
-                                        Button("Macro Tracking") {
-                                            claudeQuery =
-                                                "Provide complete macronutrient analysis with detailed portion reasoning. For each food component, describe the visual cues you're using for portion estimation: compare to visible objects (fork, plate, hand), note cooking methods affecting nutrition (oils, preparation style), explain food quality indicators (ripeness, doneness), and provide comprehensive nutrition breakdown with your confidence level for each estimate."
-                                        }
-                                    }
-                                    .font(.caption)
-                                }
-
-                                TextEditor(text: $claudeQuery)
-                                    .frame(minHeight: 80)
-                                    .border(Color.secondary.opacity(0.3), width: 0.5)
-                            }
-                        }
-                    }
-
-                    // Google Gemini API Configuration
-                    Section(
-                        header: Text("Google (Gemini API) Configuration"),
-
-                        footer: Text(
-                            "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)."
-                        )
-                    ) {
-                        VStack(spacing: 12) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                HStack {
-                                    Text("Google Gemini API Key")
-                                        .font(.headline)
-                                    Spacer()
-                                    Button(action: {
-                                        showGoogleGeminiKey.toggle()
-                                    }) {
-                                        Image(systemName: showGoogleGeminiKey ? "eye.slash" : "eye")
-                                            .foregroundColor(.blue)
-                                    }
-                                }
-
-                                HStack {
-                                    StableSecureField(
-                                        placeholder: "Enter your Google Gemini API key",
-                                        text: $googleGeminiKey,
-                                        isSecure: !showGoogleGeminiKey
-                                    )
-                                }
-                            }
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text("AI Prompt for Enhanced Results")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-
-                                    Spacer()
-
-                                    Menu("Examples") {
-                                        Button("Default Query") {
-                                            googleGeminiQuery =
-                                                "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
-                                        }
-
-                                        Button("Detailed Visual Analysis") {
-                                            googleGeminiQuery =
-                                                "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
-                                        }
-
-                                        Button("Diabetes Focus") {
-                                            googleGeminiQuery =
-                                                "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates."
-                                        }
-
-                                        Button("Macro Tracking") {
-                                            googleGeminiQuery =
-                                                "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals."
-                                        }
-                                    }
-                                    .font(.caption)
-                                }
-
-                                TextEditor(text: $googleGeminiQuery)
-                                    .frame(minHeight: 80)
-                                    .border(Color.secondary.opacity(0.3), width: 0.5)
-                            }
-                        }
-                    }
-
-                    // OpenAI (ChatGPT) API Configuration
-                    Section(
-                        header: Text("OpenAI (ChatGPT API) Configuration"),
-
-                        footer: Text(
-                            "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)"
-                        )
-                    ) {
-                        VStack(spacing: 12) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                HStack {
-                                    Text("ChatGPT (OpenAI) API Key")
-                                        .font(.headline)
-                                    Spacer()
-                                    Button(action: {
-                                        showOpenAIKey.toggle()
-                                    }) {
-                                        Image(systemName: showOpenAIKey ? "eye.slash" : "eye")
-                                            .foregroundColor(.blue)
-                                    }
-                                }
-
-                                HStack {
-                                    StableSecureField(
-                                        placeholder: "Enter your OpenAI API key",
-                                        text: $openAIKey,
-                                        isSecure: !showOpenAIKey
-                                    )
-                                }
-                            }
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text("AI Prompt for Enhanced Results")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-
-                                    Spacer()
-
-                                    Menu("Examples") {
-                                        Button("Default Query") {
-                                            openAIQuery =
-                                                "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
-                                        }
-
-                                        Button("Detailed Visual Analysis") {
-                                            openAIQuery =
-                                                "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
-                                        }
-
-                                        Button("Diabetes Focus") {
-                                            openAIQuery =
-                                                "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates."
-                                        }
-
-                                        Button("Macro Tracking") {
-                                            openAIQuery =
-                                                "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals."
-                                        }
-                                    }
-                                    .font(.caption)
-                                }
-
-                                TextEditor(text: $openAIQuery)
-                                    .frame(minHeight: 80)
-                                    .border(Color.secondary.opacity(0.3), width: 0.5)
-                            }
-                        }
-                    }
-
-                    Section(
-                        header: Text("Important: How to Use Your API Keys"),
-
-                        footer: Text(
-                            "To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food."
-                        )
-                    ) {
+                    footer: Text(
+                        "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model."
+                    )
+                ) {
+                    VStack(spacing: 12) {
                         VStack(alignment: .leading, spacing: 8) {
                             HStack {
-                                Image(systemName: "camera.fill")
-                                    .foregroundColor(.blue)
-                                Text("Camera Food Analysis")
+                                Text("Claude API Key")
                                     .font(.headline)
+                                Spacer()
+                                Button(action: {
+                                    showClaudeKey.toggle()
+                                }) {
+                                    Image(systemName: showClaudeKey ? "eye.slash" : "eye")
+                                        .foregroundColor(.blue)
+                                }
                             }
 
-                            Text(
-                                "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above."
-                            )
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            HStack {
+                                StableSecureField(
+                                    placeholder: "Enter your Claude API key",
+                                    text: $claudeKey,
+                                    isSecure: !showClaudeKey
+                                )
+                            }
+                        }
 
-                            Text(
-                                "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys"
-                            )
-                            .font(.caption)
-                            .foregroundColor(.blue)
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text("AI Prompt for Enhanced Results")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
 
-                            Text(
-                                "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI"
-                            )
-                            .font(.caption)
-                            .foregroundColor(.orange)
+                                Spacer()
+
+                                Menu("Examples") {
+                                    Button("Default Query") {
+                                        claudeQuery =
+                                            "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
+                                    }
+
+                                    Button("Detailed Visual Analysis") {
+                                        claudeQuery =
+                                            "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
+                                    }
+
+                                    Button("Diabetes Focus") {
+                                        claudeQuery =
+                                            "Focus specifically on carbohydrate analysis for Type 1 diabetes management. Identify all carb sources, estimate absorption timing, and provide detailed carb counts with confidence levels."
+                                    }
+
+                                    Button("Macro Tracking") {
+                                        claudeQuery =
+                                            "Provide complete macronutrient analysis with detailed portion reasoning. For each food component, describe the visual cues you're using for portion estimation: compare to visible objects (fork, plate, hand), note cooking methods affecting nutrition (oils, preparation style), explain food quality indicators (ripeness, doneness), and provide comprehensive nutrition breakdown with your confidence level for each estimate."
+                                    }
+                                }
+                                .font(.caption)
+                            }
+
+                            TextEditor(text: $claudeQuery)
+                                .frame(minHeight: 80)
+                                .border(Color.secondary.opacity(0.3), width: 0.5)
                         }
                     }
+                }
 
-                    Section(header: Text("Provider Information")) {
+                // Google Gemini API Configuration
+                Section(
+                    header: Text("Google (Gemini API) Configuration"),
+
+                    footer: Text(
+                        "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)."
+                    )
+                ) {
+                    VStack(spacing: 12) {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Available Search Providers:")
-                                .font(.headline)
+                            HStack {
+                                Text("Google Gemini API Key")
+                                    .font(.headline)
+                                Spacer()
+                                Button(action: {
+                                    showGoogleGeminiKey.toggle()
+                                }) {
+                                    Image(systemName: showGoogleGeminiKey ? "eye.slash" : "eye")
+                                        .foregroundColor(.blue)
+                                }
+                            }
 
-                            Text(
-                                "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)."
-                            )
-
-                            Text(
-                                "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost."
-                            )
-
-                            Text(
-                                "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries."
-                            )
-
-                            Text(
-                                "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches."
-                            )
-
-                            Text(
-                                "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat."
-                            )
+                            HStack {
+                                StableSecureField(
+                                    placeholder: "Enter your Google Gemini API key",
+                                    text: $googleGeminiKey,
+                                    isSecure: !showGoogleGeminiKey
+                                )
+                            }
                         }
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text("AI Prompt for Enhanced Results")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+
+                                Spacer()
+
+                                Menu("Examples") {
+                                    Button("Default Query") {
+                                        googleGeminiQuery =
+                                            "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
+                                    }
+
+                                    Button("Detailed Visual Analysis") {
+                                        googleGeminiQuery =
+                                            "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
+                                    }
+
+                                    Button("Diabetes Focus") {
+                                        googleGeminiQuery =
+                                            "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates."
+                                    }
+
+                                    Button("Macro Tracking") {
+                                        googleGeminiQuery =
+                                            "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals."
+                                    }
+                                }
+                                .font(.caption)
+                            }
+
+                            TextEditor(text: $googleGeminiQuery)
+                                .frame(minHeight: 80)
+                                .border(Color.secondary.opacity(0.3), width: 0.5)
+                        }
+                    }
+                }
+
+                // OpenAI (ChatGPT) API Configuration
+                Section(
+                    header: Text("OpenAI (ChatGPT API) Configuration"),
+
+                    footer: Text(
+                        "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)"
+                    )
+                ) {
+                    VStack(spacing: 12) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Text("ChatGPT (OpenAI) API Key")
+                                    .font(.headline)
+                                Spacer()
+                                Button(action: {
+                                    showOpenAIKey.toggle()
+                                }) {
+                                    Image(systemName: showOpenAIKey ? "eye.slash" : "eye")
+                                        .foregroundColor(.blue)
+                                }
+                            }
+
+                            HStack {
+                                StableSecureField(
+                                    placeholder: "Enter your OpenAI API key",
+                                    text: $openAIKey,
+                                    isSecure: !showOpenAIKey
+                                )
+                            }
+                        }
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text("AI Prompt for Enhanced Results")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+
+                                Spacer()
+
+                                Menu("Examples") {
+                                    Button("Default Query") {
+                                        openAIQuery =
+                                            "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
+                                    }
+
+                                    Button("Detailed Visual Analysis") {
+                                        openAIQuery =
+                                            "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
+                                    }
+
+                                    Button("Diabetes Focus") {
+                                        openAIQuery =
+                                            "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates."
+                                    }
+
+                                    Button("Macro Tracking") {
+                                        openAIQuery =
+                                            "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals."
+                                    }
+                                }
+                                .font(.caption)
+                            }
+
+                            TextEditor(text: $openAIQuery)
+                                .frame(minHeight: 80)
+                                .border(Color.secondary.opacity(0.3), width: 0.5)
+                        }
+                    }
+                }
+
+                Section(
+                    header: Text("Important: How to Use Your API Keys"),
+
+                    footer: Text(
+                        "To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food."
+                    )
+                ) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Image(systemName: "camera.fill")
+                                .foregroundColor(.blue)
+                            Text("Camera Food Analysis")
+                                .font(.headline)
+                        }
+
+                        Text(
+                            "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above."
+                        )
                         .font(.caption)
                         .foregroundColor(.secondary)
+
+                        Text(
+                            "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys"
+                        )
+                        .font(.caption)
+                        .foregroundColor(.blue)
+
+                        Text(
+                            "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI"
+                        )
+                        .font(.caption)
+                        .foregroundColor(.orange)
                     }
+                }
 
-                    Section(header: Text("Search Type Recommendations")) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Group {
-                                Text("**Text/Voice Search:**")
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                Text("USDA FoodData Central → OpenFoodFacts")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+                Section(header: Text("Provider Information")) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Available Search Providers:")
+                            .font(.headline)
 
-                                Text("**Barcode Scanning:**")
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                Text("OpenFoodFacts")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+                        Text(
+                            "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)."
+                        )
 
-                                Text("**AI Image Analysis:**")
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                Text("Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
+                        Text(
+                            "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost."
+                        )
+
+                        Text(
+                            "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries."
+                        )
+
+                        Text(
+                            "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches."
+                        )
+
+                        Text(
+                            "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat."
+                        )
+                    }
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                }
+
+                Section(header: Text("Search Type Recommendations")) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Group {
+                            Text("**Text/Voice Search:**")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            Text("USDA FoodData Central → OpenFoodFacts")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+
+                            Text("**Barcode Scanning:**")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            Text("OpenFoodFacts")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+
+                            Text("**AI Image Analysis:**")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            Text("Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
                     }
-                } // End if foodSearchEnabled
+                }
 
                 Section(header: Text("Medical Disclaimer")) {
                     Text(
@@ -442,27 +426,20 @@ struct AISettingsView: View {
                     .foregroundColor(.secondary)
                 }
             }
-            .navigationTitle("Food Search Settings")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button("Exit") {
-                    // Restore original values (discard changes)
-                    claudeKey = ConfigurableAIService.shared.getAPIKey(for: .claude) ?? ""
-                    claudeQuery = ConfigurableAIService.shared.getQuery(for: .claude) ?? ""
-                    openAIKey = ConfigurableAIService.shared.getAPIKey(for: .openAI) ?? ""
-                    openAIQuery = ConfigurableAIService.shared.getQuery(for: .openAI) ?? ""
-                    googleGeminiKey = ConfigurableAIService.shared.getAPIKey(for: .googleGemini) ?? ""
-                    googleGeminiQuery = ConfigurableAIService.shared.getQuery(for: .googleGemini) ?? ""
-                    // Feature flags werden automatisch durch @AppStorage verwaltet
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .foregroundColor(.secondary),
-                trailing: Button("Save") {
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle("Food Search Settings")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
                     saveSettings()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                    }
                 }
-                .font(.headline)
-                .foregroundColor(.accentColor)
-            )
+            }
         }
         .alert("API Key Required", isPresented: $showingAPIKeyAlert) {
             Button("OK") {}

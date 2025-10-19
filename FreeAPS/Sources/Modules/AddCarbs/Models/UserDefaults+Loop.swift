@@ -20,7 +20,6 @@ extension UserDefaults {
         case barcodeSearchProvider = "com.loopkit.Loop.barcodeSearchProvider"
         case aiImageProvider = "com.loopkit.Loop.aiImageProvider"
         case analysisMode = "com.loopkit.Loop.analysisMode"
-        case foodSearchEnabled = "com.loopkit.Loop.foodSearchEnabled"
         case advancedDosingRecommendationsEnabled = "com.loopkit.Loop.advancedDosingRecommendationsEnabled"
         case useGPT5ForOpenAI = "com.loopkit.Loop.useGPT5ForOpenAI"
     }
@@ -310,15 +309,6 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: Key.analysisMode.rawValue)
-        }
-    }
-
-    var foodSearchEnabled: Bool {
-        get {
-            bool(forKey: Key.foodSearchEnabled.rawValue)
-        }
-        set {
-            set(newValue, forKey: Key.foodSearchEnabled.rawValue)
         }
     }
 
