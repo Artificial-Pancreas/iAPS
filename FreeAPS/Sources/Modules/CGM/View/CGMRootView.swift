@@ -24,7 +24,8 @@ extension CGM {
         var body: some View {
             NavigationView {
                 Form {
-                    if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI
+                    if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
+                       cgmManager.isOnboarded
                     {
                         Section(header: Text("Active CGM")) {
                             HStack {
@@ -82,32 +83,34 @@ extension CGM {
                         }
                     }
 
-                    if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
-                       KnownPlugins.allowCalibrations(for: cgmManager)
-                    {
-                        Text("Calibrations").navigationLink(to: .calibrations, from: self)
-                    }
-
-                    // if CGM/App is selected but sensor life-span is not known...
                     if let cgmManager = state.deviceManager.cgmManager,
-                       KnownPlugins.cgmExpirationByPluginIdentifier(state.deviceManager.cgmManager) == nil
+                       cgmManager.isOnboarded
                     {
-                        Section {
-                            HStack {
-                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
-                                Text("days").foregroundStyle(.secondary)
+                        if KnownPlugins.allowCalibrations(for: cgmManager)
+                        {
+                            Text("Calibrations").navigationLink(to: .calibrations, from: self)
+                        }
+
+                        // if CGM/App is selected but sensor life-span is not known...
+                        if KnownPlugins.cgmExpirationByPluginIdentifier(state.deviceManager.cgmManager) == nil
+                        {
+                            Section {
+                                HStack {
+                                    TextField("0", value: $state.sensorDays, formatter: daysFormatter)
+                                    Text("days").foregroundStyle(.secondary)
+                                }
+                            }
+                            header: { Text("Sensor Life-Span") }
+                            footer: {
+                                Text(
+                                    "When using \(cgmManager.localizedTitle) iAPS doesn't know the type of sensor used or the sensor life-span."
+                                )
                             }
                         }
-                        header: { Text("Sensor Life-Span") }
-                        footer: {
-                            Text(
-                                "When using \(cgmManager.localizedTitle) iAPS doesn't know the type of sensor used or the sensor life-span."
-                            )
-                        }
-                    }
 
-                    Section(header: Text("Experimental")) {
-                        Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
+                        Section(header: Text("Experimental")) {
+                            Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
+                        }
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
@@ -115,21 +118,23 @@ extension CGM {
                 .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $state.cgmSetupPresented) {
                     if let identifier = state.cgmIdentifierToSetUp {
-                        if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
-                           cgmManager.pluginIdentifier == identifier
-                        {
-                            CGMSettingsView(
-                                cgmManager: cgmManager,
-                                deviceManager: state.deviceManager,
-                                completionDelegate: state,
-                            )
-                        } else {
-                            CGMSetupView(
-                                cgmIdentifier: identifier,
-                                deviceManager: state.deviceManager,
-                                completionDelegate: state,
-                            )
-                        }
+                        CGMSetupView(
+                            cgmIdentifier: identifier,
+                            deviceManager: state.deviceManager,
+                            completionDelegate: state,
+                        )
+                    }
+                }
+                .sheet(isPresented: $state.cgmSettingsPresented) {
+                    if let identifier = state.cgmIdentifierToSetUp,
+                       let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
+                       cgmManager.pluginIdentifier == identifier
+                    {
+                        CGMSettingsView(
+                            cgmManager: cgmManager,
+                            deviceManager: state.deviceManager,
+                            completionDelegate: state,
+                        )
                     }
                 }
             }
