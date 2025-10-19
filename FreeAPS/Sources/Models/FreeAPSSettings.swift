@@ -675,8 +675,8 @@ extension FreeAPSSettings: Decodable {
         }
 
         if let aiProvider = try? container.decode(String.self, forKey: .aiProvider) {
-        }
             settings.aiProvider = aiProvider
+        }
 
         if let claudeAPIKey = try? container.decode(String.self, forKey: .claudeAPIKey) {
             settings.claudeAPIKey = claudeAPIKey
@@ -686,8 +686,8 @@ extension FreeAPSSettings: Decodable {
             settings.claudeQuery = claudeQuery
         }
 
-            settings.openAIAPIKey = openAIAPIKey
         if let openAIAPIKey = try? container.decode(String.self, forKey: .openAIAPIKey) {
+            settings.openAIAPIKey = openAIAPIKey
         }
 
         if let openAIQuery = try? container.decode(String.self, forKey: .openAIQuery) {
@@ -702,19 +702,18 @@ extension FreeAPSSettings: Decodable {
             settings.googleGeminiQuery = googleGeminiQuery
         }
 
-            settings.textSearchProvider = textSearchProvider
         if let textSearchProvider = try? container.decode(String.self, forKey: .textSearchProvider) {
+            settings.textSearchProvider = textSearchProvider
         }
         if let barcodeSearchProvider = try? container.decode(String.self, forKey: .barcodeSearchProvider) {
-
             settings.barcodeSearchProvider = barcodeSearchProvider
         }
 
         if let aiImageProvider = try? container.decode(String.self, forKey: .aiImageProvider) {
             settings.aiImageProvider = aiImageProvider
         }
-        if let analysisMode = try? container.decode(String.self, forKey: .analysisMode) {
 
+        if let analysisMode = try? container.decode(String.self, forKey: .analysisMode) {
             settings.analysisMode = analysisMode
         }
 
