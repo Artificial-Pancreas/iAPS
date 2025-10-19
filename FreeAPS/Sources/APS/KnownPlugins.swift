@@ -15,6 +15,14 @@ enum KnownPlugins {
         cgmManager.pluginIdentifier == LibreTransmitterManagerV3.pluginIdentifier
     }
 
+    static func glucoseUploadingAvailable(for cgmManager: CGMManager) -> Bool {
+        switch cgmManager.pluginIdentifier {
+        case MockCGMManager.pluginIdentifier: return false
+        case NightscoutRemoteCGM.pluginIdentifier: return false
+        default: return true
+        }
+    }
+
     static func cgmExpirationByPluginIdentifier(_ cgmManager: CGMManager?) -> TimeInterval? {
         guard let cgmManager else { return nil }
         let secondsOfDay = 8.64E4

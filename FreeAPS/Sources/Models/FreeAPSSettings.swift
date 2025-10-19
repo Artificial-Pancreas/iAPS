@@ -135,8 +135,6 @@ struct FreeAPSSettings: JSON, Equatable {
     // 1-min loops
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
     var allowOneMinuteGlucose: Bool = false // allow sending 1-minute readings to oref, even if loops are with 5-minute intervals
-
-    var backFillIntervall: Int = 1
     // AI Food Search Variablen
     var aiProvider: String = "Basic Analysis (Free)"
     var claudeAPIKey: String = ""
@@ -145,8 +143,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var openAIAPIKey: String = ""
     var googleGeminiAPIKey: String = ""
     var googleGeminiQuery: String = ""
-    var textSearchProvider: String = "USDA FoodData Central"
     var barcodeSearchProvider: String = "OpenFoodFacts"
+    var textSearchProvider: String = "USDA FoodData Central"
     var aiImageProvider: String = "OpenAI (ChatGPT API)"
     var analysisMode: String = "standard"
     var advancedDosingRecommendationsEnabled: Bool = false
@@ -676,13 +674,9 @@ extension FreeAPSSettings: Decodable {
             settings.allowOneMinuteGlucose = allowOneMinuteGlucose
         }
 
-        if let backFillIntervall = try? container.decode(Int.self, forKey: .backFillIntervall) {
-            settings.backFillIntervall = backFillIntervall
-        }
-
         if let aiProvider = try? container.decode(String.self, forKey: .aiProvider) {
-            settings.aiProvider = aiProvider
         }
+            settings.aiProvider = aiProvider
 
         if let claudeAPIKey = try? container.decode(String.self, forKey: .claudeAPIKey) {
             settings.claudeAPIKey = claudeAPIKey
@@ -692,8 +686,8 @@ extension FreeAPSSettings: Decodable {
             settings.claudeQuery = claudeQuery
         }
 
-        if let openAIAPIKey = try? container.decode(String.self, forKey: .openAIAPIKey) {
             settings.openAIAPIKey = openAIAPIKey
+        if let openAIAPIKey = try? container.decode(String.self, forKey: .openAIAPIKey) {
         }
 
         if let openAIQuery = try? container.decode(String.self, forKey: .openAIQuery) {
@@ -708,19 +702,19 @@ extension FreeAPSSettings: Decodable {
             settings.googleGeminiQuery = googleGeminiQuery
         }
 
-        if let textSearchProvider = try? container.decode(String.self, forKey: .textSearchProvider) {
             settings.textSearchProvider = textSearchProvider
+        if let textSearchProvider = try? container.decode(String.self, forKey: .textSearchProvider) {
         }
-
         if let barcodeSearchProvider = try? container.decode(String.self, forKey: .barcodeSearchProvider) {
+
             settings.barcodeSearchProvider = barcodeSearchProvider
         }
 
         if let aiImageProvider = try? container.decode(String.self, forKey: .aiImageProvider) {
             settings.aiImageProvider = aiImageProvider
         }
-
         if let analysisMode = try? container.decode(String.self, forKey: .analysisMode) {
+
             settings.analysisMode = analysisMode
         }
 

@@ -10,6 +10,7 @@ extension CGM {
         @Injected() var deviceManager: DeviceDataManager!
 
         @Published var cgmSetupPresented: Bool = false
+        @Published var cgmSettingsPresented: Bool = false
         @Published private(set) var cgmIdentifierToSetUp: String? = nil
 
         @Published var smoothGlucose = false
@@ -26,7 +27,9 @@ extension CGM {
 
         func setupCGM(_ identifier: String?) {
             cgmIdentifierToSetUp = identifier
-            cgmSetupPresented = identifier != nil
+            cgmSetupPresented = identifier != nil && deviceManager.cgmManager == nil
+            cgmSettingsPresented = identifier != nil && deviceManager.cgmManager?.pluginIdentifier == identifier && deviceManager
+                .cgmManager?.isOnboarded == true
         }
     }
 }
