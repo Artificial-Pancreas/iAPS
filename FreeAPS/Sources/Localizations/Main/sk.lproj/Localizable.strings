@@ -1534,10 +1534,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Connect to Apple Health" = "Pripojiť k Apple Health";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Ak chcete zapisovať údaje do aplikácie Apple Health, musíte udeliť oprávnenia v ponuke Nastavenia > Zdravie > Prístup k údajom";
+"To allow iAPS to write data to Apple Health, you must grant permission in Settings > Health > Data Access." = "Ak chcete zapisovať údaje do aplikácie Apple Health, musíte udeliť oprávnenia v ponuke Nastavenia > Zdravie > Prístup k údajom";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Toto umožňuje iAPS čítať a zapisovať údaje do aplikácie Zdravie. Musíte tiež udeliť povolenia v Nastavenia > Zdravie > Prístup k údajom. Ak zadáte hodnotu glykémie do aplikácie Zdravie, otvorte iAPS a overte, či sa zobrazí.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access." = "Toto umožňuje iAPS čítať a zapisovať údaje do aplikácie Zdravie. Musíte tiež udeliť povolenia v Nastavenia > Zdravie > Prístup k údajom.";
 
 /* New ALerts ------------------------- */
 /* Info title */

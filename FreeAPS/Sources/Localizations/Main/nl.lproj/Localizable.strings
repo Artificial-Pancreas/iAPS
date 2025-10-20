@@ -1534,10 +1534,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Connect to Apple Health" = "Verbinden met Apple Gezondheid";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Als je gegevens wilt opslaan met Apple Gezondheid, moet je de juiste machtigingen verlenen in Instellingen > Gezondheid > Gegevenstoegang en apparaten";
+"To allow iAPS to write data to Apple Health, you must grant permission in Settings > Health > Data Access." = "Als je gegevens wilt opslaan met Apple Gezondheid, moet je de juiste machtigingen verlenen in Instellingen > Gezondheid > Gegevenstoegang en apparaten";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Hiermee kan iAPS lezen van en schrijven naar Apple Heath. Je moet ook machtigingen geven in Instellingen > Gezondheid > Gegevenstoegang. Als je een glucosewaarde invoert in Apple Health, open je iAPS om te bevestigen dat deze wordt weergegeven.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access." = "Hiermee kan iAPS lezen van en schrijven naar Apple Heath. Je moet ook machtigingen geven in Instellingen > Gezondheid > Gegevenstoegang.";
 
 /* New ALerts ------------------------- */
 /* Info title */

@@ -1533,10 +1533,10 @@ Enact a temp Basal or a temp target */
 "Connect to Apple Health" = "Forbind til Apple Health";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For at skrive til Apple Health er skal du give tilladelser i Indstillinger > Sundhed > Data Adgang";
+"To allow iAPS to write data to Apple Health, you must grant permission in Settings > Health > Data Access." = "For at skrive til Apple Health er skal du give tilladelser i Indstillinger > Sundhed > Data Adgang";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Dette gør det muligt for iAPS at læse fra og skrive til Apple Heath. Du skal også give tilladelser i Indstillinger > Sundhed > Dataadgang. Hvis du indtaster en glukoseværdi i Apple Health, skal du åbne iAPS for at bekræfte, at den dukker op.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access." = "Dette gør det muligt for iAPS at læse fra og skrive til Apple Heath. Du skal også give tilladelser i Indstillinger > Sundhed > Dataadgang.";
 
 /* New ALerts ------------------------- */
 /* Info title */
