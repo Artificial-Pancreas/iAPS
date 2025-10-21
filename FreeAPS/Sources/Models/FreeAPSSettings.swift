@@ -135,8 +135,6 @@ struct FreeAPSSettings: JSON, Equatable {
     // 1-min loops
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
     var allowOneMinuteGlucose: Bool = false // allow sending 1-minute readings to oref, even if loops are with 5-minute intervals
-
-    var backFillIntervall: Int = 1
 }
 
 extension FreeAPSSettings: Decodable {
@@ -659,10 +657,6 @@ extension FreeAPSSettings: Decodable {
         }
         if let allowOneMinuteGlucose = try? container.decode(Bool.self, forKey: .allowOneMinuteGlucose) {
             settings.allowOneMinuteGlucose = allowOneMinuteGlucose
-        }
-
-        if let backFillIntervall = try? container.decode(Int.self, forKey: .backFillIntervall) {
-            settings.backFillIntervall = backFillIntervall
         }
 
         self = settings
