@@ -191,19 +191,19 @@
 "Are you sure?" = "Bạn có chắc chắn không?";
 
 /* */
-"Clear Records" = "Clear Records";
+"Clear Records" = "Làm sạch dữ liệu";
 
 /* */
-"Delete CoreData database records" = "Delete CoreData database records";
+"Delete CoreData database records" = "Xóa các bản ghi trong cơ sở dữ liệu CoreData";
 
 /* */
-"Delete NS records" = "Delete NS records";
+"Delete NS records" = "Xóa các bản ghi NS";
 
 /* */
-"All records in " = "All records in ";
+"All records in " = "Tất cả bản ghi trong ";
 
 /* */
-" will be deleted!" = " will be deleted!";
+" will be deleted!" = " sẽ bị xóa!";
 
 /* Bottom target temp */
 "Bottom target" = "Mục tiêu thấp nhất";
