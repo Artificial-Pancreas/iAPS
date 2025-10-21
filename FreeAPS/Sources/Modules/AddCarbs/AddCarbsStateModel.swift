@@ -129,22 +129,23 @@ extension AddCarbs {
                     .reduce(0, +)
                 let totProtein = combinedPresets
                     .compactMap({ each in (each.preset?.protein ?? 0) as Decimal * Decimal(each.portions) }).reduce(0, +)
+                let margins: Decimal = 0.2
 
-                if carbs > totCarbs {
+                if carbs > totCarbs + margins {
                     presetsString.append("+ \(carbs - totCarbs) carbs")
-                } else if carbs < totCarbs {
+                } else if carbs + margins < totCarbs {
                     presetsString.append("- \(totCarbs - carbs) carbs")
                 }
 
-                if fat > totFat {
+                if fat > totFat + margins {
                     presetsString.append("+ \(fat - totFat) fat")
-                } else if fat < totFat {
+                } else if fat + margins < totFat {
                     presetsString.append("- \(totFat - fat) fat")
                 }
 
-                if protein > totProtein {
+                if protein > totProtein + margins {
                     presetsString.append("+ \(protein - totProtein) protein")
-                } else if protein < totProtein {
+                } else if protein + margins < totProtein {
                     presetsString.append("- \(totProtein - protein) protein")
                 }
             }

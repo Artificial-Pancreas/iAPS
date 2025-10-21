@@ -375,7 +375,7 @@ private struct FoodSearchResultRow: View {
                             VStack {
                                 Image(systemName: "exclamationmark.triangle")
                                     .foregroundColor(.orange)
-                                Text("Failed to load")
+                                Text("Failed to load, " + error.localizedDescription)
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             }
