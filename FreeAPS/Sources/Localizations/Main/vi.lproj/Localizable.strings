@@ -191,19 +191,19 @@
 "Are you sure?" = "Bạn có chắc chắn không?";
 
 /* */
-"Clear Records" = "Clear Records";
+"Clear Records" = "Làm sạch dữ liệu";
 
 /* */
-"Delete CoreData database records" = "Delete CoreData database records";
+"Delete CoreData database records" = "Xóa các bản ghi trong cơ sở dữ liệu CoreData";
 
 /* */
-"Delete NS records" = "Delete NS records";
+"Delete NS records" = "Xóa các bản ghi NS";
 
 /* */
-"All records in " = "All records in ";
+"All records in " = "Tất cả bản ghi trong ";
 
 /* */
-" will be deleted!" = " will be deleted!";
+" will be deleted!" = " sẽ bị xóa!";
 
 /* Bottom target temp */
 "Bottom target" = "Mục tiêu thấp nhất";
@@ -1533,10 +1533,10 @@ Enact a temp Basal or a temp target */
 "Connect to Apple Health" = "Kết nối Apple Health";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Để ghi dữ liệu vào Apple Health, bạn phải cấp quyền trong Cài đặt > Sức khỏe > Truy cập dữ liệu";
+"To allow iAPS to write data to Apple Health, you must grant permission in Settings > Health > Data Access." = "Để ghi dữ liệu vào Apple Health, bạn phải cấp quyền trong Cài đặt > Sức khỏe > Truy cập dữ liệu";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Điều này cho phép iAPS đọc và ghi vào Apple Heath. Bạn cũng phải cấp quyền trong Cài đặt > Sức khỏe > Truy cập dữ liệu. Nếu bạn nhập giá trị glucose vào Apple Health, hãy mở iAPS để xác nhận giá trị đó hiển thị.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access." = "Điều này cho phép iAPS đọc và ghi vào Apple Heath. Bạn cũng phải cấp quyền trong Cài đặt > Sức khỏe > Truy cập dữ liệu.";
 
 /* New ALerts ------------------------- */
 /* Info title */
