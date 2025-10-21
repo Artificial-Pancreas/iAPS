@@ -12,6 +12,7 @@ protocol NightscoutManager {
     func deleteCarbs(_ date: Date)
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
+    func uploadOldGlucose(bloodGlucose: [BloodGlucose], completion: @escaping () -> Void, progress: @escaping (Double) -> Void)
     func uploadStatus()
     func uploadStatistics(dailystat: Statistics)
     func uploadVersion(json: BareMinimum)
@@ -899,6 +900,22 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         return manualReadings
     }
 
+    func uploadOldGlucose(bloodGlucose: [BloodGlucose], completion: @escaping () -> Void, progress: @escaping (Double) -> Void) {
+        guard !bloodGlucose.isEmpty, nightscoutAPI != nil, isUploadEnabled else {
+            completion()
+            return
+        }
+        processQueue.async {
+            self.uploadGlucose(
+                upload: bloodGlucose,
+                allGlucose: nil, // do not update the "already uploaded glucose" file
+                fileToSave: OpenAPS.Nightscout.uploadedGlucose,
+                completionCB: completion,
+                progress: progress
+            )
+        }
+    }
+
     private func uploadGlucose(bloodGlucose: [BloodGlucose]) {
         guard !bloodGlucose.isEmpty, nightscoutAPI != nil, isUploadEnabled else {
             return
@@ -1064,9 +1081,16 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         uploadTreatments(tempTargetsStorage.nightscoutTretmentsNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedTempTargets)
     }
 
-    /// upload `glucose` to nightscout, upon success - save `allGlucose` to storage so we don't upload any of it next time
-    private func uploadGlucose(upload glucose: [BloodGlucose], allGlucose: [BloodGlucose], fileToSave: String) {
+    /// upload `glucose` to nightscout, upon success - if provided, save `allGlucose` to storage so we don't upload any of it next time
+    private func uploadGlucose(
+        upload glucose: [BloodGlucose],
+        allGlucose: [BloodGlucose]?,
+        fileToSave: String,
+        completionCB: (() -> Void)? = nil,
+        progress: ((Double) -> Void)? = nil
+    ) {
         guard !glucose.isEmpty, let nightscout = nightscoutAPI, isUploadEnabled, isUploadGlucoseEnabled else {
+            completionCB?()
             return
         }
         // check if unique code
@@ -1074,26 +1098,42 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         let glucoseWithoutCorrectID = glucose.filter { UUID(uuidString: $0._id) != nil }
 
         processQueue.async {
-            glucoseWithoutCorrectID.chunks(ofCount: 100)
-                .map { chunk -> AnyPublisher<Void, Error> in
-                    nightscout.uploadGlucose(Array(chunk))
+            let total = glucose.count
+            var uploaded = 0
+            progress?(0.0)
+
+            let chunks = glucoseWithoutCorrectID.chunks(ofCount: 100)
+
+            chunks.publisher
+                .flatMap(maxPublishers: .max(1)) { chunk -> AnyPublisher<Void, Error> in
+                    Deferred {
+                        nightscout.uploadGlucose(Array(chunk))
+                    }
+                    .handleEvents(receiveCompletion: { completion in
+                        if case .finished = completion {
+                            uploaded += chunk.count
+                            if total != 0 {
+                                progress?(Double(uploaded) / Double(total))
+                            } else {
+                                progress?(1.0)
+                            }
+                        }
+                    })
+                    .eraseToAnyPublisher()
                 }
-                .reduce(
-                    Just(()).setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                ) { (result, next) -> AnyPublisher<Void, Error> in
-                    Publishers.Concatenate(prefix: result, suffix: next).eraseToAnyPublisher()
-                }
-                .dropFirst()
+                .collect()
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        self.storage.save(allGlucose, as: fileToSave)
+                        if let allGlucose {
+                            self.storage.save(allGlucose, as: fileToSave)
+                        }
                         debug(.nightscout, "Glucose uploaded")
                     case let .failure(error):
                         debug(.nightscout, "Upload of glucose failed: " + error.localizedDescription)
                     }
-                } receiveValue: {}
+                    completionCB?()
+                } receiveValue: { _ in }
                 .store(in: &self.lifetime)
         }
     }

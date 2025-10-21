@@ -1534,10 +1534,10 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Connect to Apple Health" = "Conectar con Apple Salud";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Para escribir datos en la app Salud debes dar primero permisos en Ajustes > Salud > Acceso a Datos y Dispositivos";
+"To allow iAPS to write data to Apple Health, you must grant permission in Settings > Health > Data Access." = "Para escribir datos en la app Salud debes dar primero permisos en Ajustes > Salud > Acceso a Datos y Dispositivos";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Esto permite a iAPS leer y escribir en la app Salud de Apple. También debe dar permisos en Ajustes > Salud > Acceso a datos. Si ingresaste un valor de glucosa en la app Salud, revisa iAPS para confirmar que aparece.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access." = "Esto permite a iAPS leer y escribir en la app Salud de Apple. También debe dar permisos en Ajustes > Salud > Acceso a datos.";
 
 /* New ALerts ------------------------- */
 /* Info title */

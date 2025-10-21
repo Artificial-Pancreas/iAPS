@@ -1351,19 +1351,17 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func loopStats(loopStatRecord: LoopStats, error: Error?) {
-        coredataContext.perform {
-            let nLS = LoopStatRecord(context: self.coredataContext)
+        let nLS = LoopStatRecord(context: coredataContext)
+        nLS.start = loopStatRecord.start
+        nLS.end = loopStatRecord.end ?? Date()
+        nLS.loopStatus = loopStatRecord.loopStatus
+        nLS.duration = loopStatRecord.duration ?? 0.0
+        nLS.interval = loopStatRecord.interval ?? 0.0
+        if let error = error {
+            nLS.error = error.localizedDescription.string
+        }
 
-            nLS.start = loopStatRecord.start
-            nLS.end = loopStatRecord.end ?? Date()
-            nLS.loopStatus = loopStatRecord.loopStatus
-            nLS.duration = loopStatRecord.duration ?? 0.0
-            nLS.interval = loopStatRecord.interval ?? 0.0
-
-            if let error = error {
-                nLS.error = error.localizedDescription.string
-            }
-
+        coredataContext.performAndWait {
             try? self.coredataContext.save()
         }
     }
