@@ -148,7 +148,7 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
                 fat: quantityFat,
                 protein: quantityProtein,
                 note: mealPreset.dish ?? "",
-                enteredBy: CarbsEntry.manual,
+                enteredBy: CarbsEntry.shortcut,
                 isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false
             )]
         )
