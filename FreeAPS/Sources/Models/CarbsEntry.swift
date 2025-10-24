@@ -12,8 +12,10 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     let isFPU: Bool?
 
     static let manual = "iAPS"
+    static let watch = "iAPS Watch"
     static let remote = "Nightscout operator"
     static let appleHealth = "applehealth"
+    static let shortcut = "iAPS shortcut"
 
     static func == (lhs: CarbsEntry, rhs: CarbsEntry) -> Bool {
         lhs.createdAt == rhs.createdAt
