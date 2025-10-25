@@ -217,11 +217,9 @@ extension AutotuneConfig {
                         Text(rateFormatter.string(from: newRate as NSNumber) ?? "0")
                             .foregroundColor(.primary)
                     } else {
-                        let formatted = rateFormatter.string(from: oldRate as NSNumber) ?? "0"
-                        Text(formatted)
-                            .foregroundColor(.secondary)
                         Text("")
-                        Text(formatted)
+                        Text("")
+                        Text(rateFormatter.string(from: newRate as NSNumber) ?? "0")
                             .foregroundColor(.secondary)
                     }
                 } else {
