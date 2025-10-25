@@ -3261,29 +3261,29 @@ Enact a temp Basal or a temp target */
 "Read from " = "Đọc từ ";
 
 /* description for the backfill section in Nightscout settings screen */
-"Fetches old glucose readings from Nightscout" = "Fetches old glucose readings from Nightscout";
+"Fetches old glucose readings from Nightscout" = "Tải lại các giá trị đường huyết trước đó từ Nightscout";
 
 /* header and button label for the 'upload old glucose' action in Nightscout settings screen */
-"Upload glucose" = "Upload glucose";
+"Upload glucose" = "Tải đường huyết lên";
 
 /* description for the 'upload old glucose' section in Nightscout settings screen */
-"Uploads old glucose readings to Nightscout" = "Uploads old glucose readings to Nightscout";
+"Uploads old glucose readings to Nightscout" = "Gửi các giá trị đường huyết trước đó lên Nightscout";
 
 /* message when uploads are enabled, but glucose uploads are disabled, in Nightscout settings screen */
-"Glucose upload disabled in CGM settings" = "Glucose upload disabled in CGM settings";
+"Glucose upload disabled in CGM settings" = "Tải lên dữ liệu đường huyết đã bị tắt trong cài đặt CGM";
 
 /* header for the CGM list in CGM settings screen */
-"Connect to CGM" = "Connect to CGM";
+"Connect to CGM" = "Kết nối với CGM";
 
 
 /* message displayed when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
-"Pump+CGM" = "Pump+CGM";
+"Pump+CGM" = "Pump/CGM";
 
 /* label for the button to remove the CGM when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
 "Stop using the pump as CGM" = "Ngừng sử dụng pump như CGM";
 
 /* hint under the CGM list in CGM settings screen */
-"To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM." = "To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM.";
+"To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM." = "Để nhận dữ liệu đường huyết từ xDrip4iOS, Glucose Direct hoặc ứng dụng tương thích khác, hãy chọn CGM trong nhóm ứng dụng chia sẻ (Shared App Group).";
 
 /* message displayed in pump settings screen when the pump manager reports uncertain delivery */
-"Pump delivery uncertain" = "Pump delivery uncertain";
+"Pump delivery uncertain" = "Không xác định được việc tiêm insulin";

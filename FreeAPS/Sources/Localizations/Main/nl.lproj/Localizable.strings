@@ -191,19 +191,19 @@
 "Are you sure?" = "Weet je het zeker?";
 
 /* */
-"Clear Records" = "Clear Records";
+"Clear Records" = "Records wissen";
 
 /* */
-"Delete CoreData database records" = "Delete CoreData database records";
+"Delete CoreData database records" = "Verwijder CoreData database records";
 
 /* */
-"Delete NS records" = "Delete NS records";
+"Delete NS records" = "NS records verwijderen";
 
 /* */
-"All records in " = "All records in ";
+"All records in " = "Alle gegevens in ";
 
 /* */
-" will be deleted!" = " will be deleted!";
+" will be deleted!" = " wordt verwijderd!";
 
 /* Bottom target temp */
 "Bottom target" = "Ondergrens doel";
@@ -3265,29 +3265,29 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Read from " = "Lezen van ";
 
 /* description for the backfill section in Nightscout settings screen */
-"Fetches old glucose readings from Nightscout" = "Fetches old glucose readings from Nightscout";
+"Fetches old glucose readings from Nightscout" = "Haalt oude glucosewaardes van Nightscout op";
 
 /* header and button label for the 'upload old glucose' action in Nightscout settings screen */
-"Upload glucose" = "Upload glucose";
+"Upload glucose" = "Upload glucosewaarde";
 
 /* description for the 'upload old glucose' section in Nightscout settings screen */
-"Uploads old glucose readings to Nightscout" = "Uploads old glucose readings to Nightscout";
+"Uploads old glucose readings to Nightscout" = "Upload oude glucosewaardes naar Nightscout";
 
 /* message when uploads are enabled, but glucose uploads are disabled, in Nightscout settings screen */
-"Glucose upload disabled in CGM settings" = "Glucose upload disabled in CGM settings";
+"Glucose upload disabled in CGM settings" = "Glucose upload uitgeschakeld in CGM-instellingen";
 
 /* header for the CGM list in CGM settings screen */
-"Connect to CGM" = "Connect to CGM";
+"Connect to CGM" = "Verbinden met CGM";
 
 
 /* message displayed when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
-"Pump+CGM" = "Pump+CGM";
+"Pump+CGM" = "Pomp+CGM";
 
 /* label for the button to remove the CGM when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
 "Stop using the pump as CGM" = "De pomp niet langer als CGM gebruiken";
 
 /* hint under the CGM list in CGM settings screen */
-"To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM." = "To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM.";
+"To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM." = "Om waarden te ontvangen van xDrip4iOS, Glucose Direct of een andere compatibele app, selecteer Shared App Group CGM.";
 
 /* message displayed in pump settings screen when the pump manager reports uncertain delivery */
-"Pump delivery uncertain" = "Pump delivery uncertain";
+"Pump delivery uncertain" = "Pomp insulinelevering onzeker";
