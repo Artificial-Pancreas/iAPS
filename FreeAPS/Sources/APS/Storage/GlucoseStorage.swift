@@ -44,9 +44,16 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
             var stored: [BloodGlucose] = []
             self.storage.transaction { storage in
                 let existing = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
-                let existingDates = Set(existing.map(\.dateString))
-                let newRecords = glucose.filter { bg in
-                    !existingDates.contains(bg.dateString)
+                var existingDates = existing.map(\.dateString)
+                var newRecords: [BloodGlucose] = []
+                newRecords.reserveCapacity(glucose.count)
+                for bg in glucose {
+                    if existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 }) {
+                        // skip if we already have a record within +/- 45 seconds
+                        continue
+                    }
+                    newRecords.append(bg)
+                    existingDates.append(bg.dateString)
                 }
 
                 storage.append(newRecords, to: file, uniqBy: \.dateString)
