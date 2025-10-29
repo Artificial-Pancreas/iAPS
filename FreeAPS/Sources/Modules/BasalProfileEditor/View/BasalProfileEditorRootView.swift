@@ -4,7 +4,7 @@ import Swinject
 extension BasalProfileEditor {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var editMode = EditMode.inactive
         @Environment(\.dismiss) var dismiss
 
@@ -33,6 +33,15 @@ extension BasalProfileEditor {
         @State var showAlert = false
         @State var clean = false
 
+        init(
+            resolver: Resolver,
+            saveNewConcentration: Bool
+        ) {
+            self.resolver = resolver
+            self.saveNewConcentration = saveNewConcentration
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         var body: some View {
             Form {
                 if !saveNewConcentration {
@@ -43,7 +52,6 @@ extension BasalProfileEditor {
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-                configureView()
                 set = Decimal(concentration.last?.concentration ?? 1)
             }
             .navigationTitle(saveNewConcentration ? "Insulin Concentration" : "Basal Profile")

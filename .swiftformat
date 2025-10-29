@@ -1,0 +1,13 @@
+--exclude LoopKit/
+--exclude OmniKit/
+--exclude OmniBLE/
+--exclude CGMBLEKit/
+--exclude MinimedKit/
+--exclude LibreTransmitter/
+--exclude G7SensorKit/
+--exclude dexcom-share-client-swift/
+--exclude DanaKit/
+--exclude TidepoolService/
+--exclude RileyLinkKit/
+--exclude NightscoutRemoteCGM/
+--exclude MedtrumKit/

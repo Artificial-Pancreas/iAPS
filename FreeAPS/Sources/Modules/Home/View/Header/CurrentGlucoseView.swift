@@ -12,7 +12,6 @@ struct CurrentGlucoseView: View {
     @Binding var scrolling: Bool
     @Binding var displaySAGE: Bool
     @Binding var displayExpiration: Bool
-    @Binding var cgm: CGMType
     @Binding var sensordays: Double
 
     @Environment(\.colorScheme) var colorScheme
@@ -102,9 +101,9 @@ struct CurrentGlucoseView: View {
                 }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
-                    if let string = recent.glucose.map({
+                    if let string = recent.unfiltered.map({
                         formatter
-                            .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber) ?? "" })
+                            .string(from: Double(units == .mmolL ? $0.asMmolL : $0) as NSNumber) ?? "" })
                     {
                         glucoseText(string).asAny()
                             .background { glucoseDrop }
@@ -145,7 +144,7 @@ struct CurrentGlucoseView: View {
                 let sensorAge: TimeInterval = (-1 * date.timeIntervalSinceNow)
                 let expiration = sensordays - sensorAge
                 let secondsOfDay = 8.64E4
-                let colour: Color = colorScheme == .light ? .secondary : Color.black
+                let colour = colorScheme == .light ? Color.black : Color.white
                 let lineColour: Color = sensorAge >= sensordays - secondsOfDay * 1 ? Color.red
                     .opacity(0.9) : sensorAge >= sensordays - secondsOfDay * 2 ? Color
                     .orange : Color.white
@@ -161,7 +160,7 @@ struct CurrentGlucoseView: View {
                                     .replacingOccurrences(of: ",", with: " ") :
                                     (remainingTimeFormatter.string(from: displayExpiration ? expiration : sensorAge) ?? "")
                                     .replacingOccurrences(of: ",", with: " ")
-                            ).foregroundStyle(colour)
+                            ).foregroundStyle(colour).fontWeight(colorScheme == .dark ? .semibold : .regular)
                         }
                     }
             }

@@ -25,6 +25,17 @@ struct AlertEntry: JSON, Codable, Hashable {
         hasher.combine(issuedDate)
     }
 
+    init(from alert: LoopKit.Alert) {
+        alertIdentifier = alert.identifier.alertIdentifier
+        primitiveInterruptionLevel = alert.interruptionLevel.storedValue as? Decimal
+        issuedDate = Date()
+        managerIdentifier = alert.identifier.managerIdentifier
+        triggerType = alert.trigger.storedType
+        triggerInterval = alert.trigger.storedInterval as? Decimal
+        contentTitle = alert.foregroundContent?.title
+        contentBody = alert.foregroundContent?.body
+    }
+
     private enum CodingKeys: String, CodingKey {
         case alertIdentifier
         case acknowledgedDate

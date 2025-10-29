@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 
 extension Settings {
@@ -9,11 +10,16 @@ extension Settings {
         @Published var closedLoop = false
         @Published var debugOptions = false
         @Published var animatedBackground = false
-        @Published var disableCGMError = true
         @Published var profileID: String = "Hypo Treatment"
         @Published var allowDilution = false
         @Published var extended_overrides = false
         @Published var noCarbs = false
+        @Published var allowOneMinuteLoop = false
+        @Published var allowOneMinuteGlucose = false
+        @Published var entities: [Cleared] = CoreDataStack.shared.persistentContainer.managedObjectModel.entities
+            .compactMap(\.name).map {
+                Cleared(entity: $0, deleted: false)
+            }
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -24,11 +30,12 @@ extension Settings {
             nightscoutManager.fetchVersion()
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
-            subscribeSetting(\.disableCGMError, on: $disableCGMError) { disableCGMError = $0 }
             subscribeSetting(\.profileID, on: $profileID) { profileID = $0 }
             subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
             subscribeSetting(\.extended_overrides, on: $extended_overrides) { extended_overrides = $0 }
             subscribeSetting(\.noCarbs, on: $noCarbs) { noCarbs = $0 }
+            subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { allowOneMinuteLoop = $0 }
+            subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { allowOneMinuteGlucose = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
@@ -93,7 +100,12 @@ extension Settings.StateModel: SettingsObserver {
     func settingsDidChange(_ settings: FreeAPSSettings) {
         closedLoop = settings.closedLoop
         debugOptions = settings.debugOptions
-        disableCGMError = settings.disableCGMError
         allowDilution = settings.allowDilution
     }
+}
+
+struct Cleared {
+    var entity: String = "Readings"
+    var deleted: Bool = false
+    let id = UUID()
 }

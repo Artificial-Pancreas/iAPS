@@ -4,9 +4,8 @@ import Swinject
 extension Restore {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
-
-        var openAPS: Preferences?
+        let openAPS: Preferences
+        @StateObject var state: StateModel
 
         @Environment(\.dismiss) private var dismiss
 
@@ -19,11 +18,19 @@ extension Restore {
             return formatter
         }
 
+        init(
+            resolver: Resolver,
+            openAPS: Preferences
+        ) {
+            self.resolver = resolver
+            self.openAPS = openAPS
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         var body: some View {
             Form {
                 importResetSettingsView
             }
-            .onAppear(perform: configureView)
             .navigationTitle("Restore OpenAPS Settings")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Cancel") {
@@ -69,10 +76,9 @@ extension Restore {
         }
 
         private func importOpenAPSOnly() {
-            if let preferences = openAPS {
-                state.saveFile(preferences, filename: OpenAPS.Settings.preferences)
-                debug(.service, "Imported OpenAPS Settings have been saved to file storage.")
-            }
+            let preferences = openAPS
+            state.saveFile(preferences, filename: OpenAPS.Settings.preferences)
+            debug(.service, "Imported OpenAPS Settings have been saved to file storage.")
         }
     }
 }

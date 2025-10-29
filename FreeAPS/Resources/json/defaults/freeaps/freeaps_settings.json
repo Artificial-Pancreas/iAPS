@@ -40,6 +40,16 @@
   "yGridLines" : true,
   "oneDimensionalGraph" : false,
   "rulerMarks" : false,
+<<<<<<< HEAD
+=======
+  "hypoSound": "New/Anticipalte.caf",
+  "hyperSound": "New/Anticipalte.caf",
+  "ascending": "Silent",
+  "descending": "Silent",
+  "carbSound": "New/Anticipalte.caf",
+  "bolusFailure": "Silent",
+  "missingLoops": true,
+>>>>>>> dev
   "maxCarbs" : 200,
   "displayFatAndProteinOnWatch" : false,
   "confirmBolusFaster" : false,
@@ -55,7 +65,6 @@
   "useTargetButton" : false,
   "alwaysUseColors" : true,
   "timeSettings" : true,
-  "disableCGMError" : true,
   "allowBolusShortcut": false,
   "profilesOrTempTargets": true,
   "allowedRemoteBolusAmount": 0.0,
@@ -73,7 +82,11 @@
   "autoISFhourlyChange": 1,
   "higherISFrangeWeight": 0,
   "lowerISFrangeWeight": 0,
+<<<<<<< HEAD
   "postMealISFweight": 0.01,
+=======
+  "postMealISFweight": 0,
+>>>>>>> dev
   "enableBGacceleration": true,
   "bgAccelISFweight": 0,
   "bgBrakeISFweight": 0.10,

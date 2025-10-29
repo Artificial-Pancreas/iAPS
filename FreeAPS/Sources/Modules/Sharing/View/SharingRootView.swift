@@ -12,7 +12,7 @@ public enum Sex: String, CaseIterable, Identifiable {
 extension Sharing {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @State private var display: Bool = false
         @State private var copied: Bool = false
@@ -28,6 +28,11 @@ extension Sharing {
                 ...
                 calendar.date(from: endComponents)!
         }()
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -96,7 +101,6 @@ extension Sharing {
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-                configureView()
                 state.savedSettings()
             }
             .navigationBarTitle("Share and Backup")

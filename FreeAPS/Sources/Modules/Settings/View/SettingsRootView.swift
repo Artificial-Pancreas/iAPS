@@ -1,3 +1,4 @@
+import CoreData
 import HealthKit
 import SwiftUI
 import Swinject
@@ -5,8 +6,10 @@ import Swinject
 extension Settings {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State private var showShareSheet = false
+        @State private var entity: String = "Readings"
+        @State private var deletionAlert = false
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -21,6 +24,11 @@ extension Settings {
                 format: "name != %@", "" as String
             )
         ) var fetchedProfiles: FetchedResults<OverridePresets>
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -86,6 +94,7 @@ extension Settings {
                         Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                         Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                         Text("Sharing").navigationLink(to: .sharing, from: self)
+                        Text("Calendar").navigationLink(to: .calendar, from: self)
                         Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                         Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
                         Text("Auto ISF").navigationLink(to: .autoISF, from: self)
@@ -112,19 +121,6 @@ extension Settings {
                                     Button("Upload") { state.uploadProfileAndSettings(true) }
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                         .buttonStyle(.borderedProminent)
-                                }
-
-                                // Test code
-                                HStack {
-                                    Text("Delete All NS Overrides")
-                                    Button("Delete") { state.deleteOverrides() }
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .buttonStyle(.borderedProminent)
-                                        .tint(.red)
-                                }
-
-                                HStack {
-                                    Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
                                 }
 
                                 HStack {
@@ -198,12 +194,22 @@ extension Settings {
                             HStack {
                                 Toggle("Neglect Carbohydrates in oref0", isOn: $state.noCarbs)
                             }
+
+                            Group {
+                                HStack {
+                                    Text("Delete All NS Overrides")
+                                    Button("Delete") { state.deleteOverrides() }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.red)
+                                }
+                            }
+
+                            Group {
+                                NavigationLink("Delete CoreData database records", destination: clearView)
+                            }
                         }
                     } header: { Text("Developer") }
-
-                    Section {
-                        Toggle("Animated Background", isOn: $state.animatedBackground)
-                    }
 
                     Section {
                         Text("Share logs")
@@ -216,12 +222,62 @@ extension Settings {
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(activityItems: state.logItems())
             }
+            .alert(isPresented: $deletionAlert) {
+                alert(entity: entity)
+            }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.inline)
             .onDisappear(perform: { state.uploadProfileAndSettings(false) })
+        }
+
+        private func clearEntity(entity: String) {
+            CoreDataStack.shared.deleteBatch(entity: entity)
+            clear(entity)
+        }
+
+        private func clear(_ clear: String) {
+            if let edit = state.entities.firstIndex(where: { $0.entity == clear }) {
+                state.entities[edit].deleted.toggle()
+            }
+        }
+
+        private func alert(entity: String) -> Alert {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text(
+                    NSLocalizedString("All records in ", comment: "") + entity +
+                        NSLocalizedString(" will be deleted!", comment: "")
+                ),
+                primaryButton: .destructive(Text("Yes"), action: { clearEntity(entity: entity) }),
+                secondaryButton: .cancel()
+            )
+        }
+
+        private func deleted(_ entity: String) -> Bool {
+            state.entities.first(where: { $0.entity == entity && $0.deleted }) != nil
+        }
+
+        private var clearView: some View {
+            Form {
+                Section {
+                    List {
+                        ForEach(state.entities, id: \.id) { item in
+                            HStack {
+                                Text(item.entity)
+                                Spacer()
+                                Button {
+                                    entity = item.entity
+                                    deletionAlert.toggle()
+                                }
+                                label: { Image(systemName: "trash") }
+                                    .disabled(deleted(item.entity))
+                            }
+                        }
+                    }
+                } header: { Text("Delete CoreData database records") }
+            }
         }
     }
 }
