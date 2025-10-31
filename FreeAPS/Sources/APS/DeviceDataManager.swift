@@ -994,7 +994,7 @@ private extension BaseDeviceDataManager {
             pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
             pumpManagerStatus.value = pumpManager.status
             pumpName.send(pumpManager.localizedTitle)
-            pumpExpiresAtDate.send(KnownPlugins.pumpExpiration(pumpManager: pumpManager))
+            pumpExpiresAtDate.send(KnownPlugins.pumpExpirationDate(pumpManager))
         } else {
             pumpDisplayState.value = nil
             pumpManagerStatus.value = nil
