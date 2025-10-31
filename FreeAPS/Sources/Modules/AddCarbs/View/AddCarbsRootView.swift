@@ -452,7 +452,10 @@ extension AddCarbs {
         private func alert(food: AIFoodItem?) -> Alert {
             if let food = food {
                 return Alert(
-                    title: Text(NSLocalizedString("Save", comment: "") + "\"" + food.name + "\"" + NSLocalizedString("as new Meal Preset?", comment: "")),
+                    title: Text(
+                        NSLocalizedString("Save", comment: "") + "\"" + food
+                            .name + "\"" + NSLocalizedString("as new Meal Preset?", comment: "")
+                    ),
                     message: Text("To avoid having to search for same food on web again."),
                     primaryButton: .destructive(Text("Yes"), action: { addToPresetsIfNew(food: food) }),
                     secondaryButton: .cancel(Text("No"))
@@ -461,7 +464,10 @@ extension AddCarbs {
 
             return Alert(
                 title: Text("Oops!"),
-                message: Text(NSLocalizedString("Something isnt't working with food item ", comment: "") + "\"" + (food?.name ?? "nil")),
+                message: Text(
+                    NSLocalizedString("Something isnt't working with food item ", comment: "") + "\"" +
+                        (food?.name ?? "nil")
+                ),
                 primaryButton: .cancel(Text("OK")),
                 secondaryButton: .cancel()
             )
