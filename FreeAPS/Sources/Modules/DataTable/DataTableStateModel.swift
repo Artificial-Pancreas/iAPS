@@ -191,6 +191,8 @@ extension DataTable {
                 sgv: Int(glucose),
                 date: Decimal(now.timeIntervalSince1970) * 1000,
                 dateString: now,
+                unfiltered: glucose,
+                uncalibrated: glucose,
                 glucose: Int(glucose),
                 type: GlucoseType.manual.rawValue
             )
