@@ -976,6 +976,10 @@ private extension BaseDeviceDataManager {
 
         appCoordinator.setShouldUploadGlucose(cgmManager?.shouldSyncToRemoteService ?? false)
         appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager))
+
+        if let cgmManagerUI = cgmManager as? CGMManagerUI {
+            addDisplayGlucoseUnitObserver(cgmManagerUI)
+        }
     }
 
     func setupPump() {
