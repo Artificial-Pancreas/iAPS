@@ -659,10 +659,11 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
         // TODO: [loopkit] is this filtering still needed?
         // filter buggy TBRs > maxBasal from MDT
+        let pumpMaxBasal = Double(settingsManager.pumpSettings.maxBasal)
         let events = events.filter {
             // type is optional...
             guard let type = $0.type, type == .tempBasal else { return true }
-            return $0.dose?.unitsPerHour ?? 0 <= Double(settingsManager.pumpSettings.maxBasal)
+            return $0.dose?.unitsPerHour ?? 0 <= pumpMaxBasal
         }
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
