@@ -34,14 +34,15 @@ final class CoreDataStorageGlucoseSaver: NewGlucoseObserver {
                 )
 
                 let existing = try self.backgroundContext.fetch(requestReadings)
-                let existingDates = Set(existing.compactMap(\.date))
+                var existingDates = existing.compactMap(\.date)
 
                 for bg in bloodGlucose {
                     guard let glucose = bg.glucose,
-                          !existingDates.contains(bg.dateString)
+                          !existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 })
                     else {
                         continue
                     }
+                    existingDates.append(bg.dateString)
                     let dataForForStats = Readings(context: self.backgroundContext)
                     dataForForStats.date = bg.dateString
                     dataForForStats.glucose = Int16(glucose)

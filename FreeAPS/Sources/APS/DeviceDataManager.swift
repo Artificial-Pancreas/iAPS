@@ -659,10 +659,11 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
         // TODO: [loopkit] is this filtering still needed?
         // filter buggy TBRs > maxBasal from MDT
+        let pumpMaxBasal = Double(settingsManager.pumpSettings.maxBasal)
         let events = events.filter {
             // type is optional...
             guard let type = $0.type, type == .tempBasal else { return true }
-            return $0.dose?.unitsPerHour ?? 0 <= Double(settingsManager.pumpSettings.maxBasal)
+            return $0.dose?.unitsPerHour ?? 0 <= pumpMaxBasal
         }
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
@@ -975,6 +976,10 @@ private extension BaseDeviceDataManager {
 
         appCoordinator.setShouldUploadGlucose(cgmManager?.shouldSyncToRemoteService ?? false)
         appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager))
+
+        if let cgmManagerUI = cgmManager as? CGMManagerUI {
+            addDisplayGlucoseUnitObserver(cgmManagerUI)
+        }
     }
 
     func setupPump() {
@@ -989,7 +994,7 @@ private extension BaseDeviceDataManager {
             pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
             pumpManagerStatus.value = pumpManager.status
             pumpName.send(pumpManager.localizedTitle)
-            pumpExpiresAtDate.send(KnownPlugins.pumpExpiration(pumpManager: pumpManager))
+            pumpExpiresAtDate.send(KnownPlugins.pumpExpirationDate(pumpManager))
         } else {
             pumpDisplayState.value = nil
             pumpManagerStatus.value = nil

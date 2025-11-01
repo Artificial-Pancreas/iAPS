@@ -36,17 +36,6 @@ enum KnownPlugins {
         }
     }
 
-    static func pumpExpiration(pumpManager: PumpManager) -> Date? {
-        switch pumpManager.pluginIdentifier {
-        case OmnipodPumpManager.pluginIdentifier:
-            return (pumpManager as? OmnipodPumpManager)?.state.podState?.expiresAt
-        case OmniBLEPumpManager.pluginIdentifier:
-            return (pumpManager as? OmniBLEPumpManager)?.state.podState?.expiresAt
-        default:
-            return nil
-        }
-    }
-
     static func sessionStart(cgmManager: CGMManager) -> Date? {
         switch cgmManager.pluginIdentifier {
         case G5CGMManager.pluginIdentifier:
@@ -158,6 +147,9 @@ enum KnownPlugins {
                 .reservoirLevel ?? 0xDEAD_BEEF
             // TODO: find the value Pod.maximumReservoirReading
             let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
+            return Decimal(reservoir)
+        case MedtrumPumpManager.pluginIdentifier:
+            guard let reservoir = (pumpManager as? MedtrumPumpManager)?.state.reservoir else { return nil }
             return Decimal(reservoir)
         default: return nil
         }

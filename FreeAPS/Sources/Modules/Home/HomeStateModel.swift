@@ -1,6 +1,7 @@
 import Combine
 import CoreData
 import LibreTransmitter
+import LoopKit
 import LoopKitUI
 import SwiftDate
 import SwiftUI
@@ -9,6 +10,7 @@ extension Home {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var appCoordinator: AppCoordinator!
+        @Injected() var deviceDataManager: DeviceDataManager!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
         @Injected() var storage: TempTargetsStorage!
@@ -305,12 +307,17 @@ extension Home {
                     guard let self = self else { return }
                     if show, let pumpManager = self.provider.deviceManager.pumpManager
                     {
-                        let view = PumpConfig.PumpSettingsView(
-                            pumpManager: pumpManager,
-                            deviceManager: self.provider.deviceManager,
-                            completionDelegate: self,
-                        ).asAny()
-                        self.router.mainSecondaryModalView.send(view)
+                        if pumpManager.isOnboarded {
+                            let view = PumpConfig.PumpSettingsView(
+                                pumpManager: pumpManager,
+                                deviceManager: self.provider.deviceManager,
+                                completionDelegate: self,
+                            ).asAny()
+                            self.router.mainSecondaryModalView.send(view)
+                        } else {
+                            self.router.mainSecondaryModalView.send(nil)
+                            showModal(for: .pumpConfig)
+                        }
                     } else {
                         self.router.mainSecondaryModalView.send(nil)
                     }
@@ -400,9 +407,12 @@ extension Home {
                 self.readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today)
                 self.recentGlucose = self.data.glucose.last
                 if self.data.glucose.count >= 2 {
-                    self
-                        .glucoseDelta = (self.recentGlucose?.glucose ?? 0) -
-                        (self.data.glucose[self.data.glucose.count - 2].glucose ?? 0)
+                    self.glucoseDelta =
+                        NSDecimalNumber(
+                            decimal:
+                            (self.recentGlucose?.unfiltered ?? 0) -
+                                (self.data.glucose[self.data.glucose.count - 2].unfiltered ?? 0)
+                        ).intValue
                 } else {
                     self.glucoseDelta = nil
                 }

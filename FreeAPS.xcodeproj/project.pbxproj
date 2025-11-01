@@ -1902,13 +1902,13 @@
 			isa = PBXGroup;
 			children = (
 				F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */,
-				3811DE5925C9D4D500A708ED /* ViewModifiers.swift */,
-				3883581B25EE79BB00E024B2 /* DecimalTextField.swift */,
-				383420D825FFEB3F002D46C1 /* Popup.swift */,
-				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
 				38EA05FF262091870064E39B /* BolusProgressViewStyle.swift */,
-				38DF1785276A73D400B3528F /* TagCloudView.swift */,
+				3883581B25EE79BB00E024B2 /* DecimalTextField.swift */,
 				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
+				383420D825FFEB3F002D46C1 /* Popup.swift */,
+				38DF1785276A73D400B3528F /* TagCloudView.swift */,
+				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
+				3811DE5925C9D4D500A708ED /* ViewModifiers.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
