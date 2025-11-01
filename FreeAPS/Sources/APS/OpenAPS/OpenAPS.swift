@@ -4,7 +4,6 @@ import Foundation
 import JavaScriptCore
 
 final class OpenAPS {
-    private let jsWorker = JavaScriptWorker()
     private let scriptExecutor: WebViewScriptExecutor
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
     private let storage: FileStorage
@@ -323,7 +322,7 @@ final class OpenAPS {
 
                     now = Date.now
                     let (pumpProfile, profile) = await (
-                        self.makeProfileAsync(
+                        self.makeProfile(
                             preferences: preferences,
                             pumpSettings: pumpSettings,
                             bgTargets: bgTargets,
@@ -337,7 +336,7 @@ final class OpenAPS {
                             dynamicVariables: dynamicVariables,
                             settings: settings
                         ),
-                        self.makeProfileAsync(
+                        self.makeProfile(
                             preferences: preferences,
                             pumpSettings: pumpSettings,
                             bgTargets: bgTargets,
@@ -1218,17 +1217,6 @@ final class OpenAPS {
         )
     }
 
-    private func exportDefaultPreferences() -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-
-        jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Bundle.profile))
-            worker.evaluate(script: Script(name: Prepare.profile))
-            return worker.call(function: Function.exportDefaults, with: [])
-        }
-    }
-
     private func makeProfile(
         preferences: JSON,
         pumpSettings: JSON,
@@ -1241,40 +1229,6 @@ final class OpenAPS {
         autotune: JSON,
         freeaps: JSON,
         dynamicVariables: DynamicVariables,
-        settings: JSON
-    ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.call(
-            name: OpenAPS.Prepare.profile,
-            with: [
-                pumpSettings,
-                bgTargets,
-                isf,
-                basalProfile,
-                preferences,
-                carbRatio,
-                tempTargets,
-                model,
-                autotune,
-                freeaps,
-                dynamicVariables,
-                settings
-            ]
-        )
-    }
-
-    private func makeProfileAsync(
-        preferences: JSON,
-        pumpSettings: JSON,
-        bgTargets: JSON,
-        basalProfile: JSON,
-        isf: JSON,
-        carbRatio: JSON,
-        tempTargets: JSON,
-        model: JSON,
-        autotune: JSON,
-        freeaps: JSON,
-        dynamicVariables: JSON,
         settings: JSON
     ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
