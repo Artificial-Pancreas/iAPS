@@ -1228,15 +1228,15 @@ extension MainChartView {
             for peak in maxima {
                 if let glucose = peak.glucose {
                     let point = glucoseToCoordinate(peak, fullSize: fullSize)
-                    if let endX = positionPeak(peak: peak, x: point.x, .max) {
+                    if let (endX, endY) = positionPeak(peak: peak, x: point.x, y: point.y - 18, .max) {
                         glucosePeaks.append(
                             (
                                 yStart: point.y,
-                                yEnd: point.y - 15,
+                                yEnd: endY,
                                 xStart: point.x,
                                 xEnd: endX,
                                 textX: endX,
-                                textY: point.y - 15,
+                                textY: endY,
                                 glucose: glucose,
                                 .max
                             )
@@ -1248,15 +1248,15 @@ extension MainChartView {
             for peak in minima {
                 if let glucose = peak.glucose {
                     let point = glucoseToCoordinate(peak, fullSize: fullSize)
-                    if let endX = positionPeak(peak: peak, x: point.x, .min) {
+                    if let (endX, endY) = positionPeak(peak: peak, x: point.x, y: point.y + 18, .min) {
                         glucosePeaks.append(
                             (
                                 yStart: point.y,
-                                yEnd: point.y + 15,
+                                yEnd: endY,
                                 xStart: point.x,
                                 xEnd: endX,
                                 textX: endX,
-                                textY: point.y + 15,
+                                textY: endY,
                                 glucose: glucose,
                                 .min
                             )
@@ -1274,97 +1274,39 @@ extension MainChartView {
         }
     }
 
-    func placeLabelCenterX(
-        dots: [DotInfo],
-        around x: CGFloat,
-        labelWidth: CGFloat,
-        maxDotHops: Int = 3
-    ) -> CGFloat? {
-        guard !dots.isEmpty else { return x }
-
-        let half = labelWidth * 0.5
-
-        // lowerBound on rect.minX: first index with minX > x
-        func lowerBoundMinX(for x: CGFloat) -> Int {
-            var lo = 0, hi = dots.count
-            while lo < hi {
-                let mid = (lo + hi) >> 1
-                if dots[mid].rect.minX > x { hi = mid } else { lo = mid + 1 }
-            }
-            return lo
-        }
-
-        // Try to place inside the given [gapStart, gapEnd] so the label doesn't overlap either side.
-        @inline(__always) func placeInsideGap(x: CGFloat, gapStart: CGFloat, gapEnd: CGFloat) -> CGFloat? {
-            let available = gapEnd - gapStart
-            guard available >= labelWidth else { return nil }
-            // Clamp the desired center X so the label stays within the gap.
-            let minCenter = gapStart + half
-            let maxCenter = gapEnd - half
-            return min(max(x, minCenter), maxCenter)
-        }
-
-        // 1) Check the gap that currently contains `x`.
-        //    gap is between left dot (lo-1) and right dot (lo).
-        let lo = lowerBoundMinX(for: x)
-
-        // Left boundary of current gap
-        let curGapStart: CGFloat = (lo > 0) ? dots[lo - 1].rect.maxX : -.infinity
-        // Right boundary of current gap
-        let curGapEnd: CGFloat = (lo < dots.count) ? dots[lo].rect.minX : .infinity
-
-        if let cx = placeInsideGap(x: x, gapStart: curGapStart, gapEnd: curGapEnd) {
-            return cx
-        }
-
-        // 2) Prefer moving RIGHT first: gaps between dot[i]..dot[i+1], starting from the dot to the left of lo.
-        //    The nearest "pivot" dot index to the left of x is (lo-1). We'll hop i = (lo-1) .. (lo-1)+maxDotHops
-        let rightStart = max(0, lo - 1)
-        let rightEndExclusive = min(dots.count - 1, rightStart + maxDotHops) // last i we try is rightEndExclusive
-        if rightStart <= rightEndExclusive {
-            for i in rightStart ... rightEndExclusive {
-                let gapStart = dots[i].rect.maxX
-                let gapEnd: CGFloat = (i + 1 < dots.count) ? dots[i + 1].rect.minX : .infinity
-                if let cx = placeInsideGap(x: x, gapStart: gapStart, gapEnd: gapEnd) {
-                    return cx
-                }
-            }
-        }
-
-        // 3) Then try moving LEFT: gaps between dot[i-1]..dot[i], starting from the dot to the left of x (lo-1),
-        //    and going left up to maxDotHops.
-        //    Those gaps are identified by the right dot index i (so the gap is (i-1, i)).
-        let leftStart = lo - 1
-        let leftEndInclusive = max(0, leftStart - maxDotHops)
-        if leftEndInclusive <= leftStart {
-            for i in stride(from: leftStart, through: leftEndInclusive, by: -1) where i >= 0 {
-                let gapStart: CGFloat = (i - 1 >= 0) ? dots[i - 1].rect.maxX : -.infinity
-                let gapEnd = dots[i].rect.minX
-                if let cx = placeInsideGap(x: x, gapStart: gapStart, gapEnd: gapEnd) {
-                    return cx
-                }
-            }
-        }
-
-        // 4) No suitable gap within hop limit.
-        return nil
-    }
-
-    private func positionPeak(peak _: BloodGlucose, x: CGFloat, _ type: ExtremumType) -> CGFloat? {
+    private func positionPeak(peak _: BloodGlucose, x: CGFloat, y: CGFloat, _ type: ExtremumType) -> (CGFloat, CGFloat)? {
         let labelWidth: CGFloat = 32.0
+        let labelHeight: CGFloat = 20.0
+        let verticalLimit: CGFloat = 80.0
         if type == .max {
-            return placeLabelCenterX(
-                dots: bolusDots,
-                around: x,
+            let bolusLabelHeight: CGFloat = data.useInsulinBars ? 20.0 : 8.0
+            let bolusLabelWidth: CGFloat = data.useInsulinBars ? 8.0 : 20.0
+            return bolusDots.placeLabelCenter(
+                desiredCenterX: x,
+                desiredCenterY: y,
                 labelWidth: labelWidth,
-                maxDotHops: 4
+                labelHeight: labelHeight,
+                verticalSide: .above,
+                verticalLimit: verticalLimit,
+                verticalStep: 5,
+                maxDotHops: 3,
+                dotExtraLabelHeight: bolusLabelHeight,
+                dotLabelWidth: bolusLabelWidth
             )
         } else {
-            return placeLabelCenterX(
-                dots: carbsDots,
-                around: x,
+            let carbsLabelHeight: CGFloat = data.useCarbBars ? 20.0 : 8.0
+            let carbsLabelWidth: CGFloat = data.useCarbBars ? 8.0 : 20.0
+            return carbsDots.placeLabelCenter(
+                desiredCenterX: x,
+                desiredCenterY: y,
                 labelWidth: labelWidth,
-                maxDotHops: 4
+                labelHeight: labelHeight,
+                verticalSide: .below,
+                verticalLimit: verticalLimit,
+                verticalStep: 5,
+                maxDotHops: 3,
+                dotExtraLabelHeight: carbsLabelHeight,
+                dotLabelWidth: carbsLabelWidth
             )
         }
     }
@@ -2342,5 +2284,181 @@ extension MainChartView {
             size = 11
         }
         return Font.custom("BolusDotFont", fixedSize: size)
+    }
+}
+
+enum VerticalSide {
+    case above
+    case below
+}
+
+extension Array where Element == DotInfo {
+    /// Returns the placed label center (x, y) or nil if no placement fits.
+    /// Dots must be sorted by rect.minX.
+    func placeLabelCenter(
+        desiredCenterX x: CGFloat,
+        desiredCenterY y: CGFloat,
+        labelWidth: CGFloat,
+        labelHeight: CGFloat,
+        verticalSide: VerticalSide,
+        verticalLimit: CGFloat,
+        verticalStep: CGFloat = 1,
+        maxDotHops: Int = 3,
+        dotExtraLabelHeight: CGFloat, // renamed
+        dotLabelWidth: CGFloat
+    ) -> (x: CGFloat, y: CGFloat)? {
+        let halfW = labelWidth * 0.5
+        let halfH = labelHeight * 0.5
+
+        guard !isEmpty else { return (x, y) }
+
+        // Build obstacles: each dot merged with its (potentially wider) label area above it.
+        let obstacles: [CGRect] = map { d in
+            let r = d.rect
+            let dotLabelHalfW = dotLabelWidth * 0.5
+            let labelMinX = r.midX - dotLabelHalfW
+            let labelMaxX = r.midX + dotLabelHalfW
+            let expMinX = Swift.min(r.minX, labelMinX)
+            let expMaxX = Swift.max(r.maxX, labelMaxX)
+            return CGRect(
+                x: expMinX,
+                y: r.minY - dotExtraLabelHeight,
+                width: expMaxX - expMinX,
+                height: r.height + dotExtraLabelHeight
+            )
+        }
+
+        @inline(__always) func lowerBoundMinX(_ x: CGFloat) -> Int {
+            var lo = 0, hi = count
+            while lo < hi {
+                let mid = (lo + hi) >> 1
+                if self[mid].rect.minX > x { hi = mid } else { lo = mid + 1 }
+            }
+            return lo
+        }
+
+        // Gap bounds by left-dot index (as before).
+        @inline(__always) func gapBounds(leftIndex i: Int) -> (CGFloat, CGFloat) {
+            if i < 0 { return (-.infinity, self[0].rect.minX) }
+            if i >= count - 1 { return (self[count - 1].rect.maxX, .infinity) }
+            return (self[i].rect.maxX, self[i + 1].rect.minX)
+        }
+
+        // Find the closest allowed centerX inside a gap at vertical offset `dy`.
+        // Avoids obstacles by subtracting their forbidden center-X intervals.
+        func bestCenterInGap(gapStart gs: CGFloat, gapEnd ge: CGFloat, desired: CGFloat, dy: CGFloat) -> CGFloat? {
+            let minC = gs + halfW
+            let maxC = ge - halfW
+            guard minC <= maxC else { return nil }
+
+            let cy = y + dy
+            let candMinY = cy - halfH
+            let candMaxY = cy + halfH
+
+            // Forbidden center-X intervals due to obstacles that overlap in Y.
+            var blocks: [(start: CGFloat, end: CGFloat)] = []
+            blocks.reserveCapacity(obstacles.count)
+            for o in obstacles {
+                if o.maxY <= candMinY || o.minY >= candMaxY { continue } // no Y overlap
+                // For collision: centerX in [o.minX - halfW, o.maxX + halfW]
+                let s = o.minX - halfW
+                let e = o.maxX + halfW
+                // Clip to [minC, maxC]
+                let cs = Swift.max(s, minC)
+                let ce = Swift.min(e, maxC)
+                if cs < ce { blocks.append((cs, ce)) }
+            }
+
+            if blocks.isEmpty {
+                // Entire [minC, maxC] is free; clamp desired.
+                return Swift.min(Swift.max(desired, minC), maxC)
+            }
+
+            // Merge overlapping blocks.
+            blocks.sort { $0.start < $1.start }
+            var merged: [(CGFloat, CGFloat)] = []
+            var cur = blocks[0]
+            for i in 1 ..< blocks.count {
+                let b = blocks[i]
+                if b.start <= cur.1 {
+                    cur.1 = Swift.max(cur.1, b.1)
+                } else {
+                    merged.append(cur)
+                    cur = b
+                }
+            }
+            merged.append(cur)
+
+            // Build allowed intervals as the complement within [minC, maxC].
+            var allowed: [(CGFloat, CGFloat)] = []
+            var cursor = minC
+            for m in merged {
+                if m.0 > cursor { allowed.append((cursor, m.0)) }
+                cursor = Swift.max(cursor, m.1)
+            }
+            if cursor < maxC { allowed.append((cursor, maxC)) }
+            guard !allowed.isEmpty else { return nil }
+
+            // Pick nearest point to `desired`, prefer right side on ties.
+            var bestX = allowed[0].0
+            var bestDist = CGFloat.greatestFiniteMagnitude
+            var bestIsRight = false
+
+            for (a, b) in allowed {
+                let cx = Swift.min(Swift.max(desired, a), b)
+                let dist = abs(cx - desired)
+                let isRight = cx >= desired
+                if dist < bestDist || (dist == bestDist && isRight && !bestIsRight) {
+                    bestDist = dist
+                    bestX = cx
+                    bestIsRight = isRight
+                }
+            }
+            return bestX
+        }
+
+        // Vertical offsets to try (increasing movement), respecting side preference.
+        func verticalSequence(limit: CGFloat, step: CGFloat, side: VerticalSide) -> [CGFloat] {
+            guard limit > 0, step > 0 else { return [0] }
+            var list: [CGFloat] = [0]
+            let maxK = Int((limit / step).rounded(.down))
+            switch side {
+            case .above:
+                for k in 1 ... maxK { list.append(-CGFloat(k) * step) } // up is negative y
+            case .below:
+                for k in 1 ... maxK { list.append(CGFloat(k) * step) } // down is positive y
+            }
+            return list
+        }
+
+        let lo = lowerBoundMinX(x)
+        let baseLeftIndex = lo - 1
+        let vSeq = verticalSequence(limit: verticalLimit, step: verticalStep, side: verticalSide)
+
+        // Helper that tries a (gap, dy) combo and returns (cx, cy) if fits.
+        @inline(__always) func tryPlace(gapLeftIndex: Int, dy: CGFloat) -> (CGFloat, CGFloat)? {
+            let (gs, ge) = gapBounds(leftIndex: gapLeftIndex)
+            guard let cx = bestCenterInGap(gapStart: gs, gapEnd: ge, desired: x, dy: dy) else { return nil }
+            return (cx, y + dy)
+        }
+
+        // 1) Pure horizontal: right then left (dy = 0).
+        for h in 0 ... maxDotHops {
+            if let p = tryPlace(gapLeftIndex: baseLeftIndex + h, dy: 0) { return p }
+            if h > 0, let p = tryPlace(gapLeftIndex: baseLeftIndex - h, dy: 0) { return p }
+        }
+
+        // 2) Vertical + horizontal combos: up/down in place, then right-up/down, then left-up/down.
+        for (idx, dy) in vSeq.enumerated() where !(idx == 0 && dy == 0) {
+            if let p = tryPlace(gapLeftIndex: baseLeftIndex, dy: dy) { return p }
+            for h in 1 ... maxDotHops {
+                if let p = tryPlace(gapLeftIndex: baseLeftIndex + h, dy: dy) { return p }
+            }
+            for h in 1 ... maxDotHops {
+                if let p = tryPlace(gapLeftIndex: baseLeftIndex - h, dy: dy) { return p }
+            }
+        }
+
+        return nil
     }
 }
