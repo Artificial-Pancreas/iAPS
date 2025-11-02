@@ -124,6 +124,13 @@ extension Home {
             fpuAmounts: false,
             showInsulinActivity: false,
             showCobChart: false,
+            secondaryChartBackdrop: true,
+            inRangeAreaFill: false,
+            chartGlucosePeaks: false,
+            insulinActivityGridLines: true,
+            insulinActivityLabels: true,
+            yGridLabels: true,
+            showPredictionsLegend: true,
             iob: nil,
             hidePredictions: false,
             useCarbBars: false
@@ -172,6 +179,13 @@ extension Home {
             data.thresholdLines = settingsManager.settings.rulerMarks
             data.showInsulinActivity = settingsManager.settings.showInsulinActivity
             data.showCobChart = settingsManager.settings.showCobChart
+            data.secondaryChartBackdrop = settingsManager.settings.secondaryChartBackdrop
+            data.inRangeAreaFill = settingsManager.settings.inRangeAreaFill
+            data.chartGlucosePeaks = settingsManager.settings.chartGlucosePeaks
+            data.insulinActivityGridLines = settingsManager.settings.insulinActivityGridLines
+            data.insulinActivityLabels = settingsManager.settings.insulinActivityLabels
+            data.yGridLabels = settingsManager.settings.yGridLabels
+            data.showPredictionsLegend = settingsManager.settings.showPredictionsLegend
             useTargetButton = settingsManager.settings.useTargetButton
             data.screenHours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
@@ -723,6 +737,13 @@ extension Home.StateModel:
         data.thresholdLines = settingsManager.settings.rulerMarks
         data.showInsulinActivity = settingsManager.settings.showInsulinActivity
         data.showCobChart = settingsManager.settings.showCobChart
+        data.secondaryChartBackdrop = settingsManager.settings.secondaryChartBackdrop
+        data.inRangeAreaFill = settingsManager.settings.inRangeAreaFill
+        data.chartGlucosePeaks = settingsManager.settings.chartGlucosePeaks
+        data.insulinActivityGridLines = settingsManager.settings.insulinActivityGridLines
+        data.insulinActivityLabels = settingsManager.settings.insulinActivityLabels
+        data.yGridLabels = settingsManager.settings.yGridLabels
+        data.showPredictionsLegend = settingsManager.settings.showPredictionsLegend
         useTargetButton = settingsManager.settings.useTargetButton
         data.screenHours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors

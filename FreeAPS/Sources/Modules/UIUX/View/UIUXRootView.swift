@@ -39,33 +39,8 @@ extension UIUX {
         var body: some View {
             Form {
                 Section {
-                    Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
-                    Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
-                    Toggle("Display Chart Threshold lines for Low and High", isOn: $state.rulerMarks)
-                    Toggle("Display Insulin Activity Chart", isOn: $state.showInsulinActivity)
-                    Toggle("Display COB Chart", isOn: $state.showCobChart)
-                    Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
-                    HStack {
-                        Text("Horizontal Scroll View Visible hours")
-                        Spacer()
-                        DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
-                        Text("hours").foregroundColor(.secondary)
-                    }
-                    Toggle("Use insulin bars", isOn: $state.useInsulinBars)
-                    Toggle("Use carb bars", isOn: $state.useCarbBars)
-                    HStack {
-                        Text("Hide the bolus amount strings when amount is under")
-                        Spacer()
-                        DecimalTextField("0.2", value: $state.minimumSMB, formatter: insulinFormatter)
-                        Text("U").foregroundColor(.secondary)
-                    }
-                    Toggle("Display carb equivalents", isOn: $state.fpus)
-                    if state.fpus {
-                        Toggle("Display carb equivalent amount", isOn: $state.fpuAmounts)
-                    }
-                    Toggle("Hide oref0 Predictions", isOn: $state.hidePredictions)
-
-                } header: { Text("Home Chart settings ") }
+                    Text("Home Chart settings").navigationLink(to: .mainChartConfig, from: self)
+                }
 
                 Section {
                     Toggle("Display Temp Targets Button", isOn: $state.useTargetButton)
@@ -102,6 +77,7 @@ extension UIUX {
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
                     Toggle("Override HbA1c Unit", isOn: $state.overrideHbA1cUnit)
+                    Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
 
                 } header: { Text("Statistics settings ") }
 

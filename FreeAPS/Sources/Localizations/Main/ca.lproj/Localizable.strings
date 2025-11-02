@@ -1452,13 +1452,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Change HbA1c Unit";
 
 /* */
-"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+"Vertical grid lines" = "Vertical grid lines";
 
 /* */
-"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+"Horizontal grid lines" = "Horizontal grid lines";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+"Threshold lines (Low / High)" = "Threshold lines (Low / High)";
 
 /* */
 "Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";

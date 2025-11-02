@@ -114,6 +114,19 @@ struct MainChartView: View {
     @State private var peakActivity_maxBolus: Double = 0.0
     @State private var peakActivity_maxIOB: Double = 0.0
     @State private var maxActivityInData: Decimal? = nil
+    @State private var horizontalGrid: [(CGFloat, Int)] = []
+    @State private var lowThresholdLine: (CGFloat, Int)? = nil
+    @State private var highThresholdLine: (CGFloat, Int)? = nil
+    @State private var glucosePeaks: [(
+        yStart: CGFloat,
+        yEnd: CGFloat,
+        xStart: CGFloat,
+        xEnd: CGFloat,
+        textX: CGFloat,
+        textY: CGFloat,
+        glucose: Int,
+        type: ExtremumType
+    )] = []
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -134,6 +147,23 @@ struct MainChartView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
+    private var dotGlucoseFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.decimalSeparator = "."
+        return formatter
+    }
+
+    private var mmolDotGlucoseFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.minimumFractionDigits = 1
+        formatter.decimalSeparator = "."
         return formatter
     }
 
@@ -170,8 +200,10 @@ struct MainChartView: View {
             ZStack {
                 yGridView(fullSize: geo.size)
                 mainScrollView(fullSize: geo.size)
-                glucoseLabelsView(fullSize: geo.size)
-                if data.showInsulinActivity {
+                if data.yGridLabels {
+                    glucoseLabelsView(fullSize: geo.size)
+                }
+                if data.showInsulinActivity, data.insulinActivityLabels {
                     activityLabelsView(fullSize: geo.size)
                 }
             }
@@ -185,6 +217,9 @@ struct MainChartView: View {
                 update(fullSize: geo.size)
             }
             .onChange(of: data.showInsulinActivity) {
+                update(fullSize: geo.size)
+            }
+            .onChange(of: data.insulinActivityGridLines) {
                 update(fullSize: geo.size)
             }
             .onChange(of: data.showCobChart) {
@@ -205,7 +240,7 @@ struct MainChartView: View {
     var legendPanel: some View {
         ZStack {
             HStack {
-                if !data.hidePredictions {
+                if !data.hidePredictions && data.showPredictionsLegend {
                     Group {
                         Circle().fill(Color.insulin).frame(width: 8, height: 8)
                             .padding(.leading, 8)
@@ -280,82 +315,90 @@ struct MainChartView: View {
     private func yGridView(fullSize: CGSize) -> some View {
         let useColour = data.displayYgridLines ? Color.secondary : Color.clear
         return ZStack {
-            Path { path in
-                let range = glucoseYRange
-                let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
-                for line in 0 ... Config.yLinesCount {
-                    path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
+            if data.displayYgridLines {
+                Path { path in
+                    for (line, _) in horizontalGrid {
+                        path.move(to: CGPoint(x: 0, y: line))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: line))
+                    }
+                }.stroke(useColour, lineWidth: 0.15)
+            }
+
+            // in-range highlight
+            if data.inRangeAreaFill {
+                if let (highLineY, _) = highThresholdLine,
+                   let (lowLineY, _) = lowThresholdLine
+                {
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: highLineY))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: highLineY))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: lowLineY))
+                        path.addLine(to: CGPoint(x: 0, y: lowLineY))
+                        path.addLine(to: CGPoint(x: 0, y: highLineY))
+                    }.fill(IAPSconfig.inRangeBackground).opacity(0.20)
                 }
-            }.stroke(useColour, lineWidth: 0.15)
+            }
 
             // horizontal limits
             if data.thresholdLines {
-                let range = glucoseYRange
-                let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
-                    (CGFloat(range.maxValue) - CGFloat(data.highGlucose))
-                if CGFloat(range.maxValue) > CGFloat(data.highGlucose) {
+                if let (highLineY, _) = highThresholdLine {
                     Path { path in
-                        path.move(to: CGPoint(x: 0, y: range.minY + topstep))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
-                    }.stroke(Color.loopYellow, lineWidth: 0.5) // .StrokeStyle(lineWidth: 0.5, dash: [5])
+                        path.move(to: CGPoint(x: 0, y: highLineY))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: highLineY))
+                    }.stroke(Color.loopYellow, lineWidth: 0.4).opacity(0.8)
                 }
-                let yrange = glucoseYRange
-                let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
-                    (CGFloat(yrange.maxValue) - CGFloat(data.lowGlucose))
-                if CGFloat(yrange.minValue) < CGFloat(data.lowGlucose) {
+                if let (lowLineY, _) = lowThresholdLine {
                     Path { path in
-                        path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
-                    }.stroke(Color.loopRed, lineWidth: 0.5)
+                        path.move(to: CGPoint(x: 0, y: lowLineY))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: lowLineY))
+                    }.stroke(Color.loopRed, lineWidth: 0.4).opacity(0.8)
                 }
             }
 
             if data.showInsulinActivity || data.showCobChart {
-                // background for COB/activity
-                Path { path in
-                    path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: fullSize.height - Config.bottomPadding))
-                    path
-                        .addLine(to: CGPoint(
-                            x: fullSize.width,
-                            y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
-                        ))
-                    path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
-                    path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                }.fill(IAPSconfig.activityBackground)
+                if data.secondaryChartBackdrop {
+                    // background for COB/activity
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: fullSize.height - Config.bottomPadding))
+                        path
+                            .addLine(to: CGPoint(
+                                x: fullSize.width,
+                                y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
+                            ))
+                        path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
+                        path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
+                    }.fill(IAPSconfig.activityBackground)
+                }
             }
 
-            if data.showInsulinActivity, data.displayYgridLines {
+            if data.showInsulinActivity, data.insulinActivityGridLines {
                 ForEach([(peakActivity_1unit, 1), (peakActivity_maxBolus, 2)], id: \.1) { activity, _ in
                     let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
                         path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                    }.stroke(useColour, lineWidth: 0.15)
+                    }.stroke(Color.secondary, lineWidth: 0.15)
                 }
             }
 
             // thicker zero guideline for activity/COB
-            if data.showInsulinActivity, data.displayYgridLines, let yCoord = activityZeroPointY {
+            if data.showInsulinActivity, data.insulinActivityGridLines, let yCoord = activityZeroPointY {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: yCoord))
                     path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                }.stroke(useColour, lineWidth: 0.4)
+                }.stroke(Color.secondary, lineWidth: 0.4)
             }
         }
     }
 
     private func glucoseLabelsView(fullSize: CGSize) -> some View {
-        ForEach(0 ..< Config.yLinesCount + 1, id: \.self) { line -> AnyView in
-            let range = glucoseYRange
-            let yStep = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
-            let valueStep = Double(range.maxValue - range.minValue) / Double(Config.yLinesCount)
-            let value = round(Double(range.maxValue) - Double(line) * valueStep) *
+        ForEach(horizontalGrid, id: \.1) { (lineY, glucose) -> AnyView in
+            let value = Double(glucose) *
                 (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
 
-            return Text(value == 0 ? "" : glucoseFormatter.string(from: value as NSNumber) ?? "")
-                .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
+            Text(value == 0 ? "" : glucoseFormatter.string(from: value as NSNumber) ?? "")
+                .position(CGPoint(x: fullSize.width - 12, y: lineY))
                 .font(.bolusDotFont)
                 .asAny()
         }
@@ -419,6 +462,9 @@ struct MainChartView: View {
                     glucoseView(fullSize: fullSize)
                     lowGlucoseView(fullSize: fullSize)
                     highGlucoseView(fullSize: fullSize)
+                    if data.chartGlucosePeaks {
+                        glucosePeaksView(fullSize: fullSize)
+                    }
                     if data.showInsulinActivity {
                         activityView(fullSize: fullSize)
                     }
@@ -549,6 +595,67 @@ struct MainChartView: View {
             .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                 update(fullSize: fullSize)
             }
+    }
+
+    private func glucosePeaksView(fullSize _: CGSize) -> some View {
+        ForEach(glucosePeaks, id: \.3) { yStart, yEnd, xStart, xEnd, textX, textY, glucose, _ in
+            let value = Double(glucose) *
+                (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
+
+            let formatter = data.units == .mmolL ? mmolDotGlucoseFormatter : dotGlucoseFormatter
+
+            Group {
+                Path { path in
+                    path.move(to: CGPoint(x: xStart, y: yStart))
+                    path.addLine(to: CGPoint(x: xEnd, y: yEnd))
+                }
+                .stroke(Color.secondary, lineWidth: 0.75)
+                .opacity(0.75)
+                .mask(
+                    // the line goes from the center of the bg dot to the center of the text label
+                    // because of this mask (which is a "copy" of the actual label below) - the line doesn't go under the label, even though it's semi-transparent
+                    // a simpler solution is to fill the rectangle below with 1.0 opacity - but needs a better colour
+                    ZStack {
+                        Color.white // allow everywhere by default
+                        Text(value == 0 ? "" : formatter.string(from: value as NSNumber) ?? "")
+                            .font(.glucoseDotFont)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(
+                                RoundedRectangle(cornerRadius: 2)
+                                    .fill(Color.black) // cut out this area
+                            )
+                            .position(CGPoint(x: textX, y: textY))
+                            .blendMode(.destinationOut)
+                    }
+                    .compositingGroup()
+                )
+
+                let glucoseDecimal = Decimal(glucose)
+                let fillColour =
+                    glucoseDecimal < data.lowGlucose ? Color.loopRed.opacity(0.4)
+                        : glucoseDecimal > data.highGlucose ? Color.loopYellow.opacity(0.4)
+                        : colorScheme == .dark ? Color.darkGreen.opacity(0.6) : Color.darkGreen.opacity(0.4)
+
+                ZStack {
+                    Text(value == 0 ? "" : formatter.string(from: value as NSNumber) ?? "")
+                        .font(.glucoseDotFont)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 2)
+                        .background(
+                            RoundedRectangle(cornerRadius: 2)
+                                .fill(fillColour)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 2)
+                                .stroke(Color.primary, lineWidth: 0.5)
+                                .opacity(0.9)
+                        )
+                }
+                .position(CGPoint(x: textX, y: textY))
+            }
+            .asAny()
+        }
     }
 
     private func activityView(fullSize: CGSize) -> some View {
@@ -1033,6 +1140,7 @@ extension MainChartView {
         calculateOverridesRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
         calculateSuspensions(fullSize: fullSize)
+        calculateHorizontalLines(fullSize: fullSize)
     }
 
     private func calculatePeakActivities() {
@@ -1040,6 +1148,225 @@ extension MainChartView {
         peakActivity_maxBolus = peakInsulinActivity(forBolus: Double(data.maxBolus))
         peakActivity_maxIOB = peakInsulinActivity(forBolus: Double(data.maxIOB))
         maxActivityInData = data.activity.map { e in e.activity }.max()
+    }
+
+    private func roundGlucoseToNearestNiceValue(_ value: Int) -> Int {
+        if data.units == .mgdL {
+            return Int((Double(value) / 50.0).rounded() * 50.0)
+        } else {
+            // Convert to mmol/L
+            let mmol = Decimal(value) * GlucoseUnits.exchangeRate
+            let roundedMmol = mmol.rounded(to: 0)
+            // Convert back to mg/dL
+            let roundedMgdl = roundedMmol / GlucoseUnits.exchangeRate
+            return Int(NSDecimalNumber(decimal: roundedMgdl).doubleValue.rounded())
+        }
+    }
+
+    private func glucoseLines(from: Int, through: Int) -> StrideThrough<Int> {
+        let step: Int =
+            data.units == .mgdL ?
+            Int(NSDecimalNumber(decimal: 3.0 / GlucoseUnits.exchangeRate).doubleValue) // 3 mmol/L
+            : 50 // 50 mg/dl
+
+        return stride(from: from + step, through: through - step, by: step)
+    }
+
+    private func calculateHorizontalLines(fullSize: CGSize) {
+        calculationQueue.async {
+            var lines: [(CGFloat, Int)] = []
+
+            let highGlucoseInt = Int(NSDecimalNumber(decimal: data.highGlucose).doubleValue.rounded())
+            let lowGlucoseInt = Int(NSDecimalNumber(decimal: data.lowGlucose).doubleValue.rounded())
+
+            let lowLine = (glucoseToYCoordinate(lowGlucoseInt, fullSize: fullSize), lowGlucoseInt)
+            let highLine = (glucoseToYCoordinate(highGlucoseInt, fullSize: fullSize), highGlucoseInt)
+
+//            lines.append(lowLine)
+//            lines.append(highLine)
+
+            if let glucoseMin = data.glucose.compactMap(\.glucose).min(),
+               let glucoseMax = data.glucose.compactMap(\.glucose).max()
+            {
+                if glucoseMin < lowGlucoseInt {
+                    lines.append(lowLine)
+                    if glucoseMin < lowGlucoseInt - 18 {
+                        lines.append((glucoseToYCoordinate(glucoseMin, fullSize: fullSize), glucoseMin))
+                    }
+                } else {
+                    lines.append((glucoseToYCoordinate(glucoseMin, fullSize: fullSize), glucoseMin))
+                }
+
+                if glucoseMax > highGlucoseInt {
+                    lines.append(highLine)
+                    if glucoseMax > highGlucoseInt + 18 {
+                        lines.append((glucoseToYCoordinate(glucoseMax, fullSize: fullSize), glucoseMax))
+                        for g in glucoseLines(from: highGlucoseInt, through: glucoseMax) {
+                            let nice = roundGlucoseToNearestNiceValue(g)
+                            lines.append((glucoseToYCoordinate(nice, fullSize: fullSize), nice))
+                        }
+                    }
+                } else {
+                    lines.append((glucoseToYCoordinate(glucoseMax, fullSize: fullSize), glucoseMax))
+                }
+            }
+
+            let (maxima, minima) = PeakPicker.pick(data: data.glucose, windowHours: Double(data.screenHours) / 3.5)
+
+            // y, x-start, x-end, glucose value
+            var glucosePeaks: [(
+                yStart: CGFloat,
+                yEnd: CGFloat,
+                xStart: CGFloat,
+                xEnd: CGFloat,
+                textX: CGFloat,
+                textY: CGFloat,
+                glucose: Int,
+                type: ExtremumType
+            )] = []
+
+            for peak in maxima {
+                if let glucose = peak.glucose {
+                    let point = glucoseToCoordinate(peak, fullSize: fullSize)
+                    if let endX = positionPeak(peak: peak, x: point.x, .max) {
+                        glucosePeaks.append(
+                            (
+                                yStart: point.y,
+                                yEnd: point.y - 15,
+                                xStart: point.x,
+                                xEnd: endX,
+                                textX: endX,
+                                textY: point.y - 15,
+                                glucose: glucose,
+                                .max
+                            )
+                        )
+                    }
+                }
+            }
+
+            for peak in minima {
+                if let glucose = peak.glucose {
+                    let point = glucoseToCoordinate(peak, fullSize: fullSize)
+                    if let endX = positionPeak(peak: peak, x: point.x, .min) {
+                        glucosePeaks.append(
+                            (
+                                yStart: point.y,
+                                yEnd: point.y + 15,
+                                xStart: point.x,
+                                xEnd: endX,
+                                textX: endX,
+                                textY: point.y + 15,
+                                glucose: glucose,
+                                .min
+                            )
+                        )
+                    }
+                }
+            }
+
+            DispatchQueue.main.async {
+                horizontalGrid = lines
+                lowThresholdLine = lowLine
+                highThresholdLine = highLine
+                self.glucosePeaks = glucosePeaks
+            }
+        }
+    }
+
+    func placeLabelCenterX(
+        dots: [DotInfo],
+        around x: CGFloat,
+        labelWidth: CGFloat,
+        maxDotHops: Int = 3
+    ) -> CGFloat? {
+        guard !dots.isEmpty else { return x }
+
+        let half = labelWidth * 0.5
+
+        // lowerBound on rect.minX: first index with minX > x
+        func lowerBoundMinX(for x: CGFloat) -> Int {
+            var lo = 0, hi = dots.count
+            while lo < hi {
+                let mid = (lo + hi) >> 1
+                if dots[mid].rect.minX > x { hi = mid } else { lo = mid + 1 }
+            }
+            return lo
+        }
+
+        // Try to place inside the given [gapStart, gapEnd] so the label doesn't overlap either side.
+        @inline(__always) func placeInsideGap(x: CGFloat, gapStart: CGFloat, gapEnd: CGFloat) -> CGFloat? {
+            let available = gapEnd - gapStart
+            guard available >= labelWidth else { return nil }
+            // Clamp the desired center X so the label stays within the gap.
+            let minCenter = gapStart + half
+            let maxCenter = gapEnd - half
+            return min(max(x, minCenter), maxCenter)
+        }
+
+        // 1) Check the gap that currently contains `x`.
+        //    gap is between left dot (lo-1) and right dot (lo).
+        let lo = lowerBoundMinX(for: x)
+
+        // Left boundary of current gap
+        let curGapStart: CGFloat = (lo > 0) ? dots[lo - 1].rect.maxX : -.infinity
+        // Right boundary of current gap
+        let curGapEnd: CGFloat = (lo < dots.count) ? dots[lo].rect.minX : .infinity
+
+        if let cx = placeInsideGap(x: x, gapStart: curGapStart, gapEnd: curGapEnd) {
+            return cx
+        }
+
+        // 2) Prefer moving RIGHT first: gaps between dot[i]..dot[i+1], starting from the dot to the left of lo.
+        //    The nearest "pivot" dot index to the left of x is (lo-1). We'll hop i = (lo-1) .. (lo-1)+maxDotHops
+        let rightStart = max(0, lo - 1)
+        let rightEndExclusive = min(dots.count - 1, rightStart + maxDotHops) // last i we try is rightEndExclusive
+        if rightStart <= rightEndExclusive {
+            for i in rightStart ... rightEndExclusive {
+                let gapStart = dots[i].rect.maxX
+                let gapEnd: CGFloat = (i + 1 < dots.count) ? dots[i + 1].rect.minX : .infinity
+                if let cx = placeInsideGap(x: x, gapStart: gapStart, gapEnd: gapEnd) {
+                    return cx
+                }
+            }
+        }
+
+        // 3) Then try moving LEFT: gaps between dot[i-1]..dot[i], starting from the dot to the left of x (lo-1),
+        //    and going left up to maxDotHops.
+        //    Those gaps are identified by the right dot index i (so the gap is (i-1, i)).
+        let leftStart = lo - 1
+        let leftEndInclusive = max(0, leftStart - maxDotHops)
+        if leftEndInclusive <= leftStart {
+            for i in stride(from: leftStart, through: leftEndInclusive, by: -1) where i >= 0 {
+                let gapStart: CGFloat = (i - 1 >= 0) ? dots[i - 1].rect.maxX : -.infinity
+                let gapEnd = dots[i].rect.minX
+                if let cx = placeInsideGap(x: x, gapStart: gapStart, gapEnd: gapEnd) {
+                    return cx
+                }
+            }
+        }
+
+        // 4) No suitable gap within hop limit.
+        return nil
+    }
+
+    private func positionPeak(peak _: BloodGlucose, x: CGFloat, _ type: ExtremumType) -> CGFloat? {
+        let labelWidth: CGFloat = 32.0
+        if type == .max {
+            return placeLabelCenterX(
+                dots: bolusDots,
+                around: x,
+                labelWidth: labelWidth,
+                maxDotHops: 4
+            )
+        } else {
+            return placeLabelCenterX(
+                dots: carbsDots,
+                around: x,
+                labelWidth: labelWidth,
+                maxDotHops: 4
+            )
+        }
     }
 
     private func calculateActivityDots(fullSize: CGSize) {
@@ -1270,7 +1597,7 @@ extension MainChartView {
             let dots = values.map { value -> CGRect in
                 let position = predictionToCoordinate(value, fullSize: fullSize, index: index)
                 index += 1
-                return CGRect(x: position.x - 2, y: position.y - 2, width: 3, height: 3)
+                return CGRect(x: position.x - 1.3, y: position.y - 1.3, width: 2.6, height: 2.6)
             }
             DispatchQueue.main.async {
                 predictionDots[type] = dots

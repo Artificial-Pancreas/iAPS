@@ -2051,13 +2051,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "HbA1c Einheit wechseln";
 
 /* */
-"Display Chart X - Grid lines" = "Diagramm X anzeigen - Gitterlinien";
+"Vertical grid lines" = "Vertikale Gitterlinien";
 
 /* */
-"Display Chart Y - Grid lines" = "Diagramm Y anzeigen - Gitterlinien";
+"Horizontal grid lines" = "Horizontale Gitterlinien";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Diagramm-Schwellenwertlinien für Niedrig und Hoch zeigen";
+"Threshold lines (Low / High)" = "Schwellenlinien (Niedrig / Hoch)";
 
 /* */
 "Standing / Laying TIR Chart" = "TIR-Tabelle stehend/liegend";

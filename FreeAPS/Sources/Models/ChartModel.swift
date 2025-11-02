@@ -39,6 +39,13 @@ class ChartModel: ObservableObject {
     @Published var fpuAmounts: Bool
     @Published var showInsulinActivity: Bool
     @Published var showCobChart: Bool
+    @Published var secondaryChartBackdrop: Bool
+    @Published var inRangeAreaFill: Bool
+    @Published var chartGlucosePeaks: Bool
+    @Published var insulinActivityGridLines: Bool
+    @Published var insulinActivityLabels: Bool
+    @Published var yGridLabels: Bool
+    @Published var showPredictionsLegend: Bool
     @Published var iob: Decimal?
     @Published var hidePredictions: Bool
     @Published var useCarbBars: Bool
@@ -82,6 +89,13 @@ class ChartModel: ObservableObject {
         fpuAmounts: Bool,
         showInsulinActivity: Bool,
         showCobChart: Bool,
+        secondaryChartBackdrop: Bool,
+        inRangeAreaFill: Bool,
+        chartGlucosePeaks: Bool,
+        insulinActivityGridLines: Bool,
+        insulinActivityLabels: Bool,
+        yGridLabels: Bool,
+        showPredictionsLegend: Bool,
         iob: Decimal?,
         hidePredictions: Bool,
         useCarbBars: Bool
@@ -124,6 +138,13 @@ class ChartModel: ObservableObject {
         self.fpuAmounts = fpuAmounts
         self.showInsulinActivity = showInsulinActivity
         self.showCobChart = showCobChart
+        self.secondaryChartBackdrop = secondaryChartBackdrop
+        self.inRangeAreaFill = inRangeAreaFill
+        self.chartGlucosePeaks = chartGlucosePeaks
+        self.insulinActivityGridLines = insulinActivityGridLines
+        self.insulinActivityLabels = insulinActivityLabels
+        self.yGridLabels = yGridLabels
+        self.showPredictionsLegend = showPredictionsLegend
         self.iob = iob
         self.hidePredictions = hidePredictions
         self.useCarbBars = useCarbBars
