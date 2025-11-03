@@ -142,8 +142,9 @@ class CalculatedGeometries {
 
         let ended = Date.now
 
+        // TODO: remove this
         print(
-            "!!!! update took: \(ended.timeIntervalSince(started) * 1000) milliseconds, peaks: \(ended.timeIntervalSince(peaksStarted) * 1000) milliseconds"
+            "main chart update: \(ended.timeIntervalSince(started) * 1000) milliseconds, peaks: \(ended.timeIntervalSince(peaksStarted) * 1000) milliseconds"
         )
     }
 
@@ -261,9 +262,9 @@ class CalculatedGeometries {
     }
 
     private func positionPeak(peak _: BloodGlucose, x: CGFloat, y: CGFloat, _ type: ExtremumType) -> (CGFloat, CGFloat)? {
-        let labelWidth: CGFloat = 32.0
+        let labelWidth: CGFloat = 36.0
         let labelHeight: CGFloat = 20.0
-        let verticalLimit: CGFloat = 60.0
+        let verticalLimit: CGFloat = 80.0
         if type == .max {
             let bolusLabelHeight: CGFloat = data.useInsulinBars ? 20.0 : 8.0
             let bolusLabelWidth: CGFloat = data.useInsulinBars ? 8.0 : 20.0

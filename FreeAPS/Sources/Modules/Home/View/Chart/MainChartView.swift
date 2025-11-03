@@ -41,7 +41,7 @@ typealias GlucosePeak = (
 )
 
 struct MainChartView: View {
-    let data: ChartModel
+    @State var data: ChartModel
     @Binding var triggerUpdate: Bool
 
     enum Config {
@@ -207,10 +207,11 @@ struct MainChartView: View {
     }
 
     @State private var latestSize: CGSize = .zero
-    @State private var cancellables = Set<AnyCancellable>()
+    @State private var updatesCancellable: AnyCancellable?
 
-    private let sizeChanges = PassthroughSubject<Void, Never>()
-    private let externalUpdates = PassthroughSubject<Void, Never>() // ← NEW
+    @State private var sizeChanges = PassthroughSubject<Void, Never>()
+    @State private var updateRequests = PassthroughSubject<Void, Never>()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         GeometryReader { geo in
@@ -226,18 +227,30 @@ struct MainChartView: View {
             }
             .onAppear {
                 latestSize = geo.size
-                sizeChanges.send(())
                 subscribeToUpdates()
+                sizeChanges.send(())
+            }
+            .onDisappear {
+                unsubscribe()
             }
             .onChange(of: geo.size) {
                 latestSize = geo.size
                 sizeChanges.send(())
             }
             .onChange(of: triggerUpdate) {
-                externalUpdates.send(())
+                updateRequests.send(())
             }
-            .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                sizeChanges.send(())
+            .onChange(of: scenePhase) {
+                switch scenePhase {
+                case .active:
+                    if updatesCancellable == nil { subscribeToUpdates() }
+                    updateRequests.send(())
+                case .background,
+                     .inactive:
+                    unsubscribe()
+                @unknown default:
+                    break
+                }
             }
         }
     }
@@ -1054,10 +1067,11 @@ extension MainChartView {
     }
 
     private func subscribeToUpdates() {
+        updatesCancellable?.cancel()
+
         let publishers: [AnyPublisher<Void, Never>] = [
             ping(data.$screenHours),
             ping(data.$showInsulinActivity),
-            ping(data.$insulinActivityGridLines),
             ping(data.$showCobChart),
             ping(data.$useInsulinBars),
             ping(data.$useCarbBars),
@@ -1075,19 +1089,27 @@ extension MainChartView {
             ping(data.$tempTargets),
             ping(data.$suggestion),
             ping(data.$overrideHistory),
+            ping(data.$lowGlucose),
+            ping(data.$highGlucose),
+            ping(data.$units),
             // ---
             sizeChanges.eraseToAnyPublisher(),
-            externalUpdates.eraseToAnyPublisher()
+            updateRequests.eraseToAnyPublisher()
         ]
 
         // Merge + debounce + update once
-        Publishers.MergeMany(publishers)
-            .debounce(for: .milliseconds(100), scheduler: calculationQueue)
-            .receive(on: calculationQueue)
-            .sink { _ in
-                update(fullSize: latestSize)
-            }
-            .store(in: &cancellables)
+        updatesCancellable =
+            Publishers.MergeMany(publishers)
+                .debounce(for: .milliseconds(250), scheduler: calculationQueue)
+                .receive(on: calculationQueue)
+                .sink { _ in
+                    update(fullSize: latestSize)
+                }
+    }
+
+    private func unsubscribe() {
+        updatesCancellable?.cancel()
+        updatesCancellable = nil
     }
 
     // An InsulinBarMark of sorts
