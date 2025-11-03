@@ -40,7 +40,7 @@ extension UIUX {
             Form {
                 Section {
                     Text("Home Chart settings").navigationLink(to: .mainChartConfig, from: self)
-                }
+                } header: { Text("Home Chart") }
 
                 Section {
                     Toggle("Display Temp Targets Button", isOn: $state.useTargetButton)
