@@ -75,12 +75,12 @@ class CalculatedGeometries {
         peakActivity_maxIOB = peakInsulinActivity(forBolus: Double(data.maxIOB))
         maxActivityInData = data.activity.map { e in e.activity }.max()
 
+        activityChartMinMax = calculateActivityChartMinMax()
+        cobChartMinMax = calculateCobChartMinMax()
+
         peakActivity_1unit_y = activityToYCoordinate(Decimal(peakActivity_1unit))
         peakActivity_maxBolus_y = activityToYCoordinate(Decimal(peakActivity_maxBolus))
         peakActivity_maxIOB_y = activityToYCoordinate(Decimal(peakActivity_maxIOB))
-
-        activityChartMinMax = calculateActivityChartMinMax()
-        cobChartMinMax = calculateCobChartMinMax()
 
         predictionDotsIOB = calculatePredictionDots(type: .iob)
         predictionDotsCOB = calculatePredictionDots(type: .cob)
