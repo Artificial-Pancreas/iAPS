@@ -448,6 +448,7 @@
 		F2C73D622EB6602D00B700AB /* MainChartConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D612EB6602D00B700AB /* MainChartConfigDataFlow.swift */; };
 		F2C73D642EB6603900B700AB /* MainChartConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D632EB6603900B700AB /* MainChartConfigProvider.swift */; };
 		F2C73D662EB6604500B700AB /* MainChartConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */; };
+		F2C73D682EB8022C00B700AB /* CalculatedGeometries.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */; };
 		F2EE83BF2E739AD200D7177E /* CalendarShareRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */; };
 		F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */; };
 		F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */; };
@@ -1098,6 +1099,7 @@
 		F2C73D612EB6602D00B700AB /* MainChartConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartConfigDataFlow.swift; sourceTree = "<group>"; };
 		F2C73D632EB6603900B700AB /* MainChartConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartConfigProvider.swift; sourceTree = "<group>"; };
 		F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartConfigStateModel.swift; sourceTree = "<group>"; };
+		F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatedGeometries.swift; sourceTree = "<group>"; };
 		F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareRootView.swift; sourceTree = "<group>"; };
 		F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareDataFlow.swift; sourceTree = "<group>"; };
 		F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareProvider.swift; sourceTree = "<group>"; };
@@ -1869,6 +1871,7 @@
 			children = (
 				38AAF8702600C1B0004AF583 /* MainChartView.swift */,
 				F21580A42E47B4FE003BC827 /* PeakPicker.swift */,
+				F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -3137,6 +3140,7 @@
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
 				385CEAC425F2F154002D6D5B /* AnnouncementsStorage.swift in Sources */,
 				38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */,
+				F2C73D682EB8022C00B700AB /* CalculatedGeometries.swift in Sources */,
 				38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */,
 				19F191E22BE4F9BA00F6297E /* SharingRootView.swift in Sources */,
 				38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */,
