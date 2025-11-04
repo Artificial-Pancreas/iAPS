@@ -976,6 +976,10 @@ private extension BaseDeviceDataManager {
 
         appCoordinator.setShouldUploadGlucose(cgmManager?.shouldSyncToRemoteService ?? false)
         appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager))
+
+        if let cgmManagerUI = cgmManager as? CGMManagerUI {
+            addDisplayGlucoseUnitObserver(cgmManagerUI)
+        }
     }
 
     func setupPump() {
@@ -990,7 +994,7 @@ private extension BaseDeviceDataManager {
             pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
             pumpManagerStatus.value = pumpManager.status
             pumpName.send(pumpManager.localizedTitle)
-            pumpExpiresAtDate.send(KnownPlugins.pumpExpiration(pumpManager: pumpManager))
+            pumpExpiresAtDate.send(KnownPlugins.pumpExpirationDate(pumpManager))
         } else {
             pumpDisplayState.value = nil
             pumpManagerStatus.value = nil
