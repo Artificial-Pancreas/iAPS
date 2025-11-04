@@ -57,7 +57,7 @@ extension AutotuneConfig {
             currentTotal = pr2.reduce(0) { $0 + (Decimal($1.1 - $1.0.minutes) / 60) * $1.0.rate }
         }
 
-        @MainActor  func run() {
+        @MainActor func run() {
             running.toggle()
             provider.runAutotune()
                 .receive(on: DispatchQueue.main)
