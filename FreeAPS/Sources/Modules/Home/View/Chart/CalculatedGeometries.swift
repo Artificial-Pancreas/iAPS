@@ -54,6 +54,44 @@ class CalculatedGeometries {
     private(set) var firstHourPosition: CGFloat = 0
     private(set) var currentTimeX: CGFloat = 0
 
+    private(set) var bolusFont = Font.custom("BolusDotFont", fixedSize: 11)
+    private var bolusUIFont = UIFont.systemFont(ofSize: 11)
+
+    private(set) var insulinBarsPath = Path()
+
+    private var bolusFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumIntegerDigits = 0
+        formatter.maximumFractionDigits = 2
+        formatter.decimalSeparator = "."
+        return formatter
+    }
+
+    private var carbsFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+
+    private var dotGlucoseFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.decimalSeparator = "."
+        return formatter
+    }
+
+    private var mmolDotGlucoseFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.minimumFractionDigits = 1
+        formatter.decimalSeparator = "."
+        return formatter
+    }
+
     init(
         fullSize: CGSize,
         data: ChartModel
@@ -62,6 +100,9 @@ class CalculatedGeometries {
         self.data = data
 
         let started = Date.now
+
+        bolusFont = getBolusFont()
+        bolusUIFont = getBolusUIFont()
 
         firstHourDate = calculateFirstHourDate()
         oneSecondWidth = calculateOneSecondStep()
@@ -218,42 +259,78 @@ class CalculatedGeometries {
         // y, x-start, x-end, glucose value
         var glucosePeaks: [GlucosePeak] = []
 
+        let formatter = data.units == .mmolL ? mmolDotGlucoseFormatter : dotGlucoseFormatter
+
+        let peakHorizontalPadding = MainChartView.Config.peakHorizontalPadding
+        let peakVerticalPadding = MainChartView.Config.peakVerticalPadding
+        let peakMargin = MainChartView.Config.peakMargin
+
         for peak in maxima {
-            if let glucose = peak.glucose {
+            if let glucose = peak.glucose, glucose != 0 {
                 let point = glucoseToCoordinate(peak)
-                if let (endX, endY) = positionPeak(peak: peak, x: point.x, y: point.y - 18, .max) {
-                    glucosePeaks.append(
-                        (
-                            yStart: point.y,
-                            yEnd: endY,
-                            xStart: point.x,
-                            xEnd: endX,
-                            textX: endX,
-                            textY: endY,
-                            glucose: glucose,
-                            .max
-                        )
+
+                let value = Double(glucose) *
+                    (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
+
+                if let string = formatter.string(from: value as NSNumber) {
+                    var textSize = textSize(text: string, font: bolusUIFont)
+                    textSize.width += peakHorizontalPadding * 2 + peakMargin * 2
+                    textSize.height += peakVerticalPadding * 2 + peakMargin * 2
+                    let textRect = CGRect(
+                        origin: CGPoint(
+                            x: point.x - textSize.width / 2,
+                            y: point.y - textSize.height / 2 - 18
+                        ),
+                        size: textSize
                     )
+
+                    if let placedRect = positionPeak(rect: textRect, .max) {
+                        glucosePeaks.append(
+                            GlucosePeak(
+                                xStart: point.x,
+                                yStart: point.y,
+                                glucose: glucose,
+                                text: string,
+                                textRect: placedRect,
+                                type: .max
+                            )
+                        )
+                    }
                 }
             }
         }
 
         for peak in minima {
-            if let glucose = peak.glucose {
+            if let glucose = peak.glucose, glucose != 0 {
                 let point = glucoseToCoordinate(peak)
-                if let (endX, endY) = positionPeak(peak: peak, x: point.x, y: point.y + 18, .min) {
-                    glucosePeaks.append(
-                        (
-                            yStart: point.y,
-                            yEnd: endY,
-                            xStart: point.x,
-                            xEnd: endX,
-                            textX: endX,
-                            textY: endY,
-                            glucose: glucose,
-                            .min
-                        )
+
+                let value = Double(glucose) *
+                    (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
+
+                if let string = formatter.string(from: value as NSNumber) {
+                    var textSize = textSize(text: string, font: bolusUIFont)
+                    textSize.width += peakHorizontalPadding * 2 + peakMargin * 2
+                    textSize.height += peakVerticalPadding * 2 + peakMargin * 2
+                    let textRect = CGRect(
+                        origin: CGPoint(
+                            x: point.x - textSize.width / 2,
+                            y: point.y - textSize.height / 2 + 18
+                        ),
+                        size: textSize
                     )
+
+                    if let updatedRect = positionPeak(rect: textRect, .min) {
+                        glucosePeaks.append(
+                            GlucosePeak(
+                                xStart: point.x,
+                                yStart: point.y,
+                                glucose: glucose,
+                                text: string,
+                                textRect: updatedRect,
+                                type: .min
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -261,39 +338,23 @@ class CalculatedGeometries {
         return glucosePeaks
     }
 
-    private func positionPeak(peak _: BloodGlucose, x: CGFloat, y: CGFloat, _ type: ExtremumType) -> (CGFloat, CGFloat)? {
-        let labelWidth: CGFloat = 36.0
-        let labelHeight: CGFloat = 20.0
-        let verticalLimit: CGFloat = 80.0
+    private func positionPeak(rect: CGRect, _ type: ExtremumType) -> CGRect? {
+        let maxDistance: CGFloat = 60.0
         if type == .max {
-            let bolusLabelHeight: CGFloat = data.useInsulinBars ? 20.0 : 8.0
-            let bolusLabelWidth: CGFloat = data.useInsulinBars ? 8.0 : 20.0
             return bolusDots.placeLabelCenter(
-                desiredCenterX: x,
-                desiredCenterY: y,
-                labelWidth: labelWidth,
-                labelHeight: labelHeight,
+                desiredRect: rect,
                 verticalSide: .above,
-                verticalLimit: verticalLimit,
-                verticalStep: 5,
-                maxDotHops: 3,
-                dotExtraLabelHeight: bolusLabelHeight,
-                dotLabelWidth: bolusLabelWidth
+                maxDistance: maxDistance,
+                maxDotHops: 3
             )
         } else {
             let carbsLabelHeight: CGFloat = data.useCarbBars ? 20.0 : 8.0
             let carbsLabelWidth: CGFloat = data.useCarbBars ? 8.0 : 20.0
             return carbsDots.placeLabelCenter(
-                desiredCenterX: x,
-                desiredCenterY: y,
-                labelWidth: labelWidth,
-                labelHeight: labelHeight,
+                desiredRect: rect,
                 verticalSide: .below,
-                verticalLimit: verticalLimit,
-                verticalStep: 5,
-                maxDotHops: 3,
-                dotExtraLabelHeight: carbsLabelHeight,
-                dotLabelWidth: carbsLabelWidth
+                maxDistance: maxDistance,
+                maxDotHops: 3
             )
         }
     }
@@ -359,13 +420,7 @@ class CalculatedGeometries {
     }
 
     private func calculateBolusDots() -> ([DotInfo], Path) {
-        let dots = data.useInsulinBars ? insulinBarEntries() :
-            (data.boluses.map { value -> DotInfo in
-                let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970)
-                let size = MainChartView.Config.bolusSize + CGFloat(value.amount ?? 0) * MainChartView.Config.bolusScale
-                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
-                return DotInfo(rect: rect, value: value.amount ?? 0)
-            })
+        let dots = data.useInsulinBars ? insulinBarEntries() : insulinCircleEntries()
 
         let path = Path { path in
             for dot in dots {
@@ -381,24 +436,7 @@ class CalculatedGeometries {
 
     private func calculateCarbsDots() -> ([DotInfo], Path) {
         let realCarbs = data.carbs.filter { !($0.isFPU ?? false) }
-        let dots = data.useCarbBars ? carbsBarEntries(realCarbs) : realCarbs.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint(
-                value.actualDate != nil ?
-                    (value.actualDate ?? Date()).timeIntervalSince1970 :
-                    value.createdAt.timeIntervalSince1970
-            )
-            let size = min(
-                MainChartView.Config.maxCarbSize,
-                MainChartView.Config.carbsSize + CGFloat(value.carbs) * MainChartView.Config.carbsScale
-            )
-            let rect = CGRect(
-                x: center.x - size / 2,
-                y: (center.y - size / 2) + MainChartView.Config.carbOffset + (size / 2),
-                width: size,
-                height: size // + CGFloat(value.carbs) * MainChartView.Config.carbsScale
-            )
-            return DotInfo(rect: rect, value: value.carbs)
-        }
+        let dots = data.useCarbBars ? carbsBarEntries(realCarbs) : carbsCircleEntries(realCarbs)
 
         let path = Path { path in
             for dot in dots {
@@ -411,21 +449,7 @@ class CalculatedGeometries {
 
     private func calculateFPUsDots() -> ([DotInfo], Path) {
         let fpus = data.carbs.filter { $0.isFPU ?? false }
-        let dots = data.useCarbBars ? fpuBarEntries(fpus) : fpus.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint(
-                value.actualDate != nil ?
-                    (value.actualDate ?? Date()).timeIntervalSince1970 :
-                    value.createdAt.timeIntervalSince1970
-            )
-            let size = MainChartView.Config.fpuSize + CGFloat(value.carbs) * MainChartView.Config.fpuScale
-            let rect = CGRect(
-                x: center.x - size / 2,
-                y: center.y + MainChartView.Config.carbOffset - size / 2,
-                width: size,
-                height: size
-            )
-            return DotInfo(rect: rect, value: value.carbs)
-        }
+        let dots = data.useCarbBars ? fpuBarEntries(fpus) : fpuCircleEntries(fpus)
 
         let path = Path { path in
             for dot in dots {
@@ -1063,17 +1087,94 @@ class CalculatedGeometries {
         return oneSecondWidth * CGFloat(lastDeltaTime)
     }
 
+    private func insulinCircleEntries() -> [DotInfo] {
+        data.boluses.map { value -> DotInfo in
+            let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970)
+            let size = MainChartView.Config.bolusSize + CGFloat(value.amount ?? 0) * MainChartView.Config.bolusScale
+            let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+            let bolusValue = value.amount ?? 0
+            let string = bolusValue >= data.minimumSMB ? bolusFormatter.string(from: bolusValue as NSNumber) : nil
+
+            var textRect: CGRect?
+            if let string {
+                let stringSize = textSize(text: string, font: bolusUIFont)
+
+                textRect = CGRect(
+                    origin: CGPoint(
+                        x: rect.midX - stringSize.width / 2,
+                        y: rect.minY - MainChartView.Config.insulinCarbLabelMargin - stringSize.height
+                    ),
+                    size: CGSize(width: stringSize.width, height: stringSize.height)
+                )
+            }
+
+            return DotInfo(rect: rect, value: bolusValue, text: string, textRect: textRect)
+        }
+    }
+
     private func insulinBarEntries() -> [DotInfo] {
         data.boluses.map { value -> DotInfo in
             let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970)
-            let height = bolusHeight(amount: value.amount ?? 0)
+            let bolusValue = value.amount ?? 0
+            let height = bolusHeight(amount: bolusValue)
             let rect = CGRect(
                 x: center.x,
                 y: center.y - height - MainChartView.Config.insulinOffset,
-                width: width(value: value.amount ?? 0),
+                width: width(value: bolusValue),
                 height: height
             )
-            return DotInfo(rect: rect, value: value.amount ?? 0)
+            let string = bolusFormatter.string(from: bolusValue as NSNumber)
+            var textRect: CGRect?
+            if let string {
+                let stringSize = textSize(text: string, font: bolusUIFont)
+
+                textRect = CGRect(
+                    origin: CGPoint(
+                        x: rect.midX - stringSize.height / 2,
+                        y: rect.minY - MainChartView.Config.pointSizeHeight - MainChartView.Config
+                            .insulinCarbLabelMargin - stringSize.width
+                    ),
+                    size: CGSize(width: stringSize.height, height: stringSize.width)
+                )
+            }
+
+            return DotInfo(rect: rect, value: bolusValue, text: string, textRect: textRect)
+        }
+    }
+
+    private func carbsCircleEntries(_ realCarbs: [CarbsEntry]) -> [DotInfo] {
+        realCarbs.map { value -> DotInfo in
+            let center = timeToInterpolatedPoint(
+                value.actualDate != nil ?
+                    (value.actualDate ?? Date()).timeIntervalSince1970 :
+                    value.createdAt.timeIntervalSince1970
+            )
+            let size = min(
+                MainChartView.Config.maxCarbSize,
+                MainChartView.Config.carbsSize + CGFloat(value.carbs) * MainChartView.Config.carbsScale
+            )
+            let rect = CGRect(
+                x: center.x - size / 2,
+                y: (center.y - size / 2) + MainChartView.Config.carbOffset + (size / 2),
+                width: size,
+                height: size // + CGFloat(value.carbs) * MainChartView.Config.carbsScale
+            )
+
+            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+            var textRect: CGRect?
+            if let string {
+                let stringSize = textSize(text: string, font: bolusUIFont)
+
+                textRect = CGRect(
+                    origin: CGPoint(
+                        x: rect.midX - stringSize.width / 2,
+                        y: rect.maxY + MainChartView.Config.insulinCarbLabelMargin
+                    ),
+                    size: CGSize(width: stringSize.width, height: stringSize.height)
+                )
+            }
+
+            return DotInfo(rect: rect, value: value.carbs, text: string, textRect: textRect)
         }
     }
 
@@ -1087,7 +1188,56 @@ class CalculatedGeometries {
                 width: min(width(value: value.carbs), MainChartView.Config.carbWidth),
                 height: height
             )
-            return DotInfo(rect: rect, value: value.carbs)
+
+            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+            var textRect: CGRect?
+            if let string {
+                let stringSize = textSize(text: string, font: bolusUIFont)
+
+                textRect = CGRect(
+                    origin: CGPoint(
+                        x: rect.midX - stringSize.height / 2,
+                        y: rect.maxY + MainChartView.Config.pointSizeHeight + MainChartView.Config.insulinCarbLabelMargin
+                    ),
+                    size: CGSize(width: stringSize.height, height: stringSize.width)
+                )
+            }
+
+            return DotInfo(rect: rect, value: value.carbs, text: string, textRect: textRect)
+        }
+    }
+
+    private func fpuCircleEntries(_ fpus: [CarbsEntry]) -> [DotInfo] {
+        fpus.map { value -> DotInfo in
+            let center = timeToInterpolatedPoint(
+                value.actualDate != nil ?
+                    (value.actualDate ?? Date()).timeIntervalSince1970 :
+                    value.createdAt.timeIntervalSince1970
+            )
+            let size = MainChartView.Config.fpuSize + CGFloat(value.carbs) * MainChartView.Config.fpuScale
+            let rect = CGRect(
+                x: center.x - size / 2,
+                y: center.y + MainChartView.Config.carbOffset - size / 2,
+                width: size,
+                height: size
+            )
+
+            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+
+            var textRect: CGRect?
+            if let string {
+                let stringSize = textSize(text: string, font: bolusUIFont)
+
+                textRect = CGRect(
+                    origin: CGPoint(
+                        x: rect.midX - stringSize.width / 2,
+                        y: rect.maxY + MainChartView.Config.insulinCarbLabelMargin
+                    ),
+                    size: CGSize(width: stringSize.width, height: stringSize.height)
+                )
+            }
+
+            return DotInfo(rect: rect, value: value.carbs, text: string, textRect: textRect)
         }
     }
 
@@ -1101,7 +1251,22 @@ class CalculatedGeometries {
                 width: min(width(value: value.carbs), 3),
                 height: height
             )
-            return DotInfo(rect: rect, value: value.carbs)
+
+            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+            var textRect: CGRect?
+            if let string {
+                let stringSize = textSize(text: string, font: bolusUIFont)
+
+                textRect = CGRect(
+                    origin: CGPoint(
+                        x: rect.midX - stringSize.height / 2,
+                        y: rect.maxY + MainChartView.Config.pointSizeHeight + MainChartView.Config.insulinCarbLabelMargin
+                    ),
+                    size: CGSize(width: stringSize.height, height: stringSize.width)
+                )
+            }
+
+            return DotInfo(rect: rect, value: value.carbs, text: string, textRect: textRect)
         }
     }
 
@@ -1125,6 +1290,38 @@ class CalculatedGeometries {
             return value < data.minimumSMB ? 3.5 : 4
         }
     }
+
+    private func getBolusFont() -> Font {
+        var size = CGFloat(12)
+        switch data.screenHours {
+        case 12:
+            size = 9
+        case 24:
+            size = 7
+        default:
+            size = 11
+        }
+        return Font.custom("BolusDotFont", fixedSize: size)
+    }
+
+    private func getBolusUIFont() -> UIFont {
+        var size = CGFloat(12)
+        switch data.screenHours {
+        case 12:
+            size = 9
+        case 24:
+            size = 7
+        default:
+            size = 11
+        }
+        return UIFont.systemFont(ofSize: size)
+    }
+
+    private func textSize(text: String, font: UIFont) -> CGSize {
+        text.size(withAttributes: [
+            .font: font
+        ])
+    }
 }
 
 private enum VerticalSide {
@@ -1132,173 +1329,207 @@ private enum VerticalSide {
     case below
 }
 
+private struct Candidate { let p: CGPoint
+    let d: CGFloat
+    let rank: Int }
+
+private struct Pick { let p: CGPoint
+    let d2: CGFloat
+    let rank: Int }
+
 private extension Array where Element == DotInfo {
-    /// Returns the placed label center (x, y) or nil if no placement fits.
-    /// Dots must be sorted by rect.minX.
     func placeLabelCenter(
-        desiredCenterX x: CGFloat,
-        desiredCenterY y: CGFloat,
-        labelWidth: CGFloat,
-        labelHeight: CGFloat,
+        desiredRect desired: CGRect,
         verticalSide: VerticalSide,
-        verticalLimit: CGFloat,
-        verticalStep: CGFloat = 1,
-        maxDotHops: Int = 3,
-        dotExtraLabelHeight: CGFloat, // renamed
-        dotLabelWidth: CGFloat
-    ) -> (x: CGFloat, y: CGFloat)? {
-        let halfW = labelWidth * 0.5
-        let halfH = labelHeight * 0.5
+        maxDistance: CGFloat,
+        verticalStep _: CGFloat = 1, // unused (kept for sig compatibility)
+        maxDotHops _: Int = 3 // unused here
+    ) -> CGRect? {
+        let w = desired.width, h = desired.height
+        let halfW = w * 0.5, halfH = h * 0.5
+        let cx = desired.midX, cy = desired.midY
+        let maxD2: CGFloat = maxDistance * maxDistance
+        let eps: CGFloat = 1E-6
 
-        guard !isEmpty else { return (x, y) }
-
-        // Build obstacles: each dot merged with its (potentially wider) label area above it.
-        let obstacles: [CGRect] = map { d in
-            let r = d.rect
-            let dotLabelHalfW = dotLabelWidth * 0.5
-            let labelMinX = r.midX - dotLabelHalfW
-            let labelMaxX = r.midX + dotLabelHalfW
-            let expMinX = Swift.min(r.minX, labelMinX)
-            let expMaxX = Swift.max(r.maxX, labelMaxX)
-            return CGRect(
-                x: expMinX,
-                y: r.minY - dotExtraLabelHeight,
-                width: expMaxX - expMinX,
-                height: r.height + dotExtraLabelHeight
-            )
+        // Expanded obstacles (dot + optional text), Minkowski-summed by label half-size.
+        var E: [CGRect] = []
+        E.reserveCapacity(Swift.max(1, count * 2))
+        for d in self {
+            let a = d.rect
+            E.append(.init(x: a.minX - halfW, y: a.minY - halfH, width: a.width + w, height: a.height + h))
+            if let t = d.textRect {
+                E.append(.init(x: t.minX - halfW, y: t.minY - halfH, width: t.width + w, height: t.height + h))
+            }
         }
 
-        @inline(__always) func lowerBoundMinX(_ x: CGFloat) -> Int {
-            var lo = 0, hi = count
-            while lo < hi {
-                let mid = (lo + hi) >> 1
-                if self[mid].rect.minX > x { hi = mid } else { lo = mid + 1 }
-            }
-            return lo
+        @inline(__always) func insideAny(_ p: CGPoint) -> Bool {
+            for e in E where e.contains(p) { return true }
+            return false
+        }
+        @inline(__always) func dist2(_ p: CGPoint) -> CGFloat {
+            let dx = p.x - cx, dy = p.y - cy
+            return dx * dx + dy * dy
+        }
+        @inline(__always) func rectFrom(center p: CGPoint) -> CGRect {
+            .init(x: p.x - halfW, y: p.y - halfH, width: w, height: h)
         }
 
-        // Gap bounds by left-dot index (as before).
-        @inline(__always) func gapBounds(leftIndex i: Int) -> (CGFloat, CGFloat) {
-            if i < 0 { return (-.infinity, self[0].rect.minX) }
-            if i >= count - 1 { return (self[count - 1].rect.maxX, .infinity) }
-            return (self[i].rect.maxX, self[i + 1].rect.minX)
+        // If desired is already clear, keep it.
+        let desiredCenter = CGPoint(x: cx, y: cy)
+        if !insideAny(desiredCenter) { return rectFrom(center: desiredCenter) }
+
+        // Distance circle → horizontal band at a row y
+        @inline(__always) func xBand(at y: CGFloat) -> (CGFloat, CGFloat)? {
+            let dy = Swift.abs(y - cy)
+            if dy > maxDistance { return nil }
+            let rx = (maxD2 - dy * dy).squareRoot()
+            return (cx - rx, cx + rx)
         }
 
-        // Find the closest allowed centerX inside a gap at vertical offset `dy`.
-        // Avoids obstacles by subtracting their forbidden center-X intervals.
-        func bestCenterInGap(gapStart gs: CGFloat, gapEnd ge: CGFloat, desired: CGFloat, dy: CGFloat) -> CGFloat? {
-            let minC = gs + halfW
-            let maxC = ge - halfW
-            guard minC <= maxC else { return nil }
-
-            let cy = y + dy
-            let candMinY = cy - halfH
-            let candMaxY = cy + halfH
-
-            // Forbidden center-X intervals due to obstacles that overlap in Y.
-            var blocks: [(start: CGFloat, end: CGFloat)] = []
-            blocks.reserveCapacity(obstacles.count)
-            for o in obstacles {
-                if o.maxY <= candMinY || o.minY >= candMaxY { continue } // no Y overlap
-                // For collision: centerX in [o.minX - halfW, o.maxX + halfW]
-                let s = o.minX - halfW
-                let e = o.maxX + halfW
-                // Clip to [minC, maxC]
-                let cs = Swift.max(s, minC)
-                let ce = Swift.min(e, maxC)
-                if cs < ce { blocks.append((cs, ce)) }
+        // Allowed X intervals at row y (distance band minus blocking spans)
+        func allowedXIntervals(at y: CGFloat) -> [(CGFloat, CGFloat)] {
+            guard let (L, R) = xBand(at: y) else { return [] }
+            var blocks: [(CGFloat, CGFloat)] = []
+            blocks.reserveCapacity(E.count)
+            for e in E where e.minY <= y && y <= e.maxY {
+                let s = Swift.max(e.minX, L)
+                let t = Swift.min(e.maxX, R)
+                if s < t { blocks.append((s, t)) }
             }
+            if blocks.isEmpty { return [(L, R)] }
 
-            if blocks.isEmpty {
-                // Entire [minC, maxC] is free; clamp desired.
-                return Swift.min(Swift.max(desired, minC), maxC)
-            }
-
-            // Merge overlapping blocks.
-            blocks.sort { $0.start < $1.start }
+            blocks.sort { $0.0 < $1.0 }
             var merged: [(CGFloat, CGFloat)] = []
             var cur = blocks[0]
             for i in 1 ..< blocks.count {
                 let b = blocks[i]
-                if b.start <= cur.1 {
-                    cur.1 = Swift.max(cur.1, b.1)
-                } else {
-                    merged.append(cur)
-                    cur = b
-                }
+                if b.0 <= cur.1 { cur.1 = Swift.max(cur.1, b.1) } else { merged.append(cur)
+                    cur = b }
             }
             merged.append(cur)
 
-            // Build allowed intervals as the complement within [minC, maxC].
             var allowed: [(CGFloat, CGFloat)] = []
-            var cursor = minC
+            var cursor = L
             for m in merged {
                 if m.0 > cursor { allowed.append((cursor, m.0)) }
                 cursor = Swift.max(cursor, m.1)
             }
-            if cursor < maxC { allowed.append((cursor, maxC)) }
-            guard !allowed.isEmpty else { return nil }
+            if cursor < R { allowed.append((cursor, R)) }
+            return allowed
+        }
 
-            // Pick nearest point to `desired`, prefer right side on ties.
-            var bestX = allowed[0].0
-            var bestDist = CGFloat.greatestFiniteMagnitude
-            var bestIsRight = false
+        // Vertical clearance to prevent “tucking under” overlapping obstacles
+        func ceilingY(at x: CGFloat) -> CGFloat { // for .above
+            var ceilY = CGFloat.greatestFiniteMagnitude
+            for e in E where e.minX <= x && x <= e.maxX {
+                ceilY = Swift.min(ceilY, e.minY)
+            }
+            return ceilY
+        }
+        func floorY(at x: CGFloat) -> CGFloat { // for .below
+            var floorY = -CGFloat.greatestFiniteMagnitude
+            for e in E where e.minX <= x && x <= e.maxX {
+                floorY = Swift.max(floorY, e.maxY)
+            }
+            return floorY
+        }
 
-            for (a, b) in allowed {
-                let cx = Swift.min(Swift.max(desired, a), b)
-                let dist = abs(cx - desired)
-                let isRight = cx >= desired
-                if dist < bestDist || (dist == bestDist && isRight && !bestIsRight) {
-                    bestDist = dist
-                    bestX = cx
-                    bestIsRight = isRight
+        // Nearest left/right X at row y
+        func bestLeftX(_ intervals: [(CGFloat, CGFloat)]) -> CGFloat? {
+            var best: CGFloat?
+            for (a, b) in intervals {
+                if a > cx { continue }
+                let cand = Swift.min(b, cx)
+                if best == nil || cand > best! { best = cand }
+            }
+            return best
+        }
+        func bestRightX(_ intervals: [(CGFloat, CGFloat)]) -> CGFloat? {
+            var best: CGFloat?
+            for (a, b) in intervals {
+                if b < cx { continue }
+                let cand = Swift.max(a, cx)
+                if best == nil || cand < best! { best = cand }
+            }
+            return best
+        }
+
+        // Best candidate accumulator (tuple; no nested types)
+        var best: (p: CGPoint, d2: CGFloat, rank: Int)?
+
+        func consider(_ p: CGPoint, rank: Int) {
+            let d2v = dist2(p)
+            guard d2v <= maxD2, !insideAny(p) else { return }
+            if let b = best {
+                if d2v < b.d2 - eps || (Swift.abs(d2v - b.d2) <= eps && rank < b.rank) {
+                    best = (p, d2v, rank)
                 }
-            }
-            return bestX
-        }
-
-        // Vertical offsets to try (increasing movement), respecting side preference.
-        func verticalSequence(limit: CGFloat, step: CGFloat, side: VerticalSide) -> [CGFloat] {
-            guard limit > 0, step > 0 else { return [0] }
-            var list: [CGFloat] = [0]
-            let maxK = Int((limit / step).rounded(.down))
-            switch side {
-            case .above:
-                for k in 1 ... maxK { list.append(-CGFloat(k) * step) } // up is negative y
-            case .below:
-                for k in 1 ... maxK { list.append(CGFloat(k) * step) } // down is positive y
-            }
-            return list
-        }
-
-        let lo = lowerBoundMinX(x)
-        let baseLeftIndex = lo - 1
-        let vSeq = verticalSequence(limit: verticalLimit, step: verticalStep, side: verticalSide)
-
-        // Helper that tries a (gap, dy) combo and returns (cx, cy) if fits.
-        @inline(__always) func tryPlace(gapLeftIndex: Int, dy: CGFloat) -> (CGFloat, CGFloat)? {
-            let (gs, ge) = gapBounds(leftIndex: gapLeftIndex)
-            guard let cx = bestCenterInGap(gapStart: gs, gapEnd: ge, desired: x, dy: dy) else { return nil }
-            return (cx, y + dy)
-        }
-
-        // 1) Pure horizontal: right then left (dy = 0).
-        for h in 0 ... maxDotHops {
-            if let p = tryPlace(gapLeftIndex: baseLeftIndex + h, dy: 0) { return p }
-            if h > 0, let p = tryPlace(gapLeftIndex: baseLeftIndex - h, dy: 0) { return p }
-        }
-
-        // 2) Vertical + horizontal combos: up/down in place, then right-up/down, then left-up/down.
-        for (idx, dy) in vSeq.enumerated() where !(idx == 0 && dy == 0) {
-            if let p = tryPlace(gapLeftIndex: baseLeftIndex, dy: dy) { return p }
-            for h in 1 ... maxDotHops {
-                if let p = tryPlace(gapLeftIndex: baseLeftIndex + h, dy: dy) { return p }
-            }
-            for h in 1 ... maxDotHops {
-                if let p = tryPlace(gapLeftIndex: baseLeftIndex - h, dy: dy) { return p }
+            } else {
+                best = (p, d2v, rank)
             }
         }
 
+        // ---------- Rank 0/1: same Y, LEFT then RIGHT ----------
+        do {
+            let intervals = allowedXIntervals(at: cy)
+            if let xL = bestLeftX(intervals) { consider(.init(x: xL, y: cy), rank: 0) }
+            if let xR = bestRightX(intervals) { consider(.init(x: xR, y: cy), rank: 1) }
+            if let winner = best { return rectFrom(center: winner.p) }
+        }
+
+        // ---------- Rank 2/3: diagonals, scan ALL critical X, pick nearest ----------
+        var criticalX: [CGFloat] = [cx]
+        criticalX.reserveCapacity(criticalX.count + 2 * E.count)
+        for e in E { criticalX.append(e.minX)
+            criticalX.append(e.maxX) }
+        criticalX.sort()
+        var uniqX: [CGFloat] = []
+        uniqX.reserveCapacity(criticalX.count)
+        var lastX: CGFloat?
+        for x in criticalX {
+            if let L = lastX, Swift.abs(x - L) < 0.25 { continue }
+            uniqX.append(x)
+            lastX = x
+        }
+
+        switch verticalSide {
+        case .above:
+            // up-right (rank 2): evaluate ALL, then choose closest
+            for x in uniqX where x >= cx {
+                // enforce circle horizontally too
+                guard let (L, R) = xBand(at: cy), x >= L, x <= R else { continue }
+                let y = Swift.min(cy, ceilingY(at: x))
+                consider(.init(x: x, y: y), rank: 2)
+            }
+            if let winner = best, winner.rank == 2 { return rectFrom(center: winner.p) }
+
+            // up-left (rank 3)
+            for x in uniqX.reversed() where x <= cx {
+                guard let (L, R) = xBand(at: cy), x >= L, x <= R else { continue }
+                let y = Swift.min(cy, ceilingY(at: x))
+                consider(.init(x: x, y: y), rank: 3)
+            }
+            if let winner = best, winner.rank == 3 { return rectFrom(center: winner.p) }
+
+        case .below:
+            // down-right (rank 2)
+            for x in uniqX where x >= cx {
+                guard let (L, R) = xBand(at: cy), x >= L, x <= R else { continue }
+                let y = Swift.max(cy, floorY(at: x))
+                consider(.init(x: x, y: y), rank: 2)
+            }
+            if let winner = best, winner.rank == 2 { return rectFrom(center: winner.p) }
+
+            // down-left (rank 3)
+            for x in uniqX.reversed() where x <= cx {
+                guard let (L, R) = xBand(at: cy), x >= L, x <= R else { continue }
+                let y = Swift.max(cy, floorY(at: x))
+                consider(.init(x: x, y: y), rank: 3)
+            }
+            if let winner = best, winner.rank == 3 { return rectFrom(center: winner.p) }
+        }
+
+        // Nothing within maxDistance
         return nil
     }
 }

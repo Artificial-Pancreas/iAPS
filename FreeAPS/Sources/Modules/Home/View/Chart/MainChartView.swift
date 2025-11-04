@@ -13,6 +13,8 @@ enum PredictionType: Hashable {
 struct DotInfo {
     let rect: CGRect
     let value: Decimal
+    let text: String?
+    let textRect: CGRect?
 }
 
 struct AnnouncementDot {
@@ -29,16 +31,14 @@ struct OverrideStruct {
 
 typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CGFloat)
 
-typealias GlucosePeak = (
-    yStart: CGFloat,
-    yEnd: CGFloat,
-    xStart: CGFloat,
-    xEnd: CGFloat,
-    textX: CGFloat,
-    textY: CGFloat,
-    glucose: Int,
-    type: ExtremumType
-)
+struct GlucosePeak {
+    let xStart: CGFloat
+    let yStart: CGFloat
+    let glucose: Int
+    let text: String
+    let textRect: CGRect
+    let type: ExtremumType
+}
 
 struct MainChartView: View {
     @State var data: ChartModel
@@ -81,6 +81,11 @@ struct MainChartView: View {
         static let bolusHeight: Decimal = 45
         static let carbHeight: Decimal = 45
         static let carbWidth: CGFloat = 5
+        static let peakHorizontalPadding: CGFloat = 4
+        static let peakVerticalPadding: CGFloat = 2
+        static let peakMargin: CGFloat = 4
+        static let peakCornerRadius: CGFloat = 2
+        static let insulinCarbLabelMargin: CGFloat = 4
     }
 
     private enum Command {
@@ -142,6 +147,8 @@ struct MainChartView: View {
     @State private var firstHourPosition: CGFloat = 0
     @State private var currentTimeX: CGFloat = 0
 
+    @State private var bolusFont = Font.custom("BolusDotFont", fixedSize: 11)
+
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
     private var dateFormatter: DateFormatter {
@@ -178,22 +185,6 @@ struct MainChartView: View {
         formatter.maximumFractionDigits = 1
         formatter.minimumFractionDigits = 1
         formatter.decimalSeparator = "."
-        return formatter
-    }
-
-    private var bolusFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.minimumIntegerDigits = 0
-        formatter.maximumFractionDigits = 2
-        formatter.decimalSeparator = "."
-        return formatter
-    }
-
-    private var carbsFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
         return formatter
     }
 
@@ -583,16 +574,11 @@ struct MainChartView: View {
     }
 
     private func glucosePeaksView() -> some View {
-        ForEach(glucosePeaks, id: \.3) { yStart, yEnd, xStart, xEnd, textX, textY, glucose, _ in
-            let value = Double(glucose) *
-                (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
-
-            let formatter = data.units == .mmolL ? mmolDotGlucoseFormatter : dotGlucoseFormatter
-
+        ForEach(glucosePeaks, id: \.xStart) { peak in
             Group {
                 Path { path in
-                    path.move(to: CGPoint(x: xStart, y: yStart))
-                    path.addLine(to: CGPoint(x: xEnd, y: yEnd))
+                    path.move(to: CGPoint(x: peak.xStart, y: peak.yStart))
+                    path.addLine(to: CGPoint(x: peak.textRect.midX, y: peak.textRect.midY))
                 }
                 .stroke(Color.secondary, lineWidth: 0.75)
                 .opacity(0.75)
@@ -602,33 +588,34 @@ struct MainChartView: View {
                     // a simpler solution is to fill the rectangle below with 1.0 opacity - but needs a better colour
                     ZStack {
                         Color.white // allow everywhere by default
-                        Text(value == 0 ? "" : formatter.string(from: value as NSNumber) ?? "")
+                        Text(peak.text)
                             .font(.glucoseDotFont)
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 2)
+                            .padding(.horizontal, Config.peakHorizontalPadding)
+                            .padding(.vertical, Config.peakVerticalPadding)
                             .background(
-                                RoundedRectangle(cornerRadius: 2)
+                                RoundedRectangle(cornerRadius: Config.peakCornerRadius)
                                     .fill(Color.black) // cut out this area
                             )
-                            .position(CGPoint(x: textX, y: textY))
+                            .position(CGPoint(x: peak.textRect.midX, y: peak.textRect.midY))
                             .blendMode(.destinationOut)
                     }
                     .compositingGroup()
                 )
 
-                let glucoseDecimal = Decimal(glucose)
+                let glucoseDecimal = Decimal(peak.glucose)
                 let fillColour =
-                    glucoseDecimal < data.lowGlucose ? Color.loopRed.opacity(0.4)
-                        : glucoseDecimal > data.highGlucose ? Color.loopYellow.opacity(0.4)
-                        : colorScheme == .dark ? Color.darkGreen.opacity(0.6) : Color.darkGreen.opacity(0.4)
+                    glucoseDecimal < data.lowGlucose ? Color.loopRed.opacity(0.7)
+                        : glucoseDecimal > data
+                        .highGlucose ? (colorScheme == .dark ? Color.orange.opacity(0.7) : Color.loopYellow.opacity(0.4))
+                        : colorScheme == .dark ? Color.darkGreen.opacity(0.6) : Color.darkGreen.opacity(0.7)
 
                 ZStack {
-                    Text(value == 0 ? "" : formatter.string(from: value as NSNumber) ?? "")
+                    Text(peak.text)
                         .font(.glucoseDotFont)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
+                        .padding(.horizontal, Config.peakHorizontalPadding)
+                        .padding(.vertical, Config.peakVerticalPadding)
                         .background(
-                            RoundedRectangle(cornerRadius: 2)
+                            RoundedRectangle(cornerRadius: Config.peakCornerRadius)
                                 .fill(fillColour)
                         )
                         .overlay(
@@ -637,7 +624,7 @@ struct MainChartView: View {
                                 .opacity(0.9)
                         )
                 }
-                .position(CGPoint(x: textX, y: textY))
+                .position(CGPoint(x: peak.textRect.midX, y: peak.textRect.midY))
             }
             .asAny()
         }
@@ -861,23 +848,25 @@ struct MainChartView: View {
             bolusPath.stroke(Color.primary, lineWidth: 0.3)
 
             if data.useInsulinBars {
-                ForEach(bolusDots, id: \.rect.minX) { info -> AnyView in
-                    let string = bolusFormatter.string(from: info.value as NSNumber) ?? ""
-                    let stringLength = CGFloat(string.count) * 2
-                    let position = CGPoint(x: info.rect.midX, y: info.rect.minY - (8 + stringLength + Config.pointSizeHeight))
-                    Text(info.value >= data.minimumSMB ? string : "")
-                        .rotationEffect(Angle(degrees: -90))
-                        .font(bolusFont())
-                        .position(position)
-                        .asAny()
+                ForEach(bolusDots, id: \.rect.minX) { info in
+                    if let string = info.text, let textRect = info.textRect {
+                        Text(string)
+                            .rotationEffect(Angle(degrees: -90))
+                            .font(bolusFont)
+                            .position(
+                                CGPoint(x: textRect.midX, y: textRect.midY)
+                            )
+                    }
                 }
             } else {
-                ForEach(bolusDots, id: \.rect.minX) { info -> AnyView in
-                    let position = CGPoint(x: info.rect.midX, y: info.rect.minY - 8)
-                    return Text(info.value >= data.minimumSMB ? (bolusFormatter.string(from: info.value as NSNumber) ?? "") : "")
-                        .font(.bolusDotFont)
-                        .position(position)
-                        .asAny()
+                ForEach(bolusDots, id: \.rect.minX) { info in
+                    if let string = info.text, let textRect = info.textRect {
+                        Text(string)
+                            .font(.bolusDotFont)
+                            .position(
+                                CGPoint(x: textRect.midX, y: textRect.midY)
+                            )
+                    }
                 }
             }
         }
@@ -890,22 +879,24 @@ struct MainChartView: View {
             carbsPath.stroke(Color.primary, lineWidth: 0.3)
 
             if data.useCarbBars {
-                ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
-                    let string = carbsFormatter.string(from: info.value as NSNumber) ?? ""
-                    let stringLength = CGFloat(string.count) * 2
-                    let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + (8 + stringLength + Config.pointSizeHeight))
-                    Text(string)
-                        .rotationEffect(Angle(degrees: -90))
-                        .font(bolusFont())
-                        .position(position)
-                        .asAny()
+                ForEach(carbsDots, id: \.rect.minX) { info in
+                    if let string = info.text, let textRect = info.textRect {
+                        Text(string)
+                            .rotationEffect(Angle(degrees: -90))
+                            .font(bolusFont)
+                            .position(
+                                CGPoint(x: textRect.midX, y: textRect.midY)
+                            )
+                    }
                 }
             } else {
-                ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
-                    let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
-                    return Text(carbsFormatter.string(from: info.value as NSNumber) ?? "").font(.carbsDotFont)
-                        .position(position)
-                        .asAny()
+                ForEach(carbsDots, id: \.rect.minX) { info in
+                    if let string = info.text, let textRect = info.textRect {
+                        Text(string).font(.carbsDotFont)
+                            .position(
+                                CGPoint(x: textRect.midX, y: textRect.midY)
+                            )
+                    }
                 }
             }
         }
@@ -918,24 +909,24 @@ struct MainChartView: View {
             fpuPath.stroke(data.useCarbBars ? Color.loopYellow : Color.primary, lineWidth: data.useCarbBars ? 1.5 : 0.3)
 
             if data.useCarbBars, data.fpuAmounts {
-                ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
-                    let string = carbsFormatter.string(from: info.value as NSNumber) ?? ""
-                    let stringLength = CGFloat(string.count) * 2
-                    let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + (8 + stringLength + Config.pointSizeHeight))
-                    Text(string)
-                        .rotationEffect(Angle(degrees: -90))
-                        .font(bolusFont())
-                        .position(position)
-                        .asAny()
+                ForEach(fpuDots, id: \.rect.minX) { info in
+                    if let string = info.text, let textRect = info.textRect {
+                        let position = textRect.origin
+                        Text(string)
+                            .rotationEffect(Angle(degrees: -90))
+                            .font(bolusFont)
+                            .position(position)
+                    }
                 }
             } else if data.fpuAmounts {
-                ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
-                    let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
-                    return Text(carbsFormatter.string(from: info.value as NSNumber) ?? "")
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
-                        .position(position)
-                        .asAny()
+                ForEach(fpuDots, id: \.rect.minX) { info in
+                    if let string = info.text, let textRect = info.textRect {
+                        let position = textRect.origin
+                        Text(string)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                            .position(position)
+                    }
                 }
             }
         }
@@ -995,6 +986,8 @@ extension MainChartView {
         let geom = CalculatedGeometries(fullSize: fullSize, data: data)
 
         DispatchQueue.main.async {
+            self.bolusFont = geom.bolusFont
+
             self.firstHourDate = geom.firstHourDate
             self.oneSecondWidth = geom.oneSecondWidth
             self.additionalWidth = geom.additionalWidth
@@ -1140,18 +1133,5 @@ extension MainChartView {
                 path.addLine(to: CGPoint(x: rect.midX, y: rect.minY - MainChartView.Config.pointSizeHeight))
             }
         }
-    }
-
-    private func bolusFont() -> Font {
-        var size = CGFloat(12)
-        switch data.screenHours {
-        case 12:
-            size = 9
-        case 24:
-            size = 7
-        default:
-            size = 11
-        }
-        return Font.custom("BolusDotFont", fixedSize: size)
     }
 }
