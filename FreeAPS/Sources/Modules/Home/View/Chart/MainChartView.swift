@@ -83,7 +83,7 @@ struct MainChartView: View {
         static let carbWidth: CGFloat = 5
         static let peakHorizontalPadding: CGFloat = 4
         static let peakVerticalPadding: CGFloat = 2
-        static let peakMargin: CGFloat = 4
+        static let peakMargin: CGFloat = 6
         static let peakCornerRadius: CGFloat = 2
         static let insulinCarbLabelMargin: CGFloat = 4
     }
@@ -1085,6 +1085,7 @@ extension MainChartView {
             ping(data.$lowGlucose),
             ping(data.$highGlucose),
             ping(data.$units),
+            ping(data.$minimumSMB),
             // ---
             sizeChanges.eraseToAnyPublisher(),
             updateRequests.eraseToAnyPublisher()
@@ -1112,8 +1113,8 @@ extension MainChartView {
                 let rect = dot.rect
                 path.move(to: CGPoint(x: rect.midX, y: rect.maxY + MainChartView.Config.pointSizeHeight))
                 path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-                path.addLine(to: CGPoint(x: rect.minX, y: rect.minY - MainChartView.Config.pointSizeHeight))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY - MainChartView.Config.pointSizeHeight))
+                path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
                 path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
                 path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY + MainChartView.Config.pointSizeHeight))
             }
@@ -1127,8 +1128,8 @@ extension MainChartView {
                 let rect = dot.rect
                 path.move(to: CGPoint(x: rect.midX, y: rect.minY - MainChartView.Config.pointSizeHeight))
                 path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-                path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY + MainChartView.Config.pointSizeHeight))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY + MainChartView.Config.pointSizeHeight))
+                path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
                 path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
                 path.addLine(to: CGPoint(x: rect.midX, y: rect.minY - MainChartView.Config.pointSizeHeight))
             }
