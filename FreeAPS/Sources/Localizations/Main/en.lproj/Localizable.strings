@@ -3298,3 +3298,6 @@ Enact a temp Basal or a temp target */
 
 /* message displayed in pump settings screen when the pump manager reports uncertain delivery */
 "Pump delivery uncertain" = "Pump delivery uncertain";
+
+/* message displayed on home screen when the pump is added but not fully onboarded */
+"Re-connect pump!" = "Re-connect pump!";

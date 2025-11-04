@@ -465,7 +465,7 @@ extension BaseWatchManager: WCSessionDelegate {
                     carbs: Decimal(carbs),
                     fat: Decimal(fat),
                     protein: Decimal(protein), note: nil,
-                    enteredBy: CarbsEntry.manual,
+                    enteredBy: CarbsEntry.watch,
                     isFPU: false
                 )]
             )
@@ -516,7 +516,6 @@ extension BaseWatchManager: WCSessionDelegate {
                     let name = storage.isPresetName()
 
                     if let duration = storage.cancelProfile() {
-                        let presetName = preset.name
                         let nsString = name != nil ? name! : activeOveride.percentage.formatted()
                         nightscout.editOverride(nsString, duration, activeOveride.date ?? Date())
                     }

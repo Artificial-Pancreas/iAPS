@@ -128,6 +128,14 @@ extension NightscoutAPI {
             ),
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
+                value: CarbsEntry.watch.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            ),
+            URLQueryItem(
+                name: "find[enteredBy][$ne]",
+                value: CarbsEntry.shortcut.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            ),
+            URLQueryItem(
+                name: "find[enteredBy][$ne]",
                 value: NigtscoutTreatment.local.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             ),
             URLQueryItem(

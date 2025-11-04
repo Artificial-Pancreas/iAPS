@@ -57,7 +57,7 @@ extension AutotuneConfig {
             currentTotal = pr2.reduce(0) { $0 + (Decimal($1.1 - $1.0.minutes) / 60) * $1.0.rate }
         }
 
-        func run() {
+        @MainActor func run() {
             running.toggle()
             provider.runAutotune()
                 .receive(on: DispatchQueue.main)
@@ -83,8 +83,10 @@ extension AutotuneConfig {
                     return self.apsManager.makeProfiles()
                 }
                 .sink { [weak self] _ in
-                    self?.lastAutotuneDate = Date()
-                    self?.running.toggle()
+                    DispatchQueue.main.async {
+                        self?.lastAutotuneDate = Date()
+                        self?.running.toggle()
+                    }
                 }.store(in: &lifetime)
         }
 

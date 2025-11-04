@@ -191,19 +191,19 @@
 "Are you sure?" = "Ви впевнені?";
 
 /* */
-"Clear Records" = "Clear Records";
+"Clear Records" = "Очистити записи";
 
 /* */
-"Delete CoreData database records" = "Delete CoreData database records";
+"Delete CoreData database records" = "Видалити записи бази даних CoreData";
 
 /* */
-"Delete NS records" = "Delete NS records";
+"Delete NS records" = "Видалити записи NS";
 
 /* */
-"All records in " = "All records in ";
+"All records in " = "Усі записи в";
 
 /* */
-" will be deleted!" = " will be deleted!";
+" will be deleted!" = "буде видалено!";
 
 /* Bottom target temp */
 "Bottom target" = "Нижня ціль";
@@ -3264,29 +3264,29 @@ Enact a temp Basal or a temp target */
 "Read from " = "Читати з";
 
 /* description for the backfill section in Nightscout settings screen */
-"Fetches old glucose readings from Nightscout" = "Fetches old glucose readings from Nightscout";
+"Fetches old glucose readings from Nightscout" = "Отримує старі показники глюкози з Nightscout";
 
 /* header and button label for the 'upload old glucose' action in Nightscout settings screen */
-"Upload glucose" = "Upload glucose";
+"Upload glucose" = "Завантажити глюкозу";
 
 /* description for the 'upload old glucose' section in Nightscout settings screen */
-"Uploads old glucose readings to Nightscout" = "Uploads old glucose readings to Nightscout";
+"Uploads old glucose readings to Nightscout" = "Завантажує старі показники глюкози до Nightscout";
 
 /* message when uploads are enabled, but glucose uploads are disabled, in Nightscout settings screen */
-"Glucose upload disabled in CGM settings" = "Glucose upload disabled in CGM settings";
+"Glucose upload disabled in CGM settings" = "Завантаження глюкози вимкнено в налаштуваннях CGM";
 
 /* header for the CGM list in CGM settings screen */
-"Connect to CGM" = "Connect to CGM";
+"Connect to CGM" = "Підключення до CGM";
 
 
 /* message displayed when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
-"Pump+CGM" = "Pump+CGM";
+"Pump+CGM" = "Помпа+CGM";
 
 /* label for the button to remove the CGM when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
 "Stop using the pump as CGM" = "Не використовувати помпу як CGM";
 
 /* hint under the CGM list in CGM settings screen */
-"To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM." = "To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM.";
+"To receive reading from xDrip4iOS, Glucose Direct or another compatible app, select Shared App Group CGM." = "Щоб отримувати показники з xDrip4iOS, Glucose Direct або іншої сумісної програми, виберіть «Спільна група програм CGM».";
 
 /* message displayed in pump settings screen when the pump manager reports uncertain delivery */
-"Pump delivery uncertain" = "Pump delivery uncertain";
+"Pump delivery uncertain" = "Невизначена подача помпи";
