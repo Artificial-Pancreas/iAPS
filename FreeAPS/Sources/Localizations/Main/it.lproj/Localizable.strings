@@ -3287,3 +3287,6 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* message displayed in pump settings screen when the pump manager reports uncertain delivery */
 "Pump delivery uncertain" = "Pump delivery uncertain";
+
+/* message displayed on home screen when the pump is added but not fully onboarded */
+"Re-connect pump!" = "Re-connect pump!";
