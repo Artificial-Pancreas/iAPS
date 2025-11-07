@@ -3289,4 +3289,4 @@ Enact a temp Basal or a temp target */
 "Pump delivery uncertain" = "Không xác định được việc tiêm insulin";
 
 /* message displayed on home screen when the pump is added but not fully onboarded */
-"Re-connect pump!" = "Re-connect pump!";
+"Re-connect pump!" = "Kết nối lại máy bơm!";
