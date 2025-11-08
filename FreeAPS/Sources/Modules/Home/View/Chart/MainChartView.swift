@@ -1062,7 +1062,7 @@ extension MainChartView {
     private func subscribeToUpdates() {
         updatesCancellable?.cancel()
 
-        let publishers: [AnyPublisher<Void, Never>] = [
+        let debouncedPublishers: [AnyPublisher<Void, Never>] = [
             ping(data.$screenHours),
             ping(data.$showInsulinActivity),
             ping(data.$showCobChart),
@@ -1085,16 +1085,27 @@ extension MainChartView {
             ping(data.$lowGlucose),
             ping(data.$highGlucose),
             ping(data.$units),
-            ping(data.$minimumSMB),
-            // ---
+            ping(data.$minimumSMB)
+        ]
+
+        let immediatePublishers: [AnyPublisher<Void, Never>] = [
             sizeChanges.eraseToAnyPublisher(),
             updateRequests.eraseToAnyPublisher()
         ]
 
-        // Merge + debounce + update once
+        let debouncedUpdates: AnyPublisher<Void, Never> =
+            Publishers.MergeMany(debouncedPublishers)
+                .debounce(for: .milliseconds(100), scheduler: calculationQueue)
+                .eraseToAnyPublisher()
+
+        let immediateUpdates: AnyPublisher<Void, Never> =
+            Publishers.MergeMany(immediatePublishers)
+                .debounce(for: .milliseconds(10), scheduler: calculationQueue)
+                .eraseToAnyPublisher()
+
         updatesCancellable =
-            Publishers.MergeMany(publishers)
-                .debounce(for: .milliseconds(250), scheduler: calculationQueue)
+            Publishers.MergeMany([debouncedUpdates, immediateUpdates])
+                .debounce(for: .milliseconds(20), scheduler: calculationQueue)
                 .receive(on: calculationQueue)
                 .sink { _ in
                     update(fullSize: latestSize)
