@@ -18,7 +18,7 @@ final class CarbPresetIntentRequest: BaseIntentsRequest {
                 fat: Decimal(quantityFat),
                 protein: Decimal(quantityProtein),
                 note: "add with shortcuts",
-                enteredBy: CarbsEntry.manual,
+                enteredBy: CarbsEntry.shortcut,
                 isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false
             )]
         )
