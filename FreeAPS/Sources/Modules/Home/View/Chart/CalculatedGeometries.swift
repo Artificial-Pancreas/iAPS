@@ -54,43 +54,21 @@ class CalculatedGeometries {
     private(set) var firstHourPosition: CGFloat = 0
     private(set) var currentTimeX: CGFloat = 0
 
+    private var glucoseMinValue: Int = 0
+    private var glucoseMaxValue: Int = 0
+
     private(set) var bolusFont = Font.custom("BolusDotFont", fixedSize: 11)
     private var bolusUIFont = UIFont.systemFont(ofSize: 11)
 
     private(set) var insulinBarsPath = Path()
 
-    private var bolusFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.minimumIntegerDigits = 0
-        formatter.maximumFractionDigits = 2
-        formatter.decimalSeparator = "."
-        return formatter
-    }
+    private let bolusFormatter: NumberFormatter
 
-    private var carbsFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }
+    private let carbsFormatter: NumberFormatter
 
-    private var dotGlucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        formatter.decimalSeparator = "."
-        return formatter
-    }
+    private let dotGlucoseFormatter: NumberFormatter
 
-    private var mmolDotGlucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        formatter.minimumFractionDigits = 1
-        formatter.decimalSeparator = "."
-        return formatter
-    }
+    private let mmolDotGlucoseFormatter: NumberFormatter
 
     init(
         fullSize: CGSize,
@@ -101,6 +79,27 @@ class CalculatedGeometries {
 
         let started = Date.now
 
+        bolusFormatter = NumberFormatter()
+        bolusFormatter.numberStyle = .decimal
+        bolusFormatter.minimumIntegerDigits = 0
+        bolusFormatter.maximumFractionDigits = 2
+        bolusFormatter.decimalSeparator = "."
+
+        carbsFormatter = NumberFormatter()
+        carbsFormatter.numberStyle = .decimal
+        carbsFormatter.maximumFractionDigits = 0
+
+        dotGlucoseFormatter = NumberFormatter()
+        dotGlucoseFormatter.numberStyle = .decimal
+        dotGlucoseFormatter.maximumFractionDigits = 1
+        dotGlucoseFormatter.decimalSeparator = "."
+
+        mmolDotGlucoseFormatter = NumberFormatter()
+        mmolDotGlucoseFormatter.numberStyle = .decimal
+        mmolDotGlucoseFormatter.maximumFractionDigits = 1
+        mmolDotGlucoseFormatter.minimumFractionDigits = 1
+        mmolDotGlucoseFormatter.decimalSeparator = "."
+
         bolusFont = getBolusFont()
         bolusUIFont = getBolusUIFont()
 
@@ -109,6 +108,11 @@ class CalculatedGeometries {
         additionalWidth = calculateAdditionalWidth()
         fullGlucoseWidth = calculateFullGlucoseWidth()
         firstHourPosition = calculateFirstHourPosition()
+
+        let (glucoseMinValue, glucoseMaxValue) = glucoseMinMaxYValues()
+        self.glucoseMinValue = glucoseMinValue
+        self.glucoseMaxValue = glucoseMaxValue
+
         currentTimeX = timeToXCoordinate(data.timerDate.timeIntervalSince1970)
 
         peakActivity_1unit = peakInsulinActivity(forBolus: 1.0)
@@ -393,8 +397,10 @@ class CalculatedGeometries {
     }
 
     private func calculateAnnouncementDots() -> ([AnnouncementDot], Path) {
+        var startIndex = 0
         let dots = data.announcement.map { value -> AnnouncementDot in
-            let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970)
+            let (center, newStartIndex) = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, startIndex: startIndex)
+            startIndex = newStartIndex
             let size = MainChartView.Config.announcementSize * MainChartView.Config.announcementScale
             let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
             let note = value.notes
@@ -892,10 +898,9 @@ class CalculatedGeometries {
         let bottomPadding = data.showInsulinActivity || data.showCobChart ? MainChartView.Config
             .mainChartBottomPaddingWithActivity : MainChartView.Config
             .bottomPadding
-        let (minValue, maxValue) = minMaxYValues()
         let chartHeight = (fullSize.height - topPadding - bottomPadding)
-        let stepYFraction = chartHeight / CGFloat(maxValue - minValue)
-        let yOffset = CGFloat(minValue) * stepYFraction
+        let stepYFraction = chartHeight / CGFloat(glucoseMaxValue - glucoseMinValue)
+        let yOffset = CGFloat(glucoseMinValue) * stepYFraction
         let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomPadding
         return y
     }
@@ -1006,9 +1011,9 @@ class CalculatedGeometries {
         return desiredActivity / scalingFactor
     }
 
-    private func timeToInterpolatedPoint(_ time: TimeInterval) -> CGPoint {
-        var nextIndex = 0
-        for (index, value) in data.glucose.enumerated() {
+    private func timeToInterpolatedPoint(_ time: TimeInterval, startIndex: Int) -> (CGPoint, Int) {
+        var nextIndex = startIndex
+        for (index, value) in data.glucose.enumerated().dropFirst(startIndex) {
             if value.dateString.timeIntervalSince1970 > time {
                 nextIndex = index
                 break
@@ -1016,9 +1021,9 @@ class CalculatedGeometries {
         }
         let x = timeToXCoordinate(time)
 
-        guard nextIndex > 0 else {
+        guard nextIndex > startIndex else {
             let lastY = glucoseToYCoordinate(data.glucose.last?.glucose ?? 0)
-            return CGPoint(x: x, y: lastY)
+            return (CGPoint(x: x, y: lastY), nextIndex)
         }
 
         let prevX = timeToXCoordinate(data.glucose[nextIndex - 1].dateString.timeIntervalSince1970)
@@ -1028,10 +1033,10 @@ class CalculatedGeometries {
         let delta = nextX - prevX
         let fraction = (x - prevX) / delta
 
-        return pointInLine(CGPoint(x: prevX, y: prevY), CGPoint(x: nextX, y: nextY), fraction)
+        return (pointInLine(CGPoint(x: prevX, y: prevY), CGPoint(x: nextX, y: nextY), fraction), nextIndex)
     }
 
-    private func minMaxYValues() -> (min: Int, max: Int) {
+    private func glucoseMinMaxYValues() -> (min: Int, max: Int) {
         var maxValue = data.glucose.compactMap(\.glucose).max() ?? MainChartView.Config.maxGlucose
 
         if let maxTargetValue = maxTargetValue() {
@@ -1061,12 +1066,11 @@ class CalculatedGeometries {
         let topYPaddint = MainChartView.Config.topYPadding + MainChartView.Config.basalHeight
         let mainChartBottomPadding = data.showInsulinActivity || data.showCobChart ? MainChartView.Config
             .mainChartBottomPaddingWithActivity : MainChartView.Config.bottomPadding
-        let (minValue, maxValue) = minMaxYValues()
-        let stepYFraction = (fullSize.height - topYPaddint - mainChartBottomPadding) / CGFloat(maxValue - minValue)
-        let yOffset = CGFloat(minValue) * stepYFraction
-        let maxY = fullSize.height - CGFloat(minValue) * stepYFraction + yOffset - mainChartBottomPadding
-        let minY = fullSize.height - CGFloat(maxValue) * stepYFraction + yOffset - mainChartBottomPadding
-        return (minValue: minValue, minY: minY, maxValue: maxValue, maxY: maxY)
+        let stepYFraction = (fullSize.height - topYPaddint - mainChartBottomPadding) / CGFloat(glucoseMaxValue - glucoseMinValue)
+        let yOffset = CGFloat(glucoseMinValue) * stepYFraction
+        let maxY = fullSize.height - CGFloat(glucoseMinValue) * stepYFraction + yOffset - mainChartBottomPadding
+        let minY = fullSize.height - CGFloat(glucoseMaxValue) * stepYFraction + yOffset - mainChartBottomPadding
+        return (minValue: glucoseMinValue, minY: minY, maxValue: glucoseMaxValue, maxY: maxY)
     }
 
     private func calculateFirstHourDate() -> Date {
@@ -1084,8 +1088,10 @@ class CalculatedGeometries {
     }
 
     private func insulinCircleEntries() -> [DotInfo] {
-        data.boluses.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970)
+        var startIndex = 0
+        return data.boluses.map { value -> DotInfo in
+            let (center, newStartIndex) = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, startIndex: startIndex)
+            startIndex = newStartIndex
             let size = MainChartView.Config.bolusSize + CGFloat(value.amount ?? 0) * MainChartView.Config.bolusScale
             let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
             let bolusValue = value.amount ?? 0
@@ -1109,8 +1115,10 @@ class CalculatedGeometries {
     }
 
     private func insulinBarEntries() -> [DotInfo] {
-        data.boluses.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970)
+        var startIndex = 0
+        return data.boluses.map { value -> DotInfo in
+            let (center, newStartIndex) = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, startIndex: startIndex)
+            startIndex = newStartIndex
             let bolusValue = value.amount ?? 0
             let height = bolusHeight(amount: bolusValue)
             let rect = CGRect(
@@ -1140,12 +1148,15 @@ class CalculatedGeometries {
     }
 
     private func carbsCircleEntries(_ realCarbs: [CarbsEntry]) -> [DotInfo] {
-        realCarbs.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint(
+        var startIndex = 0
+        return realCarbs.map { value -> DotInfo in
+            let (center, newStartIndex) = timeToInterpolatedPoint(
                 value.actualDate != nil ?
                     (value.actualDate ?? Date()).timeIntervalSince1970 :
-                    value.createdAt.timeIntervalSince1970
+                    value.createdAt.timeIntervalSince1970,
+                startIndex: startIndex
             )
+            startIndex = newStartIndex
             let size = min(
                 MainChartView.Config.maxCarbSize,
                 MainChartView.Config.carbsSize + CGFloat(value.carbs) * MainChartView.Config.carbsScale
@@ -1176,8 +1187,13 @@ class CalculatedGeometries {
     }
 
     private func carbsBarEntries(_ carbs: [CarbsEntry]) -> [DotInfo] {
-        carbs.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint((value.actualDate ?? .distantPast).timeIntervalSince1970)
+        var startIndex = 0
+        return carbs.map { value -> DotInfo in
+            let (center, newStartIndex) = timeToInterpolatedPoint(
+                (value.actualDate ?? .distantPast).timeIntervalSince1970,
+                startIndex: startIndex
+            )
+            startIndex = newStartIndex
             let height = carbHeight(amount: value.carbs)
             let rect = CGRect(
                 x: center.x,
@@ -1205,12 +1221,15 @@ class CalculatedGeometries {
     }
 
     private func fpuCircleEntries(_ fpus: [CarbsEntry]) -> [DotInfo] {
-        fpus.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint(
+        var startIndex = 0
+        return fpus.map { value -> DotInfo in
+            let (center, newStartIndex) = timeToInterpolatedPoint(
                 value.actualDate != nil ?
                     (value.actualDate ?? Date()).timeIntervalSince1970 :
-                    value.createdAt.timeIntervalSince1970
+                    value.createdAt.timeIntervalSince1970,
+                startIndex: startIndex
             )
+            startIndex = newStartIndex
             let size = MainChartView.Config.fpuSize + CGFloat(value.carbs) * MainChartView.Config.fpuScale
             let rect = CGRect(
                 x: center.x - size / 2,
@@ -1239,8 +1258,13 @@ class CalculatedGeometries {
     }
 
     private func fpuBarEntries(_ fpus: [CarbsEntry]) -> [DotInfo] {
-        fpus.map { value -> DotInfo in
-            let center = timeToInterpolatedPoint((value.actualDate ?? .distantPast).timeIntervalSince1970)
+        var startIndex = 0
+        return fpus.map { value -> DotInfo in
+            let (center, newStartIndex) = timeToInterpolatedPoint(
+                (value.actualDate ?? .distantPast).timeIntervalSince1970,
+                startIndex: startIndex
+            )
+            startIndex = newStartIndex
             let height = carbHeight(amount: value.carbs)
             let rect = CGRect(
                 x: center.x,

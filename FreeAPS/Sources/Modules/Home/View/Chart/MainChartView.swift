@@ -151,51 +151,19 @@ struct MainChartView: View {
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter
-    }
-
-    private var date24Formatter: DateFormatter {
+    private let date24Formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.setLocalizedDateFormatFromTemplate("HH")
         return formatter
-    }
+    }()
 
-    private var glucoseFormatter: NumberFormatter {
+    private let glucoseFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         return formatter
-    }
-
-    private var dotGlucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        formatter.decimalSeparator = "."
-        return formatter
-    }
-
-    private var mmolDotGlucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        formatter.minimumFractionDigits = 1
-        formatter.decimalSeparator = "."
-        return formatter
-    }
-
-    private var fetchedTargetFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        if data.units == .mmolL {
-            formatter.maximumFractionDigits = 1
-        } else { formatter.maximumFractionDigits = 0 }
-        return formatter
-    }
+    }()
 
     @State private var latestSize: CGSize = .zero
     @State private var updatesCancellable: AnyCancellable?
@@ -221,27 +189,12 @@ struct MainChartView: View {
                 subscribeToUpdates()
                 sizeChanges.send(())
             }
-            .onDisappear {
-                unsubscribe()
-            }
             .onChange(of: geo.size) {
                 latestSize = geo.size
                 sizeChanges.send(())
             }
             .onChange(of: triggerUpdate) {
                 updateRequests.send(())
-            }
-            .onChange(of: scenePhase) {
-                switch scenePhase {
-                case .active:
-                    if updatesCancellable == nil { subscribeToUpdates() }
-                    updateRequests.send(())
-                case .background,
-                     .inactive:
-                    unsubscribe()
-                @unknown default:
-                    break
-                }
             }
         }
     }
@@ -1060,8 +1013,6 @@ extension MainChartView {
     }
 
     private func subscribeToUpdates() {
-        updatesCancellable?.cancel()
-
         let debouncedPublishers: [AnyPublisher<Void, Never>] = [
             ping(data.$screenHours),
             ping(data.$showInsulinActivity),
@@ -1095,26 +1046,19 @@ extension MainChartView {
 
         let debouncedUpdates: AnyPublisher<Void, Never> =
             Publishers.MergeMany(debouncedPublishers)
-                .debounce(for: .milliseconds(100), scheduler: calculationQueue)
+                .debounce(for: .milliseconds(15), scheduler: calculationQueue)
                 .eraseToAnyPublisher()
 
         let immediateUpdates: AnyPublisher<Void, Never> =
             Publishers.MergeMany(immediatePublishers)
-                .debounce(for: .milliseconds(10), scheduler: calculationQueue)
                 .eraseToAnyPublisher()
 
         updatesCancellable =
             Publishers.MergeMany([debouncedUpdates, immediateUpdates])
-                .debounce(for: .milliseconds(20), scheduler: calculationQueue)
                 .receive(on: calculationQueue)
                 .sink { _ in
                     update(fullSize: latestSize)
                 }
-    }
-
-    private func unsubscribe() {
-        updatesCancellable?.cancel()
-        updatesCancellable = nil
     }
 
     // An InsulinBarMark of sorts
