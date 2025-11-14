@@ -113,7 +113,7 @@ class CalculatedGeometries {
         self.glucoseMinValue = glucoseMinValue
         self.glucoseMaxValue = glucoseMaxValue
 
-        currentTimeX = timeToXCoordinate(data.timerDate.timeIntervalSince1970)
+        currentTimeX = timeToXCoordinate(Date.now.timeIntervalSince1970)
 
         peakActivity_1unit = peakInsulinActivity(forBolus: 1.0)
         peakActivity_maxBolus = peakInsulinActivity(forBolus: Double(data.maxBolus))
