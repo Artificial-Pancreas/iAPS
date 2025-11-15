@@ -1600,6 +1600,31 @@ Enact a temp Basal or a temp target */
 "Retry" = "Retry";
 
 "Scan Barcode" = "Scan Barcode";
+
+"📦 Database Results" = "📦 Database Results";
+
+"🤖 AI Search Results" = "🤖 AI Search Results";
+
+"• Use the barcode scanner for packaged foods" = "• Use the barcode scanner for packaged foods";
+
+"• Check spelling carefully" = "• Check spelling carefully";
+
+"• Use simple, common food names" = "• Use simple, common food names";
+
+"💡 Search Tips:" = "💡 Search Tips:";
+
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
+
+"Check your spelling and try again" = "Check your spelling and try again";
+
+"No Foods Found" = "No Foods Found";
+
+"Search Error" = "Search Error";
+
+"Finding the best matches for you" = "Finding the best matches for you";
+
+"Searching foods" = "Searching foods";
+
 // --------- End of AI ---------
 
 /* */
