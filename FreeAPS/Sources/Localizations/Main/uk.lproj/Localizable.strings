@@ -1381,7 +1381,248 @@ Enact a temp Basal or a temp target */
 /* Food Type / Meal Note */
 "Note" = "Примітка";
 
+// --------- AI ---------
 /* */
+"📝 Notes" = "📝 Notes";
+
+/* */
+"💉 Diabetes recommendations" = "💉 Diabetes recommendations";
+
+/* */
+"🍽️ Separate Foods" = "🍽️ Separate Foods";
+
+/* */
+"Add all" = "Add all";
+
+/* */
+"🧠 AI Food analysis" = "🧠 AI Food analysis";
+
+/* */
+"📊 Total nutritional values of the meal" = "📊 Total nutritional values of the meal";
+
+/* */
+"Confidence level:" = "Confidence level:";
+
+/* */
+"Notes: %@" = "Notes: %@";
+
+/* */
+"Visual Cues: %@" = "Visual Cues: %@";
+
+/* */
+"Preparation: %@" = "Preparation: %@";
+
+/* */
+"Preparation" = "Preparation";
+
+/* */
+"Multiplicator" = "Multiplicator";
+
+/* */
+"Accept quantity" = "Accept quantity";
+
+/* */
+"Enter desired quantity" = "Enter desired quantity";
+
+/* */
+"AI Food Search" = "AI Food Search";
+
+/* */
+"Search Food Database" = "Search Food Database";
+
+"Models Used:" = "Models Used:";
+
+"Current Mode: %@" = "Current Mode: %@";
+
+"Analysis Mode" = "Analysis Mode";
+
+"This AI provider requires an API key. Please enter your API key in the settings below." = "This AI provider requires an API key. Please enter your API key in the settings below.";
+"API Key Required" = "API Key Required";
+
+"Food Search Settings" = "Food Search Settings";
+
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
+
+"Medical Disclaimer" = "Medical Disclaimer";
+
+"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
+
+"**AI Image Analysis:**" = "**AI Image Analysis:**";
+
+"OpenFoodFacts" = "OpenFoodFacts";
+
+"**Barcode Scanning:**" = "**Barcode Scanning:**";
+
+"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
+
+"**Text/Voice Search:**" = "**Text/Voice Search:**";
+"Search Type Recommendations" = "Search Type Recommendations";
+
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.";
+
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches.";
+
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries.";
+
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost.";
+
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens).";
+
+"Available Search Providers:" = "Available Search Providers:";
+
+"Provider Information" = "Provider Information";
+
+"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI";
+
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys";
+
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.";
+
+"Camera Food Analysis" = "Camera Food Analysis";
+
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food.";
+
+"Important: How to Use Your API Keys" = "Important: How to Use Your API Keys";
+
+"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals.";
+
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+
+"Diabetes Focus" = "Diabetes Focus";
+
+"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management.";
+
+"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing.";
+
+"AI Prompt for Enhanced Results" = "AI Prompt for Enhanced Results";
+
+"Enter your OpenAI API key" = "Enter your OpenAI API key";
+
+"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API Key";
+
+"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)";
+
+"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) Configuration";
+
+"Macro Tracking" = "Macro Tracking";
+
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+
+"Detailed Visual Analysis" = "Detailed Visual Analysis";
+
+"Enter your Google Gemini API key" = "Enter your Google Gemini API key";
+
+"Google Gemini API Key" = "Google Gemini API Key";
+
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day).";
+
+"Google (Gemini API) Configuration" = "Google (Gemini API) Configuration";
+
+"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.";
+
+"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
+
+"Reset to Default" = "Reset to Default";
+
+"Retake Photo" = "Retake Photo";
+
+"Retry Analysis" = "Retry Analysis";
+
+"Try Different Provider" = "Try Different Provider";
+
+"Check Account" = "Check Account";
+
+"Analysis Error" = "Analysis Error";
+
+"AI Food Analysis" = "AI Food Analysis";
+
+"Use Cancel to retake photo" = "Use Cancel to retake photo";
+
+"Analyzing food with AI..." = "Analyzing food with AI...";
+
+"Choose from Library" = "Choose from Library";
+
+"Take a Photo" = "Take a Photo";
+
+"Keep the camera level to reduce distortion and keep portions proportional." = "Keep the camera level to reduce distortion and keep portions proportional.";
+
+"Shoot from slightly above" = "Shoot from slightly above";
+
+"Forks, cups, or hands help AI calculate realistic portions." = "Forks, cups, or hands help AI calculate realistic portions.";
+
+"Add a size reference" = "Add a size reference";
+
+"Make sure every food item is in the frame." = "Make sure every food item is in the frame.";
+
+"Frame the full meal" = "Frame the full meal";
+
+"Remove napkins, lids, or packaging that may be misidentified as food." = "Remove napkins, lids, or packaging that may be misidentified as food.";
+
+"Clear the area" = "Clear the area";
+
+"Harsh shadows confuse the AI and dim light can hide textures." = "Harsh shadows confuse the AI and dim light can hide textures.";
+
+"Use bright, even light" = "Use bright, even light";
+
+"Better photos = better estimates" = "Better photos = better estimates";
+
+"Scan failed" = "Scan failed";
+
+"Looking up product..." = "Looking up product...";
+
+"Code detected!" = "Code detected!";
+
+"Position camera over barcode or QR code" = "Position camera over barcode or QR code";
+
+"Validating format..." = "Validating format...";
+
+"Scanning for barcode or QR code..." = "Scanning for barcode or QR code...";
+
+"Initializing camera..." = "Initializing camera...";
+
+"Scan failed" = "Scan failed";
+
+"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS needs camera access to scan barcodes. Please enable camera access in Settings.";
+
+"Camera Access Required" = "Camera Access Required";
+
+"Check Permissions" = "Check Permissions";
+
+"Supports traditional barcodes and QR codes" = "Supports traditional barcodes and QR codes";
+
+"Hold steady for best results" = "Hold steady for best results";
+
+"Retry" = "Спробувати знову";
+
+"Scan Barcode" = "Scan Barcode";
+
+"📦 Database Results" = "📦 Database Results";
+
+"🤖 AI Search Results" = "🤖 AI Search Results";
+
+"• Use the barcode scanner for packaged foods" = "• Use the barcode scanner for packaged foods";
+
+"• Check spelling carefully" = "• Check spelling carefully";
+
+"• Use simple, common food names" = "• Use simple, common food names";
+
+"💡 Search Tips:" = "💡 Search Tips:";
+
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
+
+"Check your spelling and try again" = "Check your spelling and try again";
+
+"No Foods Found" = "No Foods Found";
+
+"Search Error" = "Search Error";
+
+"Finding the best matches for you" = "Finding the best matches for you";
+
+"Searching foods" = "Searching foods";
+
+// --------- End of AI ---------
+/* */
+
 "Temp Basal" = "Тимчасовий  Базал";
 
 /* */
