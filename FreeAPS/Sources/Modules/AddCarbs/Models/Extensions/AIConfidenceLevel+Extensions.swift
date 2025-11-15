@@ -9,11 +9,11 @@ extension AIConfidenceLevel {
         }
     }
 
-    var description: String {
+    var description: LocalizedStringKey {
         switch self {
-        case .high: return "Hoch"
-        case .medium: return "Mittel"
-        case .low: return "Niedrig"
+        case .high: return "High"
+        case .medium: return "Medium"
+        case .low: return "Low"
         }
     }
 }
