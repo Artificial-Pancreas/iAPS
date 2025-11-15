@@ -77,6 +77,10 @@ extension Home {
             return formatter
         }()
 
+        private var fetchedTargetFormatter: NumberFormatter {
+            state.data.units == .mmolL ? fetchedTargetFormatterMmol : fetchedTargetFormatterMgdl
+        }
+
         private let targetFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -231,7 +235,7 @@ extension Home {
 
                         if let eventualBG = state.eventualBG {
                             Text(
-                                (state.data.units == .mmolL ? fetchedTargetFormatterMmol : fetchedTargetFormatterMgdl).string(
+                                fetchedTargetFormatter.string(
                                     from: (state.data.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
                                 ) ?? ""
                             ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
@@ -738,7 +742,7 @@ extension Home {
                         .font(.system(size: 16))
                         .foregroundStyle(.teal)
 
-                    Text("\(state.data.suggestion?.sensitivityRatio ?? 1)")
+                    Text(String(describing: state.data.suggestion?.sensitivityRatio ?? 1))
                         .foregroundStyle(.primary)
                         .lineLimit(1) // maximum 1 row
                         .fixedSize(horizontal: true, vertical: false) // Prevent wrapping
@@ -848,8 +852,8 @@ extension Home {
                             .offset(y: -100)
                         }
                     }
-                    .onChange(of: scenePhase) { phase in
-                        switch phase {
+                    .onChange(of: scenePhase) {
+                        switch scenePhase {
                         case .active:
                             state.startTimer()
                         case .background,
