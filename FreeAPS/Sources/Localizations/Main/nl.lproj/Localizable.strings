@@ -1433,7 +1433,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Models Used:" = "Models Used:";
 
-"Current Mode: \(aiService.analysisMode.displayName)" = "Current Mode: \\(aiService.analysisMode.displayName)";
+"Current Mode: %@" = "Current Mode: %@";
 
 "Analysis Mode" = "Analysis Mode";
 
