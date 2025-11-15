@@ -1427,6 +1427,9 @@ Enact a temp Basal or a temp target */
 /* */
 "AI Food Search" = "AI matsökning";
 
+/* Title */
+"Food Search" = "Matsökning";
+
 /* */
 "Search Food Database" = "Sök Matdatabas";
 
@@ -1619,6 +1622,12 @@ Enact a temp Basal or a temp target */
 "Finding the best matches for you" = "Hitta de bästa matchningarna för dig";
 
 "Searching foods" = "Söker mat";
+
+"AI Analysis" = "AI-analys";
+
+"Amount:" = "Mängd:";
+
+"Take Over" = "För över";
 
 // --------- End of AI ---------
 /* */

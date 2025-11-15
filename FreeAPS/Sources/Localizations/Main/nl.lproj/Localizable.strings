@@ -1384,122 +1384,125 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 // --------- AI ---------
 /* */
-"📝 Notes" = "📝 Notes";
+"📝 Notes" = "📝 Opmerking";
 
 /* */
-"💉 Diabetes recommendations" = "💉 Diabetes recommendations";
+"💉 Diabetes recommendations" = "💉 Aanbevelingen voor diabetes";
 
 /* */
-"🍽️ Separate Foods" = "🍽️ Separate Foods";
+"🍽️ Separate Foods" = "🍽️ Gescheiden maaltijd";
 
 /* */
-"Add all" = "Add all";
+"Add all" = "Alles toevoegen";
 
 /* */
-"🧠 AI Food analysis" = "🧠 AI Food analysis";
+"🧠 AI Food analysis" = "🧠 AI Voedsel analyse";
 
 /* */
-"📊 Total nutritional values of the meal" = "📊 Total nutritional values of the meal";
+"📊 Total nutritional values of the meal" = "📊 Totale voedingswaarde van de maaltijd";
 
 /* */
-"Confidence level:" = "Confidence level:";
+"Confidence level:" = "Zekerheidsniveau:";
 
 /* */
-"Notes: %@" = "Notes: %@";
+"Notes: %@" = "Notities: %@";
 
 /* */
-"Visual Cues: %@" = "Visual Cues: %@";
+"Visual Cues: %@" = "Visuele aanwijzing: %@";
 
 /* */
-"Preparation: %@" = "Preparation: %@";
+"Preparation: %@" = "Voorbereiding: %@";
 
 /* */
-"Preparation" = "Preparation";
+"Preparation" = "Voorbereiding";
 
 /* */
-"Multiplicator" = "Multiplicator";
+"Multiplicator" = "Vermenigvuldiger";
 
 /* */
-"Accept quantity" = "Accept quantity";
+"Accept quantity" = "Hoeveelheid accepteren";
 
 /* */
-"Enter desired quantity" = "Enter desired quantity";
+"Enter desired quantity" = "Geef gewenste hoeveelheid op";
 
 /* */
-"AI Food Search" = "AI Food Search";
+"AI Food Search" = "AI voedsel zoeken";
+
+/* Title */
+"Food Search" = "Voedsel zoeken";
 
 /* */
-"Search Food Database" = "Search Food Database";
+"Search Food Database" = "Voedseldatabase doorzoeken";
 
-"Models Used:" = "Models Used:";
+"Models Used:" = "Gebruikte modellen:";
 
-"Current Mode: %@" = "Current Mode: %@";
+"Current Mode: %@" = "Huidige modus: %@";
 
-"Analysis Mode" = "Analysis Mode";
+"Analysis Mode" = "Analysemodus";
 
-"This AI provider requires an API key. Please enter your API key in the settings below." = "This AI provider requires an API key. Please enter your API key in the settings below.";
-"API Key Required" = "API Key Required";
+"This AI provider requires an API key. Please enter your API key in the settings below." = "Deze AI-aanbieder vereist een API-sleutel. Voer uw API-sleutel in in de instellingen hieronder.";
+"API Key Required" = "API-sleutel vereist";
 
-"Food Search Settings" = "Food Search Settings";
+"Food Search Settings" = "Voedsel zoekinstellingen";
 
-"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI voedingsschattingen zijn slechts schattingen. Raadpleeg altijd je zorgverlener voor medische beslissingen. Controleer waar mogelijk voedingsinformatie. Gebruik op eigen risico.";
 
-"Medical Disclaimer" = "Medical Disclaimer";
+"Medical Disclaimer" = "Medische disclaimer";
 
 "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI Image Analysis:**";
+"**AI Image Analysis:**" = "**AI afbeeldingsanalyse:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Barcode Scanning:**";
+"**Barcode Scanning:**" = "**Barcode scannen:**";
 
 "USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Text/Voice Search:**";
-"Search Type Recommendations" = "Search Type Recommendations";
+"**Text/Voice Search:**" = "**Tekst/Spraak zoeken:**";
+"Search Type Recommendations" = "Zoeken type aanbevelingen";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.";
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis officiële voedingsdatabase. Superieure voedingsgegevens voor niet-verpakte voedingsmiddelen zoals fruit, groenten en vlees.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
 
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries.";
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Meest nauwkeurige AI analyse met behulp van GPT-4 Vision. Vereist API key (~$0,01 per afbeelding). Uitstekend bij beeldanalyse en natuurlijke taal zoekopdrachten.";
 
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost.";
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "**Google (Gemini API)**: Gratis AI met royale limieten (1500/dag). Uitstekende herkenning van levensmiddelen met behulp van Google's Vision AI. Perfecte balans van kwaliteit en kosten.";
 
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens).";
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (lengtegraad API)**: Geavanceerde AI met gedetailleerde redenering. Uitstekend bij voedselanalyse en portie inschatting. Vereist een API-sleutel (~$0,25 per miljoen munten).";
 
-"Available Search Providers:" = "Available Search Providers:";
+"Available Search Providers:" = "Beschikbare zoekdiensten:";
 
-"Provider Information" = "Provider Information";
+"Provider Information" = "Provider-informatie";
 
-"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI";
+"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Als u 'OpenFoodFacts' of 'USDA' selecteert, zal de camera analyse gebruik maken van basisschattingen in plaats van AI";
 
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys";
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Selecteer 'Anthropic (Claude API)', 'Google (Gemini API)', of 'OpenAI (ChatGPT API)' voor AI Image Analyse om je betaalde sleutels te gebruiken";
 
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.";
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Wanneer je een voedselfoto neemt, gebruikt de app de geselecteerde provider in 'AI Image Analysis' hierboven.";
 
-"Camera Food Analysis" = "Camera Food Analysis";
+"Camera Food Analysis" = "Camera voedselanalyse";
 
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food.";
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Om je betaalde API-sleutels te gebruiken, zorg ervoor dat je de bijbehorende provider selecteert in 'AI Image Analysis' hierboven. De aanbieder die je selecteert voor AI Image Analyse is wat wordt gebruikt wanneer je voedsel foto's maakt.";
 
-"Important: How to Use Your API Keys" = "Important: How to Use Your API Keys";
+"Important: How to Use Your API Keys" = "Belangrijk: Hoe je API-sleutels te gebruiken";
 
-"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals.";
+"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Verdeel deze maaltijd in individuele onderdelen met volledige macronutriënte profielen (koolhydraten, eiwit, vetten, calorieën) per artikel en gecombineerde totaal.";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identificeer alle levensmiddelen in dit beeld met de focus op het koolhydratengehalte voor diabetesbeheer. Geef gedetailleerde koolhydraten op voor elk onderdeel en voor alle koolhydraten.";
 
-"Diabetes Focus" = "Diabetes Focus";
+"Diabetes Focus" = "Diabetes focus";
 
-"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management.";
+"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Geef een uiterst gedetailleerde visuele analyse van dit voedselbeeld. Beschrijf elk element dat je kunt zien: voedselkleuren, texturen, kookmethodes (gegrilde markers, browsen, stoom), bordtype en grootte, utensieven tegenwoordig, knoeien, saussen, zichtbare, kookoliën, voedselregeling, en achtergrond elementen. Gebruik deze visuele gegevens om precieze portiegrootten te schatten en nauwkeurige voedingswaarden voor diabetesbeheer te berekenen.";
 
-"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing.";
+"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyseer dit voedselplaatje voor diabetesbeheer. Beschrijf precies wat je ziet in detail: kleuren, texturen, kookmethoden, meeltype, utensils en voedselregeling. Identificeer elk levensmiddel met specifieke voorbereidingsgegevens, schatting exacte portiegrootten met visuele verwijzingen, en geef koolhydraten, eiwit, vet en calorieën voor elk onderdeel. Focus op nauwkeurige inschatting van koolhydraten bij insuline dosing.";
 
-"AI Prompt for Enhanced Results" = "AI Prompt for Enhanced Results";
+"AI Prompt for Enhanced Results" = "AI Prompt naar verbeterde resultaten";
 
-"Enter your OpenAI API key" = "Enter your OpenAI API key";
+"Enter your OpenAI API key" = "Voer je OpenAI API-sleutel in";
 
-"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API Key";
+"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-sleutel";
 
 "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)";
 
@@ -1507,7 +1510,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Macro Tracking" = "Macro Tracking";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identificeer alle levensmiddelen in dit beeld met de focus op het koolhydratengehalte voor diabetesbeheer. Geef gedetailleerde koolhydraten op voor elk onderdeel en voor alle koolhydraten.";
 
 "Detailed Visual Analysis" = "Detailed Visual Analysis";
 
@@ -1607,19 +1610,25 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "• Use simple, common food names" = "• Use simple, common food names";
 
-"💡 Search Tips:" = "💡 Search Tips:";
+"💡 Search Tips:" = "💡 Zoek tips:";
 
-"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Probeer eenvoudigere termen zoals \"brood\" of \"appel\", of scan een barcode";
 
-"Check your spelling and try again" = "Check your spelling and try again";
+"Check your spelling and try again" = "Controleer je spelling en probeer het opnieuw";
 
-"No Foods Found" = "No Foods Found";
+"No Foods Found" = "Geen pods gevonden";
 
-"Search Error" = "Search Error";
+"Search Error" = "Zoekopdracht fout";
 
-"Finding the best matches for you" = "Finding the best matches for you";
+"Finding the best matches for you" = "Vind de beste matches voor jou";
 
-"Searching foods" = "Searching foods";
+"Searching foods" = "Voedsel zoeken";
+
+"AI Analysis" = "AI Analysis";
+
+"Amount:" = "Amount:";
+
+"Take Over" = "Take Over";
 
 // --------- End of AI ---------
 /* */

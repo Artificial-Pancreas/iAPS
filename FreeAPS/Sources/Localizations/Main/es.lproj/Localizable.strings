@@ -1428,6 +1428,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* */
 "AI Food Search" = "AI Food Search";
 
+/* Title */
+"Food Search" = "Food Search";
+
 /* */
 "Search Food Database" = "Search Food Database";
 
@@ -1620,6 +1623,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Finding the best matches for you" = "Finding the best matches for you";
 
 "Searching foods" = "Searching foods";
+
+"AI Analysis" = "AI Analysis";
+
+"Amount:" = "Amount:";
+
+"Take Over" = "Take Over";
 
 // --------- End of AI ---------
 /* */
