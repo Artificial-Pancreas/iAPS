@@ -108,6 +108,7 @@ extension UIUX {
                 Section {
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
                     Toggle("Display and allow Fat and Protein entries", isOn: $state.useFPUconversion)
+                    Toggle("AI Food Search", isOn: $state.ai)
                 } header: { Text("Add Meal View settings ") }
 
                 Section {

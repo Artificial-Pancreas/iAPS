@@ -1381,7 +1381,248 @@ Enact a temp Basal or a temp target */
 /* Food Type / Meal Note */
 "Note" = "Anteckning";
 
+// --------- AI ---------
 /* */
+"📝 Notes" = "📝 Anteckningar";
+
+/* */
+"💉 Diabetes recommendations" = "💉 Diabetesrekommendationer";
+
+/* */
+"🍽️ Separate Foods" = "🍽️ Separata livsmedel";
+
+/* */
+"Add all" = "Lägg till alla";
+
+/* */
+"🧠 AI Food analysis" = "🧠 AI Livsmedelsanalys";
+
+/* */
+"📊 Total nutritional values of the meal" = "📊 Totala näringsvärden för måltiden";
+
+/* */
+"Confidence level:" = "Konfidensnivå:";
+
+/* */
+"Notes: %@" = "Anteckningar: %@";
+
+/* */
+"Visual Cues: %@" = "Visuella ledtrådar: %@";
+
+/* */
+"Preparation: %@" = "Beredning: %@";
+
+/* */
+"Preparation" = "Beredning";
+
+/* */
+"Multiplicator" = "Multiplikator";
+
+/* */
+"Accept quantity" = "Godkänn mängd";
+
+/* */
+"Enter desired quantity" = "Ange önskad mängd";
+
+/* */
+"AI Food Search" = "AI matsökning";
+
+/* */
+"Search Food Database" = "Sök Matdatabas";
+
+"Models Used:" = "Modeller som används:";
+
+"Current Mode: %@" = "Nuvarande läge: %@";
+
+"Analysis Mode" = "Analysläge";
+
+"This AI provider requires an API key. Please enter your API key in the settings below." = "Denna AI-leverantör kräver en API-nyckel. Ange din API-nyckel i inställningarna nedan.";
+"API Key Required" = "API-nyckel krävs";
+
+"Food Search Settings" = "Inställningar för matsökning";
+
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI-näringsberäkningar är endast approximationer. Rådgör alltid med din vårdgivare för medicinska beslut. Verifiera näringsinformation när det är möjligt. Använd på egen risk.";
+
+"Medical Disclaimer" = "Friskrivningsklausul";
+
+"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Antropiska (Claude API)";
+
+"**AI Image Analysis:**" = "**AI Livsmedelsanalys:**";
+
+"OpenFoodFacts" = "OpenFoodFacts";
+
+"**Barcode Scanning:**" = "**Skanna streckkod:**";
+
+"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
+
+"**Text/Voice Search:**" = "**Text/Ljud-sökning:**";
+"Search Type Recommendations" = "Söktyprekommendationer";
+
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis, officiell näringsdatabas. Överlägsen näringsdata för icke-förpackade livsmedel som frukt, grönsaker och kött.";
+
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Gratis, öppen databas med omfattande streckkodstäckning och textsökning för förpackade livsmedel. Standard för text- och streckkodssökningar.";
+
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Den mest exakta AI-analysen med GPT-4 Vision. Kräver API-nyckel (~$0.01 per bild). Utmärkt vid bildanalys och frågor om naturligt språk.";
+
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Fri AI med generösa gränser (1500/dag). Utmärkt matigenkänning med hjälp av Googles Vision AI. Perfekt balans mellan kvalitet och kostnad.";
+
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Antropisk (Claude API)**: Avancerad AI med detaljerat resonemang. Utmärkt på livsmedelsanalys och portion uppskattning. Kräver API-nyckel (~$0,25 per miljon tokens).";
+
+"Available Search Providers:" = "Tillgängliga sökleverantörer:";
+
+"Provider Information" = "Information om leverantör";
+
+"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Om du väljer 'OpenFoodFacts' eller 'USDA', kommer kameraanalys att använda grundläggande uppskattning istället för AI";
+
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Välj 'Anthropic (Claude API)', 'Google (Gemini API)' eller 'OpenAI (ChatGPT API)' för AI bildanalys för att använda dina betalda nycklar";
+
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "När du tar ett foto av mat, använder appen leverantören som valts i \"AI bildanalys\" ovan.";
+
+"Camera Food Analysis" = "AI kameralivsmedelsanalys";
+
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "För att använda dina betalda API-nycklar, se till att välja motsvarande leverantör i \"AI bildanalys\" ovan. Leverantören du väljer för AI bildanalys är vad som kommer att användas när du tar foton av mat.";
+
+"Important: How to Use Your API Keys" = "Viktigt: Hur man använder dina API-nycklar";
+
+"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Bryt ner denna måltid i enskilda komponenter med fullständiga makronäringsprofiler (kolhydrater, protein, fett, kalorier) per objekt och kombinerade summor.";
+
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifiera alla livsmedel i denna bild med fokus på kolhydratinnehåll för diabeteshantering. Ge detaljerad kolhydratberäkning för varje komponent och total måltid.";
+
+"Diabetes Focus" = "Diabetesfokus";
+
+"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Ge extremt detaljerad visuell analys av denna matbild. Beskriv alla element du kan se: matfärger, texturer, matlagningsmetoder (grillade märken, brun, ångande), tallrikstyp och storlek, redskap närvarande, garneringar, såser, matlagning oljor synliga, matarrangemang, och bakgrundselement. Använd dessa visuella detaljer för att uppskatta exakta portionsstorlekar och beräkna exakta näringsvärden för diabeteshantering.";
+
+"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analysera denna matbild för diabeteshantering. Beskriv exakt vad du ser i detalj: färger, texturer, matlagningsmetoder, tallrikstyp, redskap och matarrangemang. Identifiera varje livsmedel objekt med specifika förberedelsedetaljer, uppskatta exakta portionsstorlekar med hjälp av visuella referenser, och ge kolhydrater, protein, fett och kalorier för varje komponent. Fokus på exakt kolhydratberäkning för insulindosering.";
+
+"AI Prompt for Enhanced Results" = "AI-fråga för förbättrade resultat";
+
+"Enter your OpenAI API key" = "Ange din OpenAI API-nyckel";
+
+"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-nyckel";
+
+"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Skaffa en API-nyckel från platform.openai.com. Anpassa analysen snabbt för att få specifika måltidskomponenthaverier och näringssummor (~$0.01 per bild)";
+
+"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) - konfiguration";
+
+"Macro Tracking" = "Makrospårning";
+
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifiera alla livsmedel i denna bild med fokus på kolhydratinnehåll för diabeteshantering. Ge detaljerad kolhydratberäkning för varje komponent och total måltid.";
+
+"Detailed Visual Analysis" = "Detaljerad visuell analys";
+
+"Enter your Google Gemini API key" = "Ange din Google Gemini API-nyckel";
+
+"Google Gemini API Key" = "Google Gemini API-nyckel";
+
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Få en gratis API-nyckel från ai.google.dev. Google Gemini ger utmärkt matavläsning med ett generöst gratiskonto (1500 förfrågningar per dag).";
+
+"Google (Gemini API) Configuration" = "Google (Gemini API) - konfiguration";
+
+"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Din AI-leverantörskvot har överskridits. Kontrollera dina användningsgränser eller prova en annan leverantör.";
+
+"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Din AI-leverantör har slut på krediter. Vänligen kontrollera ditt kontos fakturering eller prova en annan leverantör.";
+
+"Reset to Default" = "Återställ standardvärden";
+
+"Retake Photo" = "Ta om foto";
+
+"Retry Analysis" = "Försök analysera igen";
+
+"Try Different Provider" = "Prova annan leverantör";
+
+"Check Account" = "Kontrollera ditt konto";
+
+"Analysis Error" = "Analysfel";
+
+"AI Food Analysis" = "AI Livsmedelsanalys";
+
+"Use Cancel to retake photo" = "Använd Avbryt för att ta om foto";
+
+"Analyzing food with AI..." = "Analyserar mat med AI...";
+
+"Choose from Library" = "Välj från biblioteket";
+
+"Take a Photo" = "Ta ett foto";
+
+"Keep the camera level to reduce distortion and keep portions proportional." = "Håll kamerans i ett jämnt läge för att minska förvrängningen och hålla portionerna proportionella.";
+
+"Shoot from slightly above" = "Fotografera något från ovan";
+
+"Forks, cups, or hands help AI calculate realistic portions." = "Gafflar, koppar, eller händer hjälper AI beräkna realistiska delar.";
+
+"Add a size reference" = "Lägg till en storleksreferens";
+
+"Make sure every food item is in the frame." = "Se till att alla livsmedel ryms inom ramen.";
+
+"Frame the full meal" = "Rama in hela måltiden";
+
+"Remove napkins, lids, or packaging that may be misidentified as food." = "Ta bort servetter, lock eller förpackningar som kan bli felaktigt identifierade som livsmedel.";
+
+"Clear the area" = "Rensa området";
+
+"Harsh shadows confuse the AI and dim light can hide textures." = "Hårda skuggor förvirrar AI och svagt ljus kan dölja texturer.";
+
+"Use bright, even light" = "Använd ljust, jämnt ljus";
+
+"Better photos = better estimates" = "Bättre foton = bättre beräkningar";
+
+"Scan failed" = "Skanning misslyckades";
+
+"Looking up product..." = "Söker efter produkt...";
+
+"Code detected!" = "Koden upptäckt!";
+
+"Position camera over barcode or QR code" = "Placera kameran över streckkod eller QR-kod";
+
+"Validating format..." = "Validerar format...";
+
+"Scanning for barcode or QR code..." = "Skannar efter streckkod eller QR-kod...";
+
+"Initializing camera..." = "Initierar kamera...";
+
+"Scan failed" = "Skanning misslyckades";
+
+"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS behöver kameraåtkomst för att skanna streckkoder. Aktivera kameraåtkomst i Inställningar.";
+
+"Camera Access Required" = "Åtkomst till kamera krävs";
+
+"Check Permissions" = "Kontrollera behörigheter";
+
+"Supports traditional barcodes and QR codes" = "Stöder traditionella streckkoder och QR-koder";
+
+"Hold steady for best results" = "Håll stadigt för bästa resultat";
+
+"Retry" = "Försök igen";
+
+"Scan Barcode" = "Skanna streckkod";
+
+"📦 Database Results" = "📦 Databasresultat";
+
+"🤖 AI Search Results" = "🤖 AI sökresultat";
+
+"• Use the barcode scanner for packaged foods" = "• Använd streckkodsläsaren för förpackade livsmedel";
+
+"• Check spelling carefully" = "• Kontrollera stavningen noggrant";
+
+"• Use simple, common food names" = "• Använd enkla, vanliga livsmedelsnamn";
+
+"💡 Search Tips:" = "💡 Söktips:";
+
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Prova enklare termer som \"bröd\" eller \"äpple\", eller skanna en streckkod";
+
+"Check your spelling and try again" = "Kontrollera din stavning och försök igen";
+
+"No Foods Found" = "Inga livsmedel hittades";
+
+"Search Error" = "Sökfel";
+
+"Finding the best matches for you" = "Hitta de bästa matchningarna för dig";
+
+"Searching foods" = "Söker mat";
+
+// --------- End of AI ---------
+/* */
+
 "Temp Basal" = "Temporär basal";
 
 /* */
@@ -3286,3 +3527,6 @@ Enact a temp Basal or a temp target */
 
 /* message displayed in pump settings screen when the pump manager reports uncertain delivery */
 "Pump delivery uncertain" = "Pumpleverans osäker";
+
+/* message displayed on home screen when the pump is added but not fully onboarded */
+"Re-connect pump!" = "Återanslut pump!";
