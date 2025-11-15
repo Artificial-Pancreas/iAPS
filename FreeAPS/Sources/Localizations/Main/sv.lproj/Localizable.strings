@@ -1609,6 +1609,8 @@ Enact a temp Basal or a temp target */
 
 "• Use simple, common food names" = "• Använd enkla, vanliga livsmedelsnamn";
 
+"• Try brand names (e.g., \"Cheerios\")" = "• Prova märkesnamn (t.ex. \"Cheerios\")";
+
 "💡 Search Tips:" = "💡 Söktips:";
 
 "Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Prova enklare termer som \"bröd\" eller \"äpple\", eller skanna en streckkod";

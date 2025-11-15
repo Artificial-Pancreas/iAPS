@@ -1384,251 +1384,253 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 // --------- AI ---------
 /* */
-"📝 Notes" = "📝 Notes";
+"📝 Notes" = "📝 Poznámky";
 
 /* */
-"💉 Diabetes recommendations" = "💉 Diabetes recommendations";
+"💉 Diabetes recommendations" = "💉 Odporúčania pre diabetes";
 
 /* */
-"🍽️ Separate Foods" = "🍽️ Separate Foods";
+"🍽️ Separate Foods" = "🍽️ Oddeliť jedlá";
 
 /* */
-"Add all" = "Add all";
+"Add all" = "Pridať všetko";
 
 /* */
-"🧠 AI Food analysis" = "🧠 AI Food analysis";
+"🧠 AI Food analysis" = "🧠 AI analýza jedla";
 
 /* */
-"📊 Total nutritional values of the meal" = "📊 Total nutritional values of the meal";
+"📊 Total nutritional values of the meal" = "📊 Celkové nutričné hodnoty jedla";
 
 /* */
-"Confidence level:" = "Confidence level:";
+"Confidence level:" = "Úroveň spoľahlivosti:";
 
 /* */
-"Notes: %@" = "Notes: %@";
+"Notes: %@" = "Poznámky: %@";
 
 /* */
-"Visual Cues: %@" = "Visual Cues: %@";
+"Visual Cues: %@" = "Vizuálne podnety: %@";
 
 /* */
-"Preparation: %@" = "Preparation: %@";
+"Preparation: %@" = "Príprava: %@";
 
 /* */
-"Preparation" = "Preparation";
+"Preparation" = "Príprava";
 
 /* */
-"Multiplicator" = "Multiplicator";
+"Multiplicator" = "Násobiteľ";
 
 /* */
-"Accept quantity" = "Accept quantity";
+"Accept quantity" = "Prijať množstvo";
 
 /* */
-"Enter desired quantity" = "Enter desired quantity";
+"Enter desired quantity" = "Zadajte požadované množstvo";
 
 /* */
-"AI Food Search" = "AI Food Search";
+"AI Food Search" = "AI vyhľadávanie jedla";
 
 /* Title */
-"Food Search" = "Food Search";
+"Food Search" = "Vyhľadávanie jedla";
 
 /* */
-"Search Food Database" = "Search Food Database";
+"Search Food Database" = "Vyhľadať v databáze jedál";
 
-"Models Used:" = "Models Used:";
+"Models Used:" = "Použité modely:";
 
-"Current Mode: %@" = "Current Mode: %@";
+"Current Mode: %@" = "Aktuálny režim: %@";
 
-"Analysis Mode" = "Analysis Mode";
+"Analysis Mode" = "Režim analýzy";
 
-"This AI provider requires an API key. Please enter your API key in the settings below." = "This AI provider requires an API key. Please enter your API key in the settings below.";
-"API Key Required" = "API Key Required";
+"This AI provider requires an API key. Please enter your API key in the settings below." = "Tento poskytovateľ AI vyžaduje API kľúč. Zadajte prosím svoj API kľúč v nastaveniach nižšie.";
+"API Key Required" = "Vyžadovaný API kľúč";
 
-"Food Search Settings" = "Food Search Settings";
+"Food Search Settings" = "Nastavenia vyhľadávania jedla";
 
-"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "Odhady nutričných hodnôt pomocou AI sú len približné. Pri zdravotných rozhodnutiach sa vždy poraďte so svojím lekárom. Kedykoľvek je to možné, overte si nutričné informácie. Používanie je na vlastné riziko.";
 
-"Medical Disclaimer" = "Medical Disclaimer";
+"Medical Disclaimer" = "Lekárske upozornenie";
 
 "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI Image Analysis:**";
+"**AI Image Analysis:**" = "**AI analýza obrázka:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Barcode Scanning:**";
+"**Barcode Scanning:**" = "**Skenovanie čiarového kódu:**";
 
 "USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Text/Voice Search:**";
-"Search Type Recommendations" = "Search Type Recommendations";
+"**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
+"Search Type Recommendations" = "Odporúčania typu vyhľadávania";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.";
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Bezplatná, oficiálna databáza nutričných hodnôt. Poskytuje kvalitné nutričné údaje pre nebalené potraviny ako ovocie, zelenina a mäso.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Bezplatná, otvorená databáza s rozsiahlym pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny. Predvolená pre textové a čiarové vyhľadávania.";
 
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries.";
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Najpresnejšia AI analýza s použitím GPT-4 Vision. Vyžaduje API kľúč (~0,01 $ za obrázok). Vynikajúca pri analýze obrázkov a prirodzených jazykových dopytoch.";
 
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost.";
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Bezplatná AI so štedrými limitmi (1500/deň). Vynikajúce rozpoznávanie jedla pomocou Google Vision AI. Ideálna rovnováha medzi kvalitou a nákladmi.";
 
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens).";
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Pokročilá AI s detailným uvažovaním. Vynikajúca pri analýze jedla a odhadovaní porcií. Vyžaduje API kľúč (~0,25 $ za milión tokenov).";
 
-"Available Search Providers:" = "Available Search Providers:";
+"Available Search Providers:" = "Dostupní poskytovatelia vyhľadávania:";
 
-"Provider Information" = "Provider Information";
+"Provider Information" = "Informácie o poskytovateľovi";
 
-"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI";
+"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Ak vyberiete „OpenFoodFacts“ alebo „USDA“, analýza kamerou použije základný odhad namiesto AI";
 
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys";
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Vyberte „Anthropic (Claude API)“, „Google (Gemini API)“ alebo „OpenAI (ChatGPT API)“, aby AI analýza obrázkov využívala vaše platené kľúče";
 
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.";
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Keď odfotíte jedlo, aplikácia použije poskytovateľa zvoleného vyššie v „AI analýze obrázkov“.";
 
-"Camera Food Analysis" = "Camera Food Analysis";
+"Camera Food Analysis" = "Analýza jedla cez kameru";
 
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food.";
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Aby ste mohli používať svoje platené API kľúče, nezabudnite vyššie v „AI analýze obrázkov“ vybrať príslušného poskytovateľa. Poskytovateľ zvolený pre AI analýzu obrázkov bude použitý pri fotení jedla.";
 
-"Important: How to Use Your API Keys" = "Important: How to Use Your API Keys";
+"Important: How to Use Your API Keys" = "Dôležité: Ako používať vaše API kľúče";
 
-"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals.";
+"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Rozdeľ toto jedlo na jednotlivé komponenty s úplnými makronutričnými profilmi (sacharidy, bielkoviny, tuky, kalórie) pre každú položku a so súhrnnými celkovými hodnotami.";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifikuj všetky potraviny na tomto obrázku so zameraním na obsah sacharidov pre manažment diabetu. PoskytnI detailné množstvá sacharidov pre každú položku a celkový počet sacharidov v jedle.";
 
-"Diabetes Focus" = "Diabetes Focus";
+"Diabetes Focus" = "Zameranie na diabetes";
 
-"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management.";
+"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "PoskytnI mimoriadne detailnú vizuálnu analýzu tohto obrázka jedla. Opíš každý prvok, ktorý vidíš: farby jedla, textúry, spôsoby prípravy (stopy po grilovaní, hnednutie, naparovanie), typ a veľkosť taniera, prítomné príborové súpravy, ozdoby, omáčky, viditeľné oleje použité pri varení, rozloženie jedla a prvky v pozadí. Tieto vizuálne detaily použi na odhad presných veľkostí porcií a výpočet presných nutričných hodnôt pre manažment diabetu.";
 
-"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing.";
+"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyzuj tento obrázok jedla pre manažment diabetu. Podrobne opíš presne to, čo vidíš: farby, textúry, spôsoby prípravy, typ taniera, príbor a rozloženie jedla. Identifikuj každú potravinu s detailmi o príprave, odhadni presné veľkosti porcií pomocou vizuálnych referencií a poskytnI sacharidy, bielkoviny, tuky a kalórie pre každú položku. Zameraj sa na presný odhad sacharidov pre dávkovanie inzulínu.";
 
-"AI Prompt for Enhanced Results" = "AI Prompt for Enhanced Results";
+"AI Prompt for Enhanced Results" = "AI zadanie pre lepšie výsledky";
 
-"Enter your OpenAI API key" = "Enter your OpenAI API key";
+"Enter your OpenAI API key" = "Zadajte svoj OpenAI API kľúč";
 
-"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API Key";
+"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API kľúč";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)";
+"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Získajte API kľúč z platform.openai.com. Prispôsobte zadanie pre analýzu, aby ste získali konkrétne rozdelenie zložiek jedla a súčty nutričných hodnôt. (~0,01 $ za obrázok)";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) Configuration";
+"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
 
-"Macro Tracking" = "Macro Tracking";
+"Macro Tracking" = "Sledovanie makier";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifikuj všetky potraviny na tomto obrázku so zameraním na obsah sacharidov pre manažment diabetu. PoskytnI detailné množstvá sacharidov pre každú položku a celkový počet sacharidov v jedle.";
 
-"Detailed Visual Analysis" = "Detailed Visual Analysis";
+"Detailed Visual Analysis" = "Detailná vizuálna analýza";
 
-"Enter your Google Gemini API key" = "Enter your Google Gemini API key";
+"Enter your Google Gemini API key" = "Zadajte svoj Google Gemini API kľúč";
 
-"Google Gemini API Key" = "Google Gemini API Key";
+"Google Gemini API Key" = "Google Gemini API kľúč";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day).";
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Získajte bezplatný API kľúč z ai.google.dev. Google Gemini poskytuje vynikajúce rozpoznávanie jedla so štedrým bezplatným limitom (1500 požiadaviek denne).";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) Configuration";
+"Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
 
-"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.";
+"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Kvóta vášho AI poskytovateľa bola prekročená. Skontrolujte prosím svoje limity používania alebo vyskúšajte iného poskytovateľa.";
 
-"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
+"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Vášmu AI poskytovateľovi došli kredity. Skontrolujte prosím fakturáciu svojho účtu alebo vyskúšajte iného poskytovateľa.";
 
-"Reset to Default" = "Reset to Default";
+"Reset to Default" = "Obnoviť predvolené nastavenia";
 
-"Retake Photo" = "Retake Photo";
+"Retake Photo" = "Znovu odfotiť";
 
-"Retry Analysis" = "Retry Analysis";
+"Retry Analysis" = "Znovu analyzovať";
 
-"Try Different Provider" = "Try Different Provider";
+"Try Different Provider" = "Vyskúšať iného poskytovateľa";
 
-"Check Account" = "Check Account";
+"Check Account" = "Skontrolovať účet";
 
-"Analysis Error" = "Analysis Error";
+"Analysis Error" = "Chyba analýzy";
 
-"AI Food Analysis" = "AI Food Analysis";
+"AI Food Analysis" = "AI analýza jedla";
 
-"Use Cancel to retake photo" = "Use Cancel to retake photo";
+"Use Cancel to retake photo" = "Použite Zrušiť na znovu odfotenie fotografie";
 
-"Analyzing food with AI..." = "Analyzing food with AI...";
+"Analyzing food with AI..." = "Analyzujem jedlo s AI...";
 
-"Choose from Library" = "Choose from Library";
+"Choose from Library" = "Vybrať z knižnice";
 
-"Take a Photo" = "Take a Photo";
+"Take a Photo" = "Odfotiť";
 
-"Keep the camera level to reduce distortion and keep portions proportional." = "Keep the camera level to reduce distortion and keep portions proportional.";
+"Keep the camera level to reduce distortion and keep portions proportional." = "Držte kameru vodorovne, aby ste znížili skreslenie a zachovali proporcie porcií.";
 
-"Shoot from slightly above" = "Shoot from slightly above";
+"Shoot from slightly above" = "Fotografujte mierne zhora";
 
-"Forks, cups, or hands help AI calculate realistic portions." = "Forks, cups, or hands help AI calculate realistic portions.";
+"Forks, cups, or hands help AI calculate realistic portions." = "Vidličky, poháre alebo ruky pomáhajú AI vypočítať realistické porcie.";
 
-"Add a size reference" = "Add a size reference";
+"Add a size reference" = "Pridať referenciu veľkosti";
 
-"Make sure every food item is in the frame." = "Make sure every food item is in the frame.";
+"Make sure every food item is in the frame." = "Uistite sa, že všetky potraviny sú v zábere.";
 
-"Frame the full meal" = "Frame the full meal";
+"Frame the full meal" = "Umiestnite celé jedlo";
 
-"Remove napkins, lids, or packaging that may be misidentified as food." = "Remove napkins, lids, or packaging that may be misidentified as food.";
+"Remove napkins, lids, or packaging that may be misidentified as food." = "Odstráňte servítky, viečka alebo obaly, ktoré môžu byť nesprávne identifikované ako jedlo.";
 
-"Clear the area" = "Clear the area";
+"Clear the area" = "Vyčistite priestor";
 
-"Harsh shadows confuse the AI and dim light can hide textures." = "Harsh shadows confuse the AI and dim light can hide textures.";
+"Harsh shadows confuse the AI and dim light can hide textures." = "Ostré tiene mätú AI a slabé osvetlenie môže zakryť textúry.";
 
-"Use bright, even light" = "Use bright, even light";
+"Use bright, even light" = "Používajte jasné, rovnomerné osvetlenie";
 
-"Better photos = better estimates" = "Better photos = better estimates";
+"Better photos = better estimates" = "Lepšie fotografie = lepšie odhady";
 
-"Scan failed" = "Scan failed";
+"Scan failed" = "Skenovanie sa nepodarilo";
 
-"Looking up product..." = "Looking up product...";
+"Looking up product..." = "Vyhľadávanie produktu...";
 
-"Code detected!" = "Code detected!";
+"Code detected!" = "Kód detegovaný!";
 
-"Position camera over barcode or QR code" = "Position camera over barcode or QR code";
+"Position camera over barcode or QR code" = "Natočte kameru na čiarový alebo QR kód";
 
-"Validating format..." = "Validating format...";
+"Validating format..." = "Validujem formát...";
 
-"Scanning for barcode or QR code..." = "Scanning for barcode or QR code...";
+"Scanning for barcode or QR code..." = "Skenujem čiarový alebo QR kód...";
 
-"Initializing camera..." = "Initializing camera...";
+"Initializing camera..." = "Incializácia kamery...";
 
-"Scan failed" = "Scan failed";
+"Scan failed" = "Skenovanie sa nepodarilo";
 
-"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS needs camera access to scan barcodes. Please enable camera access in Settings.";
+"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS potrebuje prístup ku kamere na skenovanie čiarových kódov. Povoľte prosím prístup ku kamere v Nastaveniach.";
 
-"Camera Access Required" = "Camera Access Required";
+"Camera Access Required" = "Vyžadovaný prístup ku kamere";
 
-"Check Permissions" = "Check Permissions";
+"Check Permissions" = "Skontrolovať oprávnenia";
 
-"Supports traditional barcodes and QR codes" = "Supports traditional barcodes and QR codes";
+"Supports traditional barcodes and QR codes" = "Podporuje tradičné čiarové kódy a QR kódy";
 
-"Hold steady for best results" = "Hold steady for best results";
+"Hold steady for best results" = "Držte stabilne pre najlepšie výsledky";
 
 "Retry" = "Skúsiť znova";
 
-"Scan Barcode" = "Scan Barcode";
+"Scan Barcode" = "Skenovať čiarový kód";
 
-"📦 Database Results" = "📦 Database Results";
+"📦 Database Results" = "📦 Výsledky z databázy";
 
-"🤖 AI Search Results" = "🤖 AI Search Results";
+"🤖 AI Search Results" = "🤖 Výsledky AI vyhľadávania";
 
-"• Use the barcode scanner for packaged foods" = "• Use the barcode scanner for packaged foods";
+"• Use the barcode scanner for packaged foods" = "• Použiť skener čiarových kódov pre balené potraviny";
 
-"• Check spelling carefully" = "• Check spelling carefully";
+"• Check spelling carefully" = "• Starostlivo skontrolovať pravopis";
 
-"• Use simple, common food names" = "• Use simple, common food names";
+"• Use simple, common food names" = "• Použiť jednoduché, bežné názvy potravín";
 
-"💡 Search Tips:" = "💡 Search Tips:";
+"• Try brand names (e.g., \"Cheerios\")" = "• Try brand names (e.g., \"Cheerios\")";
 
-"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
+"💡 Search Tips:" = "💡 Tipy na vyhľadávanie:";
 
-"Check your spelling and try again" = "Check your spelling and try again";
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Skúste jednoduchšie výrazy ako „chlieb“ alebo „jablko“, alebo naskenujte čiarový kód";
 
-"No Foods Found" = "No Foods Found";
+"Check your spelling and try again" = "Skontrolujte svoj pravopis a skúste to znova";
 
-"Search Error" = "Search Error";
+"No Foods Found" = "Nenašli sa žiadne potraviny";
 
-"Finding the best matches for you" = "Finding the best matches for you";
+"Search Error" = "Chyba vyhľadávania";
 
-"Searching foods" = "Searching foods";
+"Finding the best matches for you" = "Hľadám pre vás najlepšie zhody";
 
-"AI Analysis" = "AI Analysis";
+"Searching foods" = "Vyhľadávam potraviny";
 
-"Amount:" = "Amount:";
+"AI Analysis" = "AI analýza";
 
-"Take Over" = "Take Over";
+"Amount:" = "Množstvo:";
+
+"Take Over" = "Prevziať";
 
 // --------- End of AI ---------
 /* */
@@ -3542,4 +3544,4 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Pump delivery uncertain" = "Podanie pumpou je nejasné";
 
 /* message displayed on home screen when the pump is added but not fully onboarded */
-"Re-connect pump!" = "Re-connect pump!";
+"Re-connect pump!" = "Znovu pripojte pumpu!";
