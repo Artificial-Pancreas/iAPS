@@ -1433,7 +1433,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "Models Used:" = "Models Used:";
 
-"Current Mode: \(aiService.analysisMode.displayName)" = "Current Mode: \\(aiService.analysisMode.displayName)";
+"Current Mode: %@" = "Current Mode: %@";
 
 "Analysis Mode" = "Analysis Mode";
 
