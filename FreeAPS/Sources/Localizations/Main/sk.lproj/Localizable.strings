@@ -1433,7 +1433,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Models Used:" = "Models Used:";
 
-"Current Mode: \(aiService.analysisMode.displayName)" = "Current Mode: \\(aiService.analysisMode.displayName)";
+"Current Mode: %@" = "Current Mode: %@";
 
 "Analysis Mode" = "Analysis Mode";
 
