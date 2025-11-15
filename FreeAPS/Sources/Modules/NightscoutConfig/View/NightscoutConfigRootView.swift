@@ -87,6 +87,12 @@ extension NightscoutConfig {
                 }
 
                 Section {
+                    Toggle("Fetch", isOn: $state.nightscoutFetchEnabled)
+                } header: {
+                    Text("Allow Fetching")
+                }
+
+                Section {
                     Button("Import settings from Nightscout") {
                         importAlert = Alert(
                             title: Text("Import settings?"),
