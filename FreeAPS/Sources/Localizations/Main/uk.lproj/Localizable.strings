@@ -1432,7 +1432,7 @@ Enact a temp Basal or a temp target */
 
 "Models Used:" = "Models Used:";
 
-"Current Mode: \(aiService.analysisMode.displayName)" = "Current Mode: \\(aiService.analysisMode.displayName)";
+"Current Mode: %@" = "Current Mode: %@";
 
 "Analysis Mode" = "Analysis Mode";
 
