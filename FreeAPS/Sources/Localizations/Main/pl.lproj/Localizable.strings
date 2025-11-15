@@ -1429,6 +1429,9 @@ Połączono z Nightscout!";
 /* */
 "AI Food Search" = "AI Food Search";
 
+/* Title */
+"Food Search" = "Food Search";
+
 /* */
 "Search Food Database" = "Search Food Database";
 
