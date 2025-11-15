@@ -111,9 +111,9 @@ struct AICameraView: View {
                                 .foregroundColor(.primary)
                                 .cornerRadius(12)
                             }
-                            .onChange(of: selectedPhotoItem) { newItem in
+                            .onChange(of: selectedPhotoItem) {
                                 Task {
-                                    if let data = try? await newItem?.loadTransferable(type: Data.self),
+                                    if let data = try? await selectedPhotoItem?.loadTransferable(type: Data.self),
                                        let uiImage = UIImage(data: data)
                                     {
                                         await MainActor.run {
@@ -501,7 +501,7 @@ struct TelemetryWindow: View {
                             }
                         }
                     }
-                    .onChange(of: logs.count) { _ in
+                    .onChange(of: logs.count) {
                         if !logs.isEmpty {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 proxy.scrollTo(logs.count - 1, anchor: .bottom)

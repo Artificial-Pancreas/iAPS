@@ -60,7 +60,7 @@ struct FoodItemCard: View {
                     }
 
                     if foodItem.servingMultiplier != 1.0 {
-                        Text("Multiplikator: \(foodItem.servingMultiplier, specifier: "%.1f")x")
+                        Text("Multiplicator: \(foodItem.servingMultiplier, specifier: "%.1f")x")
                             .font(.caption)
                     }
                 }
@@ -99,7 +99,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "flame.fill")
                                     .foregroundColor(.orange)
                                     .font(.caption)
-                                Text("Zubereitung: \(preparation)")
+                                Text("Preparation: \(preparation)")
                                     .font(.caption)
                             }
                         }
@@ -109,7 +109,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "eye.fill")
                                     .foregroundColor(.blue)
                                     .font(.caption)
-                                Text("Visuelle Hinweise: \(visualCues)")
+                                Text("Visual Cues: \(visualCues)")
                                     .font(.caption)
                             }
                         }
@@ -119,7 +119,7 @@ struct FoodItemCard: View {
                                 Image(systemName: "note.text")
                                     .foregroundColor(.gray)
                                     .font(.caption)
-                                Text("Bewertung: \(notes)")
+                                Text("Notes: \(notes)")
                                     .font(.caption)
                             }
                         }

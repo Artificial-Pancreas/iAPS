@@ -16,7 +16,7 @@ struct BarcodeScannerView: View {
     @State private var scanningStage: ScanningStage = .initializing
     @State private var progressValue: Double = 0.0
 
-    enum ScanningStage: String, CaseIterable {
+    enum ScanningStage: LocalizedStringKey, CaseIterable {
         case initializing = "Initializing camera..."
         case positioning = "Position camera over barcode or QR code"
         case scanning = "Scanning for barcode or QR code..."
@@ -349,7 +349,7 @@ struct BarcodeScannerView: View {
     private var permissionAlert: Alert {
         Alert(
             title: Text("Camera Access Required"),
-            message: Text("Loop needs camera access to scan barcodes. Please enable camera access in Settings."),
+            message: Text("iAPS needs camera access to scan barcodes. Please enable camera access in Settings."),
             primaryButton: .default(Text("Settings")) {
                 openSettings()
             },
@@ -655,7 +655,7 @@ struct ProgressiveScanFeedback: View {
         .onAppear {
             simulateProgress()
         }
-        .onChange(of: stage) { _ in
+        .onChange(of: stage) {
             simulateProgress()
         }
     }

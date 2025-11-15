@@ -95,7 +95,7 @@ struct AIAnalysisResultsView: View {
             .cornerRadius(12)
             .padding(.horizontal)
 
-            Text("🍽️ Seperat Foods")
+            Text("🍽️ Separate Foods")
                 .font(.headline)
                 .padding(.horizontal)
 
