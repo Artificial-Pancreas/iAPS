@@ -89,7 +89,7 @@ extension Settings {
                     } header: { Text("OpenAPS") }
 
                     Section {
-                        Text("UI/UX").navigationLink(to: .statisticsConfig, from: self)
+                        Text("UI/UX").navigationLink(to: .uiConfig, from: self)
                         Text("App Icons").navigationLink(to: .iconConfig, from: self)
                         Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                         Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)

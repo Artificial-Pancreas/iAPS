@@ -716,7 +716,7 @@ extension Home {
                 }
 
                 Button("UI/UX Settings", action: {
-                    state.showModal(for: .statisticsConfig)
+                    state.showModal(for: .uiConfig)
                 })
             }
             .buttonStyle(.borderless)

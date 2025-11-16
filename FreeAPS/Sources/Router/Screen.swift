@@ -31,7 +31,8 @@ enum Screen: Identifiable, Hashable {
     case snooze
     case statistics
     case watch
-    case statisticsConfig
+    case uiConfig
+    case mainChartConfig
     case bolusCalculatorConfig
     case dynamicISF
     case calendar
@@ -100,8 +101,10 @@ extension Screen {
             WatchConfig.RootView(resolver: resolver)
         case .statistics:
             Stat.RootView(resolver: resolver)
-        case .statisticsConfig:
+        case .uiConfig:
             UIUX.RootView(resolver: resolver)
+        case .mainChartConfig:
+            MainChartConfig.RootView(resolver: resolver)
         case .bolusCalculatorConfig:
             BolusCalculatorConfig.RootView(resolver: resolver)
         case .dynamicISF:

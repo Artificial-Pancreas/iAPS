@@ -2052,13 +2052,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Change HbA1c Unit" = "Wijzig HbA1c eenheid";
 
 /* */
-"Display Chart X - Grid lines" = "Grafiek X weergeven - Rasterlijnen";
+"Vertical grid lines" = "Verticale rasterlijnen";
 
 /* */
-"Display Chart Y - Grid lines" = "Grafiek Y weergeven - Rasterlijnen";
+"Horizontal grid lines" = "Horizontale rasterlijnen";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Lijnen voor LAAG en HOOG weergeven in grafiek";
+"Threshold lines (Low / High)" = "Drempellijnen (laag / hoog)";
 
 /* */
 "Standing / Laying TIR Chart" = "Staande/liggende TIR grafiek";
