@@ -1021,7 +1021,7 @@ class CalculatedGeometries {
         }
         let x = timeToXCoordinate(time)
 
-        guard nextIndex > startIndex else {
+        guard nextIndex > 0 else {
             let lastY = glucoseToYCoordinate(data.glucose.last?.glucose ?? 0)
             return (CGPoint(x: x, y: lastY), nextIndex)
         }
