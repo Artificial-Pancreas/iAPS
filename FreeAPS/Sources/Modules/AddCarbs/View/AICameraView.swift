@@ -482,7 +482,7 @@ struct TelemetryWindow: View {
                     LazyVStack(alignment: .leading, spacing: 4) {
                         ForEach(Array(logs.enumerated()), id: \.offset) { index, log in
                             HStack {
-                                Text(log)
+                                Text(NSLocalizedString(log, comment: "Log"))
                                     .font(.system(.caption2, design: .monospaced))
                                     .foregroundColor(.primary)
                                     .multilineTextAlignment(.leading)
