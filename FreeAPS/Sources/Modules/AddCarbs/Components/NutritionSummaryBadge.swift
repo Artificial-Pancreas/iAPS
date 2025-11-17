@@ -2,8 +2,8 @@ import SwiftUI
 
 struct NutritionSummaryBadge: View {
     let value: Double
-    let unit: LocalizedStringKey
-    let label: LocalizedStringKey
+    let unit: String
+    let label: String
     let color: Color
 
     var body: some View {
@@ -11,9 +11,9 @@ struct NutritionSummaryBadge: View {
             Text("\(value, specifier: "%.0f")")
                 .font(.system(size: 16, weight: .bold))
                 .foregroundColor(color)
-            Text(unit)
+            Text(NSLocalizedString(unit, comment: ""))
                 .font(.system(size: 10))
-            Text(label)
+            Text(NSLocalizedString(label, comment: ""))
                 .font(.system(size: 10, weight: .medium))
                 .multilineTextAlignment(.center)
         }
