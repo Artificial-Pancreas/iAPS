@@ -1543,93 +1543,93 @@ Enact a temp Basal or a temp target */
 
 "Analyzing food with AI..." = "Đang phân tích món ăn bằng AI...";
 
-"Choose from Library" = "Choose from Library";
+"Choose from Library" = "Chọn từ Thư viện";
 
-"Take a Photo" = "Take a Photo";
+"Take a Photo" = "Chụp ảnh";
 
-"Keep the camera level to reduce distortion and keep portions proportional." = "Keep the camera level to reduce distortion and keep portions proportional.";
+"Keep the camera level to reduce distortion and keep portions proportional." = "Giữ camera cân bằng để giảm méo hình và giữ tỉ lệ khẩu phần đúng.";
 
-"Shoot from slightly above" = "Shoot from slightly above";
+"Shoot from slightly above" = "Chụp ảnh từ góc hơi cao so với món ăn";
 
-"Forks, cups, or hands help AI calculate realistic portions." = "Forks, cups, or hands help AI calculate realistic portions.";
+"Forks, cups, or hands help AI calculate realistic portions." = "Đặt nĩa, cốc hoặc tay gần món ăn để AI ước lượng khẩu phần chính xác hơn.";
 
-"Add a size reference" = "Add a size reference";
+"Add a size reference" = "Đặt một vật làm tham chiếu kích thước";
 
-"Make sure every food item is in the frame." = "Make sure every food item is in the frame.";
+"Make sure every food item is in the frame." = "Đảm bảo tất cả các món ăn đều nằm trong khung hình.";
 
-"Frame the full meal" = "Frame the full meal";
+"Frame the full meal" = "Đặt toàn bộ bữa ăn vào khung hình";
 
-"Remove napkins, lids, or packaging that may be misidentified as food." = "Remove napkins, lids, or packaging that may be misidentified as food.";
+"Remove napkins, lids, or packaging that may be misidentified as food." = "Hãy gỡ bỏ khăn giấy, nắp hoặc bao bì để tránh Ai nhận nhầm thành thực phẩm.";
 
-"Clear the area" = "Clear the area";
+"Clear the area" = "Dọn sạch khu vực";
 
-"Harsh shadows confuse the AI and dim light can hide textures." = "Harsh shadows confuse the AI and dim light can hide textures.";
+"Harsh shadows confuse the AI and dim light can hide textures." = "Bóng đổ mạnh làm AI bị nhầm lẫn và ánh sáng yếu có thể che khuất kết cấu món ăn.";
 
-"Use bright, even light" = "Use bright, even light";
+"Use bright, even light" = "Sử dụng ánh sáng mạnh và đều";
 
-"Better photos = better estimates" = "Better photos = better estimates";
+"Better photos = better estimates" = "Ảnh tốt hơn = Ước lượng chính xác hơn";
 
-"Scan failed" = "Scan failed";
+"Scan failed" = "Quét thất bại";
 
-"Looking up product..." = "Looking up product...";
+"Looking up product..." = "Đang tìm sản phẩm...";
 
-"Code detected!" = "Code detected!";
+"Code detected!" = "Mã đã được nhận diện!";
 
-"Position camera over barcode or QR code" = "Position camera over barcode or QR code";
+"Position camera over barcode or QR code" = "Hướng camera vào mã vạch hoặc mã QR";
 
-"Validating format..." = "Validating format...";
+"Validating format..." = "Đang kiểm tra định dạng...";
 
-"Scanning for barcode or QR code..." = "Scanning for barcode or QR code...";
+"Scanning for barcode or QR code..." = "Đang quét mã vạch hoặc mã QR...";
 
-"Initializing camera..." = "Initializing camera...";
+"Initializing camera..." = "Đang khởi tạo camera...";
 
-"Scan failed" = "Scan failed";
+"Scan failed" = "Quét thất bại";
 
-"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS needs camera access to scan barcodes. Please enable camera access in Settings.";
+"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS cần quyền truy cập camera để quét mã vạch. Vui lòng bật quyền camera trong Cài đặt.";
 
-"Camera Access Required" = "Camera Access Required";
+"Camera Access Required" = "Cần quyền truy cập camera";
 
-"Check Permissions" = "Check Permissions";
+"Check Permissions" = "Kiểm tra quyền truy cập";
 
-"Supports traditional barcodes and QR codes" = "Supports traditional barcodes and QR codes";
+"Supports traditional barcodes and QR codes" = "Có thể đọc cả mã vạch thường và mã QR";
 
-"Hold steady for best results" = "Hold steady for best results";
+"Hold steady for best results" = "Giữ camera cố định để đạt kết quả tốt";
 
 "Retry" = "Thử lại";
 
-"Scan Barcode" = "Scan Barcode";
+"Scan Barcode" = "Quét mã vạch";
 
-"📦 Database Results" = "📦 Database Results";
+"📦 Database Results" = "📦 Kết quả cơ sở dữ liệu";
 
-"🤖 AI Search Results" = "🤖 AI Search Results";
+"🤖 AI Search Results" = "🤖 Kết quả AI tìm kiếm";
 
-"• Use the barcode scanner for packaged foods" = "• Use the barcode scanner for packaged foods";
+"• Use the barcode scanner for packaged foods" = "• Sử dụng máy quét mã vạch cho thực phẩm đóng gói";
 
-"• Check spelling carefully" = "• Check spelling carefully";
+"• Check spelling carefully" = "• Kiểm tra chính tả cẩn thận";
 
-"• Use simple, common food names" = "• Use simple, common food names";
+"• Use simple, common food names" = "• Sử dụng tên thực phẩm đơn giản, phổ biến";
 
-"• Try brand names (e.g., \"Cheerios\")" = "• Try brand names (e.g., \"Cheerios\")";
+"• Try brand names (e.g., \"Cheerios\")" = "• Dùng tên thương hiệu (ví dụ: \"Cheerios\")";
 
-"💡 Search Tips:" = "💡 Search Tips:";
+"💡 Search Tips:" = "💡 Gợi ý tìm kiếm:";
 
-"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Hãy dùng từ đơn giản, ví dụ ‘bánh mì’ hoặc ‘táo’, hoặc quét mã vạch";
 
-"Check your spelling and try again" = "Check your spelling and try again";
+"Check your spelling and try again" = "Hãy kiểm tra chính tả và thử lại";
 
-"No Foods Found" = "No Foods Found";
+"No Foods Found" = "Không tìm thấy thực phẩm nào";
 
-"Search Error" = "Search Error";
+"Search Error" = "Lỗi tìm kiếm";
 
-"Finding the best matches for you" = "Finding the best matches for you";
+"Finding the best matches for you" = "Đang tìm các kết quả phù hợp nhất";
 
-"Searching foods" = "Searching foods";
+"Searching foods" = "Đang tìm kiếm thực phẩm";
 
-"AI Analysis" = "AI Analysis";
+"AI Analysis" = "Phân tích bằng AI";
 
-"Amount:" = "Amount:";
+"Amount:" = "Số lượng:";
 
-"Take Over" = "Take Over";
+"Take Over" = "Nhận quyền kiểm soát";
 
 // --------- End of AI ---------
 /* */
