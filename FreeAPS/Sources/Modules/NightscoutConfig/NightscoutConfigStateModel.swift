@@ -28,6 +28,7 @@ extension NightscoutConfig {
         @Published var uploading = false
         @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
+        @Published var nightscoutFetchEnabled = true // Allow fetch
         @Published var units: GlucoseUnits = .mmolL
         @Published var dia: Decimal = 6
         @Published var maxBasal: Decimal = 4
@@ -61,6 +62,7 @@ extension NightscoutConfig {
 
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
+            subscribeSetting(\.nightscoutFetchEnabled, on: $nightscoutFetchEnabled) { nightscoutFetchEnabled = $0 }
         }
 
         func connect() {
