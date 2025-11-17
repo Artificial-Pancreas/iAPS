@@ -3575,10 +3575,10 @@ Enact a temp Basal or a temp target */
 "Re-connect pump!" = "Återanslut pump!";
 
 /* 'fetch' toggle label in nightscout settings */
-"Fetch" = "Fetch";
+"Fetch" = "Hämta";
 
 /* 'fetch' section header in nightscout settings */
-"Allow Fetching" = "Allow Fetching";
+"Allow Fetching" = "Tillåt hämtning";
 
 /* 'fetch' scection footer in nightscout settings */
-"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS will fetch announcements, carbs and temp targets from Nightscout";
+"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS kommer att hämta aviseringar, kolhydrater och tempprära mål från Nightscout";
