@@ -1427,6 +1427,9 @@ Enact a temp Basal or a temp target */
 /* */
 "AI Food Search" = "AI matsökning";
 
+/* Title */
+"Food Search" = "Matsökning";
+
 /* */
 "Search Food Database" = "Sök Matdatabas";
 
@@ -1606,6 +1609,8 @@ Enact a temp Basal or a temp target */
 
 "• Use simple, common food names" = "• Använd enkla, vanliga livsmedelsnamn";
 
+"• Try brand names (e.g., \"Cheerios\")" = "• Prova märkesnamn (t.ex. \"Cheerios\")";
+
 "💡 Search Tips:" = "💡 Söktips:";
 
 "Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Prova enklare termer som \"bröd\" eller \"äpple\", eller skanna en streckkod";
@@ -1619,6 +1624,44 @@ Enact a temp Basal or a temp target */
 "Finding the best matches for you" = "Hitta de bästa matchningarna för dig";
 
 "Searching foods" = "Söker mat";
+
+"AI Analysis" = "AI-analys";
+
+"Analysis Status" = "Analysstatus";
+
+"❌ Analysis failed" = "❌ Analys misslyckades";
+
+"⚠️ Connection interrupted..." = "⚠️ Anslutning avbröts...";
+
+"✅ Analysis complete!" = "✅ Analys slutförd!";
+
+"🍽️ Generating nutrition summary..." = "🍽️ Skapar näringssammanfattning...";
+
+"📊 Processing analysis results..." = "📊 Bearbetar analysresultat...";
+
+"🤖 Running AI vision analysis..." = "🤖 Kör AI vision - analys...";
+
+"⚖️ Comparing to USDA standards..." = "⚖️ Jämfört med USDA standarder...";
+
+"📏 Calculating serving sizes..." = "📏 Beräknar serveringsstorlekar...";
+
+"🔬 Identifying food portions..." = "🔬 Identifierar matportioner...";
+
+"📊 Analyzing nutritional content..." = "📊 Analyserar näringsinnehållet...";
+
+"📡 Uploading image for analysis..." = "📡 Laddar upp bild för analys...";
+
+"🧠 Connecting to AI provider..." = "🧠 Ansluter till AI-leverantör...";
+
+"💼 Optimizing image quality..." = "💼 Optimerar bildkvaliteten...";
+
+"📱 Processing image data..." = "📱 Bearbetar bilddata...";
+
+"🔍 Initializing AI food analysis..." = "🔍 Initierar AI - matanalys...";
+
+"Amount:" = "Mängd:";
+
+"Take Over" = "För över";
 
 // --------- End of AI ---------
 /* */

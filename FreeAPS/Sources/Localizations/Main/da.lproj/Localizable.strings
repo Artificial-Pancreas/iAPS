@@ -1427,6 +1427,9 @@ Enact a temp Basal or a temp target */
 /* */
 "AI Food Search" = "AI Food Search";
 
+/* Title */
+"Food Search" = "Food Search";
+
 /* */
 "Search Food Database" = "Search Food Database";
 
@@ -1606,6 +1609,8 @@ Enact a temp Basal or a temp target */
 
 "• Use simple, common food names" = "• Use simple, common food names";
 
+"• Try brand names (e.g., \"Cheerios\")" = "• Try brand names (e.g., \"Cheerios\")";
+
 "💡 Search Tips:" = "💡 Search Tips:";
 
 "Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
@@ -1619,6 +1624,44 @@ Enact a temp Basal or a temp target */
 "Finding the best matches for you" = "Finding the best matches for you";
 
 "Searching foods" = "Searching foods";
+
+"AI Analysis" = "AI Analysis";
+
+"Analysis Status" = "Analysis Status";
+
+"❌ Analysis failed" = "❌ Analysis failed";
+
+"⚠️ Connection interrupted..." = "⚠️ Connection interrupted...";
+
+"✅ Analysis complete!" = "✅ Analysis complete!";
+
+"🍽️ Generating nutrition summary..." = "🍽️ Generating nutrition summary...";
+
+"📊 Processing analysis results..." = "📊 Processing analysis results...";
+
+"🤖 Running AI vision analysis..." = "🤖 Running AI vision analysis...";
+
+"⚖️ Comparing to USDA standards..." = "⚖️ Comparing to USDA standards...";
+
+"📏 Calculating serving sizes..." = "📏 Calculating serving sizes...";
+
+"🔬 Identifying food portions..." = "🔬 Identifying food portions...";
+
+"📊 Analyzing nutritional content..." = "📊 Analyzing nutritional content...";
+
+"📡 Uploading image for analysis..." = "📡 Uploading image for analysis...";
+
+"🧠 Connecting to AI provider..." = "🧠 Connecting to AI provider...";
+
+"💼 Optimizing image quality..." = "💼 Optimizing image quality...";
+
+"📱 Processing image data..." = "📱 Processing image data...";
+
+"🔍 Initializing AI food analysis..." = "🔍 Initializing AI food analysis...";
+
+"Amount:" = "Amount:";
+
+"Take Over" = "Take Over";
 
 // --------- End of AI ---------
 /* */

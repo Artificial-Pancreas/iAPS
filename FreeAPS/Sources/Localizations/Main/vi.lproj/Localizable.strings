@@ -1383,242 +1383,285 @@ Enact a temp Basal or a temp target */
 
 // --------- AI ---------
 /* */
-"📝 Notes" = "📝 Notes";
+"📝 Notes" = "📝 Ghi chú";
 
 /* */
-"💉 Diabetes recommendations" = "💉 Diabetes recommendations";
+"💉 Diabetes recommendations" = "💉 Khuyến nghị điều trị tiểu đường";
 
 /* */
-"🍽️ Separate Foods" = "🍽️ Separate Foods";
+"🍽️ Separate Foods" = "🍽️ Thức ăn riêng lẻ";
 
 /* */
-"Add all" = "Add all";
+"Add all" = "Thêm tất cả";
 
 /* */
-"🧠 AI Food analysis" = "🧠 AI Food analysis";
+"🧠 AI Food analysis" = "🧠 AI phân tích món ăn";
 
 /* */
-"📊 Total nutritional values of the meal" = "📊 Total nutritional values of the meal";
+"📊 Total nutritional values of the meal" = "📊 Tổng giá trị dinh dưỡng của bữa ăn";
 
 /* */
-"Confidence level:" = "Confidence level:";
+"Confidence level:" = "Mức độ tin cậy:";
 
 /* */
-"Notes: %@" = "Notes: %@";
+"Notes: %@" = "Ghi chú: %@";
 
 /* */
-"Visual Cues: %@" = "Visual Cues: %@";
+"Visual Cues: %@" = "Gợi ý trực quan: %@";
 
 /* */
-"Preparation: %@" = "Preparation: %@";
+"Preparation: %@" = "Chuẩn bị: %@";
 
 /* */
-"Preparation" = "Preparation";
+"Preparation" = "Chuẩn bị";
 
 /* */
-"Multiplicator" = "Multiplicator";
+"Multiplicator" = "Hệ số";
 
 /* */
-"Accept quantity" = "Accept quantity";
+"Accept quantity" = "Xác nhận số lượng";
 
 /* */
-"Enter desired quantity" = "Enter desired quantity";
+"Enter desired quantity" = "Nhập lượng mong muốn";
 
 /* */
-"AI Food Search" = "AI Food Search";
+"AI Food Search" = "AI Tìm món ăn";
+
+/* Title */
+"Food Search" = "Tìm món ăn";
 
 /* */
-"Search Food Database" = "Search Food Database";
+"Search Food Database" = "Tìm thực phẩm";
 
-"Models Used:" = "Models Used:";
+"Models Used:" = "Các mô hình sử dụng:";
 
-"Current Mode: %@" = "Current Mode: %@";
+"Current Mode: %@" = "Chế độ hiện tại: %@";
 
-"Analysis Mode" = "Analysis Mode";
+"Analysis Mode" = "Chế độ phân tích";
 
-"This AI provider requires an API key. Please enter your API key in the settings below." = "This AI provider requires an API key. Please enter your API key in the settings below.";
-"API Key Required" = "API Key Required";
+"This AI provider requires an API key. Please enter your API key in the settings below." = "Nhà cung cấp AI cần khóa API. Nhập khóa API trong cài đặt.";
+"API Key Required" = "Yêu cầu khóa API";
 
-"Food Search Settings" = "Food Search Settings";
+"Food Search Settings" = "Cài đặt tìm thực phẩm";
 
-"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "Ước tính dinh dưỡng từ AI chỉ mang tính tham khảo. Tham khảo ý kiến chuyên gia y tế và kiểm tra thông tin khi cần. Sử dụng dưới trách nhiệm của bạn.";
 
-"Medical Disclaimer" = "Medical Disclaimer";
+"Medical Disclaimer" = "Thông báo y tế";
 
-"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
+"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Nhà cung cấp AI: Google (Gemini API), OpenAI (ChatGPT API), Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI Image Analysis:**";
+"**AI Image Analysis:**" = "**Phân tích hình ảnh bằng AI:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Barcode Scanning:**";
+"**Barcode Scanning:**" = "**Quét mã sản phẩm**";
 
-"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
+"USDA FoodData Central → OpenFoodFacts" = "Cơ sở dữ liệu thực phẩm: USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Text/Voice Search:**";
-"Search Type Recommendations" = "Search Type Recommendations";
+"**Text/Voice Search:**" = "**Tìm kiếm văn bản/giọng nói:**";
+"Search Type Recommendations" = "Gợi ý kiểu tìm kiếm";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.";
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• USDA FoodData Central: Cơ sở dữ liệu dinh dưỡng miễn phí, chính thức. Thông tin chi tiết cho thực phẩm tươi như trái cây, rau và thịt.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Cơ sở dữ liệu mở, miễn phí, với mã vạch phong phú và tìm kiếm văn bản cho thực phẩm đóng gói. Mặc định cho các tìm kiếm.";
 
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries.";
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: AI phân tích chính xác với GPT-4 Vision. Cần khóa API (~0,01 USD/hình). Rất tốt cho phân tích ảnh và truy vấn bằng ngôn ngữ tự nhiên.";
 
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost.";
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: AI miễn phí, giới hạn 1500 yêu cầu/ngày. Nhận diện thực phẩm tốt nhờ Google Vision AI. Chất lượng và chi phí cân đối.";
 
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens).";
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: AI tiên tiến với khả năng suy luận chi tiết. Xuất sắc trong phân tích thực phẩm và ước lượng khẩu phần. Yêu cầu khóa API (~0,25 USD cho mỗi triệu token).";
 
-"Available Search Providers:" = "Available Search Providers:";
+"Available Search Providers:" = "Các nhà cung cấp tìm kiếm:";
 
-"Provider Information" = "Provider Information";
+"Provider Information" = "Thông tin nhà cung cấp";
 
-"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI";
+"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Chọn 'OpenFoodFacts' hoặc 'USDA' sẽ khiến camera phân tích chỉ dùng ước tính cơ bản, không dùng AI";
 
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys";
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Chọn 'Anthropic (Claude API)', 'Google (Gemini API)' hoặc 'OpenAI (ChatGPT API)' để phân tích hình ảnh bằng AI và sử dụng khóa trả phí của bạn";
 
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.";
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Ảnh món ăn sẽ được phân tích bởi nhà cung cấp đã chọn ở 'Phân tích hình ảnh bằng AI'.";
 
-"Camera Food Analysis" = "Camera Food Analysis";
+"Camera Food Analysis" = "Phân tích món ăn bằng camera";
 
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food.";
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Để dùng khóa API trả phí, chọn nhà cung cấp tương ứng trong 'Phân tích hình ảnh bằng AI'. Đây sẽ là nhà cung cấp dùng khi chụp ảnh món ăn.";
 
-"Important: How to Use Your API Keys" = "Important: How to Use Your API Keys";
+"Important: How to Use Your API Keys" = "Lưu ý: Sử dụng khóa API";
 
-"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals.";
+"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Phân tách bữa ăn này thành từng thành phần riêng lẻ, kèm thông tin đầy đủ về các chất dinh dưỡng (carbs, chất đạm, chất béo, calo) cho mỗi món và tổng hợp tất cả.";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Xác định tất cả các món ăn trong hình, chú trọng vào lượng carbohydrate để quản lý bệnh tiểu đường. Cung cấp chi tiết lượng carb cho từng món và tổng lượng carbohydrate của bữa ăn.";
 
-"Diabetes Focus" = "Diabetes Focus";
+"Diabetes Focus" = "Tiêu điểm bệnh tiểu đường";
 
-"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management.";
+"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Cung cấp phân tích hình ảnh thực phẩm cực kỳ chi tiết. Mô tả tất cả các yếu tố có thể quan sát: màu sắc, kết cấu, phương pháp nấu (vết nướng, cháy xém, hấp), loại và kích thước đĩa, dụng cụ ăn, trang trí, nước sốt, dầu ăn có thể nhìn thấy, cách sắp xếp món ăn, và các yếu tố nền. Sử dụng các chi tiết trực quan này để ước lượng chính xác khẩu phần và tính toán giá trị dinh dưỡng cho việc quản lý tiểu đường.";
 
-"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing.";
+"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Phân tích hình ảnh món ăn này cho việc quản lý tiểu đường. Mô tả chi tiết những gì bạn thấy: màu sắc, kết cấu, phương pháp nấu, loại đĩa, dụng cụ ăn, và cách bày trí món ăn. Xác định từng món với chi tiết cách chế biến, ước lượng khẩu phần chính xác dựa trên tham chiếu trực quan, và cung cấp thông tin về carbohydrate, protein, chất béo và calo cho mỗi món. Tập trung vào ước lượng carbohydrate chính xác để tính liều insulin.";
 
-"AI Prompt for Enhanced Results" = "AI Prompt for Enhanced Results";
+"AI Prompt for Enhanced Results" = "Gợi ý AI để kết quả tốt hơn";
 
-"Enter your OpenAI API key" = "Enter your OpenAI API key";
+"Enter your OpenAI API key" = "Nhập khóa API OpenAI";
 
-"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API Key";
+"ChatGPT (OpenAI) API Key" = "Khóa API ChatGPT (OpenAI)";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)";
+"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Lấy khóa API từ platform.openai.com. Tùy chỉnh lệnh phân tích để nhận chi tiết từng thành phần món ăn và tổng giá trị dinh dưỡng. (~0,01 USD cho mỗi hình ảnh)";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) Configuration";
+"OpenAI (ChatGPT API) Configuration" = "Cấu hình OpenAI (ChatGPT API)";
 
-"Macro Tracking" = "Macro Tracking";
+"Macro Tracking" = "Theo dõi dinh dưỡng";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Xác định tất cả các món ăn trong hình, chú trọng vào lượng carbohydrate để quản lý bệnh tiểu đường. Cung cấp chi tiết lượng carb cho từng món và tổng lượng carbohydrate của bữa ăn.";
 
-"Detailed Visual Analysis" = "Detailed Visual Analysis";
+"Detailed Visual Analysis" = "Phân tích hình ảnh chi tiết";
 
-"Enter your Google Gemini API key" = "Enter your Google Gemini API key";
+"Enter your Google Gemini API key" = "Nhập khóa API Google Gemini";
 
-"Google Gemini API Key" = "Google Gemini API Key";
+"Google Gemini API Key" = "Khóa API Google Gemini";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day).";
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Nhận khóa API miễn phí tại ai.google.dev. Google Gemini cung cấp khả năng nhận diện món ăn rất tốt, với mức miễn phí (1.500 yêu cầu mỗi ngày).";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) Configuration";
+"Google (Gemini API) Configuration" = "Cấu hình Google (Gemini API)";
 
-"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.";
+"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Bạn đã vượt quá hạn mức của nhà cung cấp AI. Vui lòng kiểm tra giới hạn sử dụng hoặc thử một nhà cung cấp khác.";
 
-"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
+"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Bạn đã vượt quá hạn mức của nhà cung cấp AI. Vui lòng kiểm tra giới hạn sử dụng hoặc thử một nhà cung cấp khác.";
 
-"Reset to Default" = "Reset to Default";
+"Reset to Default" = "Đặt lại về mặc định";
 
-"Retake Photo" = "Retake Photo";
+"Retake Photo" = "Chụp lại ảnh";
 
-"Retry Analysis" = "Retry Analysis";
+"Retry Analysis" = "Thử phân tích lại";
 
-"Try Different Provider" = "Try Different Provider";
+"Try Different Provider" = "Thử nhà cung cấp khác";
 
-"Check Account" = "Check Account";
+"Check Account" = "Kiểm tra tài khoản";
 
-"Analysis Error" = "Analysis Error";
+"Analysis Error" = "Lỗi phân tích";
 
-"AI Food Analysis" = "AI Food Analysis";
+"AI Food Analysis" = "AI phân tích món ăn";
 
-"Use Cancel to retake photo" = "Use Cancel to retake photo";
+"Use Cancel to retake photo" = "Chọn Hủy để chụp lại hình";
 
-"Analyzing food with AI..." = "Analyzing food with AI...";
+"Analyzing food with AI..." = "Đang phân tích món ăn bằng AI...";
 
-"Choose from Library" = "Choose from Library";
+"Choose from Library" = "Chọn từ Thư viện";
 
-"Take a Photo" = "Take a Photo";
+"Take a Photo" = "Chụp ảnh";
 
-"Keep the camera level to reduce distortion and keep portions proportional." = "Keep the camera level to reduce distortion and keep portions proportional.";
+"Keep the camera level to reduce distortion and keep portions proportional." = "Giữ camera cân bằng để giảm méo hình và giữ tỉ lệ khẩu phần đúng.";
 
-"Shoot from slightly above" = "Shoot from slightly above";
+"Shoot from slightly above" = "Chụp ảnh từ góc hơi cao so với món ăn";
 
-"Forks, cups, or hands help AI calculate realistic portions." = "Forks, cups, or hands help AI calculate realistic portions.";
+"Forks, cups, or hands help AI calculate realistic portions." = "Đặt nĩa, cốc hoặc tay gần món ăn để AI ước lượng khẩu phần chính xác hơn.";
 
-"Add a size reference" = "Add a size reference";
+"Add a size reference" = "Đặt một vật làm tham chiếu kích thước";
 
-"Make sure every food item is in the frame." = "Make sure every food item is in the frame.";
+"Make sure every food item is in the frame." = "Đảm bảo tất cả các món ăn đều nằm trong khung hình.";
 
-"Frame the full meal" = "Frame the full meal";
+"Frame the full meal" = "Đặt toàn bộ bữa ăn vào khung hình";
 
-"Remove napkins, lids, or packaging that may be misidentified as food." = "Remove napkins, lids, or packaging that may be misidentified as food.";
+"Remove napkins, lids, or packaging that may be misidentified as food." = "Hãy gỡ bỏ khăn giấy, nắp hoặc bao bì để tránh Ai nhận nhầm thành thực phẩm.";
 
-"Clear the area" = "Clear the area";
+"Clear the area" = "Dọn sạch khu vực";
 
-"Harsh shadows confuse the AI and dim light can hide textures." = "Harsh shadows confuse the AI and dim light can hide textures.";
+"Harsh shadows confuse the AI and dim light can hide textures." = "Bóng đổ mạnh làm AI bị nhầm lẫn và ánh sáng yếu có thể che khuất kết cấu món ăn.";
 
-"Use bright, even light" = "Use bright, even light";
+"Use bright, even light" = "Sử dụng ánh sáng mạnh và đều";
 
-"Better photos = better estimates" = "Better photos = better estimates";
+"Better photos = better estimates" = "Ảnh tốt hơn = Ước lượng chính xác hơn";
 
-"Scan failed" = "Scan failed";
+"Scan failed" = "Quét thất bại";
 
-"Looking up product..." = "Looking up product...";
+"Looking up product..." = "Đang tìm sản phẩm...";
 
-"Code detected!" = "Code detected!";
+"Code detected!" = "Mã đã được nhận diện!";
 
-"Position camera over barcode or QR code" = "Position camera over barcode or QR code";
+"Position camera over barcode or QR code" = "Hướng camera vào mã vạch hoặc mã QR";
 
-"Validating format..." = "Validating format...";
+"Validating format..." = "Đang kiểm tra định dạng...";
 
-"Scanning for barcode or QR code..." = "Scanning for barcode or QR code...";
+"Scanning for barcode or QR code..." = "Đang quét mã vạch hoặc mã QR...";
 
-"Initializing camera..." = "Initializing camera...";
+"Initializing camera..." = "Đang khởi tạo camera...";
 
-"Scan failed" = "Scan failed";
+"Scan failed" = "Quét thất bại";
 
-"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS needs camera access to scan barcodes. Please enable camera access in Settings.";
+"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS cần quyền truy cập camera để quét mã vạch. Vui lòng bật quyền camera trong Cài đặt.";
 
-"Camera Access Required" = "Camera Access Required";
+"Camera Access Required" = "Cần quyền truy cập camera";
 
-"Check Permissions" = "Check Permissions";
+"Check Permissions" = "Kiểm tra quyền truy cập";
 
-"Supports traditional barcodes and QR codes" = "Supports traditional barcodes and QR codes";
+"Supports traditional barcodes and QR codes" = "Có thể đọc cả mã vạch thường và mã QR";
 
-"Hold steady for best results" = "Hold steady for best results";
+"Hold steady for best results" = "Giữ camera cố định để đạt kết quả tốt";
 
 "Retry" = "Thử lại";
 
-"Scan Barcode" = "Scan Barcode";
+"Scan Barcode" = "Quét mã vạch";
 
-"📦 Database Results" = "📦 Database Results";
+"📦 Database Results" = "📦 Kết quả cơ sở dữ liệu";
 
-"🤖 AI Search Results" = "🤖 AI Search Results";
+"🤖 AI Search Results" = "🤖 Kết quả AI tìm kiếm";
 
-"• Use the barcode scanner for packaged foods" = "• Use the barcode scanner for packaged foods";
+"• Use the barcode scanner for packaged foods" = "• Sử dụng máy quét mã vạch cho thực phẩm đóng gói";
 
-"• Check spelling carefully" = "• Check spelling carefully";
+"• Check spelling carefully" = "• Kiểm tra chính tả cẩn thận";
 
-"• Use simple, common food names" = "• Use simple, common food names";
+"• Use simple, common food names" = "• Sử dụng tên thực phẩm đơn giản, phổ biến";
 
-"💡 Search Tips:" = "💡 Search Tips:";
+"• Try brand names (e.g., \"Cheerios\")" = "• Dùng tên thương hiệu (ví dụ: \"Cheerios\")";
 
-"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
+"💡 Search Tips:" = "💡 Gợi ý tìm kiếm:";
 
-"Check your spelling and try again" = "Check your spelling and try again";
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Hãy dùng từ đơn giản, ví dụ ‘bánh mì’ hoặc ‘táo’, hoặc quét mã vạch";
 
-"No Foods Found" = "No Foods Found";
+"Check your spelling and try again" = "Hãy kiểm tra chính tả và thử lại";
 
-"Search Error" = "Search Error";
+"No Foods Found" = "Không tìm thấy thực phẩm nào";
 
-"Finding the best matches for you" = "Finding the best matches for you";
+"Search Error" = "Lỗi tìm kiếm";
 
-"Searching foods" = "Searching foods";
+"Finding the best matches for you" = "Đang tìm các kết quả phù hợp nhất";
+
+"Searching foods" = "Đang tìm kiếm thực phẩm";
+
+"AI Analysis" = "Phân tích bằng AI";
+
+"Analysis Status" = "Analysis Status";
+
+"❌ Analysis failed" = "❌ Analysis failed";
+
+"⚠️ Connection interrupted..." = "⚠️ Connection interrupted...";
+
+"✅ Analysis complete!" = "✅ Analysis complete!";
+
+"🍽️ Generating nutrition summary..." = "🍽️ Generating nutrition summary...";
+
+"📊 Processing analysis results..." = "📊 Processing analysis results...";
+
+"🤖 Running AI vision analysis..." = "🤖 Running AI vision analysis...";
+
+"⚖️ Comparing to USDA standards..." = "⚖️ Comparing to USDA standards...";
+
+"📏 Calculating serving sizes..." = "📏 Calculating serving sizes...";
+
+"🔬 Identifying food portions..." = "🔬 Identifying food portions...";
+
+"📊 Analyzing nutritional content..." = "📊 Analyzing nutritional content...";
+
+"📡 Uploading image for analysis..." = "📡 Uploading image for analysis...";
+
+"🧠 Connecting to AI provider..." = "🧠 Connecting to AI provider...";
+
+"💼 Optimizing image quality..." = "💼 Optimizing image quality...";
+
+"📱 Processing image data..." = "📱 Processing image data...";
+
+"🔍 Initializing AI food analysis..." = "🔍 Initializing AI food analysis...";
+
+"Amount:" = "Số lượng:";
+
+"Take Over" = "Nhận quyền kiểm soát";
 
 // --------- End of AI ---------
 /* */
