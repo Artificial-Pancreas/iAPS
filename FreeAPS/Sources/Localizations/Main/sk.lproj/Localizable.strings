@@ -3577,3 +3577,12 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* message displayed on home screen when the pump is added but not fully onboarded */
 "Re-connect pump!" = "Znovu pripojte pumpu!";
+
+/* 'fetch' toggle label in nightscout settings */
+"Fetch" = "Fetch";
+
+/* 'fetch' section header in nightscout settings */
+"Allow Fetching" = "Allow Fetching";
+
+/* 'fetch' scection footer in nightscout settings */
+"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS will fetch announcements, carbs and temp targets from Nightscout";
