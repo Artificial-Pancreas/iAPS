@@ -105,6 +105,7 @@ extension Bolus {
                     } else {
                         Button {
                             state.hideModal()
+                            if fetch { state.saveMeal() }
                             keepForNextWiew = true
                         }
                         label: {
