@@ -87,6 +87,14 @@ extension NightscoutConfig {
                 }
 
                 Section {
+                    Toggle("Fetch", isOn: $state.nightscoutFetchEnabled)
+                } header: {
+                    Text("Allow Fetching")
+                } footer: {
+                    Text("iAPS will fetch announcements, carbs and temp targets from Nightscout")
+                }
+
+                Section {
                     Button("Import settings from Nightscout") {
                         importAlert = Alert(
                             title: Text("Import settings?"),
