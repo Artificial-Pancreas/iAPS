@@ -46,7 +46,4 @@
    <FileRef
       location = "container:MedtrumKit/MedtrumKit.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Dependencies/DanaKit/DanaKit.xcodeproj">
-   </FileRef>
 </Workspace>
