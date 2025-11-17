@@ -1513,35 +1513,35 @@ Enact a temp Basal or a temp target */
 
 "Detailed Visual Analysis" = "Phân tích hình ảnh chi tiết";
 
-"Enter your Google Gemini API key" = "Enter your Google Gemini API key";
+"Enter your Google Gemini API key" = "Nhập khóa API Google Gemini";
 
-"Google Gemini API Key" = "Google Gemini API Key";
+"Google Gemini API Key" = "Khóa API Google Gemini";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day).";
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Nhận khóa API miễn phí tại ai.google.dev. Google Gemini cung cấp khả năng nhận diện món ăn rất tốt, với mức miễn phí (1.500 yêu cầu mỗi ngày).";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) Configuration";
+"Google (Gemini API) Configuration" = "Cấu hình Google (Gemini API)";
 
-"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.";
+"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Bạn đã vượt quá hạn mức của nhà cung cấp AI. Vui lòng kiểm tra giới hạn sử dụng hoặc thử một nhà cung cấp khác.";
 
-"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
+"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Bạn đã vượt quá hạn mức của nhà cung cấp AI. Vui lòng kiểm tra giới hạn sử dụng hoặc thử một nhà cung cấp khác.";
 
-"Reset to Default" = "Reset to Default";
+"Reset to Default" = "Đặt lại về mặc định";
 
-"Retake Photo" = "Retake Photo";
+"Retake Photo" = "Chụp lại ảnh";
 
-"Retry Analysis" = "Retry Analysis";
+"Retry Analysis" = "Thử phân tích lại";
 
-"Try Different Provider" = "Try Different Provider";
+"Try Different Provider" = "Thử nhà cung cấp khác";
 
-"Check Account" = "Check Account";
+"Check Account" = "Kiểm tra tài khoản";
 
-"Analysis Error" = "Analysis Error";
+"Analysis Error" = "Lỗi phân tích";
 
-"AI Food Analysis" = "AI Food Analysis";
+"AI Food Analysis" = "AI phân tích món ăn";
 
-"Use Cancel to retake photo" = "Use Cancel to retake photo";
+"Use Cancel to retake photo" = "Chọn Hủy để chụp lại hình";
 
-"Analyzing food with AI..." = "Analyzing food with AI...";
+"Analyzing food with AI..." = "Đang phân tích món ăn bằng AI...";
 
 "Choose from Library" = "Choose from Library";
 
