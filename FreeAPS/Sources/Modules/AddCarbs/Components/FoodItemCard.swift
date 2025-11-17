@@ -143,12 +143,12 @@ struct FoodItemCard: View {
 
     private struct NutritionBadge: View {
         let value: Double
-        let unit: String
-        let label: String
+        let unit: LocalizedStringKey
+        let label: LocalizedStringKey
         let color: Color
         let icon: String
 
-        init(value: Double, unit: String, label: String, color: Color, icon: String? = nil) {
+        init(value: Double, unit: LocalizedStringKey, label: LocalizedStringKey, color: Color, icon: String? = nil) {
             self.value = value
             self.unit = unit
             self.label = label

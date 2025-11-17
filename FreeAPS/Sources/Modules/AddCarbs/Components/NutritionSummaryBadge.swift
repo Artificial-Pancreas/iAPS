@@ -2,8 +2,8 @@ import SwiftUI
 
 struct NutritionSummaryBadge: View {
     let value: Double
-    let unit: String
-    let label: String
+    let unit: LocalizedStringKey
+    let label: LocalizedStringKey
     let color: Color
 
     var body: some View {

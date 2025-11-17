@@ -391,7 +391,7 @@ struct ModernCameraView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.sourceType = .camera
+        picker.sourceType = UIImagePickerController.isSourceTypeAvailable(.camera) ? .camera : .photoLibrary
         picker.allowsEditing = false
         picker.navigationBar.tintColor = .systemBlue
         picker.view.tintColor = .systemBlue
@@ -433,8 +433,8 @@ struct ModernCameraView: UIViewControllerRepresentable {
 
 private struct CameraTipRow: View {
     let icon: String
-    let title: String
-    let detail: String
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
