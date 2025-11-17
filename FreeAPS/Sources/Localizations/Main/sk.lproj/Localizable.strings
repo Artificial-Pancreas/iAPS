@@ -1610,7 +1610,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "• Use simple, common food names" = "• Použiť jednoduché, bežné názvy potravín";
 
-"• Try brand names (e.g., \"Cheerios\")" = "• Try brand names (e.g., \"Cheerios\")";
+"• Try brand names (e.g., \"Cheerios\")" = "• Skúste názvy značiek (napr. „Chocapic“)";
 
 "💡 Search Tips:" = "💡 Tipy na vyhľadávanie:";
 
@@ -1628,37 +1628,37 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "AI Analysis" = "AI analýza";
 
-"Analysis Status" = "Analysis Status";
+"Analysis Status" = "Stav analýzy";
 
-"❌ Analysis failed" = "❌ Analysis failed";
+"❌ Analysis failed" = "❌ Analýza zlyhala";
 
-"⚠️ Connection interrupted..." = "⚠️ Connection interrupted...";
+"⚠️ Connection interrupted..." = "⚠️ Pripojenie bolo prerušené…";
 
-"✅ Analysis complete!" = "✅ Analysis complete!";
+"✅ Analysis complete!" = "✅ Analýza dokončená!";
 
-"🍽️ Generating nutrition summary..." = "🍽️ Generating nutrition summary...";
+"🍽️ Generating nutrition summary..." = "🍽️ Generujem súhrn výživových údajov...";
 
-"📊 Processing analysis results..." = "📊 Processing analysis results...";
+"📊 Processing analysis results..." = "📊 Spracovávam výsledky analýzy...";
 
-"🤖 Running AI vision analysis..." = "🤖 Running AI vision analysis...";
+"🤖 Running AI vision analysis..." = "🤖 Spúšťam analýzu pomocou AI videnia...";
 
-"⚖️ Comparing to USDA standards..." = "⚖️ Comparing to USDA standards...";
+"⚖️ Comparing to USDA standards..." = "⚖️ Porovnávam so štandardmi USDA...";
 
-"📏 Calculating serving sizes..." = "📏 Calculating serving sizes...";
+"📏 Calculating serving sizes..." = "📏 Vypočítavam porcie...";
 
-"🔬 Identifying food portions..." = "🔬 Identifying food portions...";
+"🔬 Identifying food portions..." = "🔬 Identifikujem porcie jedla...";
 
-"📊 Analyzing nutritional content..." = "📊 Analyzing nutritional content...";
+"📊 Analyzing nutritional content..." = "📊 Analyzujem výživový obsah...";
 
-"📡 Uploading image for analysis..." = "📡 Uploading image for analysis...";
+"📡 Uploading image for analysis..." = "📡 Nahrávam obrázok na analýzu...";
 
-"🧠 Connecting to AI provider..." = "🧠 Connecting to AI provider...";
+"🧠 Connecting to AI provider..." = "🧠 Pripájam sa k poskytovateľovi AI...";
 
-"💼 Optimizing image quality..." = "💼 Optimizing image quality...";
+"💼 Optimizing image quality..." = "💼 Optimalizujem kvalitu obrázka...";
 
-"📱 Processing image data..." = "📱 Processing image data...";
+"📱 Processing image data..." = "📱 Spracovávam obrazové dáta...";
 
-"🔍 Initializing AI food analysis..." = "🔍 Initializing AI food analysis...";
+"🔍 Initializing AI food analysis..." = "🔍 Inicializujem AI analýzu jedla...";
 
 "Amount:" = "Množstvo:";
 
