@@ -376,7 +376,7 @@ struct AICameraView: View {
     }
 
     private func addTelemetryLog(_ message: String) {
-        telemetryLogs.append(message)
+        telemetryLogs.append(NSLocalizedString(message, comment: "Telemetry log"))
         if telemetryLogs.count > 10 {
             telemetryLogs.removeFirst()
         }
