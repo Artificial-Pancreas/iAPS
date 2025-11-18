@@ -1659,6 +1659,44 @@ Enact a temp Basal or a temp target */
 
 "🔍 Initializing AI food analysis..." = "🔍 Initierar AI - matanalys...";
 
+"⚡ Processing AI analysis results..." = "⚡ Bearbetar AI-analysresultat...";
+
+"📥 Received response from Claude..." = "📥 Mottaget svar från Claude...";
+
+"⏳ AI is cooking up results..." = "⏳ AI kokar ihop resultat...";
+
+"🌐 Sending request to Claude..." = "🌐 Skickar begäran till Claude...";
+
+"📡 Preparing API request..." = "📡 Förbereder API-begäran...";
+
+"🔄 Encoding image data..." = "🔄 Bearbetar bilddata...";
+
+"🖼️ Optimizing your image..." = "🖼️ Optimerar din bild...";
+
+"⚙️ Configuring Claude parameters..." = "⚙️ Konfigurerar Claude-parametrar...";
+
+"⚙️ Processing analysis results..." = "⚙️ Bearbetar analysresultat...";
+
+"📊 Calculating nutrition estimates..." = "📊 Beräkna näringsestimeringar...";
+
+"🍽️ Identifying food characteristics..." = "🍽️ Identifierar livsmedelsegenskaper...";
+
+"📱 Analyzing image properties..." = "📱 Analyserar bildegenskaper...";
+
+"📊 Initializing basic analysis..." = "📊 Initierar grundläggande analys...";
+
+"📥 Received response from Gemini..." = "📥 Mottaget svar från Gemini...";
+
+"🌐 Sending request to Google Gemini..." = "🌐 Skickar begäran till Google Gemini...";
+
+"🔄 Encoding image data..." = "🔄 Bearbetar bilddata...";
+
+"⚙️ Configuring Gemini parameters..." = "⚙️ Konfigurerar Gemini-parametrar...";
+
+"📥 Received response from OpenAI..." = "📥 Mottaget svar från OpenAI...";
+
+"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Gör en djupanalys (kan ta en stund)...";
+
 "Amount:" = "Mängd:";
 
 "Take Over" = "För över";

@@ -1362,7 +1362,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Show glucose on the app badge" = "Zobraziť glykémiu na ikone aplikácie";
 
 /* */
-"Backfill glucose" = "Doplniť glykémie";
+"Backfill glucose" = "Doplniť glykémiu";
 
 /* About this source */
 "About this source" = "Informácie o tomto zdroji";
@@ -1659,6 +1659,44 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "📱 Processing image data..." = "📱 Spracovávam obrazové dáta...";
 
 "🔍 Initializing AI food analysis..." = "🔍 Inicializujem AI analýzu jedla...";
+
+"⚡ Processing AI analysis results..." = "⚡ Spracovanie výsledkov AI analýzy...";
+
+"📥 Received response from Claude..." = "📥 Prijatá odpoveď od Claude...";
+
+"⏳ AI is cooking up results..." = "⏳ AI pripravuje výsledky...";
+
+"🌐 Sending request to Claude..." = "🌐 Odosielanie požiadavky do Claude...";
+
+"📡 Preparing API request..." = "📡 Príprava API požiadavky...";
+
+"🔄 Encoding image data..." = "🔄 Kódovanie údajov obrázka...";
+
+"🖼️ Optimizing your image..." = "🖼️ Optimalizácia vášho obrázka...";
+
+"⚙️ Configuring Claude parameters..." = "⚙️ Konfigurácia parametrov Claude...";
+
+"⚙️ Processing analysis results..." = "⚙️ Spracovanie výsledkov analýzy...";
+
+"📊 Calculating nutrition estimates..." = "📊 Výpočet odhadov nutričných hodnôt...";
+
+"🍽️ Identifying food characteristics..." = "🍽️ Identifikácia charakteristík jedla...";
+
+"📱 Analyzing image properties..." = "📱 Analýza vlastností obrázka...";
+
+"📊 Initializing basic analysis..." = "📊 Inicializácia základnej analýzy...";
+
+"📥 Received response from Gemini..." = "📥 Prijatá odpoveď od Gemini...";
+
+"🌐 Sending request to Google Gemini..." = "🌐 Odosielanie požiadavky do Google Gemini...";
+
+"🔄 Encoding image data..." = "🔄 Kódovanie údajov obrázka...";
+
+"⚙️ Configuring Gemini parameters..." = "⚙️ Konfigurácia parametrov Gemini...";
+
+"📥 Received response from OpenAI..." = "📥 Prijatá odpoveď od OpenAI...";
+
+"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Robím hĺbkovú analýzu (môže to chvíľu trvať)...";
 
 "Amount:" = "Množstvo:";
 
@@ -3579,10 +3617,10 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Re-connect pump!" = "Znovu pripojte pumpu!";
 
 /* 'fetch' toggle label in nightscout settings */
-"Fetch" = "Fetch";
+"Fetch" = "Načítať";
 
 /* 'fetch' section header in nightscout settings */
-"Allow Fetching" = "Allow Fetching";
+"Allow Fetching" = "Povoliť načítanie";
 
 /* 'fetch' scection footer in nightscout settings */
-"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS will fetch announcements, carbs and temp targets from Nightscout";
+"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS bude načítavať oznámenia, sacharidy a dočasné ciele z Nightscoutu";

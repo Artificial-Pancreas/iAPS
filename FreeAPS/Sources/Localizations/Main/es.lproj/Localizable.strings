@@ -1660,6 +1660,44 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "🔍 Initializing AI food analysis..." = "🔍 Initializing AI food analysis...";
 
+"⚡ Processing AI analysis results..." = "⚡ Processing AI analysis results...";
+
+"📥 Received response from Claude..." = "📥 Received response from Claude...";
+
+"⏳ AI is cooking up results..." = "⏳ AI is cooking up results...";
+
+"🌐 Sending request to Claude..." = "🌐 Sending request to Claude...";
+
+"📡 Preparing API request..." = "📡 Preparing API request...";
+
+"🔄 Encoding image data..." = "🔄 Encoding image data...";
+
+"🖼️ Optimizing your image..." = "🖼️ Optimizing your image...";
+
+"⚙️ Configuring Claude parameters..." = "⚙️ Configuring Claude parameters...";
+
+"⚙️ Processing analysis results..." = "⚙️ Processing analysis results...";
+
+"📊 Calculating nutrition estimates..." = "📊 Calculating nutrition estimates...";
+
+"🍽️ Identifying food characteristics..." = "🍽️ Identifying food characteristics...";
+
+"📱 Analyzing image properties..." = "📱 Analyzing image properties...";
+
+"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
+
+"📥 Received response from Gemini..." = "📥 Received response from Gemini...";
+
+"🌐 Sending request to Google Gemini..." = "🌐 Sending request to Google Gemini...";
+
+"🔄 Encoding image data..." = "🔄 Encoding image data...";
+
+"⚙️ Configuring Gemini parameters..." = "⚙️ Configuring Gemini parameters...";
+
+"📥 Received response from OpenAI..." = "📥 Received response from OpenAI...";
+
+"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
+
 "Amount:" = "Amount:";
 
 "Take Over" = "Take Over";
