@@ -60,15 +60,43 @@ class CalculatedGeometries {
     private(set) var bolusFont = Font.custom("BolusDotFont", fixedSize: 11)
     private var bolusUIFont = UIFont.systemFont(ofSize: 11)
 
+    private(set) var peaksFont = Font.custom("BolusDotFont", fixedSize: 13)
+    private var peaksUIFont = UIFont.systemFont(ofSize: 13)
+
     private(set) var insulinBarsPath = Path()
 
-    private let bolusFormatter: NumberFormatter
+    private let bolusFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumIntegerDigits = 0
+        formatter.maximumFractionDigits = 2
+        formatter.decimalSeparator = "."
+        return formatter
+    }()
 
-    private let carbsFormatter: NumberFormatter
+    private let carbsFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }()
 
-    private let dotGlucoseFormatter: NumberFormatter
+    private let dotGlucoseFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.decimalSeparator = "."
+        return formatter
+    }()
 
-    private let mmolDotGlucoseFormatter: NumberFormatter
+    private let mmolDotGlucoseFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.minimumFractionDigits = 1
+        formatter.decimalSeparator = "."
+        return formatter
+    }()
 
     init(
         fullSize: CGSize,
@@ -79,29 +107,13 @@ class CalculatedGeometries {
 
         let started = Date.now
 
-        bolusFormatter = NumberFormatter()
-        bolusFormatter.numberStyle = .decimal
-        bolusFormatter.minimumIntegerDigits = 0
-        bolusFormatter.maximumFractionDigits = 2
-        bolusFormatter.decimalSeparator = "."
+        let (bolusFont, bolusUIFont) = getBolusFont()
+        self.bolusFont = bolusFont
+        self.bolusUIFont = bolusUIFont
 
-        carbsFormatter = NumberFormatter()
-        carbsFormatter.numberStyle = .decimal
-        carbsFormatter.maximumFractionDigits = 0
-
-        dotGlucoseFormatter = NumberFormatter()
-        dotGlucoseFormatter.numberStyle = .decimal
-        dotGlucoseFormatter.maximumFractionDigits = 1
-        dotGlucoseFormatter.decimalSeparator = "."
-
-        mmolDotGlucoseFormatter = NumberFormatter()
-        mmolDotGlucoseFormatter.numberStyle = .decimal
-        mmolDotGlucoseFormatter.maximumFractionDigits = 1
-        mmolDotGlucoseFormatter.minimumFractionDigits = 1
-        mmolDotGlucoseFormatter.decimalSeparator = "."
-
-        bolusFont = getBolusFont()
-        bolusUIFont = getBolusUIFont()
+        let (peaksFont, peaksUIFont) = getPeaksFont()
+        self.peaksFont = peaksFont
+        self.peaksUIFont = peaksUIFont
 
         firstHourDate = calculateFirstHourDate()
         oneSecondWidth = calculateOneSecondStep()
@@ -258,7 +270,7 @@ class CalculatedGeometries {
     }
 
     private func calculateGlucosePeaks() -> [GlucosePeak] {
-        let (maxima, minima) = PeakPicker.pick(data: data.glucose, windowHours: Double(data.screenHours) / 3.5)
+        let (maxima, minima) = PeakPicker.pick(data: data.glucose, windowHours: Double(data.screenHours) / 2.0)
 
         // y, x-start, x-end, glucose value
         var glucosePeaks: [GlucosePeak] = []
@@ -277,7 +289,7 @@ class CalculatedGeometries {
                     (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
 
                 if let string = formatter.string(from: value as NSNumber) {
-                    var textSize = textSize(text: string, font: bolusUIFont)
+                    var textSize = textSize(text: string, font: peaksUIFont)
                     textSize.width += peakHorizontalPadding * 2 + peakMargin * 2
                     textSize.height += peakVerticalPadding * 2 + peakMargin * 2
                     let textRect = CGRect(
@@ -312,7 +324,7 @@ class CalculatedGeometries {
                     (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
 
                 if let string = formatter.string(from: value as NSNumber) {
-                    var textSize = textSize(text: string, font: bolusUIFont)
+                    var textSize = textSize(text: string, font: peaksUIFont)
                     textSize.width += peakHorizontalPadding * 2 + peakMargin * 2
                     textSize.height += peakVerticalPadding * 2 + peakMargin * 2
                     let textRect = CGRect(
@@ -1312,7 +1324,7 @@ class CalculatedGeometries {
         }
     }
 
-    private func getBolusFont() -> Font {
+    private func getBolusFont() -> (Font, UIFont) {
         var size = CGFloat(12)
         switch data.screenHours {
         case 12:
@@ -1322,20 +1334,26 @@ class CalculatedGeometries {
         default:
             size = 11
         }
-        return Font.custom("BolusDotFont", fixedSize: size)
+        return (
+            Font.custom("BolusDotFont", fixedSize: size),
+            UIFont.systemFont(ofSize: size)
+        )
     }
 
-    private func getBolusUIFont() -> UIFont {
+    private func getPeaksFont() -> (Font, UIFont) {
         var size = CGFloat(12)
         switch data.screenHours {
         case 12:
-            size = 9
-        case 24:
-            size = 7
-        default:
             size = 11
+        case 24:
+            size = 9
+        default:
+            size = 13
         }
-        return UIFont.systemFont(ofSize: size)
+        return (
+            Font.custom("BolusDotFont", fixedSize: size),
+            UIFont.systemFont(ofSize: size)
+        )
     }
 
     private func textSize(text: String, font: UIFont) -> CGSize {

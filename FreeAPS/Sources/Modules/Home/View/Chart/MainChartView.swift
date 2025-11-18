@@ -148,6 +148,7 @@ struct MainChartView: View {
     @State private var currentTimeX: CGFloat = 0
 
     @State private var bolusFont = Font.custom("BolusDotFont", fixedSize: 11)
+    @State private var peaksFont = Font.custom("BolusDotFont", fixedSize: 13)
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -542,7 +543,7 @@ struct MainChartView: View {
                     ZStack {
                         Color.white // allow everywhere by default
                         Text(peak.text)
-                            .font(.glucoseDotFont)
+                            .font(peaksFont)
                             .padding(.horizontal, Config.peakHorizontalPadding)
                             .padding(.vertical, Config.peakVerticalPadding)
                             .background(
@@ -556,15 +557,19 @@ struct MainChartView: View {
                 )
 
                 let glucoseDecimal = Decimal(peak.glucose)
-                let fillColour =
-                    glucoseDecimal < data.lowGlucose ? Color.loopRed.opacity(0.7)
-                        : glucoseDecimal > data
-                        .highGlucose ? (colorScheme == .dark ? Color.orange.opacity(0.7) : Color.loopYellow.opacity(0.4))
-                        : colorScheme == .dark ? Color.darkGreen.opacity(0.6) : Color.darkGreen.opacity(0.7)
+                let fillColour = {
+                    if glucoseDecimal < data.lowGlucose {
+                        return colorScheme == .dark ? Color.loopRed.opacity(0.7) : Color.loopRed.opacity(0.7)
+                    }
+                    if glucoseDecimal > data.highGlucose {
+                        return colorScheme == .dark ? Color.orange.opacity(0.4) : Color.loopYellow.opacity(0.4)
+                    }
+                    return colorScheme == .dark ? Color.darkGreen.opacity(0.6) : Color.darkGreen.opacity(0.4)
+                }()
 
                 ZStack {
                     Text(peak.text)
-                        .font(.glucoseDotFont)
+                        .font(peaksFont)
                         .padding(.horizontal, Config.peakHorizontalPadding)
                         .padding(.vertical, Config.peakVerticalPadding)
                         .background(
@@ -940,6 +945,7 @@ extension MainChartView {
 
         DispatchQueue.main.async {
             self.bolusFont = geom.bolusFont
+            self.peaksFont = geom.peaksFont
 
             self.firstHourDate = geom.firstHourDate
             self.oneSecondWidth = geom.oneSecondWidth
