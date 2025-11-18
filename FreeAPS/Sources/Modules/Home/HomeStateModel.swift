@@ -136,6 +136,14 @@ extension Home {
             useCarbBars: false
         )
 
+        func startTimer() {
+            timer.resume()
+        }
+
+        func stopTimer() {
+            timer.suspend()
+        }
+
         override func subscribe() {
             setupGlucose()
             setupBasals()
@@ -252,7 +260,6 @@ extension Home {
                     self?.setupCurrentTempTarget()
                 }
             }
-            timer.resume()
 
             apsManager.isLooping
                 .receive(on: DispatchQueue.main)
