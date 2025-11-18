@@ -1627,37 +1627,75 @@ Enact a temp Basal or a temp target */
 
 "AI Analysis" = "Phân tích bằng AI";
 
-"Analysis Status" = "Analysis Status";
+"Analysis Status" = "Trạng thái phân tích";
 
-"❌ Analysis failed" = "❌ Analysis failed";
+"❌ Analysis failed" = "❌ Phân tích không thành công";
 
-"⚠️ Connection interrupted..." = "⚠️ Connection interrupted...";
+"⚠️ Connection interrupted..." = "⚠️ Kết nối bị gián đoạn...";
 
-"✅ Analysis complete!" = "✅ Analysis complete!";
+"✅ Analysis complete!" = "Phân tích hoàn tất!";
 
-"🍽️ Generating nutrition summary..." = "🍽️ Generating nutrition summary...";
+"🍽️ Generating nutrition summary..." = "🍽️ Đang tạo bản tóm tắt dinh dưỡng...";
 
-"📊 Processing analysis results..." = "📊 Processing analysis results...";
+"📊 Processing analysis results..." = "📊 Đang xử lý kết quả phân tích...";
 
-"🤖 Running AI vision analysis..." = "🤖 Running AI vision analysis...";
+"🤖 Running AI vision analysis..." = "🤖 Đang chạy phân tích tầm nhìn AI...";
 
-"⚖️ Comparing to USDA standards..." = "⚖️ Comparing to USDA standards...";
+"⚖️ Comparing to USDA standards..." = "⚖️ So sánh với tiêu chuẩn của USDA...";
 
-"📏 Calculating serving sizes..." = "📏 Calculating serving sizes...";
+"📏 Calculating serving sizes..." = "📏 Đang tính khẩu phần ăn...";
 
-"🔬 Identifying food portions..." = "🔬 Identifying food portions...";
+"🔬 Identifying food portions..." = "🔬 Đang xác định khẩu phần ăn...";
 
-"📊 Analyzing nutritional content..." = "📊 Analyzing nutritional content...";
+"📊 Analyzing nutritional content..." = "📊 Đang phân tích hàm lượng dinh dưỡng...";
 
-"📡 Uploading image for analysis..." = "📡 Uploading image for analysis...";
+"📡 Uploading image for analysis..." = "📡 Đang tải hình ảnh lên để phân tích...";
 
-"🧠 Connecting to AI provider..." = "🧠 Connecting to AI provider...";
+"🧠 Connecting to AI provider..." = "🧠 Đang kết nối với nhà cung cấp AI...";
 
-"💼 Optimizing image quality..." = "💼 Optimizing image quality...";
+"💼 Optimizing image quality..." = "💼 Đang Tối ưu hóa chất lượng hình ảnh...";
 
-"📱 Processing image data..." = "📱 Processing image data...";
+"📱 Processing image data..." = "📱 Đang xử lý dữ liệu hình ảnh...";
 
-"🔍 Initializing AI food analysis..." = "🔍 Initializing AI food analysis...";
+"🔍 Initializing AI food analysis..." = "🔍 Đang khởi tạo phân tích thực phẩm bằng AI...";
+
+"⚡ Processing AI analysis results..." = "⚡ Processing AI analysis results...";
+
+"📥 Received response from Claude..." = "📥 Received response from Claude...";
+
+"⏳ AI is cooking up results..." = "⏳ AI is cooking up results...";
+
+"🌐 Sending request to Claude..." = "🌐 Sending request to Claude...";
+
+"📡 Preparing API request..." = "📡 Preparing API request...";
+
+"🔄 Encoding image data..." = "🔄 Encoding image data...";
+
+"🖼️ Optimizing your image..." = "🖼️ Optimizing your image...";
+
+"⚙️ Configuring Claude parameters..." = "⚙️ Configuring Claude parameters...";
+
+"⚙️ Processing analysis results..." = "⚙️ Processing analysis results...";
+
+"📊 Calculating nutrition estimates..." = "📊 Calculating nutrition estimates...";
+
+"🍽️ Identifying food characteristics..." = "🍽️ Identifying food characteristics...";
+
+"📱 Analyzing image properties..." = "📱 Analyzing image properties...";
+
+"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
+
+"📥 Received response from Gemini..." = "📥 Received response from Gemini...";
+
+"🌐 Sending request to Google Gemini..." = "🌐 Sending request to Google Gemini...";
+
+"🔄 Encoding image data..." = "🔄 Encoding image data...";
+
+"⚙️ Configuring Gemini parameters..." = "⚙️ Configuring Gemini parameters...";
+
+"📥 Received response from OpenAI..." = "📥 Received response from OpenAI...";
+
+"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
 
 "Amount:" = "Số lượng:";
 
@@ -3574,3 +3612,12 @@ Enact a temp Basal or a temp target */
 
 /* message displayed on home screen when the pump is added but not fully onboarded */
 "Re-connect pump!" = "Kết nối lại máy bơm!";
+
+/* 'fetch' toggle label in nightscout settings */
+"Fetch" = "Lấy về";
+
+/* 'fetch' section header in nightscout settings */
+"Allow Fetching" = "Cho phép lấy";
+
+/* 'fetch' scection footer in nightscout settings */
+"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS sẽ lấy thông báo, lượng carbs và mục tiêu tạm thời từ Nightscout";
