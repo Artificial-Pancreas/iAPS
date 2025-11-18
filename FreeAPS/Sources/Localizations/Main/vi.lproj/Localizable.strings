@@ -1649,15 +1649,15 @@ Enact a temp Basal or a temp target */
 
 "📊 Analyzing nutritional content..." = "📊 Đang phân tích hàm lượng dinh dưỡng...";
 
-"📡 Uploading image for analysis..." = "📡 Uploading image for analysis...";
+"📡 Uploading image for analysis..." = "📡 Đang tải hình ảnh lên để phân tích...";
 
-"🧠 Connecting to AI provider..." = "🧠 Connecting to AI provider...";
+"🧠 Connecting to AI provider..." = "🧠 Đang kết nối với nhà cung cấp AI...";
 
-"💼 Optimizing image quality..." = "💼 Optimizing image quality...";
+"💼 Optimizing image quality..." = "💼 Đang Tối ưu hóa chất lượng hình ảnh...";
 
-"📱 Processing image data..." = "📱 Processing image data...";
+"📱 Processing image data..." = "📱 Đang xử lý dữ liệu hình ảnh...";
 
-"🔍 Initializing AI food analysis..." = "🔍 Initializing AI food analysis...";
+"🔍 Initializing AI food analysis..." = "🔍 Đang khởi tạo phân tích thực phẩm bằng AI...";
 
 "Amount:" = "Số lượng:";
 
@@ -3576,10 +3576,10 @@ Enact a temp Basal or a temp target */
 "Re-connect pump!" = "Kết nối lại máy bơm!";
 
 /* 'fetch' toggle label in nightscout settings */
-"Fetch" = "Fetch";
+"Fetch" = "Lấy về";
 
 /* 'fetch' section header in nightscout settings */
-"Allow Fetching" = "Allow Fetching";
+"Allow Fetching" = "Cho phép lấy";
 
 /* 'fetch' scection footer in nightscout settings */
-"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS will fetch announcements, carbs and temp targets from Nightscout";
+"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS sẽ lấy thông báo, lượng carbs và mục tiêu tạm thời từ Nightscout";
