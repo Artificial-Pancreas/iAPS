@@ -116,7 +116,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
                 print("🎥 Interruption: Video device not available with multiple foreground apps")
             case .videoDeviceNotAvailableDueToSystemPressure:
                 print("🎥 Interruption: Video device not available due to system pressure")
-            @unknown default:
+            default:
                 print("🎥 Interruption: Unknown reason")
             }
         }
@@ -168,7 +168,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
             print("🎥 Runtime error: \(error.localizedDescription)")
 
             DispatchQueue.global().async { [weak self] in
-                self?.scanError = BarcodeScanError.sessionSetupFailed
+                self?.scanError = .sessionSetupFailed
                 self?.isScanning = false
             }
         }
@@ -201,13 +201,13 @@ class BarcodeScannerService: NSObject, ObservableObject {
                                 print("🎥 Permission granted, retrying scan setup...")
                                 self?.startScanning()
                             } else {
-                                self?.scanError = BarcodeScanError.cameraPermissionDenied
+                                self?.scanError = .cameraPermissionDenied
                                 self?.isScanning = false
                             }
                         }
                     }
                 } else {
-                    self.scanError = BarcodeScanError.cameraPermissionDenied
+                    self.scanError = .cameraPermissionDenied
                     self.isScanning = false
                 }
             }
@@ -288,7 +288,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
                     print("🎥 Error userInfo: \(nsError.userInfo)")
                 }
                 DispatchQueue.main.async {
-                    self.scanError = BarcodeScanError.sessionSetupFailed
+                    self.scanError = .sessionSetupFailed
                     self.isScanning = false
                 }
             }
@@ -306,6 +306,10 @@ class BarcodeScannerService: NSObject, ObservableObject {
         DispatchQueue.global().async { [weak self] in
             self?.isScanning = false
             self?.lastScanResult = nil
+        }
+
+        // Internal state on background thread
+        DispatchQueue.global().async { [weak self] in
             self?.isProcessingScan = false
             self?.recentlyScannedBarcodes.removeAll()
         }
@@ -507,7 +511,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
                 }
             } catch {
                 DispatchQueue.main.async {
-                    self.scanError = BarcodeScanError.sessionSetupFailed
+                    self.scanError = .sessionSetupFailed
                 }
             }
         }
@@ -559,7 +563,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
             } catch {
                 print("🎥 ❌ Session reset failed: \(error)")
                 DispatchQueue.main.async {
-                    self.scanError = BarcodeScanError.sessionSetupFailed
+                    self.scanError = .sessionSetupFailed
                 }
             }
         }
