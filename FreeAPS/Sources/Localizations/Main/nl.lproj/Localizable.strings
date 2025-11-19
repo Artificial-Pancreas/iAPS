@@ -1431,6 +1431,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Title */
 "Food Search" = "Voedsel zoeken";
 
+"Food Search..." = "Food Search...";
+
 /* */
 "Search Food Database" = "Voedseldatabase doorzoeken";
 
