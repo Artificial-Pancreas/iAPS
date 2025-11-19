@@ -1659,43 +1659,43 @@ Enact a temp Basal or a temp target */
 
 "🔍 Initializing AI food analysis..." = "🔍 Đang khởi tạo phân tích thực phẩm bằng AI...";
 
-"⚡ Processing AI analysis results..." = "⚡ Processing AI analysis results...";
+"⚡ Processing AI analysis results..." = "⚡ Đang xử lý kết quả phân tích AI...";
 
-"📥 Received response from Claude..." = "📥 Received response from Claude...";
+"📥 Received response from Claude..." = "📥 Đã nhận phản hồi từ Claude...";
 
-"⏳ AI is cooking up results..." = "⏳ AI is cooking up results...";
+"⏳ AI is cooking up results..." = "⏳ AI đang xử lý kết quả...";
 
-"🌐 Sending request to Claude..." = "🌐 Sending request to Claude...";
+"🌐 Sending request to Claude..." = "🌐 Đang gửi yêu cầu đến Claude...";
 
-"📡 Preparing API request..." = "📡 Preparing API request...";
+"📡 Preparing API request..." = "📡 Đang chuẩn bị yêu cầu API...";
 
-"🔄 Encoding image data..." = "🔄 Encoding image data...";
+"🔄 Encoding image data..." = "🔄 Đang mã hóa dữ liệu hình ảnh...";
 
-"🖼️ Optimizing your image..." = "🖼️ Optimizing your image...";
+"🖼️ Optimizing your image..." = "🖼️ Đang tối ưu hóa hình ảnh của bạn...";
 
-"⚙️ Configuring Claude parameters..." = "⚙️ Configuring Claude parameters...";
+"⚙️ Configuring Claude parameters..." = "⚙️ Đang cấu hình các tham số cho Claude...";
 
-"⚙️ Processing analysis results..." = "⚙️ Processing analysis results...";
+"⚙️ Processing analysis results..." = "⚙️ Đang xử lý kết quả phân tích...";
 
-"📊 Calculating nutrition estimates..." = "📊 Calculating nutrition estimates...";
+"📊 Calculating nutrition estimates..." = "📊 Đang tính toán giá trị dinh dưỡng ước tính...";
 
-"🍽️ Identifying food characteristics..." = "🍽️ Identifying food characteristics...";
+"🍽️ Identifying food characteristics..." = "🍽️ Đang nhận diện đặc điểm thực phẩm...";
 
-"📱 Analyzing image properties..." = "📱 Analyzing image properties...";
+"📱 Analyzing image properties..." = "📱 Đang phân tích thuộc tính hình ảnh...";
 
-"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
+"📊 Initializing basic analysis..." = "📊 Đang khởi tạo phân tích cơ bản...";
 
-"📥 Received response from Gemini..." = "📥 Received response from Gemini...";
+"📥 Received response from Gemini..." = "📥 Đã nhận phản hồi từ Gemini...";
 
-"🌐 Sending request to Google Gemini..." = "🌐 Sending request to Google Gemini...";
+"🌐 Sending request to Google Gemini..." = "🌐 Đang gửi yêu cầu đến Google Gemini...";
 
-"🔄 Encoding image data..." = "🔄 Encoding image data...";
+"🔄 Encoding image data..." = "🔄 Đang mã hóa dữ liệu hình ảnh...";
 
-"⚙️ Configuring Gemini parameters..." = "⚙️ Configuring Gemini parameters...";
+"⚙️ Configuring Gemini parameters..." = "⚙️ Đang cấu hình các tham số cho Gemini...";
 
-"📥 Received response from OpenAI..." = "📥 Received response from OpenAI...";
+"📥 Received response from OpenAI..." = "📥 Đã nhận phản hồi từ OpenAI...";
 
-"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
+"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Đang phân tích chi tiết (có thể mất một chút thời gian)...";
 
 "Amount:" = "Số lượng:";
 
