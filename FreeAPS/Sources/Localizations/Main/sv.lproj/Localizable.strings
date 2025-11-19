@@ -1685,7 +1685,7 @@ Enact a temp Basal or a temp target */
 
 
 "📊 Initializing basic analysis...
-🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+🤖 Connecting to Google Gemini..." = "🤖 Ansluter till Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Mottaget svar från Gemini...";
 
