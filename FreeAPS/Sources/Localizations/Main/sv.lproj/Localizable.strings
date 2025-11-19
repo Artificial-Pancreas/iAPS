@@ -1430,6 +1430,8 @@ Enact a temp Basal or a temp target */
 /* Title */
 "Food Search" = "Matsökning";
 
+"Food Search..." = "Food Search...";
+
 /* */
 "Search Food Database" = "Sök Matdatabas";
 
@@ -1683,9 +1685,9 @@ Enact a temp Basal or a temp target */
 
 "📱 Analyzing image properties..." = "📱 Analyserar bildegenskaper...";
 
-"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
+"📊 Initializing basic analysis..." = "📊 Initierar grundläggande analys...";
 
-"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Ansluter till Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Mottaget svar från Gemini...";
 
@@ -1705,7 +1707,7 @@ Enact a temp Basal or a temp target */
 
 "kcal" = "kcal";
 
-"Cal" = "Cal";
+"Cal" = "Kal";
 
 
 // --------- End of AI ---------
