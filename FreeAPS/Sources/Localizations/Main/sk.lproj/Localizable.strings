@@ -1684,9 +1684,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "📱 Analyzing image properties..." = "📱 Analýza vlastností obrázka...";
 
+"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
 
-"📊 Initializing basic analysis...
-🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Prijatá odpoveď od Gemini...";
 
@@ -1703,6 +1703,11 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Amount:" = "Množstvo:";
 
 "Take Over" = "Prevziať";
+
+"kcal" = "kcal";
+
+"Cal" = "Cal";
+
 
 // --------- End of AI ---------
 /* */
