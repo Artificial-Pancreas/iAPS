@@ -1430,7 +1430,7 @@ Enact a temp Basal or a temp target */
 /* Title */
 "Food Search" = "Tìm món ăn";
 
-"Food Search..." = "Food Search...";
+"Food Search..." = "Tìm món ăn...";
 
 /* */
 "Search Food Database" = "Tìm thực phẩm";
@@ -1685,9 +1685,9 @@ Enact a temp Basal or a temp target */
 
 "📱 Analyzing image properties..." = "📱 Đang phân tích thuộc tính hình ảnh...";
 
-"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
+"📊 Initializing basic analysis..." = "📊 Đang khởi tạo phân tích cơ bản...";
 
-"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Đang kết nối với Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Đã nhận phản hồi từ Gemini...";
 
