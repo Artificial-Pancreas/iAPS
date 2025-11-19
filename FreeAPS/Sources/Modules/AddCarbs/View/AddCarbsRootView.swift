@@ -289,7 +289,13 @@ extension AddCarbs {
             preset.carbs = Decimal(max(food.carbs * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
             preset.fat = Decimal(max(food.fat * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
             preset.protein = Decimal(fmax(food.protein * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
-            preset.dish = food.name + " \(portionGrams) g"
+
+            if portionGrams != 100 {
+                preset.dish = food.name + " \(portionGrams)g"
+            } else {
+                preset.dish = food.name
+            }
+
             if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
                 do {
                     try moc.save()
