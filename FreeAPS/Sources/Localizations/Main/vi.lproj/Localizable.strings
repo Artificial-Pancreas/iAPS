@@ -1683,7 +1683,9 @@ Enact a temp Basal or a temp target */
 
 "📱 Analyzing image properties..." = "📱 Đang phân tích thuộc tính hình ảnh...";
 
-"📊 Initializing basic analysis..." = "📊 Đang khởi tạo phân tích cơ bản...";
+
+"📊 Initializing basic analysis...
+🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Đã nhận phản hồi từ Gemini...";
 
