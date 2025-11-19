@@ -1688,7 +1688,9 @@ Enact a temp Basal or a temp target */
 
 "📱 Analyzing image properties..." = "📱 Analyzing image properties...";
 
-"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
+"📊 Initializing basic analysis...""📊 Initializing basic analysis...";
+
+"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Received response from Gemini...";
 
