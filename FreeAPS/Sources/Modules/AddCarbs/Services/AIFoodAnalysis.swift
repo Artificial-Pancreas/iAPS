@@ -28,7 +28,7 @@ class NetworkQualityMonitor: ObservableObject {
 
     private func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
-            DispatchQueue.main.async {
+            DispatchQueue.global().async { [weak self] in
                 self?.isConnected = path.status == .satisfied
                 self?.isExpensive = path.isExpensive
                 self?.isConstrained = path.isConstrained
@@ -71,7 +71,10 @@ class NetworkQualityMonitor: ObservableObject {
 // MARK: - Timeout Helper
 
 /// Timeout wrapper for async operations
-private func withTimeoutForAnalysis<T>(seconds: TimeInterval, operation: @escaping () async throws -> T) async throws -> T {
+private func withTimeoutForAnalysis<T: Sendable>(
+    seconds: TimeInterval,
+    operation: @escaping () async throws -> T
+) async throws -> T {
     try await withThrowingTaskGroup(of: T.self) { group in
         // Add the actual operation
         group.addTask {

@@ -121,8 +121,8 @@ class BarcodeScannerService: NSObject, ObservableObject {
             }
         }
 
-        DispatchQueue.main.async {
-            self.isScanning = false
+        DispatchQueue.global().async { [weak self] in
+            self?.isScanning = false
             // Don't immediately set an error - wait to see if interruption ends
         }
     }
@@ -167,9 +167,9 @@ class BarcodeScannerService: NSObject, ObservableObject {
         if let error = notification.userInfo?[AVCaptureSessionErrorKey] as? AVError {
             print("🎥 Runtime error: \(error.localizedDescription)")
 
-            DispatchQueue.main.async {
-                self.scanError = BarcodeScanError.sessionSetupFailed
-                self.isScanning = false
+            DispatchQueue.global().async { [weak self] in
+                self?.scanError = BarcodeScanError.sessionSetupFailed
+                self?.isScanning = false
             }
         }
     }
@@ -191,18 +191,18 @@ class BarcodeScannerService: NSObject, ObservableObject {
         // Ensure we have camera permission before proceeding
         guard freshStatus == .authorized else {
             print("🎥 ERROR: Camera not authorized, status: \(freshStatus)")
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 if freshStatus == .notDetermined {
                     // Try to request permission
                     print("🎥 Permission not determined, requesting...")
                     AVCaptureDevice.requestAccess(for: .video) { granted in
-                        DispatchQueue.main.async {
+                        DispatchQueue.global().async { [weak self] in
                             if granted {
                                 print("🎥 Permission granted, retrying scan setup...")
-                                self.startScanning()
+                                self?.startScanning()
                             } else {
-                                self.scanError = BarcodeScanError.cameraPermissionDenied
-                                self.isScanning = false
+                                self?.scanError = BarcodeScanError.cameraPermissionDenied
+                                self?.isScanning = false
                             }
                         }
                     }
@@ -242,13 +242,13 @@ class BarcodeScannerService: NSObject, ObservableObject {
 
                 if isRunningNow && !isInterrupted {
                     // Session started successfully
-                    DispatchQueue.main.async {
-                        self.isScanning = true
-                        self.scanError = nil
+                    DispatchQueue.global().async { [weak self] in
+                        self?.isScanning = true
+                        self?.scanError = nil
                         print("🎥 ✅ SUCCESS: Session running and not interrupted")
 
                         // Start session health monitoring
-                        self.startSessionHealthMonitoring()
+                        self?.startSessionHealthMonitoring()
                     }
 
                     // Monitor for delayed interruption
@@ -303,11 +303,11 @@ class BarcodeScannerService: NSObject, ObservableObject {
         stopSessionHealthMonitoring()
 
         // Clear scanning state
-        DispatchQueue.main.async {
-            self.isScanning = false
-            self.lastScanResult = nil
-            self.isProcessingScan = false
-            self.recentlyScannedBarcodes.removeAll()
+        DispatchQueue.global().async { [weak self] in
+            self?.isScanning = false
+            self?.lastScanResult = nil
+            self?.isProcessingScan = false
+            self?.recentlyScannedBarcodes.removeAll()
         }
 
         // Stop timers
@@ -384,19 +384,19 @@ class BarcodeScannerService: NSObject, ObservableObject {
     /// Clear scan state to prepare for next scan
     func clearScanState() {
         print("🔍 Clearing scan state for next scan")
-        DispatchQueue.main.async {
+        DispatchQueue.global().async { [weak self] in
             // Don't clear lastScanResult immediately - other observers may need it
-            self.isProcessingScan = false
+            self?.isProcessingScan = false
         }
 
         // Clear recently scanned after a delay to allow for a fresh scan
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
             self.recentlyScannedBarcodes.removeAll()
             print("🔍 Ready for next scan")
         }
 
         // Clear scan result after a longer delay to allow all observers to process
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 3.0) {
             self.lastScanResult = nil
             print("🔍 Cleared lastScanResult after delay")
         }
@@ -1001,11 +1001,11 @@ class BarcodeScannerService: NSObject, ObservableObject {
         recentlyScannedBarcodes.insert(selectedBarcode.barcodeString)
 
         // Publish result on main queue
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.global().async { [weak self] in
             self?.lastScanResult = selectedBarcode
 
             // Reset processing flag after a brief delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
                 self?.isProcessingScan = false
             }
 
@@ -1126,7 +1126,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
             if isNonFoodQRCode(bestQR.barcodeString) {
                 print("🔍 Rejecting non-food QR code")
                 // We could show a specific error here, but for now we'll just return nil
-                DispatchQueue.main.async {
+                DispatchQueue.global().async {
                     self.scanError = BarcodeScanError
                         .scanningFailed("This QR code is not a food product code and cannot be scanned")
                 }
@@ -1374,7 +1374,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
         // Check session state
         if !captureSession.isRunning, isScanning {
             print("🎥 ⚠️ Session stopped but still marked as scanning")
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 self.isScanning = false
                 self.scanError = BarcodeScanError.sessionSetupFailed
             }
@@ -1446,7 +1446,7 @@ extension BarcodeScannerService: AVCaptureVideoDataOutputSampleBufferDelegate {
         /// Simulate a successful barcode scan for testing
         func simulateScan(barcode: String) {
             let result = BarcodeScanResult.sample(barcode: barcode)
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 self.lastScanResult = result
                 self.isScanning = false
             }
@@ -1454,7 +1454,7 @@ extension BarcodeScannerService: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         /// Simulate a scan error for testing
         func simulateError(_ error: BarcodeScanError) {
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 self.scanError = error
                 self.isScanning = false
             }

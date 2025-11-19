@@ -311,7 +311,7 @@ class OpenFoodFactsService {
 
     /// Mock URL protocol for testing
     class MockURLProtocol: URLProtocol {
-        static var mockResponses: [String: (Data, HTTPURLResponse)] = [:]
+        nonisolated(unsafe) static var mockResponses: [String: (Data, HTTPURLResponse)] = [:]
 
         override class func canInit(with _: URLRequest) -> Bool {
             true
