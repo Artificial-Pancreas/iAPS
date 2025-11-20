@@ -1382,11 +1382,11 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Food Type / Meal Note */
 "Note" = "Opmerking";
 
-"Servings" = "Servings";
+"Servings" = "Porties";
 
-"Kilo Calories" = "Kilo Calories";
+"Kilo Calories" = "Kilo calorieën";
 
-"Meals" = "Meals";
+"Meals" = "Maaltijden";
 
 // --------- AI ---------
 /* */
@@ -1437,7 +1437,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Title */
 "Food Search" = "Voedsel zoeken";
 
-"Food Search..." = "Food Search...";
+"Food Search..." = "Voedsel zoeken...";
 
 /* */
 "Search Food Database" = "Voedseldatabase doorzoeken";
@@ -1614,7 +1614,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "• Use the barcode scanner for packaged foods" = "• Gebruik de barcodescanner voor verpakt voedsel";
 
-"• Check spelling carefully" = "Controleer spelling zorgvuldig";
+"• Check spelling carefully" = "• Controleer spelling zorgvuldig";
 
 "• Use simple, common food names" = "• Gebruik eenvoudige en gangbare voedingsnamen";
 
@@ -1692,9 +1692,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "📱 Analyzing image properties..." = "📱 Afbeeldingen analyseren...";
 
-"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
+"📊 Initializing basic analysis..." = "📊 Basisanalyse initialiseren...";
 
-"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Verbinding maken met Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Reactie ontvangen van Gemini...";
 
@@ -1712,7 +1712,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Take Over" = "Overnemen";
 
-"kcal" = "kcal";
+"kcal" = "kCal";
 
 "Cal" = "Cal";
 
