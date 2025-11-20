@@ -1382,6 +1382,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Food Type / Meal Note */
 "Note" = "Poznámka";
 
+"Servings" = "Servings";
+
+"Kilo Calories" = "Kilo Calories";
+
+"Meals" = "Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Poznámky";
