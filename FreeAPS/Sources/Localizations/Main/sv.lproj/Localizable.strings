@@ -1436,6 +1436,7 @@ Enact a temp Basal or a temp target */
 /* Title */
 "Food Search" = "Matsökning";
 
+/* Food Search input */
 "Food Search..." = "Matsökning...";
 
 /* */
