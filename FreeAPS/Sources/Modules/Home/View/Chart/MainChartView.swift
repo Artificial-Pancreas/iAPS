@@ -952,25 +952,25 @@ struct MainChartCanvas: View {
                 for rect in geom.predictionDotsIOB {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.insulin.opacity(0.7))
+            }.fill(Color.insulin.opacity(colorScheme == .dark ? 0.8 : 0.9))
 
             Path { path in
                 for rect in geom.predictionDotsCOB {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.loopYellow.opacity(0.7))
+            }.fill(Color.loopYellow.opacity(colorScheme == .dark ? 0.8 : 0.9))
 
             Path { path in
                 for rect in geom.predictionDotsZT {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.zt.opacity(0.7))
+            }.fill(Color.zt.opacity(colorScheme == .dark ? 0.8 : 0.9))
 
             Path { path in
                 for rect in geom.predictionDotsUAM {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.uam.opacity(0.7))
+            }.fill(Color.uam.opacity(colorScheme == .dark ? 0.8 : 0.9))
         }
     }
 }
