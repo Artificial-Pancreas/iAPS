@@ -1706,6 +1706,8 @@ Enact a temp Basal or a temp target */
 
 "📥 Received response from OpenAI..." = "📥 Đã nhận phản hồi từ OpenAI...";
 
+"💾 Caching analysis result..." = "💾 Caching analysis result...";
+
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Đang phân tích chi tiết (có thể mất một chút thời gian)...";
 
 "Amount:" = "Số lượng:";
