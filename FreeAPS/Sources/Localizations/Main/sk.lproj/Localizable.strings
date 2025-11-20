@@ -1707,6 +1707,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "📥 Received response from OpenAI..." = "📥 Prijatá odpoveď od OpenAI...";
 
+"💾 Caching analysis result..." = "💾 Caching analysis result...";
+
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Robím hĺbkovú analýzu (môže to chvíľu trvať)...";
 
 "Amount:" = "Množstvo:";
