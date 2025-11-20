@@ -1381,6 +1381,12 @@ Enact a temp Basal or a temp target */
 /* Food Type / Meal Note */
 "Note" = "Anteckning";
 
+"Servings" = "Portioner";
+
+"Kilo Calories" = "Kilokalorier";
+
+"Meals" = "Måltider";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Anteckningar";
@@ -1429,6 +1435,8 @@ Enact a temp Basal or a temp target */
 
 /* Title */
 "Food Search" = "Matsökning";
+
+"Food Search..." = "Matsökning...";
 
 /* */
 "Search Food Database" = "Sök Matdatabas";
@@ -1683,9 +1691,9 @@ Enact a temp Basal or a temp target */
 
 "📱 Analyzing image properties..." = "📱 Analyserar bildegenskaper...";
 
+"📊 Initializing basic analysis..." = "📊 Initierar grundläggande analys...";
 
-"📊 Initializing basic analysis...
-🤖 Connecting to Google Gemini..." = "🤖 Ansluter till Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Ansluter till Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Mottaget svar från Gemini...";
 
@@ -1702,6 +1710,11 @@ Enact a temp Basal or a temp target */
 "Amount:" = "Mängd:";
 
 "Take Over" = "För över";
+
+"kcal" = "kcal";
+
+"Cal" = "Kal";
+
 
 // --------- End of AI ---------
 /* */

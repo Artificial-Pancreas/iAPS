@@ -1386,6 +1386,12 @@ Enact a temp Basal or a temp target */
 /* Food Type / Meal Note */
 "Note" = "Note";
 
+"Servings" = "Servings";
+
+"Kilo Calories" = "Kilo Calories";
+
+"Meals" = "Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Notes";
@@ -1434,6 +1440,8 @@ Enact a temp Basal or a temp target */
 
 /* Title */
 "Food Search" = "Food Search";
+
+"Food Search..." = "Food Search...";
 
 /* */
 "Search Food Database" = "Search Food Database";
@@ -1688,9 +1696,9 @@ Enact a temp Basal or a temp target */
 
 "📱 Analyzing image properties..." = "📱 Analyzing image properties...";
 
+"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
 
-"📊 Initializing basic analysis...
-🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Received response from Gemini...";
 
@@ -1707,6 +1715,11 @@ Enact a temp Basal or a temp target */
 "Amount:" = "Amount:";
 
 "Take Over" = "Take Over";
+
+"kcal" = "kcal";
+
+"Cal" = "Cal";
+
 
 // --------- End of AI ---------
 /* */
