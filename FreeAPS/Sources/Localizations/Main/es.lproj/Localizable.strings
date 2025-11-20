@@ -1382,6 +1382,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Food Type / Meal Note */
 "Note" = "Nota";
 
+"Servings" = "Servings";
+
+"Kilo Calories" = "Kilo Calories";
+
+"Meals" = "Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Notes";
