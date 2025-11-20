@@ -1382,6 +1382,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Food Type / Meal Note */
 "Note" = "Opmerking";
 
+"Servings" = "Servings";
+
+"Kilo Calories" = "Kilo Calories";
+
+"Meals" = "Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Opmerking";
