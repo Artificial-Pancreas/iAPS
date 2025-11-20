@@ -1383,6 +1383,12 @@ Połączono z Nightscout!";
 /* Food Type / Meal Note */
 "Note" = "Note";
 
+"Servings" = "Servings";
+
+"Kilo Calories" = "Kilo Calories";
+
+"Meals" = "Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Notes";
@@ -1431,6 +1437,8 @@ Połączono z Nightscout!";
 
 /* Title */
 "Food Search" = "Food Search";
+
+"Food Search..." = "Food Search...";
 
 /* */
 "Search Food Database" = "Search Food Database";
@@ -1685,9 +1693,9 @@ Połączono z Nightscout!";
 
 "📱 Analyzing image properties..." = "📱 Analyzing image properties...";
 
+"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
 
-"📊 Initializing basic analysis...
-🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Received response from Gemini...";
 
@@ -1704,6 +1712,11 @@ Połączono z Nightscout!";
 "Amount:" = "Amount:";
 
 "Take Over" = "Take Over";
+
+"kcal" = "kcal";
+
+"Cal" = "Cal";
+
 
 // --------- End of AI ---------
 /* */

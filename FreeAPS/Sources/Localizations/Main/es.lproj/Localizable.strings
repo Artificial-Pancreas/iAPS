@@ -1382,6 +1382,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Food Type / Meal Note */
 "Note" = "Nota";
 
+"Servings" = "Servings";
+
+"Kilo Calories" = "Kilo Calories";
+
+"Meals" = "Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Notes";
@@ -1430,6 +1436,8 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* Title */
 "Food Search" = "Food Search";
+
+"Food Search..." = "Food Search...";
 
 /* */
 "Search Food Database" = "Search Food Database";
@@ -1684,9 +1692,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "📱 Analyzing image properties..." = "📱 Analyzing image properties...";
 
+"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
 
-"📊 Initializing basic analysis...
-🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
+"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
 
 "📥 Received response from Gemini..." = "📥 Received response from Gemini...";
 
@@ -1703,6 +1711,11 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Amount:" = "Amount:";
 
 "Take Over" = "Take Over";
+
+"kcal" = "kcal";
+
+"Cal" = "Cal";
+
 
 // --------- End of AI ---------
 /* */
