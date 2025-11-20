@@ -1437,6 +1437,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Title */
 "Food Search" = "Voedsel zoeken";
 
+/* Food Search input */
 "Food Search..." = "Voedsel zoeken...";
 
 /* */
@@ -1705,6 +1706,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "⚙️ Configuring Gemini parameters..." = "⚙️ Gemini-parameters configureren...";
 
 "📥 Received response from OpenAI..." = "📥 Reactie ontvangen van OpenAI...";
+
+"💾 Caching analysis result..." = "💾 Caching analysis result...";
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Maak een diepteanalyse (kan even duren)...";
 

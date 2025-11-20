@@ -1436,6 +1436,7 @@ Enact a temp Basal or a temp target */
 /* Title */
 "Food Search" = "Matsökning";
 
+/* Food Search input */
 "Food Search..." = "Matsökning...";
 
 /* */
@@ -1704,6 +1705,8 @@ Enact a temp Basal or a temp target */
 "⚙️ Configuring Gemini parameters..." = "⚙️ Konfigurerar Gemini-parametrar...";
 
 "📥 Received response from OpenAI..." = "📥 Mottaget svar från OpenAI...";
+
+"💾 Caching analysis result..." = "💾 Sparar analysresultat...";
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Gör en djupanalys (kan ta en stund)...";
 
