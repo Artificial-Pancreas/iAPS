@@ -40,53 +40,175 @@ struct GlucosePeak {
     let type: ExtremumType
 }
 
+enum ChartConfig {
+    static let endID = "End"
+    static let basalHeight: CGFloat = 60
+    static let topYPadding: CGFloat = 55
+    static let bottomPadding: CGFloat = 20
+    static let legendBottomPadding: CGFloat = 8 // without insulin activity: additional legend padding
+    static let activityChartHeight: CGFloat = 80
+    static let activityChartTopGap: CGFloat = 20 // gap between main chart and activity chart, with legend inside
+    static let mainChartBottomPaddingWithActivity: CGFloat = bottomPadding + activityChartHeight + activityChartTopGap
+    static let legendBottomPaddingWithActivity: CGFloat = bottomPadding + activityChartHeight
+    static let cobChartHeight: CGFloat = activityChartHeight
+    static let cobChartTopGap: CGFloat = activityChartTopGap
+    static let minAdditionalWidth: CGFloat = 150
+    static let maxGlucose = 270
+    static let minGlucose = 0 // 45
+    static let yLinesCount = 5
+    static let glucoseScale: CGFloat = 2 // default 2
+    static let bolusSize: CGFloat = 8
+    static let bolusScale: CGFloat = 2.5
+    static let carbsSize: CGFloat = 6
+    static let maxCarbSize: CGFloat = 45
+    static let fpuSize: CGFloat = 4
+    static let carbsScale: CGFloat = 0.3
+    static let fpuScale: CGFloat = 0.5
+    static let announcementSize: CGFloat = 8
+    static let announcementScale: CGFloat = 2.5
+    static let owlSeize: CGFloat = 20
+    static let glucoseSize: CGFloat = 4
+    static let owlOffset: CGFloat = 100
+    static let carbOffset: CGFloat = 10
+    static let insulinOffset: CGFloat = 15
+    static let pointSizeHeight: Double = 5
+    static let pointSizeHeightCarbs: Double = 5
+    static let bolusHeight: Decimal = 45
+    static let carbHeight: Decimal = 45
+    static let carbWidth: CGFloat = 5
+    static let peakHorizontalPadding: CGFloat = 4
+    static let peakVerticalPadding: CGFloat = 2
+    static let peakMargin: CGFloat = 6
+    static let peakCornerRadius: CGFloat = 2
+    static let insulinCarbLabelMargin: CGFloat = 2
+}
+
 struct MainChartView: View {
     @State var data: ChartModel
     @Binding var triggerUpdate: Bool
 
-    enum Config {
-        static let endID = "End"
-        static let basalHeight: CGFloat = 60
-        static let topYPadding: CGFloat = 55
-        static let bottomPadding: CGFloat = 20
-        static let legendBottomPadding: CGFloat = 8 // without insulin activity: additional legend padding
-        static let activityChartHeight: CGFloat = 80
-        static let activityChartTopGap: CGFloat = 20 // gap between main chart and activity chart, with legend inside
-        static let mainChartBottomPaddingWithActivity: CGFloat = Config.bottomPadding + Config.activityChartHeight + Config
-            .activityChartTopGap
-        static let legendBottomPaddingWithActivity: CGFloat = bottomPadding + activityChartHeight
-        static let cobChartHeight: CGFloat = activityChartHeight
-        static let cobChartTopGap: CGFloat = activityChartTopGap
-        static let minAdditionalWidth: CGFloat = 150
-        static let maxGlucose = 270
-        static let minGlucose = 0 // 45
-        static let yLinesCount = 5
-        static let glucoseScale: CGFloat = 2 // default 2
-        static let bolusSize: CGFloat = 8
-        static let bolusScale: CGFloat = 2.5
-        static let carbsSize: CGFloat = 6
-        static let maxCarbSize: CGFloat = 45
-        static let fpuSize: CGFloat = 4
-        static let carbsScale: CGFloat = 0.3
-        static let fpuScale: CGFloat = 0.5
-        static let announcementSize: CGFloat = 8
-        static let announcementScale: CGFloat = 2.5
-        static let owlSeize: CGFloat = 20
-        static let glucoseSize: CGFloat = 4
-        static let owlOffset: CGFloat = 100
-        static let carbOffset: CGFloat = 10
-        static let insulinOffset: CGFloat = 15
-        static let pointSizeHeight: Double = 5
-        static let pointSizeHeightCarbs: Double = 5
-        static let bolusHeight: Decimal = 45
-        static let carbHeight: Decimal = 45
-        static let carbWidth: CGFloat = 5
-        static let peakHorizontalPadding: CGFloat = 4
-        static let peakVerticalPadding: CGFloat = 2
-        static let peakMargin: CGFloat = 6
-        static let peakCornerRadius: CGFloat = 2
-        static let insulinCarbLabelMargin: CGFloat = 4
+    @State private var geom: CalculatedGeometries? = nil
+
+    private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
+
+    @State private var latestSize: CGSize = .zero
+    @State private var updatesCancellable: AnyCancellable?
+
+    @State private var sizeChanges = PassthroughSubject<Void, Never>()
+    @State private var updateRequests = PassthroughSubject<Void, Never>()
+    @Environment(\.scenePhase) private var scenePhase
+
+    @State private var shouldScrollAfterUpdate = true
+    @State private var scrollTrigger = 0
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack {
+                if let geom = self.geom {
+                    MainChartCanvas(geom: geom, data: data, scrollTrigger: $scrollTrigger)
+                }
+            }
+            .onAppear {
+                latestSize = geo.size
+                subscribeToUpdates()
+                sizeChanges.send(())
+            }
+            .onChange(of: geo.size) {
+                latestSize = geo.size
+                sizeChanges.send(())
+            }
+            .onChange(of: triggerUpdate) {
+                updateRequests.send(())
+            }
+            .onChange(of: data.screenHours) {
+                shouldScrollAfterUpdate = true
+            }
+            .onChange(of: scenePhase) {
+                if scenePhase == .active {
+                    shouldScrollAfterUpdate = true
+                    updateRequests.send(())
+                }
+            }
+        }
     }
+
+    private func triggerScroll() {
+        scrollTrigger &+= 1
+    }
+
+    private func update(fullSize: CGSize) {
+        let geom = CalculatedGeometries(fullSize: fullSize, data: data)
+
+        DispatchQueue.main.async {
+            if self.shouldScrollAfterUpdate {
+                triggerScroll()
+                self.shouldScrollAfterUpdate = false
+            }
+            self.geom = geom
+        }
+    }
+
+    private func ping<T: Equatable>(_ p: Published<T>.Publisher) -> AnyPublisher<Void, Never> {
+        p.removeDuplicates()
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    private func subscribeToUpdates() {
+        let debouncedPublishers: [AnyPublisher<Void, Never>] = [
+            ping(data.$screenHours),
+            ping(data.$showInsulinActivity),
+            ping(data.$showCobChart),
+            ping(data.$useInsulinBars),
+            ping(data.$useCarbBars),
+            ping(data.$tempBasals),
+            ping(data.$suspensions),
+            ping(data.$maxBasal),
+            ping(data.$autotunedBasalProfile),
+            ping(data.$glucose),
+            ping(data.$activity),
+            ping(data.$cob),
+            ping(data.$isManual),
+            ping(data.$announcement),
+            ping(data.$boluses),
+            ping(data.$carbs),
+            ping(data.$tempTargets),
+            ping(data.$suggestion),
+            ping(data.$latestOverride),
+            ping(data.$overrideHistory),
+            ping(data.$lowGlucose),
+            ping(data.$highGlucose),
+            ping(data.$units),
+            ping(data.$minimumSMB)
+        ]
+
+        let immediatePublishers: [AnyPublisher<Void, Never>] = [
+            sizeChanges.eraseToAnyPublisher(),
+            updateRequests.eraseToAnyPublisher()
+        ]
+
+        let debouncedUpdates: AnyPublisher<Void, Never> =
+            Publishers.MergeMany(debouncedPublishers)
+                .debounce(for: .milliseconds(15), scheduler: calculationQueue)
+                .eraseToAnyPublisher()
+
+        let immediateUpdates: AnyPublisher<Void, Never> =
+            Publishers.MergeMany(immediatePublishers)
+                .eraseToAnyPublisher()
+
+        updatesCancellable =
+            Publishers.MergeMany([debouncedUpdates, immediateUpdates])
+                .receive(on: calculationQueue)
+                .sink { _ in
+                    update(fullSize: latestSize)
+                }
+    }
+}
+
+struct MainChartCanvas: View {
+    let geom: CalculatedGeometries
+    let data: ChartModel
+    @Binding var scrollTrigger: Int
 
     private enum Command {
         static let open = "🔴"
@@ -98,59 +220,6 @@ struct MainChartView: View {
         static let meal = "🍴"
         static let override = "👤"
     }
-
-    @State private var glucoseDots: [(rect: CGRect, glucose: Int?)] = []
-    @State private var activityDots: [CGPoint] = []
-    @State private var activityZeroPointY: CGFloat? = nil
-    @State private var cobDots: [(CGPoint, IOBData)] = []
-    @State private var cobZeroPointY: CGFloat? = nil
-    @State private var manualGlucoseDots: [CGRect] = []
-    @State private var announcementDots: [AnnouncementDot] = []
-    @State private var announcementPath = Path()
-    @State private var manualGlucoseDotsCenter: [CGRect] = []
-    @State private var unSmoothedGlucoseDots: [CGRect] = []
-    @State private var predictionDots: [PredictionType: [CGRect]] = [:]
-    @State private var bolusDots: [DotInfo] = []
-    @State private var bolusPath = Path()
-    @State private var tempBasalPath = Path()
-    @State private var regularBasalPath = Path()
-    @State private var tempTargetsPath = Path()
-    @State private var overridesPath = Path()
-    @State private var suspensionsPath = Path()
-    @State private var carbsDots: [DotInfo] = []
-    @State private var carbsPath = Path()
-    @State private var fpuDots: [DotInfo] = []
-    @State private var fpuPath = Path()
-    @State private var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
-    @State private var offset: CGFloat = 0
-    @State private var cachedMaxBasalRate: Decimal?
-    @State private var activityChartMinMax: (Double, Double) = (0, 1)
-    @State private var cobChartMinMax: (Double, Double) = (0, 1)
-    @State private var peakActivity_1unit: Double = 0.0
-    @State private var peakActivity_1unit_y: CGFloat = 0.0
-    @State private var peakActivity_maxBolus: Double = 0.0
-    @State private var peakActivity_maxBolus_y: CGFloat = 0.0
-    @State private var peakActivity_maxIOB: Double = 0.0
-    @State private var peakActivity_maxIOB_y: CGFloat = 0.0
-    @State private var maxActivityInData: Decimal? = nil
-    @State private var horizontalGrid: [(CGFloat, Int)] = []
-    @State private var lowThresholdLine: (CGFloat, Int)? = nil
-    @State private var highThresholdLine: (CGFloat, Int)? = nil
-    @State private var glucosePeaks: [GlucosePeak] = []
-
-    @State private var geometriesReady = false
-
-    @State private var firstHourDate = Date()
-    @State private var oneSecondWidth: CGFloat = 0
-    @State private var additionalWidth: CGFloat = 0
-    @State private var fullGlucoseWidth: CGFloat = 0
-    @State private var firstHourPosition: CGFloat = 0
-    @State private var currentTimeX: CGFloat = 0
-
-    @State private var bolusFont = Font.custom("BolusDotFont", fixedSize: 11)
-    @State private var peaksFont = Font.custom("BolusDotFont", fixedSize: 13)
-
-    private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
     private let date24Formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -166,36 +235,15 @@ struct MainChartView: View {
         return formatter
     }()
 
-    @State private var latestSize: CGSize = .zero
-    @State private var updatesCancellable: AnyCancellable?
-
-    @State private var sizeChanges = PassthroughSubject<Void, Never>()
-    @State private var updateRequests = PassthroughSubject<Void, Never>()
-    @Environment(\.scenePhase) private var scenePhase
-
     var body: some View {
-        GeometryReader { geo in
-            ZStack {
-                yGridView(fullSize: geo.size)
-                mainScrollView(fullSize: geo.size)
-                if data.yGridLabels {
-                    glucoseLabelsView(fullSize: geo.size)
-                }
-                if data.showInsulinActivity, data.insulinActivityLabels {
-                    activityLabelsView(fullSize: geo.size)
-                }
+        ZStack {
+            yGridView
+            mainScrollView
+            if data.yGridLabels {
+                glucoseLabelsView
             }
-            .onAppear {
-                latestSize = geo.size
-                subscribeToUpdates()
-                sizeChanges.send(())
-            }
-            .onChange(of: geo.size) {
-                latestSize = geo.size
-                sizeChanges.send(())
-            }
-            .onChange(of: triggerUpdate) {
-                updateRequests.send(())
+            if data.showInsulinActivity, data.insulinActivityLabels {
+                activityLabelsView
             }
         }
     }
@@ -233,46 +281,44 @@ struct MainChartView: View {
         }
     }
 
-    private func mainScrollView(fullSize: CGSize) -> some View {
+    private var mainScrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { scroll in
                 ZStack(alignment: .top) {
-                    tempTargetsView().drawingGroup()
-                    overridesView().drawingGroup()
-                    basalView().drawingGroup()
+                    tempTargetsView.drawingGroup()
+                    overridesView.drawingGroup()
+                    basalView.drawingGroup()
                     if data.showInsulinActivity || data.showCobChart {
                         legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                             .padding(.trailing, 20)
-                            .padding(.bottom, Config.bottomPadding + Config.legendBottomPadding + Config.activityChartHeight)
+                            .padding(
+                                .bottom,
+                                ChartConfig.bottomPadding + ChartConfig.legendBottomPadding + ChartConfig.activityChartHeight
+                            )
                     } else {
                         legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                             .padding(.trailing, 20)
-                            .padding(.bottom, Config.bottomPadding + Config.legendBottomPadding)
+                            .padding(.bottom, ChartConfig.bottomPadding + ChartConfig.legendBottomPadding)
                     }
-                    mainView(fullSize: fullSize).id(Config.endID)
+                    mainView.id(ChartConfig.endID)
                         .drawingGroup()
                         /* .onChange(of: data.glucose) { _ in
-                             scroll.scrollTo(Config.endID, anchor: .trailing)
+                             scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
                          }
                          .onChange(of: data.suggestion) { _ in
-                             scroll.scrollTo(Config.endID, anchor: .trailing)
+                             scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
                          }
                          .onChange(of: data.tempBasals) { _ in
-                             scroll.scrollTo(Config.endID, anchor: .trailing)
+                             scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
                          } */
-                        .onChange(of: data.screenHours) {
+                        .onChange(of: scrollTrigger) {
                             DispatchQueue.main.async {
-                                scroll.scrollTo(Config.endID, anchor: .trailing)
-                            }
-                        }
-                        .onChange(of: geometriesReady) {
-                            DispatchQueue.main.async {
-                                scroll.scrollTo(Config.endID, anchor: .trailing)
+                                scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
                             }
                         }
                         .onAppear {
                             DispatchQueue.main.async {
-                                scroll.scrollTo(Config.endID, anchor: .trailing)
+                                scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
                             }
                         }
                 }
@@ -280,27 +326,27 @@ struct MainChartView: View {
         }
     }
 
-    private func yGridView(fullSize: CGSize) -> some View {
+    private var yGridView: some View {
         let useColour = data.displayYgridLines ? Color.secondary : Color.clear
         return ZStack {
             if data.displayYgridLines {
                 Path { path in
-                    for (line, _) in horizontalGrid {
+                    for (line, _) in geom.horizontalGrid {
                         path.move(to: CGPoint(x: 0, y: line))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: line))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: line))
                     }
                 }.stroke(useColour, lineWidth: 0.15)
             }
 
             // in-range highlight
             if data.inRangeAreaFill {
-                if let (highLineY, _) = highThresholdLine,
-                   let (lowLineY, _) = lowThresholdLine
+                if let (highLineY, _) = geom.highThresholdLine,
+                   let (lowLineY, _) = geom.lowThresholdLine
                 {
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: highLineY))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: highLineY))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: lowLineY))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: highLineY))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: lowLineY))
                         path.addLine(to: CGPoint(x: 0, y: lowLineY))
                         path.addLine(to: CGPoint(x: 0, y: highLineY))
                     }.fill(IAPSconfig.inRangeBackground).opacity(colorScheme == .dark ? 0.15 : 0.20)
@@ -309,16 +355,16 @@ struct MainChartView: View {
 
             // horizontal limits
             if data.thresholdLines {
-                if let (highLineY, _) = highThresholdLine {
+                if let (highLineY, _) = geom.highThresholdLine {
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: highLineY))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: highLineY))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: highLineY))
                     }.stroke(Color.loopYellow, lineWidth: 0.4).opacity(0.8)
                 }
-                if let (lowLineY, _) = lowThresholdLine {
+                if let (lowLineY, _) = geom.lowThresholdLine {
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: lowLineY))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: lowLineY))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: lowLineY))
                     }.stroke(Color.loopRed, lineWidth: 0.4).opacity(0.8)
                 }
             }
@@ -327,55 +373,59 @@ struct MainChartView: View {
                 if data.secondaryChartBackdrop {
                     // background for COB/activity
                     Path { path in
-                        path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: fullSize.height - Config.bottomPadding))
+                        path.move(to: CGPoint(x: 0, y: geom.fullSize.height - ChartConfig.bottomPadding))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: geom.fullSize.height - ChartConfig.bottomPadding))
                         path
                             .addLine(to: CGPoint(
-                                x: fullSize.width,
-                                y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
+                                x: geom.fullSize.width,
+                                y: geom.fullSize.height - ChartConfig.bottomPadding - ChartConfig.activityChartHeight
                             ))
-                        path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
-                        path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
+                        path
+                            .addLine(to: CGPoint(
+                                x: 0,
+                                y: geom.fullSize.height - ChartConfig.bottomPadding - ChartConfig.activityChartHeight
+                            ))
+                        path.addLine(to: CGPoint(x: 0, y: geom.fullSize.height - ChartConfig.bottomPadding))
                     }.fill(IAPSconfig.activityBackground)
                 }
             }
 
             if data.showInsulinActivity, data.insulinActivityGridLines {
-                ForEach([(peakActivity_1unit_y, 1), (peakActivity_maxBolus_y, 2)], id: \.1) { yCoord, _ in
+                ForEach([(geom.peakActivity_1unit_y, 1), (geom.peakActivity_maxBolus_y, 2)], id: \.1) { yCoord, _ in
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
-                        path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: yCoord))
                     }.stroke(Color.secondary, lineWidth: 0.15)
                 }
             }
 
             // thicker zero guideline for activity/COB
-            if data.showInsulinActivity, data.insulinActivityGridLines, let yCoord = activityZeroPointY {
+            if data.showInsulinActivity, data.insulinActivityGridLines, let yCoord = geom.activityZeroPointY {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: yCoord))
-                    path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                    path.addLine(to: CGPoint(x: geom.fullSize.width, y: yCoord))
                 }.stroke(Color.secondary, lineWidth: 0.4)
             }
         }
     }
 
-    private func glucoseLabelsView(fullSize: CGSize) -> some View {
-        ForEach(horizontalGrid, id: \.1) { (lineY, glucose) -> AnyView in
+    private var glucoseLabelsView: some View {
+        ForEach(geom.horizontalGrid, id: \.1) { (lineY, glucose) -> AnyView in
             let value = Double(glucose) *
                 (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
 
             Text(value == 0 ? "" : glucoseFormatter.string(from: value as NSNumber) ?? "")
-                .position(CGPoint(x: fullSize.width - 12, y: lineY))
+                .position(CGPoint(x: geom.fullSize.width - 12, y: lineY))
                 .font(.bolusDotFont)
                 .asAny()
         }
     }
 
-    private func activityLabelsView(fullSize: CGSize) -> some View {
+    private var activityLabelsView: some View {
         ForEach(
             [
-                (Decimal(1.0), peakActivity_1unit, peakActivity_1unit_y, 1),
-                (data.maxBolus, peakActivity_maxBolus, peakActivity_maxBolus_y, 2)
+                (Decimal(1.0), geom.peakActivity_1unit, geom.peakActivity_1unit_y, 1),
+                (data.maxBolus, geom.peakActivity_maxBolus, geom.peakActivity_maxBolus_y, 2)
             ],
             id: \.2
         ) { bolus, _, yCoord, _ in
@@ -385,86 +435,86 @@ struct MainChartView: View {
                 Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.bolusDotFont)
                 Text("U").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
             }.foregroundStyle(Color(.insulin).opacity(0.8))
-                .position(CGPoint(x: fullSize.width - 12, y: yCoord))
+                .position(CGPoint(x: geom.fullSize.width - 12, y: yCoord))
                 .asAny()
         }
     }
 
-    private func basalView() -> some View {
+    private var basalView: some View {
         ZStack {
-            tempBasalPath.fill(Color.basal.opacity(0.5))
-            tempBasalPath.stroke(Color.insulin, lineWidth: 1)
-            regularBasalPath.stroke(Color.insulin, style: StrokeStyle(lineWidth: 0.7, dash: [4]))
-            suspensionsPath.stroke(Color.loopGray.opacity(0.7), style: StrokeStyle(lineWidth: 0.7)).scaleEffect(x: 1, y: -1)
-            suspensionsPath.fill(Color.loopGray.opacity(0.2)).scaleEffect(x: 1, y: -1)
+            geom.tempBasalPath.fill(Color.basal.opacity(0.5))
+            geom.tempBasalPath.stroke(Color.insulin, lineWidth: 1)
+            geom.regularBasalPath.stroke(Color.insulin, style: StrokeStyle(lineWidth: 0.7, dash: [4]))
+            geom.suspensionsPath.stroke(Color.loopGray.opacity(0.7), style: StrokeStyle(lineWidth: 0.7)).scaleEffect(x: 1, y: -1)
+            geom.suspensionsPath.fill(Color.loopGray.opacity(0.2)).scaleEffect(x: 1, y: -1)
         }
         .scaleEffect(x: 1, y: -1)
         .frame(
-            width: fullGlucoseWidth + additionalWidth
+            width: geom.fullGlucoseWidth + geom.additionalWidth
         )
-        .frame(maxHeight: Config.basalHeight)
+        .frame(maxHeight: ChartConfig.basalHeight)
         .background(Color.clear)
     }
 
-    private func mainView(fullSize: CGSize) -> some View {
+    private var mainView: some View {
         Group {
             VStack {
                 ZStack {
-                    xGridView(fullSize: fullSize)
-                    bolusView()
-                    if data.smooth { unSmoothedGlucoseView() }
-                    else { connectingGlucoseLinesView() }
-                    glucoseView()
-                    lowGlucoseView()
-                    highGlucoseView()
+                    xGridView
+                    bolusView
+                    if data.smooth { unSmoothedGlucoseView }
+                    else { connectingGlucoseLinesView }
+                    glucoseView
+                    lowGlucoseView
+                    highGlucoseView
                     if data.chartGlucosePeaks {
-                        glucosePeaksView()
+                        glucosePeaksView
                     }
                     if data.showInsulinActivity {
-                        activityView()
+                        activityView
                     }
                     if data.showCobChart {
-                        cobView()
+                        cobView
                     }
-                    carbsView() // has to be after activityView()
-                    manualGlucoseView()
-                    manualGlucoseCenterView()
-                    announcementView()
-                    if true || !data.hidePredictions {
-                        predictionsView()
+                    carbsView // has to be after activityView()
+                    manualGlucoseView
+                    manualGlucoseCenterView
+                    announcementView
+                    if !data.hidePredictions {
+                        predictionsView
                     }
-                    if data.fpus { fpuView() }
+                    if data.fpus { fpuView }
                 }
-                timeLabelsView()
+                timeLabelsView
             }
         }
         .frame(
-            width: fullGlucoseWidth + additionalWidth
+            width: geom.fullGlucoseWidth + geom.additionalWidth
         )
     }
 
     @Environment(\.colorScheme) var colorScheme
 
-    private func xGridView(fullSize: CGSize) -> some View {
+    private var xGridView: some View {
         let useColour = data.displayXgridLines ? Color.secondary : Color.clear
         return ZStack {
             Path { path in
                 for hour in 0 ..< data.hours + data.hours {
                     if data.screenHours < 12 || hour % 2 == 0 {
                         // only show every second line if screenHours is too big
-                        let x = firstHourPosition +
-                            oneSecondWidth *
+                        let x = geom.firstHourPosition +
+                            geom.oneSecondWidth *
                             CGFloat(hour) * CGFloat(1.hours.timeInterval)
                         path.move(to: CGPoint(x: x, y: 0))
-                        path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
+                        path.addLine(to: CGPoint(x: x, y: geom.fullSize.height - 20))
                     }
                 }
             }
             .stroke(useColour, lineWidth: 0.15)
 
             Path { path in // vertical timeline
-                path.move(to: CGPoint(x: currentTimeX, y: 0))
-                path.addLine(to: CGPoint(x: currentTimeX, y: fullSize.height - 20))
+                path.move(to: CGPoint(x: geom.currentTimeX, y: 0))
+                path.addLine(to: CGPoint(x: geom.currentTimeX, y: geom.fullSize.height - 20))
             }
             .stroke(
                 colorScheme == .dark ? IAPSconfig.chartBackgroundLight : IAPSconfig.chartBackgroundDark,
@@ -473,7 +523,7 @@ struct MainChartView: View {
         }
     }
 
-    private func timeLabelsView() -> some View {
+    private var timeLabelsView: some View {
         let format = date24Formatter
         return ZStack {
             ForEach(0 ..< data.hours + data.hours, id: \.hours) { hour in
@@ -481,11 +531,11 @@ struct MainChartView: View {
                     // only show every second time label if screenHours is too big
                     EmptyView()
                 } else {
-                    Text(format.string(from: firstHourDate.addingTimeInterval(hour.hours.timeInterval)))
+                    Text(format.string(from: geom.firstHourDate.addingTimeInterval(hour.hours.timeInterval)))
                         .font(.chartTimeFont)
                         .position(
-                            x: firstHourPosition +
-                                oneSecondWidth *
+                            x: geom.firstHourPosition +
+                                geom.oneSecondWidth *
                                 CGFloat(hour) * CGFloat(1.hours.timeInterval),
                             y: 10.0
                         )
@@ -495,9 +545,9 @@ struct MainChartView: View {
         }.frame(maxHeight: 20)
     }
 
-    private func lowGlucoseView() -> some View {
+    private var lowGlucoseView: some View {
         Path { path in
-            for rect in glucoseDots {
+            for rect in geom.glucoseDots {
                 if let glucose = rect.glucose, Decimal(glucose) <= data.lowGlucose {
                     path.addEllipse(in: rect.rect)
                 }
@@ -505,9 +555,9 @@ struct MainChartView: View {
         }.fill(Color.red)
     }
 
-    private func glucoseView() -> some View {
+    private var glucoseView: some View {
         Path { path in
-            for rect in glucoseDots {
+            for rect in geom.glucoseDots {
                 if let glucose = rect.glucose, Decimal(glucose) > data.lowGlucose,
                    Decimal(glucose) < data.highGlucose
                 {
@@ -517,9 +567,9 @@ struct MainChartView: View {
         }.fill(Color(.darkGreen))
     }
 
-    private func highGlucoseView() -> some View {
+    private var highGlucoseView: some View {
         Path { path in
-            for rect in glucoseDots {
+            for rect in geom.glucoseDots {
                 if let glucose = rect.glucose, Decimal(glucose) >= data.highGlucose {
                     path.addEllipse(in: rect.rect)
                 }
@@ -527,8 +577,8 @@ struct MainChartView: View {
         }.fill(.orange)
     }
 
-    private func glucosePeaksView() -> some View {
-        ForEach(glucosePeaks, id: \.xStart) { peak in
+    private var glucosePeaksView: some View {
+        ForEach(geom.glucosePeaks, id: \.xStart) { peak in
             Group {
                 Path { path in
                     path.move(to: CGPoint(x: peak.xStart, y: peak.yStart))
@@ -543,11 +593,11 @@ struct MainChartView: View {
                     ZStack {
                         Color.white // allow everywhere by default
                         Text(peak.text)
-                            .font(peaksFont)
-                            .padding(.horizontal, Config.peakHorizontalPadding)
-                            .padding(.vertical, Config.peakVerticalPadding)
+                            .font(geom.peaksFont)
+                            .padding(.horizontal, ChartConfig.peakHorizontalPadding)
+                            .padding(.vertical, ChartConfig.peakVerticalPadding)
                             .background(
-                                RoundedRectangle(cornerRadius: Config.peakCornerRadius)
+                                RoundedRectangle(cornerRadius: ChartConfig.peakCornerRadius)
                                     .fill(Color.black) // cut out this area
                             )
                             .position(CGPoint(x: peak.textRect.midX, y: peak.textRect.midY))
@@ -569,11 +619,11 @@ struct MainChartView: View {
 
                 ZStack {
                     Text(peak.text)
-                        .font(peaksFont)
-                        .padding(.horizontal, Config.peakHorizontalPadding)
-                        .padding(.vertical, Config.peakVerticalPadding)
+                        .font(geom.peaksFont)
+                        .padding(.horizontal, ChartConfig.peakHorizontalPadding)
+                        .padding(.vertical, ChartConfig.peakVerticalPadding)
                         .background(
-                            RoundedRectangle(cornerRadius: Config.peakCornerRadius)
+                            RoundedRectangle(cornerRadius: ChartConfig.peakCornerRadius)
                                 .fill(fillColour)
                         )
                         .overlay(
@@ -588,7 +638,7 @@ struct MainChartView: View {
         }
     }
 
-    private func activityView() -> some View {
+    private var activityView: some View {
         ZStack {
             positiveActivityFillPath()
                 .fill(Color.blue.opacity(0.3))
@@ -606,13 +656,13 @@ struct MainChartView: View {
 
     private func positiveActivityFillPath() -> Path {
         Path { path in
-            guard activityDots.count >= 2 else { return }
-            guard let zeroY = self.activityZeroPointY else { return }
+            guard geom.activityDots.count >= 2 else { return }
+            guard let zeroY = geom.activityZeroPointY else { return }
 
             var hasPositiveValues = false
 
-            for i in 0 ..< activityDots.count {
-                let point = activityDots[i]
+            for i in 0 ..< geom.activityDots.count {
+                let point = geom.activityDots[i]
 
                 if point.y < zeroY {
                     if !hasPositiveValues {
@@ -631,7 +681,7 @@ struct MainChartView: View {
 
             // Close final positive section if needed
             if hasPositiveValues {
-                let lastPoint = activityDots.last!
+                let lastPoint = geom.activityDots.last!
                 path.addLine(to: CGPoint(x: lastPoint.x, y: zeroY))
                 path.closeSubpath()
             }
@@ -640,13 +690,13 @@ struct MainChartView: View {
 
     private func negativeActivityFillPath() -> Path {
         Path { path in
-            guard activityDots.count >= 2 else { return }
-            guard let zeroY = self.activityZeroPointY else { return }
+            guard geom.activityDots.count >= 2 else { return }
+            guard let zeroY = geom.activityZeroPointY else { return }
 
             var hasNegativeValues = false
 
-            for i in 0 ..< activityDots.count {
-                let point = activityDots[i]
+            for i in 0 ..< geom.activityDots.count {
+                let point = geom.activityDots[i]
 
                 if point.y > zeroY {
                     if !hasNegativeValues {
@@ -665,7 +715,7 @@ struct MainChartView: View {
 
             // Close final negative section if needed
             if hasNegativeValues {
-                let lastPoint = activityDots.last!
+                let lastPoint = geom.activityDots.last!
                 path.addLine(to: CGPoint(x: lastPoint.x, y: zeroY))
                 path.closeSubpath()
             }
@@ -674,15 +724,15 @@ struct MainChartView: View {
 
     private func activityStrokePath() -> Path {
         Path { path in
-            guard activityDots.count >= 2 else { return }
-            path.move(to: activityDots[0])
-            for point in activityDots.dropFirst() {
+            guard geom.activityDots.count >= 2 else { return }
+            path.move(to: geom.activityDots[0])
+            for point in geom.activityDots.dropFirst() {
                 path.addLine(to: point)
             }
         }
     }
 
-    private func cobView() -> some View {
+    private var cobView: some View {
         ZStack {
             cobStrokePath(closed: true)
                 .fill(Color.loopYellow.opacity(0.3))
@@ -696,10 +746,10 @@ struct MainChartView: View {
 
     private func cobStrokePath(closed: Bool) -> Path {
         Path { path in
-            guard let cobZeroPointY = self.cobZeroPointY else { return }
+            guard let cobZeroPointY = geom.cobZeroPointY else { return }
             var isDrawing = false
 
-            for (point, cob) in cobDots.reversed() {
+            for (point, cob) in geom.cobDots.reversed() {
                 if cob.cob > 0 {
                     if !isDrawing {
                         if closed {
@@ -721,17 +771,17 @@ struct MainChartView: View {
             }
 
             if closed {
-                if isDrawing, let (latest, _) = cobDots.first {
+                if isDrawing, let (latest, _) = geom.cobDots.first {
                     path.addLine(to: CGPoint(x: latest.x, y: cobZeroPointY))
                 }
             }
         }
     }
 
-    private func connectingGlucoseLinesView() -> some View {
+    private var connectingGlucoseLinesView: some View {
         Path { path in
             var lines: [CGPoint] = []
-            for rect in glucoseDots {
+            for rect in geom.glucoseDots {
                 lines.append(CGPoint(x: rect.rect.midX, y: rect.rect.midY))
             }
             path.addLines(lines)
@@ -739,19 +789,19 @@ struct MainChartView: View {
         .stroke(Color.primary, lineWidth: 0.25)
     }
 
-    private func manualGlucoseView() -> some View {
+    private var manualGlucoseView: some View {
         Path { path in
-            for rect in manualGlucoseDots {
+            for rect in geom.manualGlucoseDots {
                 path.addEllipse(in: rect)
             }
         }
         .fill(Color.gray)
     }
 
-    private func announcementView() -> some View {
+    private var announcementView: some View {
         ZStack {
-            ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY - Config.owlOffset)
+            ForEach(geom.announcementDots, id: \.rect.minX) { info -> AnyView in
+                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY - ChartConfig.owlOffset)
                 let command = info.note.lowercased()
                 let type: String =
                     command.contains("true") ?
@@ -778,19 +828,19 @@ struct MainChartView: View {
         }
     }
 
-    private func manualGlucoseCenterView() -> some View {
+    private var manualGlucoseCenterView: some View {
         Path { path in
-            for rect in manualGlucoseDotsCenter {
+            for rect in geom.manualGlucoseDotsCenter {
                 path.addEllipse(in: rect)
             }
         }
         .fill(Color.red)
     }
 
-    private func unSmoothedGlucoseView() -> some View {
+    private var unSmoothedGlucoseView: some View {
         Path { path in
             var lines: [CGPoint] = []
-            for rect in unSmoothedGlucoseDots {
+            for rect in geom.unSmoothedGlucoseDots {
                 lines.append(CGPoint(x: rect.midX, y: rect.midY))
                 path.addEllipse(in: rect)
             }
@@ -799,58 +849,46 @@ struct MainChartView: View {
         .stroke(Color.secondary, lineWidth: 0.5)
     }
 
-    private func bolusView() -> some View {
+    private var bolusView: some View {
         ZStack {
-            let bolusPath = data.useInsulinBars ? insulinBar() : bolusPath
+            let bolusPath = geom.bolusPath
             bolusPath.fill(Color.insulin)
             bolusPath.stroke(Color.primary, lineWidth: 0.3)
 
-            if data.useInsulinBars {
-                ForEach(bolusDots, id: \.rect.minX) { info in
-                    if let string = info.text, let textRect = info.textRect {
-                        Text(string)
-                            .rotationEffect(Angle(degrees: -90))
-                            .font(bolusFont)
-                            .position(
-                                CGPoint(x: textRect.midX, y: textRect.midY)
-                            )
-                    }
-                }
-            } else {
-                ForEach(bolusDots, id: \.rect.minX) { info in
-                    if let string = info.text, let textRect = info.textRect {
-                        Text(string)
-                            .font(.bolusDotFont)
-                            .position(
-                                CGPoint(x: textRect.midX, y: textRect.midY)
-                            )
-                    }
+            ForEach(geom.bolusDots, id: \.rect.minX) { info in
+                if let string = info.text, let textRect = info.textRect {
+                    Text(string)
+                        .font(geom.bolusFont)
+                        .rotationEffect(data.useInsulinBars ? Angle(degrees: -90) : Angle(degrees: 0))
+                        .position(
+                            CGPoint(x: textRect.midX, y: textRect.midY)
+                        )
                 }
             }
         }
     }
 
-    private func carbsView() -> some View {
+    private var carbsView: some View {
         ZStack {
-            let carbsPath = data.useCarbBars ? carbsBar(carbsDots) : carbsPath
+            let carbsPath = geom.carbsPath
             carbsPath.fill(Color.loopYellow)
             carbsPath.stroke(Color.primary, lineWidth: 0.3)
 
             if data.useCarbBars {
-                ForEach(carbsDots, id: \.rect.minX) { info in
+                ForEach(geom.carbsDots, id: \.rect.minX) { info in
                     if let string = info.text, let textRect = info.textRect {
                         Text(string)
                             .rotationEffect(Angle(degrees: -90))
-                            .font(bolusFont)
+                            .font(geom.bolusFont)
                             .position(
                                 CGPoint(x: textRect.midX, y: textRect.midY)
                             )
                     }
                 }
             } else {
-                ForEach(carbsDots, id: \.rect.minX) { info in
+                ForEach(geom.carbsDots, id: \.rect.minX) { info in
                     if let string = info.text, let textRect = info.textRect {
-                        Text(string).font(.carbsDotFont)
+                        Text(string).font(geom.bolusFont)
                             .position(
                                 CGPoint(x: textRect.midX, y: textRect.midY)
                             )
@@ -860,24 +898,24 @@ struct MainChartView: View {
         }
     }
 
-    private func fpuView() -> some View {
+    private var fpuView: some View {
         ZStack {
-            let fpuPath = data.useCarbBars ? carbsBar(fpuDots) : fpuPath
+            let fpuPath = geom.fpuPath
             fpuPath.fill(data.useCarbBars ? .clear : Color.loopYellow)
             fpuPath.stroke(data.useCarbBars ? Color.loopYellow : Color.primary, lineWidth: data.useCarbBars ? 1.5 : 0.3)
 
             if data.useCarbBars, data.fpuAmounts {
-                ForEach(fpuDots, id: \.rect.minX) { info in
+                ForEach(geom.fpuDots, id: \.rect.minX) { info in
                     if let string = info.text, let textRect = info.textRect {
                         let position = textRect.origin
                         Text(string)
                             .rotationEffect(Angle(degrees: -90))
-                            .font(bolusFont)
+                            .font(geom.bolusFont)
                             .position(position)
                     }
                 }
             } else if data.fpuAmounts {
-                ForEach(fpuDots, id: \.rect.minX) { info in
+                ForEach(geom.fpuDots, id: \.rect.minX) { info in
                     if let string = info.text, let textRect = info.textRect {
                         let position = textRect.origin
                         Text(string)
@@ -890,210 +928,49 @@ struct MainChartView: View {
         }
     }
 
-    private func tempTargetsView() -> some View {
+    private var tempTargetsView: some View {
         ZStack {
-            tempTargetsPath
+            geom.tempTargetsPath
                 .fill(Color.tempBasal.opacity(0.5))
-            tempTargetsPath
+            geom.tempTargetsPath
                 .stroke(Color.basal.opacity(0.5), lineWidth: 1)
         }
     }
 
-    private func overridesView() -> some View {
+    private var overridesView: some View {
         ZStack {
-            overridesPath
+            geom.overridesPath
                 .fill(Color.violet.opacity(colorScheme == .light ? 0.3 : 0.6))
-            overridesPath
+            geom.overridesPath
                 .stroke(Color.violet.opacity(0.7), lineWidth: 1)
         }
     }
 
-    private func predictionsView() -> some View {
+    private var predictionsView: some View {
         Group {
             Path { path in
-                for rect in predictionDots[.iob] ?? [] {
+                for rect in geom.predictionDotsIOB {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.insulin)
+            }.fill(Color.insulin.opacity(0.7))
 
             Path { path in
-                for rect in predictionDots[.cob] ?? [] {
+                for rect in geom.predictionDotsCOB {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.loopYellow)
+            }.fill(Color.loopYellow.opacity(0.7))
 
             Path { path in
-                for rect in predictionDots[.zt] ?? [] {
+                for rect in geom.predictionDotsZT {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.zt)
+            }.fill(Color.zt.opacity(0.7))
 
             Path { path in
-                for rect in predictionDots[.uam] ?? [] {
+                for rect in geom.predictionDotsUAM {
                     path.addEllipse(in: rect)
                 }
-            }.fill(Color.uam)
-        }
-    }
-}
-
-// MARK: - Calculations
-
-extension MainChartView {
-    private func update(fullSize: CGSize) {
-        let geom = CalculatedGeometries(fullSize: fullSize, data: data)
-
-        DispatchQueue.main.async {
-            self.bolusFont = geom.bolusFont
-            self.peaksFont = geom.peaksFont
-
-            self.firstHourDate = geom.firstHourDate
-            self.oneSecondWidth = geom.oneSecondWidth
-            self.additionalWidth = geom.additionalWidth
-            self.fullGlucoseWidth = geom.fullGlucoseWidth
-            self.firstHourPosition = geom.firstHourPosition
-            self.currentTimeX = geom.currentTimeX
-
-            self.peakActivity_1unit = geom.peakActivity_1unit
-            self.peakActivity_1unit_y = geom.peakActivity_1unit_y
-            self.peakActivity_maxBolus = geom.peakActivity_maxBolus
-            self.peakActivity_maxBolus_y = geom.peakActivity_maxBolus_y
-            self.peakActivity_maxIOB = geom.peakActivity_maxIOB
-            self.peakActivity_maxIOB_y = geom.peakActivity_maxIOB_y
-            self.maxActivityInData = geom.maxActivityInData
-
-            self.activityChartMinMax = geom.activityChartMinMax
-            self.cobChartMinMax = geom.cobChartMinMax
-
-            self.predictionDots[.iob] = geom.predictionDotsIOB
-            self.predictionDots[.cob] = geom.predictionDotsCOB
-            self.predictionDots[.zt] = geom.predictionDotsZT
-            self.predictionDots[.uam] = geom.predictionDotsUAM
-
-            self.glucoseYRange = geom.glucoseYRange
-            self.glucoseDots = geom.glucoseDots
-
-            self.activityDots = geom.activityDots
-            self.activityZeroPointY = geom.activityZeroPointY
-
-            self.cobDots = geom.cobDots
-            self.cobZeroPointY = geom.cobZeroPointY
-            self.manualGlucoseDots = geom.manualGlucoseDots
-            self.manualGlucoseDotsCenter = geom.manualGlucoseDotsCenter
-
-            self.announcementDots = geom.announcementDots
-            self.announcementPath = geom.announcementPath
-            self.unSmoothedGlucoseDots = geom.unSmoothedGlucoseDots
-
-            self.bolusDots = geom.bolusDots
-            self.bolusPath = geom.bolusPath
-
-            self.carbsDots = geom.carbsDots
-            self.carbsPath = geom.carbsPath
-
-            self.fpuDots = geom.fpuDots
-            self.fpuPath = geom.fpuPath
-
-            self.tempTargetsPath = geom.tempTargetsPath
-            self.overridesPath = geom.overridesPath
-
-            self.tempBasalPath = geom.tempBasalPath
-            self.regularBasalPath = geom.regularBasalPath
-
-            self.suspensionsPath = geom.suspensionsPath
-
-            self.horizontalGrid = geom.horizontalGrid
-            self.lowThresholdLine = geom.lowThresholdLine
-            self.highThresholdLine = geom.highThresholdLine
-
-            self.glucosePeaks = geom.glucosePeaks
-
-            self.geometriesReady = true
-        }
-    }
-
-    private func ping<T: Equatable>(_ p: Published<T>.Publisher) -> AnyPublisher<Void, Never> {
-        p.removeDuplicates()
-            .map { _ in () }
-            .eraseToAnyPublisher()
-    }
-
-    private func subscribeToUpdates() {
-        let debouncedPublishers: [AnyPublisher<Void, Never>] = [
-            ping(data.$screenHours),
-            ping(data.$showInsulinActivity),
-            ping(data.$showCobChart),
-            ping(data.$useInsulinBars),
-            ping(data.$useCarbBars),
-            ping(data.$tempBasals),
-            ping(data.$suspensions),
-            ping(data.$maxBasal),
-            ping(data.$autotunedBasalProfile),
-            ping(data.$glucose),
-            ping(data.$activity),
-            ping(data.$cob),
-            ping(data.$isManual),
-            ping(data.$announcement),
-            ping(data.$boluses),
-            ping(data.$carbs),
-            ping(data.$tempTargets),
-            ping(data.$suggestion),
-            ping(data.$overrideHistory),
-            ping(data.$lowGlucose),
-            ping(data.$highGlucose),
-            ping(data.$units),
-            ping(data.$minimumSMB)
-        ]
-
-        let immediatePublishers: [AnyPublisher<Void, Never>] = [
-            sizeChanges.eraseToAnyPublisher(),
-            updateRequests.eraseToAnyPublisher()
-        ]
-
-        let debouncedUpdates: AnyPublisher<Void, Never> =
-            Publishers.MergeMany(debouncedPublishers)
-                .debounce(for: .milliseconds(15), scheduler: calculationQueue)
-                .eraseToAnyPublisher()
-
-        let immediateUpdates: AnyPublisher<Void, Never> =
-            Publishers.MergeMany(immediatePublishers)
-                .eraseToAnyPublisher()
-
-        updatesCancellable =
-            Publishers.MergeMany([debouncedUpdates, immediateUpdates])
-                .receive(on: calculationQueue)
-                .sink { _ in
-                    update(fullSize: latestSize)
-                }
-    }
-
-    // An InsulinBarMark of sorts
-    private func insulinBar() -> Path {
-        Path { path in
-            for dot in bolusDots {
-                let rect = dot.rect
-                path.move(to: CGPoint(x: rect.midX, y: rect.maxY + MainChartView.Config.pointSizeHeight))
-                path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-                path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-                path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY + MainChartView.Config.pointSizeHeight))
-            }
-        }
-    }
-
-    // A BarMark for Carbs
-    private func carbsBar(_ dots: [DotInfo]) -> Path {
-        Path { path in
-            for dot in dots {
-                let rect = dot.rect
-                path.move(to: CGPoint(x: rect.midX, y: rect.minY - MainChartView.Config.pointSizeHeight))
-                path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-                path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-                path.addLine(to: CGPoint(x: rect.midX, y: rect.minY - MainChartView.Config.pointSizeHeight))
-            }
+            }.fill(Color.uam.opacity(0.7))
         }
     }
 }

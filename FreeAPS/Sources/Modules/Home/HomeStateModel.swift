@@ -58,7 +58,6 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
-        @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = false
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
@@ -109,6 +108,7 @@ extension Home {
             displayXgridLines: true,
             displayYgridLines: true,
             thresholdLines: true,
+            latestOverride: nil,
             overrideHistory: [],
             minimumSMB: 0,
             insulinDIA: 7,
@@ -539,6 +539,7 @@ extension Home {
         private func setupOverrideHistory() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.data.latestOverride = self.provider.latestOverride()
                 self.data.overrideHistory = self.provider.overrideHistory()
             }
         }
@@ -559,13 +560,6 @@ extension Home {
                 percentage,
                 average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min"
             )
-        }
-
-        private func setupOverrides() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.overrides = self.provider.overrides()
-            }
         }
 
         private func setupAnnouncements() {

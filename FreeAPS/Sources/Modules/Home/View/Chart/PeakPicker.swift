@@ -3,6 +3,7 @@ import Foundation
 enum ExtremumType { case max, min }
 
 enum PeakPicker {
+    /// provided glucose MUST be sorted by dateString ascending
     static func pick(
         data: [BloodGlucose],
         windowHours: Double = 1
@@ -13,7 +14,7 @@ enum PeakPicker {
         let asc: [(bg: BloodGlucose, v: Double)] = data.compactMap { g in
             guard let v = g.glucose else { return nil }
             return (g, Double(v))
-        }.sorted { $0.bg.dateString < $1.bg.dateString }
+        }
 
         let n = asc.count
         guard n > 0 else { return ([], []) }

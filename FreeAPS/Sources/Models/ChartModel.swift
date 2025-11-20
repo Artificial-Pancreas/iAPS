@@ -24,6 +24,7 @@ class ChartModel: ObservableObject {
     @Published var displayXgridLines: Bool
     @Published var displayYgridLines: Bool
     @Published var thresholdLines: Bool
+    @Published var latestOverride: Override?
     @Published var overrideHistory: [OverrideHistory]
     @Published var minimumSMB: Decimal
     @Published var insulinDIA: Decimal
@@ -74,6 +75,7 @@ class ChartModel: ObservableObject {
         displayXgridLines: Bool,
         displayYgridLines: Bool,
         thresholdLines: Bool,
+        latestOverride: Override?,
         overrideHistory: [OverrideHistory],
         minimumSMB: Decimal,
         insulinDIA: Decimal,
@@ -123,6 +125,7 @@ class ChartModel: ObservableObject {
         self.displayXgridLines = displayXgridLines
         self.displayYgridLines = displayYgridLines
         self.thresholdLines = thresholdLines
+        self.latestOverride = latestOverride
         self.overrideHistory = overrideHistory
         self.minimumSMB = minimumSMB
         self.insulinDIA = insulinDIA
