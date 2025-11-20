@@ -1381,11 +1381,11 @@ Enact a temp Basal or a temp target */
 /* Food Type / Meal Note */
 "Note" = "Lưu ý";
 
-"Servings" = "Servings";
+"Servings" = "Khẩu phần";
 
 "Kilo Calories" = "Kilo Calories";
 
-"Meals" = "Meals";
+"Meals" = "Bữa ăn";
 
 // --------- AI ---------
 /* */
