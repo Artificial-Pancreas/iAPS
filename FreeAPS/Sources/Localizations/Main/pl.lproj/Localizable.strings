@@ -1708,6 +1708,8 @@ Połączono z Nightscout!";
 
 "📥 Received response from OpenAI..." = "📥 Received response from OpenAI...";
 
+"💾 Caching analysis result..." = "💾 Caching analysis result...";
+
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
 
 "Amount:" = "Amount:";
