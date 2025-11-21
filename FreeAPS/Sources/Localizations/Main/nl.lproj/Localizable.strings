@@ -1627,13 +1627,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Check your spelling and try again" = "Controleer je spelling en probeer het opnieuw";
 
-"No Foods Found" = "Geen pods gevonden";
+"No Foods Found" = "Geen voedingsmiddelen gevonden";
 
 "Search Error" = "Zoekopdracht fout";
 
-"Finding the best matches for you" = "Vind de beste matches voor jou";
+"Finding the best matches for you" = "De beste matches voor jou aan het zoeken";
 
-"Searching foods" = "Voedsel zoeken";
+"Searching foods" = "Voedingsmiddelen zoeken";
 
 "AI Analysis" = "AI-analyse";
 
@@ -1707,7 +1707,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "📥 Received response from OpenAI..." = "📥 Reactie ontvangen van OpenAI...";
 
-"💾 Caching analysis result..." = "💾 Caching analysis result...";
+"💾 Caching analysis result..." = "💾 Verwerken van analyse resultaten...";
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Maak een diepteanalyse (kan even duren)...";
 
