@@ -3334,3 +3334,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX settings - main chart section header */
 "Home Chart" = "Home Chart";
+
+/* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
+"Y-axis labels" = "Y-axis labels";

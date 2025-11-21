@@ -179,7 +179,8 @@ struct MainChartView: View {
             ping(data.$lowGlucose),
             ping(data.$highGlucose),
             ping(data.$units),
-            ping(data.$minimumSMB)
+            ping(data.$minimumSMB),
+            ping(data.$chartGlucosePeaks)
         ]
 
         let immediatePublishers: [AnyPublisher<Void, Never>] = [

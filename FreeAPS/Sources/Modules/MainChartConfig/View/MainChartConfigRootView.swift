@@ -41,7 +41,7 @@ extension MainChartConfig {
                 Section {
                     Toggle("Vertical grid lines", isOn: $state.xGridLines)
                     Toggle("Horizontal grid lines", isOn: $state.yGridLines)
-                    Toggle("Horizontal grid labels", isOn: $state.yGridLabels)
+                    Toggle("Y-axis labels", isOn: $state.yGridLabels)
                     Toggle("Threshold lines (Low / High)", isOn: $state.rulerMarks)
                     Toggle("In-range area highlight", isOn: $state.inRangeAreaFill)
                     Toggle("Glucose peaks", isOn: $state.chartGlucosePeaks)
