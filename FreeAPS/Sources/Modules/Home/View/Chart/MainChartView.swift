@@ -180,7 +180,11 @@ struct MainChartView: View {
             ping(data.$highGlucose),
             ping(data.$units),
             ping(data.$minimumSMB),
-            ping(data.$chartGlucosePeaks)
+            ping(data.$chartGlucosePeaks),
+            ping(data.$yGridLabels),
+            ping(data.$thresholdLines),
+            ping(data.$displayYgridLines),
+            ping(data.$inRangeAreaFill)
         ]
 
         let immediatePublishers: [AnyPublisher<Void, Never>] = [
@@ -411,7 +415,7 @@ struct MainChartCanvas: View {
     }
 
     private var glucoseLabelsView: some View {
-        ForEach(geom.horizontalGrid, id: \.1) { (lineY, glucose) -> AnyView in
+        ForEach(geom.glucoseLabels, id: \.1) { (lineY, glucose) -> AnyView in
             let value = Double(glucose) *
                 (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
 

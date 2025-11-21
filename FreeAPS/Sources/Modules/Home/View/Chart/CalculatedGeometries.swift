@@ -48,6 +48,7 @@ class CalculatedGeometries {
     private(set) var peakActivity_maxIOB_y: CGFloat = 0.0
     private(set) var maxActivityInData: Decimal?
     private(set) var horizontalGrid: [(CGFloat, Int)] = []
+    private(set) var glucoseLabels: [(CGFloat, Int)] = []
     private(set) var lowThresholdLine: (CGFloat, Int)?
     private(set) var highThresholdLine: (CGFloat, Int)?
     private(set) var glucosePeaks: [GlucosePeak] = []
@@ -204,11 +205,12 @@ class CalculatedGeometries {
 
         suspensionsPath = calculateSuspensions()
 
-        let (horizontalGrid, lowThresholdLine, highThresholdLine) = calculateHorizontalLines()
+        let (horizontalGrid, lowThresholdLine, highThresholdLine, glucoseLabels) = calculateHorizontalLines()
 
         self.horizontalGrid = horizontalGrid
         self.lowThresholdLine = lowThresholdLine
         self.highThresholdLine = highThresholdLine
+        self.glucoseLabels = glucoseLabels
 
         if data.chartGlucosePeaks {
             glucosePeaks = calculateGlucosePeaks()
@@ -244,8 +246,9 @@ class CalculatedGeometries {
         return stride(from: from + step, through: through - step, by: step)
     }
 
-    private func calculateHorizontalLines() -> ([(CGFloat, Int)], (CGFloat, Int), (CGFloat, Int)) {
+    private func calculateHorizontalLines() -> ([(CGFloat, Int)], (CGFloat, Int), (CGFloat, Int), [(CGFloat, Int)]) {
         var lines: [(CGFloat, Int)] = []
+        var labels: [(CGFloat, Int)] = []
 
         let highGlucoseInt = Int(NSDecimalNumber(decimal: data.highGlucose).doubleValue.rounded())
         let lowGlucoseInt = Int(NSDecimalNumber(decimal: data.lowGlucose).doubleValue.rounded())
@@ -253,37 +256,50 @@ class CalculatedGeometries {
         let lowLine = (glucoseToYCoordinate(lowGlucoseInt), lowGlucoseInt)
         let highLine = (glucoseToYCoordinate(highGlucoseInt), highGlucoseInt)
 
-        if let glucoseMin = glucose.compactMap(\.glucose).min(),
+        guard data.displayYgridLines || data.thresholdLines || data.inRangeAreaFill else {
+            return (lines, lowLine, highLine, labels)
+        }
+
+        func addLineAndLabel(_ glucose: Int) {
+            let y = glucoseToYCoordinate(glucose)
+            lines.append((y, glucose))
+            labels.append((y, glucose))
+        }
+        func addLabel(_ glucose: Int) {
+            labels.append((glucoseToYCoordinate(glucose), glucose))
+        }
+
+        if data.displayYgridLines,
+           let glucoseMin = glucose.compactMap(\.glucose).min(),
            let glucoseMax = glucose.compactMap(\.glucose).max()
         {
             if glucoseMin < lowGlucoseInt {
-                lines.append(lowLine)
+                addLineAndLabel(lowGlucoseInt)
                 if glucoseMin < lowGlucoseInt - 18 {
-                    lines.append((glucoseToYCoordinate(glucoseMin), glucoseMin))
+                    addLineAndLabel(glucoseMin)
                 }
             } else {
-                lines.append((glucoseToYCoordinate(glucoseMin), glucoseMin))
+                addLineAndLabel(glucoseMin)
             }
 
             if glucoseMax > highGlucoseInt {
-                lines.append(highLine)
+                addLineAndLabel(highGlucoseInt)
                 if glucoseMax > highGlucoseInt + 18 {
-                    lines.append((glucoseToYCoordinate(glucoseMax), glucoseMax))
+                    addLineAndLabel(glucoseMax)
                     for g in glucoseLines(from: highGlucoseInt, through: glucoseMax) {
                         let nice = roundGlucoseToNearestNiceValue(g)
-                        lines.append((glucoseToYCoordinate(nice), nice))
+                        addLineAndLabel(nice)
                     }
                 }
             } else {
-                lines.append((glucoseToYCoordinate(glucoseMax), glucoseMax))
+                addLineAndLabel(glucoseMax)
             }
+        } else {
+            addLabel(lowGlucoseInt)
+            addLabel(highGlucoseInt)
         }
 
-        return (
-            lines,
-            lowLine,
-            highLine
-        )
+        return (lines, lowLine, highLine, labels)
     }
 
     private func calculateGlucosePeaks() -> [GlucosePeak] {
