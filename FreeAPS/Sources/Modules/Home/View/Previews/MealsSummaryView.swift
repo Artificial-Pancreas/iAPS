@@ -5,7 +5,7 @@ struct MealsSummaryView: View {
     @FetchRequest(
         entity: Meals.entity(),
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate:
-        NSPredicate(format: "actualDate > %@", DateFilter().day)
+            NSPredicate(format: "actualDate > %@", DateFilter().today)
     ) var fetchedMeals: FetchedResults<Meals>
 
     private var formatter: NumberFormatter {
@@ -33,7 +33,7 @@ struct MealsSummaryView: View {
 
     var body: some View {
         VStack {
-            Text("Meals").font(.previewHeadline).padding(.top, 20).padding(.bottom, 15)
+            Text("Today's Meals").font(.previewHeadline).padding(.top, 20).padding(.bottom, 15)
             servingsView.padding(.horizontal, 23)
             caloriesView.padding(.horizontal, 23)
             nutrientsView.padding(.horizontal, 23).padding(.bottom, 10)
