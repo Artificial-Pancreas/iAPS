@@ -1387,6 +1387,8 @@ Enact a temp Basal or a temp target */
 
 "Meals" = "Meals";
 
+"Today's Meals" = "Today's Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Notes";
