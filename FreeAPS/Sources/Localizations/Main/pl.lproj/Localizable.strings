@@ -1389,6 +1389,8 @@ Połączono z Nightscout!";
 
 "Meals" = "Meals";
 
+"Today's Meals" = "Today's Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Notes";
@@ -1438,6 +1440,7 @@ Połączono z Nightscout!";
 /* Title */
 "Food Search" = "Food Search";
 
+/* Food Search input */
 "Food Search..." = "Food Search...";
 
 /* */
@@ -1706,6 +1709,8 @@ Połączono z Nightscout!";
 "⚙️ Configuring Gemini parameters..." = "⚙️ Configuring Gemini parameters...";
 
 "📥 Received response from OpenAI..." = "📥 Received response from OpenAI...";
+
+"💾 Caching analysis result..." = "💾 Caching analysis result...";
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
 

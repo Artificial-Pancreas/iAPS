@@ -1388,6 +1388,8 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "Meals" = "Meals";
 
+"Today's Meals" = "Today's Meals";
+
 // --------- AI ---------
 /* */
 "📝 Notes" = "📝 Notes";
@@ -1437,6 +1439,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Title */
 "Food Search" = "Food Search";
 
+/* Food Search input */
 "Food Search..." = "Food Search...";
 
 /* */
@@ -1705,6 +1708,8 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "⚙️ Configuring Gemini parameters..." = "⚙️ Configuring Gemini parameters...";
 
 "📥 Received response from OpenAI..." = "📥 Received response from OpenAI...";
+
+"💾 Caching analysis result..." = "💾 Caching analysis result...";
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
 
