@@ -1068,7 +1068,7 @@ class CalculatedGeometries {
         previousLookupTime = time
         let x = timeToXCoordinate(time)
 
-        if glucoseStartIndex == 0 {
+        if glucoseStartIndex == 0, glucose.isNotEmpty {
             let first = glucose[0]
             if time < first.dateString.timeIntervalSince1970 {
                 let y = glucoseToYCoordinate(first.glucose ?? 0)
