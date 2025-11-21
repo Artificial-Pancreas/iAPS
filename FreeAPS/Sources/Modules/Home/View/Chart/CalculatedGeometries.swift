@@ -1068,6 +1068,14 @@ class CalculatedGeometries {
         previousLookupTime = time
         let x = timeToXCoordinate(time)
 
+        if glucoseStartIndex == 0 {
+            let first = glucose[0]
+            if time < first.dateString.timeIntervalSince1970 {
+                let y = glucoseToYCoordinate(first.glucose ?? 0)
+                return CGPoint(x: x, y: y)
+            }
+        }
+
         // Find the first index >= startIndex such that current.time <= time < next.time
         // If not found, fall back to the last glucose entry.
 
