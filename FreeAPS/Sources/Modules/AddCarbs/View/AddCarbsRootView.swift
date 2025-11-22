@@ -7,7 +7,7 @@ extension AddCarbs {
         let resolver: Resolver
         let editMode: Bool
         let override: Bool
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State var dish: String = ""
         @State var isPromptPresented = false
         @State var saved = false
@@ -32,6 +32,17 @@ extension AddCarbs {
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
+
+        init(
+            resolver: Resolver,
+            editMode: Bool,
+            override: Bool
+        ) {
+            self.resolver = resolver
+            self.editMode = editMode
+            self.override = override
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -146,9 +157,7 @@ extension AddCarbs {
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-                configureView {
-                    state.loadEntries(editMode)
-                }
+                state.loadEntries(editMode)
             }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
@@ -216,7 +225,8 @@ extension AddCarbs {
                     header: { Text("Save") }
                 }
 
-                let filtered = carbPresets.filter { ($0.dish ?? "").count > 1 }.removeDublicates()
+                let filtered = carbPresets.filter { !($0.dish ?? "").isEmpty && ($0.dish ?? "Empty") != "Empty" }
+                    .removeDublicates()
                 if filtered.count > 4 {
                     Section {
                         TextField("Search", text: $string)
@@ -377,7 +387,7 @@ extension AddCarbs {
             do {
                 try moc.save()
             } catch {
-                // To do: add error
+                debug(.apsManager, "Couldn't delete meal preset at \(offsets).")
             }
         }
 
@@ -398,7 +408,7 @@ extension AddCarbs {
             if moc.hasChanges {
                 do {
                     try moc.save()
-                } catch { /* To do: add error */ }
+                } catch { debug(.apsManager, "Failed to save \(moc.updatedObjects)") }
             }
             state.edit = false
         }

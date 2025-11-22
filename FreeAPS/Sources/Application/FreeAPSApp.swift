@@ -14,7 +14,7 @@ import Swinject
     // Dependencies Assembler
     // contain all dependencies Assemblies
     // TODO: Remove static key after update "Use Dependencies" logic
-    private static var assembler = Assembler([
+    private static let assembler = Assembler([
         StorageAssembly(),
         ServiceAssembly(),
         APSAssembly(),
@@ -23,31 +23,14 @@ import Swinject
         SecurityAssembly()
     ], parent: nil, defaultObjectScope: .container)
 
-    var resolver: Resolver {
-        FreeAPSApp.assembler.resolver
-    }
-
     // Temp static var
     // Use to backward compatibility with old Dependencies logic on Logger
     // TODO: Remove var after update "Use Dependencies" logic in Logger
-    static var resolver: Resolver {
-        FreeAPSApp.assembler.resolver
-    }
+    static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
-    private func loadServices() {
-        resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
-        _ = resolver.resolve(DeviceDataManager.self)!
-        _ = resolver.resolve(APSManager.self)!
-        _ = resolver.resolve(FetchGlucoseManager.self)!
-        _ = resolver.resolve(FetchTreatmentsManager.self)!
-        _ = resolver.resolve(FetchAnnouncementsManager.self)!
-        _ = resolver.resolve(CalendarManager.self)!
-        _ = resolver.resolve(UserNotificationsManager.self)!
-        _ = resolver.resolve(WatchManager.self)!
-        _ = resolver.resolve(HealthKitManager.self)!
-        _ = resolver.resolve(BluetoothStateManager.self)!
-        _ = resolver.resolve(LiveActivityBridge.self)!
-    }
+    // TODO: do we want this? will this work with the Router?
+    // can be shared with the rest of the views with @EnvironmentObject
+    @StateObject private var appServices = AppServices(assembler: assembler)
 
     init() {
         debug(
@@ -55,18 +38,22 @@ import Swinject
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
         isNewVersion()
-        loadServices()
+        AppearanceManager.setupGlobalAppearance()
     }
 
     var body: some Scene {
         WindowGroup {
-            Main.RootView(resolver: resolver)
+            Main.RootView(resolver: FreeAPSApp.resolver)
                 .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
                 .environmentObject(Icons())
                 .onOpenURL(perform: handleURL)
+                .environmentObject(appServices)
         }
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")
+            if scenePhase == .active {
+                appServices.deviceManager.didBecomeActive()
+            }
         }
     }
 
@@ -75,7 +62,7 @@ import Swinject
 
         switch components?.host {
         case "device-select-resp":
-            resolver.resolve(NotificationCenter.self)!.post(name: .openFromGarminConnect, object: url)
+            FreeAPSApp.resolver.resolve(NotificationCenter.self)!.post(name: .openFromGarminConnect, object: url)
         default: break
         }
     }

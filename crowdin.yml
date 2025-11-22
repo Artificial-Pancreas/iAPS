@@ -24,41 +24,11 @@ export_languages:
 files:
   - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/rileylink_ios/RileyLinkKitUI/Base.lproj/Localizable.strings
-    translation: /Dependencies/rileylink_ios/RileyLinkKitUI/%osx_locale%.lproj/Localizable.strings
   - source: /FreeAPS/Resources/Base.lproj/InfoPlist.strings
     translation: /FreeAPS/Resources/%osx_locale%.lproj/InfoPlist.strings
-  - source: /Dependencies/OmniBLE/Localizations/en.lproj/Localizable.strings
-    translation: /Dependencies/OmniBLE/Localizations/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings
-    translation: /Dependencies/G7SensorKit/G7SensorKitUI/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/OmniKit/OmniKit/Resources/en.lproj/Localizable.strings
-    translation: /Dependencies/OmniKit/OmniKit/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/OmniKit/OmniKitUI/Resources/en.lproj/Localizable.strings
-    translation: /Dependencies/OmniKit/OmniKitUI/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/MinimedKit/MinimedKit/Resources/Base.lproj/Localizable.strings
-    translation: /Dependencies/MinimedKit/MinimedKit/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/MinimedKit/MinimedKitUI/Resources/en.lproj/Localizable.strings
-    translation: /Dependencies/MinimedKit/MinimedKitUI/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/CGMBLEKit/CGMBLEKitUI/Base.lproj/Localizable.strings
-    translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/CGMBLEKit/CGMBLEKit/Base.lproj/Localizable.strings
-    translation: /Dependencies/CGMBLEKit/CGMBLEKit/%osx_locale%.lproj/Localizable.strings
-  - source: //Dependencies/CGMBLEKit/CGMBLEKitUI/en.lproj/TransmitterManagerSetup.strings
-    translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/TransmitterManagerSetup.strings
-  - source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings
-    translation: /Dependencies/G7SensorKit/G7SensorKitUI/%osx_locale%.lproj/Localizable.strings
   - source: FreeAPS/Sources/Localizations/Shortcuts/en.lproj/AppShortcuts.strings
     translation: FreeAPS/Sources//Localizations/Shortcuts/%osx_locale%.lproj/AppShortcuts.strings
-  - source: /Dependencies/DanaKit/Localization/en.lproj/Localizable.strings
-    translation: /Dependencies/DanaKit/Localization/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/LoopKit/LoopKit/Resources/en.lproj/Localizable.strings
-    translation: /Dependencies/LoopKit/LoopKit/Resources/%osx_locale%.lproj/Localizable.strings
-  - source: /Dependencies/LoopKit/MockKitUI/Resources/en.lproj/Localizable.strings
-    translation: /Dependencies/LoopKit/MockKitUI/Resources/%osx_locale%.lproj/Localizable.strings
   - source: /FreeAPS/Sources/Localizations/WatchExtensionPlist/en.lproj/InfoPlist.strings
     translation: /FreeAPS/Sources/Localizations/WatchExtensionPlist/%osx_locale%.lproj/InfoPlist.strings
-  - source: /Dependencies/G7SensorKit/en.lproj/Localizable.strings
-    translation: /Dependencies/G7SensorKit/%osx_locale%.lproj/Localizable.strings
   - source: /Settings.bundle/en.lproj/Root.strings
     translation: /Settings.bundle/%osx_locale%.lproj/Root.strings

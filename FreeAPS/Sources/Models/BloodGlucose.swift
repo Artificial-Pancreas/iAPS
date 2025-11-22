@@ -23,6 +23,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         case date
         case dateString
         case unfiltered
+        case uncalibrated
         case filtered
         case noise
         case glucose
@@ -47,6 +48,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         date = try container.decode(Decimal.self, forKey: .date)
         dateString = try container.decode(Date.self, forKey: .dateString)
         unfiltered = try container.decodeIfPresent(Decimal.self, forKey: .unfiltered)
+        uncalibrated = try container.decodeIfPresent(Decimal.self, forKey: .uncalibrated)
         filtered = try container.decodeIfPresent(Decimal.self, forKey: .filtered)
         noise = try container.decodeIfPresent(Int.self, forKey: .noise)
         glucose = try container.decodeIfPresent(Int.self, forKey: .glucose)
@@ -63,6 +65,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         date: Decimal,
         dateString: Date,
         unfiltered: Decimal? = nil,
+        uncalibrated: Decimal? = nil,
         filtered: Decimal? = nil,
         noise: Int? = nil,
         glucose: Int? = nil,
@@ -77,6 +80,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         self.date = date
         self.dateString = dateString
         self.unfiltered = unfiltered
+        self.uncalibrated = uncalibrated
         self.filtered = filtered
         self.noise = noise
         self.glucose = glucose
@@ -95,7 +99,9 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
     var direction: Direction?
     let date: Decimal
     let dateString: Date
+    /// raw, un-smoothed value
     let unfiltered: Decimal?
+    let uncalibrated: Decimal?
     let filtered: Decimal?
     let noise: Int?
     var glucose: Int?

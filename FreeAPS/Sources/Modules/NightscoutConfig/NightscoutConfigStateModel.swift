@@ -11,10 +11,11 @@ extension NightscoutConfig {
         @Injected() private var keychain: Keychain!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
-        @Injected() private var healthKitManager: HealthKitManager!
-        @Injected() private var cgmManager: FetchGlucoseManager!
         @Injected() private var storage: FileStorage!
+        @Injected() private var coreDataStorageGlucoseSaver: CoreDataStorageGlucoseSaver!
         @Injected() var apsManager: APSManager!
+        @Injected() var deviceManager: DeviceDataManager!
+        private let processQueue = DispatchQueue(label: "NightscoutConfig.StateModel.processQueue")
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -23,15 +24,32 @@ extension NightscoutConfig {
         @Published var message = ""
         @Published var connecting = false
         @Published var backfilling = false
+        @Published var backfillingProgress = 0.0
+        @Published var uploading = false
+        @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
-        @Published var uploadGlucose = true // Upload Glucose
-        @Published var useLocalSource = false
-        @Published var localPort: Decimal = 0
         @Published var units: GlucoseUnits = .mmolL
         @Published var dia: Decimal = 6
-        @Published var maxBasal: Decimal = 2
+        @Published var maxBasal: Decimal = 4
         @Published var maxBolus: Decimal = 10
         @Published var allowAnnouncements: Bool = false
+        @Published var backFillInterval: Decimal = 1 {
+            didSet {
+                let clamped = min(max(backFillInterval, 1), 90)
+                if backFillInterval != clamped {
+                    backFillInterval = clamped
+                }
+            }
+        }
+
+        @Published var uploadInterval: Decimal = 1 {
+            didSet {
+                let clamped = min(max(uploadInterval, 1), 90)
+                if uploadInterval != clamped {
+                    uploadInterval = clamped
+                }
+            }
+        }
 
         override func subscribe() {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
@@ -43,19 +61,6 @@ extension NightscoutConfig {
 
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
-            subscribeSetting(\.useLocalGlucoseSource, on: $useLocalSource) { useLocalSource = $0 }
-            subscribeSetting(\.localGlucosePort, on: $localPort.map(Int.init)) { localPort = Decimal($0) }
-            subscribeSetting(\.uploadGlucose, on: $uploadGlucose, initial: { uploadGlucose = $0 }, didSet: { val in
-                if let cgmManagerG5 = self.cgmManager.glucoseSource.cgmManager as? G5CGMManager {
-                    cgmManagerG5.shouldSyncToRemoteService = val
-                }
-                if let cgmManagerG6 = self.cgmManager.glucoseSource.cgmManager as? G6CGMManager {
-                    cgmManagerG6.shouldSyncToRemoteService = val
-                }
-                if let cgmManagerG7 = self.cgmManager.glucoseSource.cgmManager as? G7CGMManager {
-                    cgmManagerG7.uploadReadings = val
-                }
-            })
         }
 
         func connect() {
@@ -242,7 +247,7 @@ extension NightscoutConfig {
                             targets: targets
                         )
                         // IS THERE A PUMP?
-                        guard let pump = self.apsManager.pumpManager else {
+                        guard let pump = self.deviceManager.pumpManager else {
                             self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
                             self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
                             self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
@@ -322,18 +327,92 @@ extension NightscoutConfig {
 
         func backfillGlucose() {
             backfilling = true
-            nightscoutManager.fetchGlucose(since: Date().addingTimeInterval(-1.days.timeInterval))
-                .sink { [weak self] glucose in
-                    guard let self = self else { return }
+            backfillingProgress = 0.0
+            nightscoutManager.fetchGlucose(
+                since: Date().addingTimeInterval(-Int(backFillInterval).days.timeInterval),
+                progress: { progress in
+                    DispatchQueue.main.async {
+                        self.backfillingProgress = progress
+                    }
+                }
+            )
+            .receive(on: processQueue)
+            .map { glucose in
+                let onePer5Min = self.glucoseStorage.filterFrequentGlucose(glucose, interval: TimeInterval(minutes: 4.5))
+                debug(.nightscout, "fetched \(glucose.count) (filtered: \(onePer5Min.count)) glucose records from nightscout")
+                return onePer5Min
+            }
+            .sink { [weak self] glucose in
+                guard let self = self else {
+                    return
+                }
+
+                guard glucose.isNotEmpty else {
                     DispatchQueue.main.async {
                         self.backfilling = false
                     }
-
-                    guard glucose.isNotEmpty else { return }
-                    self.healthKitManager.saveIfNeeded(bloodGlucose: glucose)
-                    self.glucoseStorage.storeGlucose(glucose)
+                    return
                 }
-                .store(in: &lifetime)
+                // glucose storage - store only last 24 hours
+                let cutOffDate = Date().addingTimeInterval(-1.days.timeInterval)
+                let recent = glucose.filter { $0.dateString >= cutOffDate }
+                _ = self.glucoseStorage.storeGlucose(recent)
+
+                // core date - store everything
+                coreDataStorageGlucoseSaver.storeGlucose(glucose) {
+                    DispatchQueue.main.async {
+                        self.backfilling = false
+                    }
+                }
+            }
+            .store(in: &lifetime)
+        }
+
+        func uploadOldGlucose() {
+            uploading = true
+            uploadingProgress = 0.0
+
+            processQueue.async {
+                let readings = CoreDataStorage()
+                    .fetchGlucose(interval: Date().addingTimeInterval(-Int(self.uploadInterval).days.timeInterval) as NSDate)
+                let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
+                    guard let date = reading.date,
+                          let id = reading.id
+                    else {
+                        return nil
+                    }
+                    return BloodGlucose(
+                        _id: id,
+                        sgv: Int(reading.glucose),
+                        direction: nil,
+                        date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
+                        dateString: date,
+                        unfiltered: nil,
+                        uncalibrated: nil,
+                        filtered: nil,
+                        noise: nil,
+                        glucose: Int(reading.glucose),
+                        type: "sgv",
+                        activationDate: nil,
+                        sessionStartDate: nil,
+                        transmitterID: nil
+                    )
+                }
+
+                self.nightscoutManager.uploadOldGlucose(
+                    bloodGlucose: bloodGlucose,
+                    completion: {
+                        DispatchQueue.main.async {
+                            self.uploading = false
+                        }
+                    },
+                    progress: { progress in
+                        DispatchQueue.main.async {
+                            self.uploadingProgress = progress
+                        }
+                    }
+                )
+            }
         }
 
         func delete() {

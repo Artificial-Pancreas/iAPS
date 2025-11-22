@@ -153,7 +153,7 @@ struct LoopEllipse: View {
     let stroke: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 1)
+            .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 0.7)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(colorScheme == .light ? .white : .black)
@@ -170,7 +170,8 @@ struct Sage: View {
     var body: some View {
         let fill = max(expiration / amount, 0.15)
         let colour: Color = (expiration < 0.5 * 8.64E4) ? .red
-            .opacity(0.9) : (expiration < 2 * 8.64E4) ? .orange.opacity(0.8) : colorScheme == .light ? Color.white : Color.white
+            .opacity(0.9) : (expiration < 2 * 8.64E4) ? .orange.opacity(0.8) : colorScheme == .light ? Color.white : Color
+            .black // Color.white
             .opacity(0.9)
         let scheme = colorScheme == .light ? Color(.systemGray5) : Color(.systemGray2)
 
@@ -186,7 +187,7 @@ struct Sage: View {
                                     location: fill
                                 ),
                                 Gradient.Stop(
-                                    color: colorScheme == .light ? Color.white : Color.white.opacity(0.9),
+                                    color: colorScheme == .light ? Color.white : Color.black, // Color.white.opacity(0.9),
                                     location: fill
                                 )
                             ]),
@@ -235,7 +236,7 @@ struct ClockOffset: View {
 
 struct NonStandardInsulin: View {
     let concentration: Double
-    let pod: Bool
+    let pump: HeaderPump
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -255,7 +256,7 @@ struct NonStandardInsulin: View {
                         .foregroundStyle(.white)
                 }
         }
-        .offset(x: pod ? -15 : -5, y: pod ? -24 : 7)
+        .offset(x: pump == .pod ? -15 : pump == .medtrum ? 25 : -5, y: pump == .pod ? -24 : pump == .medtrum ? -20 : 7)
     }
 }
 
@@ -415,4 +416,12 @@ extension UIImage {
         }
         return Image(uiImage: image)
     }
+}
+
+enum HeaderPump {
+    case medtrum
+    case pod
+    case dana
+    case medtronic
+    case other
 }

@@ -5,10 +5,15 @@ import Swinject
 extension Snooze {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @State private var selectedInterval = 0
         @State private var snoozeDescription = "nothing to see here"
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         private var pickerTimes: [TimeInterval] {
             var arr: [TimeInterval] = []
@@ -62,6 +67,10 @@ extension Snooze {
                 celltext = NSLocalizedString("High Glucose Alarm active", comment: "High Glucose Alarm active")
             case .low:
                 celltext = NSLocalizedString("Low Glucose Alarm active", comment: "Low Glucose Alarm active")
+            case .ascending:
+                celltext = NSLocalizedString("Ascending Glucose Alarm active", comment: "Ascending Glucose Alarm active")
+            case .descending:
+                celltext = NSLocalizedString("Descending Glucose Alarm active", comment: "Descending Glucose Alarm active")
             case .none:
                 celltext = NSLocalizedString("No Glucose Alarm active", comment: "No Glucose Alarm active")
             }
@@ -120,7 +129,6 @@ extension Snooze {
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-                configureView()
                 snoozeDescription = getSnoozeDescription()
             }
         }

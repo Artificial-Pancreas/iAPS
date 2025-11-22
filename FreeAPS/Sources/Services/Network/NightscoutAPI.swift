@@ -59,13 +59,20 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func fetchLastGlucose(sinceDate: Date? = nil) -> AnyPublisher<[BloodGlucose], Swift.Error> {
+    /// fetch glucose with [ date >= sinceDate AND date < untilDate ]
+    func fetchLastGlucose(sinceDate: Date? = nil, untilDate: Date? = nil) -> AnyPublisher<[BloodGlucose], Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.entriesPath
-        components.queryItems = [URLQueryItem(name: "count", value: "\(1600)")]
+        components.queryItems = [
+            URLQueryItem(name: "count", value: "\(500)"),
+            URLQueryItem(
+                name: "sort$desc",
+                value: "dateString"
+            ) // "date descending" should be the default sorting, but we're specifying it explicitly here, just in case
+        ]
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[dateString][$gte]",
@@ -73,9 +80,16 @@ extension NightscoutAPI {
             )
             components.queryItems?.append(dateItem)
         }
+        if let date = untilDate {
+            let dateItem = URLQueryItem(
+                name: "find[dateString][$lt]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+            )
+            components.queryItems?.append(dateItem)
+        }
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
+        request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         if let secret = secret {
@@ -111,6 +125,14 @@ extension NightscoutAPI {
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
                 value: CarbsEntry.manual.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            ),
+            URLQueryItem(
+                name: "find[enteredBy][$ne]",
+                value: CarbsEntry.watch.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            ),
+            URLQueryItem(
+                name: "find[enteredBy][$ne]",
+                value: CarbsEntry.shortcut.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             ),
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
@@ -484,6 +506,7 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
+        debug(.nightscout, "NS Client: uploading \(glucose.count) glucose entries")
         request.httpBody = try! JSONCoding.encoder.encode(glucose)
         request.httpMethod = "POST"
 

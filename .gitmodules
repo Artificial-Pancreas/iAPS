@@ -1,0 +1,42 @@
+[submodule "LoopKit"]
+	path = LoopKit
+	url = https://github.com/Artificial-Pancreas/LoopKit.git
+[submodule "LibreTransmitter"]
+	path = LibreTransmitter
+	url = https://github.com/Artificial-Pancreas/LibreTransmitter.git
+[submodule "G7SensorKit"]
+	path = G7SensorKit
+	url = https://github.com/Artificial-Pancreas/G7SensorKit.git
+[submodule "CGMBLEKit"]
+	path = CGMBLEKit
+	url = https://github.com/Artificial-Pancreas/CGMBLEKit.git
+[submodule "MinimedKit"]
+	path = MinimedKit
+	url = https://github.com/Artificial-Pancreas/MinimedKit.git
+[submodule "OmniBLE"]
+	path = OmniBLE
+	url = https://github.com/Artificial-Pancreas/OmniBLE.git
+[submodule "OmniKit"]
+	path = OmniKit
+	url = https://github.com/Artificial-Pancreas/OmniKit.git
+[submodule "dexcom-share-client-swift"]
+	path = dexcom-share-client-swift
+	url = https://github.com/Artificial-Pancreas/dexcom-share-client-swift.git
+[submodule "RileyLinkKit"]
+	path = RileyLinkKit
+	url = https://github.com/Artificial-Pancreas/RileyLinkKit
+[submodule "TidepoolService"]
+	path = TidepoolService
+	url = https://github.com/Artificial-Pancreas/TidepoolService.git
+	branch = dev
+[submodule "NightscoutRemoteCGM"]
+	path = NightscoutRemoteCGM
+	url = https://github.com/Artificial-Pancreas/NightscoutRemoteCGM.git
+[submodule "DanaKit"]
+	path = DanaKit
+	url = https://github.com/Artificial-Pancreas/DanaKit
+	branch = dev
+[submodule "MedtrumKit"]
+	path = MedtrumKit
+	url = https://github.com/Artificial-Pancreas/MedtrumKit.git
+	branch = dev

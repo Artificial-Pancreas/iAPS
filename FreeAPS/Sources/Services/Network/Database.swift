@@ -230,27 +230,6 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
-    func fetchVersion() -> AnyPublisher<Version, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.versionPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
-        request.timeoutInterval = Config.timeout
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .decode(type: Version.self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<Version, Swift.Error> in
-                warning(.nightscout, "Version fetching error: \(error.localizedDescription) \(request)")
-                return Just(Version(main: "", dev: "")).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-
     func uploadPrefs(_ prefs: NightscoutPreferences) -> AnyPublisher<Void, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme

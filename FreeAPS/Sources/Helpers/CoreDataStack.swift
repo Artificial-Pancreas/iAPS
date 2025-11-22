@@ -35,4 +35,20 @@ class CoreDataStack: ObservableObject {
     func delete(obj: NSManagedObject) {
         persistentContainer.viewContext.delete(obj)
     }
+
+    func deleteBatch(entity: String) {
+        let context = persistentContainer.viewContext
+
+        context.performAndWait {
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult>
+            fetchRequest = NSFetchRequest(entityName: entity)
+            let deleteRequest = NSBatchDeleteRequest(
+                fetchRequest: fetchRequest
+            )
+            do {
+                debug(.apsManager, "Clear the \(entity) entries from CoreData.")
+                try context.execute(deleteRequest)
+            } catch { debug(.apsManager, "Couldn't delete the \(entity) entries from CoreData.") }
+        }
+    }
 }

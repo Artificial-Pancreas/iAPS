@@ -93,6 +93,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     var old_isf = { };
     var aisf = { };
     var old_cr = { };
+    var old_basal = { };
     var microbolusAllowed = { };
     
     var inputs = { };
@@ -119,6 +120,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.basal_rate = basal_rate;
     inputs.old_isf = old_isf;
     inputs.old_cr = old_cr;
+    inputs.old_basal = old_basal;
     inputs.iaps = iaps;
     inputs.aisf = aisf;
     inputs.microbolusAllowed = microbolusAllowed;

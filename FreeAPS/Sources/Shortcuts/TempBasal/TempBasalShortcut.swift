@@ -3,8 +3,8 @@ import Foundation
 import Intents
 
 struct BasalIntent: AppIntent {
-    static var title: LocalizedStringResource = "Temp Basal"
-    static var description = IntentDescription("Allow to enact a temp basal command to iAPS.")
+    static let title: LocalizedStringResource = "Temp Basal"
+    static let description = IntentDescription("Allow to enact a temp basal command to iAPS.")
 
     @Parameter(
         title: "Amount",

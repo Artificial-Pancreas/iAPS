@@ -448,7 +448,7 @@ function b30(profile, pumpHistory, dynamicVariables, glucose_status) {
     if (!(profile.temptargetSet && profile.min_bg < profile.iaps.b30targetLevel || dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6 && dynamicVariables.overrideTarget < profile.iaps.b30targetLevel)) {
         return
     }
-    // In case override and temp target are used simultaneously - use temp target as glucose target.
+    // In case override and temp target are used simultaneously - use temp target.
     if (profile.temptargetSet && profile.min_bg >= profile.iaps.b30targetLevel) {
         return
     }
@@ -575,5 +575,5 @@ function reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF) {
     }
     addReason("bg: " + roundedBg);
     addReason("dura: " + round(dura_ISF, 2));
-    addReason("pp: " + round(pp_ISF, 2));
+    addReason("pp: " + round(pp_ISF, 3));
 }
