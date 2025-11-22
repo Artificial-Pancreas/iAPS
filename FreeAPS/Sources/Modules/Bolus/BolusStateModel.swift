@@ -284,6 +284,26 @@ extension Bolus {
             carbsStorage.storeCarbs(carbToStore)
         }
 
+        func saveMeal() {
+            if let recent = coreDataStorage.recentMeal() {
+                carbToStore = [CarbsEntry(
+                    id: recent.id,
+                    createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(5.seconds.timeInterval),
+                    actualDate: recent.actualDate,
+                    carbs: Decimal(recent.carbs),
+                    fat: Decimal(recent.fat),
+                    protein: Decimal(recent.protein),
+                    note: recent.note,
+                    enteredBy: CarbsEntry.manual,
+                    isFPU: false
+                )]
+            }
+
+            guard !empty else { return }
+
+            carbsStorage.storeCarbs(carbToStore)
+        }
+
         func setupInsulinRequired() {
             let conversion: Decimal = units == .mmolL ? 0.0555 : 1
             DispatchQueue.main.async {

@@ -3301,3 +3301,12 @@ Enact a temp Basal or a temp target */
 
 /* message displayed on home screen when the pump is added but not fully onboarded */
 "Re-connect pump!" = "Re-connect pump!";
+
+/* 'fetch' toggle label in nightscout settings */
+"Fetch" = "Fetch";
+
+/* 'fetch' section header in nightscout settings */
+"Allow Fetching" = "Allow Fetching";
+
+/* 'fetch' scection footer in nightscout settings */
+"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS will fetch announcements, carbs and temp targets from Nightscout";

@@ -1077,6 +1077,47 @@ extension MainChartView {
         }
     }
 
+    private func calculatePeakActivities() {
+        peakActivity_1unit = peakInsulinActivity(forBolus: 1.0)
+        peakActivity_maxBolus = peakInsulinActivity(forBolus: Double(data.maxBolus))
+        peakActivity_maxIOB = peakInsulinActivity(forBolus: Double(data.maxIOB))
+        maxActivityInData = data.activity.map { e in e.activity }.max()
+    }
+
+    private func calculateActivityDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = data.activity.map { value -> CGPoint in
+                activityToCoordinate(date: value.time, activity: value.activity, fullSize: fullSize)
+            }
+            let zeroPointY: CGFloat = activityToCoordinate(
+                date: Date(), // only y-coordinate matters
+                activity: 0,
+                fullSize: fullSize
+            ).y
+            DispatchQueue.main.async {
+                activityDots = dots
+                activityZeroPointY = zeroPointY
+            }
+        }
+    }
+
+    private func calculateCobDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = data.cob.map { value -> (CGPoint, IOBData) in
+                (cobToCoordinate(date: value.date, cob: value.cob, fullSize: fullSize), value)
+            }
+            let zeroPointY: CGFloat = cobToCoordinate(
+                date: Date(), // only y-coordinate matters
+                cob: 0,
+                fullSize: fullSize
+            ).y
+            DispatchQueue.main.async {
+                cobDots = dots
+                cobZeroPointY = zeroPointY
+            }
+        }
+    }
+
     private func calculateGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
             let dots = data.glucose.map { value -> (CGRect, Int?) in

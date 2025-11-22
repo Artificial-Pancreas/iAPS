@@ -11,9 +11,11 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
     @Injected() var settingsManager: SettingsManager!
+    @Injected() var broadcaster: Broadcaster!
 
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 4.minutes.timeInterval)
+    private let shouldFetch = PassthroughSubject<Bool, Never>()
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -61,7 +63,27 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 }
             }
             .store(in: &lifetime)
-        timer.fire()
-        timer.resume()
+
+        shouldFetch
+            .removeDuplicates()
+            .receive(on: processQueue)
+            .sink { shouldFetch in
+                if shouldFetch {
+                    self.timer.fire()
+                    self.timer.resume()
+                } else {
+                    self.timer.suspend()
+                }
+            }
+            .store(in: &lifetime)
+
+        broadcaster.register(SettingsObserver.self, observer: self)
+        settingsDidChange(settingsManager.settings)
+    }
+}
+
+extension BaseFetchAnnouncementsManager: SettingsObserver {
+    func settingsDidChange(_ settings: FreeAPSSettings) {
+        shouldFetch.send(settings.nightscoutFetchEnabled)
     }
 }

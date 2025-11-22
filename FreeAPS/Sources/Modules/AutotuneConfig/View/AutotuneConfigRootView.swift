@@ -210,7 +210,7 @@ extension AutotuneConfig {
 
                     if abs(difference) > tolerance {
                         Text(rateFormatter.string(from: oldRate as NSNumber) ?? "0")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.secondary)
 
                         Text("⇢").foregroundColor(.secondary)
 

@@ -3,8 +3,11 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 const libPath = process.env['OREF0_DIST_PATH'] || './lib'
 
+// const mode = 'development'
+const mode = 'production'
+
 module.exports = {
-  mode: 'production',
+  mode,
   entry: {
     iob: path.resolve(libPath, 'iob/index.js'),
     meal: path.resolve(libPath, 'meal/index.js'),
@@ -29,7 +32,7 @@ module.exports = {
     },
   },
   optimization: {
-    minimize: true,
+    minimize: mode !== 'development',
     minimizer: [new TerserPlugin({
         extractComments: false,
         parallel: true,
