@@ -10,9 +10,12 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var tempTargetsStorage: TempTargetsStorage!
     @Injected() var carbsStorage: CarbsStorage!
+    @Injected() var broadcaster: Broadcaster!
+    @Injected() var settingsManager: SettingsManager!
 
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
+    private let shouldFetch = PassthroughSubject<Bool, Never>()
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -41,7 +44,27 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
                 }
             }
             .store(in: &lifetime)
-        timer.fire()
-        timer.resume()
+
+        shouldFetch
+            .removeDuplicates()
+            .receive(on: processQueue)
+            .sink { shouldFetch in
+                if shouldFetch {
+                    self.timer.fire()
+                    self.timer.resume()
+                } else {
+                    self.timer.suspend()
+                }
+            }
+            .store(in: &lifetime)
+
+        broadcaster.register(SettingsObserver.self, observer: self)
+        settingsDidChange(settingsManager.settings)
+    }
+}
+
+extension BaseFetchTreatmentsManager: SettingsObserver {
+    func settingsDidChange(_ settings: FreeAPSSettings) {
+        shouldFetch.send(settings.nightscoutFetchEnabled)
     }
 }

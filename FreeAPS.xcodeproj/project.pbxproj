@@ -1353,6 +1353,7 @@
 		198377CF266BFEDE004DE65E /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
+				FEBEEC142E03F45B005473DC /* Settings.bundle */,
 				196F58CD2BDCFF80009CBF1B /* InfoPlists */,
 				19D440A926B6FEBD008DA6C8 /* Main */,
 				191D529D2BAB4982003F52E1 /* Shortcuts */,

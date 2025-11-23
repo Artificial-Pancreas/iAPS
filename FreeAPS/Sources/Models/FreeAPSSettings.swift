@@ -6,6 +6,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var allowAnnouncements: Bool = false
     var useAutotune: Bool = false
     var isUploadEnabled: Bool = false
+    var nightscoutFetchEnabled: Bool = true
     var debugOptions: Bool = false
     var insulinReqPercentage: Decimal = 70
     var skipBolusScreenAfterCarbs: Bool = false
@@ -161,6 +162,10 @@ extension FreeAPSSettings: Decodable {
 
         if let isUploadEnabled = try? container.decode(Bool.self, forKey: .isUploadEnabled) {
             settings.isUploadEnabled = isUploadEnabled
+        }
+
+        if let nightscoutFetchEnabled = try? container.decode(Bool.self, forKey: .nightscoutFetchEnabled) {
+            settings.nightscoutFetchEnabled = nightscoutFetchEnabled
         }
 
         if let debugOptions = try? container.decode(Bool.self, forKey: .debugOptions) {
