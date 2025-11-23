@@ -3157,7 +3157,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Neglect Carbohydrates in oref0" = "Ignorovať sacharidy v oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Skryť predpovede oref0";
+"Hide Predictions" = "Skryť predpovede";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulačka bolusu";

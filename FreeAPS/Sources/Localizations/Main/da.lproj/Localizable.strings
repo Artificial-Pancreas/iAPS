@@ -3153,7 +3153,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide Predictions" = "Hide Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Lommeregner";

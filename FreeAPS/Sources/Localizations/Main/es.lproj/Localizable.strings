@@ -3270,7 +3270,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide Predictions" = "Hide Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";

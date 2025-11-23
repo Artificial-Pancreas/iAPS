@@ -64,7 +64,7 @@ extension MainChartConfig {
                     if state.fpus {
                         Toggle("Display carb equivalent amount", isOn: $state.fpuAmounts)
                     }
-                    Toggle("Hide oref0 Predictions", isOn: $state.hidePredictions)
+                    Toggle("Hide Predictions", isOn: $state.hidePredictions)
                     if !state.hidePredictions {
                         Toggle("Predictions legend", isOn: $state.showPredictionsLegend)
                     }
