@@ -1382,13 +1382,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Food Type / Meal Note */
 "Note" = "Poznámka";
 
-"Servings" = "Servings";
+"Servings" = "Porcie";
 
-"Kilo Calories" = "Kilo Calories";
+"Kilo Calories" = "Kilokalórie";
 
-"Meals" = "Meals";
+"Meals" = "Jedlá";
 
-"Today's Meals" = "Today's Meals";
+"Today's Meals" = "Dnešné jedlá";
 
 // --------- AI ---------
 /* */
@@ -1709,7 +1709,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "📥 Received response from OpenAI..." = "📥 Prijatá odpoveď od OpenAI...";
 
-"💾 Caching analysis result..." = "💾 Caching analysis result...";
+"💾 Caching analysis result..." = "💾 Ukladám výsledok analýzy do vyrovnávacej pamäte...";
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Robím hĺbkovú analýzu (môže to chvíľu trvať)...";
 
