@@ -3,10 +3,10 @@ import SwiftUI
 
 struct MealsSummaryView: View {
     @FetchRequest(
-        entity: Meals.entity(),
+        entity: Carbohydrates.entity(),
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate:
-            NSPredicate(format: "actualDate > %@", DateFilter().today)
-    ) var fetchedMeals: FetchedResults<Meals>
+        NSPredicate(format: "date > %@", DateFilter().today)
+    ) var fetchedMeals: FetchedResults<Carbohydrates>
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -89,23 +89,35 @@ struct MealsSummaryView: View {
         }.foregroundStyle(.secondary)
     }
 
-    private var carbs: Double {
-        fetchedMeals.map(\.carbs).reduce(0, +)
+    private var carbs: Decimal {
+        fetchedMeals
+            .compactMap(\.carbs)
+            .map({ x in
+                x as Decimal
+            }).reduce(0, +)
     }
 
-    private var fat: Double {
-        fetchedMeals.map(\.fat).reduce(0, +)
+    private var fat: Decimal {
+        fetchedMeals
+            .compactMap(\.fat)
+            .map({ x in
+                x as Decimal
+            }).reduce(0, +)
     }
 
-    private var protein: Double {
-        fetchedMeals.map(\.protein).reduce(0, +)
+    private var protein: Decimal {
+        fetchedMeals
+            .compactMap(\.protein)
+            .map({ x in
+                x as Decimal
+            }).reduce(0, +)
     }
 
     private var servings: Int {
         fetchedMeals.count
     }
 
-    private func kcal() -> Double {
+    private func kcal() -> Decimal {
         4 * (carbs + protein) + fat * 9
     }
 }
