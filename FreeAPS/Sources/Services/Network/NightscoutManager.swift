@@ -494,13 +494,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
+        // Use latest SGV timestamp to match devicestatus with SGV entries
+        let latestGlucoseDate = glucoseStorage.latestDate() ?? Date()
+
         var status: NightscoutStatus
 
         status = NightscoutStatus(
             device: NigtscoutTreatment.local,
             openaps: openapsStatus,
             pump: pump,
-            uploader: uploader
+            uploader: uploader,
+            createdAt: latestGlucoseDate
         )
 
         storage.save(status, as: OpenAPS.Upload.nsStatus)
