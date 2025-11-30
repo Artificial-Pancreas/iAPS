@@ -467,19 +467,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         // When we have enacted, also send suggested with same content
         // When we have suggested, also send enacted with same content
         if loopIsClosed {
-            // Closed loop mode: send enacted, and duplicate as suggested for Nightscout popup
             openapsStatus = OpenAPSStatus(
                 iob: iob?.first,
-                suggested: enacted, // Nightscout uses suggested for popup, so duplicate enacted
+                suggested: enacted,
                 enacted: enacted,
                 version: "0.7.1"
             )
         } else {
-            // Open loop mode: send suggested, and duplicate as enacted
             openapsStatus = OpenAPSStatus(
                 iob: iob?.first,
                 suggested: suggested,
-                enacted: suggested, // Also send as enacted for consistency
+                enacted: nil,
                 version: "0.7.1"
             )
         }
