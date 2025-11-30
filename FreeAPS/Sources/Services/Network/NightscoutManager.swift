@@ -465,7 +465,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         // Nightscout requires both enacted and suggested fields to show popup on graph
         // When we have enacted, also send suggested with same content
-        // When we have suggested, also send enacted with same content
         if loopIsClosed {
             openapsStatus = OpenAPSStatus(
                 iob: iob?.first,
