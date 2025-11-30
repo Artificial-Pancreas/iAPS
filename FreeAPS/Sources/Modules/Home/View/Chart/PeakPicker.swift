@@ -3,14 +3,23 @@ import Foundation
 enum ExtremumType { case max, min }
 
 enum PeakPicker {
-    /// provided glucose MUST be sorted by dateString ascending
+    /// This function detects glucose trend extrema in two stages.
+    /// Phase 1 identifies “primary” maxima and minima using a sliding ± W time-window, ensuring that each reported peak is the most extreme (latest among equals) within its window.
+    /// Phase 2 then fills large gaps between these primary peaks: it finds secondary local extrema, filters out narrow bumps (shortest arm < W/10), ranks them by width, and iteratively inserts them only where allowed by the peak-type gap rules and same-type spacing constraints.
+    /// Opposite-type peaks may appear close together, while peaks of the same type remain well-spaced.
+    /// The result is a robust set of meaningful turning points without noise-driven micro-peaks.
     static func pick(
         data: [BloodGlucose],
         windowHours: Double = 1
     ) -> (maxima: [BloodGlucose], minima: [BloodGlucose]) {
         let W: TimeInterval = windowHours * 3600
+        let minGapSameTypeFactor = 0.85 // neighbours of SAME type at least ~0.85 * W apart
+        let oppositeGapFactor: Double = 1.7 // for opposite-type gaps
+        let minArmFraction: Double = 0.05 // filter phase-2 extrema with shortest arm < W * 0.05
 
-        // Normalize: non-nil, oldest → latest
+        let minGapSameType = minGapSameTypeFactor * W
+        let minArm = minArmFraction * W
+
         let asc: [(bg: BloodGlucose, v: Double)] = data.compactMap { g in
             guard let v = g.glucose else { return nil }
             return (g, Double(v))
@@ -19,8 +28,12 @@ enum PeakPicker {
         let n = asc.count
         guard n > 0 else { return ([], []) }
 
-        let times = asc.map(\.bg.dateString)
+        let times = asc.map(\.bg.dateString) // assuming this is Date
         let vals = asc.map(\.v)
+
+        // ---------------------------------------------------------
+        // PHASE 1: sliding-window extrema
+        // ---------------------------------------------------------
 
         // Monotonic deques of indices (we keep only the **latest** among equals):
         var maxDQ: [Int] = [] // decreasing by value
@@ -29,15 +42,18 @@ enum PeakPicker {
         var minHead = 0
 
         @inline(__always) func maxFront() -> Int? { maxHead < maxDQ.count ? maxDQ[maxHead] : nil }
-        @inline(__always) func minFront() -> Int? { minHead < minDQ.count ? minDQ[minHead] : nil }
+        @inline(__always) func minFront() -> Int? { minHead < minDQ.count ? minDQ[minDQ.count > minHead ? minHead : 0] : nil }
 
-        // IMPORTANT: use >= (<=) so pushing an equal value removes the older one.
         func maxPush(_ j: Int) {
-            while maxHead < maxDQ.count, vals[j] >= vals[maxDQ.last!] { _ = maxDQ.popLast() }
+            while maxHead < maxDQ.count, vals[j] >= vals[maxDQ.last!] {
+                _ = maxDQ.popLast()
+            }
             maxDQ.append(j)
         }
         func minPush(_ j: Int) {
-            while minHead < minDQ.count, vals[j] <= vals[minDQ.last!] { _ = minDQ.popLast() }
+            while minHead < minDQ.count, vals[j] <= vals[minDQ.last!] {
+                _ = minDQ.popLast()
+            }
             minDQ.append(j)
         }
         func maxPopFrontIf(_ idx: Int) { if let f = maxFront(), f == idx { maxHead += 1 } }
@@ -46,8 +62,8 @@ enum PeakPicker {
         var L = 0 // left boundary of window
         var R = -1 // right boundary (inclusive)
 
-        var maxima: [BloodGlucose] = []
-        var minima: [BloodGlucose] = []
+        var phase1MaxIdx: [Int] = []
+        var phase1MinIdx: [Int] = []
 
         for i in 0 ..< n {
             let ti = times[i]
@@ -66,147 +82,283 @@ enum PeakPicker {
             }
 
             // i is a peak if it's exactly the (unique-latest) extreme at the front
-            if let mf = maxFront(), mf == i { maxima.append(asc[i].bg) }
-            if let nf = minFront(), nf == i { minima.append(asc[i].bg) }
-        }
-
-        // Post-processing: simpler gap filling based on combined extrema timestamps.
-        // 1) Combine maxima and minima timestamps.
-        // 2) Find spans longer than 2 * W.
-        // 3) Split spans into k equal parts where k = floor(span / W).
-        // 4) For each split point, search local extreme within ±10% of W; if none, add the point itself
-        //    and classify as min/max based on the slope of the span.
-
-        guard let globalStart = times.first, let globalEnd = times.last, W > 0 else {
-            return (maxima, minima)
-        }
-
-        // Helper to get value at time by nearest sample index in `asc`.
-        func nearestIndex(for time: Date) -> Int? {
-            // Linear search is acceptable for typical data sizes; can optimize with binary search if needed.
-            var best: (idx: Int, dt: TimeInterval)?
-            for (i, t) in times.enumerated() {
-                let dt = abs(t.timeIntervalSince(time))
-                if best == nil || dt < best!.dt { best = (i, dt) }
+            if let mf = maxFront(), mf == i {
+                phase1MaxIdx.append(i)
             }
-            return best?.idx
+            if let nf = minFront(), nf == i {
+                phase1MinIdx.append(i)
+            }
         }
 
-        // Helper to find local extreme around a center time within ±radius seconds.
-        enum ExtremeKind { case max, min }
-        func localExtreme(around center: Date, radius: TimeInterval) -> (idx: Int, kind: ExtremeKind)? {
-            let start = center.addingTimeInterval(-radius)
-            let end = center.addingTimeInterval(radius)
-            var sIdx: Int?
-            var eIdx: Int?
-            for (i, t) in times.enumerated() {
-                if t >= start, t <= end {
-                    if sIdx == nil { sIdx = i }
-                    eIdx = i
-                } else if t > end { break }
-            }
-            guard let s = sIdx, let e = eIdx, s <= e else { return nil }
-            var minI = s, maxI = s
-            var minV = vals[s], maxV = vals[s]
-            for j in s ... e {
-                let v = vals[j]
-                if v < minV { minV = v
-                    minI = j }
-                if v > maxV { maxV = v
-                    maxI = j }
-            }
-            // If the range is non-trivial, pick the stronger extreme; else nil to fallback to center.
-            if maxV - minV > 0 {
-                let mean = (maxV + minV) * 0.5
-                let devMax = abs(maxV - mean)
-                let devMin = abs(minV - mean)
-                if devMax >= devMin { return (maxI, .max) } else { return (minI, .min) }
-            }
-            return nil
-        }
+        // ---------------------------------------------------------
+        // PHASE 2: local extrema + "shortest arm" width, with arm >= W * 0.05
+        // ---------------------------------------------------------
 
-        // Build sorted unique list of existing extrema times.
-        var selectedTimes: [Date] = (maxima.map(\.dateString) + minima.map(\.dateString))
-        selectedTimes = Array(Set(selectedTimes)).sorted()
+        // 1) Detect strict local extrema by neighbour comparison
+        var localMaxIdx: [Int] = []
+        var localMinIdx: [Int] = []
 
-        // If no extrema yet, seed with start and end so gap logic can operate.
-        if selectedTimes.isEmpty {
-            selectedTimes = [globalStart, globalEnd]
-        } else {
-            // Ensure endpoints are present for span computation.
-            if let first = selectedTimes.first, first > globalStart { selectedTimes.insert(globalStart, at: 0) }
-            if let last = selectedTimes.last, last < globalEnd { selectedTimes.append(globalEnd) }
-        }
+        if n >= 3 {
+            for i in 1 ..< (n - 1) {
+                let prev = vals[i - 1]
+                let cur = vals[i]
+                let next = vals[i + 1]
 
-        let searchRadius = 0.1 * W // ±10% of window size
-
-        // For each adjacent pair, fill large spans.
-        for i in 0 ..< (selectedTimes.count - 1) {
-            let a = selectedTimes[i]
-            let b = selectedTimes[i + 1]
-            let span = b.timeIntervalSince(a)
-            if span <= 2 * W { continue }
-
-            // Determine how many splits: spans longer than k windows -> split into k parts.
-            let k = Int(floor(span / W))
-            guard k >= 2 else { continue }
-
-            // Determine slope across the whole segment (for fallback classification)
-            let ia = nearestIndex(for: a)
-            let ib = nearestIndex(for: b)
-            let slopeKind: ExtremeKind? = {
-                if let ia, let ib, ia != ib {
-                    let va = vals[ia]
-                    let vb = vals[ib]
-                    return (vb >= va) ? .max : .min
+                if cur > prev, cur > next {
+                    localMaxIdx.append(i)
+                } else if cur < prev, cur < next {
+                    localMinIdx.append(i)
                 }
-                return nil
-            }()
+            }
+        }
 
-            // Place k-1 interior points (split into k parts -> k-1 internal marks)
-            for j in 1 ..< k {
-                let t = a.addingTimeInterval(span * Double(j) / Double(k))
-                if let found = localExtreme(around: t, radius: searchRadius) {
-                    let bg = asc[found.idx].bg
-                    if found.kind == .max {
-                        maxima.append(bg)
-                    } else {
-                        minima.append(bg)
+        struct WideExtremum {
+            let idx: Int
+            let width: TimeInterval // priority = shortest of the two arms
+            let type: ExtremumType
+        }
+
+        func buildWideExtrema(from indices: [Int], type: ExtremumType) -> [WideExtremum] {
+            var result: [WideExtremum] = []
+            result.reserveCapacity(indices.count)
+
+            for i in indices {
+                var l = i
+                var r = i
+
+                switch type {
+                case .max:
+                    // expand as long as we don't see a *strictly higher* neighbour
+                    while l > 0, vals[l - 1] <= vals[l] { l -= 1 }
+                    while r + 1 < n, vals[r + 1] <= vals[r] { r += 1 }
+
+                case .min:
+                    // expand as long as we don't see a *strictly lower* neighbour
+                    while l > 0, vals[l - 1] >= vals[l] { l -= 1 }
+                    while r + 1 < n, vals[r + 1] >= vals[r] { r += 1 }
+                }
+
+                let centerTime = times[i]
+                let leftTime = times[l]
+                let rightTime = times[r]
+
+                let leftArm = centerTime.timeIntervalSince(leftTime)
+                let rightArm = rightTime.timeIntervalSince(centerTime)
+                let shortestArm = min(leftArm, rightArm)
+
+                // filter out tiny bumps: one arm < W/10
+                guard shortestArm >= minArm else { continue }
+
+                result.append(WideExtremum(idx: i, width: shortestArm, type: type))
+            }
+
+            // widest → narrowest (for deterministic choice when several fit)
+            result.sort { $0.width > $1.width }
+            return result
+        }
+
+        let maxCandidates = buildWideExtrema(from: localMaxIdx, type: .max)
+        let minCandidates = buildWideExtrema(from: localMinIdx, type: .min)
+
+        if maxCandidates.isEmpty, minCandidates.isEmpty {
+            // No extra candidates -> return phase1 only
+            let finalMaxIdx = phase1MaxIdx.sorted { times[$0] < times[$1] }
+            let finalMinIdx = phase1MinIdx.sorted { times[$0] < times[$1] }
+            return (finalMaxIdx.map { asc[$0].bg }, finalMinIdx.map { asc[$0].bg })
+        }
+
+        // Type lookup for all peaks (phase1 + phase2)
+        var typeByIdx: [Int: ExtremumType] = [:]
+        for idx in phase1MaxIdx { typeByIdx[idx] = .max }
+        for idx in phase1MinIdx { typeByIdx[idx] = .min }
+        for cand in maxCandidates { typeByIdx[cand.idx] = .max }
+        for cand in minCandidates { typeByIdx[cand.idx] = .min }
+
+        // For looking up widths (only needed for comparing phase2 candidates)
+        var widthByIdx: [Int: TimeInterval] = [:]
+        for cand in maxCandidates { widthByIdx[cand.idx] = cand.width }
+        for cand in minCandidates { widthByIdx[cand.idx] = cand.width }
+
+        // ---------------------------------------------------------
+        // Iterative gap-filling
+        // ---------------------------------------------------------
+
+        // Phase1 peaks, sorted by time
+        var currentPeaks = Array(Set(phase1MaxIdx + phase1MinIdx))
+        currentPeaks.sort { times[$0] < times[$1] }
+
+        // Used candidates so we don't insert the same phase2 point twice
+        var usedCandidates = Set<Int>()
+
+        func bestCandidate(
+            ofType type: ExtremumType,
+            between leftIdx: Int,
+            and rightIdx: Int,
+            used: Set<Int>
+        ) -> WideExtremum? {
+            let candidates = (type == .max ? maxCandidates : minCandidates)
+
+            let tLeft = times[leftIdx]
+            let tRight = times[rightIdx]
+
+            var best: WideExtremum?
+
+            for cand in candidates {
+                let idx = cand.idx
+                if used.contains(idx) { continue }
+
+                let t = times[idx]
+                // must lie strictly inside the gap in time
+                if t <= tLeft || t >= tRight { continue }
+
+                // Enforce min distance only to same-type endpoints
+                if typeByIdx[leftIdx] == type {
+                    if t.timeIntervalSince(tLeft) < minGapSameType {
+                        continue
+                    }
+                }
+                if typeByIdx[rightIdx] == type {
+                    if tRight.timeIntervalSince(t) < minGapSameType {
+                        continue
+                    }
+                }
+
+                if let cur = best {
+                    if cand.width > cur.width {
+                        best = cand
                     }
                 } else {
-                    // Fallback: add the sample nearest to t and classify by slopeKind
-                    if let idx = nearestIndex(for: t) {
-                        let bg = asc[idx].bg
-                        if let kind = slopeKind {
-                            if kind == .max { maxima.append(bg) } else { minima.append(bg) }
-                        } else {
-                            // If slope unknown, decide by local derivative if possible
-                            let prev = max(0, idx - 1)
-                            let next = min(n - 1, idx + 1)
-                            let dv = vals[next] - vals[prev]
-                            if dv >= 0 { maxima.append(bg) } else { minima.append(bg) }
+                    best = cand
+                }
+            }
+
+            return best
+        }
+
+        let oppositeMinGap = oppositeGapFactor * W
+
+        while true {
+            var addedThisPass: [Int] = []
+
+            if currentPeaks.count >= 2 {
+                for k in 0 ..< (currentPeaks.count - 1) {
+                    let leftIdx = currentPeaks[k]
+                    let rightIdx = currentPeaks[k + 1]
+
+                    guard
+                        let leftType = typeByIdx[leftIdx],
+                        let rightType = typeByIdx[rightIdx]
+                    else { continue }
+
+                    let tLeft = times[leftIdx]
+                    let tRight = times[rightIdx]
+                    let gap = tRight.timeIntervalSince(tLeft)
+
+                    // ---- same-type gaps ----
+                    if leftType == .min && rightType == .min {
+                        // min–min: always try to add one max (no same-type gap restriction here)
+                        if let chosenMax = bestCandidate(
+                            ofType: .max,
+                            between: leftIdx,
+                            and: rightIdx,
+                            used: usedCandidates
+                        ) {
+                            let idx = chosenMax.idx
+                            addedThisPass.append(idx)
+                            usedCandidates.insert(idx)
+                            typeByIdx[idx] = .max
+                        }
+                        continue
+                    }
+
+                    if leftType == .max && rightType == .max {
+                        // max–max: always try to add one min
+                        if let chosenMin = bestCandidate(
+                            ofType: .min,
+                            between: leftIdx,
+                            and: rightIdx,
+                            used: usedCandidates
+                        ) {
+                            let idx = chosenMin.idx
+                            addedThisPass.append(idx)
+                            usedCandidates.insert(idx)
+                            typeByIdx[idx] = .min
+                        }
+                        continue
+                    }
+
+                    // ---- opposite-type gaps ----
+                    let isOpposite =
+                        (leftType == .min && rightType == .max) ||
+                        (leftType == .max && rightType == .min)
+
+                    if isOpposite, gap > oppositeMinGap {
+                        // Try to get both a max and a min that respect same-type spacing
+                        let maxCand = bestCandidate(
+                            ofType: .max,
+                            between: leftIdx,
+                            and: rightIdx,
+                            used: usedCandidates
+                        )
+                        let minCand = bestCandidate(
+                            ofType: .min,
+                            between: leftIdx,
+                            and: rightIdx,
+                            used: usedCandidates
+                        )
+
+                        if let maxC = maxCand, let minC = minCand {
+                            // No restriction between them (min can be close to max)
+                            addedThisPass.append(maxC.idx)
+                            addedThisPass.append(minC.idx)
+                            usedCandidates.insert(maxC.idx)
+                            usedCandidates.insert(minC.idx)
+                            typeByIdx[maxC.idx] = .max
+                            typeByIdx[minC.idx] = .min
+                        } else if let maxC = maxCand {
+                            addedThisPass.append(maxC.idx)
+                            usedCandidates.insert(maxC.idx)
+                            typeByIdx[maxC.idx] = .max
+                        } else if let minC = minCand {
+                            addedThisPass.append(minC.idx)
+                            usedCandidates.insert(minC.idx)
+                            typeByIdx[minC.idx] = .min
                         }
                     }
                 }
             }
-        }
 
-        // Deduplicate in case added points coincide with existing peaks
-        func uniqueByDate(_ arr: [BloodGlucose]) -> [BloodGlucose] {
-            var seen = Set<Date>()
-            var out: [BloodGlucose] = []
-            for g in arr.sorted(by: { $0.dateString < $1.dateString }) {
-                if !seen.contains(g.dateString) {
-                    out.append(g)
-                    seen.insert(g.dateString)
-                }
+            if addedThisPass.isEmpty {
+                break
             }
-            return out
+
+            // Merge newly added peaks into the list and sort by time
+            currentPeaks.append(contentsOf: addedThisPass)
+            currentPeaks = Array(Set(currentPeaks))
+            currentPeaks.sort { times[$0] < times[$1] }
         }
 
-        maxima = uniqueByDate(maxima)
-        minima = uniqueByDate(minima)
+        // ---------------------------------------------------------
+        // Final maxima / minima
+        // ---------------------------------------------------------
 
-        return (maxima, minima) // oldest → latest (with gap-filling)
+        var finalMaxIdx: [Int] = []
+        var finalMinIdx: [Int] = []
+
+        for idx in currentPeaks {
+            switch typeByIdx[idx] {
+            case .max?: finalMaxIdx.append(idx)
+            case .min?: finalMinIdx.append(idx)
+            case nil: break
+            }
+        }
+
+        finalMaxIdx.sort { times[$0] < times[$1] }
+        finalMinIdx.sort { times[$0] < times[$1] }
+
+        let maxima = finalMaxIdx.map { asc[$0].bg }
+        let minima = finalMinIdx.map { asc[$0].bg }
+
+        return (maxima, minima)
     }
 }

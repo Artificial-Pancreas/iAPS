@@ -69,6 +69,8 @@ class CalculatedGeometries {
     private(set) var peaksFont = Font.custom("BolusDotFont", fixedSize: 13)
     private var peaksUIFont = UIFont.systemFont(ofSize: 13)
 
+    private var peakObstacles: [CGRect] = []
+
     private let bolusFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -213,13 +215,14 @@ class CalculatedGeometries {
         self.glucoseLabels = glucoseLabels
 
         if data.chartGlucosePeaks {
-            glucosePeaks = calculateGlucosePeaks()
+            glucosePeaks = measure("calculateGlucosePeaks") { calculateGlucosePeaks() }
         }
 
         let ended = Date.now
 
         // TODO: remove this
-        print(
+        debug(
+            .service,
             "main chart update: \(ended.timeIntervalSince(started) * 1000) milliseconds"
         )
     }
@@ -305,8 +308,25 @@ class CalculatedGeometries {
     private func calculateGlucosePeaks() -> [GlucosePeak] {
         let (maxima, minima) = PeakPicker.pick(data: glucose, windowHours: Double(data.screenHours) / 2.0)
 
+        peakObstacles =
+            bolusDots.map(\.rect) +
+            bolusDots.compactMap(\.textRect) +
+            carbsDots.map(\.rect) +
+            carbsDots.compactMap(\.textRect)
+
+        // obstacles must be sorted for the placement algorithm
+        peakObstacles.sort { lhs, rhs in
+            if lhs.minX == rhs.minX {
+                if lhs.minY != rhs.minY { return lhs.minY < rhs.minY }
+                if lhs.maxX != rhs.maxX { return lhs.maxX < rhs.maxX }
+                return lhs.maxY < rhs.maxY
+            }
+            return lhs.minX < rhs.minX
+        }
+
         // y, x-start, x-end, glucose value
         var glucosePeaks: [GlucosePeak] = []
+        glucosePeaks.reserveCapacity(maxima.count + minima.count)
 
         let formatter = data.units == .mmolL ? mmolDotGlucoseFormatter : dotGlucoseFormatter
 
@@ -389,19 +409,11 @@ class CalculatedGeometries {
 
     private func positionPeak(rect: CGRect, _ type: ExtremumType) -> CGRect? {
         let maxDistance: CGFloat = 80.0
-        if type == .max {
-            return bolusDots.placeLabelCenter(
-                desiredRect: rect,
-                verticalSide: .above,
-                maxDistance: maxDistance
-            )
-        } else {
-            return carbsDots.placeLabelCenter(
-                desiredRect: rect,
-                verticalSide: .below,
-                maxDistance: maxDistance,
-            )
-        }
+        return peakObstacles.placeLabelCenter(
+            desiredRect: rect,
+            verticalSide: type == .max ? .above : .below,
+            maxDistance: maxDistance
+        )
     }
 
     private func calculateActivityDots() -> [CGPoint] {
