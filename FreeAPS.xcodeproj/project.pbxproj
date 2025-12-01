@@ -74,6 +74,7 @@
 		198FEED52D3F8C5900A67FAE /* LiveActivityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */; };
 		198FEED62D3F8C7900A67FAE /* LiveActivityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */; };
 		1990DC532D6C1DDE00C4D967 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
+		19914CDC2EDDC09400DC2051 /* MealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19914CDB2EDDC08F00DC2051 /* MealData.swift */; };
 		1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
@@ -698,6 +699,7 @@
 		198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoISFStateModel.swift; sourceTree = "<group>"; };
 		198FA7B92D380790006858FD /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 		198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityChart.swift; sourceTree = "<group>"; };
+		19914CDB2EDDC08F00DC2051 /* MealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealData.swift; sourceTree = "<group>"; };
 		199561C0275E61A50077B976 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		199732B4271B72DD00129A3F /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		199732B5271B9EE900129A3F /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2002,8 +2004,10 @@
 				1967DFBD29D052C200759F30 /* Icons.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
 				38887CCD25F5725200944304 /* IOBEntry.swift */,
+				F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */,
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
 				19012CDB291D2CB900FB8210 /* LoopStats.swift */,
+				19914CDB2EDDC08F00DC2051 /* MealData.swift */,
 				192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */,
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */,
@@ -2020,7 +2024,6 @@
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
-				F273F95F2DE73ABE00BF0FFC /* IOBTick0.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3465,6 +3468,7 @@
 				CE94598729E9E4110047C9C6 /* WatchConfigRootView.swift in Sources */,
 				192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */,
 				193CA2DA2E1E72B200DF9998 /* WebViewScriptExecutor.swift in Sources */,
+				19914CDC2EDDC09400DC2051 /* MealData.swift in Sources */,
 				B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */,
 				320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */,
 				19E1F7E829D082D0005C8D20 /* IconConfigDataFlow.swift in Sources */,

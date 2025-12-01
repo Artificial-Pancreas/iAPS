@@ -161,6 +161,20 @@ final class CoreDataStorage {
         return carbs
     }
 
+    func fetchMealData(interval: NSDate) -> [Carbohydrates] {
+        var data = [Carbohydrates]()
+        coredataContext.performAndWait {
+            let requestData = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+            let sortData = NSSortDescriptor(key: "date", ascending: false)
+            requestData.sortDescriptors = [sortData]
+            requestData.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? data = self.coredataContext.fetch(requestData)
+        }
+        return data
+    }
+
     func fetchStats() -> [StatsData] {
         var stats = [StatsData]()
         coredataContext.performAndWait {

@@ -1,12 +1,7 @@
-import CoreData
 import SwiftUI
 
 struct MealsSummaryView: View {
-    @FetchRequest(
-        entity: Carbohydrates.entity(),
-        sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate:
-        NSPredicate(format: "date > %@", DateFilter().today)
-    ) var fetchedMeals: FetchedResults<Carbohydrates>
+    @Binding var data: MealData
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -41,7 +36,7 @@ struct MealsSummaryView: View {
     }
 
     private var caloriesView: some View {
-        let kcal = kcal()
+        let kcal = data.kcal
         return HStack {
             Text("Kilo Calories")
             Spacer()
@@ -50,7 +45,7 @@ struct MealsSummaryView: View {
     }
 
     private var servingsView: some View {
-        let servings = servings
+        let servings = data.servings
         return HStack {
             Text("Servings")
             Spacer()
@@ -60,64 +55,32 @@ struct MealsSummaryView: View {
 
     private var nutrientsView: some View {
         VStack {
-            if carbs > 0 {
+            if data.carbs > 0 {
                 HStack {
                     Text("Carbs")
                     Spacer()
-                    Text(intFormatter.string(from: carbs as NSNumber) ?? "")
+                    Text(intFormatter.string(from: data.carbs as NSNumber) ?? "")
                     Text("g")
                 }
             }
 
-            if fat > 0 {
+            if data.fat > 0 {
                 HStack {
                     Text("Fat")
                     Spacer()
-                    Text(intFormatter.string(from: fat as NSNumber) ?? "")
+                    Text(intFormatter.string(from: data.fat as NSNumber) ?? "")
                     Text("g")
                 }
             }
 
-            if protein > 0 {
+            if data.protein > 0 {
                 HStack {
                     Text("Protein")
                     Spacer()
-                    Text(intFormatter.string(from: protein as NSNumber) ?? "")
+                    Text(intFormatter.string(from: data.protein as NSNumber) ?? "")
                     Text("g")
                 }
             }
         }.foregroundStyle(.secondary)
-    }
-
-    private var carbs: Decimal {
-        fetchedMeals
-            .compactMap(\.carbs)
-            .map({ x in
-                x as Decimal
-            }).reduce(0, +)
-    }
-
-    private var fat: Decimal {
-        fetchedMeals
-            .compactMap(\.fat)
-            .map({ x in
-                x as Decimal
-            }).reduce(0, +)
-    }
-
-    private var protein: Decimal {
-        fetchedMeals
-            .compactMap(\.protein)
-            .map({ x in
-                x as Decimal
-            }).reduce(0, +)
-    }
-
-    private var servings: Int {
-        fetchedMeals.count
-    }
-
-    private func kcal() -> Decimal {
-        4 * (carbs + protein) + fat * 9
     }
 }
