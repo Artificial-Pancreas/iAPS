@@ -306,7 +306,7 @@ class CalculatedGeometries {
     }
 
     private func calculateGlucosePeaks() -> [GlucosePeak] {
-        let (maxima, minima) = PeakPicker.pick(data: glucose, windowHours: Double(data.screenHours) / 2.0)
+        let (maxima, minima) = PeakPicker.pick(data: glucose, windowHours: Double(data.screenHours) / 2.5)
 
         peakObstacles =
             bolusDots.map(\.rect) +
