@@ -1,75 +1,68 @@
 import Foundation
 import SwiftUI
 
-class CalculatedGeometries {
+import Foundation
+import SwiftUI
+
+struct CalculatedGeometries {
     let fullSize: CGSize
-    private let data: ChartModel
 
-    private(set) var glucose: [BloodGlucose]
-    private(set) var boluses: [PumpHistoryEvent] = []
-    private(set) var realCarbs: [CarbsEntry] = []
-    private(set) var fpus: [CarbsEntry] = []
+    let glucoseDots: [(rect: CGRect, glucose: Int?)]
+    let activityDots: [CGPoint]
+    let activityZeroPointY: CGFloat?
+    let cobDots: [(CGPoint, IOBData)]
+    let cobZeroPointY: CGFloat?
+    let manualGlucoseDots: [CGRect]
+    let announcementDots: [AnnouncementDot]
+    let manualGlucoseDotsCenter: [CGRect]
+    let unSmoothedGlucoseDots: [CGRect]
+    let predictionDotsIOB: [CGRect]
+    let predictionDotsCOB: [CGRect]
+    let predictionDotsZT: [CGRect]
+    let predictionDotsUAM: [CGRect]
+    let bolusDots: [DotInfo]
+    let bolusPath: Path
+    let tempBasalPath: Path
+    let regularBasalPath: Path
+    let tempTargetsPath: Path
+    let overridesPath: Path
+    let suspensionsPath: Path
+    let carbsDots: [DotInfo]
+    let carbsPath: Path
+    let fpuDots: [DotInfo]
+    let fpuPath: Path
+    let peakActivity_1unit: Double
+    let peakActivity_1unit_y: CGFloat
+    let peakActivity_maxBolus: Double
+    let peakActivity_maxBolus_y: CGFloat
+    let peakActivity_maxIOB: Double
+    let peakActivity_maxIOB_y: CGFloat
+    let maxActivityInData: Decimal?
+    let horizontalGrid: [(CGFloat, Int)]
+    let glucoseLabels: [(CGFloat, Int)]
+    let lowThresholdLine: (CGFloat, Int)?
+    let highThresholdLine: (CGFloat, Int)?
+    let glucosePeaks: [GlucosePeak]
 
-    private(set) var glucoseDots: [(rect: CGRect, glucose: Int?)] = []
-    private(set) var activityDots: [CGPoint] = []
-    private(set) var activityZeroPointY: CGFloat?
-    private(set) var cobDots: [(CGPoint, IOBData)] = []
-    private(set) var cobZeroPointY: CGFloat?
-    private(set) var manualGlucoseDots: [CGRect] = []
-    private(set) var announcementDots: [AnnouncementDot] = []
-    private(set) var announcementPath = Path()
-    private(set) var manualGlucoseDotsCenter: [CGRect] = []
-    private(set) var unSmoothedGlucoseDots: [CGRect] = []
-    private(set) var predictionDotsIOB: [CGRect] = []
-    private(set) var predictionDotsCOB: [CGRect] = []
-    private(set) var predictionDotsZT: [CGRect] = []
-    private(set) var predictionDotsUAM: [CGRect] = []
-    private(set) var bolusDots: [DotInfo] = []
-    private(set) var bolusPath = Path()
-    private(set) var tempBasalPath = Path()
-    private(set) var regularBasalPath = Path()
-    private(set) var tempTargetsPath = Path()
-    private(set) var overridesPath = Path()
-    private(set) var suspensionsPath = Path()
-    private(set) var carbsDots: [DotInfo] = []
-    private(set) var carbsPath = Path()
-    private(set) var fpuDots: [DotInfo] = []
-    private(set) var fpuPath = Path()
-    private(set) var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
-    private(set) var offset: CGFloat = 0
-    private(set) var cachedMaxBasalRate: Decimal?
-    private(set) var activityChartMinMax: (Double, Double) = (0, 1)
-    private(set) var cobChartMinMax: (Double, Double) = (0, 1)
-    private(set) var peakActivity_1unit: Double = 0.0
-    private(set) var peakActivity_1unit_y: CGFloat = 0.0
-    private(set) var peakActivity_maxBolus: Double = 0.0
-    private(set) var peakActivity_maxBolus_y: CGFloat = 0.0
-    private(set) var peakActivity_maxIOB: Double = 0.0
-    private(set) var peakActivity_maxIOB_y: CGFloat = 0.0
-    private(set) var maxActivityInData: Decimal?
-    private(set) var horizontalGrid: [(CGFloat, Int)] = []
-    private(set) var glucoseLabels: [(CGFloat, Int)] = []
-    private(set) var lowThresholdLine: (CGFloat, Int)?
-    private(set) var highThresholdLine: (CGFloat, Int)?
-    private(set) var glucosePeaks: [GlucosePeak] = []
+    let firstHourDate: Date
+    let oneSecondWidth: CGFloat
+    let additionalWidth: CGFloat
+    let fullGlucoseWidth: CGFloat
+    let firstHourPosition: CGFloat
+    let currentTimeX: CGFloat
 
-    private(set) var firstHourDate = Date()
-    private(set) var oneSecondWidth: CGFloat = 0
-    private(set) var additionalWidth: CGFloat = 0
-    private(set) var fullGlucoseWidth: CGFloat = 0
-    private(set) var firstHourPosition: CGFloat = 0
-    private(set) var currentTimeX: CGFloat = 0
+    let bolusFont: Font
+    let peaksFont: Font
+}
 
-    private var glucoseMinValue: Int = 0
-    private var glucoseMaxValue: Int = 0
+extension CalculatedGeometries {
+    static func make(fullSize: CGSize, data: ChartModel) -> CalculatedGeometries {
+        GeometriesBuilder(fullSize: fullSize, data: data).make()
+    }
+}
 
-    private(set) var bolusFont = Font.custom("BolusDotFont", fixedSize: 11)
-    private var bolusUIFont = UIFont.systemFont(ofSize: 11)
-
-    private(set) var peaksFont = Font.custom("BolusDotFont", fixedSize: 13)
-    private var peaksUIFont = UIFont.systemFont(ofSize: 13)
-
-    private let bolusFormatter: NumberFormatter = {
+private final class GeometriesBuilder {
+    private static let bolusFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.minimumIntegerDigits = 0
@@ -78,14 +71,14 @@ class CalculatedGeometries {
         return formatter
     }()
 
-    private let carbsFormatter: NumberFormatter = {
+    private static let carbsFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         return formatter
     }()
 
-    private let dotGlucoseFormatter: NumberFormatter = {
+    private static let dotGlucoseFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
@@ -93,7 +86,7 @@ class CalculatedGeometries {
         return formatter
     }()
 
-    private let mmolDotGlucoseFormatter: NumberFormatter = {
+    private static let mmolDotGlucoseFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
@@ -102,12 +95,42 @@ class CalculatedGeometries {
         return formatter
     }()
 
-    init(
-        fullSize: CGSize,
-        data: ChartModel
-    ) {
-        let started = Date.now
+    // simple constants - initialized in the constructor
+    private let fullSize: CGSize
+    private let data: ChartModel
+    private let glucose: [BloodGlucose]
+    private let boluses: [PumpHistoryEvent]
+    private let realCarbs: [CarbsEntry]
+    private let fpus: [CarbsEntry]
 
+    private let firstHourDate: Date
+    private let oneSecondWidth: CGFloat
+    private let fullGlucoseWidth: CGFloat
+
+    private let glucoseMinValue: Int
+    private let glucoseMaxValue: Int
+
+    private let peakActivity_1unit: Double
+    private let peakActivity_maxBolus: Double
+    private let peakActivity_maxIOB: Double
+
+    private let maxActivityInData: Decimal?
+
+    private let activityChartMin: Double
+    private let activityChartMax: Double
+
+    private let cobChartMin: Double
+    private let cobChartMax: Double
+
+    private let bolusFont: Font
+    private let bolusUIFont: UIFont
+
+    private let peaksFont: Font
+    private let peaksUIFont: UIFont
+
+    private var cachedMaxBasalRate: Decimal?
+
+    init(fullSize: CGSize, data: ChartModel) {
         self.fullSize = fullSize
         self.data = data
 
@@ -129,99 +152,155 @@ class CalculatedGeometries {
                 ($0.actualDate ?? .distantPast) < ($1.actualDate ?? .distantPast)
             }
 
-        let (bolusFont, bolusUIFont) = getBolusFont()
-        self.bolusFont = bolusFont
-        self.bolusUIFont = bolusUIFont
+        firstHourDate = GeometriesBuilder.calculateFirstHourDate()
+        oneSecondWidth = GeometriesBuilder.calculateOneSecondStep(fullSize, data)
+        fullGlucoseWidth = GeometriesBuilder.calculateFullGlucoseWidth(fullSize, data)
 
-        let (peaksFont, peaksUIFont) = getPeaksFont()
-        self.peaksFont = peaksFont
-        self.peaksUIFont = peaksUIFont
+        peakActivity_1unit = GeometriesBuilder.peakInsulinActivity(forBolus: 1.0, data)
+        peakActivity_maxBolus = GeometriesBuilder.peakInsulinActivity(forBolus: Double(data.maxBolus), data)
+        peakActivity_maxIOB = GeometriesBuilder.peakInsulinActivity(forBolus: Double(data.maxIOB), data)
 
-        firstHourDate = calculateFirstHourDate()
-        oneSecondWidth = calculateOneSecondStep()
-        additionalWidth = calculateAdditionalWidth()
-        fullGlucoseWidth = calculateFullGlucoseWidth()
-        firstHourPosition = calculateFirstHourPosition()
-
-        let (glucoseMinValue, glucoseMaxValue) = glucoseMinMaxYValues()
+        let (glucoseMinValue, glucoseMaxValue) = data.glucoseMinMaxYValues()
         self.glucoseMinValue = glucoseMinValue
         self.glucoseMaxValue = glucoseMaxValue
 
-        currentTimeX = timeToXCoordinate(Date.now.timeIntervalSince1970)
+        maxActivityInData = data.maxActivityInData()
 
-        peakActivity_1unit = peakInsulinActivity(forBolus: 1.0)
-        peakActivity_maxBolus = peakInsulinActivity(forBolus: Double(data.maxBolus))
-        peakActivity_maxIOB = peakInsulinActivity(forBolus: Double(data.maxIOB))
-        maxActivityInData = data.activity.map { e in e.activity }.max()
+        let (activityChartMin, activityChartMax) = GeometriesBuilder.calculateActivityChartMinMax(
+            peakActivity_1unit: peakActivity_1unit,
+            peakActivity_maxIOB: peakActivity_maxIOB,
+            peakActivity_maxBolus: peakActivity_maxBolus,
+            maxActivityInData: maxActivityInData
+        )
+        self.activityChartMin = activityChartMin
+        self.activityChartMax = activityChartMax
 
-        activityChartMinMax = calculateActivityChartMinMax()
-        cobChartMinMax = calculateCobChartMinMax()
+        let (cobChartMin, cobChartMax) = data.cobChartMinMax()
+        self.cobChartMin = cobChartMin
+        self.cobChartMax = cobChartMax
 
-        peakActivity_1unit_y = activityToYCoordinate(Decimal(peakActivity_1unit))
-        peakActivity_maxBolus_y = activityToYCoordinate(Decimal(peakActivity_maxBolus))
-        peakActivity_maxIOB_y = activityToYCoordinate(Decimal(peakActivity_maxIOB))
+        let (bolusFont, bolusUIFont) = GeometriesBuilder.getBolusFont(data)
+        let (peaksFont, peaksUIFont) = GeometriesBuilder.getPeaksFont(data)
 
-        predictionDotsIOB = calculatePredictionDots(type: .iob)
-        predictionDotsCOB = calculatePredictionDots(type: .cob)
-        predictionDotsZT = calculatePredictionDots(type: .zt)
-        predictionDotsUAM = calculatePredictionDots(type: .uam)
+        self.bolusFont = bolusFont
+        self.bolusUIFont = bolusUIFont
+        self.peaksFont = peaksFont
+        self.peaksUIFont = peaksUIFont
+    }
 
-        glucoseYRange = getGlucoseYRange()
+    func make() -> CalculatedGeometries {
+        let additionalWidth = calculateAdditionalWidth()
+        let firstHourPosition = calculateFirstHourPosition()
 
-        glucoseDots = calculateGlucoseDots()
+        let currentTimeX = timeToXCoordinate(Date.now.timeIntervalSince1970)
 
-        activityDots = calculateActivityDots()
-        activityZeroPointY = activityToCoordinate(date: Date(), activity: 0).y // only y-coordinate matters
+        let activityZeroPointY = activityToCoordinate(date: Date(), activity: 0).y // only y-coordinate matters
 
-        cobDots = calculateCobDots()
-        cobZeroPointY = cobToCoordinate(date: Date(), cob: 0).y // only y-coordinate matters
+        let peakActivity_1unit_y = activityToYCoordinate(Decimal(peakActivity_1unit))
+        let peakActivity_maxBolus_y = activityToYCoordinate(Decimal(peakActivity_maxBolus))
+        let peakActivity_maxIOB_y = activityToYCoordinate(Decimal(peakActivity_maxIOB))
 
-        manualGlucoseDots = calculateManualGlucoseDots()
+        let predictionDotsIOB = calculatePredictionDots(type: .iob)
+        let predictionDotsCOB = calculatePredictionDots(type: .cob)
+        let predictionDotsZT = calculatePredictionDots(type: .zt)
+        let predictionDotsUAM = calculatePredictionDots(type: .uam)
 
-        manualGlucoseDotsCenter = calculateManualGlucoseDotsCenter()
+        let glucoseYRange = getGlucoseYRange()
 
-        announcementDots = calculateAnnouncementDots()
-        announcementPath = makeAnnouncementPath()
+        let glucoseDots = calculateGlucoseDots()
 
-        unSmoothedGlucoseDots = calculateUnSmoothedGlucoseDots()
+        let activityDots = calculateActivityDots()
 
-        bolusDots = calculateBolusDots()
-        bolusPath = data.useInsulinBars ? insulinBarsPath() : insulinCirclesPath()
+        let cobDots = calculateCobDots(activityZeroPointY: activityZeroPointY)
+        let cobZeroPointY = cobToCoordinate(date: Date(), cob: 0, activityZeroPointY: activityZeroPointY)
+            .y // only y-coordinate matters
 
-        carbsDots = calculateCarbsDots()
-        carbsPath = data.useCarbBars ? carbsBarsPath(carbsDots) : carbsCirclesPath(carbsDots)
+        let manualGlucoseDots = calculateManualGlucoseDots()
 
-        fpuDots = calculateFPUsDots()
-        fpuPath = data.useCarbBars ? carbsBarsPath(fpuDots) : carbsCirclesPath(fpuDots)
+        let manualGlucoseDotsCenter = calculateManualGlucoseDotsCenter()
 
-        tempTargetsPath = calculateTempTargetsRects()
+        let announcementDots = calculateAnnouncementDots()
+        let announcementPath = makeAnnouncementPath(announcementDots: announcementDots)
 
-        overridesPath = calculateOverridesRects()
+        let unSmoothedGlucoseDots = calculateUnSmoothedGlucoseDots()
+
+        let bolusDots = calculateBolusDots()
+        let bolusPath = data.useInsulinBars ? insulinBarsPath(bolusDots) : insulinCirclesPath(bolusDots)
+
+        let carbsDots = calculateCarbsDots()
+        let carbsPath = data.useCarbBars ? carbsBarsPath(carbsDots) : carbsCirclesPath(carbsDots)
+
+        let fpuDots = calculateFPUsDots()
+        let fpuPath = data.useCarbBars ? carbsBarsPath(fpuDots) : carbsCirclesPath(fpuDots)
+
+        let tempTargetsPath = calculateTempTargetsRects()
+
+        let overridesPath = calculateOverridesRects(additionalWidth: additionalWidth)
 
         let (tempBasalPath, regularBasalPath) = calculateBasalPoints()
 
-        self.tempBasalPath = tempBasalPath
-        self.regularBasalPath = regularBasalPath
-
-        suspensionsPath = calculateSuspensions()
+        let suspensionsPath = calculateSuspensions(additionalWidth: additionalWidth)
 
         let (horizontalGrid, lowThresholdLine, highThresholdLine, glucoseLabels) = calculateHorizontalLines()
 
-        self.horizontalGrid = horizontalGrid
-        self.lowThresholdLine = lowThresholdLine
-        self.highThresholdLine = highThresholdLine
-        self.glucoseLabels = glucoseLabels
+        let glucosePeaks = data.chartGlucosePeaks ?
+            measure("calculateGlucosePeaks") {
+                calculateGlucosePeaks(
+                    bolusDots: bolusDots, carbsDots: carbsDots, glucoseDots: glucoseDots, manualGlucoseDots: manualGlucoseDots,
+                    unSmoothedGlucoseDots: unSmoothedGlucoseDots
+                )
+            } :
+            []
 
-        if data.chartGlucosePeaks {
-            glucosePeaks = measure("calculateGlucosePeaks") { calculateGlucosePeaks() }
-        }
+        return CalculatedGeometries(
+            fullSize: fullSize,
 
-        let ended = Date.now
+            glucoseDots: glucoseDots,
+            activityDots: activityDots,
+            activityZeroPointY: activityZeroPointY,
+            cobDots: cobDots,
+            cobZeroPointY: cobZeroPointY,
+            manualGlucoseDots: manualGlucoseDots,
+            announcementDots: announcementDots,
+            manualGlucoseDotsCenter: manualGlucoseDotsCenter,
+            unSmoothedGlucoseDots: unSmoothedGlucoseDots,
+            predictionDotsIOB: predictionDotsIOB,
+            predictionDotsCOB: predictionDotsCOB,
+            predictionDotsZT: predictionDotsZT,
+            predictionDotsUAM: predictionDotsUAM,
+            bolusDots: bolusDots,
+            bolusPath: bolusPath,
+            tempBasalPath: tempBasalPath,
+            regularBasalPath: regularBasalPath,
+            tempTargetsPath: tempTargetsPath,
+            overridesPath: overridesPath,
+            suspensionsPath: suspensionsPath,
+            carbsDots: carbsDots,
+            carbsPath: carbsPath,
+            fpuDots: fpuDots,
+            fpuPath: fpuPath,
+            peakActivity_1unit: peakActivity_1unit,
+            peakActivity_1unit_y: peakActivity_1unit_y,
+            peakActivity_maxBolus: peakActivity_maxBolus,
+            peakActivity_maxBolus_y: peakActivity_maxBolus_y,
+            peakActivity_maxIOB: peakActivity_maxIOB,
+            peakActivity_maxIOB_y: peakActivity_maxIOB_y,
+            maxActivityInData: maxActivityInData,
+            horizontalGrid: horizontalGrid,
+            glucoseLabels: glucoseLabels,
+            lowThresholdLine: lowThresholdLine,
+            highThresholdLine: highThresholdLine,
+            glucosePeaks: glucosePeaks,
 
-        // TODO: remove this
-        debug(
-            .service,
-            "main chart update: \(ended.timeIntervalSince(started) * 1000) milliseconds"
+            firstHourDate: firstHourDate,
+            oneSecondWidth: oneSecondWidth,
+            additionalWidth: additionalWidth,
+            fullGlucoseWidth: fullGlucoseWidth,
+            firstHourPosition: firstHourPosition,
+            currentTimeX: currentTimeX,
+
+            bolusFont: bolusFont,
+            peaksFont: peaksFont
         )
     }
 
@@ -303,7 +382,13 @@ class CalculatedGeometries {
         return (lines, lowLine, highLine, labels)
     }
 
-    private func calculateGlucosePeaks() -> [GlucosePeak] {
+    private func calculateGlucosePeaks(
+        bolusDots: [DotInfo],
+        carbsDots: [DotInfo],
+        glucoseDots: [(rect: CGRect, glucose: Int?)],
+        manualGlucoseDots: [CGRect],
+        unSmoothedGlucoseDots: [CGRect],
+    ) -> [GlucosePeak] {
         let peaks = PeakPicker.pick(data: glucose, windowHours: Double(data.screenHours) / 2.5)
 
         var peakObstacles: [CGRect] =
@@ -325,7 +410,7 @@ class CalculatedGeometries {
         peakObstacles.sort { $0.minX < $1.minX }
         peakObstaclesWithBG.sort { $0.minX < $1.minX }
 
-        let formatter = data.units == .mmolL ? mmolDotGlucoseFormatter : dotGlucoseFormatter
+        let formatter = data.units == .mmolL ? GeometriesBuilder.mmolDotGlucoseFormatter : GeometriesBuilder.dotGlucoseFormatter
 
         let peakHorizontalPadding = ChartConfig.peakHorizontalPadding
         let peakVerticalPadding = ChartConfig.peakVerticalPadding
@@ -398,9 +483,11 @@ class CalculatedGeometries {
         }
     }
 
-    private func calculateCobDots() -> [(CGPoint, IOBData)] {
+    private func calculateCobDots(
+        activityZeroPointY: CGFloat
+    ) -> [(CGPoint, IOBData)] {
         data.cob.map { value -> (CGPoint, IOBData) in
-            (cobToCoordinate(date: value.date, cob: value.cob), value)
+            (cobToCoordinate(date: value.date, cob: value.cob, activityZeroPointY: activityZeroPointY), value)
         }
     }
 
@@ -440,7 +527,7 @@ class CalculatedGeometries {
         return dots
     }
 
-    private func makeAnnouncementPath() -> Path {
+    private func makeAnnouncementPath(announcementDots: [AnnouncementDot]) -> Path {
         Path { path in
             for dot in announcementDots {
                 path.addEllipse(in: dot.rect)
@@ -459,7 +546,7 @@ class CalculatedGeometries {
         data.useInsulinBars ? insulinBarEntries() : insulinCircleEntries()
     }
 
-    private func insulinCirclesPath() -> Path {
+    private func insulinCirclesPath(_ bolusDots: [DotInfo]) -> Path {
         Path { path in
             for dot in bolusDots {
                 path.addEllipse(in: dot.rect)
@@ -468,7 +555,7 @@ class CalculatedGeometries {
     }
 
     // An InsulinBarMark of sorts
-    private func insulinBarsPath() -> Path {
+    private func insulinBarsPath(_ bolusDots: [DotInfo]) -> Path {
         Path { path in
             for dot in bolusDots {
                 let rect = dot.rect
@@ -600,7 +687,7 @@ class CalculatedGeometries {
         return (tempBasalPath, autotunedBasalPath)
     }
 
-    private func calculateSuspensions() -> Path {
+    private func calculateSuspensions(additionalWidth: CGFloat) -> Path {
         var rects = data.suspensions.windows(ofCount: 2).map { window -> CGRect? in
             let window = Array(window)
             guard window[0].type == .pumpSuspend, window[1].type == .pumpResume else { return nil }
@@ -631,7 +718,7 @@ class CalculatedGeometries {
                 .map { self.timeToXCoordinate($0.timestamp.timeIntervalSince1970) }
             let x0 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970)
 
-            let x1 = tbrTimeX ?? self.fullGlucoseWidth + self.additionalWidth
+            let x1 = tbrTimeX ?? fullGlucoseWidth + additionalWidth
 
             return CGRect(x: x0, y: 0, width: x1 - x0, height: ChartConfig.basalHeight * 0.7)
         }
@@ -693,7 +780,7 @@ class CalculatedGeometries {
         }
     }
 
-    private func calculateOverridesRects() -> Path {
+    private func calculateOverridesRects(additionalWidth: CGFloat) -> Path {
         let latest = data.latestOverride
         let rects = data.overrideHistory.map { each -> CGRect in
             let duration = each.duration
@@ -825,7 +912,7 @@ class CalculatedGeometries {
         return CGPoint(x: x, y: y)
     }
 
-    private func calculateFullGlucoseWidth() -> CGFloat {
+    private static func calculateFullGlucoseWidth(_ fullSize: CGSize, _ data: ChartModel) -> CGFloat {
         fullSize.width * CGFloat(data.hours) / CGFloat(min(max(data.screenHours, 2), 24))
     }
 
@@ -862,38 +949,8 @@ class CalculatedGeometries {
         )
     }
 
-    private func calculateOneSecondStep() -> CGFloat {
+    private static func calculateOneSecondStep(_ fullSize: CGSize, _ data: ChartModel) -> CGFloat {
         fullSize.width / (CGFloat(min(max(data.screenHours, 2), 24)) * CGFloat(1.hours.timeInterval))
-    }
-
-    private func maxPredValue() -> Int? {
-        [
-            data.suggestion?.predictions?.cob ?? [],
-            data.suggestion?.predictions?.iob ?? [],
-            data.suggestion?.predictions?.zt ?? [],
-            data.suggestion?.predictions?.uam ?? []
-        ]
-        .flatMap { $0 }
-        .max()
-    }
-
-    private func minPredValue() -> Int? {
-        [
-            data.suggestion?.predictions?.cob ?? [],
-            data.suggestion?.predictions?.iob ?? [],
-            data.suggestion?.predictions?.zt ?? [],
-            data.suggestion?.predictions?.uam ?? []
-        ]
-        .flatMap { $0 }
-        .min()
-    }
-
-    private func maxTargetValue() -> Int? {
-        data.tempTargets.map { $0.targetTop ?? 0 }.filter { $0 > 0 }.max().map(Int.init)
-    }
-
-    private func minTargetValue() -> Int? {
-        data.tempTargets.map { $0.targetBottom ?? 0 }.filter { $0 > 0 }.min().map(Int.init)
     }
 
     private func activityToCoordinate(date: Date, activity: Decimal) -> CGPoint {
@@ -903,9 +960,13 @@ class CalculatedGeometries {
         return CGPoint(x: x, y: y)
     }
 
-    private func cobToCoordinate(date: Date, cob: Decimal) -> CGPoint {
+    private func cobToCoordinate(
+        date: Date,
+        cob: Decimal,
+        activityZeroPointY: CGFloat
+    ) -> CGPoint {
         let x = timeToXCoordinate(date.timeIntervalSince1970)
-        let y = cobToYCoordinate(cob)
+        let y = cobToYCoordinate(cob, activityZeroPointY: activityZeroPointY)
 
         return CGPoint(x: x, y: y)
     }
@@ -958,24 +1019,30 @@ class CalculatedGeometries {
 
     private func activityToYCoordinate(_ activityValue: Decimal) -> CGFloat {
         let bottomPadding = fullSize.height - ChartConfig.bottomPadding
-        let (minValue, maxValue) = activityChartMinMax
-        let stepYFraction = ChartConfig.activityChartHeight / CGFloat(maxValue - minValue)
-        let yOffset = CGFloat(minValue) * stepYFraction
+        let stepYFraction = ChartConfig.activityChartHeight / CGFloat(activityChartMax - activityChartMin)
+        let yOffset = CGFloat(activityChartMin) * stepYFraction
         let y = bottomPadding - CGFloat(activityValue) * stepYFraction + yOffset
         return y
     }
 
-    private func cobToYCoordinate(_ cobValue: Decimal) -> CGFloat {
-        let bottomPadding = activityZeroPointY ?? (fullSize.height - ChartConfig.bottomPadding)
-        let (minValue, maxValue) = cobChartMinMax
+    private func cobToYCoordinate(
+        _ cobValue: Decimal,
+        activityZeroPointY: CGFloat
+    ) -> CGFloat {
+        let bottomPadding = activityZeroPointY
         let circleHeight = (ChartConfig.carbsSize + 4.0 + 8.0)
-        let stepYFraction = (ChartConfig.cobChartHeight - circleHeight) / CGFloat(maxValue - minValue)
-        let yOffset = CGFloat(minValue) * stepYFraction
+        let stepYFraction = (ChartConfig.cobChartHeight - circleHeight) / CGFloat(cobChartMax - cobChartMin)
+        let yOffset = CGFloat(cobChartMin) * stepYFraction
         let y = bottomPadding - CGFloat(cobValue) * stepYFraction + yOffset
         return y
     }
 
-    private func calculateActivityChartMinMax() -> (Double, Double) {
+    private static func calculateActivityChartMinMax(
+        peakActivity_1unit: Double,
+        peakActivity_maxIOB: Double,
+        peakActivity_maxBolus: Double,
+        maxActivityInData: Decimal?
+    ) -> (Double, Double) {
         let maxIOBPeakActivity = peakActivity_maxIOB * 0.5
         let maxBolusPeakActivity = peakActivity_maxBolus * 1.1
         let maxValue = max(
@@ -989,16 +1056,9 @@ class CalculatedGeometries {
         )
     }
 
-    private func calculateCobChartMinMax() -> (Double, Double) {
-        return (
-            0.0,
-            Double(data.cob.map(\.cob).max() ?? 0.0) * 1.2
-        )
-    }
-
     // function to calculate the maximum insulin activity for a given bolus size
     // used to scale the activity chart
-    private func peakInsulinActivity(forBolus: Double) -> Double {
+    private static func peakInsulinActivity(forBolus: Double, _ data: ChartModel) -> Double {
         let peak = Double(data.insulinPeak)
         let dia = Double(data.insulinDIA)
         let end = dia * 60.0
@@ -1130,32 +1190,6 @@ class CalculatedGeometries {
         return CGPoint(x: x, y: 0)
     }
 
-    private func glucoseMinMaxYValues() -> (min: Int, max: Int) {
-        var maxValue = glucose.compactMap(\.glucose).max() ?? ChartConfig.maxGlucose
-
-        if let maxTargetValue = maxTargetValue() {
-            maxValue = max(maxValue, maxTargetValue)
-        }
-        var minValue = glucose.compactMap(\.glucose).min() ?? ChartConfig.minGlucose
-        if let minPredValue = minPredValue() {
-            minValue = min(minValue, minPredValue)
-        }
-        if let minTargetValue = minTargetValue() {
-            minValue = min(minValue, minTargetValue)
-        }
-
-        if minValue == maxValue {
-            minValue = ChartConfig.minGlucose
-            maxValue = ChartConfig.maxGlucose
-        }
-        // fix the grah y-axis as long as the min and max BG values are within set borders
-        if minValue > ChartConfig.minGlucose {
-            minValue = ChartConfig.minGlucose
-        }
-
-        return (min: minValue, max: maxValue)
-    }
-
     private func getGlucoseYRange() -> GlucoseYRange {
         let topYPaddint = ChartConfig.topYPadding + ChartConfig.basalHeight
         let mainChartBottomPadding = data.showInsulinActivity || data.showCobChart ? ChartConfig
@@ -1167,7 +1201,7 @@ class CalculatedGeometries {
         return (minValue: glucoseMinValue, minY: minY, maxValue: glucoseMaxValue, maxY: maxY)
     }
 
-    private func calculateFirstHourDate() -> Date {
+    private static func calculateFirstHourDate() -> Date {
         let firstDate = Date().addingTimeInterval(-1.days.timeInterval)
         return firstDate.dateTruncated(from: .minute)!
     }
@@ -1187,7 +1221,8 @@ class CalculatedGeometries {
             let size = ChartConfig.bolusSize + CGFloat(value.amount ?? 0) * ChartConfig.bolusScale
             let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
             let bolusValue = value.amount ?? 0
-            let string = bolusValue >= data.minimumSMB ? bolusFormatter.string(from: bolusValue as NSNumber) : nil
+            let string = bolusValue >= data.minimumSMB ? GeometriesBuilder.bolusFormatter
+                .string(from: bolusValue as NSNumber) : nil
 
             var textRect: CGRect?
             if let string {
@@ -1217,7 +1252,8 @@ class CalculatedGeometries {
                 width: width(value: bolusValue),
                 height: height + ChartConfig.pointSizeHeight
             )
-            let string = bolusValue >= data.minimumSMB ? bolusFormatter.string(from: bolusValue as NSNumber) : nil
+            let string = bolusValue >= data.minimumSMB ? GeometriesBuilder.bolusFormatter
+                .string(from: bolusValue as NSNumber) : nil
 
             var textRect: CGRect?
             if let string {
@@ -1255,7 +1291,7 @@ class CalculatedGeometries {
                 height: size // + CGFloat(value.carbs) * ChartConfig.carbsScale
             )
 
-            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+            let string = GeometriesBuilder.carbsFormatter.string(from: value.carbs as NSNumber)
             var textRect: CGRect?
             if let string {
                 let stringSize = textSize(text: string, font: bolusUIFont)
@@ -1286,7 +1322,7 @@ class CalculatedGeometries {
                 height: height + ChartConfig.pointSizeHeight
             )
 
-            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+            let string = GeometriesBuilder.carbsFormatter.string(from: value.carbs as NSNumber)
             var textRect: CGRect?
             if let string {
                 let stringSize = textSize(text: string, font: bolusUIFont)
@@ -1319,7 +1355,7 @@ class CalculatedGeometries {
                 height: size
             )
 
-            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+            let string = GeometriesBuilder.carbsFormatter.string(from: value.carbs as NSNumber)
 
             var textRect: CGRect?
             if let string {
@@ -1351,7 +1387,7 @@ class CalculatedGeometries {
                 height: height
             )
 
-            let string = carbsFormatter.string(from: value.carbs as NSNumber)
+            let string = GeometriesBuilder.carbsFormatter.string(from: value.carbs as NSNumber)
             var textRect: CGRect?
             if let string {
                 let stringSize = textSize(text: string, font: bolusUIFont)
@@ -1390,7 +1426,7 @@ class CalculatedGeometries {
         }
     }
 
-    private func getBolusFont() -> (Font, UIFont) {
+    private static func getBolusFont(_ data: ChartModel) -> (Font, UIFont) {
         var size = CGFloat(12)
         switch data.screenHours {
         case 12:
@@ -1406,7 +1442,7 @@ class CalculatedGeometries {
         )
     }
 
-    private func getPeaksFont() -> (Font, UIFont) {
+    private static func getPeaksFont(_ data: ChartModel) -> (Font, UIFont) {
         var size = CGFloat(12)
         switch data.screenHours {
         case 12:
@@ -1435,5 +1471,75 @@ class CalculatedGeometries {
         let ms = Date().timeIntervalSince(start) * 1000
         print("\(label): \(ms) ms")
         return result
+    }
+}
+
+private extension ChartModel {
+    func maxPredValue() -> Int? {
+        [
+            suggestion?.predictions?.cob ?? [],
+            suggestion?.predictions?.iob ?? [],
+            suggestion?.predictions?.zt ?? [],
+            suggestion?.predictions?.uam ?? []
+        ]
+        .flatMap { $0 }
+        .max()
+    }
+
+    func minPredValue() -> Int? {
+        [
+            suggestion?.predictions?.cob ?? [],
+            suggestion?.predictions?.iob ?? [],
+            suggestion?.predictions?.zt ?? [],
+            suggestion?.predictions?.uam ?? []
+        ]
+        .flatMap { $0 }
+        .min()
+    }
+
+    func maxTargetValue() -> Int? {
+        tempTargets.map { $0.targetTop ?? 0 }.filter { $0 > 0 }.max().map(Int.init)
+    }
+
+    func minTargetValue() -> Int? {
+        tempTargets.map { $0.targetBottom ?? 0 }.filter { $0 > 0 }.min().map(Int.init)
+    }
+
+    func cobChartMinMax() -> (Double, Double) {
+        return (
+            0.0,
+            Double(cob.map(\.cob).max() ?? 0.0) * 1.2
+        )
+    }
+
+    func glucoseMinMaxYValues() -> (min: Int, max: Int) {
+        let glucose = self.glucose
+        var maxValue = glucose.compactMap(\.glucose).max() ?? ChartConfig.maxGlucose
+
+        if let maxTargetValue = self.maxTargetValue() {
+            maxValue = max(maxValue, maxTargetValue)
+        }
+        var minValue = glucose.compactMap(\.glucose).min() ?? ChartConfig.minGlucose
+        if let minPredValue = self.minPredValue() {
+            minValue = min(minValue, minPredValue)
+        }
+        if let minTargetValue = self.minTargetValue() {
+            minValue = min(minValue, minTargetValue)
+        }
+
+        if minValue == maxValue {
+            minValue = ChartConfig.minGlucose
+            maxValue = ChartConfig.maxGlucose
+        }
+        // fix the grah y-axis as long as the min and max BG values are within set borders
+        if minValue > ChartConfig.minGlucose {
+            minValue = ChartConfig.minGlucose
+        }
+
+        return (min: minValue, max: maxValue)
+    }
+
+    func maxActivityInData() -> Decimal? {
+        activity.map { e in e.activity }.max()
     }
 }

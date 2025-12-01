@@ -137,7 +137,16 @@ struct MainChartView: View {
     }
 
     private func update(fullSize: CGSize) {
-        let geom = CalculatedGeometries(fullSize: fullSize, data: data)
+        let started = Date.now
+
+        let geom = CalculatedGeometries.make(fullSize: fullSize, data: data)
+
+        // TODO: remove this
+        let ended = Date.now
+        debug(
+            .service,
+            "main chart update: \(ended.timeIntervalSince(started) * 1000) milliseconds"
+        )
 
         DispatchQueue.main.async {
             if self.shouldScrollAfterUpdate {
