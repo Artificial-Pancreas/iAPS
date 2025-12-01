@@ -3,15 +3,20 @@ import Foundation
 enum VerticalSide {
     case above
     case below
+    case both
 }
 
-struct Candidate { let p: CGPoint
+struct Candidate {
+    let p: CGPoint
     let d: CGFloat
-    let rank: Int }
+    let rank: Int
+}
 
-struct Pick { let p: CGPoint
+struct Pick {
+    let p: CGPoint
     let d2: CGFloat
-    let rank: Int }
+    let rank: Int
+}
 
 extension Array where Element == CGRect {
     /// Place `desired` as the globally closest collision-free rect near `desired`,
@@ -54,7 +59,11 @@ extension Array where Element == CGRect {
         var lo = 0, hi = expanded.count
         while lo < hi {
             let mid = (lo + hi) >> 1
-            if expanded[mid].minX < searchBox.minX { lo = mid + 1 } else { hi = mid }
+            if expanded[mid].minX < searchBox.minX {
+                lo = mid + 1
+            } else {
+                hi = mid
+            }
         }
         var filtered: [CGRect] = []
         filtered.reserveCapacity(expanded.count - lo)
@@ -142,38 +151,82 @@ extension Array where Element == CGRect {
             }
         }
 
-        // B) ROOFLINE: compute a single roof y near cx and emit a few nearby x samples
-        do {
+        // Helper to run the roofline logic for a specific vertical side (.above / .below)
+        @inline(__always) func roofline(for side: VerticalSide) {
             var yRoof: CGFloat?
             for e in expanded where e.minX <= cx && cx <= e.maxX {
-                if verticalSide == .above {
+                switch side {
+                case .above:
                     let y = e.minY - verticalClearanceEps
                     yRoof = (yRoof == nil) ? y : Swift.min(yRoof!, y)
-                } else {
+                case .below:
                     let y = e.maxY + verticalClearanceEps
                     yRoof = (yRoof == nil) ? y : Swift.max(yRoof!, y)
+                case .both:
+                    // .both is handled outside by calling this helper twice
+                    break
                 }
             }
             if let y = yRoof {
-                let yClamp = (verticalSide == .above) ? Swift.min(y, cy) : Swift.max(y, cy)
+                let yClamp: CGFloat
+                switch side {
+                case .above:
+                    yClamp = Swift.min(y, cy)
+                case .below:
+                    yClamp = Swift.max(y, cy)
+                case .both:
+                    return
+                }
                 consider(cx, yClamp)
                 consider(cx - halfW, yClamp)
                 consider(cx + halfW, yClamp)
             }
         }
 
-        // C) DIRECT-OVER: probe a few points above/below obstacles near cx to break tight clusters
+        // B) ROOFLINE: compute a roof y near cx and emit a few nearby x samples
         do {
+            switch verticalSide {
+            case .above:
+                roofline(for: .above)
+            case .below:
+                roofline(for: .below)
+            case .both:
+                roofline(for: .above)
+                roofline(for: .below)
+            }
+        }
+
+        // Helper to run the direct-over logic for a specific vertical side (.above / .below)
+        @inline(__always) func directOver(for side: VerticalSide) {
             let xBandMin = cx - w
             let xBandMax = cx + w
             for e in expanded where e.maxX >= xBandMin && e.minX <= xBandMax {
-                let y = (verticalSide == .above)
-                    ? Swift.min(e.minY - verticalClearanceEps, cy)
-                    : Swift.max(e.maxY + verticalClearanceEps, cy)
+                let y: CGFloat
+                switch side {
+                case .above:
+                    y = Swift.min(e.minY - verticalClearanceEps, cy)
+                case .below:
+                    y = Swift.max(e.maxY + verticalClearanceEps, cy)
+                case .both:
+                    continue // handled by outer dispatch
+                }
                 let xMid = Swift.min(Swift.max(cx, e.minX), e.maxX)
                 consider(xMid, y)
                 consider(e.minX, y)
                 consider(e.maxX, y)
+            }
+        }
+
+        // C) DIRECT-OVER: probe a few points above/below obstacles near cx to break tight clusters
+        do {
+            switch verticalSide {
+            case .above:
+                directOver(for: .above)
+            case .below:
+                directOver(for: .below)
+            case .both:
+                directOver(for: .above)
+                directOver(for: .below)
             }
         }
 

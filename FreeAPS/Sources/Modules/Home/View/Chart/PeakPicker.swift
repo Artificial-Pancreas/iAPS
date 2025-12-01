@@ -1,66 +1,66 @@
 import Foundation
 
-enum ExtremumType { case max, min }
+enum ExtremumType { case max, min, none }
 
 enum PeakPicker {
-    /// Detects meaningful maxima and minima in a CGM time series using a two-stage
-    /// sliding-window extremum algorithm with gap-based refinement.
+    /// Detects meaningful extrema in a CGM time series using a multi-stage
+    /// sliding-window algorithm with gap-based refinement.
     ///
-    /// The function operates in two phases:
+    /// The function operates in **three phases**:
     ///
     /// **Phase 1 — Primary extrema**
     /// A sliding window of width *W* (derived from `windowHours`) is swept across the
-    /// entire dataset. A point is marked as a primary maximum/minimum if it is the
+    /// entire dataset. A point is marked as a primary maximum or minimum if it is the
     /// most extreme value (and the most recent among equals) within its ±W window.
-    /// This produces a coarse but structurally accurate set of major turning points.
+    /// This yields a stable set of major turning points.
     ///
-    /// **Phase 2 — Gap refinement**
+    /// **Phase 2 — Gap refinement (secondary extrema)**
     /// Each gap between consecutive primary extrema is re-examined using a smaller
     /// sliding window of size `secondaryWindowFactor * W`.
-    /// Within that gap, all secondary local maxima/minima are detected. Depending on
-    /// the gap’s endpoint types:
-    ///   • a min–min gap may admit a secondary maximum,
-    ///   • a max–max gap may admit a secondary minimum,
+    /// Local extrema inside that gap are detected, and depending on the types of the
+    /// endpoints:
+    ///   • a min–min gap may admit one secondary maximum,
+    ///   • a max–max gap may admit one secondary minimum,
     ///   • a mixed (min–max or max–min) gap may admit one of each, but only if the
-    ///     time span of the gap exceeds `oppositeGapFactor * W`.
+    ///     gap is wider than `oppositeGapFactor * W`.
     ///
-    /// For each type that a gap allows, at most one secondary extremum is selected,
-    /// according to the following rules:
+    /// When selecting a secondary extremum for a gap:
+    ///   1. **Value priority** — choose the strongest candidate
+    ///      (highest for maxima, lowest for minima).
+    ///   2. **Same-type spacing rule** — the chosen extremum must be sufficiently far
+    ///      from all other extrema of the same type, at least
+    ///      `minSameTypeGapFactor * W` apart.
+    ///      This prevents unnatural clustering of same-type peaks.
     ///
-    /// 1. **Value priority** – among all secondary candidates of the required type,
-    ///    the chosen extremum is the strongest one in its direction
-    ///    (highest value for maxima, lowest value for minima).
+    /// **Phase 3 — Neutral extrema (`.none`) in wide opposite-type gaps**
+    /// After merging primary and secondary extrema, the function scans all min–max
+    /// and max–min neighbours. If their separation exceeds `oppositeGapFactor * W`,
+    /// it inserts exactly one “neutral” extremum (`.none`) at the interior data point
+    /// whose timestamp is closest to the midpoint of the gap.
+    /// These neutral markers can be used for annotations or segmentation.
     ///
-    /// 2. **Same-type spacing constraint** – a secondary extremum is accepted only if
-    ///    it is sufficiently far from all existing extrema of the same type, where
-    ///    “far enough” means at least `minSameTypeGapFactor * W` apart.
-    ///    This prevents excessive clustering of same-type peaks while still allowing
-    ///    opposite-type peaks to be close together.
-    ///
-    /// The final result is the union of all primary extrema plus any secondary
-    /// extrema admitted during gap refinement.
-    /// This produces a stable, noise-resistant set of trend turning points that
-    /// captures both the global shape and important local features of the glucose
-    /// signal.
+    /// The function returns **all extrema of all three phases**, each annotated with
+    /// its `ExtremumType` ( `.max`, `.min`, or `.none` ), sorted in ascending
+    /// chronological order.
     ///
     /// - Parameters:
     ///   - data: The time-ordered glucose measurements.
     ///   - windowHours: The primary window width *W*, in hours.
-    ///   - secondaryWindowFactor: Multiplier applied to *W* to obtain the finer
-    ///     secondary window used inside gaps.
-    ///   - oppositeGapFactor: Minimum gap width (as a multiple of *W*) required
-    ///     before opposite-type extrema may both be added in a mixed gap.
-    ///   - minSameTypeGapFactor: Minimum required spacing between extrema of the
-    ///     same type, expressed as a multiple of *W*.
+    ///   - secondaryWindowFactor: Fraction of *W* used for secondary extrema.
+    ///   - oppositeGapFactor: Gap-width multiplier controlling when opposite-type
+    ///     gaps may receive two secondary extrema, and when neutral extrema are added.
+    ///   - minSameTypeGapFactor: Minimum spacing between same-type extrema,
+    ///     expressed as a multiple of *W*.
     ///
-    /// - Returns: A pair `(maxima, minima)` with all detected extrema, oldest first.
+    /// - Returns: An array of `(bg: BloodGlucose, type: ExtremumType)`
+    ///            sorted by timestamp ascending.
     static func pick(
         data: [BloodGlucose],
         windowHours: Double = 1,
         secondaryWindowFactor: Double = 1.0 / 3.0,
         oppositeGapFactor: Double = 1.9,
         minSameTypeGapFactor: Double = 0.8
-    ) -> (maxima: [BloodGlucose], minima: [BloodGlucose]) {
+    ) -> [(bg: BloodGlucose, type: ExtremumType)] {
         let W: TimeInterval = windowHours * 3600
         let secondaryW: TimeInterval = W * secondaryWindowFactor
         let oppositeMinGap: TimeInterval = oppositeGapFactor * W
@@ -73,7 +73,7 @@ enum PeakPicker {
         }
 
         let n = asc.count
-        guard n > 0 else { return ([], []) }
+        guard n > 0 else { return [] }
 
         let times = asc.map(\.bg.dateString)
         let vals = asc.map(\.v)
@@ -100,18 +100,24 @@ enum PeakPicker {
         primaryPeaks += primaryMinIdx.map { Peak(idx: $0, type: .min) }
         primaryPeaks.sort { times[$0.idx] < times[$1.idx] }
 
-        // Not enough primary peaks to define gaps → just return them
+        // Not enough primary peaks to define gaps → return the single peak (or none)
         if primaryPeaks.count <= 1 {
-            let maxima = primaryMaxIdx.sorted { times[$0] < times[$1] }.map { asc[$0].bg }
-            let minima = primaryMinIdx.sorted { times[$0] < times[$1] }.map { asc[$0].bg }
-            return (maxima, minima)
+            let sortedIdx = (primaryMaxIdx + primaryMinIdx).sorted { times[$0] < times[$1] }
+
+            let result: [(bg: BloodGlucose, type: ExtremumType)] =
+                sortedIdx.map { i in
+                    let type: ExtremumType = primaryMaxIdx.contains(i) ? .max : .min
+                    return (bg: asc[i].bg, type: type)
+                }
+
+            return result
         }
 
         // Same-type sets used to enforce minimal spacing for added peaks
         var maxSameType = primaryMaxIdx
         var minSameType = primaryMinIdx
 
-        // MARK: - Phase 2: refine each gap using smaller window (W/3)
+        // MARK: - Phase 2: refine each gap using smaller window (secondaryW)
 
         var secondaryPeaks: [Peak] = []
 
@@ -203,12 +209,13 @@ enum PeakPicker {
                     }
                 }
 
-            @unknown default:
+            case (_, .none),
+                 (.none, _):
                 break
             }
         }
 
-        // MARK: - Merge primary + secondary, split into maxima/minima
+        // MARK: - Merge primary + secondary
 
         var allPeaks = primaryPeaks
         let primaryIdxSet = Set(allPeaks.map(\.idx))
@@ -219,23 +226,68 @@ enum PeakPicker {
 
         allPeaks.sort { times[$0.idx] < times[$1.idx] }
 
-        var finalMaxIdx: [Int] = []
-        var finalMinIdx: [Int] = []
+        // MARK: - Phase 3: neutral (.none) extrema in wide opposite-type gaps
 
-        for p in allPeaks {
-            switch p.type {
-            case .max: finalMaxIdx.append(p.idx)
-            case .min: finalMinIdx.append(p.idx)
+        var neutralPeaks: [Peak] = []
+
+        if allPeaks.count >= 2 {
+            for i in 0 ..< (allPeaks.count - 1) {
+                let left = allPeaks[i]
+                let right = allPeaks[i + 1]
+
+                // Only min–max or max–min; ignore gaps involving `.none`.
+                let isOppositePair: Bool =
+                    (left.type == .min && right.type == .max) ||
+                    (left.type == .max && right.type == .min)
+
+                guard isOppositePair else { continue }
+
+                let tLeft = times[left.idx]
+                let tRight = times[right.idx]
+                let gapDuration = tRight.timeIntervalSince(tLeft)
+
+                guard gapDuration > oppositeMinGap else { continue }
+
+                // Need at least one interior sample to host a neutral extremum
+                let start = left.idx + 1
+                let end = right.idx
+                guard start < end else { continue }
+
+                let midTime = tLeft.addingTimeInterval(gapDuration / 2)
+                var bestIdx = start
+                var bestDist = abs(times[start].timeIntervalSince(midTime))
+
+                if start + 1 < end {
+                    for j in (start + 1) ..< end {
+                        let d = abs(times[j].timeIntervalSince(midTime))
+                        if d < bestDist {
+                            bestDist = d
+                            bestIdx = j
+                        }
+                    }
+                }
+
+                // Avoid duplicating an existing peak at exactly the same index
+                if primaryIdxSet.contains(bestIdx) ||
+                    allPeaks.contains(where: { $0.idx == bestIdx })
+                {
+                    continue
+                }
+
+                neutralPeaks.append(Peak(idx: bestIdx, type: .none))
             }
         }
 
-        finalMaxIdx.sort { times[$0] < times[$1] }
-        finalMinIdx.sort { times[$0] < times[$1] }
+        allPeaks.append(contentsOf: neutralPeaks)
+        allPeaks.sort { times[$0.idx] < times[$1.idx] }
 
-        let maxima = finalMaxIdx.map { asc[$0].bg }
-        let minima = finalMinIdx.map { asc[$0].bg }
+        // Convert to final result including .none peaks
+        let result: [(bg: BloodGlucose, type: ExtremumType)] =
+            allPeaks.map { peak in
+                (bg: asc[peak.idx].bg, type: peak.type)
+            }
 
-        return (maxima, minima)
+        return result
     }
 
     // MARK: - Private helpers
@@ -362,9 +414,14 @@ enum PeakPicker {
                     if v > currentBestVal { bestIdx = i }
                 case .min:
                     if v < currentBestVal { bestIdx = i }
+                case .none:
+                    // Should never be requested for `.none` in current logic.
+                    break
                 }
             } else {
                 bestIdx = i
+                bestVal = v
+                _ = bestVal // just to silence "unused" if optimised out
             }
         }
 

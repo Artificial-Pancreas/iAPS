@@ -69,8 +69,6 @@ class CalculatedGeometries {
     private(set) var peaksFont = Font.custom("BolusDotFont", fixedSize: 13)
     private var peaksUIFont = UIFont.systemFont(ofSize: 13)
 
-    private var peakObstacles: [CGRect] = []
-
     private let bolusFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -306,27 +304,26 @@ class CalculatedGeometries {
     }
 
     private func calculateGlucosePeaks() -> [GlucosePeak] {
-        let (maxima, minima) = PeakPicker.pick(data: glucose, windowHours: Double(data.screenHours) / 2.5)
+        let peaks = PeakPicker.pick(data: glucose, windowHours: Double(data.screenHours) / 2.5)
 
-        peakObstacles =
+        var peakObstacles: [CGRect] =
             bolusDots.map(\.rect) +
             bolusDots.compactMap(\.textRect) +
             carbsDots.map(\.rect) +
             carbsDots.compactMap(\.textRect)
 
-        // obstacles must be sorted for the placement algorithm
-        peakObstacles.sort { lhs, rhs in
-            if lhs.minX == rhs.minX {
-                if lhs.minY != rhs.minY { return lhs.minY < rhs.minY }
-                if lhs.maxX != rhs.maxX { return lhs.maxX < rhs.maxX }
-                return lhs.maxY < rhs.maxY
-            }
-            return lhs.minX < rhs.minX
-        }
+        var peakObstaclesWithBG: [CGRect] =
+            bolusDots.map(\.rect) +
+            bolusDots.compactMap(\.textRect) +
+            carbsDots.map(\.rect) +
+            carbsDots.compactMap(\.textRect) +
+            glucoseDots.map(\.rect) +
+            manualGlucoseDots +
+            unSmoothedGlucoseDots
 
-        // y, x-start, x-end, glucose value
-        var glucosePeaks: [GlucosePeak] = []
-        glucosePeaks.reserveCapacity(maxima.count + minima.count)
+        // obstacles must be sorted for the placement algorithm
+        peakObstacles.sort { $0.minX < $1.minX }
+        peakObstaclesWithBG.sort { $0.minX < $1.minX }
 
         let formatter = data.units == .mmolL ? mmolDotGlucoseFormatter : dotGlucoseFormatter
 
@@ -334,86 +331,65 @@ class CalculatedGeometries {
         let peakVerticalPadding = ChartConfig.peakVerticalPadding
         let peakMargin = ChartConfig.peakMargin
 
-        for peak in maxima {
-            if let glucose = peak.glucose, glucose != 0 {
-                let point = glucoseToCoordinate(peak)
+        return peaks.compactMap { peak -> GlucosePeak? in
+            guard let glucose = peak.bg.glucose, glucose != 0 else { return nil }
+            let point = glucoseToCoordinate(peak.bg)
 
-                let value = Double(glucose) *
-                    (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
+            let value = Double(glucose) *
+                (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
 
-                if let string = formatter.string(from: value as NSNumber) {
-                    var textSize = textSize(text: string, font: peaksUIFont)
-                    textSize.width += peakHorizontalPadding * 2 + peakMargin * 2
-                    textSize.height += peakVerticalPadding * 2 + peakMargin * 2
-                    let textRect = CGRect(
-                        origin: CGPoint(
-                            x: point.x - textSize.width / 2,
-                            y: point.y - textSize.height / 2 - 18
-                        ),
-                        size: textSize
-                    )
+            guard let string = formatter.string(from: value as NSNumber) else { return nil }
+            var textSize = textSize(text: string, font: peaksUIFont)
+            textSize.width += peakHorizontalPadding * 2 + peakMargin * 2
+            textSize.height += peakVerticalPadding * 2 + peakMargin * 2
 
-                    if let placedRect = positionPeak(rect: textRect, .max) {
-                        glucosePeaks.append(
-                            GlucosePeak(
-                                xStart: point.x,
-                                yStart: point.y,
-                                glucose: glucose,
-                                text: string,
-                                textRect: placedRect,
-                                type: .max
-                            )
-                        )
-                    }
-                }
-            }
-        }
-
-        for peak in minima {
-            if let glucose = peak.glucose, glucose != 0 {
-                let point = glucoseToCoordinate(peak)
-
-                let value = Double(glucose) *
-                    (data.units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
-
-                if let string = formatter.string(from: value as NSNumber) {
-                    var textSize = textSize(text: string, font: peaksUIFont)
-                    textSize.width += peakHorizontalPadding * 2 + peakMargin * 2
-                    textSize.height += peakVerticalPadding * 2 + peakMargin * 2
-                    let textRect = CGRect(
+            let placedRect = switch peak.type {
+            case .min: peakObstacles.placeLabelCenter(
+                    desiredRect: CGRect(
                         origin: CGPoint(
                             x: point.x - textSize.width / 2,
                             y: point.y - textSize.height / 2 + 18
                         ),
                         size: textSize
-                    )
-
-                    if let updatedRect = positionPeak(rect: textRect, .min) {
-                        glucosePeaks.append(
-                            GlucosePeak(
-                                xStart: point.x,
-                                yStart: point.y,
-                                glucose: glucose,
-                                text: string,
-                                textRect: updatedRect,
-                                type: .min
-                            )
-                        )
-                    }
-                }
+                    ),
+                    verticalSide: .below,
+                    maxDistance: 80.0
+                )
+            case .max: peakObstacles.placeLabelCenter(
+                    desiredRect: CGRect(
+                        origin: CGPoint(
+                            x: point.x - textSize.width / 2,
+                            y: point.y - textSize.height / 2 - 18
+                        ),
+                        size: textSize
+                    ),
+                    verticalSide: .above,
+                    maxDistance: 80.0
+                )
+            case .none: peakObstaclesWithBG.placeLabelCenter(
+                    desiredRect: CGRect(
+                        origin: CGPoint(
+                            x: point.x - textSize.width / 2,
+                            y: point.y - textSize.height / 2
+                        ),
+                        size: textSize
+                    ),
+                    verticalSide: .both,
+                    maxDistance: 80.0
+                )
             }
+
+            guard let placedRect else { return nil }
+
+            return GlucosePeak(
+                xStart: point.x,
+                yStart: point.y,
+                glucose: glucose,
+                text: string,
+                textRect: placedRect,
+                type: .max
+            )
         }
-
-        return glucosePeaks
-    }
-
-    private func positionPeak(rect: CGRect, _ type: ExtremumType) -> CGRect? {
-        let maxDistance: CGFloat = 80.0
-        return peakObstacles.placeLabelCenter(
-            desiredRect: rect,
-            verticalSide: type == .max ? .above : .below,
-            maxDistance: maxDistance
-        )
     }
 
     private func calculateActivityDots() -> [CGPoint] {
