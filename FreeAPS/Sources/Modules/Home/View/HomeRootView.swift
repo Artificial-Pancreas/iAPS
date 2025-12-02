@@ -518,10 +518,33 @@ extension Home {
 
         var activeIOBView: some View {
             addBackground()
-                .frame(minHeight: 405)
+                .frame(minHeight: 190)
                 .overlay {
                     ActiveIOBView(
                         data: $state.iobData,
+                    )
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+        }
+
+        var activeCOBView: some View {
+            addBackground()
+                .frame(minHeight: 190)
+                .overlay {
+                    ActiveCOBView(data: $state.iobData)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+        }
+
+        var insulinView: some View {
+            addBackground()
+                .frame(minHeight: 280)
+                .overlay {
+                    InsulinSummaryView(
                         neg: $state.neg,
                         tddChange: $state.tddChange,
                         tddAverage: $state.tddAverage,
@@ -536,11 +559,11 @@ extension Home {
                 .padding(.horizontal, 10)
         }
 
-        var activeCOBView: some View {
+        var mealsView: some View {
             addBackground()
                 .frame(minHeight: 190)
                 .overlay {
-                    ActiveCOBView(data: $state.iobData)
+                    MealsSummaryView(data: $state.mealData)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -825,13 +848,17 @@ extension Home {
 
                                 // COB Chart
                                 if state.carbData > 0 {
-                                    activeCOBView
+                                    activeCOBView.padding(.bottom, 15)
                                 }
 
                                 // IOB Chart
                                 if !state.iobData.isEmpty {
-                                    activeIOBView
+                                    activeIOBView.padding(.bottom, 15)
                                 }
+
+                                // Summary Views
+                                insulinView.padding(.bottom, 15)
+                                mealsView.padding(.bottom, 15)
                             }
                             .background {
                                 // Track vertical scroll
