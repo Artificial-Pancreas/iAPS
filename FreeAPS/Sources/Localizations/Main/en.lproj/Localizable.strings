@@ -1384,6 +1384,15 @@ Enact a temp Basal or a temp target */
 /* Food Type / Meal Note */
 "Note" = "Note";
 
+"Servings" = "Servings";
+
+"Kilo Calories" = "Kilo Calories";
+
+"Meals" = "Meals";
+
+"Today's Meals" = "Today's Meals";
+
+// --------- AI ---------
 /* */
 "Temp Basal" = "Temp Basal";
 
