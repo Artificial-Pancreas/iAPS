@@ -20,12 +20,8 @@ extension UIColor {
 
     @nonobjc static let glucose = UIColor(named: "glucose") ?? systemTeal
 
-    @nonobjc static let insulin = UIColor(named: "insulin") ?? systemOrange
-
     // The loopAccent color is intended to be use as the app accent color.
     @nonobjc public static let loopAccent = UIColor(named: "accent") ?? systemBlue
-
-    @nonobjc public static let warning = UIColor(named: "warning") ?? systemYellow
 }
 
 // MARK: - Context for colors

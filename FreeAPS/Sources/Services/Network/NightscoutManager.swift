@@ -463,11 +463,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         var openapsStatus: OpenAPSStatus
 
-        // Only upload suggested in Open Loop Mode. Only upload enacted in Closed Loop Mode.
+        // Nightscout requires both enacted and suggested fields to show popup on graph
+        // When we have enacted, also send suggested with same content
         if loopIsClosed {
             openapsStatus = OpenAPSStatus(
                 iob: iob?.first,
-                suggested: nil,
+                suggested: enacted,
                 enacted: enacted,
                 version: "0.7.1"
             )
@@ -494,13 +495,17 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
+        // Use latest SGV timestamp to match devicestatus with SGV entries
+        let latestGlucoseDate = glucoseStorage.latestDate() ?? Date()
+
         var status: NightscoutStatus
 
         status = NightscoutStatus(
             device: NigtscoutTreatment.local,
             openaps: openapsStatus,
             pump: pump,
-            uploader: uploader
+            uploader: uploader,
+            createdAt: latestGlucoseDate
         )
 
         storage.save(status, as: OpenAPS.Upload.nsStatus)
