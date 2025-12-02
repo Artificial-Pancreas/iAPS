@@ -12,6 +12,9 @@ extension Home {
         @Injected() var carbsStorage: CarbsStorage!
         @Injected() var announcementStorage: AnnouncementsStorage!
 
+        let overrideStorage = OverrideStorage()
+        let coreDateStorage = CoreDataStorage()
+
         var suggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
@@ -20,7 +23,9 @@ extension Home {
             storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
         }
 
-        let overrideStorage = OverrideStorage()
+        var fetchedMeals: [Carbohydrates] {
+            coreDateStorage.fetchMealData(interval: DateFilter().today)
+        }
 
         func overrides() -> [Override] {
             overrideStorage.fetchOverrides(interval: DateFilter().day)
@@ -39,7 +44,7 @@ extension Home {
         }
 
         func reasons() -> [IOBData]? {
-            let reasons = CoreDataStorage().fetchReasons(interval: DateFilter().day)
+            let reasons = coreDateStorage.fetchReasons(interval: DateFilter().day)
 
             guard reasons.count > 3 else {
                 return nil
