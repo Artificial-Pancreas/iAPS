@@ -303,7 +303,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
         stopSessionHealthMonitoring()
 
         // Clear scanning state
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.isScanning = false
             self?.lastScanResult = nil
         }
@@ -758,7 +758,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
 
             // Set flash to auto for low light conditions
             if videoCaptureDevice.hasFlash {
-                videoCaptureDevice.flashMode = .auto
+                AVCapturePhotoSettings().flashMode = .auto
                 print("🎥 ✅ Set flash mode to auto")
             }
 
