@@ -242,7 +242,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
 
                 if isRunningNow && !isInterrupted {
                     // Session started successfully
-                    DispatchQueue.global().async { [weak self] in
+                    DispatchQueue.main.async { [weak self] in
                         self?.isScanning = true
                         self?.scanError = nil
                         print("🎥 ✅ SUCCESS: Session running and not interrupted")
