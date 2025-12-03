@@ -51,10 +51,9 @@ extension MainChartConfig {
                     Toggle("Glucose peaks", systemImage: "numbers.rectangle.fill", isOn: $state.chartGlucosePeaks)
 
                     HStack {
-                        Image(systemName: "timeline.selection").foregroundStyle(.blue).padding(.trailing, 5)
+                        Image(systemName: "timeline.selection").foregroundStyle(.blue).offset(x: -3)
                         Text("Horizontal Scroll View Visible hours")
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
-                        Text("hours").foregroundColor(.secondary)
                     }
                     Toggle("Use insulin bars", systemImage: "arrow.down", isOn: $state.useInsulinBars)
                     Toggle("Use carb bars", systemImage: "arrow.up", isOn: $state.useCarbBars)
