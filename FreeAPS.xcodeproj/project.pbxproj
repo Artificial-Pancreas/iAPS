@@ -1548,10 +1548,10 @@
 				3811DE0425C9D32E00A708ED /* Base */,
 				C2C98283C436DB934D7E7994 /* Bolus */,
 				BD7DA9A32AE06DBA00601B20 /* BolusCalculatorConfig */,
+				F2EE83BC2E739A9300D7177E /* CalendarShare */,
 				E8176B120B55CE89F1591542 /* Calibrations */,
 				F75CB57ED6971B46F8756083 /* CGM */,
 				0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */,
-				F2EE83BC2E739A9300D7177E /* CalendarShare */,
 				F2159A472BA60A0300A0B716 /* ContactTrick */,
 				E42231DBF0DBE2B4B92D1B15 /* CREditor */,
 				9E56E3626FAD933385101B76 /* DataTable */,
@@ -1562,6 +1562,7 @@
 				19E1F7E629D0828B005C8D20 /* IconConfig */,
 				D8F047E14D567F2B5DBEFD96 /* ISFEditor */,
 				3811DE1A25C9D48300A708ED /* Main */,
+				F2C73D5D2EB6600300B700AB /* MainChartConfig */,
 				5031FE61F63C2A8A8B7674DD /* ManualTempBasal */,
 				D533BF261CDC1C3F871E7BFD /* NightscoutConfig */,
 				F66B236E00924A05D6A9F9DF /* NotificationsConfig */,
@@ -1576,7 +1577,6 @@
 				19F95FF129F10F9C00314DDC /* Stat */,
 				6517011F19F244F64E1FF14B /* TargetsEditor */,
 				190EBCC229FF134900BA767D /* UIUX */,
-				F2C73D5D2EB6600300B700AB /* MainChartConfig */,
 				CE94597C29E9E1CD0047C9C6 /* WatchConfig */,
 			);
 			path = Modules;
@@ -2732,9 +2732,9 @@
 		F2C73D5D2EB6600300B700AB /* MainChartConfig */ = {
 			isa = PBXGroup;
 			children = (
-				F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */,
-				F2C73D632EB6603900B700AB /* MainChartConfigProvider.swift */,
 				F2C73D612EB6602D00B700AB /* MainChartConfigDataFlow.swift */,
+				F2C73D632EB6603900B700AB /* MainChartConfigProvider.swift */,
+				F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */,
 				F2C73D5E2EB6601300B700AB /* View */,
 			);
 			path = MainChartConfig;
