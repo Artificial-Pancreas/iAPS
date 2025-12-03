@@ -39,21 +39,25 @@ extension MainChartConfig {
         var body: some View {
             Form {
                 Section {
-                    Toggle("Vertical grid lines", isOn: $state.xGridLines)
-                    Toggle("Horizontal grid lines", isOn: $state.yGridLines)
-                    Toggle("Y-axis labels", isOn: $state.yGridLabels)
-                    Toggle("Threshold lines (Low / High)", isOn: $state.rulerMarks)
-                    Toggle("In-range area highlight", isOn: $state.inRangeAreaFill)
+                    Toggle("Vertical grid lines", systemImage: "slider.vertical.3", isOn: $state.xGridLines)
+                    Toggle("Horizontal grid lines", systemImage: "line.3.horizontal", isOn: $state.yGridLines)
+                    Toggle("Y-axis labels", systemImage: "textformat.numbers", isOn: $state.yGridLabels)
+                    Toggle("Threshold lines (Low / High)", systemImage: "distribute.vertical.fill", isOn: $state.rulerMarks)
+                    Toggle(
+                        "In-range area highlight",
+                        systemImage: "inset.filled.bottomhalf.tophalf.rectangle",
+                        isOn: $state.inRangeAreaFill
+                    )
                     Toggle("Glucose peaks", systemImage: "numbers.rectangle.fill", isOn: $state.chartGlucosePeaks)
 
                     HStack {
+                        Image(systemName: "timeline.selection").foregroundStyle(.blue).padding(.trailing, 5)
                         Text("Horizontal Scroll View Visible hours")
-                        Spacer()
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)
                     }
-                    Toggle("Use insulin bars", isOn: $state.useInsulinBars)
-                    Toggle("Use carb bars", isOn: $state.useCarbBars)
+                    Toggle("Use insulin bars", systemImage: "arrow.down", isOn: $state.useInsulinBars)
+                    Toggle("Use carb bars", systemImage: "arrow.up", isOn: $state.useCarbBars)
                     HStack {
                         Text("Hide the bolus amount strings when amount is under")
                         Spacer()
