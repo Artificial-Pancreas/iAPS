@@ -122,7 +122,7 @@ struct FoodSearchView: View {
                     onCancel: { navigateToAICamera = false }
                 )
             }
-        }
+        }.background(Color(.systemBackground))
     }
 
     private func handleBarcodeScan(_ barcode: String) {
