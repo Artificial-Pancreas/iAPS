@@ -44,7 +44,7 @@ extension MainChartConfig {
                     Toggle("Y-axis labels", isOn: $state.yGridLabels)
                     Toggle("Threshold lines (Low / High)", isOn: $state.rulerMarks)
                     Toggle("In-range area highlight", isOn: $state.inRangeAreaFill)
-                    Toggle("Glucose peaks", isOn: $state.chartGlucosePeaks)
+                    Toggle("Glucose peaks", systemImage: "numbers.rectangle.fill", isOn: $state.chartGlucosePeaks)
 
                     HStack {
                         Text("Horizontal Scroll View Visible hours")
