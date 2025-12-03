@@ -5,8 +5,6 @@ struct ListStateIntent: AppIntent {
     // Title of the action in the Shortcuts app
     static let title: LocalizedStringResource = "List last state available with iAPS"
 
-    var stateIntent = StateIntentRequest()
-
     // Description of the action in the Shortcuts app
     static let description = IntentDescription(
         "Allow to list the last Blood Glucose, trends, IOB and COB available in iAPS"
@@ -17,6 +15,7 @@ struct ListStateIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ReturnsValue<StateiAPSResults> & ShowsSnippetView {
+        let stateIntent = StateIntentRequest()
         let glucoseValues = try? stateIntent.getLastBG()
         let iob_cob_value = try? stateIntent.getIOB_COB()
 
