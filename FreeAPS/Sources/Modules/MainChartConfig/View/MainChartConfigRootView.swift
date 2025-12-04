@@ -226,11 +226,11 @@ extension MainChartConfig {
     }
 }
 
-//#Preview("MainChartConfig.RootView (Icons sandbox)") {
+// #Preview("MainChartConfig.RootView (Icons sandbox)") {
 //    PreviewHost()
-//}
+// }
 //
-//private struct PreviewHost: View {
+// private struct PreviewHost: View {
 //    @StateObject var state = StateModelPreview()
 //
 //    private var glucoseFormatter: NumberFormatter {
@@ -472,4 +472,4 @@ extension MainChartConfig {
 //
 //        var units: GlucoseUnits = .mmolL
 //    }
-//}
+// }
