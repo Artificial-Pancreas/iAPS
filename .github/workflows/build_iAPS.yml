@@ -82,7 +82,7 @@ jobs:
           fi
 
       - name: Select Xcode version
-        run: "sudo xcode-select --switch /Applications/Xcode_26.0.1.app/Contents/Developer"
+        run: "sudo xcode-select --switch /Applications/Xcode_26.1.1.app/Contents/Developer"
       
       - name: Checkout Repo for syncing
         if: |
