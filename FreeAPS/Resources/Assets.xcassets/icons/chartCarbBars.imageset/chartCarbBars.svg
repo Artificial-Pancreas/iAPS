@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 36 36"
+   version="1.1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <defs
+     id="defs1">
+    <style
+       id="style1">
+      .bar { fill: currentColor; opacity: 0.85; stroke-width:1.5 }
+    </style>
+  </defs>
+
+  <path
+     class="bar"
+     d="M 1.9,20.075897 H 4.1 L 3,18.995187 Z m 0,0 v 7.060636 h 2.2 v -7.060636 z"
+     id="path2"
+      />
+
+  <path
+     class="bar"
+     d="m 14.9,26.047178 h 2.2 L 16,24.995187 Z m 0,0 v 6.873009 h 2.2 v -6.873009 z"
+     id="path3"
+      />
+</svg>
