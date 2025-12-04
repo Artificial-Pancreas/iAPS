@@ -138,19 +138,17 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
 
             // MARK: Save to CoreData. Currently not used
 
-            if fat > 0 || protein > 0 {
-                self.coredataContext.perform {
-                    let carbDataForStats = Carbohydrates(context: self.coredataContext)
+            self.coredataContext.perform {
+                let carbDataForStats = Carbohydrates(context: self.coredataContext)
 
-                    carbDataForStats.carbs = cbs as NSDecimalNumber
-                    carbDataForStats.fat = fat as NSDecimalNumber
-                    carbDataForStats.protein = protein as NSDecimalNumber
-                    carbDataForStats.note = note
-                    carbDataForStats.id = UUID().uuidString
-                    carbDataForStats.date = creationDate
+                carbDataForStats.carbs = cbs as NSDecimalNumber
+                carbDataForStats.fat = fat as NSDecimalNumber
+                carbDataForStats.protein = protein as NSDecimalNumber
+                carbDataForStats.note = note
+                carbDataForStats.id = UUID().uuidString
+                carbDataForStats.date = creationDate
 
-                    try? self.coredataContext.save()
-                }
+                try? self.coredataContext.save()
             }
             broadcaster.notify(CarbsObserver.self, on: processQueue) {
                 $0.carbsDidUpdate(uniqEvents)

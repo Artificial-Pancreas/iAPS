@@ -3,8 +3,8 @@ import Foundation
 import Intents
 
 struct ModeIntent: AppIntent {
-    static var title: LocalizedStringResource = "Loop Mode"
-    static var description = IntentDescription("Activate Open or Closed Loop Mode.")
+    static let title: LocalizedStringResource = "Loop Mode"
+    static let description = IntentDescription("Activate Open or Closed Loop Mode.")
     @Parameter(title: "Loop Mode") var mode: Mode?
 
     @Parameter(
