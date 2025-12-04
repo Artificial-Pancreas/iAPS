@@ -51,12 +51,12 @@ struct FoodItemCard: View {
 
                 // Portionsinformationen (immer sichtbar)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Portion: \(foodItem.portionEstimate)")
-                        .font(.subheadline)
-
-                    if let usdaSize = foodItem.usdaServingSize {
-                        Text("USDA Standard: \(usdaSize)")
-                            .font(.caption)
+                    if let weight = foodItem.displayedWeightGrams {
+                        Text("Weight: \(weight, specifier: "%.0f") g")
+                            .font(.subheadline)
+                    } else {
+                        Text("Weight not provided")
+                            .font(.subheadline)
                     }
 
                     if foodItem.servingMultiplier != 1.0 {

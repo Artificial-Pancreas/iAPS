@@ -694,12 +694,67 @@ struct FoodItemAnalysis {
     let servingMultiplier: Double
     let preparationMethod: String?
     let visualCues: String?
+    let weightGrams: Double?
     let carbohydrates: Double
     let calories: Double?
     let fat: Double?
     let fiber: Double?
     let protein: Double?
     let assessmentNotes: String?
+}
+
+private func parseWeightInGrams(from text: String?) -> Double? {
+    guard let text = text else {
+        return nil
+    }
+
+    let patterns = [
+        #"([0-9]+(?:\\.[0-9]+)?)\\s*(?:grams|gram|g)"#,
+        #"(?:~|about|approx(?:imately)?|around)\\s*([0-9]+(?:\\.[0-9]+)?)\\s*(?:g|grams?)"#,
+        #"([0-9]+(?:\\.[0-9]+)?)\\s*(?:oz|ounces?|ounce)"#,
+        #"([0-9]+(?:\\.[0-9]+)?)\\s*(?:lbs?|pounds?)"#,
+    ]
+
+    for pattern in patterns {
+        if let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) {
+            let range = NSRange(text.startIndex..<text.endIndex, in: text)
+            if let match = regex.firstMatch(in: text, options: [], range: range),
+               let valueRange = Range(match.range(at: 1), in: text) {
+                let valueString = String(text[valueRange]).replacingOccurrences(of: ",", with: ".")
+                if let value = Double(valueString) {
+                    if pattern.contains("oz") || pattern.contains("ounce") {
+                        return value * 28.3495
+                    }
+
+                    if pattern.contains("lb") || pattern.contains("pound") {
+                        return value * 453.592
+                    }
+
+                    return value
+                }
+            }
+        }
+    }
+
+    return nil
+}
+
+extension FoodItemAnalysis {
+    var displayedWeightGrams: Double? {
+        if let weightGrams {
+            return weightGrams
+        }
+
+        if let parsedPortionWeight = parseWeightInGrams(from: portionEstimate) {
+            return parsedPortionWeight
+        }
+
+        if let parsedUsdaWeight = parseWeightInGrams(from: usdaServingSize) {
+            return parsedUsdaWeight
+        }
+
+        return nil
+    }
 }
 
 /// Type of image being analyzed
@@ -1486,10 +1541,10 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 
             switch self {
             case .standard:
-                let openAIModel = gpt5Enabled ? "GPT-5" : "GPT-4o"
+                let openAIModel = gpt5Enabled ? "GPT-5.1" : "GPT-4o"
                 return "Uses full AI models (\(openAIModel), Gemini-2.0-Pro, Claude-3.5-Sonnet) for maximum accuracy. Best for complex meals with multiple components."
             case .fast:
-                let openAIModel = gpt5Enabled ? "GPT-5-nano" : "GPT-4o-mini"
+                let openAIModel = gpt5Enabled ? "GPT-5.1 Mini" : "GPT-4o-mini"
                 return "Uses optimized models (\(openAIModel), Gemini-2.0-Flash) for faster analysis. 2-3x faster with ~5-10% accuracy trade-off. Great for simple meals."
             }
         }
@@ -1537,9 +1592,9 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         case .googleGemini:
             return 15 // Free tier optimization - faster but may timeout on complex analysis
         case .openAI:
-            // Check if using GPT-5 models which need more time
+            // Check if using GPT-5.1 models which need more time
             if UserDefaults.standard.useGPT5ForOpenAI {
-                return 60 // GPT-5 models need significantly more time for processing
+                return 60 // GPT-5.1 models need significantly more time for processing
             } else {
                 return 20 // GPT-4o models - good balance of speed and reliability
             }
@@ -1559,11 +1614,11 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         case (.googleGemini, .fast):
             return "gemini-2.0-flash" // ~2x faster
         case (.openAI, .standard):
-            // Use GPT-5 if user enabled it, otherwise use GPT-4o
-            return UserDefaults.standard.useGPT5ForOpenAI ? "gpt-5" : "gpt-4o"
+            // Use GPT-5.1 if user enabled it, otherwise use GPT-4o
+            return UserDefaults.standard.useGPT5ForOpenAI ? "gpt-5.1" : "gpt-4o"
         case (.openAI, .fast):
-            // Use GPT-5-nano for fastest analysis if user enabled GPT-5, otherwise use GPT-4o-mini
-            return UserDefaults.standard.useGPT5ForOpenAI ? "gpt-5-nano" : "gpt-4o-mini"
+            // Use GPT-5.1-mini for fastest analysis if user enabled GPT-5.1, otherwise use GPT-4o-mini
+            return UserDefaults.standard.useGPT5ForOpenAI ? "gpt-5.1-mini" : "gpt-4o-mini"
         case (.claude, .standard):
             return "claude-3-5-sonnet-20241022"
         case (.claude, .fast):
@@ -1677,7 +1732,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         query: String,
         telemetryCallback _: ((String) -> Void)?
     ) async throws -> AIFoodAnalysisResult {
-        // Use the maximum timeout from all providers, with special handling for GPT-5
+        // Use the maximum timeout from all providers, with special handling for GPT-5.1
         let timeout = providers.map { provider in
             max(ConfigurableAIService.optimalTimeout(for: provider), NetworkQualityMonitor.shared.recommendedTimeout)
         }.max() ?? NetworkQualityMonitor.shared.recommendedTimeout
@@ -1724,7 +1779,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         query: String,
         telemetryCallback: ((String) -> Void)?
     ) async throws -> AIFoodAnalysisResult {
-        // Use provider-specific timeout, with special handling for GPT-5
+        // Use provider-specific timeout, with special handling for GPT-5.1
         let baseTimeout = NetworkQualityMonitor.shared.recommendedTimeout
         var lastError: Error?
 
@@ -1821,9 +1876,9 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
     }
 }
 
-// MARK: - GPT-5 Enhanced Request Handling
+// MARK: - GPT-5.1 Enhanced Request Handling
 
-/// Performs a GPT-5 request with retry logic and enhanced timeout handling
+/// Performs a GPT-5.1 request with retry logic and enhanced timeout handling
 private func performGPT5RequestWithRetry(
     request: URLRequest,
     telemetryCallback: ((String) -> Void)?
@@ -1833,10 +1888,10 @@ private func performGPT5RequestWithRetry(
 
     for attempt in 1 ... maxRetries {
         do {
-            print("🔧 GPT-5 Debug - Attempt \(attempt)/\(maxRetries)")
-            telemetryCallback?("🔄 GPT-5 attempt \(attempt)/\(maxRetries)...")
+            print("🔧 GPT-5.1 Debug - Attempt \(attempt)/\(maxRetries)")
+            telemetryCallback?("🔄 GPT-5.1 attempt \(attempt)/\(maxRetries)...")
 
-            // Create a custom URLSession with extended timeout for GPT-5
+            // Create a custom URLSession with extended timeout for GPT-5.1
             let config = URLSessionConfiguration.default
             config.timeoutIntervalForRequest = 150 // 2.5 minutes request timeout
             config.timeoutIntervalForResource = 180 // 3 minutes resource timeout
@@ -1847,28 +1902,28 @@ private func performGPT5RequestWithRetry(
                 try await session.data(for: request)
             }
 
-            print("🔧 GPT-5 Debug - Request succeeded on attempt \(attempt)")
+            print("🔧 GPT-5.1 Debug - Request succeeded on attempt \(attempt)")
             return (data, response)
 
         } catch AIFoodAnalysisError.timeout {
-            print("⚠️ GPT-5 Debug - Timeout on attempt \(attempt)")
+            print("⚠️ GPT-5.1 Debug - Timeout on attempt \(attempt)")
             lastError = AIFoodAnalysisError.timeout
 
             if attempt < maxRetries {
                 let backoffDelay = Double(attempt) * 2.0 // 2s, 4s backoff
-                telemetryCallback?("⏳ GPT-5 retry in \(Int(backoffDelay))s...")
+                telemetryCallback?("⏳ GPT-5.1 retry in \(Int(backoffDelay))s...")
                 try await Task.sleep(nanoseconds: UInt64(backoffDelay * 1_000_000_000))
             }
         } catch {
-            print("❌ GPT-5 Debug - Non-timeout error on attempt \(attempt): \(error)")
+            print("❌ GPT-5.1 Debug - Non-timeout error on attempt \(attempt): \(error)")
             // For non-timeout errors, fail immediately
             throw error
         }
     }
 
     // All retries failed
-    print("❌ GPT-5 Debug - All retry attempts failed")
-    telemetryCallback?("❌ GPT-5 requests timed out, switching to GPT-4o...")
+    print("❌ GPT-5.1 Debug - All retry attempts failed")
+    telemetryCallback?("❌ GPT-5.1 requests timed out, switching to GPT-4o...")
 
     // Auto-fallback to GPT-4o on persistent timeout
     DispatchQueue.main.async {
@@ -1876,10 +1931,10 @@ private func performGPT5RequestWithRetry(
     }
 
     throw AIFoodAnalysisError
-        .customError("GPT-5 requests timed out consistently. Automatically switched to GPT-4o for reliability.")
+        .customError("GPT-5.1 requests timed out consistently. Automatically switched to GPT-4o for reliability.")
 }
 
-/// Retry the request with GPT-4o after GPT-5 failure
+/// Retry the request with GPT-4o after GPT-5.1 failure
 private func retryWithGPT4Fallback(
     _ image: UIImage,
     apiKey: String,
@@ -1992,6 +2047,15 @@ private func parseOpenAIResponse(content: String) throws -> AIFoodAnalysisResult
         return nil
     }
 
+    func extractWeight(from json: [String: Any], portionText: String?) -> Double? {
+        let weightKeys = ["weight_grams", "portion_weight_grams", "portion_grams", "weight"]
+        if let weight = extractNumber(from: json, keys: weightKeys), weight > 0 {
+            return weight
+        }
+
+        return parseWeightInGrams(from: portionText)
+    }
+
     func extractConfidence(from json: [String: Any]) -> AIConfidenceLevel {
         let confidenceKeys = ["confidence", "confidence_level", "accuracy"]
         for key in confidenceKeys {
@@ -2041,13 +2105,15 @@ private func parseOpenAIResponse(content: String) throws -> AIFoodAnalysisResult
     var detailedFoodItems: [FoodItemAnalysis] = []
     if let foodItemsArray = nutritionData["food_items"] as? [[String: Any]] {
         for itemData in foodItemsArray {
+            let portionEstimate = extractString(from: itemData, keys: ["portion_estimate"]) ?? "1 serving"
             let foodItem = FoodItemAnalysis(
                 name: extractString(from: itemData, keys: ["name"]) ?? "Unknown Food",
-                portionEstimate: extractString(from: itemData, keys: ["portion_estimate"]) ?? "1 serving",
+                portionEstimate: portionEstimate,
                 usdaServingSize: extractString(from: itemData, keys: ["usda_serving_size"]),
                 servingMultiplier: max(0.1, extractNumber(from: itemData, keys: ["serving_multiplier"]) ?? 1.0),
                 preparationMethod: extractString(from: itemData, keys: ["preparation_method"]),
                 visualCues: extractString(from: itemData, keys: ["visual_cues"]),
+                weightGrams: extractWeight(from: itemData, portionText: portionEstimate),
                 carbohydrates: max(0, extractNumber(from: itemData, keys: ["carbohydrates"]) ?? 0),
                 calories: extractNumber(from: itemData, keys: ["calories"]).map { max(0, $0) },
                 fat: extractNumber(from: itemData, keys: ["fat"]).map { max(0, $0) },
@@ -2090,7 +2156,7 @@ private func parseOpenAIResponse(content: String) throws -> AIFoodAnalysisResult
         portionAssessmentMethod: extractString(from: nutritionData, keys: ["portion_assessment_method"]),
         diabetesConsiderations: extractString(from: nutritionData, keys: ["diabetes_considerations"]),
         visualAssessmentDetails: extractString(from: nutritionData, keys: ["visual_assessment_details"]),
-        notes: "GPT-4o fallback analysis after GPT-5 timeout",
+        notes: "GPT-4o fallback analysis after GPT-5.1 timeout",
         originalServings: originalServings,
         fatProteinUnits: extractString(from: nutritionData, keys: ["fat_protein_units"]),
         netCarbsAdjustment: extractString(from: nutritionData, keys: ["net_carbs_adjustment"]),
@@ -2115,13 +2181,13 @@ class OpenAIFoodAnalysisService {
         try await analyzeFoodImage(image, apiKey: apiKey, query: query, telemetryCallback: nil)
     }
 
-    /// Create a GPT-5 optimized version of the comprehensive analysis prompt
+    /// Create a GPT-5.1 optimized version of the comprehensive analysis prompt
     private func createGPT5OptimizedPrompt(from fullPrompt: String) -> String {
         // Extract whether this is advanced mode by checking the prompt content
         let isAdvancedEnabled = fullPrompt.contains("fat_protein_units") || fullPrompt.contains("FPU")
 
         if isAdvancedEnabled {
-            // GPT-5 optimized prompt with advanced dosing fields
+            // GPT-5.1 optimized prompt with advanced dosing fields
             return """
             ADVANCED DIABETES ANALYSIS - JSON format required:
             {
@@ -2154,7 +2220,7 @@ class OpenAIFoodAnalysisService {
             Calculate FPU = (total_fat + total_protein) ÷ 10. Use visual references for portions.
             """
         } else {
-            // Standard GPT-5 prompt
+            // Standard GPT-5.1 prompt
             return """
             DIABETES ANALYSIS - JSON format required:
             {
@@ -2188,7 +2254,7 @@ class OpenAIFoodAnalysisService {
         query: String,
         telemetryCallback: ((String) -> Void)?
     ) async throws -> AIFoodAnalysisResult {
-        // OpenAI GPT Vision implementation (GPT-5 or GPT-4o-mini)
+        // OpenAI GPT Vision implementation (GPT-5.1 or GPT-4o-mini)
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
             throw AIFoodAnalysisError.invalidResponse
         }
@@ -2201,7 +2267,7 @@ class OpenAIFoodAnalysisService {
 
         print("🤖 OpenAI Model Selection:")
         print("   Analysis Mode: \(analysisMode.rawValue)")
-        print("   GPT-5 Enabled: \(gpt5Enabled)")
+        print("   GPT-5.1 Enabled: \(gpt5Enabled)")
         print("   Selected Model: \(model)")
 
         // Optimize image size for faster processing and uploads
@@ -2209,9 +2275,9 @@ class OpenAIFoodAnalysisService {
         let optimizedImage = ConfigurableAIService.optimizeImageForAnalysis(image)
 
         // Convert image to base64 with adaptive compression
-        // GPT-5 benefits from more aggressive compression due to slower processing
+        // GPT-5.1 benefits from more aggressive compression due to slower processing
         telemetryCallback?("🔄 Encoding image data...")
-        let compressionQuality = model.contains("gpt-5") ?
+        let compressionQuality = model.contains("gpt-5.1") ?
             min(0.7, ConfigurableAIService.adaptiveCompressionQuality(for: optimizedImage)) :
             ConfigurableAIService.adaptiveCompressionQuality(for: optimizedImage)
         guard let imageData = optimizedImage.jpegData(compressionQuality: compressionQuality) else {
@@ -2231,9 +2297,9 @@ class OpenAIFoodAnalysisService {
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
 
         // Set appropriate timeout based on model type and prompt complexity
-        if model.contains("gpt-5") {
-            request.timeoutInterval = 120 // 2 minutes for GPT-5 models
-            print("🔧 GPT-5 Debug - Set URLRequest timeout to 120 seconds")
+        if model.contains("gpt-5.1") {
+            request.timeoutInterval = 120 // 2 minutes for GPT-5.1 models
+            print("🔧 GPT-5.1 Debug - Set URLRequest timeout to 120 seconds")
         } else {
             // For GPT-4 models, extend timeout significantly for advanced analysis (very long prompt)
             request.timeoutInterval = isAdvancedPrompt ? 150 : 30 // 2.5 min for advanced, 30s for standard
@@ -2258,12 +2324,12 @@ class OpenAIFoodAnalysisService {
                                 // Use the pre-prepared analysis prompt
                                 let finalPrompt: String
 
-                                if model.contains("gpt-5") {
-                                    // For GPT-5, use the user's custom query if provided, otherwise use a simplified version of the main prompt
+                                if model.contains("gpt-5.1") {
+                                    // For GPT-5.1, use the user's custom query if provided, otherwise use a simplified version of the main prompt
                                     if !query.isEmpty {
                                         finalPrompt = query
                                     } else {
-                                        // Create a simplified version of the comprehensive prompt for GPT-5 performance
+                                        // Create a simplified version of the comprehensive prompt for GPT-5.1 performance
                                         finalPrompt = createGPT5OptimizedPrompt(from: analysisPrompt)
                                     }
                                 } else {
@@ -2292,17 +2358,17 @@ class OpenAIFoodAnalysisService {
         ]
 
         // Configure parameters based on model type
-        if model.contains("gpt-5") {
-            // GPT-5 optimized parameters for better performance and reliability
+        if model.contains("gpt-5.1") {
+            // GPT-5.1 optimized parameters for better performance and reliability
             payload["max_completion_tokens"] = 6000 // Reduced from 8000 for faster processing
-            // GPT-5 uses default temperature (1) - don't set custom temperature
-            // Add explicit response format for GPT-5
+            // GPT-5.1 uses default temperature (1) - don't set custom temperature
+            // Add explicit response format for GPT-5.1
             payload["response_format"] = [
                 "type": "json_object"
             ]
-            // Add performance optimization for GPT-5
+            // Add performance optimization for GPT-5.1
             payload["stream"] = false // Ensure complete response (no streaming)
-            telemetryCallback?("⚡ Using GPT-5 optimized settings...")
+            telemetryCallback?("⚡ Using GPT-5.1 optimized settings...")
         } else {
             // GPT-4 models use max_tokens and support custom temperature
             payload["max_tokens"] = isAdvancedPrompt ? 6000 : 2500 // Much more tokens for advanced analysis
@@ -2315,15 +2381,15 @@ class OpenAIFoodAnalysisService {
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
-            // Debug logging for GPT-5 requests
-            if model.contains("gpt-5") {
-                print("🔧 GPT-5 Debug - Request payload keys: \(payload.keys.sorted())")
+            // Debug logging for GPT-5.1 requests
+            if model.contains("gpt-5.1") {
+                print("🔧 GPT-5.1 Debug - Request payload keys: \(payload.keys.sorted())")
                 if let bodyData = request.httpBody,
                    let bodyString = String(data: bodyData, encoding: .utf8)
                 {
-                    print("🔧 GPT-5 Debug - Request body length: \(bodyString.count) characters")
-                    print("🔧 GPT-5 Debug - Request contains image: \(bodyString.contains("image_url"))")
-                    print("🔧 GPT-5 Debug - Request contains response_format: \(bodyString.contains("response_format"))")
+                    print("🔧 GPT-5.1 Debug - Request body length: \(bodyString.count) characters")
+                    print("🔧 GPT-5.1 Debug - Request contains image: \(bodyString.contains("image_url"))")
+                    print("🔧 GPT-5.1 Debug - Request contains response_format: \(bodyString.contains("response_format"))")
                 }
             }
         } catch {
@@ -2339,18 +2405,18 @@ class OpenAIFoodAnalysisService {
                 telemetryCallback?("⏳ AI is cooking up results...")
             }
 
-            // Use enhanced timeout logic with retry for GPT-5
+            // Use enhanced timeout logic with retry for GPT-5.1
             let (data, response): (Data, URLResponse)
-            if model.contains("gpt-5") {
+            if model.contains("gpt-5.1") {
                 do {
-                    // GPT-5 requires special handling with retries and extended timeout
+                    // GPT-5.1 requires special handling with retries and extended timeout
                     (data, response) = try await performGPT5RequestWithRetry(
                         request: request,
                         telemetryCallback: telemetryCallback
                     )
-                } catch let error as AIFoodAnalysisError where error.localizedDescription.contains("GPT-5 timeout") {
-                    // GPT-5 failed, immediately retry with GPT-4o
-                    print("🔄 Immediate fallback: Retrying with GPT-4o after GPT-5 failure")
+                } catch let error as AIFoodAnalysisError where error.localizedDescription.contains("GPT-5.1 timeout") {
+                    // GPT-5.1 failed, immediately retry with GPT-4o
+                    print("🔄 Immediate fallback: Retrying with GPT-4o after GPT-5.1 failure")
                     telemetryCallback?("🔄 Retrying with GPT-4o...")
 
                     return try await retryWithGPT4Fallback(
@@ -2376,14 +2442,14 @@ class OpenAIFoodAnalysisService {
                 throw AIFoodAnalysisError.invalidResponse
             }
 
-            // Debug GPT-5 responses
-            if model.contains("gpt-5") {
-                print("🔧 GPT-5 Debug - HTTP Status: \(httpResponse.statusCode)")
-                print("🔧 GPT-5 Debug - Response headers: \(httpResponse.allHeaderFields)")
-                print("🔧 GPT-5 Debug - Response data length: \(data.count)")
+            // Debug GPT-5.1 responses
+            if model.contains("gpt-5.1") {
+                print("🔧 GPT-5.1 Debug - HTTP Status: \(httpResponse.statusCode)")
+                print("🔧 GPT-5.1 Debug - Response headers: \(httpResponse.allHeaderFields)")
+                print("🔧 GPT-5.1 Debug - Response data length: \(data.count)")
 
                 if let responseString = String(data: data, encoding: .utf8) {
-                    print("🔧 GPT-5 Debug - Raw response: \(responseString.prefix(500))...")
+                    print("🔧 GPT-5.1 Debug - Raw response: \(responseString.prefix(500))...")
                 }
             }
 
@@ -2410,13 +2476,13 @@ class OpenAIFoodAnalysisService {
                         } else if (message.contains("model") && message.contains("not found")) || message
                             .contains("does not exist")
                         {
-                            // Handle GPT-5 model not available - auto-fallback to GPT-4o
-                            if model.contains("gpt-5"), UserDefaults.standard.useGPT5ForOpenAI {
-                                print("⚠️ GPT-5 model not available, falling back to GPT-4o...")
-                                UserDefaults.standard.useGPT5ForOpenAI = false // Auto-disable GPT-5
+                            // Handle GPT-5.1 model not available - auto-fallback to GPT-4o
+                            if model.contains("gpt-5.1"), UserDefaults.standard.useGPT5ForOpenAI {
+                                print("⚠️ GPT-5.1 model not available, falling back to GPT-4o...")
+                                UserDefaults.standard.useGPT5ForOpenAI = false // Auto-disable GPT-5.1
                                 throw AIFoodAnalysisError
                                     .customError(
-                                        "GPT-5 not available yet. Switched to GPT-4o automatically. You can try enabling GPT-5 again later."
+                                        "GPT-5.1 not available yet. Switched to GPT-4o automatically. You can try enabling GPT-5.1 again later."
                                     )
                             }
                         }
@@ -2478,19 +2544,19 @@ class OpenAIFoodAnalysisService {
             // Add detailed logging like Gemini
             print("🔧 OpenAI: Received content length: \(content.count)")
 
-            // Check for empty content from GPT-5 and auto-fallback to GPT-4o
+            // Check for empty content from GPT-5.1 and auto-fallback to GPT-4o
             if content.isEmpty {
                 print("❌ OpenAI: Empty content received")
                 print("❌ OpenAI: Model used: \(model)")
                 print("❌ OpenAI: HTTP Status: \(httpResponse.statusCode)")
 
-                if model.contains("gpt-5"), UserDefaults.standard.useGPT5ForOpenAI {
-                    print("⚠️ GPT-5 returned empty response, automatically switching to GPT-4o...")
+                if model.contains("gpt-5.1"), UserDefaults.standard.useGPT5ForOpenAI {
+                    print("⚠️ GPT-5.1 returned empty response, automatically switching to GPT-4o...")
                     DispatchQueue.main.async {
                         UserDefaults.standard.useGPT5ForOpenAI = false
                     }
                     throw AIFoodAnalysisError
-                        .customError("GPT-5 returned empty response. Automatically switched to GPT-4o for next analysis.")
+                        .customError("GPT-5.1 returned empty response. Automatically switched to GPT-4o for next analysis.")
                 }
 
                 throw AIFoodAnalysisError.responseParsingFailed
@@ -2549,14 +2615,16 @@ class OpenAIFoodAnalysisService {
                     // Enhanced per-item error handling like Gemini
                     for (index, itemData) in foodItemsArray.enumerated() {
                         do {
+                            let portionEstimate = extractString(from: itemData, keys: ["portion_estimate"]) ?? "1 serving"
                             let foodItem = FoodItemAnalysis(
                                 name: extractString(from: itemData, keys: ["name"]) ?? "Unknown Food",
-                                portionEstimate: extractString(from: itemData, keys: ["portion_estimate"]) ?? "1 serving",
+                                portionEstimate: portionEstimate,
                                 usdaServingSize: extractString(from: itemData, keys: ["usda_serving_size"]),
                                 servingMultiplier: max(0.1, extractNumber(from: itemData, keys: ["serving_multiplier"]) ?? 1.0),
                                 // Prevent zero/negative
                                 preparationMethod: extractString(from: itemData, keys: ["preparation_method"]),
                                 visualCues: extractString(from: itemData, keys: ["visual_cues"]),
+                                weightGrams: extractWeight(from: itemData, portionText: portionEstimate),
                                 carbohydrates: max(0, extractNumber(from: itemData, keys: ["carbohydrates"]) ?? 0),
                                 // Ensure non-negative
                                 calories: extractNumber(from: itemData, keys: ["calories"]).map { max(0, $0) }, // Bounds checking
@@ -2587,6 +2655,7 @@ class OpenAIFoodAnalysisService {
                     servingMultiplier: 1.0,
                     preparationMethod: nil,
                     visualCues: nil,
+                    weightGrams: nil,
                     carbohydrates: totalCarbs,
                     calories: totalCalories,
                     fat: totalFat,
@@ -2606,6 +2675,7 @@ class OpenAIFoodAnalysisService {
                     servingMultiplier: 1.0,
                     preparationMethod: "Not specified in analysis",
                     visualCues: "Visual analysis completed",
+                    weightGrams: nil,
                     carbohydrates: 25.0,
                     calories: 200.0,
                     fat: 10.0,
@@ -3324,13 +3394,15 @@ class GoogleGeminiFoodAnalysisService {
                     // New detailed format
                     for (index, itemData) in foodItemsArray.enumerated() {
                         do {
+                            let portionEstimate = extractString(from: itemData, keys: ["portion_estimate"]) ?? "1 serving"
                             let foodItem = FoodItemAnalysis(
                                 name: extractString(from: itemData, keys: ["name"]) ?? "Food Item \(index + 1)",
-                                portionEstimate: extractString(from: itemData, keys: ["portion_estimate"]) ?? "1 serving",
+                                portionEstimate: portionEstimate,
                                 usdaServingSize: extractString(from: itemData, keys: ["usda_serving_size"]),
                                 servingMultiplier: max(0.1, extractNumber(from: itemData, keys: ["serving_multiplier"]) ?? 1.0),
                                 preparationMethod: extractString(from: itemData, keys: ["preparation_method"]),
                                 visualCues: extractString(from: itemData, keys: ["visual_cues"]),
+                                weightGrams: extractWeight(from: itemData, portionText: portionEstimate),
                                 carbohydrates: max(0, extractNumber(from: itemData, keys: ["carbohydrates"]) ?? 0),
                                 calories: extractNumber(from: itemData, keys: ["calories"]),
                                 fat: extractNumber(from: itemData, keys: ["fat"]),
@@ -3359,6 +3431,7 @@ class GoogleGeminiFoodAnalysisService {
                         servingMultiplier: 1.0,
                         preparationMethod: nil,
                         visualCues: nil,
+                        weightGrams: nil,
                         carbohydrates: totalCarbs,
                         calories: totalCalories,
                         fat: totalFat,
@@ -3379,6 +3452,7 @@ class GoogleGeminiFoodAnalysisService {
                     servingMultiplier: 1.0,
                     preparationMethod: "Not specified",
                     visualCues: "Visual analysis completed",
+                    weightGrams: nil,
                     carbohydrates: 25.0,
                     calories: 200.0,
                     fat: 10.0,
@@ -3664,6 +3738,7 @@ class BasicFoodAnalysisService {
                 servingMultiplier: 1.0,
                 preparationMethod: "Not specified",
                 visualCues: nil,
+                weightGrams: parseWeightInGrams(from: portionSize),
                 carbohydrates: estimateCarbohydrates(for: selectedFood, portion: portionSize),
                 calories: estimateCalories(for: selectedFood, portion: portionSize),
                 fat: estimateFat(for: selectedFood, portion: portionSize),
@@ -4068,6 +4143,7 @@ class ClaudeFoodAnalysisService {
                     servingMultiplier: 1.0,
                     preparationMethod: "Not specified in analysis",
                     visualCues: "Visual analysis completed",
+                    weightGrams: nil,
                     carbohydrates: max(0, totalCarbs), // Ensure non-negative
                     calories: totalCalories.map { max(0, $0) }, // Bounds checking
                     fat: totalFat.map { max(0, $0) }, // Bounds checking

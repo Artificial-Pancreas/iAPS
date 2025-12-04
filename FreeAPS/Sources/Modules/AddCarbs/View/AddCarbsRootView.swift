@@ -30,7 +30,6 @@ extension AddCarbs {
         @State private var selectedFoodItem: AIFoodItem?
         @State private var portionGrams: Double = 100.0
         @State private var selectedFoodImage: UIImage?
-        @State private var saveAlert = false
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -190,7 +189,6 @@ extension AddCarbs {
                     }
                 )
             }
-            .alert(isPresented: $saveAlert) { alert(food: selectedFoodItem) }
         }
 
         // MARK: - Helper Functions
@@ -245,7 +243,7 @@ extension AddCarbs {
 
                             selectedFoodImage = nil
                             showingFoodSearch = false
-                            saveAlert.toggle()
+                            state.add(override, fetch: editMode)
                         }
                     )
                 }
@@ -281,28 +279,6 @@ extension AddCarbs {
                     .buttonStyle(PlainButtonStyle())
                     .foregroundColor(.blue)
                 }
-            }
-        }
-
-        private func addToPresetsIfNew(food: AIFoodItem) {
-            let preset = Presets(context: moc)
-            preset.carbs = Decimal(max(food.carbs * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
-            preset.fat = Decimal(max(food.fat * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
-            preset.protein = Decimal(fmax(food.protein * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
-
-            if portionGrams != 100 {
-                preset.dish = food.name + " \(portionGrams)g"
-            } else {
-                preset.dish = food.name
-            }
-
-            if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
-                do {
-                    try moc.save()
-                    state.selection = preset
-                    state.addPresetToNewMeal()
-                    selectedFoodItem = nil
-                } catch { print("Couldn't save " + (preset.dish ?? "new preset.")) }
             }
         }
 
@@ -453,30 +429,6 @@ extension AddCarbs {
                 .buttonStyle(.borderedProminent)
                 .tint(colorScheme == .light ? Color.white.opacity(0.5) : Color(.systemGray5))
                 .offset(x: -10)
-        }
-
-        private func alert(food: AIFoodItem?) -> Alert {
-            if let food = food {
-                return Alert(
-                    title: Text(
-                        NSLocalizedString("Save", comment: "") + "\"" + food
-                            .name + "\"" + NSLocalizedString("as new Meal Preset?", comment: "")
-                    ),
-                    message: Text("To avoid having to search for same food on web again."),
-                    primaryButton: .destructive(Text("Yes"), action: { addToPresetsIfNew(food: food) }),
-                    secondaryButton: .cancel(Text("No"))
-                )
-            }
-
-            return Alert(
-                title: Text("Oops!"),
-                message: Text(
-                    NSLocalizedString("Something isnt't working with food item ", comment: "") + "\"" +
-                        (food?.name ?? "nil")
-                ),
-                primaryButton: .cancel(Text("OK")),
-                secondaryButton: .cancel()
-            )
         }
 
         @ViewBuilder private func presetsList(for preset: Presets) -> some View {
