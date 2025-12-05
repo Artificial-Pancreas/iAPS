@@ -1712,9 +1712,9 @@ Enact a temp Basal or a temp target */
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Проведення глибокого аналізу (може зайняти трохи часу)...";
 
-"🎯 Selecting optimal AI provider..." = "🎯 Selecting optimal AI provider...";
+"🎯 Selecting optimal AI provider..." = "🎯 Вибір оптимального постачальника ШІ...";
 
-"⚡ Starting parallel provider analysis..." = "⚡ Starting parallel provider analysis...";
+"⚡ Starting parallel provider analysis..." = "⚡ Початок паралельного аналізу постачальників...";
 
 "Amount:" = "Сума:";
 
