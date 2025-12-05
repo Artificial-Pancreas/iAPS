@@ -1713,6 +1713,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Robím hĺbkovú analýzu (môže to chvíľu trvať)...";
 
+"🎯 Selecting optimal AI provider..." = "🎯 Vyberám optimálneho poskytovateľa AI...";
+
+"⚡ Starting parallel provider analysis..." = "⚡ Začínam analýzu paralelných poskytovateľov...";
+
 "Amount:" = "Množstvo:";
 
 "Take Over" = "Prevziať";
