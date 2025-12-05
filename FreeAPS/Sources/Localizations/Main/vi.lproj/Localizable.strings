@@ -2762,7 +2762,7 @@ Enact a temp Basal or a temp target */
 "RegularFontWeight" = "Regular";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Trung bình";
 
 /* Contact Image, settings, semibold font weight */
 "SemiboldFontWeight" = "Semibold";
