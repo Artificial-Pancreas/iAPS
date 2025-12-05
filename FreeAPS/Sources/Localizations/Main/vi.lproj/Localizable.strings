@@ -1712,9 +1712,9 @@ Enact a temp Basal or a temp target */
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Đang phân tích chi tiết (có thể mất một chút thời gian)...";
 
-"🎯 Selecting optimal AI provider..." = "🎯 Selecting optimal AI provider...";
+"🎯 Selecting optimal AI provider..." = "🎯 Đang chọn nhà cung cấp AI tối ưu...";
 
-"⚡ Starting parallel provider analysis..." = "⚡ Starting parallel provider analysis...";
+"⚡ Starting parallel provider analysis..." = "⚡ Bắt đầu phân tích song song các nhà cung cấp...";
 
 "Amount:" = "Số lượng:";
 
