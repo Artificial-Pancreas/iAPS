@@ -17,6 +17,12 @@ jobs:
       # Checks-out the repo
       - name: Checkout Repo
         uses: actions/checkout@v4
+      
+      # Ensure compatible Bundler version for Fastlane (fastlane requires bundler < 3)
+      - name: Install Bundler 2.x
+        run: |
+          gem install bundler -v 2.7.2
+          echo "BUNDLER_VER=2.7.2" >> $GITHUB_ENV
         
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
@@ -24,7 +30,7 @@ jobs:
         
       # Install project dependencies
       - name: Install Project Dependencies
-        run: bundle install
+        run: bundle _${{ env.BUNDLER_VER }}_ install
 
       # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
       - name: Sync clock
@@ -32,7 +38,7 @@ jobs:
 
       # Create or update identifiers for app
       - name: Fastlane Provision
-        run: bundle exec fastlane identifiers
+        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane identifiers
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
