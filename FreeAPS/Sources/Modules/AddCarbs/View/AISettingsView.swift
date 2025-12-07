@@ -1,3 +1,5 @@
+import Foundation
+import SlideButton
 import SwiftUI
 
 /// Simple secure field that uses proper SwiftUI components
@@ -10,12 +12,12 @@ struct StableSecureField: View {
         if isSecure {
             SecureField(placeholder, text: $text)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
+                .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
         } else {
             TextField(placeholder, text: $text)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
+                .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
         }
     }
@@ -24,13 +26,12 @@ struct StableSecureField: View {
 /// Settings view for configuring AI food analysis
 struct AISettingsView: View {
     @ObservedObject private var aiService = ConfigurableAIService.shared
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
+
     @State private var claudeKey: String = ""
-    @State private var claudeQuery: String = ""
     @State private var openAIKey: String = ""
-    @State private var openAIQuery: String = ""
     @State private var googleGeminiKey: String = ""
-    @State private var googleGeminiQuery: String = ""
+
     @State private var showingAPIKeyAlert = false
 
     // API Key visibility toggles - start with keys hidden (secure)
@@ -38,44 +39,90 @@ struct AISettingsView: View {
     @State private var showOpenAIKey: Bool = false
     @State private var showGoogleGeminiKey: Bool = false
 
-    // Feature flag for Advanced Dosing Recommendations - MIT @AppStorage
-    @AppStorage("advancedDosingRecommendationsEnabled") private var advancedDosingRecommendationsEnabled: Bool = UserDefaults
-        .standard.advancedDosingRecommendationsEnabled
+    @AppStorage(UserDefaults.AIKey.aiImageProvider.rawValue) private var imageSearchProvider: ImageSearchProvider =
+        .defaultProvider
 
-    // GPT-5 feature flag - MIT @AppStorage
-    @AppStorage("useGPT5ForOpenAI") private var useGPT5ForOpenAI: Bool = UserDefaults.standard.useGPT5ForOpenAI
+    @AppStorage(UserDefaults.AIKey.textSearchProvider.rawValue) private var textSearchProvider: TextSearchProvider =
+        .defaultProvider
 
-    init() {
-        _claudeKey = State(initialValue: ConfigurableAIService.shared.getAPIKey(for: .claude) ?? "")
-        _claudeQuery = State(initialValue: ConfigurableAIService.shared.getQuery(for: .claude) ?? "")
-        _openAIKey = State(initialValue: ConfigurableAIService.shared.getAPIKey(for: .openAI) ?? "")
-        _openAIQuery = State(initialValue: ConfigurableAIService.shared.getQuery(for: .openAI) ?? "")
-        _googleGeminiKey = State(initialValue: ConfigurableAIService.shared.getAPIKey(for: .googleGemini) ?? "")
-        _googleGeminiQuery = State(initialValue: ConfigurableAIService.shared.getQuery(for: .googleGemini) ?? "")
+    @AppStorage(UserDefaults.AIKey.barcodeSearchProvider.rawValue) private var barcodeSearchProvider: BarcodeSearchProvider =
+        .defaultProvider
+
+    @AppStorage(UserDefaults.AIKey.nutritionAuthority.rawValue) private var preferredNutritionAuthority: NutritionAuthority =
+        .localDefault
+
+    @AppStorage(UserDefaults.AIKey.alwaysOpenCamera.rawValue) private var alwaysOpenCamera: Bool = false
+
+    @State private var preferredLanguage: String = ""
+    @State private var preferredRegion: String = ""
+
+    @State private var languageOptionsState: [(code: String, name: String)] = []
+    @State private var regionOptionsState: [(code: String, name: String)] = []
+
+    private func systemLanguageCode() -> String {
+        if let first = Locale.preferredLanguages.first {
+            let loc = Locale(identifier: first)
+            if let lang = loc.language.languageCode?.identifier {
+                return lang
+            }
+        }
+        if let lang = Locale.current.language.languageCode?.identifier {
+            return lang
+        }
+        return "en"
+    }
+
+    private func systemRegionCode() -> String {
+        if let region = Locale.current.region?.identifier {
+            return region
+        } else if let regionCode = (Locale.current as NSLocale).object(forKey: .countryCode) as? String {
+            return regionCode
+        }
+        return "US"
+    }
+
+    private func buildLanguageOptions() {
+        let codes = Set(Locale.LanguageCode.isoLanguageCodes.map(\.identifier))
+        let locale = Locale.current
+        let items: [(String, String)] = codes.compactMap { code -> (String, String)? in
+            let id = Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue: code])
+            let display = locale.localizedString(forLanguageCode: code) ?? Locale(identifier: id)
+                .localizedString(forLanguageCode: code) ?? code
+            return (code, display)
+        }
+        .sorted { $0.1.localizedCaseInsensitiveCompare($1.1) == .orderedAscending }
+        languageOptionsState = items
+    }
+
+    private func buildRegionOptions() {
+        let codes = Set(Locale.Region.isoRegions.map(\.identifier))
+        let locale = Locale.current
+        let items: [(String, String)] = codes.compactMap { code -> (String, String)? in
+            let display = locale.localizedString(forRegionCode: code) ?? code
+            return (code, display)
+        }
+        .sorted { $0.1.localizedCaseInsensitiveCompare($1.1) == .orderedAscending }
+        regionOptionsState = items
+    }
+
+    private func displayName(for code: String, in options: [(code: String, name: String)]) -> String {
+        options.first(where: { $0.code == code })?.name ?? code
+    }
+
+    init() {}
+
+    func readPersistedValues() {
+        claudeKey = ConfigurableAIService.shared.getAPIKey(for: .claude) ?? ""
+        openAIKey = ConfigurableAIService.shared.getAPIKey(for: .openAI) ?? ""
+        googleGeminiKey = ConfigurableAIService.shared.getAPIKey(for: .gemini) ?? ""
+
+        preferredLanguage = UserDefaults.standard.userPreferredLanguageForAI ?? ""
+        preferredRegion = UserDefaults.standard.userPreferredRegionForAI ?? ""
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
-                // GPT-5 Feature Section - Only show when OpenAI is selected for AI Image Analysis
-                if aiService.aiImageSearchProvider.rawValue.contains("OpenAI") {
-                    Section(
-                        header: Text("OpenAI GPT-5 (Latest)"),
-
-                        footer: Text(
-                            "Enable GPT-5, GPT-5-mini, and GPT-5-nano models for OpenAI analysis. Standard Quality uses GPT-5, Fast Mode uses GPT-5-nano for ultra-fast analysis. GPT-5 takes longer to perform analysis but these are the latest models with some improvements in health advisory accuracy. Fallback to GPT-4o if unavailable."
-                        )
-                    ) {
-                        Toggle("Use GPT-5 Models", isOn: $useGPT5ForOpenAI)
-                            .onChange(of: useGPT5ForOpenAI) {
-                                // Trigger view refresh to update Analysis Mode descriptions
-                                aiService.objectWillChange.send()
-                            }
-                    }
-                }
-
-                // Only show configuration sections if feature is enabled
-
                 Section(
                     header: Text("Food Search Provider Configuration"),
 
@@ -83,38 +130,122 @@ struct AISettingsView: View {
                         "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods."
                     )
                 ) {
-                    ForEach(SearchType.allCases, id: \.self) { searchType in
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text(searchType.rawValue)
-                                    .font(.headline)
-                                Spacer()
-                            }
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Provider for AI Image Analysis")
+                            .font(.title3)
 
-                            Text(searchType.description)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                        Picker("", selection: $imageSearchProvider) {
+                            ForEach(ImageSearchProvider.allCases, id: \.self) { provider in
+                                HStack(spacing: 12) {
+//                                    Image(systemName: icon(for: provider))
+//                                        .foregroundColor(.accentColor)
 
-                            Picker("Provider for \(searchType.rawValue)", selection: getBindingForSearchType(searchType)) {
-                                ForEach(aiService.getAvailableProvidersForSearchType(searchType), id: \.self) { provider in
-                                    Text(provider.rawValue).tag(provider)
+                                    Text(provider.providerName)
+                                        .font(.caption)
+                                    if let modelName = provider.modelName {
+                                        Text(modelName)
+                                            .font(.subheadline)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.orange.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
+
+                                    Spacer()
+
+                                    if let fast = provider.fast, fast {
+                                        Text("Fast")
+                                            .font(.caption2)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.green.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
                                 }
+                                .tag(provider)
                             }
-                            .pickerStyle(MenuPickerStyle())
                         }
-                        .padding(.vertical, 4)
+                        .pickerStyle(.navigationLink)
                     }
-                }
+                    .padding(.vertical, 4)
 
-                // Analysis Mode Configuration
-                Section(
-                    header: Text("AI Analysis Mode"),
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Provider for Text/Voice Search")
+                            .font(.title3)
 
-                    footer: Text(
-                        "Choose between speed and accuracy. Fast mode uses lighter AI models for 2-3x faster analysis with slightly reduced accuracy (~5-10% trade-off). Standard mode uses full AI models for maximum accuracy."
-                    )
-                ) {
-                    analysisModeSection
+                        Picker("", selection: $textSearchProvider) {
+                            ForEach(TextSearchProvider.allCases, id: \.self) { provider in
+                                HStack(spacing: 12) {
+//                                    Image(systemName: icon(for: provider))
+//                                        .foregroundColor(.accentColor)
+
+                                    Text(provider.providerName)
+                                        .font(.caption)
+                                    if let modelName = provider.modelName {
+                                        Text(modelName)
+                                            .font(.subheadline)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.orange.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
+
+                                    Spacer()
+
+                                    if let fast = provider.fast, fast {
+                                        Text("Fast")
+                                            .font(.caption2)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.green.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
+                                }
+                                .tag(provider)
+                            }
+                        }
+                        .pickerStyle(.navigationLink)
+                    }
+                    .padding(.vertical, 4)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Provider for Barcode Scanning")
+                            .font(.title3)
+
+                        Picker("", selection: $barcodeSearchProvider) {
+                            ForEach(BarcodeSearchProvider.allCases, id: \.self) { provider in
+                                HStack(spacing: 12) {
+//                                    Image(systemName: icon(for: provider))
+//                                        .foregroundColor(.accentColor)
+
+                                    Text(provider.providerName)
+                                        .font(.caption)
+                                    if let modelName = provider.modelName {
+                                        Text(modelName)
+                                            .font(.subheadline)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.orange.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
+
+                                    Spacer()
+
+                                    if let fast = provider.fast, fast {
+                                        Text("Fast")
+                                            .font(.caption2)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.green.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
+                                }
+                                .tag(provider)
+                            }
+                        }
+                        .pickerStyle(.navigationLink)
+                    }
+                    .padding(.vertical, 4)
                 }
 
                 // Claude API Configuration
@@ -146,43 +277,6 @@ struct AISettingsView: View {
                                     isSecure: !showClaudeKey
                                 )
                             }
-                        }
-
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text("AI Prompt for Enhanced Results")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-
-                                Spacer()
-
-                                Menu("Examples") {
-                                    Button("Default Query") {
-                                        claudeQuery =
-                                            "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
-                                    }
-
-                                    Button("Detailed Visual Analysis") {
-                                        claudeQuery =
-                                            "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
-                                    }
-
-                                    Button("Diabetes Focus") {
-                                        claudeQuery =
-                                            "Focus specifically on carbohydrate analysis for Type 1 diabetes management. Identify all carb sources, estimate absorption timing, and provide detailed carb counts with confidence levels."
-                                    }
-
-                                    Button("Macro Tracking") {
-                                        claudeQuery =
-                                            "Provide complete macronutrient analysis with detailed portion reasoning. For each food component, describe the visual cues you're using for portion estimation: compare to visible objects (fork, plate, hand), note cooking methods affecting nutrition (oils, preparation style), explain food quality indicators (ripeness, doneness), and provide comprehensive nutrition breakdown with your confidence level for each estimate."
-                                    }
-                                }
-                                .font(.caption)
-                            }
-
-                            TextEditor(text: $claudeQuery)
-                                .frame(minHeight: 80)
-                                .border(Color.secondary.opacity(0.3), width: 0.5)
                         }
                     }
                 }
@@ -217,43 +311,6 @@ struct AISettingsView: View {
                                 )
                             }
                         }
-
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text("AI Prompt for Enhanced Results")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-
-                                Spacer()
-
-                                Menu("Examples") {
-                                    Button("Default Query") {
-                                        googleGeminiQuery =
-                                            "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
-                                    }
-
-                                    Button("Detailed Visual Analysis") {
-                                        googleGeminiQuery =
-                                            "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
-                                    }
-
-                                    Button("Diabetes Focus") {
-                                        googleGeminiQuery =
-                                            "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates."
-                                    }
-
-                                    Button("Macro Tracking") {
-                                        googleGeminiQuery =
-                                            "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals."
-                                    }
-                                }
-                                .font(.caption)
-                            }
-
-                            TextEditor(text: $googleGeminiQuery)
-                                .frame(minHeight: 80)
-                                .border(Color.secondary.opacity(0.3), width: 0.5)
-                        }
                     }
                 }
 
@@ -287,42 +344,88 @@ struct AISettingsView: View {
                                 )
                             }
                         }
+                    }
+                }
 
-                        VStack(alignment: .leading, spacing: 4) {
+                Section(
+                    header: Text("Localization"),
+                    footer: Text(
+                        "Choose a specific language and region for AI output."
+                    )
+                ) {
+                    Picker("Nutrition Authority", selection: $preferredNutritionAuthority) {
+                        ForEach(NutritionAuthority.allCases, id: \.self) { authority in
+                            Text(authority.description).tag(authority)
+                        }
+                    }
+
+                    NavigationLink {
+                        OptionSelectionView(
+                            title: "Preferred Language",
+                            options: languageOptionsState,
+                            selection: $preferredLanguage
+                        )
+                    } label: {
+                        HStack {
+                            Text("Preferred Language")
+                            Spacer()
+                            Text(
+                                preferredLanguage.isEmpty
+                                    ? displayName(for: systemLanguageCode(), in: languageOptionsState)
+                                    : displayName(for: preferredLanguage, in: languageOptionsState)
+                            )
+                            .foregroundColor(.secondary)
+                        }
+                    }
+
+                    NavigationLink {
+                        OptionSelectionView(
+                            title: "Preferred Region",
+                            options: regionOptionsState,
+                            selection: $preferredRegion
+                        )
+                    } label: {
+                        HStack {
+                            Text("Preferred Region")
+                            Spacer()
+                            Text(
+                                preferredRegion.isEmpty
+                                    ? displayName(for: systemRegionCode(), in: regionOptionsState)
+                                    : displayName(for: preferredRegion, in: regionOptionsState)
+                            )
+                            .foregroundColor(.secondary)
+                        }
+                    }
+                }
+
+                Section(
+                    header: Text("UI/UX")
+                ) {
+                    Toggle(isOn: $alwaysOpenCamera) {
+                        Text("Always open camera")
+                    }
+                    Text("Long tap to select from photo library").font(.caption)
+                }
+
+                // Statistics Section
+                let allStats = AIUsageStatistics.getAllStatistics()
+                if !allStats.isEmpty {
+                    Section(
+                        header: Text("Usage Statistics"),
+                        footer: Text("View performance metrics for AI models you've used.")
+                    ) {
+                        NavigationLink {
+                            StatisticsView()
+                        } label: {
                             HStack {
-                                Text("AI Prompt for Enhanced Results")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-
+                                Image(systemName: "chart.bar.fill")
+                                    .foregroundColor(.accentColor)
+                                Text("AI Usage Statistics")
                                 Spacer()
-
-                                Menu("Examples") {
-                                    Button("Default Query") {
-                                        openAIQuery =
-                                            "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing."
-                                    }
-
-                                    Button("Detailed Visual Analysis") {
-                                        openAIQuery =
-                                            "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management."
-                                    }
-
-                                    Button("Diabetes Focus") {
-                                        openAIQuery =
-                                            "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates."
-                                    }
-
-                                    Button("Macro Tracking") {
-                                        openAIQuery =
-                                            "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals."
-                                    }
-                                }
-                                .font(.caption)
+                                Text("\(allStats.count)")
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
                             }
-
-                            TextEditor(text: $openAIQuery)
-                                .frame(minHeight: 80)
-                                .border(Color.secondary.opacity(0.3), width: 0.5)
                         }
                     }
                 }
@@ -353,12 +456,6 @@ struct AISettingsView: View {
                         )
                         .font(.caption)
                         .foregroundColor(.blue)
-
-                        Text(
-                            "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI"
-                        )
-                        .font(.caption)
-                        .foregroundColor(.orange)
                     }
                 }
 
@@ -426,92 +523,40 @@ struct AISettingsView: View {
                     .foregroundColor(.secondary)
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        saveSettings()
+                    } label: {
+                        HStack {
+                            Text("Save")
+                        }
+                    }
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Text("Cancel")
+                        }
+                    }
+                }
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Food Search Settings")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    saveSettings()
-                } label: {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                    }
-                }
-            }
+        .onAppear {
+            readPersistedValues()
+            buildLanguageOptions()
+            buildRegionOptions()
         }
         .alert("API Key Required", isPresented: $showingAPIKeyAlert) {
             Button("OK") {}
         } message: {
             Text("This AI provider requires an API key. Please enter your API key in the settings below.")
         }
-    }
-
-    @ViewBuilder private var analysisModeSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Mode picker
-            Picker("Analysis Mode", selection: Binding(
-                get: { aiService.analysisMode },
-                set: { newMode in aiService.setAnalysisMode(newMode) }
-            )) {
-                ForEach(ConfigurableAIService.AnalysisMode.allCases, id: \.self) { mode in
-                    Text(mode.displayName).tag(mode)
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-
-            currentModeDetails
-            modelInformation
-        }
-    }
-
-    @ViewBuilder private var currentModeDetails: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: aiService.analysisMode.iconName)
-                    .foregroundColor(aiService.analysisMode.iconColor)
-                Text("Current Mode: \(aiService.analysisMode.displayName)")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-            }
-
-            Text(aiService.analysisMode.detailedDescription)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
-        .background(aiService.analysisMode.backgroundColor)
-        .cornerRadius(8)
-    }
-
-    @ViewBuilder private var modelInformation: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Models Used:")
-                .font(.caption)
-                .fontWeight(.medium)
-                .foregroundColor(.secondary)
-
-            VStack(alignment: .leading, spacing: 4) {
-                modelRow(
-                    provider: "Google Gemini:",
-                    model: ConfigurableAIService.optimalModel(for: .googleGemini, mode: aiService.analysisMode)
-                )
-                modelRow(
-                    provider: "OpenAI:",
-                    model: ConfigurableAIService.optimalModel(for: .openAI, mode: aiService.analysisMode)
-                )
-                modelRow(
-                    provider: "Claude:",
-                    model: ConfigurableAIService.optimalModel(for: .claude, mode: aiService.analysisMode)
-                )
-            }
-        }
-        .padding(.vertical, 6)
-        .padding(.horizontal, 8)
-        .background(Color(.systemGray6))
-        .cornerRadius(6)
     }
 
     @ViewBuilder private func modelRow(provider: String, model: String) -> some View {
@@ -526,47 +571,461 @@ struct AISettingsView: View {
         }
     }
 
+    // MARK: - Statistics Helpers
+
+    struct ProviderStatisticsGroup {
+        let provider: AIProvider
+        let providerDisplayName: String
+        let models: [AIUsageStatistics.Statistics]
+    }
+
+    private func groupStatisticsByProvider(_ stats: [AIUsageStatistics.Statistics]) -> [ProviderStatisticsGroup] {
+        // Group by provider
+        var grouped: [AIProvider: [AIUsageStatistics.Statistics]] = [:]
+
+        for stat in stats {
+            // Parse the modelKey to get the provider
+            if let model = AIModel(rawValue: stat.modelKey) {
+                let provider = model.provider
+                grouped[provider, default: []].append(stat)
+            }
+        }
+
+        // Convert to sorted array
+        return grouped.map { provider, models in
+            ProviderStatisticsGroup(
+                provider: provider,
+                providerDisplayName: provider.displayName,
+                models: models.sorted { $0.modelKey < $1.modelKey }
+            )
+        }
+        .sorted { $0.providerDisplayName < $1.providerDisplayName }
+    }
+
+    private func modelDisplayName(for modelKey: String) -> String {
+        guard let model = AIModel(rawValue: modelKey) else {
+            return modelKey
+        }
+        return model.displayName
+    }
+
     private func saveSettings() {
         // API key and query settings
         aiService.setAPIKey(claudeKey, for: .claude)
         aiService.setAPIKey(openAIKey, for: .openAI)
-        aiService.setAPIKey(googleGeminiKey, for: .googleGemini)
-        aiService.setQuery(claudeQuery, for: .claude)
-        aiService.setQuery(openAIQuery, for: .openAI)
-        aiService.setQuery(googleGeminiQuery, for: .googleGemini)
+        aiService.setAPIKey(googleGeminiKey, for: .gemini)
+
+        // Persist localization overrides
+        UserDefaults.standard.userPreferredLanguageForAI = preferredLanguage.isEmpty ? nil : preferredLanguage
+        UserDefaults.standard.userPreferredRegionForAI = preferredRegion.isEmpty ? nil : preferredRegion
 
         // Feature flags werden automatisch durch @AppStorage gespeichert!
 
         // Dismiss the settings view
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
+    }
+}
+
+private struct OptionSelectionView: View {
+    let title: String
+    let options: [(code: String, name: String)]
+    @Binding var selection: String
+    @Environment(\.dismiss) private var dismiss
+    @State private var searchText: String = ""
+
+    private var filteredOptions: [(code: String, name: String)] {
+        let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if q.isEmpty { return options }
+        return options.filter { $0.name.localizedCaseInsensitiveContains(q) || $0.code.localizedCaseInsensitiveContains(q) }
     }
 
-    private func getBindingForSearchType(_ searchType: SearchType) -> Binding<SearchProvider> {
-        switch searchType {
-        case .textSearch:
-            return Binding(
-                get: { aiService.textSearchProvider },
-                set: { newValue in
-                    aiService.textSearchProvider = newValue
-                    UserDefaults.standard.textSearchProvider = newValue.rawValue
+    var body: some View {
+        List {
+            ForEach(filteredOptions, id: \.code) { item in
+                Button {
+                    selection = item.code
+                    dismiss()
+                } label: {
+                    HStack {
+                        Text(item.name)
+                            .foregroundColor(.primary)
+                        Spacer()
+                        if selection == item.code {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
                 }
-            )
-        case .barcodeSearch:
-            return Binding(
-                get: { aiService.barcodeSearchProvider },
-                set: { newValue in
-                    aiService.barcodeSearchProvider = newValue
-                    UserDefaults.standard.barcodeSearchProvider = newValue.rawValue
+            }
+        }
+        .navigationTitle(title)
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
+    }
+}
+
+private struct StatisticsView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    private var allStats: [AIUsageStatistics.Statistics] {
+        AIUsageStatistics.getAllStatistics()
+    }
+
+    private var groupedStats: [ProviderStatisticsGroup] {
+        groupStatisticsByProvider(allStats)
+    }
+
+    var body: some View {
+        List {
+            if allStats.isEmpty {
+                Section {
+                    VStack(spacing: 12) {
+                        Image(systemName: "chart.bar.xaxis")
+                            .font(.system(size: 48))
+                            .foregroundColor(.secondary)
+                        Text("No Statistics Yet")
+                            .font(.headline)
+                        Text("Statistics will appear here after you use AI models for food analysis.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 32)
                 }
-            )
-        case .aiImageSearch:
-            return Binding(
-                get: { aiService.aiImageSearchProvider },
-                set: { newValue in
-                    aiService.aiImageSearchProvider = newValue
-                    UserDefaults.standard.aiImageProvider = newValue.rawValue
+            } else {
+                ForEach(groupedStats, id: \.provider) { group in
+                    Section(header: Text(group.providerDisplayName)) {
+                        ForEach(group.models, id: \.key) { model in
+                            VStack(alignment: .leading, spacing: 8) {
+                                // Model name header with column labels
+                                HStack(alignment: .center, spacing: 8) {
+                                    Text(modelDisplayName(for: model.modelKey))
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+
+                                    Spacer()
+
+                                    // Column headers
+                                    HStack(spacing: 12) {
+                                        Text("Requests")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                            .frame(width: 70, alignment: .trailing)
+
+                                        Text("Avg Time")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                            .frame(width: 60, alignment: .trailing)
+                                    }
+                                }
+                                .padding(.bottom, 4)
+
+                                // Image stats section
+                                if let imageStat = model.imageStat {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        StatTypeHeader(icon: "photo", label: "Image")
+
+                                        StatRow(
+                                            label: "Total",
+                                            stat: imageStat,
+                                            showSuccessBadge: true
+                                        )
+                                        .padding(.leading, 30)
+
+                                        // Complexity breakdown for image stats
+                                        ComplexityBreakdownView(stat: imageStat)
+                                            .padding(.leading, 30)
+                                    }
+                                }
+
+                                // Text stats section
+                                if let textStat = model.textStat {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        StatTypeHeader(icon: "text.alignleft", label: "Text")
+
+                                        StatRow(
+                                            label: "Total",
+                                            stat: textStat,
+                                            showSuccessBadge: true
+                                        )
+                                        .padding(.leading, 30)
+
+                                        // Complexity breakdown for text stats
+                                        ComplexityBreakdownView(stat: textStat)
+                                            .padding(.leading, 30)
+                                    }
+                                    .padding(.top, 8)
+                                }
+                            }
+                            .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+                            .listRowSeparator(.hidden)
+                        }
+                    }
                 }
+
+                Section {
+                    VStack(spacing: 16) {
+                        SlideButton(styling: .init(indicatorSize: 50, indicatorColor: Color.red), action: {
+                            AIUsageStatistics.clearAll()
+                            dismiss()
+                        }) {
+                            HStack {
+                                Image(systemName: "trash")
+                                Text("Slide to Clear All Statistics")
+                            }
+                            .foregroundColor(.white)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        }
+                    }
+                    .padding(.vertical, 8)
+                }
+            }
+        }
+        .listSectionSpacing(.compact)
+        .navigationTitle("AI Model Statistics")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    // MARK: - Helper Types
+
+    struct ProviderStatisticsGroup {
+        let provider: AIProvider
+        let providerDisplayName: String
+        let models: [ModelStats]
+    }
+
+    struct ModelStats: Identifiable {
+        let id = UUID()
+        let modelKey: String
+        let imageStat: AIUsageStatistics.Statistics?
+        let textStat: AIUsageStatistics.Statistics?
+
+        var key: String { modelKey }
+    }
+
+    // MARK: - Helper Functions
+
+    private func groupStatisticsByProvider(_ stats: [AIUsageStatistics.Statistics]) -> [ProviderStatisticsGroup] {
+        // Group by provider and model
+        var grouped: [AIProvider: [String: (
+            image: AIUsageStatistics.Statistics?,
+            text: AIUsageStatistics.Statistics?
+        )]] = [:]
+
+        for stat in stats {
+            if let model = AIModel(rawValue: stat.modelKey) {
+                let provider = model.provider
+                let modelKey = stat.modelKey
+
+                if grouped[provider] == nil {
+                    grouped[provider] = [:]
+                }
+
+                var existing = grouped[provider]![modelKey] ?? (image: nil, text: nil)
+                if stat.requestType == .image {
+                    existing.image = stat
+                } else {
+                    existing.text = stat
+                }
+                grouped[provider]![modelKey] = existing
+            }
+        }
+
+        return grouped.map { provider, models in
+            let modelStats = models.map { modelKey, stats in
+                ModelStats(
+                    modelKey: modelKey,
+                    imageStat: stats.image,
+                    textStat: stats.text
+                )
+            }.sorted { $0.modelKey < $1.modelKey }
+
+            return ProviderStatisticsGroup(
+                provider: provider,
+                providerDisplayName: provider.displayName,
+                models: modelStats
             )
+        }
+        .sorted { $0.providerDisplayName < $1.providerDisplayName }
+    }
+
+    private func modelDisplayName(for modelKey: String) -> String {
+        guard let model = AIModel(rawValue: modelKey) else {
+            return modelKey
+        }
+        return model.displayName
+    }
+}
+
+// MARK: - StatTypeHeader Component
+
+private struct StatTypeHeader: View {
+    let icon: String
+    let label: String
+
+    var body: some View {
+        HStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.subheadline)
+                .foregroundColor(.accentColor)
+            Text(label)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+        }
+        .padding(.top, 4)
+    }
+}
+
+// MARK: - StatRow Component
+
+private struct StatRow: View {
+    let label: String
+    let stat: AIUsageStatistics.Statistics
+    let showSuccessBadge: Bool
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 12) {
+            // Left side: Row label
+            Text(label)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+                .frame(width: 60, alignment: .leading)
+
+            // Success rate badge (only for total row)
+            if showSuccessBadge {
+                HStack(spacing: 3) {
+                    Image(
+                        systemName: stat.successRate >= 90 ? "checkmark.circle.fill" :
+                            stat.successRate >= 70 ? "checkmark.circle" : "exclamationmark.circle"
+                    )
+                    .font(.caption2)
+                    .frame(width: 12)
+                    Text(String(format: "%.0f%%", stat.successRate))
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                        .frame(width: 32, alignment: .leading)
+                }
+                .foregroundColor(
+                    stat.successRate >= 90 ? .green :
+                        stat.successRate >= 70 ? .orange : .red
+                )
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(
+                    (
+                        stat.successRate >= 90 ? Color.green :
+                            stat.successRate >= 70 ? Color.orange : Color.red
+                    )
+                    .opacity(0.08)
+                )
+                .cornerRadius(4)
+                .frame(width: 65, alignment: .leading)
+            } else {
+                Color.clear
+                    .frame(width: 65)
+            }
+
+            Spacer()
+
+            // Right side: Statistics columns
+            HStack(spacing: 12) {
+                // Request count column
+                Text("\(stat.requestCount)")
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                    .frame(width: 70, alignment: .trailing)
+
+                // Average time column
+                Text(String(format: "%.1fs", stat.averageProcessingTime))
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                    .frame(width: 60, alignment: .trailing)
+            }
+        }
+    }
+}
+
+// MARK: - ComplexityBreakdownView Component
+
+private struct ComplexityBreakdownView: View {
+    let stat: AIUsageStatistics.Statistics
+
+    var body: some View {
+        VStack(spacing: 4) {
+            // Show breakdown only if we have any complexity data
+            if stat.zeroFoodCount > 0 || stat.oneFoodCount > 0 || stat.twoFoodCount > 0 || stat.multipleFoodCount > 0 {
+                if stat.zeroFoodCount > 0 {
+                    ComplexityRow(
+                        label: "0 items",
+                        count: stat.zeroFoodCount,
+                        averageTime: stat.averageZeroFoodProcessingTime
+                    )
+                }
+
+                if stat.oneFoodCount > 0 {
+                    ComplexityRow(
+                        label: "1 item",
+                        count: stat.oneFoodCount,
+                        averageTime: stat.averageOneFoodProcessingTime
+                    )
+                }
+
+                if stat.twoFoodCount > 0 {
+                    ComplexityRow(
+                        label: "2 items",
+                        count: stat.twoFoodCount,
+                        averageTime: stat.averageTwoFoodProcessingTime
+                    )
+                }
+
+                if stat.multipleFoodCount > 0 {
+                    ComplexityRow(
+                        label: "3+ items",
+                        count: stat.multipleFoodCount,
+                        averageTime: stat.averageMultipleFoodProcessingTime
+                    )
+                }
+            }
+        }
+    }
+}
+
+// MARK: - ComplexityRow Component
+
+private struct ComplexityRow: View {
+    let label: String
+    let count: Int
+    let averageTime: TimeInterval
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 12) {
+            // Left side: Complexity label
+            Text(label)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+                .frame(width: 60, alignment: .leading)
+
+            // Empty space where success badge would be
+            Color.clear
+                .frame(width: 65)
+
+            Spacer()
+
+            // Right side: Statistics columns
+            HStack(spacing: 12) {
+                // Request count column
+                Text("\(count)")
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                    .frame(width: 70, alignment: .trailing)
+
+                // Average time column
+                Text(String(format: "%.1fs", averageTime))
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                    .frame(width: 60, alignment: .trailing)
+            }
         }
     }
 }

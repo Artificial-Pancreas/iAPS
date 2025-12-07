@@ -3,7 +3,7 @@ import SwiftUI
 struct SelectedFoodView: View {
     let food: AIFoodItem
     let foodImage: UIImage?
-    @Binding var portionGrams: Double
+    @Binding var portionGrams: Decimal
     var onChange: () -> Void
     var onTakeOver: (AIFoodItem) -> Void
 
@@ -13,19 +13,19 @@ struct SelectedFoodView: View {
         (food.brand ?? "").lowercased().contains("ai overall analysis")
     }
 
-    private var displayCarbs: Double {
+    private var displayCarbs: Decimal {
         isAIProduct ? food.carbs : food.carbs * (portionGrams / 100.0)
     }
 
-    private var displayFat: Double {
+    private var displayFat: Decimal {
         isAIProduct ? food.fat : food.fat * (portionGrams / 100.0)
     }
 
-    private var displayProtein: Double {
+    private var displayProtein: Decimal {
         isAIProduct ? food.protein : food.protein * (portionGrams / 100.0)
     }
 
-    private var displayCalories: Double {
+    private var displayCalories: Decimal {
         isAIProduct ? food.calories : food.calories * (portionGrams / 100.0)
     }
 
@@ -77,10 +77,10 @@ struct SelectedFoodView: View {
                         .fixedSize(horizontal: false, vertical: true)
 
                     HStack(spacing: 4) {
-                        Image(systemName: isAIAnalysisProduct(food) ? "brain" : "scalemass")
+                        Image(systemName: food.source == .ai ? "brain" : "scalemass")
                             .font(.caption)
 
-                        if isAIAnalysisProduct(food) {
+                        if food.source == .ai {
                             Text("AI Analysis")
                                 .font(.caption)
                         } else if portionGrams == 100.0 {
@@ -92,18 +92,18 @@ struct SelectedFoodView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(
-                        isAIAnalysisProduct(food) ? Color.purple.opacity(0.2) :
+                        food.source == .ai ? Color.purple.opacity(0.2) :
                             (portionGrams == 100.0 ? Color.blue.opacity(0.2) : Color.clear)
                     )
                     .foregroundColor(
-                        isAIAnalysisProduct(food) ? .purple :
+                        food.source == .ai ? .purple :
                             (portionGrams == 100.0 ? .blue : .clear)
                     )
                     .cornerRadius(6)
                     .overlay(
                         RoundedRectangle(cornerRadius: 6)
                             .stroke(
-                                isAIAnalysisProduct(food) ? Color.purple.opacity(0.3) :
+                                food.source == .ai ? Color.purple.opacity(0.3) :
                                     (portionGrams == 100.0 ? Color.blue.opacity(0.3) : Color.clear),
                                 lineWidth: 1
                             )
@@ -111,7 +111,7 @@ struct SelectedFoodView: View {
                 }
             }
 
-            if !isAIAnalysisProduct(food) {
+            if food.source != .ai {
                 HStack {
                     Text("Amount:")
                         .font(.subheadline)
@@ -121,7 +121,7 @@ struct SelectedFoodView: View {
                         showMultiplierEditor = true
                     } label: {
                         HStack(spacing: 4) {
-                            Text("\(portionGrams, specifier: "%.0f")g")
+                            Text("\(Double(portionGrams), specifier: "%.0f")g")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                             Image(systemName: "pencil")
@@ -193,7 +193,8 @@ struct SelectedFoodView: View {
                         carbs: displayCarbs,
                         protein: displayProtein,
                         fat: displayFat,
-                        imageURL: food.imageURL
+                        imageURL: food.imageURL,
+                        source: food.source
                     )
                     onTakeOver(adjustedFood)
                 } label: {
@@ -228,13 +229,13 @@ struct SelectedFoodView: View {
     }
 
     private struct NutritionBadge: View {
-        let value: Double
+        let value: Decimal
         let unit: String
         let label: String
         let color: Color
         let icon: String
 
-        init(value: Double, unit: String, label: String, color: Color, icon: String? = nil) {
+        init(value: Decimal, unit: String, label: String, color: Color, icon: String? = nil) {
             self.value = value
             self.unit = unit
             self.label = label
@@ -249,7 +250,7 @@ struct SelectedFoodView: View {
                         .font(.system(size: 10))
                 }
                 VStack(spacing: 2) {
-                    Text("\(value, specifier: "%.1f")\(NSLocalizedString(unit, comment: ""))")
+                    Text("\(Double(value), specifier: "%.1f")\(NSLocalizedString(unit, comment: ""))")
                         .font(.system(size: 12, weight: .bold))
                     Text(NSLocalizedString(label, comment: ""))
                         .font(.system(size: 10, weight: .medium))

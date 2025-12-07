@@ -25,11 +25,10 @@ extension AddCarbs {
         // Food Search States
         @State private var showingFoodSearch = false
         @State private var foodSearchText = ""
-        @State private var searchResults: [FoodItem] = []
         @State private var isLoading = false
         @State private var errorMessage: String?
         @State private var selectedFoodItem: AIFoodItem?
-        @State private var portionGrams: Double = 100.00001
+        @State private var portionGrams: Decimal = 100.00001
         @State private var selectedFoodImage: UIImage?
         @State private var saveAlert = false
 
@@ -190,13 +189,16 @@ extension AddCarbs {
                 if editMode { state.apsManager.determineBasalSync() }
             }))
             .sheet(isPresented: $presentPresets, content: { presetView })
-            .sheet(isPresented: $showingFoodSearch) {
+            .sheet(isPresented: $showingFoodSearch, onDismiss: {
+                foodSearchState.resetNavigationState()
+            }) {
                 FoodSearchView(
                     state: foodSearchState,
                     onSelect: { selectedFood, image in
                         handleSelectedFood(selectedFood, image: image)
                     }
                 )
+                .presentationDragIndicator(.visible)
             }
             .alert(isPresented: $saveAlert) { alert(food: selectedFoodItem) }
         }
@@ -302,12 +304,12 @@ extension AddCarbs {
                             showingFoodSearch = true
                         },
                         onTakeOver: { food in
-                            state.carbs += portionGrams != 100.00001 ? Decimal(max(food.carbs, 0) / (portionGrams / 100))
-                                .rounded(to: 0) : Decimal(max(food.carbs, 0))
-                            state.fat += portionGrams != 100.00001 ? Decimal(max(food.fat, 0) / (portionGrams / 100))
-                                .rounded(to: 0) : Decimal(max(food.fat, 0))
-                            state.protein += portionGrams != 100.00001 ? Decimal(max(food.protein, 0) / (portionGrams / 100))
-                                .rounded(to: 0) : Decimal(max(food.protein, 0))
+                            state.carbs += portionGrams != 100.00001 ? max(food.carbs, 0) / (portionGrams / 100)
+                                .rounded(to: 0) : max(food.carbs, 0)
+                            state.fat += portionGrams != 100.00001 ? max(food.fat, 0) / (portionGrams / 100)
+                                .rounded(to: 0) : max(food.fat, 0)
+                            state.protein += portionGrams != 100.00001 ? max(food.protein, 0) / (portionGrams / 100)
+                                .rounded(to: 0) : max(food.protein, 0)
                             selectedFoodImage = nil
                             showingFoodSearch = false
                             if !state.skipSave {
@@ -356,9 +358,9 @@ extension AddCarbs {
         // Temporarily saved in waiter's notepad (the summary).
         private func cache(food: AIFoodItem) {
             let cache = Presets(context: moc)
-            cache.carbs = Decimal(food.carbs) as NSDecimalNumber
-            cache.fat = Decimal(food.fat) as NSDecimalNumber
-            cache.protein = Decimal(food.protein) as NSDecimalNumber
+            cache.carbs = food.carbs as NSDecimalNumber
+            cache.fat = food.fat as NSDecimalNumber
+            cache.protein = food.protein as NSDecimalNumber
             cache.dish = (portionGrams != 100.00001) ? food.name + " \(portionGrams)g" : food.name
 
             if state.selection?.dish != cache.dish {
@@ -373,16 +375,16 @@ extension AddCarbs {
             let preset = Presets(context: moc)
             preset
                 .carbs = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (Decimal(max(food.carbs * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
-                Decimal(max(food.carbs, 0)) as NSDecimalNumber
+                (max(food.carbs * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
+                max(food.carbs, 0) as NSDecimalNumber
             preset
                 .fat = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (Decimal(max(food.fat * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
-                Decimal(max(food.fat, 0)) as NSDecimalNumber
+                (max(food.fat * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
+                max(food.fat, 0) as NSDecimalNumber
             preset
                 .protein = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (Decimal(max(food.protein * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
-                Decimal(max(food.protein, 0)) as NSDecimalNumber
+                (max(food.protein * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
+                max(food.protein, 0) as NSDecimalNumber
 
             if portionGrams != 100.00001 {
                 preset.dish = food.name + " \(portionGrams)g"
@@ -400,29 +402,10 @@ extension AddCarbs {
             }
         }
 
-        private func isAIAnalysisProduct(_ food: AIFoodItem) -> Bool {
-            food.brand == "AI Analysis" || food.brand == nil || food.brand?.contains("AI") == true
-        }
-
-        private func handleSelectedFood(_ foodItem: FoodItem) {
-            let calculatedCalories = Double(truncating: foodItem.carbs as NSNumber) * 4 +
-                Double(truncating: foodItem.protein as NSNumber) * 4 +
-                Double(truncating: foodItem.fat as NSNumber) * 9
-
-            let aiFoodItem = AIFoodItem(
-                name: foodItem.name,
-                brand: foodItem.source,
-                calories: calculatedCalories,
-                carbs: Double(truncating: foodItem.carbs as NSNumber),
-                protein: Double(truncating: foodItem.protein as NSNumber),
-                fat: Double(truncating: foodItem.fat as NSNumber),
-                imageURL: foodItem.imageURL
-            )
-            selectedFoodItem = aiFoodItem
-
-            // Gramm zurücksetzen (100g für normale Produkte)
-            portionGrams = 100.00001
-
+        private func handleSelectedFood(_ foodItem: AIFoodItem, image: UIImage? = nil) {
+            selectedFoodItem = foodItem
+            selectedFoodImage = image
+            portionGrams = 100.0
             showingFoodSearch = false
         }
 
@@ -669,14 +652,6 @@ extension AddCarbs {
         private var disabled: Bool {
             (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
                 (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
-        }
-
-        private func handleSelectedFood(_ foodItem: FoodItem, image: UIImage? = nil) {
-            let aiFoodItem = foodItem.toAIFoodItem()
-            selectedFoodItem = aiFoodItem
-            selectedFoodImage = image
-            portionGrams = 100.0
-            showingFoodSearch = false
         }
 
         private var editView: some View {

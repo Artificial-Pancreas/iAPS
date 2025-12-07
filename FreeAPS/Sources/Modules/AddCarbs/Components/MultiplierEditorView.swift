@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MultiplierEditorView: View {
-    @Binding var grams: Double
+    @Binding var grams: Decimal
     @Environment(\.dismiss) var dismiss
     @State private var inputText: String = ""
     @FocusState private var isInputFocused: Bool
@@ -58,8 +58,8 @@ struct MultiplierEditorView: View {
                                 Text("\(value)")
                                     .font(.system(size: 18, weight: .semibold))
                                     .frame(width: 70, height: 50)
-                                    .background(grams == Double(value) ? Color.blue : Color.gray.opacity(0.1))
-                                    .foregroundColor(grams == Double(value) ? .white : .primary)
+                                    .background(grams == Decimal(Double(value)) ? Color.blue : Color.gray.opacity(0.1))
+                                    .foregroundColor(grams == Decimal(Double(value)) ? .white : .primary)
                                     .cornerRadius(12)
                             }
                         }
@@ -86,14 +86,14 @@ struct MultiplierEditorView: View {
                 }
             }
             .onAppear {
-                inputText = String(format: "%.0f", grams)
+                inputText = String(format: "%.0f", Double(grams))
                 isInputFocused = true
             }
         }
     }
 
     private func saveAndDismiss() {
-        if let value = Double(inputText.replacingOccurrences(of: ",", with: ".")) {
+        if let value = Decimal(from: inputText.replacingOccurrences(of: ",", with: ".")) {
             grams = value
         }
         dismiss()
