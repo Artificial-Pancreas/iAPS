@@ -69,8 +69,8 @@ enum ChartConfig {
     static let owlSeize: CGFloat = 20
     static let glucoseSize: CGFloat = 4
     static let owlOffset: CGFloat = 100
-    static let carbOffset: CGFloat = 10
-    static let insulinOffset: CGFloat = 15
+    static let carbOffset: CGFloat = 13
+    static let insulinOffset: CGFloat = 17
     static let pointSizeHeight: Double = 5
     static let pointSizeHeightCarbs: Double = 5
     static let bolusHeight: Decimal = 45
@@ -124,9 +124,14 @@ struct MainChartView: View {
                 shouldScrollAfterUpdate = true
             }
             .onChange(of: scenePhase) {
-                if scenePhase == .active {
+                switch scenePhase {
+                case .active:
                     shouldScrollAfterUpdate = true
+                    subscribeToUpdates()
                     updateRequests.send(())
+                case .background,
+                     .inactive:
+                    unsubscribeFromUpdates()
                 }
             }
         }
@@ -164,6 +169,7 @@ struct MainChartView: View {
     }
 
     private func subscribeToUpdates() {
+        guard updatesCancellable == nil else { return }
         let debouncedPublishers: [AnyPublisher<Void, Never>] = [
             ping(data.$screenHours),
             ping(data.$showInsulinActivity),
@@ -217,6 +223,11 @@ struct MainChartView: View {
                 .sink { _ in
                     update(fullSize: latestSize)
                 }
+    }
+
+    private func unsubscribeFromUpdates() {
+        updatesCancellable?.cancel()
+        updatesCancellable = nil
     }
 }
 

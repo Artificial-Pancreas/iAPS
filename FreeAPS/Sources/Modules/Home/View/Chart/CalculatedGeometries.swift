@@ -1353,7 +1353,7 @@ private final class GeometriesBuilder {
             let height = carbHeight(amount: value.carbs)
             let rect = CGRect(
                 x: center.x,
-                y: center.y + ChartConfig.insulinOffset,
+                y: center.y + ChartConfig.carbOffset,
                 width: min(width(value: value.carbs), ChartConfig.carbWidth),
                 height: height + ChartConfig.pointSizeHeight
             )
