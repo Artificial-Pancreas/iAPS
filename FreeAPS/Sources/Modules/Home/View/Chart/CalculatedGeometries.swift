@@ -282,7 +282,8 @@ private final class GeometriesBuilder {
         let glucosePeaks = data.chartGlucosePeaks ?
             measure("calculateGlucosePeaks") {
                 calculateGlucosePeaks(
-                    bolusDots: bolusDots, carbsDots: carbsDots, glucoseDots: glucoseDots, manualGlucoseDots: manualGlucoseDots,
+                    bolusDots: bolusDots, carbsDots: carbsDots, fpuDots: fpuDots, glucoseDots: glucoseDots,
+                    manualGlucoseDots: manualGlucoseDots,
                     unSmoothedGlucoseDots: unSmoothedGlucoseDots
                 )
             } :
@@ -421,6 +422,7 @@ private final class GeometriesBuilder {
     private func calculateGlucosePeaks(
         bolusDots: [DotInfo],
         carbsDots: [DotInfo],
+        fpuDots: [DotInfo],
         glucoseDots: [(rect: CGRect, glucose: Int?)],
         manualGlucoseDots: [CGRect],
         unSmoothedGlucoseDots: [CGRect],
@@ -431,7 +433,8 @@ private final class GeometriesBuilder {
             bolusDots.map(\.rect) +
             bolusDots.compactMap(\.textRect) +
             carbsDots.map(\.rect) +
-            carbsDots.compactMap(\.textRect)
+            carbsDots.compactMap(\.textRect) +
+            fpuDots.map(\.rect)
 
         var peakObstaclesWithBG: [CGRect] =
             bolusDots.map(\.rect) +
