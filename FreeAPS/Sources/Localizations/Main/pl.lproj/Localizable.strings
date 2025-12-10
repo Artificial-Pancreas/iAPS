@@ -1714,6 +1714,10 @@ Połączono z Nightscout!";
 
 "⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
 
+"🎯 Selecting optimal AI provider..." = "🎯 Selecting optimal AI provider...";
+
+"⚡ Starting parallel provider analysis..." = "⚡ Starting parallel provider analysis...";
+
 "Amount:" = "Amount:";
 
 "Take Over" = "Take Over";

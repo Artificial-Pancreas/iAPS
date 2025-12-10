@@ -34,6 +34,18 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
+      - name: Set special variables
+        run: |
+          if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
+            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          fi
+
+      # Ensure compatible Bundler version for Fastlane (fastlane requires bundler < 3)
+      - name: Install Bundler 2.x
+        run: |
+          gem install bundler -v 2.7.2
+          echo "BUNDLER_VER=2.7.2" >> $GITHUB_ENV
+
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
         run: |
@@ -47,16 +59,16 @@ jobs:
 
       # Install project dependencies
       - name: Install Project Dependencies
-        run: bundle install
+        run: bundle _${{ env.BUNDLER_VER }}_ install
 
       # Create or update Distribution certificate and provisioning profiles
       - name: Check and create or update Distribution certificate and profiles if needed
         run: |
           echo "Running Fastlane certs lane..."
-          bundle exec fastlane certs || true # ignore and continue on errors without annotating an exit code
+          bundle _${{ env.BUNDLER_VER }}_ exec fastlane certs || true # ignore and continue on errors without annotating an exit code
 
       - name: Check Distribution certificate and launch Nuke certificates if needed
-        run: bundle exec fastlane check_and_renew_certificates
+        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane check_and_renew_certificates
         id: check_certs
 
       - name: Set output and annotations based on Fastlane result
@@ -103,18 +115,30 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v4
 
+        - name: Set special variables
+          run: |
+            if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
+              echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+            fi
+
+        # Ensure compatible Bundler version for Fastlane (fastlane requires bundler < 3)
+        - name: Install Bundler 2.x
+          run: |
+            gem install bundler -v 2.7.2
+            echo "BUNDLER_VER=2.7.2" >> $GITHUB_ENV
+
         - name: Install dependencies
-          run: bundle install
+          run: bundle _${{ env.BUNDLER_VER }}_ install
 
         - name: Run Fastlane nuke_certs
           run: |
             set -e # Set error immediately after this step if error occurs
-            bundle exec fastlane nuke_certs
+            bundle _${{ env.BUNDLER_VER }}_ exec fastlane nuke_certs
 
         - name: Recreate Distribution certificate after nuking
           run: |
             set -e # Set error immediately after this step if error occurs
-            bundle exec fastlane certs
+            bundle _${{ env.BUNDLER_VER }}_ exec fastlane certs
 
         - name: Add success annotations for nuke and certificate recreation
           if: ${{ success() }}
