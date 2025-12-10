@@ -3600,7 +3600,7 @@ Enact a temp Basal or a temp target */
 "Reading from" = "Reading from";
 
 /* button to disconnect from the shared app group "Disconnect" */
-"Disconnect" = "Disconnect";
+"Disconnect" = "قطع الاتصال";
 
 
 /* description for Shared App Group Source section */
