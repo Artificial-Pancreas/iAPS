@@ -103,6 +103,8 @@ private final class GeometriesBuilder {
     private let realCarbs: [CarbsEntry]
     private let fpus: [CarbsEntry]
 
+    private let lookupGlucoseDots: [(date: Date, glucose: Int)]
+
     private let firstHourDate: Date
     private let oneSecondWidth: CGFloat
     private let fullGlucoseWidth: CGFloat
@@ -151,6 +153,40 @@ private final class GeometriesBuilder {
             .sorted {
                 ($0.actualDate ?? .distantPast) < ($1.actualDate ?? .distantPast)
             }
+
+        let cobPredictions = data.suggestion?.predictions?.cob ?? [] // [Int]
+        let iobPredictions = data.suggestion?.predictions?.iob ?? []
+        let ztPredictions = data.suggestion?.predictions?.zt ?? []
+        let uamPredictions = data.suggestion?.predictions?.uam ?? []
+
+        // Start with measured glucose points
+        var tmpLookupGlucoseDots: [(date: Date, glucose: Int)] =
+            glucose.map { g in
+                (date: g.dateString, glucose: g.glucose ?? 22)
+            }
+
+        // Append predicted points after the latest glucose:
+        // For each 5-minute prediction step (skip index 0), choose the smallest
+        // available predicted glucose across COB/IOB/ZT/UAM and append it.
+        if let deliveredAt = data.suggestion?.deliverAt, !data.hidePredictions {
+            let maxCount = max(cobPredictions.count, iobPredictions.count, ztPredictions.count, uamPredictions.count)
+            if maxCount > 1 {
+                for index in 1 ..< maxCount {
+                    var candidates: [Int] = []
+                    if index < cobPredictions.count { candidates.append(cobPredictions[index]) }
+                    if index < iobPredictions.count { candidates.append(iobPredictions[index]) }
+                    if index < ztPredictions.count { candidates.append(ztPredictions[index]) }
+                    if index < uamPredictions.count { candidates.append(uamPredictions[index]) }
+
+                    if let minValue = candidates.min() {
+                        let time = deliveredAt.addingTimeInterval(TimeInterval(index) * 5.minutes.timeInterval)
+                        tmpLookupGlucoseDots.append((date: time, glucose: minValue))
+                    }
+                }
+            }
+        }
+
+        lookupGlucoseDots = tmpLookupGlucoseDots
 
         firstHourDate = GeometriesBuilder.calculateFirstHourDate()
         oneSecondWidth = GeometriesBuilder.calculateOneSecondStep(fullSize, data)
@@ -1132,10 +1168,10 @@ private final class GeometriesBuilder {
         previousLookupTime = time
         let x = timeToXCoordinate(time)
 
-        if glucoseStartIndex == 0, glucose.isNotEmpty {
-            let first = glucose[0]
-            if time < first.dateString.timeIntervalSince1970 {
-                let y = glucoseToYCoordinate(first.glucose ?? 0)
+        if glucoseStartIndex == 0, lookupGlucoseDots.isNotEmpty {
+            let first = lookupGlucoseDots[0]
+            if time < first.date.timeIntervalSince1970 {
+                let y = glucoseToYCoordinate(first.glucose)
                 return CGPoint(x: x, y: y)
             }
         }
@@ -1145,11 +1181,11 @@ private final class GeometriesBuilder {
 
         var matchIndex: Int?
 
-        for i in glucoseStartIndex ..< (glucose.count - 1) {
-            let cur = glucose[i]
-            let nxt = glucose[i + 1]
-            let t0 = cur.dateString.timeIntervalSince1970
-            let t1 = nxt.dateString.timeIntervalSince1970
+        for i in glucoseStartIndex ..< (lookupGlucoseDots.count - 1) {
+            let cur = lookupGlucoseDots[i]
+            let nxt = lookupGlucoseDots[i + 1]
+            let t0 = cur.date.timeIntervalSince1970
+            let t1 = nxt.date.timeIntervalSince1970
             if t0 <= time, time < t1 {
                 matchIndex = i
                 break
@@ -1158,21 +1194,21 @@ private final class GeometriesBuilder {
 
         // Case 1: Found bracketing pair → weighted average of glucose values by time
         if let i = matchIndex {
-            let cur = glucose[i]
-            let nxt = glucose[i + 1]
-            let t0 = cur.dateString.timeIntervalSince1970
-            let t1 = nxt.dateString.timeIntervalSince1970
+            let cur = lookupGlucoseDots[i]
+            let nxt = lookupGlucoseDots[i + 1]
+            let t0 = cur.date.timeIntervalSince1970
+            let t1 = nxt.date.timeIntervalSince1970
 
             let dt = t1 - t0
             if dt <= 0 {
-                let y = glucoseToYCoordinate(cur.glucose ?? 0)
+                let y = glucoseToYCoordinate(cur.glucose)
                 glucoseStartIndex = i // for subsequent searches
                 return CGPoint(x: x, y: y)
             }
 
             // Weighted average of glucose
-            let g0 = Double(cur.glucose ?? 0)
-            let g1 = Double(nxt.glucose ?? 0)
+            let g0 = Double(cur.glucose)
+            let g1 = Double(nxt.glucose)
             let w = (time - t0) / dt
             let g = g0 + (g1 - g0) * w
             let y = glucoseToYCoordinate(Int(g.rounded()))

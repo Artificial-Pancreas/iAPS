@@ -193,7 +193,8 @@ struct MainChartView: View {
             ping(data.$yGridLabels),
             ping(data.$thresholdLines),
             ping(data.$displayYgridLines),
-            ping(data.$inRangeAreaFill)
+            ping(data.$inRangeAreaFill),
+            ping(data.$hidePredictions)
         ]
 
         let immediatePublishers: [AnyPublisher<Void, Never>] = [
