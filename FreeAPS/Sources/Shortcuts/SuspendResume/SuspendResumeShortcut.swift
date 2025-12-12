@@ -3,8 +3,8 @@ import Foundation
 import Intents
 
 struct SuspendResumeIntent: AppIntent {
-    static var title: LocalizedStringResource = "Pump Mode"
-    static var description = IntentDescription("Suspend or Resume Pump.")
+    static let title: LocalizedStringResource = "Pump Mode"
+    static let description = IntentDescription("Suspend or Resume Pump.")
 
     @Parameter(title: "Mode") var mode: PumpMode?
 

@@ -5,7 +5,13 @@ import Swinject
 extension AddTempTarget {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
+
         @State private var isPromptPresented = false
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
@@ -137,7 +143,6 @@ extension AddTempTarget {
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-                configureView()
                 state.hbt = isEnabledArray.first?.hbt ?? 160
             }
             .navigationTitle("Enact Temp Target")

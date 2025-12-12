@@ -17,7 +17,7 @@ extension AutoISF {
         @Published var autoISFhourlyChange: Decimal = 1
         @Published var higherISFrangeWeight: Decimal = 0
         @Published var lowerISFrangeWeight: Decimal = 0
-        @Published var postMealISFweight: Decimal = 0.01
+        @Published var postMealISFweight: Decimal = 0
         @Published var bgAccelISFweight: Decimal = 0
         @Published var bgBrakeISFweight: Decimal = 0.10
         @Published var iobThresholdPercent: Decimal = 100

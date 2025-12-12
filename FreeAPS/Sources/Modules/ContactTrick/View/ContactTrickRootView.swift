@@ -6,10 +6,15 @@ import Swinject
 extension ContactTrick {
     struct RootView: BaseView {
         let resolver: Resolver
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
 
         @State private var contactStore = CNContactStore()
         @State private var authorization = CNContactStore.authorizationStatus(for: .contacts)
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+        }
 
         var body: some View {
             Form {
@@ -81,7 +86,6 @@ extension ContactTrick {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
             .navigationTitle("Contact Image")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(

@@ -3,6 +3,14 @@ function generate(middleware, iob, currenttemp, glucose, profile, autosens = nul
     var clock = new Date();
     var string = "";
     
+    profile.old_basal = profile.current_basal;
+    
+    const factor = profile.dynamicVariables.overridePercentage / 100;
+    if (factor != 1 && profile.dynamicVariables.useOverride && profile.dynamicVariables.basal) {
+        profile.current_basal *= factor;
+        console.error("Override profile.current_basal to " + profile.current_basal);
+    }
+    
     try {
         string = middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock) || "";
     } catch (error) {

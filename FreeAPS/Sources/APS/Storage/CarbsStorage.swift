@@ -127,7 +127,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     }
                 } else {
                     self.storage.transaction { storage in
-                        storage.append(onlyCarbs, to: file, uniqBy: \.id)
+                        storage.append([onlyCarbs], to: file, uniqBy: \.id)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
                             .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
                             .sorted { $0.createdAt > $1.createdAt } ?? []

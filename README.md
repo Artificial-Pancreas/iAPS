@@ -12,14 +12,25 @@ Ready to explore iAPS? Here's how you can download and build the repository:
 
   * **Using Terminal:**
 
+    clone and open workspace project in Xcode
     ```bash
-    git clone --branch=main https://github.com/artificial-pancreas/iaps.git
-    cd iaps
-    xed .
+    git clone --recurse-submodules --branch=main https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
+    ```
+### Update the the iaps project in your local clone 
+
+  * **Using Terminal:**
+
+    ```
+    git pull
     ```
 
-  * **Using the GitHub Interface:**
-    Simply navigate to the iAPS GitHub page, click the green **"Code"** button, and select **"Open with Xcode."**
+### Update the iaps submodules
+
+  * **Using Terminal:**
+
+    ```
+    git submodule update --init --recursive
+    ```
 
 ### Build Without Xcode (Directly in GitHub)
 
@@ -37,6 +48,9 @@ Please understand that iAPS is:
   * **Highly experimental and rapidly evolving.**
   * **Not CE or FDA approved for therapy.**
 
+The Near Field Communication (NFC) capability requires a paid Apple developer membership, however if using Dexcom sensors with iAPS you don't need the NFC capability enabled in Xcode capability settings.
+Distributing and building TestFlight apps also requires a paid membership.
+
 -----
 
 ## Compatible Devices
@@ -45,6 +59,7 @@ Please understand that iAPS is:
 
   * **Omnipod EROS**
   * **Omnipod DASH**
+  * **Medtrum TouchCare Nano**
   * **Dana:**
       * Dana-I
       * DanaRS (firmware 3 only)
@@ -86,7 +101,7 @@ Connect with the iAPS community and find helpful resources here:
   * **iAPS Documentation (under development):** [https://iaps.readthedocs.io/en/latest/](https://iaps.readthedocs.io/en/latest/)
   * **OpenAPS Documentation:** [https://openaps.readthedocs.io/en/latest/](https://openaps.readthedocs.io/en/latest/)
   * **Crowdin Project for iAPS Translation:** [https://crowdin.com/project/iaps](https://crowdin.com/project/iaps)
-    [](https://crowdin.com/project/iaps)
+    [](https://crowdin.com/project/iaps) [![Crowdin](https://badges.crowdin.net/iaps/localized.svg)](https://crowdin.com/project/iaps)
   * **Middleware code for iAPS:** [https://github.com/Jon-b-m/middleware](https://github.com/Jon-b-m/middleware)
   * **Omnipod DASH Pump and Settings:** [https://loopkit.github.io/loopdocs/loop-3/omnipod/](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
 

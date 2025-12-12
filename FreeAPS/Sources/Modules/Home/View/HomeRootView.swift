@@ -9,7 +9,7 @@ extension Home {
     struct RootView: BaseView {
         let resolver: Resolver
 
-        @StateObject var state = StateModel()
+        @StateObject var state: StateModel
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
@@ -56,47 +56,61 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var onboarded: FetchedResults<Onboarding>
 
-        private var numberFormatter: NumberFormatter {
+        private let numberFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             return formatter
-        }
+        }()
 
-        private var fetchedTargetFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            if state.data.units == .mmolL {
-                formatter.maximumFractionDigits = 1
-            } else { formatter.maximumFractionDigits = 0 }
-            return formatter
-        }
-
-        private var targetFormatter: NumberFormatter {
+        private let fetchedTargetFormatterMmol: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
             return formatter
-        }
+        }()
 
-        private var tirFormatter: NumberFormatter {
+        private let fetchedTargetFormatterMgdl: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             return formatter
+        }()
+
+        private var fetchedTargetFormatter: NumberFormatter {
+            state.data.units == .mmolL ? fetchedTargetFormatterMmol : fetchedTargetFormatterMgdl
         }
 
-        private var dateFormatter: DateFormatter {
+        private let targetFormatter: NumberFormatter = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }()
+
+        private let tirFormatter: NumberFormatter = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }()
+
+        private let dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()
             dateFormatter.timeStyle = .short
             return dateFormatter
-        }
+        }()
 
         private var spriteScene: SKScene {
             let scene = SnowScene()
             scene.scaleMode = .resizeFill
             scene.backgroundColor = .clear
             return scene
+        }
+
+        init(resolver: Resolver) {
+            self.resolver = resolver
+            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         var glucoseView: some View {
@@ -110,7 +124,8 @@ extension Home {
                 alwaysUseColors: $state.alwaysUseColors,
                 displayDelta: $state.displayDelta,
                 scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
-                displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays
+                displayExpiration: $state.displayExpiration,
+                sensordays: $state.sensorDays
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -380,7 +395,7 @@ extension Home {
                 }
             }
             .confirmationDialog("Bolus already in Progress", isPresented: $showBolusActiveAlert) {
-                Button("Bolus already in Progress!", role: .cancel) {
+                Button("Bolus already in Progress!", role: .destructive) {
                     showBolusActiveAlert = false
                 }
             }
@@ -567,7 +582,8 @@ extension Home {
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
                         } else if override.percentage != 100 {
-                            Text(override.percentage.formatted() + " %").font(.statusFont).foregroundStyle(.secondary)
+                            Text((tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
+                                .foregroundStyle(.secondary)
                         } else if override.smbIsOff, !override.smbIsAlwaysOff {
                             Text("No ").font(.statusFont).foregroundStyle(.secondary) // "No" as in no SMBs
                             Image(systemName: "syringe")
@@ -722,9 +738,15 @@ extension Home {
 
         private var isfView: some View {
             ZStack {
-                HStack {
-                    Image(systemName: "divide").font(.system(size: 16)).foregroundStyle(.teal)
-                    Text("\(state.data.suggestion?.sensitivityRatio ?? 1)").foregroundStyle(.primary)
+                HStack(spacing: 4) {
+                    Image(systemName: "divide")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.teal)
+
+                    Text(String(describing: state.data.suggestion?.sensitivityRatio ?? 1))
+                        .foregroundStyle(.primary)
+                        .lineLimit(1) // maximum 1 row
+                        .fixedSize(horizontal: true, vertical: false) // Prevent wrapping
                 }
                 .font(.timeSettingFont)
                 .background(TimeEllipse(characters: 10))
@@ -735,7 +757,8 @@ extension Home {
                         displayDynamicHistory.toggle()
                     }
                 }
-            }.offset(x: 130)
+            }
+            .offset(x: 130)
         }
 
         private var animateLoopView: Bool {
@@ -757,6 +780,8 @@ extension Home {
         private var animation: any View {
             ActivityIndicator(isAnimating: .constant(true), style: .large)
         }
+
+        @Environment(\.scenePhase) private var scenePhase
 
         var body: some View {
             GeometryReader { geo in
@@ -828,14 +853,23 @@ extension Home {
                             .offset(y: -100)
                         }
                     }
+                    .onChange(of: scenePhase) {
+                        switch scenePhase {
+                        case .active:
+                            state.startTimer()
+                        case .background,
+                             .inactive:
+                            state.stopTimer()
+                        default:
+                            break
+                        }
+                    }
                 }
             }
             .onAppear {
                 if onboarded.first?.firstRun ?? true {
                     state.fetchPreferences()
                 }
-
-                configureView()
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)
