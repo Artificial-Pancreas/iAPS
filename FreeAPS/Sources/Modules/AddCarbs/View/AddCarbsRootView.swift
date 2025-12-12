@@ -483,7 +483,7 @@ extension AddCarbs {
                     ),
                     message: Text("To avoid having to search for same food on web again."),
                     primaryButton: .destructive(Text("Yes"), action: { addToPresetsIfNew(food: food) }),
-                    secondaryButton: .cancel(Text("No"))
+                    secondaryButton: .cancel(Text("No"), action: { cache(food: food) })
                 )
             }
 
