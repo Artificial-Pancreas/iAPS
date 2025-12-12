@@ -252,7 +252,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                         self.playSoundIfNeeded(for: alarm)
                     }
                     content.sound = .default
-                if sound != "Silent", self.settingsManager.settings.useAlarmSound {
+                } else if sound != "Silent", self.settingsManager.settings.useAlarmSound {
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
                     if sound == "Default" {
                         content.sound = .default
