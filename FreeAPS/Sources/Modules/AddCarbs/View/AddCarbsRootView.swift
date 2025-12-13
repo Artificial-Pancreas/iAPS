@@ -297,7 +297,11 @@ extension AddCarbs {
 
                             selectedFoodImage = nil
                             showingFoodSearch = false
-                            saveAlert.toggle()
+                            if !state.skipSave {
+                                saveAlert.toggle()
+                            } else {
+                                cache(food: selectedFood)
+                            }
                         }
                     )
                 }
@@ -333,6 +337,21 @@ extension AddCarbs {
                     .buttonStyle(PlainButtonStyle())
                     .foregroundColor(.blue)
                 }
+            }
+        }
+
+        private func cache(food: AIFoodItem) {
+            let cache = Presets(context: moc)
+            cache.carbs = Decimal(food.carbs) as NSDecimalNumber
+            cache.fat = Decimal(food.fat) as NSDecimalNumber
+            cache.protein = Decimal(food.protein) as NSDecimalNumber
+            cache.dish = food.name
+
+            if state.selection?.dish != cache.dish {
+                state.selection = cache
+                state.combinedPresets.append((state.selection, 1))
+            } else if state.combinedPresets.last != nil {
+                state.combinedPresets[state.combinedPresets.endIndex - 1].portions += 1
             }
         }
 
@@ -516,7 +535,7 @@ extension AddCarbs {
                     ),
                     message: Text("To avoid having to search for same food on web again."),
                     primaryButton: .destructive(Text("Yes"), action: { addToPresetsIfNew(food: food) }),
-                    secondaryButton: .cancel(Text("No"))
+                    secondaryButton: .cancel(Text("No"), action: { cache(food: food) })
                 )
             }
 
