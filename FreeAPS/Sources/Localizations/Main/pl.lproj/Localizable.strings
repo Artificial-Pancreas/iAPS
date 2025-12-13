@@ -2572,6 +2572,9 @@ Połączono z Nightscout!";
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Display Insulin Activity Chart";
 
+/* UI/UX-setting */
+"Don't ask for saving search result as meal prreset" = "Don't ask for saving search result as meal prreset";
+
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "CGM Configuration";
