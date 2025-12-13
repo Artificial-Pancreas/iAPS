@@ -2571,6 +2571,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Geef insuline activiteitenoverzicht weer";
 
+/* UI/UX-setting */
+"Don't ask for saving search result as meal prreset" = "Don't ask for saving search result as meal prreset";
+
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "CGM instellingen";
