@@ -1,7 +1,5 @@
 import Foundation
-import SwiftUI
-
-import Foundation
+import SwiftDate
 import SwiftUI
 
 struct CalculatedGeometries {
@@ -1242,7 +1240,7 @@ private final class GeometriesBuilder {
 
     private static func calculateFirstHourDate() -> Date {
         let firstDate = Date().addingTimeInterval(-1.days.timeInterval)
-        return firstDate.dateTruncated(from: .minute)!
+        return DateInRegion(firstDate, region: .current).dateTruncated(from: .minute)!.date
     }
 
     private func calculateFirstHourPosition() -> CGFloat {
