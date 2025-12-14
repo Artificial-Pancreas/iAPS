@@ -28,7 +28,7 @@ extension AddCarbs {
         @State private var isLoading = false
         @State private var errorMessage: String?
         @State private var selectedFoodItem: AIFoodItem?
-        @State private var portionGrams: Double = 100.0
+        @State private var portionGrams: Double = 100.00001
         @State private var selectedFoodImage: UIImage?
         @State private var saveAlert = false
 
@@ -239,10 +239,12 @@ extension AddCarbs {
                             showingFoodSearch = true
                         },
                         onTakeOver: { food in
-                            state.carbs += Decimal(max(food.carbs, 0))
-                            state.fat += Decimal(max(food.fat, 0))
-                            state.protein += Decimal(fmax(food.protein, 0))
-
+                            state.carbs += portionGrams != 100.00001 ? Decimal(max(food.carbs, 0) / (portionGrams / 100))
+                                .rounded(to: 0) : Decimal(max(food.carbs, 0))
+                            state.fat += portionGrams != 100.00001 ? Decimal(max(food.fat, 0) / (portionGrams / 100))
+                                .rounded(to: 0) : Decimal(max(food.fat, 0))
+                            state.protein += portionGrams != 100.00001 ? Decimal(max(food.protein, 0) / (portionGrams / 100))
+                                .rounded(to: 0) : Decimal(max(food.protein, 0))
                             selectedFoodImage = nil
                             showingFoodSearch = false
                             if !state.skipSave {
@@ -288,12 +290,13 @@ extension AddCarbs {
             }
         }
 
+        // Temporarily saved in waiter's notepad (the summary).
         private func cache(food: AIFoodItem) {
             let cache = Presets(context: moc)
             cache.carbs = Decimal(food.carbs) as NSDecimalNumber
             cache.fat = Decimal(food.fat) as NSDecimalNumber
             cache.protein = Decimal(food.protein) as NSDecimalNumber
-            cache.dish = food.name
+            cache.dish = (portionGrams != 100.00001) ? food.name + " \(portionGrams)g" : food.name
 
             if state.selection?.dish != cache.dish {
                 state.selection = cache
@@ -305,11 +308,20 @@ extension AddCarbs {
 
         private func addToPresetsIfNew(food: AIFoodItem) {
             let preset = Presets(context: moc)
-            preset.carbs = Decimal(max(food.carbs * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
-            preset.fat = Decimal(max(food.fat * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
-            preset.protein = Decimal(fmax(food.protein * (portionGrams / 100.0), 0)).rounded(to: 1) as NSDecimalNumber
+            preset
+                .carbs = (portionGrams != 100.0 || portionGrams != 100.00001) ?
+                (Decimal(max(food.carbs * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
+                Decimal(max(food.carbs, 0)) as NSDecimalNumber
+            preset
+                .fat = (portionGrams != 100.0 || portionGrams != 100.00001) ?
+                (Decimal(max(food.fat * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
+                Decimal(max(food.fat, 0)) as NSDecimalNumber
+            preset
+                .protein = (portionGrams != 100.0 || portionGrams != 100.00001) ?
+                (Decimal(max(food.protein * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
+                Decimal(max(food.protein, 0)) as NSDecimalNumber
 
-            if portionGrams != 100 {
+            if portionGrams != 100.00001 {
                 preset.dish = food.name + " \(portionGrams)g"
             } else {
                 preset.dish = food.name
@@ -346,7 +358,7 @@ extension AddCarbs {
             selectedFoodItem = aiFoodItem
 
             // Gramm zurücksetzen (100g für normale Produkte)
-            portionGrams = 100.0
+            portionGrams = 100.00001
 
             showingFoodSearch = false
         }
