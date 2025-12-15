@@ -69,7 +69,7 @@ extension AddCarbs {
 
         var body: some View {
             if meal {
-                mealView
+                normalMealView
             } else {
                 shortcuts()
             }
@@ -183,9 +183,6 @@ extension AddCarbs {
             }
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear {
-                state.loadEntries(editMode)
-            }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Cancel", action: {
@@ -219,12 +216,19 @@ extension AddCarbs {
             case .search:
                 foodsearchView
             default:
-                mealView
+                normalMealView
+            }
+        }
+
+        private var normalMealView: some View {
+            mealView.onAppear {
+                state.loadEntries(editMode)
             }
         }
 
         private var imageView: some View {
             mealView.onAppear {
+                state.loadEntries(editMode)
                 showingFoodSearch.toggle()
                 foodSearchState.navigateToAICamera = true
             }
@@ -232,17 +236,24 @@ extension AddCarbs {
 
         private var barcodeView: some View {
             mealView.onAppear {
+                state.loadEntries(editMode)
                 showingFoodSearch.toggle()
                 foodSearchState.navigateToBarcode.toggle()
             }
         }
 
         private var mealPresetsView: some View {
-            mealView.onAppear { presentPresets.toggle() }
+            mealView.onAppear {
+                state.loadEntries(editMode)
+                presentPresets.toggle()
+            }
         }
 
         private var foodsearchView: some View {
-            mealView.onAppear { showingFoodSearch.toggle() }
+            mealView.onAppear {
+                state.loadEntries(editMode)
+                showingFoodSearch.toggle()
+            }
         }
 
         // MARK: - Helper Functions
