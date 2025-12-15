@@ -2571,6 +2571,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Zobraziť graf aktivity inzulínu";
 
+/* UI/UX-setting */
+"Don't ask for saving search result as meal prreset" = "Don't ask for saving search result as meal prreset";
+
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "Nastavenia CGM";
