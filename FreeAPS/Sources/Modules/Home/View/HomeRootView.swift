@@ -321,7 +321,6 @@ extension Home {
                                 label: { Label("Add Meal", systemImage: "birthday.cake")
                                 }
                             }
-                            .buttonStyle(.borderless)
                             Spacer()
                         }
                         Button {
