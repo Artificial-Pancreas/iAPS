@@ -2398,13 +2398,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Change HbA1c Unit" = "Zmena jednotky HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Zobraziť mriežku na osi x grafu";
+"Vertical grid lines" = "Zvislé čiary mriežky";
 
 /* */
-"Display Chart Y - Grid lines" = "Zobraziť mriežku na osi y grafu";
+"Horizontal grid lines" = "Vodorovné čiary mriežky";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Zobraziť prahové čiary grafu pre nízke a vysoké hodnoty";
+"Threshold lines (Low / High)" = "Prahové čiary (nízka / vysoká)";
 
 /* */
 "Standing / Laying TIR Chart" = "Graf TIR na výšku / šírku";
@@ -3503,7 +3503,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Neglect Carbohydrates in oref0" = "Ignorovať sacharidy v oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Skryť predpovede oref0";
+"Hide Predictions" = "Skryť predpovede";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulačka bolusu";

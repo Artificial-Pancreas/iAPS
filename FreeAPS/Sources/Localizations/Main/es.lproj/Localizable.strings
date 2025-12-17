@@ -2408,13 +2408,13 @@ Ajustes predeterminados:\n
 "Change HbA1c Unit" = "Cambiar unidad de HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Mostrar eje X - líneas de la cuadrícula";
+"Vertical grid lines" = "Líneas de cuadrícula verticales";
 
 /* */
-"Display Chart Y - Grid lines" = "Mostrar eje Y - líneas de la cuadrícula";
+"Horizontal grid lines" = "Líneas de cuadrícula horizontales";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Mostrar umbrales en el gráfico para glucemia baja y alta";
+"Threshold lines (Low / High)" = "Líneas de umbral (bajo / alto)";
 
 /* */
 "Standing / Laying TIR Chart" = "Gráfico de Tiempo en Rango (TIR) vertical / horizontal";
@@ -3616,7 +3616,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide Predictions" = "Hide Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";

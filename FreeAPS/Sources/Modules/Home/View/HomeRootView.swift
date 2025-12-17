@@ -125,7 +125,8 @@ extension Home {
                 displayDelta: $state.displayDelta,
                 scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
                 displayExpiration: $state.displayExpiration,
-                sensordays: $state.sensorDays
+                sensordays: $state.sensorDays,
+                timerDate: $state.data.timerDate
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -769,7 +770,7 @@ extension Home {
                 }
 
                 Button("UI/UX Settings", action: {
-                    state.showModal(for: .statisticsConfig)
+                    state.showModal(for: .uiConfig)
                 })
             }
             .buttonStyle(.borderless)

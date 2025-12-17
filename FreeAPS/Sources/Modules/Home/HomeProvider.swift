@@ -31,6 +31,10 @@ extension Home {
             overrideStorage.fetchOverrides(interval: DateFilter().day)
         }
 
+        func latestOverride() -> Override? {
+            overrideStorage.fetchLatestOverride().first
+        }
+
         func overrideHistory() -> [OverrideHistory] {
             overrideStorage.fetchOverrideHistory(interval: DateFilter().day)
         }

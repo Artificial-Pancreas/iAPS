@@ -2397,13 +2397,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Byt HbA1c-enhet";
 
 /* */
-"Display Chart X - Grid lines" = "Visa linjer för X i diagram";
+"Vertical grid lines" = "Vertikala rutnätslinjer";
 
 /* */
-"Display Chart Y - Grid lines" = "Visa linjer för Y i diagram";
+"Horizontal grid lines" = "Horisontella rutnätslinjer";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Visa linjer för lågt och högt i diagram";
+"Threshold lines (Low / High)" = "Tröskellinjer (låg / hög)";
 
 /* */
 "Standing / Laying TIR Chart" = "Stående / Liggande TIR-diagram";
@@ -3499,7 +3499,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Negligera kolhydrater i oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Dölj oref0-prognoser";
+"Hide Predictions" = "Dölj prognoser";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
