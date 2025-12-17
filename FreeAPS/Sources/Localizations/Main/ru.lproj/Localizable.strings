@@ -2397,13 +2397,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Отображать гликированный гемоглобин в процентах";
 
 /* */
-"Display Chart X - Grid lines" = "Отображать вертикальные линии сетки";
+"Vertical grid lines" = "Вертикальные линии сетки";
 
 /* */
-"Display Chart Y - Grid lines" = "Отображать горизонтальные линии сетки";
+"Horizontal grid lines" = "Горизонтальные линии сетки";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Отображать линии верхнего и нижнего порога";
+"Threshold lines (Low / High)" = "Линии порога (верхний / нижний)";
 
 /* */
 "Standing / Laying TIR Chart" = "Краткий вид диаграммы времени в целевом диапазоне";
@@ -3502,7 +3502,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Игнорировать углеводы в oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Скрыть oref0 предсказания";
+"Hide Predictions" = "Скрыть предсказания";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";

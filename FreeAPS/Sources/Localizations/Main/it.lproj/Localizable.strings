@@ -2397,13 +2397,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Cambia Unità HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Grafico di visualizzazione X - Linee griglia";
+"Vertical grid lines" = "Linee della griglia verticali";
 
 /* */
-"Display Chart Y - Grid lines" = "Grafico di visualizzazione Y - Linee griglia";
+"Horizontal grid lines" = "Linee della griglia orizzontali";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Visualizza le linee di soglia del grafico per bassa e alta";
+"Threshold lines (Low / High)" = "Linee di soglia (bassa / alta)";
 
 /* */
 "Standing / Laying TIR Chart" = "Grafico TIR in piedi / sdraiato";
@@ -3503,7 +3503,7 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide Predictions" = "Hide Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";

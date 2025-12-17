@@ -58,7 +58,6 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
-        @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = false
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
@@ -110,6 +109,7 @@ extension Home {
             displayXgridLines: true,
             displayYgridLines: true,
             thresholdLines: true,
+            latestOverride: nil,
             overrideHistory: [],
             minimumSMB: 0,
             insulinDIA: 7,
@@ -125,6 +125,13 @@ extension Home {
             fpuAmounts: false,
             showInsulinActivity: false,
             showCobChart: false,
+            secondaryChartBackdrop: true,
+            inRangeAreaFill: false,
+            chartGlucosePeaks: false,
+            insulinActivityGridLines: true,
+            insulinActivityLabels: true,
+            yGridLabels: true,
+            showPredictionsLegend: true,
             iob: nil,
             hidePredictions: false,
             useCarbBars: false
@@ -182,6 +189,13 @@ extension Home {
             data.thresholdLines = settingsManager.settings.rulerMarks
             data.showInsulinActivity = settingsManager.settings.showInsulinActivity
             data.showCobChart = settingsManager.settings.showCobChart
+            data.secondaryChartBackdrop = settingsManager.settings.secondaryChartBackdrop
+            data.inRangeAreaFill = settingsManager.settings.inRangeAreaFill
+            data.chartGlucosePeaks = settingsManager.settings.chartGlucosePeaks
+            data.insulinActivityGridLines = settingsManager.settings.insulinActivityGridLines
+            data.insulinActivityLabels = settingsManager.settings.insulinActivityLabels
+            data.yGridLabels = settingsManager.settings.yGridLabels
+            data.showPredictionsLegend = settingsManager.settings.showPredictionsLegend
             useTargetButton = settingsManager.settings.useTargetButton
             data.screenHours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
@@ -339,7 +353,7 @@ extension Home {
         }
 
         func addCarbs() {
-            showModal(for: .addCarbs(editMode: false, override: false))
+            showModal(for: .addCarbs(editMode: false, override: false, mode: .meal))
         }
 
         func runLoop() {
@@ -527,6 +541,7 @@ extension Home {
         private func setupOverrideHistory() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.data.latestOverride = self.provider.latestOverride()
                 self.data.overrideHistory = self.provider.overrideHistory()
             }
         }
@@ -547,13 +562,6 @@ extension Home {
                 percentage,
                 average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min"
             )
-        }
-
-        private func setupOverrides() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.overrides = self.provider.overrides()
-            }
         }
 
         private func setupAnnouncements() {
@@ -776,6 +784,13 @@ extension Home.StateModel:
         data.thresholdLines = settingsManager.settings.rulerMarks
         data.showInsulinActivity = settingsManager.settings.showInsulinActivity
         data.showCobChart = settingsManager.settings.showCobChart
+        data.secondaryChartBackdrop = settingsManager.settings.secondaryChartBackdrop
+        data.inRangeAreaFill = settingsManager.settings.inRangeAreaFill
+        data.chartGlucosePeaks = settingsManager.settings.chartGlucosePeaks
+        data.insulinActivityGridLines = settingsManager.settings.insulinActivityGridLines
+        data.insulinActivityLabels = settingsManager.settings.insulinActivityLabels
+        data.yGridLabels = settingsManager.settings.yGridLabels
+        data.showPredictionsLegend = settingsManager.settings.showPredictionsLegend
         useTargetButton = settingsManager.settings.useTargetButton
         data.screenHours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors
