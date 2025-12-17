@@ -1,0 +1,12 @@
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .grid { stroke: currentColor; stroke-width: 1.5; opacity: 0.85; fill: none; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <line class="grid" x1="6"  y1="6" x2="6"  y2="30" />
+  <line class="grid" x1="18" y1="6" x2="18" y2="30" />
+  <line class="grid" x1="30" y1="6" x2="30" y2="30" />
+
+</svg>

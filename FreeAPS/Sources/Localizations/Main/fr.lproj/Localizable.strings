@@ -2397,13 +2397,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Changer l'unité HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Affichage Graphique X - Lignes de la grille";
+"Vertical grid lines" = "Lignes de grille verticales";
 
 /* */
-"Display Chart Y - Grid lines" = "Graphique d'affichage Y - Lignes de la grille";
+"Horizontal grid lines" = "Lignes de grille horizontales";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Afficher les lignes de seuil du graphique pour les lignes basse et haute";
+"Threshold lines (Low / High)" = "Lignes de seuil (bas / haut)";
 
 /* */
 "Standing / Laying TIR Chart" = "Graphique TIR debout / Mise en page";
@@ -3499,7 +3499,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Hide oref0 Predictions";
+"Hide Predictions" = "Hide Predictions";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";

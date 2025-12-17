@@ -2397,13 +2397,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Hiển thị biểu đồ trục X";
+"Vertical grid lines" = "Đường lưới dọc";
 
 /* */
-"Display Chart Y - Grid lines" = "Hiển thị biểu đồ trục Y";
+"Horizontal grid lines" = "Đường lưới ngang";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Hiển thị đường giới hạn Thấp và Cao";
+"Threshold lines (Low / High)" = "Đường ngưỡng (thấp / cao)";
 
 /* */
 "Standing / Laying TIR Chart" = "Biểu đồ TIR Đứng/Nằm";
@@ -3499,7 +3499,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Bỏ qua carbohydrate trong oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Ẩn dự đoán của oref0";
+"Hide Predictions" = "Ẩn dự đoán";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";
