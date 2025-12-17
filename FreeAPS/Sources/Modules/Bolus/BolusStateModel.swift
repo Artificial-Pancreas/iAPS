@@ -333,7 +333,7 @@ extension Bolus {
         }
 
         func backToCarbsView(override: Bool, editMode: Bool) {
-            showModal(for: .addCarbs(editMode: editMode, override: override))
+            showModal(for: .addCarbs(editMode: editMode, override: override, mode: .meal))
         }
 
         func carbsView(fetch: Bool, hasFatOrProtein _: Bool, mealSummary _: FetchedResults<Meals>) -> Bool {

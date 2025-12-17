@@ -7,6 +7,9 @@ class FoodSearchStateModel: ObservableObject {
     @Published var aiSearchResults: [AIFoodItem] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var mealView = false
+    @Published var navigateToBarcode = false
+    @Published var navigateToAICamera = false
 
     private var cancellables = Set<AnyCancellable>()
     private var searchTask: Task<Void, Never>?

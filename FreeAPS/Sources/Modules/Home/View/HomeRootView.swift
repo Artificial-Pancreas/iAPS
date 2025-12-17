@@ -281,24 +281,45 @@ extension Home {
                     Divider()
                     HStack {
                         if state.carbButton {
-                            Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
+                            Button { state.showModal(for: .addCarbs(editMode: false, override: false, mode: .meal)) }
                             label: {
                                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                                     Image(systemName: "fork.knife")
                                         .renderingMode(.template)
                                         .font(.custom("Buttons", size: 24))
-                                        .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
+                                        .foregroundStyle(colorScheme == .dark ? .loopYellow : .orange)
                                         .padding(8)
-                                        .foregroundColor(.loopYellow)
                                     if let carbsReq = state.carbsRequired {
                                         Text(numberFormatter.string(from: carbsReq as NSNumber)!)
                                             .font(.caption)
-                                            .foregroundColor(.white)
+                                            .foregroundStyle(.white)
                                             .padding(4)
                                             .background(Capsule().fill(Color.red))
                                     }
                                 }
-                            }.buttonStyle(.borderless)
+                            }
+                            .contextMenu {
+                                Button {
+                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .presets)) }
+                                label: { Label("Meal Presets", systemImage: "menucard")
+                                }
+                                Button {
+                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .search)) }
+                                label: { Label("Search", systemImage: "network")
+                                }
+                                Button {
+                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .barcode)) }
+                                label: { Label("Barcode", systemImage: "barcode.viewfinder")
+                                }
+                                Button {
+                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .image)) }
+                                label: { Label("AI Image Analysis", systemImage: "photo.badge.magnifyingglass")
+                                }
+                                Button {
+                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .meal)) }
+                                label: { Label("Add Meal", systemImage: "birthday.cake")
+                                }
+                            }
                             Spacer()
                         }
                         Button {
@@ -314,7 +335,7 @@ extension Home {
                                 .font(.custom("Buttons", size: 24))
                         }
                         .buttonStyle(.borderless)
-                        .foregroundColor(.insulin)
+                        .foregroundStyle(.insulin)
                         Spacer()
                         if state.allowManualTemp {
                             Button { state.showModal(for: .manualTempBasal) }
@@ -324,7 +345,7 @@ extension Home {
                                     .resizable()
                                     .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                             }
-                            .foregroundColor(.insulin)
+                            .foregroundStyle(.insulin)
                             Spacer()
                         }
                         if state.profileButton {
@@ -354,7 +375,7 @@ extension Home {
                                 .renderingMode(.template)
                                 .font(.custom("Buttons", size: 24))
                                 .padding(8)
-                                .foregroundColor(.loopGreen)
+                                .foregroundStyle(.loopGreen)
                                 .background(isTarget ? .green.opacity(0.15) : .clear)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .onTapGesture {
@@ -376,7 +397,7 @@ extension Home {
                                 .font(.custom("Buttons", size: 24))
                         }
                         .buttonStyle(.borderless)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                     }
                     .padding(.horizontal, state.allowManualTemp ? 10 : 24)
                     .padding(.bottom, geo.safeAreaInsets.bottom)

@@ -7,8 +7,6 @@ struct FoodSearchView: View {
     @Environment(\.dismiss) var dismiss
 
     // Navigation States
-    @State private var navigateToBarcode = false
-    @State private var navigateToAICamera = false
     @State private var showingAIAnalysisResults = false
     @State private var aiAnalysisResult: AIFoodAnalysisResult?
     @State private var aiAnalysisImage: UIImage?
@@ -27,7 +25,7 @@ struct FoodSearchView: View {
                         }
 
                     Button {
-                        navigateToBarcode = true
+                        state.navigateToBarcode = true
                     } label: {
                         Image(systemName: "barcode.viewfinder")
                             .font(.title2)
@@ -38,7 +36,7 @@ struct FoodSearchView: View {
                     }
 
                     Button {
-                        navigateToAICamera = true
+                        state.navigateToAICamera = true
                     } label: {
                         Image(systemName: "camera")
                             .resizable()
@@ -102,24 +100,24 @@ struct FoodSearchView: View {
 
             .navigationTitle("Food Search")
             .navigationBarItems(trailing: Button("Done") { dismiss() })
-            .navigationDestination(isPresented: $navigateToBarcode) {
+            .navigationDestination(isPresented: $state.navigateToBarcode) {
                 BarcodeScannerView(
                     onBarcodeScanned: { barcode in
                         handleBarcodeScan(barcode)
-                        navigateToBarcode = false
+                        state.navigateToBarcode = false
                     },
-                    onCancel: { navigateToBarcode = false }
+                    onCancel: { state.navigateToBarcode = false }
                 )
             }
-            .navigationDestination(isPresented: $navigateToAICamera) {
+            .navigationDestination(isPresented: $state.navigateToAICamera) {
                 AICameraView(
                     onFoodAnalyzed: { analysisResult, image in
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             handleAIAnalysis(analysisResult, image: image)
-                            navigateToAICamera = false
+                            state.navigateToAICamera = false
                         }
                     },
-                    onCancel: { navigateToAICamera = false }
+                    onCancel: { state.navigateToAICamera = false }
                 )
             }
         }.background(Color(.systemBackground))
@@ -127,7 +125,7 @@ struct FoodSearchView: View {
 
     private func handleBarcodeScan(_ barcode: String) {
         print("📦 Barcode scanned: \(barcode)")
-        navigateToBarcode = false
+        state.navigateToBarcode = false
         state.foodSearchText = barcode
         state.performSearch(query: barcode)
         print("🔍 Search for Barcode: \(barcode)")

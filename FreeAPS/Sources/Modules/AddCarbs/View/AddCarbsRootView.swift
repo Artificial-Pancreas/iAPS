@@ -9,6 +9,7 @@ extension AddCarbs {
         let resolver: Resolver
         let editMode: Bool
         let override: Bool
+        let mode: MealMode.Mode
         @StateObject var state: StateModel
         @StateObject var foodSearchState = FoodSearchStateModel()
 
@@ -49,11 +50,13 @@ extension AddCarbs {
         init(
             resolver: Resolver,
             editMode: Bool,
-            override: Bool
+            override: Bool,
+            mode: MealMode.Mode
         ) {
             self.resolver = resolver
             self.editMode = editMode
             self.override = override
+            self.mode = mode
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
@@ -65,6 +68,14 @@ extension AddCarbs {
         }
 
         var body: some View {
+            if meal {
+                normalMealView
+            } else {
+                shortcuts()
+            }
+        }
+
+        private var mealView: some View {
             Form {
                 // AI Food Search
                 state.ai ? foodSearch : nil
@@ -172,9 +183,6 @@ extension AddCarbs {
             }
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear {
-                state.loadEntries(editMode)
-            }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Cancel", action: {
@@ -191,6 +199,61 @@ extension AddCarbs {
                 )
             }
             .alert(isPresented: $saveAlert) { alert(food: selectedFoodItem) }
+        }
+
+        private var meal: Bool {
+            mode == .meal || foodSearchState.mealView
+        }
+
+        @ViewBuilder private func shortcuts() -> some View {
+            switch mode {
+            case .image:
+                imageView
+            case .barcode:
+                barcodeView
+            case .presets:
+                mealPresetsView
+            case .search:
+                foodsearchView
+            default:
+                normalMealView
+            }
+        }
+
+        private var normalMealView: some View {
+            mealView.onAppear {
+                state.loadEntries(editMode)
+            }
+        }
+
+        private var imageView: some View {
+            mealView.onAppear {
+                state.loadEntries(editMode)
+                showingFoodSearch.toggle()
+                foodSearchState.navigateToAICamera = true
+            }
+        }
+
+        private var barcodeView: some View {
+            mealView.onAppear {
+                state.loadEntries(editMode)
+                showingFoodSearch.toggle()
+                foodSearchState.navigateToBarcode.toggle()
+            }
+        }
+
+        private var mealPresetsView: some View {
+            mealView.onAppear {
+                state.loadEntries(editMode)
+                presentPresets.toggle()
+            }
+        }
+
+        private var foodsearchView: some View {
+            mealView.onAppear {
+                state.loadEntries(editMode)
+                showingFoodSearch.toggle()
+            }
         }
 
         // MARK: - Helper Functions

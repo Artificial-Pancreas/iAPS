@@ -1394,6 +1394,11 @@ Enact a temp Basal or a temp target */
 
 // --------- AI ---------
 /* */
+
+"AI Image Analysis" = "AI Image Analysis";
+
+"Barcode" = "Barcode";
+
 "📝 Notes" = "📝 Notes";
 
 /* */

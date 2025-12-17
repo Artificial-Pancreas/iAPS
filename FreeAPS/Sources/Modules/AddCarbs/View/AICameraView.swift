@@ -95,7 +95,6 @@ struct AICameraView: View {
                                 .cornerRadius(12)
                             }
 
-                            // ✅ PhotosPicker statt UIImagePickerController
                             PhotosPicker(
                                 selection: $selectedPhotoItem,
                                 matching: .images,
