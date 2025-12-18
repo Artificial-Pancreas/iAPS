@@ -3654,13 +3654,13 @@ Enact a temp Basal or a temp target */
 "iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS kommer att hämta aviseringar, kolhydrater och temporära målvärden från Nightscout";
 
 /* main chart settings - toggle, controls whether to draw the in-range area backdrop (fill) */
-"In-range area highlight" = "In-range area highlight";
+"In-range area highlight" = "Markerat målområde";
 
 /* main chart settings - toggle, controls whether to show inline BG peaks */
-"Glucose peaks" = "Glucose peaks";
+"Glucose peaks" = "Blodsockerfokus";
 
 /* main chart settings - toggle, controls whether to show the predictions legend */
-"Predictions legend" = "Predictions legend";
+"Predictions legend" = "Prognosförklaring";
 
 /* main chart settings - toggle, controls whether to draw the secondary chart backdrop (fill) */
 "Secondary chart backdrop" = "Bakgund för sekundärt diagram";
@@ -3681,4 +3681,4 @@ Enact a temp Basal or a temp target */
 "Main Chart" = "Huvuddiagram";
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
-"Y-axis labels" = "Y-axis labels";
+"Y-axis labels" = "Y-axeletiketter";
