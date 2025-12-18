@@ -22,86 +22,164 @@ struct AIProgressView: View {
     @State private var latestTelemetry: String?
 
     var body: some View {
-        VStack {
-            switch analysisRequest {
-            case .image:
-                EmptyView()
+        let sideInset: CGFloat = 20
+        let isAnalysisComplete = analysisEnd != nil
 
-            case let .query(query):
-                Spacer()
-                    .frame(height: 100)
+        return ZStack {
+            // Main content area - fills entire space
+            Group {
+                switch analysisRequest {
+                case let .image(image):
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(.ultraThinMaterial)
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .padding(8)
+                    }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .strokeBorder(
+                                LinearGradient(
+                                    colors: [
+                                        Color.cyan.opacity(isAnalysisComplete ? 0.1 : 0.3),
+                                        Color.blue.opacity(isAnalysisComplete ? 0.08 : 0.2),
+                                        Color.purple.opacity(isAnalysisComplete ? 0.08 : 0.2),
+                                        Color.cyan.opacity(isAnalysisComplete ? 0.1 : 0.3)
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1.5
+                            )
+                    )
+                    .shadow(color: Color.cyan.opacity(isAnalysisComplete ? 0.05 : 0.15), radius: 12, x: 0, y: 4)
+                    .shadow(color: Color.black.opacity(0.08), radius: 18, x: 0, y: 8)
+                    .padding(.horizontal, sideInset)
+                    .padding(.top, 60) // Space for badge
+                    .padding(.bottom, 80) // Space for progress bar
 
+                case let .query(query):
+                    HStack(alignment: .top, spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            Color.cyan.opacity(0.2),
+                                            Color.blue.opacity(0.15)
+                                        ],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 44, height: 44)
+                            
+                            Image(systemName: "magnifyingglass")
+                                .font(.title3)
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [.cyan, .blue],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .symbolEffect(.pulse, options: .repeating, value: !isAnalysisComplete)
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Searching for")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            
+                            Text(query)
+                                .font(.title3)
+                                .fontWeight(.medium)
+                                .foregroundColor(.primary)
+                        }
+                        
+                        Spacer()
+                    }
+                    .padding(16)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .strokeBorder(
+                                LinearGradient(
+                                    colors: [
+                                        Color.cyan.opacity(isAnalysisComplete ? 0.1 : 0.3),
+                                        Color.blue.opacity(isAnalysisComplete ? 0.08 : 0.2),
+                                        Color.purple.opacity(isAnalysisComplete ? 0.08 : 0.2)
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1.5
+                            )
+                    )
+                    .shadow(color: Color.cyan.opacity(isAnalysisComplete ? 0.05 : 0.15), radius: 12, x: 0, y: 4)
+                    .shadow(color: Color.black.opacity(0.08), radius: 18, x: 0, y: 8)
+                    .padding(.horizontal, sideInset)
+                    .padding(.top, 60) // Space for badge
+                    .padding(.bottom, 80) // Space for progress bar
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            // Badge overlay - top
+            VStack {
                 HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.secondary)
-                    Text(query)
-                        .font(.title3)
-                        .foregroundColor(.primary)
                     Spacer()
+                    if let model = analysisModel {
+                        HStack(spacing: 6) {
+                            Image(systemName: "sparkles")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                            Text(model)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .fontDesign(.rounded)
+                                .foregroundStyle(.primary)
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 7)
+                        .background(.thinMaterial, in: Capsule())
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
+                        )
+                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                        .transition(.scale.combined(with: .opacity))
+                    }
                 }
-                .padding()
-                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-                .padding(.horizontal)
+                .padding(.top, 20)
+                .padding(.horizontal, sideInset)
+                .padding(.bottom, 16)
+                
+                Spacer()
             }
-            Spacer()
-//            TelemetryWindow(logs: telemetryLogs).padding(.horizontal)
-//            Spacer()
-//                .frame(height: 30)
-
-            AnalyzingPill(
-                //                title: latestTelemetry ?? NSLocalizedString("Analyzing food with AI…", comment: ""),
-                title: NSLocalizedString("Analyzing food with AI…", comment: ""),
-                startDate: analysisStart,
-                eta: analysisEta,
-                endDate: analysisEnd
-            ) {
-                searchTask?.cancel()
-                searchTask = nil
-                analysisStart = nil
-                analysisEnd = nil
-                isAnalyzing = false
-                onCancel()
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 60)
-        }
-        .overlay(alignment: .topTrailing) {
-            // AI Model Badge overlay - top right (doesn't affect layout)
-            if let model = analysisModel {
-                HStack(spacing: 6) {
-                    Image(systemName: "brain")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                    Text(model)
-                        .font(.caption)
-                        .fontWeight(.medium)
-                        .fontDesign(.rounded)
-                        .foregroundStyle(.primary)
-                        .opacity(0.8)
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: analysisModel)
+            
+            // Progress bar overlay - bottom
+            VStack {
+                Spacer()
+                
+                AnalyzingPill(
+                    title: NSLocalizedString("Analyzing food with AI…", comment: ""),
+                    startDate: analysisStart,
+                    eta: analysisEta,
+                    endDate: analysisEnd
+                ) {
+                    searchTask?.cancel()
+                    searchTask = nil
+                    analysisStart = nil
+                    analysisEnd = nil
+                    isAnalyzing = false
+                    onCancel()
                 }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 6)
-                .background(.thinMaterial, in: Capsule())
-                .overlay(
-                    Capsule()
-                        .strokeBorder(Color.secondary.opacity(0.2), lineWidth: 0.5)
-                )
-                .padding()
-                .transition(.scale.combined(with: .opacity))
-            }
-        }
-        .background {
-            // Background layer - full screen image or text query display
-            switch analysisRequest {
-            case let .image(image):
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipped()
-                    .ignoresSafeArea()
-
-            case .query:
-                EmptyView()
+                .padding(.horizontal, sideInset)
+                .padding(.vertical, 16)
             }
         }
         .background(Color(.systemBackground))

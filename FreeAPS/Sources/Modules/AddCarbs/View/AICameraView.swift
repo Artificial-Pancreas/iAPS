@@ -5,6 +5,7 @@ import UIKit
 /// Camera view for AI-powered food analysis - iOS 26 COMPATIBLE
 struct AICameraView: View {
     let onImageCaptured: (UIImage) -> Void
+    let setRoute: (FoodSearchRoute?) -> Void
     let onCancel: () -> Void
 
     @State var showingImagePicker = false
@@ -70,11 +71,9 @@ struct AICameraView: View {
 
                     Spacer()
 
-                    // Quick action buttons - iOS 26 COMPATIBLE
                     VStack(spacing: 12) {
                         Button(action: {
-                            imageSourceType = .camera
-                            showingImagePicker = true
+                            setRoute(.camera)
                         }) {
                             HStack {
                                 Image(systemName: "sparkles")
@@ -131,17 +130,11 @@ struct AICameraView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showingImagePicker) {
-            if imageSourceType == .camera {
-                ModernCameraView(onImageCaptured: onImageCaptured, isPresented: $showingImagePicker)
-            }
-        }
     }
 }
 
 struct ModernCameraView: UIViewControllerRepresentable {
     let onImageCaptured: (UIImage) -> Void
-    @Binding var isPresented: Bool
     @Environment(\.dismiss) private var dismiss
 
     func makeUIViewController(context: Context) -> UIImagePickerController {

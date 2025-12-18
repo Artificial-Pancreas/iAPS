@@ -54,7 +54,7 @@ struct OpenAIProtocol: AIProviderProtocol {
             model: model,
             input: inputMessages,
             max_output_tokens: 6000,
-            temperature: 0.01,
+            temperature: model.temperature,
             text: textOptions,
             stream: stream
         )
@@ -196,7 +196,7 @@ private struct OpenAIResponsesRequest: Encodable {
     let model: OpenAIModel
     let input: [OpenAIResponsesMessage]
     let max_output_tokens: Int
-    let temperature: Double
+    let temperature: Double?
     let text: OpenAIResponsesTextOptions?
     let stream: Bool?
 }

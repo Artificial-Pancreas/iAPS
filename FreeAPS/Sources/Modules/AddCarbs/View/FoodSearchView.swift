@@ -31,7 +31,7 @@ struct FoodSearchView: View {
                     }
 
                     Button {
-                        state.navigateToBarcode = true
+                        state.foodSearchRoute = .barcodeScanner
                     } label: {
                         Image(systemName: "barcode.viewfinder")
                             .font(.title2)
@@ -50,12 +50,14 @@ struct FoodSearchView: View {
                         .cornerRadius(8)
                         .foregroundColor(.purple)
                         .onTapGesture {
-                            state.overrideCameraByDefault = false
-                            state.navigateToAICamera = true
+                            if UserDefaults.standard.alwaysOpenCamera {
+                                state.foodSearchRoute = .camera
+                            } else {
+                                state.foodSearchRoute = .photoSourceSelect
+                            }
                         }
                         .onLongPressGesture(minimumDuration: 0.5) {
-                            state.overrideCameraByDefault = true
-                            state.navigateToAICamera = true
+                            state.foodSearchRoute = .photoSourceSelect
                         }
                 }
                 .padding(.horizontal)
@@ -75,52 +77,61 @@ struct FoodSearchView: View {
 
 //            .navigationTitle("Food Search")
 //            .navigationBarItems(trailing: Button("Done") { dismiss() })
-            .navigationDestination(isPresented: $state.navigateToBarcode) {
-                BarcodeScannerView(
-                    onBarcodeScanned: { barcode in
-                        handleBarcodeScan(barcode)
-                        state.navigateToBarcode = false
-                    },
-                    onCancel: { state.navigateToBarcode = false }
-                )
-            }
-            .navigationDestination(isPresented: $state.navigateToAICamera) {
-                if UserDefaults.standard.alwaysOpenCamera, !state.overrideCameraByDefault {
+            .navigationDestination(item: state.navigationRoute) { route in
+                switch route {
+                case let .aiAnalysis(request, _):
+                    AIProgressView(
+                        analysisRequest: request,
+                        onFoodAnalyzed: { analysisResult, analysisRequest in
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                handleAIAnalysis(analysisResult, image: analysisRequest.image)
+                                state.aiAnalysisRequest = analysisRequest
+                                state.foodSearchRoute = nil
+                            }
+                        },
+                        onCancel: {
+                            state.foodSearchRoute = nil
+                        }
+                    )
+                case .photoSourceSelect:
                     AICameraView(
                         onImageCaptured: { image in
-                            state.navigateToAICamera = false
-                            state.navigateToAIAnalysis = AnalysisRoute(request: AnalysisRequest.image(image))
+                            state.foodSearchRoute = .aiAnalysis(request: AnalysisRequest.image(image))
                         },
-                        onCancel: { state.navigateToAICamera = false },
-                        showingImagePicker: true,
-                        imageSourceType: .camera
-                    )
-                } else {
-                    AICameraView(
-                        onImageCaptured: { image in
-                            state.navigateToAICamera = false
-                            state.navigateToAIAnalysis = AnalysisRoute(request: AnalysisRequest.image(image))
+                        setRoute: { route in
+                            state.foodSearchRoute = route
                         },
-                        onCancel: { state.navigateToAICamera = false }
+                        onCancel: {
+                            state.foodSearchRoute = nil
+                        },
+//                        showingImagePicker: true,
+//                        imageSourceType: .camera
                     )
+                case .barcodeScanner:
+                    BarcodeScannerView(
+                        onBarcodeScanned: { barcode in
+                            handleBarcodeScan(barcode)
+                            state.foodSearchRoute = nil
+                        },
+                        onCancel: {
+                            state.foodSearchRoute = nil
+                        }
+                    )
+                case .camera: // should never happen
+                    EmptyView()
                 }
             }
-            .navigationDestination(item: $state.navigateToAIAnalysis) { analysisRoute in
-                AIProgressView(
-                    analysisRequest: analysisRoute.request,
-                    onFoodAnalyzed: { analysisResult, analysisRequest in
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            handleAIAnalysis(analysisResult, image: analysisRequest.image)
-                            state.aiAnalysisRequest = analysisRequest
-                            state.navigateToAICamera = false
-                            state.navigateToAIAnalysis = nil
+            .fullScreenCover(item: state.fullScreenRoute) { route in
+                switch route {
+                case .camera:
+                    ModernCameraView(
+                        onImageCaptured: { image in
+                            state.foodSearchRoute = .aiAnalysis(request: AnalysisRequest.image(image))
                         }
-                    },
-                    onCancel: {
-                        state.navigateToAICamera = false
-                        state.navigateToAIAnalysis = nil
-                    }
-                )
+                    )
+                default: // should never happen
+                    EmptyView()
+                }
             }
             .sheet(item: $state.latestTextSearch) { searchResult in
                 TextSearchResultsSheet(
@@ -141,7 +152,6 @@ struct FoodSearchView: View {
 
     private func handleBarcodeScan(_ barcode: String) {
         print("📦 Barcode scanned: \(barcode)")
-        state.navigateToBarcode = false
         state.enterBarcodeAndSearch(barcode: barcode)
         print("🔍 Search for Barcode: \(barcode)")
     }

@@ -1,22 +1,66 @@
 import Combine
 import SwiftUI
 
-struct AnalysisRoute: Identifiable, Hashable {
-    let id = UUID()
-    let request: AnalysisRequest
+enum FoodSearchRoute: Identifiable, Hashable {
+    // Static cases - always the same identity
+    case photoSourceSelect
+    case camera
+    case barcodeScanner
 
-    static func == (lhs: AnalysisRoute, rhs: AnalysisRoute) -> Bool { lhs.id == rhs.id }
+    // Dynamic cases - each instance has unique identity
+    case aiAnalysis(request: AnalysisRequest, id: UUID = UUID())
+
+    // ----------------
+
+    var id: String {
+        switch self {
+        case .barcodeScanner: "barcodeScanner"
+        case .camera: "camera"
+        case .photoSourceSelect: "photoSourceSelect"
+        case let .aiAnalysis(_, id): "aiAnalysis-\(id.uuidString)"
+        }
+    }
+
+    var asFullScreenCover: FoodSearchRoute? {
+        switch self {
+        case .camera: self
+        default: nil
+        }
+    }
+
+    var asNavigation: FoodSearchRoute? {
+        switch self {
+        case .camera: nil
+        default: self
+        }
+    }
+
+    static func == (lhs: FoodSearchRoute, rhs: FoodSearchRoute) -> Bool {
+        lhs.id == rhs.id
+    }
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
+// struct FoodSearchRoute: Identifiable, Hashable {
+//    let id = UUID()
+//    let request: AnalysisRequest
+//
+//    static func == (lhs: FoodSearchRoute, rhs: FoodSearchRoute) -> Bool { lhs.id == rhs.id }
+//
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(id)
+//    }
+// }
+
 final class FoodSearchStateModel: ObservableObject {
     @Published var foodSearchText = ""
     @Published var isBarcode = false
 
-    @Published var navigateToAIAnalysis: AnalysisRoute? = nil
+    @Published var foodSearchRoute: FoodSearchRoute? = nil
+
     @Published var latestTextSearch: FoodAnalysisResult? = nil
     @Published var searchResults: [FoodAnalysisResult] = []
     @Published var aiAnalysisRequest: AnalysisRequest?
@@ -25,9 +69,28 @@ final class FoodSearchStateModel: ObservableObject {
     @Published var latestSearchIcon: String? = nil
     @Published var isLoading = false
     @Published var mealView = false
-    @Published var navigateToBarcode = false
-    @Published var navigateToAICamera = false
-    @Published var overrideCameraByDefault = false
+
+    var fullScreenRoute: Binding<FoodSearchRoute?> {
+        Binding(
+            get: { [weak self] in
+                self?.foodSearchRoute?.asFullScreenCover
+            },
+            set: { [weak self] newValue in
+                self?.foodSearchRoute = newValue
+            }
+        )
+    }
+
+    var navigationRoute: Binding<FoodSearchRoute?> {
+        Binding(
+            get: { [weak self] in
+                self?.foodSearchRoute?.asNavigation
+            },
+            set: { [weak self] newValue in
+                self?.foodSearchRoute = newValue
+            }
+        )
+    }
 
     var resultsView = SearchResultsState.empty
 
@@ -102,7 +165,7 @@ final class FoodSearchStateModel: ObservableObject {
                     case .aiModel:
                         self.isLoading = false
                         self.latestSearchIcon = "brain"
-                        navigateToAIAnalysis = AnalysisRoute(request: .query(trimmedQuery))
+                        foodSearchRoute = .aiAnalysis(request: .query(trimmedQuery))
                         return
                     case .openFoodFacts,
                          .usdaFoodData:
@@ -146,10 +209,7 @@ final class FoodSearchStateModel: ObservableObject {
     }
 
     func resetNavigationState() {
-        navigateToBarcode = false
-        navigateToAICamera = false
-        navigateToAIAnalysis = nil
-        overrideCameraByDefault = false
+        foodSearchRoute = nil
     }
 
     @MainActor func addItem(_ item: AnalysedFoodItem) {

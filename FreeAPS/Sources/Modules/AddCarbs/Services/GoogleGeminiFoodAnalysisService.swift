@@ -43,7 +43,7 @@ struct GeminiProtocol: AIProviderProtocol {
         let geminiRequest = GeminiGenerateContentRequest(
             contents: [GeminiContent(parts: [userTextPart] + imageParts)],
             generationConfig: GeminiGenerationConfig(
-                temperature: 0.01,
+                temperature: model.temperature,
                 topP: 0.95,
                 topK: 8,
                 maxOutputTokens: 8000
@@ -185,7 +185,7 @@ private struct GeminiInlineData: Encodable {
 }
 
 private struct GeminiGenerationConfig: Encodable {
-    let temperature: Double
+    let temperature: Double?
     let topP: Double
     let topK: Int
     let maxOutputTokens: Int

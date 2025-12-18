@@ -42,6 +42,8 @@ protocol AIModelBase {
 
     var fast: Bool { get }
 
+    var temperature: Double? { get }
+
     var rawValue: String { get }
 
     var timeoutsConfig: ModelTimeoutsConfig { get }
@@ -69,6 +71,17 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: true
         case .gpt_5_1: false
         case .gpt_5_2: false
+        }
+    }
+
+    var temperature: Double? {
+        switch self {
+        case .gpt_4o: 0.01
+        case .gpt_4o_mini: 0.01
+        case .gpt_5: nil
+        case .gpt_5_mini: nil
+        case .gpt_5_1: 0.01
+        case .gpt_5_2: 0.01
         }
     }
 
@@ -158,6 +171,14 @@ enum GeminiModel: String, AIModelBase, Encodable {
         }
     }
 
+    var temperature: Double? {
+        switch self {
+        case .gemini_2_5_pro: 0.01
+        case .gemini_2_5_flash: 0.01
+        case .gemini_3_pro_preview: 0.01
+        }
+    }
+
     var displayName: String {
         switch self {
         case .gemini_2_5_pro: "2.5 Pro"
@@ -209,6 +230,13 @@ enum ClaudeModel: String, AIModelBase, Encodable {
         switch self {
         case .sonnet_4_5: false
         case .haiku_4_5: true
+        }
+    }
+
+    var temperature: Double? {
+        switch self {
+        case .sonnet_4_5: 0.01
+        case .haiku_4_5: 0.01
         }
     }
 

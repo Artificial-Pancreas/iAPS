@@ -48,7 +48,7 @@ struct ClaudeProtocol: AIProviderProtocol {
         let body = ClaudeMessagesRequest(
             model: model,
             max_tokens: 8000,
-            temperature: 0.01,
+            temperature: model.temperature,
             messages: messages
         )
 
@@ -151,7 +151,7 @@ struct ClaudeProtocol: AIProviderProtocol {
 private struct ClaudeMessagesRequest: Encodable {
     let model: ClaudeModel
     let max_tokens: Int
-    let temperature: Double
+    let temperature: Double?
     let messages: [ClaudeMessage]
 }
 
