@@ -177,12 +177,7 @@ extension UIColor {
 }
 
 extension Color {
-
     /// Dynamische Farben
-    static let dynamicColorBlue = Color(
-        light: Color(red: 0.45, green: 0.70, blue: 0.95),
-        dark: Color(red: 0.29, green: 0.55, blue: 0.91)
-    )
 
     static let dynamicColorRed = Color(
         light: Color(red: 1.0, green: 0.65, blue: 0.65),
@@ -199,11 +194,6 @@ extension Color {
         dark: Color(red: 0.95, green: 0.77, blue: 0.25)
     )
 
-    static let dynamicColorBrown = Color(
-        light: Color(red: 0.80, green: 0.65, blue: 0.54),
-        dark: Color(red: 0.60, green: 0.50, blue: 0.42)
-    )
-
     static let dynamicColorOrange = Color(
         light: Color(red: 1.00, green: 0.70, blue: 0.40),
         dark: Color(red: 0.95, green: 0.55, blue: 0.20)
@@ -215,7 +205,7 @@ struct LoopEllipse: View {
     let stroke: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 1)
+            .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 0.7)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(colorScheme == .light ? .white : .black)
