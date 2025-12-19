@@ -3,346 +3,160 @@ import SwiftUI
 import UIKit
 
 struct AIProgressView: View {
-    let analysisRequest: AnalysisRequest
-    let onFoodAnalyzed: (FoodAnalysisResult, AnalysisRequest) -> Void
+    @ObservedObject var state: FoodSearchStateModel
+
     let onCancel: () -> Void
 
-    @State private var isAnalyzing: Bool = false
-
-    @State private var analysisError: String?
-    @State private var showingErrorAlert = false
-    @State private var telemetryLogs: [String] = []
-    @State private var selectedPhotoItem: PhotosPickerItem?
-
-    @State private var searchTask: Task<Void, Never>? = nil
-    @State private var analysisStart: Date? = nil
-    @State private var analysisEnd: Date? = nil
-    @State private var analysisEta: TimeInterval?
-    @State private var analysisModel: String?
-    @State private var latestTelemetry: String?
-
     var body: some View {
-        let sideInset: CGFloat = 20
-        let isAnalysisComplete = analysisEnd != nil
+        ZStack {
+            ZStack {
+                searchTypeView
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.horizontal)
+                    .padding(.top, 120)
+                    .padding(.bottom, 120)
+            }
+            .safeAreaPadding()
+            .backgroundStyle(.blue.opacity(0.5))
+            .overlay(alignment: .top) {
+                HStack {
+                    Spacer()
+                    if let model = state.analysisModel {
+                        Text(model)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(.primary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 7)
+                            .background(.thinMaterial, in: Capsule())
+                            .overlay(
+                                Capsule()
+                                    .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
+                            )
+                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                            .transition(.scale.combined(with: .opacity))
+                    }
+                }
+                .safeAreaPadding()
+                .padding(.horizontal)
+                .padding(.top, 30)
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: state.analysisModel)
+            }
+            .overlay(alignment: .bottom) {
+                AnalyzingPill(
+                    title: NSLocalizedString("Analyzing food with AI…", comment: ""),
+                    startDate: state.analysisStart,
+                    eta: state.analysisEta,
+                    endDate: state.analysisEnd,
+                    onCancel: {
+                        onCancel()
+                    }
+                )
+                .safeAreaPadding()
+                .padding(.horizontal)
+                .padding(.bottom, 30)
+            }
+        }
+        .background(.regularMaterial)
+    }
 
-        return ZStack {
-            // Main content area - fills entire space
+    private var searchTypeView: some View {
+        let isAnalysisComplete = state.analysisEnd != nil
+
+        return GeometryReader { geometry in
+            let safeHeight = geometry.size.height
+            let maxImageHeight = safeHeight * 0.5
+
             Group {
-                switch analysisRequest {
+                switch state.aiAnalysisRequest {
                 case let .image(image):
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(.ultraThinMaterial)
+                    VStack(spacing: 12) {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
-                            .padding(8)
-                    }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .strokeBorder(
-                                LinearGradient(
-                                    colors: [
-                                        Color.cyan.opacity(isAnalysisComplete ? 0.1 : 0.3),
-                                        Color.blue.opacity(isAnalysisComplete ? 0.08 : 0.2),
-                                        Color.purple.opacity(isAnalysisComplete ? 0.08 : 0.2),
-                                        Color.cyan.opacity(isAnalysisComplete ? 0.1 : 0.3)
-                                    ],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 1.5
+                            .frame(maxHeight: maxImageHeight)
+                            .padding(.horizontal, 32)
+
+                        // Inline error overlay for image analysis
+                        if let error = state.analysisError {
+                            InlineErrorBanner(
+                                error: error,
+                                onRetry: {
+                                    state.retryAIAnalysis()
+                                },
+                                onCancel: {
+                                    onCancel()
+                                }
                             )
-                    )
-                    .shadow(color: Color.cyan.opacity(isAnalysisComplete ? 0.05 : 0.15), radius: 12, x: 0, y: 4)
-                    .shadow(color: Color.black.opacity(0.08), radius: 18, x: 0, y: 8)
-                    .padding(.horizontal, sideInset)
-                    .padding(.top, 60) // Space for badge
-                    .padding(.bottom, 80) // Space for progress bar
+                            .padding(.horizontal)
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
                 case let .query(query):
-                    HStack(alignment: .top, spacing: 12) {
-                        ZStack {
-                            Circle()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [
-                                            Color.cyan.opacity(0.2),
-                                            Color.blue.opacity(0.15)
-                                        ],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
+                    VStack(spacing: 12) {
+                        HStack(alignment: .top, spacing: 12) {
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [
+                                                Color.cyan.opacity(0.2),
+                                                Color.blue.opacity(0.15)
+                                            ],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
                                     )
-                                )
-                                .frame(width: 44, height: 44)
-                            
-                            Image(systemName: "magnifyingglass")
-                                .font(.title3)
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [.cyan, .blue],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
+                                    .frame(width: 44, height: 44)
+
+                                Image(systemName: "magnifyingglass")
+                                    .font(.title3)
+                                    .foregroundStyle(
+                                        LinearGradient(
+                                            colors: [.cyan, .blue],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
                                     )
-                                )
-                                .symbolEffect(.pulse, options: .repeating, value: !isAnalysisComplete)
+                                    .symbolEffect(.pulse, options: .repeating, value: !isAnalysisComplete)
+                            }
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(query)
+                                    .font(.title3)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.primary)
+                            }
+
+                            Spacer()
                         }
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Searching for")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                            
-                            Text(query)
-                                .font(.title3)
-                                .fontWeight(.medium)
-                                .foregroundColor(.primary)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding(16)
-                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .strokeBorder(
-                                LinearGradient(
-                                    colors: [
-                                        Color.cyan.opacity(isAnalysisComplete ? 0.1 : 0.3),
-                                        Color.blue.opacity(isAnalysisComplete ? 0.08 : 0.2),
-                                        Color.purple.opacity(isAnalysisComplete ? 0.08 : 0.2)
-                                    ],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 1.5
+                        .padding(16)
+                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+
+                        if let error = state.analysisError {
+                            InlineErrorBanner(
+                                error: error,
+                                onRetry: {
+                                    state.retryAIAnalysis()
+                                },
+                                onCancel: {
+                                    onCancel()
+                                }
                             )
-                    )
-                    .shadow(color: Color.cyan.opacity(isAnalysisComplete ? 0.05 : 0.15), radius: 12, x: 0, y: 4)
-                    .shadow(color: Color.black.opacity(0.08), radius: 18, x: 0, y: 8)
-                    .padding(.horizontal, sideInset)
-                    .padding(.top, 60) // Space for badge
-                    .padding(.bottom, 80) // Space for progress bar
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            // Badge overlay - top
-            VStack {
-                HStack {
-                    Spacer()
-                    if let model = analysisModel {
-                        HStack(spacing: 6) {
-                            Image(systemName: "sparkles")
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
-                            Text(model)
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .fontDesign(.rounded)
-                                .foregroundStyle(.primary)
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 7)
-                        .background(.thinMaterial, in: Capsule())
-                        .overlay(
-                            Capsule()
-                                .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
-                        )
-                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                        .transition(.scale.combined(with: .opacity))
-                    }
-                }
-                .padding(.top, 20)
-                .padding(.horizontal, sideInset)
-                .padding(.bottom, 16)
-                
-                Spacer()
-            }
-            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: analysisModel)
-            
-            // Progress bar overlay - bottom
-            VStack {
-                Spacer()
-                
-                AnalyzingPill(
-                    title: NSLocalizedString("Analyzing food with AI…", comment: ""),
-                    startDate: analysisStart,
-                    eta: analysisEta,
-                    endDate: analysisEnd
-                ) {
-                    searchTask?.cancel()
-                    searchTask = nil
-                    analysisStart = nil
-                    analysisEnd = nil
-                    isAnalyzing = false
-                    onCancel()
-                }
-                .padding(.horizontal, sideInset)
-                .padding(.vertical, 16)
-            }
-        }
-        .background(Color(.systemBackground))
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                if !isAnalyzing, analysisError == nil {
-                    analyzeImage()
-                }
-            }
-        }
-        .onDisappear {
-            searchTask?.cancel()
-            searchTask = nil
-        }
-        .navigationBarHidden(true)
-        .alert("Analysis Error", isPresented: $showingErrorAlert) {
-            // Credit/quota exhaustion errors - provide direct guidance
-            if analysisError?.contains("credits exhausted") == true || analysisError?.contains("quota exceeded") == true {
-                Button("Cancel", role: .cancel) {
-                    analysisError = nil
-                }
-            }
-            // Rate limit errors - suggest waiting
-            else if analysisError?.contains("rate limit") == true {
-                Button("Wait and Retry") {
-                    Task {
-                        try? await Task.sleep(nanoseconds: 3_000_000_000)
-                        analyzeImage()
-                    }
-                }
-                Button("Cancel", role: .cancel) {
-                    analysisError = nil
-                    onCancel()
-                }
-            }
-            // General errors - provide standard options
-            else {
-                Button("Cancel", role: .cancel) {
-                    analysisError = nil
-                    onCancel()
-                }
-            }
-        } message: {
-            if analysisError?.contains("credits exhausted") == true {
-                Text("Your AI provider has run out of credits. Please check your account billing or try a different provider.")
-            } else if analysisError?.contains("quota exceeded") == true {
-                Text("Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.")
-            } else if analysisError?.contains("rate limit") == true {
-                Text("Too many requests sent to your AI provider. Please wait a moment before trying again.")
-            } else {
-                Text(analysisError ?? "Unknown error occurred")
-            }
-        }
-    }
-
-    private func analyzeImage() {
-        // Check if AI service is configured
-        let aiService = ConfigurableAIService.shared
-
-        switch analysisRequest {
-        case .image:
-            guard aiService.isImageAnalysisConfigured else {
-                analysisError = "AI service not configured. Please check settings."
-                showingErrorAlert = true
-                return
-            }
-        case .query:
-            guard aiService.isTextSearchConfigured else {
-                analysisError = "AI service not configured. Please check settings."
-                showingErrorAlert = true
-                return
-            }
-        }
-
-        isAnalyzing = true
-        analysisError = nil
-        telemetryLogs = []
-        analysisStart = Date()
-        analysisEnd = nil
-        analysisEta = nil
-        analysisModel = nil
-        latestTelemetry = nil
-
-        searchTask?.cancel()
-        searchTask = Task {
-            do {
-                switch analysisRequest {
-                case let .image(image):
-                    let result = try await aiService.analyzeFoodImage(image) { telemetryMessage in
-                        Task { @MainActor in
-                            if telemetryMessage.hasPrefix("ETA: ") {
-                                let etaString = telemetryMessage.dropFirst(5)
-                                if let etaValue = Double(etaString.trimmingCharacters(in: .whitespaces)) {
-                                    analysisEta = etaValue * 1.2
-                                }
-                            } else if telemetryMessage.hasPrefix("MODEL: ") {
-                                analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
-                            } else {
-                                latestTelemetry = telemetryMessage
-                                addTelemetryLog(telemetryMessage)
-                            }
+                            .transition(.move(edge: .top).combined(with: .opacity))
                         }
                     }
-                    await MainActor.run {
-                        addTelemetryLog("✅ Analysis complete!")
-                        analysisEnd = Date.now
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            isAnalyzing = false
-                            onFoodAnalyzed(result, analysisRequest)
-                        }
-                    }
-                case let .query(query):
-                    let result = try await aiService.analyzeFoodQuery(query) { telemetryMessage in
-                        Task { @MainActor in
-                            if telemetryMessage.hasPrefix("ETA: ") {
-                                let etaString = telemetryMessage.dropFirst("ETA: ".count)
-                                if let etaValue = Double(etaString.trimmingCharacters(in: .whitespaces)) {
-                                    analysisEta = etaValue * 1.2
-                                }
-                            } else if telemetryMessage.hasPrefix("MODEL: ") {
-                                analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
-                            } else {
-                                latestTelemetry = telemetryMessage
-                                addTelemetryLog(telemetryMessage)
-                            }
-                        }
-                    }
-                    await MainActor.run {
-                        addTelemetryLog("✅ Analysis complete!")
-                        analysisEnd = Date.now
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            isAnalyzing = false
-                            onFoodAnalyzed(result, analysisRequest)
-                        }
-                    }
-                }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
-            } catch {
-                await MainActor.run {
-                    addTelemetryLog("⚠️ Connection interrupted")
-                }
-                try? await Task.sleep(nanoseconds: 300_000_000)
-
-                await MainActor.run {
-                    addTelemetryLog("❌ Analysis failed")
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        isAnalyzing = false
-                        analysisStart = nil
-                        analysisEnd = nil
-                        analysisError = error.localizedDescription
-                        showingErrorAlert = true
-                    }
+                case nil: // no aiAnalysisRequest for some reason
+                    EmptyView()
                 }
             }
         }
-    }
-
-    private func addTelemetryLog(_ message: String) {
-        telemetryLogs.append(NSLocalizedString(message, comment: "Telemetry log"))
-        if telemetryLogs.count > 10 {
-            telemetryLogs.removeFirst()
-        }
+        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: state.analysisError)
     }
 }
 
@@ -796,5 +610,160 @@ struct AnalyzingPill: View {
                     }
                 }
             }
+    }
+}
+
+struct InlineErrorBanner: View {
+    let error: String
+    var onRetry: (() -> Void)? = nil
+    var onCancel: () -> Void
+
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var errorType: ErrorType {
+        if error.contains("credits exhausted") {
+            return .creditsExhausted
+        } else if error.contains("quota exceeded") {
+            return .quotaExceeded
+        } else if error.contains("rate limit") {
+            return .rateLimit
+        } else {
+            return .general
+        }
+    }
+
+    private enum ErrorType {
+        case creditsExhausted
+        case quotaExceeded
+        case rateLimit
+        case general
+
+        var icon: String {
+            switch self {
+            case .creditsExhausted,
+                 .quotaExceeded: return "creditcard.trianglebadge.exclamationmark"
+            case .rateLimit: return "clock.badge.exclamationmark"
+            case .general: return "exclamationmark.triangle"
+            }
+        }
+
+        var title: String {
+            switch self {
+            case .creditsExhausted: return "Credits Exhausted"
+            case .quotaExceeded: return "Quota Exceeded"
+            case .rateLimit: return "Rate Limit Reached"
+            case .general: return "Analysis Failed"
+            }
+        }
+
+        func message(originalError: String) -> String {
+            switch self {
+            case .creditsExhausted:
+                return "Your AI provider has run out of credits. Please check your account billing or try a different provider."
+            case .quotaExceeded:
+                return "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider."
+            case .rateLimit:
+                return "Too many requests sent to your AI provider. Please wait a moment before trying again."
+            case .general:
+                return originalError
+            }
+        }
+
+        var canRetry: Bool {
+            switch self {
+            case .general,
+                 .rateLimit: return true
+            case .creditsExhausted,
+                 .quotaExceeded: return false
+            }
+        }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.red.opacity(0.2),
+                                    Color.orange.opacity(0.15)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 40, height: 40)
+
+                    Image(systemName: errorType.icon)
+                        .font(.body)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.red, .orange],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(errorType.title)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+
+                    Text(errorType.message(originalError: error))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                Spacer(minLength: 0)
+            }
+
+            HStack(spacing: 8) {
+                Spacer()
+
+                Button("Dismiss") {
+                    onCancel()
+                }
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .buttonStyle(.bordered)
+                .buttonBorderShape(.capsule)
+
+                if errorType.canRetry, let onRetry {
+                    Button(errorType == .rateLimit ? "Wait & Retry" : "Retry") {
+                        onRetry()
+                    }
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.capsule)
+                    .tint(.red)
+                }
+            }
+        }
+        .padding(16)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(
+                    LinearGradient(
+                        colors: [
+                            Color.red.opacity(0.3),
+                            Color.orange.opacity(0.2),
+                            Color.red.opacity(0.3)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1.5
+                )
+        )
+        .shadow(color: Color.red.opacity(0.15), radius: 12, x: 0, y: 4)
+        .shadow(color: Color.black.opacity(0.08), radius: 18, x: 0, y: 8)
     }
 }

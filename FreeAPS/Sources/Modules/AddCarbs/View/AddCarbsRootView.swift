@@ -232,7 +232,7 @@ extension AddCarbs {
             mealView.onAppear {
                 state.loadEntries(editMode)
                 showingFoodSearch.toggle()
-                foodSearchState.foodSearchRoute = .photoSourceSelect
+                foodSearchState.foodSearchRoute = .camera
             }
         }
 

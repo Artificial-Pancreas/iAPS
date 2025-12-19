@@ -81,12 +81,11 @@ final class OpenFoodFactsService {
             let request = createRequest(for: directURL)
             let response = try await performRequest(request)
 
-            #if DEBUG
-                let tempDir = FileManager.default.temporaryDirectory
-                let responseFile = tempDir.appendingPathComponent("openfoodfacts_direct_response.json")
-                try response.data.write(to: responseFile)
-                print("💾 DEBUG: Direct product response saved to: \(responseFile.path)")
-            #endif
+            saveDebugDataToTempFile(
+                description: "OpenFoodFacts direct product response",
+                fileName: "openfoodfacts_direct_response.json",
+                data: response.data
+            )
 
             // Versuche das direkte Produkt-Format zu parsen
             do {
@@ -123,13 +122,11 @@ final class OpenFoodFactsService {
         let request = createRequest(for: url)
         let response = try await performRequest(request)
 
-        #if DEBUG
-            // Response speichern für Debugging
-            let tempDir = FileManager.default.temporaryDirectory
-            let responseFile = tempDir.appendingPathComponent("openfoodfacts_search_response.json")
-            try response.data.write(to: responseFile)
-            print("💾 DEBUG: Search response saved to: \(responseFile.path)")
-        #endif
+        saveDebugDataToTempFile(
+            description: "OpenFoodFacts direct product response",
+            fileName: "openfoodfacts_search_response.json",
+            data: response.data
+        )
 
         do {
             _ = try decodeResponse(OpenFoodFactsSearchResponse.self, from: response.data)

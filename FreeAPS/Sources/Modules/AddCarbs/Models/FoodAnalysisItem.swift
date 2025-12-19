@@ -21,7 +21,7 @@ enum FoodItemSource {
 }
 
 /// Individual food item analysis with detailed portion assessment
-struct AnalysedFoodItem {
+struct AnalysedFoodItem: Identifiable {
     let id = UUID()
     let name: String
     let confidence: AIConfidenceLevel?
