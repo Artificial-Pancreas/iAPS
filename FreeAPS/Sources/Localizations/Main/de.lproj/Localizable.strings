@@ -2577,7 +2577,7 @@ Enact a temp Basal or a temp target */
 "Display Insulin Activity Chart" = "Insulin-Aktivitätsdiagramm anzeigen";
 
 /* UI/UX-setting */
-"Don't ask for saving search result as meal prreset" = "Don't ask for saving search result as meal prreset";
+"Don't ask for saving search result as meal preset" = "Don't ask for saving search result as meal preset";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
