@@ -338,7 +338,7 @@
 "Schedule" = "Lịch trình";
 
 /* */
-"(standard units / hour)" = "(tiêu chuẩn units / hour)";
+"(standard units / hour)" = "(tiêu chuẩn đơn vị/giờ)";
 
 /*  */
 "starts at" = "bắt đầu lúc";
@@ -2576,7 +2576,7 @@ Enact a temp Basal or a temp target */
 "Display Insulin Activity Chart" = "Hiển thị biểu đồ hoạt động của insulin";
 
 /* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Don't ask for saving search result as meal preset";
+"Don't ask for saving search result as meal preset" = "Không yêu cầu lưu kết quả tìm kiếm làm bữa ăn mẫu";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
