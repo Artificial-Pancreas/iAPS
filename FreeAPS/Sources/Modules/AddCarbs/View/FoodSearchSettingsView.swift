@@ -24,7 +24,7 @@ struct StableSecureField: View {
 }
 
 /// Settings view for configuring AI food analysis
-struct AISettingsView: View {
+struct FoodSearchSettingsView: View {
     @ObservedObject private var aiService = ConfigurableAIService.shared
     @Environment(\.dismiss) private var dismiss
 
@@ -1033,9 +1033,9 @@ private struct ComplexityRow: View {
 // MARK: - Preview
 
 #if DEBUG
-    struct AISettingsView_Previews: PreviewProvider {
+    struct FoodSearchSettingsView_Previews: PreviewProvider {
         static var previews: some View {
-            AISettingsView()
+            FoodSearchSettingsView()
         }
     }
 #endif

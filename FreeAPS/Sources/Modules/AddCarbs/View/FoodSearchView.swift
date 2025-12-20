@@ -4,222 +4,191 @@ import SwiftUI
 
 struct FoodSearchView: View {
     @ObservedObject var state: FoodSearchStateModel
-    var onSelect: (AIFoodItem, UIImage?) -> Void
+    var onSelect: (AIFoodItem, UIImage?, Date?) -> Void
     @Environment(\.dismiss) var dismiss
 
-    @State private var showPhotoPicker = false
-    @State private var selectedPhotoItem: PhotosPickerItem?
-    @State private var showCameraMenu = false
-
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
+        VStack(spacing: 0) {
+            SearchResultsView(
+                state: state,
+                onFoodItemSelected: { foodItem, selectedTime in
+                    handleFoodItemSelection(foodItem, image: state.aiAnalysisRequest?.image, selectedTime: selectedTime)
+                },
+                onCompleteMealSelected: { totalMeal, selectedTime in
+                    handleFoodItemSelection(totalMeal, image: state.aiAnalysisRequest?.image, selectedTime: selectedTime)
+                }
+            )
+        }
+        .fullScreenCover(item: state.foodSearchRouteBinding) { route in
+            switch route {
+            case .camera:
+                ModernCameraView(
+                    onImageCaptured: { image in
+                        state.startImageAnalysis(image: image)
+                    }
+                )
+            case .barcodeScanner:
+                BarcodeScannerView(
+                    onBarcodeScanned: { barcode in
+                        state.enterBarcodeAndSearch(barcode: barcode)
+                    },
+                    onCancel: {
+                        state.foodSearchRoute = nil
+                    }
+                )
+            case .aiProgress:
+                AIProgressView(
+                    state: state,
+                    onCancel: {
+                        print("progress view - cancelled")
+                        state.cancelSearchTask()
+                    }
+                )
+            }
+        }
+        .sheet(item: $state.latestTextSearch) { searchResult in
+            TextSearchResultsSheet(
+                searchResult: searchResult,
+                onFoodItemSelected: { selectedItem, selectedTime in
+                    state.addItem(selectedItem)
+                    state.latestTextSearch = nil
+                },
+                onDismiss: {
+                    state.latestTextSearch = nil
+                }
+            )
+        }
+    }
+
+    struct SearchBar: View {
+        @ObservedObject var state: FoodSearchStateModel
+        @State private var showPhotoPicker = false
+        @State private var selectedPhotoItem: PhotosPickerItem?
+        @FocusState private var isTextFieldFocused: Bool
+
+        var body: some View {
+            HStack(spacing: 10) {
                 HStack(spacing: 10) {
-                    HStack(spacing: 10) {
-                        Image(systemName: "magnifyingglass")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.secondary)
+                    Image(systemName: "magnifyingglass")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.secondary)
 
-                        ZStack(alignment: .trailing) {
-                            TextField("Search foods...", text: $state.foodSearchText)
-                                .font(.body)
-                                .autocapitalization(.none)
-                                .disableAutocorrection(true)
-                                .submitLabel(.search)
-                                .onSubmit {
-                                    state.searchByText(query: state.foodSearchText)
+                    ZStack(alignment: .trailing) {
+                        TextField("Search foods...", text: $state.foodSearchText)
+                            .font(.body)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                            .submitLabel(.search)
+                            .focused($isTextFieldFocused)
+                            .onSubmit {
+                                state.searchByText(query: state.foodSearchText)
+                                state.showingFoodSearch = true
+                            }
+                            .onChange(of: isTextFieldFocused) { _, newValue in
+                                if newValue {
+                                    state.showingFoodSearch = true
                                 }
-
-                            if state.isBarcode {
-                                Text("barcode")
-                                    .font(.caption2)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.blue)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(Color.blue.opacity(0.12))
-                                    .cornerRadius(6)
-                                    .padding(.trailing, 4)
                             }
-                        }
 
-                        // Clear button
-                        if !state.foodSearchText.isEmpty {
-                            Button(action: {
-                                state.foodSearchText = ""
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.secondary.opacity(0.6))
-                            }
-                            .buttonStyle(PlainButtonStyle())
+                        if state.isBarcode {
+                            Text("barcode")
+                                .font(.caption2)
+                                .fontWeight(.medium)
+                                .foregroundColor(.blue)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.blue.opacity(0.12))
+                                .cornerRadius(6)
+                                .padding(.trailing, 4)
                         }
                     }
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color(.systemGray5))
-                    )
 
-                    // Barcode Scanner Button
-                    Button {
-                        state.foodSearchRoute = .barcodeScanner
-                    } label: {
-                        Image(systemName: "barcode.viewfinder")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.blue)
-                            .frame(width: 46, height: 46)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(Color.blue.opacity(0.12))
-                            )
+                    // Clear button
+                    if !state.foodSearchText.isEmpty {
+                        Button(action: {
+                            state.foodSearchText = ""
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.system(size: 16))
+                                .foregroundColor(.secondary.opacity(0.6))
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .buttonStyle(PlainButtonStyle())
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color(.systemGray5))
+                )
 
-                    // Camera Button with Context Menu
-                    Image(systemName: "camera.fill")
+                // Barcode Scanner Button
+                Button {
+                    state.showingFoodSearch = true
+                    state.foodSearchRoute = .barcodeScanner
+                } label: {
+                    Image(systemName: "barcode.viewfinder")
                         .font(.system(size: 20, weight: .medium))
-                        .foregroundColor(.purple)
+                        .foregroundColor(.blue)
                         .frame(width: 46, height: 46)
                         .background(
                             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .fill(Color.purple.opacity(0.12))
+                                .fill(Color.blue.opacity(0.12))
                         )
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            // Regular tap - open camera
-                            state.foodSearchRoute = .camera
-                        }
-                        .onLongPressGesture(minimumDuration: 0.3) {
-                            // Long press - trigger haptic and show menu
-                            let generator = UIImpactFeedbackGenerator(style: .medium)
-                            generator.impactOccurred()
-                            showCameraMenu = true
-                        }
-                        .confirmationDialog("Choose Photo Source", isPresented: $showCameraMenu, titleVisibility: .hidden) {
-                            Button("Take Photo") {
-                                state.foodSearchRoute = .camera
-                            }
-
-                            Button("Choose from Library") {
-                                showPhotoPicker = true
-                            }
-
-                            Button("Cancel", role: .cancel) {}
-                        }
-                        .photosPicker(
-                            isPresented: $showPhotoPicker,
-                            selection: $selectedPhotoItem,
-                            matching: .images
-                        )
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 12)
-
-                SearchResultsView(
-                    state: state,
-                    onFoodItemSelected: { foodItem in
-                        handleFoodItemSelection(foodItem, image: state.aiAnalysisRequest?.image)
-                    },
-                    onCompleteMealSelected: { totalMeal in
-                        handleFoodItemSelection(totalMeal, image: state.aiAnalysisRequest?.image)
-                    }
-                )
-            }
-            .navigationTitle("Food Search")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading:
-                NavigationLink(destination: AISettingsView()) {
-                    Image(systemName: "gearshape")
-                        .font(.system(size: 20, weight: .medium))
-                        .foregroundColor(.secondary.opacity(0.5))
-                        .frame(width: 46, height: 46)
                 }
                 .buttonStyle(PlainButtonStyle())
-            )
-            .navigationBarItems(trailing: Button("Cancel") { dismiss() })
 
-            .fullScreenCover(item: state.fullScreenRoute) { route in
-                switch route {
-                case .camera:
-                    ModernCameraView(
-                        onImageCaptured: { image in
-                            state.startImageAnalysis(image: image)
-                        }
+                // Camera Button with Context Menu
+                Image(systemName: "camera.fill")
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(.purple)
+                    .frame(width: 46, height: 46)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color.purple.opacity(0.12))
                     )
-                case .barcodeScanner:
-                    BarcodeScannerView(
-                        onBarcodeScanned: { barcode in
-                            handleBarcodeScan(barcode)
-                        },
-                        onCancel: {
-                            state.foodSearchRoute = nil
-                        }
-                    )
-                case .aiProgress:
-                    AIProgressView(
-                        state: state,
-                        onCancel: {
-                            print("progress view - cancelled")
-                            state.cancelSearchTask()
-                        }
-                    )
-                }
-            }
-            .navigationDestination(item: state.navigationRoute) { route in
-                switch route {
-                case .barcodeScanner:
-                    BarcodeScannerView(
-                        onBarcodeScanned: { barcode in
-                            handleBarcodeScan(barcode)
-                        },
-                        onCancel: {
-                            state.foodSearchRoute = nil
-                        }
-                    )
-                case .camera: // should never happen
-                    EmptyView()
-                case .aiProgress: // should never happen
-                    EmptyView()
-                }
-            }
-            .sheet(item: $state.latestTextSearch) { searchResult in
-                TextSearchResultsSheet(
-                    searchResult: searchResult,
-                    onFoodItemSelected: { selectedItem in
-                        state.addItem(selectedItem)
-                        state.latestTextSearch = nil
-                    },
-                    onDismiss: {
-                        state.latestTextSearch = nil
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        state.foodSearchRoute = .camera
+                        state.showingFoodSearch = true
                     }
-                )
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
+                    .contextMenu {
+                        Button {
+                            state.foodSearchRoute = .camera
+                            state.showingFoodSearch = true
+                        } label: {
+                            Label("Take Photo", systemImage: "camera")
+                        }
+
+                        Button {
+                            showPhotoPicker = true
+                            state.showingFoodSearch = true
+                        } label: {
+                            Label("Choose from Library", systemImage: "photo.on.rectangle")
+                        }
+                    }
+                    .photosPicker(
+                        isPresented: $showPhotoPicker,
+                        selection: $selectedPhotoItem,
+                        matching: .images
+                    )
             }
             .onChange(of: selectedPhotoItem) { _, newItem in
+                guard let selectedPhotoItem = newItem else { return }
                 Task {
-                    if let data = try? await newItem?.loadTransferable(type: Data.self),
+                    if let data = try await selectedPhotoItem.loadTransferable(type: Data.self),
                        let image = UIImage(data: data)
                     {
                         state.startImageAnalysis(image: image)
+                        self.selectedPhotoItem = nil
                     }
                 }
             }
         }
-        .background(Color(.systemBackground))
     }
 
-    private func handleBarcodeScan(_ barcode: String) {
-        print("📦 Barcode scanned: \(barcode)")
-        state.enterBarcodeAndSearch(barcode: barcode)
-        print("🔍 Search for Barcode: \(barcode)")
-    }
-
-    private func handleFoodItemSelection(_ foodItem: AIFoodItem, image: UIImage?) {
-        onSelect(foodItem, image)
+    private func handleFoodItemSelection(_ foodItem: AIFoodItem, image: UIImage?, selectedTime: Date?) {
+        onSelect(foodItem, image, selectedTime)
         dismiss()
     }
 }

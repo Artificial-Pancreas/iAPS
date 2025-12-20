@@ -85,7 +85,7 @@
 		19AEF4322B1F5A98006FFE8B /* TIRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AEF4312B1F5A98006FFE8B /* TIRView.swift */; };
 		19B0EF2128F6D66200069496 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B0EF2028F6D66200069496 /* Statistics.swift */; };
 		19C3C72D2E97AE520000BE4D /* AIFoodItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C71F2E97AE520000BE4D /* AIFoodItem+Extensions.swift */; };
-		19C3C72F2E97AE520000BE4D /* AIAnalysisResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7182E97AE520000BE4D /* AIAnalysisResultsView.swift */; };
+		19C3C72F2E97AE520000BE4D /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7182E97AE520000BE4D /* SearchResultsView.swift */; };
 		19C3C7302E97AE520000BE4D /* FoodSearchStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */; };
 		19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7282E97AE520000BE4D /* BarcodeScannerService.swift */; };
 		19C3C7342E97AE520000BE4D /* UserDefaults+Loop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */; };
@@ -95,8 +95,8 @@
 		19C3C73A2E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7202E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift */; };
 		19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C72B2E97AE520000BE4D /* OpenFoodFactsService.swift */; };
 		19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */; };
-		19C3C7442E97AE7B0000BE4D /* AICameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C73E2E97AE7B0000BE4D /* AICameraView.swift */; };
-		19C3C7462E97AE7B0000BE4D /* AISettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C73F2E97AE7B0000BE4D /* AISettingsView.swift */; };
+		19C3C7442E97AE7B0000BE4D /* ModernCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C73E2E97AE7B0000BE4D /* ModernCameraView.swift */; };
+		19C3C7462E97AE7B0000BE4D /* FoodSearchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C73F2E97AE7B0000BE4D /* FoodSearchSettingsView.swift */; };
 		19C3C7472E97AE7B0000BE4D /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7402E97AE7B0000BE4D /* BarcodeScannerView.swift */; };
 		19C3C7482E97AE7B0000BE4D /* SelectedFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7432E97AE7B0000BE4D /* SelectedFoodView.swift */; };
 		19C3C7492E97AE7B0000BE4D /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7422E97AE7B0000BE4D /* FoodSearchView.swift */; };
@@ -737,7 +737,7 @@
 		19B0EF2028F6D66200069496 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		19C166682756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19C166692756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
-		19C3C7182E97AE520000BE4D /* AIAnalysisResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAnalysisResultsView.swift; sourceTree = "<group>"; };
+		19C3C7182E97AE520000BE4D /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		19C3C71B2E97AE520000BE4D /* MultiplierEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplierEditorView.swift; sourceTree = "<group>"; };
 		19C3C71E2E97AE520000BE4D /* AIConfidenceLevel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIConfidenceLevel+Extensions.swift"; sourceTree = "<group>"; };
 		19C3C71F2E97AE520000BE4D /* AIFoodItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIFoodItem+Extensions.swift"; sourceTree = "<group>"; };
@@ -748,8 +748,8 @@
 		19C3C7272E97AE520000BE4D /* AIFoodAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysis.swift; sourceTree = "<group>"; };
 		19C3C7282E97AE520000BE4D /* BarcodeScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerService.swift; sourceTree = "<group>"; };
 		19C3C72B2E97AE520000BE4D /* OpenFoodFactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsService.swift; sourceTree = "<group>"; };
-		19C3C73E2E97AE7B0000BE4D /* AICameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICameraView.swift; sourceTree = "<group>"; };
-		19C3C73F2E97AE7B0000BE4D /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
+		19C3C73E2E97AE7B0000BE4D /* ModernCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernCameraView.swift; sourceTree = "<group>"; };
+		19C3C73F2E97AE7B0000BE4D /* FoodSearchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchSettingsView.swift; sourceTree = "<group>"; };
 		19C3C7402E97AE7B0000BE4D /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		19C3C7422E97AE7B0000BE4D /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
 		19C3C7432E97AE7B0000BE4D /* SelectedFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFoodView.swift; sourceTree = "<group>"; };
@@ -1458,15 +1458,6 @@
 				198F67B02CFCBD5D00E538CB /* View */,
 			);
 			path = AutoISF;
-			sourceTree = "<group>";
-		};
-		19C3C71D2E97AE520000BE4D /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				19C3C7182E97AE520000BE4D /* AIAnalysisResultsView.swift */,
-				19C3C71B2E97AE520000BE4D /* MultiplierEditorView.swift */,
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		19C3C7212E97AE520000BE4D /* Extensions */ = {
@@ -2446,12 +2437,14 @@
 			isa = PBXGroup;
 			children = (
 				86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */,
-				19C3C73E2E97AE7B0000BE4D /* AICameraView.swift */,
-				F2FA68932EEC87D200476D7B /* AIProgressView.swift */,
-				19C3C73F2E97AE7B0000BE4D /* AISettingsView.swift */,
-				19C3C7402E97AE7B0000BE4D /* BarcodeScannerView.swift */,
+				19C3C73F2E97AE7B0000BE4D /* FoodSearchSettingsView.swift */,
 				19C3C7422E97AE7B0000BE4D /* FoodSearchView.swift */,
+				19C3C73E2E97AE7B0000BE4D /* ModernCameraView.swift */,
+				19C3C7402E97AE7B0000BE4D /* BarcodeScannerView.swift */,
+				19C3C7182E97AE520000BE4D /* SearchResultsView.swift */,
+				F2FA68932EEC87D200476D7B /* AIProgressView.swift */,
 				19C3C7432E97AE7B0000BE4D /* SelectedFoodView.swift */,
+				19C3C71B2E97AE520000BE4D /* MultiplierEditorView.swift */,
 				F2D360FF2EE21D83004CC6B1 /* ModelQueryEditor.swift */,
 			);
 			path = View;
@@ -2540,7 +2533,6 @@
 				5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */,
 				618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */,
 				39E7C997E56DAF8D28D09014 /* AddCarbsStateModel.swift */,
-				19C3C71D2E97AE520000BE4D /* Components */,
 				19C3C7262E97AE520000BE4D /* Models */,
 				19C3C72C2E97AE520000BE4D /* Services */,
 				50E85421406582CF9D321A20 /* View */,
@@ -3497,8 +3489,8 @@
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
 				F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */,
 				F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */,
-				19C3C7442E97AE7B0000BE4D /* AICameraView.swift in Sources */,
-				19C3C7462E97AE7B0000BE4D /* AISettingsView.swift in Sources */,
+				19C3C7442E97AE7B0000BE4D /* ModernCameraView.swift in Sources */,
+				19C3C7462E97AE7B0000BE4D /* FoodSearchSettingsView.swift in Sources */,
 				19C3C7472E97AE7B0000BE4D /* BarcodeScannerView.swift in Sources */,
 				19C3C7482E97AE7B0000BE4D /* SelectedFoodView.swift in Sources */,
 				19C3C7492E97AE7B0000BE4D /* FoodSearchView.swift in Sources */,
@@ -3581,7 +3573,7 @@
 				23888883D4EA091C88480FF2 /* BolusProvider.swift in Sources */,
 				38E98A2D25F52DC400C0CED0 /* NSLocking+Extensions.swift in Sources */,
 				19C3C72D2E97AE520000BE4D /* AIFoodItem+Extensions.swift in Sources */,
-				19C3C72F2E97AE520000BE4D /* AIAnalysisResultsView.swift in Sources */,
+				19C3C72F2E97AE520000BE4D /* SearchResultsView.swift in Sources */,
 				F2D361002EE21D83004CC6B1 /* ModelQueryEditor.swift in Sources */,
 				19C3C7302E97AE520000BE4D /* FoodSearchStateModel.swift in Sources */,
 				19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */,

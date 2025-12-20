@@ -7,27 +7,13 @@ enum FoodSearchRoute: String, Identifiable {
     case aiProgress
 
     var id: FoodSearchRoute { self }
-
-    var asFullScreenCover: FoodSearchRoute? {
-        switch self {
-        case .camera: self
-        case .aiProgress: self
-        case .barcodeScanner: self
-        }
-    }
-
-    var asNavigation: FoodSearchRoute? {
-        switch self {
-        case .camera: nil
-        case .aiProgress: nil
-        case .barcodeScanner: nil
-        }
-    }
 }
 
 final class FoodSearchStateModel: ObservableObject {
     @Published var foodSearchText = ""
     @Published var isBarcode = false
+
+    @Published var showingFoodSearch = false
 
     @Published var foodSearchRoute: FoodSearchRoute? = nil
 
@@ -55,23 +41,20 @@ final class FoodSearchStateModel: ObservableObject {
 
     @Published var searchTask: Task<Void, Never>? = nil
 
-    private var cancellables = Set<AnyCancellable>()
-
-    var fullScreenRoute: Binding<FoodSearchRoute?> {
-        Binding(
-            get: { [weak self] in
-                self?.foodSearchRoute?.asFullScreenCover
-            },
-            set: { [weak self] newValue in
-                self?.foodSearchRoute = newValue
-            }
-        )
+    var visibleSections: [FoodAnalysisResult] {
+        searchResults.filter({ !resultsView.isSectionDeleted($0.id) })
     }
 
-    var navigationRoute: Binding<FoodSearchRoute?> {
+    var allFoodItems: [AnalysedFoodItem] {
+        visibleSections.flatMap(\.foodItemsDetailed)
+    }
+
+    private var cancellables = Set<AnyCancellable>()
+
+    var foodSearchRouteBinding: Binding<FoodSearchRoute?> {
         Binding(
             get: { [weak self] in
-                self?.foodSearchRoute?.asNavigation
+                self?.foodSearchRoute
             },
             set: { [weak self] newValue in
                 self?.foodSearchRoute = newValue

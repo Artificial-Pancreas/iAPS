@@ -23,7 +23,6 @@ extension AddCarbs {
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
         // Food Search States
-        @State private var showingFoodSearch = false
         @State private var foodSearchText = ""
         @State private var isLoading = false
         @State private var errorMessage: String?
@@ -31,6 +30,7 @@ extension AddCarbs {
         @State private var portionGrams: Decimal = 100.00001
         @State private var selectedFoodImage: UIImage?
         @State private var saveAlert = false
+        @State private var showCancelConfirmation = false
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -67,10 +67,73 @@ extension AddCarbs {
         }
 
         var body: some View {
-            if meal {
-                normalMealView
-            } else {
-                shortcuts()
+            VStack(spacing: 0) {
+                FoodSearchView.SearchBar(state: foodSearchState).padding(.horizontal)
+
+                if foodSearchState.showingFoodSearch {
+                    FoodSearchView(
+                        state: foodSearchState,
+                        onSelect: { selectedFood, image, date in
+                            handleSelectedFood(selectedFood, image: image, date: date)
+                        }
+                    )
+                } else {
+                    mealView
+                }
+            }
+            .compactSectionSpacing()
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .navigationTitle("Add Meal")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading:
+                NavigationLink(destination: FoodSearchSettingsView()) {
+                    Image(systemName: "gearshape")
+                        .font(.system(size: 20, weight: .medium))
+                        .foregroundColor(.secondary.opacity(0.5))
+                        .frame(width: 46, height: 46)
+                }
+                .buttonStyle(PlainButtonStyle())
+            )
+            .navigationBarItems(trailing: Button("Cancel", action: {
+                if hasUnsavedFoodSearchResults {
+                    showCancelConfirmation = true
+                } else {
+                    state.hideModal()
+                    if editMode { state.apsManager.determineBasalSync() }
+                }
+            }))
+            .confirmationDialog(
+                "Discard Food Search?",
+                isPresented: $showCancelConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Discard", role: .destructive) {
+                    state.hideModal()
+                    if editMode { state.apsManager.determineBasalSync() }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("You have an unsaved food item. Are you sure you want to discard it?")
+            }
+            .onAppear {
+                state.loadEntries(editMode)
+                if !meal {
+                    switch mode {
+                    case .image:
+                        foodSearchState.foodSearchRoute = .camera
+                        foodSearchState.showingFoodSearch = true
+                    case .barcode:
+                        foodSearchState.foodSearchRoute = .barcodeScanner
+                        foodSearchState.showingFoodSearch = true
+                    case .presets:
+                        presentPresets.toggle()
+                    case .search:
+                        foodSearchState.showingFoodSearch = true
+                    default:
+                        break
+                    }
+                }
             }
         }
 
@@ -180,26 +243,7 @@ extension AddCarbs {
                 }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
                     .tint(.white)
             }
-            .compactSectionSpacing()
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .navigationTitle("Add Meal")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Cancel", action: {
-                state.hideModal()
-                if editMode { state.apsManager.determineBasalSync() }
-            }))
             .sheet(isPresented: $presentPresets, content: { presetView })
-            .sheet(isPresented: $showingFoodSearch, onDismiss: {
-                foodSearchState.resetNavigationState()
-            }) {
-                FoodSearchView(
-                    state: foodSearchState,
-                    onSelect: { selectedFood, image in
-                        handleSelectedFood(selectedFood, image: image)
-                    }
-                )
-                .presentationDragIndicator(.visible)
-            }
             .alert(isPresented: $saveAlert) { alert(food: selectedFoodItem) }
         }
 
@@ -207,55 +251,8 @@ extension AddCarbs {
             mode == .meal || foodSearchState.mealView
         }
 
-        @ViewBuilder private func shortcuts() -> some View {
-            switch mode {
-            case .image:
-                imageView
-            case .barcode:
-                barcodeView
-            case .presets:
-                mealPresetsView
-            case .search:
-                foodsearchView
-            default:
-                normalMealView
-            }
-        }
-
-        private var normalMealView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-            }
-        }
-
-        private var imageView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                showingFoodSearch.toggle()
-                foodSearchState.foodSearchRoute = .camera
-            }
-        }
-
-        private var barcodeView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                showingFoodSearch.toggle()
-                foodSearchState.foodSearchRoute = .barcodeScanner
-            }
-        }
-
-        private var mealPresetsView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                presentPresets.toggle()
-            }
-        }
-
-        private var foodsearchView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                showingFoodSearch.toggle()
-            }
+        private var hasUnsavedFoodSearchResults: Bool {
+            foodSearchState.showingFoodSearch && foodSearchState.allFoodItems.isNotEmpty
         }
 
         // MARK: - Helper Functions
@@ -291,8 +288,6 @@ extension AddCarbs {
 
         private var foodSearch: some View {
             Group {
-                foodSearchSection
-
                 if let selectedFood = selectedFoodItem {
                     SelectedFoodView(
                         food: selectedFood,
@@ -301,7 +296,7 @@ extension AddCarbs {
                         onChange: {
                             selectedFoodItem = nil
                             selectedFoodImage = nil
-                            showingFoodSearch = true
+                            foodSearchState.showingFoodSearch = true
                         },
                         onTakeOver: { food in
                             state.carbs += portionGrams != 100.00001 ? max(food.carbs, 0) / (portionGrams / 100)
@@ -311,7 +306,7 @@ extension AddCarbs {
                             state.protein += portionGrams != 100.00001 ? max(food.protein, 0) / (portionGrams / 100)
                                 .rounded(to: 0) : max(food.protein, 0)
                             selectedFoodImage = nil
-                            showingFoodSearch = false
+                            foodSearchState.showingFoodSearch = false
                             if !state.skipSave {
                                 saveAlert.toggle()
                             } else {
@@ -319,38 +314,6 @@ extension AddCarbs {
                             }
                         }
                     )
-                }
-            }
-        }
-
-        private var foodSearchSection: some View {
-            Section {
-                // Search in Food Database
-                Button {
-                    showingFoodSearch = true
-                } label: {
-                    HStack {
-                        Image(systemName: "network")
-                        Text("Search Food Database")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.popUpGray)
-                            .font(.system(size: 14, weight: .semibold))
-                    }
-                    .foregroundColor(.blue)
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-            // Settings
-            header: {
-                HStack {
-                    Text("AI Food Search")
-                    Spacer()
-                    NavigationLink(destination: AISettingsView()) {
-                        Image(systemName: "gearshape")
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .foregroundColor(.blue)
                 }
             }
         }
@@ -402,11 +365,11 @@ extension AddCarbs {
             }
         }
 
-        private func handleSelectedFood(_ foodItem: AIFoodItem, image: UIImage? = nil) {
+        private func handleSelectedFood(_ foodItem: AIFoodItem, image: UIImage?, time: Date?) {
             selectedFoodItem = foodItem
             selectedFoodImage = image
             portionGrams = 100.0
-            showingFoodSearch = false
+            foodSearchState.showingFoodSearch = false
         }
 
         private var empty: Bool {

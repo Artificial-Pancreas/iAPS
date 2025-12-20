@@ -8,152 +8,127 @@ struct AIProgressView: View {
     let onCancel: () -> Void
 
     var body: some View {
-        ZStack {
+        GeometryReader { geometry in
             ZStack {
-                searchTypeView
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.horizontal)
-                    .padding(.top, 120)
-                    .padding(.bottom, 120)
-            }
-            .safeAreaPadding()
-            .backgroundStyle(.blue.opacity(0.5))
-            .overlay(alignment: .top) {
-                HStack {
-                    Spacer()
-                    if let model = state.analysisModel {
-                        Text(model)
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .fontDesign(.rounded)
-                            .foregroundStyle(.primary)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 7)
-                            .background(.thinMaterial, in: Capsule())
-                            .overlay(
-                                Capsule()
-                                    .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
-                            )
-                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                            .transition(.scale.combined(with: .opacity))
-                    }
+                Color.clear
+                    .background(.regularMaterial)
+                    .ignoresSafeArea()
+
+                VStack(spacing: 0) {
+                    Spacer(minLength: 0)
+
+                    searchTypeView
+                        .padding(.horizontal, 20)
+                        .frame(
+                            maxWidth: .infinity,
+                            maxHeight: geometry.size.height - geometry.safeAreaInsets.bottom - 140
+                        )
+
+                    Spacer(minLength: 0)
                 }
-                .safeAreaPadding()
-                .padding(.horizontal)
-                .padding(.top, 30)
-                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: state.analysisModel)
-            }
-            .overlay(alignment: .bottom) {
-                AnalyzingPill(
-                    title: NSLocalizedString("Analyzing food with AI…", comment: ""),
-                    startDate: state.analysisStart,
-                    eta: state.analysisEta,
-                    endDate: state.analysisEnd,
-                    onCancel: {
-                        onCancel()
+                .frame(maxHeight: .infinity)
+                .padding(.bottom, 140)
+
+                VStack(spacing: 0) {
+                    HStack {
+                        if let model = state.analysisModel {
+                            Text(model)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .fontDesign(.rounded)
+                                .foregroundStyle(.primary.opacity(0.7))
+                                .transition(.scale.combined(with: .opacity))
+                        }
+                        Spacer()
                     }
-                )
-                .safeAreaPadding()
-                .padding(.horizontal)
-                .padding(.bottom, 30)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 8)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: state.analysisModel)
+
+                    AnalyzingPill(
+                        title: NSLocalizedString("Analyzing food with AI…", comment: ""),
+                        startDate: state.analysisStart,
+                        eta: state.analysisEta,
+                        endDate: state.analysisEnd,
+                        onCancel: {
+                            onCancel()
+                        }
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, max(geometry.safeAreaInsets.bottom, 120))
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             }
         }
-        .background(.regularMaterial)
+        .ignoresSafeArea()
     }
 
     private var searchTypeView: some View {
         let isAnalysisComplete = state.analysisEnd != nil
 
-        return GeometryReader { geometry in
-            let safeHeight = geometry.size.height
-            let maxImageHeight = safeHeight * 0.5
+        return VStack(spacing: 12) {
+            switch state.aiAnalysisRequest {
+            case let .image(image):
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
 
-            Group {
-                switch state.aiAnalysisRequest {
-                case let .image(image):
-                    VStack(spacing: 12) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxHeight: maxImageHeight)
-                            .padding(.horizontal, 32)
-
-                        // Inline error overlay for image analysis
-                        if let error = state.analysisError {
-                            InlineErrorBanner(
-                                error: error,
-                                onRetry: {
-                                    state.retryAIAnalysis()
-                                },
-                                onCancel: {
-                                    onCancel()
-                                }
+            case let .query(query):
+                HStack(alignment: .top, spacing: 12) {
+                    ZStack {
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        Color.cyan.opacity(0.2),
+                                        Color.blue.opacity(0.15)
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
                             )
-                            .padding(.horizontal)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                        }
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            .frame(width: 44, height: 44)
 
-                case let .query(query):
-                    VStack(spacing: 12) {
-                        HStack(alignment: .top, spacing: 12) {
-                            ZStack {
-                                Circle()
-                                    .fill(
-                                        LinearGradient(
-                                            colors: [
-                                                Color.cyan.opacity(0.2),
-                                                Color.blue.opacity(0.15)
-                                            ],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                                    .frame(width: 44, height: 44)
-
-                                Image(systemName: "magnifyingglass")
-                                    .font(.title3)
-                                    .foregroundStyle(
-                                        LinearGradient(
-                                            colors: [.cyan, .blue],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                                    .symbolEffect(.pulse, options: .repeating, value: !isAnalysisComplete)
-                            }
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(query)
-                                    .font(.title3)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.primary)
-                            }
-
-                            Spacer()
-                        }
-                        .padding(16)
-                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-
-                        if let error = state.analysisError {
-                            InlineErrorBanner(
-                                error: error,
-                                onRetry: {
-                                    state.retryAIAnalysis()
-                                },
-                                onCancel: {
-                                    onCancel()
-                                }
+                        Image(systemName: "magnifyingglass")
+                            .font(.title3)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.cyan, .blue],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
                             )
-                            .transition(.move(edge: .top).combined(with: .opacity))
-                        }
+                            .symbolEffect(.pulse, options: .repeating, value: !isAnalysisComplete)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
-                case nil: // no aiAnalysisRequest for some reason
-                    EmptyView()
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(query)
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                    }
+
+                    Spacer()
                 }
+                .padding(16)
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+
+            case nil:
+                EmptyView()
+            }
+
+            // Error banner (same for both)
+            if let error = state.analysisError {
+                InlineErrorBanner(
+                    error: error,
+                    onRetry: {
+                        state.retryAIAnalysis()
+                    },
+                    onCancel: {
+                        onCancel()
+                    }
+                )
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: state.analysisError)
@@ -580,6 +555,9 @@ struct AnalyzingPill: View {
                         shimmerPhase = 140
                     }
                 }
+
+                // Initialize progress state
+                progressState = ProgressState(eta: eta, isFinished: endDate != nil, isOvertime: false)
             }
             .onChange(of: startDate) { _, newStartDate in
                 // Reset progress when a new analysis starts
@@ -589,23 +567,27 @@ struct AnalyzingPill: View {
                 }
             }
             .onChange(of: eta) { _, newEta in
+                // Update progress state with new ETA
                 progressState = ProgressState(eta: newEta, isFinished: endDate != nil, isOvertime: progressState.isOvertime)
             }
-            .onChange(of: endDate) { _, _ in
-                progressState = ProgressState(eta: eta, isFinished: endDate != nil, isOvertime: progressState.isOvertime)
+            .onChange(of: endDate) { _, newEndDate in
+                // Update progress state when analysis finishes
+                progressState = ProgressState(eta: eta, isFinished: newEndDate != nil, isOvertime: progressState.isOvertime)
             }
-            .onChange(of: progressState) { _, state in
-                if state.isFinished {
-                    // Finished: reset animation ID to cancel any in-flight animation, then immediately set to 100%
+            .onChange(of: progressState) { oldState, newState in
+                if newState.isFinished {
+                    // Finished: cancel any in-flight animation and immediately set to 100%
                     progressAnimationID = UUID()
                     progress = 1.0
-                } else if state.isOvertime {
-                    // Overtime: reset animation ID and immediately set to 100%
+                } else if newState.isOvertime {
+                    // Overtime: cancel any in-flight animation and immediately set to 100%
                     progressAnimationID = UUID()
                     progress = 1.0
-                } else if let eta = state.eta {
-                    // Normal: animate to 100% over ETA duration
-                    withAnimation(.easeOut(duration: eta)) {
+                } else if let newEta = newState.eta, oldState.eta != newEta, !newState.isFinished, !newState.isOvertime {
+                    // ETA became available or changed: start/restart progress animation
+                    progressAnimationID = UUID() // Cancel any existing animation
+                    progress = 0.0
+                    withAnimation(.easeOut(duration: newEta)) {
                         progress = 1.0
                     }
                 }
