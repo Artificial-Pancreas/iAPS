@@ -13,7 +13,6 @@ extension UserDefaults {
         case preferredRegion = "com.loopkit.Loop.AIPreferredRegion"
         case nutritionAuthority = "com.loopkit.Loop.AINutritionAuthority"
         case aiProviderStatistics = "com.loopkit.Loop.AIStatistics"
-        case alwaysOpenCamera = "com.loopkit.Loop.AlwaysOpenCamera"
     }
 
     var claudeAPIKey: String {
@@ -110,15 +109,6 @@ extension UserDefaults {
         }
         set {
             set(newValue.rawValue, forKey: AIKey.nutritionAuthority.rawValue)
-        }
-    }
-
-    var alwaysOpenCamera: Bool {
-        get {
-            bool(forKey: AIKey.alwaysOpenCamera.rawValue)
-        }
-        set {
-            set(newValue, forKey: AIKey.alwaysOpenCamera.rawValue)
         }
     }
 }

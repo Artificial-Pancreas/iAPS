@@ -475,7 +475,7 @@ struct SearchResultsView: View {
                             icon: "camera.fill",
                             iconColor: .purple,
                             title: "Photo Analysis",
-                            description: "Snap a picture for AI-powered nutrition analysis"
+                            description: "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library."
                         )
                     }
                     .buttonStyle(.plain)

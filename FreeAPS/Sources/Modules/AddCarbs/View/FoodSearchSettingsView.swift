@@ -51,8 +51,6 @@ struct FoodSearchSettingsView: View {
     @AppStorage(UserDefaults.AIKey.nutritionAuthority.rawValue) private var preferredNutritionAuthority: NutritionAuthority =
         .localDefault
 
-    @AppStorage(UserDefaults.AIKey.alwaysOpenCamera.rawValue) private var alwaysOpenCamera: Bool = false
-
     @State private var preferredLanguage: String = ""
     @State private var preferredRegion: String = ""
 
@@ -396,15 +394,6 @@ struct FoodSearchSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                     }
-                }
-
-                Section(
-                    header: Text("UI/UX")
-                ) {
-                    Toggle(isOn: $alwaysOpenCamera) {
-                        Text("Always open camera")
-                    }
-                    Text("Long tap to select from photo library").font(.caption)
                 }
 
                 // Statistics Section
