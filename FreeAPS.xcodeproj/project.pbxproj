@@ -487,7 +487,7 @@
 		F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */; };
 		F2EE83C52E739B0100D7177E /* CalendarShareStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */; };
 		F2EE83C72E73A04200D7177E /* KnownPlugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C62E73A04200D7177E /* KnownPlugins.swift */; };
-		F2FA68842EE905F100476D7B /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FA68832EE905F100476D7B /* Types.swift */; };
+		F2FA68842EE905F100476D7B /* AITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FA68832EE905F100476D7B /* AITypes.swift */; };
 		F2FA68862EE9061D00476D7B /* FoodAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FA68852EE9061D00476D7B /* FoodAnalysisService.swift */; };
 		F2FA68882EE90B0F00476D7B /* AIPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FA68872EE90B0F00476D7B /* AIPrompts.swift */; };
 		F2FA688A2EE90FD500476D7B /* ImageAnalysisCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FA68892EE90FD500476D7B /* ImageAnalysisCache.swift */; };
@@ -1161,7 +1161,7 @@
 		F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareProvider.swift; sourceTree = "<group>"; };
 		F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareStateModel.swift; sourceTree = "<group>"; };
 		F2EE83C62E73A04200D7177E /* KnownPlugins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPlugins.swift; sourceTree = "<group>"; };
-		F2FA68832EE905F100476D7B /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		F2FA68832EE905F100476D7B /* AITypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITypes.swift; sourceTree = "<group>"; };
 		F2FA68852EE9061D00476D7B /* FoodAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAnalysisService.swift; sourceTree = "<group>"; };
 		F2FA68872EE90B0F00476D7B /* AIPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPrompts.swift; sourceTree = "<group>"; };
 		F2FA68892EE90FD500476D7B /* ImageAnalysisCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnalysisCache.swift; sourceTree = "<group>"; };
@@ -1481,6 +1481,7 @@
 				F24EB2932EE5B8B100C981A2 /* FoodAnalysisResult.swift */,
 				F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */,
 				F272855D2EF07D4100782A53 /* AIFoodItem.swift */,
+				F2FA68832EE905F100476D7B /* AITypes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1488,7 +1489,6 @@
 		19C3C72C2E97AE520000BE4D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				F2FA68832EE905F100476D7B /* Types.swift */,
 				19C3C7272E97AE520000BE4D /* AIFoodAnalysis.swift */,
 				19C3C7282E97AE520000BE4D /* BarcodeScannerService.swift */,
 				F2FA68852EE9061D00476D7B /* FoodAnalysisService.swift */,
@@ -3648,7 +3648,7 @@
 				3171D2818C7C72CD1584BB5E /* NotificationsConfigStateModel.swift in Sources */,
 				CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */,
 				CE7CA3502A064973004BE681 /* CancelTempPresetIntent.swift in Sources */,
-				F2FA68842EE905F100476D7B /* Types.swift in Sources */,
+				F2FA68842EE905F100476D7B /* AITypes.swift in Sources */,
 				6B1F539F9FF75646D1606066 /* SnoozeDataFlow.swift in Sources */,
 				6FFAE524D1D9C262F2407CAE /* SnoozeProvider.swift in Sources */,
 				8194B80890CDD6A3C13B0FEE /* SnoozeStateModel.swift in Sources */,

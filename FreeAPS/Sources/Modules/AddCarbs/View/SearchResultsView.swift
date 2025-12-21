@@ -1159,7 +1159,6 @@ private struct AnalysisResultListSection: View {
         var base: CGFloat = 420
         if let desc = analysisResult.overallDescription, !desc.isEmpty { base += 60 }
         if let diabetes = analysisResult.diabetesConsiderations, !diabetes.isEmpty { base += 60 }
-        if let notes = analysisResult.notes, !notes.isEmpty { base += 60 }
         return min(max(base, 400), 640)
     }
 
@@ -1402,12 +1401,6 @@ private struct SectionInfoPopup: View {
                         embedIcon: true
                     )
                     .padding(.horizontal)
-                }
-
-                // Notes
-                if let notes = analysisResult.notes, !notes.isEmpty {
-                    InfoCard(icon: "note.text", title: "Notes", content: notes, color: .gray, embedIcon: true)
-                        .padding(.horizontal)
                 }
 
                 Spacer(minLength: 8)

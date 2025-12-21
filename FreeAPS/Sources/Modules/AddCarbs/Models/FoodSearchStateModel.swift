@@ -347,7 +347,6 @@ final class FoodSearchStateModel: ObservableObject {
                 briefDescription: existing.briefDescription,
                 overallDescription: existing.overallDescription,
                 diabetesConsiderations: existing.diabetesConsiderations,
-                notes: existing.notes,
                 source: existing.source,
                 barcode: existing.barcode,
                 textQuery: existing.textQuery
@@ -362,7 +361,6 @@ final class FoodSearchStateModel: ObservableObject {
                 briefDescription: nil,
                 overallDescription: nil,
                 diabetesConsiderations: nil,
-                notes: nil,
                 source: source,
                 barcode: nil,
                 textQuery: nil

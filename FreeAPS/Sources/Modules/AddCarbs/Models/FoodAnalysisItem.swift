@@ -20,7 +20,6 @@ enum FoodItemSource {
     case manual
 }
 
-/// Individual food item analysis with detailed portion assessment
 struct AnalysedFoodItem: Identifiable {
     let id = UUID()
     let name: String
@@ -31,16 +30,8 @@ struct AnalysedFoodItem: Identifiable {
     let standardServing: String?
     let standardServingSize: Decimal?
     let units: MealUnits?
-//    let servingsStandard: String?
-//    let servingMultiplier: Double
     let preparationMethod: String?
     let visualCues: String?
-//    let carbohydrates: Double
-//    let calories: Double?
-//    let fat: Double?
-//    let fiber: Double?
-//    let protein: Double?
-//    let sugars: Double?
     let glycemicIndex: Decimal?
     let caloriesPer100: Decimal?
     let carbsPer100: Decimal?
@@ -157,8 +148,6 @@ extension AnalysedFoodItem: Decodable {
         let portionEstimate = try container.decodeTrimmedIfPresent(forKey: .portionEstimate)
         let portionEstimateSize = try container.decodeNumberIfPresent(forKey: .portionEstimateSize) ?? standardServingSize
         let units = try container.decodeIfPresent(MealUnits.self, forKey: .units) ?? .grams
-//        let servingsStandard = try container.decodeTrimmedIfPresent(forKey: .servingsStandard)
-//        let servingMultiplier = try container.decodeNumberIfPresent(forKey: .servingMultiplier) ?? 1.0
         let preparationMethod = try container.decodeTrimmedIfPresent(forKey: .preparationMethod)
         let visualCues = try container.decodeTrimmedIfPresent(forKey: .visualCues)
         let glycemicIndex = try container.decodeNumberIfPresent(forKey: .glycemicIndex)
@@ -178,8 +167,6 @@ extension AnalysedFoodItem: Decodable {
         self.standardServing = standardServing
         self.standardServingSize = standardServingSize
         self.units = units
-//            servingsStandard: servingsStandard,
-//            servingMultiplier: servingMultiplier,
         self.preparationMethod = preparationMethod
         self.visualCues = visualCues
         self.glycemicIndex = glycemicIndex
@@ -204,16 +191,8 @@ extension AnalysedFoodItem: Decodable {
         case standardServing = "standard_serving"
         case standardServingSize = "standard_serving_size"
         case units
-//        case servingsStandard = "serving_standard"
-//        case servingMultiplier = "serving_multiplier"
         case preparationMethod = "preparation_method"
         case visualCues = "visual_cues"
-//        case carbohydrates
-//        case calories
-//        case fat
-//        case fiber
-//        case protein
-//        case sugars
         case glycemicIndex = "glycemic_index"
         case caloriesPer100 = "calories_per_100"
         case carbsPer100 = "carbs_per_100"
@@ -268,9 +247,6 @@ extension AnalysedFoodItem {
 
     static var schemaText: [(String, Any)] {
         let fields = self.fields + [
-            //        (.portionEstimateSize,
-            //            "decimal, assume the portion matches the standard serving size, in grams or milliliters; do not include unit;"),
-//            (.preparationMethod, "cooking details if mentioned")
             (
                 .assessmentNotes,
                 "explain how you calculated this specific portion size, what references you used; (language)"
