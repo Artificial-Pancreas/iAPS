@@ -384,6 +384,13 @@ enum TextSearchProvider {
     case usdaFoodData
     case openFoodFacts
 
+    var isAI: Bool {
+        switch self {
+        case .aiModel: true
+        default: false
+        }
+    }
+
     var providerName: String {
         switch self {
         case let .aiModel(model): model.provider.displayName

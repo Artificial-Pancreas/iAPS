@@ -72,9 +72,12 @@ struct FoodSearchView: View {
         var body: some View {
             HStack(spacing: 10) {
                 HStack(spacing: 10) {
-                    Image(systemName: "magnifyingglass")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.secondary)
+                    Image(
+                        systemName: state.isBarcode ? "barcode" :
+                            UserDefaults.standard.textSearchProvider.isAI ? "text.bubble" : "magnifyingglass"
+                    )
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.secondary)
 
                     ZStack(alignment: .trailing) {
                         TextField("Search foods...", text: $state.foodSearchText)
@@ -92,18 +95,6 @@ struct FoodSearchView: View {
                                     state.showingFoodSearch = true
                                 }
                             }
-
-                        if state.isBarcode {
-                            Text("barcode")
-                                .font(.caption2)
-                                .fontWeight(.medium)
-                                .foregroundColor(.blue)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.blue.opacity(0.12))
-                                .cornerRadius(6)
-                                .padding(.trailing, 4)
-                        }
                     }
 
                     // Clear button
