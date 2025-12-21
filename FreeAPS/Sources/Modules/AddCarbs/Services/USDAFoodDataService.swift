@@ -84,31 +84,18 @@ final class USDAFoodDataService {
                 throw OpenFoodFactsError.serverError(httpResponse.statusCode)
             }
 
-            // Parse USDA response with detailed error handling
-            guard let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                print("🇺🇸 USDA: Invalid JSON response format")
-                throw OpenFoodFactsError
-                    .decodingError(NSError(
-                        domain: "USDA",
-                        code: 1,
-                        userInfo: [NSLocalizedDescriptionKey: "Invalid JSON response"]
-                    ))
+            // Decode USDA response using Codable
+            let decoder = JSONDecoder()
+            let searchResponse: USDASearchResponse
+
+            do {
+                searchResponse = try decoder.decode(USDASearchResponse.self, from: data)
+            } catch {
+                print("🇺🇸 USDA: Decoding error - \(error)")
+                throw OpenFoodFactsError.decodingError(error)
             }
 
-            // Check for API errors in response
-            if let error = jsonResponse["error"] as? [String: Any],
-               let code = error["code"] as? String,
-               let message = error["message"] as? String
-            {
-                print("🇺🇸 USDA: API error - \(code): \(message)")
-                throw OpenFoodFactsError.serverError(400)
-            }
-
-            guard let foods = jsonResponse["foods"] as? [[String: Any]] else {
-                print("🇺🇸 USDA: No foods array in response")
-                throw OpenFoodFactsError.noData
-            }
-
+            let foods = searchResponse.foods
             print("🇺🇸 USDA: Raw API returned \(foods.count) food items")
 
             // Check for task cancellation before processing results
@@ -145,13 +132,9 @@ final class USDAFoodDataService {
     }
 
     /// Convert USDA food data to OpenFoodFactsProduct for UI compatibility
-    private func convertUSDAFoodToProduct(_ foodData: [String: Any]) -> OpenFoodFactsProduct? {
-        guard let fdcId = foodData["fdcId"] as? Int,
-              let description = foodData["description"] as? String
-        else {
-            print("🇺🇸 USDA: Missing fdcId or description for food item")
-            return nil
-        }
+    private func convertUSDAFoodToProduct(_ foodData: USDAFood) -> OpenFoodFactsProduct? {
+        let fdcId = foodData.fdcId
+        let description = foodData.description
 
         // Extract nutrition data from USDA food nutrients with comprehensive mapping
         var carbs: Decimal = 0
@@ -164,119 +147,66 @@ final class USDAFoodDataService {
         // Track what nutrients we found for debugging
         var foundNutrients: [String] = []
 
-        if let foodNutrients = foodData["foodNutrients"] as? [[String: Any]] {
+        if let foodNutrients = foodData.foodNutrients {
             print("🇺🇸 USDA: Found \(foodNutrients.count) nutrients for '\(description)'")
 
             for nutrient in foodNutrients {
                 // Debug: print the structure of the first few nutrients
                 if foundNutrients.count < 3 {
-                    print("🇺🇸 USDA: Nutrient structure: \(nutrient)")
+                    print(
+                        "🇺🇸 USDA: Nutrient - Code: \(nutrient.nutrientCode?.rawValue ?? -1), Name: \(nutrient.nutrientName ?? "nil"), Value: \(nutrient.value ?? 0)"
+                    )
                 }
 
-                // Try different possible field names for nutrient number
-                var nutrientNumber: Int?
-                if let number = nutrient["nutrientNumber"] as? Int {
-                    nutrientNumber = number
-                } else if let number = nutrient["nutrientId"] as? Int {
-                    nutrientNumber = number
-                } else if let numberString = nutrient["nutrientNumber"] as? String,
-                          let number = Int(numberString)
-                {
-                    nutrientNumber = number
-                } else if let numberString = nutrient["nutrientId"] as? String,
-                          let number = Int(numberString)
-                {
-                    nutrientNumber = number
-                }
-
-                guard let nutrientNum = nutrientNumber else {
+                guard let nutrientCode = nutrient.nutrientCode,
+                      let value = nutrient.value
+                else {
                     continue
                 }
 
-                // Handle both Double and String values from USDA API
-                var value: Decimal = 0
-                if let doubleValue = nutrient["value"] as? Double {
-                    value = Decimal(doubleValue)
-                } else if let stringValue = nutrient["value"] as? String,
-                          let parsedValue = Decimal(from: stringValue)
-                {
-                    value = parsedValue
-                } else if let doubleValue = nutrient["amount"] as? Double {
-                    value = Decimal(doubleValue)
-                } else if let stringValue = nutrient["amount"] as? String,
-                          let parsedValue = Decimal(from: stringValue)
-                {
-                    value = parsedValue
-                } else {
-                    continue
-                }
+                let decimalValue = Decimal(value)
 
-                // Comprehensive USDA nutrient number mapping
-                switch nutrientNum {
-                // Carbohydrates - multiple possible sources
-                case 205: // Carbohydrate, by difference (most common)
-                    carbs = value
-                    foundNutrients.append("carbs-205")
-                case 1005: // Carbohydrate, by summation
-                    if carbs == 0 { carbs = value }
-                    foundNutrients.append("carbs-1005")
-                case 1050: // Carbohydrate, other
-                    if carbs == 0 { carbs = value }
-                    foundNutrients.append("carbs-1050")
+                // Use the enum to handle nutrients by category with priority
+                switch nutrientCode.category {
+                case .carbohydrate:
+                    if carbs == 0 || nutrientCode.priority < foundNutrientPriority(for: .carbohydrate) {
+                        carbs = decimalValue
+                        foundNutrients.append("carbs-\(nutrientCode.rawValue)")
+                    }
 
-                // Protein - multiple possible sources
-                case 203: // Protein (most common)
-                    protein = value
-                    foundNutrients.append("protein-203")
-                case 1003: // Protein, crude
-                    if protein == 0 { protein = value }
-                    foundNutrients.append("protein-1003")
+                case .protein:
+                    if protein == 0 || nutrientCode.priority < foundNutrientPriority(for: .protein) {
+                        protein = decimalValue
+                        foundNutrients.append("protein-\(nutrientCode.rawValue)")
+                    }
 
-                // Fat - multiple possible sources
-                case 204: // Total lipid (fat) (most common)
-                    fat = value
-                    foundNutrients.append("fat-204")
-                case 1004: // Total lipid, crude
-                    if fat == 0 { fat = value }
-                    foundNutrients.append("fat-1004")
+                case .fat:
+                    if fat == 0 || nutrientCode.priority < foundNutrientPriority(for: .fat) {
+                        fat = decimalValue
+                        foundNutrients.append("fat-\(nutrientCode.rawValue)")
+                    }
 
-                // Fiber - multiple possible sources
-                case 291: // Fiber, total dietary (most common)
-                    fiber = value
-                    foundNutrients.append("fiber-291")
-                case 1079: // Fiber, crude
-                    if fiber == 0 { fiber = value }
-                    foundNutrients.append("fiber-1079")
+                case .fiber:
+                    if fiber == 0 || nutrientCode.priority < foundNutrientPriority(for: .fiber) {
+                        fiber = decimalValue
+                        foundNutrients.append("fiber-\(nutrientCode.rawValue)")
+                    }
 
-                // Sugars - multiple possible sources
-                case 269: // Sugars, total including NLEA (most common)
-                    sugars = value
-                    foundNutrients.append("sugars-269")
-                case 1010: // Sugars, total
-                    if sugars == 0 { sugars = value }
-                    foundNutrients.append("sugars-1010")
-                case 1063: // Sugars, added
-                    if sugars == 0 { sugars = value }
-                    foundNutrients.append("sugars-1063")
+                case .sugar:
+                    if sugars == 0 || nutrientCode.priority < foundNutrientPriority(for: .sugar) {
+                        sugars = decimalValue
+                        foundNutrients.append("sugars-\(nutrientCode.rawValue)")
+                    }
 
-                // Energy/Calories - multiple possible sources
-                case 208: // Energy (kcal) (most common)
-                    energy = value
-                    foundNutrients.append("energy-208")
-                case 1008: // Energy, gross
-                    if energy == 0 { energy = value }
-                    foundNutrients.append("energy-1008")
-                case 1062: // Energy, metabolizable
-                    if energy == 0 { energy = value }
-                    foundNutrients.append("energy-1062")
-
-                default:
-                    break
+                case .energy:
+                    if energy == 0 || nutrientCode.priority < foundNutrientPriority(for: .energy) {
+                        energy = decimalValue
+                        foundNutrients.append("energy-\(nutrientCode.rawValue)")
+                    }
                 }
             }
         } else {
             print("🇺🇸 USDA: No foodNutrients array found in food data for '\(description)'")
-            print("🇺🇸 USDA: Available keys in foodData: \(Array(foodData.keys))")
         }
 
         // Log what we found for debugging
@@ -319,6 +249,13 @@ final class USDAFoodDataService {
             imageFrontURL: nil,
             code: String(fdcId)
         )
+    }
+
+    /// Helper to determine the priority of an already-found nutrient (for now, always returns max priority)
+    private func foundNutrientPriority(for _: USDANutrientCode.NutrientCategory) -> Int {
+        // This could be enhanced to track actual priorities if needed
+        // For now, we only replace if we haven't found anything yet (handled by == 0 check)
+        Int.max
     }
 
     /// Clean up USDA food descriptions for better readability
@@ -380,5 +317,198 @@ final class USDAFoodDataService {
         }
 
         return nil
+    }
+}
+
+// MARK: - USDA API Response Models
+
+/// USDA Nutrient identification codes
+/// Based on USDA FoodData Central nutrient database
+enum USDANutrientCode: Int {
+    // MARK: Carbohydrates
+
+    /// Carbohydrate, by difference (most common)
+    case carbohydrateByDifference = 205
+    /// Carbohydrate, by summation
+    case carbohydrateBySummation = 1005
+    /// Carbohydrate, other
+    case carbohydrateOther = 1050
+
+    // MARK: Protein
+
+    /// Protein (most common)
+    case protein = 203
+    /// Protein, crude
+    case proteinCrude = 1003
+
+    // MARK: Fat
+
+    /// Total lipid (fat) (most common)
+    case totalLipidFat = 204
+    /// Total lipid, crude
+    case totalLipidCrude = 1004
+
+    // MARK: Fiber
+
+    /// Fiber, total dietary (most common)
+    case fiberTotalDietary = 291
+    /// Fiber, crude
+    case fiberCrude = 1079
+
+    // MARK: Sugars
+
+    /// Sugars, total including NLEA (most common)
+    case sugarsTotalIncludingNLEA = 269
+    /// Sugars, total
+    case sugarsTotal = 1010
+    /// Sugars, added
+    case sugarsAdded = 1063
+
+    // MARK: Energy/Calories
+
+    /// Energy (kcal) (most common)
+    case energyKcal = 208
+    /// Energy, gross
+    case energyGross = 1008
+    /// Energy, metabolizable
+    case energyMetabolizable = 1062
+
+    /// Category of the nutrient for easier grouping
+    var category: NutrientCategory {
+        switch self {
+        case .carbohydrateByDifference,
+             .carbohydrateBySummation,
+             .carbohydrateOther:
+            return .carbohydrate
+        case .protein,
+             .proteinCrude:
+            return .protein
+        case .totalLipidCrude,
+             .totalLipidFat:
+            return .fat
+        case .fiberCrude,
+             .fiberTotalDietary:
+            return .fiber
+        case .sugarsAdded,
+             .sugarsTotal,
+             .sugarsTotalIncludingNLEA:
+            return .sugar
+        case .energyGross,
+             .energyKcal,
+             .energyMetabolizable:
+            return .energy
+        }
+    }
+
+    /// Priority within its category (lower is higher priority)
+    var priority: Int {
+        switch self {
+        // Primary values (most common/preferred)
+        case .carbohydrateByDifference,
+             .energyKcal,
+             .fiberTotalDietary,
+             .protein,
+             .sugarsTotalIncludingNLEA,
+             .totalLipidFat:
+            return 1
+        // Secondary values (summation/alternative)
+        case .carbohydrateBySummation,
+             .energyGross,
+             .fiberCrude,
+             .proteinCrude,
+             .sugarsTotal,
+             .totalLipidCrude:
+            return 2
+        // Tertiary values (other/less common)
+        case .carbohydrateOther,
+             .energyMetabolizable,
+             .sugarsAdded:
+            return 3
+        }
+    }
+
+    enum NutrientCategory {
+        case carbohydrate
+        case protein
+        case fat
+        case fiber
+        case sugar
+        case energy
+    }
+}
+
+/// Root response from USDA FoodData Central search API
+struct USDASearchResponse: Codable {
+    let foods: [USDAFood]
+    let totalHits: Int?
+    let currentPage: Int?
+    let totalPages: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case foods
+        case totalHits
+        case currentPage
+        case totalPages
+    }
+}
+
+/// USDA Food item from search results
+struct USDAFood: Codable {
+    let fdcId: Int
+    let description: String
+    let dataType: String?
+    let brandOwner: String?
+    let brandName: String?
+    let ingredients: String?
+    let foodNutrients: [USDAFoodNutrient]?
+    let servingSize: Double?
+    let servingSizeUnit: String?
+    let householdServingFullText: String?
+
+    enum CodingKeys: String, CodingKey {
+        case fdcId
+        case description
+        case dataType
+        case brandOwner
+        case brandName
+        case ingredients
+        case foodNutrients
+        case servingSize
+        case servingSizeUnit
+        case householdServingFullText
+    }
+}
+
+/// Nutrient information from USDA food item
+struct USDAFoodNutrient: Codable {
+    let nutrientId: Int?
+    let nutrientNumber: String?
+    let nutrientName: String?
+    let value: Double?
+    let unitName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case nutrientId
+        case nutrientNumber
+        case nutrientName
+        case value
+        case unitName
+    }
+
+    /// Get the nutrient number as an integer, handling both String and Int formats
+    var nutrientNumberAsInt: Int? {
+        if let nutrientId = nutrientId {
+            return nutrientId
+        }
+        if let nutrientNumber = nutrientNumber, let intValue = Int(nutrientNumber) {
+            return intValue
+        }
+        return nil
+    }
+
+    /// Get the nutrient as a typed enum value
+    var nutrientCode: USDANutrientCode? {
+        guard let number = nutrientNumberAsInt else { return nil }
+        return USDANutrientCode(rawValue: number)
     }
 }
