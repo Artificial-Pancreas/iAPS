@@ -5,6 +5,8 @@ struct SearchResultsView: View {
     @ObservedObject var state: FoodSearchStateModel
     let onFoodItemSelected: (AIFoodItem, Date?) -> Void
     let onCompleteMealSelected: (AIFoodItem, Date?) -> Void
+    let addButtonLabelKey: LocalizedStringKey = "" // TODO: not used currently
+    let addAllButtonLabelKey: LocalizedStringKey
 
     @State private var clearedResults: [FoodAnalysisResult] = []
     @State private var clearedResultsViewState: SearchResultsState?
@@ -13,11 +15,16 @@ struct SearchResultsView: View {
     @State private var showManualEntry = false
 
     private var nonDeletedItemCount: Int {
-        state.allFoodItems.filter { !state.resultsView.isDeleted($0) }.count
+        state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.resultsView.isDeleted($0) }.count
+    }
+
+    private var hasVisibleContent: Bool {
+        // Only deleted sections count as removing content (item deletions can be undone)
+        !state.visibleSections.isEmpty
     }
 
     private var totalCalories: Decimal {
-        state.allFoodItems.reduce(0) { sum, item in
+        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.resultsView.isDeleted(item) else { return sum }
             let portion = state.resultsView.portionSize(for: item)
             return sum + (item.caloriesInPortion(portion: portion) ?? 0)
@@ -25,7 +32,7 @@ struct SearchResultsView: View {
     }
 
     private var totalCarbs: Decimal {
-        state.allFoodItems.reduce(0) { sum, item in
+        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.resultsView.isDeleted(item) else { return sum }
             let portion = state.resultsView.portionSize(for: item)
             return sum + (item.carbsInPortion(portion: portion) ?? 0)
@@ -33,7 +40,7 @@ struct SearchResultsView: View {
     }
 
     private var totalProtein: Decimal {
-        state.allFoodItems.reduce(0) { sum, item in
+        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.resultsView.isDeleted(item) else { return sum }
             let portion = state.resultsView.portionSize(for: item)
             return sum + (item.proteinInPortion(portion: portion) ?? 0)
@@ -41,7 +48,7 @@ struct SearchResultsView: View {
     }
 
     private var totalFat: Decimal {
-        state.allFoodItems.reduce(0) { sum, item in
+        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.resultsView.isDeleted(item) else { return sum }
             let portion = state.resultsView.portionSize(for: item)
             return sum + (item.fatInPortion(portion: portion) ?? 0)
@@ -50,8 +57,7 @@ struct SearchResultsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if state.searchResults.isEmpty {
-                
+            if !hasVisibleContent {
                 Button(action: {
                     // Dismiss keyboard
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -76,7 +82,7 @@ struct SearchResultsView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
             }
-            
+
             // Loading indicator
             if state.isLoading {
                 loadingBanner()
@@ -96,14 +102,18 @@ struct SearchResultsView: View {
             }
 
             // Always show results if available, otherwise show empty state
-            if state.searchResults.isEmpty {
+            if !hasVisibleContent {
                 noSearchesView
             } else {
                 searchResultsView
             }
         }
-        .onChange(of: state.searchResults) { _, newValue in
-            if clearedResultsViewState != nil, !newValue.isEmpty {
+        .onChange(of: state.searchResults) { _, _ in
+            // Only clear undo state if we have new visible content
+            let hasNewVisibleContent = !state.visibleSections.isEmpty &&
+                !state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.resultsView.isDeleted($0) }.isEmpty
+
+            if clearedResultsViewState != nil, hasNewVisibleContent {
                 withAnimation(.easeOut(duration: 0.2)) {
                     clearedResults = []
                     clearedResultsViewState = nil
@@ -228,84 +238,82 @@ struct SearchResultsView: View {
     private var searchResultsView: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 6) {
-                if nonDeletedItemCount > 1 {
-                    // Nutrition badges in a card-like container
-                    VStack(spacing: 10) {
-                        HStack {
-                            Text("Meal Totals")
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            // Clear All button
-                            Button(action: {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    // Save current state for undo
-                                    clearedResults = state.searchResults
-                                    clearedResultsViewState = SearchResultsState()
-                                    clearedResultsViewState?.editedItems = state.resultsView.editedItems
-                                    clearedResultsViewState?.deletedSections = state.resultsView.deletedSections
-                                    clearedResultsViewState?.collapsedSections = state.resultsView.collapsedSections
+                // Nutrition badges in a card-like container
+                VStack(spacing: 10) {
+                    HStack {
+                        Text("Meal Totals")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        // Clear All button
+                        Button(action: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                // Save current state for undo
+                                clearedResults = state.searchResults
+                                clearedResultsViewState = SearchResultsState()
+                                clearedResultsViewState?.editedItems = state.resultsView.editedItems
+                                clearedResultsViewState?.deletedSections = state.resultsView.deletedSections
+                                clearedResultsViewState?.collapsedSections = state.resultsView.collapsedSections
 
-                                    // Clear everything
-                                    state.searchResults = []
-                                    state.resultsView.clear()
-                                    state.latestSearchError = nil
-                                    state.latestSearchIcon = nil
-                                }
-                            }) {
-                                Text("Clear All")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                // Clear everything
+                                state.searchResults = []
+                                state.resultsView.clear()
+                                state.latestSearchError = nil
+                                state.latestSearchIcon = nil
                             }
+                        }) {
+                            Text("Clear All")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                         }
-
-                        HStack(spacing: 8) {
-                            TotalNutritionBadge(
-                                value: totalCarbs,
-                                label: "carbs",
-                                color: NutritionBadgeConfig.carbsColor
-                            )
-                            .id("carbs-\(totalCarbs)")
-                            .transition(.scale.combined(with: .opacity))
-
-                            TotalNutritionBadge(
-                                value: totalProtein,
-                                label: "protein",
-                                color: NutritionBadgeConfig.proteinColor
-                            )
-                            .id("protein-\(totalProtein)")
-                            .transition(.scale.combined(with: .opacity))
-
-                            TotalNutritionBadge(
-                                value: totalFat,
-                                label: "fat",
-                                color: NutritionBadgeConfig.fatColor
-                            )
-                            .id("fat-\(totalFat)")
-                            .transition(.scale.combined(with: .opacity))
-
-                            TotalNutritionBadge(
-                                value: totalCalories,
-                                label: "kcal",
-                                color: NutritionBadgeConfig.caloriesColor
-                            )
-                            .id("calories-\(totalCalories)")
-                            .transition(.scale.combined(with: .opacity))
-                        }
-                        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCarbs)
-                        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalProtein)
-                        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalFat)
-                        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCalories)
                     }
-                    .padding(.bottom, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(.systemBackground))
-                            .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
-                    )
+
+                    HStack(spacing: 8) {
+                        TotalNutritionBadge(
+                            value: totalCarbs,
+                            label: "carbs",
+                            color: NutritionBadgeConfig.carbsColor
+                        )
+                        .id("carbs-\(totalCarbs)")
+                        .transition(.scale.combined(with: .opacity))
+
+                        TotalNutritionBadge(
+                            value: totalProtein,
+                            label: "protein",
+                            color: NutritionBadgeConfig.proteinColor
+                        )
+                        .id("protein-\(totalProtein)")
+                        .transition(.scale.combined(with: .opacity))
+
+                        TotalNutritionBadge(
+                            value: totalFat,
+                            label: "fat",
+                            color: NutritionBadgeConfig.fatColor
+                        )
+                        .id("fat-\(totalFat)")
+                        .transition(.scale.combined(with: .opacity))
+
+                        TotalNutritionBadge(
+                            value: totalCalories,
+                            label: "kcal",
+                            color: NutritionBadgeConfig.caloriesColor
+                        )
+                        .id("calories-\(totalCalories)")
+                        .transition(.scale.combined(with: .opacity))
+                    }
+                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCarbs)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalProtein)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalFat)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCalories)
                 }
-                
+                .padding(.bottom, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color(.systemBackground))
+                        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+                )
+
                 HStack(alignment: .center) {
 //                    Text("\(nonDeletedItemCount) \(nonDeletedItemCount == 1 ? "Food Item" : "Food Items")")
 //                        .font(.title3)
@@ -351,10 +359,12 @@ struct SearchResultsView: View {
                         }
                         .buttonStyle(.plain)
                         .padding(.trailing, 8)
-                        
+
                         Button(action: {
-                            let mealName = nonDeletedItemCount == 1 ?
-                                state.allFoodItems.first(where: { !state.resultsView.isDeleted($0) })?.name ?? "Meal" :
+                            let visibleItems = state.visibleSections.flatMap(\.foodItemsDetailed)
+                                .filter { !state.resultsView.isDeleted($0) }
+                            let mealName = visibleItems.count == 1 ?
+                                visibleItems.first?.name ?? "Meal" :
                                 "Complete Meal"
 
                             let totalMeal = AIFoodItem(
@@ -364,14 +374,12 @@ struct SearchResultsView: View {
                                 carbs: totalCarbs,
                                 protein: totalProtein,
                                 fat: totalFat,
-                                imageURL: nonDeletedItemCount == 1 ? state.allFoodItems
-                                    .first(where: { !state.resultsView.isDeleted($0) })?
-                                    .imageURL : nil,
-                                source: state.searchResults.first?.source ?? .ai
+                                imageURL: visibleItems.count == 1 ? visibleItems.first?.imageURL : nil,
+                                source: state.visibleSections.first?.source ?? .ai
                             )
                             onCompleteMealSelected(totalMeal, selectedTime)
                         }) {
-                            Text(nonDeletedItemCount == 1 ? "Add" : "Add All")
+                            Text(addAllButtonLabelKey)
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
@@ -390,7 +398,6 @@ struct SearchResultsView: View {
                         .presentationDetents([.height(280)])
                         .presentationDragIndicator(.visible)
                 }
-                
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 20)
@@ -434,7 +441,7 @@ struct SearchResultsView: View {
         formatter.timeStyle = .short
         return formatter.string(from: date)
     }
-    
+
     private var noSearchesView: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -446,7 +453,7 @@ struct SearchResultsView: View {
                         title: "Text Search",
                         description: "Search databases or describe food for AI analysis"
                     )
-                    
+
                     // Barcode Scanner Card
                     Button(action: {
                         state.foodSearchRoute = .barcodeScanner
@@ -459,7 +466,7 @@ struct SearchResultsView: View {
                         )
                     }
                     .buttonStyle(.plain)
-                    
+
                     // Photo Analysis Card
                     Button(action: {
                         state.foodSearchRoute = .camera
@@ -472,7 +479,7 @@ struct SearchResultsView: View {
                         )
                     }
                     .buttonStyle(.plain)
-                    
+
                     // Manual Entry Card
                     Button(action: {
                         showManualEntry = true
@@ -487,7 +494,7 @@ struct SearchResultsView: View {
                     .buttonStyle(.plain)
                 }
                 .padding(.horizontal)
-                
+
                 // Photography tips
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 6) {
@@ -499,7 +506,7 @@ struct SearchResultsView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 8) {
                         TipRow(icon: "light.max", text: "Use good lighting for best results")
                         TipRow(icon: "arrow.up.left.and.arrow.down.right", text: "Include the full plate or package in frame")
@@ -528,7 +535,7 @@ private struct CapabilityCard: View {
     let iconColor: Color
     let title: String
     let description: String
-    
+
     var body: some View {
         HStack(spacing: 12) {
             // Icon container
@@ -536,25 +543,25 @@ private struct CapabilityCard: View {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(iconColor.opacity(0.12))
                     .frame(width: 44, height: 44)
-                
+
                 Image(systemName: icon)
                     .font(.system(size: 20, weight: .medium))
                     .foregroundColor(iconColor)
             }
-            
+
             // Text content
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(.primary)
-                
+
                 Text(description)
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .lineLimit(2)
             }
-            
+
             Spacer()
         }
         .padding(12)
@@ -568,18 +575,18 @@ private struct CapabilityCard: View {
 private struct TipRow: View {
     let icon: String
     let text: String
-    
+
     var body: some View {
         HStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.system(size: 12))
                 .foregroundColor(.secondary)
                 .frame(width: 16)
-            
+
             Text(text)
                 .font(.caption)
                 .foregroundColor(.secondary)
-            
+
             Spacer()
         }
     }
@@ -590,9 +597,9 @@ private struct TipRow: View {
 private struct ManualFoodEntrySheet: View {
     let onSave: (AnalysedFoodItem) -> Void
     let onCancel: () -> Void
-    
+
     // Create a template food item for the editable popup
-    @State private var editableFoodItem: AnalysedFoodItem = AnalysedFoodItem(
+    @State private var editableFoodItem = AnalysedFoodItem(
         name: "",
         confidence: nil,
         brand: nil,
@@ -615,7 +622,7 @@ private struct ManualFoodEntrySheet: View {
         imageFrontURL: nil,
         source: .manual
     )
-    
+
     @State private var editedPortionSize: Decimal = 100
     @State private var editedName: String = ""
     @State private var editedCaloriesPer100: Decimal?
@@ -625,54 +632,54 @@ private struct ManualFoodEntrySheet: View {
     @State private var editedFiberPer100: Decimal?
     @State private var editedSugarsPer100: Decimal?
     @State private var editedServingSize: Decimal?
-    
+
     private var canSave: Bool {
         editedCarbsPer100 >= 0 && editedProteinPer100 >= 0 && editedFatPer100 >= 0
     }
-    
+
     private func autoGeneratedName() -> String {
         let carbs = editedCarbsPer100
         let protein = editedProteinPer100
         let fat = editedFatPer100
-        
+
         let total = carbs + protein + fat
         guard total > 0 else { return "Food" }
-        
+
         // Calculate percentages
         let carbPercent = (carbs / total) * 100
         let proteinPercent = (protein / total) * 100
         let fatPercent = (fat / total) * 100
-        
+
         // Low-carb check (important for diabetes)
         if carbPercent < 10 {
             if proteinPercent > 50 { return "Lean Protein" }
             if fatPercent > 60 { return "Fatty Food" }
             return "Low-Carb Food"
         }
-        
+
         // Dominant macro (>50%)
         if carbPercent > 50 {
             if carbPercent > 80 { return "Starchy Food" }
             return "Carb Food"
         }
-        
+
         if proteinPercent > 50 {
             if fatPercent < 10 { return "Lean Protein" }
             return "Protein Food"
         }
-        
+
         if fatPercent > 50 {
             return "Fatty Food"
         }
-        
+
         // Balanced
         if carbPercent > 30 && proteinPercent > 30 {
             return "Mixed Food"
         }
-        
+
         return "Food"
     }
-    
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -689,7 +696,7 @@ private struct ManualFoodEntrySheet: View {
                     editedServingSize: $editedServingSize,
                     allowNutritionEditing: true
                 )
-                
+
                 // Editable food name at bottom
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Food Name (Optional)")
@@ -697,7 +704,7 @@ private struct ManualFoodEntrySheet: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                         .padding(.horizontal)
-                    
+
                     TextField(autoGeneratedName(), text: $editedName)
                         .font(.body)
                         .textFieldStyle(.roundedBorder)
@@ -705,7 +712,7 @@ private struct ManualFoodEntrySheet: View {
                 }
                 .padding(.top, 12)
                 .padding(.bottom, 8)
-                
+
                 // Action buttons at bottom
                 HStack(spacing: 12) {
                     Button("Cancel") {
@@ -716,8 +723,8 @@ private struct ManualFoodEntrySheet: View {
                     .background(Color.gray.opacity(0.2))
                     .foregroundColor(.primary)
                     .cornerRadius(10)
-                    
-                    Button("Add") {
+
+                    Button("Save") {
                         saveFoodItem()
                     }
                     .frame(maxWidth: .infinity)
@@ -735,18 +742,18 @@ private struct ManualFoodEntrySheet: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    
+
     private func saveFoodItem() {
         // Calculate calories from macros
         let calculatedCalories = (editedCarbsPer100 * 4) + (editedProteinPer100 * 4) + (editedFatPer100 * 9)
-        
+
         // Use auto-generated name if user hasn't entered one
         let finalName = editedName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?
             autoGeneratedName() : editedName
-        
+
         // Use edited serving size if provided, otherwise nil
         let finalServingSize = editedServingSize
-        
+
         let foodItem = AnalysedFoodItem(
             name: finalName,
             confidence: nil,
@@ -770,7 +777,7 @@ private struct ManualFoodEntrySheet: View {
             imageFrontURL: nil,
             source: .manual
         )
-        
+
         onSave(foodItem)
     }
 }
@@ -780,8 +787,44 @@ private struct ManualFoodEntrySheet: View {
 private struct TimePickerSheet: View {
     @Binding var selectedTime: Date?
     @Binding var isPresented: Bool
-    @State private var pickerDate: Date = Date()
-    
+    @State private var pickerDate = Date()
+
+    // Computed property that adjusts the date to ensure the time is within ±12 hours of now
+    private var adjustedMealTime: Date {
+        let now = Date()
+        let calendar = Calendar.current
+
+        // Get the time components from the picker
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: pickerDate)
+
+        // Create a date with today's date and the selected time
+        guard let todayWithSelectedTime = calendar.date(
+            bySettingHour: timeComponents.hour ?? 0,
+            minute: timeComponents.minute ?? 0,
+            second: 0,
+            of: now
+        ) else {
+            return pickerDate
+        }
+
+        // Calculate the time difference in seconds
+        let timeDifference = todayWithSelectedTime.timeIntervalSince(now)
+        let twelveHoursInSeconds: TimeInterval = 12 * 60 * 60
+
+        // If the selected time is more than 12 hours in the future, it was probably meant for yesterday
+        if timeDifference > twelveHoursInSeconds {
+            return calendar.date(byAdding: .day, value: -1, to: todayWithSelectedTime) ?? todayWithSelectedTime
+        }
+        // If the selected time is more than 12 hours in the past, it was probably meant for tomorrow
+        else if timeDifference < -twelveHoursInSeconds {
+            return calendar.date(byAdding: .day, value: 1, to: todayWithSelectedTime) ?? todayWithSelectedTime
+        }
+        // Otherwise, use today with the selected time
+        else {
+            return todayWithSelectedTime
+        }
+    }
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
@@ -794,7 +837,7 @@ private struct TimePickerSheet: View {
                 .datePickerStyle(.wheel)
                 .labelsHidden()
                 .padding(.horizontal)
-                
+
                 // Action buttons
                 HStack(spacing: 12) {
                     // Reset to "now" button
@@ -811,10 +854,10 @@ private struct TimePickerSheet: View {
                                 .cornerRadius(10)
                         }
                     }
-                    
+
                     // Set time button
                     Button(action: {
-                        selectedTime = pickerDate
+                        selectedTime = adjustedMealTime
                         isPresented = false
                     }) {
                         Text("Set Time")
@@ -1036,14 +1079,14 @@ private struct TotalNutritionBadge: View {
     let unit: String?
     let label: String?
     let color: Color
-    
+
     init(value: Decimal, unit: String? = nil, label: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
         self.label = label
         self.color = color
     }
-    
+
     var body: some View {
         VStack {
             HStack(spacing: 3) {
@@ -1051,7 +1094,7 @@ private struct TotalNutritionBadge: View {
                 Text("\(Double(value), specifier: "%.0f")")
                     .font(.system(size: 17, weight: .bold, design: .rounded)) // Larger
                     .foregroundColor(.primary)
-                
+
                 if let unit = unit {
                     Text(unit)
                         .font(.system(size: 12, weight: .semibold, design: .rounded))
@@ -1073,6 +1116,7 @@ private struct TotalNutritionBadge: View {
         .cornerRadius(10) // Slightly larger radius
     }
 }
+
 private struct ConfidenceBadge: View {
     let level: AIConfidenceLevel
 
@@ -1186,6 +1230,7 @@ private struct AnalysisResultListSection: View {
                             Image(systemName: icon)
                                 .font(.system(size: 16))
                                 .foregroundColor(.secondary)
+                                .frame(width: 44, height: 44)
                         }
                     }
                 }
@@ -1211,7 +1256,7 @@ private struct AnalysisResultListSection: View {
                 } label: {
                     Label("Delete", systemImage: "trash")
                 }
-                
+
                 Button {
                     // TODO: Implement save functionality
                 } label: {
@@ -1385,36 +1430,42 @@ private struct EditableFoodItemInfoPopup: View {
     @Binding var editedFiberPer100: Decimal?
     @Binding var editedSugarsPer100: Decimal?
     @Binding var editedServingSize: Decimal?
-    
+
     let allowNutritionEditing: Bool
-    
+
     @State private var sliderMultiplier: Double = 1.0
     @State private var showAllNutrients: Bool = false
     @FocusState private var focusedField: Field?
-    
+
     enum Field: Hashable {
-        case name, carbs, protein, fat, fiber, sugars, servingSize
+        case name
+        case carbs
+        case protein
+        case fat
+        case fiber
+        case sugars
+        case servingSize
     }
-    
+
     private var baseServingSize: Decimal {
         foodItem.standardServingSize ?? 100
     }
-    
+
     private var unit: String {
         (foodItem.units ?? .grams).localizedAbbreviation
     }
-    
+
     private var hasOptionalNutrients: Bool {
         (editedFiberPer100 != nil && editedFiberPer100! > 0) ||
-        (editedSugarsPer100 != nil && editedSugarsPer100! > 0) ||
-        (editedServingSize != nil && editedServingSize! > 0)
+            (editedSugarsPer100 != nil && editedSugarsPer100! > 0) ||
+            (editedServingSize != nil && editedServingSize! > 0)
     }
-    
+
     // Calculate calories from macros: Carbs (4 kcal/g) + Protein (4 kcal/g) + Fat (9 kcal/g)
     private var calculatedCaloriesPer100: Decimal {
         (editedCarbsPer100 * 4) + (editedProteinPer100 * 4) + (editedFatPer100 * 9)
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -1423,11 +1474,11 @@ private struct EditableFoodItemInfoPopup: View {
                     Text("\(Double(portionSize), specifier: "%.0f") \(unit)")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.orange)
-                    
-                    Slider(value: $sliderMultiplier, in: 0.25...5.0, step: 0.25)
+
+                    Slider(value: $sliderMultiplier, in: 0.25 ... 5.0, step: 0.25)
                         .tint(.orange)
                         .padding(.horizontal)
-                    
+
                     HStack {
                         Text("0.25x")
                             .font(.caption)
@@ -1467,20 +1518,20 @@ private struct EditableFoodItemInfoPopup: View {
                         source: .manual
                     )
                 }
-                
+
                 // Nutrition Table with Editable Per100 values
                 VStack(spacing: 8) {
                     // Header row
                     HStack(spacing: 8) {
                         Text("")
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         Text("This portion")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
                             .frame(width: 80, alignment: .trailing)
-                        
+
                         Text("Per 100\(unit)")
                             .font(.caption)
                             .fontWeight(.semibold)
@@ -1489,9 +1540,9 @@ private struct EditableFoodItemInfoPopup: View {
                     }
                     .padding(.horizontal, 12)
                     .padding(.top, 8)
-                    
+
                     Divider()
-                    
+
                     EditableDetailedNutritionRow(
                         label: "Carbs",
                         portionValue: editedCarbsPer100 / 100 * portionSize,
@@ -1521,7 +1572,7 @@ private struct EditableFoodItemInfoPopup: View {
                         focusedField: $focusedField,
                         field: .fat
                     )
-                    
+
                     // Optional: Fiber (only show if toggled or has value)
                     if showAllNutrients {
                         Divider()
@@ -1538,7 +1589,7 @@ private struct EditableFoodItemInfoPopup: View {
                             field: .fiber
                         )
                     }
-                    
+
                     // Optional: Sugars (only show if toggled or has value)
                     if showAllNutrients {
                         Divider()
@@ -1555,7 +1606,7 @@ private struct EditableFoodItemInfoPopup: View {
                             field: .sugars
                         )
                     }
-                    
+
                     Divider()
                     // Display-only calculated calories (read-only)
                     CalculatedCaloriesRow(
@@ -1564,7 +1615,7 @@ private struct EditableFoodItemInfoPopup: View {
                         per100Value: calculatedCaloriesPer100,
                         unit: "kcal"
                     )
-                    
+
                     // Optional: Serving Size (only show if toggled)
                     if showAllNutrients {
                         Divider()
@@ -1579,7 +1630,7 @@ private struct EditableFoodItemInfoPopup: View {
                             field: .servingSize
                         )
                     }
-                   
+
                     // Button to reveal optional nutrients (disappears after clicked)
                     if allowNutritionEditing && !showAllNutrients {
                         Button(action: {
@@ -1607,7 +1658,7 @@ private struct EditableFoodItemInfoPopup: View {
                         .fill(Color(.secondarySystemBackground))
                 )
                 .padding(.horizontal)
-                
+
                 Spacer(minLength: 8)
             }
             .padding(.vertical)
@@ -1622,23 +1673,23 @@ private struct EditableFoodItemInfoPopup: View {
             }
         }
     }
-    
+
     // Auto-generate food name based on macros
     private var autoGeneratedName: String {
         let carbs = editedCarbsPer100
         let protein = editedProteinPer100
         let fat = editedFatPer100
-        
+
         // Calculate total macros
         let total = carbs + protein + fat
-        
+
         guard total > 0 else { return "Custom Food" }
-        
+
         // Calculate percentages
         let carbPercent = (carbs / total) * 100
         let proteinPercent = (protein / total) * 100
         let fatPercent = (fat / total) * 100
-        
+
         // Determine dominant macro (>50%)
         if carbPercent > 50 {
             if proteinPercent > 20 {
@@ -1665,7 +1716,7 @@ private struct EditableFoodItemInfoPopup: View {
                 return "High-Fat Food"
             }
         }
-        
+
         // Balanced macros - check if any are very low
         if carbPercent < 10 && proteinPercent > 25 && fatPercent > 25 {
             return "Low-Carb Meal"
@@ -1674,7 +1725,7 @@ private struct EditableFoodItemInfoPopup: View {
         } else if proteinPercent < 10 && carbPercent > 25 && fatPercent > 25 {
             return "Low-Protein Snack"
         }
-        
+
         // If nothing specific matches, it's balanced
         return "Balanced Meal"
     }
@@ -1687,19 +1738,19 @@ private struct EditableDetailedNutritionRow: View {
     @Binding var per100Value: Decimal
     let unit: String
     let isEditable: Bool
-    
+
     var focusedField: FocusState<EditableFoodItemInfoPopup.Field?>.Binding
     let field: EditableFoodItemInfoPopup.Field
-    
+
     @State private var editText: String = ""
-    
+
     var body: some View {
         HStack(spacing: 8) {
             Text(label)
                 .font(.subheadline)
                 .foregroundColor(.primary.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             // Per portion value (calculated, read-only)
             HStack(spacing: 2) {
                 Text("\(Double(portionValue), specifier: "%.1f")")
@@ -1712,7 +1763,7 @@ private struct EditableDetailedNutritionRow: View {
                     .frame(width: 24, alignment: .leading)
             }
             .frame(width: 80, alignment: .trailing)
-            
+
             // Per 100g/ml value (editable if enabled)
             if isEditable {
                 HStack(spacing: 4) {
@@ -1735,7 +1786,7 @@ private struct EditableDetailedNutritionRow: View {
                             // Only show value if it's greater than 0, otherwise leave empty
                             editText = per100Value > 0 ? "\(per100Value)" : ""
                         }
-                    
+
                     Text(unit)
                         .font(.caption2)
                         .foregroundColor(.secondary.opacity(0.7))
@@ -1766,14 +1817,14 @@ private struct CalculatedCaloriesRow: View {
     let portionValue: Decimal
     let per100Value: Decimal
     let unit: String
-    
+
     var body: some View {
         HStack(spacing: 8) {
             Text(label)
                 .font(.subheadline)
                 .foregroundColor(.primary.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             // Per portion value (calculated, read-only)
             HStack(spacing: 2) {
                 Text("\(Double(portionValue), specifier: "%.1f")")
@@ -1786,7 +1837,7 @@ private struct CalculatedCaloriesRow: View {
                     .frame(width: 24, alignment: .leading)
             }
             .frame(width: 80, alignment: .trailing)
-            
+
             // Per 100g/ml value (calculated, read-only)
             HStack(spacing: 4) {
                 Text("\(Double(per100Value), specifier: "%.1f")")
@@ -1809,23 +1860,23 @@ private struct EditableServingSizeRow: View {
     @Binding var servingSize: Decimal
     let unit: String
     let isEditable: Bool
-    
+
     var focusedField: FocusState<EditableFoodItemInfoPopup.Field?>.Binding
     let field: EditableFoodItemInfoPopup.Field
-    
+
     @State private var editText: String = ""
-    
+
     var body: some View {
         HStack(spacing: 8) {
             Text("Serving Size")
                 .font(.subheadline)
                 .foregroundColor(.primary.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             // Empty space for "per portion" column (N/A for serving size)
             Spacer()
                 .frame(width: 80, alignment: .trailing)
-            
+
             // Serving size value (editable if enabled)
             if isEditable {
                 HStack(spacing: 4) {
@@ -1848,7 +1899,7 @@ private struct EditableServingSizeRow: View {
                             // Only show value if it's greater than 0, otherwise leave empty
                             editText = servingSize > 0 ? "\(servingSize)" : ""
                         }
-                    
+
                     Text(unit)
                         .font(.caption2)
                         .foregroundColor(.secondary.opacity(0.7))
@@ -1975,7 +2026,7 @@ private struct FoodItemInfoPopup: View {
                     HStack(spacing: 8) {
                         Text("")
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         Text("This portion")
                             .font(.caption)
                             .fontWeight(.semibold)
@@ -2362,7 +2413,7 @@ struct FoodItemRow: View {
                         Label("Edit Portion", systemImage: "slider.horizontal.3")
                     }
                 }
-                
+
                 if onDelete != nil {
                     Button(role: .destructive) {
                         onDelete?()
@@ -2370,7 +2421,7 @@ struct FoodItemRow: View {
                         Label("Delete", systemImage: "trash")
                     }
                 }
-                
+
                 Button {
                     // TODO: Implement save functionality
                 } label: {
@@ -2647,12 +2698,12 @@ struct TextSearchResultsSheet: View {
     let searchResult: FoodAnalysisResult
     let onFoodItemSelected: (AnalysedFoodItem, Date?) -> Void
     let onDismiss: () -> Void
-    
+
     @State private var selectedTime: Date?
     @State private var showTimePicker = false
 
     @Environment(\.dismiss) var dismiss
-    
+
     // Helper function to format time
     private func timeString(for date: Date) -> String {
         let formatter = DateFormatter()
@@ -2684,7 +2735,7 @@ struct TextSearchResultsSheet: View {
                         }
 
                         Spacer()
-                        
+
                         // Time picker button
                         Button(action: {
                             showTimePicker = true

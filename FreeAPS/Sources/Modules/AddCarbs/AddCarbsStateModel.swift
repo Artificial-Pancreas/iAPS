@@ -64,7 +64,32 @@ extension AddCarbs {
                 enteredBy: CarbsEntry.manual,
                 isFPU: false
             )]
+            add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+        }
 
+        func addAIFood(_ continue_: Bool, fetch: Bool, food: AIFoodItem, date: Date?) {
+            guard food.carbs > 0 || food.fat > 0 || food.protein > 0 else {
+                showModal(for: nil)
+                return
+            }
+            carbs = min(food.carbs, maxCarbs)
+            id_ = UUID().uuidString
+
+            let carbsToStore = [CarbsEntry(
+                id: id_,
+                createdAt: now,
+                actualDate: date,
+                carbs: food.carbs,
+                fat: food.fat,
+                protein: food.protein,
+                note: nil,
+                enteredBy: CarbsEntry.manual,
+                isFPU: false
+            )]
+            add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+        }
+
+        func add(_ continue_: Bool, fetch: Bool, carbsToStore: [CarbsEntry]) {
             if hypoTreatment { hypo() }
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {

@@ -5,18 +5,21 @@ import SwiftUI
 struct FoodSearchView: View {
     @ObservedObject var state: FoodSearchStateModel
     var onSelect: (AIFoodItem, UIImage?, Date?) -> Void
-    @Environment(\.dismiss) var dismiss
+//    let addButtonLabelKey: LocalizedStringKey
+    let addAllButtonLabelKey: LocalizedStringKey
 
     var body: some View {
         VStack(spacing: 0) {
             SearchResultsView(
                 state: state,
                 onFoodItemSelected: { foodItem, selectedTime in
-                    handleFoodItemSelection(foodItem, image: state.aiAnalysisRequest?.image, selectedTime: selectedTime)
+                    onSelect(foodItem, state.aiAnalysisRequest?.image, selectedTime)
                 },
                 onCompleteMealSelected: { totalMeal, selectedTime in
-                    handleFoodItemSelection(totalMeal, image: state.aiAnalysisRequest?.image, selectedTime: selectedTime)
-                }
+                    onSelect(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
+                },
+//                addButtonLabelKey: addButtonLabelKey,
+                addAllButtonLabelKey: addAllButtonLabelKey
             )
         }
         .fullScreenCover(item: state.foodSearchRouteBinding) { route in
@@ -49,7 +52,7 @@ struct FoodSearchView: View {
         .sheet(item: $state.latestTextSearch) { searchResult in
             TextSearchResultsSheet(
                 searchResult: searchResult,
-                onFoodItemSelected: { selectedItem, selectedTime in
+                onFoodItemSelected: { selectedItem, _ in
                     state.addItem(selectedItem)
                     state.latestTextSearch = nil
                 },
@@ -185,10 +188,5 @@ struct FoodSearchView: View {
                 }
             }
         }
-    }
-
-    private func handleFoodItemSelection(_ foodItem: AIFoodItem, image: UIImage?, selectedTime: Date?) {
-        onSelect(foodItem, image, selectedTime)
-        dismiss()
     }
 }

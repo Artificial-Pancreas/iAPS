@@ -73,9 +73,12 @@ extension AddCarbs {
                 if foodSearchState.showingFoodSearch {
                     FoodSearchView(
                         state: foodSearchState,
-                        onSelect: { selectedFood, image, date in
-                            handleSelectedFood(selectedFood, image: image, date: date)
-                        }
+                        onSelect: { selectedFood, _, date in
+                            button.toggle()
+                            if button { state.addAIFood(override, fetch: editMode, food: selectedFood, date: date) }
+                        },
+                        addAllButtonLabelKey: (state.skipBolus && !override && !editMode) ? "Save" :
+                            "Continue"
                     )
                 } else {
                     mealView
@@ -365,7 +368,7 @@ extension AddCarbs {
             }
         }
 
-        private func handleSelectedFood(_ foodItem: AIFoodItem, image: UIImage?, time: Date?) {
+        private func handleSelectedFood(_ foodItem: AIFoodItem, image: UIImage?, time _: Date?) {
             selectedFoodItem = foodItem
             selectedFoodImage = image
             portionGrams = 100.0
