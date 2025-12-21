@@ -40,3 +40,6 @@
 	path = MedtrumKit
 	url = https://github.com/Artificial-Pancreas/MedtrumKit.git
 	branch = dev
+[submodule "EversenseKit"]
+	path = EversenseKit
+	url = https://github.com/Artificial-Pancreas/EversenseKit

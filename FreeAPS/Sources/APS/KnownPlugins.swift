@@ -1,4 +1,5 @@
 import CGMBLEKit
+import EversenseKit
 import Foundation
 import G7SensorKit
 import LibreTransmitter
@@ -32,6 +33,8 @@ enum KnownPlugins {
         case G7CGMManager.pluginIdentifier: 10.5 * secondsOfDay
         case LibreTransmitterManagerV3.pluginIdentifier: 14.5 * secondsOfDay
         case MinimedPumpManager.pluginIdentifier: 6 * secondsOfDay
+        case EversenseCGMManager
+            .pluginIdentifier: (((cgmManager as? EversenseCGMManager)?.state.is365 ?? false) ? 365 : 180) * secondsOfDay
         default: nil
         }
     }
@@ -46,6 +49,8 @@ enum KnownPlugins {
             return (cgmManager as? G7CGMManager)?.sensorFinishesWarmupAt
         case LibreTransmitterManagerV3.pluginIdentifier:
             return (cgmManager as? LibreTransmitterManagerV3)?.sensorInfoObservable.activatedAt
+        case EversenseCGMManager.pluginIdentifier:
+            return (cgmManager as? EversenseCGMManager)?.state.activatedAt
         default:
             return nil
         }
@@ -70,6 +75,7 @@ enum KnownPlugins {
         case G5CGMManager.pluginIdentifier: return CGMType.dexcomG5.rawValue
         case G6CGMManager.pluginIdentifier: return CGMType.dexcomG6.rawValue
         case G7CGMManager.pluginIdentifier: return CGMType.dexcomG7.rawValue
+        case EversenseCGMManager.pluginIdentifier: return CGMType.eversense.rawValue
         case LibreTransmitterManagerV3.pluginIdentifier: return CGMType.libreTransmitter.rawValue
         case NightscoutRemoteCGM.pluginIdentifier: return CGMType.nightscout.rawValue
         case MockCGMManager.pluginIdentifier: return CGMType.simulator.rawValue

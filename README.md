@@ -82,6 +82,9 @@ Distributing and building TestFlight apps also requires a paid membership.
       * 1
       * 2 (European)
       * 2 Plus (European)
+  * **Eversense**
+      * E3 (90 & 180 days)
+      * 365
   * **Medtronic Enlite**
   * **Nightscout** (as CGM)
 

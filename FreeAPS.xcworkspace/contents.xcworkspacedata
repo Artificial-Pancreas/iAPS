@@ -23,6 +23,9 @@
       location = "group:G7SensorKit/G7SensorKit.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:EversenseKit/EversenseKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:dexcom-share-client-swift/ShareClient.xcodeproj">
    </FileRef>
    <FileRef
