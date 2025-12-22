@@ -87,7 +87,7 @@ extension UIUX {
                     Toggle("AI Food Search", isOn: $state.ai)
 
                     if state.ai {
-                        Toggle("Don't ask for saving search result as meal prreset", isOn: $state.skipSave)
+                        Toggle("Don't ask for saving search result as meal preset", isOn: $state.skipSave)
                     }
                 } header: { Text("Add Meal View settings ") }
 
