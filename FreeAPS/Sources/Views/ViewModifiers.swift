@@ -148,58 +148,6 @@ struct ColouredBackground: View {
     }
 }
 
-// MARK: - Dynamische Farben
-
-// Initializer für dynamische Farben
-extension Color {
-    init(light: Color, dark: Color) {
-        self.init(UIColor(
-            light: UIColor(light),
-            dark: UIColor(dark)
-        ))
-    }
-}
-
-extension UIColor {
-    convenience init(light: UIColor, dark: UIColor) {
-        self.init { traitCollection in
-            switch traitCollection.userInterfaceStyle {
-            case .dark,
-                 .unspecified:
-                return dark
-            case .light:
-                return light
-            @unknown default:
-                return light
-            }
-        }
-    }
-}
-
-extension Color {
-    /// Dynamische Farben
-
-    static let dynamicColorRed = Color(
-        light: Color(red: 1.0, green: 0.65, blue: 0.65),
-        dark: Color(red: 0.96, green: 0.47, blue: 0.47)
-    )
-
-    static let dynamicColorGreen = Color(
-        light: Color(red: 0.50, green: 0.85, blue: 0.60),
-        dark: Color(red: 0.25, green: 0.73, blue: 0.44)
-    )
-
-    static let dynamicColorYellow = Color(
-        light: Color(red: 1.00, green: 0.90, blue: 0.50),
-        dark: Color(red: 0.95, green: 0.77, blue: 0.25)
-    )
-
-    static let dynamicColorOrange = Color(
-        light: Color(red: 1.00, green: 0.70, blue: 0.40),
-        dark: Color(red: 0.95, green: 0.55, blue: 0.20)
-    )
-}
-
 struct LoopEllipse: View {
     @Environment(\.colorScheme) var colorScheme
     let stroke: Color
