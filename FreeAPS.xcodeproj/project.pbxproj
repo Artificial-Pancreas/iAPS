@@ -89,7 +89,6 @@
 		19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7282E97AE520000BE4D /* BarcodeScannerService.swift */; };
 		19C3C7342E97AE520000BE4D /* UserDefaults+Loop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */; };
 		19C3C7352E97AE520000BE4D /* AIFoodAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7272E97AE520000BE4D /* AIFoodAnalysis.swift */; };
-		19C3C7372E97AE520000BE4D /* AIConfidenceLevel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C71E2E97AE520000BE4D /* AIConfidenceLevel+Extensions.swift */; };
 		19C3C73A2E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7202E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift */; };
 		19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C72B2E97AE520000BE4D /* OpenFoodFactsService.swift */; };
 		19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */; };
@@ -736,7 +735,6 @@
 		19C166682756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19C166692756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19C3C7182E97AE520000BE4D /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		19C3C71E2E97AE520000BE4D /* AIConfidenceLevel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIConfidenceLevel+Extensions.swift"; sourceTree = "<group>"; };
 		19C3C7202E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenFoodFactsProducts+Extensions.swift"; sourceTree = "<group>"; };
 		19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchStateModel.swift; sourceTree = "<group>"; };
 		19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsSearchResponse.swift; sourceTree = "<group>"; };
@@ -1459,7 +1457,6 @@
 		19C3C7212E97AE520000BE4D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				19C3C71E2E97AE520000BE4D /* AIConfidenceLevel+Extensions.swift */,
 				19C3C7202E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift */,
 			);
 			path = Extensions;
@@ -1470,6 +1467,7 @@
 			children = (
 				19C3C7212E97AE520000BE4D /* Extensions */,
 				19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */,
+				F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */,
 				19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */,
 				19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */,
 				F24EB2932EE5B8B100C981A2 /* AIFoodAnalysisResult.swift */,
@@ -1477,7 +1475,6 @@
 				F2FA68832EE905F100476D7B /* AITypes.swift */,
 				F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */,
 				F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */,
-				F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3572,7 +3569,6 @@
 				19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */,
 				19C3C7342E97AE520000BE4D /* UserDefaults+Loop.swift in Sources */,
 				19C3C7352E97AE520000BE4D /* AIFoodAnalysis.swift in Sources */,
-				19C3C7372E97AE520000BE4D /* AIConfidenceLevel+Extensions.swift in Sources */,
 				19C3C73A2E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift in Sources */,
 				19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */,
 				19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */,

@@ -33,7 +33,7 @@ enum FoodItemSource {
     }
 }
 
-enum ConfidenceLevel: String, JSON, Identifiable, CaseIterable {
+enum ConfidenceLevel: String, Codable, Identifiable, CaseIterable {
     case high
     case medium
     case low

@@ -56,32 +56,6 @@ struct SearchResultsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if !hasVisibleContent {
-                Button(action: {
-                    // Dismiss keyboard
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    state.showingFoodSearch = false
-                }) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "arrow.left")
-                            .font(.system(size: 14, weight: .medium))
-                        Text("Back")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                    }
-                    .foregroundColor(.blue)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.blue.opacity(0.12))
-                    )
-                }
-                .buttonStyle(.plain)
-                .padding(.horizontal)
-                .padding(.top, 8)
-            }
-
             // Loading indicator
             if state.isLoading {
                 loadingBanner()
@@ -100,7 +74,15 @@ struct SearchResultsView: View {
                 undoButton
             }
 
-            // Always show results if available, otherwise show empty state
+            VStack(alignment: .leading, spacing: 6) {
+                if hasVisibleContent {
+                    mealTotalsView
+                }
+                actionButtonRow
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 20)
+
             if !hasVisibleContent {
                 noSearchesView
             } else {
@@ -134,6 +116,194 @@ struct SearchResultsView: View {
         }
     }
 
+    private var actionButtonRow: some View {
+        HStack(alignment: .center) {
+            // Manual Entry button
+            Button(action: {
+                showManualEntry = true
+            }) {
+                Image(systemName: "plus.circle")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color(.systemGray5))
+                    )
+            }
+            .buttonStyle(.plain)
+
+            Spacer()
+
+            if nonDeletedItemCount > 0 {
+                // Time picker button
+                Button(action: {
+                    showTimePicker = true
+                }) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock")
+                            .font(.system(size: 14, weight: .medium))
+                        Text(selectedTime == nil ? "now" : timeString(for: selectedTime!))
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color(.systemGray5))
+                    )
+                }
+                .buttonStyle(.plain)
+                .padding(.trailing, 8)
+            }
+
+            if hasVisibleContent {
+                Button(action: {
+                    let foodItems = state.visibleSections.flatMap(\.foodItemsDetailed)
+                        .filter { !state.searchResultsState.isDeleted($0) }
+                        .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
+                    onCompleteMealSelected(foodItems, selectedTime)
+                }) {
+                    Text(addAllButtonLabelKey)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(Color.accentColor)
+                        )
+                }
+                .buttonStyle(PlainButtonStyle())
+
+            } else {
+                Spacer()
+                Button(action: {
+                    // Dismiss keyboard
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    state.showingFoodSearch = false
+                }) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "arrow.left")
+                            .font(.system(size: 14, weight: .medium))
+                        Text("Back")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.primary)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color(.systemGray5))
+                    )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .sheet(isPresented: $showTimePicker) {
+            TimePickerSheet(selectedTime: $selectedTime, isPresented: $showTimePicker)
+                .presentationDetents([.height(280)])
+                .presentationDragIndicator(.visible)
+        }
+    }
+
+    private var mealTotalsView: some View {
+        VStack(spacing: 10) {
+            HStack {
+                Text("Meal Totals")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
+                Spacer()
+                // Clear All button
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        // Save current state for undo
+                        clearedResultsViewState = SearchResultsState()
+                        clearedResultsViewState?.searchResults = state.searchResultsState.searchResults
+                        clearedResultsViewState?.editedItems = state.searchResultsState.editedItems
+                        clearedResultsViewState?.deletedSections = state.searchResultsState.deletedSections
+                        clearedResultsViewState?.collapsedSections = state.searchResultsState.collapsedSections
+
+                        // Clear everything
+                        state.searchResultsState.clear()
+                        state.latestSearchError = nil
+                        state.latestSearchIcon = nil
+                    }
+                }) {
+                    Text("Clear All")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            }
+
+            HStack(spacing: 8) {
+                TotalNutritionBadge(
+                    value: totalCarbs,
+                    label: "carbs",
+                    color: NutritionBadgeConfig.carbsColor
+                )
+                .id("carbs-\(totalCarbs)")
+                .transition(.scale.combined(with: .opacity))
+
+                TotalNutritionBadge(
+                    value: totalProtein,
+                    label: "protein",
+                    color: NutritionBadgeConfig.proteinColor
+                )
+                .id("protein-\(totalProtein)")
+                .transition(.scale.combined(with: .opacity))
+
+                TotalNutritionBadge(
+                    value: totalFat,
+                    label: "fat",
+                    color: NutritionBadgeConfig.fatColor
+                )
+                .id("fat-\(totalFat)")
+                .transition(.scale.combined(with: .opacity))
+
+                TotalNutritionBadge(
+                    value: totalCalories,
+                    label: "kcal",
+                    color: NutritionBadgeConfig.caloriesColor
+                )
+                .id("calories-\(totalCalories)")
+                .transition(.scale.combined(with: .opacity))
+            }
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCarbs)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalProtein)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalFat)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCalories)
+        }
+        .padding(.bottom, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.systemBackground))
+                .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+        )
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(.systemGray6).opacity(0.5),
+                    Color(.systemGray6).opacity(0.3)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+        .overlay(
+            Rectangle()
+                .frame(height: 0.5)
+                .foregroundColor(Color.gray.opacity(0.2)),
+            alignment: .bottom
+        )
+    }
+
     private var undoButton: some View {
         HStack(alignment: .center) {
             Spacer()
@@ -142,6 +312,7 @@ struct SearchResultsView: View {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     // Restore cleared results and state
                     if let savedState = clearedResultsViewState {
+                        state.searchResultsState.searchResults = savedState.searchResults
                         state.searchResultsState.editedItems = savedState.editedItems
                         state.searchResultsState.deletedSections = savedState.deletedSections
                         state.searchResultsState.collapsedSections = savedState.collapsedSections
@@ -233,171 +404,6 @@ struct SearchResultsView: View {
 
     private var searchResultsView: some View {
         VStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 6) {
-                // Nutrition badges in a card-like container
-                VStack(spacing: 10) {
-                    HStack {
-                        Text("Meal Totals")
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        // Clear All button
-                        Button(action: {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                // Save current state for undo
-                                clearedResultsViewState = SearchResultsState()
-                                clearedResultsViewState?.editedItems = state.searchResultsState.editedItems
-                                clearedResultsViewState?.deletedSections = state.searchResultsState.deletedSections
-                                clearedResultsViewState?.collapsedSections = state.searchResultsState.collapsedSections
-
-                                // Clear everything
-                                state.searchResultsState.clear()
-                                state.latestSearchError = nil
-                                state.latestSearchIcon = nil
-                            }
-                        }) {
-                            Text("Clear All")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-
-                    HStack(spacing: 8) {
-                        TotalNutritionBadge(
-                            value: totalCarbs,
-                            label: "carbs",
-                            color: NutritionBadgeConfig.carbsColor
-                        )
-                        .id("carbs-\(totalCarbs)")
-                        .transition(.scale.combined(with: .opacity))
-
-                        TotalNutritionBadge(
-                            value: totalProtein,
-                            label: "protein",
-                            color: NutritionBadgeConfig.proteinColor
-                        )
-                        .id("protein-\(totalProtein)")
-                        .transition(.scale.combined(with: .opacity))
-
-                        TotalNutritionBadge(
-                            value: totalFat,
-                            label: "fat",
-                            color: NutritionBadgeConfig.fatColor
-                        )
-                        .id("fat-\(totalFat)")
-                        .transition(.scale.combined(with: .opacity))
-
-                        TotalNutritionBadge(
-                            value: totalCalories,
-                            label: "kcal",
-                            color: NutritionBadgeConfig.caloriesColor
-                        )
-                        .id("calories-\(totalCalories)")
-                        .transition(.scale.combined(with: .opacity))
-                    }
-                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCarbs)
-                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalProtein)
-                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalFat)
-                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCalories)
-                }
-                .padding(.bottom, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color(.systemBackground))
-                        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
-                )
-
-                HStack(alignment: .center) {
-//                    Text("\(nonDeletedItemCount) \(nonDeletedItemCount == 1 ? "Food Item" : "Food Items")")
-//                        .font(.title3)
-//                        .fontWeight(.semibold)
-
-                    // Manual Entry button
-                    Button(action: {
-                        showManualEntry = true
-                    }) {
-                        Image(systemName: "plus.circle")
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(Color(.systemGray5))
-                            )
-                    }
-                    .buttonStyle(.plain)
-
-                    Spacer()
-
-                    if nonDeletedItemCount > 0 {
-                        // Time picker button
-                        Button(action: {
-                            showTimePicker = true
-                        }) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "clock")
-                                    .font(.system(size: 14, weight: .medium))
-                                Text(selectedTime == nil ? "now" : timeString(for: selectedTime!))
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                            }
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(Color(.systemGray5))
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .padding(.trailing, 8)
-
-                        Button(action: {
-                            let foodItems = state.visibleSections.flatMap(\.foodItemsDetailed)
-                                .filter { !state.searchResultsState.isDeleted($0) }
-                                .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
-                            onCompleteMealSelected(foodItems, selectedTime)
-                        }) {
-                            Text(addAllButtonLabelKey)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 10)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .fill(Color.accentColor)
-                                )
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                }
-                .sheet(isPresented: $showTimePicker) {
-                    TimePickerSheet(selectedTime: $selectedTime, isPresented: $showTimePicker)
-                        .presentationDetents([.height(280)])
-                        .presentationDragIndicator(.visible)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 20)
-            .background(
-                LinearGradient(
-                    colors: [
-                        Color(.systemGray6).opacity(0.5),
-                        Color(.systemGray6).opacity(0.3)
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .overlay(
-                Rectangle()
-                    .frame(height: 0.5)
-                    .foregroundColor(Color.gray.opacity(0.2)),
-                alignment: .bottom
-            )
             List {
                 ForEach(state.visibleSections) { analysisResult in
                     AnalysisResultListSection(
@@ -887,6 +893,24 @@ private extension FoodItemSource {
             return "pencil"
         case .database:
             return "database" // TODO: better icon?
+        }
+    }
+}
+
+extension ConfidenceLevel {
+    var color: Color {
+        switch self {
+        case .high: return .green
+        case .medium: return .orange
+        case .low: return .red
+        }
+    }
+
+    var description: LocalizedStringKey {
+        switch self {
+        case .high: return "High"
+        case .medium: return "Medium"
+        case .low: return "Low"
         }
     }
 }
