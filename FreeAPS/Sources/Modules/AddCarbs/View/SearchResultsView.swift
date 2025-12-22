@@ -443,6 +443,8 @@ struct SearchResultsView: View {
 
                     // Barcode Scanner Card
                     Button(action: {
+                        // Dismiss keyboard
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         state.foodSearchRoute = .barcodeScanner
                     }) {
                         CapabilityCard(
@@ -456,6 +458,8 @@ struct SearchResultsView: View {
 
                     // Photo Analysis Card
                     Button(action: {
+                        // Dismiss keyboard
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         state.foodSearchRoute = .camera
                     }) {
                         CapabilityCard(
