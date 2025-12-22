@@ -14,7 +14,7 @@ class ImageAnalysisCache {
     }
 
     /// Cache an analysis result for the given image
-    func cacheResult(_ result: FoodAnalysisResult, for image: UIImage) {
+    func cacheResult(_ result: FoodItemGroup, for image: UIImage) {
         let imageHash = calculateImageHash(image)
         let cachedResult = CachedAnalysisResult(
             result: result,
@@ -26,7 +26,7 @@ class ImageAnalysisCache {
     }
 
     /// Get cached result for the given image if available and not expired
-    func getCachedResult(for image: UIImage) -> FoodAnalysisResult? {
+    func getCachedResult(for image: UIImage) -> FoodItemGroup? {
         let imageHash = calculateImageHash(image)
 
         guard let cachedResult = cache.object(forKey: imageHash as NSString) else {
@@ -61,11 +61,11 @@ class ImageAnalysisCache {
 
 /// Wrapper for cached analysis results with metadata
 private class CachedAnalysisResult {
-    let result: FoodAnalysisResult
+    let result: FoodItemGroup
     let timestamp: Date
     let imageHash: String
 
-    init(result: FoodAnalysisResult, timestamp: Date, imageHash: String) {
+    init(result: FoodItemGroup, timestamp: Date, imageHash: String) {
         self.result = result
         self.timestamp = timestamp
         self.imageHash = imageHash

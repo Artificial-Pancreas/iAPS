@@ -26,10 +26,8 @@ extension AddCarbs {
         @State private var foodSearchText = ""
         @State private var isLoading = false
         @State private var errorMessage: String?
-        @State private var selectedFoodItem: AIFoodItem?
         @State private var portionGrams: Decimal = 100.00001
         @State private var selectedFoodImage: UIImage?
-        @State private var saveAlert = false
         @State private var showCancelConfirmation = false
 
         @FetchRequest(
@@ -142,9 +140,6 @@ extension AddCarbs {
 
         private var mealView: some View {
             Form {
-                // AI Food Search
-                state.ai ? foodSearch : nil
-
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
                         HStack {
@@ -247,7 +242,6 @@ extension AddCarbs {
                     .tint(.white)
             }
             .sheet(isPresented: $presentPresets, content: { presetView })
-            .alert(isPresented: $saveAlert) { alert(food: selectedFoodItem) }
         }
 
         private var meal: Bool {
@@ -289,91 +283,36 @@ extension AddCarbs {
 
         // MARK: - Food Search Section
 
-        private var foodSearch: some View {
-            Group {
-                if let selectedFood = selectedFoodItem {
-                    SelectedFoodView(
-                        food: selectedFood,
-                        foodImage: selectedFoodImage,
-                        portionGrams: $portionGrams,
-                        onChange: {
-                            selectedFoodItem = nil
-                            selectedFoodImage = nil
-                            foodSearchState.showingFoodSearch = true
-                        },
-                        onTakeOver: { food in
-                            state.carbs += portionGrams != 100.00001 ? max(food.carbs, 0) / (portionGrams / 100)
-                                .rounded(to: 0) : max(food.carbs, 0)
-                            state.fat += portionGrams != 100.00001 ? max(food.fat, 0) / (portionGrams / 100)
-                                .rounded(to: 0) : max(food.fat, 0)
-                            state.protein += portionGrams != 100.00001 ? max(food.protein, 0) / (portionGrams / 100)
-                                .rounded(to: 0) : max(food.protein, 0)
-                            selectedFoodImage = nil
-                            foodSearchState.showingFoodSearch = false
-                            if !state.skipSave {
-                                saveAlert.toggle()
-                            } else {
-                                cache(food: selectedFood)
-                            }
-                        }
-                    )
-                }
-            }
-        }
-
-        // Temporarily saved in waiter's notepad (the summary).
-        private func cache(food: AIFoodItem) {
-            let cache = Presets(context: moc)
-            cache.carbs = food.carbs as NSDecimalNumber
-            cache.fat = food.fat as NSDecimalNumber
-            cache.protein = food.protein as NSDecimalNumber
-            cache.dish = (portionGrams != 100.00001) ? food.name + " \(portionGrams)g" : food.name
-
-            if state.selection?.dish != cache.dish {
-                state.selection = cache
-                state.combinedPresets.append((state.selection, 1))
-            } else if state.combinedPresets.last != nil {
-                state.combinedPresets[state.combinedPresets.endIndex - 1].portions += 1
-            }
-        }
-
-        private func addToPresetsIfNew(food: AIFoodItem) {
-            let preset = Presets(context: moc)
-            preset
-                .carbs = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (max(food.carbs * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
-                max(food.carbs, 0) as NSDecimalNumber
-            preset
-                .fat = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (max(food.fat * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
-                max(food.fat, 0) as NSDecimalNumber
-            preset
-                .protein = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (max(food.protein * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
-                max(food.protein, 0) as NSDecimalNumber
-
-            if portionGrams != 100.00001 {
-                preset.dish = food.name + " \(portionGrams)g"
-            } else {
-                preset.dish = food.name
-            }
-
-            if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
-                do {
-                    try moc.save()
-                    state.selection = preset
-                    state.addPresetToNewMeal()
-                    selectedFoodItem = nil
-                } catch { print("Couldn't save " + (preset.dish ?? "new preset.")) }
-            }
-        }
-
-        private func handleSelectedFood(_ foodItem: AIFoodItem, image: UIImage?, time _: Date?) {
-            selectedFoodItem = foodItem
-            selectedFoodImage = image
-            portionGrams = 100.0
-            foodSearchState.showingFoodSearch = false
-        }
+//        private func addToPresetsIfNew(food: FoodItemDetailed) {
+//            let preset = Presets(context: moc)
+//            preset
+//                .carbs = (portionGrams != 100.0 || portionGrams != 100.00001) ?
+//                (max(food.carbs * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
+//                max(food.carbs, 0) as NSDecimalNumber
+//            preset
+//                .fat = (portionGrams != 100.0 || portionGrams != 100.00001) ?
+//                (max(food.fat * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
+//                max(food.fat, 0) as NSDecimalNumber
+//            preset
+//                .protein = (portionGrams != 100.0 || portionGrams != 100.00001) ?
+//                (max(food.protein * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
+//                max(food.protein, 0) as NSDecimalNumber
+//
+//            if portionGrams != 100.00001 {
+//                preset.dish = food.name + " \(portionGrams)g"
+//            } else {
+//                preset.dish = food.name
+//            }
+//
+//            if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
+//                do {
+//                    try moc.save()
+//                    state.selection = preset
+//                    state.addPresetToNewMeal()
+//                    selectedFoodItem = nil
+//                } catch { print("Couldn't save " + (preset.dish ?? "new preset.")) }
+//            }
+//        }
 
         private var empty: Bool {
             state.carbs <= 0 && state.fat <= 0 && state.protein <= 0
@@ -496,30 +435,6 @@ extension AddCarbs {
                 .buttonStyle(.borderedProminent)
                 .tint(colorScheme == .light ? Color.white.opacity(0.5) : Color(.systemGray5))
                 .offset(x: -10)
-        }
-
-        private func alert(food: AIFoodItem?) -> Alert {
-            if let food = food {
-                return Alert(
-                    title: Text(
-                        NSLocalizedString("Save", comment: "") + "\"" + food
-                            .name + "\"" + NSLocalizedString("as new Meal Preset?", comment: "")
-                    ),
-                    message: Text("To avoid having to search for same food on web again."),
-                    primaryButton: .destructive(Text("Yes"), action: { addToPresetsIfNew(food: food) }),
-                    secondaryButton: .cancel(Text("No"), action: { cache(food: food) })
-                )
-            }
-
-            return Alert(
-                title: Text("Oops!"),
-                message: Text(
-                    NSLocalizedString("Something isnt't working with food item ", comment: "") + "\"" +
-                        (food?.name ?? "nil")
-                ),
-                primaryButton: .cancel(Text("OK")),
-                secondaryButton: .cancel()
-            )
         }
 
         @ViewBuilder private func presetsList(for preset: Presets) -> some View {

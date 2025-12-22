@@ -3,19 +3,18 @@ import SwiftUI
 
 struct SearchResultsView: View {
     @ObservedObject var state: FoodSearchStateModel
-    let onFoodItemSelected: (AIFoodItem, Date?) -> Void
-    let onCompleteMealSelected: (AIFoodItem, Date?) -> Void
+    let onFoodItemSelected: (FoodItemDetailed, Date?) -> Void
+    let onCompleteMealSelected: ([FoodItemDetailed], Date?) -> Void
     let addButtonLabelKey: LocalizedStringKey = "" // TODO: not used currently
     let addAllButtonLabelKey: LocalizedStringKey
 
-    @State private var clearedResults: [FoodAnalysisResult] = []
     @State private var clearedResultsViewState: SearchResultsState?
     @State private var selectedTime: Date?
     @State private var showTimePicker = false
     @State private var showManualEntry = false
 
     private var nonDeletedItemCount: Int {
-        state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.resultsView.isDeleted($0) }.count
+        state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.searchResultsState.isDeleted($0) }.count
     }
 
     private var hasVisibleContent: Bool {
@@ -25,32 +24,32 @@ struct SearchResultsView: View {
 
     private var totalCalories: Decimal {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.resultsView.isDeleted(item) else { return sum }
-            let portion = state.resultsView.portionSize(for: item)
+            guard !state.searchResultsState.isDeleted(item) else { return sum }
+            let portion = state.searchResultsState.portionSize(for: item)
             return sum + (item.caloriesInPortion(portion: portion) ?? 0)
         }
     }
 
     private var totalCarbs: Decimal {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.resultsView.isDeleted(item) else { return sum }
-            let portion = state.resultsView.portionSize(for: item)
+            guard !state.searchResultsState.isDeleted(item) else { return sum }
+            let portion = state.searchResultsState.portionSize(for: item)
             return sum + (item.carbsInPortion(portion: portion) ?? 0)
         }
     }
 
     private var totalProtein: Decimal {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.resultsView.isDeleted(item) else { return sum }
-            let portion = state.resultsView.portionSize(for: item)
+            guard !state.searchResultsState.isDeleted(item) else { return sum }
+            let portion = state.searchResultsState.portionSize(for: item)
             return sum + (item.proteinInPortion(portion: portion) ?? 0)
         }
     }
 
     private var totalFat: Decimal {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.resultsView.isDeleted(item) else { return sum }
-            let portion = state.resultsView.portionSize(for: item)
+            guard !state.searchResultsState.isDeleted(item) else { return sum }
+            let portion = state.searchResultsState.portionSize(for: item)
             return sum + (item.fatInPortion(portion: portion) ?? 0)
         }
     }
@@ -108,14 +107,13 @@ struct SearchResultsView: View {
                 searchResultsView
             }
         }
-        .onChange(of: state.searchResults) { _, _ in
+        .onChange(of: state.searchResultsState.searchResults) {
             // Only clear undo state if we have new visible content
             let hasNewVisibleContent = !state.visibleSections.isEmpty &&
-                !state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.resultsView.isDeleted($0) }.isEmpty
+                !state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.searchResultsState.isDeleted($0) }.isEmpty
 
             if clearedResultsViewState != nil, hasNewVisibleContent {
                 withAnimation(.easeOut(duration: 0.2)) {
-                    clearedResults = []
                     clearedResultsViewState = nil
                 }
             }
@@ -143,14 +141,12 @@ struct SearchResultsView: View {
             Button(action: {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     // Restore cleared results and state
-                    state.searchResults = clearedResults
                     if let savedState = clearedResultsViewState {
-                        state.resultsView.editedItems = savedState.editedItems
-                        state.resultsView.deletedSections = savedState.deletedSections
-                        state.resultsView.collapsedSections = savedState.collapsedSections
+                        state.searchResultsState.editedItems = savedState.editedItems
+                        state.searchResultsState.deletedSections = savedState.deletedSections
+                        state.searchResultsState.collapsedSections = savedState.collapsedSections
                     }
 
-                    clearedResults = []
                     clearedResultsViewState = nil
                 }
             }) {
@@ -250,15 +246,13 @@ struct SearchResultsView: View {
                         Button(action: {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 // Save current state for undo
-                                clearedResults = state.searchResults
                                 clearedResultsViewState = SearchResultsState()
-                                clearedResultsViewState?.editedItems = state.resultsView.editedItems
-                                clearedResultsViewState?.deletedSections = state.resultsView.deletedSections
-                                clearedResultsViewState?.collapsedSections = state.resultsView.collapsedSections
+                                clearedResultsViewState?.editedItems = state.searchResultsState.editedItems
+                                clearedResultsViewState?.deletedSections = state.searchResultsState.deletedSections
+                                clearedResultsViewState?.collapsedSections = state.searchResultsState.collapsedSections
 
                                 // Clear everything
-                                state.searchResults = []
-                                state.resultsView.clear()
+                                state.searchResultsState.clear()
                                 state.latestSearchError = nil
                                 state.latestSearchIcon = nil
                             }
@@ -361,23 +355,10 @@ struct SearchResultsView: View {
                         .padding(.trailing, 8)
 
                         Button(action: {
-                            let visibleItems = state.visibleSections.flatMap(\.foodItemsDetailed)
-                                .filter { !state.resultsView.isDeleted($0) }
-                            let mealName = visibleItems.count == 1 ?
-                                visibleItems.first?.name ?? "Meal" :
-                                "Complete Meal"
-
-                            let totalMeal = AIFoodItem(
-                                name: mealName,
-                                brand: nil,
-                                calories: totalCalories,
-                                carbs: totalCarbs,
-                                protein: totalProtein,
-                                fat: totalFat,
-                                imageURL: visibleItems.count == 1 ? visibleItems.first?.imageURL : nil,
-                                source: state.visibleSections.first?.source ?? .ai
-                            )
-                            onCompleteMealSelected(totalMeal, selectedTime)
+                            let foodItems = state.visibleSections.flatMap(\.foodItemsDetailed)
+                                .filter { !state.searchResultsState.isDeleted($0) }
+                                .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
+                            onCompleteMealSelected(foodItems, selectedTime)
                         }) {
                             Text(addAllButtonLabelKey)
                                 .font(.subheadline)
@@ -595,16 +576,15 @@ private struct TipRow: View {
 // MARK: - Manual Food Entry Sheet
 
 private struct ManualFoodEntrySheet: View {
-    let onSave: (AnalysedFoodItem) -> Void
+    let onSave: (FoodItemDetailed) -> Void
     let onCancel: () -> Void
 
     // Create a template food item for the editable popup
-    @State private var editableFoodItem = AnalysedFoodItem(
+    @State private var editableFoodItem = FoodItemDetailed(
         name: "",
         confidence: nil,
         brand: nil,
-        portionEstimate: nil,
-        portionEstimateSize: 100,
+        portionSize: 100,
         standardServing: nil,
         standardServingSize: 100,
         units: .grams,
@@ -754,12 +734,11 @@ private struct ManualFoodEntrySheet: View {
         // Use edited serving size if provided, otherwise nil
         let finalServingSize = editedServingSize
 
-        let foodItem = AnalysedFoodItem(
+        let foodItem = FoodItemDetailed(
             name: finalName,
             confidence: nil,
             brand: nil,
-            portionEstimate: nil,
-            portionEstimateSize: editedPortionSize,
+            portionSize: editedPortionSize,
             standardServing: nil,
             standardServingSize: finalServingSize,
             units: .grams,
@@ -889,105 +868,15 @@ private struct TimePickerSheet: View {
     }
 }
 
-class SearchResultsState: ObservableObject {
-    @Published var editedItems: [String: EditableFoodItem] = [:]
-    @Published var deletedSections: Set<UUID> = []
-    @Published var collapsedSections: Set<UUID> = []
-
-    static var empty: SearchResultsState {
-        SearchResultsState()
-    }
-
-    struct EditableFoodItem: Identifiable {
-        let id = UUID()
-        let original: AnalysedFoodItem
-        var portionSize: Decimal
-        var isDeleted: Bool = false
-
-        init(from foodItem: AnalysedFoodItem) {
-            original = foodItem
-            portionSize = foodItem.portionEstimateSize ?? 0
-        }
-    }
-
-    // Public accessor for current edited state
-    var currentEditedItems: [EditableFoodItem] {
-        editedItems.values.filter { !$0.isDeleted }
-    }
-
-    // Helper to get current portion size for a food item
-    func portionSize(for foodItem: AnalysedFoodItem) -> Decimal {
-        let key = foodItem.id.uuidString
-        return editedItems[key]?.portionSize ?? foodItem.portionEstimateSize ?? 0
-    }
-
-    // Helper to check if item is deleted
-    func isDeleted(_ foodItem: AnalysedFoodItem) -> Bool {
-        let key = foodItem.id.uuidString
-        return editedItems[key]?.isDeleted ?? false
-    }
-
-    // Update portion size for an item
-    func updatePortion(for foodItem: AnalysedFoodItem, to newPortion: Decimal) {
-        let key = foodItem.id.uuidString
-        if editedItems[key] == nil {
-            editedItems[key] = EditableFoodItem(from: foodItem)
-        }
-        editedItems[key]?.portionSize = newPortion
-    }
-
-    // Mark item as deleted
-    func deleteItem(_ foodItem: AnalysedFoodItem) {
-        let key = foodItem.id.uuidString
-        if editedItems[key] == nil {
-            editedItems[key] = EditableFoodItem(from: foodItem)
-        }
-        editedItems[key]?.isDeleted = true
-    }
-
-    // Undelete an item
-    func undeleteItem(_ foodItem: AnalysedFoodItem) {
-        let key = foodItem.id.uuidString
-        editedItems[key]?.isDeleted = false
-    }
-
-    // Delete entire section
-    func deleteSection(_ sectionId: UUID) {
-        deletedSections.insert(sectionId)
-    }
-
-    // Check if section is deleted
-    func isSectionDeleted(_ sectionId: UUID) -> Bool {
-        deletedSections.contains(sectionId)
-    }
-
-    // MARK: - Collapsed sections helpers
-
-    func isSectionCollapsed(_ sectionId: UUID) -> Bool {
-        collapsedSections.contains(sectionId)
-    }
-
-    func toggleSectionCollapsed(_ sectionId: UUID) {
-        if collapsedSections.contains(sectionId) {
-            collapsedSections.remove(sectionId)
-        } else {
-            collapsedSections.insert(sectionId)
-        }
-    }
-
-    // Clear all state
-    func clear() {
-        editedItems.removeAll()
-        deletedSections.removeAll()
-        collapsedSections.removeAll()
-    }
-}
-
 private extension FoodItemSource {
     var icon: String {
         switch self {
-        case .ai:
+        case .aiPhoto:
             return "photo"
+        case .aiMenu:
+            return "photo" // TODO: better icon?
+        case .aiReceipe:
+            return "photo" // TODO: better icon?
         case .aiText:
             return "text.bubble"
         case .search:
@@ -996,18 +885,24 @@ private extension FoodItemSource {
             return "barcode"
         case .manual:
             return "pencil"
+        case .database:
+            return "database" // TODO: better icon?
         }
     }
 }
 
-private extension FoodAnalysisResult {
+private extension FoodItemGroup {
     var title: String {
         switch source {
         case .manual: NSLocalizedString("Manual entry", comment: "Section with manualy entered foods")
+        case .database: NSLocalizedString("Saved foods", comment: "Section with saved foods")
         case .barcode: NSLocalizedString("Barcode scan", comment: "Section with bar code scan results")
         case .search: NSLocalizedString("Online database search", comment: "Section with online database search results")
-        case .ai,
-             .aiText: briefDescription ?? textQuery ?? NSLocalizedString(
+        case .aiMenu,
+             .aiPhoto,
+             .aiReceipe,
+             .aiText:
+            briefDescription ?? textQuery ?? NSLocalizedString(
                 "AI Results",
                 comment: "Section with AI food analysis results, when details are unavailable"
             )
@@ -1118,7 +1013,7 @@ private struct TotalNutritionBadge: View {
 }
 
 private struct ConfidenceBadge: View {
-    let level: AIConfidenceLevel
+    let level: ConfidenceLevel
 
     @Environment(\.colorScheme) private var colorScheme
 
@@ -1148,9 +1043,9 @@ private struct ConfidenceBadge: View {
 }
 
 private struct AnalysisResultListSection: View {
-    let analysisResult: FoodAnalysisResult
+    let analysisResult: FoodItemGroup
     @ObservedObject var state: FoodSearchStateModel
-    let onFoodItemSelected: (AIFoodItem, Date?) -> Void
+    let onFoodItemSelected: (FoodItemDetailed, Date?) -> Void
     let selectedTime: Date?
 
     @State private var showInfoPopup = false
@@ -1163,7 +1058,7 @@ private struct AnalysisResultListSection: View {
     }
 
     private var nonDeletedItemCount: Int {
-        analysisResult.foodItemsDetailed.filter { !state.resultsView.isDeleted($0) }.count
+        analysisResult.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }.count
     }
 
     var body: some View {
@@ -1174,11 +1069,11 @@ private struct AnalysisResultListSection: View {
                     // Collapse/Expand button (left side)
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.2)) {
-                            state.resultsView.toggleSectionCollapsed(analysisResult.id)
+                            state.searchResultsState.toggleSectionCollapsed(analysisResult.id)
                         }
                     }) {
                         Image(
-                            systemName: state.resultsView
+                            systemName: state.searchResultsState
                                 .isSectionCollapsed(analysisResult.id) ? "chevron.right" : "chevron.down"
                         )
                         .font(.system(size: 14, weight: .semibold))
@@ -1191,7 +1086,7 @@ private struct AnalysisResultListSection: View {
                     // Title (tappable to collapse/expand)
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.2)) {
-                            state.resultsView.toggleSectionCollapsed(analysisResult.id)
+                            state.searchResultsState.toggleSectionCollapsed(analysisResult.id)
                         }
                     }) {
                         Text(analysisResult.title)
@@ -1206,7 +1101,7 @@ private struct AnalysisResultListSection: View {
                     .buttonStyle(PlainButtonStyle())
 
                     // Info button (only for AI sources)
-                    if analysisResult.source == .ai || analysisResult.source == .aiText {
+                    if analysisResult.source?.isAI == true {
                         Button(action: {
                             showInfoPopup = true
                         }) {
@@ -1241,7 +1136,7 @@ private struct AnalysisResultListSection: View {
             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                 Button(role: .destructive) {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        state.resultsView.deleteSection(analysisResult.id)
+                        state.searchResultsState.deleteSection(analysisResult.id)
                     }
                 } label: {
                     Image(systemName: "trash")
@@ -1250,7 +1145,7 @@ private struct AnalysisResultListSection: View {
             .contextMenu {
                 Button(role: .destructive) {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        state.resultsView.deleteSection(analysisResult.id)
+                        state.searchResultsState.deleteSection(analysisResult.id)
                     }
                 } label: {
                     Label("Delete", systemImage: "trash")
@@ -1269,15 +1164,15 @@ private struct AnalysisResultListSection: View {
             }
 
             // Food Items
-            if !state.resultsView.isSectionCollapsed(analysisResult.id) {
+            if !state.searchResultsState.isSectionCollapsed(analysisResult.id) {
                 ForEach(Array(analysisResult.foodItemsDetailed.enumerated()), id: \.element.id) { index, foodItem in
                     Group {
-                        if state.resultsView.isDeleted(foodItem) {
+                        if state.searchResultsState.isDeleted(foodItem) {
                             DeletedFoodItemRow(
                                 foodItem: foodItem,
                                 onUndelete: {
                                     withAnimation(.easeInOut(duration: 0.2)) {
-                                        state.resultsView.undeleteItem(foodItem)
+                                        state.searchResultsState.undeleteItem(foodItem)
                                     }
                                 },
                                 isFirst: index == 0,
@@ -1286,28 +1181,21 @@ private struct AnalysisResultListSection: View {
                         } else {
                             FoodItemRow(
                                 foodItem: foodItem,
-                                portionSize: state.resultsView.portionSize(for: foodItem),
+                                portionSize: state.searchResultsState.portionSize(for: foodItem),
                                 onPortionChange: { newPortion in
-                                    state.resultsView.updatePortion(for: foodItem, to: newPortion)
+                                    state.searchResultsState.updatePortion(for: foodItem, to: newPortion)
                                 },
                                 onDelete: {
                                     withAnimation(.easeInOut(duration: 0.2)) {
-                                        state.resultsView.deleteItem(foodItem)
+                                        state.searchResultsState.deleteItem(foodItem)
                                     }
                                 },
                                 onSelect: {
-                                    let currentPortion = state.resultsView.portionSize(for: foodItem)
-                                    let selectedFood = AIFoodItem(
-                                        name: foodItem.name,
-                                        brand: foodItem.brand,
-                                        calories: foodItem.caloriesInPortion(portion: currentPortion) ?? 0,
-                                        carbs: foodItem.carbsInPortion(portion: currentPortion) ?? 0,
-                                        protein: foodItem.proteinInPortion(portion: currentPortion) ?? 0,
-                                        fat: foodItem.fatInPortion(portion: currentPortion) ?? 0,
-                                        imageURL: foodItem.imageURL,
-                                        source: foodItem.source
+                                    let currentPortion = state.searchResultsState.portionSize(for: foodItem)
+                                    onFoodItemSelected(
+                                        foodItem.withPortion(currentPortion),
+                                        selectedTime
                                     )
-                                    onFoodItemSelected(selectedFood, selectedTime)
                                 },
                                 isFirst: index == 0,
                                 isLast: index == analysisResult.foodItemsDetailed.count - 1,
@@ -1323,7 +1211,7 @@ private struct AnalysisResultListSection: View {
 }
 
 struct DeletedFoodItemRow: View {
-    let foodItem: AnalysedFoodItem
+    let foodItem: FoodItemDetailed
     let onUndelete: () -> Void
     let isFirst: Bool
     let isLast: Bool
@@ -1371,7 +1259,7 @@ struct DeletedFoodItemRow: View {
 }
 
 private struct SectionInfoPopup: View {
-    let analysisResult: FoodAnalysisResult
+    let analysisResult: FoodItemGroup
 
     var body: some View {
         ScrollView {
@@ -1413,7 +1301,7 @@ private struct SectionInfoPopup: View {
 // MARK: - Editable Food Item Info Popup
 
 private struct EditableFoodItemInfoPopup: View {
-    @Binding var foodItem: AnalysedFoodItem
+    @Binding var foodItem: FoodItemDetailed
     @Binding var portionSize: Decimal
     @Binding var editedName: String
     @Binding var editedCaloriesPer100: Decimal?
@@ -1487,12 +1375,11 @@ private struct EditableFoodItemInfoPopup: View {
                 .onChange(of: sliderMultiplier) { _, newValue in
                     portionSize = baseServingSize * Decimal(newValue)
                     // Update the food item's portion size (calories are calculated automatically)
-                    foodItem = AnalysedFoodItem(
+                    foodItem = FoodItemDetailed(
                         name: editedName,
                         confidence: nil,
                         brand: nil,
-                        portionEstimate: nil,
-                        portionEstimateSize: portionSize,
+                        portionSize: portionSize,
                         standardServing: nil,
                         standardServingSize: baseServingSize,
                         units: foodItem.units,
@@ -1924,18 +1811,18 @@ private struct EditableServingSizeRow: View {
 }
 
 private struct FoodItemInfoPopup: View {
-    let foodItem: AnalysedFoodItem
+    let foodItem: FoodItemDetailed
     let portionSize: Decimal
 
     // Helper functions to avoid type inference issues
-    private func shouldShowStandardServing(_ item: AnalysedFoodItem) -> Bool {
+    private func shouldShowStandardServing(_ item: FoodItemDetailed) -> Bool {
         let hasDescription = item.standardServing != nil && !(item.standardServing?.isEmpty ?? true)
         let hasSize = item.standardServingSize != nil
         return hasDescription || hasSize
     }
 
     @ViewBuilder private func standardServingContent(
-        foodItem: AnalysedFoodItem,
+        foodItem: FoodItemDetailed,
         portionSize _: Decimal,
         unit _: String
     ) -> some View {
@@ -1946,7 +1833,7 @@ private struct FoodItemInfoPopup: View {
         }
     }
 
-    private func standardServingTitle(foodItem: AnalysedFoodItem, unit: String) -> String {
+    private func standardServingTitle(foodItem: FoodItemDetailed, unit: String) -> String {
         if let servingSize = foodItem.standardServingSize {
             let formattedSize = String(format: "%.0f", Double(truncating: servingSize as NSNumber))
             return "Standard Serving - \(formattedSize) \(unit)"
@@ -2000,7 +1887,7 @@ private struct FoodItemInfoPopup: View {
                     // Source icon and confidence on the right
                     HStack(spacing: 8) {
                         // Confidence badge (if AI source)
-                        if foodItem.source == .ai || foodItem.source == .aiText, let confidence = foodItem.confidence {
+                        if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
                             ConfidenceBadge(level: confidence)
                         }
 
@@ -2305,7 +2192,7 @@ struct RoundedCorner: Shape {
 // MARK: - Food Item Row
 
 struct FoodItemRow: View {
-    let foodItem: AnalysedFoodItem
+    let foodItem: FoodItemDetailed
     let portionSize: Decimal
     let onPortionChange: ((Decimal) -> Void)?
     let onDelete: (() -> Void)?
@@ -2324,11 +2211,6 @@ struct FoodItemRow: View {
 
     private var baseServingSize: Decimal {
         foodItem.standardServingSize ?? 100
-    }
-
-    // Helper to determine if confidence badge should be shown
-    private var shouldShowConfidence: Bool {
-        (foodItem.source == .ai || foodItem.source == .aiText) && foodItem.confidence != nil
     }
 
     var body: some View {
@@ -2369,7 +2251,7 @@ struct FoodItemRow: View {
                     if !showSelectButton {
                         HStack(spacing: 0) {
                             // Confidence badge (if AI source)
-                            if shouldShowConfidence, let confidence = foodItem.confidence {
+                            if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
                                 ConfidenceBadge(level: confidence)
                             }
                         }
@@ -2478,8 +2360,8 @@ struct FoodItemRow: View {
                         onPortionChange?(newPortion)
                         showPortionAdjuster = false
                     },
-                    onReset: foodItem.portionEstimateSize != nil ? {
-                        if let original = foodItem.portionEstimateSize {
+                    onReset: foodItem.portionSize != nil ? {
+                        if let original = foodItem.portionSize {
                             onPortionChange?(original)
                             showPortionAdjuster = false
                         }
@@ -2489,8 +2371,8 @@ struct FoodItemRow: View {
                     }
                 )
                 .presentationDetents([.height(
-                    hasNutritionInfo ? (foodItem.portionEstimateSize != nil ? 420 : 400) :
-                        (foodItem.portionEstimateSize != nil ? 340 : 300)
+                    hasNutritionInfo ? (foodItem.portionSize != nil ? 420 : 400) :
+                        (foodItem.portionSize != nil ? 340 : 300)
                 )])
                 .presentationDragIndicator(.visible)
             }
@@ -2509,7 +2391,7 @@ struct FoodItemRow: View {
         }
     }
 
-    private func preferredItemInfoHeight(for item: AnalysedFoodItem) -> CGFloat {
+    private func preferredItemInfoHeight(for item: FoodItemDetailed) -> CGFloat {
         var base: CGFloat = 480
         if let notes = item.assessmentNotes, !notes.isEmpty { base += 40 }
         if let prep = item.preparationMethod, !prep.isEmpty { base += 30 }
@@ -2525,7 +2407,7 @@ extension FoodItemRow {
         let value: Decimal
         let color: Color
         let icon: String
-        let foodItem: AnalysedFoodItem
+        let foodItem: FoodItemDetailed
 
         @Environment(\.colorScheme) private var colorScheme
 
@@ -2554,7 +2436,7 @@ extension FoodItemRow {
 
     private struct PortionAdjusterView: View {
         let currentPortion: Decimal
-        let foodItem: AnalysedFoodItem
+        let foodItem: FoodItemDetailed
         @Binding var sliderMultiplier: Double
         let onSave: (Decimal) -> Void
         let onReset: (() -> Void)?
@@ -2573,7 +2455,7 @@ extension FoodItemRow {
         }
 
         private func resetSliderToOriginal() {
-            if let original = foodItem.portionEstimateSize, baseServingSize > 0 {
+            if let original = foodItem.portionSize, baseServingSize > 0 {
                 sliderMultiplier = Double(original / baseServingSize)
             }
         }
@@ -2640,7 +2522,7 @@ extension FoodItemRow {
                 .padding(.horizontal)
 
                 // Show reset button if original portion size is available
-                if let original = foodItem.portionEstimateSize {
+                if let original = foodItem.portionSize {
                     Button(action: resetSliderToOriginal) {
                         HStack {
                             Text("Reset to \(Double(original), specifier: "%.0f") \(unit)")
@@ -2688,8 +2570,8 @@ extension FoodItemRow {
 // MARK: - Text Search Results Sheet
 
 struct TextSearchResultsSheet: View {
-    let searchResult: FoodAnalysisResult
-    let onFoodItemSelected: (AnalysedFoodItem, Date?) -> Void
+    let searchResult: FoodItemGroup
+    let onFoodItemSelected: (FoodItemDetailed, Date?) -> Void
     let onDismiss: () -> Void
 
     @State private var selectedTime: Date?
@@ -2770,7 +2652,7 @@ struct TextSearchResultsSheet: View {
                         if foodItem.name.isNotEmpty {
                             FoodItemRow(
                                 foodItem: foodItem,
-                                portionSize: foodItem.portionEstimateSize ?? foodItem.standardServingSize ?? 100,
+                                portionSize: foodItem.portionSize ?? foodItem.standardServingSize ?? 100,
                                 onPortionChange: nil,
                                 onDelete: nil,
                                 onSelect: {

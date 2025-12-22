@@ -17,16 +17,16 @@ final class FoodSearchStateModel: ObservableObject {
 
     @Published var foodSearchRoute: FoodSearchRoute? = nil
 
-    @Published var latestTextSearch: FoodAnalysisResult? = nil
-    @Published var searchResults: [FoodAnalysisResult] = []
     @Published var aiAnalysisRequest: AnalysisRequest?
 
+    @Published var latestTextSearch: FoodItemGroup? = nil
     @Published var latestSearchError: String? = nil
     @Published var latestSearchIcon: String? = nil
+
     @Published var isLoading = false
     @Published var mealView = false
 
-    var resultsView = SearchResultsState.empty
+    var searchResultsState = SearchResultsState.empty
 
     // analysis progress
 
@@ -41,11 +41,11 @@ final class FoodSearchStateModel: ObservableObject {
 
     @Published var searchTask: Task<Void, Never>? = nil
 
-    var visibleSections: [FoodAnalysisResult] {
-        searchResults.filter({ !resultsView.isSectionDeleted($0.id) })
+    var visibleSections: [FoodItemGroup] {
+        searchResultsState.searchResults.filter({ !searchResultsState.isSectionDeleted($0.id) })
     }
 
-    var allFoodItems: [AnalysedFoodItem] {
+    var allFoodItems: [FoodItemDetailed] {
         visibleSections.flatMap(\.foodItemsDetailed)
     }
 
@@ -63,7 +63,7 @@ final class FoodSearchStateModel: ObservableObject {
     }
 
     init() {
-        resultsView.objectWillChange.sink { [weak self] _ in
+        searchResultsState.objectWillChange.sink { [weak self] _ in
             self?.objectWillChange.send()
         }
         .store(in: &cancellables)
@@ -288,10 +288,10 @@ final class FoodSearchStateModel: ObservableObject {
     }
 
     private func onFoodAnalyzed(
-        _ analysisResult: FoodAnalysisResult,
+        _ analysisResult: FoodItemGroup,
         _ analysisRequest: AnalysisRequest
     ) {
-        searchResults = [analysisResult] + searchResults
+        searchResultsState.searchResults = [analysisResult] + searchResultsState.searchResults
         aiAnalysisRequest = analysisRequest
 
         // TODO: delay before hiding the progress screen, do we want it?
@@ -331,18 +331,17 @@ final class FoodSearchStateModel: ObservableObject {
         foodSearchRoute = nil
     }
 
-    @MainActor func addItem(_ item: AnalysedFoodItem) {
+    @MainActor func addItem(_ item: FoodItemDetailed) {
         // Early return if source is missing; although caller asserts it won't be nil, guard defensively
         guard let source = item.source else { return }
 
         // Find an existing result with the same source as the item's source
-        if let existingIndex = searchResults.firstIndex(where: { $0.source == source }) {
-            let existing = searchResults.remove(at: existingIndex)
+        if let existingIndex = searchResultsState.searchResults.firstIndex(where: { $0.source == source }) {
+            let existing = searchResultsState.searchResults.remove(at: existingIndex)
             // Build a new items array by prepending the new item
             let newItems = [item] + existing.foodItemsDetailed
-            // Rebuild a new FoodAnalysisResult preserving all existing fields, only replacing items
-            let updated = FoodAnalysisResult(
-                imageType: existing.imageType,
+            // Rebuild a new FoodItemGroup preserving all existing fields, only replacing items
+            let updated = FoodItemGroup(
                 foodItemsDetailed: newItems,
                 briefDescription: existing.briefDescription,
                 overallDescription: existing.overallDescription,
@@ -352,11 +351,10 @@ final class FoodSearchStateModel: ObservableObject {
                 textQuery: existing.textQuery
             )
             // Put this updated result at the beginning of the list of results
-            searchResults.insert(updated, at: 0)
+            searchResultsState.searchResults.insert(updated, at: 0)
         } else {
             // Create a brand new result for this source; other fields are nil by default
-            let newResult = FoodAnalysisResult(
-                imageType: nil,
+            let newResult = FoodItemGroup(
                 foodItemsDetailed: [item],
                 briefDescription: nil,
                 overallDescription: nil,
@@ -365,7 +363,7 @@ final class FoodSearchStateModel: ObservableObject {
                 barcode: nil,
                 textQuery: nil
             )
-            searchResults.insert(newResult, at: 0)
+            searchResultsState.searchResults.insert(newResult, at: 0)
         }
     }
 }

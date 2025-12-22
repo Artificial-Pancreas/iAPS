@@ -4,7 +4,7 @@ import SwiftUI
 
 struct FoodSearchView: View {
     @ObservedObject var state: FoodSearchStateModel
-    var onSelect: (AIFoodItem, UIImage?, Date?) -> Void
+    var onSelect: ([FoodItemDetailed], UIImage?, Date?) -> Void
 //    let addButtonLabelKey: LocalizedStringKey
     let addAllButtonLabelKey: LocalizedStringKey
 
@@ -13,7 +13,7 @@ struct FoodSearchView: View {
             SearchResultsView(
                 state: state,
                 onFoodItemSelected: { foodItem, selectedTime in
-                    onSelect(foodItem, state.aiAnalysisRequest?.image, selectedTime)
+                    onSelect([foodItem], state.aiAnalysisRequest?.image, selectedTime)
                 },
                 onCompleteMealSelected: { totalMeal, selectedTime in
                     onSelect(totalMeal, state.aiAnalysisRequest?.image, selectedTime)

@@ -12,7 +12,7 @@ extension USDAFoodDataService: TextAnalysisService {
     func analyzeText(
         prompt: String,
         telemetryCallback _: ((String) -> Void)?
-    ) async throws -> FoodAnalysisResult {
+    ) async throws -> FoodItemGroup {
         let products = try await searchProducts(query: prompt, pageSize: 15)
         var result = fromOpenFoodFactsProducts(products: products, confidence: nil, source: .search)
         result.textQuery = prompt

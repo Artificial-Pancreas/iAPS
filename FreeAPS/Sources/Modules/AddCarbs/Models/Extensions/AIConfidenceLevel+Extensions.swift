@@ -1,6 +1,6 @@
 import SwiftUI
 
-extension AIConfidenceLevel {
+extension ConfidenceLevel {
     var color: Color {
         switch self {
         case .high: return .green

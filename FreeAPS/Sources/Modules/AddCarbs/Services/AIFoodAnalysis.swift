@@ -123,7 +123,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
     func analyzeFoodImage(
         _ image: UIImage,
         telemetryCallback: ((String) -> Void)?
-    ) async throws -> FoodAnalysisResult {
+    ) async throws -> FoodItemGroup {
         // Check cache first for instant results
         if let cachedResult = imageAnalysisCache.getCachedResult(for: image) {
             telemetryCallback?("📋 Found cached analysis result")
@@ -171,13 +171,13 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
             aggressiveImageCompression: providerImpl.needAggressiveImageCompression,
             telemetryCallback: telemetryCallback
         )
-        let analysisPrompt = AIPrompts.getAnalysisPrompt(.image(image), responseSchema: FoodAnalysisResult.schemaVisual)
+        let analysisPrompt = AIPrompts.getAnalysisPrompt(.image(image), responseSchema: AIAnalysisResult.schemaVisual)
 
         // Track processing time
         let startTime = Date()
 
         do {
-            let result: FoodAnalysisResult = try await providerImpl.analyzeImage(
+            let result: FoodItemGroup = try await providerImpl.analyzeImage(
                 prompt: analysisPrompt,
                 images: [base64Image],
                 telemetryCallback: telemetryCallback
@@ -213,12 +213,12 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
     func analyzeFoodQuery(
         _ query: String,
         telemetryCallback: ((String) -> Void)?
-    ) async throws -> FoodAnalysisResult {
+    ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.textSearchProvider.description) …")
         switch UserDefaults.standard.textSearchProvider {
         case let .aiModel(model):
             let providerImpl = try getAIImplementation(for: model, telemetryCallback: telemetryCallback)
-            let analysisPrompt = AIPrompts.getAnalysisPrompt(.query(query), responseSchema: FoodAnalysisResult.schemaText)
+            let analysisPrompt = AIPrompts.getAnalysisPrompt(.query(query), responseSchema: AIAnalysisResult.schemaText)
 
             // Use average processing time from statistics, or fall back to default ETA
             if let stats = AIUsageStatistics.getStatistics(model: model, requestType: .text),
@@ -273,7 +273,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
     func analyzeBarcode(
         _ barcode: String,
         telemetryCallback: ((String) -> Void)?
-    ) async throws -> FoodAnalysisResult {
+    ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.barcodeSearchProvider.description) …")
         switch UserDefaults.standard.barcodeSearchProvider {
         case .openFoodFacts:
@@ -371,7 +371,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 //    func analyzeImageWithParallelProviders(
 //        _ image: UIImage,
 //        telemetryCallback: ((String) -> Void)?
-//    ) async throws -> FoodAnalysisResult {
+//    ) async throws -> FoodItemGroup {
 //        let networkMonitor = NetworkQualityMonitor.shared
 //        telemetryCallback?("🌐 Analyzing network conditions …")
 //
@@ -419,13 +419,13 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 //        _ image: UIImage,
 //        providers: [SearchProvider],
 //        telemetryCallback _: ((String) -> Void)?
-//    ) async throws -> FoodAnalysisResult {
+//    ) async throws -> FoodItemGroup {
 //        // Use the maximum timeout from all providers, with special handling for GPT-5
 //        let timeout = providers.map { provider in
 //            max(ConfigurableAIService.optimalTimeout(for: provider), NetworkQualityMonitor.shared.recommendedTimeout)
 //        }.max() ?? NetworkQualityMonitor.shared.recommendedTimeout
 //
-//        return try await withThrowingTaskGroup(of: FoodAnalysisResult.self) { group in
+//        return try await withThrowingTaskGroup(of: FoodItemGroup.self) { group in
 //            // Add timeout wrapper for each provider
 //            for provider in providers {
 //                group.addTask { [weak self] in
@@ -465,7 +465,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 //        _ image: UIImage,
 //        providers: [SearchProvider],
 //        telemetryCallback: ((String) -> Void)?
-//    ) async throws -> FoodAnalysisResult {
+//    ) async throws -> FoodItemGroup {
 //        // Use provider-specific timeout, with special handling for GPT-5
 //        let baseTimeout = NetworkQualityMonitor.shared.recommendedTimeout
 //        var lastError: Error?
@@ -497,7 +497,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 //    private func analyzeImageWithSingleProvider(
 //        _ image: UIImage,
 //        provider: SearchProvider
-//    ) async throws -> FoodAnalysisResult {
+//    ) async throws -> FoodItemGroup {
 //        let providerImpl = try getProviderImplementation(for: provider)
 //        return try await providerImpl.analyzeFoodImage(
 //            image,
@@ -510,7 +510,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 //    private func analyzeQueryWithSingleProvider(
 //        _ query: String,
 //        provider: SearchProvider
-//    ) async throws -> FoodAnalysisResult {
+//    ) async throws -> FoodItemGroup {
 //        let providerImpl = try getProviderImplementation(for: provider)
 //        return try await providerImpl.analyzeFoodQuery(
 //            query,
