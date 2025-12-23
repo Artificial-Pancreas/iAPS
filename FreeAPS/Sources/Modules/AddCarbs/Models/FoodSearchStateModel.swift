@@ -28,6 +28,7 @@ final class FoodSearchStateModel: ObservableObject {
     @Published var isLoading = false
     @Published var mealView = false
     @Published var filterText = ""
+    @Published var showManualEntry = false
 
     var searchResultsState = SearchResultsState.empty
 

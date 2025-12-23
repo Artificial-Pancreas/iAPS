@@ -11,7 +11,6 @@ struct SearchResultsView: View {
     @State private var clearedResultsViewState: SearchResultsState?
     @State private var selectedTime: Date?
     @State private var showTimePicker = false
-    @State private var showManualEntry = false
 
     private var nonDeletedItemCount: Int {
         state.searchResultsState.nonDeletedItemCount
@@ -211,14 +210,14 @@ struct SearchResultsView: View {
             .presentationDetents([.height(600), .large])
             .presentationDragIndicator(.visible)
         }
-        .sheet(isPresented: $showManualEntry) {
+        .sheet(isPresented: $state.showManualEntry) {
             ManualFoodEntrySheet(
                 onSave: { foodItem in
                     state.addItem(foodItem)
-                    showManualEntry = false
+                    state.showManualEntry = false
                 },
                 onCancel: {
-                    showManualEntry = false
+                    state.showManualEntry = false
                 }
             )
             .presentationDetents([.height(600), .large])
@@ -228,41 +227,6 @@ struct SearchResultsView: View {
 
     private var actionButtonRow: some View {
         HStack(alignment: .center) {
-            // Manual Entry button
-            Button(action: {
-                showManualEntry = true
-            }) {
-                Image(systemName: "text.badge.plus")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color(.systemGray5))
-                    )
-            }
-            .buttonStyle(.plain)
-
-            if state.savedFoods?.foodItemsDetailed.count ?? 0 > 0 {
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        state.showSavedFoods = true
-                    }
-                }) {
-                    Image(systemName: "archivebox.fill")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color(.systemGray5))
-                        )
-                }
-                .buttonStyle(.plain)
-            }
-
             Spacer()
 
             if nonDeletedItemCount > 0 {
@@ -308,28 +272,6 @@ struct SearchResultsView: View {
                         )
                 }
                 .buttonStyle(PlainButtonStyle())
-
-            } else {
-                Spacer()
-                Button(action: {
-                    state.showingFoodSearch = false
-                }) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "arrow.left")
-                            .font(.system(size: 14, weight: .medium))
-                        Text("Back")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundColor(.primary)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color(.systemGray5))
-                    )
-                }
-                .buttonStyle(.plain)
             }
         }
         .sheet(isPresented: $showTimePicker) {
@@ -606,7 +548,7 @@ struct SearchResultsView: View {
 
                     // Manual Entry Card
                     Button(action: {
-                        showManualEntry = true
+                        state.showManualEntry = true
                     }) {
                         CapabilityCard(
                             icon: "pencil",
