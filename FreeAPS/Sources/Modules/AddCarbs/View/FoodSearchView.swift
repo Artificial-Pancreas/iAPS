@@ -61,44 +61,51 @@ struct FoodSearchView: View {
             HStack(spacing: 10) {
                 HStack(spacing: 10) {
                     Image(
-                        systemName: state.isBarcode ? "barcode" :
-                            UserDefaults.standard.textSearchProvider.isAI ? "text.bubble" : "magnifyingglass"
+                        systemName: state.showSavedFoods ? "archivebox.fill" : (
+                            state.isBarcode ? "barcode" :
+                                UserDefaults.standard.textSearchProvider.isAI ? "text.bubble" : "magnifyingglass"
+                        )
                     )
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.secondary)
 
                     ZStack(alignment: .trailing) {
-                        TextField("Search foods...", text: $state.foodSearchText)
-                            .font(.body)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
-                            .submitLabel(.search)
-                            .focused($isTextFieldFocused)
-                            .onSubmit {
-                                state.searchByText(query: state.foodSearchText)
+                        TextField(
+                            state
+                                .showSavedFoods ? "Search saved foods..." :
+                                (UserDefaults.standard.textSearchProvider.isAI ? "Ask AI..." : "Search foods..."),
+                            text: $state.foodSearchText
+                        )
+                        .font(.body)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .submitLabel(.search)
+                        .focused($isTextFieldFocused)
+                        .onSubmit {
+                            state.searchByText(query: state.foodSearchText)
+                            state.showingFoodSearch = true
+                        }
+                        .onChange(of: isTextFieldFocused) { _, newValue in
+                            if newValue {
                                 state.showingFoodSearch = true
                             }
-                            .onChange(of: isTextFieldFocused) { _, newValue in
-                                if newValue {
-                                    state.showingFoodSearch = true
+                        }
+                        .onChange(of: state.foodSearchText) { _, newValue in
+                            // Update the saved foods filter text
+                            state.filterText = newValue
+                        }
+                        .toolbar {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Spacer()
+                                Button {
+                                    isTextFieldFocused = false
+                                } label: {
+                                    Image(systemName: "keyboard.chevron.compact.down")
+                                        .font(.body.weight(.semibold))
+                                        .foregroundStyle(.blue)
                                 }
                             }
-                            .onChange(of: state.foodSearchText) { _, newValue in
-                                // Update the saved foods filter text
-                                state.filterText = newValue
-                            }
-                            .toolbar {
-                                ToolbarItemGroup(placement: .keyboard) {
-                                    Spacer()
-                                    Button {
-                                        isTextFieldFocused = false
-                                    } label: {
-                                        Image(systemName: "keyboard.chevron.compact.down")
-                                            .font(.body.weight(.semibold))
-                                            .foregroundStyle(.blue)
-                                    }
-                                }
-                            }
+                        }
                     }
 
                     // Clear button

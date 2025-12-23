@@ -105,23 +105,14 @@ struct SearchResultsView: View {
                 .padding(.vertical, 20)
             }
 
-            // Main content (switch between views based on search state)
             if let savedFoods = state.savedFoods, state.showSavedFoods {
                 // Show saved foods inline with header
                 VStack(spacing: 0) {
-                    // Header bar
                     HStack {
-                        // Source icon and title
-                        HStack(spacing: 8) {
-                            Image(systemName: "archivebox.fill")
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(.secondary)
-
-                            Text("Saved Foods")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                                .lineLimit(1)
-                        }
+                        Text("Saved Foods")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
 
                         Spacer()
 
