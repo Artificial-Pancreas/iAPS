@@ -207,7 +207,7 @@ struct SearchResultsView: View {
                     },
                     useTransparentBackground: true
                 )
-                .navigationTitle("Search Results")
+                .navigationTitle(searchResult.textQuery == nil ? "Search Results" : "Results for '\(searchResult.textQuery!)'")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -555,6 +555,7 @@ struct SearchResultsView: View {
             .listStyle(.plain)
             .background(Color(.systemGroupedBackground))
             .scrollContentBackground(.hidden)
+            .scrollDismissesKeyboard(.immediately)
         }
     }
 
@@ -646,6 +647,7 @@ struct SearchResultsView: View {
             .padding(.top, 20)
             .frame(maxWidth: .infinity)
         }
+        .scrollDismissesKeyboard(.immediately)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemGroupedBackground))
     }
@@ -1979,12 +1981,49 @@ private struct FoodItemInfoPopup: View {
 
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // Title
-                Text(foodItem.name)
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.primary)
-                    .padding(.horizontal)
+                // Title and image
+                HStack(alignment: .top, spacing: 12) {
+                    Text(foodItem.name)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    // Product image (if available)
+                    if let imageURLString = foodItem.imageURL, let imageURL = URL(string: imageURLString) {
+                        AsyncImage(url: imageURL) { phase in
+                            switch phase {
+                            case .empty:
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemGray5))
+                                    .frame(width: 80, height: 80)
+                                    .overlay(
+                                        ProgressView()
+                                            .controlSize(.small)
+                                    )
+                            case let .success(image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            case .failure:
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemGray5))
+                                    .frame(width: 80, height: 80)
+                                    .overlay(
+                                        Image(systemName: "photo")
+                                            .font(.system(size: 24))
+                                            .foregroundColor(.secondary)
+                                    )
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal)
+
                 if let visualCues = foodItem.visualCues, !visualCues.isEmpty {
                     InfoCard(icon: "eye.fill", title: "Visual Cues", content: visualCues, color: .blue, embedIcon: true)
                         .padding(.horizontal)
@@ -2306,6 +2345,47 @@ struct InfoCard: View {
     }
 }
 
+// MARK: - Food Item Thumbnail
+
+/// Reusable component for displaying food item product images
+private struct FoodItemThumbnail: View {
+    let imageURL: String?
+
+    var body: some View {
+        if let imageURLString = imageURL, let imageURL = URL(string: imageURLString) {
+            AsyncImage(url: imageURL) { phase in
+                switch phase {
+                case .empty:
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color(.systemGray5))
+                        .frame(width: 60, height: 60)
+                        .overlay(
+                            ProgressView()
+                                .controlSize(.small)
+                        )
+                case let .success(image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 60, height: 60)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                case .failure:
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color(.systemGray5))
+                        .frame(width: 60, height: 60)
+                        .overlay(
+                            Image(systemName: "photo")
+                                .font(.system(size: 20))
+                                .foregroundColor(.secondary)
+                        )
+                @unknown default:
+                    EmptyView()
+                }
+            }
+        }
+    }
+}
+
 // Helper for rounded corners on specific corners
 extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
@@ -2373,66 +2453,71 @@ struct FoodItemRow: View {
     var body: some View {
         VStack(spacing: 0) {
             // Main Row Content
-            VStack(alignment: .leading, spacing: 6) {
-                HStack(spacing: 8) {
-                    Text(foodItem.name)
-                        .font(.body)
-                        .fontWeight(.medium)
-                        .foregroundColor(.primary)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 8) {
+                        Text(foodItem.name)
+                            .font(.body)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    // Select button (when in search results mode)
-                    if showSelectButton {
-                        Button(action: onSelect) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 14, weight: .semibold))
-                                Text("Select")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
+                        // Select button (when in search results mode)
+                        if showSelectButton {
+                            Button(action: onSelect) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "plus.circle.fill")
+                                        .font(.system(size: 14, weight: .semibold))
+                                    Text("Select")
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                }
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .fill(Color.accentColor)
+                                )
                             }
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                    .fill(Color.accentColor)
-                            )
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        .buttonStyle(PlainButtonStyle())
+
+                        // Source icon with confidence badge (if AI)
+                        if !showSelectButton {
+                            HStack(spacing: 0) {
+                                // Confidence badge (if AI source)
+                                if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
+                                    ConfidenceBadge(level: confidence)
+                                }
+                            }
+                        }
                     }
 
-                    // Source icon with confidence badge (if AI)
-                    if !showSelectButton {
-                        HStack(spacing: 0) {
-                            // Confidence badge (if AI source)
-                            if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
-                                ConfidenceBadge(level: confidence)
+                    HStack(spacing: 8) {
+                        PortionSizeBadge(
+                            value: portionSize,
+                            color: .orange,
+                            icon: "scalemass.fill",
+                            foodItem: foodItem
+                        )
+
+                        // Only show serving multiplier for per100 items
+                        if case .per100 = foodItem.nutrition {
+                            if let servingSize = foodItem.standardServingSize {
+                                Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
+                                    .font(.caption)
+                                    .foregroundColor(.primary)
+                                    .opacity(0.7)
                             }
                         }
                     }
                 }
 
-                HStack(spacing: 8) {
-                    PortionSizeBadge(
-                        value: portionSize,
-                        color: .orange,
-                        icon: "scalemass.fill",
-                        foodItem: foodItem
-                    )
-
-                    // Only show serving multiplier for per100 items
-                    if case .per100 = foodItem.nutrition {
-                        if let servingSize = foodItem.standardServingSize {
-                            Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
-                                .font(.caption)
-                                .foregroundColor(.primary)
-                                .opacity(0.7)
-                        }
-                    }
-                }
+                // Product image thumbnail (if available) - on the right
+                FoodItemThumbnail(imageURL: foodItem.imageURL)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
@@ -2697,11 +2782,48 @@ extension FoodItemRow {
 
         var body: some View {
             VStack(spacing: 20) {
-                VStack(spacing: 4) {
-                    Text(foodItem.name)
-                        .font(.title3)
-                        .fontWeight(.semibold)
+                HStack(alignment: .top, spacing: 12) {
+                    VStack(spacing: 4) {
+                        Text(foodItem.name)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    // Product image (if available)
+                    if let imageURLString = foodItem.imageURL, let imageURL = URL(string: imageURLString) {
+                        AsyncImage(url: imageURL) { phase in
+                            switch phase {
+                            case .empty:
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemGray5))
+                                    .frame(width: 80, height: 80)
+                                    .overlay(
+                                        ProgressView()
+                                            .controlSize(.small)
+                                    )
+                            case let .success(image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            case .failure:
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemGray5))
+                                    .frame(width: 80, height: 80)
+                                    .overlay(
+                                        Image(systemName: "photo")
+                                            .font(.system(size: 24))
+                                            .foregroundColor(.secondary)
+                                    )
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                    }
                 }
+                .padding(.horizontal)
                 .padding(.top)
 
                 VStack(spacing: 8) {
@@ -2962,42 +3084,47 @@ private struct TextSearchFoodItemRow: View {
     var body: some View {
         VStack(spacing: 0) {
             // Main Row Content
-            VStack(alignment: .leading, spacing: 8) {
-                // Top row: Name + Confidence
-                HStack(spacing: 8) {
-                    Text(foodItem.name)
-                        .font(.body)
-                        .fontWeight(.medium)
-                        .foregroundColor(.primary)
-                        .lineLimit(2)
-                        .truncationMode(.tail)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
+                    // Top row: Name + Confidence
+                    HStack(spacing: 8) {
+                        Text(foodItem.name)
+                            .font(.body)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    // Confidence badge (if AI source)
-                    if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
-                        ConfidenceBadge(level: confidence)
+                        // Confidence badge (if AI source)
+                        if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
+                            ConfidenceBadge(level: confidence)
+                        }
                     }
-                }
 
-                // Middle row: Portion badge + serving multiplier
-                HStack(spacing: 8) {
-                    PortionSizeBadge(
-                        value: portionSize,
-                        color: .orange,
-                        icon: "scalemass.fill",
-                        foodItem: foodItem
-                    )
+                    // Middle row: Portion badge + serving multiplier
+                    HStack(spacing: 8) {
+                        PortionSizeBadge(
+                            value: portionSize,
+                            color: .orange,
+                            icon: "scalemass.fill",
+                            foodItem: foodItem
+                        )
 
-                    // Only show serving multiplier for per100 items
-                    if case .per100 = foodItem.nutrition {
-                        if let servingSize = foodItem.standardServingSize {
-                            Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
-                                .font(.caption)
-                                .foregroundColor(.primary)
-                                .opacity(0.7)
+                        // Only show serving multiplier for per100 items
+                        if case .per100 = foodItem.nutrition {
+                            if let servingSize = foodItem.standardServingSize {
+                                Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
+                                    .font(.caption)
+                                    .foregroundColor(.primary)
+                                    .opacity(0.7)
+                            }
                         }
                     }
                 }
+
+                // Product image thumbnail (if available) - on the right
+                FoodItemThumbnail(imageURL: foodItem.imageURL)
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
