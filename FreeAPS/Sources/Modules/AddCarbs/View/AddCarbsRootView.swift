@@ -57,6 +57,50 @@ extension AddCarbs {
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
+        // Transform Presets to FoodItemDetailed
+        private func transformPresetsToFoodItems(_ presets: FetchedResults<Presets>) -> [FoodItemDetailed] {
+            presets.compactMap { preset -> FoodItemDetailed? in
+                guard let dish = preset.dish, !dish.isEmpty, dish != "Empty" else { return nil }
+
+                let carbs = (preset.carbs as Decimal?) ?? 0
+                let fat = (preset.fat as Decimal?) ?? 0
+                let protein = (preset.protein as Decimal?) ?? 0
+
+                let nutritionValues = NutritionValues(
+                    calories: nil,
+                    carbs: carbs,
+                    fat: fat,
+                    fiber: nil,
+                    protein: protein,
+                    sugars: nil
+                )
+
+                return FoodItemDetailed(
+                    name: dish,
+                    nutrition: .perServing(nutritionValues),
+                    servingsMultiplier: 1,
+                    standardServing: nil,
+                    standardServingSize: nil,
+                    units: .grams,
+                    source: .database
+                )
+            }
+        }
+
+        // Update savedFoods when presets change
+        private func updateSavedFoods() {
+            let foodItems = transformPresetsToFoodItems(carbPresets)
+            foodSearchState.savedFoods = FoodItemGroup(
+                foodItemsDetailed: foodItems,
+                briefDescription: nil,
+                overallDescription: nil,
+                diabetesConsiderations: nil,
+                source: .database,
+                barcode: nil,
+                textQuery: nil
+            )
+        }
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -119,6 +163,7 @@ extension AddCarbs {
             }
             .onAppear {
                 state.loadEntries(editMode)
+                updateSavedFoods() // Initialize savedFoods on appear
                 if !meal {
                     switch mode {
                     case .image:
@@ -135,6 +180,9 @@ extension AddCarbs {
                         break
                     }
                 }
+            }
+            .onChange(of: carbPresets.count) { _ in
+                updateSavedFoods()
             }
         }
 
