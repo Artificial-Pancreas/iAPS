@@ -87,6 +87,18 @@ struct FoodSearchView: View {
                                 // Update the saved foods filter text
                                 state.filterText = newValue
                             }
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    Button {
+                                        isTextFieldFocused = false
+                                    } label: {
+                                        Image(systemName: "keyboard.chevron.compact.down")
+                                            .font(.body.weight(.semibold))
+                                            .foregroundStyle(.blue)
+                                    }
+                                }
+                            }
                     }
 
                     // Clear button
@@ -110,8 +122,6 @@ struct FoodSearchView: View {
 
                 // Barcode Scanner Button
                 Button {
-                    // Dismiss keyboard
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     state.showingFoodSearch = true
                     state.foodSearchRoute = .barcodeScanner
                 } label: {
@@ -137,20 +147,11 @@ struct FoodSearchView: View {
                     )
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        // Dismiss keyboard
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         state.foodSearchRoute = .camera
                         state.showingFoodSearch = true
                     }
                     .contextMenu {
                         Button {
-                            // Dismiss keyboard
-                            UIApplication.shared.sendAction(
-                                #selector(UIResponder.resignFirstResponder),
-                                to: nil,
-                                from: nil,
-                                for: nil
-                            )
                             state.foodSearchRoute = .camera
                             state.showingFoodSearch = true
                         } label: {
@@ -158,13 +159,6 @@ struct FoodSearchView: View {
                         }
 
                         Button {
-                            // Dismiss keyboard
-                            UIApplication.shared.sendAction(
-                                #selector(UIResponder.resignFirstResponder),
-                                to: nil,
-                                from: nil,
-                                for: nil
-                            )
                             showPhotoPicker = true
                             state.showingFoodSearch = true
                         } label: {

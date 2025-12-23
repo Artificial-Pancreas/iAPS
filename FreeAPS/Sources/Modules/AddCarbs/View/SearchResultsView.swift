@@ -168,9 +168,11 @@ struct SearchResultsView: View {
             } else if !hasVisibleContent {
                 noSearchesView
                     .transition(.opacity)
+                    .scrollDismissesKeyboard(.immediately)
             } else {
                 searchResultsView
                     .transition(.opacity)
+                    .scrollDismissesKeyboard(.immediately)
             }
         }
         .onChange(of: state.searchResultsState.searchResults) {
@@ -221,7 +223,6 @@ struct SearchResultsView: View {
         .sheet(isPresented: $showManualEntry) {
             ManualFoodEntrySheet(
                 onSave: { foodItem in
-                    // Use the state model's addItem function
                     state.addItem(foodItem)
                     showManualEntry = false
                 },
@@ -320,8 +321,6 @@ struct SearchResultsView: View {
             } else {
                 Spacer()
                 Button(action: {
-                    // Dismiss keyboard
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     state.showingFoodSearch = false
                 }) {
                     HStack(spacing: 8) {
@@ -580,8 +579,6 @@ struct SearchResultsView: View {
 
                     // Barcode Scanner Card
                     Button(action: {
-                        // Dismiss keyboard
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         state.foodSearchRoute = .barcodeScanner
                     }) {
                         CapabilityCard(
@@ -595,8 +592,6 @@ struct SearchResultsView: View {
 
                     // Photo Analysis Card
                     Button(action: {
-                        // Dismiss keyboard
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         state.foodSearchRoute = .camera
                     }) {
                         CapabilityCard(
@@ -2937,6 +2932,7 @@ struct FoodItemsSelectorView: View {
             }
             .padding(.vertical)
         }
+        .scrollDismissesKeyboard(.immediately)
     }
 }
 
