@@ -14,16 +14,15 @@ struct SearchResultsView: View {
     @State private var showManualEntry = false
 
     private var nonDeletedItemCount: Int {
-        state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.searchResultsState.isDeleted($0) }.count
+        state.searchResultsState.nonDeletedItemCount
     }
 
     private var hasVisibleContent: Bool {
-        // Only deleted sections count as removing content (item deletions can be undone)
-        !state.visibleSections.isEmpty
+        state.searchResultsState.hasVisibleContent
     }
 
     private var totalCalories: Decimal {
-        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
+        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
             switch item.nutrition {
@@ -36,7 +35,7 @@ struct SearchResultsView: View {
     }
 
     private var totalCarbs: Decimal {
-        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
+        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
             switch item.nutrition {
@@ -49,7 +48,7 @@ struct SearchResultsView: View {
     }
 
     private var totalProtein: Decimal {
-        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
+        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
             switch item.nutrition {
@@ -62,7 +61,7 @@ struct SearchResultsView: View {
     }
 
     private var totalFat: Decimal {
-        state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
+        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
             switch item.nutrition {
@@ -76,49 +75,148 @@ struct SearchResultsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Loading indicator
-            if state.isLoading {
-                loadingBanner()
-                    .padding(.top, 12)
-                    .padding(.horizontal)
-            }
-            // Error message (only when not loading)
-            else if let latestSearchError = state.latestSearchError {
-                errorMessageBanner(message: latestSearchError, icon: state.latestSearchIcon)
-                    .padding(.top, 12)
-                    .padding(.horizontal)
-            }
-
-            // Undo button (shown after clearing, regardless of empty/non-empty state)
-            if clearedResultsViewState != nil {
-                undoButton
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                if hasVisibleContent {
-                    mealTotalsView
+            // Only show these elements when NOT showing saved foods inline
+            if !(state.savedFoods != nil && state.showSavedFoods) {
+                // Loading indicator
+                if state.isLoading {
+                    loadingBanner()
+                        .padding(.top, 12)
+                        .padding(.horizontal)
                 }
-                actionButtonRow
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 20)
+                // Error message (only when not loading)
+                else if let latestSearchError = state.latestSearchError {
+                    errorMessageBanner(message: latestSearchError, icon: state.latestSearchIcon)
+                        .padding(.top, 12)
+                        .padding(.horizontal)
+                }
 
-            if !hasVisibleContent {
+                // Undo button (shown after clearing, regardless of empty/non-empty state)
+                if clearedResultsViewState != nil {
+                    undoButton
+                }
+
+                VStack(alignment: .leading, spacing: 6) {
+                    if hasVisibleContent {
+                        mealTotalsView
+                    }
+                    actionButtonRow
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 20)
+            }
+
+            // Main content (switch between views based on search state)
+            if let savedFoods = state.savedFoods, state.showSavedFoods {
+                // Show saved foods inline with header
+                VStack(spacing: 0) {
+                    // Header bar
+                    HStack {
+                        // Source icon and title
+                        HStack(spacing: 8) {
+                            Image(systemName: "archivebox.fill")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.secondary)
+
+                            Text("Saved Foods")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                                .lineLimit(1)
+                        }
+
+                        Spacer()
+
+                        // Done button
+                        Button(action: {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                state.showSavedFoods = false
+                            }
+                        }) {
+                            Text("Done")
+                                .font(.body)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.blue)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(Color(.systemBackground))
+
+                    Divider()
+
+                    FoodItemsSelectorView(
+                        searchResult: savedFoods,
+                        onFoodItemSelected: { selectedItem in
+                            state.addItem(selectedItem)
+                        },
+                        onFoodItemRemoved: { removedItem in
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                state.searchResultsState.hardDeleteItem(removedItem)
+                            }
+                        },
+                        isItemAdded: { foodItem in
+                            state.searchResultsState.nonDeletedItems.contains(where: { $0.id == foodItem.id })
+                        },
+                        onDismiss: {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                state.showSavedFoods = false
+                            }
+                        },
+                        filterText: state.filterText
+                    )
+                }
+                .transition(.move(edge: .trailing).combined(with: .opacity))
+            } else if !hasVisibleContent {
                 noSearchesView
+                    .transition(.opacity)
             } else {
                 searchResultsView
+                    .transition(.opacity)
             }
         }
         .onChange(of: state.searchResultsState.searchResults) {
             // Only clear undo state if we have new visible content
-            let hasNewVisibleContent = !state.visibleSections.isEmpty &&
-                !state.visibleSections.flatMap(\.foodItemsDetailed).filter { !state.searchResultsState.isDeleted($0) }.isEmpty
+            let hasNewVisibleContent = !state.searchResultsState.visibleSections.isEmpty &&
+                !state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed)
+                .filter { !state.searchResultsState.isDeleted($0) }.isEmpty
 
             if clearedResultsViewState != nil, hasNewVisibleContent {
                 withAnimation(.easeOut(duration: 0.2)) {
                     clearedResultsViewState = nil
                 }
             }
+        }
+        .sheet(item: $state.latestTextSearch) { searchResult in
+            NavigationStack {
+                FoodItemsSelectorView(
+                    searchResult: searchResult,
+                    onFoodItemSelected: { selectedItem in
+                        state.addItem(selectedItem)
+                    },
+                    onFoodItemRemoved: { removedItem in
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            state.searchResultsState.hardDeleteItem(removedItem)
+                        }
+                    },
+                    isItemAdded: { foodItem in
+                        state.searchResultsState.nonDeletedItems.contains(where: { $0.id == foodItem.id })
+                    },
+                    onDismiss: {
+                        state.latestTextSearch = nil
+                    },
+                    useTransparentBackground: true
+                )
+                .navigationTitle("Search Results")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") {
+                            state.latestTextSearch = nil
+                        }
+                    }
+                }
+            }
+            .presentationDetents([.height(600), .large])
+            .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showManualEntry) {
             ManualFoodEntrySheet(
@@ -142,7 +240,7 @@ struct SearchResultsView: View {
             Button(action: {
                 showManualEntry = true
             }) {
-                Image(systemName: "plus.circle")
+                Image(systemName: "text.badge.plus")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.secondary)
                     .padding(.horizontal, 14)
@@ -153,6 +251,25 @@ struct SearchResultsView: View {
                     )
             }
             .buttonStyle(.plain)
+
+            if state.savedFoods?.foodItemsDetailed.count ?? 0 > 0 {
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        state.showSavedFoods = true
+                    }
+                }) {
+                    Image(systemName: "archivebox.fill")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(Color(.systemGray5))
+                        )
+                }
+                .buttonStyle(.plain)
+            }
 
             Spacer()
 
@@ -182,7 +299,7 @@ struct SearchResultsView: View {
 
             if hasVisibleContent {
                 Button(action: {
-                    let foodItems = state.visibleSections.flatMap(\.foodItemsDetailed)
+                    let foodItems = state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed)
                         .filter { !state.searchResultsState.isDeleted($0) }
                         .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
                     onCompleteMealSelected(foodItems, selectedTime)
@@ -425,7 +542,7 @@ struct SearchResultsView: View {
     private var searchResultsView: some View {
         VStack(spacing: 0) {
             List {
-                ForEach(state.visibleSections) { analysisResult in
+                ForEach(state.searchResultsState.visibleSections) { analysisResult in
                     AnalysisResultListSection(
                         analysisResult: analysisResult,
                         state: state,
@@ -895,7 +1012,7 @@ private extension FoodItemSource {
         case .manual:
             return "pencil"
         case .database:
-            return "database" // TODO: better icon?
+            return "archivebox.fill" // TODO: better icon?
         }
     }
 }
@@ -2740,123 +2857,294 @@ extension FoodItemRow {
 
 // MARK: - Text Search Results Sheet
 
-struct TextSearchResultsSheet: View {
+struct FoodItemsSelectorView: View {
     let searchResult: FoodItemGroup
-    let onFoodItemSelected: (FoodItemDetailed, Date?) -> Void
+    let onFoodItemSelected: (FoodItemDetailed) -> Void
+    let onFoodItemRemoved: (FoodItemDetailed) -> Void
+    let isItemAdded: (FoodItemDetailed) -> Bool
     let onDismiss: () -> Void
+    var useTransparentBackground: Bool = false
+    var filterText: String = ""
 
-    @State private var selectedTime: Date?
-    @State private var showTimePicker = false
+    private var displayTitle: String {
+        if searchResult.source == .database {
+            return "Saved Foods"
+        } else if let query = searchResult.textQuery {
+            return query
+        } else {
+            return "Search Results"
+        }
+    }
 
-    @Environment(\.dismiss) var dismiss
+    private var filteredFoodItems: [FoodItemDetailed] {
+        let trimmedFilter = filterText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
-    // Helper function to format time
-    private func timeString(for date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+        guard !trimmedFilter.isEmpty else {
+            return searchResult.foodItemsDetailed
+        }
+
+        return searchResult.foodItemsDetailed.filter { foodItem in
+            foodItem.name.lowercased().contains(trimmedFilter)
+        }
     }
 
     var body: some View {
-        NavigationStack {
+        ScrollView {
             VStack(spacing: 0) {
-                // Header card with search info
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
+                ForEach(Array(filteredFoodItems.enumerated()), id: \.element.id) { index, foodItem in
+                    if foodItem.name.isNotEmpty {
+                        TextSearchFoodItemRow(
+                            foodItem: foodItem,
+                            portionSize: foodItem.portionSize ?? foodItem.standardServingSize ?? 100,
+                            onAdd: {
+                                onFoodItemSelected(foodItem)
+                            },
+                            onRemove: {
+                                onFoodItemRemoved(foodItem)
+                            },
+                            isAdded: isItemAdded(foodItem),
+                            isFirst: index == 0,
+                            isLast: index == filteredFoodItems.count - 1,
+                            useTransparentBackground: useTransparentBackground
+                        )
+
+                        if index != filteredFoodItems.count - 1 {
+                            Divider()
+                                .padding(.horizontal, 16)
+                        }
+                    }
+                }
+
+                // Show a message if filter returns no results
+                if filteredFoodItems.isEmpty && !filterText.isEmpty {
+                    VStack(spacing: 12) {
                         Image(systemName: "magnifyingglass")
-                            .font(.system(size: 16))
-                            .foregroundColor(.blue)
-
-                        if let query = searchResult.textQuery {
-                            Text("Results for \"\(query)\"")
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                        } else {
-                            Text("Search Results")
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundColor(.secondary)
-                        }
-
-                        Spacer()
-
-                        // Time picker button
-                        Button(action: {
-                            showTimePicker = true
-                        }) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "clock")
-                                    .font(.system(size: 14, weight: .medium))
-                                Text(selectedTime == nil ? "now" : timeString(for: selectedTime!))
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                            }
+                            .font(.system(size: 48))
                             .foregroundColor(.secondary)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                    .fill(Color(.systemGray5))
-                            )
-                        }
-                        .buttonStyle(.plain)
-                    }
+                            .padding(.top, 40)
 
-                    Text(
-                        "\(searchResult.foodItemsDetailed.count) \(searchResult.foodItemsDetailed.count == 1 ? "result" : "results") found"
+                        Text("No foods found")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+
+                        Text("Try a different search term")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                }
+            }
+            .padding(.vertical)
+        }
+    }
+}
+
+// MARK: - Text Search Food Item Row
+
+private struct TextSearchFoodItemRow: View {
+    let foodItem: FoodItemDetailed
+    let portionSize: Decimal
+    let onAdd: () -> Void
+    let onRemove: () -> Void
+    let isAdded: Bool
+    let isFirst: Bool
+    let isLast: Bool
+    let useTransparentBackground: Bool
+
+    @State private var showItemInfo = false
+
+    private var hasNutritionInfo: Bool {
+        switch foodItem.nutrition {
+        case let .per100(values):
+            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+        case let .perServing(values):
+            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+        }
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // Main Row Content
+            VStack(alignment: .leading, spacing: 8) {
+                // Top row: Name + Confidence
+                HStack(spacing: 8) {
+                    Text(foodItem.name)
+                        .font(.body)
+                        .fontWeight(.medium)
+                        .foregroundColor(.primary)
+                        .lineLimit(2)
+                        .truncationMode(.tail)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    // Confidence badge (if AI source)
+                    if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
+                        ConfidenceBadge(level: confidence)
+                    }
+                }
+
+                // Middle row: Portion badge + serving multiplier
+                HStack(spacing: 8) {
+                    PortionSizeBadge(
+                        value: portionSize,
+                        color: .orange,
+                        icon: "scalemass.fill",
+                        foodItem: foodItem
                     )
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(
-                    Color.blue.opacity(0.08)
-                )
 
-                // Results list
-                List {
-                    ForEach(searchResult.foodItemsDetailed) { foodItem in
-                        let index = searchResult.foodItemsDetailed.firstIndex(where: { $0.id == foodItem.id }) ?? 0
-                        if foodItem.name.isNotEmpty {
-                            FoodItemRow(
-                                foodItem: foodItem,
-                                portionSize: foodItem.portionSize ?? foodItem.standardServingSize ?? 100,
-                                onPortionChange: nil,
-                                onDelete: nil,
-                                onSelect: {
-                                    onFoodItemSelected(foodItem, selectedTime)
-                                },
-                                isFirst: index == 0,
-                                isLast: index == searchResult.foodItemsDetailed.count - 1,
-                                showSelectButton: true
-                            )
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            .listRowBackground(Color(.systemGray6))
-                            .listRowSeparator(index == searchResult.foodItemsDetailed.count - 1 ? .hidden : .visible)
+                    // Only show serving multiplier for per100 items
+                    if case .per100 = foodItem.nutrition {
+                        if let servingSize = foodItem.standardServingSize {
+                            Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                                .opacity(0.7)
                         }
                     }
                 }
-                .listStyle(.plain)
-                .background(Color(.systemGroupedBackground))
-                .scrollContentBackground(.hidden)
             }
-            .navigationTitle("Select Food")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Cancel") {
-                        onDismiss()
-                    }
-                }
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+            .padding(.bottom, 8)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                showItemInfo = true
             }
-            .sheet(isPresented: $showTimePicker) {
-                TimePickerSheet(selectedTime: $selectedTime, isPresented: $showTimePicker)
-                    .presentationDetents([.height(280)])
+            .sheet(isPresented: $showItemInfo) {
+                FoodItemInfoPopup(foodItem: foodItem, portionSize: portionSize)
+                    .presentationDetents([.height(preferredItemInfoHeight(for: foodItem)), .large])
                     .presentationDragIndicator(.visible)
             }
+
+            // Compact nutrition info
+            HStack(spacing: 6) {
+                switch foodItem.nutrition {
+                case .per100:
+                    if let carbs = foodItem.carbsInPortion(portion: portionSize) {
+                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                    }
+                    if let protein = foodItem.proteinInPortion(portion: portionSize), protein > 0 {
+                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                    }
+                    if let fat = foodItem.fatInPortion(portion: portionSize), fat > 0 {
+                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                    }
+                    if let calories = foodItem.caloriesInPortion(portion: portionSize), calories > 0 {
+                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                    }
+                case .perServing:
+                    if let carbs = foodItem.carbsInServings(multiplier: portionSize) {
+                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                    }
+                    if let protein = foodItem.proteinInServings(multiplier: portionSize), protein > 0 {
+                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                    }
+                    if let fat = foodItem.fatInServings(multiplier: portionSize), fat > 0 {
+                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                    }
+                    if let calories = foodItem.caloriesInServings(multiplier: portionSize), calories > 0 {
+                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
+
+            // Add button row (full width)
+            if isAdded {
+                Button(action: onRemove) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "minus.circle.fill")
+                            .font(.system(size: 16, weight: .semibold))
+                        Text("Remove")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.primary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color(.systemGray5))
+                    )
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+            } else {
+                Button(action: onAdd) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 16, weight: .semibold))
+                        Text("Add to Meal")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.accentColor)
+                    )
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+            }
+        }
+        .padding(.top, isFirst ? 8 : 0)
+        .padding(.bottom, isLast ? 8 : 0)
+        .background(useTransparentBackground ? Color.clear : Color(.systemGray6))
+    }
+
+    private func preferredItemInfoHeight(for item: FoodItemDetailed) -> CGFloat {
+        var base: CGFloat = 480
+        if let notes = item.assessmentNotes, !notes.isEmpty { base += 40 }
+        if let prep = item.preparationMethod, !prep.isEmpty { base += 30 }
+        if let cues = item.visualCues, !cues.isEmpty { base += 30 }
+        if (item.standardServing != nil && !item.standardServing!.isEmpty) ||
+            item.standardServingSize != nil { base += 40 }
+        return min(max(base, 460), 680)
+    }
+
+    private struct PortionSizeBadge: View {
+        let value: Decimal
+        let color: Color
+        let icon: String
+        let foodItem: FoodItemDetailed
+
+        @Environment(\.colorScheme) private var colorScheme
+
+        var body: some View {
+            HStack(spacing: 4) {
+                if !icon.isEmpty {
+                    Image(systemName: icon)
+                        .font(.system(size: 10))
+                        .opacity(0.3)
+                }
+                HStack(spacing: 2) {
+                    switch foodItem.nutrition {
+                    case .per100:
+                        Text("\(Double(value), specifier: "%.0f")")
+                            .font(.system(size: 15, weight: .bold))
+                        Text(NSLocalizedString((foodItem.units ?? .grams).localizedAbbreviation, comment: ""))
+                            .font(.system(size: 13, weight: .semibold))
+                            .opacity(0.4)
+                    case .perServing:
+                        Text("\(Double(value), specifier: "%.1f")")
+                            .font(.system(size: 15, weight: .bold))
+                        Text(value == 1 ? "serving" : "servings")
+                            .font(.system(size: 13, weight: .semibold))
+                            .opacity(0.4)
+                    }
+                }
+            }
+            .foregroundColor(.primary)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+            .background(Color(.systemGray4))
+            .cornerRadius(8)
         }
     }
 }

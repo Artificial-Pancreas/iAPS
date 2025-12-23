@@ -49,18 +49,6 @@ struct FoodSearchView: View {
                 )
             }
         }
-        .sheet(item: $state.latestTextSearch) { searchResult in
-            TextSearchResultsSheet(
-                searchResult: searchResult,
-                onFoodItemSelected: { selectedItem, _ in
-                    state.addItem(selectedItem)
-                    state.latestTextSearch = nil
-                },
-                onDismiss: {
-                    state.latestTextSearch = nil
-                }
-            )
-        }
     }
 
     struct SearchBar: View {
@@ -94,6 +82,10 @@ struct FoodSearchView: View {
                                 if newValue {
                                     state.showingFoodSearch = true
                                 }
+                            }
+                            .onChange(of: state.foodSearchText) { _, newValue in
+                                // Update the saved foods filter text
+                                state.filterText = newValue
                             }
                     }
 

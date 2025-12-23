@@ -20,11 +20,14 @@ final class FoodSearchStateModel: ObservableObject {
     @Published var aiAnalysisRequest: AnalysisRequest?
 
     @Published var latestTextSearch: FoodItemGroup? = nil
+    @Published var savedFoods: FoodItemGroup? = nil
     @Published var latestSearchError: String? = nil
     @Published var latestSearchIcon: String? = nil
 
+    @Published var showSavedFoods = false
     @Published var isLoading = false
     @Published var mealView = false
+    @Published var filterText = ""
 
     var searchResultsState = SearchResultsState.empty
 
