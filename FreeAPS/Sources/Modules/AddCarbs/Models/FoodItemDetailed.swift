@@ -41,24 +41,35 @@ enum ConfidenceLevel: String, Codable, Identifiable, CaseIterable {
     var id: ConfidenceLevel { self }
 }
 
+struct NutritionValues {
+    let calories: Decimal?
+    let carbs: Decimal?
+    let fat: Decimal?
+    let fiber: Decimal?
+    let protein: Decimal?
+    let sugars: Decimal?
+}
+
+enum FoodNutrition {
+    case per100(NutritionValues)
+    case perServing(NutritionValues)
+}
+
 struct FoodItemDetailed: Identifiable {
     let id = UUID()
     let name: String
     let confidence: ConfidenceLevel?
     let brand: String?
     let portionSize: Decimal?
+    let servingsMultiplier: Decimal?
     let standardServing: String?
     let standardServingSize: Decimal?
     let units: MealUnits?
     let preparationMethod: String?
     let visualCues: String?
     let glycemicIndex: Decimal?
-    let caloriesPer100: Decimal?
-    let carbsPer100: Decimal?
-    let fatPer100: Decimal?
-    let fiberPer100: Decimal?
-    let proteinPer100: Decimal?
-    let sugarsPer100: Decimal?
+
+    let nutrition: FoodNutrition
 
     let assessmentNotes: String?
 
@@ -69,21 +80,17 @@ struct FoodItemDetailed: Identifiable {
 
     init(
         name: String,
+        nutrition: FoodNutrition,
         confidence: ConfidenceLevel? = nil,
         brand: String? = nil,
         portionSize: Decimal? = nil,
+        servingsMultiplier: Decimal? = nil,
         standardServing: String? = nil,
         standardServingSize: Decimal? = nil,
         units: MealUnits? = nil,
         preparationMethod: String? = nil,
         visualCues: String? = nil,
         glycemicIndex: Decimal? = nil,
-        caloriesPer100: Decimal? = nil,
-        carbsPer100: Decimal? = nil,
-        fatPer100: Decimal? = nil,
-        fiberPer100: Decimal? = nil,
-        proteinPer100: Decimal? = nil,
-        sugarsPer100: Decimal? = nil,
         assessmentNotes: String? = nil,
         imageURL: String? = nil,
         imageFrontURL: String? = nil,
@@ -93,18 +100,14 @@ struct FoodItemDetailed: Identifiable {
         self.confidence = confidence
         self.brand = brand
         self.portionSize = portionSize
+        self.servingsMultiplier = servingsMultiplier
         self.standardServing = standardServing
         self.standardServingSize = standardServingSize
         self.units = units
         self.preparationMethod = preparationMethod
         self.visualCues = visualCues
         self.glycemicIndex = glycemicIndex
-        self.caloriesPer100 = caloriesPer100
-        self.carbsPer100 = carbsPer100
-        self.fatPer100 = fatPer100
-        self.fiberPer100 = fiberPer100
-        self.proteinPer100 = proteinPer100
-        self.sugarsPer100 = sugarsPer100
+        self.nutrition = nutrition
         self.assessmentNotes = assessmentNotes
         self.imageURL = imageURL
         self.imageFrontURL = imageFrontURL
@@ -114,68 +117,142 @@ struct FoodItemDetailed: Identifiable {
 
 extension FoodItemDetailed {
     var caloriesInThisPortion: Decimal? {
-        guard let portion = portionSize else { return nil }
-        return caloriesInPortion(portion: portion)
+        switch nutrition {
+        case .per100:
+            guard let portion = portionSize else { return nil }
+            return caloriesInPortion(portion: portion)
+        case .perServing:
+            guard let multiplier = servingsMultiplier else { return nil }
+            return caloriesInServings(multiplier: multiplier)
+        }
     }
 
     var carbsInThisPortion: Decimal? {
-        guard let portion = portionSize else { return nil }
-        return carbsInPortion(portion: portion)
+        switch nutrition {
+        case .per100:
+            guard let portion = portionSize else { return nil }
+            return carbsInPortion(portion: portion)
+        case .perServing:
+            guard let multiplier = servingsMultiplier else { return nil }
+            return carbsInServings(multiplier: multiplier)
+        }
     }
 
     var fatInThisPortion: Decimal? {
-        guard let portion = portionSize else { return nil }
-        return fatInPortion(portion: portion)
+        switch nutrition {
+        case .per100:
+            guard let portion = portionSize else { return nil }
+            return fatInPortion(portion: portion)
+        case .perServing:
+            guard let multiplier = servingsMultiplier else { return nil }
+            return fatInServings(multiplier: multiplier)
+        }
     }
 
     var proteinInThisPortion: Decimal? {
-        guard let portion = portionSize else { return nil }
-        return proteinInPortion(portion: portion)
+        switch nutrition {
+        case .per100:
+            guard let portion = portionSize else { return nil }
+            return proteinInPortion(portion: portion)
+        case .perServing:
+            guard let multiplier = servingsMultiplier else { return nil }
+            return proteinInServings(multiplier: multiplier)
+        }
     }
 
+    // MARK: - Per 100g/ml calculations
+
     func caloriesInPortion(portion: Decimal) -> Decimal? {
-        guard let caloriesPer100 = self.caloriesPer100 else { return nil }
+        guard case let .per100(per100) = nutrition else { return nil }
+        guard let caloriesPer100 = per100.calories else { return nil }
         return caloriesPer100 / 100 * portion
     }
 
     func carbsInPortion(portion: Decimal) -> Decimal? {
-        guard let carbsPer100 = self.carbsPer100 else { return nil }
+        guard case let .per100(per100) = nutrition else { return nil }
+        guard let carbsPer100 = per100.carbs else { return nil }
         return carbsPer100 / 100 * portion
     }
 
     func fatInPortion(portion: Decimal) -> Decimal? {
-        guard let fatPer100 = self.fatPer100 else { return nil }
+        guard case let .per100(per100) = nutrition else { return nil }
+        guard let fatPer100 = per100.fat else { return nil }
         return fatPer100 / 100 * portion
     }
 
     func proteinInPortion(portion: Decimal) -> Decimal? {
-        guard let proteinPer100 = self.proteinPer100 else { return nil }
+        guard case let .per100(per100) = nutrition else { return nil }
+        guard let proteinPer100 = per100.protein else { return nil }
         return proteinPer100 / 100 * portion
     }
 
-    /// Returns a copy of this food item with an updated portion size
+    // MARK: - Per serving calculations
+
+    func caloriesInServings(multiplier: Decimal) -> Decimal? {
+        guard case let .perServing(perServing) = nutrition else { return nil }
+        guard let caloriesPerServing = perServing.calories else { return nil }
+        return caloriesPerServing * multiplier
+    }
+
+    func carbsInServings(multiplier: Decimal) -> Decimal? {
+        guard case let .perServing(perServing) = nutrition else { return nil }
+        guard let carbsPerServing = perServing.carbs else { return nil }
+        return carbsPerServing * multiplier
+    }
+
+    func fatInServings(multiplier: Decimal) -> Decimal? {
+        guard case let .perServing(perServing) = nutrition else { return nil }
+        guard let fatPerServing = perServing.fat else { return nil }
+        return fatPerServing * multiplier
+    }
+
+    func proteinInServings(multiplier: Decimal) -> Decimal? {
+        guard case let .perServing(perServing) = nutrition else { return nil }
+        guard let proteinPerServing = perServing.protein else { return nil }
+        return proteinPerServing * multiplier
+    }
+
+    /// Returns a copy of this food item with an updated portion size or servings multiplier
     func withPortion(_ newPortion: Decimal) -> FoodItemDetailed {
-        FoodItemDetailed(
-            name: name,
-            confidence: confidence,
-            brand: brand,
-            portionSize: newPortion,
-            standardServing: standardServing,
-            standardServingSize: standardServingSize,
-            units: units,
-            preparationMethod: preparationMethod,
-            visualCues: visualCues,
-            glycemicIndex: glycemicIndex,
-            caloriesPer100: caloriesPer100,
-            carbsPer100: carbsPer100,
-            fatPer100: fatPer100,
-            fiberPer100: fiberPer100,
-            proteinPer100: proteinPer100,
-            sugarsPer100: sugarsPer100,
-            assessmentNotes: assessmentNotes,
-            imageURL: imageURL,
-            imageFrontURL: imageFrontURL,
-            source: source ?? .manual
-        )
+        switch nutrition {
+        case .per100:
+            return FoodItemDetailed(
+                name: name,
+                nutrition: nutrition,
+                confidence: confidence,
+                brand: brand,
+                portionSize: newPortion,
+                servingsMultiplier: servingsMultiplier,
+                standardServing: standardServing,
+                standardServingSize: standardServingSize,
+                units: units,
+                preparationMethod: preparationMethod,
+                visualCues: visualCues,
+                glycemicIndex: glycemicIndex,
+                assessmentNotes: assessmentNotes,
+                imageURL: imageURL,
+                imageFrontURL: imageFrontURL,
+                source: source ?? .manual
+            )
+        case .perServing:
+            return FoodItemDetailed(
+                name: name,
+                nutrition: nutrition,
+                confidence: confidence,
+                brand: brand,
+                portionSize: portionSize,
+                servingsMultiplier: newPortion,
+                standardServing: standardServing,
+                standardServingSize: standardServingSize,
+                units: units,
+                preparationMethod: preparationMethod,
+                visualCues: visualCues,
+                glycemicIndex: glycemicIndex,
+                assessmentNotes: assessmentNotes,
+                imageURL: imageURL,
+                imageFrontURL: imageFrontURL,
+                source: source ?? .manual
+            )
+        }
     }
 }

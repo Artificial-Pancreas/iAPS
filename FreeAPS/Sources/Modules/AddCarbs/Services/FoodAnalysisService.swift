@@ -156,18 +156,20 @@ extension TextAnalysisService {
         let items: [FoodItemDetailed] = products.map { item in
             FoodItemDetailed(
                 name: item.productName ?? "Product without name",
+                nutrition: .per100(NutritionValues(
+                    calories: item.nutriments.calories,
+                    carbs: item.nutriments.carbohydrates,
+                    fat: item.nutriments.fat,
+                    fiber: item.nutriments.fiber,
+                    protein: item.nutriments.proteins,
+                    sugars: item.nutriments.sugars
+                )),
                 confidence: confidence,
                 brand: item.brands,
                 portionSize: item.servingQuantity,
                 standardServing: item.servingSize,
                 standardServingSize: item.servingQuantity,
                 units: MealUnits.grams,
-                caloriesPer100: item.nutriments.calories,
-                carbsPer100: item.nutriments.carbohydrates,
-                fatPer100: item.nutriments.fat,
-                fiberPer100: item.nutriments.fiber,
-                proteinPer100: item.nutriments.proteins,
-                sugarsPer100: item.nutriments.sugars,
                 imageURL: item.imageURL,
                 imageFrontURL: item.imageFrontURL,
                 source: source
@@ -196,18 +198,20 @@ extension TextAnalysisService {
             }
             return FoodItemDetailed(
                 name: item.name,
+                nutrition: .per100(NutritionValues(
+                    calories: item.caloriesPer100,
+                    carbs: item.carbsPer100,
+                    fat: item.fatPer100,
+                    fiber: item.fiberPer100,
+                    protein: item.proteinPer100,
+                    sugars: item.sugarsPer100,
+                )),
                 confidence: confidence,
                 brand: item.brand,
                 portionSize: item.portionEstimateSize,
                 standardServing: item.standardServing,
                 standardServingSize: item.standardServingSize,
                 units: item.units,
-                caloriesPer100: item.caloriesPer100,
-                carbsPer100: item.carbsPer100,
-                fatPer100: item.fatPer100,
-                fiberPer100: item.fiberPer100,
-                proteinPer100: item.proteinPer100,
-                sugarsPer100: item.sugarsPer100,
                 imageURL: nil,
                 imageFrontURL: nil,
                 source: source

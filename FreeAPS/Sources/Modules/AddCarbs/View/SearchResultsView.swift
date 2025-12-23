@@ -26,7 +26,12 @@ struct SearchResultsView: View {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
-            return sum + (item.caloriesInPortion(portion: portion) ?? 0)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.caloriesInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.caloriesInServings(multiplier: portion) ?? 0)
+            }
         }
     }
 
@@ -34,7 +39,12 @@ struct SearchResultsView: View {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
-            return sum + (item.carbsInPortion(portion: portion) ?? 0)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.carbsInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.carbsInServings(multiplier: portion) ?? 0)
+            }
         }
     }
 
@@ -42,7 +52,12 @@ struct SearchResultsView: View {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
-            return sum + (item.proteinInPortion(portion: portion) ?? 0)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.proteinInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.proteinInServings(multiplier: portion) ?? 0)
+            }
         }
     }
 
@@ -50,7 +65,12 @@ struct SearchResultsView: View {
         state.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
             guard !state.searchResultsState.isDeleted(item) else { return sum }
             let portion = state.searchResultsState.portionSize(for: item)
-            return sum + (item.fatInPortion(portion: portion) ?? 0)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.fatInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.fatInServings(multiplier: portion) ?? 0)
+            }
         }
     }
 
@@ -589,30 +609,6 @@ private struct ManualFoodEntrySheet: View {
     let onSave: (FoodItemDetailed) -> Void
     let onCancel: () -> Void
 
-    // Create a template food item for the editable popup
-    @State private var editableFoodItem = FoodItemDetailed(
-        name: "",
-        confidence: nil,
-        brand: nil,
-        portionSize: 100,
-        standardServing: nil,
-        standardServingSize: 100,
-        units: .grams,
-        preparationMethod: nil,
-        visualCues: nil,
-        glycemicIndex: nil,
-        caloriesPer100: nil,
-        carbsPer100: 0,
-        fatPer100: 0,
-        fiberPer100: nil,
-        proteinPer100: 0,
-        sugarsPer100: nil,
-        assessmentNotes: nil,
-        imageURL: nil,
-        imageFrontURL: nil,
-        source: .manual
-    )
-
     @State private var editedPortionSize: Decimal = 100
     @State private var editedName: String = ""
     @State private var editedCaloriesPer100: Decimal?
@@ -674,7 +670,6 @@ private struct ManualFoodEntrySheet: View {
         NavigationStack {
             VStack(spacing: 0) {
                 EditableFoodItemInfoPopup(
-                    foodItem: $editableFoodItem,
                     portionSize: $editedPortionSize,
                     editedName: $editedName,
                     editedCaloriesPer100: $editedCaloriesPer100,
@@ -744,8 +739,18 @@ private struct ManualFoodEntrySheet: View {
         // Use edited serving size if provided, otherwise nil
         let finalServingSize = editedServingSize
 
+        let nutritionValues = NutritionValues(
+            calories: calculatedCalories,
+            carbs: editedCarbsPer100,
+            fat: editedFatPer100,
+            fiber: editedFiberPer100,
+            protein: editedProteinPer100,
+            sugars: editedSugarsPer100
+        )
+
         let foodItem = FoodItemDetailed(
             name: finalName,
+            nutrition: .per100(nutritionValues),
             confidence: nil,
             brand: nil,
             portionSize: editedPortionSize,
@@ -755,12 +760,6 @@ private struct ManualFoodEntrySheet: View {
             preparationMethod: nil,
             visualCues: nil,
             glycemicIndex: nil,
-            caloriesPer100: calculatedCalories,
-            carbsPer100: editedCarbsPer100,
-            fatPer100: editedFatPer100,
-            fiberPer100: editedFiberPer100,
-            proteinPer100: editedProteinPer100,
-            sugarsPer100: editedSugarsPer100,
             assessmentNotes: nil,
             imageURL: nil,
             imageFrontURL: nil,
@@ -1329,7 +1328,6 @@ private struct SectionInfoPopup: View {
 // MARK: - Editable Food Item Info Popup
 
 private struct EditableFoodItemInfoPopup: View {
-    @Binding var foodItem: FoodItemDetailed
     @Binding var portionSize: Decimal
     @Binding var editedName: String
     @Binding var editedCaloriesPer100: Decimal?
@@ -1357,11 +1355,11 @@ private struct EditableFoodItemInfoPopup: View {
     }
 
     private var baseServingSize: Decimal {
-        foodItem.standardServingSize ?? 100
+        editedServingSize ?? 100
     }
 
     private var unit: String {
-        (foodItem.units ?? .grams).localizedAbbreviation
+        MealUnits.grams.localizedAbbreviation
     }
 
     private var hasOptionalNutrients: Bool {
@@ -1402,29 +1400,6 @@ private struct EditableFoodItemInfoPopup: View {
                 .padding(.vertical, 8)
                 .onChange(of: sliderMultiplier) { _, newValue in
                     portionSize = baseServingSize * Decimal(newValue)
-                    // Update the food item's portion size (calories are calculated automatically)
-                    foodItem = FoodItemDetailed(
-                        name: editedName,
-                        confidence: nil,
-                        brand: nil,
-                        portionSize: portionSize,
-                        standardServing: nil,
-                        standardServingSize: baseServingSize,
-                        units: foodItem.units,
-                        preparationMethod: nil,
-                        visualCues: nil,
-                        glycemicIndex: nil,
-                        caloriesPer100: calculatedCaloriesPer100,
-                        carbsPer100: editedCarbsPer100,
-                        fatPer100: editedFatPer100,
-                        fiberPer100: editedFiberPer100,
-                        proteinPer100: editedProteinPer100,
-                        sugarsPer100: editedSugarsPer100,
-                        assessmentNotes: nil,
-                        imageURL: nil,
-                        imageFrontURL: nil,
-                        source: .manual
-                    )
                 }
 
                 // Nutrition Table with Editable Per100 values
@@ -1842,6 +1817,23 @@ private struct FoodItemInfoPopup: View {
     let foodItem: FoodItemDetailed
     let portionSize: Decimal
 
+    // Helper to extract nutrition values
+    private var nutritionValues: NutritionValues? {
+        switch foodItem.nutrition {
+        case let .per100(values):
+            return values
+        case let .perServing(values):
+            return values
+        }
+    }
+
+    private var isPerServing: Bool {
+        if case .perServing = foodItem.nutrition {
+            return true
+        }
+        return false
+    }
+
     // Helper functions to avoid type inference issues
     private func shouldShowStandardServing(_ item: FoodItemDetailed) -> Bool {
         let hasDescription = item.standardServing != nil && !(item.standardServing?.isEmpty ?? true)
@@ -1896,13 +1888,24 @@ private struct FoodItemInfoPopup: View {
                             .opacity(0.3)
 
                         HStack(spacing: 3) {
-                            Text("\(amount)")
-                                .font(.system(size: 17, weight: .bold))
-                                .foregroundColor(.primary)
-                            Text(unit)
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(.primary)
-                                .opacity(0.4)
+                            switch foodItem.nutrition {
+                            case .per100:
+                                Text("\(amount)")
+                                    .font(.system(size: 17, weight: .bold))
+                                    .foregroundColor(.primary)
+                                Text(unit)
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(.primary)
+                                    .opacity(0.4)
+                            case .perServing:
+                                Text("\(amount)")
+                                    .font(.system(size: 17, weight: .bold))
+                                    .foregroundColor(.primary)
+                                Text(portionSize == 1 ? "serving" : "servings")
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(.primary)
+                                    .opacity(0.4)
+                            }
                         }
                     }
                     .padding(.horizontal, 12)
@@ -1941,7 +1944,7 @@ private struct FoodItemInfoPopup: View {
                             .foregroundColor(.secondary)
                             .frame(width: 90, alignment: .trailing)
 
-                        Text("Per 100\(unit)")
+                        Text(isPerServing ? "Per serving" : "Per 100\(unit)")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
@@ -1954,49 +1957,53 @@ private struct FoodItemInfoPopup: View {
 
                     DetailedNutritionRow(
                         label: "Carbs",
-                        portionValue: foodItem.carbsInPortion(portion: portionSize),
-                        per100Value: foodItem.carbsPer100,
+                        portionValue: foodItem.carbsInThisPortion,
+                        per100Value: nutritionValues?.carbs,
                         unit: "g"
                     )
                     Divider()
                     DetailedNutritionRow(
                         label: "Protein",
-                        portionValue: foodItem.proteinInPortion(portion: portionSize),
-                        per100Value: foodItem.proteinPer100,
+                        portionValue: foodItem.proteinInThisPortion,
+                        per100Value: nutritionValues?.protein,
                         unit: "g"
                     )
                     Divider()
                     DetailedNutritionRow(
                         label: "Fat",
-                        portionValue: foodItem.fatInPortion(portion: portionSize),
-                        per100Value: foodItem.fatPer100,
+                        portionValue: foodItem.fatInThisPortion,
+                        per100Value: nutritionValues?.fat,
                         unit: "g"
                     )
 
                     // Optional additional nutrition
-                    if let fiberPer100 = foodItem.fiberPer100, fiberPer100 > 0 {
+                    if let fiber = nutritionValues?.fiber, fiber > 0 {
                         Divider()
                         DetailedNutritionRow(
                             label: "Fiber",
-                            portionValue: fiberPer100 / 100 * portionSize,
-                            per100Value: fiberPer100,
+                            portionValue: isPerServing ?
+                                (foodItem.servingsMultiplier.map { fiber * $0 }) :
+                                (foodItem.portionSize.map { fiber / 100 * $0 }),
+                            per100Value: fiber,
                             unit: "g"
                         )
                     }
-                    if let sugarsPer100 = foodItem.sugarsPer100, sugarsPer100 > 0 {
+                    if let sugars = nutritionValues?.sugars, sugars > 0 {
                         Divider()
                         DetailedNutritionRow(
                             label: "Sugar",
-                            portionValue: sugarsPer100 / 100 * portionSize,
-                            per100Value: sugarsPer100,
+                            portionValue: isPerServing ?
+                                (foodItem.servingsMultiplier.map { sugars * $0 }) :
+                                (foodItem.portionSize.map { sugars / 100 * $0 }),
+                            per100Value: sugars,
                             unit: "g"
                         )
                     }
                     Divider()
                     DetailedNutritionRow(
                         label: "Calories",
-                        portionValue: foodItem.caloriesInPortion(portion: portionSize),
-                        per100Value: foodItem.caloriesPer100,
+                        portionValue: foodItem.caloriesInThisPortion,
+                        per100Value: nutritionValues?.calories,
                         unit: "kcal"
                     )
                 }
@@ -2232,13 +2239,23 @@ struct FoodItemRow: View {
     @State private var showItemInfo = false
     @State private var showPortionAdjuster = false
     @State private var sliderMultiplier: Double = 1.0
+
     private var hasNutritionInfo: Bool {
-        foodItem.caloriesPer100 != nil || foodItem.carbsPer100 != nil || foodItem.proteinPer100 != nil || foodItem
-            .fatPer100 != nil
+        switch foodItem.nutrition {
+        case let .per100(values):
+            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+        case let .perServing(values):
+            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+        }
     }
 
     private var baseServingSize: Decimal {
-        foodItem.standardServingSize ?? 100
+        switch foodItem.nutrition {
+        case .per100:
+            return foodItem.standardServingSize ?? 100
+        case .perServing:
+            return 1
+        }
     }
 
     var body: some View {
@@ -2294,11 +2311,14 @@ struct FoodItemRow: View {
                         foodItem: foodItem
                     )
 
-                    if let servingSize = foodItem.standardServingSize {
-                        Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
-                            .font(.caption)
-                            .foregroundColor(.primary)
-                            .opacity(0.7)
+                    // Only show serving multiplier for per100 items
+                    if case .per100 = foodItem.nutrition {
+                        if let servingSize = foodItem.standardServingSize {
+                            Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                                .opacity(0.7)
+                        }
                     }
                 }
             }
@@ -2339,17 +2359,33 @@ struct FoodItemRow: View {
 
             // Compact nutrition info
             HStack(spacing: 6) {
-                if let carbs = foodItem.carbsInPortion(portion: portionSize) {
-                    NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                }
-                if let protein = foodItem.proteinInPortion(portion: portionSize), protein > 0 {
-                    NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                }
-                if let fat = foodItem.fatInPortion(portion: portionSize), fat > 0 {
-                    NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                }
-                if let calories = foodItem.caloriesInPortion(portion: portionSize), calories > 0 {
-                    NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                switch foodItem.nutrition {
+                case .per100:
+                    if let carbs = foodItem.carbsInPortion(portion: portionSize) {
+                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                    }
+                    if let protein = foodItem.proteinInPortion(portion: portionSize), protein > 0 {
+                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                    }
+                    if let fat = foodItem.fatInPortion(portion: portionSize), fat > 0 {
+                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                    }
+                    if let calories = foodItem.caloriesInPortion(portion: portionSize), calories > 0 {
+                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                    }
+                case .perServing:
+                    if let carbs = foodItem.carbsInServings(multiplier: portionSize) {
+                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                    }
+                    if let protein = foodItem.proteinInServings(multiplier: portionSize), protein > 0 {
+                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                    }
+                    if let fat = foodItem.fatInServings(multiplier: portionSize), fat > 0 {
+                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                    }
+                    if let calories = foodItem.caloriesInServings(multiplier: portionSize), calories > 0 {
+                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -2388,20 +2424,41 @@ struct FoodItemRow: View {
                         onPortionChange?(newPortion)
                         showPortionAdjuster = false
                     },
-                    onReset: foodItem.portionSize != nil ? {
-                        if let original = foodItem.portionSize {
-                            onPortionChange?(original)
-                            showPortionAdjuster = false
+                    onReset: {
+                        switch foodItem.nutrition {
+                        case .per100:
+                            return foodItem.portionSize != nil
+                        case .perServing:
+                            return foodItem.servingsMultiplier != nil
+                        }
+                    }() ? {
+                        switch foodItem.nutrition {
+                        case .per100:
+                            if let original = foodItem.portionSize {
+                                onPortionChange?(original)
+                                showPortionAdjuster = false
+                            }
+                        case .perServing:
+                            if let original = foodItem.servingsMultiplier {
+                                onPortionChange?(original)
+                                showPortionAdjuster = false
+                            }
                         }
                     } : nil,
                     onCancel: {
                         showPortionAdjuster = false
                     }
                 )
-                .presentationDetents([.height(
-                    hasNutritionInfo ? (foodItem.portionSize != nil ? 420 : 400) :
-                        (foodItem.portionSize != nil ? 340 : 300)
-                )])
+                .presentationDetents([.height({
+                    let hasReset: Bool
+                    switch foodItem.nutrition {
+                    case .per100:
+                        hasReset = foodItem.portionSize != nil
+                    case .perServing:
+                        hasReset = foodItem.servingsMultiplier != nil
+                    }
+                    return hasNutritionInfo ? (hasReset ? 420 : 400) : (hasReset ? 340 : 300)
+                }())])
                 .presentationDragIndicator(.visible)
             }
         }
@@ -2447,11 +2504,20 @@ extension FoodItemRow {
                         .opacity(0.3)
                 }
                 HStack(spacing: 2) {
-                    Text("\(Double(value), specifier: "%.0f")")
-                        .font(.system(size: 15, weight: .bold))
-                    Text(NSLocalizedString((foodItem.units ?? .grams).localizedAbbreviation, comment: ""))
-                        .font(.system(size: 13, weight: .semibold))
-                        .opacity(0.4)
+                    switch foodItem.nutrition {
+                    case .per100:
+                        Text("\(Double(value), specifier: "%.0f")")
+                            .font(.system(size: 15, weight: .bold))
+                        Text(NSLocalizedString((foodItem.units ?? .grams).localizedAbbreviation, comment: ""))
+                            .font(.system(size: 13, weight: .semibold))
+                            .opacity(0.4)
+                    case .perServing:
+                        Text("\(Double(value), specifier: "%.1f")")
+                            .font(.system(size: 15, weight: .bold))
+                        Text(value == 1 ? "serving" : "servings")
+                            .font(.system(size: 13, weight: .semibold))
+                            .opacity(0.4)
+                    }
                 }
             }
             .foregroundColor(.primary)
@@ -2470,21 +2536,50 @@ extension FoodItemRow {
         let onReset: (() -> Void)?
         let onCancel: () -> Void
 
+        private var isPerServing: Bool {
+            if case .perServing = foodItem.nutrition {
+                return true
+            }
+            return false
+        }
+
         private var baseServingSize: Decimal {
-            foodItem.standardServingSize ?? 100
+            switch foodItem.nutrition {
+            case .per100:
+                return foodItem.standardServingSize ?? 100
+            case .perServing:
+                return 1
+            }
         }
 
         private var unit: String {
-            (foodItem.units ?? .grams).localizedAbbreviation
+            switch foodItem.nutrition {
+            case .per100:
+                return (foodItem.units ?? .grams).localizedAbbreviation
+            case .perServing:
+                return "serving"
+            }
         }
 
         var calculatedPortion: Decimal {
-            baseServingSize * Decimal(sliderMultiplier)
+            switch foodItem.nutrition {
+            case .per100:
+                return baseServingSize * Decimal(sliderMultiplier)
+            case .perServing:
+                return Decimal(sliderMultiplier)
+            }
         }
 
         private func resetSliderToOriginal() {
-            if let original = foodItem.portionSize, baseServingSize > 0 {
-                sliderMultiplier = Double(original / baseServingSize)
+            switch foodItem.nutrition {
+            case .per100:
+                if let original = foodItem.portionSize, baseServingSize > 0 {
+                    sliderMultiplier = Double(original / baseServingSize)
+                }
+            case .perServing:
+                if let original = foodItem.servingsMultiplier {
+                    sliderMultiplier = Double(original)
+                }
             }
         }
 
@@ -2498,14 +2593,21 @@ extension FoodItemRow {
                 .padding(.top)
 
                 VStack(spacing: 8) {
-                    Text("\(Double(calculatedPortion), specifier: "%.0f") \(unit)")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.orange)
+                    switch foodItem.nutrition {
+                    case .per100:
+                        Text("\(Double(calculatedPortion), specifier: "%.0f") \(unit)")
+                            .font(.system(size: 32, weight: .bold))
+                            .foregroundColor(.orange)
 
-                    if foodItem.standardServingSize != nil {
-                        Text("\(sliderMultiplier, specifier: "%.2f")× serving")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                        if foodItem.standardServingSize != nil {
+                            Text("\(sliderMultiplier, specifier: "%.2f")× serving")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                    case .perServing:
+                        Text("\(Double(calculatedPortion), specifier: "%.2f") \(calculatedPortion == 1 ? "serving" : "servings")")
+                            .font(.system(size: 32, weight: .bold))
+                            .foregroundColor(.orange)
                     }
                 }
 
@@ -2526,21 +2628,41 @@ extension FoodItemRow {
                     // Display nutritional information if available
                     if hasNutritionInfo {
                         HStack(spacing: 8) {
-                            if let carbs = foodItem.carbsInPortion(portion: calculatedPortion), carbs > 0 {
-                                NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let protein = foodItem.proteinInPortion(portion: calculatedPortion), protein > 0 {
-                                NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let fat = foodItem.fatInPortion(portion: calculatedPortion), fat > 0 {
-                                NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let calories = foodItem.caloriesInPortion(portion: calculatedPortion), calories > 0 {
-                                NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                                    .frame(maxWidth: .infinity)
+                            switch foodItem.nutrition {
+                            case .per100:
+                                if let carbs = foodItem.carbsInPortion(portion: calculatedPortion), carbs > 0 {
+                                    NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                if let protein = foodItem.proteinInPortion(portion: calculatedPortion), protein > 0 {
+                                    NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                if let fat = foodItem.fatInPortion(portion: calculatedPortion), fat > 0 {
+                                    NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                if let calories = foodItem.caloriesInPortion(portion: calculatedPortion), calories > 0 {
+                                    NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                                        .frame(maxWidth: .infinity)
+                                }
+                            case .perServing:
+                                if let carbs = foodItem.carbsInServings(multiplier: calculatedPortion), carbs > 0 {
+                                    NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                if let protein = foodItem.proteinInServings(multiplier: calculatedPortion), protein > 0 {
+                                    NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                if let fat = foodItem.fatInServings(multiplier: calculatedPortion), fat > 0 {
+                                    NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                if let calories = foodItem.caloriesInServings(multiplier: calculatedPortion), calories > 0 {
+                                    NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                                        .frame(maxWidth: .infinity)
+                                }
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -2549,19 +2671,36 @@ extension FoodItemRow {
                 }
                 .padding(.horizontal)
 
-                // Show reset button if original portion size is available
-                if let original = foodItem.portionSize {
-                    Button(action: resetSliderToOriginal) {
-                        HStack {
-                            Text("Reset to \(Double(original), specifier: "%.0f") \(unit)")
+                // Show reset button if original portion size or servings multiplier is available
+                switch foodItem.nutrition {
+                case .per100:
+                    if let original = foodItem.portionSize {
+                        Button(action: resetSliderToOriginal) {
+                            HStack {
+                                Text("Reset to \(Double(original), specifier: "%.0f") \(unit)")
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(Color.blue.opacity(0.1))
+                            .foregroundColor(.blue)
+                            .cornerRadius(10)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.blue.opacity(0.1))
-                        .foregroundColor(.blue)
-                        .cornerRadius(10)
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
+                case .perServing:
+                    if let original = foodItem.servingsMultiplier {
+                        Button(action: resetSliderToOriginal) {
+                            HStack {
+                                Text("Reset to \(Double(original), specifier: "%.2f") \(original == 1 ? "serving" : "servings")")
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(Color.blue.opacity(0.1))
+                            .foregroundColor(.blue)
+                            .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                    }
                 }
 
                 HStack(spacing: 12) {
@@ -2589,8 +2728,12 @@ extension FoodItemRow {
         }
 
         private var hasNutritionInfo: Bool {
-            foodItem.caloriesPer100 != nil || foodItem.carbsPer100 != nil || foodItem.proteinPer100 != nil || foodItem
-                .fatPer100 != nil
+            switch foodItem.nutrition {
+            case let .per100(values):
+                return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+            case let .perServing(values):
+                return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+            }
         }
     }
 }
