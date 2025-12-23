@@ -19,7 +19,7 @@ final class FoodSearchStateModel: ObservableObject {
 
     @Published var aiAnalysisRequest: AnalysisRequest?
 
-    @Published var latestTextSearch: FoodItemGroup? = nil
+    @Published var latestMultipleSelectSearch: FoodItemGroup? = nil
     @Published var savedFoods: FoodItemGroup? = nil
     @Published var latestSearchError: String? = nil
     @Published var latestSearchIcon: String? = nil
@@ -142,7 +142,7 @@ final class FoodSearchStateModel: ObservableObject {
                         if result.foodItemsDetailed.count == 1 {
                             addItem(first)
                         } else {
-                            self.latestTextSearch = result
+                            self.latestMultipleSelectSearch = result
                         }
                     } else {
                         self.latestSearchError = NSLocalizedString(
@@ -179,7 +179,7 @@ final class FoodSearchStateModel: ObservableObject {
                         if result.foodItemsDetailed.count == 1 {
                             addItem(first)
                         } else {
-                            self.latestTextSearch = result
+                            self.latestMultipleSelectSearch = result
                         }
                     } else {
                         self.latestSearchError = NSLocalizedString(
@@ -295,9 +295,12 @@ final class FoodSearchStateModel: ObservableObject {
         _ analysisResult: FoodItemGroup,
         _ analysisRequest: AnalysisRequest
     ) {
-        searchResultsState.searchResults = [analysisResult] + searchResultsState.searchResults
+        if analysisResult.source == .aiMenu {
+            latestMultipleSelectSearch = analysisResult
+        } else {
+            searchResultsState.searchResults = [analysisResult] + searchResultsState.searchResults
+        }
         aiAnalysisRequest = analysisRequest
-
         // TODO: delay before hiding the progress screen, do we want it?
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.foodSearchRoute = nil
@@ -322,7 +325,7 @@ final class FoodSearchStateModel: ObservableObject {
         searchTask = nil
         latestSearchError = nil
         latestSearchIcon = nil
-        latestTextSearch = nil
+        latestMultipleSelectSearch = nil
         telemetryLogs = []
         analysisStart = nil
         analysisEnd = nil

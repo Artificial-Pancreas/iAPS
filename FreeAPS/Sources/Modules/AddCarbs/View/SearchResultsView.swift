@@ -177,7 +177,7 @@ struct SearchResultsView: View {
                 }
             }
         }
-        .sheet(item: $state.latestTextSearch) { searchResult in
+        .sheet(item: $state.latestMultipleSelectSearch) { searchResult in
             NavigationStack {
                 FoodItemsSelectorView(
                     searchResult: searchResult,
@@ -193,16 +193,16 @@ struct SearchResultsView: View {
                         state.searchResultsState.nonDeletedItems.contains(where: { $0.id == foodItem.id })
                     },
                     onDismiss: {
-                        state.latestTextSearch = nil
+                        state.latestMultipleSelectSearch = nil
                     },
                     useTransparentBackground: true
                 )
-                .navigationTitle(searchResult.textQuery == nil ? "Search Results" : "Results for '\(searchResult.textQuery!)'")
+                .navigationTitle(foodSelectorTitle(for: searchResult))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("Done") {
-                            state.latestTextSearch = nil
+                            state.latestMultipleSelectSearch = nil
                         }
                     }
                 }
@@ -222,6 +222,16 @@ struct SearchResultsView: View {
             )
             .presentationDetents([.height(600), .large])
             .presentationDragIndicator(.visible)
+        }
+    }
+
+    private func foodSelectorTitle(for searchResult: FoodItemGroup) -> String {
+        if let description = searchResult.briefDescription {
+            return description
+        } else if let query = searchResult.textQuery {
+            return "Results for '\(query)'"
+        } else {
+            return "Search Results"
         }
     }
 
@@ -2924,16 +2934,6 @@ struct FoodItemsSelectorView: View {
     let onDismiss: () -> Void
     var useTransparentBackground: Bool = false
     var filterText: String = ""
-
-    private var displayTitle: String {
-        if searchResult.source == .database {
-            return "Saved Foods"
-        } else if let query = searchResult.textQuery {
-            return query
-        } else {
-            return "Search Results"
-        }
-    }
 
     private var filteredFoodItems: [FoodItemDetailed] {
         let trimmedFilter = filterText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
