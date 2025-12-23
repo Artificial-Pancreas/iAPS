@@ -57,6 +57,8 @@ struct FoodSearchSettingsView: View {
     @State private var languageOptionsState: [(code: String, name: String)] = []
     @State private var regionOptionsState: [(code: String, name: String)] = []
 
+    @State private var showingStatistics = false
+
     private func systemLanguageCode() -> String {
         if let first = Locale.preferredLanguages.first {
             let loc = Locale(identifier: first)
@@ -403,8 +405,8 @@ struct FoodSearchSettingsView: View {
                         header: Text("Usage Statistics"),
                         footer: Text("View performance metrics for AI models you've used.")
                     ) {
-                        NavigationLink {
-                            StatisticsView()
+                        Button {
+                            showingStatistics = true
                         } label: {
                             HStack {
                                 Image(systemName: "chart.bar.fill")
@@ -546,6 +548,12 @@ struct FoodSearchSettingsView: View {
         } message: {
             Text("This AI provider requires an API key. Please enter your API key in the settings below.")
         }
+        .sheet(isPresented: $showingStatistics) {
+            StatisticsView()
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(.ultraThinMaterial)
+        }
     }
 
     @ViewBuilder private func modelRow(provider: String, model: String) -> some View {
@@ -664,116 +672,126 @@ private struct StatisticsView: View {
     }
 
     var body: some View {
-        List {
-            if allStats.isEmpty {
-                Section {
-                    VStack(spacing: 12) {
-                        Image(systemName: "chart.bar.xaxis")
-                            .font(.system(size: 48))
-                            .foregroundColor(.secondary)
-                        Text("No Statistics Yet")
-                            .font(.headline)
-                        Text("Statistics will appear here after you use AI models for food analysis.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
+        NavigationStack {
+            List {
+                if allStats.isEmpty {
+                    Section {
+                        VStack(spacing: 12) {
+                            Image(systemName: "chart.bar.xaxis")
+                                .font(.system(size: 48))
+                                .foregroundColor(.secondary)
+                            Text("No Statistics Yet")
+                                .font(.headline)
+                            Text("Statistics will appear here after you use AI models for food analysis.")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 32)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 32)
-                }
-            } else {
-                ForEach(groupedStats, id: \.provider) { group in
-                    Section(header: Text(group.providerDisplayName)) {
-                        ForEach(group.models, id: \.key) { model in
-                            VStack(alignment: .leading, spacing: 8) {
-                                // Model name header with column labels
-                                HStack(alignment: .center, spacing: 8) {
-                                    Text(modelDisplayName(for: model.modelKey))
-                                        .font(.headline)
-                                        .fontWeight(.bold)
+                } else {
+                    ForEach(groupedStats, id: \.provider) { group in
+                        Section(header: Text(group.providerDisplayName)) {
+                            ForEach(group.models, id: \.key) { model in
+                                VStack(alignment: .leading, spacing: 12) {
+                                    // Model name header with column labels
+                                    HStack(alignment: .center, spacing: 8) {
+                                        Text(modelDisplayName(for: model.modelKey))
+                                            .font(.headline)
+                                            .fontWeight(.bold)
 
-                                    Spacer()
+                                        Spacer()
 
-                                    // Column headers
-                                    HStack(spacing: 12) {
-                                        Text("Requests")
-                                            .font(.caption2)
-                                            .foregroundColor(.secondary)
-                                            .frame(width: 70, alignment: .trailing)
+                                        // Column headers
+                                        HStack(spacing: 12) {
+                                            Text("Count")
+                                                .font(.caption2)
+                                                .foregroundColor(.secondary)
+                                                .frame(width: 50, alignment: .trailing)
 
-                                        Text("Avg Time")
-                                            .font(.caption2)
-                                            .foregroundColor(.secondary)
-                                            .frame(width: 60, alignment: .trailing)
+                                            Text("Avg Time")
+                                                .font(.caption2)
+                                                .foregroundColor(.secondary)
+                                                .frame(width: 60, alignment: .trailing)
+                                        }
+                                    }
+                                    .padding(.bottom, 4)
+
+                                    // Image stats section
+                                    if let imageStat = model.imageStat {
+                                        VStack(alignment: .leading, spacing: 6) {
+                                            StatTypeHeaderWithBadge(
+                                                icon: "photo",
+                                                label: "Image",
+                                                stat: imageStat
+                                            )
+
+                                            // Complexity breakdown for image stats
+                                            ComplexityBreakdownView(stat: imageStat)
+                                                .padding(.leading, 24)
+                                        }
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 12)
+                                        .background(Color.primary.opacity(0.03))
+                                        .cornerRadius(8)
+                                    }
+
+                                    // Text stats section
+                                    if let textStat = model.textStat {
+                                        VStack(alignment: .leading, spacing: 6) {
+                                            StatTypeHeaderWithBadge(
+                                                icon: "text.alignleft",
+                                                label: "Text",
+                                                stat: textStat
+                                            )
+
+                                            // Complexity breakdown for text stats
+                                            ComplexityBreakdownView(stat: textStat)
+                                                .padding(.leading, 24)
+                                        }
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 12)
+                                        .background(Color.primary.opacity(0.03))
+                                        .cornerRadius(8)
                                     }
                                 }
-                                .padding(.bottom, 4)
-
-                                // Image stats section
-                                if let imageStat = model.imageStat {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        StatTypeHeader(icon: "photo", label: "Image")
-
-                                        StatRow(
-                                            label: "Total",
-                                            stat: imageStat,
-                                            showSuccessBadge: true
-                                        )
-                                        .padding(.leading, 30)
-
-                                        // Complexity breakdown for image stats
-                                        ComplexityBreakdownView(stat: imageStat)
-                                            .padding(.leading, 30)
-                                    }
-                                }
-
-                                // Text stats section
-                                if let textStat = model.textStat {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        StatTypeHeader(icon: "text.alignleft", label: "Text")
-
-                                        StatRow(
-                                            label: "Total",
-                                            stat: textStat,
-                                            showSuccessBadge: true
-                                        )
-                                        .padding(.leading, 30)
-
-                                        // Complexity breakdown for text stats
-                                        ComplexityBreakdownView(stat: textStat)
-                                            .padding(.leading, 30)
-                                    }
-                                    .padding(.top, 8)
-                                }
+                                .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+                                .listRowSeparator(.hidden)
                             }
-                            .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
-                            .listRowSeparator(.hidden)
                         }
                     }
-                }
 
-                Section {
-                    VStack(spacing: 16) {
-                        SlideButton(styling: .init(indicatorSize: 50, indicatorColor: Color.red), action: {
-                            AIUsageStatistics.clearAll()
-                            dismiss()
-                        }) {
-                            HStack {
-                                Image(systemName: "trash")
-                                Text("Slide to Clear All Statistics")
+                    Section {
+                        VStack(spacing: 16) {
+                            SlideButton(styling: .init(indicatorSize: 50, indicatorColor: Color.red), action: {
+                                AIUsageStatistics.clearAll()
+                                dismiss()
+                            }) {
+                                HStack {
+                                    Image(systemName: "trash")
+                                    Text("Slide to Clear All Statistics")
+                                }
+                                .foregroundColor(.white)
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
                             }
-                            .foregroundColor(.white)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
                         }
+                        .padding(.vertical, 8)
                     }
-                    .padding(.vertical, 8)
+                }
+            }
+            .listSectionSpacing(.compact)
+            .navigationTitle("AI Model Statistics")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
+                        dismiss()
+                    }
                 }
             }
         }
-        .listSectionSpacing(.compact)
-        .navigationTitle("AI Model Statistics")
-        .navigationBarTitleDisplayMode(.inline)
     }
 
     // MARK: - Helper Types
@@ -847,90 +865,56 @@ private struct StatisticsView: View {
     }
 }
 
-// MARK: - StatTypeHeader Component
+// MARK: - StatTypeHeaderWithBadge Component
 
-private struct StatTypeHeader: View {
+private struct StatTypeHeaderWithBadge: View {
     let icon: String
     let label: String
+    let stat: AIUsageStatistics.Statistics
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.subheadline)
                 .foregroundColor(.accentColor)
+                .frame(width: 16)
+
             Text(label)
                 .font(.subheadline)
                 .fontWeight(.semibold)
-        }
-        .padding(.top, 4)
-    }
-}
 
-// MARK: - StatRow Component
-
-private struct StatRow: View {
-    let label: String
-    let stat: AIUsageStatistics.Statistics
-    let showSuccessBadge: Bool
-
-    var body: some View {
-        HStack(alignment: .center, spacing: 12) {
-            // Left side: Row label
-            Text(label)
-                .font(.subheadline)
-                .foregroundColor(.primary)
-                .frame(width: 60, alignment: .leading)
-
-            // Success rate badge (only for total row)
-            if showSuccessBadge {
-                HStack(spacing: 3) {
-                    Image(
-                        systemName: stat.successRate >= 90 ? "checkmark.circle.fill" :
-                            stat.successRate >= 70 ? "checkmark.circle" : "exclamationmark.circle"
-                    )
+            // Success rate badge
+            HStack(spacing: 3) {
+                Image(
+                    systemName: stat.successRate >= 90 ? "checkmark.circle.fill" :
+                        stat.successRate >= 70 ? "checkmark.circle" : "exclamationmark.circle"
+                )
+                .font(.caption2)
+                Text(String(format: "%.0f%%", stat.successRate))
                     .font(.caption2)
-                    .frame(width: 12)
-                    Text(String(format: "%.0f%%", stat.successRate))
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                        .frame(width: 32, alignment: .leading)
-                }
-                .foregroundColor(
-                    stat.successRate >= 90 ? .green :
-                        stat.successRate >= 70 ? .orange : .red
-                )
-                .padding(.horizontal, 6)
-                .padding(.vertical, 2)
-                .background(
-                    (
-                        stat.successRate >= 90 ? Color.green :
-                            stat.successRate >= 70 ? Color.orange : Color.red
-                    )
-                    .opacity(0.08)
-                )
-                .cornerRadius(4)
-                .frame(width: 65, alignment: .leading)
-            } else {
-                Color.clear
-                    .frame(width: 65)
+                    .fontWeight(.semibold)
             }
+            .foregroundColor(
+                stat.successRate >= 90 ? .green :
+                    stat.successRate >= 70 ? .orange : .red
+            )
+            .padding(.horizontal, 6)
+            .padding(.vertical, 3)
+            .background(
+                (
+                    stat.successRate >= 90 ? Color.green :
+                        stat.successRate >= 70 ? Color.orange : Color.red
+                )
+                .opacity(0.15)
+            )
+            .cornerRadius(4)
 
             Spacer()
 
-            // Right side: Statistics columns
-            HStack(spacing: 12) {
-                // Request count column
-                Text("\(stat.requestCount)")
-                    .font(.subheadline)
-                    .foregroundColor(.primary)
-                    .frame(width: 70, alignment: .trailing)
-
-                // Average time column
-                Text(String(format: "%.1fs", stat.averageProcessingTime))
-                    .font(.subheadline)
-                    .foregroundColor(.primary)
-                    .frame(width: 60, alignment: .trailing)
-            }
+            // Total requests
+            Text("\(stat.requestCount) requests")
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
     }
 }
@@ -946,7 +930,8 @@ private struct ComplexityBreakdownView: View {
             if stat.zeroFoodCount > 0 || stat.oneFoodCount > 0 || stat.twoFoodCount > 0 || stat.multipleFoodCount > 0 {
                 if stat.zeroFoodCount > 0 {
                     ComplexityRow(
-                        label: "0 items",
+                        icon: "0.circle.fill",
+                        label: "No items",
                         count: stat.zeroFoodCount,
                         averageTime: stat.averageZeroFoodProcessingTime
                     )
@@ -954,7 +939,8 @@ private struct ComplexityBreakdownView: View {
 
                 if stat.oneFoodCount > 0 {
                     ComplexityRow(
-                        label: "1 item",
+                        icon: "1.circle.fill",
+                        label: "Single item",
                         count: stat.oneFoodCount,
                         averageTime: stat.averageOneFoodProcessingTime
                     )
@@ -962,7 +948,8 @@ private struct ComplexityBreakdownView: View {
 
                 if stat.twoFoodCount > 0 {
                     ComplexityRow(
-                        label: "2 items",
+                        icon: "2.circle.fill",
+                        label: "Two items",
                         count: stat.twoFoodCount,
                         averageTime: stat.averageTwoFoodProcessingTime
                     )
@@ -970,7 +957,8 @@ private struct ComplexityBreakdownView: View {
 
                 if stat.multipleFoodCount > 0 {
                     ComplexityRow(
-                        label: "3+ items",
+                        icon: "3.circle.fill",
+                        label: "Multiple items",
                         count: stat.multipleFoodCount,
                         averageTime: stat.averageMultipleFoodProcessingTime
                     )
@@ -983,39 +971,44 @@ private struct ComplexityBreakdownView: View {
 // MARK: - ComplexityRow Component
 
 private struct ComplexityRow: View {
+    let icon: String
     let label: String
     let count: Int
     let averageTime: TimeInterval
 
     var body: some View {
-        HStack(alignment: .center, spacing: 12) {
-            // Left side: Complexity label
-            Text(label)
-                .font(.subheadline)
-                .foregroundColor(.primary)
-                .frame(width: 60, alignment: .leading)
+        HStack(alignment: .center, spacing: 8) {
+            // Icon and label
+            HStack(spacing: 6) {
+                Image(systemName: icon)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(width: 14)
 
-            // Empty space where success badge would be
-            Color.clear
-                .frame(width: 65)
+                Text(label)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .frame(minWidth: 100, alignment: .leading)
 
             Spacer()
 
-            // Right side: Statistics columns
+            // Statistics
             HStack(spacing: 12) {
-                // Request count column
+                // Count
                 Text("\(count)")
-                    .font(.subheadline)
+                    .font(.caption)
                     .foregroundColor(.primary)
-                    .frame(width: 70, alignment: .trailing)
+                    .frame(width: 50, alignment: .trailing)
 
-                // Average time column
+                // Average time
                 Text(String(format: "%.1fs", averageTime))
-                    .font(.subheadline)
+                    .font(.caption)
                     .foregroundColor(.primary)
                     .frame(width: 60, alignment: .trailing)
             }
         }
+        .padding(.vertical, 4)
     }
 }
 
