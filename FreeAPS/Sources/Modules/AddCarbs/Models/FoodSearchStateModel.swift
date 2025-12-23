@@ -319,9 +319,13 @@ final class FoodSearchStateModel: ObservableObject {
         print("cancelling search task")
         searchTask?.cancel()
         searchTask = nil
+        latestSearchError = nil
+        latestSearchIcon = nil
+        latestTextSearch = nil
         telemetryLogs = []
         analysisStart = nil
         analysisEnd = nil
+        isLoading = false
         isAnalyzing = false
         aiAnalysisRequest = nil
         analysisError = nil
