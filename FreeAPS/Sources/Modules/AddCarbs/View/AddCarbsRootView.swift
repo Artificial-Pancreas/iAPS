@@ -67,7 +67,7 @@ extension AddCarbs {
                 let protein = (preset.protein as Decimal?) ?? 0
 
                 let nutritionValues = NutritionValues(
-                    calories: nil,
+                    calories: (carbs * 4) + (protein * 4) + (fat * 9),
                     carbs: carbs,
                     fat: fat,
                     fiber: nil,

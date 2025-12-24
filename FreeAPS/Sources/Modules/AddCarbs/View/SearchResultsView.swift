@@ -2954,7 +2954,16 @@ struct FoodItemsSelectorView: View {
                     if foodItem.name.isNotEmpty {
                         TextSearchFoodItemRow(
                             foodItem: foodItem,
-                            portionSize: foodItem.portionSize ?? foodItem.standardServingSize ?? 100,
+                            portionSize: {
+                                // For per-serving nutrition, use servingsMultiplier (default 1.0)
+                                // For per-100 nutrition, use portionSize in grams (default to standardServingSize or 100)
+                                switch foodItem.nutrition {
+                                case .perServing:
+                                    return foodItem.servingsMultiplier ?? 1.0
+                                case .per100:
+                                    return foodItem.portionSize ?? foodItem.standardServingSize ?? 100
+                                }
+                            }(),
                             onAdd: {
                                 onFoodItemSelected(foodItem)
                             },
