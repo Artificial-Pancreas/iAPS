@@ -4,22 +4,23 @@ import SwiftUI
 
 struct FoodSearchView: View {
     @ObservedObject var state: FoodSearchStateModel
-    var onSelect: ([FoodItemDetailed], UIImage?, Date?) -> Void
-//    let addButtonLabelKey: LocalizedStringKey
-    let addAllButtonLabelKey: LocalizedStringKey
+    let onContinue: ([FoodItemDetailed], UIImage?, Date?) -> Void
+    let onHypoTreatment: (([FoodItemDetailed], UIImage?, Date?) -> Void)?
+    let continueButtonLabelKey: LocalizedStringKey
+    let hypoTreatmentButtonLabelKey: LocalizedStringKey
 
     var body: some View {
         VStack(spacing: 0) {
             SearchResultsView(
                 state: state,
-                onFoodItemSelected: { foodItem, selectedTime in
-                    onSelect([foodItem], state.aiAnalysisRequest?.image, selectedTime)
+                onContinue: { totalMeal, selectedTime in
+                    onContinue(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
                 },
-                onCompleteMealSelected: { totalMeal, selectedTime in
-                    onSelect(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
-                },
-//                addButtonLabelKey: addButtonLabelKey,
-                addAllButtonLabelKey: addAllButtonLabelKey
+                onHypoTreatment: onHypoTreatment != nil ? { totalMeal, selectedTime in
+                    onHypoTreatment?(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
+                } : nil,
+                continueButtonLabelKey: continueButtonLabelKey,
+                hypoTreatmentButtonLabelKey: hypoTreatmentButtonLabelKey
             )
         }
         .fullScreenCover(item: state.foodSearchRouteBinding) { route in
@@ -43,6 +44,7 @@ struct FoodSearchView: View {
                 AIProgressView(
                     state: state,
                     onCancel: {
+                        print("progress view - cancelled")
                         state.cancelSearchTask()
                     }
                 )

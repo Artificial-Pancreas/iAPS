@@ -115,12 +115,23 @@ extension AddCarbs {
                 if foodSearchState.showingFoodSearch {
                     FoodSearchView(
                         state: foodSearchState,
-                        onSelect: { selectedFood, _, date in
+                        onContinue: { selectedFood, _, date in
                             button.toggle()
-                            if button { state.addAIFood(override, fetch: editMode, food: selectedFood, date: date) }
+                            if button {
+                                state.hypoTreatment = false
+                                state.addAIFood(override, fetch: editMode, food: selectedFood, date: date)
+                            }
                         },
-                        addAllButtonLabelKey: (state.skipBolus && !override && !editMode) ? "Save" :
-                            "Continue"
+                        onHypoTreatment: state.id != nil && state.id != "None" && state
+                            .carbsRequired != nil ? { selectedFood, _, date in
+                                button.toggle()
+                                if button {
+                                    state.hypoTreatment = true
+                                    state.addAIFood(override, fetch: editMode, food: selectedFood, date: date)
+                                }
+                            } : nil,
+                        continueButtonLabelKey: (state.skipBolus && !override && !editMode) ? "Save" : "Continue",
+                        hypoTreatmentButtonLabelKey: "Hypo Treatment"
                     )
                 } else {
                     mealView

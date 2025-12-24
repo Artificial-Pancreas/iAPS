@@ -3,10 +3,11 @@ import SwiftUI
 
 struct SearchResultsView: View {
     @ObservedObject var state: FoodSearchStateModel
-    let onFoodItemSelected: (FoodItemDetailed, Date?) -> Void
-    let onCompleteMealSelected: ([FoodItemDetailed], Date?) -> Void
+    let onContinue: ([FoodItemDetailed], Date?) -> Void
+    let onHypoTreatment: (([FoodItemDetailed], Date?) -> Void)?
     let addButtonLabelKey: LocalizedStringKey = "" // TODO: not used currently
-    let addAllButtonLabelKey: LocalizedStringKey
+    let continueButtonLabelKey: LocalizedStringKey
+    let hypoTreatmentButtonLabelKey: LocalizedStringKey
 
     @State private var clearedResultsViewState: SearchResultsState?
     @State private var selectedTime: Date?
@@ -227,8 +228,6 @@ struct SearchResultsView: View {
 
     private var actionButtonRow: some View {
         HStack(alignment: .center) {
-            Spacer()
-
             if nonDeletedItemCount > 0 {
                 // Time picker button
                 Button(action: {
@@ -237,11 +236,11 @@ struct SearchResultsView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "clock")
                             .font(.system(size: 14, weight: .medium))
-                        Text(selectedTime == nil ? "now" : timeString(for: selectedTime!))
+                        Text(selectedTime == nil ? "Now" : timeString(for: selectedTime!))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.accentColor)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 10)
                     .background(
@@ -253,14 +252,36 @@ struct SearchResultsView: View {
                 .padding(.trailing, 8)
             }
 
+            Spacer()
+
             if hasVisibleContent {
+                if let onHypoTreatment = self.onHypoTreatment {
+                    Button(action: {
+                        let foodItems = state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed)
+                            .filter { !state.searchResultsState.isDeleted($0) }
+                            .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
+                        onHypoTreatment(foodItems, selectedTime)
+                    }) {
+                        Text(hypoTreatmentButtonLabelKey)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .fill(Color.orange)
+                            )
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
                 Button(action: {
                     let foodItems = state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed)
                         .filter { !state.searchResultsState.isDeleted($0) }
                         .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
-                    onCompleteMealSelected(foodItems, selectedTime)
+                    onContinue(foodItems, selectedTime)
                 }) {
-                    Text(addAllButtonLabelKey)
+                    Text(continueButtonLabelKey)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
@@ -272,28 +293,6 @@ struct SearchResultsView: View {
                         )
                 }
                 .buttonStyle(PlainButtonStyle())
-
-//            } else {
-//                Spacer()
-//                Button(action: {
-//                    state.showingFoodSearch = false
-//                }) {
-//                    HStack(spacing: 8) {
-//                        Image(systemName: "arrow.left")
-//                            .font(.system(size: 14, weight: .medium))
-//                        Text("Back")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//                    }
-//                    .foregroundColor(.primary)
-//                    .padding(.horizontal, 16)
-//                    .padding(.vertical, 10)
-//                    .background(
-//                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-//                            .fill(Color(.systemGray5))
-//                    )
-//                }
-//                .buttonStyle(.plain)
             }
         }
         .sheet(isPresented: $showTimePicker) {
@@ -506,10 +505,9 @@ struct SearchResultsView: View {
         VStack(spacing: 0) {
             List {
                 ForEach(state.searchResultsState.visibleSections) { analysisResult in
-                    AnalysisResultListSection(
+                    FoodItemGroupListSection(
                         analysisResult: analysisResult,
                         state: state,
-                        onFoodItemSelected: onFoodItemSelected,
                         selectedTime: selectedTime
                     )
                 }
@@ -1180,10 +1178,9 @@ private struct ConfidenceBadge: View {
     }
 }
 
-private struct AnalysisResultListSection: View {
+private struct FoodItemGroupListSection: View {
     let analysisResult: FoodItemGroup
     @ObservedObject var state: FoodSearchStateModel
-    let onFoodItemSelected: (FoodItemDetailed, Date?) -> Void
     let selectedTime: Date?
 
     @State private var showInfoPopup = false
@@ -1328,16 +1325,8 @@ private struct AnalysisResultListSection: View {
                                         state.searchResultsState.deleteItem(foodItem)
                                     }
                                 },
-                                onSelect: {
-                                    let currentPortion = state.searchResultsState.portionSize(for: foodItem)
-                                    onFoodItemSelected(
-                                        foodItem.withPortion(currentPortion),
-                                        selectedTime
-                                    )
-                                },
                                 isFirst: index == 0,
-                                isLast: index == analysisResult.foodItemsDetailed.count - 1,
-                                showSelectButton: false
+                                isLast: index == analysisResult.foodItemsDetailed.count - 1
                             )
                         }
                     }
@@ -2420,10 +2409,8 @@ struct FoodItemRow: View {
     let portionSize: Decimal
     let onPortionChange: ((Decimal) -> Void)?
     let onDelete: (() -> Void)?
-    let onSelect: () -> Void
     let isFirst: Bool
     let isLast: Bool
-    let showSelectButton: Bool
 
     @State private var showItemInfo = false
     @State private var showPortionAdjuster = false
@@ -2461,34 +2448,9 @@ struct FoodItemRow: View {
                             .truncationMode(.tail)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        // Select button (when in search results mode)
-                        if showSelectButton {
-                            Button(action: onSelect) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "plus.circle.fill")
-                                        .font(.system(size: 14, weight: .semibold))
-                                    Text("Select")
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
-                                }
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Color.accentColor)
-                                )
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        }
-
-                        // Source icon with confidence badge (if AI)
-                        if !showSelectButton {
+                        if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
                             HStack(spacing: 0) {
-                                // Confidence badge (if AI source)
-                                if foodItem.source?.isAI == true, let confidence = foodItem.confidence {
-                                    ConfidenceBadge(level: confidence)
-                                }
+                                ConfidenceBadge(level: confidence)
                             }
                         }
                     }
