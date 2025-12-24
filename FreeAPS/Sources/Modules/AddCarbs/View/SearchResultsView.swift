@@ -197,7 +197,7 @@ struct SearchResultsView: View {
                     },
                     useTransparentBackground: true
                 )
-                .navigationTitle(foodSelectorTitle(for: searchResult))
+                .navigationTitle(searchResult.textQuery == nil ? "Search Results" : "Results for '\(searchResult.textQuery!)'")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -222,16 +222,6 @@ struct SearchResultsView: View {
             )
             .presentationDetents([.height(600), .large])
             .presentationDragIndicator(.visible)
-        }
-    }
-
-    private func foodSelectorTitle(for searchResult: FoodItemGroup) -> String {
-        if let description = searchResult.briefDescription {
-            return description
-        } else if let query = searchResult.textQuery {
-            return "Results for '\(query)'"
-        } else {
-            return "Search Results"
         }
     }
 
@@ -282,6 +272,28 @@ struct SearchResultsView: View {
                         )
                 }
                 .buttonStyle(PlainButtonStyle())
+
+//            } else {
+//                Spacer()
+//                Button(action: {
+//                    state.showingFoodSearch = false
+//                }) {
+//                    HStack(spacing: 8) {
+//                        Image(systemName: "arrow.left")
+//                            .font(.system(size: 14, weight: .medium))
+//                        Text("Back")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//                    }
+//                    .foregroundColor(.primary)
+//                    .padding(.horizontal, 16)
+//                    .padding(.vertical, 10)
+//                    .background(
+//                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+//                            .fill(Color(.systemGray5))
+//                    )
+//                }
+//                .buttonStyle(.plain)
             }
         }
         .sheet(isPresented: $showTimePicker) {
@@ -521,13 +533,42 @@ struct SearchResultsView: View {
     private var noSearchesView: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // Three main capabilities
+                // Main capabilities
                 VStack(spacing: 12) {
+                    // Saved Foods Card (always visible)
+                    Group {
+                        if let savedFoods = state.savedFoods, !savedFoods.foodItemsDetailed.isEmpty {
+                            Button(action: {
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    state.showSavedFoods = true
+                                }
+                            }) {
+                                CapabilityCard(
+                                    icon: "archivebox.fill",
+                                    iconColor: .orange,
+                                    title: "Saved Foods",
+                                    description: "Quick access to your frequently used foods",
+                                    isDisabled: false
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            CapabilityCard(
+                                icon: "archivebox.fill",
+                                iconColor: .orange,
+                                title: "Saved Foods",
+                                description: "No saved foods yet",
+                                isDisabled: true
+                            )
+                        }
+                    }
+
                     CapabilityCard(
                         icon: "text.magnifyingglass",
                         iconColor: .blue,
                         title: "Text Search",
-                        description: "Search databases or describe food for AI analysis"
+                        description: "Search databases or describe food for AI analysis",
+                        isDisabled: false
                     )
 
                     // Barcode Scanner Card
@@ -538,7 +579,8 @@ struct SearchResultsView: View {
                             icon: "barcode.viewfinder",
                             iconColor: .blue,
                             title: "Barcode Scanner",
-                            description: "Scan packaged foods for nutrition information"
+                            description: "Scan packaged foods for nutrition information",
+                            isDisabled: false
                         )
                     }
                     .buttonStyle(.plain)
@@ -551,7 +593,8 @@ struct SearchResultsView: View {
                             icon: "camera.fill",
                             iconColor: .purple,
                             title: "Photo Analysis",
-                            description: "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library."
+                            description: "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.",
+                            isDisabled: false
                         )
                     }
                     .buttonStyle(.plain)
@@ -561,10 +604,11 @@ struct SearchResultsView: View {
                         state.showManualEntry = true
                     }) {
                         CapabilityCard(
-                            icon: "pencil",
+                            icon: "list.bullet.clipboard",
                             iconColor: .green,
                             title: "Manual Entry",
-                            description: "Enter nutrition information manually"
+                            description: "Enter nutrition information manually",
+                            isDisabled: false
                         )
                     }
                     .buttonStyle(.plain)
@@ -612,18 +656,19 @@ private struct CapabilityCard: View {
     let iconColor: Color
     let title: String
     let description: String
+    let isDisabled: Bool
 
     var body: some View {
         HStack(spacing: 12) {
             // Icon container
             ZStack {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(iconColor.opacity(0.12))
+                    .fill(iconColor.opacity(isDisabled ? 0.05 : 0.12))
                     .frame(width: 44, height: 44)
 
                 Image(systemName: icon)
                     .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(iconColor)
+                    .foregroundColor(iconColor.opacity(isDisabled ? 0.3 : 1.0))
             }
 
             // Text content
@@ -631,11 +676,11 @@ private struct CapabilityCard: View {
                 Text(title)
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundColor(.primary)
+                    .foregroundColor(isDisabled ? .secondary : .primary)
 
                 Text(description)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.secondary.opacity(isDisabled ? 0.6 : 1.0))
                     .lineLimit(2)
             }
 
@@ -644,7 +689,7 @@ private struct CapabilityCard: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Color(.secondarySystemGroupedBackground))
+                .fill(Color(.secondarySystemGroupedBackground).opacity(isDisabled ? 0.5 : 1.0))
         )
     }
 }
@@ -949,17 +994,17 @@ private extension FoodItemSource {
         case .aiPhoto:
             return "photo"
         case .aiMenu:
-            return "photo" // TODO: better icon?
+            return "menucard" // TODO: better icon?
         case .aiReceipe:
-            return "photo" // TODO: better icon?
+            return "book.pages" // TODO: better icon?
         case .aiText:
             return "text.bubble"
         case .search:
             return "magnifyingglass"
         case .barcode:
-            return "barcode"
+            return "barcode.viewfinder"
         case .manual:
-            return "pencil"
+            return "list.bullet.clipboard"
         case .database:
             return "archivebox.fill" // TODO: better icon?
         }
@@ -2934,6 +2979,16 @@ struct FoodItemsSelectorView: View {
     let onDismiss: () -> Void
     var useTransparentBackground: Bool = false
     var filterText: String = ""
+
+    private var displayTitle: String {
+        if searchResult.source == .database {
+            return "Saved Foods"
+        } else if let query = searchResult.textQuery {
+            return query
+        } else {
+            return "Search Results"
+        }
+    }
 
     private var filteredFoodItems: [FoodItemDetailed] {
         let trimmedFilter = filterText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()

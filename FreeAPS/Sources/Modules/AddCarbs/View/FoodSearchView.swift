@@ -152,7 +152,7 @@ struct FoodSearchView: View {
                                     state.showManualEntry = true
                                     state.showingFoodSearch = true
                                 } label: {
-                                    Image(systemName: "text.badge.plus")
+                                    Image(systemName: "list.bullet.clipboard")
                                         .font(.system(size: 20, weight: .medium))
                                         .foregroundColor(.green)
                                         .frame(width: 46, height: 46)
