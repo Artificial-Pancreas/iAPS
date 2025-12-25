@@ -77,10 +77,8 @@ extension AddCarbs {
 
                 return FoodItemDetailed(
                     name: dish,
-                    nutrition: .perServing(nutritionValues),
+                    nutritionPerServing: nutritionValues,
                     servingsMultiplier: 1,
-                    standardServing: nil,
-                    standardServingSize: nil,
                     units: .grams,
                     source: .database
                 )

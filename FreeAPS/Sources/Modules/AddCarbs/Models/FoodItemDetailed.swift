@@ -55,7 +55,7 @@ enum FoodNutrition {
     case perServing(NutritionValues)
 }
 
-struct FoodItemDetailed: Identifiable {
+struct FoodItemDetailed: Identifiable, Equatable {
     let id = UUID()
     let name: String
     let confidence: ConfidenceLevel?
@@ -78,13 +78,16 @@ struct FoodItemDetailed: Identifiable {
 
     var source: FoodItemSource?
 
+    static func == (lhs: FoodItemDetailed, rhs: FoodItemDetailed) -> Bool {
+        lhs.id == rhs.id
+    }
+
     init(
         name: String,
-        nutrition: FoodNutrition,
+        nutritionPer100: NutritionValues,
+        portionSize: Decimal,
         confidence: ConfidenceLevel? = nil,
         brand: String? = nil,
-        portionSize: Decimal? = nil,
-        servingsMultiplier: Decimal? = nil,
         standardServing: String? = nil,
         standardServingSize: Decimal? = nil,
         units: MealUnits? = nil,
@@ -100,6 +103,41 @@ struct FoodItemDetailed: Identifiable {
         self.confidence = confidence
         self.brand = brand
         self.portionSize = portionSize
+        servingsMultiplier = nil
+        self.standardServing = standardServing
+        self.standardServingSize = standardServingSize
+        self.units = units
+        self.preparationMethod = preparationMethod
+        self.visualCues = visualCues
+        self.glycemicIndex = glycemicIndex
+        nutrition = .per100(nutritionPer100)
+        self.assessmentNotes = assessmentNotes
+        self.imageURL = imageURL
+        self.imageFrontURL = imageFrontURL
+        self.source = source
+    }
+
+    init(
+        name: String,
+        nutritionPerServing: NutritionValues,
+        servingsMultiplier: Decimal,
+        confidence: ConfidenceLevel? = nil,
+        brand: String? = nil,
+        standardServing: String? = nil,
+        standardServingSize: Decimal? = nil,
+        units: MealUnits? = nil,
+        preparationMethod: String? = nil,
+        visualCues: String? = nil,
+        glycemicIndex: Decimal? = nil,
+        assessmentNotes: String? = nil,
+        imageURL: String? = nil,
+        imageFrontURL: String? = nil,
+        source: FoodItemSource
+    ) {
+        self.name = name
+        self.confidence = confidence
+        self.brand = brand
+        portionSize = nil
         self.servingsMultiplier = servingsMultiplier
         self.standardServing = standardServing
         self.standardServingSize = standardServingSize
@@ -107,7 +145,7 @@ struct FoodItemDetailed: Identifiable {
         self.preparationMethod = preparationMethod
         self.visualCues = visualCues
         self.glycemicIndex = glycemicIndex
-        self.nutrition = nutrition
+        nutrition = .perServing(nutritionPerServing)
         self.assessmentNotes = assessmentNotes
         self.imageURL = imageURL
         self.imageFrontURL = imageFrontURL
@@ -215,14 +253,13 @@ extension FoodItemDetailed {
     /// Returns a copy of this food item with an updated portion size or servings multiplier
     func withPortion(_ newPortion: Decimal) -> FoodItemDetailed {
         switch nutrition {
-        case .per100:
+        case let .per100(nutrition):
             return FoodItemDetailed(
                 name: name,
-                nutrition: nutrition,
+                nutritionPer100: nutrition,
+                portionSize: newPortion,
                 confidence: confidence,
                 brand: brand,
-                portionSize: newPortion,
-                servingsMultiplier: servingsMultiplier,
                 standardServing: standardServing,
                 standardServingSize: standardServingSize,
                 units: units,
@@ -234,14 +271,13 @@ extension FoodItemDetailed {
                 imageFrontURL: imageFrontURL,
                 source: source ?? .manual
             )
-        case .perServing:
+        case let .perServing(nutrition):
             return FoodItemDetailed(
                 name: name,
-                nutrition: nutrition,
+                nutritionPerServing: nutrition,
+                servingsMultiplier: newPortion,
                 confidence: confidence,
                 brand: brand,
-                portionSize: portionSize,
-                servingsMultiplier: newPortion,
                 standardServing: standardServing,
                 standardServingSize: standardServingSize,
                 units: units,

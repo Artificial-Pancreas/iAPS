@@ -136,11 +136,12 @@ final class FoodSearchStateModel: ObservableObject {
                     barcode,
                     telemetryCallback: nil
                 )
-                Task { @MainActor in
-                    self.isLoading = false
+
+                self.isLoading = false
+                if !Task.isCancelled {
                     if let first = result.foodItemsDetailed.first {
                         if result.foodItemsDetailed.count == 1 {
-                            addItem(first)
+                            addItem(first, group: result)
                         } else {
                             self.latestMultipleSelectSearch = result
                         }
@@ -173,11 +174,11 @@ final class FoodSearchStateModel: ObservableObject {
                     telemetryCallback: nil
                 )
 
+                self.isLoading = false
                 if !Task.isCancelled {
-                    self.isLoading = false
                     if let first = result.foodItemsDetailed.first {
                         if result.foodItemsDetailed.count == 1 {
-                            addItem(first)
+                            addItem(first, group: result)
                         } else {
                             self.latestMultipleSelectSearch = result
                         }
@@ -342,39 +343,45 @@ final class FoodSearchStateModel: ObservableObject {
         foodSearchRoute = nil
     }
 
-    @MainActor func addItem(_ item: FoodItemDetailed) {
-        // Early return if source is missing; although caller asserts it won't be nil, guard defensively
-        guard let source = item.source else { return }
+    @MainActor func addItem(_ item: FoodItemDetailed, group: FoodItemGroup?) {
+        if searchResultsState.isDeleted(item) {
+            searchResultsState.undeleteItem(item)
+            return
+        }
 
-        // Find an existing result with the same source as the item's source
-        if let existingIndex = searchResultsState.searchResults.firstIndex(where: { $0.source == source }) {
-            let existing = searchResultsState.searchResults.remove(at: existingIndex)
-            // Build a new items array by prepending the new item
-            let newItems = [item] + existing.foodItemsDetailed
-            // Rebuild a new FoodItemGroup preserving all existing fields, only replacing items
-            let updated = FoodItemGroup(
-                foodItemsDetailed: newItems,
-                briefDescription: existing.briefDescription,
-                overallDescription: existing.overallDescription,
-                diabetesConsiderations: existing.diabetesConsiderations,
-                source: existing.source,
-                barcode: existing.barcode,
-                textQuery: existing.textQuery
-            )
-            // Put this updated result at the beginning of the list of results
-            searchResultsState.searchResults.insert(updated, at: 0)
+        let targetGroupIndex: Int?
+        var targetGroup: FoodItemGroup
+        if let group = group, group.source.isAI == true {
+            // Find existing group with same ID (for AI sources)
+            targetGroupIndex = searchResultsState.searchResults.firstIndex { $0.id == group.id }
+            if let targetGroupIndex {
+                targetGroup = searchResultsState.searchResults[targetGroupIndex].copyWithItemPrepended(item)
+            } else {
+                targetGroup = group.copyWithItems([item])
+            }
         } else {
-            // Create a brand new result for this source; other fields are nil by default
-            let newResult = FoodItemGroup(
-                foodItemsDetailed: [item],
-                briefDescription: nil,
-                overallDescription: nil,
-                diabetesConsiderations: nil,
-                source: source,
-                barcode: nil,
-                textQuery: nil
-            )
-            searchResultsState.searchResults.insert(newResult, at: 0)
+            // Find existing group with same source (nil --> manual food entry)
+            let source = group?.source ?? .manual
+            targetGroupIndex = searchResultsState.searchResults.firstIndex { $0.source == source }
+            if let targetGroupIndex {
+                targetGroup = searchResultsState.searchResults[targetGroupIndex].copyWithItemPrepended(item)
+            } else {
+                targetGroup = FoodItemGroup(
+                    foodItemsDetailed: [item],
+                    source: source,
+                )
+            }
+        }
+
+        if let index = targetGroupIndex {
+            searchResultsState.searchResults[index] = targetGroup
+            // Move to front if not already there
+            if index != 0 {
+                searchResultsState.searchResults.remove(at: index)
+                searchResultsState.searchResults.insert(targetGroup, at: 0)
+            }
+        } else {
+            searchResultsState.searchResults.insert(targetGroup, at: 0)
         }
     }
 }

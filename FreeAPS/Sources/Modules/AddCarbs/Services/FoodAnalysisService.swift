@@ -154,26 +154,49 @@ extension TextAnalysisService {
         source: FoodItemSource
     ) -> FoodItemGroup {
         let items: [FoodItemDetailed] = products.map { item in
-            FoodItemDetailed(
-                name: item.productName ?? "Product without name",
-                nutrition: .per100(NutritionValues(
-                    calories: item.nutriments.calories,
-                    carbs: item.nutriments.carbohydrates,
-                    fat: item.nutriments.fat,
-                    fiber: item.nutriments.fiber,
-                    protein: item.nutriments.proteins,
-                    sugars: item.nutriments.sugars
-                )),
-                confidence: confidence,
-                brand: item.brands,
-                portionSize: item.servingQuantity,
-                standardServing: item.servingSize,
-                standardServingSize: item.servingQuantity,
-                units: MealUnits.grams,
-                imageURL: item.imageURL,
-                imageFrontURL: item.imageFrontURL,
-                source: source
-            )
+            if let servingQuantity = item.servingQuantity {
+                FoodItemDetailed(
+                    name: item.productName ?? "Product without name",
+                    nutritionPer100: NutritionValues(
+                        calories: item.nutriments.calories,
+                        carbs: item.nutriments.carbohydrates,
+                        fat: item.nutriments.fat,
+                        fiber: item.nutriments.fiber,
+                        protein: item.nutriments.proteins,
+                        sugars: item.nutriments.sugars
+                    ),
+                    portionSize: servingQuantity,
+                    confidence: confidence,
+                    brand: item.brands,
+                    standardServing: item.servingSize,
+                    standardServingSize: item.servingQuantity,
+                    units: MealUnits.grams,
+                    imageURL: item.imageURL,
+                    imageFrontURL: item.imageFrontURL,
+                    source: source
+                )
+            } else {
+                FoodItemDetailed(
+                    name: item.productName ?? "Product without name",
+                    nutritionPerServing: NutritionValues(
+                        calories: item.nutriments.calories,
+                        carbs: item.nutriments.carbohydrates,
+                        fat: item.nutriments.fat,
+                        fiber: item.nutriments.fiber,
+                        protein: item.nutriments.proteins,
+                        sugars: item.nutriments.sugars
+                    ),
+                    servingsMultiplier: 1,
+                    confidence: confidence,
+                    brand: item.brands,
+                    standardServing: item.servingSize,
+                    standardServingSize: item.servingQuantity,
+                    units: MealUnits.grams,
+                    imageURL: item.imageURL,
+                    imageFrontURL: item.imageFrontURL,
+                    source: source
+                )
+            }
         }
 
         return FoodItemGroup(
@@ -198,17 +221,17 @@ extension TextAnalysisService {
             }
             return FoodItemDetailed(
                 name: item.name,
-                nutrition: .per100(NutritionValues(
+                nutritionPer100: NutritionValues(
                     calories: item.caloriesPer100,
                     carbs: item.carbsPer100,
                     fat: item.fatPer100,
                     fiber: item.fiberPer100,
                     protein: item.proteinPer100,
                     sugars: item.sugarsPer100,
-                )),
+                ),
+                portionSize: item.portionEstimateSize ?? 100,
                 confidence: confidence,
                 brand: item.brand,
-                portionSize: item.portionEstimateSize,
                 standardServing: item.standardServing,
                 standardServingSize: item.standardServingSize,
                 units: item.units,
