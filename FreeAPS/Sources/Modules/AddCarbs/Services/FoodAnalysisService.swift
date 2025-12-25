@@ -235,6 +235,8 @@ extension TextAnalysisService {
                 standardServing: item.standardServing,
                 standardServingSize: item.standardServingSize,
                 units: item.units,
+                preparationMethod: item.preparationMethod,
+                visualCues: item.visualCues,
                 imageURL: nil,
                 imageFrontURL: nil,
                 source: source

@@ -56,7 +56,7 @@ enum FoodNutrition {
 }
 
 struct FoodItemDetailed: Identifiable, Equatable {
-    let id = UUID()
+    let id: UUID
     let name: String
     let confidence: ConfidenceLevel?
     let brand: String?
@@ -76,13 +76,14 @@ struct FoodItemDetailed: Identifiable, Equatable {
     let imageURL: String?
     let imageFrontURL: String?
 
-    var source: FoodItemSource?
+    let source: FoodItemSource
 
     static func == (lhs: FoodItemDetailed, rhs: FoodItemDetailed) -> Bool {
         lhs.id == rhs.id
     }
 
     init(
+        id: UUID? = nil,
         name: String,
         nutritionPer100: NutritionValues,
         portionSize: Decimal,
@@ -99,6 +100,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
         imageFrontURL: String? = nil,
         source: FoodItemSource
     ) {
+        self.id = id ?? UUID()
         self.name = name
         self.confidence = confidence
         self.brand = brand
@@ -118,6 +120,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
     }
 
     init(
+        id: UUID? = nil,
         name: String,
         nutritionPerServing: NutritionValues,
         servingsMultiplier: Decimal,
@@ -134,6 +137,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
         imageFrontURL: String? = nil,
         source: FoodItemSource
     ) {
+        self.id = id ?? UUID()
         self.name = name
         self.confidence = confidence
         self.brand = brand
@@ -269,7 +273,7 @@ extension FoodItemDetailed {
                 assessmentNotes: assessmentNotes,
                 imageURL: imageURL,
                 imageFrontURL: imageFrontURL,
-                source: source ?? .manual
+                source: source
             )
         case let .perServing(nutrition):
             return FoodItemDetailed(
@@ -287,7 +291,7 @@ extension FoodItemDetailed {
                 assessmentNotes: assessmentNotes,
                 imageURL: imageURL,
                 imageFrontURL: imageFrontURL,
-                source: source ?? .manual
+                source: source
             )
         }
     }

@@ -129,7 +129,7 @@ struct FoodSearchView: View {
                         .fill(Color(.systemGray5))
                 )
 
-                if !state.showSavedFoods, !state.showManualEntry, state.latestMultipleSelectSearch == nil {
+                if !state.showSavedFoods, state.latestMultipleSelectSearch == nil {
                     HStack(spacing: 10) {
                         if state.showingFoodSearch {
                             Button {
