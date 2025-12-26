@@ -66,51 +66,38 @@ struct FoodSearchView: View {
                 // First Row - Search Text Field
                 HStack(spacing: 10) {
                     Image(
-                        systemName: state.showSavedFoods ? "archivebox.fill" : (
-                            state.isBarcode ? "barcode" :
-                                UserDefaults.standard.textSearchProvider.isAI ? "text.bubble" : "magnifyingglass"
+                        systemName: state.showSavedFoods ? FoodItemSource.database.icon : (
+                            state.isBarcode ? FoodItemSource.barcode.icon :
+                                UserDefaults.standard.textSearchProvider.isAI ? FoodItemSource.aiText.icon : FoodItemSource.search
+                                .icon
                         )
                     )
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.secondary)
 
-                    ZStack(alignment: .trailing) {
-                        TextField(
-                            state
-                                .showSavedFoods ? "Search saved foods..." :
-                                (UserDefaults.standard.textSearchProvider.isAI ? "Ask AI..." : "Search foods..."),
-                            text: $state.foodSearchText
-                        )
-                        .font(.body)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                        .submitLabel(.search)
-                        .focused($isTextFieldFocused)
-                        .onSubmit {
-                            state.searchByText(query: state.foodSearchText)
+                    TextField(
+                        state
+                            .showSavedFoods ? "Search saved foods..." :
+                            (UserDefaults.standard.textSearchProvider.isAI ? "Ask AI..." : "Search foods..."),
+                        text: $state.foodSearchText
+                    )
+                    .font(.body)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .submitLabel(.search)
+                    .focused($isTextFieldFocused)
+                    .onSubmit {
+                        state.searchByText(query: state.foodSearchText)
+                        state.showingFoodSearch = true
+                    }
+                    .onChange(of: isTextFieldFocused) { _, newValue in
+                        if newValue {
                             state.showingFoodSearch = true
                         }
-                        .onChange(of: isTextFieldFocused) { _, newValue in
-                            if newValue {
-                                state.showingFoodSearch = true
-                            }
-                        }
-                        .onChange(of: state.foodSearchText) { _, newValue in
-                            // Update the saved foods filter text
-                            state.filterText = newValue
-                        }
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
-                                Button {
-                                    isTextFieldFocused = false
-                                } label: {
-                                    Image(systemName: "keyboard.chevron.compact.down")
-                                        .font(.body.weight(.semibold))
-                                        .foregroundStyle(.blue)
-                                }
-                            }
-                        }
+                    }
+                    .onChange(of: state.foodSearchText) { _, newValue in
+                        // Update the saved foods filter text
+                        state.filterText = newValue
                     }
 
                     // Clear button
@@ -157,7 +144,7 @@ struct FoodSearchView: View {
                                     state.showManualEntry = true
                                     state.showingFoodSearch = true
                                 } label: {
-                                    Image(systemName: "list.bullet.clipboard")
+                                    Image(systemName: FoodItemSource.manual.icon)
                                         .font(.system(size: 20, weight: .medium))
                                         .foregroundColor(.green)
                                         .frame(width: 46, height: 46)
@@ -174,7 +161,7 @@ struct FoodSearchView: View {
                                     state.showSavedFoods = true
                                     state.showingFoodSearch = true
                                 } label: {
-                                    Image(systemName: "archivebox.fill")
+                                    Image(systemName: FoodItemSource.database.icon)
                                         .font(.system(size: 20, weight: .medium))
                                         .foregroundColor(.orange)
                                         .frame(width: 46, height: 46)
@@ -190,7 +177,7 @@ struct FoodSearchView: View {
                                 state.showingFoodSearch = true
                                 state.foodSearchRoute = .barcodeScanner
                             } label: {
-                                Image(systemName: "barcode.viewfinder")
+                                Image(systemName: FoodItemSource.barcode.icon)
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.blue)
                                     .frame(width: 46, height: 46)
@@ -234,6 +221,21 @@ struct FoodSearchView: View {
                                     selection: $selectedPhotoItem,
                                     matching: .images
                                 )
+                        }
+                    }
+                }
+            }
+            .toolbar {
+                // Only show toolbar when search field is focused
+                if isTextFieldFocused {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button {
+                            isTextFieldFocused = false
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down")
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(.blue)
                         }
                     }
                 }

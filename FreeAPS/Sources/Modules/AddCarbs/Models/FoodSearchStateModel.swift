@@ -377,4 +377,49 @@ final class FoodSearchStateModel: ObservableObject {
             searchResultsState.searchResults.insert(targetGroup, at: 0)
         }
     }
+
+    /// Updates an existing food item in the search results (typically used for manual entries)
+    /// The edited item must have the same ID as the original item
+    @MainActor func updateItem(_ editedItem: FoodItemDetailed) {
+        // Find which group contains this item
+        guard let groupIndex = searchResultsState.searchResults.firstIndex(where: { group in
+            group.foodItemsDetailed.contains(where: { $0.id == editedItem.id })
+        }) else {
+            return
+        }
+
+        var updatedGroup = searchResultsState.searchResults[groupIndex]
+
+        // Replace the food item in the group
+        guard let itemIndex = updatedGroup.foodItemsDetailed.firstIndex(where: { $0.id == editedItem.id }) else {
+            return
+        }
+
+        var updatedItems = updatedGroup.foodItemsDetailed
+        updatedItems[itemIndex] = editedItem
+
+        // Create updated group with the same metadata
+        updatedGroup = FoodItemGroup(
+            foodItemsDetailed: updatedItems,
+            briefDescription: updatedGroup.briefDescription,
+            overallDescription: updatedGroup.overallDescription,
+            diabetesConsiderations: updatedGroup.diabetesConsiderations,
+            source: updatedGroup.source,
+            barcode: updatedGroup.barcode,
+            textQuery: updatedGroup.textQuery
+        )
+
+        // Update the group in search results
+        searchResultsState.searchResults[groupIndex] = updatedGroup
+
+        // Also update the portion in editedItems to match the edited item's current portion
+        let newPortion: Decimal
+        switch editedItem.nutrition {
+        case .per100:
+            newPortion = editedItem.portionSize ?? 100
+        case .perServing:
+            newPortion = editedItem.servingsMultiplier ?? 1
+        }
+        searchResultsState.updatePortion(for: editedItem, to: newPortion)
+    }
 }

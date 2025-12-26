@@ -526,7 +526,7 @@ struct SearchResultsView: View {
                                 }
                             }) {
                                 CapabilityCard(
-                                    icon: "archivebox.fill",
+                                    icon: FoodItemSource.database.icon,
                                     iconColor: .orange,
                                     title: "Saved Foods",
                                     description: "Quick access to your frequently used foods",
@@ -536,17 +536,17 @@ struct SearchResultsView: View {
                             .buttonStyle(.plain)
                         } else {
                             CapabilityCard(
-                                icon: "archivebox.fill",
+                                icon: FoodItemSource.database.icon,
                                 iconColor: .orange,
                                 title: "Saved Foods",
-                                description: "No saved foods yet",
+                                description: "No saved foods",
                                 isDisabled: true
                             )
                         }
                     }
 
                     CapabilityCard(
-                        icon: "text.magnifyingglass",
+                        icon: FoodItemSource.aiText.icon,
                         iconColor: .blue,
                         title: "Text Search",
                         description: "Search databases or describe food for AI analysis",
@@ -558,7 +558,7 @@ struct SearchResultsView: View {
                         state.foodSearchRoute = .barcodeScanner
                     }) {
                         CapabilityCard(
-                            icon: "barcode.viewfinder",
+                            icon: FoodItemSource.barcode.icon,
                             iconColor: .blue,
                             title: "Barcode Scanner",
                             description: "Scan packaged foods for nutrition information",
@@ -586,7 +586,7 @@ struct SearchResultsView: View {
                         state.showManualEntry = true
                     }) {
                         CapabilityCard(
-                            icon: "list.bullet.clipboard",
+                            icon: FoodItemSource.manual.icon,
                             iconColor: .green,
                             title: "Manual Entry",
                             description: "Enter nutrition information manually",
@@ -703,6 +703,7 @@ private struct FoodItemEditorSheet: View {
     let title: String
     let onSave: (FoodItemDetailed) -> Void
     let onCancel: () -> Void
+    let allowServingMultiplierEdit: Bool
 
     @State private var nutritionMode: NutritionEntryMode = .perServing
     @State private var portionSizeOrMultiplier: Decimal = 1
@@ -714,8 +715,20 @@ private struct FoodItemEditorSheet: View {
     @State private var editedSugars: Decimal?
     @State private var editedServingSize: Decimal?
     @State private var editedCalories: Decimal?
-    @State private var hasManuallyEditedCalories: Bool = false
     @State private var sliderMultiplier: Double = 1.0
+
+    @FocusState private var focusedField: NutritionField?
+
+    enum NutritionField: Hashable {
+        case carbs
+        case protein
+        case fat
+        case fiber
+        case sugars
+        case servingSize
+        case calories
+        case name
+    }
 
     enum NutritionEntryMode: String, CaseIterable, Hashable {
         case perServing = "Per Serving"
@@ -759,12 +772,14 @@ private struct FoodItemEditorSheet: View {
     init(
         existingItem: FoodItemDetailed?,
         title: String? = nil,
+        allowServingMultiplierEdit: Bool = false,
         onSave: @escaping (FoodItemDetailed) -> Void,
         onCancel: @escaping () -> Void
     ) {
         self.existingItem = existingItem
         // Use provided title, or default based on whether editing existing item
         self.title = title ?? (existingItem != nil ? "Edit Food" : "Add Food Manually")
+        self.allowServingMultiplierEdit = allowServingMultiplierEdit
         self.onSave = onSave
         self.onCancel = onCancel
 
@@ -783,7 +798,6 @@ private struct FoodItemEditorSheet: View {
                 _editedFiber = State(initialValue: values.fiber)
                 _editedSugars = State(initialValue: values.sugars)
                 _editedCalories = State(initialValue: values.calories)
-                _hasManuallyEditedCalories = State(initialValue: values.calories != nil)
                 _portionSizeOrMultiplier = State(initialValue: item.portionSize ?? 100)
                 _sliderMultiplier = State(initialValue: Double(item.portionSize ?? 100))
 
@@ -795,7 +809,6 @@ private struct FoodItemEditorSheet: View {
                 _editedFiber = State(initialValue: values.fiber)
                 _editedSugars = State(initialValue: values.sugars)
                 _editedCalories = State(initialValue: values.calories)
-                _hasManuallyEditedCalories = State(initialValue: values.calories != nil)
                 _portionSizeOrMultiplier = State(initialValue: item.servingsMultiplier ?? 1)
                 _sliderMultiplier = State(initialValue: Double(item.servingsMultiplier ?? 1))
             }
@@ -860,16 +873,8 @@ private struct FoodItemEditorSheet: View {
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
                     .padding(.top, 16)
-                    .onChange(of: nutritionMode) { _, newMode in
-                        // Reset portion/multiplier when switching modes
-                        switch newMode.nutritionType {
-                        case .perServing:
-                            portionSizeOrMultiplier = 1
-                            sliderMultiplier = 1.0
-                        case .per100:
-                            portionSizeOrMultiplier = 100
-                            sliderMultiplier = 100.0
-                        }
+                    .onChange(of: nutritionMode) { oldMode, newMode in
+                        handleNutritionModeChange(from: oldMode, to: newMode)
                     }
                 }
 
@@ -884,12 +889,13 @@ private struct FoodItemEditorSheet: View {
                     editedSugars: $editedSugars,
                     editedServingSize: $editedServingSize,
                     editedCalories: $editedCalories,
-                    hasManuallyEditedCalories: $hasManuallyEditedCalories
+                    allowServingMultiplierEdit: allowServingMultiplierEdit,
+                    focusedField: $focusedField
                 )
 
                 // Editable food name at bottom
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Food Name (Optional)")
+                    Text("Food Name")
                         .font(.caption)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
@@ -899,6 +905,7 @@ private struct FoodItemEditorSheet: View {
                         .font(.body)
                         .textFieldStyle(.roundedBorder)
                         .padding(.horizontal)
+                        .focused($focusedField, equals: .name)
                 }
                 .padding(.top, 12)
                 .padding(.bottom, 8)
@@ -930,25 +937,102 @@ private struct FoodItemEditorSheet: View {
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                // Only show keyboard toolbar when a field is actually focused
+                if focusedField != nil {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button {
+                            focusedField = nil
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down")
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                }
+            }
+        }
+        // Ensure keyboard dismisses when sheet loses focus
+        .onDisappear {
+            focusedField = nil
         }
     }
 
-    private func saveFoodItem() {
-        // Only use manually edited calories if the user actually entered a value
-        // Otherwise, don't save calories (let it be calculated dynamically)
-        let finalCalories: Decimal?
-        if hasManuallyEditedCalories, let manualCalories = editedCalories, manualCalories > 0 {
-            finalCalories = manualCalories
-        } else {
-            finalCalories = nil
+    private func handleNutritionModeChange(from oldMode: NutritionEntryMode, to newMode: NutritionEntryMode) {
+        // Skip if modes are the same
+        guard oldMode.nutritionType != newMode.nutritionType else {
+            return
         }
 
+        switch (oldMode.nutritionType, newMode.nutritionType) {
+        case (.per100, .perServing):
+            // Switching from per100 to perServing
+            // Calculate new per-serving values based on current portion size
+            let currentPortionSize = portionSizeOrMultiplier
+            let scaleFactor = currentPortionSize / 100
+
+            editedCarbs = round(editedCarbs * scaleFactor, to: 1)
+            editedProtein = round(editedProtein * scaleFactor, to: 1)
+            editedFat = round(editedFat * scaleFactor, to: 1)
+            editedFiber = editedFiber.map { round($0 * scaleFactor, to: 1) }
+            editedSugars = editedSugars.map { round($0 * scaleFactor, to: 1) }
+
+            // Scale calories if they exist
+            editedCalories = editedCalories.map { round($0 * scaleFactor, to: 0) }
+
+            // Set serving size to current portion size
+            editedServingSize = currentPortionSize
+
+            // Set multiplier to 1 (always for perServing mode in this context)
+            portionSizeOrMultiplier = 1
+            sliderMultiplier = 1.0
+
+        case (.perServing, .per100):
+            // Switching from perServing to per100
+            if let servingSize = editedServingSize, servingSize > 0 {
+                // We have a serving size - do reverse conversion
+                let scaleFactor = 100 / servingSize
+
+                editedCarbs = round(editedCarbs * scaleFactor, to: 1)
+                editedProtein = round(editedProtein * scaleFactor, to: 1)
+                editedFat = round(editedFat * scaleFactor, to: 1)
+                editedFiber = editedFiber.map { round($0 * scaleFactor, to: 1) }
+                editedSugars = editedSugars.map { round($0 * scaleFactor, to: 1) }
+
+                // Scale calories if they exist
+                editedCalories = editedCalories.map { round($0 * scaleFactor, to: 0) }
+
+                // Set portion size to the serving size
+                portionSizeOrMultiplier = servingSize
+                sliderMultiplier = Double(servingSize)
+            } else {
+                // No serving size available - just set default portion size
+                portionSizeOrMultiplier = 100
+                sliderMultiplier = 100.0
+            }
+
+        default:
+            // Handle switches between per100g and per100ml (same nutrition type)
+            break
+        }
+    }
+
+    // Helper function to round Decimal to specified number of decimal places
+    private func round(_ value: Decimal, to places: Int) -> Decimal {
+        var rounded = value
+        var result = Decimal()
+        NSDecimalRound(&result, &rounded, places, .plain)
+        return result
+    }
+
+    private func saveFoodItem() {
         // Use auto-generated name if user hasn't entered one
         let finalName = editedName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?
             autoGeneratedName() : editedName
 
         let nutritionValues = NutritionValues(
-            calories: finalCalories,
+            calories: editedCalories,
             carbs: editedCarbs,
             fat: editedFat,
             fiber: editedFiber,
@@ -1044,6 +1128,10 @@ private struct FoodItemEditorSheet: View {
 
         onSave(foodItem)
     }
+
+    private func endEditing() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
 
 // MARK: - Food Item Nutrition Editor
@@ -1059,20 +1147,10 @@ private struct FoodItemNutritionEditor: View {
     @Binding var editedSugars: Decimal?
     @Binding var editedServingSize: Decimal?
     @Binding var editedCalories: Decimal?
-    @Binding var hasManuallyEditedCalories: Bool
+    let allowServingMultiplierEdit: Bool
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
 
     @State private var showAllNutrients: Bool = false
-    @FocusState private var focusedField: Field?
-
-    enum Field: Hashable {
-        case carbs
-        case protein
-        case fat
-        case fiber
-        case sugars
-        case servingSize
-        case calories
-    }
 
     init(
         nutritionMode: Binding<FoodItemEditorSheet.NutritionEntryMode>,
@@ -1085,7 +1163,8 @@ private struct FoodItemNutritionEditor: View {
         editedSugars: Binding<Decimal?>,
         editedServingSize: Binding<Decimal?>,
         editedCalories: Binding<Decimal?>,
-        hasManuallyEditedCalories: Binding<Bool>
+        allowServingMultiplierEdit: Bool = false,
+        focusedField: FocusState<FoodItemEditorSheet.NutritionField?>.Binding
     ) {
         _nutritionMode = nutritionMode
         _portionSizeOrMultiplier = portionSizeOrMultiplier
@@ -1097,13 +1176,14 @@ private struct FoodItemNutritionEditor: View {
         _editedSugars = editedSugars
         _editedServingSize = editedServingSize
         _editedCalories = editedCalories
-        _hasManuallyEditedCalories = hasManuallyEditedCalories
+        self.allowServingMultiplierEdit = allowServingMultiplierEdit
+        _focusedField = focusedField
 
         // Auto-expand if there are optional nutrients
         let hasOptionalNutrients = (editedFiber.wrappedValue != nil && editedFiber.wrappedValue! > 0) ||
             (editedSugars.wrappedValue != nil && editedSugars.wrappedValue! > 0) ||
             (editedServingSize.wrappedValue != nil && editedServingSize.wrappedValue! > 0) ||
-            hasManuallyEditedCalories.wrappedValue
+            (editedCalories.wrappedValue != nil && editedCalories.wrappedValue! > 0)
 
         _showAllNutrients = State(initialValue: hasOptionalNutrients)
     }
@@ -1123,8 +1203,10 @@ private struct FoodItemNutritionEditor: View {
 
     // Use manually edited calories if available, otherwise use calculated
     private var displayedCalories: Decimal {
-        if hasManuallyEditedCalories, let manualCalories = editedCalories {
-            return manualCalories
+        // If we have a calories value (whether from food item or manual entry), use it
+        // Only fall back to calculated if there's no value at all
+        if let calories = editedCalories {
+            return calories
         } else {
             return calculatedCalories
         }
@@ -1170,37 +1252,42 @@ private struct FoodItemNutritionEditor: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 // Portion Size/Multiplier Slider
-                VStack(spacing: 12) {
-                    switch nutritionType {
-                    case .per100:
-                        Text("\(Double(portionSizeOrMultiplier), specifier: "%.0f") \(nutritionMode.unit.localizedAbbreviation)")
+                // Show for per100 mode always, or for perServing mode when allowServingMultiplierEdit is true
+                if nutritionType == .per100 || (nutritionType == .perServing && allowServingMultiplierEdit) {
+                    VStack(spacing: 12) {
+                        switch nutritionType {
+                        case .per100:
+                            Text(
+                                "\(Double(portionSizeOrMultiplier), specifier: "%.0f") \(nutritionMode.unit.localizedAbbreviation)"
+                            )
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(.orange)
-                    case .perServing:
-                        Text("\(Double(portionSizeOrMultiplier), specifier: "%.2f")×")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(.orange)
-                    }
-
-                    Slider(value: $sliderMultiplier, in: sliderRange, step: sliderStep)
-                        .tint(.orange)
-                        .padding(.horizontal)
-                        .onChange(of: sliderMultiplier) { _, newValue in
-                            portionSizeOrMultiplier = Decimal(newValue)
+                        case .perServing:
+                            Text("\(Double(portionSizeOrMultiplier), specifier: "%.2f")× servings")
+                                .font(.system(size: 28, weight: .bold))
+                                .foregroundColor(.orange)
                         }
 
-                    HStack {
-                        Text(sliderMinLabel)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text(sliderMaxLabel)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                        Slider(value: $sliderMultiplier, in: sliderRange, step: sliderStep)
+                            .tint(.orange)
+                            .padding(.horizontal)
+                            .onChange(of: sliderMultiplier) { _, newValue in
+                                portionSizeOrMultiplier = Decimal(newValue)
+                            }
+
+                        HStack {
+                            Text(sliderMinLabel)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            Text(sliderMaxLabel)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
+                    .padding(.vertical, 8)
                 }
-                .padding(.vertical, 8)
 
                 // Nutrition Table with Editable values
                 VStack(spacing: 8) {
@@ -1213,7 +1300,7 @@ private struct FoodItemNutritionEditor: View {
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
-                            .frame(width: 75, alignment: .trailing)
+                            .frame(width: 95, alignment: .trailing)
 
                         Text(nutritionType == .perServing ? "Per serving" : "Per 100\(nutritionMode.unit.localizedAbbreviation)")
                             .font(.caption)
@@ -1232,14 +1319,8 @@ private struct FoodItemNutritionEditor: View {
                         baseValue: $editedCarbs,
                         unit: "g",
                         focusedField: $focusedField,
-                        field: .carbs
+                        fieldTag: .carbs
                     )
-                    .onChange(of: editedCarbs) { _, _ in
-                        // Reset manual calories flag when macros change (unless user is actively editing calories)
-                        if focusedField != .calories {
-                            hasManuallyEditedCalories = false
-                        }
-                    }
                     Divider()
                     FoodItemNutritionRow(
                         label: "Protein",
@@ -1247,13 +1328,8 @@ private struct FoodItemNutritionEditor: View {
                         baseValue: $editedProtein,
                         unit: "g",
                         focusedField: $focusedField,
-                        field: .protein
+                        fieldTag: .protein
                     )
-                    .onChange(of: editedProtein) { _, _ in
-                        if focusedField != .calories {
-                            hasManuallyEditedCalories = false
-                        }
-                    }
                     Divider()
                     FoodItemNutritionRow(
                         label: "Fat",
@@ -1261,13 +1337,8 @@ private struct FoodItemNutritionEditor: View {
                         baseValue: $editedFat,
                         unit: "g",
                         focusedField: $focusedField,
-                        field: .fat
+                        fieldTag: .fat
                     )
-                    .onChange(of: editedFat) { _, _ in
-                        if focusedField != .calories {
-                            hasManuallyEditedCalories = false
-                        }
-                    }
 
                     // Optional nutrients
                     if showAllNutrients {
@@ -1279,13 +1350,9 @@ private struct FoodItemNutritionEditor: View {
                             baseValue: $editedCalories,
                             calculatedValue: calculatedCalories,
                             unit: "kcal",
+                            isCalculated: editedCalories == nil,
                             focusedField: $focusedField,
-                            field: .calories,
-                            isCalculated: !hasManuallyEditedCalories,
-                            onValueChanged: { newValue in
-                                // Only mark as manually edited if user actually entered a value
-                                hasManuallyEditedCalories = (newValue != nil && newValue! > 0)
-                            }
+                            fieldTag: .calories
                         )
 
                         Divider()
@@ -1298,7 +1365,7 @@ private struct FoodItemNutritionEditor: View {
                             ),
                             unit: "g",
                             focusedField: $focusedField,
-                            field: .fiber
+                            fieldTag: .fiber
                         )
 
                         Divider()
@@ -1311,7 +1378,7 @@ private struct FoodItemNutritionEditor: View {
                             ),
                             unit: "g",
                             focusedField: $focusedField,
-                            field: .sugars
+                            fieldTag: .sugars
                         )
 
                         Divider()
@@ -1322,7 +1389,7 @@ private struct FoodItemNutritionEditor: View {
                             ),
                             unit: nutritionMode.unit.localizedAbbreviation,
                             focusedField: $focusedField,
-                            field: .servingSize
+                            fieldTag: .servingSize
                         )
                     }
 
@@ -1358,6 +1425,7 @@ private struct FoodItemNutritionEditor: View {
             }
             .padding(.vertical)
         }
+        .scrollDismissesKeyboard(.immediately)
     }
 
     private func calculatePortionValue(baseValue: Decimal) -> Decimal {
@@ -1368,6 +1436,12 @@ private struct FoodItemNutritionEditor: View {
             return baseValue * portionSizeOrMultiplier
         }
     }
+
+    private func endEditing() {
+        #if canImport(UIKit)
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        #endif
+    }
 }
 
 // Helper view for food item nutrition rows
@@ -1376,11 +1450,32 @@ private struct FoodItemNutritionRow: View {
     let portionValue: Decimal
     @Binding var baseValue: Decimal
     let unit: String
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
+    let fieldTag: FoodItemEditorSheet.NutritionField
 
-    var focusedField: FocusState<FoodItemNutritionEditor.Field?>.Binding
-    let field: FoodItemNutritionEditor.Field
+    @State private var textValue: String = ""
 
-    @State private var editText: String = ""
+    private var textBinding: Binding<String> {
+        Binding(
+            get: {
+                // When focused or if there's text, use the text value
+                // Otherwise show empty for 0 values
+                if textValue.isEmpty, baseValue == 0 {
+                    return ""
+                }
+                return textValue
+            },
+            set: { newValue in
+                textValue = newValue
+                // Convert to Decimal, treating empty as 0
+                if let decimal = Decimal(string: newValue) {
+                    baseValue = decimal
+                } else if newValue.isEmpty {
+                    baseValue = 0
+                }
+            }
+        )
+    }
 
     var body: some View {
         HStack(spacing: 8) {
@@ -1400,26 +1495,30 @@ private struct FoodItemNutritionRow: View {
                     .foregroundColor(.secondary.opacity(0.7))
                     .frame(width: 28, alignment: .leading)
             }
-            .frame(width: 75, alignment: .trailing)
+            .frame(width: 95, alignment: .trailing)
 
-            // Base value (editable)
+            // Base value (editable) - wrapped with keyboard dismissal
             HStack(spacing: 4) {
-                TextField("0", text: $editText)
+                TextField("0", text: textBinding)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
-                    .textFieldStyle(.roundedBorder)
-                    .focused(focusedField, equals: field)
-                    .onChange(of: editText) { _, newValue in
-                        if newValue.isEmpty {
-                            baseValue = 0
-                        } else if let decimal = Decimal(string: newValue) {
-                            baseValue = decimal
+                    .focused($focusedField, equals: fieldTag)
+                    .onAppear {
+                        // Initialize text value from baseValue
+                        if baseValue > 0 {
+                            textValue = String(describing: baseValue)
                         }
                     }
-                    .onAppear {
-                        editText = baseValue > 0 ? "\(baseValue)" : ""
+                    .onChange(of: baseValue) { _, newValue in
+                        // Update text when baseValue changes externally
+                        if newValue > 0 {
+                            textValue = String(describing: newValue)
+                        } else {
+                            textValue = ""
+                        }
                     }
 
                 Text(unit)
@@ -1442,14 +1541,33 @@ private struct FoodItemCaloriesRow: View {
     @Binding var baseValue: Decimal?
     let calculatedValue: Decimal
     let unit: String
-
-    var focusedField: FocusState<FoodItemNutritionEditor.Field?>.Binding
-    let field: FoodItemNutritionEditor.Field
-
     let isCalculated: Bool
-    let onValueChanged: (Decimal?) -> Void
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
+    let fieldTag: FoodItemEditorSheet.NutritionField
 
-    @State private var editText: String = ""
+    @State private var textValue: String = ""
+
+    private var textBinding: Binding<String> {
+        Binding(
+            get: {
+                // When there's text, use it
+                // Otherwise show empty for nil/0 values
+                if textValue.isEmpty, baseValue == nil || baseValue == 0 {
+                    return ""
+                }
+                return textValue
+            },
+            set: { newValue in
+                textValue = newValue
+                // Convert to Decimal, treating empty as nil
+                if let decimal = Decimal(string: newValue), decimal > 0 {
+                    baseValue = decimal
+                } else if newValue.isEmpty {
+                    baseValue = nil
+                }
+            }
+        )
+    }
 
     var body: some View {
         HStack(spacing: 8) {
@@ -1469,7 +1587,7 @@ private struct FoodItemCaloriesRow: View {
 
             // Per portion value (calculated, read-only)
             HStack(spacing: 2) {
-                Text("\(Double(portionValue), specifier: "%.1f")")
+                Text("\(Int(truncating: portionValue as NSNumber))")
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.primary)
@@ -1478,34 +1596,32 @@ private struct FoodItemCaloriesRow: View {
                     .foregroundColor(.secondary.opacity(0.7))
                     .frame(width: 28, alignment: .leading)
             }
-            .frame(width: 75, alignment: .trailing)
+            .frame(width: 95, alignment: .trailing)
 
-            // Base value (editable)
+            // Base value (editable) - wrapped with keyboard dismissal
             HStack(spacing: 4) {
                 TextField(
                     calculatedValue > 0 ? "\(Int(truncating: calculatedValue as NSNumber))" : "0",
-                    text: $editText
+                    text: textBinding
                 )
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .keyboardType(.decimalPad)
-                .multilineTextAlignment(.trailing)
                 .textFieldStyle(.roundedBorder)
-                .focused(focusedField, equals: field)
-                .onChange(of: editText) { _, newValue in
-                    if newValue.isEmpty {
-                        baseValue = nil
-                        onValueChanged(nil)
-                    } else if let decimal = Decimal(string: newValue) {
-                        baseValue = decimal
-                        onValueChanged(decimal)
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.trailing)
+                .focused($focusedField, equals: fieldTag)
+                .onAppear {
+                    // Initialize text value from baseValue
+                    if let value = baseValue, value > 0 {
+                        textValue = String(Int(truncating: value as NSNumber))
                     }
                 }
-                .onAppear {
-                    if let value = baseValue, value > 0 {
-                        editText = "\(value)"
+                .onChange(of: baseValue) { _, newValue in
+                    // Update text when baseValue changes externally
+                    if let value = newValue, value > 0 {
+                        textValue = String(Int(truncating: value as NSNumber))
                     } else {
-                        editText = ""
+                        textValue = ""
                     }
                 }
 
@@ -1526,11 +1642,32 @@ private struct FoodItemCaloriesRow: View {
 private struct FoodItemServingSizeRow: View {
     @Binding var servingSize: Decimal
     let unit: String
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
+    let fieldTag: FoodItemEditorSheet.NutritionField
 
-    var focusedField: FocusState<FoodItemNutritionEditor.Field?>.Binding
-    let field: FoodItemNutritionEditor.Field
+    @State private var textValue: String = ""
 
-    @State private var editText: String = ""
+    private var textBinding: Binding<String> {
+        Binding(
+            get: {
+                // When there's text, use it
+                // Otherwise show empty for 0 values
+                if textValue.isEmpty, servingSize == 0 {
+                    return ""
+                }
+                return textValue
+            },
+            set: { newValue in
+                textValue = newValue
+                // Convert to Decimal, treating empty as 0
+                if let decimal = Decimal(string: newValue), decimal > 0 {
+                    servingSize = decimal
+                } else if newValue.isEmpty {
+                    servingSize = 0
+                }
+            }
+        )
+    }
 
     var body: some View {
         HStack(spacing: 8) {
@@ -1541,26 +1678,30 @@ private struct FoodItemServingSizeRow: View {
 
             // Empty space for "per portion" column
             Spacer()
-                .frame(width: 75, alignment: .trailing)
+                .frame(width: 95, alignment: .trailing)
 
-            // Serving size value (editable)
+            // Serving size value (editable) - wrapped with keyboard dismissal
             HStack(spacing: 4) {
-                TextField("optional", text: $editText)
+                TextField("optional", text: textBinding)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
-                    .textFieldStyle(.roundedBorder)
-                    .focused(focusedField, equals: field)
-                    .onChange(of: editText) { _, newValue in
-                        if newValue.isEmpty {
-                            servingSize = 0
-                        } else if let decimal = Decimal(string: newValue) {
-                            servingSize = decimal
+                    .focused($focusedField, equals: fieldTag)
+                    .onAppear {
+                        // Initialize text value from servingSize
+                        if servingSize > 0 {
+                            textValue = String(describing: servingSize)
                         }
                     }
-                    .onAppear {
-                        editText = servingSize > 0 ? "\(servingSize)" : ""
+                    .onChange(of: servingSize) { _, newValue in
+                        // Update text when servingSize changes externally
+                        if newValue > 0 {
+                            textValue = String(describing: newValue)
+                        } else {
+                            textValue = ""
+                        }
                     }
 
                 Text(unit)
@@ -1683,25 +1824,25 @@ private struct TimePickerSheet: View {
     }
 }
 
-private extension FoodItemSource {
+extension FoodItemSource {
     var icon: String {
         switch self {
         case .aiPhoto:
-            return "photo"
+            return "camera.viewfinder"
         case .aiMenu:
-            return "menucard" // TODO: better icon?
+            return "list.clipboard"
         case .aiReceipe:
-            return "book.pages" // TODO: better icon?
+            return "book.fill"
         case .aiText:
-            return "text.bubble"
+            return "character.bubble"
         case .search:
-            return "magnifyingglass"
+            return "magnifyingglass.circle"
         case .barcode:
             return "barcode.viewfinder"
         case .manual:
-            return "list.bullet.clipboard"
+            return "square.and.pencil"
         case .database:
-            return "archivebox.fill" // TODO: better icon?
+            return "archivebox.fill"
         }
     }
 }
@@ -1739,7 +1880,6 @@ private extension FoodItemGroup {
                 "AI Results",
                 comment: "Section with AI food analysis results, when details are unavailable"
             )
-        case nil: ""
         }
     }
 }
@@ -2018,6 +2158,7 @@ private struct FoodItemGroupListSection: View {
                                     }
                                 },
                                 onPersist: onPersist,
+                                onUpdate: state.updateItem,
                                 savedFoodIds: savedFoodIds,
                                 isFirst: index == 0,
                                 isLast: index == analysisResult.foodItemsDetailed.count - 1
@@ -2614,12 +2755,14 @@ struct FoodItemRow: View {
     let onPortionChange: ((Decimal) -> Void)?
     let onDelete: (() -> Void)?
     let onPersist: ((FoodItemDetailed) -> Void)?
+    let onUpdate: ((FoodItemDetailed) -> Void)?
     let savedFoodIds: Set<UUID>
     let isFirst: Bool
     let isLast: Bool
 
     @State private var showItemInfo = false
     @State private var showPortionAdjuster = false
+    @State private var showEditSheet = false
     @State private var sliderMultiplier: Double = 1.0
 
     private var isSaved: Bool {
@@ -2633,6 +2776,10 @@ struct FoodItemRow: View {
         case let .perServing(values):
             return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
         }
+    }
+
+    private var isManualEntry: Bool {
+        foodItem.source == .manual
     }
 
     var body: some View {
@@ -2687,10 +2834,18 @@ struct FoodItemRow: View {
             }
             .contextMenu {
                 if onPortionChange != nil {
-                    Button {
-                        showPortionAdjuster = true
-                    } label: {
-                        Label("Edit Portion", systemImage: "slider.horizontal.3")
+                    if isManualEntry {
+                        Button {
+                            showEditSheet = true
+                        } label: {
+                            Label("Edit Food", systemImage: "pencil")
+                        }
+                    } else {
+                        Button {
+                            showPortionAdjuster = true
+                        } label: {
+                            Label("Edit Portion", systemImage: "slider.horizontal.3")
+                        }
                     }
                 }
 
@@ -2725,31 +2880,47 @@ struct FoodItemRow: View {
             HStack(spacing: 6) {
                 switch foodItem.nutrition {
                 case .per100:
-                    if let carbs = foodItem.carbsInPortion(portion: portionSize) {
-                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                    }
-                    if let protein = foodItem.proteinInPortion(portion: portionSize), protein > 0 {
-                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                    }
-                    if let fat = foodItem.fatInPortion(portion: portionSize), fat > 0 {
-                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                    }
-                    if let calories = foodItem.caloriesInPortion(portion: portionSize), calories > 0 {
-                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                    }
+                    NutritionBadge(
+                        value: foodItem.carbsInPortion(portion: portionSize) ?? 0,
+                        label: "carbs",
+                        color: NutritionBadgeConfig.carbsColor
+                    )
+                    NutritionBadge(
+                        value: foodItem.proteinInPortion(portion: portionSize) ?? 0,
+                        label: "protein",
+                        color: NutritionBadgeConfig.proteinColor
+                    )
+                    NutritionBadge(
+                        value: foodItem.fatInPortion(portion: portionSize) ?? 0,
+                        label: "fat",
+                        color: NutritionBadgeConfig.fatColor
+                    )
+                    NutritionBadge(
+                        value: foodItem.caloriesInPortion(portion: portionSize) ?? 0,
+                        unit: "kcal",
+                        color: NutritionBadgeConfig.caloriesColor
+                    )
                 case .perServing:
-                    if let carbs = foodItem.carbsInServings(multiplier: portionSize) {
-                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                    }
-                    if let protein = foodItem.proteinInServings(multiplier: portionSize), protein > 0 {
-                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                    }
-                    if let fat = foodItem.fatInServings(multiplier: portionSize), fat > 0 {
-                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                    }
-                    if let calories = foodItem.caloriesInServings(multiplier: portionSize), calories > 0 {
-                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                    }
+                    NutritionBadge(
+                        value: foodItem.carbsInServings(multiplier: portionSize) ?? 0,
+                        label: "carbs",
+                        color: NutritionBadgeConfig.carbsColor
+                    )
+                    NutritionBadge(
+                        value: foodItem.proteinInServings(multiplier: portionSize) ?? 0,
+                        label: "protein",
+                        color: NutritionBadgeConfig.proteinColor
+                    )
+                    NutritionBadge(
+                        value: foodItem.fatInServings(multiplier: portionSize) ?? 0,
+                        label: "fat",
+                        color: NutritionBadgeConfig.fatColor
+                    )
+                    NutritionBadge(
+                        value: foodItem.caloriesInServings(multiplier: portionSize) ?? 0,
+                        unit: "kcal",
+                        color: NutritionBadgeConfig.caloriesColor
+                    )
                 }
             }
             .padding(.horizontal, 16)
@@ -2770,12 +2941,21 @@ struct FoodItemRow: View {
         }
         .when(onPortionChange != nil) { view in
             view.swipeActions(edge: .leading, allowsFullSwipe: true) {
-                Button {
-                    showPortionAdjuster = true
-                } label: {
-                    Label("Edit Portion", systemImage: "slider.horizontal.3")
+                if isManualEntry {
+                    Button {
+                        showEditSheet = true
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                    .tint(.orange)
+                } else {
+                    Button {
+                        showPortionAdjuster = true
+                    } label: {
+                        Label("Edit Portion", systemImage: "slider.horizontal.3")
+                    }
+                    .tint(.orange)
                 }
-                .tint(.orange)
             }
         }
         .when(onPortionChange != nil) { view in
@@ -2825,6 +3005,22 @@ struct FoodItemRow: View {
                 }())])
                 .presentationDragIndicator(.visible)
             }
+        }
+        .sheet(isPresented: $showEditSheet) {
+            FoodItemEditorSheet(
+                existingItem: foodItem,
+                title: "Edit Food",
+                allowServingMultiplierEdit: true, // Allow editing multiplier for foods in the main list
+                onSave: { editedItem in
+                    onUpdate?(editedItem)
+                    showEditSheet = false
+                },
+                onCancel: {
+                    showEditSheet = false
+                }
+            )
+            .presentationDetents([.height(600), .large])
+            .presentationDragIndicator(.visible)
         }
         .onChange(of: portionSize) { _, newValue in
             // Update multiplier when portion size changes externally
@@ -3475,6 +3671,7 @@ private struct FoodItemsSelectorItemRow: View {
             FoodItemEditorSheet(
                 existingItem: foodItem,
                 title: "Edit Saved Food",
+                allowServingMultiplierEdit: false, // Don't allow editing multiplier for saved foods
                 onSave: { editedItem in
                     onPersist?(editedItem)
                     showEditSheet = false
