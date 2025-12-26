@@ -73,9 +73,10 @@ struct BolusProgressViewStyle: View {
                     GeometryReader { geometry in
                         ZStack(alignment: .leading) {
                             Capsule()
+                                // Hintergrund blauer Insulinbalken
                                 .fill(
                                     colorScheme == .dark ?
-                                        Color(white: 0.3).opacity(0.8) :
+                                        Color(white: 0.4).opacity(0.9) :
                                         Color(white: 0.78).opacity(0.8)
                                 )
                                 .frame(height: 20)
