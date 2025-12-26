@@ -864,12 +864,13 @@ extension Home {
                     .ignoresSafeArea(edges: .vertical)
                     .overlay {
                         if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                            EnhancedBolusProgressBar(
+                            BolusProgressViewStyle(
                                 progress: progress,
                                 amount: amount,
                                 onCancel: { state.cancelBolus() }
                             ).frame(maxWidth: .infinity, alignment: .center)
-                                .offset(y: -100)
+                                .offset(y: -60)
+                                .padding(.horizontal, 20)
                         }
                     }
                     .onChange(of: scenePhase) {
