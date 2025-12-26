@@ -57,48 +57,6 @@ extension AddCarbs {
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
-        // Transform Presets to FoodItemDetailed
-        private func transformPresetsToFoodItems(_ presets: FetchedResults<Presets>) -> [FoodItemDetailed] {
-            presets.compactMap { preset -> FoodItemDetailed? in
-                guard let dish = preset.dish, !dish.isEmpty, dish != "Empty" else { return nil }
-
-                let carbs = (preset.carbs as Decimal?) ?? 0
-                let fat = (preset.fat as Decimal?) ?? 0
-                let protein = (preset.protein as Decimal?) ?? 0
-
-                let nutritionValues = NutritionValues(
-                    calories: (carbs * 4) + (protein * 4) + (fat * 9),
-                    carbs: carbs,
-                    fat: fat,
-                    fiber: nil,
-                    protein: protein,
-                    sugars: nil
-                )
-
-                return FoodItemDetailed(
-                    name: dish,
-                    nutritionPerServing: nutritionValues,
-                    servingsMultiplier: 1,
-                    units: .grams,
-                    source: .database
-                )
-            }
-        }
-
-        // Update savedFoods when presets change
-        private func updateSavedFoods() {
-            let foodItems = transformPresetsToFoodItems(carbPresets)
-            foodSearchState.savedFoods = FoodItemGroup(
-                foodItemsDetailed: foodItems,
-                briefDescription: nil,
-                overallDescription: nil,
-                diabetesConsiderations: nil,
-                source: .database,
-                barcode: nil,
-                textQuery: nil
-            )
-        }
-
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -128,6 +86,12 @@ extension AddCarbs {
                                     state.addAIFood(override, fetch: editMode, food: selectedFood, date: date)
                                 }
                             } : nil,
+                        onPersist: { food in
+                            saveOrUpdatePreset(food)
+                        },
+                        onDelete: { food in
+                            deletePreset(food)
+                        },
                         continueButtonLabelKey: (state.skipBolus && !override && !editMode) ? "Save" : "Continue",
                         hypoTreatmentButtonLabelKey: "Hypo Treatment"
                     )
@@ -172,6 +136,7 @@ extension AddCarbs {
             }
             .onAppear {
                 state.loadEntries(editMode)
+                addMissingFoodIDs()
                 updateSavedFoods() // Initialize savedFoods on appear
                 if !meal {
                     switch mode {
@@ -190,7 +155,7 @@ extension AddCarbs {
                     }
                 }
             }
-            .onChange(of: carbPresets.count) { _ in
+            .onChange(of: carbPresets.count) {
                 updateSavedFoods()
             }
         }
@@ -306,7 +271,7 @@ extension AddCarbs {
         }
 
         private var hasUnsavedFoodSearchResults: Bool {
-            foodSearchState.showingFoodSearch && foodSearchState.allFoodItems.isNotEmpty
+            foodSearchState.showingFoodSearch && foodSearchState.searchResultsState.nonDeletedItems.isNotEmpty
         }
 
         // MARK: - Helper Functions
@@ -338,38 +303,150 @@ extension AddCarbs {
             }
         }
 
+        // Transform Presets to FoodItemDetailed
+        private func transformPresetsToFoodItems(_ presets: FetchedResults<Presets>) -> [FoodItemDetailed] {
+            presets.compactMap { preset -> FoodItemDetailed? in
+                guard let foodName = preset.dish, !foodName.isEmpty, foodName != "Empty" else {
+                    return nil
+                }
+                guard let foodID = preset.foodID else {
+                    return nil
+                }
+                let mealUnits = preset.mealUnits.map { MealUnits(rawValue: $0) ?? .grams } ?? .grams
+                let nutritionPer100 = preset.per100
+
+                let carbs = (preset.carbs as Decimal?) ?? 0
+                let fat = (preset.fat as Decimal?) ?? 0
+                let protein = (preset.protein as Decimal?) ?? 0
+
+                let nutritionValues = NutritionValues(
+                    calories: preset.calories as Decimal?,
+                    carbs: carbs,
+                    fat: fat,
+                    fiber: preset.fiber as Decimal?,
+                    protein: protein,
+                    sugars: preset.sugars as Decimal?
+                )
+
+                if nutritionPer100 {
+                    return FoodItemDetailed(
+                        id: foodID,
+                        name: foodName,
+                        nutritionPer100: nutritionValues,
+                        portionSize: (preset.portionSize as Decimal?) ?? 100,
+                        standardServing: preset.standardServing,
+                        standardServingSize: preset.standardServingSize as Decimal?,
+                        units: mealUnits,
+                        glycemicIndex: preset.glycemicIndex as Decimal?,
+                        imageURL: preset.imageURL,
+                        source: .database
+                    )
+                } else {
+                    return FoodItemDetailed(
+                        id: foodID,
+                        name: foodName,
+                        nutritionPerServing: nutritionValues,
+                        servingsMultiplier: 1,
+                        standardServing: preset.standardServing,
+                        standardServingSize: preset.standardServingSize as Decimal?,
+                        units: mealUnits,
+                        glycemicIndex: preset.glycemicIndex as Decimal?,
+                        imageURL: preset.imageURL,
+                        source: .database
+                    )
+                }
+            }
+        }
+
+        private func addMissingFoodIDs() {
+            let noId = carbPresets.filter { $0.foodID == nil }
+            if noId.isNotEmpty {
+                for preset in noId {
+                    preset.foodID = UUID()
+                    print("adding id to preset: \(preset.dish) - \(preset.foodID)")
+                }
+                do {
+                    try moc.save()
+                } catch {
+                    print("Couldn't save presets after adding IDs: \(error.localizedDescription)")
+                }
+            }
+        }
+
+        // Update savedFoods when presets change
+        private func updateSavedFoods() {
+            let foodItems = transformPresetsToFoodItems(carbPresets)
+            foodSearchState.savedFoods = FoodItemGroup(
+                foodItemsDetailed: foodItems,
+                briefDescription: nil,
+                overallDescription: nil,
+                diabetesConsiderations: nil,
+                source: .database,
+                barcode: nil,
+                textQuery: nil
+            )
+        }
+
         // MARK: - Food Search Section
 
-//        private func addToPresetsIfNew(food: FoodItemDetailed) {
-//            let preset = Presets(context: moc)
-//            preset
-//                .carbs = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-//                (max(food.carbs * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
-//                max(food.carbs, 0) as NSDecimalNumber
-//            preset
-//                .fat = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-//                (max(food.fat * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
-//                max(food.fat, 0) as NSDecimalNumber
-//            preset
-//                .protein = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-//                (max(food.protein * (portionGrams / 100), 0).rounded(to: 1) as NSDecimalNumber) :
-//                max(food.protein, 0) as NSDecimalNumber
-//
-//            if portionGrams != 100.00001 {
-//                preset.dish = food.name + " \(portionGrams)g"
-//            } else {
-//                preset.dish = food.name
-//            }
-//
-//            if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
-//                do {
-//                    try moc.save()
-//                    state.selection = preset
-//                    state.addPresetToNewMeal()
-//                    selectedFoodItem = nil
-//                } catch { print("Couldn't save " + (preset.dish ?? "new preset.")) }
-//            }
-//        }
+        private func saveOrUpdatePreset(_ food: FoodItemDetailed) {
+            guard food.name.isNotEmpty else { return }
+
+            let existingPreset = carbPresets.first(where: { preset in
+                preset.foodID == food.id
+            })
+
+            let preset = existingPreset ?? Presets(context: moc)
+
+            preset.foodID = food.id
+            let foodNutrition: NutritionValues
+            switch food.nutrition {
+            case let .perServing(nutrition):
+                foodNutrition = nutrition
+                preset.per100 = false
+            case let .per100(nutrition):
+                foodNutrition = nutrition
+                preset.per100 = true
+            }
+
+            preset.portionSize = food.portionSize.map { NSDecimalNumber(decimal: max($0, 0)) }
+
+            preset.carbs = foodNutrition.carbs.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.fat = foodNutrition.fat.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.protein = foodNutrition.protein.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.fiber = foodNutrition.fiber.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.sugars = foodNutrition.sugars.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.calories = foodNutrition.calories.map { NSDecimalNumber(decimal: max($0, 0)) }
+
+            preset.glycemicIndex = food.glycemicIndex.map { NSDecimalNumber(decimal: $0) }
+            preset.standardServing = food.standardServing
+            preset.standardServingSize = food.standardServingSize.map { NSDecimalNumber(decimal: $0) }
+            preset.imageURL = food.imageURL
+            preset.mealUnits = (food.units ?? .grams).rawValue
+
+            preset.dish = food.name
+
+            do {
+                try moc.save()
+                updateSavedFoods()
+            } catch {
+                print("Couldn't save " + (preset.dish ?? "new preset."))
+            }
+        }
+
+        private func deletePreset(_ food: FoodItemDetailed) {
+            // Find preset by food ID
+            if let presetToDelete = carbPresets.first(where: { preset in
+                preset.foodID == food.id
+            }) {
+                moc.delete(presetToDelete)
+                do {
+                    try moc.save()
+                } catch {
+                    debug(.apsManager, "Couldn't delete meal preset for food: \(food.name).")
+                }
+            }
+        }
 
         private var empty: Bool {
             state.carbs <= 0 && state.fat <= 0 && state.protein <= 0

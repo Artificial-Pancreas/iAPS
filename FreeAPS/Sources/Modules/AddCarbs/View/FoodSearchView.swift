@@ -6,6 +6,8 @@ struct FoodSearchView: View {
     @ObservedObject var state: FoodSearchStateModel
     let onContinue: ([FoodItemDetailed], UIImage?, Date?) -> Void
     let onHypoTreatment: (([FoodItemDetailed], UIImage?, Date?) -> Void)?
+    let onPersist: (FoodItemDetailed) -> Void
+    let onDelete: (FoodItemDetailed) -> Void
     let continueButtonLabelKey: LocalizedStringKey
     let hypoTreatmentButtonLabelKey: LocalizedStringKey
 
@@ -19,6 +21,8 @@ struct FoodSearchView: View {
                 onHypoTreatment: onHypoTreatment != nil ? { totalMeal, selectedTime in
                     onHypoTreatment?(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
                 } : nil,
+                onPersist: onPersist,
+                onDelete: onDelete,
                 continueButtonLabelKey: continueButtonLabelKey,
                 hypoTreatmentButtonLabelKey: hypoTreatmentButtonLabelKey
             )
@@ -44,7 +48,6 @@ struct FoodSearchView: View {
                 AIProgressView(
                     state: state,
                     onCancel: {
-                        print("progress view - cancelled")
                         state.cancelSearchTask()
                     }
                 )

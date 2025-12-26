@@ -5,7 +5,8 @@ struct SearchResultsView: View {
     @ObservedObject var state: FoodSearchStateModel
     let onContinue: ([FoodItemDetailed], Date?) -> Void
     let onHypoTreatment: (([FoodItemDetailed], Date?) -> Void)?
-    let addButtonLabelKey: LocalizedStringKey = "" // TODO: not used currently
+    let onPersist: (FoodItemDetailed) -> Void
+    let onDelete: (FoodItemDetailed) -> Void
     let continueButtonLabelKey: LocalizedStringKey
     let hypoTreatmentButtonLabelKey: LocalizedStringKey
 
@@ -19,58 +20,6 @@ struct SearchResultsView: View {
 
     private var hasVisibleContent: Bool {
         state.searchResultsState.hasVisibleContent
-    }
-
-    private var totalCalories: Decimal {
-        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.searchResultsState.isDeleted(item) else { return sum }
-            let portion = state.searchResultsState.portionSize(for: item)
-            switch item.nutrition {
-            case .per100:
-                return sum + (item.caloriesInPortion(portion: portion) ?? 0)
-            case .perServing:
-                return sum + (item.caloriesInServings(multiplier: portion) ?? 0)
-            }
-        }
-    }
-
-    private var totalCarbs: Decimal {
-        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.searchResultsState.isDeleted(item) else { return sum }
-            let portion = state.searchResultsState.portionSize(for: item)
-            switch item.nutrition {
-            case .per100:
-                return sum + (item.carbsInPortion(portion: portion) ?? 0)
-            case .perServing:
-                return sum + (item.carbsInServings(multiplier: portion) ?? 0)
-            }
-        }
-    }
-
-    private var totalProtein: Decimal {
-        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.searchResultsState.isDeleted(item) else { return sum }
-            let portion = state.searchResultsState.portionSize(for: item)
-            switch item.nutrition {
-            case .per100:
-                return sum + (item.proteinInPortion(portion: portion) ?? 0)
-            case .perServing:
-                return sum + (item.proteinInServings(multiplier: portion) ?? 0)
-            }
-        }
-    }
-
-    private var totalFat: Decimal {
-        state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed).reduce(0) { sum, item in
-            guard !state.searchResultsState.isDeleted(item) else { return sum }
-            let portion = state.searchResultsState.portionSize(for: item)
-            switch item.nutrition {
-            case .per100:
-                return sum + (item.fatInPortion(portion: portion) ?? 0)
-            case .perServing:
-                return sum + (item.fatInServings(multiplier: portion) ?? 0)
-            }
-        }
     }
 
     var body: some View {
@@ -116,6 +65,21 @@ struct SearchResultsView: View {
 
                         Spacer()
 
+                        // Add New button
+                        Button(action: {
+                            state.showNewSavedFoodEntry = true
+                        }) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 16))
+                                Text("New")
+                                    .font(.body)
+                                    .fontWeight(.semibold)
+                            }
+                            .foregroundColor(.blue)
+                        }
+                        .padding(.trailing, 8)
+
                         // Done button
                         Button(action: {
                             withAnimation(.easeInOut(duration: 0.3)) {
@@ -141,24 +105,20 @@ struct SearchResultsView: View {
                         },
                         onFoodItemRemoved: { removedItem in
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                state.searchResultsState.hardDeleteItem(removedItem)
+                                state.searchResultsState.deleteItem(removedItem)
                             }
                         },
                         isItemAdded: { foodItem in
-                            let result = state.searchResultsState.nonDeletedItems.contains(where: { $0.id == foodItem.id })
-                            print("nonDeletedItems:")
-                            state.searchResultsState.nonDeletedItems.forEach {
-                                print("\($0)")
-                            }
-                            print("isItemAdded: \(foodItem) --> \(result)")
-                            return result
+                            state.searchResultsState.nonDeletedItems.contains(where: { $0.id == foodItem.id })
                         },
                         onDismiss: {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 state.showSavedFoods = false
                             }
                         },
-                        filterText: state.filterText
+                        filterText: state.filterText,
+                        onPersist: onPersist,
+                        onDelete: onDelete
                     )
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -174,8 +134,8 @@ struct SearchResultsView: View {
         }
         .onChange(of: state.searchResultsState.searchResults) {
             // Only clear undo state if we have new visible content
-            let hasNewVisibleContent = !state.searchResultsState.visibleSections.isEmpty &&
-                !state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed)
+            let hasNewVisibleContent = !state.searchResultsState.searchResults.isEmpty &&
+                !state.searchResultsState.searchResults.flatMap(\.foodItemsDetailed)
                 .filter { !state.searchResultsState.isDeleted($0) }.isEmpty
 
             if clearedResultsViewState != nil, hasNewVisibleContent {
@@ -202,7 +162,9 @@ struct SearchResultsView: View {
                     onDismiss: {
                         state.latestMultipleSelectSearch = nil
                     },
-                    useTransparentBackground: true
+                    useTransparentBackground: true,
+                    onPersist: nil,
+                    onDelete: nil
                 )
                 .navigationTitle(searchResult.textQuery == nil ? "Search Results" : "Results for '\(searchResult.textQuery!)'")
                 .navigationBarTitleDisplayMode(.inline)
@@ -220,12 +182,28 @@ struct SearchResultsView: View {
         .sheet(isPresented: $state.showManualEntry) {
             FoodItemEditorSheet(
                 existingItem: nil,
+                title: "Add Food Manually",
                 onSave: { foodItem in
                     state.addItem(foodItem, group: nil)
                     state.showManualEntry = false
                 },
                 onCancel: {
                     state.showManualEntry = false
+                }
+            )
+            .presentationDetents([.height(600), .large])
+            .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $state.showNewSavedFoodEntry) {
+            FoodItemEditorSheet(
+                existingItem: nil,
+                title: "Create Saved Food",
+                onSave: { foodItem in
+                    onPersist(foodItem)
+                    state.showNewSavedFoodEntry = false
+                },
+                onCancel: {
+                    state.showNewSavedFoodEntry = false
                 }
             )
             .presentationDetents([.height(600), .large])
@@ -264,7 +242,7 @@ struct SearchResultsView: View {
             if hasVisibleContent {
                 if let onHypoTreatment = self.onHypoTreatment {
                     Button(action: {
-                        let foodItems = state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed)
+                        let foodItems = state.searchResultsState.searchResults.flatMap(\.foodItemsDetailed)
                             .filter { !state.searchResultsState.isDeleted($0) }
                             .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
                         onHypoTreatment(foodItems, selectedTime)
@@ -277,13 +255,13 @@ struct SearchResultsView: View {
                             .padding(.vertical, 10)
                             .background(
                                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(Color.orange)
+                                    .fill(Color.orange.opacity(0.7))
                             )
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
                 Button(action: {
-                    let foodItems = state.searchResultsState.visibleSections.flatMap(\.foodItemsDetailed)
+                    let foodItems = state.searchResultsState.searchResults.flatMap(\.foodItemsDetailed)
                         .filter { !state.searchResultsState.isDeleted($0) }
                         .map { $0.withPortion(state.searchResultsState.portionSize(for: $0)) }
                     onContinue(foodItems, selectedTime)
@@ -340,41 +318,41 @@ struct SearchResultsView: View {
 
             HStack(spacing: 8) {
                 TotalNutritionBadge(
-                    value: totalCarbs,
+                    value: state.searchResultsState.totalCarbs,
                     label: "carbs",
                     color: NutritionBadgeConfig.carbsColor
                 )
-                .id("carbs-\(totalCarbs)")
+                .id("carbs-\(state.searchResultsState.totalCarbs)")
                 .transition(.scale.combined(with: .opacity))
 
                 TotalNutritionBadge(
-                    value: totalProtein,
+                    value: state.searchResultsState.totalProtein,
                     label: "protein",
                     color: NutritionBadgeConfig.proteinColor
                 )
-                .id("protein-\(totalProtein)")
+                .id("protein-\(state.searchResultsState.totalProtein)")
                 .transition(.scale.combined(with: .opacity))
 
                 TotalNutritionBadge(
-                    value: totalFat,
+                    value: state.searchResultsState.totalFat,
                     label: "fat",
                     color: NutritionBadgeConfig.fatColor
                 )
-                .id("fat-\(totalFat)")
+                .id("fat-\(state.searchResultsState.totalFat)")
                 .transition(.scale.combined(with: .opacity))
 
                 TotalNutritionBadge(
-                    value: totalCalories,
+                    value: state.searchResultsState.totalCalories,
                     label: "kcal",
                     color: NutritionBadgeConfig.caloriesColor
                 )
-                .id("calories-\(totalCalories)")
+                .id("calories-\(state.searchResultsState.totalCalories)")
                 .transition(.scale.combined(with: .opacity))
             }
-            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCarbs)
-            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalProtein)
-            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalFat)
-            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: totalCalories)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalCarbs)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalProtein)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalFat)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalCalories)
         }
         .padding(.bottom, 12)
         .background(
@@ -509,11 +487,12 @@ struct SearchResultsView: View {
     private var searchResultsView: some View {
         VStack(spacing: 0) {
             List {
-                ForEach(state.searchResultsState.visibleSections) { analysisResult in
+                ForEach(state.searchResultsState.searchResults) { analysisResult in
                     FoodItemGroupListSection(
                         analysisResult: analysisResult,
                         state: state,
-                        selectedTime: selectedTime
+                        selectedTime: selectedTime,
+                        onPersist: onPersist
                     )
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -721,10 +700,11 @@ private struct TipRow: View {
 
 private struct FoodItemEditorSheet: View {
     let existingItem: FoodItemDetailed?
+    let title: String
     let onSave: (FoodItemDetailed) -> Void
     let onCancel: () -> Void
 
-    @State private var nutritionType: NutritionEntryType = .perServing
+    @State private var nutritionMode: NutritionEntryMode = .perServing
     @State private var portionSizeOrMultiplier: Decimal = 1
     @State private var editedName: String = ""
     @State private var editedCarbs: Decimal = 0
@@ -737,21 +717,54 @@ private struct FoodItemEditorSheet: View {
     @State private var hasManuallyEditedCalories: Bool = false
     @State private var sliderMultiplier: Double = 1.0
 
-    enum NutritionEntryType: String, CaseIterable {
+    enum NutritionEntryMode: String, CaseIterable, Hashable {
         case perServing = "Per Serving"
-        case per100 = "Per 100g"
+        case per100g = "Per 100g"
+        case per100ml = "Per 100ml"
+
+        var nutritionType: NutritionEntryType {
+            switch self {
+            case .perServing: return .perServing
+            case .per100g,
+                 .per100ml: return .per100
+            }
+        }
+
+        var unit: MealUnits {
+            switch self {
+            case .per100g,
+                 .perServing: return .grams
+            case .per100ml: return .milliliters
+            }
+        }
+    }
+
+    enum NutritionEntryType {
+        case perServing
+        case per100
+    }
+
+    private var nutritionType: NutritionEntryType {
+        nutritionMode.nutritionType
+    }
+
+    private var selectedUnit: MealUnits {
+        nutritionMode.unit
     }
 
     private var canSave: Bool {
         editedCarbs >= 0 && editedProtein >= 0 && editedFat >= 0
     }
 
-    private var isEditingExisting: Bool {
-        existingItem != nil
-    }
-
-    init(existingItem: FoodItemDetailed?, onSave: @escaping (FoodItemDetailed) -> Void, onCancel: @escaping () -> Void) {
+    init(
+        existingItem: FoodItemDetailed?,
+        title: String? = nil,
+        onSave: @escaping (FoodItemDetailed) -> Void,
+        onCancel: @escaping () -> Void
+    ) {
         self.existingItem = existingItem
+        // Use provided title, or default based on whether editing existing item
+        self.title = title ?? (existingItem != nil ? "Edit Food" : "Add Food Manually")
         self.onSave = onSave
         self.onCancel = onCancel
 
@@ -761,7 +774,9 @@ private struct FoodItemEditorSheet: View {
 
             switch item.nutrition {
             case let .per100(values):
-                _nutritionType = State(initialValue: .per100)
+                // Determine mode based on units
+                let mode: NutritionEntryMode = (item.units ?? .grams) == .milliliters ? .per100ml : .per100g
+                _nutritionMode = State(initialValue: mode)
                 _editedCarbs = State(initialValue: values.carbs ?? 0)
                 _editedProtein = State(initialValue: values.protein ?? 0)
                 _editedFat = State(initialValue: values.fat ?? 0)
@@ -773,7 +788,7 @@ private struct FoodItemEditorSheet: View {
                 _sliderMultiplier = State(initialValue: Double(item.portionSize ?? 100))
 
             case let .perServing(values):
-                _nutritionType = State(initialValue: .perServing)
+                _nutritionMode = State(initialValue: .perServing)
                 _editedCarbs = State(initialValue: values.carbs ?? 0)
                 _editedProtein = State(initialValue: values.protein ?? 0)
                 _editedFat = State(initialValue: values.fat ?? 0)
@@ -835,19 +850,19 @@ private struct FoodItemEditorSheet: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Nutrition Type Picker at the top
+                // Nutrition Mode Picker at the top (3-way)
                 VStack(spacing: 12) {
-                    Picker("Nutrition Type", selection: $nutritionType) {
-                        ForEach(NutritionEntryType.allCases, id: \.self) { type in
-                            Text(type.rawValue).tag(type)
+                    Picker("Nutrition Type", selection: $nutritionMode) {
+                        ForEach(NutritionEntryMode.allCases, id: \.self) { mode in
+                            Text(mode.rawValue).tag(mode)
                         }
                     }
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
                     .padding(.top, 16)
-                    .onChange(of: nutritionType) { _, newType in
-                        // Reset portion/multiplier when switching types
-                        switch newType {
+                    .onChange(of: nutritionMode) { _, newMode in
+                        // Reset portion/multiplier when switching modes
+                        switch newMode.nutritionType {
                         case .perServing:
                             portionSizeOrMultiplier = 1
                             sliderMultiplier = 1.0
@@ -859,7 +874,7 @@ private struct FoodItemEditorSheet: View {
                 }
 
                 FoodItemNutritionEditor(
-                    nutritionType: $nutritionType,
+                    nutritionMode: $nutritionMode,
                     portionSizeOrMultiplier: $portionSizeOrMultiplier,
                     sliderMultiplier: $sliderMultiplier,
                     editedCarbs: $editedCarbs,
@@ -913,18 +928,19 @@ private struct FoodItemEditorSheet: View {
                 .padding(.vertical, 16)
                 .background(Color(.systemBackground))
             }
-            .navigationTitle(isEditingExisting ? "Edit Food" : "Add Food Manually")
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 
     private func saveFoodItem() {
-        // Use manually edited calories if available, otherwise calculate from macros
-        let finalCalories: Decimal
-        if hasManuallyEditedCalories, let manualCalories = editedCalories {
+        // Only use manually edited calories if the user actually entered a value
+        // Otherwise, don't save calories (let it be calculated dynamically)
+        let finalCalories: Decimal?
+        if hasManuallyEditedCalories, let manualCalories = editedCalories, manualCalories > 0 {
             finalCalories = manualCalories
         } else {
-            finalCalories = (editedCarbs * 4) + (editedProtein * 4) + (editedFat * 9)
+            finalCalories = nil
         }
 
         // Use auto-generated name if user hasn't entered one
@@ -944,7 +960,7 @@ private struct FoodItemEditorSheet: View {
 
         // If editing existing item, preserve its properties
         if let existingItem = existingItem {
-            switch nutritionType {
+            switch nutritionMode.nutritionType {
             case .per100:
                 foodItem = FoodItemDetailed(
                     id: existingItem.id, // Preserve ID
@@ -955,7 +971,7 @@ private struct FoodItemEditorSheet: View {
                     brand: existingItem.brand,
                     standardServing: existingItem.standardServing,
                     standardServingSize: editedServingSize,
-                    units: existingItem.units,
+                    units: selectedUnit,
                     preparationMethod: existingItem.preparationMethod,
                     visualCues: existingItem.visualCues,
                     glycemicIndex: existingItem.glycemicIndex,
@@ -974,7 +990,7 @@ private struct FoodItemEditorSheet: View {
                     brand: existingItem.brand,
                     standardServing: existingItem.standardServing,
                     standardServingSize: editedServingSize,
-                    units: existingItem.units,
+                    units: selectedUnit,
                     preparationMethod: existingItem.preparationMethod,
                     visualCues: existingItem.visualCues,
                     glycemicIndex: existingItem.glycemicIndex,
@@ -986,7 +1002,7 @@ private struct FoodItemEditorSheet: View {
             }
         } else {
             // Creating new item
-            switch nutritionType {
+            switch nutritionMode.nutritionType {
             case .per100:
                 foodItem = FoodItemDetailed(
                     name: finalName,
@@ -996,7 +1012,7 @@ private struct FoodItemEditorSheet: View {
                     brand: nil,
                     standardServing: nil,
                     standardServingSize: editedServingSize,
-                    units: .grams,
+                    units: selectedUnit,
                     preparationMethod: nil,
                     visualCues: nil,
                     glycemicIndex: nil,
@@ -1014,7 +1030,7 @@ private struct FoodItemEditorSheet: View {
                     brand: nil,
                     standardServing: nil,
                     standardServingSize: editedServingSize,
-                    units: .grams,
+                    units: selectedUnit,
                     preparationMethod: nil,
                     visualCues: nil,
                     glycemicIndex: nil,
@@ -1033,7 +1049,7 @@ private struct FoodItemEditorSheet: View {
 // MARK: - Food Item Nutrition Editor
 
 private struct FoodItemNutritionEditor: View {
-    @Binding var nutritionType: FoodItemEditorSheet.NutritionEntryType
+    @Binding var nutritionMode: FoodItemEditorSheet.NutritionEntryMode
     @Binding var portionSizeOrMultiplier: Decimal
     @Binding var sliderMultiplier: Double
     @Binding var editedCarbs: Decimal
@@ -1059,7 +1075,7 @@ private struct FoodItemNutritionEditor: View {
     }
 
     init(
-        nutritionType: Binding<FoodItemEditorSheet.NutritionEntryType>,
+        nutritionMode: Binding<FoodItemEditorSheet.NutritionEntryMode>,
         portionSizeOrMultiplier: Binding<Decimal>,
         sliderMultiplier: Binding<Double>,
         editedCarbs: Binding<Decimal>,
@@ -1071,7 +1087,7 @@ private struct FoodItemNutritionEditor: View {
         editedCalories: Binding<Decimal?>,
         hasManuallyEditedCalories: Binding<Bool>
     ) {
-        _nutritionType = nutritionType
+        _nutritionMode = nutritionMode
         _portionSizeOrMultiplier = portionSizeOrMultiplier
         _sliderMultiplier = sliderMultiplier
         _editedCarbs = editedCarbs
@@ -1093,7 +1109,11 @@ private struct FoodItemNutritionEditor: View {
     }
 
     private var unit: String {
-        nutritionType == .per100 ? "g" : "serving"
+        nutritionMode == .perServing ? "serving" : nutritionMode.unit.localizedAbbreviation
+    }
+
+    private var nutritionType: FoodItemEditorSheet.NutritionEntryType {
+        nutritionMode.nutritionType
     }
 
     // Calculate calories from macros
@@ -1131,7 +1151,7 @@ private struct FoodItemNutritionEditor: View {
     private var sliderMinLabel: String {
         switch nutritionType {
         case .per100:
-            return "10g"
+            return "10\(nutritionMode.unit.localizedAbbreviation)"
         case .perServing:
             return "0.25×"
         }
@@ -1140,7 +1160,7 @@ private struct FoodItemNutritionEditor: View {
     private var sliderMaxLabel: String {
         switch nutritionType {
         case .per100:
-            return "600g"
+            return "600\(nutritionMode.unit.localizedAbbreviation)"
         case .perServing:
             return "10×"
         }
@@ -1153,7 +1173,7 @@ private struct FoodItemNutritionEditor: View {
                 VStack(spacing: 12) {
                     switch nutritionType {
                     case .per100:
-                        Text("\(Double(portionSizeOrMultiplier), specifier: "%.0f") g")
+                        Text("\(Double(portionSizeOrMultiplier), specifier: "%.0f") \(nutritionMode.unit.localizedAbbreviation)")
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(.orange)
                     case .perServing:
@@ -1193,9 +1213,9 @@ private struct FoodItemNutritionEditor: View {
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
-                            .frame(width: 80, alignment: .trailing)
+                            .frame(width: 75, alignment: .trailing)
 
-                        Text(nutritionType == .perServing ? "Per serving" : "Per 100g")
+                        Text(nutritionType == .perServing ? "Per serving" : "Per 100\(nutritionMode.unit.localizedAbbreviation)")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
@@ -1256,21 +1276,16 @@ private struct FoodItemNutritionEditor: View {
                         FoodItemCaloriesRow(
                             label: "Calories",
                             portionValue: calculatePortionValue(baseValue: displayedCalories),
-                            baseValue: Binding(
-                                get: { displayedCalories },
-                                set: { newValue in
-                                    editedCalories = newValue
-                                    hasManuallyEditedCalories = true
-                                }
-                            ),
+                            baseValue: $editedCalories,
+                            calculatedValue: calculatedCalories,
                             unit: "kcal",
                             focusedField: $focusedField,
                             field: .calories,
                             isCalculated: !hasManuallyEditedCalories,
-                            onReset: hasManuallyEditedCalories ? {
-                                hasManuallyEditedCalories = false
-                                editedCalories = nil
-                            } : nil
+                            onValueChanged: { newValue in
+                                // Only mark as manually edited if user actually entered a value
+                                hasManuallyEditedCalories = (newValue != nil && newValue! > 0)
+                            }
                         )
 
                         Divider()
@@ -1305,7 +1320,7 @@ private struct FoodItemNutritionEditor: View {
                                 get: { editedServingSize ?? 0 },
                                 set: { editedServingSize = $0 > 0 ? $0 : nil }
                             ),
-                            unit: "g",
+                            unit: nutritionMode.unit.localizedAbbreviation,
                             focusedField: $focusedField,
                             field: .servingSize
                         )
@@ -1383,9 +1398,9 @@ private struct FoodItemNutritionRow: View {
                 Text(unit)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
-                    .frame(width: 24, alignment: .leading)
+                    .frame(width: 28, alignment: .leading)
             }
-            .frame(width: 80, alignment: .trailing)
+            .frame(width: 75, alignment: .trailing)
 
             // Base value (editable)
             HStack(spacing: 4) {
@@ -1410,11 +1425,12 @@ private struct FoodItemNutritionRow: View {
                 Text(unit)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
+                    .frame(width: 28, alignment: .leading)
             }
             .frame(width: 100, alignment: .trailing)
-            .padding(.leading, 8)
         }
-        .padding(.horizontal, 12)
+        .padding(.leading, 12)
+        .padding(.trailing, 6)
         .padding(.vertical, 6)
     }
 }
@@ -1423,14 +1439,15 @@ private struct FoodItemNutritionRow: View {
 private struct FoodItemCaloriesRow: View {
     let label: String
     let portionValue: Decimal
-    @Binding var baseValue: Decimal
+    @Binding var baseValue: Decimal?
+    let calculatedValue: Decimal
     let unit: String
 
     var focusedField: FocusState<FoodItemNutritionEditor.Field?>.Binding
     let field: FoodItemNutritionEditor.Field
 
     let isCalculated: Bool
-    let onReset: (() -> Void)?
+    let onValueChanged: (Decimal?) -> Void
 
     @State private var editText: String = ""
 
@@ -1441,11 +1458,11 @@ private struct FoodItemCaloriesRow: View {
                     .font(.subheadline)
                     .foregroundColor(.primary.opacity(0.8))
 
-                // Show indicator if auto-calculated
+                // Show formula indicator if auto-calculated
                 if isCalculated {
                     Image(systemName: "function")
-                        .font(.system(size: 10))
-                        .foregroundColor(.secondary.opacity(0.6))
+                        .font(.system(size: 11))
+                        .foregroundColor(.blue.opacity(0.8))
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -1459,54 +1476,48 @@ private struct FoodItemCaloriesRow: View {
                 Text(unit)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
-                    .frame(width: 24, alignment: .leading)
+                    .frame(width: 28, alignment: .leading)
             }
-            .frame(width: 80, alignment: .trailing)
+            .frame(width: 75, alignment: .trailing)
 
             // Base value (editable)
             HStack(spacing: 4) {
-                TextField("auto", text: $editText)
-                    .font(.subheadline)
-                    .foregroundColor(isCalculated ? .secondary.opacity(0.6) : .secondary)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .textFieldStyle(.roundedBorder)
-                    .focused(focusedField, equals: field)
-                    .onChange(of: editText) { _, newValue in
-                        if newValue.isEmpty {
-                            baseValue = 0
-                        } else if let decimal = Decimal(string: newValue) {
-                            baseValue = decimal
-                        }
+                TextField(
+                    calculatedValue > 0 ? "\(Int(truncating: calculatedValue as NSNumber))" : "0",
+                    text: $editText
+                )
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .keyboardType(.decimalPad)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(.roundedBorder)
+                .focused(focusedField, equals: field)
+                .onChange(of: editText) { _, newValue in
+                    if newValue.isEmpty {
+                        baseValue = nil
+                        onValueChanged(nil)
+                    } else if let decimal = Decimal(string: newValue) {
+                        baseValue = decimal
+                        onValueChanged(decimal)
                     }
-                    .onChange(of: baseValue) { _, newValue in
-                        // Update text field when value changes (e.g., from calculation)
-                        if !(focusedField.wrappedValue.map({ $0 == field }) ?? false) {
-                            editText = newValue > 0 ? "\(newValue)" : ""
-                        }
+                }
+                .onAppear {
+                    if let value = baseValue, value > 0 {
+                        editText = "\(value)"
+                    } else {
+                        editText = ""
                     }
-                    .onAppear {
-                        editText = baseValue > 0 ? "\(baseValue)" : ""
-                    }
+                }
 
                 Text(unit)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
-
-                // Reset button (only show if manually edited)
-                if let onReset = onReset {
-                    Button(action: onReset) {
-                        Image(systemName: "arrow.counterclockwise")
-                            .font(.system(size: 10))
-                            .foregroundColor(.secondary)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
+                    .frame(width: 28, alignment: .leading)
             }
             .frame(width: 100, alignment: .trailing)
-            .padding(.leading, 8)
         }
-        .padding(.horizontal, 12)
+        .padding(.leading, 12)
+        .padding(.trailing, 6)
         .padding(.vertical, 6)
     }
 }
@@ -1530,7 +1541,7 @@ private struct FoodItemServingSizeRow: View {
 
             // Empty space for "per portion" column
             Spacer()
-                .frame(width: 80, alignment: .trailing)
+                .frame(width: 75, alignment: .trailing)
 
             // Serving size value (editable)
             HStack(spacing: 4) {
@@ -1555,11 +1566,12 @@ private struct FoodItemServingSizeRow: View {
                 Text(unit)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
+                    .frame(width: 28, alignment: .leading)
             }
             .frame(width: 100, alignment: .trailing)
-            .padding(.leading, 8)
         }
-        .padding(.horizontal, 12)
+        .padding(.leading, 12)
+        .padding(.trailing, 6)
         .padding(.vertical, 6)
     }
 }
@@ -1867,8 +1879,13 @@ private struct FoodItemGroupListSection: View {
     let analysisResult: FoodItemGroup
     @ObservedObject var state: FoodSearchStateModel
     let selectedTime: Date?
+    let onPersist: (FoodItemDetailed) -> Void
 
     @State private var showInfoPopup = false
+
+    private var savedFoodIds: Set<UUID> {
+        Set(state.savedFoods?.foodItemsDetailed.map(\.id) ?? [])
+    }
 
     private var preferredInfoHeight: CGFloat {
         var base: CGFloat = 420
@@ -1964,13 +1981,7 @@ private struct FoodItemGroupListSection: View {
                         state.searchResultsState.deleteSection(analysisResult.id)
                     }
                 } label: {
-                    Label("Delete", systemImage: "trash")
-                }
-
-                Button {
-                    // TODO: Implement save functionality
-                } label: {
-                    Label("Save (TODO)", systemImage: "square.and.arrow.down")
+                    Label("Remove from meal", systemImage: "trash")
                 }
             }
             .sheet(isPresented: $showInfoPopup) {
@@ -2006,6 +2017,8 @@ private struct FoodItemGroupListSection: View {
                                         state.searchResultsState.deleteItem(foodItem)
                                     }
                                 },
+                                onPersist: onPersist,
+                                savedFoodIds: savedFoodIds,
                                 isFirst: index == 0,
                                 isLast: index == analysisResult.foodItemsDetailed.count - 1
                             )
@@ -2600,12 +2613,18 @@ struct FoodItemRow: View {
     let portionSize: Decimal
     let onPortionChange: ((Decimal) -> Void)?
     let onDelete: (() -> Void)?
+    let onPersist: ((FoodItemDetailed) -> Void)?
+    let savedFoodIds: Set<UUID>
     let isFirst: Bool
     let isLast: Bool
 
     @State private var showItemInfo = false
     @State private var showPortionAdjuster = false
     @State private var sliderMultiplier: Double = 1.0
+
+    private var isSaved: Bool {
+        savedFoodIds.contains(foodItem.id)
+    }
 
     private var hasNutritionInfo: Bool {
         switch foodItem.nutrition {
@@ -2675,18 +2694,25 @@ struct FoodItemRow: View {
                     }
                 }
 
-                if onDelete != nil {
-                    Button(role: .destructive) {
-                        onDelete?()
-                    } label: {
-                        Label("Delete", systemImage: "trash")
+                if foodItem.source != .database {
+                    if isSaved {
+                        Label("Saved", systemImage: "checkmark.circle.fill")
+                            .foregroundColor(.secondary)
+                    } else if let onPersist = onPersist {
+                        Button {
+                            onPersist(foodItem)
+                        } label: {
+                            Label("Save", systemImage: "square.and.arrow.down")
+                        }
                     }
                 }
 
-                Button {
-                    // TODO: Implement save functionality
-                } label: {
-                    Label("Save (TODO)", systemImage: "square.and.arrow.down")
+                if let onDelete = onDelete {
+                    Button(role: .destructive) {
+                        onDelete()
+                    } label: {
+                        Label("Remove from meal", systemImage: "trash")
+                    }
                 }
             }
             .sheet(isPresented: $showItemInfo) {
@@ -3159,6 +3185,8 @@ struct FoodItemsSelectorView: View {
     let onDismiss: () -> Void
     var useTransparentBackground: Bool = false
     var filterText: String = ""
+    var onPersist: ((FoodItemDetailed) -> Void)? = nil
+    var onDelete: ((FoodItemDetailed) -> Void)? = nil
 
     private var displayTitle: String {
         if searchResult.source == .database {
@@ -3183,43 +3211,10 @@ struct FoodItemsSelectorView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                ForEach(Array(filteredFoodItems.enumerated()), id: \.element.id) { index, foodItem in
-                    if foodItem.name.isNotEmpty {
-                        FoodItemsSelectorItemRow(
-                            foodItem: foodItem,
-                            portionSize: {
-                                // For per-serving nutrition, use servingsMultiplier (default 1.0)
-                                // For per-100 nutrition, use portionSize in grams (default to standardServingSize or 100)
-                                switch foodItem.nutrition {
-                                case .perServing:
-                                    return foodItem.servingsMultiplier ?? 1.0
-                                case .per100:
-                                    return foodItem.portionSize ?? foodItem.standardServingSize ?? 100
-                                }
-                            }(),
-                            onAdd: {
-                                onFoodItemSelected(foodItem)
-                            },
-                            onRemove: {
-                                onFoodItemRemoved(foodItem)
-                            },
-                            isAdded: isItemAdded(foodItem),
-                            isFirst: index == 0,
-                            isLast: index == filteredFoodItems.count - 1,
-                            useTransparentBackground: useTransparentBackground
-                        )
-
-                        if index != filteredFoodItems.count - 1 {
-                            Divider()
-                                .padding(.horizontal, 16)
-                        }
-                    }
-                }
-
-                // Show a message if filter returns no results
-                if filteredFoodItems.isEmpty && !filterText.isEmpty {
+        Group {
+            if filteredFoodItems.isEmpty && !filterText.isEmpty {
+                // Show empty state in ScrollView when no results
+                ScrollView {
                     VStack(spacing: 12) {
                         Image(systemName: "magnifyingglass")
                             .font(.system(size: 48))
@@ -3229,18 +3224,52 @@ struct FoodItemsSelectorView: View {
                         Text("No foods found")
                             .font(.headline)
                             .foregroundColor(.secondary)
-
-                        Text("Try a different search term")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
                 }
+                .scrollDismissesKeyboard(.immediately)
+            } else {
+                // Use List for swipe actions support
+                List {
+                    ForEach(Array(filteredFoodItems.enumerated()), id: \.element.id) { index, foodItem in
+                        if foodItem.name.isNotEmpty {
+                            FoodItemsSelectorItemRow(
+                                foodItem: foodItem,
+                                portionSize: {
+                                    // For per-serving nutrition, use servingsMultiplier (default 1.0)
+                                    // For per-100 nutrition, use portionSize in grams (default to standardServingSize or 100)
+                                    switch foodItem.nutrition {
+                                    case .perServing:
+                                        return foodItem.servingsMultiplier ?? 1.0
+                                    case .per100:
+                                        return foodItem.portionSize ?? foodItem.standardServingSize ?? 100
+                                    }
+                                }(),
+                                onAdd: {
+                                    onFoodItemSelected(foodItem)
+                                },
+                                onRemove: {
+                                    onFoodItemRemoved(foodItem)
+                                },
+                                isAdded: isItemAdded(foodItem),
+                                isFirst: index == 0,
+                                isLast: index == filteredFoodItems.count - 1,
+                                useTransparentBackground: useTransparentBackground,
+                                onPersist: onPersist,
+                                onDelete: onDelete
+                            )
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowSeparator(index == filteredFoodItems.count - 1 ? .hidden : .visible)
+                            .listRowBackground(useTransparentBackground ? Color.clear : Color(.systemGray6))
+                        }
+                    }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .scrollDismissesKeyboard(.immediately)
             }
-            .padding(.vertical)
         }
-        .scrollDismissesKeyboard(.immediately)
     }
 }
 
@@ -3253,8 +3282,12 @@ private struct FoodItemsSelectorItemRow: View {
     let isFirst: Bool
     let isLast: Bool
     let useTransparentBackground: Bool
+    var onPersist: ((FoodItemDetailed) -> Void)? = nil
+    var onDelete: ((FoodItemDetailed) -> Void)? = nil
 
     @State private var showItemInfo = false
+    @State private var showEditSheet = false
+    @State private var showDeleteConfirmation = false
 
     private var hasNutritionInfo: Bool {
         switch foodItem.nutrition {
@@ -3362,7 +3395,7 @@ private struct FoodItemsSelectorItemRow: View {
                     HStack(spacing: 6) {
                         Image(systemName: "minus.circle.fill")
                             .font(.system(size: 16, weight: .semibold))
-                        Text("Remove")
+                        Text("Remove from meal")
                             .font(.subheadline)
                             .fontWeight(.semibold)
                     }
@@ -3402,6 +3435,57 @@ private struct FoodItemsSelectorItemRow: View {
         .padding(.top, isFirst ? 8 : 0)
         .padding(.bottom, isLast ? 8 : 0)
         .background(useTransparentBackground ? Color.clear : Color(.systemGray6))
+        .when(onPersist != nil) { view in
+            view.swipeActions(edge: .leading, allowsFullSwipe: true) {
+                Button {
+                    showEditSheet = true
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+                .tint(.orange)
+            }
+        }
+        .when(onDelete != nil) { view in
+            view.swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                Button {
+                    showDeleteConfirmation = true
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+                .tint(.red)
+            }
+        }
+        .confirmationDialog(
+            "Delete Saved Food",
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete Permanently", role: .destructive) {
+                onDelete?(foodItem)
+            }
+            Button("Cancel", role: .cancel) {
+                showDeleteConfirmation = false
+            }
+        } message: {
+            Text(
+                "Are you sure you want to permanently delete \"\(foodItem.name)\" from your saved foods? This action cannot be undone."
+            )
+        }
+        .sheet(isPresented: $showEditSheet) {
+            FoodItemEditorSheet(
+                existingItem: foodItem,
+                title: "Edit Saved Food",
+                onSave: { editedItem in
+                    onPersist?(editedItem)
+                    showEditSheet = false
+                },
+                onCancel: {
+                    showEditSheet = false
+                }
+            )
+            .presentationDetents([.height(600), .large])
+            .presentationDragIndicator(.visible)
+        }
     }
 
     private func preferredItemInfoHeight(for item: FoodItemDetailed) -> CGFloat {

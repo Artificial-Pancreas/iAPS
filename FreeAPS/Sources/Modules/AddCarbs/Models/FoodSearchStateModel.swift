@@ -29,6 +29,7 @@ final class FoodSearchStateModel: ObservableObject {
     @Published var mealView = false
     @Published var filterText = ""
     @Published var showManualEntry = false
+    @Published var showNewSavedFoodEntry = false
 
     var searchResultsState = SearchResultsState.empty
 
@@ -44,14 +45,6 @@ final class FoodSearchStateModel: ObservableObject {
     @Published var analysisModel: String?
 
     @Published var searchTask: Task<Void, Never>? = nil
-
-    var visibleSections: [FoodItemGroup] {
-        searchResultsState.searchResults.filter({ !searchResultsState.isSectionDeleted($0.id) })
-    }
-
-    var allFoodItems: [FoodItemDetailed] {
-        visibleSections.flatMap(\.foodItemsDetailed)
-    }
 
     private var cancellables = Set<AnyCancellable>()
 

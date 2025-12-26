@@ -41,7 +41,7 @@ enum ConfidenceLevel: String, Codable, Identifiable, CaseIterable {
     var id: ConfidenceLevel { self }
 }
 
-struct NutritionValues {
+struct NutritionValues: Equatable {
     let calories: Decimal?
     let carbs: Decimal?
     let fat: Decimal?
@@ -50,7 +50,7 @@ struct NutritionValues {
     let sugars: Decimal?
 }
 
-enum FoodNutrition {
+enum FoodNutrition: Equatable {
     case per100(NutritionValues)
     case perServing(NutritionValues)
 }
@@ -79,7 +79,23 @@ struct FoodItemDetailed: Identifiable, Equatable {
     let source: FoodItemSource
 
     static func == (lhs: FoodItemDetailed, rhs: FoodItemDetailed) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+            lhs.name == rhs.name &&
+            lhs.confidence == rhs.confidence &&
+            lhs.brand == rhs.brand &&
+            lhs.portionSize == rhs.portionSize &&
+            lhs.servingsMultiplier == rhs.servingsMultiplier &&
+            lhs.standardServing == rhs.standardServing &&
+            lhs.standardServingSize == rhs.standardServingSize &&
+            lhs.units == rhs.units &&
+            lhs.preparationMethod == rhs.preparationMethod &&
+            lhs.visualCues == rhs.visualCues &&
+            lhs.glycemicIndex == rhs.glycemicIndex &&
+            lhs.nutrition == rhs.nutrition &&
+            lhs.assessmentNotes == rhs.assessmentNotes &&
+            lhs.imageURL == rhs.imageURL &&
+            lhs.imageFrontURL == rhs.imageFrontURL &&
+            lhs.source == rhs.source
     }
 
     init(

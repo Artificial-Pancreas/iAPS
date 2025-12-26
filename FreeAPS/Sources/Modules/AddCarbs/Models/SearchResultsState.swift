@@ -4,7 +4,6 @@ class SearchResultsState: ObservableObject {
     @Published var searchResults: [FoodItemGroup] = []
 
     @Published var editedItems: [String: EditableFoodItem] = [:]
-    @Published var deletedSections: Set<UUID> = []
     @Published var collapsedSections: Set<UUID> = []
 
     static var empty: SearchResultsState {
@@ -65,8 +64,16 @@ class SearchResultsState: ObservableObject {
         editedItems[key]?.portionSize = newPortion
     }
 
-    // Mark item as deleted
     func deleteItem(_ foodItem: FoodItemDetailed) {
+        if let section = searchResults.first(where: { $0.foodItemsDetailed.contains(where: { $0.id == foodItem.id }) }) {
+            // if the food was added from saved foods - hard delete
+            if section.source == .database {
+                hardDeleteItem(foodItem)
+                return
+            }
+        }
+
+        // otherwise, soft delete
         let key = foodItem.id.uuidString
         if editedItems[key] == nil {
             editedItems[key] = EditableFoodItem(from: foodItem)
@@ -74,13 +81,12 @@ class SearchResultsState: ObservableObject {
         editedItems[key]?.isDeleted = true
     }
 
-    // Undelete an item
     func undeleteItem(_ foodItem: FoodItemDetailed) {
         let key = foodItem.id.uuidString
         editedItems[key]?.isDeleted = false
     }
 
-    // Hard delete an item (permanently removes it from search results)
+    // Hard delete an item (permanently removes it from search results) - used when removing a food that was added from Saved Foods, or when adding/deleting from a multiple-choise selector
     func hardDeleteItem(_ foodItem: FoodItemDetailed) {
         // Remove from search results
         for (index, group) in searchResults.enumerated() {
@@ -113,14 +119,26 @@ class SearchResultsState: ObservableObject {
         editedItems.removeValue(forKey: key)
     }
 
-    // Delete entire section
+    // Hard delete entire section (removes from searchResults and cleans up editedItems)
     func deleteSection(_ sectionId: UUID) {
-        deletedSections.insert(sectionId)
-    }
+        // Find the section to delete
+        guard let sectionIndex = searchResults.firstIndex(where: { $0.id == sectionId }) else {
+            return
+        }
 
-    // Check if section is deleted
-    func isSectionDeleted(_ sectionId: UUID) -> Bool {
-        deletedSections.contains(sectionId)
+        let section = searchResults[sectionIndex]
+
+        // Clean up editedItems for all items in this section
+        for item in section.foodItemsDetailed {
+            let key = item.id.uuidString
+            editedItems.removeValue(forKey: key)
+        }
+
+        // Remove the section from searchResults
+        searchResults.remove(at: sectionIndex)
+
+        // Clean up collapsed state if it exists
+        collapsedSections.remove(sectionId)
     }
 
     // MARK: - Collapsed sections helpers
@@ -140,18 +158,13 @@ class SearchResultsState: ObservableObject {
     func clear() {
         searchResults = []
         editedItems.removeAll()
-        deletedSections.removeAll()
         collapsedSections.removeAll()
     }
 
     // MARK: - Computed Properties
 
-    var visibleSections: [FoodItemGroup] {
-        searchResults.filter { !isSectionDeleted($0.id) }
-    }
-
     var nonDeletedItems: [FoodItemDetailed] {
-        visibleSections.flatMap(\.foodItemsDetailed).filter { !isDeleted($0) }
+        searchResults.flatMap(\.foodItemsDetailed).filter { !isDeleted($0) }
     }
 
     var nonDeletedItemCount: Int {
@@ -159,7 +172,54 @@ class SearchResultsState: ObservableObject {
     }
 
     var hasVisibleContent: Bool {
-        // Only deleted sections count as removing content (item deletions can be undone)
-        !visibleSections.isEmpty
+        !searchResults.isEmpty
+    }
+
+    var totalCalories: Decimal {
+        nonDeletedItems.reduce(0) { sum, item in
+            let portion = portionSize(for: item)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.caloriesInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.caloriesInServings(multiplier: portion) ?? 0)
+            }
+        }
+    }
+
+    var totalCarbs: Decimal {
+        nonDeletedItems.reduce(0) { sum, item in
+            let portion = portionSize(for: item)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.carbsInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.carbsInServings(multiplier: portion) ?? 0)
+            }
+        }
+    }
+
+    var totalProtein: Decimal {
+        nonDeletedItems.reduce(0) { sum, item in
+            let portion = portionSize(for: item)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.proteinInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.proteinInServings(multiplier: portion) ?? 0)
+            }
+        }
+    }
+
+    var totalFat: Decimal {
+        nonDeletedItems.reduce(0) { sum, item in
+            let portion = portionSize(for: item)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.fatInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.fatInServings(multiplier: portion) ?? 0)
+            }
+        }
     }
 }

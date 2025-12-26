@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24512" systemVersion="25B78" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES" codeGenerationType="class">
         <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -171,10 +171,21 @@
         <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
     </entity>
     <entity name="Presets" representedClassName="Presets" syncable="YES" codeGenerationType="class">
+        <attribute name="calories" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="dish" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="fiber" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="foodID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="glycemicIndex" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="imageURL" optional="YES" attributeType="String"/>
+        <attribute name="mealUnits" optional="YES" attributeType="String"/>
+        <attribute name="per100" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="portionSize" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="standardServing" optional="YES" attributeType="String"/>
+        <attribute name="standardServingSize" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="sugars" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="Profiles" representedClassName="Profiles" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
