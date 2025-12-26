@@ -635,13 +635,12 @@ struct MainChartCanvas: View {
                 let glucoseDecimal = Decimal(peak.glucose)
                 let fillColour = {
                     if glucoseDecimal < data.lowGlucose {
-                        return colorScheme == .dark ? Color.peakRed.opacity(0.7) : Color.peakRed.opacity(0.7)
+                        return Color.peakRed
                     }
                     if glucoseDecimal > data.highGlucose {
-                        return colorScheme == .dark ? Color.peakOrange.opacity(0.4) : Color.peakYellow
-                            .opacity(0.4)
+                        return Color.peakOrange
                     }
-                    return colorScheme == .dark ? Color.peakGreen.opacity(0.6) : Color.peakGreen.opacity(0.4)
+                    return Color.peakGreen
                 }()
 
                 ZStack {
