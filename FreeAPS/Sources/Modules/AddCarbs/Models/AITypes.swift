@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 enum AIProvider: Hashable {
     case openAI
@@ -53,6 +54,8 @@ protocol AIModelBase {
     var defaultTextETA: TimeInterval { get }
 
     var provider: AIProvider { get }
+
+    var maxImageDimension: Int { get }
 }
 
 enum OpenAIModel: String, AIModelBase, Encodable {
@@ -156,6 +159,8 @@ enum OpenAIModel: String, AIModelBase, Encodable {
     }
 
     var provider: AIProvider { .openAI }
+
+    var maxImageDimension: Int { 1024 }
 }
 
 enum GeminiModel: String, AIModelBase, Encodable {
@@ -220,6 +225,8 @@ enum GeminiModel: String, AIModelBase, Encodable {
     }
 
     var provider: AIProvider { .gemini }
+
+    var maxImageDimension: Int { 1024 }
 }
 
 enum ClaudeModel: String, AIModelBase, Encodable {
@@ -277,6 +284,8 @@ enum ClaudeModel: String, AIModelBase, Encodable {
     }
 
     var provider: AIProvider { .claude }
+
+    var maxImageDimension: Int { 1024 }
 }
 
 enum AIModel {
@@ -329,6 +338,14 @@ enum AIModel {
         case let .openAI(model): model.defaultTextETA
         case let .gemini(model): model.defaultTextETA
         case let .claude(model): model.defaultTextETA
+        }
+    }
+    
+    var maxImageDimension: Int {
+        switch self {
+        case let .openAI(model): model.maxImageDimension
+        case let .gemini(model): model.maxImageDimension
+        case let .claude(model): model.maxImageDimension
         }
     }
 }
@@ -627,25 +644,10 @@ extension BarcodeSearchProvider: RawRepresentable, Codable {
     public typealias RawValue = String
 
     public init?(rawValue: String) {
-        // Either "openFoodFacts", "usdaFoodData" or "aiModel/<...>"
         if rawValue == "openFoodFacts" {
             self = .openFoodFacts
             return
         }
-//        if rawValue == "usdaFoodData" {
-//            self = .usdaFoodData
-//            return
-//        }
-//        let parts = rawValue.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true).map(String.init)
-//        guard let head = parts.first else { return nil }
-//        let tail = parts.count > 1 ? parts[1] : ""
-//        switch head {
-//        case "aiModel":
-//            guard let model = AIModel(rawValue: tail) else { return nil }
-//            self = .aiModel(model)
-//        default:
-//            return nil
-//        }
         return nil
     }
 
@@ -653,10 +655,6 @@ extension BarcodeSearchProvider: RawRepresentable, Codable {
         switch self {
         case .openFoodFacts:
             return "openFoodFacts"
-//        case .usdaFoodData:
-//            return "usdaFoodData"
-//        case let .aiModel(model):
-//            return "aiModel/\(model.rawValue)"
         }
     }
 
@@ -720,6 +718,18 @@ struct ModelTimeoutsConfig {
     let requestTimeoutInterval: TimeInterval
     let timeoutIntervalForRequest: TimeInterval
     let timeoutIntervalForResource: TimeInterval
+}
+
+enum AnalysisRequest {
+    case image(_ image: UIImage)
+    case query(_ query: String)
+
+    var image: UIImage? {
+        switch self {
+        case let .image(image): image
+        case .query: nil
+        }
+    }
 }
 
 enum NutritionAuthority: String {

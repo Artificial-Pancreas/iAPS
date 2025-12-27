@@ -27,19 +27,18 @@ struct AIProviderClient: Sendable {
         do {
             telemetryCallback?("⏳ Waiting for response from AI …")
 
+            #if DEBUG
+                if let promptData = prompt.data(using: .utf8) {
+                    saveDebugDataToTempFile(description: "AI prompt", fileName: "ai-prompt.txt", data: promptData)
+                }
+            #endif
+
             let (data, response): (Data, URLResponse) = try await performRequestWithRetry(
                 request: urlRequest,
                 telemetryCallback: telemetryCallback
             )
 
-//
-//            if let bodyString = String(data: data, encoding: .utf8) {
-//                print("raw response: \(bodyString)")
-//            } else {
-//                print("raw response: <non-UTF8 data of length \(data.count)>")
-//            }
-
-            telemetryCallback?("📥 Received response from OpenAI …")
+            saveDebugDataToTempFile(description: "AI response", fileName: "ai-response.txt", data: data)
 
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("❌ Invalid HTTP response")
@@ -90,9 +89,7 @@ struct AIProviderClient: Sendable {
             let session = createSession()
 
             do {
-                let (data, response) = try await withTimeoutForAnalysis(seconds: 140) {
-                    try await session.data(for: request)
-                }
+                let (data, response) = try await session.data(for: request)
 
                 print("🔧 Request succeeded on attempt \(attempt)")
                 return (data, response)

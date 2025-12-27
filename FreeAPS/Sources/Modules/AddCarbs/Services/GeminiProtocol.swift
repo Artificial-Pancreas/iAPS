@@ -31,10 +31,6 @@ struct GeminiProtocol: AIProviderProtocol {
             throw AIFoodAnalysisError.requestCreationFailed
         }
 
-        print("gemini prompt -------------------------------")
-        print(prompt)
-        print("---------------------------------------------")
-
         let userTextPart = GeminiPart(text: prompt)
         let imageParts = images.map {
             GeminiPart(inline_data: GeminiInlineData(mime_type: "image/jpeg", data: $0))

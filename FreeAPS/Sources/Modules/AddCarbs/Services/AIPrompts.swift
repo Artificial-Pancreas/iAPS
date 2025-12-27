@@ -1,76 +1,57 @@
 import Foundation
 import UIKit
 
-enum AnalysisRequest {
-    case image(_ image: UIImage)
-    case query(_ query: String)
-
-    var image: UIImage? {
-        switch self {
-        case let .image(image): image
-        case .query: nil
-        }
-    }
-}
-
 enum AIPrompts {
     static func getAnalysisPrompt(
         _ request: AnalysisRequest,
         responseSchema: [(String, Any)],
-    ) -> String {
+    ) throws -> String {
         do {
-            let selectedPrompt = try getStandardAnalysisPrompt(
+            return try buildAnalysisPrompt(
                 request,
                 responseSchema: responseSchema,
             )
-            let promptLength = selectedPrompt.count
-
-            print("🎯 AI Analysis Prompt Selection:")
-            //    print("   Advanced Dosing Enabled: \(isAdvancedEnabled)")
-            print("   Prompt Length: \(promptLength) characters")
-            //    print("   Prompt Type: \(isAdvancedEnabled ? "ADVANCED (with FPU calculations)" : "STANDARD (basic diabetes analysis)")")
-            print("   First 100 chars of selected prompt: \(String(selectedPrompt.prefix(100)))")
-
-            return selectedPrompt
         } catch {
-            return ""
+            throw AIFoodAnalysisError.requestCreationFailed
         }
     }
 }
 
-private enum PromptLoader {
-    static func loadTextResource(named fileName: String) -> String {
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: nil) else {
-            assertionFailure("Missing resource \(fileName)")
-            return ""
-        }
-        do {
-            return try String(contentsOf: url, encoding: .utf8)
-        } catch {
-            assertionFailure("Failed to load \(fileName): \(error)")
-            return ""
-        }
+private func loadTextResource(named fileName: String) -> String {
+    guard let url = Bundle.main.url(forResource: fileName, withExtension: nil) else {
+        assertionFailure("Missing resource \(fileName)")
+        return ""
+    }
+    do {
+        return try String(contentsOf: url, encoding: .utf8)
+    } catch {
+        assertionFailure("Failed to load \(fileName): \(error)")
+        return ""
     }
 }
 
-private let prompt_0_header: String = PromptLoader.loadTextResource(named: "ai/standard/0_header.txt")
-private let prompt_1_preferences: String = PromptLoader.loadTextResource(named: "ai/standard/1_user_preferences.txt")
+private let prompt_0_header =
+    loadTextResource(named: "ai/standard/0_header.txt")
 
-private let prompt_3_standards: String = PromptLoader.loadTextResource(named: "ai/standard/3_standards.txt")
+private let prompt_1_preferences =
+    loadTextResource(named: "ai/standard/1_user_preferences.txt")
 
-private let prompt_5a_photo_instructions: String = PromptLoader
-    .loadTextResource(named: "ai/standard/5a_photo_instructions.txt")
+private let prompt_3_standards =
+    loadTextResource(named: "ai/standard/3_standards.txt")
 
-private let prompt_5b_text_instructions: String = PromptLoader
-    .loadTextResource(named: "ai/standard/5b_text_instructions.txt")
+private let prompt_5a_photo_instructions =
+    loadTextResource(named: "ai/standard/5a_photo_instructions.txt")
 
-private let prompt_7_response_schema: String = PromptLoader.loadTextResource(named: "ai/standard/7_response_schema.txt")
+private let prompt_5b_text_instructions =
+    loadTextResource(named: "ai/standard/5b_text_instructions.txt")
 
-private let prompt_8_footer: String = PromptLoader
-    .loadTextResource(named: "ai/standard/8_footer.txt")
+private let prompt_7_response_schema =
+    loadTextResource(named: "ai/standard/7_response_schema.txt")
 
-/// Standard analysis prompt for basic diabetes management (used when Advanced Dosing is OFF)
-private func getStandardAnalysisPrompt(
+private let prompt_8_footer =
+    loadTextResource(named: "ai/standard/8_footer.txt")
+
+private func buildAnalysisPrompt(
     _ request: AnalysisRequest,
     responseSchema: [(String, Any)],
 ) throws -> String {
@@ -134,7 +115,7 @@ private func makePreferencesBlock(regionCode: String?) -> String {
         .replacingOccurrences(of: "(region)", with: regionForAI)
 }
 
-// MARK: just to encode an [(string, any)] and preserve the order of fields in the schema, since swift doesn't seem to have anything for this ¯\_(ツ)_/¯
+// MARK: just to encode an [(string, any)] into a JSON string preserving the order of fields in the schema, since swift doesn't seem to have anything for this ¯\_(ツ)_/¯
 
 private enum PlainJSON {
     case object([(String, PlainJSON)])

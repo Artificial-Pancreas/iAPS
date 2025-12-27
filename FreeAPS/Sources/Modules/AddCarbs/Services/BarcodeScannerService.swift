@@ -70,31 +70,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
     override init() {
         super.init()
         checkCameraAuthorization()
-        // setupSessionNotifications()
     }
-
-    /* private func setupSessionNotifications() {
-         NotificationCenter.default.addObserver(
-             self,
-             selector: #selector(sessionWasInterrupted),
-             name: .AVCaptureSessionWasInterrupted,
-             object: captureSession
-         )
-
-         NotificationCenter.default.addObserver(
-             self,
-             selector: #selector(sessionInterruptionEnded),
-             name: .AVCaptureSessionInterruptionEnded,
-             object: captureSession
-         )
-
-         NotificationCenter.default.addObserver(
-             self,
-             selector: #selector(sessionRuntimeError),
-             name: .AVCaptureSessionRuntimeError,
-             object: captureSession
-         )
-     } */
 
     @objc private func sessionWasInterrupted(notification: NSNotification) {
         print("🎥 ========== Session was interrupted ==========")
@@ -621,19 +597,6 @@ class BarcodeScannerService: NSObject, ObservableObject {
         print("🎥 Simple session setup completed")
     }
 
-    /// Get video preview layer for UI integration
-    /*   func getPreviewLayer() -> AVCaptureVideoPreviewLayer? {
-         // Always create a new preview layer to avoid conflicts
-         // Each view should have its own preview layer instance
-         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-         previewLayer.videoGravity = .resizeAspectFill
-         print("🎥 Created preview layer for session: \(captureSession)")
-         print(
-             "🎥 Session running: \(captureSession.isRunning), inputs: \(captureSession.inputs.count), outputs: \(captureSession.outputs.count)"
-         )
-         return previewLayer
-     }*/
-
     /// Get shared video preview layer
     func getPreviewLayer() -> AVCaptureVideoPreviewLayer? {
         if _previewLayer == nil {
@@ -686,17 +649,6 @@ class BarcodeScannerService: NSObject, ObservableObject {
 
         print("🎥 Finding best available camera device...")
 
-        // Try to get the best available camera (like AI camera does)
-        /*  let discoverySession = AVCaptureDevice.DiscoverySession(
-             deviceTypes: [
-                // .builtInTripleCamera, // iPhone Pro models
-                 .builtInDualWideCamera, // iPhone models with dual camera
-                 .builtInWideAngleCamera, // Standard camera
-                 .builtInUltraWideCamera // Ultra-wide as fallback
-             ],
-             mediaType: .video,
-             position: .back // Prefer back camera for scanning
-         )*/
         let discoverySession = AVCaptureDevice.DiscoverySession(
             deviceTypes: [
                 .builtInWideAngleCamera // ✅ Nur Wide Angle - zuverlässigste
