@@ -126,12 +126,13 @@ struct MainChartView: View {
             .onChange(of: scenePhase) {
                 switch scenePhase {
                 case .active:
-                    shouldScrollAfterUpdate = true
                     subscribeToUpdates()
                     updateRequests.send(())
                 case .background,
                      .inactive:
                     unsubscribeFromUpdates()
+                @unknown default:
+                    print("unknown scene phase: \(scenePhase)")
                 }
             }
         }
@@ -146,7 +147,6 @@ struct MainChartView: View {
 
         let geom = CalculatedGeometries.make(fullSize: fullSize, data: data)
 
-        // TODO: remove this
         let ended = Date.now
         debug(
             .service,
