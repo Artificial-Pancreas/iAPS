@@ -160,7 +160,18 @@ enum OpenAIModel: String, AIModelBase, Encodable {
 
     var provider: AIProvider { .openAI }
 
-    var maxImageDimension: Int { 1024 }
+    var maxImageDimension: Int {
+        switch self {
+        case .gpt_4o,
+             .gpt_5,
+             .gpt_5_1,
+             .gpt_5_2:
+            return 2048
+        case .gpt_4o_mini,
+             .gpt_5_mini:
+            return 1568
+        }
+    }
 }
 
 enum GeminiModel: String, AIModelBase, Encodable {
@@ -226,7 +237,13 @@ enum GeminiModel: String, AIModelBase, Encodable {
 
     var provider: AIProvider { .gemini }
 
-    var maxImageDimension: Int { 1024 }
+    var maxImageDimension: Int {
+        switch self {
+        case .gemini_2_5_pro: 2048
+        case .gemini_2_5_flash: 1568
+        case .gemini_3_pro_preview: 2048
+        }
+    }
 }
 
 enum ClaudeModel: String, AIModelBase, Encodable {
@@ -285,7 +302,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
 
     var provider: AIProvider { .claude }
 
-    var maxImageDimension: Int { 1024 }
+    var maxImageDimension: Int { 1568 }
 }
 
 enum AIModel {
@@ -340,7 +357,7 @@ enum AIModel {
         case let .claude(model): model.defaultTextETA
         }
     }
-    
+
     var maxImageDimension: Int {
         switch self {
         case let .openAI(model): model.maxImageDimension
