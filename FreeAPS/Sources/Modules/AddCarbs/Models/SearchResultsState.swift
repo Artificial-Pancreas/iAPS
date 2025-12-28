@@ -141,6 +141,49 @@ class SearchResultsState: ObservableObject {
         collapsedSections.remove(sectionId)
     }
 
+    /// Updates an existing food item in the search results while preserving portion size/multiplier
+    func updateExistingItem(_ updatedItem: FoodItemDetailed) {
+        // Find all instances of this item across all search results
+        for (groupIndex, group) in searchResults.enumerated() {
+            for (itemIndex, existingItem) in group.foodItemsDetailed.enumerated() {
+                if existingItem.id == updatedItem.id {
+                    // Preserve the current portion size or multiplier
+                    let preservedPortion = portionSize(for: existingItem)
+
+                    // Create a new group with the updated item
+                    var updatedFoodItems = group.foodItemsDetailed
+                    updatedFoodItems[itemIndex] = updatedItem
+
+                    let updatedGroup = FoodItemGroup(
+                        foodItemsDetailed: updatedFoodItems,
+                        briefDescription: group.briefDescription,
+                        overallDescription: group.overallDescription,
+                        diabetesConsiderations: group.diabetesConsiderations,
+                        source: group.source,
+                        barcode: group.barcode,
+                        textQuery: group.textQuery
+                    )
+
+                    searchResults[groupIndex] = updatedGroup
+
+                    // Update editedItems to preserve the portion with the new item reference
+                    let key = updatedItem.id.uuidString
+                    if var edited = editedItems[key] {
+                        edited.portionSize = preservedPortion
+                        editedItems[key] = EditableFoodItem(from: updatedItem)
+                        editedItems[key]?.portionSize = preservedPortion
+                        editedItems[key]?.isDeleted = edited.isDeleted
+                    } else {
+                        // Create new edited item with preserved portion
+                        var newEdited = EditableFoodItem(from: updatedItem)
+                        newEdited.portionSize = preservedPortion
+                        editedItems[key] = newEdited
+                    }
+                }
+            }
+        }
+    }
+
     // MARK: - Collapsed sections helpers
 
     func isSectionCollapsed(_ sectionId: UUID) -> Bool {

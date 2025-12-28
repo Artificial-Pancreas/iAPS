@@ -59,7 +59,7 @@ final class OpenFoodFactsService {
         }
     }
 
-    private func searchProducts(query: String, pageSize: Int = 20) async throws -> [OpenFoodFactsProduct] {
+    func searchProducts(query: String, pageSize: Int = 20) async throws -> [OpenFoodFactsProduct] {
         let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedQuery.isEmpty else {
             return []

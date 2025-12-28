@@ -75,7 +75,6 @@ struct FoodItemDetailed: Identifiable, Equatable {
     let assessmentNotes: String?
 
     let imageURL: String?
-    let imageFrontURL: String?
 
     let source: FoodItemSource
 
@@ -95,7 +94,6 @@ struct FoodItemDetailed: Identifiable, Equatable {
             lhs.nutrition == rhs.nutrition &&
             lhs.assessmentNotes == rhs.assessmentNotes &&
             lhs.imageURL == rhs.imageURL &&
-            lhs.imageFrontURL == rhs.imageFrontURL &&
             lhs.source == rhs.source
     }
 
@@ -114,7 +112,6 @@ struct FoodItemDetailed: Identifiable, Equatable {
         glycemicIndex: Decimal? = nil,
         assessmentNotes: String? = nil,
         imageURL: String? = nil,
-        imageFrontURL: String? = nil,
         standardName: String? = nil,
         source: FoodItemSource
     ) {
@@ -134,7 +131,6 @@ struct FoodItemDetailed: Identifiable, Equatable {
         nutrition = .per100(nutritionPer100)
         self.assessmentNotes = assessmentNotes
         self.imageURL = imageURL
-        self.imageFrontURL = imageFrontURL
         self.source = source
     }
 
@@ -153,7 +149,6 @@ struct FoodItemDetailed: Identifiable, Equatable {
         glycemicIndex: Decimal? = nil,
         assessmentNotes: String? = nil,
         imageURL: String? = nil,
-        imageFrontURL: String? = nil,
         standardName: String? = nil,
         source: FoodItemSource
     ) {
@@ -173,7 +168,6 @@ struct FoodItemDetailed: Identifiable, Equatable {
         nutrition = .perServing(nutritionPerServing)
         self.assessmentNotes = assessmentNotes
         self.imageURL = imageURL
-        self.imageFrontURL = imageFrontURL
         self.source = source
     }
 }
@@ -293,7 +287,6 @@ extension FoodItemDetailed {
                 glycemicIndex: glycemicIndex,
                 assessmentNotes: assessmentNotes,
                 imageURL: imageURL,
-                imageFrontURL: imageFrontURL,
                 source: source
             )
         case let .perServing(nutrition):
@@ -311,7 +304,49 @@ extension FoodItemDetailed {
                 glycemicIndex: glycemicIndex,
                 assessmentNotes: assessmentNotes,
                 imageURL: imageURL,
-                imageFrontURL: imageFrontURL,
+                source: source
+            )
+        }
+    }
+
+    func withImageURL(_ newImageURL: String?) -> FoodItemDetailed {
+        switch nutrition {
+        case let .per100(nutritionValues):
+            return FoodItemDetailed(
+                id: id,
+                name: name,
+                nutritionPer100: nutritionValues,
+                portionSize: portionSize ?? 100,
+                confidence: confidence,
+                brand: brand,
+                standardServing: standardServing,
+                standardServingSize: standardServingSize,
+                units: units,
+                preparationMethod: preparationMethod,
+                visualCues: visualCues,
+                glycemicIndex: glycemicIndex,
+                assessmentNotes: assessmentNotes,
+                imageURL: newImageURL,
+                standardName: standardName,
+                source: source
+            )
+        case let .perServing(nutritionValues):
+            return FoodItemDetailed(
+                id: id,
+                name: name,
+                nutritionPerServing: nutritionValues,
+                servingsMultiplier: servingsMultiplier ?? 1,
+                confidence: confidence,
+                brand: brand,
+                standardServing: standardServing,
+                standardServingSize: standardServingSize,
+                units: units,
+                preparationMethod: preparationMethod,
+                visualCues: visualCues,
+                glycemicIndex: glycemicIndex,
+                assessmentNotes: assessmentNotes,
+                imageURL: newImageURL,
+                standardName: standardName,
                 source: source
             )
         }

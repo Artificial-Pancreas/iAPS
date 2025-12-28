@@ -31,6 +31,8 @@ final class FoodSearchStateModel: ObservableObject {
     @Published var showManualEntry = false
     @Published var showNewSavedFoodEntry = false
 
+    @Published var aiTextAnalysis = UserDefaults.standard.aiTextSearchByDefault
+
     var searchResultsState = SearchResultsState.empty
 
     // analysis progress
@@ -101,15 +103,24 @@ final class FoodSearchStateModel: ObservableObject {
 
         if isBarcode {
             startBarcodeSearch(barcode: trimmedQuery)
+        } else if aiTextAnalysis {
+            startAIAnalysis(analysisRequest: .query(trimmedQuery))
         } else {
-            switch UserDefaults.standard.textSearchProvider {
-            case .aiModel:
-                startAIAnalysis(analysisRequest: .query(trimmedQuery))
-            case .openFoodFacts,
-                 .usdaFoodData:
-                startTextSearch(query: trimmedQuery)
-            }
+            startTextSearch(query: trimmedQuery)
         }
+    }
+
+    func searchFoodImages(_ query: String) async -> [String] {
+        async let openFoodFacts = OpenFoodFactsService.shared.searchProducts(query: query, pageSize: 15)
+        async let openverse = OpenverseClient.shared.searchImages(query: query, pageSize: 15)
+        let openFoodFactsResults = (try? await openFoodFacts) ?? []
+        let openverseResults = (try? await openverse) ?? []
+
+        let openFoodFactsUrls = openFoodFactsResults.compactMap(\.imageURL)
+        let openverseUrls = openverseResults.compactMap(\.url)
+
+        let result = openverseUrls + openFoodFactsUrls
+        return result
     }
 
     func retryAIAnalysis() {
@@ -162,7 +173,7 @@ final class FoodSearchStateModel: ObservableObject {
 
         searchTask = Task { @MainActor in
             do {
-                let result = try await ConfigurableAIService.shared.analyzeFoodQuery(
+                let result = try await ConfigurableAIService.shared.executeTextSearch(
                     query,
                     telemetryCallback: nil
                 )
@@ -208,7 +219,7 @@ final class FoodSearchStateModel: ObservableObject {
                 return
             }
         case .query:
-            guard aiService.isTextSearchConfigured else {
+            guard aiService.isAiTextAnalysisConfigured else {
                 analysisError = "AI service not configured. Please check settings."
 //                showingErrorAlert = true
                 return

@@ -9,11 +9,13 @@ extension UserDefaults {
         case textSearchProvider = "com.loopkit.Loop.textSearchProvider"
         case barcodeSearchProvider = "com.loopkit.Loop.barcodeSearchProvider"
         case aiImageProvider = "com.loopkit.Loop.aiImageProvider"
+        case aiTextProvider = "com.loopkit.Loop.aiTextProvider"
         case preferredLanguage = "com.loopkit.Loop.AIPreferredLanguage"
         case preferredRegion = "com.loopkit.Loop.AIPreferredRegion"
         case nutritionAuthority = "com.loopkit.Loop.AINutritionAuthority"
         case aiProviderStatistics = "com.loopkit.Loop.AIStatistics"
         case sendSmallerImages = "com.loopkit.Loop.AISendSmallerImages"
+        case aiTextSearchByDefault = "com.loopkit.Loop.AITextSearchByDefault"
     }
 
     var claudeAPIKey: String {
@@ -82,6 +84,19 @@ extension UserDefaults {
         }
     }
 
+    var aiTextProvider: AITextProvider {
+        get {
+            if let str = string(forKey: AIKey.aiTextProvider.rawValue) {
+                return AITextProvider(rawValue: str) ?? .defaultProvider
+            } else {
+                return .defaultProvider
+            }
+        }
+        set {
+            set(newValue.rawValue, forKey: AIKey.aiTextProvider.rawValue)
+        }
+    }
+
     var userPreferredLanguageForAI: String? {
         get {
             string(forKey: AIKey.preferredLanguage.rawValue)
@@ -106,6 +121,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: AIKey.sendSmallerImages.rawValue)
+        }
+    }
+
+    var aiTextSearchByDefault: Bool {
+        get {
+            bool(forKey: AIKey.aiTextSearchByDefault.rawValue)
+        }
+        set {
+            set(newValue, forKey: AIKey.aiTextSearchByDefault.rawValue)
         }
     }
 

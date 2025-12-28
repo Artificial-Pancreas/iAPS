@@ -172,7 +172,6 @@ extension TextAnalysisService {
                     standardServingSize: item.servingQuantity,
                     units: MealUnits.grams,
                     imageURL: item.imageURL,
-                    imageFrontURL: item.imageFrontURL,
                     source: source
                 )
             } else {
@@ -193,7 +192,6 @@ extension TextAnalysisService {
                     standardServingSize: item.servingQuantity,
                     units: MealUnits.grams,
                     imageURL: item.imageURL,
-                    imageFrontURL: item.imageFrontURL,
                     source: source
                 )
             }
@@ -238,7 +236,6 @@ extension TextAnalysisService {
                 preparationMethod: item.preparationMethod,
                 visualCues: item.visualCues,
                 imageURL: nil,
-                imageFrontURL: nil,
                 standardName: item.standardName,
                 source: source
             )
@@ -411,6 +408,10 @@ extension AnalysiedFoodItem {
     private static var fields: [(AnalysiedFoodItem.CodingKeys, Any)] {
         [
             (.name, "string, required; specific food name"),
+            (
+                .standardName,
+                "string; concise image-search query for this product. Branded/menu item: include the brand + product name. Generic food: use only the common product name. Use only nouns, plus an optional color. Do not use any other adjectives. Never include rawness, doneness, peel/skin state, serving style, cut form, or texture."
+            ),
             (.confidence, "decimal 0 to 1; required; confidence for this item"),
             (.units, "string enum; one of: 'grams' or 'milliliters'; as appropriate for this meal; do NOT translate;"),
             (.caloriesPer100, "decimal, kilocalories per 100 grams or milliliters"),

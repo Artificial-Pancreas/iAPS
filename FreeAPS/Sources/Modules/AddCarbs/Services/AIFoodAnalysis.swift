@@ -24,18 +24,14 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         }
     }
 
-    var isTextSearchConfigured: Bool {
-        switch UserDefaults.standard.textSearchProvider {
+    var isAiTextAnalysisConfigured: Bool {
+        switch UserDefaults.standard.aiTextProvider {
         case .aiModel(.claude):
             return !UserDefaults.standard.claudeAPIKey.isEmpty
         case .aiModel(.gemini):
             return !UserDefaults.standard.googleGeminiAPIKey.isEmpty
         case .aiModel(.openAI):
             return !UserDefaults.standard.openAIAPIKey.isEmpty
-        case .usdaFoodData:
-            return true
-        case .openFoodFacts:
-            return true
         }
     }
 
@@ -153,12 +149,33 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         }
     }
 
-    func analyzeFoodQuery(
+    func executeTextSearch(
         _ query: String,
         telemetryCallback: ((String) -> Void)?
     ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.textSearchProvider.description) …")
         switch UserDefaults.standard.textSearchProvider {
+        case .usdaFoodData:
+            return try await USDAFoodDataService.shared.analyzeText(prompt: query, telemetryCallback: telemetryCallback)
+        case .openFoodFacts:
+            return try await OpenFoodFactsService.shared.analyzeText(prompt: query, telemetryCallback: telemetryCallback)
+        }
+    }
+
+    func executeImageSearch(
+        _ query: String,
+        telemetryCallback: ((String) -> Void)?
+    ) async -> [String] {
+        let result = try? await OpenFoodFactsService.shared.analyzeText(prompt: query, telemetryCallback: telemetryCallback)
+        return result?.foodItemsDetailed.compactMap(\.imageURL) ?? []
+    }
+
+    func analyzeFoodQuery(
+        _ query: String,
+        telemetryCallback: ((String) -> Void)?
+    ) async throws -> FoodItemGroup {
+        telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.textSearchProvider.description) …")
+        switch UserDefaults.standard.aiTextProvider {
         case let .aiModel(model):
             let providerImpl = try getAIImplementation(for: model, telemetryCallback: telemetryCallback)
             let analysisPrompt = try AIPrompts.getAnalysisPrompt(.query(query), responseSchema: AIAnalysisResult.schemaText)
@@ -206,10 +223,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
                 )
                 throw error
             }
-        case .usdaFoodData:
-            return try await USDAFoodDataService.shared.analyzeText(prompt: query, telemetryCallback: telemetryCallback)
-        case .openFoodFacts:
-            return try await OpenFoodFactsService.shared.analyzeText(prompt: query, telemetryCallback: telemetryCallback)
         }
     }
 

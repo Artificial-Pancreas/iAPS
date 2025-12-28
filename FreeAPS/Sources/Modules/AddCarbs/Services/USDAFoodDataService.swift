@@ -13,7 +13,7 @@ extension USDAFoodDataService: TextAnalysisService {
         prompt: String,
         telemetryCallback _: ((String) -> Void)?
     ) async throws -> FoodItemGroup {
-        let products = try await searchProducts(query: prompt, pageSize: 15)
+        let products = try await searchProducts(query: prompt, pageSize: 25)
         var result = fromOpenFoodFactsProducts(products: products, confidence: nil, source: .search)
         result.textQuery = prompt
         return result
@@ -74,6 +74,8 @@ final class USDAFoodDataService {
             try Task.checkCancellation()
 
             let (data, response) = try await session.data(for: request)
+
+            saveDebugDataToTempFile(description: "USDA response", fileName: "usda-response.json", data: data)
 
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw OpenFoodFactsError.invalidResponse
@@ -151,13 +153,6 @@ final class USDAFoodDataService {
             print("🇺🇸 USDA: Found \(foodNutrients.count) nutrients for '\(description)'")
 
             for nutrient in foodNutrients {
-                // Debug: print the structure of the first few nutrients
-                if foundNutrients.count < 3 {
-                    print(
-                        "🇺🇸 USDA: Nutrient - Code: \(nutrient.nutrientCode?.rawValue ?? -1), Name: \(nutrient.nutrientName ?? "nil"), Value: \(nutrient.value ?? 0)"
-                    )
-                }
-
                 guard let nutrientCode = nutrient.nutrientCode,
                       let value = nutrient.value
                 else {

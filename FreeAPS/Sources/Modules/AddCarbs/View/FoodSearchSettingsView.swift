@@ -42,6 +42,9 @@ struct FoodSearchSettingsView: View {
     @AppStorage(UserDefaults.AIKey.aiImageProvider.rawValue) private var imageSearchProvider: ImageSearchProvider =
         .defaultProvider
 
+    @AppStorage(UserDefaults.AIKey.aiTextProvider.rawValue) private var aiTextProvider: AITextProvider =
+        .defaultProvider
+
     @AppStorage(UserDefaults.AIKey.textSearchProvider.rawValue) private var textSearchProvider: TextSearchProvider =
         .defaultProvider
 
@@ -50,6 +53,8 @@ struct FoodSearchSettingsView: View {
 
     @AppStorage(UserDefaults.AIKey.nutritionAuthority.rawValue) private var preferredNutritionAuthority: NutritionAuthority =
         .localDefault
+
+    @AppStorage(UserDefaults.AIKey.aiTextSearchByDefault.rawValue) private var aiTextSearchByDefault: Bool = false
 
     @AppStorage(UserDefaults.AIKey.sendSmallerImages.rawValue) private var sendSmallerImages: Bool = false
 
@@ -139,9 +144,42 @@ struct FoodSearchSettingsView: View {
                         Picker("", selection: $imageSearchProvider) {
                             ForEach(ImageSearchProvider.allCases, id: \.self) { provider in
                                 HStack(spacing: 12) {
-//                                    Image(systemName: icon(for: provider))
-//                                        .foregroundColor(.accentColor)
+                                    Text(provider.providerName)
+                                        .font(.caption)
+                                    if let modelName = provider.modelName {
+                                        Text(modelName)
+                                            .font(.subheadline)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.orange.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
 
+                                    Spacer()
+
+                                    if let fast = provider.fast, fast {
+                                        Text("Fast")
+                                            .font(.caption2)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Color.green.opacity(0.15))
+                                            .cornerRadius(4)
+                                    }
+                                }
+                                .tag(provider)
+                            }
+                        }
+                        .pickerStyle(.navigationLink)
+                    }
+                    .padding(.vertical, 4)
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Provider for AI Text Analysis")
+                            .font(.title3)
+
+                        Picker("", selection: $aiTextProvider) {
+                            ForEach(AITextProvider.allCases, id: \.self) { provider in
+                                HStack(spacing: 12) {
                                     Text(provider.providerName)
                                         .font(.caption)
                                     if let modelName = provider.modelName {
@@ -178,30 +216,10 @@ struct FoodSearchSettingsView: View {
                         Picker("", selection: $textSearchProvider) {
                             ForEach(TextSearchProvider.allCases, id: \.self) { provider in
                                 HStack(spacing: 12) {
-//                                    Image(systemName: icon(for: provider))
-//                                        .foregroundColor(.accentColor)
-
                                     Text(provider.providerName)
                                         .font(.caption)
-                                    if let modelName = provider.modelName {
-                                        Text(modelName)
-                                            .font(.subheadline)
-                                            .padding(.horizontal, 6)
-                                            .padding(.vertical, 2)
-                                            .background(Color.orange.opacity(0.15))
-                                            .cornerRadius(4)
-                                    }
 
                                     Spacer()
-
-                                    if let fast = provider.fast, fast {
-                                        Text("Fast")
-                                            .font(.caption2)
-                                            .padding(.horizontal, 6)
-                                            .padding(.vertical, 2)
-                                            .background(Color.green.opacity(0.15))
-                                            .cornerRadius(4)
-                                    }
                                 }
                                 .tag(provider)
                             }
@@ -217,30 +235,10 @@ struct FoodSearchSettingsView: View {
                         Picker("", selection: $barcodeSearchProvider) {
                             ForEach(BarcodeSearchProvider.allCases, id: \.self) { provider in
                                 HStack(spacing: 12) {
-//                                    Image(systemName: icon(for: provider))
-//                                        .foregroundColor(.accentColor)
-
                                     Text(provider.providerName)
                                         .font(.caption)
-                                    if let modelName = provider.modelName {
-                                        Text(modelName)
-                                            .font(.subheadline)
-                                            .padding(.horizontal, 6)
-                                            .padding(.vertical, 2)
-                                            .background(Color.orange.opacity(0.15))
-                                            .cornerRadius(4)
-                                    }
 
                                     Spacer()
-
-                                    if let fast = provider.fast, fast {
-                                        Text("Fast")
-                                            .font(.caption2)
-                                            .padding(.horizontal, 6)
-                                            .padding(.vertical, 2)
-                                            .background(Color.green.opacity(0.15))
-                                            .cornerRadius(4)
-                                    }
                                 }
                                 .tag(provider)
                             }
@@ -347,6 +345,12 @@ struct FoodSearchSettingsView: View {
                             }
                         }
                     }
+                }
+
+                Section(
+                    header: Text("Text Search"),
+                ) {
+                    Toggle("Use AI search by default", isOn: $aiTextSearchByDefault)
                 }
 
                 Section(

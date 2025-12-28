@@ -13,6 +13,7 @@ struct SearchResultsView: View {
     @State private var clearedResultsViewState: SearchResultsState?
     @State private var selectedTime: Date?
     @State private var showTimePicker = false
+    @State private var isDownloadingImage = false
 
     private var nonDeletedItemCount: Int {
         state.searchResultsState.nonDeletedItemCount
@@ -31,6 +32,23 @@ struct SearchResultsView: View {
                     loadingBanner()
                         .padding(.top, 12)
                         .padding(.horizontal)
+                }
+                // Image download indicator
+                else if isDownloadingImage {
+                    HStack(spacing: 12) {
+                        ProgressView()
+                            .controlSize(.regular)
+
+                        Text("Saving image...")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(Color(.secondarySystemGroupedBackground))
+                    .padding(.top, 12)
+                    .padding(.horizontal)
                 }
                 // Error message (only when not loading)
                 else if let latestSearchError = state.latestSearchError {
@@ -116,9 +134,11 @@ struct SearchResultsView: View {
                                 state.showSavedFoods = false
                             }
                         },
+                        onImageSearch: state.searchFoodImages,
+                        onPersist: persistFoodItem,
+                        onDelete: onDelete,
+                        useTransparentBackground: false,
                         filterText: state.filterText,
-                        onPersist: onPersist,
-                        onDelete: onDelete
                     )
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -162,9 +182,10 @@ struct SearchResultsView: View {
                     onDismiss: {
                         state.latestMultipleSelectSearch = nil
                     },
-                    useTransparentBackground: true,
+                    onImageSearch: state.searchFoodImages,
                     onPersist: nil,
-                    onDelete: nil
+                    onDelete: nil,
+                    useTransparentBackground: true
                 )
                 .navigationTitle(searchResult.textQuery == nil ? "Search Results" : "Results for '\(searchResult.textQuery!)'")
                 .navigationBarTitleDisplayMode(.inline)
@@ -199,7 +220,7 @@ struct SearchResultsView: View {
                 existingItem: nil,
                 title: "Create Saved Food",
                 onSave: { foodItem in
-                    onPersist(foodItem)
+                    persistFoodItem(foodItem)
                     state.showNewSavedFoodEntry = false
                 },
                 onCancel: {
@@ -492,7 +513,8 @@ struct SearchResultsView: View {
                         analysisResult: analysisResult,
                         state: state,
                         selectedTime: selectedTime,
-                        onPersist: onPersist
+                        onPersist: persistFoodItem,
+                        savedFoodIds: Set(state.savedFoods?.foodItemsDetailed.map(\.id) ?? [])
                     )
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -629,6 +651,60 @@ struct SearchResultsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemGroupedBackground))
     }
+
+    // utils
+
+    private func persistFoodItem(_ foodItem: FoodItemDetailed) {
+        if let imageURL = foodItem.imageURL, let url = URL(string: imageURL), !url.isFileURL {
+            Task {
+                isDownloadingImage = true
+                let updatedItem = await ensureLocalImageURLHelper(for: foodItem)
+                await MainActor.run {
+                    isDownloadingImage = false
+                    onPersist(updatedItem)
+                    // Update any existing instances in the meal
+                    state.searchResultsState.updateExistingItem(updatedItem)
+                }
+            }
+        } else {
+            onPersist(foodItem)
+            state.searchResultsState.updateExistingItem(foodItem)
+        }
+    }
+
+    private func ensureLocalImageURLHelper(for foodItem: FoodItemDetailed) async -> FoodItemDetailed {
+        guard let imageURL = foodItem.imageURL else {
+            return foodItem
+        }
+
+        guard let url = URL(string: imageURL), !url.isFileURL else {
+            return foodItem
+        }
+
+        guard let image = await downloadAndResolveImage(imageURL) else {
+            return foodItem
+        }
+
+        guard let localURL = await FoodImageStorageManager.shared.saveImage(image, for: foodItem.id) else {
+            return foodItem
+        }
+
+        return foodItem.withImageURL(localURL)
+    }
+
+    private func downloadAndResolveImage(_ urlString: String) async -> UIImage? {
+        if let cached = FoodImageStorageManager.shared.getCachedImage(for: urlString) {
+            return cached
+        }
+
+        guard let url = URL(string: urlString) else { return nil }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return UIImage(data: data)
+        } catch {
+            return nil
+        }
+    }
 }
 
 // MARK: - Empty State Components
@@ -703,7 +779,7 @@ private struct FoodItemEditorSheet: View {
     let title: String
     let onSave: (FoodItemDetailed) -> Void
     let onCancel: () -> Void
-    let allowServingMultiplierEdit: Bool
+    let allowServingMultiplierEdit: Bool // New parameter to control slider visibility
 
     @State private var nutritionMode: NutritionEntryMode = .perServing
     @State private var portionSizeOrMultiplier: Decimal = 1
@@ -1061,7 +1137,6 @@ private struct FoodItemEditorSheet: View {
                     glycemicIndex: existingItem.glycemicIndex,
                     assessmentNotes: existingItem.assessmentNotes,
                     imageURL: existingItem.imageURL,
-                    imageFrontURL: existingItem.imageFrontURL,
                     source: existingItem.source
                 )
             case .perServing:
@@ -1080,7 +1155,6 @@ private struct FoodItemEditorSheet: View {
                     glycemicIndex: existingItem.glycemicIndex,
                     assessmentNotes: existingItem.assessmentNotes,
                     imageURL: existingItem.imageURL,
-                    imageFrontURL: existingItem.imageFrontURL,
                     source: existingItem.source
                 )
             }
@@ -1102,7 +1176,6 @@ private struct FoodItemEditorSheet: View {
                     glycemicIndex: nil,
                     assessmentNotes: nil,
                     imageURL: nil,
-                    imageFrontURL: nil,
                     source: .manual
                 )
             case .perServing:
@@ -1120,7 +1193,6 @@ private struct FoodItemEditorSheet: View {
                     glycemicIndex: nil,
                     assessmentNotes: nil,
                     imageURL: nil,
-                    imageFrontURL: nil,
                     source: .manual
                 )
             }
@@ -2020,12 +2092,9 @@ private struct FoodItemGroupListSection: View {
     @ObservedObject var state: FoodSearchStateModel
     let selectedTime: Date?
     let onPersist: (FoodItemDetailed) -> Void
+    let savedFoodIds: Set<UUID>
 
     @State private var showInfoPopup = false
-
-    private var savedFoodIds: Set<UUID> {
-        Set(state.savedFoods?.foodItemsDetailed.map(\.id) ?? [])
-    }
 
     private var preferredInfoHeight: CGFloat {
         var base: CGFloat = 420
@@ -2158,7 +2227,15 @@ private struct FoodItemGroupListSection: View {
                                     }
                                 },
                                 onPersist: onPersist,
-                                onUpdate: state.updateItem,
+                                onUpdate: { updatedItem in
+                                    // If this is a saved food, persist it and update all instances
+                                    if savedFoodIds.contains(updatedItem.id) {
+                                        onPersist(updatedItem)
+                                    } else {
+                                        // Otherwise just update this instance
+                                        state.updateItem(updatedItem)
+                                    }
+                                },
                                 savedFoodIds: savedFoodIds,
                                 isFirst: index == 0,
                                 isLast: index == analysisResult.foodItemsDetailed.count - 1
@@ -2323,37 +2400,7 @@ private struct FoodItemInfoPopup: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     // Product image (if available)
-                    if let imageURLString = foodItem.imageURL, let imageURL = URL(string: imageURLString) {
-                        AsyncImage(url: imageURL) { phase in
-                            switch phase {
-                            case .empty:
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray5))
-                                    .frame(width: 80, height: 80)
-                                    .overlay(
-                                        ProgressView()
-                                            .controlSize(.small)
-                                    )
-                            case let .success(image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 80, height: 80)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                            case .failure:
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray5))
-                                    .frame(width: 80, height: 80)
-                                    .overlay(
-                                        Image(systemName: "photo")
-                                            .font(.system(size: 24))
-                                            .foregroundColor(.secondary)
-                                    )
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
-                    }
+                    FoodItemLargeImage(imageURL: foodItem.imageURL)
                 }
                 .padding(.horizontal)
 
@@ -2678,42 +2725,135 @@ struct InfoCard: View {
 
 // MARK: - Food Item Thumbnail
 
-/// Reusable component for displaying food item product images
+/// Reusable component for displaying food item product images (60x60 - for list rows)
+/// Supports both HTTP(S) URLs and file:// URLs
 private struct FoodItemThumbnail: View {
     let imageURL: String?
 
+    @State private var loadedImage: UIImage?
+    @State private var isLoading = false
+    @State private var loadFailed = false
+
     var body: some View {
-        if let imageURLString = imageURL, let imageURL = URL(string: imageURLString) {
-            AsyncImage(url: imageURL) { phase in
-                switch phase {
-                case .empty:
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(.systemGray5))
-                        .frame(width: 60, height: 60)
-                        .overlay(
-                            ProgressView()
-                                .controlSize(.small)
-                        )
-                case let .success(image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 60, height: 60)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                case .failure:
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(.systemGray5))
-                        .frame(width: 60, height: 60)
-                        .overlay(
-                            Image(systemName: "photo")
-                                .font(.system(size: 20))
-                                .foregroundColor(.secondary)
-                        )
-                @unknown default:
-                    EmptyView()
-                }
+        Group {
+            if let image = loadedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 60, height: 60)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            } else if isLoading {
+                loadingPlaceholder()
+            } else if loadFailed {
+                placeholderImage()
+            } else {
+                Color.clear
+                    .frame(width: 60, height: 60)
             }
         }
+        .task(id: imageURL) {
+            guard let imageURL = imageURL else { return }
+
+            isLoading = true
+            loadFailed = false
+
+            if let image = await FoodImageStorageManager.shared.loadImage(from: imageURL) {
+                loadedImage = image
+                loadFailed = false
+            } else {
+                loadedImage = nil
+                loadFailed = true
+            }
+
+            isLoading = false
+        }
+    }
+
+    private func loadingPlaceholder() -> some View {
+        RoundedRectangle(cornerRadius: 8)
+            .fill(Color(.systemGray5))
+            .frame(width: 60, height: 60)
+            .overlay(
+                ProgressView()
+                    .controlSize(.small)
+            )
+    }
+
+    private func placeholderImage() -> some View {
+        RoundedRectangle(cornerRadius: 8)
+            .fill(Color(.systemGray5))
+            .frame(width: 60, height: 60)
+            .overlay(
+                Image(systemName: "photo")
+                    .font(.system(size: 20))
+                    .foregroundColor(.secondary)
+            )
+    }
+}
+
+/// Reusable component for displaying food item product images (80x80 - for sheets/popups)
+/// Supports both HTTP(S) URLs and file:// URLs
+private struct FoodItemLargeImage: View {
+    let imageURL: String?
+
+    @State private var loadedImage: UIImage?
+    @State private var isLoading = false
+    @State private var loadFailed = false
+
+    var body: some View {
+        Group {
+            if let image = loadedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 80, height: 80)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            } else if isLoading {
+                loadingPlaceholder()
+            } else if loadFailed {
+                placeholderImage()
+            } else {
+                Color.clear
+                    .frame(width: 80, height: 80)
+            }
+        }
+        .task(id: imageURL) {
+            guard let imageURL = imageURL else { return }
+
+            isLoading = true
+            loadFailed = false
+
+            if let image = await FoodImageStorageManager.shared.loadImage(from: imageURL) {
+                loadedImage = image
+                loadFailed = false
+            } else {
+                loadedImage = nil
+                loadFailed = true
+            }
+
+            isLoading = false
+        }
+    }
+
+    private func loadingPlaceholder() -> some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(Color(.systemGray5))
+            .frame(width: 80, height: 80)
+            .overlay(
+                ProgressView()
+                    .controlSize(.small)
+            )
+    }
+
+    private func placeholderImage() -> some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(Color(.systemGray5))
+            .frame(width: 80, height: 80)
+            .overlay(
+                Image(systemName: "photo")
+                    .font(.system(size: 24))
+                    .foregroundColor(.secondary)
+            )
     }
 }
 
@@ -3198,37 +3338,7 @@ extension FoodItemRow {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                     // Product image (if available)
-                    if let imageURLString = foodItem.imageURL, let imageURL = URL(string: imageURLString) {
-                        AsyncImage(url: imageURL) { phase in
-                            switch phase {
-                            case .empty:
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray5))
-                                    .frame(width: 80, height: 80)
-                                    .overlay(
-                                        ProgressView()
-                                            .controlSize(.small)
-                                    )
-                            case let .success(image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 80, height: 80)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                            case .failure:
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray5))
-                                    .frame(width: 80, height: 80)
-                                    .overlay(
-                                        Image(systemName: "photo")
-                                            .font(.system(size: 24))
-                                            .foregroundColor(.secondary)
-                                    )
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
-                    }
+                    FoodItemLargeImage(imageURL: foodItem.imageURL)
                 }
                 .padding(.horizontal)
                 .padding(.top)
@@ -3379,10 +3489,12 @@ struct FoodItemsSelectorView: View {
     let onFoodItemRemoved: (FoodItemDetailed) -> Void
     let isItemAdded: (FoodItemDetailed) -> Bool
     let onDismiss: () -> Void
-    var useTransparentBackground: Bool = false
+    let onImageSearch: (String) async -> [String]
+    let onPersist: ((FoodItemDetailed) -> Void)?
+    let onDelete: ((FoodItemDetailed) -> Void)?
+    let useTransparentBackground: Bool
+
     var filterText: String = ""
-    var onPersist: ((FoodItemDetailed) -> Void)? = nil
-    var onDelete: ((FoodItemDetailed) -> Void)? = nil
 
     private var displayTitle: String {
         if searchResult.source == .database {
@@ -3453,7 +3565,8 @@ struct FoodItemsSelectorView: View {
                                 isLast: index == filteredFoodItems.count - 1,
                                 useTransparentBackground: useTransparentBackground,
                                 onPersist: onPersist,
-                                onDelete: onDelete
+                                onDelete: onDelete,
+                                onImageSearch: onImageSearch
                             )
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .listRowSeparator(index == filteredFoodItems.count - 1 ? .hidden : .visible)
@@ -3478,12 +3591,15 @@ private struct FoodItemsSelectorItemRow: View {
     let isFirst: Bool
     let isLast: Bool
     let useTransparentBackground: Bool
-    var onPersist: ((FoodItemDetailed) -> Void)? = nil
-    var onDelete: ((FoodItemDetailed) -> Void)? = nil
+    let onPersist: ((FoodItemDetailed) -> Void)?
+    let onDelete: ((FoodItemDetailed) -> Void)?
+    let onImageSearch: (String) async -> [String]
 
     @State private var showItemInfo = false
     @State private var showEditSheet = false
     @State private var showDeleteConfirmation = false
+    @State private var showImageSelector = false
+    @State private var isSavingImage = false
 
     private var hasNutritionInfo: Bool {
         switch foodItem.nutrition {
@@ -3537,7 +3653,57 @@ private struct FoodItemsSelectorItemRow: View {
                 }
 
                 // Product image thumbnail (if available) - on the right
-                FoodItemThumbnail(imageURL: foodItem.imageURL)
+                // Make it tappable to open image selector (only for saved foods with onPersist)
+                if onPersist != nil {
+                    Button(action: {
+                        showImageSelector = true
+                    }) {
+                        if isSavingImage {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color(.systemGray5))
+                                .frame(width: 60, height: 60)
+                                .overlay(
+                                    ProgressView()
+                                        .controlSize(.small)
+                                )
+                        } else if foodItem.imageURL != nil {
+                            // Has image - show it without any badge (clean look)
+                            FoodItemThumbnail(imageURL: foodItem.imageURL)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.blue.opacity(0.3), lineWidth: 1)
+                                )
+                        } else {
+                            // No image - show placeholder with camera icon (only hint for adding)
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color(.systemGray5))
+                                .frame(width: 60, height: 60)
+                                .overlay(
+                                    VStack(spacing: 2) {
+                                        Image(systemName: "camera")
+                                            .font(.system(size: 18))
+                                            .foregroundColor(.secondary.opacity(0.6))
+                                        Text("Add")
+                                            .font(.system(size: 9, weight: .medium))
+                                            .foregroundColor(.secondary.opacity(0.6))
+                                    }
+                                )
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isSavingImage)
+                    .contextMenu {
+                        if foodItem.imageURL != nil {
+                            Button(role: .destructive) {
+                                removeImage()
+                            } label: {
+                                Label("Remove Image", systemImage: "trash")
+                            }
+                        }
+                    }
+                } else {
+                    FoodItemThumbnail(imageURL: foodItem.imageURL)
+                }
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
@@ -3545,11 +3711,6 @@ private struct FoodItemsSelectorItemRow: View {
             .contentShape(Rectangle())
             .onTapGesture {
                 showItemInfo = true
-            }
-            .sheet(isPresented: $showItemInfo) {
-                FoodItemInfoPopup(foodItem: foodItem, portionSize: portionSize)
-                    .presentationDetents([.height(preferredItemInfoHeight(for: foodItem)), .large])
-                    .presentationDragIndicator(.visible)
             }
 
             // Compact nutrition info
@@ -3667,15 +3828,26 @@ private struct FoodItemsSelectorItemRow: View {
                 "Are you sure you want to permanently delete \"\(foodItem.name)\" from your saved foods? This action cannot be undone."
             )
         }
+        .sheet(isPresented: $showItemInfo) {
+            FoodItemInfoPopup(foodItem: foodItem, portionSize: portionSize)
+                .presentationDetents([.height(preferredItemInfoHeight(for: foodItem)), .large])
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $showImageSelector) {
+            ImageSelectorView(
+                initialSearchTerm: foodItem.standardName ?? foodItem.name,
+                onSave: { selectedImage in
+                    handleImageSelection(selectedImage)
+                },
+                onSearch: onImageSearch
+            )
+        }
         .sheet(isPresented: $showEditSheet) {
             FoodItemEditorSheet(
                 existingItem: foodItem,
                 title: "Edit Saved Food",
                 allowServingMultiplierEdit: false, // Don't allow editing multiplier for saved foods
-                onSave: { editedItem in
-                    onPersist?(editedItem)
-                    showEditSheet = false
-                },
+                onSave: handleSave,
                 onCancel: {
                     showEditSheet = false
                 }
@@ -3683,6 +3855,46 @@ private struct FoodItemsSelectorItemRow: View {
             .presentationDetents([.height(600), .large])
             .presentationDragIndicator(.visible)
         }
+    }
+
+    private func handleSave(_ editedItem: FoodItemDetailed) {
+        onPersist?(editedItem)
+        showEditSheet = false
+    }
+
+    /// Handles image selection from the ImageSelectorView
+    /// Resizes the image, saves it to storage, and updates the food item
+    private func handleImageSelection(_ image: UIImage) {
+        guard let onPersist = onPersist else { return }
+
+        isSavingImage = true
+        showImageSelector = false
+
+        Task {
+            // Save the image and get the file URL
+            if let imageURL = await FoodImageStorageManager.shared.saveImage(image, for: foodItem.id) {
+                // Update the food item with the new image URL
+                let updatedItem = foodItem.withImageURL(imageURL)
+
+                await MainActor.run {
+                    onPersist(updatedItem)
+                    isSavingImage = false
+                }
+            } else {
+                await MainActor.run {
+                    isSavingImage = false
+                }
+            }
+        }
+    }
+
+    /// Removes the image from the food item
+    private func removeImage() {
+        guard let onPersist = onPersist else { return }
+
+        // Update the food item with nil imageURL
+        let updatedItem = foodItem.withImageURL(nil)
+        onPersist(updatedItem)
     }
 
     private func preferredItemInfoHeight(for item: FoodItemDetailed) -> CGFloat {

@@ -183,6 +183,7 @@
         <attribute name="per100" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="portionSize" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="standardName" optional="YES" attributeType="String"/>
         <attribute name="standardServing" optional="YES" attributeType="String"/>
         <attribute name="standardServingSize" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="sugars" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>

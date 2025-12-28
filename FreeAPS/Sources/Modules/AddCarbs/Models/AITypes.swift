@@ -413,31 +413,18 @@ enum ImageSearchProvider {
     static let defaultProvider: ImageSearchProvider = .aiModel(.gemini(.gemini_2_5_pro))
 }
 
-enum TextSearchProvider {
+enum AITextProvider {
     case aiModel(AIModel)
-    case usdaFoodData
-    case openFoodFacts
-
-    var isAI: Bool {
-        switch self {
-        case .aiModel: true
-        default: false
-        }
-    }
 
     var providerName: String {
         switch self {
         case let .aiModel(model): model.provider.displayName
-        case .usdaFoodData: "USDA Food Data"
-        case .openFoodFacts: "OpenFoodFacts"
         }
     }
 
     var modelName: String? {
         switch self {
         case let .aiModel(model): model.displayName
-        case .usdaFoodData: nil
-        case .openFoodFacts: nil
         }
     }
 
@@ -452,12 +439,10 @@ enum TextSearchProvider {
     var fast: Bool? {
         switch self {
         case let .aiModel(model): model.fast
-        case .usdaFoodData: nil
-        case .openFoodFacts: nil
         }
     }
 
-    static let allCases: [TextSearchProvider] = [
+    static let allCases: [ImageSearchProvider] = [
         .aiModel(.openAI(.gpt_4o)),
         .aiModel(.openAI(.gpt_4o_mini)),
         .aiModel(.openAI(.gpt_5)),
@@ -468,7 +453,28 @@ enum TextSearchProvider {
         .aiModel(.gemini(.gemini_2_5_pro)),
         .aiModel(.gemini(.gemini_2_5_flash)),
         .aiModel(.claude(.sonnet_4_5)),
-        .aiModel(.claude(.haiku_4_5)),
+        .aiModel(.claude(.haiku_4_5))
+    ]
+
+    static let defaultProvider: AITextProvider = .aiModel(.gemini(.gemini_2_5_pro))
+}
+
+enum TextSearchProvider {
+    case usdaFoodData
+    case openFoodFacts
+
+    var providerName: String {
+        switch self {
+        case .usdaFoodData: "USDA Food Data"
+        case .openFoodFacts: "OpenFoodFacts"
+        }
+    }
+
+    var description: String {
+        providerName
+    }
+
+    static let allCases: [TextSearchProvider] = [
         .usdaFoodData,
         .openFoodFacts
     ]
@@ -485,24 +491,8 @@ enum BarcodeSearchProvider {
         }
     }
 
-    var modelName: String? {
-        switch self {
-        case .openFoodFacts: nil
-        }
-    }
-
     var description: String {
-        if let model = modelName {
-            "\(providerName) (\(model))"
-        } else {
-            providerName
-        }
-    }
-
-    var fast: Bool? {
-        switch self {
-        case .openFoodFacts: nil
-        }
+        providerName
     }
 
     static let allCases: [BarcodeSearchProvider] = [
@@ -604,18 +594,10 @@ extension ImageSearchProvider: RawRepresentable, Codable {
     }
 }
 
-extension TextSearchProvider: RawRepresentable, Codable {
+extension AITextProvider: RawRepresentable, Codable {
     public typealias RawValue = String
 
     public init?(rawValue: String) {
-        if rawValue == "usdaFoodData" {
-            self = .usdaFoodData
-            return
-        }
-        if rawValue == "openFoodFacts" {
-            self = .openFoodFacts
-            return
-        }
         let parts = rawValue.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true).map(String.init)
         guard let head = parts.first else { return nil }
         let tail = parts.count > 1 ? parts[1] : ""
@@ -630,12 +612,50 @@ extension TextSearchProvider: RawRepresentable, Codable {
 
     public var rawValue: String {
         switch self {
+        case let .aiModel(model):
+            return "aiModel/\(model.rawValue)"
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        guard let value = AITextProvider(rawValue: string) else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Invalid ImageSearchProvider string: \(string)"
+            )
+        }
+        self = value
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+extension TextSearchProvider: RawRepresentable, Codable {
+    public typealias RawValue = String
+
+    public init?(rawValue: String) {
+        if rawValue == "usdaFoodData" {
+            self = .usdaFoodData
+            return
+        }
+        if rawValue == "openFoodFacts" {
+            self = .openFoodFacts
+            return
+        }
+        return nil
+    }
+
+    public var rawValue: String {
+        switch self {
         case .usdaFoodData:
             return "usdaFoodData"
         case .openFoodFacts:
             return "openFoodFacts"
-        case let .aiModel(model):
-            return "aiModel/\(model.rawValue)"
         }
     }
 
@@ -699,6 +719,18 @@ extension ImageSearchProvider: Hashable, Identifiable {
     public var id: String { rawValue }
 
     public static func == (lhs: ImageSearchProvider, rhs: ImageSearchProvider) -> Bool {
+        lhs.rawValue == rhs.rawValue
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(rawValue)
+    }
+}
+
+extension AITextProvider: Hashable, Identifiable {
+    public var id: String { rawValue }
+
+    public static func == (lhs: AITextProvider, rhs: AITextProvider) -> Bool {
         lhs.rawValue == rhs.rawValue
     }
 

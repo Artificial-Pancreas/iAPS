@@ -65,59 +65,83 @@ struct FoodSearchView: View {
             VStack(spacing: 10) {
                 // First Row - Search Text Field
                 HStack(spacing: 10) {
-                    Image(
-                        systemName: state.showSavedFoods ? FoodItemSource.database.icon : (
-                            state.isBarcode ? FoodItemSource.barcode.icon :
-                                UserDefaults.standard.textSearchProvider.isAI ? FoodItemSource.aiText.icon : FoodItemSource.search
-                                .icon
-                        )
-                    )
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.secondary)
-
-                    TextField(
-                        state
-                            .showSavedFoods ? "Search saved foods..." :
-                            (UserDefaults.standard.textSearchProvider.isAI ? "Ask AI..." : "Search foods..."),
-                        text: $state.foodSearchText
-                    )
-                    .font(.body)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .submitLabel(.search)
-                    .focused($isTextFieldFocused)
-                    .onSubmit {
-                        state.searchByText(query: state.foodSearchText)
-                        state.showingFoodSearch = true
-                    }
-                    .onChange(of: isTextFieldFocused) { _, newValue in
-                        if newValue {
-                            state.showingFoodSearch = true
-                        }
-                    }
-                    .onChange(of: state.foodSearchText) { _, newValue in
-                        // Update the saved foods filter text
-                        state.filterText = newValue
-                    }
-
-                    // Clear button
-                    if !state.foodSearchText.isEmpty {
-                        Button(action: {
-                            state.foodSearchText = ""
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.system(size: 16))
-                                .foregroundColor(.secondary.opacity(0.6))
+                    // AI/Search Toggle Button (only when not showing saved foods)
+                    if !state.showSavedFoods {
+                        Button {
+                            state.aiTextAnalysis.toggle()
+                        } label: {
+                            Image(
+                                systemName: state.isBarcode ? FoodItemSource.barcode
+                                    .icon : (state.aiTextAnalysis ? FoodItemSource.aiText.icon : FoodItemSource.search.icon)
+                            )
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(state.isBarcode ? .blue.opacity(0.5) : (state.aiTextAnalysis ? .purple : .blue))
+                            .frame(width: 36, height: 36)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .fill(
+                                        (state.isBarcode ? Color.blue : (state.aiTextAnalysis ? Color.purple : Color.blue))
+                                            .opacity(0.12)
+                                    )
+                            )
                         }
                         .buttonStyle(PlainButtonStyle())
+                        .disabled(state.isBarcode)
                     }
+
+                    // Search TextField Container
+                    HStack(spacing: 10) {
+                        // Icon only shown for saved foods
+                        if state.showSavedFoods {
+                            Image(systemName: FoodItemSource.database.icon)
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.secondary)
+                        }
+
+                        TextField(
+                            state
+                                .showSavedFoods ? "Search saved foods..." :
+                                (state.aiTextAnalysis ? "Ask AI..." : "Search foods..."),
+                            text: $state.foodSearchText
+                        )
+                        .font(.body)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .submitLabel(.search)
+                        .focused($isTextFieldFocused)
+                        .onSubmit {
+                            state.searchByText(query: state.foodSearchText)
+                            state.showingFoodSearch = true
+                        }
+                        .onChange(of: isTextFieldFocused) { _, newValue in
+                            if newValue {
+                                state.showingFoodSearch = true
+                            }
+                        }
+                        .onChange(of: state.foodSearchText) { _, newValue in
+                            // Update the saved foods filter text
+                            state.filterText = newValue
+                        }
+
+                        // Clear button
+                        if !state.foodSearchText.isEmpty {
+                            Button(action: {
+                                state.foodSearchText = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.secondary.opacity(0.6))
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color(.systemGray5))
+                    )
                 }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color(.systemGray5))
-                )
 
                 if !state.showSavedFoods, state.latestMultipleSelectSearch == nil {
                     HStack(spacing: 10) {

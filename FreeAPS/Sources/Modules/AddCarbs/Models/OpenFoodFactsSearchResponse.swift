@@ -161,11 +161,6 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         if let decodedDataSource = try? container.decode(FoodDataSource.self, forKey: .dataSource) {
             dataSource = decodedDataSource
         }
-
-        // ✅ DEBUG: Sofort nach Decoding prüfen
-        print("🖼️ DECODING DEBUG in OpenFoodFactsProduct:")
-        print("   - imageURL: \(imageURL ?? "nil")")
-        print("   - imageFrontURL: \(imageFrontURL ?? "nil")")
     }
 
     func encode(to encoder: Encoder) throws {
