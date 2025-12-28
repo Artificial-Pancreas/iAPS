@@ -51,6 +51,8 @@ struct FoodSearchSettingsView: View {
     @AppStorage(UserDefaults.AIKey.nutritionAuthority.rawValue) private var preferredNutritionAuthority: NutritionAuthority =
         .localDefault
 
+    @AppStorage(UserDefaults.AIKey.sendSmallerImages.rawValue) private var sendSmallerImages: Bool = false
+
     @State private var preferredLanguage: String = ""
     @State private var preferredRegion: String = ""
 
@@ -396,6 +398,15 @@ struct FoodSearchSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                     }
+                }
+
+                Section(
+                    header: Text("Image Processing"),
+                    footer: Text(
+                        "When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail."
+                    )
+                ) {
+                    Toggle("Send smaller images to AI", isOn: $sendSmallerImages)
                 }
 
                 // Statistics Section

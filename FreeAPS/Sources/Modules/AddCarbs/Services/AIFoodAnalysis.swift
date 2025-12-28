@@ -115,7 +115,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         let base64Image = try await ImageCompression.getImageBase64(
             for: image,
             aggressiveImageCompression: providerImpl.needAggressiveImageCompression,
-            maxSize: aiModel.maxImageDimension
+            maxSize: UserDefaults.standard.shouldSendSmallerImagesToAI ? 1024 : aiModel.maxImageDimension
         )
         let analysisPrompt = try AIPrompts.getAnalysisPrompt(.image(image), responseSchema: AIAnalysisResult.schemaVisual)
 

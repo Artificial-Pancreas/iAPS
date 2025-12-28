@@ -13,6 +13,7 @@ extension UserDefaults {
         case preferredRegion = "com.loopkit.Loop.AIPreferredRegion"
         case nutritionAuthority = "com.loopkit.Loop.AINutritionAuthority"
         case aiProviderStatistics = "com.loopkit.Loop.AIStatistics"
+        case sendSmallerImages = "com.loopkit.Loop.AISendSmallerImages"
     }
 
     var claudeAPIKey: String {
@@ -96,6 +97,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: AIKey.preferredRegion.rawValue)
+        }
+    }
+
+    var shouldSendSmallerImagesToAI: Bool {
+        get {
+            bool(forKey: AIKey.sendSmallerImages.rawValue)
+        }
+        set {
+            set(newValue, forKey: AIKey.sendSmallerImages.rawValue)
         }
     }
 
