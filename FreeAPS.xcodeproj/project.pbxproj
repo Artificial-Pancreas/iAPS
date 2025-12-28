@@ -89,7 +89,6 @@
 		19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7282E97AE520000BE4D /* BarcodeScannerService.swift */; };
 		19C3C7342E97AE520000BE4D /* UserDefaults+Loop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */; };
 		19C3C7352E97AE520000BE4D /* AIFoodAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7272E97AE520000BE4D /* AIFoodAnalysis.swift */; };
-		19C3C73A2E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7202E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift */; };
 		19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C72B2E97AE520000BE4D /* OpenFoodFactsService.swift */; };
 		19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */; };
 		19C3C7442E97AE7B0000BE4D /* ModernCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C73E2E97AE7B0000BE4D /* ModernCameraView.swift */; };
@@ -733,7 +732,6 @@
 		19C166682756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19C166692756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19C3C7182E97AE520000BE4D /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		19C3C7202E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenFoodFactsProducts+Extensions.swift"; sourceTree = "<group>"; };
 		19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchStateModel.swift; sourceTree = "<group>"; };
 		19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsSearchResponse.swift; sourceTree = "<group>"; };
 		19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Loop.swift"; sourceTree = "<group>"; };
@@ -1450,18 +1448,9 @@
 			path = AutoISF;
 			sourceTree = "<group>";
 		};
-		19C3C7212E97AE520000BE4D /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				19C3C7202E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		19C3C7262E97AE520000BE4D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				19C3C7212E97AE520000BE4D /* Extensions */,
 				19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */,
 				F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */,
 				19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */,
@@ -3562,7 +3551,6 @@
 				19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */,
 				19C3C7342E97AE520000BE4D /* UserDefaults+Loop.swift in Sources */,
 				19C3C7352E97AE520000BE4D /* AIFoodAnalysis.swift in Sources */,
-				19C3C73A2E97AE520000BE4D /* OpenFoodFactsProducts+Extensions.swift in Sources */,
 				19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */,
 				19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */,
 				38569353270B5E350002C50D /* CGMRootView.swift in Sources */,

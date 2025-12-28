@@ -1,4 +1,4 @@
-Do NOT invent visual details.
+DO NOT invent visual details.
 
 After inspecting the image, you MUST first classify the image into exactly one of the following types:
   • food_photo – a photo of prepared food intended for consumption (e.g., plated meal, bowl, snack, packaged food with visible contents).

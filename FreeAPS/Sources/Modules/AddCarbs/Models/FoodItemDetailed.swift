@@ -58,6 +58,7 @@ enum FoodNutrition: Equatable {
 struct FoodItemDetailed: Identifiable, Equatable {
     let id: UUID
     let name: String
+    let standardName: String?
     let confidence: ConfidenceLevel?
     let brand: String?
     let portionSize: Decimal?
@@ -114,10 +115,12 @@ struct FoodItemDetailed: Identifiable, Equatable {
         assessmentNotes: String? = nil,
         imageURL: String? = nil,
         imageFrontURL: String? = nil,
+        standardName: String? = nil,
         source: FoodItemSource
     ) {
         self.id = id ?? UUID()
         self.name = name
+        self.standardName = standardName
         self.confidence = confidence
         self.brand = brand
         self.portionSize = portionSize
@@ -151,10 +154,12 @@ struct FoodItemDetailed: Identifiable, Equatable {
         assessmentNotes: String? = nil,
         imageURL: String? = nil,
         imageFrontURL: String? = nil,
+        standardName: String? = nil,
         source: FoodItemSource
     ) {
         self.id = id ?? UUID()
         self.name = name
+        self.standardName = standardName
         self.confidence = confidence
         self.brand = brand
         portionSize = nil

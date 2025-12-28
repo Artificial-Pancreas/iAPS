@@ -239,6 +239,7 @@ extension TextAnalysisService {
                 visualCues: item.visualCues,
                 imageURL: nil,
                 imageFrontURL: nil,
+                standardName: item.standardName,
                 source: source
             )
         }
@@ -317,9 +318,10 @@ enum ImageAnalysisType: String, JSON, Identifiable, CaseIterable {
     var id: ImageAnalysisType { self }
 }
 
-struct FoodItemDetailedDetailed: Identifiable {
+struct AnalysiedFoodItem: Identifiable {
     let id = UUID()
     let name: String
+    let standardName: String?
     let confidence: AIConfidenceLevel?
     let brand: String?
     let portionEstimateSize: Decimal?
@@ -339,11 +341,12 @@ struct FoodItemDetailedDetailed: Identifiable {
     let assessmentNotes: String?
 }
 
-extension FoodItemDetailedDetailed: Decodable {
+extension AnalysiedFoodItem: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         let name = try container.decodeTrimmedIfPresent(forKey: .name) ?? "Food item"
+        let standardName = try container.decodeTrimmedIfPresent(forKey: .standardName)
         let confidence: AIConfidenceLevel = try container.decode(AIConfidenceLevel.self, forKey: .confidence)
         let brand = try container.decodeTrimmedIfPresent(forKey: .brand)
         let standardServing = try container.decodeTrimmedIfPresent(forKey: .standardServing)
@@ -362,6 +365,7 @@ extension FoodItemDetailedDetailed: Decodable {
         let assessmentNotes = try container.decodeTrimmedIfPresent(forKey: .assessmentNotes)
 
         self.name = name
+        self.standardName = standardName
         self.confidence = confidence
         self.brand = brand
         self.portionEstimateSize = portionEstimateSize
@@ -382,6 +386,7 @@ extension FoodItemDetailedDetailed: Decodable {
 
     private enum CodingKeys: String, CodingKey {
         case name
+        case standardName = "standard_name"
         case confidence
         case brand
         case portionEstimateSize = "portion_estimate_size"
@@ -402,8 +407,8 @@ extension FoodItemDetailedDetailed: Decodable {
     }
 }
 
-extension FoodItemDetailedDetailed {
-    private static var fields: [(FoodItemDetailedDetailed.CodingKeys, Any)] {
+extension AnalysiedFoodItem {
+    private static var fields: [(AnalysiedFoodItem.CodingKeys, Any)] {
         [
             (.name, "string, required; specific food name"),
             (.confidence, "decimal 0 to 1; required; confidence for this item"),
@@ -457,36 +462,13 @@ extension FoodItemDetailedDetailed {
 struct AIAnalysisResult: Identifiable, Equatable {
     let id = UUID()
     let imageType: ImageAnalysisType?
-    let foodItemsDetailed: [FoodItemDetailedDetailed]
+    let foodItemsDetailed: [AnalysiedFoodItem]
     let briefDescription: String?
     let overallDescription: String?
     let diabetesConsiderations: String?
 
     static func == (lhs: AIAnalysisResult, rhs: AIAnalysisResult) -> Bool {
         lhs.id == rhs.id
-    }
-
-    // Helper function to clean food names for display
-    private func cleanFoodName(_ name: String) -> String {
-        var cleaned = name
-
-        // Remove common technical terms while preserving essential info
-        let removals = [
-            " Breast", " Fillet", " Thigh", " Florets", " Spears",
-            " Cubes", " Medley", " Portion"
-        ]
-
-        for removal in removals {
-            cleaned = cleaned.replacingOccurrences(of: removal, with: "")
-        }
-
-        // Capitalize first letter and trim
-        cleaned = cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !cleaned.isEmpty {
-            cleaned = cleaned.prefix(1).uppercased() + cleaned.dropFirst()
-        }
-
-        return cleaned.isEmpty ? name : cleaned
     }
 }
 
@@ -496,8 +478,8 @@ extension AIAnalysisResult: Decodable {
         let imageType: ImageAnalysisType? = try container
             .decodeIfPresent(ImageAnalysisType.self, forKey: .imageType) ?? .foodPhoto
 
-        let foodItemsDetailed: [FoodItemDetailedDetailed] = try container
-            .decode([FoodItemDetailedDetailed].self, forKey: .foodItemsDetailed)
+        let foodItemsDetailed: [AnalysiedFoodItem] = try container
+            .decode([AnalysiedFoodItem].self, forKey: .foodItemsDetailed)
 
         let briefDescription: String? = try container.decodeTrimmedIfPresent(forKey: .briefDescription)
         let overallDescription: String? = try container.decodeTrimmedIfPresent(forKey: .overallDescription)
@@ -531,7 +513,7 @@ extension AIAnalysisResult {
     static var schemaVisual: [(String, Any)] {
         let fields = [
             (.imageType, "string enum: food_photo or menu_photo or recipe_photo"),
-            (.foodItemsDetailed, FoodItemDetailedDetailed.schemaVisual),
+            (.foodItemsDetailed, AnalysiedFoodItem.schemaVisual),
             (.overallDescription, "describe what you see on the photo; (language)")
         ] + self.fields
 
@@ -542,7 +524,7 @@ extension AIAnalysisResult {
 
     static var schemaText: [(String, Any)] {
         let fields = [
-            (.foodItemsDetailed, [FoodItemDetailedDetailed.schemaText]),
+            (.foodItemsDetailed, [AnalysiedFoodItem.schemaText]),
             (.overallDescription, "describe what you perceived from the user input; (language)")
         ] + self.fields
 
