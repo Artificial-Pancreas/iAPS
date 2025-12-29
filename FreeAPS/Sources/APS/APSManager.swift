@@ -135,6 +135,11 @@ final class BaseAPSManager: APSManager, Injectable {
         CoreDataStorage().insulinConcentration()
     }
 
+    var override: Override? {
+        guard let last = OverrideStorage().fetchLatestOverride().first, last.enabled else { return nil }
+        return last
+    }
+
     init(resolver: Resolver) {
         injectServices(resolver)
         openAPS = OpenAPS(
@@ -374,7 +379,8 @@ final class BaseAPSManager: APSManager, Injectable {
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary) }
+            .flatMap { _ in
+                self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary, override: self.override) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async { [self] in

@@ -42,6 +42,11 @@ extension Home {
         ) var fetchedProfiles: FetchedResults<OverridePresets>
 
         @FetchRequest(
+            entity: Auto_ISF.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var fetchedAISF: FetchedResults<Auto_ISF>
+
+        @FetchRequest(
             entity: TempTargets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var sliderTTpresets: FetchedResults<TempTargets>
@@ -795,7 +800,7 @@ extension Home {
                 .font(.timeSettingFont)
                 .background(TimeEllipse(characters: 10))
                 .onTapGesture {
-                    if state.autoisf {
+                    if (state.autoisf && !disabled()) || enabled() {
                         displayAutoHistory.toggle()
                     } else {
                         displayDynamicHistory.toggle()
@@ -803,6 +808,18 @@ extension Home {
                 }
             }
             .offset(x: 130)
+        }
+
+        private func enabled() -> Bool {
+            guard let or = fetchedPercent.first, or.enabled else { return false }
+            guard let aisf = fetchedAISF.first else { return false }
+            return aisf.autoisf
+        }
+
+        private func disabled() -> Bool {
+            guard let or = fetchedPercent.first, or.enabled else { return false }
+            guard let aisf = fetchedAISF.first else { return false }
+            return !aisf.autoisf
         }
 
         private var animateLoopView: Bool {

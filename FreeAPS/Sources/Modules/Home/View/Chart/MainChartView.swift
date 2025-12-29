@@ -126,12 +126,13 @@ struct MainChartView: View {
             .onChange(of: scenePhase) {
                 switch scenePhase {
                 case .active:
-                    shouldScrollAfterUpdate = true
                     subscribeToUpdates()
                     updateRequests.send(())
                 case .background,
                      .inactive:
                     unsubscribeFromUpdates()
+                @unknown default:
+                    print("unknown scene phase: \(scenePhase)")
                 }
             }
         }
@@ -146,7 +147,6 @@ struct MainChartView: View {
 
         let geom = CalculatedGeometries.make(fullSize: fullSize, data: data)
 
-        // TODO: remove this
         let ended = Date.now
         debug(
             .service,
@@ -635,12 +635,12 @@ struct MainChartCanvas: View {
                 let glucoseDecimal = Decimal(peak.glucose)
                 let fillColour = {
                     if glucoseDecimal < data.lowGlucose {
-                        return colorScheme == .dark ? Color.loopRed.opacity(0.7) : Color.loopRed.opacity(0.7)
+                        return Color.peakRed
                     }
                     if glucoseDecimal > data.highGlucose {
-                        return colorScheme == .dark ? Color.orange.opacity(0.4) : Color.loopYellow.opacity(0.4)
+                        return Color.peakOrange
                     }
-                    return colorScheme == .dark ? Color.darkGreen.opacity(0.6) : Color.darkGreen.opacity(0.4)
+                    return Color.peakGreen
                 }()
 
                 ZStack {
