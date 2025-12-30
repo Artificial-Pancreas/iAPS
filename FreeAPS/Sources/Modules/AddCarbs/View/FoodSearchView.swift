@@ -27,12 +27,12 @@ struct FoodSearchView: View {
                 hypoTreatmentButtonLabelKey: hypoTreatmentButtonLabelKey
             )
         }
-        .fullScreenCover(item: state.foodSearchRouteBinding) { route in
+        .fullScreenCover(item: state.foodSearchFullScreenRouteBinding) { route in
             switch route {
             case .camera:
                 ModernCameraView(
                     onImageCaptured: { image in
-                        state.startImageAnalysis(image: image)
+                        state.handleImageCaptured(image: image)
                     }
                 )
             case .barcodeScanner:
@@ -49,6 +49,20 @@ struct FoodSearchView: View {
                     state: state,
                     onCancel: {
                         state.cancelSearchTask()
+                    }
+                )
+            }
+        }
+        .sheet(item: state.foodSearchSheetRouteBinding) { route in
+            switch route {
+            case let .imageCommentInput(image):
+                ImageCommentInputView(
+                    image: image,
+                    onContinue: { comment in
+                        state.startImageAnalysis(image: image, comment: comment)
+                    },
+                    onCancel: {
+                        state.foodSearchRoute = nil
                     }
                 )
             }
@@ -239,6 +253,26 @@ struct FoodSearchView: View {
                                     } label: {
                                         Label("Choose from Library", systemImage: "photo.on.rectangle")
                                     }
+
+                                    if !UserDefaults.standard.aiAddImageCommentByDefault {
+                                        Divider()
+
+                                        Button {
+                                            state.forceShowCommentForNextImage = true
+                                            state.foodSearchRoute = .camera
+                                            state.showingFoodSearch = true
+                                        } label: {
+                                            Label("Photo (+ comment)", systemImage: "camera.badge.ellipsis")
+                                        }
+
+                                        Button {
+                                            state.forceShowCommentForNextImage = true
+                                            showPhotoPicker = true
+                                            state.showingFoodSearch = true
+                                        } label: {
+                                            Label("Library (+ comment)", systemImage: "square.and.pencil")
+                                        }
+                                    }
                                 }
                                 .photosPicker(
                                     isPresented: $showPhotoPicker,
@@ -270,7 +304,7 @@ struct FoodSearchView: View {
                     if let data = try await selectedPhotoItem.loadTransferable(type: Data.self),
                        let image = UIImage(data: data)
                     {
-                        state.startImageAnalysis(image: image)
+                        state.handleImageCaptured(image: image)
                         self.selectedPhotoItem = nil
                     }
                 }

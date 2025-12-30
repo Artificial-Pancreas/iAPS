@@ -1,12 +1,35 @@
 import Combine
 import SwiftUI
 
-enum FoodSearchRoute: String, Identifiable {
+enum FoodSearchRoute {
+    case camera
+    case barcodeScanner
+    case aiProgress
+    case imageCommentInput(UIImage)
+}
+
+enum FoodSearchFullScreenRoute: Identifiable {
     case camera
     case barcodeScanner
     case aiProgress
 
-    var id: FoodSearchRoute { self }
+    var id: String {
+        switch self {
+        case .camera: return "camera"
+        case .barcodeScanner: return "barcodeScanner"
+        case .aiProgress: return "aiProgress"
+        }
+    }
+}
+
+enum FoodSearchSheetRoute: Identifiable {
+    case imageCommentInput(UIImage)
+
+    var id: String {
+        switch self {
+        case .imageCommentInput: return "imageCommentInput"
+        }
+    }
 }
 
 final class FoodSearchStateModel: ObservableObject {
@@ -33,6 +56,8 @@ final class FoodSearchStateModel: ObservableObject {
 
     @Published var aiTextAnalysis = UserDefaults.standard.aiTextSearchByDefault
 
+    @Published var forceShowCommentForNextImage = false
+
     var searchResultsState = SearchResultsState.empty
 
     // analysis progress
@@ -50,13 +75,40 @@ final class FoodSearchStateModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
-    var foodSearchRouteBinding: Binding<FoodSearchRoute?> {
+    var foodSearchFullScreenRouteBinding: Binding<FoodSearchFullScreenRoute?> {
         Binding(
             get: { [weak self] in
-                self?.foodSearchRoute
+                switch self?.foodSearchRoute {
+                case .camera: .camera
+                case .aiProgress: .aiProgress
+                case .barcodeScanner: .barcodeScanner
+                default: nil
+                }
             },
             set: { [weak self] newValue in
-                self?.foodSearchRoute = newValue
+                self?.foodSearchRoute = switch newValue {
+                case .camera: .camera
+                case .barcodeScanner: .barcodeScanner
+                case .aiProgress: .aiProgress
+                default: nil
+                }
+            }
+        )
+    }
+
+    var foodSearchSheetRouteBinding: Binding<FoodSearchSheetRoute?> {
+        Binding(
+            get: { [weak self] in
+                switch self?.foodSearchRoute {
+                case let .imageCommentInput(image): .imageCommentInput(image)
+                default: nil
+                }
+            },
+            set: { [weak self] newValue in
+                self?.foodSearchRoute = switch newValue {
+                case let .imageCommentInput(image): .imageCommentInput(image)
+                default: nil
+                }
             }
         )
     }
@@ -89,8 +141,20 @@ final class FoodSearchStateModel: ObservableObject {
         searchByText(query: barcode)
     }
 
-    func startImageAnalysis(image: UIImage) {
-        startAIAnalysis(analysisRequest: .image(image))
+    func startImageAnalysis(image: UIImage, comment: String?) {
+        startAIAnalysis(analysisRequest: .image(image, comment))
+    }
+
+    func handleImageCaptured(image: UIImage) {
+        let shouldShowComment = forceShowCommentForNextImage || UserDefaults.standard.aiAddImageCommentByDefault
+
+        forceShowCommentForNextImage = false
+
+        if shouldShowComment {
+            foodSearchRoute = .imageCommentInput(image)
+        } else {
+            startImageAnalysis(image: image, comment: nil)
+        }
     }
 
     func searchByText(query: String) {
@@ -229,8 +293,8 @@ final class FoodSearchStateModel: ObservableObject {
         searchTask = Task {
             do {
                 switch analysisRequest {
-                case let .image(image):
-                    let result = try await aiService.analyzeFoodImage(image) { telemetryMessage in
+                case let .image(image, comment):
+                    let result = try await aiService.analyzeFoodImage(image, comment: comment) { telemetryMessage in
                         Task { @MainActor in
                             if telemetryMessage.hasPrefix("ETA: ") {
                                 let etaString = telemetryMessage.dropFirst(5)

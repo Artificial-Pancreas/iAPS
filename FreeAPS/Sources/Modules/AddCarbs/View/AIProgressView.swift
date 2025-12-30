@@ -68,7 +68,7 @@ struct AIProgressView: View {
 
         return VStack(spacing: 12) {
             switch state.aiAnalysisRequest {
-            case let .image(image):
+            case let .image(image, _):
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()

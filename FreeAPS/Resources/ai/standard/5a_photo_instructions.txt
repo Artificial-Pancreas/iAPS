@@ -39,3 +39,4 @@ CRITICAL VALIDATION RULE (must be applied before output):
   (e.g. single slice, 100 g) OR set standard_serving_size to null.
 • do NOT reuse or scale down the portion to fabricate a standard serving.
 
+(user_comment)

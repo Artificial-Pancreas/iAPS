@@ -79,6 +79,7 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
     /// Analyze food image with telemetry callbacks for progress tracking
     func analyzeFoodImage(
         _ image: UIImage,
+        comment: String?,
         telemetryCallback: ((String) -> Void)?
     ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.aiImageProvider.description) …")
@@ -113,7 +114,10 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
             aggressiveImageCompression: providerImpl.needAggressiveImageCompression,
             maxSize: UserDefaults.standard.shouldSendSmallerImagesToAI ? 1024 : aiModel.maxImageDimension
         )
-        let analysisPrompt = try AIPrompts.getAnalysisPrompt(.image(image), responseSchema: AIAnalysisResult.schemaVisual)
+        let analysisPrompt = try AIPrompts.getAnalysisPrompt(
+            .image(image, comment),
+            responseSchema: AIAnalysisResult.schemaVisual
+        )
 
         // Track processing time
         let startTime = Date()

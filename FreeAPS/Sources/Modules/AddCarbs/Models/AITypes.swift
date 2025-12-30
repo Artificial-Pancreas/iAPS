@@ -770,12 +770,12 @@ struct ModelTimeoutsConfig {
 }
 
 enum AnalysisRequest {
-    case image(_ image: UIImage)
+    case image(_ image: UIImage, _ comment: String?)
     case query(_ query: String)
 
     var image: UIImage? {
         switch self {
-        case let .image(image): image
+        case let .image(image, _): image
         case .query: nil
         }
     }

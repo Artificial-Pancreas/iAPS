@@ -56,6 +56,8 @@ struct FoodSearchSettingsView: View {
 
     @AppStorage(UserDefaults.AIKey.aiTextSearchByDefault.rawValue) private var aiTextSearchByDefault: Bool = false
 
+    @AppStorage(UserDefaults.AIKey.aiAddImageCommentByDefault.rawValue) private var aiAddImageCommentByDefault: Bool = false
+
     @AppStorage(UserDefaults.AIKey.sendSmallerImages.rawValue) private var sendSmallerImages: Bool = false
 
     @State private var preferredLanguage: String = ""
@@ -348,12 +350,6 @@ struct FoodSearchSettingsView: View {
                 }
 
                 Section(
-                    header: Text("Text Search"),
-                ) {
-                    Toggle("Use AI search by default", isOn: $aiTextSearchByDefault)
-                }
-
-                Section(
                     header: Text("Localization"),
                     footer: Text(
                         "Choose a specific language and region for AI output."
@@ -402,6 +398,24 @@ struct FoodSearchSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                     }
+                }
+
+                Section(
+                    header: Text("Default Text Search Method"),
+                    footer: Text(
+                        "Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field."
+                    )
+                ) {
+                    Toggle("Default to AI search", isOn: $aiTextSearchByDefault)
+                }
+
+                Section(
+                    header: Text("Image Annotations"),
+                    footer: Text(
+                        "When enabled, you'll be prompted to add optional text descriptions to food images."
+                    )
+                ) {
+                    Toggle("Show annotation prompt for images", isOn: $aiAddImageCommentByDefault)
                 }
 
                 Section(
