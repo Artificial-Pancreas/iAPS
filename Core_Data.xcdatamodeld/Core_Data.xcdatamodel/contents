@@ -187,6 +187,7 @@
         <attribute name="standardServing" optional="YES" attributeType="String"/>
         <attribute name="standardServingSize" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="sugars" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="tags" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Profiles" representedClassName="Profiles" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
