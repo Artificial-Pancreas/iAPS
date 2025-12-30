@@ -442,7 +442,7 @@ enum AITextProvider {
         }
     }
 
-    static let allCases: [ImageSearchProvider] = [
+    static let allCases: [AITextProvider] = [
         .aiModel(.openAI(.gpt_4o)),
         .aiModel(.openAI(.gpt_4o_mini)),
         .aiModel(.openAI(.gpt_5)),

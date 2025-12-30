@@ -39,26 +39,15 @@ struct FoodSearchSettingsView: View {
     @State private var showOpenAIKey: Bool = false
     @State private var showGoogleGeminiKey: Bool = false
 
-    @AppStorage(UserDefaults.AIKey.aiImageProvider.rawValue) private var imageSearchProvider: ImageSearchProvider =
-        .defaultProvider
+    @State private var imageSearchProvider: ImageSearchProvider = .defaultProvider
+    @State private var aiTextProvider: AITextProvider = .defaultProvider
+    @State private var textSearchProvider: TextSearchProvider = .defaultProvider
+    @State private var barcodeSearchProvider: BarcodeSearchProvider = .defaultProvider
+    @State private var preferredNutritionAuthority: NutritionAuthority = .localDefault
 
-    @AppStorage(UserDefaults.AIKey.aiTextProvider.rawValue) private var aiTextProvider: AITextProvider =
-        .defaultProvider
-
-    @AppStorage(UserDefaults.AIKey.textSearchProvider.rawValue) private var textSearchProvider: TextSearchProvider =
-        .defaultProvider
-
-    @AppStorage(UserDefaults.AIKey.barcodeSearchProvider.rawValue) private var barcodeSearchProvider: BarcodeSearchProvider =
-        .defaultProvider
-
-    @AppStorage(UserDefaults.AIKey.nutritionAuthority.rawValue) private var preferredNutritionAuthority: NutritionAuthority =
-        .localDefault
-
-    @AppStorage(UserDefaults.AIKey.aiTextSearchByDefault.rawValue) private var aiTextSearchByDefault: Bool = false
-
-    @AppStorage(UserDefaults.AIKey.aiAddImageCommentByDefault.rawValue) private var aiAddImageCommentByDefault: Bool = false
-
-    @AppStorage(UserDefaults.AIKey.sendSmallerImages.rawValue) private var sendSmallerImages: Bool = false
+    @State private var aiTextSearchByDefault: Bool = false
+    @State private var aiAddImageCommentByDefault: Bool = false
+    @State private var sendSmallerImages: Bool = false
 
     @State private var preferredLanguage: String = ""
     @State private var preferredRegion: String = ""
@@ -127,6 +116,16 @@ struct FoodSearchSettingsView: View {
 
         preferredLanguage = UserDefaults.standard.userPreferredLanguageForAI ?? ""
         preferredRegion = UserDefaults.standard.userPreferredRegionForAI ?? ""
+
+        imageSearchProvider = UserDefaults.standard.aiImageProvider
+        aiTextProvider = UserDefaults.standard.aiTextProvider
+        textSearchProvider = UserDefaults.standard.textSearchProvider
+        barcodeSearchProvider = UserDefaults.standard.barcodeSearchProvider
+        preferredNutritionAuthority = UserDefaults.standard.userPreferredNutritionAuthorityForAI
+
+        aiTextSearchByDefault = UserDefaults.standard.aiTextSearchByDefault
+        aiAddImageCommentByDefault = UserDefaults.standard.aiAddImageCommentByDefault
+        sendSmallerImages = UserDefaults.standard.shouldSendSmallerImagesToAI
     }
 
     var body: some View {
@@ -636,18 +635,23 @@ struct FoodSearchSettingsView: View {
     }
 
     private func saveSettings() {
-        // API key and query settings
         aiService.setAPIKey(claudeKey, for: .claude)
         aiService.setAPIKey(openAIKey, for: .openAI)
         aiService.setAPIKey(googleGeminiKey, for: .gemini)
 
-        // Persist localization overrides
         UserDefaults.standard.userPreferredLanguageForAI = preferredLanguage.isEmpty ? nil : preferredLanguage
         UserDefaults.standard.userPreferredRegionForAI = preferredRegion.isEmpty ? nil : preferredRegion
 
-        // Feature flags werden automatisch durch @AppStorage gespeichert!
+        UserDefaults.standard.aiImageProvider = imageSearchProvider
+        UserDefaults.standard.aiTextProvider = aiTextProvider
+        UserDefaults.standard.textSearchProvider = textSearchProvider
+        UserDefaults.standard.barcodeSearchProvider = barcodeSearchProvider
+        UserDefaults.standard.userPreferredNutritionAuthorityForAI = preferredNutritionAuthority
 
-        // Dismiss the settings view
+        UserDefaults.standard.aiTextSearchByDefault = aiTextSearchByDefault
+        UserDefaults.standard.aiAddImageCommentByDefault = aiAddImageCommentByDefault
+        UserDefaults.standard.shouldSendSmallerImagesToAI = sendSmallerImages
+
         dismiss()
     }
 }
