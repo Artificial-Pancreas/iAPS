@@ -580,7 +580,6 @@ struct FoodSearchSettingsView: View {
             StatisticsView()
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
-                .presentationBackground(.ultraThinMaterial)
         }
     }
 
