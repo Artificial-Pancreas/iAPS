@@ -7,6 +7,8 @@ final class AppCoordinator {
     @Published private(set) var shouldUploadGlucose: Bool = false
     @Published private(set) var sensorDays: Double? = nil
 
+    let isLooping = CurrentValueSubject<Bool, Never>(false)
+
     var heartbeat: AnyPublisher<Void, Never> {
         _heartbeat.eraseToAnyPublisher()
     }

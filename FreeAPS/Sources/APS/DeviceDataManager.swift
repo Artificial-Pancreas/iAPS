@@ -504,6 +504,13 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         // storeNewBloodGlucose runs in queue.async with callback so that we don't block the CGM manager
         bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) { newGlucoseStored in
             if newGlucoseStored || forceRecommendLoop {
+                guard !self.appCoordinator.isLooping.value else {
+                    debug(
+                        .deviceManager,
+                        "new glucose saved, but the loop is already in progress - skipping pump sync and loop recommendation"
+                    )
+                    return
+                }
                 self.processQueue.safeSync {
                     self.updatePumpData {
                         self._recommendsLoop.send(())

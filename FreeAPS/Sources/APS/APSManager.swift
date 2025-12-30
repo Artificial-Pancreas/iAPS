@@ -12,7 +12,6 @@ protocol APSManager {
     func enactBolus(amount: Double, isSMB: Bool)
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
-    var isLooping: CurrentValueSubject<Bool, Never> { get }
     var lastLoopDate: Date { get }
     var lastLoopDateSubject: PassthroughSubject<Date, Never> { get }
     var bolusProgress: CurrentValueSubject<Decimal?, Never> { get }
@@ -108,7 +107,6 @@ final class BaseAPSManager: APSManager, Injectable {
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
     @Persisted(key: "temporary") var temporaryData = TemporaryData()
 
-    let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
     let lastError = CurrentValueSubject<Error?, Never>(nil)
     let bolusProgress = CurrentValueSubject<Decimal?, Never>(nil)
@@ -212,7 +210,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         }
 
-        guard !isLooping.value else {
+        guard !appCoordinator.isLooping.value else {
             warning(.apsManager, "Loop already in progress. Skip recommendation.")
             return
         }
@@ -249,7 +247,7 @@ final class BaseAPSManager: APSManager, Injectable {
             interval: interval
         )
 
-        isLooping.send(true)
+        appCoordinator.isLooping.send(true)
 
         determineBasal()
             .replaceEmpty(with: false)
@@ -289,7 +287,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Loop exit point
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
-        isLooping.send(false)
+        appCoordinator.isLooping.send(false)
 
         if let apsError = error {
             warning(.apsManager, "Loop failed with error: \(apsError.localizedDescription)")
