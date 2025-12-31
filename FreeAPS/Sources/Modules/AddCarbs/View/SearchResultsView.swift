@@ -3746,6 +3746,10 @@ struct FoodItemsSelectorView: View {
                 .scrollDismissesKeyboard(.immediately)
             }
         }
+        .onChange(of: allExistingTags) { _, newValue in
+            // Remove any selected tags that no longer exist
+            selectedTags = selectedTags.intersection(newValue)
+        }
     }
 }
 
