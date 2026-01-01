@@ -1900,7 +1900,7 @@ extension MainChartView {
 
     private func firstHourDate() -> Date {
         let firstDate = Date().addingTimeInterval(-1.days.timeInterval)
-        return firstDate.dateTruncated(from: .minute)!
+        return DateInRegion(firstDate, region: .current).dateTruncated(from: .minute)!.date
     }
 
     private func firstHourPosition(viewWidth: CGFloat) -> CGFloat {

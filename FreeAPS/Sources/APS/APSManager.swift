@@ -12,7 +12,6 @@ protocol APSManager {
     func enactBolus(amount: Double, isSMB: Bool)
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
-    var isLooping: CurrentValueSubject<Bool, Never> { get }
     var lastLoopDate: Date { get }
     var lastLoopDateSubject: PassthroughSubject<Date, Never> { get }
     var bolusProgress: CurrentValueSubject<Decimal?, Never> { get }
@@ -108,7 +107,6 @@ final class BaseAPSManager: APSManager, Injectable {
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
     @Persisted(key: "temporary") var temporaryData = TemporaryData()
 
-    let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
     let lastError = CurrentValueSubject<Error?, Never>(nil)
     let bolusProgress = CurrentValueSubject<Decimal?, Never>(nil)
@@ -133,6 +131,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
     var concentration: (concentration: Double, increment: Double) {
         CoreDataStorage().insulinConcentration()
+    }
+
+    var override: Override? {
+        guard let last = OverrideStorage().fetchLatestOverride().first, last.enabled else { return nil }
+        return last
     }
 
     init(resolver: Resolver) {
@@ -207,7 +210,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         }
 
-        guard !isLooping.value else {
+        guard !appCoordinator.isLooping.value else {
             warning(.apsManager, "Loop already in progress. Skip recommendation.")
             return
         }
@@ -244,7 +247,7 @@ final class BaseAPSManager: APSManager, Injectable {
             interval: interval
         )
 
-        isLooping.send(true)
+        appCoordinator.isLooping.send(true)
 
         determineBasal()
             .replaceEmpty(with: false)
@@ -284,7 +287,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Loop exit point
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
-        isLooping.send(false)
+        appCoordinator.isLooping.send(false)
 
         if let apsError = error {
             warning(.apsManager, "Loop failed with error: \(apsError.localizedDescription)")
@@ -375,7 +378,8 @@ final class BaseAPSManager: APSManager, Injectable {
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary) }
+            .flatMap { _ in
+                self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary, override: self.override) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async { [self] in

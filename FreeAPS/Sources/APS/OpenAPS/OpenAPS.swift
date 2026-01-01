@@ -28,7 +28,12 @@ final class OpenAPS {
         self.scriptExecutor = scriptExecutor
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: TemporaryData) -> Future<Suggestion?, Never> {
+    func determineBasal(
+        currentTemp: TempBasal,
+        clock: Date = Date(),
+        temporary: TemporaryData,
+        override: Override?
+    ) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
                 Task {
@@ -116,7 +121,9 @@ final class OpenAPS {
 
                     now = Date.now
                     // Auto ISF Layer
-                    if let freeAPSSettings = settings, freeAPSSettings.autoisf {
+                    if let freeAPSSettings = settings, freeAPSSettings.autoisf || self.autoISF(override: override),
+                       self.notDisabled(override: override)
+                    {
                         now = Date.now
                         profile = await self.autosisf(
                             glucose: glucose,
@@ -175,7 +182,8 @@ final class OpenAPS {
                             preferences: preferencesData,
                             profile: profile,
                             tdd: tdd,
-                            settings: settings
+                            settings: settings,
+                            override: override
                         )
                         // Update time
                         suggestion.timestamp = suggestion.deliverAt ?? clock
@@ -377,6 +385,20 @@ final class OpenAPS {
 
     // MARK: - Private
 
+    private func autoISF(override: Override?) -> Bool {
+        guard let current = override, current.enabled else { return false }
+        guard current.overrideAutoISF, let settings = OverrideStorage().fetchLatestAutoISFsettings().first,
+              settings.autoisf else { return false }
+        return true
+    }
+
+    private func notDisabled(override: Override?) -> Bool {
+        guard let current = override, current.enabled else { return true }
+        guard current.overrideAutoISF, let settings = OverrideStorage().fetchLatestAutoISFsettings().first,
+              settings.autoisf else { return true }
+        return true
+    }
+
     private func pumpHistory() async -> RawJSON {
         await loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory)
     }
@@ -456,13 +478,13 @@ final class OpenAPS {
         preferences: Preferences?,
         profile: RawJSON,
         tdd: InsulinDistribution?,
-        settings: FreeAPSSettings?
+        settings: FreeAPSSettings?,
+        override: Override?
     ) -> String {
         var reasonString = reason
         let startIndex = reasonString.startIndex
         var aisf = false
         var totalDailyDose: Decimal?
-        let or = OverrideStorage().fetchLatestOverride().first
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {
@@ -476,7 +498,9 @@ final class OpenAPS {
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
             // Auto ISF
-            if let freeAPSSettings = settings, freeAPSSettings.autoisf {
+            if let freeAPSSettings = settings, freeAPSSettings.autoisf || autoISF(override: override),
+               self.notDisabled(override: override)
+            {
                 let reasons = profile.autoISFreasons ?? ""
                 // If disabled in middleware or Auto ISF layer
                 if let disabled = readAndExclude(json: profile, variable: "autoisf", exclude: "autoisf_m"),
@@ -543,7 +567,7 @@ final class OpenAPS {
 
         // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
-        if targetGlucose != nil, let override = or, override.enabled {
+        if targetGlucose != nil, let override = override, override.enabled {
             var orString = ", Override: "
             if override.percentage != 100 {
                 orString += (formatter.string(from: override.percentage as NSNumber) ?? "")
@@ -615,7 +639,7 @@ final class OpenAPS {
                 saveSuggestion.glucose = (suggestion.bg ?? 0) as NSDecimalNumber
                 saveSuggestion.ratio = (suggestion.sensitivityRatio ?? 1) as NSDecimalNumber
 
-                if let override = or, override.enabled {
+                if let override = override, override.enabled {
                     saveSuggestion.override = true
                 }
 

@@ -247,7 +247,7 @@ extension Home {
                 }
             }
 
-            apsManager.isLooping
+            appCoordinator.isLooping
                 .receive(on: DispatchQueue.main)
                 .weakAssign(to: \.isLooping, on: self)
                 .store(in: &lifetime)
