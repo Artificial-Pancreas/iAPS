@@ -146,7 +146,7 @@
 "Continue" = "Vervolg";
 
 /* Home title */
-"Home" = "Hoofdmenu";
+"Home" = "Home";
 
 /* Looping in progress */
 "looping" = "Updaten";
@@ -1382,7 +1382,358 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Food Type / Meal Note */
 "Note" = "Opmerking";
 
+"Servings" = "Porties";
+
+"Kilo Calories" = "Kilo calorieën";
+
+"Meals" = "Maaltijden";
+
+"Today's Meals" = "Maaltijden van vandaag";
+
+// --------- AI ---------
 /* */
+
+"AI Image Analysis" = "AI afbeeldingsanalyse";
+
+"Barcode" = "Barcode";
+
+"📝 Notes" = "📝 Opmerking";
+
+/* */
+"💉 Diabetes recommendations" = "💉 Aanbevelingen voor diabetes";
+
+/* */
+"🍽️ Separate Foods" = "🍽️ Gescheiden maaltijd";
+
+/* */
+"Add all" = "Alles toevoegen";
+
+/* */
+"🧠 AI Food analysis" = "🧠 AI Voedsel analyse";
+
+/* */
+"📊 Total nutritional values of the meal" = "📊 Totale voedingswaarde van de maaltijd";
+
+/* */
+"Confidence level:" = "Zekerheidsniveau:";
+
+/* */
+"Notes: %@" = "Notities: %@";
+
+/* */
+"Visual Cues: %@" = "Visuele aanwijzing: %@";
+
+/* */
+"Preparation: %@" = "Voorbereiding: %@";
+
+/* */
+"Preparation" = "Voorbereiding";
+
+/* */
+"Multiplicator" = "Vermenigvuldiger";
+
+/* */
+"Accept quantity" = "Hoeveelheid accepteren";
+
+/* */
+"Enter desired quantity" = "Geef gewenste hoeveelheid op";
+
+/* */
+"AI Food Search" = "AI voedsel zoeken";
+
+/* Title */
+"Food Search" = "Voedsel zoeken";
+
+/* Food Search input */
+"Food Search..." = "Voedsel zoeken...";
+
+/* */
+"Search Food Database" = "Voedseldatabase doorzoeken";
+
+"Models Used:" = "Gebruikte modellen:";
+
+"Current Mode: %@" = "Huidige modus: %@";
+
+"Analysis Mode" = "Analysemodus";
+
+"This AI provider requires an API key. Please enter your API key in the settings below." = "Deze AI-aanbieder vereist een API-sleutel. Voer uw API-sleutel in in de instellingen hieronder.";
+"API Key Required" = "API-sleutel vereist";
+
+"Food Search Settings" = "Voedsel zoekinstellingen";
+
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI voedingsschattingen zijn slechts schattingen. Raadpleeg altijd je zorgverlener voor medische beslissingen. Controleer waar mogelijk voedingsinformatie. Gebruik op eigen risico.";
+
+"Medical Disclaimer" = "Medische disclaimer";
+
+"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
+
+"**AI Image Analysis:**" = "**AI afbeeldingsanalyse:**";
+
+"OpenFoodFacts" = "OpenFoodFacts";
+
+"**Barcode Scanning:**" = "**Barcode scannen:**";
+
+"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
+
+"**Text/Voice Search:**" = "**Tekst/Spraak zoeken:**";
+"Search Type Recommendations" = "Zoeken type aanbevelingen";
+
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis officiële voedingsdatabase. Superieure voedingsgegevens voor niet-verpakte voedingsmiddelen zoals fruit, groenten en vlees.";
+
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
+
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Meest nauwkeurige AI analyse met behulp van GPT-4 Vision. Vereist API key (~$0,01 per afbeelding). Uitstekend bij beeldanalyse en natuurlijke taal zoekopdrachten.";
+
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "**Google (Gemini API)**: Gratis AI met royale limieten (1500/dag). Uitstekende herkenning van levensmiddelen met behulp van Google's Vision AI. Perfecte balans van kwaliteit en kosten.";
+
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (lengtegraad API)**: Geavanceerde AI met gedetailleerde redenering. Uitstekend bij voedselanalyse en portie inschatting. Vereist een API-sleutel (~$0,25 per miljoen munten).";
+
+"Available Search Providers:" = "Beschikbare zoekdiensten:";
+
+"Provider Information" = "Provider-informatie";
+
+"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Als u 'OpenFoodFacts' of 'USDA' selecteert, zal de camera analyse gebruik maken van basisschattingen in plaats van AI";
+
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Selecteer 'Anthropic (Claude API)', 'Google (Gemini API)', of 'OpenAI (ChatGPT API)' voor AI Image Analyse om je betaalde sleutels te gebruiken";
+
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Wanneer je een voedselfoto neemt, gebruikt de app de geselecteerde provider in 'AI Image Analysis' hierboven.";
+
+"Camera Food Analysis" = "Camera voedselanalyse";
+
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Om je betaalde API-sleutels te gebruiken, zorg ervoor dat je de bijbehorende provider selecteert in 'AI Image Analysis' hierboven. De aanbieder die je selecteert voor AI Image Analyse is wat wordt gebruikt wanneer je voedsel foto's maakt.";
+
+"Important: How to Use Your API Keys" = "Belangrijk: Hoe je API-sleutels te gebruiken";
+
+"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Verdeel deze maaltijd in individuele onderdelen met volledige macronutriënte profielen (koolhydraten, eiwit, vetten, calorieën) per artikel en gecombineerde totaal.";
+
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identificeer alle levensmiddelen in dit beeld met de focus op het koolhydratengehalte voor diabetesbeheer. Geef gedetailleerde koolhydraten op voor elk onderdeel en voor alle koolhydraten.";
+
+"Diabetes Focus" = "Diabetes focus";
+
+"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Geef een uiterst gedetailleerde visuele analyse van dit voedselbeeld. Beschrijf elk element dat je kunt zien: voedselkleuren, texturen, kookmethodes (gegrilde markers, browsen, stoom), bordtype en grootte, utensieven tegenwoordig, knoeien, saussen, zichtbare, kookoliën, voedselregeling, en achtergrond elementen. Gebruik deze visuele gegevens om precieze portiegrootten te schatten en nauwkeurige voedingswaarden voor diabetesbeheer te berekenen.";
+
+"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyseer dit voedselplaatje voor diabetesbeheer. Beschrijf precies wat je ziet in detail: kleuren, texturen, kookmethoden, meeltype, utensils en voedselregeling. Identificeer elk levensmiddel met specifieke voorbereidingsgegevens, schatting exacte portiegrootten met visuele verwijzingen, en geef koolhydraten, eiwit, vet en calorieën voor elk onderdeel. Focus op nauwkeurige inschatting van koolhydraten bij insuline dosing.";
+
+"AI Prompt for Enhanced Results" = "AI Prompt naar verbeterde resultaten";
+
+"Enter your OpenAI API key" = "Voer je OpenAI API-sleutel in";
+
+"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-sleutel";
+
+"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Krijg een API-sleutel van platform.openai.com. Pas de analyse aan om specifieke maaltijdfragmenten en voedingswaarden te krijgen. (~$0,01 per afbeelding)";
+
+"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) configuratie";
+
+"Macro Tracking" = "Macronutriënten bijhouden";
+
+"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identificeer alle levensmiddelen in dit beeld met de focus op het koolhydratengehalte voor diabetesbeheer. Geef gedetailleerde koolhydraten op voor elk onderdeel en voor alle koolhydraten.";
+
+"Detailed Visual Analysis" = "Gedetailleerde visuele analyse";
+
+"Enter your Google Gemini API key" = "Voer uw Google Gemini API-sleutel in";
+
+"Google Gemini API Key" = "Google Gemini API-sleutel";
+
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Krijg een gratis API-sleutel van ai.google.dev. Google Gemini biedt uitstekende herkenning van voedsel met een royale prijs (1500 verzoeken per dag).";
+
+"Google (Gemini API) Configuration" = "Google (Gemini API) configuratie";
+
+"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Je AI provider quotum is overschreden. Controleer je gebruiksbeperkingen of probeer een andere provider.";
+
+"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "De credits voor je AI-provider zijn op. Controleer de facturering van je account of probeer een andere provider.";
+
+"Reset to Default" = "Standaardwaarden terugzetten";
+
+"Retake Photo" = "Foto opnieuw maken";
+
+"Retry Analysis" = "Analyse opnieuw proberen";
+
+"Try Different Provider" = "Probeer een andere provider";
+
+"Check Account" = "Controleer account";
+
+"Analysis Error" = "Analysefout";
+
+"AI Food Analysis" = "AI voedsel analyse";
+
+"Use Cancel to retake photo" = "Gebruik 'Annuleren' om foto opnieuw te nemen";
+
+"Analyzing food with AI..." = "Voedsel analyseren met AI...";
+
+"Choose from Library" = "Kies uit bibliotheek";
+
+"Take a Photo" = "Neem een foto";
+
+"Keep the camera level to reduce distortion and keep portions proportional." = "Houd het cameraleniveau om vervorming te verminderen en porties proportioneel te houden.";
+
+"Shoot from slightly above" = "Maak de foto van iets boven";
+
+"Forks, cups, or hands help AI calculate realistic portions." = "Vorken, kopjes of handen helpen AI realistische gedeeltes te berekenen.";
+
+"Add a size reference" = "Voeg een maatreferentie toe";
+
+"Make sure every food item is in the frame." = "Zorg ervoor dat al het voedsel zich binnen het kader bevindt.";
+
+"Frame the full meal" = "Kader de volledige maaltijd";
+
+"Remove napkins, lids, or packaging that may be misidentified as food." = "Verwijder servetten, deksels of verpakkingen die per ongeluk als voedsel kunnen worden aangezien.";
+
+"Clear the area" = "Het gebied leegmaken";
+
+"Harsh shadows confuse the AI and dim light can hide textures." = "Harde schaduwen verwarren de AI en zwak licht kan structuren verbergen.";
+
+"Use bright, even light" = "Gebruik helder en evenwichtig licht";
+
+"Better photos = better estimates" = "Betere foto's = betere schattingen";
+
+"Scan failed" = "Scannen mislukt";
+
+"Looking up product..." = "Product zoeken...";
+
+"Code detected!" = "Code gedetecteerd!";
+
+"Position camera over barcode or QR code" = "Positioneer de camera over de streepjescode of QR-code";
+
+"Validating format..." = "Formaat valideren...";
+
+"Scanning for barcode or QR code..." = "Zoeken naar barcode of QR-code...";
+
+"Initializing camera..." = "Camera initialiseren...";
+
+"Scan failed" = "Scannen mislukt";
+
+"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS heeft toegang tot de camera nodig om barcodes te scannen. Schakel toegang tot de camera in via Instellingen.";
+
+"Camera Access Required" = "Cameratoegang vereist";
+
+"Check Permissions" = "Machtigingen controleren";
+
+"Supports traditional barcodes and QR codes" = "Ondersteunt traditionele barcodes en QR-codes";
+
+"Hold steady for best results" = "Stabiel blijven voor beste resultaten";
+
+"Retry" = "Opnieuw proberen";
+
+"Scan Barcode" = "Barcode scannen";
+
+"📦 Database Results" = "📦 Database resultaten";
+
+"🤖 AI Search Results" = "🤖 AI zoekresultaten";
+
+"• Use the barcode scanner for packaged foods" = "• Gebruik de barcodescanner voor verpakt voedsel";
+
+"• Check spelling carefully" = "• Controleer spelling zorgvuldig";
+
+"• Use simple, common food names" = "• Gebruik eenvoudige en gangbare voedingsnamen";
+
+"• Try brand names (e.g., \"Cheerios\")" = "• Probeer merknamen (bijv. \"Heinz\" of \"Chiquita 🍌)";
+
+"💡 Search Tips:" = "💡 Zoek tips:";
+
+"Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Probeer eenvoudigere termen zoals \"brood\" of \"appel\", of scan een barcode";
+
+"Check your spelling and try again" = "Controleer je spelling en probeer het opnieuw";
+
+"No Foods Found" = "Geen voedingsmiddelen gevonden";
+
+"Search Error" = "Zoekopdracht fout";
+
+"Finding the best matches for you" = "De beste matches voor jou aan het zoeken";
+
+"Searching foods" = "Voedingsmiddelen zoeken";
+
+"AI Analysis" = "AI-analyse";
+
+"Analysis Status" = "Status analyse";
+
+"❌ Analysis failed" = "❌ Analyse mislukt";
+
+"⚠️ Connection interrupted..." = "⚠️ Verbinding verbroken...";
+
+"✅ Analysis complete!" = "✅ Analyse voltooid!";
+
+"🍽️ Generating nutrition summary..." = "🍽️ Voedingssamenvatting genereren...";
+
+"📊 Processing analysis results..." = "📊 Verwerken van analyse resultaten...";
+
+"🤖 Running AI vision analysis..." = "🤖 Bezig met AI zichtanalyse...";
+
+"⚖️ Comparing to USDA standards..." = "⚖️ Vergelijken naar USDA normen...";
+
+"📏 Calculating serving sizes..." = "📏 Berekenen portiegroottes...";
+
+"🔬 Identifying food portions..." = "🔬 Voedselporties identificeren...";
+
+"📊 Analyzing nutritional content..." = "📊 Analyseren van voedingswaarde...";
+
+"📡 Uploading image for analysis..." = "📡 Afbeelding uploaden voor analyse...";
+
+"🧠 Connecting to AI provider..." = "🧠 Verbinding maken met AI provider...";
+
+"💼 Optimizing image quality..." = "💼 Afbeeldingskwaliteit optimaliseren...";
+
+"📱 Processing image data..." = "📱 Afbeeldingsgegevens verwerken...";
+
+"🔍 Initializing AI food analysis..." = "🔍 Initialiseren AI voedsel analyse...";
+
+"⚡ Processing AI analysis results..." = "⚡ Verwerken AI analyse resultaten...";
+
+"📥 Received response from Claude..." = "📥 Reactie ontvangen van Claude...";
+
+"⏳ AI is cooking up results..." = "⏳ AI bereidt resultaten voor...";
+
+"🌐 Sending request to Claude..." = "🌐 Verzoek verzenden naar Claude...";
+
+"📡 Preparing API request..." = "📡 Voorbereiden van API-aanvraag...";
+
+"🔄 Encoding image data..." = "🔄 Afbeeldingsgegevens verwerken...";
+
+"🖼️ Optimizing your image..." = "🖼️ Je afbeelding wordt geoptimaliseerd...";
+
+"⚙️ Configuring Claude parameters..." = "⚙️ Claude parameters configureren...";
+
+"⚙️ Processing analysis results..." = "⚙️ Verwerken van analyse resultaten...";
+
+"📊 Calculating nutrition estimates..." = "📊 Berekenen van voedingswaarde voorspelling...";
+
+"🍽️ Identifying food characteristics..." = "🍽️ Kenmerken van voedsel identificeren...";
+
+"📱 Analyzing image properties..." = "📱 Afbeeldingen analyseren...";
+
+"📊 Initializing basic analysis..." = "📊 Basisanalyse initialiseren...";
+
+"🤖 Connecting to Google Gemini..." = "🤖 Verbinding maken met Google Gemini...";
+
+"📥 Received response from Gemini..." = "📥 Reactie ontvangen van Gemini...";
+
+"🌐 Sending request to Google Gemini..." = "🌐 Verzoek verzenden naar Google Gemini...";
+
+"🔄 Encoding image data..." = "🔄 Afbeeldingsgegevens verwerken...";
+
+"⚙️ Configuring Gemini parameters..." = "⚙️ Gemini-parameters configureren...";
+
+"📥 Received response from OpenAI..." = "📥 Reactie ontvangen van OpenAI...";
+
+"💾 Caching analysis result..." = "💾 Verwerken van analyse resultaten...";
+
+"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Maak een diepteanalyse (kan even duren)...";
+
+"🎯 Selecting optimal AI provider..." = "🎯 Selecteer optimale AI provider...";
+
+"⚡ Starting parallel provider analysis..." = "⚡ Beginnen met parallelle provider analyse...";
+
+"Amount:" = "Hoeveelheid:";
+
+"Take Over" = "Overnemen";
+
+"kcal" = "kCal";
+
+"Cal" = "Cal";
+
+
+// --------- End of AI ---------
+/* */
+
 "Temp Basal" = "Tijdelijk basaal";
 
 /* */
@@ -2052,13 +2403,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Change HbA1c Unit" = "Wijzig HbA1c eenheid";
 
 /* */
-"Display Chart X - Grid lines" = "Grafiek X weergeven - Rasterlijnen";
+"Vertical grid lines" = "Verticale rasterlijnen";
 
 /* */
-"Display Chart Y - Grid lines" = "Grafiek Y weergeven - Rasterlijnen";
+"Horizontal grid lines" = "Horizontale rasterlijnen";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Lijnen voor LAAG en HOOG weergeven in grafiek";
+"Threshold lines (Low / High)" = "Drempellijnen (laag / hoog)";
 
 /* */
 "Standing / Laying TIR Chart" = "Staande/liggende TIR grafiek";
@@ -2225,6 +2576,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Geef insuline activiteitenoverzicht weer";
 
+/* UI/UX-setting */
+"Don't ask for saving search result as meal preset" = "Vraag niet om het zoekresultaat op te slaan als maaltijd preset";
+
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "CGM instellingen";
@@ -2302,9 +2656,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Share your data anonymously" = "Deel je gegevens anoniem";
-
-/* Setting Title */
-"Sharing" = "Delen van statistieken";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -3161,7 +3512,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Neglect Carbohydrates in oref0" = "Negeer koolhydraten in oref0";
 
 /* Debug option */
-"Hide oref0 Predictions" = "Verberg oref0 voorspellingen";
+"Hide Predictions" = "Voorspellingen verbergen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
@@ -3294,3 +3645,45 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* message displayed in pump settings screen when the pump manager reports uncertain delivery */
 "Pump delivery uncertain" = "Pomp insulinelevering onzeker";
+
+/* message displayed on home screen when the pump is added but not fully onboarded */
+"Re-connect pump!" = "Pomp opnieuw verbinden!";
+
+/* 'fetch' toggle label in nightscout settings */
+"Fetch" = "Verkrijg";
+
+/* 'fetch' section header in nightscout settings */
+"Allow Fetching" = "Ophalen toestaan";
+
+/* 'fetch' scection footer in nightscout settings */
+"iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS zal aankondigingen, koolhydraten en tijdelijke doelen ophalen van Nightscout";
+
+/* main chart settings - toggle, controls whether to draw the in-range area backdrop (fill) */
+"In-range area highlight" = "In-range gebied markeren";
+
+/* main chart settings - toggle, controls whether to show inline BG peaks */
+"Glucose peaks" = "Glucose pieken";
+
+/* main chart settings - toggle, controls whether to show the predictions legend */
+"Predictions legend" = "Legenda voorspellingen";
+
+/* main chart settings - toggle, controls whether to draw the secondary chart backdrop (fill) */
+"Secondary chart backdrop" = "Secundaire grafiekachtergrond";
+
+/* main chart settings - toggle, controls whether to show insulin activity grid lines */
+"Insulin activity grid lines" = "Insuline activiteit raster lijnen";
+
+/* main chart settings - toggle, controls whether to show insulin activity axis labels */
+"Insulin activity labels" = "Insuline activiteitlabels";
+
+/* main chart settings - secondary chart section header */
+"Secondary chart" = "Secundaire grafiek";
+
+/* main chart settings - navigation title and the navigation link label */
+"Main Chart settings" = "Home grafiek instellingen";
+
+/* UI/UX settings - main chart section header */
+"Main Chart" = "Belangrijkste grafiek";
+
+/* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
+"Y-axis labels" = "Y-as labels";
