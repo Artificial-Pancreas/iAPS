@@ -585,9 +585,9 @@ struct SearchResultsView: View {
     private var searchResultsView: some View {
         VStack(spacing: 0) {
             List {
-                ForEach(state.searchResultsState.searchResults) { analysisResult in
+                ForEach(state.searchResultsState.searchResults) { foodItemGroup in
                     FoodItemGroupListSection(
-                        analysisResult: analysisResult,
+                        foodItemGroup: foodItemGroup,
                         state: state,
                         selectedTime: selectedTime,
                         onPersist: persistFoodItem,
@@ -2136,7 +2136,6 @@ private enum NutritionBadgeConfig {
     static let sugarsColor = Color.purple
 }
 
-// Unified nutrition badge used throughout the file
 private struct NutritionBadge: View {
     let value: Decimal
     let unit: String?
@@ -2182,6 +2181,45 @@ private struct NutritionBadge: View {
         .padding(.vertical, 6)
         .background(color.opacity(backgroundOpacity))
         .cornerRadius(8)
+    }
+}
+
+private struct NutritionBadgePlain: View {
+    let value: Decimal
+    let unit: String?
+    let label: String?
+    let color: Color
+
+    @Environment(\.colorScheme) private var colorScheme
+
+    init(value: Decimal, unit: String? = nil, label: String? = nil, color: Color) {
+        self.value = value
+        self.unit = unit
+        self.label = label
+        self.color = color
+    }
+
+    var body: some View {
+        HStack(spacing: 3) {
+            Text("\(Double(value), specifier: unit == "kcal" || value > 20 ? "%.0f" : "%.1f")")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundColor(color)
+                .fixedSize()
+            if let unit = unit {
+                Text(unit)
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .fixedSize()
+            }
+            if let label = label {
+                Text(label)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .textCase(.lowercase)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
+        }
     }
 }
 
@@ -2259,7 +2297,7 @@ private struct ConfidenceBadge: View {
 }
 
 private struct FoodItemGroupListSection: View {
-    let analysisResult: FoodItemGroup
+    let foodItemGroup: FoodItemGroup
     @ObservedObject var state: FoodSearchStateModel
     let selectedTime: Date?
     let onPersist: (FoodItemDetailed) -> Void
@@ -2270,17 +2308,17 @@ private struct FoodItemGroupListSection: View {
 
     private var preferredInfoHeight: CGFloat {
         var base: CGFloat = 420
-        if let desc = analysisResult.overallDescription, !desc.isEmpty { base += 60 }
-        if let diabetes = analysisResult.diabetesConsiderations, !diabetes.isEmpty { base += 60 }
+        if let desc = foodItemGroup.overallDescription, !desc.isEmpty { base += 60 }
+        if let diabetes = foodItemGroup.diabetesConsiderations, !diabetes.isEmpty { base += 60 }
         return min(max(base, 400), 640)
     }
 
     private var nonDeletedItemCount: Int {
-        analysisResult.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }.count
+        foodItemGroup.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }.count
     }
 
     private func saveSectionAsFoodItem() {
-        let nonDeletedItems = analysisResult.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }
+        let nonDeletedItems = foodItemGroup.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }
 
         guard !nonDeletedItems.isEmpty else { return }
 
@@ -2359,7 +2397,7 @@ private struct FoodItemGroupListSection: View {
         )
 
         // Generate name from section
-        let sectionName = analysisResult.briefDescription ?? analysisResult.textQuery ?? analysisResult.title
+        let sectionName = foodItemGroup.briefDescription ?? foodItemGroup.textQuery ?? foodItemGroup.title
 
         // Create new food item with per-serving nutrition
         let savedItem = FoodItemDetailed(
@@ -2374,7 +2412,7 @@ private struct FoodItemGroupListSection: View {
             preparationMethod: nil,
             visualCues: nil,
             glycemicIndex: nil,
-            assessmentNotes: "Saved from section totals",
+            assessmentNotes: nil,
             imageURL: nil,
             tags: nil,
             source: .manual
@@ -2391,12 +2429,12 @@ private struct FoodItemGroupListSection: View {
                     // Collapse/Expand button (left side)
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.2)) {
-                            state.searchResultsState.toggleSectionCollapsed(analysisResult.id)
+                            state.searchResultsState.toggleSectionCollapsed(foodItemGroup.id)
                         }
                     }) {
                         Image(
                             systemName: state.searchResultsState
-                                .isSectionCollapsed(analysisResult.id) ? "chevron.right" : "chevron.down"
+                                .isSectionCollapsed(foodItemGroup.id) ? "chevron.right" : "chevron.down"
                         )
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.secondary)
@@ -2408,10 +2446,10 @@ private struct FoodItemGroupListSection: View {
                     // Title (tappable to collapse/expand)
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.2)) {
-                            state.searchResultsState.toggleSectionCollapsed(analysisResult.id)
+                            state.searchResultsState.toggleSectionCollapsed(foodItemGroup.id)
                         }
                     }) {
-                        Text(analysisResult.title)
+                        Text(foodItemGroup.title)
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
@@ -2423,7 +2461,7 @@ private struct FoodItemGroupListSection: View {
                     .buttonStyle(PlainButtonStyle())
 
                     // Info button (only for AI sources)
-                    if analysisResult.source.isAI {
+                    if foodItemGroup.source.isAI {
                         Button(action: {
                             showInfoPopup = true
                         }) {
@@ -2433,14 +2471,14 @@ private struct FoodItemGroupListSection: View {
                                     .foregroundColor(.blue)
                                     .frame(width: 44, height: 44)
                                     .contentShape(Rectangle())
-                                Image(systemName: analysisResult.source.icon)
+                                Image(systemName: foodItemGroup.source.icon)
                                     .font(.system(size: 16))
                                     .foregroundColor(.secondary)
                             }
                         }
                         .buttonStyle(PlainButtonStyle())
                     } else {
-                        Image(systemName: analysisResult.source.icon)
+                        Image(systemName: foodItemGroup.source.icon)
                             .font(.system(size: 16))
                             .foregroundColor(.secondary)
                             .frame(width: 44, height: 44)
@@ -2454,7 +2492,7 @@ private struct FoodItemGroupListSection: View {
             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                 Button(role: .destructive) {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        state.searchResultsState.deleteSection(analysisResult.id)
+                        state.searchResultsState.deleteSection(foodItemGroup.id)
                     }
                 } label: {
                     Image(systemName: "trash")
@@ -2464,26 +2502,26 @@ private struct FoodItemGroupListSection: View {
                 Button {
                     saveSectionAsFoodItem()
                 } label: {
-                    Label("Save as Food Item", systemImage: "square.and.arrow.down")
+                    Label("Save", systemImage: "square.and.arrow.down")
                 }
 
                 Button(role: .destructive) {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        state.searchResultsState.deleteSection(analysisResult.id)
+                        state.searchResultsState.deleteSection(foodItemGroup.id)
                     }
                 } label: {
                     Label("Remove from meal", systemImage: "trash")
                 }
             }
             .sheet(isPresented: $showInfoPopup) {
-                SectionInfoPopup(analysisResult: analysisResult)
+                SectionInfoPopup(foodItemGroup: foodItemGroup)
                     .presentationDetents([.height(preferredInfoHeight), .large])
                     .presentationDragIndicator(.visible)
             }
 
             // Food Items
-            if !state.searchResultsState.isSectionCollapsed(analysisResult.id) {
-                ForEach(Array(analysisResult.foodItemsDetailed.enumerated()), id: \.element.id) { index, foodItem in
+            if !state.searchResultsState.isSectionCollapsed(foodItemGroup.id) {
+                ForEach(Array(foodItemGroup.foodItemsDetailed.enumerated()), id: \.element.id) { index, foodItem in
                     Group {
                         if state.searchResultsState.isDeleted(foodItem) {
                             DeletedFoodItemRow(
@@ -2494,7 +2532,7 @@ private struct FoodItemGroupListSection: View {
                                     }
                                 },
                                 isFirst: index == 0,
-                                isLast: index == analysisResult.foodItemsDetailed.count - 1
+                                isLast: index == foodItemGroup.foodItemsDetailed.count - 1
                             )
                         } else {
                             FoodItemRow(
@@ -2521,11 +2559,11 @@ private struct FoodItemGroupListSection: View {
                                 savedFoodIds: savedFoodIds,
                                 allExistingTags: allExistingTags,
                                 isFirst: index == 0,
-                                isLast: index == analysisResult.foodItemsDetailed.count - 1
+                                isLast: index == foodItemGroup.foodItemsDetailed.count - 1
                             )
                         }
                     }
-                    .listRowSeparator(index == analysisResult.foodItemsDetailed.count - 1 ? .hidden : .visible)
+                    .listRowSeparator(index == foodItemGroup.foodItemsDetailed.count - 1 ? .hidden : .visible)
                 }
             }
         }
@@ -2581,13 +2619,13 @@ struct DeletedFoodItemRow: View {
 }
 
 private struct SectionInfoPopup: View {
-    let analysisResult: FoodItemGroup
+    let foodItemGroup: FoodItemGroup
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 // Title
-                if let title = analysisResult.briefDescription, !title.isEmpty {
+                if let title = foodItemGroup.briefDescription, !title.isEmpty {
                     Text(title)
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -2596,13 +2634,13 @@ private struct SectionInfoPopup: View {
                 }
 
                 // Description
-                if let description = analysisResult.overallDescription, !description.isEmpty {
+                if let description = foodItemGroup.overallDescription, !description.isEmpty {
                     InfoCard(icon: "text.quote", title: "Description", content: description, color: .gray, embedIcon: true)
                         .padding(.horizontal)
                 }
 
                 // Diabetes Recommendations
-                if let diabetesInfo = analysisResult.diabetesConsiderations, !diabetesInfo.isEmpty {
+                if let diabetesInfo = foodItemGroup.diabetesConsiderations, !diabetesInfo.isEmpty {
                     InfoCard(
                         icon: "cross.case.fill",
                         title: "Diabetes Recommendations",
@@ -3228,12 +3266,17 @@ struct FoodItemRow: View {
                     }
 
                     HStack(spacing: 8) {
-                        PortionSizeBadge(
-                            value: portionSize,
-                            color: .orange,
-                            icon: "scalemass.fill",
-                            foodItem: foodItem
-                        )
+                        Button(action: {
+                            showPortionAdjuster = true
+                        }) {
+                            PortionSizeBadge(
+                                value: portionSize,
+                                color: .orange,
+                                icon: "scalemass.fill",
+                                foodItem: foodItem
+                            )
+                        }
+                        .buttonStyle(.plain)
 
                         // Only show serving multiplier for per100 items
                         if case .per100 = foodItem.nutrition {
@@ -3799,14 +3842,29 @@ struct FoodItemsSelectorView: View {
         }
     }
 
-    // Extract all unique tags from saved foods, with favorites first
+    // Extract tags that exist in foods matching the currently selected tags
+    // This creates a progressive filtering experience
     private var allTags: [String] {
         var seen = Set<String>()
         var result: [String] = []
         var hasFavorites = false
 
-        // First pass: collect all tags
-        for foodItem in searchResult.foodItemsDetailed {
+        // Get foods that match currently selected tags (or all foods if nothing selected)
+        let matchingFoods: [FoodItemDetailed]
+        if selectedTags.isEmpty {
+            matchingFoods = searchResult.foodItemsDetailed
+        } else {
+            matchingFoods = searchResult.foodItemsDetailed.filter { foodItem in
+                guard let tags = foodItem.tags else { return false }
+                // Food item must have ALL selected tags
+                return selectedTags.allSatisfy { selectedTag in
+                    tags.contains(selectedTag)
+                }
+            }
+        }
+
+        // Collect all tags from matching foods
+        for foodItem in matchingFoods {
             if let tags = foodItem.tags {
                 for tag in tags {
                     if tag == FoodTags.favorites {
@@ -3969,47 +4027,7 @@ private struct FoodItemsSelectorItemRow: View {
     var body: some View {
         VStack(spacing: 0) {
             // Main Row Content
-            HStack(alignment: .top, spacing: 12) {
-                VStack(alignment: .leading, spacing: 8) {
-                    // Top row: Name + Confidence
-                    HStack(spacing: 8) {
-                        Text(foodItem.name)
-                            .font(.body)
-                            .fontWeight(.medium)
-                            .foregroundColor(.primary)
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        // Confidence badge (if AI source)
-                        if foodItem.source.isAI, let confidence = foodItem.confidence {
-                            ConfidenceBadge(level: confidence)
-                        }
-                    }
-
-                    // Middle row: Portion badge + serving multiplier
-                    HStack(spacing: 8) {
-                        PortionSizeBadge(
-                            value: portionSize,
-                            color: .orange,
-                            icon: "scalemass.fill",
-                            foodItem: foodItem
-                        )
-
-                        // Only show serving multiplier for per100 items
-                        if case .per100 = foodItem.nutrition {
-                            if let servingSize = foodItem.standardServingSize {
-                                Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
-                                    .font(.caption)
-                                    .foregroundColor(.primary)
-                                    .opacity(0.7)
-                            }
-                        }
-                    }
-                }
-
-                // Product image thumbnail (if available) - on the right
-                // Make it tappable to open image selector (only for saved foods with onPersist)
+            HStack(alignment: .center, spacing: 12) {
                 if onPersist != nil {
                     Button(action: {
                         showImageSelector = true
@@ -4030,7 +4048,6 @@ private struct FoodItemsSelectorItemRow: View {
                                         .stroke(Color.blue.opacity(0.3), lineWidth: 1)
                                 )
                         } else {
-                            // No image - show placeholder with camera icon (only hint for adding)
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Color(.systemGray5))
                                 .frame(width: 60, height: 60)
@@ -4060,6 +4077,60 @@ private struct FoodItemsSelectorItemRow: View {
                 } else {
                     FoodItemThumbnail(imageURL: foodItem.imageURL)
                 }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 8) {
+                        Text(foodItem.name)
+                            .font(.body)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Button(action: isAdded ? onRemove : onAdd) {
+                            Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle.fill")
+                                .font(.system(size: 28))
+                                .foregroundColor(isAdded ? .green : .accentColor)
+                                .symbolRenderingMode(.hierarchical)
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    HStack(spacing: 8) {
+                        switch foodItem.nutrition {
+                        case .per100:
+                            if let carbs = foodItem.carbsInPortion(portion: portionSize) {
+                                NutritionBadgePlain(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                            }
+                            if let protein = foodItem.proteinInPortion(portion: portionSize), protein > 0 {
+                                NutritionBadgePlain(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                            }
+                            if let fat = foodItem.fatInPortion(portion: portionSize), fat > 0 {
+                                NutritionBadgePlain(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                            }
+                        case .perServing:
+                            if let carbs = foodItem.carbsInServings(multiplier: portionSize) {
+                                NutritionBadgePlain(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
+                            }
+                            if let protein = foodItem.proteinInServings(multiplier: portionSize), protein > 0 {
+                                NutritionBadgePlain(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
+                            }
+                            if let fat = foodItem.fatInServings(multiplier: portionSize), fat > 0 {
+                                NutritionBadgePlain(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
+                            }
+                        }
+
+//                        if case .per100 = foodItem.nutrition {
+//                            PortionSizeBadge(
+//                                value: portionSize,
+//                                color: .orange,
+//                                icon: "scalemass.fill",
+//                                foodItem: foodItem
+//                            )
+//                        }
+                    }
+                }
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
@@ -4067,82 +4138,6 @@ private struct FoodItemsSelectorItemRow: View {
             .contentShape(Rectangle())
             .onTapGesture {
                 showItemInfo = true
-            }
-
-            // Compact nutrition info
-            HStack(spacing: 6) {
-                switch foodItem.nutrition {
-                case .per100:
-                    if let carbs = foodItem.carbsInPortion(portion: portionSize) {
-                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                    }
-                    if let protein = foodItem.proteinInPortion(portion: portionSize), protein > 0 {
-                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                    }
-                    if let fat = foodItem.fatInPortion(portion: portionSize), fat > 0 {
-                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                    }
-                    if let calories = foodItem.caloriesInPortion(portion: portionSize), calories > 0 {
-                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                    }
-                case .perServing:
-                    if let carbs = foodItem.carbsInServings(multiplier: portionSize) {
-                        NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                    }
-                    if let protein = foodItem.proteinInServings(multiplier: portionSize), protein > 0 {
-                        NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                    }
-                    if let fat = foodItem.fatInServings(multiplier: portionSize), fat > 0 {
-                        NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                    }
-                    if let calories = foodItem.caloriesInServings(multiplier: portionSize), calories > 0 {
-                        NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                    }
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 8)
-
-            if isAdded {
-                Button(action: onRemove) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "minus.circle.fill")
-                            .font(.system(size: 16, weight: .semibold))
-                        Text("Remove from meal")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundColor(.primary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color(.systemGray5))
-                    )
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.horizontal, 16)
-                .padding(.bottom, 12)
-            } else {
-                Button(action: onAdd) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 16, weight: .semibold))
-                        Text("Add to Meal")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.accentColor)
-                    )
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.horizontal, 16)
-                .padding(.bottom, 12)
             }
         }
         .padding(.top, isFirst ? 8 : 0)
@@ -4312,53 +4307,30 @@ private struct FoodTagCloudView: View {
     @Binding var selectedTags: Set<String>
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-//            HStack(spacing: 6) {
-//
-//                Spacer()
-//
-//                // Clear all button (only show when tags are selected)
-//                if !selectedTags.isEmpty {
-//                    Button(action: {
-//                        withAnimation(.easeInOut(duration: 0.2)) {
-//                            selectedTags.removeAll()
-//                        }
-//                    }) {
-//                        HStack(spacing: 3) {
-//                            Image(systemName: "xmark.circle.fill")
-//                                .font(.system(size: 11))
-//                            Text("Clear")
-//                                .font(.caption2)
-//                                .fontWeight(.medium)
-//                        }
-//                        .foregroundColor(.secondary)
-//                    }
-//                    .buttonStyle(.plain)
-//                }
-//            }
-
-            // Horizontal scrolling tag list
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
-                    ForEach(tags, id: \.self) { tag in
-                        TagChip(
-                            tag: tag,
-                            isSelected: selectedTags.contains(tag),
-                            onTap: {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    if selectedTags.contains(tag) {
-                                        selectedTags.remove(tag)
-                                    } else {
-                                        selectedTags.insert(tag)
-                                    }
-                                }
+        // Wrapping tag layout using FlowLayout
+        FlowLayout(spacing: 6) {
+            ForEach(tags, id: \.self) { tag in
+                TagChip(
+                    tag: tag,
+                    isSelected: selectedTags.contains(tag),
+                    onTap: {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                            if selectedTags.contains(tag) {
+                                selectedTags.remove(tag)
+                            } else {
+                                selectedTags.insert(tag)
                             }
-                        )
+                        }
                     }
-                }
-                .padding(.horizontal, 1) // Tiny padding to prevent clipping
+                )
+                .transition(.asymmetric(
+                    insertion: .scale(scale: 0.8, anchor: .center).combined(with: .opacity),
+                    removal: .scale(scale: 0.8, anchor: .center).combined(with: .opacity)
+                ))
+                .animation(.spring(response: 0.4, dampingFraction: 0.75), value: tag)
             }
         }
+        .animation(.spring(response: 0.4, dampingFraction: 0.75), value: tags)
     }
 }
 
@@ -4386,20 +4358,23 @@ private struct TagChip: View {
         Button(action: onTap) {
             // Use a fixed-size container with overlay to prevent width changes
             Text(isFavorites ? tag : tag.uppercased())
-                .font(.system(size: isFavorites ? 18 : 11, weight: .semibold, design: .default))
+//                .font(.system(size: isFavorites ? 18 : 11, weight: .semibold, design: .default))
+                .font(.system(size: 11, weight: .semibold, design: .default))
                 .textCase(isFavorites ? nil : .uppercase)
                 .fontDesign(.default)
                 .kerning(isFavorites ? 0 : 0.5)
                 .foregroundColor(isSelected ? .white : colorScheme == .dark ? .white : .primary)
                 .opacity(isSelected ? 1.0 : 0.85) // Subtle opacity change instead of weight change
-                .padding(.horizontal, isFavorites ? 8 : 10)
-                .padding(.vertical, isFavorites ? 6 : 5)
+//                .padding(.horizontal, isFavorites ? 8 : 10)
+//                .padding(.vertical, isFavorites ? 6 : 5)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
                 .background(
-                    RoundedRectangle(cornerRadius: isFavorites ? 8 : 6, style: .continuous)
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .fill(isSelected ? tagColor.opacity(0.85) : tagColor.opacity(colorScheme == .dark ? 0.12 : 0.08))
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: isFavorites ? 8 : 6, style: .continuous)
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .strokeBorder(
                             isSelected ? Color.clear : tagColor.opacity(colorScheme == .dark ? 0.45 : 0.35),
                             lineWidth: 1.0
