@@ -1,0 +1,75 @@
+
+name: Pin OmniBLE to pod-keep-alive
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Optional specific commit SHA to pin (leave blank to use branch tip)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write  # allow pushing a new branch
+
+jobs:
+  pin-omnible:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout superproject with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0  # full history is safer
+
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Switch OmniBLE remote and pin to commit
+        env:
+          SUBPATH: OmniBLE
+          NEW_URL: https://github.com/LoopKit/OmniBLE.git
+          BRANCH: pod-keep-alive
+          INPUT_COMMIT_SHA: ${{ github.event.inputs.commit_sha }}
+        run: |
+          set -euo pipefail
+
+          # Ensure submodule exists locally
+          git submodule update --init -- "$SUBPATH"
+
+          # Update URL in .gitmodules and local submodule config
+          git submodule set-url "$SUBPATH" "$NEW_URL"
+          git submodule sync -- "$SUBPATH"
+          git -C "$SUBPATH" remote set-url origin "$NEW_URL"
+
+          # Resolve target commit
+          if [ -n "$INPUT_COMMIT_SHA" ]; then
+            COMMIT_SHA="$INPUT_COMMIT_SHA"
+            # Ensure the commit exists
+            git -C "$SUBPATH" fetch origin
+            git -C "$SUBPATH" cat-file -e "$COMMIT_SHA^{commit}"
+          else
+            # Use the tip of the branch
+            git -C "$SUBPATH" fetch origin "$BRANCH"
+            COMMIT_SHA=$(git -C "$SUBPATH" rev-parse "origin/$BRANCH")
+          fi
+          echo "Pinning OmniBLE to commit: $COMMIT_SHA"
+
+          # Checkout exact commit in submodule (detached HEAD is expected)
+          git -C "$SUBPATH" checkout "$COMMIT_SHA"
+
+          # Stage the updated gitlink and .gitmodules
+          git add .gitmodules "$SUBPATH"
+          git commit -m "OmniBLE: switch to LoopKit/OmniBLE and pin to ${BRANCH:-custom} @ $COMMIT_SHA" || echo "No changes"
+
+      - name: Push changes to a new branch
+        run: |
+          set -euo pipefail
+          BRANCH_NAME="pin-omnible-pod-keep-alive-$(date +%Y%m%d%H%M%S)"
+          # Create a branch from current HEAD (whatever actions/checkout pulled)
+          git checkout -b "$BRANCH_NAME"
+          git push -u origin "$BRANCH_NAME"
+
+      - name: Show submodule status
+        run: git submodule status
