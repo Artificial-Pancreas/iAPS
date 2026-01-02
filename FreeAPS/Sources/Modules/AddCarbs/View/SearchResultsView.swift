@@ -400,6 +400,80 @@ struct SearchResultsView: View {
                 .foregroundColor(Color.gray.opacity(0.2)),
             alignment: .bottom
         )
+        .contextMenu {
+            Button {
+                saveMealTotalsAsFoodItem()
+            } label: {
+                Label("Save", systemImage: "square.and.arrow.down")
+            }
+        }
+    }
+
+    private func saveMealTotalsAsFoodItem() {
+        let allItems = state.searchResultsState.searchResults.flatMap(\.foodItemsDetailed)
+            .filter { !state.searchResultsState.isDeleted($0) }
+
+        guard !allItems.isEmpty else { return }
+
+        // Calculate aggregate serving size (sum of all portion sizes for per100, and serving sizes for perServing)
+        var aggregateServingSize: Decimal? = 0
+        var hasAllServingSizes = true
+
+        for item in allItems {
+            let portionSize = state.searchResultsState.portionSize(for: item)
+
+            switch item.nutrition {
+            case .per100:
+                // For per100, use the portion size directly
+                aggregateServingSize? += portionSize
+
+            case .perServing:
+                // For perServing, use standardServingSize multiplied by servingsMultiplier
+                if let servingSize = item.standardServingSize {
+                    aggregateServingSize? += servingSize * portionSize
+                } else {
+                    // If any perServing item doesn't have a serving size, we can't calculate aggregate
+                    hasAllServingSizes = false
+                    break
+                }
+            }
+        }
+
+        // If we couldn't calculate complete serving size, set to nil
+        if !hasAllServingSizes {
+            aggregateServingSize = nil
+        }
+
+        // Create nutrition values from totals
+        let nutritionValues = NutritionValues(
+            calories: state.searchResultsState.totalCalories,
+            carbs: state.searchResultsState.totalCarbs,
+            fat: state.searchResultsState.totalFat,
+            fiber: state.searchResultsState.totalFiber,
+            protein: state.searchResultsState.totalProtein,
+            sugars: state.searchResultsState.totalSugars
+        )
+
+        // Create new food item with per-serving nutrition
+        let savedItem = FoodItemDetailed(
+            name: "Complete Meal",
+            nutritionPerServing: nutritionValues,
+            servingsMultiplier: 1,
+            confidence: nil,
+            brand: nil,
+            standardServing: nil,
+            standardServingSize: aggregateServingSize,
+            units: .grams,
+            preparationMethod: nil,
+            visualCues: nil,
+            glycemicIndex: nil,
+            assessmentNotes: nil,
+            imageURL: nil,
+            tags: nil,
+            source: .manual
+        )
+
+        onPersist(savedItem)
     }
 
     private var undoButton: some View {
@@ -2205,6 +2279,110 @@ private struct FoodItemGroupListSection: View {
         analysisResult.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }.count
     }
 
+    private func saveSectionAsFoodItem() {
+        let nonDeletedItems = analysisResult.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }
+
+        guard !nonDeletedItems.isEmpty else { return }
+
+        // Calculate totals for this section
+        var totalCarbs: Decimal = 0
+        var totalProtein: Decimal = 0
+        var totalFat: Decimal = 0
+        var totalFiber: Decimal = 0
+        var totalSugars: Decimal = 0
+        var totalCalories: Decimal = 0
+
+        // Calculate aggregate serving size
+        var aggregateServingSize: Decimal? = 0
+        var hasAllServingSizes = true
+
+        for item in nonDeletedItems {
+            let portionSize = state.searchResultsState.portionSize(for: item)
+
+            switch item.nutrition {
+            case let .per100(values):
+                // For per100, scale by portion size
+                let scale = portionSize / 100
+                totalCarbs += (values.carbs ?? 0) * scale
+                totalProtein += (values.protein ?? 0) * scale
+                totalFat += (values.fat ?? 0) * scale
+                if let fiber = values.fiber {
+                    totalFiber += fiber * scale
+                }
+                if let sugars = values.sugars {
+                    totalSugars += sugars * scale
+                }
+                if let calories = values.calories {
+                    totalCalories += calories * scale
+                }
+
+                // Add portion size to aggregate
+                aggregateServingSize? += portionSize
+
+            case let .perServing(values):
+                // For perServing, multiply by servings multiplier
+                totalCarbs += (values.carbs ?? 0) * portionSize
+                totalProtein += (values.protein ?? 0) * portionSize
+                totalFat += (values.fat ?? 0) * portionSize
+                if let fiber = values.fiber {
+                    totalFiber += fiber * portionSize
+                }
+                if let sugars = values.sugars {
+                    totalSugars += sugars * portionSize
+                }
+                if let calories = values.calories {
+                    totalCalories += calories * portionSize
+                }
+
+                // Add serving size multiplied by multiplier
+                if let servingSize = item.standardServingSize {
+                    aggregateServingSize? += servingSize * portionSize
+                } else {
+                    hasAllServingSizes = false
+                }
+            }
+        }
+
+        // If we couldn't calculate complete serving size, set to nil
+        if !hasAllServingSizes {
+            aggregateServingSize = nil
+        }
+
+        // Create nutrition values from totals
+        let nutritionValues = NutritionValues(
+            calories: totalCalories > 0 ? totalCalories : nil,
+            carbs: totalCarbs,
+            fat: totalFat,
+            fiber: totalFiber > 0 ? totalFiber : nil,
+            protein: totalProtein,
+            sugars: totalSugars > 0 ? totalSugars : nil
+        )
+
+        // Generate name from section
+        let sectionName = analysisResult.briefDescription ?? analysisResult.textQuery ?? analysisResult.title
+
+        // Create new food item with per-serving nutrition
+        let savedItem = FoodItemDetailed(
+            name: sectionName,
+            nutritionPerServing: nutritionValues,
+            servingsMultiplier: 1,
+            confidence: nil,
+            brand: nil,
+            standardServing: nil,
+            standardServingSize: aggregateServingSize,
+            units: .grams,
+            preparationMethod: nil,
+            visualCues: nil,
+            glycemicIndex: nil,
+            assessmentNotes: "Saved from section totals",
+            imageURL: nil,
+            tags: nil,
+            source: .manual
+        )
+
+        onPersist(savedItem)
+    }
+
     var body: some View {
         Group {
             // Section Header Row
@@ -2283,6 +2461,12 @@ private struct FoodItemGroupListSection: View {
                 }
             }
             .contextMenu {
+                Button {
+                    saveSectionAsFoodItem()
+                } label: {
+                    Label("Save as Food Item", systemImage: "square.and.arrow.down")
+                }
+
                 Button(role: .destructive) {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         state.searchResultsState.deleteSection(analysisResult.id)

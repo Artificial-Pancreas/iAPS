@@ -265,4 +265,28 @@ class SearchResultsState: ObservableObject {
             }
         }
     }
+
+    var totalFiber: Decimal {
+        nonDeletedItems.reduce(0) { sum, item in
+            let portion = portionSize(for: item)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.fiberInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.fiberInServings(multiplier: portion) ?? 0)
+            }
+        }
+    }
+
+    var totalSugars: Decimal {
+        nonDeletedItems.reduce(0) { sum, item in
+            let portion = portionSize(for: item)
+            switch item.nutrition {
+            case .per100:
+                return sum + (item.sugarsInPortion(portion: portion) ?? 0)
+            case .perServing:
+                return sum + (item.sugarsInServings(multiplier: portion) ?? 0)
+            }
+        }
+    }
 }
