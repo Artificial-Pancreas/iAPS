@@ -247,7 +247,12 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 content.title = titles.joined(separator: " ")
                 content.body = body
 
-                if sound != "Silent", self.settingsManager.settings.useAlarmSound {
+                if notificationAlarm {
+                    if let alarm = self.glucoseStorage.alarm {
+                        self.playSoundIfNeeded(for: alarm)
+                    }
+                    content.sound = .default
+                } else if sound != "Silent", self.settingsManager.settings.useAlarmSound {
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
                     if sound == "Default" {
                         content.sound = .default
@@ -403,7 +408,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
     static func stopSound() {
         stopPlaying = true
-        AudioServicesDisposeSystemSoundID(soundID)
+        AudioServicesDisposeSystemSoundID(currentSoundID)
     }
 
     private var glucoseFormatter: NumberFormatter {

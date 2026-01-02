@@ -1,5 +1,27 @@
 import Foundation
 
+enum AlertSound: Int, CaseIterable, Codable, Identifiable {
+    case alarm = 1336
+    case beep = 1005
+    case bell = 1007
+    case glass = 1022
+
+    var id: Int { rawValue }
+
+    var description: String {
+        switch self {
+        case .alarm:
+            return "Alarm"
+        case .beep:
+            return "Beep"
+        case .bell:
+            return "Bell"
+        case .glass:
+            return "Glass"
+        }
+    }
+}
+
 struct FreeAPSSettings: JSON, Equatable {
     var units: GlucoseUnits = .mmolL
     var closedLoop: Bool = false
@@ -17,6 +39,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var glucoseBadge: Bool = false
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
+    var highAlertSound: AlertSound = .alarm
+    var lowAlertSound: AlertSound = .alarm
     var addSourceInfoToGlucoseNotifications: Bool = false
     var lowGlucose: Decimal = 72
     var highGlucose: Decimal = 270
@@ -298,6 +322,13 @@ extension FreeAPSSettings: Decodable {
             settings.useAlarmSound = useAlarmSound
         }
 
+        if let highAlertSound = try? container.decode(AlertSound.self, forKey: .highAlertSound) {
+            settings.highAlertSound = highAlertSound
+        }
+
+        if let lowAlertSound = try? container.decode(AlertSound.self, forKey: .lowAlertSound) {
+            settings.lowAlertSound = lowAlertSound
+        }
         if let carbButton = try? container.decode(Bool.self, forKey: .carbButton) {
             settings.carbButton = carbButton
         }
