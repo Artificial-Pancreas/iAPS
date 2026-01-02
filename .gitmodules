@@ -15,7 +15,7 @@
 	url = https://github.com/Artificial-Pancreas/MinimedKit.git
 [submodule "OmniBLE"]
 	path = OmniBLE
-	url = https://github.com/Artificial-Pancreas/OmniBLE.git
+	url = https://github.com/LoopKit/OmniBLE.git
 [submodule "OmniKit"]
 	path = OmniKit
 	url = https://github.com/Artificial-Pancreas/OmniKit.git
