@@ -490,6 +490,7 @@
 		F2E8D1632F09661C0097F482 /* FoodItemEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1622F09661C0097F482 /* FoodItemEditorSheet.swift */; };
 		F2E8D1672F09676D0097F482 /* NoSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1662F09676D0097F482 /* NoSearchesView.swift */; };
 		F2E8D16B2F0967B50097F482 /* FoodItemsSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D16A2F0967B50097F482 /* FoodItemsSelectorView.swift */; };
+		F2E8D16D2F098B8E0097F482 /* DismissPreventionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D16C2F098B8E0097F482 /* DismissPreventionKey.swift */; };
 		F2EE83BF2E739AD200D7177E /* CalendarShareRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */; };
 		F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */; };
 		F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */; };
@@ -1171,6 +1172,7 @@
 		F2E8D1622F09661C0097F482 /* FoodItemEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemEditorSheet.swift; sourceTree = "<group>"; };
 		F2E8D1662F09676D0097F482 /* NoSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSearchesView.swift; sourceTree = "<group>"; };
 		F2E8D16A2F0967B50097F482 /* FoodItemsSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemsSelectorView.swift; sourceTree = "<group>"; };
+		F2E8D16C2F098B8E0097F482 /* DismissPreventionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissPreventionKey.swift; sourceTree = "<group>"; };
 		F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareRootView.swift; sourceTree = "<group>"; };
 		F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareDataFlow.swift; sourceTree = "<group>"; };
 		F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareProvider.swift; sourceTree = "<group>"; };
@@ -2459,6 +2461,7 @@
 				F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */,
 				F2FA68932EEC87D200476D7B /* AIProgressView.swift */,
 				F2D360FF2EE21D83004CC6B1 /* ModelQueryEditor.swift */,
+				F2E8D16C2F098B8E0097F482 /* DismissPreventionKey.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3339,6 +3342,7 @@
 				19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */,
 				F2E8D16B2F0967B50097F482 /* FoodItemsSelectorView.swift in Sources */,
 				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
+				F2E8D16D2F098B8E0097F482 /* DismissPreventionKey.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */,
 				F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */,

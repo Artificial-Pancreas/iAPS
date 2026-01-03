@@ -43,6 +43,7 @@ extension AddCarbs {
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
+        @EnvironmentObject var mainState: Main.StateModel
 
         init(
             resolver: Resolver,
@@ -103,6 +104,15 @@ extension AddCarbs {
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle(foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal")
             .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: shouldPreventDismiss) { newValue in
+                mainState.shouldPreventModalDismiss = newValue
+            }
+            .onChange(of: foodSearchState.showSavedFoods) { _ in
+                mainState.shouldPreventModalDismiss = shouldPreventDismiss
+            }
+            .onAppear {
+                mainState.shouldPreventModalDismiss = shouldPreventDismiss
+            }
             .navigationBarItems(
                 leading:
                 Group {
@@ -133,14 +143,7 @@ extension AddCarbs {
             .navigationBarItems(
                 trailing:
                 Button(action: {
-                    if foodSearchState.showSavedFoods {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            foodSearchState.showSavedFoods = false
-                        }
-                    } else {
-                        state.hideModal()
-                        if editMode { state.apsManager.determineBasalSync() }
-                    }
+                    handleDismissAction()
                 }) {
                     Text(foodSearchState.showSavedFoods ? "Done" : "Cancel")
                 }
@@ -702,6 +705,41 @@ extension AddCarbs {
         private var disabled: Bool {
             (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
                 (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
+        }
+
+        /// Determines if the view should prevent interactive dismissal (swipe down)
+        private var shouldPreventDismiss: Bool {
+            let result: Bool
+            // Prevent dismiss if showing saved foods OR if there are unsaved changes
+            if foodSearchState.showSavedFoods {
+                result = true // Block swipe when saved foods are shown
+            } else if hasUnsavedFoodSearchResults {
+                result = true // Block swipe when there are unsaved food search results
+            } else {
+                result = false // Allow swipe in other cases
+            }
+            return result
+        }
+
+        /// Handles the dismiss action from the Cancel/Done button
+        private func handleDismissAction() {
+            // If showing saved foods, just close them
+            if foodSearchState.showSavedFoods {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    foodSearchState.showSavedFoods = false
+                }
+                return
+            }
+
+            // If there are unsaved food search results, show confirmation
+            if hasUnsavedFoodSearchResults {
+                showCancelConfirmation = true
+                return
+            }
+
+            // Otherwise, just dismiss
+            state.hideModal()
+            if editMode { state.apsManager.determineBasalSync() }
         }
 
         private var editView: some View {
