@@ -57,30 +57,36 @@ struct TagChip: View {
 
     var body: some View {
         Button(action: onTap) {
-            // Use a fixed-size container with overlay to prevent width changes
-            Text(isFavorites ? tag : tag.uppercased())
-//                .font(.system(size: isFavorites ? 18 : 11, weight: .semibold, design: .default))
-                .font(.system(size: 11, weight: .semibold, design: .default))
-                .textCase(isFavorites ? nil : .uppercase)
-                .fontDesign(.default)
-                .kerning(isFavorites ? 0 : 0.5)
-                .foregroundColor(isSelected ? .white : colorScheme == .dark ? .white : .primary)
-                .opacity(isSelected ? 1.0 : 0.85) // Subtle opacity change instead of weight change
-//                .padding(.horizontal, isFavorites ? 8 : 10)
-//                .padding(.vertical, isFavorites ? 6 : 5)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(
-                    RoundedRectangle(cornerRadius: 6, style: .continuous)
-                        .fill(isSelected ? tagColor.opacity(0.85) : tagColor.opacity(colorScheme == .dark ? 0.12 : 0.08))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6, style: .continuous)
-                        .strokeBorder(
-                            isSelected ? Color.clear : tagColor.opacity(colorScheme == .dark ? 0.45 : 0.35),
-                            lineWidth: 1.0
-                        )
-                )
+            Group {
+                if isFavorites {
+                    // Use SF Symbol for favorites - filled when selected, outline when not
+                    Image(systemName: isSelected ? "star.fill" : "star")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(isSelected ? .white : tagColor)
+                } else {
+                    // Regular text tag
+                    Text(tag.uppercased())
+                        .font(.system(size: 11, weight: .semibold, design: .default))
+                        .textCase(.uppercase)
+                        .fontDesign(.default)
+                        .kerning(0.5)
+                        .foregroundColor(isSelected ? .white : colorScheme == .dark ? .white : .primary)
+                }
+            }
+            .opacity(isSelected ? 1.0 : 0.85)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .fill(isSelected ? tagColor.opacity(0.85) : tagColor.opacity(colorScheme == .dark ? 0.12 : 0.08))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .strokeBorder(
+                        isSelected ? Color.clear : tagColor.opacity(colorScheme == .dark ? 0.45 : 0.35),
+                        lineWidth: 1.0
+                    )
+            )
         }
         .buttonStyle(.plain)
     }

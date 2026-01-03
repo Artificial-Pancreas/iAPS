@@ -227,22 +227,22 @@ struct FoodItemEditorSheet: View {
                                     }
                                 }
                             }) {
-                                Text(FoodTags.favorites)
-                                    .font(.system(size: 18, weight: .semibold, design: .default))
-                                    .foregroundColor(editedTags.contains(FoodTags.favorites) ? .white : .primary)
+                                Image(systemName: editedTags.contains(FoodTags.favorites) ? "star.fill" : "star")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(editedTags.contains(FoodTags.favorites) ? .white : .orange)
                                     .padding(.horizontal, 8)
                                     .padding(.vertical, 6)
                                     .background(
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                                             .fill(
-                                                editedTags.contains(FoodTags.favorites) ? Color.purple.opacity(0.75) : Color
-                                                    .purple.opacity(0.08)
+                                                editedTags.contains(FoodTags.favorites) ? Color.orange.opacity(0.75) : Color
+                                                    .orange.opacity(0.08)
                                             )
                                     )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                                             .strokeBorder(
-                                                editedTags.contains(FoodTags.favorites) ? Color.clear : Color.purple
+                                                editedTags.contains(FoodTags.favorites) ? Color.clear : Color.orange
                                                     .opacity(0.35),
                                                 lineWidth: 1.0
                                             )
