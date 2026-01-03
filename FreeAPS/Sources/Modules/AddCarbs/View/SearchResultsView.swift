@@ -73,49 +73,8 @@ struct SearchResultsView: View {
             }
 
             if let savedFoods = state.savedFoods, state.showSavedFoods {
-                // Show saved foods inline with header
+                // Show saved foods inline
                 VStack(spacing: 0) {
-                    HStack {
-                        Text("Saved Foods")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                            .lineLimit(1)
-
-                        Spacer()
-
-                        // Add New button
-                        Button(action: {
-                            state.showNewSavedFoodEntry = true
-                        }) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 16))
-                                Text("New")
-                                    .font(.body)
-                                    .fontWeight(.semibold)
-                            }
-                            .foregroundColor(.blue)
-                        }
-                        .padding(.trailing, 8)
-
-                        // Done button
-                        Button(action: {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                state.showSavedFoods = false
-                            }
-                        }) {
-                            Text("Done")
-                                .font(.body)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.blue)
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(Color(.systemBackground))
-
-                    Divider()
-
                     FoodItemsSelectorView(
                         searchResult: savedFoods,
                         onFoodItemSelected: { selectedItem in

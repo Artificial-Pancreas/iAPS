@@ -101,26 +101,50 @@ extension AddCarbs {
             }
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .navigationTitle("Add Meal")
+            .navigationTitle(foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
-                NavigationLink(destination: FoodSearchSettingsView()) {
-                    Image(systemName: "gearshape")
-                        .font(.system(size: 20, weight: .medium))
-                        .foregroundColor(.secondary.opacity(0.5))
-                        .frame(width: 46, height: 46)
+                Group {
+                    if foodSearchState.showSavedFoods {
+                        Button(action: {
+                            foodSearchState.showNewSavedFoodEntry = true
+                        }) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 16))
+                                Text("New")
+                                    .font(.body)
+                                    .fontWeight(.semibold)
+                            }
+                            .foregroundColor(.blue)
+                        }
+                    } else {
+                        NavigationLink(destination: FoodSearchSettingsView()) {
+                            Image(systemName: "gearshape")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.secondary.opacity(0.5))
+                                .frame(width: 46, height: 46)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
-                .buttonStyle(PlainButtonStyle())
             )
-            .navigationBarItems(trailing: Button("Cancel", action: {
-                if hasUnsavedFoodSearchResults {
-                    showCancelConfirmation = true
-                } else {
-                    state.hideModal()
-                    if editMode { state.apsManager.determineBasalSync() }
+            .navigationBarItems(
+                trailing:
+                Button(action: {
+                    if foodSearchState.showSavedFoods {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            foodSearchState.showSavedFoods = false
+                        }
+                    } else {
+                        state.hideModal()
+                        if editMode { state.apsManager.determineBasalSync() }
+                    }
+                }) {
+                    Text(foodSearchState.showSavedFoods ? "Done" : "Cancel")
                 }
-            }))
+            )
             .confirmationDialog(
                 "Discard Food Search?",
                 isPresented: $showCancelConfirmation,

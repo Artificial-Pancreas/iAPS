@@ -196,8 +196,10 @@ struct FoodSearchView: View {
 
                             if state.savedFoods?.foodItemsDetailed.count ?? 0 > 0 {
                                 Button {
-                                    state.showSavedFoods = true
-                                    state.showingFoodSearch = true
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        state.showSavedFoods = true
+                                        state.showingFoodSearch = true
+                                    }
                                 } label: {
                                     Image(systemName: FoodItemSource.database.icon)
                                         .font(.system(size: 20, weight: .medium))
@@ -254,24 +256,22 @@ struct FoodSearchView: View {
                                         Label("Choose from Library", systemImage: "photo.on.rectangle")
                                     }
 
-                                    if !UserDefaults.standard.aiAddImageCommentByDefault {
-                                        Divider()
+                                    Divider()
 
-                                        Button {
-                                            state.forceShowCommentForNextImage = true
-                                            state.foodSearchRoute = .camera
-                                            state.showingFoodSearch = true
-                                        } label: {
-                                            Label("Photo (+ comment)", systemImage: "camera.badge.ellipsis")
-                                        }
+                                    Button {
+                                        state.forceShowCommentForNextImage = true
+                                        state.foodSearchRoute = .camera
+                                        state.showingFoodSearch = true
+                                    } label: {
+                                        Label("Photo (+ comment)", systemImage: "camera.badge.ellipsis")
+                                    }
 
-                                        Button {
-                                            state.forceShowCommentForNextImage = true
-                                            showPhotoPicker = true
-                                            state.showingFoodSearch = true
-                                        } label: {
-                                            Label("Library (+ comment)", systemImage: "square.and.pencil")
-                                        }
+                                    Button {
+                                        state.forceShowCommentForNextImage = true
+                                        showPhotoPicker = true
+                                        state.showingFoodSearch = true
+                                    } label: {
+                                        Label("Library (+ comment)", systemImage: "square.and.pencil")
                                     }
                                 }
                                 .photosPicker(
