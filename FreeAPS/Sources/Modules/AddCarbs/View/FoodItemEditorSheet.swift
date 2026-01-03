@@ -1,0 +1,1089 @@
+import Foundation
+import SwiftUI
+
+struct FoodItemEditorSheet: View {
+    let existingItem: FoodItemDetailed?
+    let title: String
+    let onSave: (FoodItemDetailed) -> Void
+    let onCancel: () -> Void
+    let allowServingMultiplierEdit: Bool // New parameter to control slider visibility
+    let allExistingTags: Set<String> // All tags from other saved foods
+
+    @State private var nutritionMode: NutritionEntryMode = .perServing
+    @State private var portionSizeOrMultiplier: Decimal = 1
+    @State private var editedName: String = ""
+    @State private var editedCarbs: Decimal = 0
+    @State private var editedProtein: Decimal = 0
+    @State private var editedFat: Decimal = 0
+    @State private var editedFiber: Decimal?
+    @State private var editedSugars: Decimal?
+    @State private var editedServingSize: Decimal?
+    @State private var editedCalories: Decimal?
+    @State private var sliderMultiplier: Double = 1.0
+    @State private var editedTags: Set<String> = []
+    @State private var showingAddNewTag = false
+    @State private var newTagText: String = ""
+
+    @FocusState private var focusedField: NutritionField?
+
+    enum NutritionField: Hashable {
+        case carbs
+        case protein
+        case fat
+        case fiber
+        case sugars
+        case servingSize
+        case calories
+        case name
+    }
+
+    enum NutritionEntryMode: String, CaseIterable, Hashable {
+        case perServing = "Per Serving"
+        case per100g = "Per 100g"
+        case per100ml = "Per 100ml"
+
+        var nutritionType: NutritionEntryType {
+            switch self {
+            case .perServing: return .perServing
+            case .per100g,
+                 .per100ml: return .per100
+            }
+        }
+
+        var unit: MealUnits {
+            switch self {
+            case .per100g,
+                 .perServing: return .grams
+            case .per100ml: return .milliliters
+            }
+        }
+    }
+
+    enum NutritionEntryType {
+        case perServing
+        case per100
+    }
+
+    private var nutritionType: NutritionEntryType {
+        nutritionMode.nutritionType
+    }
+
+    private var selectedUnit: MealUnits {
+        nutritionMode.unit
+    }
+
+    private var canSave: Bool {
+        editedCarbs >= 0 && editedProtein >= 0 && editedFat >= 0
+    }
+
+    init(
+        existingItem: FoodItemDetailed?,
+        title: String? = nil,
+        allowServingMultiplierEdit: Bool = false,
+        allExistingTags: Set<String> = [],
+        onSave: @escaping (FoodItemDetailed) -> Void,
+        onCancel: @escaping () -> Void
+    ) {
+        self.existingItem = existingItem
+        // Use provided title, or default based on whether editing existing item
+        self.title = title ?? (existingItem != nil ? "Edit Food" : "Add Food Manually")
+        self.allowServingMultiplierEdit = allowServingMultiplierEdit
+        self.allExistingTags = allExistingTags
+        self.onSave = onSave
+        self.onCancel = onCancel
+
+        // Initialize state from existing item if provided
+        if let item = existingItem {
+            _editedName = State(initialValue: item.name)
+            _editedTags = State(initialValue: Set(item.tags ?? []))
+
+            switch item.nutrition {
+            case let .per100(values):
+                // Determine mode based on units
+                let mode: NutritionEntryMode = (item.units ?? .grams) == .milliliters ? .per100ml : .per100g
+                _nutritionMode = State(initialValue: mode)
+                _editedCarbs = State(initialValue: values.carbs ?? 0)
+                _editedProtein = State(initialValue: values.protein ?? 0)
+                _editedFat = State(initialValue: values.fat ?? 0)
+                _editedFiber = State(initialValue: values.fiber)
+                _editedSugars = State(initialValue: values.sugars)
+                _editedCalories = State(initialValue: values.calories)
+                _portionSizeOrMultiplier = State(initialValue: item.portionSize ?? 100)
+                _sliderMultiplier = State(initialValue: Double(item.portionSize ?? 100))
+
+            case let .perServing(values):
+                _nutritionMode = State(initialValue: .perServing)
+                _editedCarbs = State(initialValue: values.carbs ?? 0)
+                _editedProtein = State(initialValue: values.protein ?? 0)
+                _editedFat = State(initialValue: values.fat ?? 0)
+                _editedFiber = State(initialValue: values.fiber)
+                _editedSugars = State(initialValue: values.sugars)
+                _editedCalories = State(initialValue: values.calories)
+                _portionSizeOrMultiplier = State(initialValue: item.servingsMultiplier ?? 1)
+                _sliderMultiplier = State(initialValue: Double(item.servingsMultiplier ?? 1))
+            }
+
+            _editedServingSize = State(initialValue: item.standardServingSize)
+        }
+    }
+
+    private func autoGeneratedName() -> String {
+        let carbs = editedCarbs
+        let protein = editedProtein
+        let fat = editedFat
+
+        let total = carbs + protein + fat
+        guard total > 0 else { return "Food" }
+
+        // Calculate percentages
+        let carbPercent = (carbs / total) * 100
+        let proteinPercent = (protein / total) * 100
+        let fatPercent = (fat / total) * 100
+
+        // Low-carb check (important for diabetes)
+        if carbPercent < 10 {
+            if proteinPercent > 50 { return "Lean Protein" }
+            if fatPercent > 60 { return "Fatty Food" }
+            return "Low-Carb Food"
+        }
+
+        // Dominant macro (>50%)
+        if carbPercent > 50 {
+            if carbPercent > 80 { return "Starchy Food" }
+            return "Carb Food"
+        }
+
+        if proteinPercent > 50 {
+            if fatPercent < 10 { return "Lean Protein" }
+            return "Protein Food"
+        }
+
+        if fatPercent > 50 {
+            return "Fatty Food"
+        }
+
+        // Balanced
+        if carbPercent > 30 && proteinPercent > 30 {
+            return "Mixed Food"
+        }
+
+        return "Food"
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                // Nutrition Mode Picker at the top (3-way)
+                VStack(spacing: 12) {
+                    Picker("Nutrition Type", selection: $nutritionMode) {
+                        ForEach(NutritionEntryMode.allCases, id: \.self) { mode in
+                            Text(mode.rawValue).tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal)
+                    .padding(.top, 16)
+                    .onChange(of: nutritionMode) { oldMode, newMode in
+                        handleNutritionModeChange(from: oldMode, to: newMode)
+                    }
+                }
+
+                FoodItemNutritionEditor(
+                    nutritionMode: $nutritionMode,
+                    portionSizeOrMultiplier: $portionSizeOrMultiplier,
+                    sliderMultiplier: $sliderMultiplier,
+                    editedCarbs: $editedCarbs,
+                    editedProtein: $editedProtein,
+                    editedFat: $editedFat,
+                    editedFiber: $editedFiber,
+                    editedSugars: $editedSugars,
+                    editedServingSize: $editedServingSize,
+                    editedCalories: $editedCalories,
+                    allowServingMultiplierEdit: allowServingMultiplierEdit,
+                    focusedField: $focusedField
+                )
+
+                // Editable food name with favorite tag
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Food Name")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+
+                    HStack(spacing: 8) {
+                        TextField(autoGeneratedName(), text: $editedName)
+                            .font(.body)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($focusedField, equals: .name)
+
+                        if !allExistingTags.isEmpty || existingItem?.source == .database {
+                            Button(action: {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    if editedTags.contains(FoodTags.favorites) {
+                                        editedTags.remove(FoodTags.favorites)
+                                    } else {
+                                        editedTags.insert(FoodTags.favorites)
+                                    }
+                                }
+                            }) {
+                                Text(FoodTags.favorites)
+                                    .font(.system(size: 18, weight: .semibold, design: .default))
+                                    .foregroundColor(editedTags.contains(FoodTags.favorites) ? .white : .primary)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 6)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .fill(
+                                                editedTags.contains(FoodTags.favorites) ? Color.purple.opacity(0.75) : Color
+                                                    .purple.opacity(0.08)
+                                            )
+                                    )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .strokeBorder(
+                                                editedTags.contains(FoodTags.favorites) ? Color.clear : Color.purple
+                                                    .opacity(0.35),
+                                                lineWidth: 1.0
+                                            )
+                                    )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                .padding(.top, 12)
+                .padding(.bottom, 8)
+
+                // Collapsible tags section (only show if editing a saved food or creating one for the saved foods list)
+                if !allExistingTags.isEmpty || existingItem?.source == .database {
+                    CollapsibleTagsSection(
+                        selectedTags: $editedTags,
+                        allExistingTags: allExistingTags,
+                        showingAddNewTag: $showingAddNewTag
+                    )
+                    .padding(.horizontal)
+                    .padding(.bottom, 8)
+                }
+
+                // Action buttons at bottom
+                HStack(spacing: 12) {
+                    Button("Cancel") {
+                        onCancel()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color.gray.opacity(0.2))
+                    .foregroundColor(.primary)
+                    .cornerRadius(10)
+
+                    Button("Save") {
+                        saveFoodItem()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(canSave ? Color.accentColor : Color.gray.opacity(0.2))
+                    .foregroundColor(canSave ? .white : .secondary)
+                    .cornerRadius(10)
+                    .disabled(!canSave)
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 16)
+                .background(Color(.systemBackground))
+            }
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                // Only show keyboard toolbar when a field is actually focused
+                if focusedField != nil {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button {
+                            focusedField = nil
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down")
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                }
+            }
+        }
+        // Ensure keyboard dismisses when sheet loses focus
+        .onDisappear {
+            focusedField = nil
+        }
+        .alert("Add New Tag", isPresented: $showingAddNewTag) {
+            TextField("Tag name", text: $newTagText)
+                .autocapitalization(.none)
+            Button("Cancel", role: .cancel) {
+                newTagText = ""
+            }
+            Button("Add") {
+                let trimmed = newTagText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+                if !trimmed.isEmpty, trimmed != FoodTags.favorites {
+                    editedTags.insert(trimmed)
+                }
+                newTagText = ""
+            }
+        } message: {
+            Text("Enter a tag name (e.g., breakfast, snack, low-carb)")
+        }
+    }
+
+    private func handleNutritionModeChange(from oldMode: NutritionEntryMode, to newMode: NutritionEntryMode) {
+        // Skip if modes are the same
+        guard oldMode.nutritionType != newMode.nutritionType else {
+            return
+        }
+
+        switch (oldMode.nutritionType, newMode.nutritionType) {
+        case (.per100, .perServing):
+            // Switching from per100 to perServing
+            // Calculate new per-serving values based on current portion size
+            let currentPortionSize = portionSizeOrMultiplier
+            let scaleFactor = currentPortionSize / 100
+
+            editedCarbs = round(editedCarbs * scaleFactor, to: 1)
+            editedProtein = round(editedProtein * scaleFactor, to: 1)
+            editedFat = round(editedFat * scaleFactor, to: 1)
+            editedFiber = editedFiber.map { round($0 * scaleFactor, to: 1) }
+            editedSugars = editedSugars.map { round($0 * scaleFactor, to: 1) }
+
+            // Scale calories if they exist
+            editedCalories = editedCalories.map { round($0 * scaleFactor, to: 0) }
+
+            // Set serving size to current portion size
+            editedServingSize = currentPortionSize
+
+            // Set multiplier to 1 (always for perServing mode in this context)
+            portionSizeOrMultiplier = 1
+            sliderMultiplier = 1.0
+
+        case (.perServing, .per100):
+            // Switching from perServing to per100
+            if let servingSize = editedServingSize, servingSize > 0 {
+                // We have a serving size - do reverse conversion
+                let scaleFactor = 100 / servingSize
+
+                editedCarbs = round(editedCarbs * scaleFactor, to: 1)
+                editedProtein = round(editedProtein * scaleFactor, to: 1)
+                editedFat = round(editedFat * scaleFactor, to: 1)
+                editedFiber = editedFiber.map { round($0 * scaleFactor, to: 1) }
+                editedSugars = editedSugars.map { round($0 * scaleFactor, to: 1) }
+
+                // Scale calories if they exist
+                editedCalories = editedCalories.map { round($0 * scaleFactor, to: 0) }
+
+                // Set portion size to the serving size
+                portionSizeOrMultiplier = servingSize
+                sliderMultiplier = Double(servingSize)
+            } else {
+                // No serving size available - just set default portion size
+                portionSizeOrMultiplier = 100
+                sliderMultiplier = 100.0
+            }
+
+        default:
+            // Handle switches between per100g and per100ml (same nutrition type)
+            break
+        }
+    }
+
+    // Helper function to round Decimal to specified number of decimal places
+    private func round(_ value: Decimal, to places: Int) -> Decimal {
+        var rounded = value
+        var result = Decimal()
+        NSDecimalRound(&result, &rounded, places, .plain)
+        return result
+    }
+
+    private func saveFoodItem() {
+        // Use auto-generated name if user hasn't entered one
+        let finalName = editedName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?
+            autoGeneratedName() : editedName
+
+        let nutritionValues = NutritionValues(
+            calories: editedCalories,
+            carbs: editedCarbs,
+            fat: editedFat,
+            fiber: editedFiber,
+            protein: editedProtein,
+            sugars: editedSugars
+        )
+
+        // Convert tags to array, ensuring favorites is always first if present
+        let tagsArray: [String]? = {
+            guard !editedTags.isEmpty else { return nil }
+            var result = Array(editedTags)
+            // Sort so favorites comes first, then alphabetically
+            result.sort { tag1, tag2 in
+                if tag1 == FoodTags.favorites { return true }
+                if tag2 == FoodTags.favorites { return false }
+                return tag1 < tag2
+            }
+            return result
+        }()
+
+        let foodItem: FoodItemDetailed
+
+        // If editing existing item, preserve its properties
+        if let existingItem = existingItem {
+            switch nutritionMode.nutritionType {
+            case .per100:
+                foodItem = FoodItemDetailed(
+                    id: existingItem.id, // Preserve ID
+                    name: finalName,
+                    nutritionPer100: nutritionValues,
+                    portionSize: portionSizeOrMultiplier,
+                    confidence: existingItem.confidence,
+                    brand: existingItem.brand,
+                    standardServing: existingItem.standardServing,
+                    standardServingSize: editedServingSize,
+                    units: selectedUnit,
+                    preparationMethod: existingItem.preparationMethod,
+                    visualCues: existingItem.visualCues,
+                    glycemicIndex: existingItem.glycemicIndex,
+                    assessmentNotes: existingItem.assessmentNotes,
+                    imageURL: existingItem.imageURL,
+                    tags: tagsArray,
+                    source: existingItem.source
+                )
+            case .perServing:
+                foodItem = FoodItemDetailed(
+                    id: existingItem.id, // Preserve ID
+                    name: finalName,
+                    nutritionPerServing: nutritionValues,
+                    servingsMultiplier: portionSizeOrMultiplier,
+                    confidence: existingItem.confidence,
+                    brand: existingItem.brand,
+                    standardServing: existingItem.standardServing,
+                    standardServingSize: editedServingSize,
+                    units: selectedUnit,
+                    preparationMethod: existingItem.preparationMethod,
+                    visualCues: existingItem.visualCues,
+                    glycemicIndex: existingItem.glycemicIndex,
+                    assessmentNotes: existingItem.assessmentNotes,
+                    imageURL: existingItem.imageURL,
+                    tags: tagsArray,
+                    source: existingItem.source
+                )
+            }
+        } else {
+            // Creating new item
+            switch nutritionMode.nutritionType {
+            case .per100:
+                foodItem = FoodItemDetailed(
+                    name: finalName,
+                    nutritionPer100: nutritionValues,
+                    portionSize: portionSizeOrMultiplier,
+                    confidence: nil,
+                    brand: nil,
+                    standardServing: nil,
+                    standardServingSize: editedServingSize,
+                    units: selectedUnit,
+                    preparationMethod: nil,
+                    visualCues: nil,
+                    glycemicIndex: nil,
+                    assessmentNotes: nil,
+                    imageURL: nil,
+                    tags: tagsArray,
+                    source: .manual
+                )
+            case .perServing:
+                foodItem = FoodItemDetailed(
+                    name: finalName,
+                    nutritionPerServing: nutritionValues,
+                    servingsMultiplier: portionSizeOrMultiplier,
+                    confidence: nil,
+                    brand: nil,
+                    standardServing: nil,
+                    standardServingSize: editedServingSize,
+                    units: selectedUnit,
+                    preparationMethod: nil,
+                    visualCues: nil,
+                    glycemicIndex: nil,
+                    assessmentNotes: nil,
+                    imageURL: nil,
+                    tags: tagsArray,
+                    source: .manual
+                )
+            }
+        }
+
+        onSave(foodItem)
+    }
+}
+
+private struct FoodItemNutritionEditor: View {
+    @Binding var nutritionMode: FoodItemEditorSheet.NutritionEntryMode
+    @Binding var portionSizeOrMultiplier: Decimal
+    @Binding var sliderMultiplier: Double
+    @Binding var editedCarbs: Decimal
+    @Binding var editedProtein: Decimal
+    @Binding var editedFat: Decimal
+    @Binding var editedFiber: Decimal?
+    @Binding var editedSugars: Decimal?
+    @Binding var editedServingSize: Decimal?
+    @Binding var editedCalories: Decimal?
+    let allowServingMultiplierEdit: Bool
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
+
+    @State private var showAllNutrients: Bool = false
+
+    init(
+        nutritionMode: Binding<FoodItemEditorSheet.NutritionEntryMode>,
+        portionSizeOrMultiplier: Binding<Decimal>,
+        sliderMultiplier: Binding<Double>,
+        editedCarbs: Binding<Decimal>,
+        editedProtein: Binding<Decimal>,
+        editedFat: Binding<Decimal>,
+        editedFiber: Binding<Decimal?>,
+        editedSugars: Binding<Decimal?>,
+        editedServingSize: Binding<Decimal?>,
+        editedCalories: Binding<Decimal?>,
+        allowServingMultiplierEdit: Bool = false,
+        focusedField: FocusState<FoodItemEditorSheet.NutritionField?>.Binding
+    ) {
+        _nutritionMode = nutritionMode
+        _portionSizeOrMultiplier = portionSizeOrMultiplier
+        _sliderMultiplier = sliderMultiplier
+        _editedCarbs = editedCarbs
+        _editedProtein = editedProtein
+        _editedFat = editedFat
+        _editedFiber = editedFiber
+        _editedSugars = editedSugars
+        _editedServingSize = editedServingSize
+        _editedCalories = editedCalories
+        self.allowServingMultiplierEdit = allowServingMultiplierEdit
+        _focusedField = focusedField
+
+        // Auto-expand if there are optional nutrients
+        let hasOptionalNutrients = (editedFiber.wrappedValue != nil && editedFiber.wrappedValue! > 0) ||
+            (editedSugars.wrappedValue != nil && editedSugars.wrappedValue! > 0) ||
+            (editedServingSize.wrappedValue != nil && editedServingSize.wrappedValue! > 0) ||
+            (editedCalories.wrappedValue != nil && editedCalories.wrappedValue! > 0)
+
+        _showAllNutrients = State(initialValue: hasOptionalNutrients)
+    }
+
+    private var unit: String {
+        nutritionMode == .perServing ? "serving" : nutritionMode.unit.localizedAbbreviation
+    }
+
+    private var nutritionType: FoodItemEditorSheet.NutritionEntryType {
+        nutritionMode.nutritionType
+    }
+
+    // Calculate calories from macros
+    private var calculatedCalories: Decimal {
+        (editedCarbs * 4) + (editedProtein * 4) + (editedFat * 9)
+    }
+
+    // Use manually edited calories if available, otherwise use calculated
+    private var displayedCalories: Decimal {
+        // If we have a calories value (whether from food item or manual entry), use it
+        // Only fall back to calculated if there's no value at all
+        if let calories = editedCalories {
+            return calories
+        } else {
+            return calculatedCalories
+        }
+    }
+
+    private var sliderRange: ClosedRange<Double> {
+        switch nutritionType {
+        case .per100:
+            return 10.0 ... 600.0
+        case .perServing:
+            return 0.25 ... 10.0
+        }
+    }
+
+    private var sliderStep: Double.Stride {
+        switch nutritionType {
+        case .per100:
+            return 5.0
+        case .perServing:
+            return 0.25
+        }
+    }
+
+    private var sliderMinLabel: String {
+        switch nutritionType {
+        case .per100:
+            return "10\(nutritionMode.unit.localizedAbbreviation)"
+        case .perServing:
+            return "0.25×"
+        }
+    }
+
+    private var sliderMaxLabel: String {
+        switch nutritionType {
+        case .per100:
+            return "600\(nutritionMode.unit.localizedAbbreviation)"
+        case .perServing:
+            return "10×"
+        }
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                // Portion Size/Multiplier Slider
+                // Show for per100 mode always, or for perServing mode when allowServingMultiplierEdit is true
+                if nutritionType == .per100 || (nutritionType == .perServing && allowServingMultiplierEdit) {
+                    VStack(spacing: 12) {
+                        switch nutritionType {
+                        case .per100:
+                            Text(
+                                "\(Double(portionSizeOrMultiplier), specifier: "%.0f") \(nutritionMode.unit.localizedAbbreviation)"
+                            )
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundColor(.orange)
+                        case .perServing:
+                            Text("\(Double(portionSizeOrMultiplier), specifier: "%.2f")× servings")
+                                .font(.system(size: 28, weight: .bold))
+                                .foregroundColor(.orange)
+                        }
+
+                        Slider(value: $sliderMultiplier, in: sliderRange, step: sliderStep)
+                            .tint(.orange)
+                            .padding(.horizontal)
+                            .onChange(of: sliderMultiplier) { _, newValue in
+                                portionSizeOrMultiplier = Decimal(newValue)
+                            }
+
+                        HStack {
+                            Text(sliderMinLabel)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            Text(sliderMaxLabel)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.horizontal)
+                    }
+                    .padding(.vertical, 8)
+                }
+
+                // Nutrition Table with Editable values
+                VStack(spacing: 8) {
+                    // Header row
+                    HStack(spacing: 8) {
+                        Text("")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text("This portion")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                            .frame(width: 95, alignment: .trailing)
+
+                        Text(nutritionType == .perServing ? "Per serving" : "Per 100\(nutritionMode.unit.localizedAbbreviation)")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                            .frame(width: 100, alignment: .trailing)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.top, 8)
+
+                    Divider()
+
+                    FoodItemNutritionRow(
+                        label: "Carbs",
+                        portionValue: calculatePortionValue(baseValue: editedCarbs),
+                        baseValue: $editedCarbs,
+                        unit: "g",
+                        focusedField: $focusedField,
+                        fieldTag: .carbs
+                    )
+                    Divider()
+                    FoodItemNutritionRow(
+                        label: "Protein",
+                        portionValue: calculatePortionValue(baseValue: editedProtein),
+                        baseValue: $editedProtein,
+                        unit: "g",
+                        focusedField: $focusedField,
+                        fieldTag: .protein
+                    )
+                    Divider()
+                    FoodItemNutritionRow(
+                        label: "Fat",
+                        portionValue: calculatePortionValue(baseValue: editedFat),
+                        baseValue: $editedFat,
+                        unit: "g",
+                        focusedField: $focusedField,
+                        fieldTag: .fat
+                    )
+
+                    // Optional nutrients
+                    if showAllNutrients {
+                        Divider()
+                        // Editable calories row (with auto-calculation when not manually edited)
+                        FoodItemCaloriesRow(
+                            label: "Calories",
+                            portionValue: calculatePortionValue(baseValue: displayedCalories),
+                            baseValue: $editedCalories,
+                            calculatedValue: calculatedCalories,
+                            unit: "kcal",
+                            isCalculated: editedCalories == nil,
+                            focusedField: $focusedField,
+                            fieldTag: .calories
+                        )
+
+                        Divider()
+                        FoodItemNutritionRow(
+                            label: "Fiber",
+                            portionValue: calculatePortionValue(baseValue: editedFiber ?? 0),
+                            baseValue: Binding(
+                                get: { editedFiber ?? 0 },
+                                set: { editedFiber = $0 > 0 ? $0 : nil }
+                            ),
+                            unit: "g",
+                            focusedField: $focusedField,
+                            fieldTag: .fiber
+                        )
+
+                        Divider()
+                        FoodItemNutritionRow(
+                            label: "Sugar",
+                            portionValue: calculatePortionValue(baseValue: editedSugars ?? 0),
+                            baseValue: Binding(
+                                get: { editedSugars ?? 0 },
+                                set: { editedSugars = $0 > 0 ? $0 : nil }
+                            ),
+                            unit: "g",
+                            focusedField: $focusedField,
+                            fieldTag: .sugars
+                        )
+
+                        Divider()
+                        FoodItemServingSizeRow(
+                            servingSize: Binding(
+                                get: { editedServingSize ?? 0 },
+                                set: { editedServingSize = $0 > 0 ? $0 : nil }
+                            ),
+                            unit: nutritionMode.unit.localizedAbbreviation,
+                            focusedField: $focusedField,
+                            fieldTag: .servingSize
+                        )
+                    }
+
+                    // Button to reveal optional nutrients
+                    if !showAllNutrients {
+                        Button(action: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showAllNutrients = true
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: "chevron.down")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                Text("Show All Nutrients")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.vertical, 8)
+                            .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color(.secondarySystemBackground))
+                )
+                .padding(.horizontal)
+
+                Spacer(minLength: 8)
+            }
+            .padding(.vertical)
+        }
+        .scrollDismissesKeyboard(.immediately)
+    }
+
+    private func calculatePortionValue(baseValue: Decimal) -> Decimal {
+        switch nutritionType {
+        case .per100:
+            return baseValue / 100 * portionSizeOrMultiplier
+        case .perServing:
+            return baseValue * portionSizeOrMultiplier
+        }
+    }
+}
+
+private struct FoodItemNutritionRow: View {
+    let label: String
+    let portionValue: Decimal
+    @Binding var baseValue: Decimal
+    let unit: String
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
+    let fieldTag: FoodItemEditorSheet.NutritionField
+
+    @State private var textValue: String = ""
+
+    private var textBinding: Binding<String> {
+        Binding(
+            get: {
+                // When focused or if there's text, use the text value
+                // Otherwise show empty for 0 values
+                if textValue.isEmpty, baseValue == 0 {
+                    return ""
+                }
+                return textValue
+            },
+            set: { newValue in
+                textValue = newValue
+                // Convert to Decimal, treating empty as 0
+                if let decimal = Decimal(string: newValue) {
+                    baseValue = decimal
+                } else if newValue.isEmpty {
+                    baseValue = 0
+                }
+            }
+        )
+    }
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text(label)
+                .font(.subheadline)
+                .foregroundColor(.primary.opacity(0.8))
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Per portion value (calculated, read-only)
+            HStack(spacing: 2) {
+                Text("\(Double(portionValue), specifier: "%.1f")")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary)
+                Text(unit)
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.7))
+                    .frame(width: 28, alignment: .leading)
+            }
+            .frame(width: 95, alignment: .trailing)
+
+            // Base value (editable) - wrapped with keyboard dismissal
+            HStack(spacing: 4) {
+                TextField("0", text: textBinding)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.trailing)
+                    .focused($focusedField, equals: fieldTag)
+                    .onAppear {
+                        // Initialize text value from baseValue
+                        if baseValue > 0 {
+                            textValue = String(describing: baseValue)
+                        }
+                    }
+                    .onChange(of: baseValue) { _, newValue in
+                        // Update text when baseValue changes externally
+                        if newValue > 0 {
+                            textValue = String(describing: newValue)
+                        } else {
+                            textValue = ""
+                        }
+                    }
+
+                Text(unit)
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.7))
+                    .frame(width: 28, alignment: .leading)
+            }
+            .frame(width: 100, alignment: .trailing)
+        }
+        .padding(.leading, 12)
+        .padding(.trailing, 6)
+        .padding(.vertical, 6)
+    }
+}
+
+private struct FoodItemCaloriesRow: View {
+    let label: String
+    let portionValue: Decimal
+    @Binding var baseValue: Decimal?
+    let calculatedValue: Decimal
+    let unit: String
+    let isCalculated: Bool
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
+    let fieldTag: FoodItemEditorSheet.NutritionField
+
+    @State private var textValue: String = ""
+
+    private var textBinding: Binding<String> {
+        Binding(
+            get: {
+                // When there's text, use it
+                // Otherwise show empty for nil/0 values
+                if textValue.isEmpty, baseValue == nil || baseValue == 0 {
+                    return ""
+                }
+                return textValue
+            },
+            set: { newValue in
+                textValue = newValue
+                // Convert to Decimal, treating empty as nil
+                if let decimal = Decimal(string: newValue), decimal > 0 {
+                    baseValue = decimal
+                } else if newValue.isEmpty {
+                    baseValue = nil
+                }
+            }
+        )
+    }
+
+    var body: some View {
+        HStack(spacing: 8) {
+            HStack(spacing: 4) {
+                Text(label)
+                    .font(.subheadline)
+                    .foregroundColor(.primary.opacity(0.8))
+
+                // Show formula indicator if auto-calculated
+                if isCalculated {
+                    Image(systemName: "function")
+                        .font(.system(size: 11))
+                        .foregroundColor(.blue.opacity(0.8))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Per portion value (calculated, read-only)
+            HStack(spacing: 2) {
+                Text("\(Int(truncating: portionValue as NSNumber))")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary)
+                Text(unit)
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.7))
+                    .frame(width: 28, alignment: .leading)
+            }
+            .frame(width: 95, alignment: .trailing)
+
+            // Base value (editable) - wrapped with keyboard dismissal
+            HStack(spacing: 4) {
+                TextField(
+                    calculatedValue > 0 ? "\(Int(truncating: calculatedValue as NSNumber))" : "0",
+                    text: textBinding
+                )
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .textFieldStyle(.roundedBorder)
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.trailing)
+                .focused($focusedField, equals: fieldTag)
+                .onAppear {
+                    // Initialize text value from baseValue
+                    if let value = baseValue, value > 0 {
+                        textValue = String(Int(truncating: value as NSNumber))
+                    }
+                }
+                .onChange(of: baseValue) { _, newValue in
+                    // Update text when baseValue changes externally
+                    if let value = newValue, value > 0 {
+                        textValue = String(Int(truncating: value as NSNumber))
+                    } else {
+                        textValue = ""
+                    }
+                }
+
+                Text(unit)
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.7))
+                    .frame(width: 28, alignment: .leading)
+            }
+            .frame(width: 100, alignment: .trailing)
+        }
+        .padding(.leading, 12)
+        .padding(.trailing, 6)
+        .padding(.vertical, 6)
+    }
+}
+
+private struct FoodItemServingSizeRow: View {
+    @Binding var servingSize: Decimal
+    let unit: String
+    @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
+    let fieldTag: FoodItemEditorSheet.NutritionField
+
+    @State private var textValue: String = ""
+
+    private var textBinding: Binding<String> {
+        Binding(
+            get: {
+                // When there's text, use it
+                // Otherwise show empty for 0 values
+                if textValue.isEmpty, servingSize == 0 {
+                    return ""
+                }
+                return textValue
+            },
+            set: { newValue in
+                textValue = newValue
+                // Convert to Decimal, treating empty as 0
+                if let decimal = Decimal(string: newValue), decimal > 0 {
+                    servingSize = decimal
+                } else if newValue.isEmpty {
+                    servingSize = 0
+                }
+            }
+        )
+    }
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text("Serving Size")
+                .font(.subheadline)
+                .foregroundColor(.primary.opacity(0.8))
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Empty space for "per portion" column
+            Spacer()
+                .frame(width: 95, alignment: .trailing)
+
+            // Serving size value (editable) - wrapped with keyboard dismissal
+            HStack(spacing: 4) {
+                TextField("optional", text: textBinding)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.trailing)
+                    .focused($focusedField, equals: fieldTag)
+                    .onAppear {
+                        // Initialize text value from servingSize
+                        if servingSize > 0 {
+                            textValue = String(describing: servingSize)
+                        }
+                    }
+                    .onChange(of: servingSize) { _, newValue in
+                        // Update text when servingSize changes externally
+                        if newValue > 0 {
+                            textValue = String(describing: newValue)
+                        } else {
+                            textValue = ""
+                        }
+                    }
+
+                Text(unit)
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.7))
+                    .frame(width: 28, alignment: .leading)
+            }
+            .frame(width: 100, alignment: .trailing)
+        }
+        .padding(.leading, 12)
+        .padding(.trailing, 6)
+        .padding(.vertical, 6)
+    }
+}

@@ -481,6 +481,15 @@
 		F2C73D662EB6604500B700AB /* MainChartConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */; };
 		F2C73D682EB8022C00B700AB /* CalculatedGeometries.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */; };
 		F2D361002EE21D83004CC6B1 /* ModelQueryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D360FF2EE21D83004CC6B1 /* ModelQueryEditor.swift */; };
+		F2E8D1492F0960820097F482 /* FoodItemBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1482F0960820097F482 /* FoodItemBadges.swift */; };
+		F2E8D14D2F09616A0097F482 /* TimePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D14C2F09616A0097F482 /* TimePickerSheet.swift */; };
+		F2E8D1512F0961CC0097F482 /* FoodTagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1502F0961CC0097F482 /* FoodTagCloudView.swift */; };
+		F2E8D1572F0963530097F482 /* FoodItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1562F0963530097F482 /* FoodItemRow.swift */; };
+		F2E8D15B2F0964860097F482 /* FoodItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D15A2F0964860097F482 /* FoodItemImage.swift */; };
+		F2E8D15F2F0965F90097F482 /* FoodItemInfoPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D15E2F0965F90097F482 /* FoodItemInfoPopup.swift */; };
+		F2E8D1632F09661C0097F482 /* FoodItemEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1622F09661C0097F482 /* FoodItemEditorSheet.swift */; };
+		F2E8D1672F09676D0097F482 /* NoSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1662F09676D0097F482 /* NoSearchesView.swift */; };
+		F2E8D16B2F0967B50097F482 /* FoodItemsSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D16A2F0967B50097F482 /* FoodItemsSelectorView.swift */; };
 		F2EE83BF2E739AD200D7177E /* CalendarShareRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */; };
 		F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */; };
 		F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */; };
@@ -1153,6 +1162,15 @@
 		F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartConfigStateModel.swift; sourceTree = "<group>"; };
 		F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatedGeometries.swift; sourceTree = "<group>"; };
 		F2D360FF2EE21D83004CC6B1 /* ModelQueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelQueryEditor.swift; sourceTree = "<group>"; };
+		F2E8D1482F0960820097F482 /* FoodItemBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemBadges.swift; sourceTree = "<group>"; };
+		F2E8D14C2F09616A0097F482 /* TimePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerSheet.swift; sourceTree = "<group>"; };
+		F2E8D1502F0961CC0097F482 /* FoodTagCloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTagCloudView.swift; sourceTree = "<group>"; };
+		F2E8D1562F0963530097F482 /* FoodItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemRow.swift; sourceTree = "<group>"; };
+		F2E8D15A2F0964860097F482 /* FoodItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemImage.swift; sourceTree = "<group>"; };
+		F2E8D15E2F0965F90097F482 /* FoodItemInfoPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemInfoPopup.swift; sourceTree = "<group>"; };
+		F2E8D1622F09661C0097F482 /* FoodItemEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemEditorSheet.swift; sourceTree = "<group>"; };
+		F2E8D1662F09676D0097F482 /* NoSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSearchesView.swift; sourceTree = "<group>"; };
+		F2E8D16A2F0967B50097F482 /* FoodItemsSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemsSelectorView.swift; sourceTree = "<group>"; };
 		F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareRootView.swift; sourceTree = "<group>"; };
 		F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareDataFlow.swift; sourceTree = "<group>"; };
 		F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareProvider.swift; sourceTree = "<group>"; };
@@ -2428,6 +2446,15 @@
 				19C3C73E2E97AE7B0000BE4D /* ModernCameraView.swift */,
 				19C3C7402E97AE7B0000BE4D /* BarcodeScannerView.swift */,
 				19C3C7182E97AE520000BE4D /* SearchResultsView.swift */,
+				F2E8D1562F0963530097F482 /* FoodItemRow.swift */,
+				F2E8D15A2F0964860097F482 /* FoodItemImage.swift */,
+				F2E8D15E2F0965F90097F482 /* FoodItemInfoPopup.swift */,
+				F2E8D1622F09661C0097F482 /* FoodItemEditorSheet.swift */,
+				F2E8D1662F09676D0097F482 /* NoSearchesView.swift */,
+				F2E8D1482F0960820097F482 /* FoodItemBadges.swift */,
+				F2E8D16A2F0967B50097F482 /* FoodItemsSelectorView.swift */,
+				F2E8D14C2F09616A0097F482 /* TimePickerSheet.swift */,
+				F2E8D1502F0961CC0097F482 /* FoodTagCloudView.swift */,
 				F25284682F01C7BC0084D094 /* ImageSelectorView.swift */,
 				F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */,
 				F2FA68932EEC87D200476D7B /* AIProgressView.swift */,
@@ -3213,6 +3240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */,
+				F2E8D14D2F09616A0097F482 /* TimePickerSheet.swift in Sources */,
 				3811DEEB25CA063400A708ED /* PersistedProperty.swift in Sources */,
 				F21580A52E47B4FF003BC827 /* PeakPicker.swift in Sources */,
 				38E44537274E411700EC9A94 /* Disk+Helpers.swift in Sources */,
@@ -3252,6 +3280,7 @@
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				CE94598429E9E3E60047C9C6 /* WatchConfigStateModel.swift in Sources */,
 				F281B4A22ECF9087007185A9 /* LabelPlacement.swift in Sources */,
+				F2E8D15F2F0965F90097F482 /* FoodItemInfoPopup.swift in Sources */,
 				38DF1786276A73D400B3528F /* TagCloudView.swift in Sources */,
 				38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */,
 				383420D925FFEB3F002D46C1 /* Popup.swift in Sources */,
@@ -3263,6 +3292,7 @@
 				19B0EF2128F6D66200069496 /* Statistics.swift in Sources */,
 				3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */,
 				3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */,
+				F2E8D1492F0960820097F482 /* FoodItemBadges.swift in Sources */,
 				38A0364225ED069400FCBB52 /* TempBasal.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,
 				383948DA25CD64D500E91849 /* Glucose.swift in Sources */,
@@ -3307,6 +3337,7 @@
 				38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */,
 				1947541C2D470F0500A89AD1 /* SuspendResumeShortcut.swift in Sources */,
 				19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */,
+				F2E8D16B2F0967B50097F482 /* FoodItemsSelectorView.swift in Sources */,
 				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */,
@@ -3361,6 +3392,7 @@
 				190EBCCB29FF13CB00BA767D /* UIUXRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
+				F2E8D1512F0961CC0097F482 /* FoodTagCloudView.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,
@@ -3463,6 +3495,7 @@
 				F2FA68862EE9061D00476D7B /* FoodAnalysisService.swift in Sources */,
 				F90692D1274B99B60037068D /* HealthKitProvider.swift in Sources */,
 				F2FA68882EE90B0F00476D7B /* AIPrompts.swift in Sources */,
+				F2E8D1572F0963530097F482 /* FoodItemRow.swift in Sources */,
 				19F95FF729F10FEE00314DDC /* StatStateModel.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,
 				F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */,
@@ -3537,6 +3570,7 @@
 				E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */,
 				19493A3D2C59987700EC83A7 /* DatabaseModels.swift in Sources */,
 				38E8755427561E9800975559 /* DataFlow.swift in Sources */,
+				F2E8D1672F09676D0097F482 /* NoSearchesView.swift in Sources */,
 				19C3C74B2E97B2F10000BE4D /* BarcodeScanResult.swift in Sources */,
 				38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */,
 				CE7CA34F2A064973004BE681 /* BaseIntentsRequest.swift in Sources */,
@@ -3570,6 +3604,7 @@
 				19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */,
 				19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */,
 				38569353270B5E350002C50D /* CGMRootView.swift in Sources */,
+				F2E8D1632F09661C0097F482 /* FoodItemEditorSheet.swift in Sources */,
 				F2ACC0672EF88E0A00C86FBC /* SearchResultsState.swift in Sources */,
 				69A31254F2451C20361D172F /* BolusStateModel.swift in Sources */,
 				0CEA2EA070AB041AF3E3745B /* BolusRootView.swift in Sources */,
@@ -3594,6 +3629,7 @@
 				19D2047D2ECF267A001110FC /* MealsSummaryView.swift in Sources */,
 				38E44534274E411700EC9A94 /* Disk+InternalHelpers.swift in Sources */,
 				F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */,
+				F2E8D15B2F0964860097F482 /* FoodItemImage.swift in Sources */,
 				F2941FA92E78823C00A9DD5D /* AppGroupCGMPlugin.swift in Sources */,
 				38A00B2325FC2B55006BC0B0 /* LRUCache.swift in Sources */,
 				1924F72C2BA35AE5006644EE /* TotalDailyDose.swift in Sources */,
