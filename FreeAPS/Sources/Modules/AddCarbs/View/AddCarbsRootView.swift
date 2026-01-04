@@ -104,14 +104,17 @@ extension AddCarbs {
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle(foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal")
             .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: shouldPreventDismiss) { newValue in
-                mainState.shouldPreventModalDismiss = newValue
+            .onChange(of: shouldPreventDismiss) {
+                mainState.shouldPreventModalDismiss = shouldPreventDismiss
             }
-            .onChange(of: foodSearchState.showSavedFoods) { _ in
+            .onChange(of: foodSearchState.showSavedFoods) {
                 mainState.shouldPreventModalDismiss = shouldPreventDismiss
             }
             .onAppear {
                 mainState.shouldPreventModalDismiss = shouldPreventDismiss
+            }
+            .onDisappear {
+                mainState.shouldPreventModalDismiss = false
             }
             .navigationBarItems(
                 leading:
@@ -709,16 +712,14 @@ extension AddCarbs {
 
         /// Determines if the view should prevent interactive dismissal (swipe down)
         private var shouldPreventDismiss: Bool {
-            let result: Bool
             // Prevent dismiss if showing saved foods OR if there are unsaved changes
             if foodSearchState.showSavedFoods {
-                result = true // Block swipe when saved foods are shown
+                return true // Block swipe when saved foods are shown
             } else if hasUnsavedFoodSearchResults {
-                result = true // Block swipe when there are unsaved food search results
+                return true // Block swipe when there are unsaved food search results
             } else {
-                result = false // Allow swipe in other cases
+                return false // Allow swipe in other cases
             }
-            return result
         }
 
         /// Handles the dismiss action from the Cancel/Done button
