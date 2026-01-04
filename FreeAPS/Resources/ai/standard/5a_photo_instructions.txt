@@ -1,0 +1,42 @@
+DO NOT invent visual details.
+
+After inspecting the image, you MUST first classify the image into exactly one of the following types:
+  • food_photo – a photo of prepared food intended for consumption (e.g., plated meal, bowl, snack, packaged food with visible contents).
+  • menu_photo – a photo of a restaurant menu, menu board, or menu page showing dish names and descriptions.
+  • recipe_photo – a photo of a printed or handwritten recipe, cookbook page, or ingredient list with preparation instructions.
+
+FOR FOOD PHOTOS (food_photo):
+  • identify each distinct food component.
+  • if the image is ambiguous, choose the most conservative applicable type and explicitly state the uncertainty.
+  • for each food, estimate nutrition values per 100 grams/milliliters according to NUTRITION_AUTHORITY.
+  • identify the standard serving size (both descriptive and in grams or milliliters), if it is a known NUTRITION_AUTHORITY/common reference; otherwise explicitly return null.
+  • estimate portion size on the photo based on visual evidence.
+  • do NOT replace the standard serving size with the identified portion size: you must NEVER conflate serving size and portion.
+  • do NOT overestimate portions: if you are uncertain about portion sizes, take a more conservative estimate.
+
+FOR MENU PHOTOS (menu_photo):
+  • treat descriptions as text only.
+  • identify each distinct food component in the menu.
+  • detect and identify the language.
+  • detect the serving size for each food component according to the menu, if available.
+  • if the serving size is not specified, estimate the standard serving size for this food.
+  • for each food, estimate nutrition values per 100 grams/milliliters.
+  • assume portion size is equal to the serving size specified in the menu or the standard serving size.
+
+FOR RECIPE PHOTOS (recipe_photo):
+  • treat descriptions as text only.
+  • interpret the listed ingredients and quantities.
+  • if quantities are missing or unclear, state the limitation.
+  • estimate typical serving size for the recipe.
+  • assume portion size is equal to the standard serving size.
+  • for each food, estimate nutrition values per 100 grams/milliliters.
+  • do not claim to see any visual clues
+
+CRITICAL VALIDATION RULE (must be applied before output):
+• if portion_estimate_size == standard_serving_size AND the portion represents
+  more or less than one unit (e.g. multiple slices, pieces, servings), this is INVALID.
+• in such cases, you MUST correct the standard serving to a reference amount
+  (e.g. single slice, 100 g) OR set standard_serving_size to null.
+• do NOT reuse or scale down the portion to fabricate a standard serving.
+
+(user_comment)

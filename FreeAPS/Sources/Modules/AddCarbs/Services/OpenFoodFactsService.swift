@@ -1,15 +1,43 @@
 import Foundation
 import OSLog
 
+extension OpenFoodFactsService: TextAnalysisService {
+    func analyzeText(
+        prompt: String,
+        telemetryCallback _: ((String) -> Void)?
+    ) async throws -> FoodItemGroup {
+        let products = try await searchProducts(query: prompt, pageSize: 15)
+        var result = fromOpenFoodFactsProducts(products: products, confidence: nil, source: .search)
+        result.textQuery = prompt
+        return result
+    }
+}
+
+extension OpenFoodFactsService: BarcodeAnalysisService {
+    func analyzeBarcode(
+        barcode: String,
+        telemetryCallback _: ((String) -> Void)?
+    ) async throws -> FoodItemGroup {
+        let item = try await searchProduct(barcode: barcode)
+        var result = fromOpenFoodFactsProducts(products: [item], confidence: .high, source: .barcode)
+        result.barcode = barcode
+        return result
+    }
+}
+
 /// Service for interacting with the OpenFoodFacts API
 /// Provides food search functionality and barcode lookup for carb counting
-class OpenFoodFactsService {
+final class OpenFoodFactsService {
+    static let shared = OpenFoodFactsService()
+
     // MARK: - Properties
 
     private let session: URLSession
     private let baseURL = "https://world.openfoodfacts.org"
     private let userAgent = "Loop-iOS-Diabetes-App/1.0"
     private let log = OSLog(subsystem: "", category: "OpenFoodFactsService")
+
+    private let timeout: TimeInterval = 30.0
 
     // MARK: - Initialization
 
@@ -21,8 +49,8 @@ class OpenFoodFactsService {
         } else {
             // Create optimized configuration for food database requests
             let config = URLSessionConfiguration.default
-            config.timeoutIntervalForRequest = 30.0
-            config.timeoutIntervalForResource = 60.0
+            config.timeoutIntervalForRequest = timeout
+            config.timeoutIntervalForResource = timeout * 2
             config.waitsForConnectivity = true
             config.networkServiceType = .default
             config.allowsCellularAccess = true
@@ -30,8 +58,6 @@ class OpenFoodFactsService {
             self.session = URLSession(configuration: config)
         }
     }
-
-    // MARK: - Public API
 
     func searchProducts(query: String, pageSize: Int = 20) async throws -> [OpenFoodFactsProduct] {
         let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -55,11 +81,11 @@ class OpenFoodFactsService {
             let request = createRequest(for: directURL)
             let response = try await performRequest(request)
 
-            // ✅ DEBUG: Response speichern
-            let tempDir = FileManager.default.temporaryDirectory
-            let responseFile = tempDir.appendingPathComponent("openfoodfacts_direct_response.json")
-            try response.data.write(to: responseFile)
-            print("💾 DEBUG: Direct product response saved to: \(responseFile.path)")
+            saveDebugDataToTempFile(
+                description: "OpenFoodFacts direct product response",
+                fileName: "openfoodfacts_direct_response.json",
+                data: response.data
+            )
 
             // Versuche das direkte Produkt-Format zu parsen
             do {
@@ -96,12 +122,26 @@ class OpenFoodFactsService {
         let request = createRequest(for: url)
         let response = try await performRequest(request)
 
-        // Response speichern für Debugging
-        let tempDir = FileManager.default.temporaryDirectory
-        let responseFile = tempDir.appendingPathComponent("openfoodfacts_search_response.json")
-        try response.data.write(to: responseFile)
-        print("💾 DEBUG: Search response saved to: \(responseFile.path)")
+        saveDebugDataToTempFile(
+            description: "OpenFoodFacts direct product response",
+            fileName: "openfoodfacts_search_response.json",
+            data: response.data
+        )
 
+        do {
+            _ = try decodeResponse(OpenFoodFactsSearchResponse.self, from: response.data)
+        } catch let decodingError as DecodingError {
+            print("❌ DECODING FAILED:")
+            print(prettyPrintDecodingError(decodingError))
+
+            // Also print a snippet of the raw JSON for context
+            if let jsonString = String(data: response.data, encoding: .utf8) {
+                let preview = String(jsonString.prefix(500))
+                print("📄 JSON Preview (first 500 chars):\n\(preview)")
+            }
+        } catch {
+            print("❌ Other error: \(error.localizedDescription)")
+        }
         let searchResponse = try decodeResponse(OpenFoodFactsSearchResponse.self, from: response.data)
         let validProducts = searchResponse.products.filter { $0.hasSufficientNutritionalData }
 
@@ -191,7 +231,7 @@ class OpenFoodFactsService {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("en", forHTTPHeaderField: "Accept-Language")
-        request.timeoutInterval = 30.0 // Increased from 10 to 30 seconds
+        request.timeoutInterval = timeout
         return request
     }
 
@@ -271,10 +311,20 @@ class OpenFoodFactsService {
             let decoder = JSONDecoder()
             return try decoder.decode(type, from: data)
         } catch let decodingError as DecodingError {
-            os_log("JSON decoding failed: %{public}@", log: log, type: .error, decodingError.localizedDescription)
+            let detailedError = prettyPrintDecodingError(decodingError)
+            os_log("JSON decoding failed:\n%{public}@", log: log, type: .error, detailedError)
+            print("❌ DETAILED DECODING ERROR:\n\(detailedError)")
+
+            // Print JSON preview
+            if let jsonString = String(data: data, encoding: .utf8) {
+                let preview = String(jsonString.prefix(1000))
+                print("📄 JSON Preview (first 1000 chars):\n\(preview)")
+            }
+
             throw OpenFoodFactsError.decodingError(decodingError)
         } catch {
             os_log("Decoding error: %{public}@", log: log, type: .error, error.localizedDescription)
+            print("❌ OTHER DECODING ERROR: \(error)")
             throw OpenFoodFactsError.decodingError(error)
         }
     }
@@ -286,99 +336,49 @@ class OpenFoodFactsService {
         let predicate = NSPredicate(format: "SELF MATCHES %@", numericPattern)
         return predicate.evaluate(with: barcode)
     }
-}
 
-// MARK: - Testing Support
-
-#if DEBUG
-    extension OpenFoodFactsService {
-        /// Create a mock service for testing that returns sample data
-        static func mock() -> OpenFoodFactsService {
-            let configuration = URLSessionConfiguration.ephemeral
-            configuration.protocolClasses = [MockURLProtocol.self]
-            let session = URLSession(configuration: configuration)
-            return OpenFoodFactsService(session: session)
-        }
-
-        /// Configure mock responses for testing
-        static func configureMockResponses() {
-            MockURLProtocol.mockResponses = [
-                "search": MockURLProtocol.createSearchResponse(),
-                "product": MockURLProtocol.createProductResponse()
-            ]
-        }
-    }
-
-    /// Mock URL protocol for testing
-    class MockURLProtocol: URLProtocol {
-        nonisolated(unsafe) static var mockResponses: [String: (Data, HTTPURLResponse)] = [:]
-
-        override class func canInit(with _: URLRequest) -> Bool {
-            true
-        }
-
-        override class func canonicalRequest(for request: URLRequest) -> URLRequest {
-            request
-        }
-
-        override func startLoading() {
-            guard let url = request.url else { return }
-
-            let key = url.path.contains("search") ? "search" : "product"
-
-            if let (data, response) = MockURLProtocol.mockResponses[key] {
-                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-                client?.urlProtocol(self, didLoad: data)
-            } else {
-                let response = HTTPURLResponse(url: url, statusCode: 404, httpVersion: nil, headerFields: nil)!
-                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+    private func prettyPrintDecodingError(_ error: DecodingError) -> String {
+        switch error {
+        case let .typeMismatch(type, context):
+            var output = "Type mismatch for type: \(type)\n"
+            output += "  Expected type: \(type)\n"
+            output += "  Coding path: \(context.codingPath.map(\.stringValue).joined(separator: " → "))\n"
+            output += "  Debug description: \(context.debugDescription)\n"
+            if let underlyingError = context.underlyingError {
+                output += "  Underlying error: \(underlyingError.localizedDescription)\n"
             }
+            return output
 
-            client?.urlProtocolDidFinishLoading(self)
-        }
+        case let .valueNotFound(type, context):
+            var output = "Value not found for type: \(type)\n"
+            output += "  Expected type: \(type)\n"
+            output += "  Coding path: \(context.codingPath.map(\.stringValue).joined(separator: " → "))\n"
+            output += "  Debug description: \(context.debugDescription)\n"
+            if let underlyingError = context.underlyingError {
+                output += "  Underlying error: \(underlyingError.localizedDescription)\n"
+            }
+            return output
 
-        override func stopLoading() {}
+        case let .keyNotFound(key, context):
+            var output = "Key '\(key.stringValue)' not found\n"
+            output += "  Coding path: \(context.codingPath.map(\.stringValue).joined(separator: " → "))\n"
+            output += "  Debug description: \(context.debugDescription)\n"
+            if let underlyingError = context.underlyingError {
+                output += "  Underlying error: \(underlyingError.localizedDescription)\n"
+            }
+            return output
 
-        static func createSearchResponse() -> (Data, HTTPURLResponse) {
-            let response = OpenFoodFactsSearchResponse(
-                products: [
-                    OpenFoodFactsProduct.sample(name: "Test Bread", carbs: 45.0),
-                    OpenFoodFactsProduct.sample(name: "Test Pasta", carbs: 75.0)
-                ],
-                count: 2,
-                page: 1,
-                pageCount: 1,
-                pageSize: 20
-            )
+        case let .dataCorrupted(context):
+            var output = "Data corrupted\n"
+            output += "  Coding path: \(context.codingPath.map(\.stringValue).joined(separator: " → "))\n"
+            output += "  Debug description: \(context.debugDescription)\n"
+            if let underlyingError = context.underlyingError {
+                output += "  Underlying error: \(underlyingError.localizedDescription)\n"
+            }
+            return output
 
-            let data = try! JSONEncoder().encode(response)
-            let httpResponse = HTTPURLResponse(
-                url: URL(string: "https://world.openfoodfacts.org/cgi/search.pl")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: ["Content-Type": "application/json"]
-            )!
-
-            return (data, httpResponse)
-        }
-
-        static func createProductResponse() -> (Data, HTTPURLResponse) {
-            let response = OpenFoodFactsProductResponse(
-                code: "1234567890123",
-                product: OpenFoodFactsProduct.sample(name: "Test Product", carbs: 30.0),
-                status: 1,
-                statusVerbose: "product found"
-            )
-
-            let data = try! JSONEncoder().encode(response)
-            let httpResponse = HTTPURLResponse(
-                url: URL(string: "https://world.openfoodfacts.org/api/v2/product/1234567890123.json")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: ["Content-Type": "application/json"]
-            )!
-
-            return (data, httpResponse)
+        @unknown default:
+            return "Unknown decoding error: \(error.localizedDescription)"
         }
     }
-#endif
+}

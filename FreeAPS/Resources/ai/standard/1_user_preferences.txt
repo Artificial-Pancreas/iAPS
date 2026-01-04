@@ -1,0 +1,6 @@
+USER PREFERENCES:
+
+• NUTRITION_AUTHORITY is (nutrition_authority)
+• USER_REGION is (region)
+
+• DO NOT change standards based on USER_REGION.

@@ -64,8 +64,40 @@ extension AddCarbs {
                 enteredBy: CarbsEntry.manual,
                 isFPU: false
             )]
+            add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+        }
 
+        func addAIFood(_ continue_: Bool, fetch: Bool, food: [FoodItemDetailed], date: Date?) {
+            var carbs = food.compactMap(\.carbsInThisPortion).reduce(0, +)
+            let fat = food.compactMap(\.fatInThisPortion).reduce(0, +)
+            let protein = food.compactMap(\.proteinInThisPortion).reduce(0, +)
+            guard carbs > 0 || fat > 0 || protein > 0 else {
+                showModal(for: nil)
+                return
+            }
+            carbs = min(carbs, maxCarbs)
+            id_ = UUID().uuidString
+
+            let carbsToStore = [CarbsEntry(
+                id: id_,
+                createdAt: now,
+                actualDate: date,
+                carbs: carbs,
+                fat: fat,
+                protein: protein,
+                note: nil,
+                enteredBy: CarbsEntry.manual,
+                isFPU: false
+            )]
+            add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+        }
+
+        func add(_ continue_: Bool, fetch: Bool, carbsToStore: [CarbsEntry]) {
             if hypoTreatment { hypo() }
+            let carbs = carbsToStore.map(\.carbs).reduce(0, +)
+            let fat = carbsToStore.compactMap(\.fat).reduce(0, +)
+            let protein = carbsToStore.compactMap(\.protein).reduce(0, +)
+            let empty = carbs <= 0 && fat <= 0 && protein <= 0
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
                 carbsStorage.storeCarbs(carbsToStore)

@@ -134,5 +134,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>iAPS needs access to your photos so you can select food images for AI analysis.</string>
 </dict>
 </plist>

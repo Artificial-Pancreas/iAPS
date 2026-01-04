@@ -1,0 +1,10 @@
+Provide detailed nutrition information for: (query)
+
+• identify each distinct food component.
+• if not explicitly specified, assume portion sizes to be equal to the standard serving size.
+• identify standard serving sizes.
+• provide whole the full standard serving size, even if a portion of a meal or serving is described (half, quarter, etc).
+• identify portion sizes.
+• if portion size is not provided, assume portion size to be equal to the standard serving size.
+• for each food, estimate nutrition values per 100 grams/milliliters.
+• do not claim to see any visual clues.

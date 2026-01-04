@@ -109,18 +109,5 @@
     "noCarbs": false,
     "hidePredictions": false,
     "useCarbBars": false,
-    "aiProvider": "Basic Analysis (Free)",
-    "claudeAPIKey": "",
-    "claudeQuery": "",
-    "openAIQuery": "",
-    "openAIAPIKey": "",
-    "googleGeminiAPIKey": "",
-    "googleGeminiQuery": "",
-    "textSearchProvider": "USDA FoodData Central",
-    "barcodeSearchProvider": "OpenFoodFacts",
-    "aiImageProvider": "OpenAI (ChatGPT API)",
-    "analysisMode": "standard",
-    "advancedDosingRecommendationsEnabled": false,
-    "useGPT5ForOpenAI": false,
     "ai": true
 }

@@ -17,6 +17,41 @@ struct OpenFoodFactsSearchResponse: Codable {
         case pageCount = "page_count"
         case pageSize = "page_size"
     }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        products = try container.decode([OpenFoodFactsProduct].self, forKey: .products)
+        count = try Self.decodeFlexibleInt(from: container, forKey: .count)
+        page = try Self.decodeFlexibleInt(from: container, forKey: .page)
+        pageCount = try Self.decodeFlexibleInt(from: container, forKey: .pageCount)
+        pageSize = try Self.decodeFlexibleInt(from: container, forKey: .pageSize)
+    }
+
+    /// Decode an Int that might come as a String or Int from the API
+    private static func decodeFlexibleInt(
+        from container: KeyedDecodingContainer<CodingKeys>,
+        forKey key: CodingKeys
+    ) throws -> Int {
+        // Try as Int first
+        if let intValue = try? container.decode(Int.self, forKey: key) {
+            return intValue
+        }
+        // Try as String and convert
+        if let stringValue = try? container.decode(String.self, forKey: key),
+           let intValue = Int(stringValue)
+        {
+            return intValue
+        }
+        // Throw an error if neither works
+        throw DecodingError.typeMismatch(
+            Int.self,
+            DecodingError.Context(
+                codingPath: container.codingPath + [key],
+                debugDescription: "Expected Int or String containing Int for key '\(key.stringValue)'"
+            )
+        )
+    }
 }
 
 /// Response structure for single product lookup by barcode
@@ -53,7 +88,7 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
     let categories: String?
     let nutriments: Nutriments
     let servingSize: String?
-    let servingQuantity: Double?
+    let servingQuantity: Decimal?
 
     // ✅ ÄNDERE ZU var FÜR MUTABILITY
     var imageURL: String?
@@ -113,10 +148,10 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         nutriments = (try? container.decode(Nutriments.self, forKey: .nutriments)) ?? Nutriments.empty()
         servingSize = try container.decodeIfPresent(String.self, forKey: .servingSize)
         // Handle serving_quantity which can be String or Double
-        if let servingQuantityDouble = try? container.decodeIfPresent(Double.self, forKey: .servingQuantity) {
+        if let servingQuantityDouble = try? container.decodeIfPresent(Decimal.self, forKey: .servingQuantity) {
             servingQuantity = servingQuantityDouble
         } else if let servingQuantityString = try? container.decodeIfPresent(String.self, forKey: .servingQuantity) {
-            servingQuantity = Double(servingQuantityString)
+            servingQuantity = Decimal(from: servingQuantityString)
         } else {
             servingQuantity = nil
         }
@@ -126,11 +161,6 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         if let decodedDataSource = try? container.decode(FoodDataSource.self, forKey: .dataSource) {
             dataSource = decodedDataSource
         }
-
-        // ✅ DEBUG: Sofort nach Decoding prüfen
-        print("🖼️ DECODING DEBUG in OpenFoodFactsProduct:")
-        print("   - imageURL: \(imageURL ?? "nil")")
-        print("   - imageFrontURL: \(imageFrontURL ?? "nil")")
     }
 
     func encode(to encoder: Encoder) throws {
@@ -159,7 +189,7 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         categories: String? = nil,
         nutriments: Nutriments,
         servingSize: String?,
-        servingQuantity: Double?,
+        servingQuantity: Decimal?,
         imageURL: String?,
         imageFrontURL: String?,
         code: String?,
@@ -216,68 +246,68 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         }
     }
 
-    /// Carbohydrates per serving (calculated from 100g values if serving size available)
-    var carbsPerServing: Double? {
-        guard let servingQuantity = servingQuantity, servingQuantity > 0 else {
-            return nutriments.carbohydrates
-        }
-        return (nutriments.carbohydrates * servingQuantity) / 100.0
-    }
-
-    /// Protein per serving (calculated from 100g values if serving size available)
-    var proteinPerServing: Double? {
-        guard let protein = nutriments.proteins,
-              let servingQuantity = servingQuantity, servingQuantity > 0
-        else {
-            return nutriments.proteins
-        }
-        return (protein * servingQuantity) / 100.0
-    }
-
-    /// Fat per serving (calculated from 100g values if serving size available)
-    var fatPerServing: Double? {
-        guard let fat = nutriments.fat,
-              let servingQuantity = servingQuantity, servingQuantity > 0
-        else {
-            return nutriments.fat
-        }
-        return (fat * servingQuantity) / 100.0
-    }
-
-    /// Calories per serving (calculated from 100g values if serving size available)
-    var caloriesPerServing: Double? {
-        guard let calories = nutriments.calories,
-              let servingQuantity = servingQuantity, servingQuantity > 0
-        else {
-            return nutriments.calories
-        }
-        return (calories * servingQuantity) / 100.0
-    }
-
-    /// Fiber per serving (calculated from 100g values if serving size available)
-    var fiberPerServing: Double? {
-        guard let fiber = nutriments.fiber,
-              let servingQuantity = servingQuantity, servingQuantity > 0
-        else {
-            return nutriments.fiber
-        }
-        return (fiber * servingQuantity) / 100.0
-    }
-
-    /// Formatted serving size display text
-    var servingSizeDisplay: String {
-        if let servingSize = servingSize, !servingSize.isEmpty {
-            return servingSize
-        } else if let servingQuantity = servingQuantity, servingQuantity > 0 {
-            return "\(Int(servingQuantity))g"
-        } else {
-            return "100g"
-        }
-    }
+//    /// Carbohydrates per serving (calculated from 100g values if serving size available)
+//    var carbsPerServing: Decimal? {
+//        guard let servingQuantity = servingQuantity, servingQuantity > 0 else {
+//            return nutriments.carbohydrates
+//        }
+//        return (nutriments.carbohydrates * servingQuantity) / 100.0
+//    }
+//
+//    /// Protein per serving (calculated from 100g values if serving size available)
+//    var proteinPerServing: Decimal? {
+//        guard let protein = nutriments.proteins,
+//              let servingQuantity = servingQuantity, servingQuantity > 0
+//        else {
+//            return nutriments.proteins
+//        }
+//        return (protein * servingQuantity) / 100.0
+//    }
+//
+//    /// Fat per serving (calculated from 100g values if serving size available)
+//    var fatPerServing: Decimal? {
+//        guard let fat = nutriments.fat,
+//              let servingQuantity = servingQuantity, servingQuantity > 0
+//        else {
+//            return nutriments.fat
+//        }
+//        return (fat * servingQuantity) / 100.0
+//    }
+//
+//    /// Calories per serving (calculated from 100g values if serving size available)
+//    var caloriesPerServing: Decimal? {
+//        guard let calories = nutriments.calories,
+//              let servingQuantity = servingQuantity, servingQuantity > 0
+//        else {
+//            return nutriments.calories
+//        }
+//        return (calories * servingQuantity) / 100.0
+//    }
+//
+//    /// Fiber per serving (calculated from 100g values if serving size available)
+//    var fiberPerServing: Decimal? {
+//        guard let fiber = nutriments.fiber,
+//              let servingQuantity = servingQuantity, servingQuantity > 0
+//        else {
+//            return nutriments.fiber
+//        }
+//        return (fiber * servingQuantity) / 100.0
+//    }
+//
+//    /// Formatted serving size display text
+//    var servingSizeDisplay: String {
+//        if let servingSize = servingSize, !servingSize.isEmpty {
+//            return servingSize
+//        } else if let servingQuantity = servingQuantity, servingQuantity > 0 {
+//            return "\(Int(servingQuantity))g"
+//        } else {
+//            return "100g"
+//        }
+//    }
 
     /// Whether this product has sufficient nutritional data for Loop
     var hasSufficientNutritionalData: Bool {
-        nutriments.carbohydrates >= 0 && !displayName.isEmpty
+        nutriments.carbohydrates != nil && !displayName.isEmpty
     }
 
     // MARK: - Hashable & Equatable
@@ -293,13 +323,13 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
 
 /// Nutritional information for a food product - simplified to essential nutrients only
 struct Nutriments: Codable {
-    let carbohydrates: Double
-    let proteins: Double?
-    let fat: Double?
-    let calories: Double?
-    let sugars: Double?
-    let fiber: Double?
-    let energy: Double?
+    let carbohydrates: Decimal?
+    let proteins: Decimal?
+    let fat: Decimal?
+    let calories: Decimal?
+    let sugars: Decimal?
+    let fiber: Decimal?
+    let energy: Decimal?
 
     enum CodingKeys: String, CodingKey {
         case carbohydratesServing = "carbohydrates_serving"
@@ -323,13 +353,13 @@ struct Nutriments: Codable {
 
         // Use 100g values as base since serving sizes are often incorrect in the database
         // The app will handle serving size calculations based on actual product weight
-        carbohydrates = try container.decodeIfPresent(Double.self, forKey: .carbohydrates100g) ?? 0.0
-        proteins = try container.decodeIfPresent(Double.self, forKey: .proteins100g)
-        fat = try container.decodeIfPresent(Double.self, forKey: .fat100g)
-        calories = try container.decodeIfPresent(Double.self, forKey: .calories100g)
-        sugars = try container.decodeIfPresent(Double.self, forKey: .sugars100g)
-        fiber = try container.decodeIfPresent(Double.self, forKey: .fiber100g)
-        energy = try container.decodeIfPresent(Double.self, forKey: .energy100g)
+        carbohydrates = try container.decodeIfPresent(Decimal.self, forKey: .carbohydrates100g)
+        proteins = try container.decodeIfPresent(Decimal.self, forKey: .proteins100g)
+        fat = try container.decodeIfPresent(Decimal.self, forKey: .fat100g)
+        calories = try container.decodeIfPresent(Decimal.self, forKey: .calories100g)
+        sugars = try container.decodeIfPresent(Decimal.self, forKey: .sugars100g)
+        fiber = try container.decodeIfPresent(Decimal.self, forKey: .fiber100g)
+        energy = try container.decodeIfPresent(Decimal.self, forKey: .energy100g)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -347,13 +377,13 @@ struct Nutriments: Codable {
 
     /// Manual initializer for programmatic creation (e.g., AI analysis)
     init(
-        carbohydrates: Double,
-        proteins: Double? = nil,
-        fat: Double? = nil,
-        calories: Double? = nil,
-        sugars: Double? = nil,
-        fiber: Double? = nil,
-        energy: Double? = nil
+        carbohydrates: Decimal,
+        proteins: Decimal? = nil,
+        fat: Decimal? = nil,
+        calories: Decimal? = nil,
+        sugars: Decimal? = nil,
+        fiber: Decimal? = nil,
+        energy: Decimal? = nil
     ) {
         self.carbohydrates = carbohydrates
         self.proteins = proteins
@@ -439,92 +469,3 @@ enum OpenFoodFactsError: Error, LocalizedError {
         }
     }
 }
-
-// MARK: - Testing Support
-
-#if DEBUG
-    extension OpenFoodFactsProduct {
-        /// Create a sample product for testing
-        static func sample(
-            name: String = "Sample Product",
-            carbs: Double = 25.0,
-            servingSize: String? = "100g"
-        ) -> OpenFoodFactsProduct {
-            OpenFoodFactsProduct(
-                id: "sample_\(abs(name.hashValue))",
-                productName: name,
-                brands: "Sample Brand",
-                categories: "Sample Category",
-                nutriments: Nutriments.sample(carbs: carbs),
-                servingSize: servingSize,
-                servingQuantity: 100.0,
-                imageURL: nil,
-                imageFrontURL: nil,
-                code: "1234567890123"
-            )
-        }
-    }
-
-    extension Nutriments {
-        /// Create sample nutriments for testing
-        static func sample(carbs: Double = 25.0) -> Nutriments {
-            Nutriments(
-                carbohydrates: carbs,
-                proteins: 8.0,
-                fat: 2.0,
-                calories: nil,
-                sugars: nil,
-                fiber: nil,
-                energy: nil
-            )
-        }
-    }
-
-    extension OpenFoodFactsProduct {
-        var validatedImageURL: URL? {
-            // Prüfe zuerst imageFrontURL (bessere Qualität)
-            if let frontURLString = imageFrontURL,
-               let frontURL = createValidURL(from: frontURLString)
-            {
-                return frontURL
-            }
-
-            // Fallback zu imageURL
-            if let imageURLString = imageURL,
-               let imageURL = createValidURL(from: imageURLString)
-            {
-                return imageURL
-            }
-
-            return nil
-        }
-
-        private func createValidURL(from urlString: String) -> URL? {
-            var cleanedURL = urlString
-
-            // Entferne führende Punkte (../) die manchmal in der API vorkommen
-            if cleanedURL.hasPrefix("../") {
-                cleanedURL = String(cleanedURL.dropFirst(3))
-            }
-
-            // Stelle sicher, dass es eine absolute URL ist
-            if !cleanedURL.hasPrefix("http") {
-                cleanedURL = "https://static.openfoodfacts.org\(cleanedURL)"
-            }
-
-            return URL(string: cleanedURL)
-        }
-    }
-
-    extension Nutriments {
-        init(carbohydrates: Double, proteins: Double?, fat: Double?) {
-            self.carbohydrates = carbohydrates
-            self.proteins = proteins
-            self.fat = fat
-            calories = nil
-            sugars = nil
-            fiber = nil
-            energy = nil
-        }
-    }
-#endif

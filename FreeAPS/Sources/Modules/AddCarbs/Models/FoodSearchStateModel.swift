@@ -1,105 +1,500 @@
 import Combine
 import SwiftUI
 
-class FoodSearchStateModel: ObservableObject {
+enum FoodSearchRoute {
+    case camera
+    case barcodeScanner
+    case aiProgress
+    case imageCommentInput(UIImage)
+}
+
+enum FoodSearchFullScreenRoute: Identifiable {
+    case camera
+    case barcodeScanner
+    case aiProgress
+
+    var id: String {
+        switch self {
+        case .camera: return "camera"
+        case .barcodeScanner: return "barcodeScanner"
+        case .aiProgress: return "aiProgress"
+        }
+    }
+}
+
+enum FoodSearchSheetRoute: Identifiable {
+    case imageCommentInput(UIImage)
+
+    var id: String {
+        switch self {
+        case .imageCommentInput: return "imageCommentInput"
+        }
+    }
+}
+
+final class FoodSearchStateModel: ObservableObject {
     @Published var foodSearchText = ""
-    @Published var searchResults: [OpenFoodFactsProduct] = []
-    @Published var aiSearchResults: [AIFoodItem] = []
+    @Published var isBarcode = false
+
+    @Published var showingFoodSearch = false
+
+    @Published var foodSearchRoute: FoodSearchRoute? = nil
+
+    @Published var aiAnalysisRequest: AnalysisRequest?
+
+    @Published var latestMultipleSelectSearch: FoodItemGroup? = nil
+    @Published var savedFoods: FoodItemGroup? = nil
+    @Published var latestSearchError: String? = nil
+    @Published var latestSearchIcon: String? = nil
+
+    @Published var showSavedFoods = false
     @Published var isLoading = false
-    @Published var errorMessage: String?
     @Published var mealView = false
-    @Published var navigateToBarcode = false
-    @Published var navigateToAICamera = false
+    @Published var filterText = ""
+    @Published var showManualEntry = false
+    @Published var showNewSavedFoodEntry = false
+
+    @Published var aiTextAnalysis = UserDefaults.standard.aiTextSearchByDefault
+
+    @Published var forceShowCommentForNextImage = false
+
+    var searchResultsState = SearchResultsState.empty
+
+    // analysis progress
+
+    @Published var isAnalyzing: Bool = false
+    @Published var analysisError: String?
+//    @Published var showingErrorAlert = false
+    @Published var telemetryLogs: [String] = []
+    @Published var analysisStart: Date? = nil
+    @Published var analysisEnd: Date? = nil
+    @Published var analysisEta: TimeInterval?
+    @Published var analysisModel: String?
+
+    @Published var searchTask: Task<Void, Never>? = nil
 
     private var cancellables = Set<AnyCancellable>()
-    private var searchTask: Task<Void, Never>?
+
+    var foodSearchFullScreenRouteBinding: Binding<FoodSearchFullScreenRoute?> {
+        Binding(
+            get: { [weak self] in
+                switch self?.foodSearchRoute {
+                case .camera: .camera
+                case .aiProgress: .aiProgress
+                case .barcodeScanner: .barcodeScanner
+                default: nil
+                }
+            },
+            set: { [weak self] newValue in
+                self?.foodSearchRoute = switch newValue {
+                case .camera: .camera
+                case .barcodeScanner: .barcodeScanner
+                case .aiProgress: .aiProgress
+                default: nil
+                }
+            }
+        )
+    }
+
+    var foodSearchSheetRouteBinding: Binding<FoodSearchSheetRoute?> {
+        Binding(
+            get: { [weak self] in
+                switch self?.foodSearchRoute {
+                case let .imageCommentInput(image): .imageCommentInput(image)
+                default: nil
+                }
+            },
+            set: { [weak self] newValue in
+                self?.foodSearchRoute = switch newValue {
+                case let .imageCommentInput(image): .imageCommentInput(image)
+                default: nil
+                }
+            }
+        )
+    }
 
     init() {
-        print("🔍 FoodSearchStateModel initialized")
+        searchResultsState.objectWillChange.sink { [weak self] _ in
+            self?.objectWillChange.send()
+        }
+        .store(in: &cancellables)
 
         $foodSearchText
             .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
             .removeDuplicates()
             .sink { [weak self] query in
-                self?.performSearch(query: query)
+                guard let self else {
+                    return
+                }
+                let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+                self.isBarcode = trimmedQuery.isNotEmpty && isBarcode(trimmedQuery)
             }
             .store(in: &cancellables)
     }
 
     deinit {
-        print("🔍 FoodSearchStateModel deinitialized")
         searchTask?.cancel()
     }
 
-    func performSearch(query: String) {
-        guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
-            searchResults = []
-            aiSearchResults = []
+    func enterBarcodeAndSearch(barcode: String) {
+        foodSearchText = barcode
+        searchByText(query: barcode)
+    }
+
+    func startImageAnalysis(image: UIImage, comment: String?) {
+        startAIAnalysis(analysisRequest: .image(image, comment))
+    }
+
+    func handleImageCaptured(image: UIImage) {
+        let shouldShowComment = forceShowCommentForNextImage || UserDefaults.standard.aiAddImageCommentByDefault
+
+        forceShowCommentForNextImage = false
+
+        if shouldShowComment {
+            foodSearchRoute = .imageCommentInput(image)
+        } else {
+            startImageAnalysis(image: image, comment: nil)
+        }
+    }
+
+    func searchByText(query: String) {
+        let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmedQuery.isNotEmpty else {
             return
         }
 
-        searchTask?.cancel()
+        let isBarcode = isBarcode(trimmedQuery)
+
+        if isBarcode {
+            startBarcodeSearch(barcode: trimmedQuery)
+        } else if aiTextAnalysis {
+            startAIAnalysis(analysisRequest: .query(trimmedQuery))
+        } else {
+            startTextSearch(query: trimmedQuery)
+        }
+    }
+
+    func searchFoodImages(_ query: String) async -> [String] {
+        async let openFoodFacts = OpenFoodFactsService.shared.searchProducts(query: query, pageSize: 15)
+        async let openverse = OpenverseClient.shared.searchImages(query: query, pageSize: 15)
+        let openFoodFactsResults = (try? await openFoodFacts) ?? []
+        let openverseResults = (try? await openverse) ?? []
+
+        let openFoodFactsUrls = openFoodFactsResults.compactMap(\.imageURL)
+        let openverseUrls = openverseResults.compactMap(\.url)
+
+        let result = openverseUrls + openFoodFactsUrls
+        return result
+    }
+
+    func retryAIAnalysis() {
+        if let request = aiAnalysisRequest {
+            startAIAnalysis(analysisRequest: request)
+        }
+    }
+
+    private func startBarcodeSearch(barcode: String) {
+        cancelSearchTask()
         isLoading = true
-        errorMessage = nil
+        latestSearchIcon = "barcode"
 
         searchTask = Task { @MainActor in
             do {
-                let openFoodProducts = try await FoodSearchRouter.shared.searchFoodsByText(query)
+                let result = try await ConfigurableAIService.shared.analyzeBarcode(
+                    barcode,
+                    telemetryCallback: nil
+                )
 
+                self.isLoading = false
                 if !Task.isCancelled {
-                    self.searchResults = openFoodProducts
-                    self.isLoading = false
-                    print("✅ Search completed: \(self.searchResults.count) results")
+                    if let first = result.foodItemsDetailed.first {
+                        if result.foodItemsDetailed.count == 1 {
+                            addItem(first, group: result)
+                        } else {
+                            self.latestMultipleSelectSearch = result
+                        }
+                    } else {
+                        self.latestSearchError = NSLocalizedString(
+                            "Product not found",
+                            comment: "barcode search produced no results"
+                        )
+                    }
                 }
             } catch {
                 if !Task.isCancelled {
-                    self.errorMessage = error.localizedDescription
+                    self.latestSearchError = error.localizedDescription
                     self.isLoading = false
-                    self.searchResults = []
                     print("❌ Search failed: \(error.localizedDescription)")
                 }
             }
         }
     }
 
-    func searchWithOpenFoodFacts(barcode: String) {
+    private func startTextSearch(query: String) {
+        cancelSearchTask()
         isLoading = true
-        errorMessage = nil
-        foodSearchText = barcode
+        latestSearchIcon = "magnifyingglass"
 
-        Task {
+        searchTask = Task { @MainActor in
             do {
-                print("🔍 Searching OpenFoodFacts for barcode: \(barcode)")
+                let result = try await ConfigurableAIService.shared.executeTextSearch(
+                    query,
+                    telemetryCallback: nil
+                )
 
-                if let product = try await FoodSearchRouter.shared.searchFoodByBarcode(barcode) {
-                    await MainActor.run {
-                        self.searchResults = [product]
-                        print("✅ OpenFoodFacts found product: \(product.displayName)")
-                        self.isLoading = false
-
-                        print("🖼️ Barcode Product URLs: \(product.imageURL ?? "nil"), \(product.imageFrontURL ?? "nil")")
-                    }
-                } else {
-                    await MainActor.run {
-                        print("⚠️ No OpenFoodFacts results, using normal search")
-                        self.performSearch(query: barcode)
+                self.isLoading = false
+                if !Task.isCancelled {
+                    if let first = result.foodItemsDetailed.first {
+                        if result.foodItemsDetailed.count == 1 {
+                            addItem(first, group: result)
+                        } else {
+                            self.latestMultipleSelectSearch = result
+                        }
+                    } else {
+                        self.latestSearchError = NSLocalizedString(
+                            "Product not found",
+                            comment: "text database search produced no results"
+                        )
                     }
                 }
             } catch {
-                await MainActor.run {
-                    print("❌ OpenFoodFacts search failed: \(error), using normal search")
-                    self.errorMessage = "OpenFoodFacts search failed: \(error.localizedDescription)"
-                    self.performSearch(query: barcode)
+                if !Task.isCancelled {
+                    self.latestSearchError = error.localizedDescription
+                    self.isLoading = false
+                    print("❌ Search failed: \(error.localizedDescription)")
                 }
             }
         }
     }
 
-    func addAISearchResults(_ results: [AIFoodItem]) {
-        aiSearchResults = results
+    private func startAIAnalysis(analysisRequest: AnalysisRequest) {
+        cancelSearchTask()
+        aiAnalysisRequest = analysisRequest
+        analysisStart = Date()
+        foodSearchRoute = .aiProgress
+
+        let aiService = ConfigurableAIService.shared
+
+        switch analysisRequest {
+        case .image:
+            guard aiService.isImageAnalysisConfigured else {
+                analysisError = "AI service not configured. Please check settings."
+//                showingErrorAlert = true
+                return
+            }
+        case .query:
+            guard aiService.isAiTextAnalysisConfigured else {
+                analysisError = "AI service not configured. Please check settings."
+//                showingErrorAlert = true
+                return
+            }
+        }
+
+        searchTask = Task {
+            do {
+                switch analysisRequest {
+                case let .image(image, comment):
+                    let result = try await aiService.analyzeFoodImage(image, comment: comment) { telemetryMessage in
+                        Task { @MainActor in
+                            if telemetryMessage.hasPrefix("ETA: ") {
+                                let etaString = telemetryMessage.dropFirst(5)
+                                if let etaValue = Double(etaString.trimmingCharacters(in: .whitespaces)) {
+                                    self.analysisEta = etaValue * 1.2
+                                }
+                            } else if telemetryMessage.hasPrefix("MODEL: ") {
+                                self.analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
+                            } else {
+                                self.addTelemetryLog(telemetryMessage)
+                            }
+                        }
+                    }
+                    await MainActor.run {
+                        self.addTelemetryLog("✅ Analysis complete!")
+                        self.analysisEnd = Date.now
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            self.isAnalyzing = false
+                            self.onFoodAnalyzed(result, analysisRequest)
+                        }
+                    }
+                case let .query(query):
+                    let result = try await aiService.analyzeFoodQuery(query) { telemetryMessage in
+                        Task { @MainActor in
+                            if telemetryMessage.hasPrefix("ETA: ") {
+                                let etaString = telemetryMessage.dropFirst("ETA: ".count)
+                                if let etaValue = Double(etaString.trimmingCharacters(in: .whitespaces)) {
+                                    self.analysisEta = etaValue * 1.2
+                                }
+                            } else if telemetryMessage.hasPrefix("MODEL: ") {
+                                self.analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
+                            } else {
+                                self.addTelemetryLog(telemetryMessage)
+                            }
+                        }
+                    }
+                    await MainActor.run {
+                        self.addTelemetryLog("✅ Analysis complete!")
+                        self.analysisEnd = Date.now
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            self.isAnalyzing = false
+                            self.onFoodAnalyzed(result, analysisRequest)
+                        }
+                    }
+                }
+
+            } catch {
+                await MainActor.run {
+                    self.addTelemetryLog("⚠️ Connection interrupted")
+                }
+                await MainActor.run {
+                    self.addTelemetryLog("❌ Analysis failed")
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.isAnalyzing = false
+                        self.analysisStart = nil
+                        self.analysisEnd = nil
+                        self.analysisError = error.localizedDescription
+//                        showingErrorAlert = true
+                    }
+                }
+            }
+        }
     }
 
-    func clearAISearchResults() {
-        aiSearchResults = []
+    private func onFoodAnalyzed(
+        _ analysisResult: FoodItemGroup,
+        _ analysisRequest: AnalysisRequest
+    ) {
+        if analysisResult.source == .aiMenu {
+            latestMultipleSelectSearch = analysisResult
+        } else {
+            searchResultsState.searchResults = [analysisResult] + searchResultsState.searchResults
+        }
+        aiAnalysisRequest = analysisRequest
+        // TODO: delay before hiding the progress screen, do we want it?
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.foodSearchRoute = nil
+        }
+    }
+
+    private func addTelemetryLog(_ message: String) {
+        telemetryLogs.append(NSLocalizedString(message, comment: "Telemetry log"))
+        if telemetryLogs.count > 10 {
+            telemetryLogs.removeFirst()
+        }
+    }
+
+    private func isBarcode(_ str: String) -> Bool {
+        let numericCharacterSet = CharacterSet.decimalDigits
+        return str.unicodeScalars.allSatisfy { numericCharacterSet.contains($0) }
+    }
+
+    func cancelSearchTask() {
+        print("cancelling search task")
+        searchTask?.cancel()
+        searchTask = nil
+        latestSearchError = nil
+        latestSearchIcon = nil
+        latestMultipleSelectSearch = nil
+        telemetryLogs = []
+        analysisStart = nil
+        analysisEnd = nil
+        isLoading = false
+        isAnalyzing = false
+        aiAnalysisRequest = nil
+        analysisError = nil
+        analysisEnd = nil
+        analysisEta = nil
+        foodSearchRoute = nil
+    }
+
+    func resetNavigationState() {
+        foodSearchRoute = nil
+    }
+
+    @MainActor func addItem(_ item: FoodItemDetailed, group: FoodItemGroup?) {
+        if searchResultsState.isDeleted(item) {
+            searchResultsState.undeleteItem(item)
+            return
+        }
+
+        let targetGroupIndex: Int?
+        var targetGroup: FoodItemGroup
+        if let group = group, group.source.isAI == true {
+            // Find existing group with same ID (for AI sources)
+            targetGroupIndex = searchResultsState.searchResults.firstIndex { $0.id == group.id }
+            if let targetGroupIndex {
+                targetGroup = searchResultsState.searchResults[targetGroupIndex].copyWithItemPrepended(item)
+            } else {
+                targetGroup = group.copyWithItems([item])
+            }
+        } else {
+            // Find existing group with same source (nil --> manual food entry)
+            let source = group?.source ?? .manual
+            targetGroupIndex = searchResultsState.searchResults.firstIndex { $0.source == source }
+            if let targetGroupIndex {
+                targetGroup = searchResultsState.searchResults[targetGroupIndex].copyWithItemPrepended(item)
+            } else {
+                targetGroup = FoodItemGroup(
+                    foodItemsDetailed: [item],
+                    source: source,
+                )
+            }
+        }
+
+        if let index = targetGroupIndex {
+            searchResultsState.searchResults[index] = targetGroup
+            // Move to front if not already there
+            if index != 0 {
+                searchResultsState.searchResults.remove(at: index)
+                searchResultsState.searchResults.insert(targetGroup, at: 0)
+            }
+        } else {
+            searchResultsState.searchResults.insert(targetGroup, at: 0)
+        }
+    }
+
+    /// Updates an existing food item in the search results (typically used for manual entries)
+    /// The edited item must have the same ID as the original item
+    @MainActor func updateItem(_ editedItem: FoodItemDetailed) {
+        // Find which group contains this item
+        guard let groupIndex = searchResultsState.searchResults.firstIndex(where: { group in
+            group.foodItemsDetailed.contains(where: { $0.id == editedItem.id })
+        }) else {
+            return
+        }
+
+        var updatedGroup = searchResultsState.searchResults[groupIndex]
+
+        // Replace the food item in the group
+        guard let itemIndex = updatedGroup.foodItemsDetailed.firstIndex(where: { $0.id == editedItem.id }) else {
+            return
+        }
+
+        var updatedItems = updatedGroup.foodItemsDetailed
+        updatedItems[itemIndex] = editedItem
+
+        // Create updated group with the same metadata
+        updatedGroup = FoodItemGroup(
+            foodItemsDetailed: updatedItems,
+            briefDescription: updatedGroup.briefDescription,
+            overallDescription: updatedGroup.overallDescription,
+            diabetesConsiderations: updatedGroup.diabetesConsiderations,
+            source: updatedGroup.source,
+            barcode: updatedGroup.barcode,
+            textQuery: updatedGroup.textQuery
+        )
+
+        // Update the group in search results
+        searchResultsState.searchResults[groupIndex] = updatedGroup
+
+        // Also update the portion in editedItems to match the edited item's current portion
+        let newPortion: Decimal
+        switch editedItem.nutrition {
+        case .per100:
+            newPortion = editedItem.portionSize ?? 100
+        case .perServing:
+            newPortion = editedItem.servingsMultiplier ?? 1
+        }
+        searchResultsState.updatePortion(for: editedItem, to: newPortion)
     }
 }

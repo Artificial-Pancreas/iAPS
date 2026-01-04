@@ -23,15 +23,12 @@ extension AddCarbs {
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
         // Food Search States
-        @State private var showingFoodSearch = false
         @State private var foodSearchText = ""
-        @State private var searchResults: [FoodItem] = []
         @State private var isLoading = false
         @State private var errorMessage: String?
-        @State private var selectedFoodItem: AIFoodItem?
-        @State private var portionGrams: Double = 100.00001
+        @State private var portionGrams: Decimal = 100.00001
         @State private var selectedFoodImage: UIImage?
-        @State private var saveAlert = false
+        @State private var showCancelConfirmation = false
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -46,6 +43,7 @@ extension AddCarbs {
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
+        @EnvironmentObject var mainState: Main.StateModel
 
         init(
             resolver: Resolver,
@@ -68,18 +66,132 @@ extension AddCarbs {
         }
 
         var body: some View {
-            if meal {
-                normalMealView
-            } else {
-                shortcuts()
+            VStack(spacing: 0) {
+                FoodSearchView.SearchBar(state: foodSearchState).padding(.horizontal)
+
+                if foodSearchState.showingFoodSearch {
+                    FoodSearchView(
+                        state: foodSearchState,
+                        onContinue: { selectedFood, _, date in
+                            button.toggle()
+                            if button {
+                                state.hypoTreatment = false
+                                state.addAIFood(override, fetch: editMode, food: selectedFood, date: date)
+                            }
+                        },
+                        onHypoTreatment: state.id != nil && state.id != "None" && state
+                            .carbsRequired != nil ? { selectedFood, _, date in
+                                button.toggle()
+                                if button {
+                                    state.hypoTreatment = true
+                                    state.addAIFood(override, fetch: editMode, food: selectedFood, date: date)
+                                }
+                            } : nil,
+                        onPersist: { food in
+                            saveOrUpdatePreset(food)
+                        },
+                        onDelete: { food in
+                            deletePreset(food)
+                        },
+                        continueButtonLabelKey: (state.skipBolus && !override && !editMode) ? "Save" : "Continue",
+                        hypoTreatmentButtonLabelKey: "Hypo Treatment"
+                    )
+                } else {
+                    mealView
+                }
+            }
+            .compactSectionSpacing()
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .navigationTitle(foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal")
+            .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: shouldPreventDismiss) {
+                mainState.shouldPreventModalDismiss = shouldPreventDismiss
+            }
+            .onChange(of: foodSearchState.showSavedFoods) {
+                mainState.shouldPreventModalDismiss = shouldPreventDismiss
+            }
+            .onAppear {
+                mainState.shouldPreventModalDismiss = shouldPreventDismiss
+            }
+            .onDisappear {
+                mainState.shouldPreventModalDismiss = false
+            }
+            .navigationBarItems(
+                leading:
+                Group {
+                    if foodSearchState.showSavedFoods {
+                        Button(action: {
+                            foodSearchState.showNewSavedFoodEntry = true
+                        }) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 16))
+                                Text("New")
+                                    .font(.body)
+                                    .fontWeight(.semibold)
+                            }
+                            .foregroundColor(.blue)
+                        }
+                    } else {
+                        NavigationLink(destination: FoodSearchSettingsView()) {
+                            Image(systemName: "gearshape")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.secondary.opacity(0.5))
+                                .frame(width: 46, height: 46)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            )
+            .navigationBarItems(
+                trailing:
+                Button(action: {
+                    handleDismissAction()
+                }) {
+                    Text(foodSearchState.showSavedFoods ? "Done" : "Cancel")
+                }
+            )
+            .confirmationDialog(
+                "Discard Food Search?",
+                isPresented: $showCancelConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Discard", role: .destructive) {
+                    state.hideModal()
+                    if editMode { state.apsManager.determineBasalSync() }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("You have an unsaved food item. Are you sure you want to discard it?")
+            }
+            .onAppear {
+                state.loadEntries(editMode)
+                addMissingFoodIDs()
+                updateSavedFoods() // Initialize savedFoods on appear
+                if !meal {
+                    switch mode {
+                    case .image:
+                        foodSearchState.foodSearchRoute = .camera
+                        foodSearchState.showingFoodSearch = true
+                    case .barcode:
+                        foodSearchState.foodSearchRoute = .barcodeScanner
+                        foodSearchState.showingFoodSearch = true
+                    case .presets:
+                        presentPresets.toggle()
+                    case .search:
+                        foodSearchState.showingFoodSearch = true
+                    default:
+                        break
+                    }
+                }
+            }
+            .onChange(of: carbPresets.count) {
+                updateSavedFoods()
             }
         }
 
         private var mealView: some View {
             Form {
-                // AI Food Search
-                state.ai ? foodSearch : nil
-
                 if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
                     Section {
                         HStack {
@@ -181,79 +293,15 @@ extension AddCarbs {
                 }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
                     .tint(.white)
             }
-            .compactSectionSpacing()
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .navigationTitle("Add Meal")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Cancel", action: {
-                state.hideModal()
-                if editMode { state.apsManager.determineBasalSync() }
-            }))
             .sheet(isPresented: $presentPresets, content: { presetView })
-            .sheet(isPresented: $showingFoodSearch) {
-                FoodSearchView(
-                    state: foodSearchState,
-                    onSelect: { selectedFood, image in
-                        handleSelectedFood(selectedFood, image: image)
-                    }
-                )
-            }
-            .alert(isPresented: $saveAlert) { alert(food: selectedFoodItem) }
         }
 
         private var meal: Bool {
             mode == .meal || foodSearchState.mealView
         }
 
-        @ViewBuilder private func shortcuts() -> some View {
-            switch mode {
-            case .image:
-                imageView
-            case .barcode:
-                barcodeView
-            case .presets:
-                mealPresetsView
-            case .search:
-                foodsearchView
-            default:
-                normalMealView
-            }
-        }
-
-        private var normalMealView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-            }
-        }
-
-        private var imageView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                showingFoodSearch.toggle()
-                foodSearchState.navigateToAICamera = true
-            }
-        }
-
-        private var barcodeView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                showingFoodSearch.toggle()
-                foodSearchState.navigateToBarcode.toggle()
-            }
-        }
-
-        private var mealPresetsView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                presentPresets.toggle()
-            }
-        }
-
-        private var foodsearchView: some View {
-            mealView.onAppear {
-                state.loadEntries(editMode)
-                showingFoodSearch.toggle()
-            }
+        private var hasUnsavedFoodSearchResults: Bool {
+            foodSearchState.showingFoodSearch && foodSearchState.searchResultsState.nonDeletedItems.isNotEmpty
         }
 
         // MARK: - Helper Functions
@@ -285,145 +333,160 @@ extension AddCarbs {
             }
         }
 
-        // MARK: - Food Search Section
+        // Transform Presets to FoodItemDetailed
+        private func transformPresetsToFoodItems(_ presets: FetchedResults<Presets>) -> [FoodItemDetailed] {
+            presets.compactMap { preset -> FoodItemDetailed? in
+                guard let foodName = preset.dish, !foodName.isEmpty, foodName != "Empty" else {
+                    return nil
+                }
+                guard let foodID = preset.foodID else {
+                    return nil
+                }
+                let mealUnits = preset.mealUnits.map { MealUnits(rawValue: $0) ?? .grams } ?? .grams
+                let nutritionPer100 = preset.per100
 
-        private var foodSearch: some View {
-            Group {
-                foodSearchSection
+                let carbs = (preset.carbs as Decimal?) ?? 0
+                let fat = (preset.fat as Decimal?) ?? 0
+                let protein = (preset.protein as Decimal?) ?? 0
 
-                if let selectedFood = selectedFoodItem {
-                    SelectedFoodView(
-                        food: selectedFood,
-                        foodImage: selectedFoodImage,
-                        portionGrams: $portionGrams,
-                        onChange: {
-                            selectedFoodItem = nil
-                            selectedFoodImage = nil
-                            showingFoodSearch = true
-                        },
-                        onTakeOver: { food in
-                            state.carbs += portionGrams != 100.00001 ? Decimal(max(food.carbs, 0) / (portionGrams / 100))
-                                .rounded(to: 0) : Decimal(max(food.carbs, 0))
-                            state.fat += portionGrams != 100.00001 ? Decimal(max(food.fat, 0) / (portionGrams / 100))
-                                .rounded(to: 0) : Decimal(max(food.fat, 0))
-                            state.protein += portionGrams != 100.00001 ? Decimal(max(food.protein, 0) / (portionGrams / 100))
-                                .rounded(to: 0) : Decimal(max(food.protein, 0))
-                            selectedFoodImage = nil
-                            showingFoodSearch = false
-                            if !state.skipSave {
-                                saveAlert.toggle()
-                            } else {
-                                cache(food: selectedFood)
-                            }
-                        }
+                let nutritionValues = NutritionValues(
+                    calories: preset.calories as Decimal?,
+                    carbs: carbs,
+                    fat: fat,
+                    fiber: preset.fiber as Decimal?,
+                    protein: protein,
+                    sugars: preset.sugars as Decimal?
+                )
+
+                if nutritionPer100 {
+                    return FoodItemDetailed(
+                        id: foodID,
+                        name: foodName,
+                        nutritionPer100: nutritionValues,
+                        portionSize: (preset.portionSize as Decimal?) ?? 100,
+                        standardServing: preset.standardServing,
+                        standardServingSize: preset.standardServingSize as Decimal?,
+                        units: mealUnits,
+                        glycemicIndex: preset.glycemicIndex as Decimal?,
+                        imageURL: preset.imageURL,
+                        standardName: preset.standardName,
+                        tags: preset.tags?.lowercased().split(separator: ",", omittingEmptySubsequences: true).map(String.init),
+                        source: .database
+                    )
+                } else {
+                    return FoodItemDetailed(
+                        id: foodID,
+                        name: foodName,
+                        nutritionPerServing: nutritionValues,
+                        servingsMultiplier: 1,
+                        standardServing: preset.standardServing,
+                        standardServingSize: preset.standardServingSize as Decimal?,
+                        units: mealUnits,
+                        glycemicIndex: preset.glycemicIndex as Decimal?,
+                        imageURL: preset.imageURL,
+                        standardName: preset.standardName,
+                        tags: preset.tags?.lowercased().split(separator: ",", omittingEmptySubsequences: true).map(String.init),
+                        source: .database
                     )
                 }
             }
         }
 
-        private var foodSearchSection: some View {
-            Section {
-                // Search in Food Database
-                Button {
-                    showingFoodSearch = true
-                } label: {
-                    HStack {
-                        Image(systemName: "network")
-                        Text("Search Food Database")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.popUpGray)
-                            .font(.system(size: 14, weight: .semibold))
-                    }
-                    .foregroundColor(.blue)
+        private func addMissingFoodIDs() {
+            let noId = carbPresets.filter { $0.foodID == nil }
+            if noId.isNotEmpty {
+                for preset in noId {
+                    preset.foodID = UUID()
                 }
-                .buttonStyle(PlainButtonStyle())
-            }
-            // Settings
-            header: {
-                HStack {
-                    Text("AI Food Search")
-                    Spacer()
-                    NavigationLink(destination: AISettingsView()) {
-                        Image(systemName: "gearshape")
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .foregroundColor(.blue)
-                }
-            }
-        }
-
-        // Temporarily saved in waiter's notepad (the summary).
-        private func cache(food: AIFoodItem) {
-            let cache = Presets(context: moc)
-            cache.carbs = Decimal(food.carbs) as NSDecimalNumber
-            cache.fat = Decimal(food.fat) as NSDecimalNumber
-            cache.protein = Decimal(food.protein) as NSDecimalNumber
-            cache.dish = (portionGrams != 100.00001) ? food.name + " \(portionGrams)g" : food.name
-
-            if state.selection?.dish != cache.dish {
-                state.selection = cache
-                state.combinedPresets.append((state.selection, 1))
-            } else if state.combinedPresets.last != nil {
-                state.combinedPresets[state.combinedPresets.endIndex - 1].portions += 1
-            }
-        }
-
-        private func addToPresetsIfNew(food: AIFoodItem) {
-            let preset = Presets(context: moc)
-            preset
-                .carbs = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (Decimal(max(food.carbs * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
-                Decimal(max(food.carbs, 0)) as NSDecimalNumber
-            preset
-                .fat = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (Decimal(max(food.fat * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
-                Decimal(max(food.fat, 0)) as NSDecimalNumber
-            preset
-                .protein = (portionGrams != 100.0 || portionGrams != 100.00001) ?
-                (Decimal(max(food.protein * (portionGrams / 100), 0)).rounded(to: 1) as NSDecimalNumber) :
-                Decimal(max(food.protein, 0)) as NSDecimalNumber
-
-            if portionGrams != 100.00001 {
-                preset.dish = food.name + " \(portionGrams)g"
-            } else {
-                preset.dish = food.name
-            }
-
-            if moc.hasChanges, !carbPresets.compactMap(\.dish).contains(preset.dish), !food.name.isEmpty {
                 do {
                     try moc.save()
-                    state.selection = preset
-                    state.addPresetToNewMeal()
-                    selectedFoodItem = nil
-                } catch { print("Couldn't save " + (preset.dish ?? "new preset.")) }
+                } catch {
+                    print("Couldn't save presets after adding IDs: \(error.localizedDescription)")
+                }
             }
         }
 
-        private func isAIAnalysisProduct(_ food: AIFoodItem) -> Bool {
-            food.brand == "AI Analysis" || food.brand == nil || food.brand?.contains("AI") == true
+        // Update savedFoods when presets change
+        private func updateSavedFoods() {
+            let foodItems = transformPresetsToFoodItems(carbPresets)
+            foodSearchState.savedFoods = FoodItemGroup(
+                foodItemsDetailed: foodItems,
+                briefDescription: nil,
+                overallDescription: nil,
+                diabetesConsiderations: nil,
+                source: .database,
+                barcode: nil,
+                textQuery: nil
+            )
         }
 
-        private func handleSelectedFood(_ foodItem: FoodItem) {
-            let calculatedCalories = Double(truncating: foodItem.carbs as NSNumber) * 4 +
-                Double(truncating: foodItem.protein as NSNumber) * 4 +
-                Double(truncating: foodItem.fat as NSNumber) * 9
+        // MARK: - Food Search Section
 
-            let aiFoodItem = AIFoodItem(
-                name: foodItem.name,
-                brand: foodItem.source,
-                calories: calculatedCalories,
-                carbs: Double(truncating: foodItem.carbs as NSNumber),
-                protein: Double(truncating: foodItem.protein as NSNumber),
-                fat: Double(truncating: foodItem.fat as NSNumber),
-                imageURL: foodItem.imageURL
-            )
-            selectedFoodItem = aiFoodItem
+        private func saveOrUpdatePreset(_ food: FoodItemDetailed) {
+            guard food.name.isNotEmpty else { return }
 
-            // Gramm zurücksetzen (100g für normale Produkte)
-            portionGrams = 100.00001
+            let existingPreset = carbPresets.first(where: { preset in
+                preset.foodID == food.id
+            })
 
-            showingFoodSearch = false
+            let preset = existingPreset ?? Presets(context: moc)
+
+            preset.foodID = food.id
+            let foodNutrition: NutritionValues
+            switch food.nutrition {
+            case let .perServing(nutrition):
+                foodNutrition = nutrition
+                preset.per100 = false
+            case let .per100(nutrition):
+                foodNutrition = nutrition
+                preset.per100 = true
+            }
+
+            preset.portionSize = food.portionSize.map { NSDecimalNumber(decimal: max($0, 0)) }
+
+            preset.carbs = foodNutrition.carbs.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.fat = foodNutrition.fat.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.protein = foodNutrition.protein.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.fiber = foodNutrition.fiber.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.sugars = foodNutrition.sugars.map { NSDecimalNumber(decimal: max($0, 0)) }
+            preset.calories = foodNutrition.calories.map { NSDecimalNumber(decimal: max($0, 0)) }
+
+            preset.glycemicIndex = food.glycemicIndex.map { NSDecimalNumber(decimal: $0) }
+            preset.standardServing = food.standardServing
+            preset.standardServingSize = food.standardServingSize.map { NSDecimalNumber(decimal: $0) }
+            preset.imageURL = food.imageURL
+            preset.mealUnits = (food.units ?? .grams).rawValue
+
+            preset.standardName = food.standardName
+            if let tags = food.tags {
+                preset.tags = tags.map { tag in tag.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .joined(separator: ",")
+            } else {
+                preset.tags = nil
+            }
+
+            preset.dish = food.name
+
+            do {
+                try moc.save()
+                updateSavedFoods()
+            } catch {
+                print("Couldn't save " + (preset.dish ?? "new preset."))
+            }
+        }
+
+        private func deletePreset(_ food: FoodItemDetailed) {
+            // Find preset by food ID
+            if let presetToDelete = carbPresets.first(where: { preset in
+                preset.foodID == food.id
+            }) {
+                moc.delete(presetToDelete)
+                do {
+                    try moc.save()
+                } catch {
+                    debug(.apsManager, "Couldn't delete meal preset for food: \(food.name).")
+                }
+            }
         }
 
         private var empty: Bool {
@@ -549,30 +612,6 @@ extension AddCarbs {
                 .offset(x: -10)
         }
 
-        private func alert(food: AIFoodItem?) -> Alert {
-            if let food = food {
-                return Alert(
-                    title: Text(
-                        NSLocalizedString("Save", comment: "") + "\"" + food
-                            .name + "\"" + NSLocalizedString("as new Meal Preset?", comment: "")
-                    ),
-                    message: Text("To avoid having to search for same food on web again."),
-                    primaryButton: .destructive(Text("Yes"), action: { addToPresetsIfNew(food: food) }),
-                    secondaryButton: .cancel(Text("No"), action: { cache(food: food) })
-                )
-            }
-
-            return Alert(
-                title: Text("Oops!"),
-                message: Text(
-                    NSLocalizedString("Something isnt't working with food item ", comment: "") + "\"" +
-                        (food?.name ?? "nil")
-                ),
-                primaryButton: .cancel(Text("OK")),
-                secondaryButton: .cancel()
-            )
-        }
-
         @ViewBuilder private func presetsList(for preset: Presets) -> some View {
             let dish = preset.dish ?? ""
 
@@ -671,12 +710,37 @@ extension AddCarbs {
                 (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
         }
 
-        private func handleSelectedFood(_ foodItem: FoodItem, image: UIImage? = nil) {
-            let aiFoodItem = foodItem.toAIFoodItem()
-            selectedFoodItem = aiFoodItem
-            selectedFoodImage = image
-            portionGrams = 100.0
-            showingFoodSearch = false
+        /// Determines if the view should prevent interactive dismissal (swipe down)
+        private var shouldPreventDismiss: Bool {
+            // Prevent dismiss if showing saved foods OR if there are unsaved changes
+            if foodSearchState.showSavedFoods {
+                return true // Block swipe when saved foods are shown
+            } else if hasUnsavedFoodSearchResults {
+                return true // Block swipe when there are unsaved food search results
+            } else {
+                return false // Allow swipe in other cases
+            }
+        }
+
+        /// Handles the dismiss action from the Cancel/Done button
+        private func handleDismissAction() {
+            // If showing saved foods, just close them
+            if foodSearchState.showSavedFoods {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    foodSearchState.showSavedFoods = false
+                }
+                return
+            }
+
+            // If there are unsaved food search results, show confirmation
+            if hasUnsavedFoodSearchResults {
+                showCancelConfirmation = true
+                return
+            }
+
+            // Otherwise, just dismiss
+            state.hideModal()
+            if editMode { state.apsManager.determineBasalSync() }
         }
 
         private var editView: some View {
