@@ -1392,33 +1392,34 @@ Enact a temp Basal or a temp target */
 // --------- AI ---------
 /* */
 
-"Ask AI..." = "Ask AI...";
+"Ask AI..." = "Запитайте ШІ...";
 
-"Search saved foods..." = "Search saved foods...";
+"Search saved foods..." = "Пошук збережених страв...";
 
-"Search foods..." = "Search foods...";
+"Search foods..." = "Пошук продуктів...";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Збережена їжа";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Додати Їжу Вручну";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "На порцію
+";
 
-"Per 100g" = "Per 100g";
+"Per 100g" = "На 100 г";
 
-"Per 100ml" = "Per 100ml";
+"Per 100ml" = "На 100 мл";
 
-"This portion" = "This portion";
+"This portion" = "Ця порція";
 
-"Serving Size" = "Serving Size";
+"Serving Size" = "Розмір порції";
 
-"Food Name" = "Food Name";
+"Food Name" = "Назва Страви";
 
-"Food" = "Food";
+"Food" = "Страва";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Швидкий доступ до часто використовуваних страв";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Пошук по базах даних або опис їжі для аналізу ШІ";
 
 "Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
 
@@ -1614,25 +1615,26 @@ Enact a temp Basal or a temp target */
 
 "Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Пошук по базах даних або опис їжі для аналізу ШІ";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Швидкий доступ до часто використовуваних страв";
 
-"Food" = "Food";
+"Food" = "Страва";
 
-"Food Name" = "Food Name";
+"Food Name" = "Назва Страви";
 
-"Serving Size" = "Serving Size";
+"Serving Size" = "Розмір порції";
 
-"This portion" = "This portion";
+"This portion" = "Ця порція";
 
-"Per 100g" = "Per 100g";
+"Per 100g" = "На 100 г";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "На порцію
+";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Додати Їжу Вручну";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Збережена їжа";
 
 "United States (USDA / FDA)" = "United States (USDA / FDA)";
 
