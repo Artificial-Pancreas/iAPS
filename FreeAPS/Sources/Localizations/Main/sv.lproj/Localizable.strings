@@ -1392,71 +1392,71 @@ Enact a temp Basal or a temp target */
 // --------- AI ---------
 /* */
 
-"Ask AI..." = "Ask AI...";
+"Ask AI..." = "Fråga AI...";
 
-"Search saved foods..." = "Search saved foods...";
+"Search saved foods..." = "Sök efter sparade mat...";
 
-"Search foods..." = "Search foods...";
+"Search foods..." = "Söker efter mat...";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Sparad mat";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Lägg till mat manuellt";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "Per portion";
 
 "Per 100g" = "Per 100g";
 
 "Per 100ml" = "Per 100ml";
 
-"This portion" = "This portion";
+"This portion" = "Denna portion";
 
-"Serving Size" = "Serving Size";
+"Serving Size" = "Portionsstorlek";
 
-"Food Name" = "Food Name";
+"Food Name" = "Matnamn";
 
-"Food" = "Food";
+"Food" = "Mat";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Snabb tillgång till din vanliga mat";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Sök i databaser eller beskriv mat för AI-analys";
 
-"Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
+"Scan packaged foods for nutrition information" = "Skanna förpackad mat för näringsinformation";
 
-"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Ta en bild för AI-driven näringsanalys. Tryck länge för att välja från ditt bildbibliotek.";
 
-"Enter nutrition information manually" = "Enter nutrition information manually";
+"Enter nutrition information manually" = "Ange näringsinformation manuellt";
 
-"Place a reference object (coin, hand) for scale" = "Place a reference object (coin, hand) for scale";
+"Place a reference object (coin, hand) for scale" = "Placera ett referensobjekt (mynt, hand) för skala";
 
-"Include the full plate or package in frame" = "Include the full plate or package in frame";
+"Include the full plate or package in frame" = "Inkludera hela tallriken eller paketet inom ramen";
 
-"Use good lighting for best results" = "Use good lighting for best results";
+"Use good lighting for best results" = "Använd bra belysning för bästa resultat";
 
-"Photography Tips" = "Photography Tips";
+"Photography Tips" = "Fotograferingstips";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Manuell inmatning";
 
-"Photo Analysis" = "Photo Analysis";
+"Photo Analysis" = "Fotoanalys";
 
-"Barcode Scanner" = "Barcode Scanner";
+"Barcode Scanner" = "Streckkodsläsare";
 
-"Text Search" = "Text Search";
+"Text Search" = "Textsökning";
 
 "AI Image Analysis" = "AI Livsmedelsanalys";
 
 "Barcode" = "Streckkod";
 
-"AI Model Statistics" = "AI Model Statistics";
+"AI Model Statistics" = "AI-modellstatistik";
 
-"Slide to Clear All Statistics" = "Slide to Clear All Statistics";
+"Slide to Clear All Statistics" = "Dra för att rensa all statistik";
 
-"Avg Time" = "Avg Time";
+"Avg Time" = "Snitttid";
 
-"Count" = "Count";
+"Count" = "Antal";
 
-"Statistics will appear here after you use AI models for food analysis." = "Statistics will appear here after you use AI models for food analysis.";
+"Statistics will appear here after you use AI models for food analysis." = "Statistik visas här efter att du använder AI-modeller för livsmedelsanalys.";
 
-"No Statistics Yet" = "No Statistics Yet";
+"No Statistics Yet" = "Ingen statistik ännu";
 
 "Food Search Settings" = "Inställningar för matsökning";
 
@@ -1502,15 +1502,15 @@ Enact a temp Basal or a temp target */
 
 "Important: How to Use Your API Keys" = "Viktigt: Hur man använder dina API-nycklar";
 
-"AI Progress Animation" = "AI Progress Animation";
+"AI Progress Animation" = "AI-progessanimering";
 
-"Miscellaneous" = "Miscellaneous";
+"Miscellaneous" = "Diverse";
 
-"AI Usage Statistics" = "AI Usage Statistics";
+"AI Usage Statistics" = "AI-användningsstatistik";
 
-"View performance metrics for AI models you've used." = "View performance metrics for AI models you've used.";
+"View performance metrics for AI models you've used." = "Visa prestandamätvärden för AI-modeller du använt.";
 
-"Usage Statistics" = "Usage Statistics";
+"Usage Statistics" = "Användningsstatistik";
 
 "Photo library access is required to save images." = "Photo library access is required to save images.";
 
@@ -1590,49 +1590,49 @@ Enact a temp Basal or a temp target */
 
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
 
-"Barcode Scanner" = "Barcode Scanner";
+"Barcode Scanner" = "Streckkodsläsare";
 
-"Photography Tips" = "Photography Tips";
+"Photography Tips" = "Fotograferingstips";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Manuell inmatning";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Manuell inmatning";
 
-"Photo Analysis" = "Photo Analysis";
+"Photo Analysis" = "Fotoanalys";
 
-"Text Search" = "Text Search";
+"Text Search" = "Textsökning";
 
-"Place a reference object (coin, hand) for scale" = "Place a reference object (coin, hand) for scale";
+"Place a reference object (coin, hand) for scale" = "Placera ett referensobjekt (mynt, hand) för skala";
 
-"Include the full plate or package in frame" = "Include the full plate or package in frame";
+"Include the full plate or package in frame" = "Inkludera hela tallriken eller paketet inom ramen";
 
-"Use good lighting for best results" = "Use good lighting for best results";
+"Use good lighting for best results" = "Använd bra belysning för bästa resultat";
 
-"Enter nutrition information manually" = "Enter nutrition information manually";
+"Enter nutrition information manually" = "Ange näringsinformation manuellt";
 
-"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Ta en bild för AI-driven näringsanalys. Tryck länge för att välja från ditt bildbibliotek.";
 
-"Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
+"Scan packaged foods for nutrition information" = "Skanna förpackad mat för näringsinformation";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Sök i databaser eller beskriv mat för AI-analys";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Snabb tillgång till din vanliga mat";
 
-"Food" = "Food";
+"Food" = "Mat";
 
-"Food Name" = "Food Name";
+"Food Name" = "Matnamn";
 
-"Serving Size" = "Serving Size";
+"Serving Size" = "Portionsstorlek";
 
-"This portion" = "This portion";
+"This portion" = "Denna portion";
 
 "Per 100g" = "Per 100g";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "Per portion";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Lägg till mat manuellt";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Sparad mat";
 
 "United States (USDA / FDA)" = "United States (USDA / FDA)";
 
