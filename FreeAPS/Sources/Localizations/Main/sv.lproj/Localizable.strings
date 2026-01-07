@@ -1576,15 +1576,15 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Antropisk (Claude API) konfiguration";
 
-"Provider for Barcode Scanning" = "Leverantör för streckkodssökning";
+"Provider for Barcode Scanning" = "Leverantör av streckkodssökning";
 
-"Provider for Text/Voice Search" = "Leverantör för text/ljud-sökning";
+"Provider for Text/Voice Search" = "Leverantör av text/ljud-sökning";
 
 "Provider for AI Text Analysis" = "Leverantör för AI-textanalys";
 
 "Fast" = "Snabb";
 
-"Provider for AI Image Analysis" = "Leverantör för AI-bildanalys";
+"Provider for AI Image Analysis" = "Leverantör av AI-bildanalys";
 
 "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Konfigurera API-tjänsten som används för varje typ av matsökning. AI-bildanalys styr vad som händer när du tar foton på mat. Olika leverantörer utmärker sig på olika sökmetoder.";
 
