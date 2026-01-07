@@ -1512,43 +1512,43 @@ Enact a temp Basal or a temp target */
 
 "Usage Statistics" = "Användningsstatistik";
 
-"Photo library access is required to save images." = "Photo library access is required to save images.";
+"Photo library access is required to save images." = "Åtkomst till bildbibliotek krävs för att spara bilder.";
 
-"Enable Photo Library Access" = "Enable Photo Library Access";
+"Enable Photo Library Access" = "Aktivera åtkomst till fotobibliotek";
 
-"Save Photos" = "Save Photos";
+"Save Photos" = "Spara bilder";
 
-"When enabled, photos taken will be saved into the iAPS album in your photo library." = "When enabled, photos taken will be saved into the iAPS album in your photo library.";
+"When enabled, photos taken will be saved into the iAPS album in your photo library." = "När den är aktiverad kommer foton som tas att sparas i iAPS-albumet i ditt fotobibliotek.";
 
-"Photo Library" = "Photo Library";
+"Photo Library" = "Fotobibliotek";
 
-"Send smaller images to AI" = "Send smaller images to AI";
+"Send smaller images to AI" = "Skicka mindre bilder till AI";
 
-"When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail." = "When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail.";
+"When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail." = "När den är aktiverad ändras bilder till en mindre upplösning innan de skickas till AI. Detta minskar dataanvändningen och snabbar upp analysen, men AI kommer att se mindre detaljer.";
 
-"Image Processing" = "Image Processing";
+"Image Processing" = "Bildbehandling";
 
-"Show annotation prompt for images" = "Show annotation prompt for images";
+"Show annotation prompt for images" = "Visa kommentarsfråga för bilder";
 
-"When enabled, you'll be prompted to add optional text descriptions to food images." = "When enabled, you'll be prompted to add optional text descriptions to food images.";
+"When enabled, you'll be prompted to add optional text descriptions to food images." = "När den är aktiverad uppmanas du att lägga till valfria textbeskrivningar till matbilder.";
 
-"Image Annotations" = "Image Annotations";
+"Image Annotations" = "Bildnoteringar";
 
-"Default to AI search" = "Default to AI search";
+"Default to AI search" = "Standard för AI-sökning";
 
-"Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field." = "Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field.";
+"Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field." = "Anger vilken sökmetod som väljs som standard när du öppnar sökvyn. Du kan alltid växla mellan AI och databassökning med hjälp av knappen bredvid sökfältet.";
 
-"Default Text Search Method" = "Default Text Search Method";
+"Default Text Search Method" = "Standardmetod för textsökning";
 
-"Preferred Region" = "Preferred Region";
+"Preferred Region" = "Önskad region";
 
-"Preferred Language" = "Preferred Language";
+"Preferred Language" = "Önskat språk";
 
-"Nutrition Authority" = "Nutrition Authority";
+"Nutrition Authority" = "Näringsmyndighet";
 
-"Choose a specific language and region for AI output." = "Choose a specific language and region for AI output.";
+"Choose a specific language and region for AI output." = "Välj ett specifikt språk och region för AI-utdata.";
 
-"Localization" = "Localization";
+"Localization" = "Lokalisering";
 
 "Enter your OpenAI API key" = "Ange din OpenAI API-nyckel";
 
@@ -1568,27 +1568,27 @@ Enact a temp Basal or a temp target */
 
 "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Få en gratis API-nyckel från ai.google.dev. Google Gemini ger utmärkt matavläsning med ett generöst gratiskonto (1500 förfrågningar per dag).";
 
-"Enter your Claude API key" = "Enter your Claude API key";
+"Enter your Claude API key" = "Ange din Claude API-nyckel";
 
-"Claude API Key" = "Claude API Key";
+"Claude API Key" = "Claude API-nyckel";
 
-"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model.";
+"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Få en Claude API-nyckel från console.anthropic.com. Claude utmärker sig på detaljerad resonemang och livsmedelsanalys. Prissättningen börjar på $ 0,25 per miljon tokens för Haiku-modellen.";
 
-"Anthropic (Claude API) Configuration" = "Anthropic (Claude API) Configuration";
+"Anthropic (Claude API) Configuration" = "Antropisk (Claude API) konfiguration";
 
-"Provider for Barcode Scanning" = "Provider for Barcode Scanning";
+"Provider for Barcode Scanning" = "Leverantör för streckkodssökning";
 
-"Provider for Text/Voice Search" = "Provider for Text/Voice Search";
+"Provider for Text/Voice Search" = "Leverantör för text/ljud-sökning";
 
-"Provider for AI Text Analysis" = "Provider for AI Text Analysis";
+"Provider for AI Text Analysis" = "Leverantör för AI-textanalys";
 
 "Fast" = "Snabb";
 
-"Provider for AI Image Analysis" = "Provider for AI Image Analysis";
+"Provider for AI Image Analysis" = "Leverantör för AI-bildanalys";
 
-"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods.";
+"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Konfigurera API-tjänsten som används för varje typ av matsökning. AI-bildanalys styr vad som händer när du tar foton på mat. Olika leverantörer utmärker sig på olika sökmetoder.";
 
-"Food Search Provider Configuration" = "Food Search Provider Configuration";
+"Food Search Provider Configuration" = "Konfiguration av matsökleverantör";
 
 "Barcode Scanner" = "Streckkodsläsare";
 
@@ -1634,23 +1634,23 @@ Enact a temp Basal or a temp target */
 
 "Saved Foods" = "Sparad mat";
 
-"United States (USDA / FDA)" = "United States (USDA / FDA)";
+"United States (USDA / FDA)" = "Förenta staterna (USDA / FDA)";
 
-"European Union (EFSA / EU labeling)" = "European Union (EFSA / EU labeling)";
+"European Union (EFSA / EU labeling)" = "Europeiska unionen (EFSA / EU-märkning)";
 
-"United Kingdom (CoFID / NHS)" = "United Kingdom (CoFID / NHS)";
+"United Kingdom (CoFID / NHS)" = "Storbritannien (CoFID / NHS)";
 
-"Canada (Health Canada)" = "Canada (Health Canada)";
+"Canada (Health Canada)" = "Kanada (Health Canada)";
 
-"Australia & New Zealand (FSANZ)" = "Australia & New Zealand (FSANZ)";
+"Australia & New Zealand (FSANZ)" = "Australien & Nya Zeeland (FSANZ)";
 
 "Japan (MHLW)" = "Japan (MHLW)";
 
-"International (WHO / FAO / Codex)" = "International (WHO / FAO / Codex)";
+"International (WHO / FAO / Codex)" = "Internationellt (WHO / FAO / Codex)";
 
-"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "United States Department of Agriculture (USDA), FDA Nutrition Facts";
+"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "Förenta staternas jordbruksdepartement (USDA), FDA Nutrition Facts";
 
-"European Food Safety Authority (EFSA), EU food labeling standards" = "European Food Safety Authority (EFSA), EU food labeling standards";
+"European Food Safety Authority (EFSA), EU food labeling standards" = "Europeiska myndigheten för livsmedelssäkerhet (EFSA), EU: s standarder för livsmedelsmärkning";
 
 "UK Composition of Foods Integrated Dataset (CoFID), NHS" = "UK Composition of Foods Integrated Dataset (CoFID), NHS";
 
@@ -1664,9 +1664,9 @@ Enact a temp Basal or a temp target */
 
 "protein" = "protein";
 
-"carbs" = "carbs";
+"carbs" = "kolhydrater";
 
-"fat" = "fat";
+"fat" = "fett";
 
 "📝 Notes" = "📝 Anteckningar";
 
@@ -2001,13 +2001,13 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Kal";
 
-" servings" = "servings";
+" servings" = "portioner";
 
-" serving" = "serving";
+" serving" = "portion";
 
-"Reset to " = "Reset to ";
+"Reset to " = "Återställ till ";
 
-"Apply" = "Apply";
+"Apply" = "Använd";
 
 "Carbs" = "Kolhydrater";
 
