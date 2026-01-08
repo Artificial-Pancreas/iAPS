@@ -1664,7 +1664,7 @@ Enact a temp Basal or a temp target */
 
 "protein" = "protein";
 
-"carbs" = "kolhydrater";
+"carbs" = "kolh.";
 
 "fat" = "fett";
 
