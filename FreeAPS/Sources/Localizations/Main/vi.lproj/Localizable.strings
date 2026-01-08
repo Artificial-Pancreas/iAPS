@@ -1588,7 +1588,7 @@ Enact a temp Basal or a temp target */
 
 "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Cấu hình dịch vụ API được sử dụng cho từng loại tìm kiếm thực phẩm. AI Phân tích hình ảnh quyết định kết quả khi bạn chụp ảnh thực phẩm. Các nhà cung cấp khác nhau sẽ mạnh ở các phương thức tìm kiếm khác nhau.";
 
-"Food Search Provider Configuration" = "Food Search Provider Configuration";
+"Food Search Provider Configuration" = "Cấu hình tìm kiếm thực phẩm";
 
 "Barcode Scanner" = "Quét mã vạch";
 
@@ -1634,39 +1634,39 @@ Enact a temp Basal or a temp target */
 
 "Saved Foods" = "Lưu thực phẩm";
 
-"United States (USDA / FDA)" = "United States (USDA / FDA)";
+"United States (USDA / FDA)" = "Hoa Kỳ (USDA / FDA)";
 
-"European Union (EFSA / EU labeling)" = "European Union (EFSA / EU labeling)";
+"European Union (EFSA / EU labeling)" = "Liên minh Châu Âu (EFSA / ghi nhãn EU)";
 
-"United Kingdom (CoFID / NHS)" = "United Kingdom (CoFID / NHS)";
+"United Kingdom (CoFID / NHS)" = "Vương quốc Anh (CoFID / NHS)";
 
-"Canada (Health Canada)" = "Canada (Health Canada)";
+"Canada (Health Canada)" = "Canada (Bộ Y tế Canada)";
 
-"Australia & New Zealand (FSANZ)" = "Australia & New Zealand (FSANZ)";
+"Australia & New Zealand (FSANZ)" = "Úc & New Zealand (FSANZ)";
 
-"Japan (MHLW)" = "Japan (MHLW)";
+"Japan (MHLW)" = "Nhật Bản (MHLW)";
 
-"International (WHO / FAO / Codex)" = "International (WHO / FAO / Codex)";
+"International (WHO / FAO / Codex)" = "Quốc tế (WHO / FAO / Codex)";
 
-"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "United States Department of Agriculture (USDA), FDA Nutrition Facts";
+"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "Bộ Nông nghiệp Hoa Kỳ (USDA), Bảng thông tin dinh dưỡng của FDA";
 
-"European Food Safety Authority (EFSA), EU food labeling standards" = "European Food Safety Authority (EFSA), EU food labeling standards";
+"European Food Safety Authority (EFSA), EU food labeling standards" = "Cơ quan An toàn Thực phẩm Châu Âu (EFSA), tiêu chuẩn thực phẩm của EU";
 
-"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "UK Composition of Foods Integrated Dataset (CoFID), NHS";
+"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "CSDL thành phần thực phẩm Vương quốc Anh (CoFID), NHS";
 
-"Health Canada, Canadian Nutrition Facts Table" = "Health Canada, Canadian Nutrition Facts Table";
+"Health Canada, Canadian Nutrition Facts Table" = "Bộ Y tế Canada, Bảng dinh dưỡng Canada";
 
-"Food Standards Australia New Zealand (FSANZ)" = "Food Standards Australia New Zealand (FSANZ)";
+"Food Standards Australia New Zealand (FSANZ)" = "Tiêu chuẩn Thực phẩm Úc–New Zealand (FSANZ)";
 
-"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards";
+"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Bộ Y tế, Lao động và Phúc lợi (MHLW), tiêu chuẩn ghi nhãn thực phẩm Nhật Bản";
 
-"World Health Organization (WHO), FAO, Codex Alimentarius" = "World Health Organization (WHO), FAO, Codex Alimentarius";
+"World Health Organization (WHO), FAO, Codex Alimentarius" = "Tổ chức Y tế Thế giới (WHO), FAO, Codex Alimentarius";
 
-"protein" = "protein";
+"protein" = "chất đạm";
 
 "carbs" = "carbs";
 
-"fat" = "fat";
+"fat" = "chất béo";
 
 "📝 Notes" = "📝 Ghi chú";
 
@@ -2001,13 +2001,13 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Cal";
 
-" servings" = "servings";
+" servings" = "khẩu phần";
 
-" serving" = "serving";
+" serving" = "phần ăn";
 
-"Reset to " = "Reset to ";
+"Reset to " = "Đặt lại về 0 ";
 
-"Apply" = "Apply";
+"Apply" = "Áp dụng";
 
 "Carbs" = "Carbs";
 
