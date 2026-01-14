@@ -1393,31 +1393,31 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 // --------- AI ---------
 /* */
 
-"Ask AI..." = "Ask AI...";
+"Ask AI..." = "Spýtať sa umelej inteligencie...";
 
-"Search saved foods..." = "Search saved foods...";
+"Search saved foods..." = "Vyhľadávanie uložených jedál...";
 
-"Search foods..." = "Search foods...";
+"Search foods..." = "Vyhľadávanie jedál...";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Uložené jedlá";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Pridať jedlo manuálne";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "Na porciu";
 
-"Per 100g" = "Per 100g";
+"Per 100g" = "Na 100g";
 
-"Per 100ml" = "Per 100ml";
+"Per 100ml" = "Na 100ml";
 
-"This portion" = "This portion";
+"This portion" = "Táto porcia";
 
-"Serving Size" = "Serving Size";
+"Serving Size" = "Veľkosť porcie";
 
-"Food Name" = "Food Name";
+"Food Name" = "Názov jedla";
 
-"Food" = "Food";
+"Food" = "Jedlo";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Rýchly prístup k často používaným potravinám";
 
 "Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
 
@@ -1425,9 +1425,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
 
-"Enter nutrition information manually" = "Enter nutrition information manually";
+"Enter nutrition information manually" = "Manuálne zadanie nutričných informácií";
 
-"Place a reference object (coin, hand) for scale" = "Place a reference object (coin, hand) for scale";
+"Place a reference object (coin, hand) for scale" = "Umiestnite referenčný predmet (mincu, ruku) pre určenie mierky";
 
 "Include the full plate or package in frame" = "Include the full plate or package in frame";
 
@@ -1435,29 +1435,29 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Photography Tips" = "Photography Tips";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Manuálne zadanie";
 
-"Photo Analysis" = "Photo Analysis";
+"Photo Analysis" = "Analýza fotografií";
 
-"Barcode Scanner" = "Barcode Scanner";
+"Barcode Scanner" = "Skener čiarových kódov";
 
-"Text Search" = "Text Search";
+"Text Search" = "Vyhľadávanie textu";
 
 "AI Image Analysis" = "AI analýza obrázka";
 
 "Barcode" = "Čiarový kód";
 
-"AI Model Statistics" = "AI Model Statistics";
+"AI Model Statistics" = "Štatistika modelu AI";
 
-"Slide to Clear All Statistics" = "Slide to Clear All Statistics";
+"Slide to Clear All Statistics" = "Posunutím vymažete všetky štatistiky";
 
-"Avg Time" = "Avg Time";
+"Avg Time" = "Priemerný čas";
 
-"Count" = "Count";
+"Count" = "Počet";
 
-"Statistics will appear here after you use AI models for food analysis." = "Statistics will appear here after you use AI models for food analysis.";
+"Statistics will appear here after you use AI models for food analysis." = "Štatistiky sa tu zobrazia po použití modelov umelej inteligencie na analýzu potravín.";
 
-"No Statistics Yet" = "No Statistics Yet";
+"No Statistics Yet" = "Zatiaľ žiadne štatistiky";
 
 "Food Search Settings" = "Nastavenia vyhľadávania jedla";
 
@@ -1503,31 +1503,31 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Important: How to Use Your API Keys" = "Dôležité: Ako používať vaše API kľúče";
 
-"AI Progress Animation" = "AI Progress Animation";
+"AI Progress Animation" = "Animácia postupu umelej inteligencie";
 
-"Miscellaneous" = "Miscellaneous";
+"Miscellaneous" = "Rôzne";
 
-"AI Usage Statistics" = "AI Usage Statistics";
+"AI Usage Statistics" = "Štatistiky používania umelej inteligencie";
 
-"View performance metrics for AI models you've used." = "View performance metrics for AI models you've used.";
+"View performance metrics for AI models you've used." = "Zobraziť metriky výkonnosti pre modely umelej inteligencie, ktoré ste použili.";
 
-"Usage Statistics" = "Usage Statistics";
+"Usage Statistics" = "Štatistika používania";
 
 "Photo library access is required to save images." = "Photo library access is required to save images.";
 
 "Enable Photo Library Access" = "Enable Photo Library Access";
 
-"Save Photos" = "Save Photos";
+"Save Photos" = "Uložiť fotografie";
 
 "When enabled, photos taken will be saved into the iAPS album in your photo library." = "When enabled, photos taken will be saved into the iAPS album in your photo library.";
 
-"Photo Library" = "Photo Library";
+"Photo Library" = "Knižnica fotografií";
 
 "Send smaller images to AI" = "Send smaller images to AI";
 
 "When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail." = "When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail.";
 
-"Image Processing" = "Image Processing";
+"Image Processing" = "Spracovanie obrázkov";
 
 "Show annotation prompt for images" = "Show annotation prompt for images";
 
@@ -1539,17 +1539,17 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field." = "Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field.";
 
-"Default Text Search Method" = "Default Text Search Method";
+"Default Text Search Method" = "Predvolená metóda vyhľadávania textu";
 
-"Preferred Region" = "Preferred Region";
+"Preferred Region" = "Preferovaný región";
 
-"Preferred Language" = "Preferred Language";
+"Preferred Language" = "Preferovaný jazyk";
 
-"Nutrition Authority" = "Nutrition Authority";
+"Nutrition Authority" = "Úrad pre výživu";
 
-"Choose a specific language and region for AI output." = "Choose a specific language and region for AI output.";
+"Choose a specific language and region for AI output." = "Vyberte konkrétny jazyk a región pre výstup umelej inteligencie.";
 
-"Localization" = "Localization";
+"Localization" = "Lokalizácia";
 
 "Enter your OpenAI API key" = "Zadajte svoj OpenAI API kľúč";
 
@@ -1569,11 +1569,11 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Získajte bezplatný API kľúč z ai.google.dev. Google Gemini poskytuje vynikajúce rozpoznávanie jedla so štedrým bezplatným limitom (1500 požiadaviek denne).";
 
-"Enter your Claude API key" = "Enter your Claude API key";
+"Enter your Claude API key" = "Zadajte svoj Claude API kľúč";
 
-"Claude API Key" = "Claude API Key";
+"Claude API Key" = "Claude API kľúč";
 
-"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model.";
+"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Získajte Claude API kľúč z console.anthropic.com. Claude vyniká v detailnom uvažovaní a analýze potravín. Cena modelu Haiku začína na 0,25 USD za milión tokenov.";
 
 "Anthropic (Claude API) Configuration" = "Anthropic (Claude API) Configuration";
 
@@ -1581,7 +1581,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Provider for Text/Voice Search" = "Provider for Text/Voice Search";
 
-"Provider for AI Text Analysis" = "Provider for AI Text Analysis";
+"Provider for AI Text Analysis" = "Poskytovateľ analýzy textu s umelou inteligenciou";
 
 "Fast" = "Rýchly";
 
@@ -1591,25 +1591,25 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
 
-"Barcode Scanner" = "Barcode Scanner";
+"Barcode Scanner" = "Skener čiarových kódov";
 
 "Photography Tips" = "Photography Tips";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Manuálne zadanie";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Manuálne zadanie";
 
-"Photo Analysis" = "Photo Analysis";
+"Photo Analysis" = "Analýza fotografií";
 
-"Text Search" = "Text Search";
+"Text Search" = "Vyhľadávanie textu";
 
-"Place a reference object (coin, hand) for scale" = "Place a reference object (coin, hand) for scale";
+"Place a reference object (coin, hand) for scale" = "Umiestnite referenčný predmet (mincu, ruku) pre určenie mierky";
 
 "Include the full plate or package in frame" = "Include the full plate or package in frame";
 
 "Use good lighting for best results" = "Use good lighting for best results";
 
-"Enter nutrition information manually" = "Enter nutrition information manually";
+"Enter nutrition information manually" = "Manuálne zadanie nutričných informácií";
 
 "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
 
@@ -1617,23 +1617,23 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Rýchly prístup k často používaným potravinám";
 
-"Food" = "Food";
+"Food" = "Jedlo";
 
-"Food Name" = "Food Name";
+"Food Name" = "Názov jedla";
 
-"Serving Size" = "Serving Size";
+"Serving Size" = "Veľkosť porcie";
 
-"This portion" = "This portion";
+"This portion" = "Táto porcia";
 
-"Per 100g" = "Per 100g";
+"Per 100g" = "Na 100g";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "Na porciu";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Pridať jedlo manuálne";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Uložené jedlá";
 
 "United States (USDA / FDA)" = "United States (USDA / FDA)";
 
@@ -1645,29 +1645,29 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Australia & New Zealand (FSANZ)" = "Australia & New Zealand (FSANZ)";
 
-"Japan (MHLW)" = "Japan (MHLW)";
+"Japan (MHLW)" = "Japonsko (MHLW)";
 
-"International (WHO / FAO / Codex)" = "International (WHO / FAO / Codex)";
+"International (WHO / FAO / Codex)" = "Medzinárodné (WHO / FAO / Codex)";
 
-"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "United States Department of Agriculture (USDA), FDA Nutrition Facts";
+"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "Ministerstvo poľnohospodárstva Spojených štátov amerických (USDA), výživové údaje FDA";
 
-"European Food Safety Authority (EFSA), EU food labeling standards" = "European Food Safety Authority (EFSA), EU food labeling standards";
+"European Food Safety Authority (EFSA), EU food labeling standards" = "Európsky úrad pre bezpečnosť potravín (EFSA), normy EÚ pre označovanie potravín";
 
-"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "UK Composition of Foods Integrated Dataset (CoFID), NHS";
+"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "Integrovaná databáza zloženia potravín Spojeného kráľovstva (CoFID), NHS";
 
-"Health Canada, Canadian Nutrition Facts Table" = "Health Canada, Canadian Nutrition Facts Table";
+"Health Canada, Canadian Nutrition Facts Table" = "Health Canada, tabuľka kanadských nutričných údajov";
 
-"Food Standards Australia New Zealand (FSANZ)" = "Food Standards Australia New Zealand (FSANZ)";
+"Food Standards Australia New Zealand (FSANZ)" = "Potravinové normy Austrália Nový Zéland (FSANZ)";
 
-"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards";
+"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Ministerstvo zdravotníctva, práce a sociálnych vecí (MHLW), Japonské normy pre označovanie potravín";
 
-"World Health Organization (WHO), FAO, Codex Alimentarius" = "World Health Organization (WHO), FAO, Codex Alimentarius";
+"World Health Organization (WHO), FAO, Codex Alimentarius" = "Svetová zdravotnícka organizácia (WHO), FAO, Codex Alimentarius";
 
-"protein" = "protein";
+"protein" = "bielkoviny";
 
-"carbs" = "carbs";
+"carbs" = "sacharidy";
 
-"fat" = "fat";
+"fat" = "tuky";
 
 "📝 Notes" = "📝 Poznámky";
 
