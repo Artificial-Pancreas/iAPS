@@ -33,12 +33,11 @@ enum KnownPlugins {
         case G7CGMManager.pluginIdentifier:
             return 10.5 * secondsOfDay
         case LibreTransmitterManagerV3.pluginIdentifier:
-            // Use dynamic lifetime from sensor (supports Libre 2, 2+, 3 with different lifetimes)
-            if let libreManager = cgmManager as? LibreTransmitterManagerV3 {
-                let maxMinutes = libreManager.sensorInfoObservable.sensorMaxMinutesWearTime
-                if maxMinutes > 0 {
-                    return TimeInterval(maxMinutes * 60)  // Convert minutes to seconds
-                }
+            // Calculate total sensor lifetime from sensor dates (supports Libre 2, 2+, 3)
+            if let libreManager = cgmManager as? LibreTransmitterManagerV3,
+               let activatedAt = libreManager.sensorInfoObservable.activatedAt,
+               let expiresAt = libreManager.sensorInfoObservable.expiresAt {
+                return expiresAt.timeIntervalSince(activatedAt)  // Total lifetime in seconds
             }
             return nil
         case MinimedPumpManager.pluginIdentifier:
