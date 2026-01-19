@@ -27,12 +27,24 @@ enum KnownPlugins {
         guard let cgmManager else { return nil }
         let secondsOfDay = 8.64E4
 
-        return switch cgmManager.pluginIdentifier {
-        case G6CGMManager.pluginIdentifier: 10 * secondsOfDay
-        case G7CGMManager.pluginIdentifier: 10.5 * secondsOfDay
-        case LibreTransmitterManagerV3.pluginIdentifier: 14.5 * secondsOfDay
-        case MinimedPumpManager.pluginIdentifier: 6 * secondsOfDay
-        default: nil
+        switch cgmManager.pluginIdentifier {
+        case G6CGMManager.pluginIdentifier:
+            return 10 * secondsOfDay
+        case G7CGMManager.pluginIdentifier:
+            return 10.5 * secondsOfDay
+        case LibreTransmitterManagerV3.pluginIdentifier:
+            // Use dynamic lifetime from sensor (supports Libre 2, 2+, 3 with different lifetimes)
+            if let libreManager = cgmManager as? LibreTransmitterManagerV3 {
+                let maxMinutes = libreManager.sensorInfoObservable.sensorMaxMinutesWearTime
+                if maxMinutes > 0 {
+                    return TimeInterval(maxMinutes * 60)  // Convert minutes to seconds
+                }
+            }
+            return nil
+        case MinimedPumpManager.pluginIdentifier:
+            return 6 * secondsOfDay
+        default:
+            return nil
         }
     }
 
