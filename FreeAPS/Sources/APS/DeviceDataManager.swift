@@ -800,8 +800,6 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         UserDefaults.standard.cgmManagerRawValue = manager.rawValue
         appCoordinator.setShouldUploadGlucose(manager.shouldSyncToRemoteService)
-        // Update sensor days when CGM state updates (e.g., when sensor data is received)
-        appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(manager))
     }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {

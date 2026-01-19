@@ -33,11 +33,17 @@ enum KnownPlugins {
         case G7CGMManager.pluginIdentifier:
             return 10.5 * secondsOfDay
         case LibreTransmitterManagerV3.pluginIdentifier:
-            // Calculate total sensor lifetime from sensor dates (supports Libre 2, 2+, 3)
-            if let libreManager = cgmManager as? LibreTransmitterManagerV3,
-               let activatedAt = libreManager.sensorInfoObservable.activatedAt,
-               let expiresAt = libreManager.sensorInfoObservable.expiresAt {
-                return expiresAt.timeIntervalSince(activatedAt)  // Total lifetime in seconds
+            // Solution 5: Use UserDefaults.standard.preSelectedSensor
+            // This is set during sensor pairing and persisted, so it's always available
+            // Libre 2+ (serial starts with "301") = 15.5 days
+            // Libre 2 (other serials) = 14.5 days
+            if let sensorName = UserDefaults.standard.preSelectedSensor?.sensorName,
+               !sensorName.isEmpty {
+                if sensorName.hasPrefix("301") {
+                    return 15.5 * secondsOfDay  // Libre 2+
+                } else {
+                    return 14.5 * secondsOfDay  // Libre 2
+                }
             }
             return nil
         case MinimedPumpManager.pluginIdentifier:
