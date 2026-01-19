@@ -1419,21 +1419,21 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Quick access to your frequently used foods" = "Rýchly prístup k často používaným potravinám";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Vyhľadajte v databázach alebo opíšte jedlo pre analýzu pomocou AI";
 
-"Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
+"Scan packaged foods for nutrition information" = "Skenujte balené potraviny pre nutričné informácie";
 
-"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Odfotografujte jedlo pre výživovú analýzu pomocou AI. Dlhým stlačením vyberte z fotiek.";
 
 "Enter nutrition information manually" = "Manuálne zadanie nutričných informácií";
 
 "Place a reference object (coin, hand) for scale" = "Umiestnite referenčný predmet (mincu, ruku) pre určenie mierky";
 
-"Include the full plate or package in frame" = "Include the full plate or package in frame";
+"Include the full plate or package in frame" = "Zahrňte do záberu celý tanier alebo balenie";
 
-"Use good lighting for best results" = "Use good lighting for best results";
+"Use good lighting for best results" = "Používajte dobré osvetlenie pre najlepšie výsledky";
 
-"Photography Tips" = "Photography Tips";
+"Photography Tips" = "Tipy na fotografovanie";
 
 "Manual Entry" = "Manuálne zadanie";
 
@@ -1513,31 +1513,31 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Usage Statistics" = "Štatistika používania";
 
-"Photo library access is required to save images." = "Photo library access is required to save images.";
+"Photo library access is required to save images." = "Na ukladanie obrázkov je potrebný prístup k fotkám.";
 
-"Enable Photo Library Access" = "Enable Photo Library Access";
+"Enable Photo Library Access" = "Povoliť prístup k fotkám";
 
 "Save Photos" = "Uložiť fotografie";
 
-"When enabled, photos taken will be saved into the iAPS album in your photo library." = "When enabled, photos taken will be saved into the iAPS album in your photo library.";
+"When enabled, photos taken will be saved into the iAPS album in your photo library." = "Keď je táto možnosť povolená, nasnímané fotografie sa uložia do albumu iAPS vo fotkách.";
 
 "Photo Library" = "Knižnica fotografií";
 
-"Send smaller images to AI" = "Send smaller images to AI";
+"Send smaller images to AI" = "Odosielať menšie obrázky do AI";
 
-"When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail." = "When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail.";
+"When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail." = "Ak je táto možnosť povolená, obrázky sa pred odoslaním do AI zmenšia na nižšie rozlíšenie. Zníži sa tým spotreba dát a zrýchli analýza, ale AI uvidí menej detailov.";
 
 "Image Processing" = "Spracovanie obrázkov";
 
-"Show annotation prompt for images" = "Show annotation prompt for images";
+"Show annotation prompt for images" = "Zobraziť výzvu na anotáciu obrázkov";
 
-"When enabled, you'll be prompted to add optional text descriptions to food images." = "When enabled, you'll be prompted to add optional text descriptions to food images.";
+"When enabled, you'll be prompted to add optional text descriptions to food images." = "Ak je táto možnosť povolená, budete vyzvaní na pridanie voliteľného textového popisu k obrázkom jedla.";
 
-"Image Annotations" = "Image Annotations";
+"Image Annotations" = "Anotácie obrázkov";
 
-"Default to AI search" = "Default to AI search";
+"Default to AI search" = "Predvolene použiť vyhľadávanie pomocou AI";
 
-"Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field." = "Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field.";
+"Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field." = "Nastavuje, ktorá metóda vyhľadávania je predvolene vybraná pri otvorení zobrazenia vyhľadávania potravín. Vždy môžete prepínať medzi vyhľadávaním pomocou AI a databázovým vyhľadávaním pomocou tlačidla vedľa vyhľadávacieho poľa.";
 
 "Default Text Search Method" = "Predvolená metóda vyhľadávania textu";
 
@@ -1575,25 +1575,25 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Získajte Claude API kľúč z console.anthropic.com. Claude vyniká v detailnom uvažovaní a analýze potravín. Cena modelu Haiku začína na 0,25 USD za milión tokenov.";
 
-"Anthropic (Claude API) Configuration" = "Anthropic (Claude API) Configuration";
+"Anthropic (Claude API) Configuration" = "Konfigurácia Anthropic (Claude API)";
 
-"Provider for Barcode Scanning" = "Provider for Barcode Scanning";
+"Provider for Barcode Scanning" = "Poskytovateľ pre skenovanie čiarových kódov";
 
-"Provider for Text/Voice Search" = "Provider for Text/Voice Search";
+"Provider for Text/Voice Search" = "Poskytovateľ pre textové/hlasové vyhľadávanie";
 
 "Provider for AI Text Analysis" = "Poskytovateľ analýzy textu s umelou inteligenciou";
 
 "Fast" = "Rýchly";
 
-"Provider for AI Image Analysis" = "Provider for AI Image Analysis";
+"Provider for AI Image Analysis" = "Poskytovateľ pre analýzu obrázkov pomocou AI";
 
-"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods.";
+"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Nastavte API službu používanú pre každý typ vyhľadávania potravín. Analýza obrázkov pomocou AI určuje, čo sa stane, keď odfotografujete jedlo. Rôzni poskytovatelia vynikajú v rôznych metódach vyhľadávania.";
 
-"Food Search Provider Configuration" = "Food Search Provider Configuration";
+"Food Search Provider Configuration" = "Konfigurácia poskytovateľa vyhľadávania potravín";
 
 "Barcode Scanner" = "Skener čiarových kódov";
 
-"Photography Tips" = "Photography Tips";
+"Photography Tips" = "Tipy na fotografovanie";
 
 "Manual Entry" = "Manuálne zadanie";
 
@@ -1605,17 +1605,17 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Place a reference object (coin, hand) for scale" = "Umiestnite referenčný predmet (mincu, ruku) pre určenie mierky";
 
-"Include the full plate or package in frame" = "Include the full plate or package in frame";
+"Include the full plate or package in frame" = "Zahrňte do záberu celý tanier alebo balenie";
 
-"Use good lighting for best results" = "Use good lighting for best results";
+"Use good lighting for best results" = "Používajte dobré osvetlenie pre najlepšie výsledky";
 
 "Enter nutrition information manually" = "Manuálne zadanie nutričných informácií";
 
-"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Odfotografujte jedlo pre výživovú analýzu pomocou AI. Dlhým stlačením vyberte z fotiek.";
 
-"Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
+"Scan packaged foods for nutrition information" = "Skenujte balené potraviny pre nutričné informácie";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Vyhľadajte v databázach alebo opíšte jedlo pre analýzu pomocou AI";
 
 "Quick access to your frequently used foods" = "Rýchly prístup k často používaným potravinám";
 
@@ -1635,15 +1635,15 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Saved Foods" = "Uložené jedlá";
 
-"United States (USDA / FDA)" = "United States (USDA / FDA)";
+"United States (USDA / FDA)" = "Spojené štáty (USDA / FDA)";
 
-"European Union (EFSA / EU labeling)" = "European Union (EFSA / EU labeling)";
+"European Union (EFSA / EU labeling)" = "Európska únia (EFSA / označovanie EÚ)";
 
-"United Kingdom (CoFID / NHS)" = "United Kingdom (CoFID / NHS)";
+"United Kingdom (CoFID / NHS)" = "Spojené kráľovstvo (CoFID / NHS)";
 
-"Canada (Health Canada)" = "Canada (Health Canada)";
+"Canada (Health Canada)" = "Kanada (Health Canada)";
 
-"Australia & New Zealand (FSANZ)" = "Australia & New Zealand (FSANZ)";
+"Australia & New Zealand (FSANZ)" = "Austrália a Nový Zéland (FSANZ)";
 
 "Japan (MHLW)" = "Japonsko (MHLW)";
 
@@ -2002,13 +2002,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Cal" = "Cal";
 
-" servings" = "servings";
+" servings" = "porcie";
 
-" serving" = "serving";
+" serving" = "porcia";
 
-"Reset to " = "Reset to ";
+"Reset to " = "Obnoviť na ";
 
-"Apply" = "Apply";
+"Apply" = "Použiť";
 
 "Carbs" = "Sacharidy";
 
