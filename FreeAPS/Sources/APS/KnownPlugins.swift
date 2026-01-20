@@ -27,23 +27,20 @@ enum KnownPlugins {
         guard let cgmManager else { return nil }
         let secondsOfDay = 8.64E4
 
-        switch cgmManager.pluginIdentifier {
-        case G6CGMManager.pluginIdentifier:
-            return 10 * secondsOfDay
-        case G7CGMManager.pluginIdentifier:
-            return 10.5 * secondsOfDay
-        case LibreTransmitterManagerV3.pluginIdentifier:
-            // maxAge is public and contains sensor lifetime in minutes
-            // This is set during sensor pairing and persisted
-            if let maxAge = UserDefaults.standard.preSelectedSensor?.maxAge, maxAge > 0 {
-                return TimeInterval(maxAge * 60)  // Convert minutes to seconds
-            }
-            return nil
-        case MinimedPumpManager.pluginIdentifier:
-            return 6 * secondsOfDay
-        default:
+        return switch cgmManager.pluginIdentifier {
+        case G6CGMManager.pluginIdentifier: 10 * secondsOfDay
+        case G7CGMManager.pluginIdentifier: 10.5 * secondsOfDay
+        case LibreTransmitterManagerV3.pluginIdentifier: libreExpirationSeconds
+        case MinimedPumpManager.pluginIdentifier: 6 * secondsOfDay
+        default: nil
+        }
+    }
+
+    static var libreExpirationSeconds: TimeInterval? {
+        guard let maxAge = UserDefaults.standard.preSelectedSensor?.maxAge, maxAge > 0 else {
             return nil
         }
+        return TimeInterval(maxAge * 60)  // Convert minutes to seconds
     }
 
     static func sessionStart(cgmManager: CGMManager) -> Date? {
