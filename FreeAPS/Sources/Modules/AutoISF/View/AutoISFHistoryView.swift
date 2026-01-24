@@ -83,8 +83,16 @@ struct AutoISFHistoryView: View {
 
             Divider()
 
-            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -21 : -9
-            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -10 : 0
+            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max") ?
+                -21 : -9
+            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max") ?
+                -10 : 0
+            let proMaxInset: CGFloat =
+                (
+                    device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max" || device ==
+                        "iPhone 17 Pro Max"
+                ) ? 25 :
+                15
 
             // Subtitle with non-localized variable acronyms
             HStack(spacing: 10) {
@@ -186,9 +194,9 @@ struct AutoISFHistoryView: View {
                             }
                             .listRowInsets(.init(
                                 top: 0,
-                                leading: 15,
+                                leading: proMaxInset,
                                 bottom: 0,
-                                trailing: 15
+                                trailing: 10
                             ))
                         }
                     }

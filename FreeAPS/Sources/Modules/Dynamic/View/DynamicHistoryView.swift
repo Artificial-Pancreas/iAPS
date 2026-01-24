@@ -60,6 +60,8 @@ struct DynamicHistoryView: View {
         history
     }
 
+    let device = UIDevice.current.getDeviceId
+
     private var history: some View {
         VStack(spacing: 0) {
             Button { dismiss() }
@@ -117,6 +119,12 @@ struct DynamicHistoryView: View {
                             (item.tdd ?? 0) != 0 ? (tddFormatter.string(from: (item.tdd ?? 0) as NSNumber) ?? "") : "--"
                         ]
 
+                        let proMaxInset: CGFloat =
+                            (
+                                device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max" || device ==
+                                    "iPhone 17 Pro Max"
+                            ) ? 25 : 15
+
                         Grid(horizontalSpacing: 0) {
                             GridRow {
                                 // Time
@@ -164,9 +172,9 @@ struct DynamicHistoryView: View {
                         }
                         .listRowInsets(.init(
                             top: 0,
-                            leading: 15,
+                            leading: proMaxInset,
                             bottom: 0,
-                            trailing: 15
+                            trailing: 10
                         ))
                     }
                 }
