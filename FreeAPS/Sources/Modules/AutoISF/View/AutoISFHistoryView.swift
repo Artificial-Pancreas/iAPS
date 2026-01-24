@@ -184,11 +184,17 @@ struct AutoISFHistoryView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
+                            .listRowInsets(.init(
+                                top: 0,
+                                leading: 15,
+                                bottom: 0,
+                                trailing: 15
+                            ))
                         }
                     }
                 }
             }
-            .environment(\.defaultMinListRowHeight, 35)
+            .environment(\.defaultMinListRowHeight, 30)
             .font(.system(size: 12))
             .listStyle(.plain)
         }.background(Color(.systemGray5))
