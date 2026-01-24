@@ -133,7 +133,9 @@ struct DynamicHistoryView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading).offset(x: -1)
                                 // Ratio
                                 Text(formatter.string(from: item.ratio ?? 1) ?? "").foregroundStyle(.red)
+                                    .activeOverride(item.override)
                                     .frame(maxWidth: .infinity, alignment: .leading)
+
                                 // ISF.
                                 Text(dynamicReasons.first ?? "")
                                     .foregroundStyle(.orange)
@@ -159,7 +161,7 @@ struct DynamicHistoryView: View {
                                 ).foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }
-                        }.listRowBackground(item.override ? Color.purpleOverrides : nil)
+                        }
                     }
                 }
             }.font(.system(size: 12)).listStyle(.plain)

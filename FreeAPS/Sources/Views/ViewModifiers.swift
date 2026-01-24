@@ -38,6 +38,24 @@ struct CompactSectionSpacing: ViewModifier {
     }
 }
 
+struct ActiveOverride: ViewModifier {
+    var override: Bool = false
+    func body(content: Content) -> some View {
+        content
+            .overlay {
+                override ?
+
+                    Image(systemName: "person.2.fill")
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(Color.purple.opacity(0.3), Color.green.opacity(0.3))
+                    .font(.system(size: 10))
+                    .offset(y: 15)
+
+                    : nil
+            }
+    }
+}
+
 struct CarveOrDrop: ViewModifier {
     let carve: Bool
     func body(content: Content) -> some View {
@@ -388,6 +406,10 @@ extension View {
 
     func compactSectionSpacing() -> some View {
         modifier(CompactSectionSpacing())
+    }
+
+    func activeOverride(_ override: Bool) -> some View {
+        modifier(ActiveOverride(override: override))
     }
 
     func asAny() -> AnyView { .init(self) }

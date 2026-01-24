@@ -138,6 +138,7 @@ struct AutoISFHistoryView: View {
                                         .offset(x: 4)
                                     // Ratio
                                     Text((formatter.string(from: item.ratio ?? 1) ?? "") + "  ").foregroundStyle(.red)
+                                        .activeOverride(item.override)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     // acce.
                                     Text((reasonParsed.first ?? "") + "  ")
@@ -182,7 +183,7 @@ struct AutoISFHistoryView: View {
                                     .foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                            }.listRowBackground(item.override ? Color.purpleOverrides : nil)
+                            }
                         }
                     }
                 }
