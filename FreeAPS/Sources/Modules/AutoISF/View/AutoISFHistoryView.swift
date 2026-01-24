@@ -188,6 +188,7 @@ struct AutoISFHistoryView: View {
                     }
                 }
             }
+            .environment(\.defaultMinListRowHeight, 35)
             .font(.system(size: 12))
             .listStyle(.plain)
         }.background(Color(.systemGray5))

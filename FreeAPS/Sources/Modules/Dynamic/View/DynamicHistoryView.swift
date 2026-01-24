@@ -164,7 +164,10 @@ struct DynamicHistoryView: View {
                         }
                     }
                 }
-            }.font(.system(size: 12)).listStyle(.plain)
+            }
+            .environment(\.defaultMinListRowHeight, 35)
+            .font(.system(size: 12))
+            .listStyle(.plain)
         }.background(Color(.systemGray5))
     }
 }

@@ -49,7 +49,8 @@ struct ActiveOverride: ViewModifier {
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(Color.purple.opacity(0.3), Color.green.opacity(0.3))
                     .font(.system(size: 10))
-                    .offset(y: 15)
+                    .offset(x: 20)
+                    .frame(maxHeight: .infinity, alignment: .leading)
 
                     : nil
             }
