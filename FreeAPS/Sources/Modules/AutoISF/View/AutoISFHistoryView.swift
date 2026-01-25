@@ -41,6 +41,14 @@ struct AutoISFHistoryView: View {
         return formatter
     }
 
+    private var singleDigitFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = "."
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "sv")
@@ -145,7 +153,7 @@ struct AutoISFHistoryView: View {
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .offset(x: 4)
                                     // Ratio
-                                    Text((formatter.string(from: item.ratio ?? 1) ?? "") + "  ").foregroundStyle(.red)
+                                    Text((singleDigitFormatter.string(from: item.ratio ?? 1) ?? "") + "  ").foregroundStyle(.red)
                                         .activeOverride(item.override)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     // acce.

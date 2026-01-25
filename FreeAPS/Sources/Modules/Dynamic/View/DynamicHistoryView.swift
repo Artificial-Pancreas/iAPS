@@ -140,7 +140,7 @@ struct DynamicHistoryView: View {
                                     .foregroundStyle(Color(.basal))
                                     .frame(maxWidth: .infinity, alignment: .leading).offset(x: -1)
                                 // Ratio
-                                Text(formatter.string(from: item.ratio ?? 1) ?? "").foregroundStyle(.red)
+                                Text(tddFormatter.string(from: item.ratio ?? 1) ?? "").foregroundStyle(.red)
                                     .activeOverride(item.override)
                                     .frame(maxWidth: .infinity, alignment: .leading)
 
