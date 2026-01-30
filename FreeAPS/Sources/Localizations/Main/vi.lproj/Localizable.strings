@@ -408,7 +408,7 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "URL không xác thực";
 
 /*  */
-"Local glucose source" = "Nguồn Glucose cục bộ";
+"Local glucose source" = "Nguồn đường huyết cục bộ";
 
 /* Header */
 "Nightscout Config" = "Cấu hình Nightscout";
@@ -420,7 +420,7 @@ Enact a temp Basal or a temp target */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Sử dụng nguồn glucose cục bộ";
+"Use local glucose server" = "Sử dụng nguồn đường huyết cục bộ";
 
 /* Enable Statistics */
 "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Điều này cho phép tải số liệu thống kê lên Nightscout mà có thể được sử dụng bởi Dự án Community Statictics và Demographics. \n\nTham gia vào Thống kê Cộng đồng là tùy chọn và yêu cầu đăng ký riêng tại:\n";
@@ -429,7 +429,7 @@ Enact a temp Basal or a temp target */
 "Edit settings json" = "Edit settings json";
 
 /* */
-"Glucose units" = "Đơn vị Glucose";
+"Glucose units" = "Đơn vị đường huyết";
 
 /*  */
 "Preferences" = "Tùy chỉnh";
@@ -1069,7 +1069,7 @@ Enact a temp Basal or a temp target */
 "No logs available" = "Không có nhật ký nào";
 
 /* */
-"Glucose Notification visibility" = "Khả năng hiển thị thông báo Glucose";
+"Glucose Notification visibility" = "Hiển thị thông báo đường huyết";
 
 /* */
 "Always Notify Glucose" = "Luôn thông báo đường huyết";
@@ -1214,19 +1214,19 @@ Enact a temp Basal or a temp target */
 "Schedules were saved successfully!" = "Lịch trình được lưu thành công!";
 
 /* */
-"High Glucose Alarm active" = "Báo động Glucose đang Cao";
+"High Glucose Alarm active" = "Báo động đường huyết đang Cao";
 
 /* */
-"Low Glucose Alarm active" = "Báo động Glucose đang Thấp";
+"Low Glucose Alarm active" = "Báo động đường hyết đang Thấp";
 
 /* */
-"No Glucose Alarm active" = "Báo động Không có Glucose đang hoạt động";
+"No Glucose Alarm active" = "Báo động không có đường huyết";
 
 /* */
-"Ascending Glucose Alarm active" = "Cảnh báo đường huyết đang tăng";
+"Ascending Glucose Alarm active" = "Báo động đường huyết đang Tăng";
 
 /* */
-"Descending Glucose Alarm active" = "Cảnh báo đường huyết đang giảm";
+"Descending Glucose Alarm active" = "Báo động đường huyết đang Giảm";
 
 /* */
 "snoozing until %@" = "tạm yên cho đến khi %@";
@@ -2797,19 +2797,19 @@ Enact a temp Basal or a temp target */
 "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Mặc định là 20 phút. Tần suất cập nhật và lưu statistics.json cũng như tải danh sách cuối cùng lên Nightscout khi được bật.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "Past 24 Hours ";
+"Past 24 Hours " = "24 giờ trước ";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Tuần trước ";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Tháng trước ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "90 ngày trước ";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Tất cả dữ liệu của các ngày trước ";
 
 /* "Display Loop statistics in statPanel */
 "Display Loop Cycle statistics" = "Hiển thị số liệu thống kê theo vòng tròn";
@@ -3912,7 +3912,7 @@ Enact a temp Basal or a temp target */
 
 
 /* message displayed when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
-"Pump+CGM" = "Pump/CGM";
+"Pump+CGM" = "Pump+CGM";
 
 /* label for the button to remove the CGM when the pump is configured to be the CGM as well (enlite), in CGM settings screen */
 "Stop using the pump as CGM" = "Ngừng sử dụng pump như CGM";
