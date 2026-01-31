@@ -1579,17 +1579,17 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Provider for Barcode Scanning" = "Provider voor Barcode Scannen";
 
-"Provider for Text/Voice Search" = "Provider for Text/Voice Search";
+"Provider for Text/Voice Search" = "Zoekmachine voor tekst/spraakzoeken";
 
-"Provider for AI Text Analysis" = "Provider for AI Text Analysis";
+"Provider for AI Text Analysis" = "Provider voor AI tekstanalyse";
 
 "Fast" = "Snel";
 
-"Provider for AI Image Analysis" = "Provider for AI Image Analysis";
+"Provider for AI Image Analysis" = "Provider voor AI afbeeldingsanalyse";
 
-"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods.";
+"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Configureer de API-dienst die wordt gebruikt voor elk type voedselzoekopdracht. De AI afbeeldingsanalyse bepaalt wat er gebeurt als je foto's van voedsel neemt. Verschillende aanbieders resulteren via verschillende zoekmethoden.";
 
-"Food Search Provider Configuration" = "Food Search Provider Configuration";
+"Food Search Provider Configuration" = "Voedsel zoekmachine configuratie";
 
 "Barcode Scanner" = "Barcodescanner";
 
@@ -1635,39 +1635,39 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Saved Foods" = "Bewaarde maaltijd";
 
-"United States (USDA / FDA)" = "United States (USDA / FDA)";
+"United States (USDA / FDA)" = "Verenigde Staten (USDA/FDA)";
 
-"European Union (EFSA / EU labeling)" = "European Union (EFSA / EU labeling)";
+"European Union (EFSA / EU labeling)" = "Europese Unie (EFSA/EU-labeling)";
 
-"United Kingdom (CoFID / NHS)" = "United Kingdom (CoFID / NHS)";
+"United Kingdom (CoFID / NHS)" = "Verenigd Koninkrijk (CoFID/NHS)";
 
-"Canada (Health Canada)" = "Canada (Health Canada)";
+"Canada (Health Canada)" = "Canada (Volksgezondheid Canada)";
 
-"Australia & New Zealand (FSANZ)" = "Australia & New Zealand (FSANZ)";
+"Australia & New Zealand (FSANZ)" = "Australië & Nieuw Zeeland (FSANZ)";
 
 "Japan (MHLW)" = "Japan (MHLW)";
 
-"International (WHO / FAO / Codex)" = "International (WHO / FAO / Codex)";
+"International (WHO / FAO / Codex)" = "Internationaal (WHO/FAO/Codex)";
 
-"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "United States Department of Agriculture (USDA), FDA Nutrition Facts";
+"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "Het Amerikaanse ministerie van Landbouw (USDA), FDA Nutrition Facts";
 
-"European Food Safety Authority (EFSA), EU food labeling standards" = "European Food Safety Authority (EFSA), EU food labeling standards";
+"European Food Safety Authority (EFSA), EU food labeling standards" = "Europese Autoriteit voor voedselveiligheid (EFSA), Europese normen voor voedseletikettering";
 
-"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "UK Composition of Foods Integrated Dataset (CoFID), NHS";
+"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "UK Compositie van Voedsel Geïntegreerd Dataset (CoFID), NHS";
 
-"Health Canada, Canadian Nutrition Facts Table" = "Health Canada, Canadian Nutrition Facts Table";
+"Health Canada, Canadian Nutrition Facts Table" = "Gezondheid van Canada, Canadese Nutrition Facts tabel";
 
-"Food Standards Australia New Zealand (FSANZ)" = "Food Standards Australia New Zealand (FSANZ)";
+"Food Standards Australia New Zealand (FSANZ)" = "Levensmiddelenstandaarden in Australië Nieuw-Zeeland (FSANZ)";
 
-"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards";
+"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Ministerie van Volksgezondheid, Arbeid en Welzijn (MHLW), Japanse voedsellabeling normen";
 
-"World Health Organization (WHO), FAO, Codex Alimentarius" = "World Health Organization (WHO), FAO, Codex Alimentarius";
+"World Health Organization (WHO), FAO, Codex Alimentarius" = "Wereldgezondheidsorganisatie (WHO), FAO, Codex Alimentarius";
 
-"protein" = "protein";
+"protein" = "eiwit";
 
-"carbs" = "carbs";
+"carbs" = "koolhydraten";
 
-"fat" = "fat";
+"fat" = "vet";
 
 "📝 Notes" = "📝 Opmerking";
 
@@ -2002,13 +2002,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Cal" = "Cal";
 
-" servings" = "servings";
+" servings" = "porties";
 
-" serving" = "serving";
+" serving" = "portie";
 
-"Reset to " = "Reset to ";
+"Reset to " = "Herstellen naar ";
 
-"Apply" = "Apply";
+"Apply" = "Toepassen";
 
 "Carbs" = "Koolhydraten";
 
