@@ -302,7 +302,7 @@
 "Dynamic Variables" = "Dynamic Variables";
 
 /*  */
-"Basal profile" = "Cấu hình liều nền";
+"Basal profile" = "Hồ sơ liều nền";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
@@ -326,7 +326,7 @@
 "Add" = "Thêm";
 
 /*  */
-"Basal Profile" = "Cấu hình liều nền";
+"Basal Profile" = "Hồ sơ liều nền";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -447,13 +447,13 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Cho phép điều khiển iAPS từ xa";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Cài đặt liều nền\n * Tỷ lệ Carb\n * Đường huyết mục tiêu\n * Độ nhạy Insulin\n * DIA\n\n trong Cài đặt iAPS > Cấu hình.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.\n.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Cài đặt liều nền\n * Tỷ lệ Carb\n * Đường huyết mục tiêu\n * Độ nhạy Insulin\n * DIA\n\n trong Cài đặt iAPS > Hồ sơ.\n\n Hồ sơ không hợp lệ hoặc tồi có thể có tác động thảm họa.\n.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Việc này có thể thay thế một vài hoặc tất cả những cấu hình bơm hiện tại của bạn. Bạn có chắc bạn muốn nhập cấu hình từ Nightscout?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nCác cấu hình liều nền trên Nightscout không hợp lệ.\n\n Việc cập nhật bị hủy bỏ. Đề nghị bạn kiểm tra cấu hình liều nền trên Nightscout!";
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nCác hồ sơ liều nền trên Nightscout không hợp lệ.\n\n Việc cập nhật bị hủy bỏ. Đề nghị bạn kiểm tra cấu hình liều nền trên Nightscout!";
 
 /* Import Error */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\n Các cấu hình đã được nhập nhưng liều nền không được lưu vào bơm (không có bơm). Kiểm tra cấu hình liều nền của bạn và nhấn 'Lưu vào bơm' để đồng hóa cấu hình liều nền mới";
@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Đơn vị đường huyết không khớp trong Cài đặt Nightscout và Pump. Nhập cấu hình bị hủy bỏ.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Không thể tìm thấy cấu hình Nightscout mặc định.";
+"Can't find the default Nightscout Profile." = "Không thể tìm thấy hồ sơ Nightscout mặc định.";
 
 /* Add Blood Glucose Test, header */
 "Blood Glucose Test" = "Kiểm tra đường huyết";
@@ -652,7 +652,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Thêm thiết bị";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Nút Cấu hình Ghi đè/Nút Mục iêu Tạm thời";
+"Profile Overrides Button / Temp Targets Button" = "Nút Hồ sơ Ghi đè/Nút Mục iêu Tạm thời";
 
 /* */
 "Glucose Target" = "Đường huyết mục tiêu";
@@ -1162,7 +1162,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to activate the Override Preset %@?" = "Bạn có chắc chắn muốn kích hoạt Ghi đè cài sẵn %@ không?";
 
 /* Override Shortcut */
-"The Profile Override" = "Cấu hình ghi đè";
+"The Profile Override" = "Hồ sơ ghi đè";
 
 /* Override Shortcut */
 "is now activated" = "hiện đã được kích hoạt";
@@ -2089,7 +2089,7 @@ Enact a temp Basal or a temp target */
 "Developer" = "Nhà phát triển";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+"NS Upload Profile and Settings" = "Tải hồ sơ và cài đặt lên Nightscout";
 
 /* Debug option delete all NS overrides */
 "Delete All NS Overrides" = "Xóa toàn bộ ghi đè từ NS";
@@ -2131,7 +2131,7 @@ Enact a temp Basal or a temp target */
 "Pump profile" = "Cấu hình Bơm";
 
 /* Debug option view Profile */
-"Profile" = "Cấu hình";
+"Profile" = "Hồ sơ";
 
 /* Debug option view Enacted */
 "Enacted" = "Đã kích hoạt";
@@ -2249,13 +2249,13 @@ Enact a temp Basal or a temp target */
 "Ignore flat CGM readings" = "Bỏ qua các giá trị CGM phẳng";
 
 /* Service Section */
-"Profile Override" = "Cấu hình Ghi đè";
+"Profile Override" = "Hồ sơ Ghi đè";
 
 /* Extend max override percentage */
 "Max Override 400%" = "Ghi đè tối đa 400%";
 
 /* */
-"Override Profiles" = "Chế độ ghi đè";
+"Override Profiles" = "Các hồ sơ ghi đè";
 
 /* */
 "Normal " = "Bình thường ";
@@ -2272,7 +2272,7 @@ Enact a temp Basal or a temp target */
 "Enable indefinitely" = "Kích hoạt vô thời hạn";
 
 /* */
-"Override Profile target" = "Mục tiêu của cấu hình ghi đè";
+"Override Profile target" = "Mục tiêu của hồ sơ ghi đè";
 
 /* */
 "Disable SMBs" = "Vô hiệu hóa SMBs";
@@ -2293,13 +2293,13 @@ Enact a temp Basal or a temp target */
 "... than" = "... hơn";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Cấu hình mặc định";
+"Normal Profile" = "Hồ sơ mặc định";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Cấu hình tùy chỉnh";
+"Custom Profile" = "Tùy chỉnh hồ sơ";
 
 /* */
-"Profiles" = "Cấu hình";
+"Profiles" = "Hồ sơ";
 
 /* */
 "Advanced Settings" = "Cài đặt nâng cao";
@@ -2332,10 +2332,10 @@ Enact a temp Basal or a temp target */
 "Override Max IOB" = "Ghi đè mức IOB tối đa";
 
 /* */
-"Start new Profile" = "Bắt đầu cấu hình mới";
+"Start new Profile" = "Bắt đầu Hồ sơ mới";
 
 /* */
-"Save as Profile" = "Lưu cấu hình";
+"Save as Profile" = "Lưu Hồ sơ";
 
 /* */
 "Save as preset" = "Lưu làm thiết đặt sẵn";
@@ -2350,19 +2350,19 @@ Enact a temp Basal or a temp target */
 "Return to Normal?" = "Quay lại chế độ bình thường không?";
 
 /* */
-"This will change settings back to your normal profile." = "Việc này sẽ thay đổi cấu hình trở lại cấu hình bình thường của bạn.";
+"This will change settings back to your normal profile." = "Thao tác này sẽ đưa các cài đặt trở lại hồ sơ bình thường của bạn.";
 
 /* Start Profile Alert */
-"Start Profile" = "Khởi động cấu hình";
+"Start Profile" = "Khởi động Hồ sơ";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Insulin nền trong cấu hình của bạn sẽ được điều chỉnh theo tỷ lệ ghi đè, và các giá trị ISF (hệ số nhạy cảm insulin) và CR (tỷ lệ carb) sẽ được điều chỉnh ngược lại theo tỷ lệ đó.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Insulin nền trong hồ sơ của bạn sẽ được điều chỉnh theo tỷ lệ ghi đè, và các giá trị ISF (hệ số nhạy cảm insulin) và CR (tỷ lệ carb) sẽ được điều chỉnh ngược lại theo tỷ lệ đó.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Bắt đầu ghi đè này sẽ thay đổi Cấu hình và/hoặc Mục tiêu đường huyết được sử dụng trong quá trình lặp lại (looping) trong toàn bộ khoảng thời gian đã chọn. Nhấn “Bắt đầu cấu hình” sẽ kích hoạt cấu hình mới của bạn hoặc chỉnh sửa cấu hình hiện tại đang hoạt động.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Bắt đầu ghi đè này sẽ thay đổi hồ sơ và/hoặc Mục tiêu đường huyết được sử dụng trong quá trình lặp lại trong toàn bộ khoảng thời gian đã chọn. Nhấn “Bắt đầu Hồ sơ” sẽ kích hoạt Hồ sơ mới của bạn hoặc chỉnh sửa Hồ sơ hiện tại đang hoạt động.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Mục tiêu cấu hình ghi đè";
+"Override Profile Target" = "Mục tiêu Hồ sơ ghi đè";
 
 /* Alert string. Keep spaces. */
 " SMBs are disabled either by schedule or during the entire duration." = " SMBs bị vô hiệu theo lịch trình hoặc theo toàn bộ thời gian.";
@@ -3113,7 +3113,7 @@ Enact a temp Basal or a temp target */
 "Auto ISF Min" = "Auto ISF Tối thiểu";
 
 /* */
-"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Cần Mục tiêu Glucose cụ thể của EatingSoon được thiết lập bằng hồ sơ ghi đè hoặc mục tiêu tạm thời";
+"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Cần mục tiêu đường huyết cụ thể của EatingSoon được thiết lập bằng hồ sơ ghi đè hoặc mục tiêu tạm thời";
 
 /* */
 "Once this Target is cancelled, the B30 high TBR will be cancelled" = "Khi Mục tiêu này bị hủy, TBR cao của B30 cũng sẽ bị hủy theo";
@@ -3439,7 +3439,7 @@ Enact a temp Basal or a temp target */
 "Suspend Zeros IOB" = "Tạm dừng khi IOB bằng 0";
 
 /* "Suspend Zeros IOB” */
-"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Mặc định là False. Mọi mức liều nền tạm thời hiện có trong thời gian máy bơm bị tạm dừng sẽ bị xóa và mức liều nền tạm thời bằng 0 để phủ nhận tốc độ liều nền của cấu hình trong thời gian máy bơm bị tạm dừng sẽ được thêm vào.";
+"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Mặc định là False. Mọi mức liều nền tạm thời hiện có trong thời gian máy bơm bị tạm dừng sẽ bị xóa và mức liều nền tạm thời bằng 0 để phủ nhận tốc độ liều nền của Hồ sơ trong thời gian máy bơm bị tạm dừng sẽ được thêm vào.";
 
 /* Headline "Max IOB" */
 "Max IOB" = "IOB tối đa";
@@ -3696,7 +3696,7 @@ Enact a temp Basal or a temp target */
 "Display Temp Targets Button" = "Hiển thị nút mục tiêu tạm thời";
 
 /* UI/UX option */
-"Display Profile Override Button" = "Hiển thị nút cấu hình ghi đè";
+"Display Profile Override Button" = "Hiển thị nút Hồ sơ ghi đè";
 
 /* UI/UX option */
 "Display Meal Button" = "Hiển thị nút bữa ăn";
@@ -3714,7 +3714,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c Unit" = "Thay đổi đơn vị HbA1c";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả cấu hình và mục tiêu tạm thời";
+"In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả hồ sơ và mục tiêu tạm thời";
 
 /* UI/UX option */
 "Always Color Glucose Value (green, yellow etc)" = "Luôn tô màu Giá trị Đường huyết (xanh, vàng, v. v.)";
