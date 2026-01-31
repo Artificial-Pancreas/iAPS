@@ -40,7 +40,7 @@ enum KnownPlugins {
         guard let maxAge = UserDefaults.standard.preSelectedSensor?.maxAge, maxAge > 0 else {
             return nil
         }
-        return TimeInterval(maxAge * 60)  // Convert minutes to seconds
+        return TimeInterval(maxAge * 60) // Convert minutes to seconds
     }
 
     static func sessionStart(cgmManager: CGMManager) -> Date? {
