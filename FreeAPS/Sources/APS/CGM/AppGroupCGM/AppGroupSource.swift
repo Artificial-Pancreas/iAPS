@@ -52,17 +52,18 @@ final class AppGroupSource {
 
     private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> CGMReadingResult {
         guard let sharedData = sharedDefaults.data(forKey: "latestReadings"),
-              previouslySeenSharedData != sharedData // don't do anything if nothing changed since the last heartbeat
+              previouslySeenSharedData != sharedData   // do nothing if data did not change since last heartbeat
         else {
             return .noData
         }
         previouslySeenSharedData = sharedData
 
-        // make sure HeartBeatManager is setup, it will be firing our timer on BT activity
+        // make sure HeartBeatManager is set up; it will fire our timer on BT activity
         deviceAddress = HeartBeatManager.shared.checkCGMBluetoothTransmitter(
             sharedUserDefaults: sharedDefaults,
             heartbeat: _heartBeatDelegate
         )
+
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {
             return .noData
@@ -76,7 +77,7 @@ final class AppGroupSource {
             return .noData
         }
 
-        // keep track of the app we're reading from
+        // keep track of the app we are reading from
         latestReadingFrom = .parseFromValue(firstFrom)
         if latestReadingFrom == nil {
             latestReadingFromOther = firstFrom
@@ -95,32 +96,59 @@ final class AppGroupSource {
                 let date = parseDate(timestamp)
             else { continue }
 
-            var direction: BloodGlucose.Direction?
+            var trend: GlucoseTrend?
 
-            // Dexcom changed the format of trend in 2021 so we accept both String/Int types
+            // Dexcom / xDrip provide direction as String or (sometimes) as Int
             if let directionString = sgv["direction"] as? String {
-                direction = .init(rawValue: directionString)
+                // map known direction strings to GlucoseTrend
+                switch directionString {
+                case "TripleUp":
+                    trend = .upUpUp
+                case "DoubleUp":
+                    trend = .upUp
+                case "SingleUp", "Up":
+                    trend = .up
+                case "FortyFiveUp":
+                    trend = .up
+                case "Flat":
+                    trend = .flat
+                case "FortyFiveDown":
+                    trend = .down
+                case "SingleDown", "Down":
+                    trend = .down
+                case "DoubleDown":
+                    trend = .downDown
+                case "TripleDown":
+                    trend = .downDownDown
+                default:
+                    trend = nil
+                }
             } else if let intTrend = sgv["trend"] as? Int {
-                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
+                trend = GlucoseTrend(rawValue: intTrend)
             } else if let intTrend = sgv["Trend"] as? Int {
-                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
-            } else if let stringTrend = sgv["trend"] as? String, let intTrend = Int(stringTrend) {
-                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
+                trend = GlucoseTrend(rawValue: intTrend)
+            } else if let stringTrend = sgv["trend"] as? String,
+                      let intTrend = Int(stringTrend) {
+                trend = GlucoseTrend(rawValue: intTrend)
             }
 
             results.append(
                 NewGlucoseSample(
                     date: date,
-                    quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double(glucose)),
+                    quantity: HKQuantity(
+                        unit: .milligramsPerDeciliter,
+                        doubleValue: Double(glucose)
+                    ),
                     condition: nil,
-                    trend: nil, // TODO: add trend?
-                    trendRate: nil, // TODO: add trend rate?
+                    trend: trend,
+                    trendRate: nil,
                     isDisplayOnly: false,
                     wasUserEntered: false,
-                    syncIdentifier: "\(Int(date.timeIntervalSince1970))",
+                    syncIdentifier: "\(Int(date.timeIntervalSince1970))"
                 )
             )
         }
+
         latestReadingDate = results.map(\.date).max()
         return results.isEmpty ? .noData : .newData(results)
     }
