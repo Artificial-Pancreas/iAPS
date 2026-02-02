@@ -83,6 +83,7 @@ extension Home {
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
         @Published var mealData = MealData()
+        @Published private var lastMealsResetDate = Calendar.current.startOfDay(for: Date())
 
         // Chart data
         var data = ChartModel(
@@ -258,8 +259,16 @@ extension Home {
 
             timer.eventHandler = {
                 DispatchQueue.main.async { [weak self] in
-                    self?.data.timerDate = Date()
-                    self?.setupCurrentTempTarget()
+                    guard let self = self else { return }
+                    self.data.timerDate = Date()
+                    self.setupCurrentTempTarget()
+
+                    // Reload meals only once per day change
+                    let todayStart = Calendar.current.startOfDay(for: Date())
+                    if todayStart > self.lastMealsResetDate {
+                        self.lastMealsResetDate = todayStart
+                        self.setupMeals()
+                    }
                 }
             }
 

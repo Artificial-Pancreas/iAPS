@@ -95,18 +95,18 @@ final class AppGroupSource {
                 let date = parseDate(timestamp)
             else { continue }
 
-//            var direction: BloodGlucose.Direction?
-//
-//            // Dexcom changed the format of trend in 2021 so we accept both String/Int types
-//            if let directionString = sgv["direction"] as? String {
-//                direction = .init(rawValue: directionString)
-//            } else if let intTrend = sgv["trend"] as? Int {
-//                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
-//            } else if let intTrend = sgv["Trend"] as? Int {
-//                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
-//            } else if let stringTrend = sgv["trend"] as? String, let intTrend = Int(stringTrend) {
-//                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
-//            }
+            var direction: BloodGlucose.Direction?
+
+            // Dexcom changed the format of trend in 2021 so we accept both String/Int types
+            if let directionString = sgv["direction"] as? String {
+                direction = .init(rawValue: directionString)
+            } else if let intTrend = sgv["trend"] as? Int {
+                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
+            } else if let intTrend = sgv["Trend"] as? Int {
+                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
+            } else if let stringTrend = sgv["trend"] as? String, let intTrend = Int(stringTrend) {
+                direction = .init(trendType: GlucoseTrend(rawValue: intTrend))
+            }
 
             results.append(
                 NewGlucoseSample(
