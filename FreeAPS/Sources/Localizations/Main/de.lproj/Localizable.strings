@@ -95,7 +95,7 @@
 "A Remote Bolus Was Just Delivered!" = "Ein Remote Bolus wurde gerade abgegeben!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Letzte Berechnung um";
+"Enacted at" = "Erledigt um";
 
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Vorgeschlagen um";
