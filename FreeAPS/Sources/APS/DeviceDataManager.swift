@@ -135,7 +135,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             oldValue?.delegateQueue = nil
             setupCGM()
             rawCGMManager = cgmManager?.rawValue
-//            UserDefaults.standard.clearLegacyCGMManagerRawValue()
+            UserDefaults.standard.clearLegacyCGMManagerRawValue()
         }
     }
 
@@ -156,7 +156,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
             setupPump()
             rawPumpManager = pumpManager?.rawValue
-//            UserDefaults.standard.clearLegacyPumpManagerRawValue()
+            UserDefaults.standard.clearLegacyPumpManagerRawValue()
         }
     }
 
