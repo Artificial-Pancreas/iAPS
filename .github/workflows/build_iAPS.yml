@@ -4,19 +4,13 @@ run-name: Build iAPS (${{ github.ref_name }})
 on:
   workflow_dispatch:
 
-  # this will trigger this workflow for any push to any branch that this workflow is
-  # active on, *but*, the auto_build_check job will check to see if this branch is
-  # enabled *for* being auto built, and short circuit the process if so.
-  #
-  # if AUTO_BUILD_BRANCHES is not set, or the current branch is not listed, this
-  # workflow is triggered, but doesn't actually do anything.
-  #
+  # Trigger on push, but only builds if AUTO_BUILD_BRANCHES contains this branch
   push:
 
 env:
   UPSTREAM_REPO: Artificial-Pancreas/iAPS
-  UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
-  TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (replace with specific branch name if needed)
+  UPSTREAM_BRANCH: ${{ github.ref_name }}
+  TARGET_BRANCH: ${{ github.ref_name }}
   ALIVE_BRANCH: alive
 
 jobs:
@@ -41,8 +35,7 @@ jobs:
         run: |
           echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
 
-  # Checks if Distribution certificate is present and valid, optionally nukes and
-  # creates new certs if the repository variable ENABLE_NUKE_CERTS == 'true'
+  # Checks if Distribution certificate is present and valid
   check_certs:
     needs: auto_build_check
     name: Check certificates
@@ -50,6 +43,7 @@ jobs:
     uses: ./.github/workflows/create_certs.yml
     secrets: inherit
 
+  # ✅ FIXED: Removed "alive" checkout. Just checkout the current branch.
   check_latest_from_upstream:
     needs: [check_certs]
     runs-on: ubuntu-latest
@@ -58,56 +52,13 @@ jobs:
       NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
 
     steps:
-      - name: Checkout target repo (alive)
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-          ref: ${{ env.ALIVE_BRANCH }}
-
-      # Optional: If you actually need an upstream check here, add it.
-      # Currently this job only ensures the 'alive' branch exists and is fetchable.
-
-  # Builds iAPS
-  build:
-    name: Build
-    needs: [check_certs, check_latest_from_upstream]
-    runs-on: macos-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Set special variables
-        run: |
-          if [ ! -z "${{ vars.APP_IDENTIFIER }}" ]; then
-            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
-          fi
-          if [ ! -z "${{ vars.BUILD_GROUP }}" ]; then
-            echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> $GITHUB_ENV
-          fi
-
-      - name: Select Xcode version (stable)
-        run: |
-          set -e
-          if [ -d "/Applications/Xcode_16.2.app" ]; then
-            sudo xcode-select --switch "/Applications/Xcode_16.2.app/Contents/Developer"
-          elif [ -d "/Applications/Xcode_16.1.app" ]; then
-            sudo xcode-select --switch "/Applications/Xcode_16.1.app/Contents/Developer"
-          elif [ -d "/Applications/Xcode_15.4.app" ]; then
-            sudo xcode-select --switch "/Applications/Xcode_15.4.app/Contents/Developer"
-          else
-            echo "No expected Xcode found. Installed Xcodes:"
-            ls -1 /Applications | grep Xcode || true
-            exit 1
-          fi
-          xcodebuild -version
-
-      - name: Checkout Repo for syncing
-        if: |
-          vars.SCHEDULED_SYNC == 'true'
+      - name: Checkout target repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
           ref: ${{ env.TARGET_BRANCH }}
 
+      # Optional: only sync if enabled and not running on upstream repo
       - name: Sync upstream changes
         if: |
           vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
@@ -130,11 +81,47 @@ jobs:
           vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
         run: echo "There were no new commits."
 
-      - name: Show value of 'has_new_commits'
+  build:
+    name: Build
+    needs: [check_certs, check_latest_from_upstream]
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Set special variables
+        run: |
+          if [ ! -z "${{ vars.APP_IDENTIFIER }}" ]; then
+            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          fi
+          if [ ! -z "${{ vars.BUILD_GROUP }}" ]; then
+            echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> $GITHUB_ENV
+          fi
+
+      # Select Xcode (keep yours)
+      - name: Select Xcode version
+        run: "sudo xcode-select --switch /Applications/Xcode_26.0.1.app/Contents/Developer"
+
+      # Checkout Repo for syncing (optional)
+      - name: Checkout Repo for syncing
         if: |
           vars.SCHEDULED_SYNC == 'true'
-        run: |
-          echo "${{ steps.sync.outputs.has_new_commits }}"
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+          ref: ${{ env.TARGET_BRANCH }}
+
+      - name: Sync upstream changes
+        if: |
+          vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          target_sync_branch: ${{ env.TARGET_BRANCH }}
+          shallow_since: 6 months ago
+          target_repo_token: ${{ secrets.GH_PAT }}
+          upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
+          upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
 
       - name: Checkout Repo for building
         uses: actions/checkout@v4
@@ -147,18 +134,18 @@ jobs:
       - name: Patch Match Tables
         run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
 
-      # FIX: ensure Bundler < 3 for fastlane compatibility (use 2.7.2)
+      # Bundler pin (because fastlane requires Bundler < 3)
       - name: Install Bundler 2.7.2
         run: |
           gem uninstall -aIx bundler || true
           gem install bundler -v 2.7.2
           bundler -v
 
-      # Install project dependencies (use Bundler 2.7.2 explicitly)
+      # Install project dependencies
       - name: Install project dependencies
         run: bundle _2.7.2_ install
 
-      # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
+      # Sync clock
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
@@ -179,17 +166,5 @@ jobs:
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
-      # Upload Build artifacts
-      - name: Upload build log, IPA and Symbol artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: |
-            artifacts
-            buildlog
+  
+::contentReference[oaicite:0]{index=0}
