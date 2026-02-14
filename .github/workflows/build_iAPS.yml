@@ -78,8 +78,22 @@ jobs:
             echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> $GITHUB_ENV
           fi
 
-      - name: Select Xcode version
-        run: sudo xcode-select --switch /Applications/Xcode_26.0.1.app/Contents/Developer
+      - name: Select Xcode version (stable)
+  run: |
+    set -e
+    if [ -d "/Applications/Xcode_16.2.app" ]; then
+      sudo xcode-select --switch "/Applications/Xcode_16.2.app/Contents/Developer"
+    elif [ -d "/Applications/Xcode_16.1.app" ]; then
+      sudo xcode-select --switch "/Applications/Xcode_16.1.app/Contents/Developer"
+    elif [ -d "/Applications/Xcode_15.4.app" ]; then
+      sudo xcode-select --switch "/Applications/Xcode_15.4.app/Contents/Developer"
+    else
+      echo "No expected Xcode found. Installed Xcodes:"
+      ls -1 /Applications | grep Xcode || true
+      exit 1
+    fi
+    xcodebuild -version
+
 
       - name: Checkout Repo for syncing
         if: vars.SCHEDULED_SYNC == 'true'
