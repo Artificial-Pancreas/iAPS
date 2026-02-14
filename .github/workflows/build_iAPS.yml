@@ -73,8 +73,6 @@ jobs:
             echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> "$GITHUB_ENV"
           fi
 
-      # IMPORTANT:
-      # Use the runner default Xcode (so watchOS is installed). Do NOT hard-pin to Xcode_26.0.1.
       - name: Show Xcode version
         run: xcodebuild -version
 
@@ -85,7 +83,6 @@ jobs:
           submodules: recursive
           ref: ${{ env.TARGET_BRANCH }}
 
-      # Patch Fastlane Match to not print tables (best-effort)
       - name: Patch Match Tables
         shell: bash
         run: |
@@ -95,7 +92,6 @@ jobs:
             sed -i "" "/puts(Terminal::Table.new(params))/d" "$TABLE_PRINTER" || true
           fi
 
-      # Pin Bundler to a fastlane-compatible version (< 3)
       - name: Install Bundler 2.7.2
         shell: bash
         run: |
