@@ -10,13 +10,12 @@ on:
   #
   # if AUTO_BUILD_BRANCHES is not set, or the current branch is not listed, this
   # workflow is triggered, but doesn't actually do anything.
-  #
   push:
 
 env:
   UPSTREAM_REPO: Artificial-Pancreas/iAPS
-  UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
-  TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (replace with specific branch name if needed)
+  UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from
+  TARGET_BRANCH: ${{ github.ref_name }}   # target branch on fork to be kept in sync
   ALIVE_BRANCH: alive
 
 jobs:
@@ -29,20 +28,19 @@ jobs:
     steps:
       - name: Is Auto Build Branch
         id: auto-build-enabled
+        shell: bash
         run: |
-          echo "auto_build=false" >> $GITHUB_OUTPUT
-          if [ ! -z "${{ vars.AUTO_BUILD_BRANCHES }}" ]; then
+          echo "auto_build=false" >> "$GITHUB_OUTPUT"
+          if [ -n "${{ vars.AUTO_BUILD_BRANCHES }}" ]; then
             if echo ",${{ vars.AUTO_BUILD_BRANCHES }}," | grep -q ",${{ github.ref_name }},"; then
-              echo "auto_build=true" >> $GITHUB_OUTPUT
+              echo "auto_build=true" >> "$GITHUB_OUTPUT"
             fi
           fi
 
       - name: Show Auto Build Status
-        run: |
-          echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
+        run: echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
 
-  # Checks if Distribution certificate is present and valid, optionally nukes and
-  # creates new certs if the repository variable ENABLE_NUKE_CERTS == 'true'
+  # Checks if Distribution certificate is present and valid
   check_certs:
     needs: auto_build_check
     name: Check certificates
@@ -63,28 +61,31 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
           ref: ${{ env.ALIVE_BRANCH }}
+          fetch-depth: 1
 
       # Optional: If you actually need an upstream check here, add it.
       # Currently this job only ensures the 'alive' branch exists and is fetchable.
 
-  # Builds iAPS
   build:
     name: Build
     needs: [check_certs, check_latest_from_upstream]
     runs-on: macos-latest
     permissions:
       contents: write
+
     steps:
       - name: Set special variables
+        shell: bash
         run: |
-          if [ ! -z "${{ vars.APP_IDENTIFIER }}" ]; then
-            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          if [ -n "${{ vars.APP_IDENTIFIER }}" ]; then
+            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> "$GITHUB_ENV"
           fi
-          if [ ! -z "${{ vars.BUILD_GROUP }}" ]; then
-            echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> $GITHUB_ENV
+          if [ -n "${{ vars.BUILD_GROUP }}" ]; then
+            echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> "$GITHUB_ENV"
           fi
 
       - name: Select Xcode version (stable)
+        shell: bash
         run: |
           set -e
           if [ -d "/Applications/Xcode_16.2.app" ]; then
@@ -101,16 +102,14 @@ jobs:
           xcodebuild -version
 
       - name: Checkout Repo for syncing
-        if: |
-          vars.SCHEDULED_SYNC == 'true'
+        if: vars.SCHEDULED_SYNC == 'true'
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
           ref: ${{ env.TARGET_BRANCH }}
 
       - name: Sync upstream changes
-        if: |
-          vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
+        if: vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
@@ -121,20 +120,16 @@ jobs:
           upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
 
       - name: New commits found
-        if: |
-          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
+        if: vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
         run: echo "New commits were found to sync."
 
       - name: No new commits
-        if: |
-          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
+        if: vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
         run: echo "There were no new commits."
 
       - name: Show value of 'has_new_commits'
-        if: |
-          vars.SCHEDULED_SYNC == 'true'
-        run: |
-          echo "${{ steps.sync.outputs.has_new_commits }}"
+        if: vars.SCHEDULED_SYNC == 'true'
+        run: echo "${{ steps.sync.outputs.has_new_commits }}"
 
       - name: Checkout Repo for building
         uses: actions/checkout@v4
@@ -143,26 +138,27 @@ jobs:
           submodules: recursive
           ref: ${{ env.TARGET_BRANCH }}
 
-      # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
-        run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
+        shell: bash
+        run: |
+          # If fastlane gem path differs, this is still harmless (sed just won't find files).
+          find /usr/local/lib/ruby/gems -name table_printer.rb -print0 | xargs -0 -I{} sed -i "" "/puts(Terminal::Table.new(params))/d" "{}" || true
 
-      # FIX: ensure Bundler < 3 for fastlane compatibility (use 2.7.2)
       - name: Install Bundler 2.7.2
+        shell: bash
         run: |
           gem uninstall -aIx bundler || true
           gem install bundler -v 2.7.2
           bundler -v
 
-      # Install project dependencies (use Bundler 2.7.2 explicitly)
       - name: Install project dependencies
-        run: bundle _2.7.2_ install
+        shell: bash
+        run: |
+          bundle _2.7.2_ install --jobs 4 --retry 3
 
-      # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
-      # Build signed iAPS IPA file
       - name: Fastlane Build & Archive
         run: bundle _2.7.2_ exec fastlane build_iAPS
         env:
@@ -173,7 +169,6 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
-      # Upload to TestFlight
       - name: Fastlane upload to TestFlight
         run: bundle _2.7.2_ exec fastlane release
         env:
@@ -184,7 +179,6 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
-      # Upload Build artifacts
       - name: Upload build log, IPA and Symbol artifacts
         if: always()
         uses: actions/upload-artifact@v4
