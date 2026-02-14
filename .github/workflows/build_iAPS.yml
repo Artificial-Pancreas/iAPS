@@ -114,8 +114,25 @@ jobs:
           gem install bundler -v 2.7.2
           bundle _2.7.2_ -v
 
-      - name: Install project dependencies
-        run: bundle _2.7.2_ install
+      - name: Install project dependencies (retry on rubygems network glitches)
+        run: |
+          set -euo pipefail
+          bundle _2.7.2_ config set --local retry 5
+          bundle _2.7.2_ config set --local timeout 120
+
+          # Some runs have transient DNS/network issues to rubygems. Retry with backoff.
+          for i in 1 2 3 4 5; do
+            echo "bundle install attempt $i/5"
+            if bundle _2.7.2_ install --jobs 4 --retry 5; then
+              echo "bundle install succeeded"
+              exit 0
+            fi
+            echo "bundle install failed, sleeping..."
+            sleep $((i * 10))
+          done
+
+          echo "bundle install failed after retries"
+          exit 1
 
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
