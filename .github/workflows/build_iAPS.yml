@@ -3,12 +3,20 @@ run-name: Build iAPS (${{ github.ref_name }})
 
 on:
   workflow_dispatch:
+
+  # this will trigger this workflow for any push to any branch that this workflow is
+  # active on, *but*, the auto_build_check job will check to see if this branch is
+  # enabled *for* being auto built, and short circuit the process if so.
+  #
+  # if AUTO_BUILD_BRANCHES is not set, or the current branch is not listed, this
+  # workflow is triggered, but doesn't actually do anything.
+  #
   push:
 
 env:
   UPSTREAM_REPO: Artificial-Pancreas/iAPS
-  UPSTREAM_BRANCH: ${{ github.ref_name }}
-  TARGET_BRANCH: ${{ github.ref_name }}
+  UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
+  TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (replace with specific branch name if needed)
   ALIVE_BRANCH: alive
 
 jobs:
@@ -17,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       AUTO_BUILD_ENABLED: ${{ steps.auto-build-enabled.outputs.auto_build }}
+
     steps:
       - name: Is Auto Build Branch
         id: auto-build-enabled
@@ -27,10 +36,13 @@ jobs:
               echo "auto_build=true" >> $GITHUB_OUTPUT
             fi
           fi
+
       - name: Show Auto Build Status
         run: |
           echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
 
+  # Checks if Distribution certificate is present and valid, optionally nukes and
+  # creates new certs if the repository variable ENABLE_NUKE_CERTS == 'true'
   check_certs:
     needs: auto_build_check
     name: Check certificates
@@ -46,64 +58,59 @@ jobs:
       NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
 
     steps:
-      - name: Checkout target repo (alive) - try
-        id: checkout_alive
-        continue-on-error: true
+      - name: Checkout target repo (alive)
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
           ref: ${{ env.ALIVE_BRANCH }}
 
-      - name: Fallback checkout target branch if alive missing
-        if: steps.checkout_alive.outcome != 'success'
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-          ref: ${{ env.TARGET_BRANCH }}
+      # Optional: If you actually need an upstream check here, add it.
+      # Currently this job only ensures the 'alive' branch exists and is fetchable.
 
+  # Builds iAPS
   build:
     name: Build
     needs: [check_certs, check_latest_from_upstream]
     runs-on: macos-latest
     permissions:
       contents: write
-
     steps:
       - name: Set special variables
         run: |
-          if [ ! -z "${{ vars.APP_IDENTIFIER }}"  ]; then
+          if [ ! -z "${{ vars.APP_IDENTIFIER }}" ]; then
             echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
           fi
-          if [ ! -z "${{ vars.BUILD_GROUP }}"  ]; then
+          if [ ! -z "${{ vars.BUILD_GROUP }}" ]; then
             echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> $GITHUB_ENV
           fi
 
       - name: Select Xcode version (stable)
-  run: |
-    set -e
-    if [ -d "/Applications/Xcode_16.2.app" ]; then
-      sudo xcode-select --switch "/Applications/Xcode_16.2.app/Contents/Developer"
-    elif [ -d "/Applications/Xcode_16.1.app" ]; then
-      sudo xcode-select --switch "/Applications/Xcode_16.1.app/Contents/Developer"
-    elif [ -d "/Applications/Xcode_15.4.app" ]; then
-      sudo xcode-select --switch "/Applications/Xcode_15.4.app/Contents/Developer"
-    else
-      echo "No expected Xcode found. Installed Xcodes:"
-      ls -1 /Applications | grep Xcode || true
-      exit 1
-    fi
-    xcodebuild -version
-
+        run: |
+          set -e
+          if [ -d "/Applications/Xcode_16.2.app" ]; then
+            sudo xcode-select --switch "/Applications/Xcode_16.2.app/Contents/Developer"
+          elif [ -d "/Applications/Xcode_16.1.app" ]; then
+            sudo xcode-select --switch "/Applications/Xcode_16.1.app/Contents/Developer"
+          elif [ -d "/Applications/Xcode_15.4.app" ]; then
+            sudo xcode-select --switch "/Applications/Xcode_15.4.app/Contents/Developer"
+          else
+            echo "No expected Xcode found. Installed Xcodes:"
+            ls -1 /Applications | grep Xcode || true
+            exit 1
+          fi
+          xcodebuild -version
 
       - name: Checkout Repo for syncing
-        if: vars.SCHEDULED_SYNC == 'true'
+        if: |
+          vars.SCHEDULED_SYNC == 'true'
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
           ref: ${{ env.TARGET_BRANCH }}
 
       - name: Sync upstream changes
-        if: vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
+        if: |
+          vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
@@ -113,6 +120,22 @@ jobs:
           upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
           upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
 
+      - name: New commits found
+        if: |
+          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
+        run: echo "New commits were found to sync."
+
+      - name: No new commits
+        if: |
+          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
+        run: echo "There were no new commits."
+
+      - name: Show value of 'has_new_commits'
+        if: |
+          vars.SCHEDULED_SYNC == 'true'
+        run: |
+          echo "${{ steps.sync.outputs.has_new_commits }}"
+
       - name: Checkout Repo for building
         uses: actions/checkout@v4
         with:
@@ -120,37 +143,26 @@ jobs:
           submodules: recursive
           ref: ${{ env.TARGET_BRANCH }}
 
+      # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
         run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
 
+      # FIX: ensure Bundler < 3 for fastlane compatibility (use 2.7.2)
       - name: Install Bundler 2.7.2
         run: |
+          gem uninstall -aIx bundler || true
           gem install bundler -v 2.7.2
-          bundle _2.7.2_ -v
+          bundler -v
 
-      - name: Install project dependencies (retry on rubygems network glitches)
-        run: |
-          set -euo pipefail
-          bundle _2.7.2_ config set --local retry 5
-          bundle _2.7.2_ config set --local timeout 120
+      # Install project dependencies (use Bundler 2.7.2 explicitly)
+      - name: Install project dependencies
+        run: bundle _2.7.2_ install
 
-          # Some runs have transient DNS/network issues to rubygems. Retry with backoff.
-          for i in 1 2 3 4 5; do
-            echo "bundle install attempt $i/5"
-            if bundle _2.7.2_ install --jobs 4 --retry 5; then
-              echo "bundle install succeeded"
-              exit 0
-            fi
-            echo "bundle install failed, sleeping..."
-            sleep $((i * 10))
-          done
-
-          echo "bundle install failed after retries"
-          exit 1
-
+      # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
+      # Build signed iAPS IPA file
       - name: Fastlane Build & Archive
         run: bundle _2.7.2_ exec fastlane build_iAPS
         env:
@@ -161,6 +173,7 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
+      # Upload to TestFlight
       - name: Fastlane upload to TestFlight
         run: bundle _2.7.2_ exec fastlane release
         env:
@@ -171,6 +184,7 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
+      # Upload Build artifacts
       - name: Upload build log, IPA and Symbol artifacts
         if: always()
         uses: actions/upload-artifact@v4
