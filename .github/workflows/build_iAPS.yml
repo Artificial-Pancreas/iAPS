@@ -31,7 +31,9 @@ jobs:
           fi
 
       - name: Show Auto Build Status
-        run: echo "Auto Build Status: ${{ steps.auto_build_enabled.outputs.auto_build }}"
+        shell: bash
+        run: |
+          echo 'Auto Build Status: ${{ steps.auto_build_enabled.outputs.auto_build }}'
 
   check_certs:
     needs: auto_build_check
@@ -131,9 +133,11 @@ jobs:
           bundle _2.7.2_ install --jobs 4 --retry 3
 
       - name: Sync clock
+        shell: bash
         run: sudo sntp -sS time.windows.com
 
       - name: Fastlane Build & Archive
+        shell: bash
         run: bundle _2.7.2_ exec fastlane build_iAPS
         env:
           TEAMID: ${{ secrets.TEAMID }}
@@ -144,6 +148,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
       - name: Fastlane upload to TestFlight
+        shell: bash
         run: bundle _2.7.2_ exec fastlane release
         env:
           TEAMID: ${{ secrets.TEAMID }}
