@@ -1,3 +1,4 @@
+import SwiftData // neu
 import SwiftUI
 import Swinject
 
@@ -6,9 +7,14 @@ extension Main {
         let resolver: Resolver
         @StateObject var state: StateModel
         @Environment(\.colorScheme) var lightMode
+        @Environment(\.modelContext) private var modelContext
+
+        private let coreDataStorage = CoreDataStorage()
 
         var colorScheme: ColorScheme {
-            state.lightMode != LightMode.auto ? (state.lightMode == .light ? .light : .dark) : lightMode
+            state.lightMode != LightMode.auto
+                ? (state.lightMode == .light ? .light : .dark)
+                : lightMode
         }
 
         init(resolver: Resolver) {
@@ -27,6 +33,9 @@ extension Main {
                     state.secondaryModalView ?? EmptyView().asAny()
                 }
                 .environment(\.colorScheme, colorScheme)
+                .onAppear {
+                    _ = coreDataStorage.generateMealSummariesForLastNDays(days: 90)
+                }
         }
     }
 }

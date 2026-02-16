@@ -483,4 +483,59 @@ final class CoreDataStorage {
         let recent = conc.first
         return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
     }
+
+    func generateMealSummariesForLastNDays(days: Int) -> [MealDaySummary] {
+        let calendar = Calendar.current
+        let startDate = calendar.date(byAdding: .day, value: -days + 1, to: Date())!
+        let interval = startDate as NSDate
+
+        let carbsEntries = fetchMealData(interval: interval)
+
+        var grouped: [Date: [Carbohydrates]] = [:]
+
+        for entry in carbsEntries {
+            guard let date = entry.date as Date? else { continue }
+            let day = calendar.startOfDay(for: date)
+            grouped[day, default: []].append(entry)
+        }
+
+        var summaries: [MealDaySummary] = []
+
+        for (day, entries) in grouped {
+            let kcal = entries.reduce(0.0) { $0 + entryKcal($1) }
+            let carbs = entries.reduce(0.0) { $0 + entryCarbs($1) }
+            let fat = entries.reduce(0.0) { $0 + entryFat($1) }
+            let protein = entries.reduce(0.0) { $0 + entryProtein($1) }
+            let servings = entries.count
+
+            let summary = MealDaySummary(
+                date: day,
+                kcal: kcal,
+                carbs: carbs,
+                fat: fat,
+                protein: protein,
+                servings: servings
+            )
+            summaries.append(summary)
+        }
+
+        summaries.sort { $0.date < $1.date }
+        return summaries
+    }
+
+    private func entryKcal(_ entry: Carbohydrates) -> Double {
+        entry.kcal?.doubleValue ?? 0
+    }
+
+    private func entryCarbs(_ entry: Carbohydrates) -> Double {
+        entry.carbs?.doubleValue ?? 0
+    }
+
+    private func entryFat(_ entry: Carbohydrates) -> Double {
+        entry.fat?.doubleValue ?? 0
+    }
+
+    private func entryProtein(_ entry: Carbohydrates) -> Double {
+        entry.protein?.doubleValue ?? 0
+    }
 }

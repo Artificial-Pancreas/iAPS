@@ -52,7 +52,7 @@ final class AppGroupSource {
 
     private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> CGMReadingResult {
         guard let sharedData = sharedDefaults.data(forKey: "latestReadings"),
-              previouslySeenSharedData != sharedData   // do nothing if data did not change since last heartbeat
+              previouslySeenSharedData != sharedData // do nothing if data did not change since last heartbeat
         else {
             return .noData
         }
@@ -106,7 +106,8 @@ final class AppGroupSource {
                     trend = .upUpUp
                 case "DoubleUp":
                     trend = .upUp
-                case "SingleUp", "Up":
+                case "SingleUp",
+                     "Up":
                     trend = .up
                 case "FortyFiveUp":
                     trend = .up
@@ -114,7 +115,8 @@ final class AppGroupSource {
                     trend = .flat
                 case "FortyFiveDown":
                     trend = .down
-                case "SingleDown", "Down":
+                case "Down",
+                     "SingleDown":
                     trend = .down
                 case "DoubleDown":
                     trend = .downDown
@@ -128,7 +130,8 @@ final class AppGroupSource {
             } else if let intTrend = sgv["Trend"] as? Int {
                 trend = GlucoseTrend(rawValue: intTrend)
             } else if let stringTrend = sgv["trend"] as? String,
-                      let intTrend = Int(stringTrend) {
+                      let intTrend = Int(stringTrend)
+            {
                 trend = GlucoseTrend(rawValue: intTrend)
             }
 

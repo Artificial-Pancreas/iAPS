@@ -62,7 +62,8 @@ extension AddCarbs {
                 protein: protein,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false
+                isFPU: false,
+                kcal: nil
             )]
 
             if hypoTreatment { hypo() }

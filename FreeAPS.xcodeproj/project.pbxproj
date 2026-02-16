@@ -486,6 +486,12 @@
 		F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */; };
 		F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */; };
 		F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */; };
+		F76A60462F42764D002C2D05 /* MealsSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A60452F427640002C2D05 /* MealsSummary.swift */; };
+		F76A60482F427737002C2D05 /* MealsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A60472F427727002C2D05 /* MealsRange.swift */; };
+		F76A604A2F42779A002C2D05 /* MealsMacrosChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A60492F427794002C2D05 /* MealsMacrosChartView.swift */; };
+		F76A604C2F4277D2002C2D05 /* MealsHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A604B2F4277CF002C2D05 /* MealsHistorySheet.swift */; };
+		F76A604E2F42782A002C2D05 /* MealsCardContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A604D2F427826002C2D05 /* MealsCardContainerView.swift */; };
+		F76A60502F42857E002C2D05 /* MealDaySummary.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A604F2F42857A002C2D05 /* MealDaySummary.swift.swift */; };
 		F816825E28DB441200054060 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816825D28DB441200054060 /* HeartBeatManager.swift */; };
 		F816826028DB441800054060 /* BluetoothTransmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816825F28DB441800054060 /* BluetoothTransmitter.swift */; };
 		F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90692A9274B7AAE0037068D /* HealthKitManager.swift */; };
@@ -1146,6 +1152,12 @@
 		F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareStateModel.swift; sourceTree = "<group>"; };
 		F2EE83C62E73A04200D7177E /* KnownPlugins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPlugins.swift; sourceTree = "<group>"; };
 		F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTextField.swift; sourceTree = "<group>"; };
+		F76A60452F427640002C2D05 /* MealsSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsSummary.swift; sourceTree = "<group>"; };
+		F76A60472F427727002C2D05 /* MealsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsRange.swift; sourceTree = "<group>"; };
+		F76A60492F427794002C2D05 /* MealsMacrosChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsMacrosChartView.swift; sourceTree = "<group>"; };
+		F76A604B2F4277CF002C2D05 /* MealsHistorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsHistorySheet.swift; sourceTree = "<group>"; };
+		F76A604D2F427826002C2D05 /* MealsCardContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsCardContainerView.swift; sourceTree = "<group>"; };
+		F76A604F2F42857A002C2D05 /* MealDaySummary.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDaySummary.swift.swift; sourceTree = "<group>"; };
 		F816825D28DB441200054060 /* HeartBeatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		F816825F28DB441800054060 /* BluetoothTransmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothTransmitter.swift; sourceTree = "<group>"; };
 		F90692A9274B7AAE0037068D /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
@@ -2014,6 +2026,9 @@
 				38DF1785276A73D400B3528F /* TagCloudView.swift */,
 				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
 				3811DE5925C9D4D500A708ED /* ViewModifiers.swift */,
+				F76A604D2F427826002C2D05 /* MealsCardContainerView.swift */,
+				F76A604B2F4277CF002C2D05 /* MealsHistorySheet.swift */,
+				F76A60492F427794002C2D05 /* MealsMacrosChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2073,6 +2088,9 @@
 		388E5A5925B6F0250019842D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F76A604F2F42857A002C2D05 /* MealDaySummary.swift.swift */,
+				F76A60472F427727002C2D05 /* MealsRange.swift */,
+				F76A60452F427640002C2D05 /* MealsSummary.swift */,
 				CE82E02628E869DF00473A9C /* AlertEntry.swift */,
 				385CEAC025F2EA52002D6D5B /* Announcement.swift */,
 				19DB781C2D332F73007BBB54 /* AutoISFsettings.swift */,
@@ -3204,6 +3222,7 @@
 				F2941FA32E787F9F00A9DD5D /* AppGroupCGM+UI.swift in Sources */,
 				F2EE83C52E739B0100D7177E /* CalendarShareStateModel.swift in Sources */,
 				196809E22D46E7B300BA566F /* OpenClosedShortcuts.swift in Sources */,
+				F76A604C2F4277D2002C2D05 /* MealsHistorySheet.swift in Sources */,
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
 				19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */,
@@ -3331,6 +3350,7 @@
 				38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */,
 				38EA05DA261F6E7C0064E39B /* SimpleLogReporter.swift in Sources */,
 				F2C73D642EB6603900B700AB /* MainChartConfigProvider.swift in Sources */,
+				F76A60482F427737002C2D05 /* MealsRange.swift in Sources */,
 				3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */,
 				3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */,
 				19A910302A24BF6300C8951B /* StatsView.swift in Sources */,
@@ -3388,6 +3408,7 @@
 				195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */,
 				F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */,
 				19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */,
+				F76A604E2F42782A002C2D05 /* MealsCardContainerView.swift in Sources */,
 				1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */,
 				F2159A522BA60F7A00A0B716 /* FontWeight.swift in Sources */,
 				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,
@@ -3405,6 +3426,7 @@
 				9825E5E923F0B8FA80C8C7C7 /* NightscoutConfigStateModel.swift in Sources */,
 				19AEF4322B1F5A98006FFE8B /* TIRView.swift in Sources */,
 				38A43598262E0E4900E80935 /* FetchAnnouncementsManager.swift in Sources */,
+				F76A60502F42857E002C2D05 /* MealDaySummary.swift.swift in Sources */,
 				642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */,
 				190141312CDB930400ABD925 /* RestoreStateModel.swift in Sources */,
 				190F8CF72BC6F70800EDB473 /* IllustrationView.swift in Sources */,
@@ -3576,6 +3598,7 @@
 				1924F72C2BA35AE5006644EE /* TotalDailyDose.swift in Sources */,
 				3083261C4B268E353F36CD0B /* AutotuneConfigDataFlow.swift in Sources */,
 				891DECF7BC20968D7F566161 /* AutotuneConfigProvider.swift in Sources */,
+				F76A60462F42764D002C2D05 /* MealsSummary.swift in Sources */,
 				D76333C9256787610B3B4875 /* AutotuneConfigStateModel.swift in Sources */,
 				A05235B9112E677ED03B6E8E /* AutotuneConfigRootView.swift in Sources */,
 				19389E552D69393900636E49 /* TemporaryData.swift in Sources */,
@@ -3597,6 +3620,7 @@
 				192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */,
 				193CA2DA2E1E72B200DF9998 /* WebViewScriptExecutor.swift in Sources */,
 				19914CDC2EDDC09400DC2051 /* MealData.swift in Sources */,
+				F76A604A2F42779A002C2D05 /* MealsMacrosChartView.swift in Sources */,
 				B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */,
 				320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */,
 				19E1F7E829D082D0005C8D20 /* IconConfigDataFlow.swift in Sources */,
@@ -3948,7 +3972,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4002,7 +4026,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4057,7 +4081,7 @@
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FreeAPSWatch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = iAPS;
@@ -4101,7 +4125,7 @@
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FreeAPSWatch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = iAPS;
@@ -4134,7 +4158,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4155,7 +4179,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4180,7 +4204,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -4214,7 +4238,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;

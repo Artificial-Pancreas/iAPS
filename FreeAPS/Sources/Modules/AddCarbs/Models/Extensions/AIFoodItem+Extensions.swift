@@ -20,7 +20,8 @@ extension AIFoodItem {
             protein: Decimal(protein * scalingFactor),
             note: "\(name)\(brand != nil ? " (\(brand!))" : "") - AI detected",
             enteredBy: CarbsEntry.manual,
-            isFPU: false
+            isFPU: false,
+            kcal: nil
         )
     }
 }

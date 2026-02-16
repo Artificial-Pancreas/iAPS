@@ -585,7 +585,7 @@ extension Home {
             addBackground()
                 .frame(minHeight: 190)
                 .overlay {
-                    MealsSummaryView(data: $state.mealData)
+                    MealsCardContainerView(todayData: $state.mealData)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()

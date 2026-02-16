@@ -85,7 +85,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     let eachCarbEntry = CarbsEntry(
                         id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
                         carbs: equivalent, fat: 0, protein: 0, note: nil,
-                        enteredBy: CarbsEntry.manual, isFPU: true
+                        enteredBy: CarbsEntry.manual, isFPU: true, kcal: nil
                     )
                     futureCarbArray.append(eachCarbEntry)
                     numberOfEquivalents -= 1
@@ -113,7 +113,8 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     protein: protein,
                     note: entry.note ?? "",
                     enteredBy: entry.enteredBy ?? "",
-                    isFPU: false
+                    isFPU: false,
+                    kcal: nil
                 )
 
                 // If fetched en masse from NS
@@ -144,6 +145,14 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 carbDataForStats.carbs = cbs as NSDecimalNumber
                 carbDataForStats.fat = fat as NSDecimalNumber
                 carbDataForStats.protein = protein as NSDecimalNumber
+
+                let kcalValue =
+                    (Double(truncating: carbDataForStats.carbs ?? 0) * 4.0) +
+                    (Double(truncating: carbDataForStats.fat ?? 0) * 9.0) +
+                    (Double(truncating: carbDataForStats.protein ?? 0) * 4.0)
+
+                carbDataForStats.kcal = NSDecimalNumber(value: kcalValue)
+
                 carbDataForStats.note = note
                 carbDataForStats.id = UUID().uuidString
                 carbDataForStats.date = creationDate

@@ -10,6 +10,7 @@ struct TemporaryData: JSON, Equatable {
         protein: 0,
         note: "",
         enteredBy: "",
-        isFPU: false
+        isFPU: false,
+        kcal: nil
     )
 }

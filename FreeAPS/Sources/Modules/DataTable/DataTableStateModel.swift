@@ -257,7 +257,8 @@ extension DataTable {
                 protein: meal.protein,
                 note: old.note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false
+                isFPU: false,
+                kcal: nil
             )
 
             if let deleteOld = computed {
