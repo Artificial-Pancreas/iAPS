@@ -7,47 +7,39 @@ struct MealsMacrosChartView: View {
 
     var body: some View {
         Chart {
-            ForEach(summaries, id: \.date) { item in
-                // kcal als Balken
-                BarMark(
-                    x: .value("Date", item.date),
-                    y: .value("kcal", item.kcal)
-                )
-                .foregroundStyle(.orange.opacity(0.5))
+            ForEach(summaries) { item in
+                if item.kcal > 0 {
+                    BarMark(
+                        x: .value("Date", item.date),
+                        y: .value("kcal", item.kcal)
+                    )
+                    .foregroundStyle(.orange.opacity(0.4))
+                }
 
-                // Carbs
-                LineMark(
-                    x: .value("Date", item.date),
-                    y: .value("Carbs (g)", item.carbs)
-                )
-                .foregroundStyle(.blue)
-                .interpolationMethod(.catmullRom)
+                if item.carbs > 0 {
+                    LineMark(
+                        x: .value("Date", item.date),
+                        y: .value("Carbs (g)", item.carbs)
+                    )
+                    .foregroundStyle(.blue)
+                }
 
-                // Fat
-                LineMark(
-                    x: .value("Date", item.date),
-                    y: .value("Fat (g)", item.fat)
-                )
-                .foregroundStyle(.red)
-                .interpolationMethod(.catmullRom)
+                if item.fat > 0 {
+                    LineMark(
+                        x: .value("Date", item.date),
+                        y: .value("Fat (g)", item.fat)
+                    )
+                    .foregroundStyle(.red)
+                }
 
-                // Protein
-                LineMark(
-                    x: .value("Date", item.date),
-                    y: .value("Protein (g)", item.protein)
-                )
-                .foregroundStyle(.green)
-                .interpolationMethod(.catmullRom)
+                if item.protein > 0 {
+                    LineMark(
+                        x: .value("Date", item.date),
+                        y: .value("Protein (g)", item.protein)
+                    )
+                    .foregroundStyle(.green)
+                }
             }
-        }
-        .chartXAxis {
-            AxisMarks(values: .automatic(desiredCount: 6)) { _ in
-                AxisGridLine()
-                AxisValueLabel(format: .dateTime.day().month(.abbreviated))
-            }
-        }
-        .chartYAxis {
-            AxisMarks(position: .leading)
         }
         .frame(height: 260)
     }
