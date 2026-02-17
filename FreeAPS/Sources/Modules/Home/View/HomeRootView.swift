@@ -21,6 +21,7 @@ extension Home {
         @State var showBolusActiveAlert = false
         @State var displayAutoHistory = false
         @State var displayDynamicHistory = false
+        @State private var isMealsHistoryPresented = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
@@ -590,6 +591,12 @@ extension Home {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
+                .onTapGesture {
+                    isMealsHistoryPresented = true
+                }
+                .sheet(isPresented: $isMealsHistoryPresented) {
+                    MealsHistorySheet()
+                }
         }
 
         var loopPreview: some View {

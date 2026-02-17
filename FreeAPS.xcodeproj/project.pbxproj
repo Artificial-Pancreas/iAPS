@@ -109,7 +109,6 @@
 		19C3C7492E97AE7B0000BE4D /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7422E97AE7B0000BE4D /* FoodSearchView.swift */; };
 		19C3C74B2E97B2F10000BE4D /* BarcodeScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C74A2E97B2F10000BE4D /* BarcodeScanResult.swift */; };
 		19CE0E592DD9F30D0050FC89 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE0E582DD9F3060050FC89 /* Configuration.swift */; };
-		19D2047D2ECF267A001110FC /* MealsSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D2047C2ECF2666001110FC /* MealsSummaryView.swift */; };
 		19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */; };
 		19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */; };
 		19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */; };
@@ -486,12 +485,22 @@
 		F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */; };
 		F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */; };
 		F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */; };
+<<<<<<< HEAD
 		F76A60462F42764D002C2D05 /* MealsSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A60452F427640002C2D05 /* MealsSummary.swift */; };
 		F76A60482F427737002C2D05 /* MealsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A60472F427727002C2D05 /* MealsRange.swift */; };
 		F76A604A2F42779A002C2D05 /* MealsMacrosChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A60492F427794002C2D05 /* MealsMacrosChartView.swift */; };
 		F76A604C2F4277D2002C2D05 /* MealsHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A604B2F4277CF002C2D05 /* MealsHistorySheet.swift */; };
 		F76A604E2F42782A002C2D05 /* MealsCardContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A604D2F427826002C2D05 /* MealsCardContainerView.swift */; };
 		F76A60502F42857E002C2D05 /* MealDaySummary.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76A604F2F42857A002C2D05 /* MealDaySummary.swift.swift */; };
+=======
+		F70E2B232F4507CD007767BE /* MealsSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70E2B202F4507CD007767BE /* MealsSummaryView.swift */; };
+		F70E2B242F4507CD007767BE /* MealsMacrosChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70E2B1F2F4507CD007767BE /* MealsMacrosChartView.swift */; };
+		F70E2B252F4507CD007767BE /* MealsCardContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70E2B1D2F4507CD007767BE /* MealsCardContainerView.swift */; };
+		F70E2B262F4507CD007767BE /* MealsRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70E2B1B2F4507CD007767BE /* MealsRange.swift */; };
+		F70E2B272F4507CD007767BE /* MealsHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70E2B1E2F4507CD007767BE /* MealsHistorySheet.swift */; };
+		F70E2B282F4507CD007767BE /* MealDaySummary.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70E2B1A2F4507CD007767BE /* MealDaySummary.swift.swift */; };
+		F70E2B2A2F4516A1007767BE /* Carbohydrates+Kcal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70E2B292F45169D007767BE /* Carbohydrates+Kcal.swift */; };
+>>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
 		F816825E28DB441200054060 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816825D28DB441200054060 /* HeartBeatManager.swift */; };
 		F816826028DB441800054060 /* BluetoothTransmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816825F28DB441800054060 /* BluetoothTransmitter.swift */; };
 		F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90692A9274B7AAE0037068D /* HealthKitManager.swift */; };
@@ -756,7 +765,6 @@
 		19C3C7432E97AE7B0000BE4D /* SelectedFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFoodView.swift; sourceTree = "<group>"; };
 		19C3C74A2E97B2F10000BE4D /* BarcodeScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScanResult.swift; sourceTree = "<group>"; };
 		19CE0E582DD9F3060050FC89 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
-		19D2047C2ECF2666001110FC /* MealsSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsSummaryView.swift; sourceTree = "<group>"; };
 		19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigDataFlow.swift; sourceTree = "<group>"; };
 		19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigProvider.swift; sourceTree = "<group>"; };
 		19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigStateModel.swift; sourceTree = "<group>"; };
@@ -1152,12 +1160,22 @@
 		F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareStateModel.swift; sourceTree = "<group>"; };
 		F2EE83C62E73A04200D7177E /* KnownPlugins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPlugins.swift; sourceTree = "<group>"; };
 		F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTextField.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		F76A60452F427640002C2D05 /* MealsSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsSummary.swift; sourceTree = "<group>"; };
 		F76A60472F427727002C2D05 /* MealsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsRange.swift; sourceTree = "<group>"; };
 		F76A60492F427794002C2D05 /* MealsMacrosChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsMacrosChartView.swift; sourceTree = "<group>"; };
 		F76A604B2F4277CF002C2D05 /* MealsHistorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsHistorySheet.swift; sourceTree = "<group>"; };
 		F76A604D2F427826002C2D05 /* MealsCardContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsCardContainerView.swift; sourceTree = "<group>"; };
 		F76A604F2F42857A002C2D05 /* MealDaySummary.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDaySummary.swift.swift; sourceTree = "<group>"; };
+=======
+		F70E2B1A2F4507CD007767BE /* MealDaySummary.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDaySummary.swift.swift; sourceTree = "<group>"; };
+		F70E2B1B2F4507CD007767BE /* MealsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsRange.swift; sourceTree = "<group>"; };
+		F70E2B1D2F4507CD007767BE /* MealsCardContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsCardContainerView.swift; sourceTree = "<group>"; };
+		F70E2B1E2F4507CD007767BE /* MealsHistorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsHistorySheet.swift; sourceTree = "<group>"; };
+		F70E2B1F2F4507CD007767BE /* MealsMacrosChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsMacrosChartView.swift; sourceTree = "<group>"; };
+		F70E2B202F4507CD007767BE /* MealsSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsSummaryView.swift; sourceTree = "<group>"; };
+		F70E2B292F45169D007767BE /* Carbohydrates+Kcal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Carbohydrates+Kcal.swift"; sourceTree = "<group>"; };
+>>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
 		F816825D28DB441200054060 /* HeartBeatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		F816825F28DB441800054060 /* BluetoothTransmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothTransmitter.swift; sourceTree = "<group>"; };
 		F90692A9274B7AAE0037068D /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
@@ -1358,7 +1376,6 @@
 				191A9D172BED24B000028D48 /* ActiveIOBView.swift */,
 				19D8FBC12ECE79A2009DA31F /* InsulinSummaryView.swift */,
 				194D7E6D2B974F9F007A38C1 /* LoopsView.swift */,
-				19D2047C2ECF2666001110FC /* MealsSummaryView.swift */,
 				19AEF4312B1F5A98006FFE8B /* TIRView.swift */,
 			);
 			path = Previews;
@@ -1419,7 +1436,6 @@
 		198377CF266BFEDE004DE65E /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
-				FEBEEC142E03F45B005473DC /* Settings.bundle */,
 				196F58CD2BDCFF80009CBF1B /* InfoPlists */,
 				19D440A926B6FEBD008DA6C8 /* Main */,
 				191D529D2BAB4982003F52E1 /* Shortcuts */,
@@ -1638,6 +1654,7 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F70E2B222F4507CD007767BE /* Meals */,
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
 				A9A4C88374496B3C89058A89 /* AddTempTarget */,
 				198F67B42CFCBD5D00E538CB /* AutoISF */,
@@ -2182,6 +2199,7 @@
 		38A0362725ECF05300FCBB52 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				F70E2B292F45169D007767BE /* Carbohydrates+Kcal.swift */,
 				38AEE75625F0F18E0013F05B /* CarbsStorage.swift */,
 				385CEAC325F2F154002D6D5B /* AnnouncementsStorage.swift */,
 				38A0363A25ECF07E00FCBB52 /* GlucoseStorage.swift */,
@@ -2902,6 +2920,35 @@
 			path = NotificationsConfig;
 			sourceTree = "<group>";
 		};
+		F70E2B1C2F4507CD007767BE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F70E2B1A2F4507CD007767BE /* MealDaySummary.swift.swift */,
+				F70E2B1B2F4507CD007767BE /* MealsRange.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F70E2B212F4507CD007767BE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F70E2B1D2F4507CD007767BE /* MealsCardContainerView.swift */,
+				F70E2B1E2F4507CD007767BE /* MealsHistorySheet.swift */,
+				F70E2B1F2F4507CD007767BE /* MealsMacrosChartView.swift */,
+				F70E2B202F4507CD007767BE /* MealsSummaryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F70E2B222F4507CD007767BE /* Meals */ = {
+			isa = PBXGroup;
+			children = (
+				F70E2B1C2F4507CD007767BE /* Models */,
+				F70E2B212F4507CD007767BE /* Views */,
+			);
+			path = Meals;
+			sourceTree = "<group>";
+		};
 		F75CB57ED6971B46F8756083 /* CGM */ = {
 			isa = PBXGroup;
 			children = (
@@ -3331,6 +3378,7 @@
 				CE1856F52ADC4858007E39C7 /* AddCarbPresetIntent.swift in Sources */,
 				38569347270B5DFB0002C50D /* CGMType.swift in Sources */,
 				3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */,
+				F70E2B2A2F4516A1007767BE /* Carbohydrates+Kcal.swift in Sources */,
 				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
 				E00EEC0727368630002FF094 /* APSAssembly.swift in Sources */,
@@ -3515,6 +3563,12 @@
 				19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */,
 				1948C0662D35A8350032B6A2 /* AutoISFHistoryView.swift in Sources */,
 				9702FF92A09C53942F20D7EA /* TargetsEditorRootView.swift in Sources */,
+				F70E2B232F4507CD007767BE /* MealsSummaryView.swift in Sources */,
+				F70E2B242F4507CD007767BE /* MealsMacrosChartView.swift in Sources */,
+				F70E2B252F4507CD007767BE /* MealsCardContainerView.swift in Sources */,
+				F70E2B262F4507CD007767BE /* MealsRange.swift in Sources */,
+				F70E2B272F4507CD007767BE /* MealsHistorySheet.swift in Sources */,
+				F70E2B282F4507CD007767BE /* MealDaySummary.swift.swift in Sources */,
 				1967DFBE29D052C200759F30 /* Icons.swift in Sources */,
 				38E8754F275556FA00975559 /* WatchManager.swift in Sources */,
 				F2A4B7C32E6C8CA7000E0E85 /* CGMManagerExtensions.swift in Sources */,
@@ -3590,7 +3644,6 @@
 				C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */,
 				38E4453B274E411700EC9A94 /* Disk+VolumeInformation.swift in Sources */,
 				7BCFACB97C821041BA43A114 /* ManualTempBasalRootView.swift in Sources */,
-				19D2047D2ECF267A001110FC /* MealsSummaryView.swift in Sources */,
 				38E44534274E411700EC9A94 /* Disk+InternalHelpers.swift in Sources */,
 				F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */,
 				F2941FA92E78823C00A9DD5D /* AppGroupCGMPlugin.swift in Sources */,
@@ -4153,6 +4206,89 @@
 			};
 			name = Release;
 		};
+<<<<<<< HEAD
+=======
+		38E8754127554D5900975559 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
+				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "iAPS WatchKit Extension";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Bla bla Record Health";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Bla bla Update Health";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG RUN_STATISTICS";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Debug;
+		};
+		38E8754227554D5900975559 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
+				DEVELOPMENT_ASSET_PATHS = "\"FreeAPSWatch WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 5CF57H4QA2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "iAPS WatchKit Extension";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Bla bla Record Health";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Bla bla Update Health";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RUN_STATISTICS;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Release;
+		};
+>>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
 		38FCF3F525E9028E0078B0D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {

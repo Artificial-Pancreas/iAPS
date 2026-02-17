@@ -494,7 +494,11 @@ final class CoreDataStorage {
         var grouped: [Date: [Carbohydrates]] = [:]
 
         for entry in carbsEntries {
+<<<<<<< HEAD
             guard let date = entry.date as Date? else { continue }
+=======
+            guard let date = entry.date else { continue }
+>>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
             let day = calendar.startOfDay(for: date)
             grouped[day, default: []].append(entry)
         }
@@ -524,7 +528,18 @@ final class CoreDataStorage {
     }
 
     private func entryKcal(_ entry: Carbohydrates) -> Double {
+<<<<<<< HEAD
         entry.kcal?.doubleValue ?? 0
+=======
+        // bevorzugt gespeicherte kcal, sonst aus Makros berechnen
+        if let stored = entry.kcal?.doubleValue {
+            return stored
+        }
+        let carbs = entryCarbs(entry)
+        let fat = entryFat(entry)
+        let protein = entryProtein(entry)
+        return carbs * 4.0 + fat * 9.0 + protein * 4.0
+>>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
     }
 
     private func entryCarbs(_ entry: Carbohydrates) -> Double {
