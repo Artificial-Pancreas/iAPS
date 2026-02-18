@@ -28,29 +28,44 @@ struct MealsSummaryView: View {
 
     var body: some View {
         VStack {
-            Text("Today's Meals").font(.previewHeadline).padding(.top, 20).padding(.bottom, 15)
-            servingsView.padding(.horizontal, 23)
-            caloriesView.padding(.horizontal, 23)
-            nutrientsView.padding(.horizontal, 23).padding(.bottom, 10)
-        }.dynamicTypeSize(...DynamicTypeSize.xLarge)
+            Text("Today's Meals")
+                .font(.previewHeadline)
+                .padding(.top, 20)
+                .padding(.bottom, 15)
+
+            servingsView
+                .padding(.horizontal, 23)
+
+            caloriesView
+                .padding(.horizontal, 23)
+
+            nutrientsView
+                .padding(.horizontal, 23)
+                .padding(.bottom, 10)
+        }
+        .dynamicTypeSize(...DynamicTypeSize.xLarge)
     }
 
     private var caloriesView: some View {
         let kcal = data.kcal
+
         return HStack {
             Text("Kilo Calories")
             Spacer()
             Text(intFormatter.string(from: kcal as NSNumber) ?? "")
-        }.foregroundStyle(.secondary)
+        }
+        .foregroundStyle(.secondary)
     }
 
     private var servingsView: some View {
         let servings = data.servings
+
         return HStack {
             Text("Servings")
             Spacer()
             Text(intFormatter.string(from: servings as NSNumber) ?? "")
-        }.foregroundStyle(.secondary)
+        }
+        .foregroundStyle(.secondary)
     }
 
     private var nutrientsView: some View {
@@ -81,6 +96,7 @@ struct MealsSummaryView: View {
                     Text("g")
                 }
             }
-        }.foregroundStyle(.secondary)
+        }
+        .foregroundStyle(.secondary)
     }
 }

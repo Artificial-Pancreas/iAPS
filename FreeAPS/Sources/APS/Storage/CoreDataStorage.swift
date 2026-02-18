@@ -5,7 +5,7 @@ import Swinject
 
 final class CoreDataStorage {
     let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-
+    
     func fetchGlucose(interval: NSDate) -> [Readings] {
         var fetchGlucose = [Readings]()
         coredataContext.performAndWait {
@@ -19,7 +19,7 @@ final class CoreDataStorage {
         }
         return fetchGlucose
     }
-
+    
     func fetchRecentGlucose() -> Readings? {
         var fetchGlucose = [Readings]()
         coredataContext.performAndWait {
@@ -31,7 +31,7 @@ final class CoreDataStorage {
         }
         return fetchGlucose.first
     }
-
+    
     func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
         var fetchTicks = [InsulinActivity]()
         coredataContext.performAndWait {
@@ -55,11 +55,11 @@ final class CoreDataStorage {
         }
         return result
     }
-
+    
     func saveInsulinData(iobEntries: [IOBTick0]) -> Decimal? {
         guard let firstDate = iobEntries.compactMap(\.time).min() else { return nil }
         let iob = iobEntries[0].iob
-
+        
         coredataContext.perform {
             let deleteRequest = InsulinActivity.fetchRequest()
             deleteRequest.predicate = NSPredicate(
@@ -73,7 +73,7 @@ final class CoreDataStorage {
                     self.coredataContext.delete(record)
                 }
             } catch { return }
-
+            
             for iobEntry in iobEntries {
                 let record = InsulinActivity(context: self.coredataContext)
                 record.date = iobEntry.time
@@ -84,7 +84,7 @@ final class CoreDataStorage {
         }
         return iob
     }
-
+    
     func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
         var fetchLoopStats = [LoopStatRecord]()
         coredataContext.performAndWait {
@@ -98,7 +98,7 @@ final class CoreDataStorage {
         }
         return fetchLoopStats
     }
-
+    
     func fetchTDD(interval: NSDate) -> [TDD] {
         var uniqueEvents = [TDD]()
         coredataContext.performAndWait {
@@ -110,7 +110,7 @@ final class CoreDataStorage {
         }
         return uniqueEvents
     }
-
+    
     func saveTDD(_ insulin: (bolus: Decimal, basal: Decimal, hours: Double)) {
         coredataContext.perform {
             let saveToTDD = TDD(context: self.coredataContext)
@@ -124,7 +124,7 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
     }
-
+    
     func fetchTempTargetsSlider() -> [TempTargetsSlider] {
         var sliderArray = [TempTargetsSlider]()
         coredataContext.performAndWait {
@@ -136,7 +136,7 @@ final class CoreDataStorage {
         }
         return sliderArray
     }
-
+    
     func fetchTempTargets() -> [TempTargets] {
         var tempTargetsArray = [TempTargets]()
         coredataContext.performAndWait {
@@ -148,7 +148,7 @@ final class CoreDataStorage {
         }
         return tempTargetsArray
     }
-
+    
     func fetcarbs(interval: NSDate) -> [Carbohydrates] {
         var carbs = [Carbohydrates]()
         coredataContext.performAndWait {
@@ -160,7 +160,7 @@ final class CoreDataStorage {
         }
         return carbs
     }
-
+    
     func fetchMealData(interval: NSDate) -> [Carbohydrates] {
         var data = [Carbohydrates]()
         coredataContext.performAndWait {
@@ -174,7 +174,7 @@ final class CoreDataStorage {
         }
         return data
     }
-
+    
     func fetchStats() -> [StatsData] {
         var stats = [StatsData]()
         coredataContext.performAndWait {
@@ -186,7 +186,7 @@ final class CoreDataStorage {
         }
         return stats
     }
-
+    
     func fetchInsulinDistribution() -> [InsulinDistribution] {
         var insulinDistribution = [InsulinDistribution]()
         coredataContext.performAndWait {
@@ -198,7 +198,7 @@ final class CoreDataStorage {
         }
         return insulinDistribution
     }
-
+    
     func fetchReason() -> Reasons? {
         var suggestion = [Reasons]()
         coredataContext.performAndWait {
@@ -210,7 +210,7 @@ final class CoreDataStorage {
         }
         return suggestion.first
     }
-
+    
     func fetchReasons(interval: NSDate) -> [Reasons] {
         var reasonArray = [Reasons]()
         coredataContext.performAndWait {
@@ -224,7 +224,7 @@ final class CoreDataStorage {
         }
         return reasonArray
     }
-
+    
     func recentReason() -> Reasons? {
         var reasonArray = [Reasons]()
         coredataContext.performAndWait {
@@ -236,7 +236,7 @@ final class CoreDataStorage {
         }
         return reasonArray.first
     }
-
+    
     func saveStatUploadCount() {
         coredataContext.performAndWait { [self] in
             let saveStatsCoreData = StatsData(context: self.coredataContext)
@@ -245,7 +245,7 @@ final class CoreDataStorage {
         }
         UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
     }
-
+    
     func saveVNr(_ versions: Version?) {
         guard let version = versions else { return }
         guard version.main != "" else { return }
@@ -253,14 +253,14 @@ final class CoreDataStorage {
             let saveNr = VNr(context: self.coredataContext)
             saveNr.nr = version.main
             saveNr.dev = version.dev
-
+            
             if coredataContext.hasChanges {
                 saveNr.date = Date.now
                 try? self.coredataContext.save()
             }
         }
     }
-
+    
     func fetchVNr() -> VNr? {
         var nr = [VNr]()
         coredataContext.performAndWait {
@@ -272,7 +272,7 @@ final class CoreDataStorage {
         }
         return nr.first
     }
-
+    
     func recentMeal() -> Meals? {
         var meals = [Meals]()
         coredataContext.performAndWait {
@@ -284,7 +284,7 @@ final class CoreDataStorage {
         }
         return meals.first
     }
-
+    
     func saveMeal(_ stored: [CarbsEntry], now: Date) {
         coredataContext.perform { [self] in
             let save = Meals(context: coredataContext)
@@ -300,7 +300,7 @@ final class CoreDataStorage {
             }
         }
     }
-
+    
     func fetchMealPreset(_ name: String) -> Presets? {
         var presetsArray = [Presets]()
         var preset: Presets?
@@ -310,7 +310,7 @@ final class CoreDataStorage {
                 format: "dish == %@", name
             )
             try? presetsArray = self.coredataContext.fetch(requestPresets)
-
+            
             guard let mealPreset = presetsArray.first else {
                 return
             }
@@ -318,7 +318,7 @@ final class CoreDataStorage {
         }
         return preset
     }
-
+    
     func fetchMealPresets() -> [Presets] {
         var presetsArray = [Presets]()
         coredataContext.performAndWait {
@@ -330,7 +330,7 @@ final class CoreDataStorage {
         }
         return presetsArray
     }
-
+    
     func fetchOnbarding() -> Bool {
         var firstRun = true
         coredataContext.performAndWait {
@@ -342,7 +342,7 @@ final class CoreDataStorage {
         }
         return firstRun
     }
-
+    
     func saveOnbarding() {
         coredataContext.performAndWait { [self] in
             let save = Onboarding(context: self.coredataContext)
@@ -351,7 +351,7 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
     }
-
+    
     func startOnbarding() {
         coredataContext.performAndWait { [self] in
             let save = Onboarding(context: self.coredataContext)
@@ -360,11 +360,11 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
     }
-
+    
     func fetchSettingProfileName() -> String {
         fetchActiveProfile()
     }
-
+    
     func fetchSettingProfileNames() -> [Profiles]? {
         var presetsArray: [Profiles]?
         coredataContext.performAndWait {
@@ -375,7 +375,7 @@ final class CoreDataStorage {
         }
         return presetsArray
     }
-
+    
     func fetchUniqueSettingProfileName(_ name: String) -> Bool {
         var presetsArray: Profiles?
         coredataContext.performAndWait {
@@ -389,7 +389,7 @@ final class CoreDataStorage {
         }
         return (presetsArray != nil)
     }
-
+    
     func saveProfileSettingName(name: String) {
         coredataContext.perform { [self] in
             let save = Profiles(context: self.coredataContext)
@@ -398,7 +398,7 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
     }
-
+    
     func migrateProfileSettingName(name: String) {
         coredataContext.perform { [self] in
             let save = Profiles(context: self.coredataContext)
@@ -408,13 +408,13 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
     }
-
+    
     func profileSettingUploaded(name: String) {
         var profile: String = name
         if profile.isEmpty {
             profile = "default"
         }
-
+        
         // Avoid duplicates
         if !fetchUniqueSettingProfileName(name) {
             coredataContext.perform { [self] in
@@ -426,7 +426,7 @@ final class CoreDataStorage {
             }
         }
     }
-
+    
     func activeProfile(name: String) {
         coredataContext.perform { [self] in
             let save = ActiveProfile(context: self.coredataContext)
@@ -436,7 +436,7 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
     }
-
+    
     func checkIfActiveProfile() -> Bool {
         var presetsArray = [ActiveProfile]()
         coredataContext.performAndWait {
@@ -447,7 +447,7 @@ final class CoreDataStorage {
         }
         return (presetsArray.first?.active ?? false)
     }
-
+    
     func fetchActiveProfile() -> String {
         var presetsArray = [ActiveProfile]()
         coredataContext.performAndWait {
@@ -458,7 +458,7 @@ final class CoreDataStorage {
         }
         return presetsArray.first?.name ?? "default"
     }
-
+    
     func fetchLastLoop() -> LastLoop? {
         var lastLoop = [LastLoop]()
         coredataContext.performAndWait {
@@ -470,7 +470,7 @@ final class CoreDataStorage {
         }
         return lastLoop.first
     }
-
+    
     func insulinConcentration() -> (concentration: Double, increment: Double) {
         var conc = [InsulinConcentration]()
         coredataContext.performAndWait {
@@ -483,22 +483,23 @@ final class CoreDataStorage {
         let recent = conc.first
         return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
     }
-
+    
     func generateMealSummariesForLastNDays(days: Int) -> [MealDaySummary] {
         let calendar = Calendar.current
         let startDate = calendar.date(byAdding: .day, value: -days + 1, to: Date())!
         let interval = startDate as NSDate
 
+        // 1. macro data older than 90 days
+        let ninetyDaysAgo = calendar.date(byAdding: .day, value: -90, to: Date())!
+        purgeOldMealMacros(olderThan: ninetyDaysAgo)
+
+        // 2. load current entries
         let carbsEntries = fetchMealData(interval: interval)
 
         var grouped: [Date: [Carbohydrates]] = [:]
 
         for entry in carbsEntries {
-<<<<<<< HEAD
-            guard let date = entry.date as Date? else { continue }
-=======
             guard let date = entry.date else { continue }
->>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
             let day = calendar.startOfDay(for: date)
             grouped[day, default: []].append(entry)
         }
@@ -527,11 +528,44 @@ final class CoreDataStorage {
         return summaries
     }
 
+    /// empty old entries
+    private func purgeOldMealMacros(olderThan date: Date) {
+        coredataContext.performAndWait {
+            let fetchRequest: NSFetchRequest<Carbohydrates> = Carbohydrates.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "date < %@", date as NSDate)
+
+            do {
+                let oldEntries = try coredataContext.fetch(fetchRequest)
+                for entry in oldEntries {
+                    entry.carbs = nil
+                    entry.fat = nil
+                    entry.protein = nil
+                    entry.kcal = nil
+                    // entry.servings = 0
+                }
+                try coredataContext.save()
+            } catch {
+                print("Error purging old meal macro data: \(error)")
+            }
+        }
+    }
+
+    private func fetchMealData(interval: NSDate) -> [Carbohydrates] {
+        var data = [Carbohydrates]()
+        coredataContext.performAndWait {
+            let requestData = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+            let sortData = NSSortDescriptor(key: "date", ascending: false)
+            requestData.sortDescriptors = [sortData]
+            requestData.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? data = self.coredataContext.fetch(requestData)
+        }
+        return data
+    }
+
+    // kcal for one entry
     private func entryKcal(_ entry: Carbohydrates) -> Double {
-<<<<<<< HEAD
-        entry.kcal?.doubleValue ?? 0
-=======
-        // bevorzugt gespeicherte kcal, sonst aus Makros berechnen
         if let stored = entry.kcal?.doubleValue {
             return stored
         }
@@ -539,17 +573,19 @@ final class CoreDataStorage {
         let fat = entryFat(entry)
         let protein = entryProtein(entry)
         return carbs * 4.0 + fat * 9.0 + protein * 4.0
->>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
     }
 
+    // carbs
     private func entryCarbs(_ entry: Carbohydrates) -> Double {
         entry.carbs?.doubleValue ?? 0
     }
 
+    // fat
     private func entryFat(_ entry: Carbohydrates) -> Double {
         entry.fat?.doubleValue ?? 0
     }
 
+    // protein
     private func entryProtein(_ entry: Carbohydrates) -> Double {
         entry.protein?.doubleValue ?? 0
     }

@@ -259,11 +259,10 @@ extension Home {
 
             timer.eventHandler = {
                 DispatchQueue.main.async { [weak self] in
-<<<<<<< HEAD
-=======
                     self?.data.timerDate = Date()
                     self?.setupCurrentTempTarget()
->>>>>>> 0dc2c7dd4 (Meals history sheet, macros chart, kcal support and CGM trend mapping)
+
+                    // Meals history sheet, macros chart, kcal support and CGM trend mapping
                     guard let self = self else { return }
                     self.data.timerDate = Date()
                     self.setupCurrentTempTarget()

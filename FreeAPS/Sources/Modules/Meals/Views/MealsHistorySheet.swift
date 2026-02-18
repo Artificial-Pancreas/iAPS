@@ -24,7 +24,7 @@ struct MealsHistorySheet: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .padding(.top, 40)
-                } else {
+                } else if selectedRange == .oneWeek {
                     MealsMacrosChartView(summaries: summaries)
                         .padding(.horizontal)
                         .padding(.top, 10)
@@ -32,6 +32,11 @@ struct MealsHistorySheet: View {
                     averagesView
                         .padding(.top, 12)
                         .padding(.horizontal)
+                } else {
+                    Text("Not enough data to show averages for this period yet.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 40)
                 }
 
                 Spacer()
@@ -59,7 +64,7 @@ struct MealsHistorySheet: View {
             days: selectedRange.days
         )
 
-        // previous period (same length, directly before current period)
+        // previous period (same length, direkt davor)
         previousSummaries = storage.generateMealSummariesForLastNDays(
             days: selectedRange.days * 2
         )
@@ -152,7 +157,7 @@ struct MealsHistorySheet: View {
                 Text(arrow(for: deltaProtein))
                     .foregroundColor(.green)
             }
-            .font(.footnote)
         }
+        .font(.footnote)
     }
 }
