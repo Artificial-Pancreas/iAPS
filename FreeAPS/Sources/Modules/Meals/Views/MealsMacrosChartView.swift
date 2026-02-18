@@ -34,6 +34,17 @@ struct MealsMacrosChartView: View {
                 }
             }
         }
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .day)) { value in
+                AxisGridLine()
+                AxisTick()
+                AxisValueLabel {
+                    if let date = value.as(Date.self) {
+                        Text(date, format: .dateTime.day().month())
+                    }
+                }
+            }
+        }
         .frame(height: 260)
     }
 }
