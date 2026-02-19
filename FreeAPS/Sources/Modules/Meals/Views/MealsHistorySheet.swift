@@ -14,6 +14,13 @@ struct MealsHistorySheet: View {
     // ✅ Optimization: Create storage only once
     private let storage = CoreDataStorage()
 
+    // ✅ Neues Format für die Karten: TT.MM.YY
+    private static let cardDateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yy"
+        return df
+    }()
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -317,7 +324,8 @@ struct MealsHistorySheet: View {
                 let item = summaries[index]
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(item.date, format: .dateTime.day().month(.twoDigits))
+                    // ✅ Hier ist das neue Datumsformat im Einsatz
+                    Text(MealsHistorySheet.cardDateFormatter.string(from: item.date))
                         .font(.caption)
                         .foregroundColor(cardTextColor)
 

@@ -17,7 +17,8 @@ struct MealsMacrosChartView: View {
 
     private static let dayFormatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "dd.MM."
+        // Hier ist das neue Format: TT.MM.YY
+        df.dateFormat = "dd.MM.yy"
         return df
     }()
 

@@ -30,6 +30,10 @@ struct MealsSummaryView: View {
 
     // MARK: - Adaptive Colors
 
+    private var kcalColor: Color {
+        colorScheme == .dark ? .orange : Color(red: 0.9, green: 0.5, blue: 0.0)
+    }
+
     private var carbsColor: Color {
         colorScheme == .dark ? .red : Color(red: 0.8, green: 0.0, blue: 0.0)
     }
@@ -40,6 +44,11 @@ struct MealsSummaryView: View {
 
     private var proteinColor: Color {
         colorScheme == .dark ? .green : Color(red: 0.0, green: 0.6, blue: 0.2)
+    }
+
+    // Neue Farbe für Servings hinzugefügt
+    private var servingsColor: Color {
+        colorScheme == .dark ? .purple : Color(red: 0.5, green: 0.1, blue: 0.7)
     }
 
     var body: some View {
@@ -67,10 +76,11 @@ struct MealsSummaryView: View {
 
         return HStack {
             Text("Kilo Calories")
+                .foregroundColor(kcalColor)
             Spacer()
             Text(intFormatter.string(from: kcal as NSNumber) ?? "")
+                .foregroundColor(kcalColor)
         }
-        .foregroundStyle(.secondary)
     }
 
     private var servingsView: some View {
@@ -78,10 +88,11 @@ struct MealsSummaryView: View {
 
         return HStack {
             Text("Servings")
+                .foregroundColor(servingsColor)
             Spacer()
             Text(intFormatter.string(from: servings as NSNumber) ?? "")
+                .foregroundColor(servingsColor)
         }
-        .foregroundStyle(.secondary)
     }
 
     private var nutrientsView: some View {
