@@ -167,7 +167,7 @@ struct MealsHistorySheet: View {
         .font(.footnote)
     }
 
-    // MARK: - Piano black daily cards
+    // MARK: - Piano black daily cards (accessible colors)
 
     private var dailyCards: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -176,7 +176,7 @@ struct MealsHistorySheet: View {
                     // Date
                     Text(item.date, format: .dateTime.day().month(.twoDigits))
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color.white.opacity(0.8))
 
                     // kcal
                     HStack {
@@ -184,7 +184,7 @@ struct MealsHistorySheet: View {
                         Spacer()
                         Text(item.kcal.formatted(.number.precision(.fractionLength(0))))
                     }
-                    .foregroundColor(.orange)
+                    .foregroundColor(Color.orange.opacity(0.9))
 
                     // Carbs
                     HStack {
@@ -192,7 +192,7 @@ struct MealsHistorySheet: View {
                         Spacer()
                         Text(item.carbs.formatted(.number.precision(.fractionLength(1))))
                     }
-                    .foregroundColor(.red)
+                    .foregroundColor(Color(red: 1.0, green: 0.35, blue: 0.35))
 
                     // Fat
                     HStack {
@@ -200,7 +200,7 @@ struct MealsHistorySheet: View {
                         Spacer()
                         Text(item.fat.formatted(.number.precision(.fractionLength(1))))
                     }
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(red: 0.45, green: 0.7, blue: 1.0))
 
                     // Protein
                     HStack {
@@ -208,7 +208,7 @@ struct MealsHistorySheet: View {
                         Spacer()
                         Text(item.protein.formatted(.number.precision(.fractionLength(1))))
                     }
-                    .foregroundColor(.green)
+                    .foregroundColor(Color(red: 0.4, green: 1.0, blue: 0.6))
                 }
                 .font(.footnote)
                 .padding(10)
@@ -217,18 +217,18 @@ struct MealsHistorySheet: View {
                         .fill(
                             LinearGradient(
                                 colors: [
-                                    Color.black.opacity(0.95),
-                                    Color.black.opacity(0.8)
+                                    Color.black,
+                                    Color(red: 0.05, green: 0.05, blue: 0.06)
                                 ],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
                         )
-                        .shadow(color: .black.opacity(0.7), radius: 4, x: 0, y: 2)
+                        .shadow(color: .black.opacity(0.8), radius: 4, x: 0, y: 2)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .stroke(Color.white.opacity(0.08), lineWidth: 1)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
                 )
             }
         }
