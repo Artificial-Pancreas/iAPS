@@ -38,106 +38,100 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             let note = entries.last?.note
             let creationDate = entries.last?.createdAt ?? Date.now
 
-            if fat > 0 || protein > 0 {
-                // -------------------------- FPU--------------------------------------
-                let interval = settings.settings.minuteInterval // Interval between carbs
-                let timeCap = settings.settings.timeCap // Max Duration
-                let adjustment = settings.settings.individualAdjustmentFactor
-                let delay = settings.settings.delay // Tme before first future carb entry
-                let kcal = protein * 4 + fat * 9
-                let carbEquivalents = (kcal / 10) * adjustment
-                let fpus = carbEquivalents / 10
-                // Duration in hours used for extended boluses with Warsaw Method. Here used for total duration of the computed carb equivalents instead, excluding the configurable delay.
-                var computedDuration = 0
-                switch fpus {
-                case ..<2:
-                    computedDuration = 3
-                case 2 ..< 3:
-                    computedDuration = 4
-                case 3 ..< 4:
-                    computedDuration = 5
-                default:
-                    computedDuration = timeCap
-                }
-                // Size of each created carb equivalent if 60 minutes interval
-                var equivalent: Decimal = carbEquivalents / Decimal(computedDuration)
-                // Adjust for interval setting other than 60 minutes
-                equivalent /= Decimal(60 / interval)
-                // Round to 1 fraction digit
-                equivalent = Decimal(round(Double(equivalent * 10)) / 10)
-                // Round up to 1 or done to 0 as oref0 only accepts carbs >= 1
-                equivalent = equivalent > IAPSconfig.minimumCarbEquivalent ? max(equivalent, 1) : 0
-                // Number of equivalents
-                var numberOfEquivalents = equivalent > 0 ? carbEquivalents / equivalent : 0
-                // Only use delay in first loop
-                var firstIndex = true
-                // New date for each carb equivalent
-                var useDate = entries.last?.actualDate ?? Date()
-                // Group and Identify all FPUs together
-                // Create an array of all future carb equivalents.
-                var futureCarbArray = [CarbsEntry]()
-                while carbEquivalents > 0, numberOfEquivalents > 0 {
-                    if firstIndex {
-                        useDate = useDate.addingTimeInterval(delay.minutes.timeInterval)
-                        firstIndex = false
-                    } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
+            // EFFICIENCY: Combine all file operations into a single transaction
+            self.storage.transaction { storage in
 
-                    let eachCarbEntry = CarbsEntry(
-                        id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
-                        carbs: equivalent, fat: 0, protein: 0, note: nil,
-                        enteredBy: CarbsEntry.manual, isFPU: true, kcal: nil
-                    )
-                    futureCarbArray.append(eachCarbEntry)
-                    numberOfEquivalents -= 1
-                }
-                // Save the array
-                if carbEquivalents > 0 {
-                    self.storage.transaction { storage in
+                // -------------------------- FPU --------------------------------------
+                if fat > 0 || protein > 0 {
+                    let interval = settings.settings.minuteInterval // Interval between carbs
+                    let timeCap = settings.settings.timeCap // Max Duration
+                    let adjustment = settings.settings.individualAdjustmentFactor
+                    let delay = settings.settings.delay // Time before first future carb entry
+                    let kcal = protein * 4 + fat * 9
+                    let carbEquivalents = (kcal / 10) * adjustment
+                    let fpus = carbEquivalents / 10
+
+                    // Duration in hours used for extended boluses with Warsaw Method. Here used for total duration of the computed carb equivalents instead, excluding the configurable delay.
+                    var computedDuration = 0
+                    switch fpus {
+                    case ..<2:
+                        computedDuration = 3
+                    case 2 ..< 3:
+                        computedDuration = 4
+                    case 3 ..< 4:
+                        computedDuration = 5
+                    default:
+                        computedDuration = timeCap
+                    }
+
+                    // Size of each created carb equivalent if 60 minutes interval
+                    var equivalent: Decimal = carbEquivalents / Decimal(computedDuration)
+                    // Adjust for interval setting other than 60 minutes
+                    equivalent /= Decimal(60 / interval)
+                    // Round to 1 fraction digit
+                    equivalent = Decimal(round(Double(equivalent * 10)) / 10)
+                    // Round up to 1 or done to 0 as oref0 only accepts carbs >= 1
+                    equivalent = equivalent > IAPSconfig.minimumCarbEquivalent ? max(equivalent, 1) : 0
+
+                    // Number of equivalents
+                    var numberOfEquivalents = equivalent > 0 ? carbEquivalents / equivalent : 0
+                    var firstIndex = true
+                    var useDate = entries.last?.actualDate ?? Date()
+                    var futureCarbArray = [CarbsEntry]()
+
+                    while carbEquivalents > 0, numberOfEquivalents > 0 {
+                        if firstIndex {
+                            useDate = useDate.addingTimeInterval(delay.minutes.timeInterval)
+                            firstIndex = false
+                        } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
+
+                        let eachCarbEntry = CarbsEntry(
+                            id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
+                            carbs: equivalent, fat: 0, protein: 0, note: nil,
+                            enteredBy: CarbsEntry.manual, isFPU: true, kcal: nil
+                        )
+                        futureCarbArray.append(eachCarbEntry)
+                        numberOfEquivalents -= 1
+                    }
+
+                    // Append FPUs once
+                    if carbEquivalents > 0, !futureCarbArray.isEmpty {
                         storage.append(futureCarbArray, to: file, uniqBy: \.id)
-                        uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                            .sorted { $0.createdAt > $1.createdAt } ?? []
-                        storage.save(Array(uniqEvents), as: file)
                     }
-                }
-            } // ------------------------- END OF FPU ----------------------------------------
-            // Store the actual (normal) carbs
-            if let entry = entries.last {
-                // uniqEvents = []
-                let onlyCarbs = CarbsEntry(
-                    id: entry.id ?? "",
-                    createdAt: creationDate,
-                    actualDate: entry.actualDate ?? entry.createdAt,
-                    carbs: entry.carbs,
-                    fat: fat,
-                    protein: protein,
-                    note: entry.note ?? "",
-                    enteredBy: entry.enteredBy ?? "",
-                    isFPU: false,
-                    kcal: nil
-                )
+                } // ------------------------- END OF FPU ----------------------------------------
 
-                // If fetched en masse from NS
-                if entries.filter({ $0.carbs > 0 }).count > 1 {
-                    self.storage.transaction { storage in
+                // ------------------------- NORMAL CARBS ----------------------------------------
+                if let entry = entries.last {
+                    let onlyCarbs = CarbsEntry(
+                        id: entry.id ?? "",
+                        createdAt: creationDate,
+                        actualDate: entry.actualDate ?? entry.createdAt,
+                        carbs: entry.carbs,
+                        fat: fat,
+                        protein: protein,
+                        note: entry.note ?? "",
+                        enteredBy: entry.enteredBy ?? "",
+                        isFPU: false,
+                        kcal: nil
+                    )
+
+                    // If fetched en masse from NS
+                    if entries.filter({ $0.carbs > 0 }).count > 1 {
                         storage.append(entries, to: file, uniqBy: \.createdAt)
-                        uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                            .sorted { $0.createdAt > $1.createdAt } ?? []
-                        storage.save(Array(uniqEvents), as: file)
-                    }
-                } else {
-                    self.storage.transaction { storage in
+                    } else {
                         storage.append([onlyCarbs], to: file, uniqBy: \.id)
-                        uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                            .sorted { $0.createdAt > $1.createdAt } ?? []
-                        storage.save(Array(uniqEvents), as: file)
                     }
                 }
+
+                // ------------------------- CLEANUP & SAVE --------------------------------------
+                // Read the file ONCE, filter, sort, and save it.
+                uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
+                    .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                    .sorted { $0.createdAt > $1.createdAt } ?? []
+                storage.save(Array(uniqEvents), as: file)
             }
 
-            // MARK: Save to CoreData. Currently not used
+            // MARK: Save to CoreData. (Required for Statistics and Meal History)
 
             self.coredataContext.perform {
                 let carbDataForStats = Carbohydrates(context: self.coredataContext)
@@ -159,6 +153,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
 
                 try? self.coredataContext.save()
             }
+
             broadcaster.notify(CarbsObserver.self, on: processQueue) {
                 $0.carbsDidUpdate(uniqEvents)
             }
