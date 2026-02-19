@@ -489,7 +489,7 @@
 		F7E96C1A2F45433D00CD4878 /* MealsCardContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96C122F45433D00CD4878 /* MealsCardContainerView.swift */; };
 		F7E96C1B2F45433D00CD4878 /* MealsMacrosChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96C142F45433D00CD4878 /* MealsMacrosChartView.swift */; };
 		F7E96C1C2F45433D00CD4878 /* MealsHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96C132F45433D00CD4878 /* MealsHistorySheet.swift */; };
-		F7E96C1D2F45433D00CD4878 /* MealDaySummary.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96C0F2F45433D00CD4878 /* MealDaySummary.swift.swift */; };
+		F7E96C1D2F45433D00CD4878 /* MealDaySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E96C0F2F45433D00CD4878 /* MealDaySummary.swift */; };
 		F816825E28DB441200054060 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816825D28DB441200054060 /* HeartBeatManager.swift */; };
 		F816826028DB441800054060 /* BluetoothTransmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816825F28DB441800054060 /* BluetoothTransmitter.swift */; };
 		F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90692A9274B7AAE0037068D /* HealthKitManager.swift */; };
@@ -1148,7 +1148,7 @@
 		F2EE83C42E739B0100D7177E /* CalendarShareStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareStateModel.swift; sourceTree = "<group>"; };
 		F2EE83C62E73A04200D7177E /* KnownPlugins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownPlugins.swift; sourceTree = "<group>"; };
 		F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGTextField.swift; sourceTree = "<group>"; };
-		F7E96C0F2F45433D00CD4878 /* MealDaySummary.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDaySummary.swift.swift; sourceTree = "<group>"; };
+		F7E96C0F2F45433D00CD4878 /* MealDaySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDaySummary.swift; sourceTree = "<group>"; };
 		F7E96C102F45433D00CD4878 /* MealsRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsRange.swift; sourceTree = "<group>"; };
 		F7E96C122F45433D00CD4878 /* MealsCardContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsCardContainerView.swift; sourceTree = "<group>"; };
 		F7E96C132F45433D00CD4878 /* MealsHistorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsHistorySheet.swift; sourceTree = "<group>"; };
@@ -2905,7 +2905,7 @@
 		F7E96C112F45433D00CD4878 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F7E96C0F2F45433D00CD4878 /* MealDaySummary.swift.swift */,
+				F7E96C0F2F45433D00CD4878 /* MealDaySummary.swift */,
 				F7E96C102F45433D00CD4878 /* MealsRange.swift */,
 			);
 			path = Models;
@@ -3449,7 +3449,7 @@
 				F7E96C1A2F45433D00CD4878 /* MealsCardContainerView.swift in Sources */,
 				F7E96C1B2F45433D00CD4878 /* MealsMacrosChartView.swift in Sources */,
 				F7E96C1C2F45433D00CD4878 /* MealsHistorySheet.swift in Sources */,
-				F7E96C1D2F45433D00CD4878 /* MealDaySummary.swift.swift in Sources */,
+				F7E96C1D2F45433D00CD4878 /* MealDaySummary.swift in Sources */,
 				BD7DA9AC2AE06EB900601B20 /* BolusCalculatorConfigRootView.swift in Sources */,
 				AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */,
 				F2941FA12E787F6500A9DD5D /* AppGroupCGM.swift in Sources */,

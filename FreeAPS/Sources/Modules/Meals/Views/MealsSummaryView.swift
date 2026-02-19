@@ -3,6 +3,8 @@ import SwiftUI
 struct MealsSummaryView: View {
     @Binding var data: MealData
 
+    @Environment(\.colorScheme) private var colorScheme
+
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -24,6 +26,20 @@ struct MealsSummaryView: View {
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         return formatter
+    }
+
+    // MARK: - Adaptive Colors
+
+    private var carbsColor: Color {
+        colorScheme == .dark ? .red : Color(red: 0.8, green: 0.0, blue: 0.0)
+    }
+
+    private var fatColor: Color {
+        colorScheme == .dark ? .blue : Color(red: 0.0, green: 0.4, blue: 0.9)
+    }
+
+    private var proteinColor: Color {
+        colorScheme == .dark ? .green : Color(red: 0.0, green: 0.6, blue: 0.2)
     }
 
     var body: some View {
@@ -73,30 +89,38 @@ struct MealsSummaryView: View {
             if data.carbs > 0 {
                 HStack {
                     Text("Carbs")
+                        .foregroundColor(carbsColor)
                     Spacer()
                     Text(intFormatter.string(from: data.carbs as NSNumber) ?? "")
+                        .foregroundColor(carbsColor)
                     Text("g")
+                        .foregroundColor(carbsColor)
                 }
             }
 
             if data.fat > 0 {
                 HStack {
                     Text("Fat")
+                        .foregroundColor(fatColor)
                     Spacer()
                     Text(intFormatter.string(from: data.fat as NSNumber) ?? "")
+                        .foregroundColor(fatColor)
                     Text("g")
+                        .foregroundColor(fatColor)
                 }
             }
 
             if data.protein > 0 {
                 HStack {
                     Text("Protein")
+                        .foregroundColor(proteinColor)
                     Spacer()
                     Text(intFormatter.string(from: data.protein as NSNumber) ?? "")
+                        .foregroundColor(proteinColor)
                     Text("g")
+                        .foregroundColor(proteinColor)
                 }
             }
         }
-        .foregroundStyle(.secondary)
     }
 }

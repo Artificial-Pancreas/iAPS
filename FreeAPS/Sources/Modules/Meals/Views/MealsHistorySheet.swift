@@ -5,8 +5,14 @@ struct MealsHistorySheet: View {
     @State private var summaries: [MealDaySummary] = []
     @State private var previousSummaries: [MealDaySummary] = []
     @State private var selectedRange: MealsRange = .oneWeek
+    @State private var dragOffset: CGFloat = 0
+    @State private var isDragging: Bool = false
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
+
+    // ✅ Optimization: Create storage only once
+    private let storage = CoreDataStorage()
 
     var body: some View {
         NavigationStack {
@@ -19,58 +25,119 @@ struct MealsHistorySheet: View {
                     }
                     .pickerStyle(.segmented)
                     .padding()
+                    .scaleEffect(isDragging ? 0.98 : 1.0)
+                    .opacity(isDragging ? 0.7 : 1.0)
+                    .simultaneousGesture(
+                        DragGesture(minimumDistance: 15, coordinateSpace: .local)
+                            .onChanged { value in
+                                withAnimation(.interactiveSpring(response: 0.25, dampingFraction: 0.9)) {
+                                    dragOffset = value.translation.width
+                                    isDragging = true
+                                }
+                            }
+                            .onEnded { value in
+                                handleSwipe(translation: value.translation.width)
+                                withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                                    dragOffset = 0
+                                    isDragging = false
+                                }
+                            }
+                    )
 
                     if summaries.isEmpty {
                         Text("Not enough data available for the selected period yet.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                             .padding(.top, 40)
-                    } else if selectedRange == .oneWeek {
-                        MealsMacrosChartView(summaries: summaries)
-                            .padding(.horizontal)
-                            .padding(.top, 10)
+                    } else {
+                        MealsMacrosChartView(
+                            summaries: summaries,
+                            range: selectedRange
+                        )
+                        .padding(.horizontal)
+                        .padding(.top, 10)
+                        .offset(x: dragOffset * 0.4)
+                        .opacity(isDragging ? 0.85 : 1.0)
+                        .scaleEffect(isDragging ? 0.98 : 1.0)
 
-                        averagesView
+                        averagesSection
                             .padding(.top, 12)
                             .padding(.horizontal)
+                            .offset(x: dragOffset * 0.35)
+                            .opacity(isDragging ? 0.85 : 1.0)
+                            .scaleEffect(isDragging ? 0.98 : 1.0)
 
                         dailyCards
                             .padding(.top, 12)
                             .padding(.horizontal)
-                    } else {
-                        Text("Not enough data to show averages for this period yet.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                            .padding(.top, 40)
                     }
 
                     Spacer(minLength: 20)
                 }
             }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 15, coordinateSpace: .local)
+                    .onChanged { value in
+                        withAnimation(.interactiveSpring(response: 0.25, dampingFraction: 0.9)) {
+                            dragOffset = value.translation.width
+                            isDragging = true
+                        }
+                    }
+                    .onEnded { value in
+                        handleSwipe(translation: value.translation.width)
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                            dragOffset = 0
+                            isDragging = false
+                        }
+                    }
+            )
             .navigationTitle("Meals history")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") {
-                        dismiss()
-                    }
+                    Button("Close") { dismiss() }
                 }
             }
             .onAppear(perform: loadData)
             .onChange(of: selectedRange) { _, _ in
-                loadData()
+                withAnimation(.easeInOut(duration: 0.4)) {
+                    loadData()
+                }
             }
         }
     }
 
-    private func loadData() {
-        let storage = CoreDataStorage()
+    // MARK: - Swipe Handler
 
-        // current period
+    private func handleSwipe(translation: CGFloat) {
+        let allRanges = MealsRange.allCases
+        guard let currentIndex = allRanges.firstIndex(of: selectedRange) else { return }
+
+        // Sensitivity reduced to 25 points for smoother swiping
+        if translation < -25 {
+            // Swipe left = next time range (larger)
+            let nextIndex = currentIndex + 1
+            if nextIndex < allRanges.count {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selectedRange = allRanges[nextIndex]
+                }
+            }
+        } else if translation > 25 {
+            // Swipe right = previous time range (smaller)
+            let previousIndex = currentIndex - 1
+            if previousIndex >= 0 {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                    selectedRange = allRanges[previousIndex]
+                }
+            }
+        }
+    }
+
+    // ✅ Optimization: Storage is reused
+    private func loadData() {
         summaries = storage.generateMealSummariesForLastNDays(
             days: selectedRange.days
         )
 
-        // previous period (same length, directly before current period)
         previousSummaries = storage.generateMealSummariesForLastNDays(
             days: selectedRange.days * 2
         )
@@ -82,16 +149,63 @@ struct MealsHistorySheet: View {
         }
     }
 
-    // MARK: - Averages and comparison
+    // MARK: - Adaptive Colors (✅ Optimized with Static Extension)
+
+    private var kcalColor: Color {
+        MacroColors.kcal(for: colorScheme)
+    }
+
+    private var carbsColor: Color {
+        MacroColors.carbs(for: colorScheme)
+    }
+
+    private var fatColor: Color {
+        MacroColors.fat(for: colorScheme)
+    }
+
+    private var proteinColor: Color {
+        MacroColors.protein(for: colorScheme)
+    }
+
+    private var cardBackgroundGradient: LinearGradient {
+        if colorScheme == .dark {
+            return LinearGradient(
+                colors: [
+                    Color.black,
+                    Color(red: 0.05, green: 0.05, blue: 0.06)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        } else {
+            return LinearGradient(
+                colors: [
+                    Color.white,
+                    Color(red: 0.95, green: 0.95, blue: 0.96)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+    }
+
+    private var cardBorderColor: Color {
+        colorScheme == .dark ? Color.white.opacity(isDragging ? 0.25 : 0.15) : Color.black.opacity(isDragging ? 0.3 : 0.2)
+    }
+
+    private var cardTextColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.8) : Color.black.opacity(0.8)
+    }
+
+    // MARK: - Helpers
 
     private func average(
         of keyPath: KeyPath<MealDaySummary, Double>,
         in data: [MealDaySummary]
-    ) -> Double {
-        let count = Double(data.count)
-        guard count > 0 else { return 0 }
+    ) -> Double? {
+        guard !data.isEmpty else { return nil }
         let sum = data.reduce(0.0) { $0 + $1[keyPath: keyPath] }
-        return sum / count
+        return sum / Double(data.count)
     }
 
     private func arrow(for delta: Double) -> String {
@@ -100,137 +214,181 @@ struct MealsHistorySheet: View {
         return "→"
     }
 
-    private var averagesView: some View {
+    // MARK: - Averages
+
+    private var averagesSection: some View {
         let days = selectedRange.days
+        let minimumDaysRequired = 14 // At least 2 weeks of data required
 
-        let avgKcal = average(of: \.kcal, in: summaries)
-        let prevAvgKcal = average(of: \.kcal, in: previousSummaries)
+        // Check if enough data is available for current AND previous period
+        guard summaries.count >= minimumDaysRequired,
+              previousSummaries.count >= minimumDaysRequired
+        else {
+            return AnyView(
+                Text("At least 2 weeks of data required to calculate averages and trends.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            )
+        }
+
+        // Calculate averages
+        guard
+            let avgKcal = average(of: \.kcal, in: summaries),
+            let avgCarbs = average(of: \.carbs, in: summaries),
+            let avgFat = average(of: \.fat, in: summaries),
+            let avgProtein = average(of: \.protein, in: summaries),
+            let prevAvgKcal = average(of: \.kcal, in: previousSummaries),
+            let prevAvgCarbs = average(of: \.carbs, in: previousSummaries),
+            let prevAvgFat = average(of: \.fat, in: previousSummaries),
+            let prevAvgProtein = average(of: \.protein, in: previousSummaries)
+        else {
+            return AnyView(
+                Text("∅")
+                    .font(.title)
+                    .foregroundStyle(.secondary)
+            )
+        }
+
         let deltaKcal = avgKcal - prevAvgKcal
-
-        let avgCarbs = average(of: \.carbs, in: summaries)
-        let prevAvgCarbs = average(of: \.carbs, in: previousSummaries)
         let deltaCarbs = avgCarbs - prevAvgCarbs
-
-        let avgFat = average(of: \.fat, in: summaries)
-        let prevAvgFat = average(of: \.fat, in: previousSummaries)
         let deltaFat = avgFat - prevAvgFat
-
-        let avgProtein = average(of: \.protein, in: summaries)
-        let prevAvgProtein = average(of: \.protein, in: previousSummaries)
         let deltaProtein = avgProtein - prevAvgProtein
 
-        return VStack(alignment: .leading, spacing: 4) {
-            Text("Daily average for last \(days) days")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        let symbolKcal = arrow(for: deltaKcal)
+        let symbolCarbs = arrow(for: deltaCarbs)
+        let symbolFat = arrow(for: deltaFat)
+        let symbolProtein = arrow(for: deltaProtein)
 
-            HStack {
-                Text("kcal")
-                    .foregroundColor(.orange)
-                Spacer()
-                Text(avgKcal.formatted(.number.precision(.fractionLength(0))))
-                    .foregroundColor(.orange)
-                Text(arrow(for: deltaKcal))
-                    .foregroundColor(.orange)
-            }
+        return AnyView(
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Daily average for last \(days) days")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
 
-            HStack {
-                Text("Carbs (g)")
-                    .foregroundColor(.red)
-                Spacer()
-                Text(avgCarbs.formatted(.number.precision(.fractionLength(1))))
-                    .foregroundColor(.red)
-                Text(arrow(for: deltaCarbs))
-                    .foregroundColor(.red)
-            }
+                HStack {
+                    Text("kcal")
+                        .foregroundColor(kcalColor)
+                    Spacer()
+                    Text(avgKcal.formatted(.number.precision(.fractionLength(0))))
+                        .foregroundColor(kcalColor)
+                    Text(symbolKcal)
+                        .foregroundColor(kcalColor)
+                }
 
-            HStack {
-                Text("Fat (g)")
-                    .foregroundColor(.blue)
-                Spacer()
-                Text(avgFat.formatted(.number.precision(.fractionLength(1))))
-                    .foregroundColor(.blue)
-                Text(arrow(for: deltaFat))
-                    .foregroundColor(.blue)
-            }
+                HStack {
+                    Text("Carbs (g)")
+                        .foregroundColor(carbsColor)
+                    Spacer()
+                    Text(avgCarbs.formatted(.number.precision(.fractionLength(1))))
+                        .foregroundColor(carbsColor)
+                    Text(symbolCarbs)
+                        .foregroundColor(carbsColor)
+                }
 
-            HStack {
-                Text("Protein (g)")
-                    .foregroundColor(.green)
-                Spacer()
-                Text(avgProtein.formatted(.number.precision(.fractionLength(1))))
-                    .foregroundColor(.green)
-                Text(arrow(for: deltaProtein))
-                    .foregroundColor(.green)
+                HStack {
+                    Text("Fat (g)")
+                        .foregroundColor(fatColor)
+                    Spacer()
+                    Text(avgFat.formatted(.number.precision(.fractionLength(1))))
+                        .foregroundColor(fatColor)
+                    Text(symbolFat)
+                        .foregroundColor(fatColor)
+                }
+
+                HStack {
+                    Text("Protein (g)")
+                        .foregroundColor(proteinColor)
+                    Spacer()
+                    Text(avgProtein.formatted(.number.precision(.fractionLength(1))))
+                        .foregroundColor(proteinColor)
+                    Text(symbolProtein)
+                        .foregroundColor(proteinColor)
+                }
             }
-        }
-        .font(.footnote)
+            .font(.footnote)
+        )
     }
 
-    // MARK: - Piano black daily cards (accessible colors)
+    // MARK: - Daily cards (✅ Optimized without array copy)
 
     private var dailyCards: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ForEach(summaries) { item in
+            ForEach(summaries.indices, id: \.self) { index in
+                let item = summaries[index]
+
                 VStack(alignment: .leading, spacing: 6) {
-                    // Date
                     Text(item.date, format: .dateTime.day().month(.twoDigits))
                         .font(.caption)
-                        .foregroundColor(Color.white.opacity(0.8))
+                        .foregroundColor(cardTextColor)
 
-                    // kcal
                     HStack {
                         Text("kcal")
                         Spacer()
                         Text(item.kcal.formatted(.number.precision(.fractionLength(0))))
                     }
-                    .foregroundColor(Color.orange.opacity(0.9))
+                    .foregroundColor(kcalColor)
 
-                    // Carbs
                     HStack {
                         Text("Carbs (g)")
                         Spacer()
                         Text(item.carbs.formatted(.number.precision(.fractionLength(1))))
                     }
-                    .foregroundColor(Color(red: 1.0, green: 0.35, blue: 0.35))
+                    .foregroundColor(carbsColor)
 
-                    // Fat
                     HStack {
                         Text("Fat (g)")
                         Spacer()
                         Text(item.fat.formatted(.number.precision(.fractionLength(1))))
                     }
-                    .foregroundColor(Color(red: 0.45, green: 0.7, blue: 1.0))
+                    .foregroundColor(fatColor)
 
-                    // Protein
                     HStack {
                         Text("Protein (g)")
                         Spacer()
                         Text(item.protein.formatted(.number.precision(.fractionLength(1))))
                     }
-                    .foregroundColor(Color(red: 0.4, green: 1.0, blue: 0.6))
+                    .foregroundColor(proteinColor)
                 }
                 .font(.footnote)
                 .padding(10)
                 .background(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(
-                            LinearGradient(
-                                colors: [
-                                    Color.black,
-                                    Color(red: 0.05, green: 0.05, blue: 0.06)
-                                ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                        .shadow(color: .black.opacity(0.8), radius: 4, x: 0, y: 2)
+                        .fill(cardBackgroundGradient)
+                        .shadow(color: colorScheme == .dark ? .black.opacity(0.8) : .black.opacity(0.15), radius: 4, x: 0, y: 2)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                        .stroke(cardBorderColor, lineWidth: isDragging ? 1.5 : 1)
+                )
+                .offset(x: dragOffset * (0.25 + Double(index) * 0.02))
+                .scaleEffect(isDragging ? 0.97 : 1.0)
+                .opacity(isDragging ? 0.80 : 1.0)
+                .rotation3DEffect(
+                    .degrees(dragOffset * 0.02),
+                    axis: (x: 0, y: 1, z: 0),
+                    perspective: 1.0
                 )
             }
         }
+    }
+}
+
+// MARK: - ✅ Optimization: Static Color Extension
+
+enum MacroColors {
+    static func kcal(for scheme: ColorScheme) -> Color {
+        scheme == .dark ? .orange : Color(red: 0.9, green: 0.5, blue: 0.0)
+    }
+
+    static func carbs(for scheme: ColorScheme) -> Color {
+        scheme == .dark ? .red : Color(red: 0.8, green: 0.0, blue: 0.0)
+    }
+
+    static func fat(for scheme: ColorScheme) -> Color {
+        scheme == .dark ? .blue : Color(red: 0.0, green: 0.4, blue: 0.9)
+    }
+
+    static func protein(for scheme: ColorScheme) -> Color {
+        scheme == .dark ? .green : Color(red: 0.0, green: 0.6, blue: 0.2)
     }
 }

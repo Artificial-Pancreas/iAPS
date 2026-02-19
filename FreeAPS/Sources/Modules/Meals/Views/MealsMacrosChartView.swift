@@ -3,24 +3,38 @@ import SwiftUI
 
 struct MealsMacrosChartView: View {
     let summaries: [MealDaySummary]
+    let range: MealsRange
 
-    // Hilfsstruktur für einzelne Balken (Carbs/Fat/Protein)
+    @Environment(\.colorScheme) private var colorScheme
+
     struct MacroPoint: Identifiable {
         let id = UUID()
-        let dayLabel: String // z.B. "16.02."
-        let macro: String // "Carbs", "Fat", "Protein"
+        let dayLabel: String
+        let macro: String
         let kcal: Double
         let color: Color
     }
 
-    // Datum → String "dd.MM."
     private static let dayFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "dd.MM."
         return df
     }()
 
-    // Alle Punkte für den Chart aufbereiten
+    // MARK: - Adaptive Colors
+
+    private var carbsColor: Color {
+        colorScheme == .dark ? .red : Color(red: 0.8, green: 0.0, blue: 0.0)
+    }
+
+    private var fatColor: Color {
+        colorScheme == .dark ? .blue : Color(red: 0.0, green: 0.4, blue: 0.9)
+    }
+
+    private var proteinColor: Color {
+        colorScheme == .dark ? .green : Color(red: 0.0, green: 0.6, blue: 0.2)
+    }
+
     var points: [MacroPoint] {
         summaries.flatMap { item -> [MacroPoint] in
             guard item.kcal > 0 else { return [] }
@@ -36,7 +50,7 @@ struct MealsMacrosChartView: View {
                         dayLabel: label,
                         macro: "Carbs",
                         kcal: item.carbs * 4.0,
-                        color: .red
+                        color: carbsColor
                     )
                 )
             }
@@ -47,7 +61,7 @@ struct MealsMacrosChartView: View {
                         dayLabel: label,
                         macro: "Fat",
                         kcal: item.fat * 9.0,
-                        color: .blue
+                        color: fatColor
                     )
                 )
             }
@@ -58,7 +72,7 @@ struct MealsMacrosChartView: View {
                         dayLabel: label,
                         macro: "Protein",
                         kcal: item.protein * 4.0,
-                        color: .green
+                        color: proteinColor
                     )
                 )
             }
@@ -75,6 +89,15 @@ struct MealsMacrosChartView: View {
                     y: .value("kcal", point.kcal)
                 )
                 .foregroundStyle(point.color)
+            }
+        }
+        .chartXAxis {
+            if range == .oneWeek {
+                AxisMarks()
+            } else {
+                AxisMarks {
+                    AxisValueLabel("")
+                }
             }
         }
         .chartYAxisLabel("kcal")

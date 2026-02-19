@@ -513,7 +513,7 @@ final class CoreDataStorage {
                 dayFat += fat
                 dayProtein += protein
 
-                // kcal update im CoreData
+                // kcal auch im CoreData‑Objekt aktualisieren (NSDecimalNumber!)
                 entry.kcal = NSDecimalNumber(value: kcal)
             }
 
@@ -533,7 +533,7 @@ final class CoreDataStorage {
             summaries.append(summary)
         }
 
-        // Änderungen an CoreData speichern (aktualisierte kcal)
+        // Änderungen an CoreData speichern
         do {
             try coredataContext.save()
         } catch {
@@ -545,7 +545,7 @@ final class CoreDataStorage {
         return summaries
     }
 
-    /// empty old entries
+    // leer räumen
     private func purgeOldMealMacros(olderThan date: Date) {
         coredataContext.performAndWait {
             let fetchRequest: NSFetchRequest<Carbohydrates> = Carbohydrates.fetchRequest()
@@ -558,7 +558,6 @@ final class CoreDataStorage {
                     entry.fat = nil
                     entry.protein = nil
                     entry.kcal = nil
-                    // entry.servings = 0
                 }
                 try coredataContext.save()
             } catch {
@@ -581,6 +580,18 @@ final class CoreDataStorage {
         return data
     }
 
+    private func entryCarbs(_ entry: Carbohydrates) -> Double {
+        entry.carbs?.doubleValue ?? 0
+    }
+
+    private func entryFat(_ entry: Carbohydrates) -> Double {
+        entry.fat?.doubleValue ?? 0
+    }
+
+    private func entryProtein(_ entry: Carbohydrates) -> Double {
+        entry.protein?.doubleValue ?? 0
+    }
+
     // kcal entry
     private func entryKcal(_ entry: Carbohydrates) -> Double {
         if let stored = entry.kcal?.doubleValue {
@@ -590,20 +601,5 @@ final class CoreDataStorage {
         let fat = entryFat(entry)
         let protein = entryProtein(entry)
         return carbs * 4.0 + fat * 9.0 + protein * 4.0
-    }
-
-    // carbs
-    private func entryCarbs(_ entry: Carbohydrates) -> Double {
-        entry.carbs?.doubleValue ?? 0
-    }
-
-    // fat
-    private func entryFat(_ entry: Carbohydrates) -> Double {
-        entry.fat?.doubleValue ?? 0
-    }
-
-    // protein
-    private func entryProtein(_ entry: Carbohydrates) -> Double {
-        entry.protein?.doubleValue ?? 0
     }
 }
