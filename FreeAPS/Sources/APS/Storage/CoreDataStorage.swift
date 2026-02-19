@@ -472,16 +472,19 @@ final class CoreDataStorage {
 
     func generateMealSummariesForLastNDays(days: Int) -> [MealDaySummary] {
         let calendar = Calendar.current
+
+        // Startdatum (einschließlich) der Periode
         let startDate = calendar.date(byAdding: .day, value: -days + 1, to: Date())!
         let interval = startDate as NSDate
 
-        // 1. macro data older than 90 days
+        // 1. macro data older than 90 days leeren
         let ninetyDaysAgo = calendar.date(byAdding: .day, value: -90, to: Date())!
         purgeOldMealMacros(olderThan: ninetyDaysAgo)
 
-        // 2. load current entries
+        // 2. aktuelle Einträge laden (ab startDate)
         let carbsEntries = fetchMealData(interval: interval)
 
+        // nach Kalendertag gruppieren
         var grouped: [Date: [Carbohydrates]] = [:]
 
         for entry in carbsEntries {
@@ -492,24 +495,52 @@ final class CoreDataStorage {
 
         var summaries: [MealDaySummary] = []
 
+        // für jeden Tag kcal aus Makros berechnen
         for (day, entries) in grouped {
-            let kcal = entries.reduce(0.0) { $0 + entryKcal($1) }
-            let carbs = entries.reduce(0.0) { $0 + entryCarbs($1) }
-            let fat = entries.reduce(0.0) { $0 + entryFat($1) }
-            let protein = entries.reduce(0.0) { $0 + entryProtein($1) }
+            var dayKcal = 0.0
+            var dayCarbs = 0.0
+            var dayFat = 0.0
+            var dayProtein = 0.0
+
+            for entry in entries {
+                let carbs = entryCarbs(entry)
+                let fat = entryFat(entry)
+                let protein = entryProtein(entry)
+
+                let kcal = carbs * 4.0 + fat * 9.0 + protein * 4.0
+                dayKcal += kcal
+                dayCarbs += carbs
+                dayFat += fat
+                dayProtein += protein
+
+                // kcal update im CoreData
+                entry.kcal = NSDecimalNumber(value: kcal)
+            }
+
             let servings = entries.count
+
+            // nur Tage mit kcal > 0 in die Summary aufnehmen
+            guard dayKcal > 0 else { continue }
 
             let summary = MealDaySummary(
                 date: day,
-                kcal: kcal,
-                carbs: carbs,
-                fat: fat,
-                protein: protein,
+                kcal: dayKcal,
+                carbs: dayCarbs,
+                fat: dayFat,
+                protein: dayProtein,
                 servings: servings
             )
             summaries.append(summary)
         }
 
+        // Änderungen an CoreData speichern (aktualisierte kcal)
+        do {
+            try coredataContext.save()
+        } catch {
+            print("Error saving updated kcal values: \(error)")
+        }
+
+        // nach Datum sortiert zurückgeben
         summaries.sort { $0.date < $1.date }
         return summaries
     }
