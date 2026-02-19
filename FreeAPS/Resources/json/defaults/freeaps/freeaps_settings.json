@@ -18,6 +18,8 @@
   "glucoseBadge" : false,
   "glucoseNotificationsAlways" : false,
   "useAlarmSound" : false,
+  "highAlertSound" : 1336,
+  "lowAlertSound" : 1336,
   "addSourceInfoToGlucoseNotifications" : false,
   "lowGlucose" : 72,
   "highGlucose" : 270,
