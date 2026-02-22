@@ -3303,6 +3303,12 @@ Enact a temp Basal or a temp target */
 "Enable Auto ISF" = "Enable Auto ISF";
 
 /* */
+"Enable Auto CR" = "Enable Auto CR";
+
+/* */
+"Highly Experimental!\n\nAdjusts also the profile Carb Ratio.\n\nNot recommended if always using the suggested bolus calculator recommendations." = "Highly Experimental!\n\nAdjusts also the profile Carb Ratio.\n\nNot recommended if always using the suggested bolus calculator recommendations.";
+
+/* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting";
 
 /* */

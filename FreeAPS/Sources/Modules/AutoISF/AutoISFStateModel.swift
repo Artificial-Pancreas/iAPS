@@ -6,6 +6,7 @@ extension AutoISF {
         @Injected() var storage: FileStorage!
 
         @Published var autoisf: Bool = false
+        @Published var autocr: Bool = false
         @Published var enableBGacceleration: Bool = true
         @Published var use_B30 = false
 
@@ -42,6 +43,7 @@ extension AutoISF {
 
         override func subscribe() {
             subscribeSetting(\.autoisf, on: $autoisf) { autoisf = $0 }
+            subscribeSetting(\.autocr, on: $autocr) { autocr = $0 }
             subscribeSetting(\.enableBGacceleration, on: $enableBGacceleration) { enableBGacceleration = $0 }
             subscribeSetting(\.smbDeliveryRatioBGrange, on: $smbDeliveryRatioBGrange) { smbDeliveryRatioBGrange = $0 }
 

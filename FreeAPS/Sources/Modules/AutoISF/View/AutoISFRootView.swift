@@ -70,6 +70,7 @@ extension AutoISF {
                                 }
                         }.disabled(isPresented)
                     }
+
                 } header: { Text("Experimental").foregroundStyle(.red) }
 
                 if state.autoisf {
@@ -81,6 +82,19 @@ extension AutoISF {
                                         info(
                                             header: "Enable BG acceleration",
                                             body: "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                            }.disabled(isPresented)
+                        }
+
+                        HStack {
+                            Toggle(isOn: $state.autocr) {
+                                Text("Enable Auto CR")
+                                    .onTapGesture {
+                                        info(
+                                            header: "Enable Auto CR",
+                                            body: "Highly Experimental!\n\nAdjusts also the profile Carb Ratio.\n\nNot recommended if always using the suggested bolus calculator recommendations.",
                                             useGraphics: nil
                                         )
                                     }
