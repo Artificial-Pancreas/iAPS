@@ -587,7 +587,7 @@ extension FreeAPSSettings: Decodable {
         }
 
         if let autocr = try? container.decode(Bool.self, forKey: .autocr) {
-            settings.autoisf = autocr
+            settings.autocr = autocr
         }
 
         if let enableBGacceleration = try? container.decode(Bool.self, forKey: .enableBGacceleration) {
