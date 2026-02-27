@@ -19,7 +19,7 @@ env:
 on: 
 
   schedule:
-    - cron: '0 3 * * *'             # scheduled to run daily
+    - cron: '0 3 * * 6'             # scheduled to run daily
 
   workflow_dispatch:                # trigger manually
 
