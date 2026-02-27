@@ -94,7 +94,7 @@ extension AutoISF {
                                     .onTapGesture {
                                         info(
                                             header: "Enable Auto CR",
-                                            body: "Highly Experimental!\n\nAdjusts also the profile Carb Ratio.\n\nNot recommended if always using the suggested bolus calculator recommendations.",
+                                            body: "Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely.",
                                             useGraphics: nil
                                         )
                                     }
