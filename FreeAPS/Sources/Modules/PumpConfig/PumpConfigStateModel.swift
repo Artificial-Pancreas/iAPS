@@ -190,9 +190,15 @@ extension PumpConfig {
             let isoFormatter = ISO8601DateFormatter()
             isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
 
+            // OPTIMIERT: Zeitzone und Millisekunden für sauberes Nightscout-Tracking
+            let offset = TimeZone.current.secondsFromGMT(for: date) / 60
+            let mills = Int(date.timeIntervalSince1970 * 1000)
+
             let payload: [[String: Any]] = [[
                 "eventType": eventType,
                 "created_at": isoFormatter.string(from: date),
+                "utcOffset": offset,
+                "mills": mills,
                 "enteredBy": "Loop",
                 "notes": eventType
             ]]

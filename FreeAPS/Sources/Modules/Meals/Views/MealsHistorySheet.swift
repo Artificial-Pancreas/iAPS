@@ -3,7 +3,6 @@ import SwiftUI
 
 struct MealsHistorySheet: View {
     @State private var summaries: [MealDaySummary] = []
-    @State private var previousSummaries: [MealDaySummary] = []
     @State private var selectedRange: MealsRange = .oneWeek
     @State private var dragOffset: CGFloat = 0
     @State private var isDragging: Bool = false
@@ -139,24 +138,14 @@ struct MealsHistorySheet: View {
         }
     }
 
-    // ✅ Optimization: Storage is reused
+    // ✅ Einfaches Laden der Daten für den aktuellen Zeitraum
     private func loadData() {
         summaries = storage.generateMealSummariesForLastNDays(
             days: selectedRange.days
         )
-
-        previousSummaries = storage.generateMealSummariesForLastNDays(
-            days: selectedRange.days * 2
-        )
-
-        if previousSummaries.count > summaries.count {
-            previousSummaries = Array(
-                previousSummaries.dropLast(summaries.count)
-            )
-        }
     }
 
-    // MARK: - Adaptive Colors (✅ Optimized with Static Extension)
+    // MARK: - Adaptive Colors
 
     private var kcalColor: Color {
         MacroColors.kcal(for: colorScheme)
@@ -206,48 +195,25 @@ struct MealsHistorySheet: View {
 
     // MARK: - Helpers
 
-    private func average(
-        of keyPath: KeyPath<MealDaySummary, Double>,
-        in data: [MealDaySummary]
-    ) -> Double? {
-        guard !data.isEmpty else { return nil }
-        let sum = data.reduce(0.0) { $0 + $1[keyPath: keyPath] }
-        return sum / Double(data.count)
-    }
-
-    private func arrow(for delta: Double) -> String {
-        if delta > 0.01 { return "↑" }
-        if delta < -0.01 { return "↓" }
-        return "→"
+    // ✅ Berechnet Durchschnitt nur für Tage, an denen auch Werte vorliegen (>0)
+    private func average(of keyPath: KeyPath<MealDaySummary, Double>, in data: [MealDaySummary]) -> Double? {
+        let validEntries = data.filter { $0[keyPath: keyPath] > 0 }
+        guard !validEntries.isEmpty else { return nil }
+        let sum = validEntries.reduce(0.0) { $0 + $1[keyPath: keyPath] }
+        return sum / Double(validEntries.count)
     }
 
     // MARK: - Averages
 
     private var averagesSection: some View {
-        let days = selectedRange.days
-        let minimumDaysRequired = 14 // At least 2 weeks of data required
+        let days = summaries.count
 
-        // Check if enough data is available for current AND previous period
-        guard summaries.count >= minimumDaysRequired,
-              previousSummaries.count >= minimumDaysRequired
-        else {
-            return AnyView(
-                Text("At least 2 weeks of data required to calculate averages and trends.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            )
-        }
-
-        // Calculate averages
+        // Berechne aktuelle Durchschnitte
         guard
             let avgKcal = average(of: \.kcal, in: summaries),
             let avgCarbs = average(of: \.carbs, in: summaries),
             let avgFat = average(of: \.fat, in: summaries),
-            let avgProtein = average(of: \.protein, in: summaries),
-            let prevAvgKcal = average(of: \.kcal, in: previousSummaries),
-            let prevAvgCarbs = average(of: \.carbs, in: previousSummaries),
-            let prevAvgFat = average(of: \.fat, in: previousSummaries),
-            let prevAvgProtein = average(of: \.protein, in: previousSummaries)
+            let avgProtein = average(of: \.protein, in: summaries)
         else {
             return AnyView(
                 Text("∅")
@@ -255,16 +221,6 @@ struct MealsHistorySheet: View {
                     .foregroundStyle(.secondary)
             )
         }
-
-        let deltaKcal = avgKcal - prevAvgKcal
-        let deltaCarbs = avgCarbs - prevAvgCarbs
-        let deltaFat = avgFat - prevAvgFat
-        let deltaProtein = avgProtein - prevAvgProtein
-
-        let symbolKcal = arrow(for: deltaKcal)
-        let symbolCarbs = arrow(for: deltaCarbs)
-        let symbolFat = arrow(for: deltaFat)
-        let symbolProtein = arrow(for: deltaProtein)
 
         return AnyView(
             VStack(alignment: .leading, spacing: 4) {
@@ -278,8 +234,6 @@ struct MealsHistorySheet: View {
                     Spacer()
                     Text(avgKcal.formatted(.number.precision(.fractionLength(0))))
                         .foregroundColor(kcalColor)
-                    Text(symbolKcal)
-                        .foregroundColor(kcalColor)
                 }
 
                 HStack {
@@ -287,8 +241,6 @@ struct MealsHistorySheet: View {
                         .foregroundColor(carbsColor)
                     Spacer()
                     Text(avgCarbs.formatted(.number.precision(.fractionLength(1))))
-                        .foregroundColor(carbsColor)
-                    Text(symbolCarbs)
                         .foregroundColor(carbsColor)
                 }
 
@@ -298,8 +250,6 @@ struct MealsHistorySheet: View {
                     Spacer()
                     Text(avgFat.formatted(.number.precision(.fractionLength(1))))
                         .foregroundColor(fatColor)
-                    Text(symbolFat)
-                        .foregroundColor(fatColor)
                 }
 
                 HStack {
@@ -308,15 +258,13 @@ struct MealsHistorySheet: View {
                     Spacer()
                     Text(avgProtein.formatted(.number.precision(.fractionLength(1))))
                         .foregroundColor(proteinColor)
-                    Text(symbolProtein)
-                        .foregroundColor(proteinColor)
                 }
             }
             .font(.footnote)
         )
     }
 
-    // MARK: - Daily cards (✅ Optimized without array copy)
+    // MARK: - Daily cards
 
     private var dailyCards: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -324,7 +272,6 @@ struct MealsHistorySheet: View {
                 let item = summaries[index]
 
                 VStack(alignment: .leading, spacing: 6) {
-                    // ✅ Hier ist das neue Datumsformat im Einsatz
                     Text(MealsHistorySheet.cardDateFormatter.string(from: item.date))
                         .font(.caption)
                         .foregroundColor(cardTextColor)
@@ -381,7 +328,7 @@ struct MealsHistorySheet: View {
     }
 }
 
-// MARK: - ✅ Optimization: Static Color Extension
+// MARK: - Static Color Extension
 
 enum MacroColors {
     static func kcal(for scheme: ColorScheme) -> Color {
