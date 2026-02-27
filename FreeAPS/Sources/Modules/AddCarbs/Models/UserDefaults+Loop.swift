@@ -3,12 +3,6 @@ import LoopKit
 
 extension UserDefaults {
     private enum Key: String {
-        case legacyPumpManagerState = "com.loopkit.Loop.PumpManagerState"
-        case legacyCGMManagerState = "com.loopkit.Loop.CGMManagerState"
-        case legacyServicesState = "com.loopkit.Loop.ServicesState"
-        case loopNotRunningNotifications = "com.loopkit.Loop.loopNotRunningNotifications"
-        case inFlightAutomaticDose = "com.loopkit.Loop.inFlightAutomaticDose"
-        case favoriteFoods = "com.loopkit.Loop.favoriteFoods"
         case aiProvider = "com.loopkit.Loop.aiProvider"
         case claudeAPIKey = "com.loopkit.Loop.claudeAPIKey"
         case claudeQuery = "com.loopkit.Loop.claudeQuery"
@@ -22,45 +16,6 @@ extension UserDefaults {
         case analysisMode = "com.loopkit.Loop.analysisMode"
         case advancedDosingRecommendationsEnabled = "com.loopkit.Loop.advancedDosingRecommendationsEnabled"
         case useGPT5ForOpenAI = "com.loopkit.Loop.useGPT5ForOpenAI"
-    }
-
-    func clearLegacyPumpManagerRawValue() {
-        set(nil, forKey: Key.legacyPumpManagerState.rawValue)
-    }
-
-    func clearLegacyCGMManagerRawValue() {
-        set(nil, forKey: Key.legacyCGMManagerState.rawValue)
-    }
-
-    var legacyServicesState: [Service.RawStateValue] {
-        array(forKey: Key.legacyServicesState.rawValue) as? [[String: Any]] ?? []
-    }
-
-    func clearLegacyServicesState() {
-        set(nil, forKey: Key.legacyServicesState.rawValue)
-    }
-
-    var inFlightAutomaticDose: AutomaticDoseRecommendation? {
-        get {
-            let decoder = JSONDecoder()
-            guard let data = object(forKey: Key.inFlightAutomaticDose.rawValue) as? Data else {
-                return nil
-            }
-            return try? decoder.decode(AutomaticDoseRecommendation.self, from: data)
-        }
-        set {
-            do {
-                if let newValue = newValue {
-                    let encoder = JSONEncoder()
-                    let data = try encoder.encode(newValue)
-                    set(data, forKey: Key.inFlightAutomaticDose.rawValue)
-                } else {
-                    set(nil, forKey: Key.inFlightAutomaticDose.rawValue)
-                }
-            } catch {
-                assertionFailure("Unable to encode AutomaticDoseRecommendation")
-            }
-        }
     }
 
     var aiProvider: String {
