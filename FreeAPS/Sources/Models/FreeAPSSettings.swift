@@ -112,6 +112,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var lightMode: LightMode = .auto
     // Auto ISF
     var autoisf: Bool = false
+    var autocr: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
     var smbDeliveryRatioMin: Decimal = 0.5
     var smbDeliveryRatioMax: Decimal = 0.5
@@ -583,6 +584,10 @@ extension FreeAPSSettings: Decodable {
         // AutoISF
         if let autoisf = try? container.decode(Bool.self, forKey: .autoisf) {
             settings.autoisf = autoisf
+        }
+
+        if let autocr = try? container.decode(Bool.self, forKey: .autocr) {
+            settings.autocr = autocr
         }
 
         if let enableBGacceleration = try? container.decode(Bool.self, forKey: .enableBGacceleration) {

@@ -497,8 +497,8 @@ final class OpenAPS {
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
             // Auto ISF
-            if let freeAPSSettings = settings, freeAPSSettings.autoisf || autoISF(override: override),
-               self.notDisabled(override: override)
+            if let freeAPSSettings = settings, freeAPSSettings.autoisf,
+               self.notDisabled(override: override) || autoISF(override: override)
             {
                 let reasons = profile.autoISFreasons ?? ""
                 // If disabled in middleware or Auto ISF layer
@@ -1037,6 +1037,7 @@ final class OpenAPS {
             {
                 autoISFsettings = AutoISFsettings(
                     autoisf: fetched.autoisf,
+                    autocr: fetched.autocr,
                     smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
                     smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
                     smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
