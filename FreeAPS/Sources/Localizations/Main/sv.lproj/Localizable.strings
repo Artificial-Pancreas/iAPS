@@ -853,7 +853,7 @@ Enact a temp Basal or a temp target */
 "Pairinginfo" = "Parkopplingsinfo";
 
 /* */
-"PatchInfo" = "Patchinformation";
+"PatchInfo" = "Patch-information";
 
 /* */
 "Calibrationinfo" = "Kalibreringsinfo";
