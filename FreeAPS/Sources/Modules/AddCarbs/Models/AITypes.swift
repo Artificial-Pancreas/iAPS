@@ -178,12 +178,14 @@ enum GeminiModel: String, AIModelBase, Encodable {
     case gemini_2_5_pro = "gemini-2.5-pro"
     case gemini_2_5_flash = "gemini-2.5-flash"
     case gemini_3_pro_preview = "gemini-3-pro-preview"
+    case gemini_3_1_pro_preview = "gemini-3.1-pro-preview"
 
     var fast: Bool {
         switch self {
         case .gemini_2_5_pro: false
         case .gemini_2_5_flash: true
         case .gemini_3_pro_preview: false
+        case .gemini_3_1_pro_preview: false
         }
     }
 
@@ -192,6 +194,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: 0.01
         case .gemini_2_5_flash: 0.01
         case .gemini_3_pro_preview: 0.01
+        case .gemini_3_1_pro_preview: 0.01
         }
     }
 
@@ -200,6 +203,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: "2.5 Pro"
         case .gemini_2_5_flash: "2.5 Flash"
         case .gemini_3_pro_preview: "3 Pro Preview"
+        case .gemini_3_1_pro_preview: "3.1 Pro Preview"
         }
     }
 
@@ -208,6 +212,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: false
         case .gemini_2_5_flash: false
         case .gemini_3_pro_preview: false
+        case .gemini_3_1_pro_preview: false
         }
     }
 
@@ -216,6 +221,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: 40
         case .gemini_2_5_flash: 30
         case .gemini_3_pro_preview: 45
+        case .gemini_3_1_pro_preview: 45
         }
     }
 
@@ -224,6 +230,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: 15
         case .gemini_2_5_flash: 10
         case .gemini_3_pro_preview: 15
+        case .gemini_3_1_pro_preview: 15
         }
     }
 
@@ -242,6 +249,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: 2048
         case .gemini_2_5_flash: 1568
         case .gemini_3_pro_preview: 2048
+        case .gemini_3_1_pro_preview: 2048
         }
     }
 }
@@ -249,10 +257,12 @@ enum GeminiModel: String, AIModelBase, Encodable {
 enum ClaudeModel: String, AIModelBase, Encodable {
     case sonnet_4_5 = "claude-sonnet-4-5"
     case haiku_4_5 = "claude-haiku-4-5"
+    case sonnet_4_6 = "claude-sonnet-4-6"
 
     var fast: Bool {
         switch self {
         case .sonnet_4_5: false
+        case .sonnet_4_6: false
         case .haiku_4_5: true
         }
     }
@@ -260,6 +270,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
     var temperature: Double? {
         switch self {
         case .sonnet_4_5: 0.01
+        case .sonnet_4_6: 0.01
         case .haiku_4_5: 0.01
         }
     }
@@ -267,6 +278,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
     var displayName: String {
         switch self {
         case .sonnet_4_5: "Sonnet 4.5"
+        case .sonnet_4_6: "Sonnet 4.6"
         case .haiku_4_5: "Haiku 4.5"
         }
     }
@@ -274,6 +286,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
     var needAggressiveImageCompression: Bool {
         switch self {
         case .sonnet_4_5: return false
+        case .sonnet_4_6: return false
         case .haiku_4_5: return false
         }
     }
@@ -281,6 +294,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
     var defaultImageETA: TimeInterval {
         switch self {
         case .sonnet_4_5: 55
+        case .sonnet_4_6: 55
         case .haiku_4_5: 40
         }
     }
@@ -288,6 +302,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
     var defaultTextETA: TimeInterval {
         switch self {
         case .sonnet_4_5: 15
+        case .sonnet_4_6: 15
         case .haiku_4_5: 10
         }
     }
@@ -404,9 +419,11 @@ enum ImageSearchProvider {
         .aiModel(.openAI(.gpt_5_1)),
         .aiModel(.openAI(.gpt_5_2)),
         .aiModel(.gemini(.gemini_3_pro_preview)),
+        .aiModel(.gemini(.gemini_3_1_pro_preview)),
         .aiModel(.gemini(.gemini_2_5_pro)),
         .aiModel(.gemini(.gemini_2_5_flash)),
         .aiModel(.claude(.sonnet_4_5)),
+        .aiModel(.claude(.sonnet_4_6)),
         .aiModel(.claude(.haiku_4_5))
     ]
 
