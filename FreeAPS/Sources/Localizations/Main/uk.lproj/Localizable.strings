@@ -3296,10 +3296,10 @@ Enact a temp Basal or a temp target */
 "Enable Auto ISF" = "Увімкнути автоматичний ISF";
 
 /* */
-"Enable Auto CR" = "Enable Auto CR";
+"Enable Auto CR" = "Увімкнути автоматичний Вуглеводний Коефіцієнт";
 
 /* */
-"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely.";
+"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Високоекспериментально!\n\nКоригує вуглеводний коефіцієнт вашого профілю в кожному циклі на ту саму величину, що й ISF вашого профілю, використовуючи налаштування autoISF.\n\nВикористовуйте калькулятор болюса з великою обережністю, це може призвести до занадто суворих рекомендацій щодо дози.\n\nAutoCR + autoISF можуть сумуватися. Спочатку зменште агресивність autoISF (наприклад, зменшіть максимум/вагу), потім увімкніть AutoCR та уважно стежте.";
 
 /* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Вмикає автоматичний ISF. Це вимкне будь-яке можливе динамічне налаштування ISF/CR";
