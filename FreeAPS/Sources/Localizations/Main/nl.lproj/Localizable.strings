@@ -3294,10 +3294,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Enable Auto ISF" = "Auto ISF inschakelen";
 
 /* */
-"Enable Auto CR" = "Enable Auto CR";
+"Enable Auto CR" = "Auto CR inschakelen";
 
 /* */
-"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely.";
+"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Hoogst experimenteel!\n\nPast elke loop aan in dezelfde hoeveelheid als je profiel ISF via autoISF-instellingen.\n\nGebruik de boluscalculator met grote voorzichtigheid, dit kan ervoor zorgen dat de dosis van aanbevelingen te sterk is.\n\nAutoCR + autoISF kan opstapelen. Verminder eerst de agressiviteit van autoISF (bijvoorbeeld lagere max/waarde), schakel AutoCR in en volg nauwlettend.";
 
 /* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Auto ISF. Dit schakelt eventuele dynamische ISF/CR instellingen uit";
