@@ -219,12 +219,8 @@ struct BarcodeScannerView: View {
                     }
 
                     Button("Check Permissions") {
-                        print("🎥 Check Permissions button tapped")
                         let status = AVCaptureDevice.authorizationStatus(for: .video)
-                        print("🎥 Current system status: \(status)")
-                        scannerService.testCameraAccess()
 
-                        // Clear the current error to test button functionality
                         scannerService.scanError = nil
 
                         // Request permission again if needed
@@ -288,38 +284,24 @@ struct BarcodeScannerView: View {
     // MARK: - Methods
 
     private func setupScannerAfterReset() {
-        print("🎥 Setting up scanner after reset...")
-
         // Get fresh camera authorization status
         let currentStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        print("🎥 Camera authorization from system: \(currentStatus)")
-        print("🎥 Scanner service authorization: \(scannerService.cameraAuthorizationStatus)")
 
         // Update scanner service status
         scannerService.cameraAuthorizationStatus = currentStatus
-        print("🎥 Updated scanner service authorization to: \(scannerService.cameraAuthorizationStatus)")
 
-        // Test camera access first
-        print("🎥 Running camera access test...")
-        scannerService.testCameraAccess()
-
-        // Start scanning immediately
-        print("🎥 Calling setupScanner()...")
         setupScanner()
 
         // Listen for scan results
-        print("🎥 Setting up scan result observer...")
         scannerService.$lastScanResult
             .compactMap { $0 }
             .removeDuplicates { $0.barcodeString == $1.barcodeString } // Remove duplicate barcodes
             .throttle(for: .milliseconds(500), scheduler: DispatchQueue.main, latest: false) // Throttle rapid scans
             .sink { result in
-                print("🎥 ✅ Code result received: \(result.barcodeString) (Type: \(result.barcodeType))")
                 self.onBarcodeScanned(result.barcodeString)
 
                 // Clear scan state immediately to prevent rapid duplicate scans
                 self.scannerService.clearScanState()
-                print("🔍 Cleared scan state immediately to prevent duplicates")
             }
             .store(in: &cancellables)
     }
