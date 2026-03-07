@@ -236,7 +236,7 @@ enum AIUsageStatistics {
 
     /// Clear all AI statistics
     static func clearAll() {
-        UserDefaults.standard.set(nil, forKey: UserDefaults.AIKey.aiProviderStatistics.rawValue)
+        UserDefaults.standard.set(nil, forKey: UserDefaults.AIStatisticsKey.aiProviderStatistics.rawValue)
     }
 
     /// Clear statistics for a specific model and request type
@@ -253,7 +253,7 @@ enum AIUsageStatistics {
     // MARK: - Private Helpers
 
     private static func loadStatistics() -> [String: Statistics] {
-        guard let data = UserDefaults.standard.data(forKey: UserDefaults.AIKey.aiProviderStatistics.rawValue) else {
+        guard let data = UserDefaults.standard.data(forKey: UserDefaults.AIStatisticsKey.aiProviderStatistics.rawValue) else {
             return [:]
         }
 
@@ -286,9 +286,15 @@ enum AIUsageStatistics {
         let encoder = JSONEncoder()
         do {
             let data = try encoder.encode(statistics)
-            UserDefaults.standard.set(data, forKey: UserDefaults.AIKey.aiProviderStatistics.rawValue)
+            UserDefaults.standard.set(data, forKey: UserDefaults.AIStatisticsKey.aiProviderStatistics.rawValue)
         } catch {
             assertionFailure("Unable to encode AI provider statistics: \(error)")
         }
+    }
+}
+
+private extension UserDefaults {
+    enum AIStatisticsKey: String {
+        case aiProviderStatistics = "com.loopkit.Loop.AIStatistics"
     }
 }

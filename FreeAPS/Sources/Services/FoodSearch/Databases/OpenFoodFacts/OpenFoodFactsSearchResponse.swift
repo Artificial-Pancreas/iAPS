@@ -1,8 +1,5 @@
 import Foundation
 
-// MARK: - OpenFoodFacts API Response Models
-
-/// Root response structure for OpenFoodFacts search API
 struct OpenFoodFactsSearchResponse: Codable {
     let products: [OpenFoodFactsProduct]
     let count: Int
@@ -81,7 +78,7 @@ enum FoodDataSource: String, CaseIterable, Codable {
 }
 
 /// Represents a food product from OpenFoodFacts database
-class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
+struct OpenFoodFactsProduct: Identifiable, Hashable {
     let id: String
     let productName: String?
     let brands: String?
@@ -90,26 +87,86 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
     let servingSize: String?
     let servingQuantity: Decimal?
 
-    // ✅ ÄNDERE ZU var FÜR MUTABILITY
-    var imageURL: String?
-    var imageFrontURL: String?
+    let imageURL: String?
+    let imageFrontURL: String?
 
-    let code: String? // barcode
-    var dataSource: FoodDataSource = .unknown
+    let code: String?
+    let dataSource: FoodDataSource
 
-    // Non-codable property for UI state only
-    var isSkeleton: Bool = false // Flag to identify skeleton loading items
-
-    // ✅ OBSERVABLE FÜR BILD-LADESTATUS
-    @Published var imageLoadState: ImageLoadState = .notLoaded
-
-    enum ImageLoadState {
-        case notLoaded
-        case loading
-        case loaded(URL)
-        case failed
+    init(
+        id: String,
+        productName: String?,
+        brands: String?,
+        categories: String? = nil,
+        nutriments: Nutriments,
+        servingSize: String?,
+        servingQuantity: Decimal?,
+        imageURL: String?,
+        imageFrontURL: String?,
+        code: String?,
+        dataSource: FoodDataSource = .unknown
+    ) {
+        self.id = id
+        self.productName = productName
+        self.brands = brands
+        self.categories = categories
+        self.nutriments = nutriments
+        self.servingSize = servingSize
+        self.servingQuantity = servingQuantity
+        self.imageURL = imageURL
+        self.imageFrontURL = imageFrontURL
+        self.code = code
+        self.dataSource = dataSource
     }
 
+    init(
+        id: String,
+        productName: String,
+        brands: String,
+        nutriments: Nutriments,
+        servingSize: String,
+        imageURL: String?
+    ) {
+        self.init(
+            id: id,
+            productName: productName,
+            brands: brands,
+            categories: nil,
+            nutriments: nutriments,
+            servingSize: servingSize,
+            servingQuantity: 100.0,
+            imageURL: imageURL,
+            imageFrontURL: imageURL,
+            code: nil
+        )
+    }
+
+    var displayName: String {
+        if let productName = productName, !productName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return productName
+        } else if let brands = brands, !brands.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return brands
+        } else {
+            return NSLocalizedString("Unknown Product", comment: "Fallback name for products without names")
+        }
+    }
+
+    var hasSufficientNutritionalData: Bool {
+        nutriments.carbohydrates != nil && !displayName.isEmpty
+    }
+
+    // MARK: - Hashable & Equatable
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: OpenFoodFactsProduct, rhs: OpenFoodFactsProduct) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+extension OpenFoodFactsProduct: Codable {
     enum CodingKeys: String, CodingKey {
         case productName = "product_name"
         case brands
@@ -123,7 +180,7 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         case dataSource = "data_source"
     }
 
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         // Handle product identification
@@ -160,6 +217,8 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         // dataSource has a default value, but override if present in decoded data
         if let decodedDataSource = try? container.decode(FoodDataSource.self, forKey: .dataSource) {
             dataSource = decodedDataSource
+        } else {
+            dataSource = .unknown
         }
     }
 
@@ -176,148 +235,6 @@ class OpenFoodFactsProduct: Codable, Identifiable, ObservableObject, Hashable {
         try container.encodeIfPresent(imageFrontURL, forKey: .imageFrontURL)
         try container.encodeIfPresent(code, forKey: .code)
         try container.encode(dataSource, forKey: .dataSource)
-        // Note: isSkeleton is intentionally not encoded as it's UI state only
-    }
-
-    // MARK: - Custom Initializers
-
-    /// Main initializer
-    init(
-        id: String,
-        productName: String?,
-        brands: String?,
-        categories: String? = nil,
-        nutriments: Nutriments,
-        servingSize: String?,
-        servingQuantity: Decimal?,
-        imageURL: String?,
-        imageFrontURL: String?,
-        code: String?,
-        dataSource: FoodDataSource = .unknown,
-        isSkeleton: Bool = false
-    ) {
-        self.id = id
-        self.productName = productName
-        self.brands = brands
-        self.categories = categories
-        self.nutriments = nutriments
-        self.servingSize = servingSize
-        self.servingQuantity = servingQuantity
-        self.imageURL = imageURL
-        self.imageFrontURL = imageFrontURL
-        self.code = code
-        self.dataSource = dataSource
-        self.isSkeleton = isSkeleton
-    }
-
-    /// Simplified initializer for programmatic creation
-    convenience init(
-        id: String,
-        productName: String,
-        brands: String,
-        nutriments: Nutriments,
-        servingSize: String,
-        imageURL: String?
-    ) {
-        self.init(
-            id: id,
-            productName: productName,
-            brands: brands,
-            categories: nil,
-            nutriments: nutriments,
-            servingSize: servingSize,
-            servingQuantity: 100.0,
-            imageURL: imageURL,
-            imageFrontURL: imageURL,
-            code: nil
-        )
-    }
-
-    // MARK: - Computed Properties
-
-    /// Display name with fallback logic
-    var displayName: String {
-        if let productName = productName, !productName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return productName
-        } else if let brands = brands, !brands.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return brands
-        } else {
-            return NSLocalizedString("Unknown Product", comment: "Fallback name for products without names")
-        }
-    }
-
-//    /// Carbohydrates per serving (calculated from 100g values if serving size available)
-//    var carbsPerServing: Decimal? {
-//        guard let servingQuantity = servingQuantity, servingQuantity > 0 else {
-//            return nutriments.carbohydrates
-//        }
-//        return (nutriments.carbohydrates * servingQuantity) / 100.0
-//    }
-//
-//    /// Protein per serving (calculated from 100g values if serving size available)
-//    var proteinPerServing: Decimal? {
-//        guard let protein = nutriments.proteins,
-//              let servingQuantity = servingQuantity, servingQuantity > 0
-//        else {
-//            return nutriments.proteins
-//        }
-//        return (protein * servingQuantity) / 100.0
-//    }
-//
-//    /// Fat per serving (calculated from 100g values if serving size available)
-//    var fatPerServing: Decimal? {
-//        guard let fat = nutriments.fat,
-//              let servingQuantity = servingQuantity, servingQuantity > 0
-//        else {
-//            return nutriments.fat
-//        }
-//        return (fat * servingQuantity) / 100.0
-//    }
-//
-//    /// Calories per serving (calculated from 100g values if serving size available)
-//    var caloriesPerServing: Decimal? {
-//        guard let calories = nutriments.calories,
-//              let servingQuantity = servingQuantity, servingQuantity > 0
-//        else {
-//            return nutriments.calories
-//        }
-//        return (calories * servingQuantity) / 100.0
-//    }
-//
-//    /// Fiber per serving (calculated from 100g values if serving size available)
-//    var fiberPerServing: Decimal? {
-//        guard let fiber = nutriments.fiber,
-//              let servingQuantity = servingQuantity, servingQuantity > 0
-//        else {
-//            return nutriments.fiber
-//        }
-//        return (fiber * servingQuantity) / 100.0
-//    }
-//
-//    /// Formatted serving size display text
-//    var servingSizeDisplay: String {
-//        if let servingSize = servingSize, !servingSize.isEmpty {
-//            return servingSize
-//        } else if let servingQuantity = servingQuantity, servingQuantity > 0 {
-//            return "\(Int(servingQuantity))g"
-//        } else {
-//            return "100g"
-//        }
-//    }
-
-    /// Whether this product has sufficient nutritional data for Loop
-    var hasSufficientNutritionalData: Bool {
-        nutriments.carbohydrates != nil && !displayName.isEmpty
-    }
-
-    // MARK: - Hashable & Equatable
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-
-    static func == (lhs: OpenFoodFactsProduct, rhs: OpenFoodFactsProduct) -> Bool {
-        lhs.id == rhs.id
     }
 }
 
@@ -394,15 +311,11 @@ struct Nutriments: Codable {
         self.energy = energy
     }
 
-    /// Create empty nutriments with zero values
     static func empty() -> Nutriments {
         Nutriments(carbohydrates: 0.0, proteins: nil, fat: nil, calories: nil, sugars: nil, fiber: nil, energy: nil)
     }
 }
 
-// MARK: - Error Types
-
-/// Errors that can occur when interacting with OpenFoodFacts API
 enum OpenFoodFactsError: Error, LocalizedError {
     case invalidURL
     case invalidResponse

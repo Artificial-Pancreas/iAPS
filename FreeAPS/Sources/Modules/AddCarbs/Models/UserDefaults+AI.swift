@@ -13,7 +13,6 @@ extension UserDefaults {
         case preferredLanguage = "com.loopkit.Loop.AIPreferredLanguage"
         case preferredRegion = "com.loopkit.Loop.AIPreferredRegion"
         case nutritionAuthority = "com.loopkit.Loop.AINutritionAuthority"
-        case aiProviderStatistics = "com.loopkit.Loop.AIStatistics"
         case sendSmallerImages = "com.loopkit.Loop.AISendSmallerImages"
         case aiTextSearchByDefault = "com.loopkit.Loop.AITextSearchByDefault"
         case aiAddImageCommentByDefault = "com.loopkit.Loop.AIAddImageCommentByDefault"
