@@ -87,7 +87,7 @@
 		19C3C72F2E97AE520000BE4D /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7182E97AE520000BE4D /* SearchResultsView.swift */; };
 		19C3C7302E97AE520000BE4D /* FoodSearchStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */; };
 		19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7282E97AE520000BE4D /* BarcodeScannerService.swift */; };
-		19C3C7342E97AE520000BE4D /* UserDefaults+Loop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */; };
+		19C3C7342E97AE520000BE4D /* UserDefaults+AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7252E97AE520000BE4D /* UserDefaults+AI.swift */; };
 		19C3C7352E97AE520000BE4D /* AIFoodAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7272E97AE520000BE4D /* AIFoodAnalysis.swift */; };
 		19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C72B2E97AE520000BE4D /* OpenFoodFactsService.swift */; };
 		19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */; };
@@ -750,7 +750,7 @@
 		19C3C7182E97AE520000BE4D /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchStateModel.swift; sourceTree = "<group>"; };
 		19C3C7242E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsSearchResponse.swift; sourceTree = "<group>"; };
-		19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Loop.swift"; sourceTree = "<group>"; };
+		19C3C7252E97AE520000BE4D /* UserDefaults+AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+AI.swift"; sourceTree = "<group>"; };
 		19C3C7272E97AE520000BE4D /* AIFoodAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysis.swift; sourceTree = "<group>"; };
 		19C3C7282E97AE520000BE4D /* BarcodeScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerService.swift; sourceTree = "<group>"; };
 		19C3C72B2E97AE520000BE4D /* OpenFoodFactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFoodFactsService.swift; sourceTree = "<group>"; };
@@ -1485,7 +1485,7 @@
 			children = (
 				19C3C7232E97AE520000BE4D /* FoodSearchStateModel.swift */,
 				F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */,
-				19C3C7252E97AE520000BE4D /* UserDefaults+Loop.swift */,
+				19C3C7252E97AE520000BE4D /* UserDefaults+AI.swift */,
 				F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */,
 				F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */,
 			);
@@ -3629,7 +3629,7 @@
 				F2D361002EE21D83004CC6B1 /* ModelQueryEditor.swift in Sources */,
 				19C3C7302E97AE520000BE4D /* FoodSearchStateModel.swift in Sources */,
 				19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */,
-				19C3C7342E97AE520000BE4D /* UserDefaults+Loop.swift in Sources */,
+				19C3C7342E97AE520000BE4D /* UserDefaults+AI.swift in Sources */,
 				19C3C7352E97AE520000BE4D /* AIFoodAnalysis.swift in Sources */,
 				19C3C73B2E97AE520000BE4D /* OpenFoodFactsService.swift in Sources */,
 				19C3C73D2E97AE520000BE4D /* OpenFoodFactsSearchResponse.swift in Sources */,

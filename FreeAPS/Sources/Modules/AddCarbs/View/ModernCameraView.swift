@@ -39,10 +39,6 @@ struct ModernCameraView: UIViewControllerRepresentable {
         ) {
             if let uiImage = info[.originalImage] as? UIImage {
                 parent.onImageCaptured(uiImage)
-                // Delay dismiss to allow the callback to complete and state changes to propagate
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                    self.parent.dismiss()
-//                }
             } else {
                 parent.dismiss()
             }
