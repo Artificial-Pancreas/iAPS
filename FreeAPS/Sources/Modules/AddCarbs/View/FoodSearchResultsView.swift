@@ -14,32 +14,13 @@ struct FoodSearchResultsView: View {
         VStack(spacing: 0) {
             if isSearching {
                 searchingView
-                    .onAppear {
-                        print("🔍 FoodSearchResultsView: Showing searching state")
-                    }
             } else if let errorMessage = errorMessage {
                 errorView(message: errorMessage)
-                    .onAppear {
-                        print("🔍 FoodSearchResultsView: Showing error state - \(errorMessage)")
-                    }
             } else if searchResults.isEmpty, aiSearchResults.isEmpty {
                 emptyResultsView
-                    .onAppear {
-                        print("🔍 FoodSearchResultsView: Showing empty results state")
-                    }
             } else {
                 resultsListView
-                    .onAppear {
-                        print(
-                            "🔍 FoodSearchResultsView: Showing \(searchResults.count) traditional + \(aiSearchResults.count) AI results"
-                        )
-                    }
             }
-        }
-        .onAppear {
-            print(
-                "🔍 FoodSearchResultsView body: isSearching=\(isSearching), traditionalResults=\(searchResults.count), aiResults=\(aiSearchResults.count), error=\(errorMessage ?? "none")"
-            )
         }
     }
 
@@ -48,36 +29,30 @@ struct FoodSearchResultsView: View {
     private var searchingView: some View {
         VStack(spacing: 16) {
             ZStack {
-                // Outer pulsing ring
                 Circle()
                     .stroke(Color.blue.opacity(0.3), lineWidth: 2)
                     .frame(width: 70, height: 70)
                     .scaleEffect(pulseScale)
                     .animation(
-                        .easeInOut(duration: 1.2)
-                            .repeatForever(autoreverses: true),
+                        .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
                         value: pulseScale
                     )
 
-                // Inner filled circle
                 Circle()
                     .fill(Color.blue.opacity(0.15))
                     .frame(width: 60, height: 60)
                     .scaleEffect(secondaryPulseScale)
                     .animation(
-                        .easeInOut(duration: 0.8)
-                            .repeatForever(autoreverses: true),
+                        .easeInOut(duration: 0.8).repeatForever(autoreverses: true),
                         value: secondaryPulseScale
                     )
 
-                // Rotating magnifying glass
                 Image(systemName: "magnifyingglass")
                     .font(.title)
                     .foregroundColor(.blue)
                     .rotationEffect(rotationAngle)
                     .animation(
-                        .linear(duration: 2.0)
-                            .repeatForever(autoreverses: false),
+                        .linear(duration: 2.0).repeatForever(autoreverses: false),
                         value: rotationAngle
                     )
             }
@@ -93,7 +68,6 @@ struct FoodSearchResultsView: View {
                         .font(.headline)
                         .foregroundColor(.primary)
 
-                    // Animated dots
                     HStack(spacing: 2) {
                         ForEach(0 ..< 3) { index in
                             Circle()
@@ -101,9 +75,7 @@ struct FoodSearchResultsView: View {
                                 .frame(width: 4, height: 4)
                                 .scaleEffect(dotScales[index])
                                 .animation(
-                                    .easeInOut(duration: 0.6)
-                                        .repeatForever()
-                                        .delay(Double(index) * 0.2),
+                                    .easeInOut(duration: 0.6).repeatForever().delay(Double(index) * 0.2),
                                     value: dotScales[index]
                                 )
                         }
@@ -177,7 +149,6 @@ struct FoodSearchResultsView: View {
                     .multilineTextAlignment(.center)
             }
 
-            // Helpful suggestions
             VStack(spacing: 4) {
                 Text("💡 Search Tips:")
                     .font(.caption)
@@ -202,7 +173,6 @@ struct FoodSearchResultsView: View {
     private var resultsListView: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                // AI Results Section
                 if !aiSearchResults.isEmpty {
                     Section {
                         Text("🤖 AI Search Results")
@@ -220,17 +190,13 @@ struct FoodSearchResultsView: View {
                             .background(Color(.systemBackground))
 
                             if aiProduct.id != aiSearchResults.last?.id {
-                                Divider()
-                                    .padding(.leading, 16)
+                                Divider().padding(.leading, 16)
                             }
                         }
                     }
-
-                    Divider()
-                        .padding(.vertical, 8)
+                    Divider().padding(.vertical, 8)
                 }
 
-                // Traditional Results Section
                 if !searchResults.isEmpty {
                     Section {
                         Text("📦 Database Results")
@@ -248,8 +214,7 @@ struct FoodSearchResultsView: View {
                             .background(Color(.systemBackground))
 
                             if product.id != searchResults.last?.id {
-                                Divider()
-                                    .padding(.leading, 16)
+                                Divider().padding(.leading, 16)
                             }
                         }
                     }
@@ -259,8 +224,6 @@ struct FoodSearchResultsView: View {
         }
     }
 }
-
-// MARK: - AI Food Search Result Row
 
 private struct AIFoodSearchResultRow: View {
     let product: AIFoodItem
@@ -277,7 +240,6 @@ private struct AIFoodSearchResultRow: View {
                         .foregroundColor(.purple)
                 )
 
-            // Product details
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.name)
                     .font(.headline)
@@ -294,14 +256,12 @@ private struct AIFoodSearchResultRow: View {
                         .truncationMode(.tail)
                 }
 
-                // Nutrition info
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(format: "%.1fg carbs per 100g", product.carbs))
                         .font(.caption)
                         .foregroundColor(.blue)
                         .lineLimit(1)
 
-                    // Additional nutrition
                     HStack(spacing: 8) {
                         Text(String(format: "%.1fg protein", product.protein))
                             .font(.caption2)
@@ -321,11 +281,8 @@ private struct AIFoodSearchResultRow: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
-            .onTapGesture {
-                onSelected()
-            }
+            .onTapGesture { onSelected() }
 
-            // Selection indicator
             Image(systemName: "chevron.right")
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -335,49 +292,44 @@ private struct AIFoodSearchResultRow: View {
     }
 }
 
-// MARK: - Food Search Result Row (Original)
-
 private struct FoodSearchResultRow: View {
     let product: OpenFoodFactsProduct
     let onSelected: () -> Void
-    var validatedImageURL: URL? {
-        guard let urlString = product.imageURL ?? product.imageFrontURL else {
-            return nil
-        }
+    let cachedImageURL: URL?
 
-        var cleanedURL = urlString
-        if cleanedURL.hasPrefix("../") {
-            cleanedURL = String(cleanedURL.dropFirst(3))
-        }
-        if !cleanedURL.hasPrefix("http") {
-            cleanedURL = "https://static.openfoodfacts.org\(cleanedURL)"
-        }
+    // 🚀 OPTIMIERUNG: URL exakt EINMAL berechnen beim Laden
+    init(product: OpenFoodFactsProduct, onSelected: @escaping () -> Void) {
+        self.product = product
+        self.onSelected = onSelected
 
-        return URL(string: cleanedURL)
+        if let urlString = product.imageFrontURL ?? product.imageURL {
+            var cleanedURL = urlString
+            if cleanedURL.hasPrefix("../") {
+                cleanedURL = String(cleanedURL.dropFirst(3))
+            }
+            if !cleanedURL.hasPrefix("http") {
+                cleanedURL = "https://static.openfoodfacts.org\(cleanedURL)"
+            }
+            cachedImageURL = URL(string: cleanedURL)
+        } else {
+            cachedImageURL = nil
+        }
     }
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Group {
-                if let imageURL = product.imageFrontURL ?? product.imageURL,
-                   let url = URL(string: imageURL)
-                {
+                if let url = cachedImageURL {
                     AsyncImage(url: url) { phase in
                         switch phase {
                         case .empty:
-                            ProgressView()
-                                .scaleEffect(0.7)
+                            ProgressView().scaleEffect(0.7)
                         case let .success(image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
+                            image.resizable().aspectRatio(contentMode: .fill)
                         case let .failure(error):
                             VStack {
-                                Image(systemName: "exclamationmark.triangle")
-                                    .foregroundColor(.orange)
-                                Text("Failed to load, " + error.localizedDescription)
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
+                                Image(systemName: "exclamationmark.triangle").foregroundColor(.orange)
+                                Text("Failed").font(.caption2).foregroundColor(.secondary)
                             }
                         @unknown default:
                             EmptyView()
@@ -396,7 +348,7 @@ private struct FoodSearchResultRow: View {
                         )
                 }
             }
-            // Product details
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.displayName)
                     .font(.headline)
@@ -413,10 +365,8 @@ private struct FoodSearchResultRow: View {
                         .truncationMode(.tail)
                 }
 
-                // Essential nutrition info
                 VStack(alignment: .leading, spacing: 2) {
                     VStack(alignment: .leading, spacing: 1) {
-                        // Carbs per serving or per 100g
                         if let carbsPerServing = product.carbsPerServing {
                             Text(String(format: "%.1fg carbs per %@", carbsPerServing, product.servingSizeDisplay))
                                 .font(.caption)
@@ -431,20 +381,13 @@ private struct FoodSearchResultRow: View {
                         }
                     }
 
-                    // Additional nutrition if available
                     HStack(spacing: 8) {
                         if let protein = product.nutriments.proteins {
-                            Text(String(format: "%.1fg protein", protein))
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
+                            Text(String(format: "%.1fg protein", protein)).font(.caption2).foregroundColor(.secondary)
                         }
-
                         if let fat = product.nutriments.fat {
-                            Text(String(format: "%.1fg fat", fat))
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
+                            Text(String(format: "%.1fg fat", fat)).font(.caption2).foregroundColor(.secondary)
                         }
-
                         Spacer()
                     }
                 }
@@ -452,11 +395,9 @@ private struct FoodSearchResultRow: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
             .onTapGesture {
-                print("🔍 User tapped on food result: \(product.displayName)")
                 onSelected()
             }
 
-            // Selection indicator
             Image(systemName: "chevron.right")
                 .font(.caption)
                 .foregroundColor(.secondary)
