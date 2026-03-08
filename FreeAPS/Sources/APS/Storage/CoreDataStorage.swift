@@ -35,7 +35,7 @@ final class CoreDataStorage {
     func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
         var fetchTicks = [InsulinActivity]()
         coredataContext.performAndWait {
-            let requestTicks = InsulinActivity.fetchRequest()
+            let requestTicks = InsulinActivity.fetchRequest() as NSFetchRequest<InsulinActivity>
             let sort = NSSortDescriptor(key: "date", ascending: true)
             requestTicks.sortDescriptors = [sort]
             requestTicks.predicate = NSPredicate(
@@ -61,11 +61,11 @@ final class CoreDataStorage {
         let iob = iobEntries[0].iob
 
         coredataContext.perform {
-            let deleteRequest = InsulinActivity.fetchRequest()
+            let deleteRequest = InsulinActivity.fetchRequest() as NSFetchRequest<InsulinActivity>
             deleteRequest.predicate = NSPredicate(
                 format: "date >= %@ OR date < %@",
-                firstDate.addingTimeInterval(-60) as NSDate, // delete previous "future" entries
-                firstDate.addingTimeInterval(-86400) as NSDate // delete entries older than 1 day
+                firstDate.addingTimeInterval(-60) as NSDate, // Delete previous "future" entries
+                firstDate.addingTimeInterval(-86400) as NSDate // Delete entries older than 1 day
             )
             do {
                 let recordsToDelete = try self.coredataContext.fetch(deleteRequest)
@@ -116,11 +116,12 @@ final class CoreDataStorage {
             let saveToTDD = TDD(context: self.coredataContext)
             saveToTDD.timestamp = Date.now
             saveToTDD.tdd = (insulin.basal + insulin.bolus) as NSDecimalNumber?
+
             let saveToInsulin = InsulinDistribution(context: self.coredataContext)
             saveToInsulin.bolus = insulin.bolus as NSDecimalNumber?
-            // saveToInsulin.scheduledBasal = (suggestion.insulin?.scheduled_basal ?? 0) as NSDecimalNumber?
             saveToInsulin.tempBasal = insulin.basal as NSDecimalNumber?
             saveToInsulin.date = Date()
+
             try? self.coredataContext.save()
         }
     }
@@ -131,7 +132,6 @@ final class CoreDataStorage {
             let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
             let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
             requestIsEnbled.sortDescriptors = [sortIsEnabled]
-            // requestIsEnbled.fetchLimit = 1
             try? sliderArray = coredataContext.fetch(requestIsEnbled)
         }
         return sliderArray
@@ -159,20 +159,6 @@ final class CoreDataStorage {
             try? carbs = coredataContext.fetch(requestCarbs)
         }
         return carbs
-    }
-
-    func fetchMealData(interval: NSDate) -> [Carbohydrates] {
-        var data = [Carbohydrates]()
-        coredataContext.performAndWait {
-            let requestData = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
-            let sortData = NSSortDescriptor(key: "date", ascending: false)
-            requestData.sortDescriptors = [sortData]
-            requestData.predicate = NSPredicate(
-                format: "date > %@", interval
-            )
-            try? data = self.coredataContext.fetch(requestData)
-        }
-        return data
     }
 
     func fetchStats() -> [StatsData] {
@@ -247,8 +233,7 @@ final class CoreDataStorage {
     }
 
     func saveVNr(_ versions: Version?) {
-        guard let version = versions else { return }
-        guard version.main != "" else { return }
+        guard let version = versions, !version.main.isEmpty else { return }
         coredataContext.perform { [self] in
             let saveNr = VNr(context: self.coredataContext)
             saveNr.nr = version.main
@@ -301,20 +286,16 @@ final class CoreDataStorage {
         }
     }
 
+    // Optimization: Added fetchLimit to avoid fetching the entire preset library
     func fetchMealPreset(_ name: String) -> Presets? {
-        var presetsArray = [Presets]()
         var preset: Presets?
         coredataContext.performAndWait {
             let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
             requestPresets.predicate = NSPredicate(
                 format: "dish == %@", name
             )
-            try? presetsArray = self.coredataContext.fetch(requestPresets)
-
-            guard let mealPreset = presetsArray.first else {
-                return
-            }
-            preset = mealPreset
+            requestPresets.fetchLimit = 1
+            preset = (try? self.coredataContext.fetch(requestPresets))?.first
         }
         return preset
     }
@@ -376,18 +357,17 @@ final class CoreDataStorage {
         return presetsArray
     }
 
+    // Optimization: Replaced memory-heavy fetch with a direct database count query
     func fetchUniqueSettingProfileName(_ name: String) -> Bool {
-        var presetsArray: Profiles?
+        var count = 0
         coredataContext.performAndWait {
             let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
-            let sort = NSSortDescriptor(key: "date", ascending: false)
-            requestProfiles.sortDescriptors = [sort]
             requestProfiles.predicate = NSPredicate(
                 format: "uploaded == true && name == %@", name as String
             )
-            try? presetsArray = self.coredataContext.fetch(requestProfiles).first
+            count = (try? self.coredataContext.count(for: requestProfiles)) ?? 0
         }
-        return (presetsArray != nil)
+        return count > 0
     }
 
     func saveProfileSettingName(name: String) {
@@ -410,10 +390,7 @@ final class CoreDataStorage {
     }
 
     func profileSettingUploaded(name: String) {
-        var profile: String = name
-        if profile.isEmpty {
-            profile = "default"
-        }
+        let profile = name.isEmpty ? "default" : name
 
         // Avoid duplicates
         if !fetchUniqueSettingProfileName(name) {
@@ -437,26 +414,32 @@ final class CoreDataStorage {
         }
     }
 
+    // Optimization: Added fetchLimit to only check the most recent entry
     func checkIfActiveProfile() -> Bool {
-        var presetsArray = [ActiveProfile]()
+        var isActive = false
         coredataContext.performAndWait {
             let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
-            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+            requestProfiles.fetchLimit = 1
+            isActive = (try? self.coredataContext.fetch(requestProfiles))?.first?.active ?? false
         }
-        return (presetsArray.first?.active ?? false)
+        return isActive
     }
 
+    // Optimization: Added fetchLimit to prevent fetching all profiles
     func fetchActiveProfile() -> String {
-        var presetsArray = [ActiveProfile]()
+        var profileName = "default"
         coredataContext.performAndWait {
             let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
-            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+            requestProfiles.fetchLimit = 1
+            if let first = (try? self.coredataContext.fetch(requestProfiles))?.first, let name = first.name {
+                profileName = name
+            }
         }
-        return presetsArray.first?.name ?? "default"
+        return profileName
     }
 
     func fetchLastLoop() -> LastLoop? {
@@ -482,5 +465,142 @@ final class CoreDataStorage {
         }
         let recent = conc.first
         return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
+    }
+
+    // MARK: - Meal History & Statistics Methods
+
+    func generateMealSummariesForLastNDays(days: Int) -> [MealDaySummary] {
+        let calendar = Calendar.current
+
+        // Start date (inclusive) of the period
+        let startDate = calendar.date(byAdding: .day, value: -days + 1, to: Date())!
+        let interval = startDate as NSDate
+
+        // 1. Purge macro data older than 90 days
+        let ninetyDaysAgo = calendar.date(byAdding: .day, value: -90, to: Date())!
+        purgeOldMealMacros(olderThan: ninetyDaysAgo)
+
+        // 2. Load current entries (from startDate)
+        let carbsEntries = fetchMealData(interval: interval)
+
+        // Group by calendar day
+        var grouped: [Date: [Carbohydrates]] = [:]
+
+        for entry in carbsEntries {
+            guard let date = entry.date else { continue }
+            let day = calendar.startOfDay(for: date)
+            grouped[day, default: []].append(entry)
+        }
+
+        var summaries: [MealDaySummary] = []
+
+        // Calculate kcal from macros for each day
+        for (day, entries) in grouped {
+            var dayKcal = 0.0
+            var dayCarbs = 0.0
+            var dayFat = 0.0
+            var dayProtein = 0.0
+
+            for entry in entries {
+                let carbs = entryCarbs(entry)
+                let fat = entryFat(entry)
+                let protein = entryProtein(entry)
+
+                let kcal = carbs * 4.0 + fat * 9.0 + protein * 4.0
+                dayKcal += kcal
+                dayCarbs += carbs
+                dayFat += fat
+                dayProtein += protein
+
+                // Update kcal in CoreData object (NSDecimalNumber)
+                entry.kcal = NSDecimalNumber(value: kcal)
+            }
+
+            let servings = entries.count
+
+            // Only include days with kcal > 0 in the summary
+            guard dayKcal > 0 else { continue }
+
+            let summary = MealDaySummary(
+                date: day,
+                kcal: dayKcal,
+                carbs: dayCarbs,
+                fat: dayFat,
+                protein: dayProtein,
+                servings: servings
+            )
+            summaries.append(summary)
+        }
+
+        // Save changes to CoreData
+        do {
+            try coredataContext.save()
+        } catch {
+            print("Error saving updated kcal values: \(error)")
+        }
+
+        // Return sorted by date
+        summaries.sort { $0.date < $1.date }
+        return summaries
+    }
+
+    // Clear old macros without destroying the entries entirely
+    private func purgeOldMealMacros(olderThan date: Date) {
+        coredataContext.performAndWait {
+            let fetchRequest = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+            fetchRequest.predicate = NSPredicate(format: "date < %@", date as NSDate)
+
+            do {
+                let oldEntries = try coredataContext.fetch(fetchRequest)
+                for entry in oldEntries {
+                    entry.carbs = nil
+                    entry.fat = nil
+                    entry.protein = nil
+                    entry.kcal = nil
+                }
+                if coredataContext.hasChanges {
+                    try coredataContext.save()
+                }
+            } catch {
+                print("Error purging old meal macro data: \(error)")
+            }
+        }
+    }
+
+    func fetchMealData(interval: NSDate) -> [Carbohydrates] {
+        var data = [Carbohydrates]()
+        coredataContext.performAndWait {
+            let requestData = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+            let sortData = NSSortDescriptor(key: "date", ascending: false)
+            requestData.sortDescriptors = [sortData]
+            requestData.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? data = self.coredataContext.fetch(requestData)
+        }
+        return data
+    }
+
+    private func entryCarbs(_ entry: Carbohydrates) -> Double {
+        entry.carbs?.doubleValue ?? 0
+    }
+
+    private func entryFat(_ entry: Carbohydrates) -> Double {
+        entry.fat?.doubleValue ?? 0
+    }
+
+    private func entryProtein(_ entry: Carbohydrates) -> Double {
+        entry.protein?.doubleValue ?? 0
+    }
+
+    // Kcal entry calculation
+    private func entryKcal(_ entry: Carbohydrates) -> Double {
+        if let stored = entry.kcal?.doubleValue {
+            return stored
+        }
+        let carbs = entryCarbs(entry)
+        let fat = entryFat(entry)
+        let protein = entryProtein(entry)
+        return carbs * 4.0 + fat * 9.0 + protein * 4.0
     }
 }

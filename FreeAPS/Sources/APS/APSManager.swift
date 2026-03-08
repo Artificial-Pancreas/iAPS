@@ -692,7 +692,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 protein: protein,
                 note: "Remote",
                 enteredBy: "Nightscout operator",
-                isFPU: false
+                isFPU: false,
+                kcal: nil
             )])
 
             announcementsStorage.storeAnnouncements([announcement], enacted: true)

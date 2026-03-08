@@ -27,3 +27,7 @@ protocol PumpConfigProvider: Provider {
     func pumpSettings() -> PumpSettings
     func basalProfile() -> [BasalProfileEntry]
 }
+
+@objc protocol RefillCapable {
+    func writeRefillEvent(date: Date, completion: @escaping (Bool) -> Void)
+}
