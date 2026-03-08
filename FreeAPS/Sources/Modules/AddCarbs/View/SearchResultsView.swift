@@ -404,63 +404,14 @@ struct SearchResultsView: View {
 
     private func saveMealTotalsAsFoodItem() {
         let allItems = state.searchResultsState.nonDeletedItems
-
         guard !allItems.isEmpty else { return }
 
-        // Calculate aggregate serving size (sum of all portion sizes for per100, and serving sizes for perServing)
-        var aggregateServingSize: Decimal? = 0
-        var hasAllServingSizes = true
-
-        for item in allItems {
-            let portionSize = state.searchResultsState.portionSize(for: item)
-
-            switch item.nutrition {
-            case .per100:
-                // For per100, use the portion size directly
-                aggregateServingSize? += portionSize
-
-            case .perServing:
-                // For perServing, use standardServingSize multiplied by servingsMultiplier
-                if let servingSize = item.standardServingSize {
-                    aggregateServingSize? += servingSize * portionSize
-                } else {
-                    // If any perServing item doesn't have a serving size, we can't calculate aggregate
-                    hasAllServingSizes = false
-                    break
-                }
-            }
-        }
-
-        // If we couldn't calculate complete serving size, set to nil
-        if !hasAllServingSizes {
-            aggregateServingSize = nil
-        }
-
-        // Create nutrition values from totals
-        var nutritionValues: NutritionValues = [:]
-        for nutrient in NutrientType.allCases {
-            let value = state.searchResultsState.total(nutrient)
-            if value > 0 || nutrient.isPrimary {
-                nutritionValues[nutrient] = value
-            }
-        }
-
-        // Create new food item with per-serving nutrition
         let savedItem = FoodItemDetailed(
             name: "Complete Meal",
-            nutritionPerServing: nutritionValues,
+            nutritionPerServing: state.searchResultsState.mealNutritionValues,
             servingsMultiplier: 1,
-            confidence: nil,
-            brand: nil,
-            standardServing: nil,
-            standardServingSize: aggregateServingSize,
+            standardServingSize: state.searchResultsState.aggregateServingSize(for: allItems),
             units: .grams,
-            preparationMethod: nil,
-            visualCues: nil,
-            glycemicIndex: nil,
-            assessmentNotes: nil,
-            imageURL: nil,
-            tags: nil,
             source: .manual
         )
 
@@ -622,30 +573,11 @@ struct SearchResultsView: View {
     // utils
 
     private func createCombinedFoodItem() -> FoodItemDetailed {
-        var nutritionValues: NutritionValues = [:]
-        for nutrient in NutrientType.allCases {
-            let value = state.searchResultsState.total(nutrient)
-            if value > 0 || nutrient.isPrimary {
-                nutritionValues[nutrient] = value
-            }
-        }
-
-        // Create new food item with per-serving nutrition
-        return FoodItemDetailed(
+        FoodItemDetailed(
             name: "Complete Meal",
-            nutritionPerServing: nutritionValues,
+            nutritionPerServing: state.searchResultsState.mealNutritionValues,
             servingsMultiplier: 1,
-            confidence: nil,
-            brand: nil,
-            standardServing: nil,
-            standardServingSize: nil,
             units: .grams,
-            preparationMethod: nil,
-            visualCues: nil,
-            glycemicIndex: nil,
-            assessmentNotes: nil,
-            imageURL: nil,
-            tags: nil,
             source: .manual
         )
     }
@@ -767,61 +699,17 @@ private struct FoodItemGroupListSection: View {
     }
 
     private func saveSectionAsFoodItem() {
-        let nonDeletedItems = foodItemGroup.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }
-
-        guard !nonDeletedItems.isEmpty else { return }
-
-        var totals: [NutrientType: Decimal] = [:]
-        var aggregateServingSize: Decimal? = 0
-        var hasAllServingSizes = true
-
-        for item in nonDeletedItems {
-            let portionSize = state.searchResultsState.portionSize(for: item)
-            for nutrient in NutrientType.allCases {
-                totals[nutrient, default: 0] += item.nutrient(nutrient, forPortion: portionSize)
-            }
-
-            switch item.nutrition {
-            case .per100:
-                aggregateServingSize? += portionSize
-            case .perServing:
-                if let servingSize = item.standardServingSize {
-                    aggregateServingSize? += servingSize * portionSize
-                } else {
-                    hasAllServingSizes = false
-                }
-            }
-        }
-
-        if !hasAllServingSizes {
-            aggregateServingSize = nil
-        }
-
-        var nutritionValues: NutritionValues = [:]
-        for nutrient in NutrientType.allCases {
-            let total = totals[nutrient, default: 0]
-            if total > 0 || nutrient.isPrimary {
-                nutritionValues[nutrient] = total
-            }
-        }
+        let items = foodItemGroup.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }
+        guard !items.isEmpty else { return }
 
         let sectionName = foodItemGroup.briefDescription ?? foodItemGroup.textQuery ?? foodItemGroup.title
 
         let savedItem = FoodItemDetailed(
             name: sectionName,
-            nutritionPerServing: nutritionValues,
+            nutritionPerServing: state.searchResultsState.nutritionValues(for: items),
             servingsMultiplier: 1,
-            confidence: nil,
-            brand: nil,
-            standardServing: nil,
-            standardServingSize: aggregateServingSize,
+            standardServingSize: state.searchResultsState.aggregateServingSize(for: items),
             units: .grams,
-            preparationMethod: nil,
-            visualCues: nil,
-            glycemicIndex: nil,
-            assessmentNotes: nil,
-            imageURL: nil,
-            tags: nil,
             source: .manual
         )
 

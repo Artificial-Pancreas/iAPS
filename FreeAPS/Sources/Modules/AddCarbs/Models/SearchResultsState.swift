@@ -252,4 +252,46 @@ class SearchResultsState: ObservableObject {
     var hasNutritionOverrides: Bool {
         !nutritionOverrides.isEmpty
     }
+
+    // MARK: - Nutrition value builders (for saving food items)
+
+    /// Build nutrition values from meal-level totals (includes manual overrides)
+    var mealNutritionValues: NutritionValues {
+        var values: NutritionValues = [:]
+        for nutrient in NutrientType.allCases {
+            let value = total(nutrient)
+            if value > 0 || nutrient.isPrimary {
+                values[nutrient] = value
+            }
+        }
+        return values
+    }
+
+    /// Build nutrition values from a specific subset of items (no overrides applied)
+    func nutritionValues(for items: [FoodItemDetailed]) -> NutritionValues {
+        var values: NutritionValues = [:]
+        for nutrient in NutrientType.allCases {
+            let sum = items.reduce(Decimal(0)) { $0 + $1.nutrient(nutrient, forPortion: portionSize(for: $1)) }
+            if sum > 0 || nutrient.isPrimary {
+                values[nutrient] = sum
+            }
+        }
+        return values
+    }
+
+    /// Compute aggregate serving size from a list of items; returns nil if any perServing item lacks a standardServingSize
+    func aggregateServingSize(for items: [FoodItemDetailed]) -> Decimal? {
+        var total: Decimal = 0
+        for item in items {
+            let portion = portionSize(for: item)
+            switch item.nutrition {
+            case .per100:
+                total += portion
+            case .perServing:
+                guard let servingSize = item.standardServingSize else { return nil }
+                total += servingSize * portion
+            }
+        }
+        return total
+    }
 }

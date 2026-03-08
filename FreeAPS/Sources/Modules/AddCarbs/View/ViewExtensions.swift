@@ -29,3 +29,14 @@ struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
+
+extension FoodItemDetailed {
+    func preferredInfoSheetHeight() -> CGFloat {
+        var base: CGFloat = 480
+        if let notes = assessmentNotes, !notes.isEmpty { base += 40 }
+        if let prep = preparationMethod, !prep.isEmpty { base += 30 }
+        if let cues = visualCues, !cues.isEmpty { base += 30 }
+        if (standardServing != nil && !standardServing!.isEmpty) || standardServingSize != nil { base += 40 }
+        return min(max(base, 460), 680)
+    }
+}

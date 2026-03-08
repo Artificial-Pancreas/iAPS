@@ -1,6 +1,19 @@
 import Foundation
 import SwiftUI
 
+private func adaptiveNutritionColor(_ color: Color, colorScheme: ColorScheme) -> Color {
+    guard colorScheme == .light else { return color }
+    switch color {
+    case .orange: return Color(red: 0.85, green: 0.45, blue: 0.0)
+    case .green: return Color(red: 0.0, green: 0.6, blue: 0.0)
+    case .red: return Color(red: 0.8, green: 0.0, blue: 0.0)
+    case .blue: return Color(red: 0.0, green: 0.4, blue: 0.8)
+    case .purple: return Color(red: 0.6, green: 0.0, blue: 0.6)
+    case .gray: return Color(red: 0.4, green: 0.4, blue: 0.4)
+    default: return color
+    }
+}
+
 enum NutritionBadgeConfig {
     static let caloriesColor = Color.gray
 }
@@ -98,33 +111,11 @@ struct NutritionBadgePlain: View {
         self.color = color
     }
 
-    private var adaptiveColor: Color {
-        guard colorScheme == .light else { return color }
-
-        // Use specific darker variants for better contrast in light mode
-        switch color {
-        case .orange:
-            return Color(red: 0.85, green: 0.45, blue: 0.0) // Darker orange
-        case .green:
-            return Color(red: 0.0, green: 0.6, blue: 0.0) // Darker green
-        case .red:
-            return Color(red: 0.8, green: 0.0, blue: 0.0) // Darker red
-        case .blue:
-            return Color(red: 0.0, green: 0.4, blue: 0.8) // Darker blue
-        case .purple:
-            return Color(red: 0.6, green: 0.0, blue: 0.6) // Darker purple
-        case .gray:
-            return Color(red: 0.4, green: 0.4, blue: 0.4) // Darker gray for better contrast
-        default:
-            return color
-        }
-    }
-
     var body: some View {
         HStack(spacing: 3) {
             Text("\(Double(value), specifier: unit == UnitEnergy.kilocalories || value > 20 ? "%.0f" : "%.1f")")
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
-                .foregroundColor(adaptiveColor)
+                .foregroundColor(adaptiveNutritionColor(color, colorScheme: colorScheme))
                 .shadow(color: .black.opacity(colorScheme == .light ? 0.08 : 0), radius: 0.5, x: 0, y: 0.5)
                 .fixedSize()
             if let unit = unit {
@@ -161,34 +152,12 @@ struct NutritionBadgePlainStacked: View {
         self.color = color
     }
 
-    private var adaptiveColor: Color {
-        guard colorScheme == .light else { return color }
-
-        // Use specific darker variants for better contrast in light mode
-        switch color {
-        case .orange:
-            return Color(red: 0.85, green: 0.45, blue: 0.0) // Darker orange
-        case .green:
-            return Color(red: 0.0, green: 0.6, blue: 0.0) // Darker green
-        case .red:
-            return Color(red: 0.8, green: 0.0, blue: 0.0) // Darker red
-        case .blue:
-            return Color(red: 0.0, green: 0.4, blue: 0.8) // Darker blue
-        case .purple:
-            return Color(red: 0.6, green: 0.0, blue: 0.6) // Darker purple
-        case .gray:
-            return Color(red: 0.4, green: 0.4, blue: 0.4) // Darker gray for better contrast
-        default:
-            return color
-        }
-    }
-
     var body: some View {
         VStack(spacing: 3) {
             HStack(spacing: 3) {
                 Text("\(Double(value), specifier: unit == UnitEnergy.kilocalories || value > 10 ? "%.0f" : "%.1f")")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundColor(adaptiveColor)
+                    .foregroundColor(adaptiveNutritionColor(color, colorScheme: colorScheme))
                     .shadow(color: .black.opacity(colorScheme == .light ? 0.08 : 0), radius: 0.5, x: 0, y: 0.5)
                     .fixedSize()
                 if let unit = unit {

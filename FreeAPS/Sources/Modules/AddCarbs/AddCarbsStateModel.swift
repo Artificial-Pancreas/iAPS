@@ -68,9 +68,9 @@ extension AddCarbs {
         }
 
         func addAIFood(_ continue_: Bool, fetch: Bool, food: FoodItemDetailed, date: Date?) {
-            var carbs = food.carbsInThisPortion ?? 0
-            let fat = food.fatInThisPortion ?? 0
-            let protein = food.proteinInThisPortion ?? 0
+            var carbs = food.nutrientInThisPortion(.carbs) ?? 0
+            let fat = food.nutrientInThisPortion(.fat) ?? 0
+            let protein = food.nutrientInThisPortion(.protein) ?? 0
             guard carbs > 0 || fat > 0 || protein > 0 else {
                 showModal(for: nil)
                 return

@@ -20,13 +20,6 @@ struct FoodItemRow: View {
         savedFoodIds.contains(foodItem.id)
     }
 
-    private var hasNutritionInfo: Bool {
-        switch foodItem.nutrition {
-        case let .per100(values): return !values.isEmpty
-        case let .perServing(values): return !values.isEmpty
-        }
-    }
-
     private var isManualEntry: Bool {
         foodItem.source == .manual
     }
@@ -198,14 +191,14 @@ struct FoodItemRow: View {
                     case .perServing:
                         hasReset = foodItem.servingsMultiplier != nil
                     }
-                    return hasNutritionInfo ? (hasReset ? 420 : 400) : (hasReset ? 340 : 300)
+                    return foodItem.hasNutritionValues ? (hasReset ? 420 : 400) : (hasReset ? 340 : 300)
                 }())])
                 .presentationDragIndicator(.visible)
             }
         }
         .sheet(isPresented: $showItemInfo) {
             FoodItemInfoPopup(foodItem: foodItem, portionSize: portionSize)
-                .presentationDetents([.height(preferredItemInfoHeight(for: foodItem)), .large])
+                .presentationDetents([.height(foodItem.preferredInfoSheetHeight()), .large])
                 .presentationDragIndicator(.visible)
         }
         .onChange(of: portionSize) { _, newValue in
@@ -215,59 +208,49 @@ struct FoodItemRow: View {
             sliderMultiplier = Double(portionSize)
         }
     }
+}
 
-    private func preferredItemInfoHeight(for item: FoodItemDetailed) -> CGFloat {
-        var base: CGFloat = 480
-        if let notes = item.assessmentNotes, !notes.isEmpty { base += 40 }
-        if let prep = item.preparationMethod, !prep.isEmpty { base += 30 }
-        if let cues = item.visualCues, !cues.isEmpty { base += 30 }
-        if (item.standardServing != nil && !item.standardServing!.isEmpty) ||
-            item.standardServingSize != nil { base += 40 }
-        return min(max(base, 460), 680)
+struct PortionSizeBadge: View {
+    let value: Decimal
+    let color: Color
+    let icon: String
+    let foodItem: FoodItemDetailed
+
+    @Environment(\.colorScheme) private var colorScheme
+
+    var body: some View {
+        HStack(spacing: 4) {
+            if !icon.isEmpty {
+                Image(systemName: icon)
+                    .font(.system(size: 10))
+                    .opacity(0.3)
+            }
+            HStack(spacing: 2) {
+                switch foodItem.nutrition {
+                case .per100:
+                    Text("\(Double(value), specifier: "%.0f")")
+                        .font(.system(size: 15, weight: .bold))
+                    Text((foodItem.units ?? .grams).dimension.symbol)
+                        .font(.system(size: 13, weight: .semibold))
+                        .opacity(0.4)
+                case .perServing:
+                    Text("\(Double(value), specifier: "%.1f")")
+                        .font(.system(size: 15, weight: .bold))
+                    Text(value == 1 ? "serving" : "servings")
+                        .font(.system(size: 13, weight: .semibold))
+                        .opacity(0.4)
+                }
+            }
+        }
+        .foregroundColor(.primary)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 6)
+        .background(Color(.systemGray4))
+        .cornerRadius(8)
     }
 }
 
 extension FoodItemRow {
-    private struct PortionSizeBadge: View {
-        let value: Decimal
-        let color: Color
-        let icon: String
-        let foodItem: FoodItemDetailed
-
-        @Environment(\.colorScheme) private var colorScheme
-
-        var body: some View {
-            HStack(spacing: 4) {
-                if !icon.isEmpty {
-                    Image(systemName: icon)
-                        .font(.system(size: 10))
-                        .opacity(0.3)
-                }
-                HStack(spacing: 2) {
-                    switch foodItem.nutrition {
-                    case .per100:
-                        Text("\(Double(value), specifier: "%.0f")")
-                            .font(.system(size: 15, weight: .bold))
-                        Text((foodItem.units ?? .grams).dimension.symbol)
-                            .font(.system(size: 13, weight: .semibold))
-                            .opacity(0.4)
-                    case .perServing:
-                        Text("\(Double(value), specifier: "%.1f")")
-                            .font(.system(size: 15, weight: .bold))
-                        Text(value == 1 ? "serving" : "servings")
-                            .font(.system(size: 13, weight: .semibold))
-                            .opacity(0.4)
-                    }
-                }
-            }
-            .foregroundColor(.primary)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 6)
-            .background(Color(.systemGray4))
-            .cornerRadius(8)
-        }
-    }
-
     private struct PortionAdjusterView: View {
         let currentPortion: Decimal
         let foodItem: FoodItemDetailed
@@ -275,13 +258,6 @@ extension FoodItemRow {
         let onSave: (Decimal) -> Void
         let onReset: (() -> Void)?
         let onCancel: () -> Void
-
-        private var isPerServing: Bool {
-            if case .perServing = foodItem.nutrition {
-                return true
-            }
-            return false
-        }
 
         private var unit: String {
             switch foodItem.nutrition {
@@ -296,7 +272,7 @@ extension FoodItemRow {
             Decimal(sliderMultiplier)
         }
 
-        private let formatter: NumberFormatter = {
+        private static let formatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
@@ -376,7 +352,7 @@ extension FoodItemRow {
                     switch foodItem.nutrition {
                     case .per100:
                         Text(
-                            (formatter.string(from: calculatedPortion as NSNumber) ?? "") +
+                            (FoodItemRow.PortionAdjusterView.formatter.string(from: calculatedPortion as NSNumber) ?? "") +
                                 NSLocalizedString(unit, comment: "")
                         )
                         .font(.system(size: 32, weight: .bold))
@@ -403,7 +379,7 @@ extension FoodItemRow {
                     }
 
                     // Display nutritional information if available
-                    if hasNutritionInfo {
+                    if foodItem.hasNutritionValues {
                         HStack(spacing: 8) {
                             ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
                                 let value = foodItem.nutrient(nutrient, forPortion: calculatedPortion)
@@ -440,7 +416,7 @@ extension FoodItemRow {
                             HStack {
                                 Text(
                                     NSLocalizedString("Reset to ", comment: "") +
-                                        (formatter.string(from: original as NSNumber) ?? "") +
+                                        (FoodItemRow.PortionAdjusterView.formatter.string(from: original as NSNumber) ?? "") +
                                         unit
                                 )
                             }
@@ -459,7 +435,7 @@ extension FoodItemRow {
                             HStack {
                                 Text(
                                     NSLocalizedString("Reset to ", comment: "") +
-                                        (formatter.string(from: original as NSNumber) ?? "") +
+                                        (FoodItemRow.PortionAdjusterView.formatter.string(from: original as NSNumber) ?? "") +
                                         NSLocalizedString(servingString, comment: "")
                                 )
                             }
@@ -494,13 +470,6 @@ extension FoodItemRow {
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
-            }
-        }
-
-        private var hasNutritionInfo: Bool {
-            switch foodItem.nutrition {
-            case let .per100(values): return !values.isEmpty
-            case let .perServing(values): return !values.isEmpty
             }
         }
     }

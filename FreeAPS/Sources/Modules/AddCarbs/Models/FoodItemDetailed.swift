@@ -262,41 +262,6 @@ extension FoodItemDetailed {
         }
     }
 
-    var carbsInThisPortion: Decimal? {
-        switch nutrition {
-        case .per100:
-            guard let portion = portionSize else { return nil }
-            return carbsInPortion(portion: portion)
-        case .perServing:
-            guard let multiplier = servingsMultiplier else { return nil }
-            return carbsInServings(multiplier: multiplier)
-        }
-    }
-
-    var fatInThisPortion: Decimal? {
-        switch nutrition {
-        case .per100:
-            guard let portion = portionSize else { return nil }
-            return fatInPortion(portion: portion)
-        case .perServing:
-            guard let multiplier = servingsMultiplier else { return nil }
-            return fatInServings(multiplier: multiplier)
-        }
-    }
-
-    var proteinInThisPortion: Decimal? {
-        switch nutrition {
-        case .per100:
-            guard let portion = portionSize else { return nil }
-            return proteinInPortion(portion: portion)
-        case .perServing:
-            guard let multiplier = servingsMultiplier else { return nil }
-            return proteinInServings(multiplier: multiplier)
-        }
-    }
-
-    // MARK: - Per 100g/ml calculations
-
     /// Calculates calories from macronutrients using standard conversion factors:
     /// - Carbs: 4 kcal/g
     /// - Protein: 4 kcal/g
@@ -314,37 +279,15 @@ extension FoodItemDetailed {
         return nutrientPer100 / 100 * portion
     }
 
-    func carbsInPortion(portion: Decimal) -> Decimal? {
-        nutrientInPortion(.carbs, portion: portion)
-    }
-
-    func fatInPortion(portion: Decimal) -> Decimal? {
-        nutrientInPortion(.fat, portion: portion)
-    }
-
-    func proteinInPortion(portion: Decimal) -> Decimal? {
-        nutrientInPortion(.protein, portion: portion)
-    }
-
-    func fiberInPortion(portion: Decimal) -> Decimal? {
-        nutrientInPortion(.fiber, portion: portion)
-    }
-
-    func sugarsInPortion(portion: Decimal) -> Decimal? {
-        nutrientInPortion(.sugars, portion: portion)
-    }
-
     func caloriesInPortion(portion: Decimal) -> Decimal? {
         guard case .per100 = nutrition else { return nil }
 
         return calculateCaloriesFromMacros(
-            carbs: carbsInPortion(portion: portion),
-            protein: proteinInPortion(portion: portion),
-            fat: fatInPortion(portion: portion)
+            carbs: nutrientInPortion(.carbs, portion: portion),
+            protein: nutrientInPortion(.protein, portion: portion),
+            fat: nutrientInPortion(.fat, portion: portion)
         )
     }
-
-    // MARK: - Per serving calculations
 
     func nutrientInServings(_ nutrient: NutrientType, multiplier: Decimal) -> Decimal? {
         guard case let .perServing(perServing) = nutrition else { return nil }
@@ -352,33 +295,13 @@ extension FoodItemDetailed {
         return nutrientPerServing * multiplier
     }
 
-    func carbsInServings(multiplier: Decimal) -> Decimal? {
-        nutrientInServings(.carbs, multiplier: multiplier)
-    }
-
-    func fatInServings(multiplier: Decimal) -> Decimal? {
-        nutrientInServings(.fat, multiplier: multiplier)
-    }
-
-    func proteinInServings(multiplier: Decimal) -> Decimal? {
-        nutrientInServings(.protein, multiplier: multiplier)
-    }
-
-    func fiberInServings(multiplier: Decimal) -> Decimal? {
-        nutrientInServings(.fiber, multiplier: multiplier)
-    }
-
-    func sugarsInServings(multiplier: Decimal) -> Decimal? {
-        nutrientInServings(.sugars, multiplier: multiplier)
-    }
-
     func caloriesInServings(multiplier: Decimal) -> Decimal? {
         guard case .perServing = nutrition else { return nil }
 
         return calculateCaloriesFromMacros(
-            carbs: carbsInServings(multiplier: multiplier),
-            protein: proteinInServings(multiplier: multiplier),
-            fat: fatInServings(multiplier: multiplier)
+            carbs: nutrientInServings(.carbs, multiplier: multiplier),
+            protein: nutrientInServings(.protein, multiplier: multiplier),
+            fat: nutrientInServings(.fat, multiplier: multiplier)
         )
     }
 
@@ -541,5 +464,14 @@ extension FoodItemDetailed {
                 source: source
             )
         }
+    }
+
+    var isPerServing: Bool {
+        if case .perServing = nutrition { return true }
+        return false
+    }
+
+    var hasNutritionValues: Bool {
+        nutrition.isNotEmpty
     }
 }

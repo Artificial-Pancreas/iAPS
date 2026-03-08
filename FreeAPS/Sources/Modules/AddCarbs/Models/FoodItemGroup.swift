@@ -55,20 +55,4 @@ struct FoodItemGroup: Identifiable, Equatable {
             lhs.overallDescription == rhs.overallDescription &&
             lhs.diabetesConsiderations == rhs.diabetesConsiderations
     }
-
-    var totalCalories: Decimal {
-        foodItemsDetailed.compactMap(\.caloriesInThisPortion).reduce(0, +)
-    }
-
-    var totalCarbs: Decimal {
-        foodItemsDetailed.compactMap(\.carbsInThisPortion).reduce(0, +)
-    }
-
-    var totalFat: Decimal {
-        foodItemsDetailed.compactMap(\.fatInThisPortion).reduce(0, +)
-    }
-
-    var totalProtein: Decimal {
-        foodItemsDetailed.compactMap(\.proteinInThisPortion).reduce(0, +)
-    }
 }

@@ -15,13 +15,6 @@ struct FoodItemInfoPopup: View {
         }
     }
 
-    private var isPerServing: Bool {
-        if case .perServing = foodItem.nutrition {
-            return true
-        }
-        return false
-    }
-
     private var caloriesPer100: Decimal? {
         guard let values = nutritionValues else { return nil }
         let carbs = values[.carbs] ?? 0
@@ -141,7 +134,7 @@ struct FoodItemInfoPopup: View {
                             .foregroundColor(.secondary)
                             .frame(width: 90, alignment: .trailing)
 
-                        Text(isPerServing ? "Per serving" : "Per 100\(unit)")
+                        Text(foodItem.isPerServing ? "Per serving" : "Per 100\(unit)")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)

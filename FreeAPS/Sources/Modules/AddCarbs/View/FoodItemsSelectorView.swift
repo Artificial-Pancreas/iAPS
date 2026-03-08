@@ -378,7 +378,7 @@ private struct FoodItemsSelectorItemRow: View {
         }
         .sheet(isPresented: $showItemInfo) {
             FoodItemInfoPopup(foodItem: foodItem, portionSize: portionSize)
-                .presentationDetents([.height(preferredItemInfoHeight(for: foodItem)), .large])
+                .presentationDetents([.height(foodItem.preferredInfoSheetHeight()), .large])
                 .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showImageSelector) {
@@ -445,55 +445,5 @@ private struct FoodItemsSelectorItemRow: View {
         // Update the food item with nil imageURL
         let updatedItem = foodItem.withImageURL(nil)
         onPersist(updatedItem)
-    }
-
-    private func preferredItemInfoHeight(for item: FoodItemDetailed) -> CGFloat {
-        var base: CGFloat = 480
-        if let notes = item.assessmentNotes, !notes.isEmpty { base += 40 }
-        if let prep = item.preparationMethod, !prep.isEmpty { base += 30 }
-        if let cues = item.visualCues, !cues.isEmpty { base += 30 }
-        if (item.standardServing != nil && !item.standardServing!.isEmpty) ||
-            item.standardServingSize != nil { base += 40 }
-        return min(max(base, 460), 680)
-    }
-
-    private struct PortionSizeBadge: View {
-        let value: Decimal
-        let color: Color
-        let icon: String
-        let foodItem: FoodItemDetailed
-
-        @Environment(\.colorScheme) private var colorScheme
-
-        var body: some View {
-            HStack(spacing: 4) {
-                if !icon.isEmpty {
-                    Image(systemName: icon)
-                        .font(.system(size: 10))
-                        .opacity(0.3)
-                }
-                HStack(spacing: 2) {
-                    switch foodItem.nutrition {
-                    case .per100:
-                        Text("\(Double(value), specifier: "%.0f")")
-                            .font(.system(size: 15, weight: .bold))
-                        Text((foodItem.units ?? .grams).dimension.symbol)
-                            .font(.system(size: 13, weight: .semibold))
-                            .opacity(0.4)
-                    case .perServing:
-                        Text("\(Double(value), specifier: "%.1f")")
-                            .font(.system(size: 15, weight: .bold))
-                        Text(value == 1 ? "serving" : "servings")
-                            .font(.system(size: 13, weight: .semibold))
-                            .opacity(0.4)
-                    }
-                }
-            }
-            .foregroundColor(.primary)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 6)
-            .background(Color(.systemGray4))
-            .cornerRadius(8)
-        }
     }
 }

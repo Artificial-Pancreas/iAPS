@@ -36,7 +36,6 @@ enum ImageCompression {
             var currentMaxSize = maxSize
             while currentMaxSize >= 512 {
                 let optimizedImage = ImageCompression.resizeImageForAnalysis(image, maxSize: currentMaxSize)
-                
 
                 guard let imageData = optimizedImage.jpegData(compressionQuality: 90) else {
                     throw AIFoodAnalysisError.imageProcessingFailed
@@ -45,9 +44,11 @@ enum ImageCompression {
                 if imageData.count <= maxBytes {
                     return imageData.base64EncodedString()
                 }
-                
+
                 currentMaxSize = currentMaxSize * 3 / 4 // reduce by 25% and retry
-                print("image size: \(optimizedImage.size.width)x\(optimizedImage.size.height), data size: \(imageData.count), reducing max dimension to: \(currentMaxSize) and retrying")
+                print(
+                    "image size: \(optimizedImage.size.width)x\(optimizedImage.size.height), data size: \(imageData.count), reducing max dimension to: \(currentMaxSize) and retrying"
+                )
             }
             // couldn't make it small enough...
             throw AIFoodAnalysisError.imageProcessingFailed
