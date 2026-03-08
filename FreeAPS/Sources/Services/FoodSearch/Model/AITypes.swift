@@ -466,10 +466,12 @@ enum AITextProvider {
         .aiModel(.openAI(.gpt_5_mini)),
         .aiModel(.openAI(.gpt_5_1)),
         .aiModel(.openAI(.gpt_5_2)),
+        .aiModel(.gemini(.gemini_3_1_pro_preview)),
         .aiModel(.gemini(.gemini_3_pro_preview)),
         .aiModel(.gemini(.gemini_2_5_pro)),
         .aiModel(.gemini(.gemini_2_5_flash)),
         .aiModel(.claude(.sonnet_4_5)),
+        .aiModel(.claude(.sonnet_4_6)),
         .aiModel(.claude(.haiku_4_5))
     ]
 
