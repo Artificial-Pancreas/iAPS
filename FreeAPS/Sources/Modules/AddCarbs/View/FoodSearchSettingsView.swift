@@ -116,7 +116,7 @@ struct FoodSearchSettingsView: View {
                     header: Text("Food Search Provider Configuration"),
 
                     footer: Text(
-                        "Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods."
+                        "Configure which service handles each type of food search."
                     )
                 ) {
                     VStack(alignment: .leading, spacing: 6) {
@@ -235,7 +235,7 @@ struct FoodSearchSettingsView: View {
                     header: Text("Anthropic (Claude API) Configuration"),
 
                     footer: Text(
-                        "Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model."
+                        "Get an API key at console.anthropic.com."
                     )
                 ) {
                     VStack(spacing: 12) {
@@ -268,7 +268,7 @@ struct FoodSearchSettingsView: View {
                     header: Text("Google (Gemini API) Configuration"),
 
                     footer: Text(
-                        "Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)."
+                        "Get a free API key at ai.google.dev."
                     )
                 ) {
                     VStack(spacing: 12) {
@@ -301,7 +301,7 @@ struct FoodSearchSettingsView: View {
                     header: Text("OpenAI (ChatGPT API) Configuration"),
 
                     footer: Text(
-                        "Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)"
+                        "Get an API key at platform.openai.com."
                     )
                 ) {
                     VStack(spacing: 12) {
@@ -486,89 +486,15 @@ struct FoodSearchSettingsView: View {
                     Toggle("AI Progress Animation", isOn: $aiProgressAnimation)
                 }
 
-                Section(
-                    header: Text("Important: How to Use Your API Keys"),
-
-                    footer: Text(
-                        "To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food."
-                    )
-                ) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Image(systemName: "camera.fill")
-                                .foregroundColor(.blue)
-                            Text("Camera Food Analysis")
-                                .font(.headline)
-                        }
-
-                        Text(
-                            "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above."
-                        )
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                        Text(
-                            "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys"
-                        )
-                        .font(.caption)
-                        .foregroundColor(.blue)
-                    }
-                }
-
                 Section(header: Text("Provider Information")) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Available Search Providers:")
-                            .font(.headline)
-
                         Text(
-                            "• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)."
+                            "OpenFoodFacts and USDA FoodData Central are free. Anthropic, Google, and OpenAI require API keys from their respective developer portals."
                         )
-
-                        Text(
-                            "• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost."
-                        )
-
-                        Text(
-                            "• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries."
-                        )
-
-                        Text(
-                            "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches."
-                        )
-
-                        Text(
-                            "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat."
-                        )
+                        .font(.headline)
                     }
                     .font(.caption)
                     .foregroundColor(.secondary)
-                }
-
-                Section(header: Text("Search Type Recommendations")) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Group {
-                            Text("**Text/Voice Search:**")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                            Text("USDA FoodData Central → OpenFoodFacts")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-
-                            Text("**Barcode Scanning:**")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                            Text("OpenFoodFacts")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-
-                            Text("**AI Image Analysis:**")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                            Text("Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
                 }
 
                 Section(header: Text("Medical Disclaimer")) {
