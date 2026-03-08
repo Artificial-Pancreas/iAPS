@@ -133,8 +133,6 @@ struct AIProviderClient: Sendable {
 }
 
 protocol AIProviderProtocol: Sendable {
-    var needAggressiveImageCompression: Bool { get }
-
     var numberOfRetries: Int { get }
 
     var timeoutsConfig: ModelTimeoutsConfig { get }

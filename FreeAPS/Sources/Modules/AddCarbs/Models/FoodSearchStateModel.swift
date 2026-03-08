@@ -485,7 +485,6 @@ final class FoodSearchStateModel: ObservableObject {
     }
 
     func cancelSearchTask() {
-        print("cancelling search task")
         searchTask?.cancel()
         searchTask = nil
         latestSearchError = nil

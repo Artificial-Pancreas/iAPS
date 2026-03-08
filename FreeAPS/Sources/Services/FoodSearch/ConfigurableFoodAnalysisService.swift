@@ -103,7 +103,6 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
         telemetryCallback?("🖼️ Optimizing your image …")
         let base64Image = try await ImageCompression.getImageBase64(
             for: image,
-            aggressiveImageCompression: providerImpl.needAggressiveImageCompression,
             maxSize: UserDefaults.standard.shouldSendSmallerImagesToAI ? 1024 : aiModel.maxImageDimension
         )
         let analysisPrompt = try AIPrompts.getAnalysisPrompt(

@@ -25,22 +25,9 @@ enum AIProvider: Hashable {
             return "OpenAI GPT"
         }
     }
-
-    var description: String {
-        switch self {
-        case .claude:
-            return "Anthropic's Claude AI with excellent reasoning. Requires paid API key from console.anthropic.com."
-        case .gemini:
-            return "Free API key available at ai.google.dev. Best for detailed food analysis."
-        case .openAI:
-            return "Requires paid OpenAI API key. Most accurate for complex meals."
-        }
-    }
 }
 
 protocol AIModelBase {
-    var needAggressiveImageCompression: Bool { get }
-
     var fast: Bool { get }
 
     var temperature: Double? { get }
@@ -103,17 +90,6 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         }
     }
 
-    var needAggressiveImageCompression: Bool {
-        switch self {
-        case .gpt_4o: false
-        case .gpt_4o_mini: false
-        case .gpt_5: true
-        case .gpt_5_mini: true
-        case .gpt_5_1: true
-        case .gpt_5_2: true
-        case .gpt_5_4: true
-        }}
-
     var isGPT5: Bool {
         switch self {
         case .gpt_4o: false
@@ -171,14 +147,13 @@ enum OpenAIModel: String, AIModelBase, Encodable {
     var maxImageDimension: Int {
         switch self {
         case .gpt_4o,
+             .gpt_4o_mini,
              .gpt_5,
              .gpt_5_1,
              .gpt_5_2,
-             .gpt_5_4:
-            return 2048
-        case .gpt_4o_mini,
+             .gpt_5_4,
              .gpt_5_mini:
-            return 1568
+            return 2048
         }
     }
 }
@@ -216,15 +191,6 @@ enum GeminiModel: String, AIModelBase, Encodable {
         }
     }
 
-    var needAggressiveImageCompression: Bool {
-        switch self {
-        case .gemini_2_5_pro: false
-        case .gemini_2_5_flash: false
-        case .gemini_3_pro_preview: false
-        case .gemini_3_1_pro_preview: false
-        }
-    }
-
     var defaultImageETA: TimeInterval {
         switch self {
         case .gemini_2_5_pro: 40
@@ -255,10 +221,10 @@ enum GeminiModel: String, AIModelBase, Encodable {
 
     var maxImageDimension: Int {
         switch self {
-        case .gemini_2_5_pro: 2048
-        case .gemini_2_5_flash: 1568
-        case .gemini_3_pro_preview: 2048
-        case .gemini_3_1_pro_preview: 2048
+        case .gemini_2_5_flash,
+             .gemini_2_5_pro,
+             .gemini_3_1_pro_preview,
+             .gemini_3_pro_preview: 2048
         }
     }
 }
@@ -293,15 +259,6 @@ enum ClaudeModel: String, AIModelBase, Encodable {
         case .sonnet_4_6: "Sonnet 4.6"
         case .opus_4_6: "Opus 4.6"
         case .haiku_4_5: "Haiku 4.5"
-        }
-    }
-
-    var needAggressiveImageCompression: Bool {
-        switch self {
-        case .sonnet_4_5: return false
-        case .sonnet_4_6: return false
-        case .opus_4_6: return false
-        case .haiku_4_5: return false
         }
     }
 

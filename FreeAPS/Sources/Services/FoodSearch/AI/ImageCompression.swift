@@ -19,7 +19,9 @@ enum ImageCompression {
     }
 
     private static func resizeImage(_ image: UIImage, to newSize: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: newSize)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1.0
+        let renderer = UIGraphicsImageRenderer(size: newSize, format: format)
         return renderer.image { _ in
             image.draw(in: CGRect(origin: .zero, size: newSize))
         }
@@ -27,18 +29,28 @@ enum ImageCompression {
 
     static func getImageBase64(
         for image: UIImage,
-        aggressiveImageCompression: Bool,
-        maxSize: Int
+        maxSize: Int,
+        maxBytes: Int = 4_800_000
     ) async throws -> String {
         try await Task.detached(priority: .userInitiated) {
-            let optimizedImage = ImageCompression.resizeImageForAnalysis(image, maxSize: maxSize)
-            let compressionQuality = aggressiveImageCompression ? 0.7 : 0.85
+            var currentMaxSize = maxSize
+            while currentMaxSize >= 512 {
+                let optimizedImage = ImageCompression.resizeImageForAnalysis(image, maxSize: currentMaxSize)
+                
 
-            guard let imageData = optimizedImage.jpegData(compressionQuality: compressionQuality) else {
-                throw AIFoodAnalysisError.imageProcessingFailed
+                guard let imageData = optimizedImage.jpegData(compressionQuality: 90) else {
+                    throw AIFoodAnalysisError.imageProcessingFailed
+                }
+
+                if imageData.count <= maxBytes {
+                    return imageData.base64EncodedString()
+                }
+                
+                currentMaxSize = currentMaxSize * 3 / 4 // reduce by 25% and retry
+                print("image size: \(optimizedImage.size.width)x\(optimizedImage.size.height), data size: \(imageData.count), reducing max dimension to: \(currentMaxSize) and retrying")
             }
-
-            return imageData.base64EncodedString()
+            // couldn't make it small enough...
+            throw AIFoodAnalysisError.imageProcessingFailed
         }.value
     }
 }

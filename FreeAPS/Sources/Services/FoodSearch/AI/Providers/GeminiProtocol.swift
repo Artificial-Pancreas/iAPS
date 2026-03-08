@@ -10,8 +10,6 @@ struct GeminiProtocol: AIProviderProtocol {
 
     var numberOfRetries: Int { 1 }
 
-    var needAggressiveImageCompression: Bool { model.needAggressiveImageCompression }
-
     func buildRequest(
         prompt: String,
         images: [String],

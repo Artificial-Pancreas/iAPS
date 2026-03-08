@@ -3,8 +3,6 @@ import Foundation
 protocol AnalysisServiceBase {}
 
 protocol ImageAnalysisService: Sendable, AnalysisServiceBase {
-    var needAggressiveImageCompression: Bool { get }
-
     func analyzeImage(
         prompt: String,
         images: [String],
@@ -46,8 +44,6 @@ struct AIAnalysisService {
 }
 
 extension AIAnalysisService: ImageAnalysisService {
-    var needAggressiveImageCompression: Bool { proto.needAggressiveImageCompression }
-
     func analyzeImage(
         prompt: String,
         images: [String],
