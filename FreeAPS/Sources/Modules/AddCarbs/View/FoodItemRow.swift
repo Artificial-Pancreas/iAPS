@@ -248,7 +248,7 @@ extension FoodItemRow {
                     case .per100:
                         Text("\(Double(value), specifier: "%.0f")")
                             .font(.system(size: 15, weight: .bold))
-                        Text(NSLocalizedString((foodItem.units ?? .grams).localizedAbbreviation, comment: ""))
+                        Text((foodItem.units ?? .grams).dimension.symbol)
                             .font(.system(size: 13, weight: .semibold))
                             .opacity(0.4)
                     case .perServing:

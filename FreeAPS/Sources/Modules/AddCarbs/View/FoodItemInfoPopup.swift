@@ -55,7 +55,7 @@ struct FoodItemInfoPopup: View {
 
     var body: some View {
         let amount = String(format: "%.0f", Double(truncating: portionSize as NSNumber))
-        let unit = NSLocalizedString((foodItem.units ?? .grams).localizedAbbreviation, comment: "")
+        let unit = (foodItem.units ?? .grams).dimension.symbol
 
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {

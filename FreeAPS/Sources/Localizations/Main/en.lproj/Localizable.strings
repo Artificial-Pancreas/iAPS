@@ -3990,5 +3990,3 @@ Enact a temp Basal or a temp target */
 "nutrient_protein" = "Protein";
 
 "nutrient_sugars" = "Sugars";
-
-"unit_grams_abbr" = "g";

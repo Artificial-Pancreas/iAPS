@@ -4,13 +4,6 @@ enum MealUnits: String, Codable {
     case grams
     case milliliters
 
-    var localizedAbbreviation: String {
-        switch self {
-        case .grams: NSLocalizedString("g", comment: "abbreviation for grams")
-        case .milliliters: NSLocalizedString("ml", comment: "abbreviation for milliliters")
-        }
-    }
-
     var dimension: Dimension {
         switch self {
         case .grams: UnitMass.grams

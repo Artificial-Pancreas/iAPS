@@ -194,24 +194,22 @@ struct FoodSearchView: View {
                                 .buttonStyle(PlainButtonStyle())
                             }
 
-                            if state.savedFoods?.foodItemsDetailed.count ?? 0 > 0 {
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        state.showSavedFoods = true
-                                        state.showingFoodSearch = true
-                                    }
-                                } label: {
-                                    Image(systemName: FoodItemSource.database.icon)
-                                        .font(.system(size: 20, weight: .medium))
-                                        .foregroundColor(.orange)
-                                        .frame(width: 46, height: 46)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                                .fill(Color.orange.opacity(0.12))
-                                        )
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    state.showSavedFoods = true
+                                    state.showingFoodSearch = true
                                 }
-                                .buttonStyle(PlainButtonStyle())
+                            } label: {
+                                Image(systemName: FoodItemSource.database.icon)
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.orange)
+                                    .frame(width: 46, height: 46)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                            .fill(Color.orange.opacity(0.12))
+                                    )
                             }
+                            .buttonStyle(PlainButtonStyle())
 
                             Button {
                                 state.showingFoodSearch = true
