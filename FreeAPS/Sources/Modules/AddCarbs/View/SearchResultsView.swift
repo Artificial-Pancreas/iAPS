@@ -622,8 +622,6 @@ struct SearchResultsView: View {
     // utils
 
     private func createCombinedFoodItem() -> FoodItemDetailed {
-        let allItems = state.searchResultsState.nonDeletedItems
-
         var nutritionValues: NutritionValues = [:]
         for nutrient in NutrientType.allCases {
             let value = state.searchResultsState.total(nutrient)
