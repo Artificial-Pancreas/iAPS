@@ -111,6 +111,7 @@ struct ImageSelectorView: View {
             .fullScreenCover(item: $selectedImage) { identifiableImage in
                 ImagePreview(
                     image: identifiableImage.image,
+                    attribution: identifiableImage.attribution,
                     onSave: { finalImage in
                         onSave(finalImage)
                         dismiss()
@@ -400,13 +401,26 @@ struct ImageSelectorView: View {
                         isDownloading: downloadingURL == result.fullURL,
                         onTap: {
                             Task {
-                                await downloadAndSelectImage(from: result.fullURL)
+                                await downloadAndSelectImage(from: result.fullURL, attribution: result.attribution)
                             }
                         }
                     )
                 }
             }
+
+            attributionFooter
         }
+    }
+
+    private var attributionFooter: some View {
+        Text(
+            "Images via [Openverse API](https://openverse.org) (not endorsed or certified by Openverse) and [Open Food Facts](https://world.openfoodfacts.org)"
+        )
+        .font(.caption2)
+        .foregroundColor(.secondary)
+        .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity)
+        .padding(.top, 4)
     }
 
     private func errorBanner(message: String) -> some View {
@@ -474,7 +488,7 @@ struct ImageSelectorView: View {
         }
     }
 
-    private func downloadAndSelectImage(from urlString: String) async {
+    private func downloadAndSelectImage(from urlString: String, attribution: String? = nil) async {
         guard let url = URL(string: urlString) else {
             await MainActor.run {
                 errorMessage = "Invalid image URL"
@@ -492,7 +506,7 @@ struct ImageSelectorView: View {
 
             if let uiImage = UIImage(data: data) {
                 await MainActor.run {
-                    selectedImage = IdentifiableImage(image: uiImage)
+                    selectedImage = IdentifiableImage(image: uiImage, attribution: attribution)
                     downloadingURL = nil
                 }
             } else {
@@ -585,6 +599,7 @@ private struct ImageGridCell: View {
 
 private struct ImagePreview: View {
     let image: UIImage
+    let attribution: String?
     let onSave: (UIImage) -> Void
     let onCancel: () -> Void
 
@@ -711,6 +726,15 @@ private struct ImagePreview: View {
                 .padding(.top, 16)
 
                 Spacer()
+
+                if let attribution {
+                    Text(attribution)
+                        .font(.caption2)
+                        .foregroundColor(.white.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 4)
+                }
 
                 // Bottom buttons
                 HStack(spacing: 16) {
@@ -998,4 +1022,10 @@ private struct ViewfinderCorners: View {
 private struct IdentifiableImage: Identifiable {
     let id = UUID()
     let image: UIImage
+    let attribution: String?
+
+    init(image: UIImage, attribution: String? = nil) {
+        self.image = image
+        self.attribution = attribution
+    }
 }

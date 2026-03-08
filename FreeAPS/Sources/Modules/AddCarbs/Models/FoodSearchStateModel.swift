@@ -6,6 +6,7 @@ struct ImageSearchResult: Identifiable {
     let id: String
     let thumbnailURL: String?
     let fullURL: String
+    let attribution: String?
 }
 
 enum FoodSearchRoute {
@@ -264,7 +265,8 @@ final class FoodSearchStateModel: ObservableObject {
             return ImageSearchResult(
                 id: UUID().uuidString,
                 thumbnailURL: result.thumbnail ?? result.url,
-                fullURL: result.url
+                fullURL: result.url,
+                attribution: result.attribution
             )
         }
 
@@ -273,7 +275,8 @@ final class FoodSearchStateModel: ObservableObject {
             return ImageSearchResult(
                 id: UUID().uuidString,
                 thumbnailURL: nil,
-                fullURL: fullURL
+                fullURL: fullURL,
+                attribution: nil
             )
         }
 
