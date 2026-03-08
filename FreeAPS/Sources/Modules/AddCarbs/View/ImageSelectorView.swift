@@ -5,11 +5,11 @@ import UIKit
 struct ImageSelectorView: View {
     let initialSearchTerm: String?
     let onSave: (UIImage) -> Void
-    let onSearch: (String) async -> [String]
+    let onSearch: (String) async -> [ImageSearchResult]
 
     @Environment(\.dismiss) private var dismiss
 
-    @State private var imageURLs: [String] = []
+    @State private var imageURLs: [ImageSearchResult] = []
     @State private var isSearching: Bool = false
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var showPhotoPicker: Bool = false
@@ -32,7 +32,7 @@ struct ImageSelectorView: View {
     init(
         initialSearchTerm: String? = nil,
         onSave: @escaping (UIImage) -> Void,
-        onSearch: @escaping (String) async -> [String]
+        onSearch: @escaping (String) async -> [ImageSearchResult]
     ) {
         self.initialSearchTerm = initialSearchTerm
         self.onSave = onSave
@@ -394,13 +394,13 @@ struct ImageSelectorView: View {
                 GridItem(.flexible(), spacing: 12),
                 GridItem(.flexible(), spacing: 12)
             ], spacing: 12) {
-                ForEach(imageURLs, id: \.self) { urlString in
+                ForEach(imageURLs) { result in
                     ImageGridCell(
-                        urlString: urlString,
-                        isDownloading: downloadingURL == urlString,
+                        thumbnailURL: result.thumbnailURL ?? result.fullURL,
+                        isDownloading: downloadingURL == result.fullURL,
                         onTap: {
                             Task {
-                                await downloadAndSelectImage(from: urlString)
+                                await downloadAndSelectImage(from: result.fullURL)
                             }
                         }
                     )
@@ -513,53 +513,47 @@ struct ImageSelectorView: View {
 // MARK: - Image Grid Cell
 
 private struct ImageGridCell: View {
-    let urlString: String
+    let thumbnailURL: String
     let isDownloading: Bool
     let onTap: () -> Void
+
+    @State private var loadedImage: UIImage?
+    @State private var isLoadingThumbnail = false
+    @State private var loadFailed = false
 
     var body: some View {
         Button(action: onTap) {
             GeometryReader { geometry in
                 ZStack {
-                    if let url = URL(string: urlString) {
-                        AsyncImage(url: url) { phase in
-                            switch phase {
-                            case .empty:
+                    if let image = loadedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: geometry.size.width, height: geometry.size.width)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray5))
-                                    .overlay(
-                                        ProgressView()
-                                            .controlSize(.small)
-                                    )
-                            case let .success(image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: geometry.size.width, height: geometry.size.width)
-                                    .clipped()
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .stroke(Color(.systemGray4), lineWidth: 1)
-                                    )
-                            case .failure:
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemGray5))
-                                    .overlay(
-                                        Image(systemName: "photo")
-                                            .font(.system(size: 24))
-                                            .foregroundColor(.secondary)
-                                    )
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
+                                    .stroke(Color(.systemGray4), lineWidth: 1)
+                            )
+                    } else if loadFailed {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(.systemGray5))
+                            .overlay(
+                                Image(systemName: "photo")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(.secondary)
+                            )
                     } else {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color(.systemGray5))
+                            .overlay(
+                                ProgressView()
+                                    .controlSize(.small)
+                            )
                     }
 
-                    // Downloading overlay
+                    // Downloading overlay (when user tapped and full image is being fetched)
                     if isDownloading {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color.black.opacity(0.5))
@@ -574,6 +568,16 @@ private struct ImageGridCell: View {
             .aspectRatio(1, contentMode: .fit)
         }
         .buttonStyle(.plain)
+        .task(id: thumbnailURL) {
+            isLoadingThumbnail = true
+            loadFailed = false
+            if let image = await FoodImageStorageManager.shared.loadImage(from: thumbnailURL) {
+                loadedImage = image
+            } else {
+                loadFailed = true
+            }
+            isLoadingThumbnail = false
+        }
     }
 }
 

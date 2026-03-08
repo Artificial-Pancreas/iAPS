@@ -7,7 +7,7 @@ struct FoodItemsSelectorView: View {
     let onFoodItemRemoved: (FoodItemDetailed) -> Void
     let isItemAdded: (FoodItemDetailed) -> Bool
     let onDismiss: () -> Void
-    let onImageSearch: (String) async -> [String]
+    let onImageSearch: (String) async -> [ImageSearchResult]
     let onPersist: ((FoodItemDetailed) -> Void)?
     let onDelete: ((FoodItemDetailed) -> Void)?
     let useTransparentBackground: Bool
@@ -196,7 +196,7 @@ private struct FoodItemsSelectorItemRow: View {
     let useTransparentBackground: Bool
     let onPersist: ((FoodItemDetailed) -> Void)?
     let onDelete: ((FoodItemDetailed) -> Void)?
-    let onImageSearch: (String) async -> [String]
+    let onImageSearch: (String) async -> [ImageSearchResult]
     let allExistingTags: Set<String>
 
     @State private var showItemInfo = false

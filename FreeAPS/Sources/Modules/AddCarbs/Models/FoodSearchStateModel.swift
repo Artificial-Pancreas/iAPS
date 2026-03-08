@@ -2,6 +2,12 @@ import Combine
 import Photos
 import SwiftUI
 
+struct ImageSearchResult: Identifiable {
+    let id: String
+    let thumbnailURL: String?
+    let fullURL: String
+}
+
 enum FoodSearchRoute {
     case camera
     case barcodeScanner
@@ -247,17 +253,31 @@ final class FoodSearchStateModel: ObservableObject {
         }
     }
 
-    func searchFoodImages(_ query: String) async -> [String] {
+    func searchFoodImages(_ query: String) async -> [ImageSearchResult] {
         async let openFoodFacts = OpenFoodFactsService.shared.searchProducts(query: query, pageSize: 15)
         async let openverse = OpenverseClient.shared.searchImages(query: query, pageSize: 15)
         let openFoodFactsResults = (try? await openFoodFacts) ?? []
         let openverseResults = (try? await openverse) ?? []
 
-        let openFoodFactsUrls = openFoodFactsResults.compactMap(\.imageURL)
-        let openverseUrls = openverseResults.compactMap(\.url)
+        let openverseImageResults = openverseResults.compactMap { result -> ImageSearchResult? in
+            guard !result.url.isEmpty else { return nil }
+            return ImageSearchResult(
+                id: UUID().uuidString,
+                thumbnailURL: result.thumbnail ?? result.url,
+                fullURL: result.url
+            )
+        }
 
-        let result = openverseUrls + openFoodFactsUrls
-        return result
+        let openFoodFactsImageResults = openFoodFactsResults.compactMap { product -> ImageSearchResult? in
+            guard let fullURL = product.imageURL ?? product.imageFrontURL else { return nil }
+            return ImageSearchResult(
+                id: UUID().uuidString,
+                thumbnailURL: nil,
+                fullURL: fullURL
+            )
+        }
+
+        return openverseImageResults + openFoodFactsImageResults
     }
 
     func retryAIAnalysis() {

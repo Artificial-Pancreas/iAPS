@@ -424,7 +424,6 @@ extension FoodItemRow {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                    // Product image (if available)
                     FoodItemLargeImage(imageURL: foodItem.imageURL)
                 }
                 .padding(.horizontal)
