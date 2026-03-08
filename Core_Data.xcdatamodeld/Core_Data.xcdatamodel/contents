@@ -6,6 +6,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Auto_ISF" representedClassName="Auto_ISF" syncable="YES" codeGenerationType="class">
+        <attribute name="autocr" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="autoisf" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="autoisf_max" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="autoisf_min" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>

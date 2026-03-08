@@ -3293,6 +3293,12 @@ Enact a temp Basal or a temp target */
 "Enable Auto ISF" = "Kích hoạt Auto ISF";
 
 /* */
+"Enable Auto CR" = "Kích hoạt Auto CR";
+
+/* */
+"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Điều chỉnh tỷ lệ Carb (CR) trong hồ sơ của bạn ở mỗi vòng lặp, với cùng mức thay đổi như ISF theo cài đặt autoISF.\n\nHãy hết sức thận trọng khi sử dụng máy tính bolus, vì tính năng này có thể khiến khuyến nghị liều trở nên quá mạnh.\n\nAutoCR + autoISF có thể cộng dồn tác động. Hãy giảm mức độ “aggressiveness” của autoISF trước (ví dụ: giảm giá trị tối đa/trọng số), sau đó mới bật AutoCR và theo dõi sát sao.";
+
+/* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Bật Auto ISF. Điều này sẽ vô hiệu hóa bất kỳ cài đặt ISF/CR Dynamic nào";
 
 /* */
