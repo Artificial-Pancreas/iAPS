@@ -125,7 +125,7 @@ struct FoodItemRow: View {
                 }
                 NutritionBadgePlain(
                     value: foodItem.calories(forPortion: portionSize),
-                    unit: "kcal",
+                    unit: UnitEnergy.kilocalories,
                     color: NutritionBadgeConfig.caloriesColor
                 )
             }
@@ -286,9 +286,9 @@ extension FoodItemRow {
         private var unit: String {
             switch foodItem.nutrition {
             case .per100:
-                return (foodItem.units ?? .grams).localizedAbbreviation
+                return (foodItem.units?.dimension ?? UnitMass.grams).symbol
             case .perServing:
-                return "serving"
+                return NSLocalizedString("serving", comment: "")
             }
         }
 
@@ -418,8 +418,12 @@ extension FoodItemRow {
                             }
                             let calories = foodItem.calories(forPortion: calculatedPortion)
                             if calories > 0 {
-                                NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                                    .frame(maxWidth: .infinity)
+                                NutritionBadge(
+                                    value: calories,
+                                    unit: UnitEnergy.kilocalories,
+                                    color: NutritionBadgeConfig.caloriesColor
+                                )
+                                .frame(maxWidth: .infinity)
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -437,7 +441,7 @@ extension FoodItemRow {
                                 Text(
                                     NSLocalizedString("Reset to ", comment: "") +
                                         (formatter.string(from: original as NSNumber) ?? "") +
-                                        NSLocalizedString(unit, comment: "")
+                                        unit
                                 )
                             }
                             .frame(maxWidth: .infinity)

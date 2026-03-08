@@ -23,7 +23,7 @@ struct ManualNutritionOverrideEditor: View {
                                         get: { editedValues[nutrient] ?? "" },
                                         set: { editedValues[nutrient] = $0 }
                                     ),
-                                    unit: nutrient.unitsAbbr,
+                                    unit: nutrient.unit,
                                     placeholder: formatDecimal(state.searchResultsState.baseTotal(nutrient)),
                                     focusedField: $focusedField,
                                     fieldTag: nutrient
@@ -151,7 +151,7 @@ struct ManualNutritionOverrideEditor: View {
 private struct NutritionOverrideRow: View {
     let localizedLabel: String
     @Binding var text: String
-    let unit: String
+    let unit: Dimension
     let placeholder: String
     @FocusState.Binding var focusedField: NutrientType?
     let fieldTag: NutrientType
@@ -189,7 +189,7 @@ private struct NutritionOverrideRow: View {
             }
             .frame(width: 100, height: 32)
 
-            Text(unit)
+            Text(unit.symbol)
                 .font(.caption2)
                 .foregroundColor(.secondary.opacity(0.7))
                 .frame(width: 28, alignment: .leading)

@@ -158,7 +158,7 @@ struct FoodItemInfoPopup: View {
                                 localizedLabel: nutrient.localizedLabel,
                                 portionValue: foodItem.nutrientInThisPortion(nutrient),
                                 per100Value: nutrientValue,
-                                unit: nutrient.unitsAbbr
+                                unit: nutrient.unit
                             )
                         }
                     }
@@ -168,7 +168,7 @@ struct FoodItemInfoPopup: View {
                         localizedLabel: NSLocalizedString("Calories", comment: ""),
                         portionValue: foodItem.caloriesInThisPortion,
                         per100Value: caloriesPer100,
-                        unit: "kcal"
+                        unit: UnitEnergy.kilocalories
                     )
                 }
                 .padding(12)
@@ -216,7 +216,7 @@ private struct DetailedNutritionRow: View {
     let localizedLabel: String
     let portionValue: Decimal?
     let per100Value: Decimal?
-    let unit: String
+    let unit: Dimension
 
     var body: some View {
         HStack(spacing: 8) {
@@ -232,7 +232,7 @@ private struct DetailedNutritionRow: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(.primary)
-                    Text(NSLocalizedString(unit, comment: ""))
+                    Text(unit.symbol)
                         .font(.caption2)
                         .foregroundColor(.secondary.opacity(0.7))
                         .frame(width: 24, alignment: .leading)
@@ -251,7 +251,7 @@ private struct DetailedNutritionRow: View {
                     Text("\(Double(value), specifier: "%.1f")")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                    Text(NSLocalizedString(unit, comment: ""))
+                    Text(unit.symbol)
                         .font(.caption2)
                         .foregroundColor(.secondary.opacity(0.7))
                         .frame(width: 24, alignment: .leading)

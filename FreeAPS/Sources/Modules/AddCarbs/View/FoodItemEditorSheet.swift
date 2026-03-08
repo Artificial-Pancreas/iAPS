@@ -626,7 +626,7 @@ private struct FoodItemNutritionEditor: View {
                                 get: { nutrients[nutrient] ?? 0 },
                                 set: { nutrients[nutrient] = $0 }
                             ),
-                            unit: nutrient.unitsAbbr,
+                            unit: nutrient.unit,
                             focusedField: $focusedField,
                             fieldTag: .nutrient(nutrient)
                         )
@@ -656,7 +656,7 @@ private struct FoodItemNutritionEditor: View {
                                         }
                                     }
                                 ),
-                                unit: nutrient.unitsAbbr,
+                                unit: nutrient.unit,
                                 focusedField: $focusedField,
                                 fieldTag: .nutrient(nutrient)
                             )
@@ -723,7 +723,7 @@ private struct FoodItemNutritionRow: View {
     let localizedLabel: String
     let portionValue: Decimal
     @Binding var baseValue: Decimal
-    let unit: String
+    let unit: Dimension
     @FocusState.Binding var focusedField: FoodItemEditorSheet.NutritionField?
     let fieldTag: FoodItemEditorSheet.NutritionField
 
@@ -764,7 +764,7 @@ private struct FoodItemNutritionRow: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.primary)
-                Text(unit)
+                Text(unit.symbol)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
                     .frame(width: 28, alignment: .leading)
@@ -795,7 +795,7 @@ private struct FoodItemNutritionRow: View {
                         }
                     }
 
-                Text(unit)
+                Text(unit.symbol)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
                     .frame(width: 28, alignment: .leading)
@@ -829,7 +829,7 @@ private struct FoodItemCaloriesDisplayRow: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.primary)
-                Text("kcal")
+                Text(UnitEnergy.kilocalories.symbol)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
                     .frame(width: 28, alignment: .leading)
@@ -840,7 +840,7 @@ private struct FoodItemCaloriesDisplayRow: View {
                 Text("\(Int(truncating: baseCalories as NSNumber))")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                Text("kcal")
+                Text(UnitEnergy.kilocalories.symbol)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
                     .frame(width: 28, alignment: .leading)

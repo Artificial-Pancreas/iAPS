@@ -37,13 +37,13 @@ extension ConfidenceLevel {
 
 struct NutritionBadge: View {
     let value: Decimal
-    let unit: String?
+    let unit: Dimension?
     let localizedLabel: String?
     let color: Color
 
     @Environment(\.colorScheme) private var colorScheme
 
-    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
+    init(value: Decimal, unit: Dimension? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
         self.localizedLabel = localizedLabel
@@ -56,12 +56,12 @@ struct NutritionBadge: View {
 
     var body: some View {
         HStack(spacing: 3) {
-            Text("\(Double(value), specifier: unit == "kcal" || value > 20 ? "%.0f" : "%.1f")")
+            Text("\(Double(value), specifier: unit == UnitEnergy.kilocalories || value > 20 ? "%.0f" : "%.1f")")
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .foregroundColor(.primary)
                 .fixedSize()
             if let unit = unit {
-                Text(NSLocalizedString(unit, comment: ""))
+                Text(unit.symbol)
                     .font(.system(size: 11, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
                     .fixedSize()
@@ -85,13 +85,13 @@ struct NutritionBadge: View {
 
 struct NutritionBadgePlain: View {
     let value: Decimal
-    let unit: String?
+    let unit: Dimension?
     let localizedLabel: String?
     let color: Color
 
     @Environment(\.colorScheme) private var colorScheme
 
-    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
+    init(value: Decimal, unit: Dimension? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
         self.localizedLabel = localizedLabel
@@ -122,13 +122,13 @@ struct NutritionBadgePlain: View {
 
     var body: some View {
         HStack(spacing: 3) {
-            Text("\(Double(value), specifier: unit == "kcal" || value > 20 ? "%.0f" : "%.1f")")
+            Text("\(Double(value), specifier: unit == UnitEnergy.kilocalories || value > 20 ? "%.0f" : "%.1f")")
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .foregroundColor(adaptiveColor)
                 .shadow(color: .black.opacity(colorScheme == .light ? 0.08 : 0), radius: 0.5, x: 0, y: 0.5)
                 .fixedSize()
             if let unit = unit {
-                Text(NSLocalizedString(unit, comment: ""))
+                Text(unit.symbol)
                     .font(.system(size: 11, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
                     .fixedSize()
@@ -148,13 +148,13 @@ struct NutritionBadgePlain: View {
 
 struct NutritionBadgePlainStacked: View {
     let value: Decimal
-    let unit: String?
+    let unit: Dimension?
     let localizedLabel: String?
     let color: Color
 
     @Environment(\.colorScheme) private var colorScheme
 
-    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
+    init(value: Decimal, unit: Dimension? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
         self.localizedLabel = localizedLabel
@@ -186,13 +186,13 @@ struct NutritionBadgePlainStacked: View {
     var body: some View {
         VStack(spacing: 3) {
             HStack(spacing: 3) {
-                Text("\(Double(value), specifier: unit == "kcal" || value > 10 ? "%.0f" : "%.1f")")
+                Text("\(Double(value), specifier: unit == UnitEnergy.kilocalories || value > 10 ? "%.0f" : "%.1f")")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundColor(adaptiveColor)
                     .shadow(color: .black.opacity(colorScheme == .light ? 0.08 : 0), radius: 0.5, x: 0, y: 0.5)
                     .fixedSize()
                 if let unit = unit {
-                    Text(NSLocalizedString(unit, comment: ""))
+                    Text(unit.symbol)
                         .font(.system(size: 11, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                         .fixedSize()
@@ -211,11 +211,11 @@ struct NutritionBadgePlainStacked: View {
 
 struct TotalNutritionBadge: View {
     let value: Decimal
-    let unit: String?
+    let unit: Dimension?
     let localizedLabel: String?
     let color: Color
 
-    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
+    init(value: Decimal, unit: Dimension? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
         self.localizedLabel = localizedLabel
@@ -231,7 +231,7 @@ struct TotalNutritionBadge: View {
                     .foregroundColor(.primary)
 
                 if let unit = unit {
-                    Text(NSLocalizedString(unit, comment: ""))
+                    Text(unit.symbol)
                         .font(.system(size: 12, weight: .semibold, design: .rounded))
                         .foregroundColor(.secondary)
                 }

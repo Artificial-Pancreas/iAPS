@@ -316,7 +316,7 @@ struct SearchResultsView: View {
                     }
                     TotalNutritionBadge(
                         value: state.searchResultsState.totalCalories,
-                        localizedLabel: NSLocalizedString("kcal", comment: "kcal"),
+                        localizedLabel: UnitEnergy.kilocalories.symbol,
                         color: NutritionBadgeConfig.caloriesColor
                     )
                     .id("calories-\(state.searchResultsState.totalCalories)")

@@ -10,6 +10,13 @@ enum MealUnits: String, Codable {
         case .milliliters: NSLocalizedString("ml", comment: "abbreviation for milliliters")
         }
     }
+
+    var dimension: Dimension {
+        switch self {
+        case .grams: UnitMass.grams
+        case .milliliters: UnitVolume.milliliters
+        }
+    }
 }
 
 enum FoodItemSource {
@@ -64,14 +71,14 @@ extension NutrientType {
         }
     }
 
-    var unitsAbbr: String {
+    var unit: Dimension {
         switch self {
         case .carbs,
              .fat,
              .fiber,
              .protein,
              .sugars:
-            NSLocalizedString("unit_grams_abbr", comment: "")
+            UnitMass.grams
         }
     }
 

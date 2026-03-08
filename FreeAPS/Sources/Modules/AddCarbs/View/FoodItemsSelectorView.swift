@@ -123,7 +123,6 @@ struct FoodItemsSelectorView: View {
                 }
                 .scrollDismissesKeyboard(.immediately)
             } else {
-                // Use List for swipe actions support
                 List {
                     // Tag cloud section (only for saved foods)
                     if showTagCloud && !allTags.isEmpty {
@@ -282,7 +281,12 @@ private struct FoodItemsSelectorItemRow: View {
 
                     HStack(spacing: 8) {
                         if case .per100 = foodItem.nutrition {
-                            NutritionBadgePlain(value: portionSize, unit: "g", localizedLabel: "", color: .primary)
+                            NutritionBadgePlain(
+                                value: portionSize,
+                                unit: foodItem.units?.dimension ?? UnitMass.grams,
+                                localizedLabel: "",
+                                color: .primary
+                            )
                         } else {
                             VStack {}
                                 .frame(maxWidth: .infinity)
@@ -313,7 +317,7 @@ private struct FoodItemsSelectorItemRow: View {
                         if let kcal, kcal > 0 {
                             NutritionBadgePlainStacked(
                                 value: kcal,
-                                localizedLabel: NSLocalizedString("kcal", comment: "kcal"),
+                                localizedLabel: UnitEnergy.kilocalories.symbol,
                                 color: NutritionBadgeConfig.caloriesColor
                             )
                             .frame(maxWidth: .infinity)
