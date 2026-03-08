@@ -65,6 +65,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
     case gpt_5_mini = "gpt-5-mini"
     case gpt_5_1 = "gpt-5.1"
     case gpt_5_2 = "gpt-5.2"
+    case gpt_5_4 = "gpt-5.4"
 
     var fast: Bool {
         switch self {
@@ -74,6 +75,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: true
         case .gpt_5_1: false
         case .gpt_5_2: false
+        case .gpt_5_4: false
         }
     }
 
@@ -85,6 +87,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: nil
         case .gpt_5_1: 0.01
         case .gpt_5_2: 0.01
+        case .gpt_5_4: 0.01
         }
     }
 
@@ -96,6 +99,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: "5 mini"
         case .gpt_5_1: "5.1"
         case .gpt_5_2: "5.2"
+        case .gpt_5_4: "5.4"
         }
     }
 
@@ -107,6 +111,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: true
         case .gpt_5_1: true
         case .gpt_5_2: true
+        case .gpt_5_4: true
         }}
 
     var isGPT5: Bool {
@@ -117,6 +122,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: true
         case .gpt_5_1: true
         case .gpt_5_2: true
+        case .gpt_5_4: true
         }
     }
 
@@ -128,6 +134,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: 30
         case .gpt_5_1: 45
         case .gpt_5_2: 50
+        case .gpt_5_4: 50
         }
     }
 
@@ -139,6 +146,7 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_5_mini: 10
         case .gpt_5_1: 15
         case .gpt_5_2: 15
+        case .gpt_5_4: 15
         }
     }
 
@@ -165,7 +173,8 @@ enum OpenAIModel: String, AIModelBase, Encodable {
         case .gpt_4o,
              .gpt_5,
              .gpt_5_1,
-             .gpt_5_2:
+             .gpt_5_2,
+             .gpt_5_4:
             return 2048
         case .gpt_4o_mini,
              .gpt_5_mini:
@@ -258,11 +267,13 @@ enum ClaudeModel: String, AIModelBase, Encodable {
     case sonnet_4_5 = "claude-sonnet-4-5"
     case haiku_4_5 = "claude-haiku-4-5"
     case sonnet_4_6 = "claude-sonnet-4-6"
+    case opus_4_6 = "claude-opus-4-6"
 
     var fast: Bool {
         switch self {
         case .sonnet_4_5: false
         case .sonnet_4_6: false
+        case .opus_4_6: false
         case .haiku_4_5: true
         }
     }
@@ -271,6 +282,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
         switch self {
         case .sonnet_4_5: 0.01
         case .sonnet_4_6: 0.01
+        case .opus_4_6: 0.01
         case .haiku_4_5: 0.01
         }
     }
@@ -279,6 +291,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
         switch self {
         case .sonnet_4_5: "Sonnet 4.5"
         case .sonnet_4_6: "Sonnet 4.6"
+        case .opus_4_6: "Opus 4.6"
         case .haiku_4_5: "Haiku 4.5"
         }
     }
@@ -287,6 +300,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
         switch self {
         case .sonnet_4_5: return false
         case .sonnet_4_6: return false
+        case .opus_4_6: return false
         case .haiku_4_5: return false
         }
     }
@@ -295,6 +309,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
         switch self {
         case .sonnet_4_5: 55
         case .sonnet_4_6: 55
+        case .opus_4_6: 100
         case .haiku_4_5: 40
         }
     }
@@ -303,6 +318,7 @@ enum ClaudeModel: String, AIModelBase, Encodable {
         switch self {
         case .sonnet_4_5: 15
         case .sonnet_4_6: 15
+        case .opus_4_6: 20
         case .haiku_4_5: 10
         }
     }
@@ -418,12 +434,14 @@ enum ImageSearchProvider {
         .aiModel(.openAI(.gpt_5_mini)),
         .aiModel(.openAI(.gpt_5_1)),
         .aiModel(.openAI(.gpt_5_2)),
+        .aiModel(.openAI(.gpt_5_4)),
         .aiModel(.gemini(.gemini_3_pro_preview)),
         .aiModel(.gemini(.gemini_3_1_pro_preview)),
         .aiModel(.gemini(.gemini_2_5_pro)),
         .aiModel(.gemini(.gemini_2_5_flash)),
         .aiModel(.claude(.sonnet_4_5)),
         .aiModel(.claude(.sonnet_4_6)),
+        .aiModel(.claude(.opus_4_6)),
         .aiModel(.claude(.haiku_4_5))
     ]
 
@@ -466,12 +484,14 @@ enum AITextProvider {
         .aiModel(.openAI(.gpt_5_mini)),
         .aiModel(.openAI(.gpt_5_1)),
         .aiModel(.openAI(.gpt_5_2)),
+        .aiModel(.openAI(.gpt_5_4)),
         .aiModel(.gemini(.gemini_3_1_pro_preview)),
         .aiModel(.gemini(.gemini_3_pro_preview)),
         .aiModel(.gemini(.gemini_2_5_pro)),
         .aiModel(.gemini(.gemini_2_5_flash)),
         .aiModel(.claude(.sonnet_4_5)),
         .aiModel(.claude(.sonnet_4_6)),
+        .aiModel(.claude(.opus_4_6)),
         .aiModel(.claude(.haiku_4_5))
     ]
 
