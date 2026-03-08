@@ -1,12 +1,4 @@
-import CoreML
-import CryptoKit
 import Foundation
-import LoopKit
-import Network
-import os.log
-import SwiftUI
-import UIKit
-import Vision
 
 struct GeminiProtocol: AIProviderProtocol {
     private let baseURLTemplate = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -51,8 +43,7 @@ struct GeminiProtocol: AIProviderProtocol {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         do {
-            let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(geminiRequest)
+            request.httpBody = try JSONEncoder().encode(geminiRequest)
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -65,13 +56,11 @@ struct GeminiProtocol: AIProviderProtocol {
         telemetryCallback _: ((String) -> Void)?
     ) throws {
         guard httpResponse.statusCode == 200 else {
-            print("❌ Google Gemini API error: \(httpResponse.statusCode)")
             if let apiError = try? JSONDecoder().decode(GeminiErrorResponse.self, from: data) {
                 let message = apiError.error.message
                 let status = apiError.error.status ?? ""
-                print("❌ Gemini API Error: status=\(status), message=\(message)")
+                print("Gemini API error \(httpResponse.statusCode): \(message) [status: \(status)]")
 
-                // Handle common Gemini errors with specific error types
                 if message.localizedCaseInsensitiveContains("quota") ||
                     message.localizedCaseInsensitiveContains("QUOTA_EXCEEDED") ||
                     status.localizedCaseInsensitiveContains("QUOTA_EXCEEDED")
@@ -94,10 +83,9 @@ struct GeminiProtocol: AIProviderProtocol {
                     throw AIFoodAnalysisError.creditsExhausted(provider: "Google Gemini")
                 }
             } else {
-                print("❌ Gemini: Error data: \(String(data: data, encoding: .utf8) ?? "Unable to decode")")
+                print("Gemini API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
             }
 
-            // Handle HTTP status codes for common credit/quota issues
             if httpResponse.statusCode == 429 {
                 throw AIFoodAnalysisError.rateLimitExceeded(provider: "Google Gemini")
             } else if httpResponse.statusCode == 403 {
@@ -108,7 +96,7 @@ struct GeminiProtocol: AIProviderProtocol {
         }
 
         guard !data.isEmpty else {
-            print("❌ Google Gemini: Empty response data")
+            print("Gemini returned an empty response body")
             throw AIFoodAnalysisError.invalidResponse
         }
     }
@@ -117,34 +105,30 @@ struct GeminiProtocol: AIProviderProtocol {
         data: Data,
         telemetryCallback _: ((String) -> Void)?
     ) throws -> String {
-        let decoder = JSONDecoder()
-        let geminiResponse = try decoder.decode(GeminiGenerateContentResponse.self, from: data)
+        let geminiResponse: GeminiGenerateContentResponse
+        do {
+            geminiResponse = try JSONDecoder().decode(GeminiGenerateContentResponse.self, from: data)
+        } catch {
+            print("Failed to decode Gemini response: \(error)")
+            throw AIFoodAnalysisError.responseParsingFailed
+        }
 
         guard let firstCandidate = geminiResponse.candidates?.first else {
-            print("❌ Google Gemini: No candidates in response")
-            if let err = try? decoder.decode(GeminiErrorResponse.self, from: data) {
-                print("❌ Google Gemini: API returned error: \(err)")
-            }
+            print("Gemini response contains no candidates")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
-        // Extract text from the first candidate's content parts (Codable)
         let parts: [GeminiPartResponse] = firstCandidate.content?.parts ?? []
-        var textSegments: [String] = []
-        for part in parts {
-            if let t = part.text, !t.isEmpty {
-                textSegments.append(t)
-            }
-        }
-        let text = textSegments.joined(separator: "\n").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let text = parts
+            .compactMap(\.text)
+            .filter { !$0.isEmpty }
+            .joined(separator: "\n")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !text.isEmpty else {
-            print("❌ Google Gemini: Invalid response structure or empty text")
-            print("❌ Candidate: \(String(describing: firstCandidate))")
+            print("Gemini candidates produced no text content (finishReason: \(firstCandidate.finishReason ?? "nil"))")
             throw AIFoodAnalysisError.responseParsingFailed
         }
-
-        print("🔧 Google Gemini: Received text length: \(text.count)")
 
         return text
     }

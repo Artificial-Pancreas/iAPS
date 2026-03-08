@@ -21,7 +21,6 @@ struct AIProviderClient: Sendable {
         )
 
         urlRequest.timeoutInterval = proto.timeoutsConfig.requestTimeoutInterval
-        print("🔧 Timeout - \(urlRequest.timeoutInterval)s, Prompt: \(prompt.count) chars")
 
         telemetryCallback?("🌐 Sending request …")
         do {
@@ -41,14 +40,14 @@ struct AIProviderClient: Sendable {
             saveDebugDataToTempFile(description: "AI response", fileName: "ai-response.txt", data: data)
 
             guard let httpResponse = response as? HTTPURLResponse else {
-                print("❌ Invalid HTTP response")
+                print("Expected HTTPURLResponse but got \(type(of: response))")
                 throw AIFoodAnalysisError.invalidResponse
             }
 
             try proto.handleErrorResponse(httpResponse: httpResponse, data: data, telemetryCallback: telemetryCallback)
 
             guard !data.isEmpty else {
-                print("❌ Empty response data")
+                print("AI response body is empty (HTTP \(httpResponse.statusCode))")
                 throw AIFoodAnalysisError.invalidResponse
             }
 
@@ -80,32 +79,19 @@ struct AIProviderClient: Sendable {
         maxRetries: Int,
         telemetryCallback: ((String) -> Void)?
     ) async throws -> (Data, URLResponse) {
+        if attempt != 1 {
+            telemetryCallback?("🔄 Attempt \(attempt)/\(maxRetries) …")
+        }
+
+        let session = createSession()
         do {
-            print("🔧 Attempt \(attempt)/\(maxRetries)")
-            if attempt != 1 {
-                telemetryCallback?("🔄 Attempt \(attempt)/\(maxRetries) …")
-            }
-
-            let session = createSession()
-
-            do {
-                let (data, response) = try await session.data(for: request)
-
-                print("🔧 Request succeeded on attempt \(attempt)")
-                return (data, response)
-            } catch {
-                if let urlError = error as? URLError, urlError.code == .timedOut {
-                    print("⚠️ Request timed out")
-                    throw AIFoodAnalysisError.timeout // makes performRequestWithRetry handle it
-                }
-                throw error
-            }
-        } catch AIFoodAnalysisError.timeout {
-            print("⚠️ Timeout")
-            throw AIFoodAnalysisError.timeout
+            let (data, response) = try await session.data(for: request)
+            return (data, response)
         } catch {
-            print("❌ Non-timeout error: \(error)")
-            // For non-timeout errors, fail immediately
+            if let urlError = error as? URLError, urlError.code == .timedOut {
+                throw AIFoodAnalysisError.timeout
+            }
+            print("Request failed (attempt \(attempt)/\(maxRetries)): \(error)")
             throw error
         }
     }
@@ -127,23 +113,20 @@ struct AIProviderClient: Sendable {
                 )
 
             } catch AIFoodAnalysisError.timeout {
-                print("⚠️ Debug - Timeout on attempt \(attempt)")
+                print("Request timed out (attempt \(attempt)/\(maxRetries))")
                 lastError = AIFoodAnalysisError.timeout
 
                 if attempt < maxRetries {
-                    let backoffDelay = Double(attempt) * 2.0 // 2s, 4s backoff
+                    let backoffDelay = Double(attempt) * 2.0
                     telemetryCallback?("⏳ retry in \(Int(backoffDelay))s …")
                     try await Task.sleep(nanoseconds: UInt64(backoffDelay * 1_000_000_000))
                 }
             } catch {
-                print("❌ Debug - Non-timeout error on attempt \(attempt): \(error)")
-                // For non-timeout errors, fail immediately
                 throw error
             }
         }
 
-        print("❌ Debug - All retry attempts failed")
-
+        print("All \(maxRetries) request attempts timed out")
         throw AIFoodAnalysisError
             .customError("requests timed out consistently. Last error: \(lastError?.localizedDescription ?? "unknown")")
     }

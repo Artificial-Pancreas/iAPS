@@ -131,17 +131,14 @@ extension AnalysisServiceBase {
 
         // 5. Decode
         guard let jsonData = fixedJson.data(using: .utf8) else {
-            print("❌ Failed to convert to Data. JSON was:\n\(fixedJson)")
+            print("Failed to convert cleaned AI JSON string to Data")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
         do {
-            let decoder = JSONDecoder()
-            return try decoder.decode(type, from: jsonData)
-
+            return try JSONDecoder().decode(type, from: jsonData)
         } catch {
-            print("❌ JSON decode error: \(error)")
-            print("❌ JSON content:\n\(fixedJson)")
+            print("Failed to decode AI response JSON: \(error)\nJSON content:\n(fixedJson)")
             throw AIFoodAnalysisError.responseParsingFailed
         }
     }

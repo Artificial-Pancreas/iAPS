@@ -1,12 +1,4 @@
-import CoreML
-import CryptoKit
 import Foundation
-import LoopKit
-import Network
-import os.log
-import SwiftUI
-import UIKit
-import Vision
 
 extension USDAFoodDataService: TextAnalysisService {
     func analyzeText(
@@ -26,11 +18,9 @@ final class USDAFoodDataService {
 
     private let baseURL = "https://api.nal.usda.gov/fdc/v1"
     private let session: URLSession
-
     private let timeout: TimeInterval = 10.0
 
     private init() {
-        // Create optimized URLSession configuration for USDA API
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = timeout
         config.timeoutIntervalForResource = timeout * 2
@@ -39,26 +29,20 @@ final class USDAFoodDataService {
         session = URLSession(configuration: config)
     }
 
-    /// Search for food products using USDA FoodData Central API
-    /// - Parameter query: Search query string
-    /// - Returns: Array of OpenFoodFactsProduct for compatibility with existing UI
     private func searchProducts(query: String, pageSize: Int = 15) async throws -> [OpenFoodFactsProduct] {
-        print("🇺🇸 Starting USDA FoodData Central search for: '\(query)'")
-
         guard let url = URL(string: "\(baseURL)/foods/search") else {
             throw OpenFoodFactsError.invalidURL
         }
 
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         components.queryItems = [
-            URLQueryItem(name: "api_key", value: "DEMO_KEY"), // USDA provides free demo access
+            URLQueryItem(name: "api_key", value: "DEMO_KEY"),
             URLQueryItem(name: "query", value: query),
             URLQueryItem(name: "pageSize", value: String(pageSize)),
             URLQueryItem(name: "dataType", value: "Foundation,SR Legacy,Survey"),
-            // Get comprehensive nutrition data from multiple sources
             URLQueryItem(name: "sortBy", value: "dataType.keyword"),
             URLQueryItem(name: "sortOrder", value: "asc"),
-            URLQueryItem(name: "requireAllWords", value: "false") // Allow partial matches for better results
+            URLQueryItem(name: "requireAllWords", value: "false")
         ]
 
         guard let finalURL = components.url else {
@@ -70,7 +54,6 @@ final class USDAFoodDataService {
         request.timeoutInterval = timeout
 
         do {
-            // Check for task cancellation before making request
             try Task.checkCancellation()
 
             let (data, response) = try await session.data(for: request)
@@ -82,63 +65,30 @@ final class USDAFoodDataService {
             }
 
             guard httpResponse.statusCode == 200 else {
-                print("🇺🇸 USDA: HTTP error \(httpResponse.statusCode)")
+                print("USDA HTTP error \(httpResponse.statusCode)")
                 throw OpenFoodFactsError.serverError(httpResponse.statusCode)
             }
 
-            // Decode USDA response using Codable
-            let decoder = JSONDecoder()
             let searchResponse: USDASearchResponse
-
             do {
-                searchResponse = try decoder.decode(USDASearchResponse.self, from: data)
+                searchResponse = try JSONDecoder().decode(USDASearchResponse.self, from: data)
             } catch {
-                print("🇺🇸 USDA: Decoding error - \(error)")
+                print("Failed to decode USDA search response: \(error)")
                 throw OpenFoodFactsError.decodingError(error)
             }
 
-            let foods = searchResponse.foods
-            print("🇺🇸 USDA: Raw API returned \(foods.count) food items")
-
-            // Check for task cancellation before processing results
             try Task.checkCancellation()
 
-            // Convert USDA foods to OpenFoodFactsProduct format for UI compatibility
-            let products = foods.compactMap { foodData -> OpenFoodFactsProduct? in
-                // Check for cancellation during processing to allow fast cancellation
-                if Task.isCancelled {
-                    return nil
-                }
-                return convertUSDAFoodToProduct(foodData)
-            }
-
-            print("🇺🇸 USDA search completed: \(products.count) valid products found (filtered from \(foods.count) raw items)")
-            return products
+            return searchResponse.foods.compactMap { Task.isCancelled ? nil : convertUSDAFoodToProduct($0) }
 
         } catch {
-            print("🇺🇸 USDA search failed: \(error)")
-
-            // Handle task cancellation gracefully
-            if error is CancellationError {
-                print("🇺🇸 USDA: Task was cancelled (expected behavior during rapid typing)")
-                return []
-            }
-
-            if let urlError = error as? URLError, urlError.code == .cancelled {
-                print("🇺🇸 USDA: URLSession request was cancelled (expected behavior during rapid typing)")
-                return []
-            }
-
+            if error is CancellationError { return [] }
+            if let urlError = error as? URLError, urlError.code == .cancelled { return [] }
             throw OpenFoodFactsError.networkError(error)
         }
     }
 
-    /// Convert USDA food data to OpenFoodFactsProduct for UI compatibility
     private func convertUSDAFoodToProduct(_ foodData: USDAFood) -> OpenFoodFactsProduct? {
-        let fdcId = foodData.fdcId
-        let description = foodData.description
-
-        // Extract nutrition data from USDA food nutrients with comprehensive mapping
         var carbs: Decimal = 0
         var protein: Decimal = 0
         var fat: Decimal = 0
@@ -146,81 +96,27 @@ final class USDAFoodDataService {
         var sugars: Decimal = 0
         var energy: Decimal = 0
 
-        // Track what nutrients we found for debugging
-        var foundNutrients: [String] = []
-
         if let foodNutrients = foodData.foodNutrients {
-            print("🇺🇸 USDA: Found \(foodNutrients.count) nutrients for '\(description)'")
-
             for nutrient in foodNutrients {
                 guard let nutrientCode = nutrient.nutrientCode,
                       let value = nutrient.value
-                else {
-                    continue
-                }
+                else { continue }
 
                 let decimalValue = Decimal(value)
 
-                // Use the enum to handle nutrients by category with priority
                 switch nutrientCode.category {
-                case .carbohydrate:
-                    if carbs == 0 || nutrientCode.priority < foundNutrientPriority(for: .carbohydrate) {
-                        carbs = decimalValue
-                        foundNutrients.append("carbs-\(nutrientCode.rawValue)")
-                    }
-
-                case .protein:
-                    if protein == 0 || nutrientCode.priority < foundNutrientPriority(for: .protein) {
-                        protein = decimalValue
-                        foundNutrients.append("protein-\(nutrientCode.rawValue)")
-                    }
-
-                case .fat:
-                    if fat == 0 || nutrientCode.priority < foundNutrientPriority(for: .fat) {
-                        fat = decimalValue
-                        foundNutrients.append("fat-\(nutrientCode.rawValue)")
-                    }
-
-                case .fiber:
-                    if fiber == 0 || nutrientCode.priority < foundNutrientPriority(for: .fiber) {
-                        fiber = decimalValue
-                        foundNutrients.append("fiber-\(nutrientCode.rawValue)")
-                    }
-
-                case .sugar:
-                    if sugars == 0 || nutrientCode.priority < foundNutrientPriority(for: .sugar) {
-                        sugars = decimalValue
-                        foundNutrients.append("sugars-\(nutrientCode.rawValue)")
-                    }
-
-                case .energy:
-                    if energy == 0 || nutrientCode.priority < foundNutrientPriority(for: .energy) {
-                        energy = decimalValue
-                        foundNutrients.append("energy-\(nutrientCode.rawValue)")
-                    }
+                case .carbohydrate: if carbs == 0 { carbs = decimalValue }
+                case .protein: if protein == 0 { protein = decimalValue }
+                case .fat: if fat == 0 { fat = decimalValue }
+                case .fiber: if fiber == 0 { fiber = decimalValue }
+                case .sugar: if sugars == 0 { sugars = decimalValue }
+                case .energy: if energy == 0 { energy = decimalValue }
                 }
             }
-        } else {
-            print("🇺🇸 USDA: No foodNutrients array found in food data for '\(description)'")
         }
 
-        // Log what we found for debugging
-        if foundNutrients.isEmpty {
-            print("🇺🇸 USDA: No recognized nutrients found for '\(description)' (fdcId: \(fdcId))")
-        } else {
-            print("🇺🇸 USDA: Found nutrients for '\(description)': \(foundNutrients.joined(separator: ", "))")
-        }
+        guard carbs > 0 || protein > 0 || fat > 0 || energy > 0 else { return nil }
 
-        // Enhanced data quality validation
-        let hasUsableNutrientData = carbs > 0 || protein > 0 || fat > 0 || energy > 0
-        if !hasUsableNutrientData {
-            print(
-                "🇺🇸 USDA: Skipping '\(description)' - no usable nutrient data (carbs: \(carbs), protein: \(protein), fat: \(fat), energy: \(energy))"
-            )
-            return nil
-        }
-
-        // Create nutriments object with comprehensive data
         let nutriments = Nutriments(
             carbohydrates: carbs,
             proteins: protein > 0 ? protein : nil,
@@ -231,57 +127,40 @@ final class USDAFoodDataService {
             energy: energy > 0 ? energy : nil
         )
 
-        // Create product with USDA data
         return OpenFoodFactsProduct(
-            id: String(fdcId),
-            productName: cleanUSDADescription(description),
+            id: String(foodData.fdcId),
+            productName: cleanUSDADescription(foodData.description),
             brands: "USDA FoodData Central",
-            categories: categorizeUSDAFood(description),
+            categories: categorizeUSDAFood(foodData.description),
             nutriments: nutriments,
-            servingSize: "100g", // USDA data is typically per 100g
+            servingSize: "100g",
             servingQuantity: 100.0,
             imageURL: nil,
             imageFrontURL: nil,
-            code: String(fdcId)
+            code: String(foodData.fdcId)
         )
     }
 
-    /// Helper to determine the priority of an already-found nutrient (for now, always returns max priority)
-    private func foundNutrientPriority(for _: USDANutrientCode.NutrientCategory) -> Int {
-        // This could be enhanced to track actual priorities if needed
-        // For now, we only replace if we haven't found anything yet (handled by == 0 check)
-        Int.max
-    }
-
-    /// Clean up USDA food descriptions for better readability
     private func cleanUSDADescription(_ description: String) -> String {
         var cleaned = description
 
-        // Remove common USDA technical terms and codes
         let removals = [
             ", raw", ", cooked", ", boiled", ", steamed",
             ", NFS", ", NS as to form", ", not further specified",
             "USDA Commodity", "Food and Nutrition Service",
-            ", UPC: ", "\\b\\d{5,}\\b" // Remove long numeric codes
+            ", UPC: ", "\\b\\d{5,}\\b"
         ]
 
         for removal in removals {
             if removal.starts(with: "\\") {
-                // Handle regex patterns
-                cleaned = cleaned.replacingOccurrences(
-                    of: removal,
-                    with: "",
-                    options: .regularExpression
-                )
+                cleaned = cleaned.replacingOccurrences(of: removal, with: "", options: .regularExpression)
             } else {
                 cleaned = cleaned.replacingOccurrences(of: removal, with: "")
             }
         }
 
-        // Capitalize properly and trim
         cleaned = cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // Ensure first letter is capitalized
         if !cleaned.isEmpty {
             cleaned = cleaned.prefix(1).uppercased() + cleaned.dropFirst()
         }
@@ -289,11 +168,9 @@ final class USDAFoodDataService {
         return cleaned.isEmpty ? "USDA Food Item" : cleaned
     }
 
-    /// Categorize USDA food items based on their description
     private func categorizeUSDAFood(_ description: String) -> String? {
         let lowercased = description.lowercased()
 
-        // Define category mappings based on common USDA food terms
         let categories: [String: [String]] = [
             "Fruits": ["apple", "banana", "orange", "berry", "grape", "peach", "pear", "plum", "cherry", "melon", "fruit"],
             "Vegetables": ["broccoli", "carrot", "spinach", "lettuce", "tomato", "onion", "pepper", "cucumber", "vegetable"],

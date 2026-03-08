@@ -1,12 +1,4 @@
-import CoreML
-import CryptoKit
 import Foundation
-import LoopKit
-import Network
-import os.log
-import SwiftUI
-import UIKit
-import Vision
 
 struct OpenAIProtocol: AIProviderProtocol {
     private let apiURL = URL(string: "https://api.openai.com/v1/responses")!
@@ -30,10 +22,6 @@ struct OpenAIProtocol: AIProviderProtocol {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
 
-        print("🔍 OpenAI Final Prompt Debug:")
-        print("   Analysis prompt length: \(prompt.count) characters")
-        print("   First 100 chars of analysis prompt: \(String(prompt.prefix(100)))")
-
         let textPart = OpenAIResponsesContent.input_text(text: prompt)
         let imageParts = images.map {
             OpenAIResponsesContent.input_image(imageURL: "data:image/jpeg;base64,\($0)")
@@ -47,7 +35,7 @@ struct OpenAIProtocol: AIProviderProtocol {
         var stream: Bool?
         if model.isGPT5 {
             textOptions = OpenAIResponsesTextOptions(format: .init(type: "json_object"))
-            stream = false // Ensure complete response (no streaming)
+            stream = false
         }
 
         let body = OpenAIResponsesRequest(
@@ -60,8 +48,7 @@ struct OpenAIProtocol: AIProviderProtocol {
         )
 
         do {
-            let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(body)
+            request.httpBody = try JSONEncoder().encode(body)
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -74,12 +61,11 @@ struct OpenAIProtocol: AIProviderProtocol {
         data: Data,
         telemetryCallback _: ((String) -> Void)?
     ) throws {
-        // Decode error response JSON at the top of non-200 error block
         if httpResponse.statusCode != 200 {
             if let apiError = try? JSONDecoder().decode(OpenAIErrorResponse.self, from: data) {
                 let message = apiError.error.message ?? "Unknown error"
                 let code = apiError.error.code ?? apiError.error.type ?? ""
-                print("❌ OpenAI API Error: code=\(code), message=\(message)")
+                print("OpenAI API error \(httpResponse.statusCode): \(message) [code: \(code)]")
 
                 switch code {
                 case "insufficient_quota":
@@ -89,11 +75,8 @@ struct OpenAIProtocol: AIProviderProtocol {
                 case "invalid_api_key":
                     throw AIFoodAnalysisError.customError("Invalid OpenAI API key. Please check your configuration.")
                 case "model_not_found":
-                    throw AIFoodAnalysisError.customError(
-                        "Model not found."
-                    )
+                    throw AIFoodAnalysisError.customError("Model not found.")
                 default:
-                    // Fallback to message inspection for unknown codes
                     if message.localizedCaseInsensitiveContains("quota") {
                         throw AIFoodAnalysisError.creditsExhausted(provider: "OpenAI")
                     } else if message.localizedCaseInsensitiveContains("rate limit") {
@@ -105,16 +88,13 @@ struct OpenAIProtocol: AIProviderProtocol {
                     } else if message.localizedCaseInsensitiveContains("model"),
                               message.localizedCaseInsensitiveContains("not found")
                     {
-                        throw AIFoodAnalysisError.customError(
-                            "Model not found."
-                        )
+                        throw AIFoodAnalysisError.customError("Model not found.")
                     }
                 }
             } else {
-                print("❌ OpenAI: Error data: \(String(data: data, encoding: .utf8) ?? "Unable to decode")")
+                print("OpenAI API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
             }
 
-            // Handle HTTP status codes for common credit/quota issues
             if httpResponse.statusCode == 429 {
                 throw AIFoodAnalysisError.rateLimitExceeded(provider: "OpenAI")
             } else if httpResponse.statusCode == 402 {
@@ -123,34 +103,26 @@ struct OpenAIProtocol: AIProviderProtocol {
                 throw AIFoodAnalysisError.quotaExceeded(provider: "OpenAI")
             }
 
-            // Generic API error for unhandled cases
             throw AIFoodAnalysisError.apiError(httpResponse.statusCode)
         }
     }
 
     func extractResponse(
         data: Data,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback _: ((String) -> Void)?
     ) throws -> String {
-        let decoder = JSONDecoder()
-        let responsesPayload = try decoder.decode(OpenAIResponsesResponse.self, from: data)
+        let responsesPayload: OpenAIResponsesResponse
+        do {
+            responsesPayload = try JSONDecoder().decode(OpenAIResponsesResponse.self, from: data)
+        } catch {
+            print("Failed to decode OpenAI response: \(error)")
+            throw AIFoodAnalysisError.responseParsingFailed
+        }
 
         guard let content = extractContent(from: responsesPayload), !content.isEmpty else {
-            print("❌ \(model): Could not extract content from /responses payload (struct)")
-            print("❌ \(model): Response payload: \(responsesPayload)")
+            print("Could not extract text content from OpenAI response payload")
             throw AIFoodAnalysisError.responseParsingFailed
         }
-
-        // Add detailed logging like Gemini
-        print("🔧 \(model): Received content length: \(content.count)")
-
-        if content.isEmpty {
-            print("❌ \(model): Empty content received")
-            throw AIFoodAnalysisError.responseParsingFailed
-        }
-
-        // Enhanced JSON extraction from GPT-4's response (like Claude service)
-        telemetryCallback?("⚡ Processing AI analysis results …")
 
         return content
     }
@@ -161,12 +133,10 @@ struct OpenAIProtocol: AIProviderProtocol {
     // 2) output (array of segments with type/text)
     // 3) content (array) with items that may contain text or nested message content
     private func extractContent(from payload: OpenAIResponsesResponse) -> String? {
-        // Case 1: output_text
         if let outputText = payload.output_text, !outputText.isEmpty {
             return outputText
         }
 
-        // Case 2: output array of messages with nested content
         if let output = payload.output, !output.isEmpty {
             var parts: [String] = []
             for message in output {
@@ -181,7 +151,6 @@ struct OpenAIProtocol: AIProviderProtocol {
             if !parts.isEmpty { return parts.joined(separator: "\n") }
         }
 
-        // Case 3: content array
         if let contentArr = payload.content, !contentArr.isEmpty {
             let parts = contentArr.compactMap { $0.text ?? $0.message?.content }
             if !parts.isEmpty { return parts.joined(separator: "\n") }
@@ -239,14 +208,14 @@ private struct OpenAIResponsesResponse: Decodable {
 
 private struct OpenAIResponsesMessageOutput: Decodable {
     let id: String?
-    let type: String? // e.g., "message"
+    let type: String?
     let status: String?
     let role: String?
     let content: [OpenAIResponsesOutputContent]?
 }
 
 private struct OpenAIResponsesOutputContent: Decodable {
-    let type: String? // e.g., "output_text"
+    let type: String?
     let text: String?
 }
 

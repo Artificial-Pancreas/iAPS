@@ -185,13 +185,6 @@ private func renderPlainJSON(_ node: PlainJSON, indent: String = "") -> String {
     }
 }
 
-private struct DynamicCodingKey: CodingKey {
-    var stringValue: String
-    init?(stringValue: String) { self.stringValue = stringValue }
-    var intValue: Int? { nil }
-    init?(intValue _: Int) { nil }
-}
-
 private func PlainJSONFromPairs(_ pairs: [(String, Any)]) -> PlainJSON {
     var out: [(String, PlainJSON)] = []
     out.reserveCapacity(pairs.count)

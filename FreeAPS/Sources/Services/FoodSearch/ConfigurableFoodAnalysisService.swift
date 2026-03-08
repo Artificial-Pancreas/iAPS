@@ -1,15 +1,9 @@
-import CoreML
-import CryptoKit
+import Combine
 import Foundation
-import LoopKit
-import Network
-import os.log
-import SwiftUI
 import UIKit
-import Vision
 
-class ConfigurableAIService: ObservableObject, @unchecked Sendable {
-    static let shared = ConfigurableAIService()
+class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
+    static let shared = ConfigurableFoodAnalysisService()
 
     private init() {}
 
@@ -91,13 +85,11 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
             )
         }
 
-        // Get the AI model for statistics tracking
         let aiModel = switch UserDefaults.standard.aiImageProvider {
         case let .aiModel(model):
             model
         }
 
-        // Use average processing time from statistics, or fall back to default ETA
         if let stats = AIUsageStatistics.getStatistics(model: aiModel, requestType: .image),
            stats.averageSuccessProcessingTime > 0
         {
@@ -119,7 +111,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
             responseSchema: AIAnalysisResult.schemaVisual
         )
 
-        // Track processing time
         let startTime = Date()
 
         do {
@@ -129,7 +120,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
                 telemetryCallback: telemetryCallback
             )
 
-            // Record successful request statistics
             let processingTime = Date().timeIntervalSince(startTime)
             AIUsageStatistics.recordRequest(
                 model: aiModel,
@@ -141,7 +131,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 
             return result
         } catch {
-            // Record failed request statistics
             let processingTime = Date().timeIntervalSince(startTime)
             AIUsageStatistics.recordRequest(
                 model: aiModel,
@@ -184,7 +173,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
             let providerImpl = try getAIImplementation(for: model, telemetryCallback: telemetryCallback)
             let analysisPrompt = try AIPrompts.getAnalysisPrompt(.query(query), responseSchema: AIAnalysisResult.schemaText)
 
-            // Use average processing time from statistics, or fall back to default ETA
             if let stats = AIUsageStatistics.getStatistics(model: model, requestType: .text),
                stats.averageSuccessProcessingTime > 0
             {
@@ -196,7 +184,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 
             telemetryCallback?("MODEL: \(model.description)")
 
-            // Track processing time
             let startTime = Date()
 
             do {
@@ -205,7 +192,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
                     telemetryCallback: telemetryCallback
                 )
 
-                // Record successful request statistics
                 let processingTime = Date().timeIntervalSince(startTime)
                 AIUsageStatistics.recordRequest(
                     model: model,
@@ -217,7 +203,6 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
 
                 return result
             } catch {
-                // Record failed request statistics
                 let processingTime = Date().timeIntervalSince(startTime)
                 AIUsageStatistics.recordRequest(
                     model: model,
@@ -237,38 +222,32 @@ class ConfigurableAIService: ObservableObject, @unchecked Sendable {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.barcodeSearchProvider.description) …")
         switch UserDefaults.standard.barcodeSearchProvider {
         case .openFoodFacts:
-            let result = try await OpenFoodFactsService.shared.analyzeBarcode(
+            return try await OpenFoodFactsService.shared.analyzeBarcode(
                 barcode: barcode,
                 telemetryCallback: telemetryCallback
             )
-            return result
         }
     }
 
-    private func getApiKey(
-        for model: AIModel,
-        telemetryCallback _: ((String) -> Void)?
-    ) throws -> String {
+    private func getApiKey(for model: AIModel, telemetryCallback _: ((String) -> Void)?) throws -> String {
         let key: String
         switch model {
         case .gemini:
             key = UserDefaults.standard.googleGeminiAPIKey
             guard !key.isEmpty else {
-                print("❌ Google Gemini API key not configured")
+                print("No API key configured for Google Gemini")
                 throw AIFoodAnalysisError.noApiKey
             }
-
         case .openAI:
             key = UserDefaults.standard.openAIAPIKey
             guard !key.isEmpty else {
-                print("❌ OpenAI API key not configured")
+                print("No API key configured for OpenAI")
                 throw AIFoodAnalysisError.noApiKey
             }
-
         case .claude:
             key = UserDefaults.standard.claudeAPIKey
             guard !key.isEmpty else {
-                print("❌ Claude API key not configured")
+                print("No API key configured for Claude")
                 throw AIFoodAnalysisError.noApiKey
             }
         }

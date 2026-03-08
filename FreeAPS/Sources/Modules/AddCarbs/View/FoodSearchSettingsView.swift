@@ -25,7 +25,7 @@ struct StableSecureField: View {
 }
 
 struct FoodSearchSettingsView: View {
-    @ObservedObject private var aiService = ConfigurableAIService.shared
+    @ObservedObject private var aiService = ConfigurableFoodAnalysisService.shared
     @Environment(\.dismiss) private var dismiss
 
     @State private var claudeKey: String = ""
@@ -669,9 +669,9 @@ struct FoodSearchSettingsView: View {
     }
 
     private func readPersistedValues() {
-        claudeKey = ConfigurableAIService.shared.getAPIKey(for: .claude) ?? ""
-        openAIKey = ConfigurableAIService.shared.getAPIKey(for: .openAI) ?? ""
-        googleGeminiKey = ConfigurableAIService.shared.getAPIKey(for: .gemini) ?? ""
+        claudeKey = ConfigurableFoodAnalysisService.shared.getAPIKey(for: .claude) ?? ""
+        openAIKey = ConfigurableFoodAnalysisService.shared.getAPIKey(for: .openAI) ?? ""
+        googleGeminiKey = ConfigurableFoodAnalysisService.shared.getAPIKey(for: .gemini) ?? ""
 
         preferredLanguage = UserDefaults.standard.userPreferredLanguageForAI ?? ""
         preferredRegion = UserDefaults.standard.userPreferredRegionForAI ?? ""

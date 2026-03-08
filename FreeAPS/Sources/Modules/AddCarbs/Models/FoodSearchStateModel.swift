@@ -273,7 +273,7 @@ final class FoodSearchStateModel: ObservableObject {
 
         searchTask = Task { @MainActor in
             do {
-                let result = try await ConfigurableAIService.shared.analyzeBarcode(
+                let result = try await ConfigurableFoodAnalysisService.shared.analyzeBarcode(
                     barcode,
                     telemetryCallback: nil
                 )
@@ -310,7 +310,7 @@ final class FoodSearchStateModel: ObservableObject {
 
         searchTask = Task { @MainActor in
             do {
-                let result = try await ConfigurableAIService.shared.executeTextSearch(
+                let result = try await ConfigurableFoodAnalysisService.shared.executeTextSearch(
                     query,
                     telemetryCallback: nil
                 )
@@ -346,7 +346,7 @@ final class FoodSearchStateModel: ObservableObject {
         analysisStart = Date()
         foodSearchRoute = .aiProgress
 
-        let aiService = ConfigurableAIService.shared
+        let aiService = ConfigurableFoodAnalysisService.shared
 
         switch analysisRequest {
         case .image:

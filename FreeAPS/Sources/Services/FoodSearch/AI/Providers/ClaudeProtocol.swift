@@ -1,12 +1,4 @@
-import CoreML
-import CryptoKit
 import Foundation
-import LoopKit
-import Network
-import os.log
-import SwiftUI
-import UIKit
-import Vision
 
 struct ClaudeProtocol: AIProviderProtocol {
     private let url = URL(string: "https://api.anthropic.com/v1/messages")!
@@ -53,8 +45,7 @@ struct ClaudeProtocol: AIProviderProtocol {
         )
 
         do {
-            let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(body)
+            request.httpBody = try JSONEncoder().encode(body)
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -71,9 +62,8 @@ struct ClaudeProtocol: AIProviderProtocol {
             if let apiError = try? JSONDecoder().decode(ClaudeErrorResponse.self, from: data) {
                 let message = apiError.error.message
                 let type = apiError.error.type ?? ""
-                print("❌ Claude API Error: type=\(type), message=\(message)")
+                print("Claude API error \(httpResponse.statusCode): \(message) [type: \(type)]")
 
-                // Handle common Claude errors with specific error types
                 if message.localizedCaseInsensitiveContains("credit") || message
                     .localizedCaseInsensitiveContains("billing") || message.localizedCaseInsensitiveContains("usage")
                 {
@@ -91,10 +81,9 @@ struct ClaudeProtocol: AIProviderProtocol {
                     throw AIFoodAnalysisError.customError("Invalid Claude API key. Please check your configuration.")
                 }
             } else {
-                print("❌ Claude: Error data: \(String(data: data, encoding: .utf8) ?? "Unable to decode")")
+                print("Claude API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
             }
 
-            // Handle HTTP status codes for common credit/quota issues
             if httpResponse.statusCode == 429 {
                 throw AIFoodAnalysisError.rateLimitExceeded(provider: "Claude")
             } else if httpResponse.statusCode == 402 {
@@ -106,9 +95,8 @@ struct ClaudeProtocol: AIProviderProtocol {
             throw AIFoodAnalysisError.apiError(httpResponse.statusCode)
         }
 
-        // Enhanced data validation like Gemini
         guard !data.isEmpty else {
-            print("❌ Claude: Empty response data")
+            print("Claude returned an empty response body")
             throw AIFoodAnalysisError.invalidResponse
         }
     }
@@ -117,29 +105,26 @@ struct ClaudeProtocol: AIProviderProtocol {
         data: Data,
         telemetryCallback _: ((String) -> Void)?
     ) throws -> String {
-        let decoder = JSONDecoder()
-        let claudeResponse = try decoder.decode(ClaudeMessagesResponse.self, from: data)
+        let claudeResponse: ClaudeMessagesResponse
+        do {
+            claudeResponse = try JSONDecoder().decode(ClaudeMessagesResponse.self, from: data)
+        } catch {
+            print("Failed to decode Claude response: \(error)")
+            throw AIFoodAnalysisError.responseParsingFailed
+        }
 
         guard let contentItems = claudeResponse.content, !contentItems.isEmpty else {
-            print("❌ Claude: Invalid response structure - no content items")
-            if let raw = String(data: data, encoding: .utf8) {
-                print("❌ Claude: Raw response: \(raw)")
-            }
+            print("Claude response contains no content items")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
-        // Extract first text segment from content
-        guard let text = contentItems.first(where: { ($0.type == nil || $0.type == "text") && ($0.text?.isEmpty == false) })?
+        guard let text = contentItems
+            .first(where: { ($0.type == nil || $0.type == "text") && ($0.text?.isEmpty == false) })?
             .text
         else {
-            print("❌ Claude: No text content in response")
-            if let raw = String(data: data, encoding: .utf8) {
-                print("❌ Claude: Raw response: \(raw)")
-            }
+            print("Claude response has no text content block")
             throw AIFoodAnalysisError.responseParsingFailed
         }
-
-        print("🔧 Claude: Received text length: \(text.count)")
 
         return text
     }
