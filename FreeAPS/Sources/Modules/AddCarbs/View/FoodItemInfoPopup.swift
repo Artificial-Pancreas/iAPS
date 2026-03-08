@@ -22,6 +22,14 @@ struct FoodItemInfoPopup: View {
         return false
     }
 
+    private var caloriesPer100: Decimal? {
+        guard let values = nutritionValues else { return nil }
+        let carbs = values[.carbs] ?? 0
+        let protein = values[.protein] ?? 0
+        let fat = values[.fat] ?? 0
+        return carbs * 4 + protein * 4 + fat * 9
+    }
+
     // Helper functions to avoid type inference issues
     private func shouldShowStandardServing(_ item: FoodItemDetailed) -> Bool {
         let hasDescription = item.standardServing != nil && !(item.standardServing?.isEmpty ?? true)
@@ -29,11 +37,7 @@ struct FoodItemInfoPopup: View {
         return hasDescription || hasSize
     }
 
-    @ViewBuilder private func standardServingContent(
-        foodItem: FoodItemDetailed,
-        portionSize _: Decimal,
-        unit _: String
-    ) -> some View {
+    @ViewBuilder private func standardServingContent(foodItem: FoodItemDetailed) -> some View {
         if let servingDescription = foodItem.standardServing, !servingDescription.isEmpty {
             Text(servingDescription)
                 .font(.subheadline)
@@ -146,57 +150,24 @@ struct FoodItemInfoPopup: View {
                     .padding(.horizontal, 12)
                     .padding(.top, 8)
 
-                    Divider()
-
-                    DetailedNutritionRow(
-                        label: "Carbs",
-                        portionValue: foodItem.carbsInThisPortion,
-                        per100Value: nutritionValues?.carbs,
-                        unit: "g"
-                    )
-                    Divider()
-                    DetailedNutritionRow(
-                        label: "Protein",
-                        portionValue: foodItem.proteinInThisPortion,
-                        per100Value: nutritionValues?.protein,
-                        unit: "g"
-                    )
-                    Divider()
-                    DetailedNutritionRow(
-                        label: "Fat",
-                        portionValue: foodItem.fatInThisPortion,
-                        per100Value: nutritionValues?.fat,
-                        unit: "g"
-                    )
-
-                    // Optional additional nutrition
-                    if let fiber = nutritionValues?.fiber, fiber > 0 {
-                        Divider()
-                        DetailedNutritionRow(
-                            label: "Fiber",
-                            portionValue: isPerServing ?
-                                (foodItem.servingsMultiplier.map { fiber * $0 }) :
-                                (foodItem.portionSize.map { fiber / 100 * $0 }),
-                            per100Value: fiber,
-                            unit: "g"
-                        )
+                    ForEach(NutrientType.allCases) { nutrient in
+                        let nutrientValue = nutritionValues?[nutrient]
+                        if nutrient.isPrimary || (nutrientValue != nil && nutrientValue! > 0) {
+                            Divider()
+                            DetailedNutritionRow(
+                                localizedLabel: nutrient.localizedLabel,
+                                portionValue: foodItem.nutrientInThisPortion(nutrient),
+                                per100Value: nutrientValue,
+                                unit: nutrient.unitsAbbr
+                            )
+                        }
                     }
-                    if let sugars = nutritionValues?.sugars, sugars > 0 {
-                        Divider()
-                        DetailedNutritionRow(
-                            label: "Sugar",
-                            portionValue: isPerServing ?
-                                (foodItem.servingsMultiplier.map { sugars * $0 }) :
-                                (foodItem.portionSize.map { sugars / 100 * $0 }),
-                            per100Value: sugars,
-                            unit: "g"
-                        )
-                    }
+
                     Divider()
                     DetailedNutritionRow(
-                        label: "Calories",
+                        localizedLabel: NSLocalizedString("Calories", comment: ""),
                         portionValue: foodItem.caloriesInThisPortion,
-                        per100Value: nutritionValues?.calories,
+                        per100Value: caloriesPer100,
                         unit: "kcal"
                     )
                 }
@@ -215,7 +186,7 @@ struct FoodItemInfoPopup: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
 
-                        standardServingContent(foodItem: foodItem, portionSize: portionSize, unit: unit)
+                        standardServingContent(foodItem: foodItem)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)
@@ -241,45 +212,15 @@ struct FoodItemInfoPopup: View {
     }
 }
 
-private struct NutritionRow: View {
-    let label: String
-    let value: Decimal?
-    let unit: String
-
-    var body: some View {
-        HStack {
-            Text(label)
-                .font(.subheadline)
-                .foregroundColor(.primary.opacity(0.8))
-            Spacer()
-            if let value = value, value > 0 {
-                HStack(spacing: 2) {
-                    Text("\(Double(value), specifier: "%.1f")")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .foregroundColor(.primary)
-                    Text(unit)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary.opacity(0.7))
-                }
-            } else {
-                Text("—")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary.opacity(0.7))
-            }
-        }
-    }
-}
-
 private struct DetailedNutritionRow: View {
-    let label: String
+    let localizedLabel: String
     let portionValue: Decimal?
     let per100Value: Decimal?
     let unit: String
 
     var body: some View {
         HStack(spacing: 8) {
-            Text(NSLocalizedString(label, comment: ""))
+            Text(localizedLabel)
                 .font(.subheadline)
                 .foregroundColor(.primary.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)

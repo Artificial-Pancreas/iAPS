@@ -3,11 +3,18 @@ import SwiftUI
 
 enum NutritionBadgeConfig {
     static let caloriesColor = Color.gray
-    static let carbsColor = Color.orange
-    static let proteinColor = Color.green
-    static let fatColor = Color.blue
-    static let fiberColor = Color.purple
-    static let sugarsColor = Color.purple
+}
+
+extension NutrientType {
+    var badgeColor: Color {
+        switch self {
+        case .carbs: Color.orange
+        case .protein: Color.green
+        case .fat: Color.blue
+        case .fiber: Color.purple
+        case .sugars: Color.purple
+        }
+    }
 }
 
 extension ConfidenceLevel {
@@ -31,15 +38,15 @@ extension ConfidenceLevel {
 struct NutritionBadge: View {
     let value: Decimal
     let unit: String?
-    let label: String?
+    let localizedLabel: String?
     let color: Color
 
     @Environment(\.colorScheme) private var colorScheme
 
-    init(value: Decimal, unit: String? = nil, label: String? = nil, color: Color) {
+    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
-        self.label = label
+        self.localizedLabel = localizedLabel
         self.color = color
     }
 
@@ -59,8 +66,8 @@ struct NutritionBadge: View {
                     .foregroundColor(.secondary)
                     .fixedSize()
             }
-            if let label = label {
-                Text(NSLocalizedString(label, comment: ""))
+            if let localizedLabel = localizedLabel {
+                Text(localizedLabel)
                     .font(.system(size: 11, weight: .semibold, design: .rounded))
                     .textCase(.lowercase)
                     .foregroundColor(.secondary)
@@ -79,15 +86,15 @@ struct NutritionBadge: View {
 struct NutritionBadgePlain: View {
     let value: Decimal
     let unit: String?
-    let label: String?
+    let localizedLabel: String?
     let color: Color
 
     @Environment(\.colorScheme) private var colorScheme
 
-    init(value: Decimal, unit: String? = nil, label: String? = nil, color: Color) {
+    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
-        self.label = label
+        self.localizedLabel = localizedLabel
         self.color = color
     }
 
@@ -126,8 +133,8 @@ struct NutritionBadgePlain: View {
                     .foregroundColor(.secondary)
                     .fixedSize()
             }
-            if let label = label {
-                Text(NSLocalizedString(label, comment: ""))
+            if let localizedLabel = localizedLabel {
+                Text(localizedLabel)
                     .font(.system(size: 11, weight: .semibold, design: .rounded))
                     .textCase(.lowercase)
                     .foregroundColor(.secondary)
@@ -142,15 +149,15 @@ struct NutritionBadgePlain: View {
 struct NutritionBadgePlainStacked: View {
     let value: Decimal
     let unit: String?
-    let label: String?
+    let localizedLabel: String?
     let color: Color
 
     @Environment(\.colorScheme) private var colorScheme
 
-    init(value: Decimal, unit: String? = nil, label: String? = nil, color: Color) {
+    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
-        self.label = label
+        self.localizedLabel = localizedLabel
         self.color = color
     }
 
@@ -191,7 +198,7 @@ struct NutritionBadgePlainStacked: View {
                         .fixedSize()
                 }
             }
-            Text(NSLocalizedString(label ?? "", comment: ""))
+            Text(localizedLabel ?? "")
                 .font(.system(size: 11, weight: .semibold, design: .rounded))
                 .textCase(.lowercase)
                 .foregroundColor(.secondary)
@@ -205,13 +212,13 @@ struct NutritionBadgePlainStacked: View {
 struct TotalNutritionBadge: View {
     let value: Decimal
     let unit: String?
-    let label: String?
+    let localizedLabel: String?
     let color: Color
 
-    init(value: Decimal, unit: String? = nil, label: String? = nil, color: Color) {
+    init(value: Decimal, unit: String? = nil, localizedLabel: String? = nil, color: Color) {
         self.value = value
         self.unit = unit
-        self.label = label
+        self.localizedLabel = localizedLabel
         self.color = color
     }
 
@@ -230,8 +237,8 @@ struct TotalNutritionBadge: View {
                 }
             }
             HStack {
-                if let label = label {
-                    Text(NSLocalizedString(label, comment: ""))
+                if let localizedLabel = localizedLabel {
+                    Text(localizedLabel)
                         .font(.system(size: 12, weight: .bold, design: .rounded))
                         .foregroundColor(.secondary)
                 }
@@ -273,17 +280,19 @@ struct ConfidenceBadge: View {
 
 struct AdjustmentBadge: View {
     let value: Decimal
-    let label: String
+    let localizedLabel: String
     let color: Color
 
-    private var formattedValue: String {
-        let nsNumber = NSDecimalNumber(decimal: abs(value))
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        numberFormatter.maximumFractionDigits = 1
-        numberFormatter.minimumFractionDigits = 0
-        let valueString = numberFormatter.string(from: nsNumber) ?? "0"
+    private static let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.minimumFractionDigits = 0
+        return formatter
+    }()
 
+    private var formattedValue: String {
+        let valueString = Self.numberFormatter.string(from: NSDecimalNumber(decimal: abs(value))) ?? "0"
         let sign = value >= 0 ? "+" : "-"
         return "\(sign)\(valueString)"
     }
@@ -293,7 +302,7 @@ struct AdjustmentBadge: View {
             Text(formattedValue)
                 .font(.caption2)
                 .fontWeight(.semibold)
-            Text(NSLocalizedString(label, comment: ""))
+            Text(localizedLabel)
                 .font(.caption2)
         }
         .foregroundColor(color)

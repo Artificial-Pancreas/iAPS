@@ -205,14 +205,7 @@ private struct FoodItemsSelectorItemRow: View {
     @State private var showImageSelector = false
     @State private var isSavingImage = false
 
-    private var hasNutritionInfo: Bool {
-        switch foodItem.nutrition {
-        case let .per100(values):
-            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
-        case let .perServing(values):
-            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
-        }
-    }
+    private let displayNutrients: [NutrientType] = [.carbs, .protein, .fat]
 
     var body: some View {
         VStack(spacing: 0) {
@@ -289,89 +282,45 @@ private struct FoodItemsSelectorItemRow: View {
 
                     HStack(spacing: 8) {
                         if case .per100 = foodItem.nutrition {
-                            NutritionBadgePlain(value: portionSize, unit: "g", label: "", color: .primary)
+                            NutritionBadgePlain(value: portionSize, unit: "g", localizedLabel: "", color: .primary)
                         } else {
                             VStack {}
                                 .frame(maxWidth: .infinity)
                         }
 
-                        switch foodItem.nutrition {
-                        case .per100:
-                            if let carbs = foodItem.carbsInPortion(portion: portionSize) {
-                                NutritionBadgePlainStacked(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                                    .frame(maxWidth: .infinity)
-                            } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
+                        ForEach(displayNutrients, id: \.self) { nutrient in
+                            let value = switch foodItem.nutrition {
+                            case .per100: foodItem.nutrientInPortion(nutrient, portion: portionSize)
+                            case .perServing: foodItem.nutrientInServings(nutrient, multiplier: portionSize)
                             }
-                            if let protein = foodItem.proteinInPortion(portion: portionSize), protein > 0 {
+                            if let value {
                                 NutritionBadgePlainStacked(
-                                    value: protein,
-                                    label: "protein",
-                                    color: NutritionBadgeConfig.proteinColor
+                                    value: value,
+                                    localizedLabel: nutrient.localizedLabel,
+                                    color: nutrient.badgeColor
                                 )
                                 .frame(maxWidth: .infinity)
-                            } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let fat = foodItem.fatInPortion(portion: portionSize), fat > 0 {
-                                NutritionBadgePlainStacked(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                                    .frame(maxWidth: .infinity)
-                            } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let kcal = foodItem.caloriesInPortion(portion: portionSize), kcal > 0 {
-                                NutritionBadgePlainStacked(value: kcal, label: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                                    .frame(maxWidth: .infinity)
-                            } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
-                            }
-                        case .perServing:
-                            if let carbs = foodItem.carbsInServings(multiplier: portionSize) {
-                                NutritionBadgePlainStacked(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                                    .frame(maxWidth: .infinity)
-                            } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let protein = foodItem.proteinInServings(multiplier: portionSize), protein > 0 {
-                                NutritionBadgePlainStacked(
-                                    value: protein,
-                                    label: "protein",
-                                    color: NutritionBadgeConfig.proteinColor
-                                )
-                                .frame(maxWidth: .infinity)
-                            } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let fat = foodItem.fatInServings(multiplier: portionSize), fat > 0 {
-                                NutritionBadgePlainStacked(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                                    .frame(maxWidth: .infinity)
-                            } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
-                            }
-                            if let kcal = foodItem.fatInServings(multiplier: portionSize), kcal > 0 {
-                                NutritionBadgePlainStacked(value: kcal, label: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                                    .frame(maxWidth: .infinity)
                             } else {
                                 VStack {}
                                     .frame(maxWidth: .infinity)
                             }
                         }
+                        let kcal = switch foodItem.nutrition {
+                        case .per100: foodItem.caloriesInPortion(portion: portionSize)
+                        case .perServing: foodItem.caloriesInServings(multiplier: portionSize)
+                        }
 
-//                        if case .per100 = foodItem.nutrition {
-//                            PortionSizeBadge(
-//                                value: portionSize,
-//                                color: .orange,
-//                                icon: "scalemass.fill",
-//                                foodItem: foodItem
-//                            )
-//                        }
+                        if let kcal, kcal > 0 {
+                            NutritionBadgePlainStacked(
+                                value: kcal,
+                                localizedLabel: NSLocalizedString("kcal", comment: "kcal"),
+                                color: NutritionBadgeConfig.caloriesColor
+                            )
+                            .frame(maxWidth: .infinity)
+                        } else {
+                            VStack {}
+                                .frame(maxWidth: .infinity)
+                        }
                     }
                     .padding(.trailing, 40)
                 }

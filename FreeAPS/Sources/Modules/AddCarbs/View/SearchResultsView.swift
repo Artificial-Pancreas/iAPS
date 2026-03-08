@@ -116,8 +116,7 @@ struct SearchResultsView: View {
         .onChange(of: state.searchResultsState.searchResults) {
             // Only clear undo state if we have new visible content
             let hasNewVisibleContent = !state.searchResultsState.searchResults.isEmpty &&
-                !state.searchResultsState.searchResults.flatMap(\.foodItemsDetailed)
-                .filter { !state.searchResultsState.isDeleted($0) }.isEmpty
+                !state.searchResultsState.nonDeletedItems.isEmpty
 
             if clearedResultsViewState != nil, hasNewVisibleContent {
                 withAnimation(.easeOut(duration: 0.2)) {
@@ -288,11 +287,7 @@ struct SearchResultsView: View {
                         clearedResultsViewState?.searchResults = state.searchResultsState.searchResults
                         clearedResultsViewState?.editedItems = state.searchResultsState.editedItems
                         clearedResultsViewState?.collapsedSections = state.searchResultsState.collapsedSections
-                        clearedResultsViewState?.carbsOverride = state.searchResultsState.carbsOverride
-                        clearedResultsViewState?.proteinOverride = state.searchResultsState.proteinOverride
-                        clearedResultsViewState?.fatOverride = state.searchResultsState.fatOverride
-                        clearedResultsViewState?.fiberOverride = state.searchResultsState.fiberOverride
-                        clearedResultsViewState?.sugarsOverride = state.searchResultsState.sugarsOverride
+                        clearedResultsViewState?.nutritionOverrides = state.searchResultsState.nutritionOverrides
 
                         // Clear everything
                         state.searchResultsState.clear()
@@ -310,33 +305,18 @@ struct SearchResultsView: View {
                 showNutritionOverrideEditor = true
             }) {
                 HStack(spacing: 8) {
-                    TotalNutritionBadge(
-                        value: state.searchResultsState.totalCarbs,
-                        label: "carbs",
-                        color: NutritionBadgeConfig.carbsColor
-                    )
-                    .id("carbs-\(state.searchResultsState.totalCarbs)")
-                    .transition(.scale.combined(with: .opacity))
-
-                    TotalNutritionBadge(
-                        value: state.searchResultsState.totalProtein,
-                        label: "protein",
-                        color: NutritionBadgeConfig.proteinColor
-                    )
-                    .id("protein-\(state.searchResultsState.totalProtein)")
-                    .transition(.scale.combined(with: .opacity))
-
-                    TotalNutritionBadge(
-                        value: state.searchResultsState.totalFat,
-                        label: "fat",
-                        color: NutritionBadgeConfig.fatColor
-                    )
-                    .id("fat-\(state.searchResultsState.totalFat)")
-                    .transition(.scale.combined(with: .opacity))
-
+                    ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
+                        TotalNutritionBadge(
+                            value: state.searchResultsState.total(nutrient),
+                            localizedLabel: nutrient.localizedLabel,
+                            color: nutrient.badgeColor
+                        )
+                        .id("\(nutrient.rawValue)-\(state.searchResultsState.total(nutrient))")
+                        .transition(.scale.combined(with: .opacity))
+                    }
                     TotalNutritionBadge(
                         value: state.searchResultsState.totalCalories,
-                        label: "kcal",
+                        localizedLabel: NSLocalizedString("kcal", comment: "kcal"),
                         color: NutritionBadgeConfig.caloriesColor
                     )
                     .id("calories-\(state.searchResultsState.totalCalories)")
@@ -344,9 +324,6 @@ struct SearchResultsView: View {
                 }
             }
             .buttonStyle(.plain)
-            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalCarbs)
-            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalProtein)
-            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalFat)
             .animation(.spring(response: 0.4, dampingFraction: 0.7), value: state.searchResultsState.totalCalories)
 
             // Show adjustments row if any overrides are active - also make it tappable
@@ -371,30 +348,17 @@ struct SearchResultsView: View {
                         }
 
                         HStack(spacing: 8) {
-                            if let override = state.searchResultsState.carbsOverride, abs(override) >= 0.1 {
-                                AdjustmentBadge(
-                                    value: override,
-                                    label: "carbs",
-                                    color: NutritionBadgeConfig.carbsColor
-                                )
+                            ForEach(NutrientType.allCases) { nutrient in
+                                if let override = state.searchResultsState.nutritionOverrides[nutrient],
+                                   abs(override) >= 0.1
+                                {
+                                    AdjustmentBadge(
+                                        value: override,
+                                        localizedLabel: nutrient.localizedLabel,
+                                        color: nutrient.badgeColor
+                                    )
+                                }
                             }
-
-                            if let override = state.searchResultsState.proteinOverride, abs(override) >= 0.1 {
-                                AdjustmentBadge(
-                                    value: override,
-                                    label: "protein",
-                                    color: NutritionBadgeConfig.proteinColor
-                                )
-                            }
-
-                            if let override = state.searchResultsState.fatOverride, abs(override) >= 0.1 {
-                                AdjustmentBadge(
-                                    value: override,
-                                    label: "fat",
-                                    color: NutritionBadgeConfig.fatColor
-                                )
-                            }
-
                             Spacer()
                         }
                     }
@@ -439,8 +403,7 @@ struct SearchResultsView: View {
     }
 
     private func saveMealTotalsAsFoodItem() {
-        let allItems = state.searchResultsState.searchResults.flatMap(\.foodItemsDetailed)
-            .filter { !state.searchResultsState.isDeleted($0) }
+        let allItems = state.searchResultsState.nonDeletedItems
 
         guard !allItems.isEmpty else { return }
 
@@ -474,14 +437,13 @@ struct SearchResultsView: View {
         }
 
         // Create nutrition values from totals
-        let nutritionValues = NutritionValues(
-            calories: state.searchResultsState.totalCalories,
-            carbs: state.searchResultsState.totalCarbs,
-            fat: state.searchResultsState.totalFat,
-            fiber: state.searchResultsState.totalFiber,
-            protein: state.searchResultsState.totalProtein,
-            sugars: state.searchResultsState.totalSugars
-        )
+        var nutritionValues: NutritionValues = [:]
+        for nutrient in NutrientType.allCases {
+            let value = state.searchResultsState.total(nutrient)
+            if value > 0 || nutrient.isPrimary {
+                nutritionValues[nutrient] = value
+            }
+        }
 
         // Create new food item with per-serving nutrition
         let savedItem = FoodItemDetailed(
@@ -518,11 +480,7 @@ struct SearchResultsView: View {
                         state.searchResultsState.editedItems = savedState.editedItems
                         state.searchResultsState.collapsedSections = savedState.collapsedSections
                         // Restore nutrition overrides
-                        state.searchResultsState.carbsOverride = savedState.carbsOverride
-                        state.searchResultsState.proteinOverride = savedState.proteinOverride
-                        state.searchResultsState.fatOverride = savedState.fatOverride
-                        state.searchResultsState.fiberOverride = savedState.fiberOverride
-                        state.searchResultsState.sugarsOverride = savedState.sugarsOverride
+                        state.searchResultsState.nutritionOverrides = savedState.nutritionOverrides
                     }
 
                     clearedResultsViewState = nil
@@ -642,10 +600,14 @@ struct SearchResultsView: View {
     }
 
     // Helper function to format time
-    private func timeString(for date: Date) -> String {
+    private static let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        return formatter.string(from: date)
+        return formatter
+    }()
+
+    private func timeString(for date: Date) -> String {
+        Self.timeFormatter.string(from: date)
     }
 
     private var noSearchesView: some View {
@@ -660,17 +622,15 @@ struct SearchResultsView: View {
     // utils
 
     private func createCombinedFoodItem() -> FoodItemDetailed {
-        let allItems = state.searchResultsState.searchResults.flatMap(\.foodItemsDetailed)
-            .filter { !state.searchResultsState.isDeleted($0) }
+        let allItems = state.searchResultsState.nonDeletedItems
 
-        let nutritionValues = NutritionValues(
-            calories: state.searchResultsState.totalCalories,
-            carbs: state.searchResultsState.totalCarbs,
-            fat: state.searchResultsState.totalFat,
-            fiber: state.searchResultsState.totalFiber,
-            protein: state.searchResultsState.totalProtein,
-            sugars: state.searchResultsState.totalSugars
-        )
+        var nutritionValues: NutritionValues = [:]
+        for nutrient in NutrientType.allCases {
+            let value = state.searchResultsState.total(nutrient)
+            if value > 0 || nutrient.isPrimary {
+                nutritionValues[nutrient] = value
+            }
+        }
 
         // Create new food item with per-serving nutrition
         return FoodItemDetailed(
@@ -813,57 +773,20 @@ private struct FoodItemGroupListSection: View {
 
         guard !nonDeletedItems.isEmpty else { return }
 
-        // Calculate totals for this section
-        var totalCarbs: Decimal = 0
-        var totalProtein: Decimal = 0
-        var totalFat: Decimal = 0
-        var totalFiber: Decimal = 0
-        var totalSugars: Decimal = 0
-        var totalCalories: Decimal = 0
-
-        // Calculate aggregate serving size
+        var totals: [NutrientType: Decimal] = [:]
         var aggregateServingSize: Decimal? = 0
         var hasAllServingSizes = true
 
         for item in nonDeletedItems {
             let portionSize = state.searchResultsState.portionSize(for: item)
+            for nutrient in NutrientType.allCases {
+                totals[nutrient, default: 0] += item.nutrient(nutrient, forPortion: portionSize)
+            }
 
             switch item.nutrition {
-            case let .per100(values):
-                // For per100, scale by portion size
-                let scale = portionSize / 100
-                totalCarbs += (values.carbs ?? 0) * scale
-                totalProtein += (values.protein ?? 0) * scale
-                totalFat += (values.fat ?? 0) * scale
-                if let fiber = values.fiber {
-                    totalFiber += fiber * scale
-                }
-                if let sugars = values.sugars {
-                    totalSugars += sugars * scale
-                }
-                if let calories = values.calories {
-                    totalCalories += calories * scale
-                }
-
-                // Add portion size to aggregate
+            case .per100:
                 aggregateServingSize? += portionSize
-
-            case let .perServing(values):
-                // For perServing, multiply by servings multiplier
-                totalCarbs += (values.carbs ?? 0) * portionSize
-                totalProtein += (values.protein ?? 0) * portionSize
-                totalFat += (values.fat ?? 0) * portionSize
-                if let fiber = values.fiber {
-                    totalFiber += fiber * portionSize
-                }
-                if let sugars = values.sugars {
-                    totalSugars += sugars * portionSize
-                }
-                if let calories = values.calories {
-                    totalCalories += calories * portionSize
-                }
-
-                // Add serving size multiplied by multiplier
+            case .perServing:
                 if let servingSize = item.standardServingSize {
                     aggregateServingSize? += servingSize * portionSize
                 } else {
@@ -872,25 +795,20 @@ private struct FoodItemGroupListSection: View {
             }
         }
 
-        // If we couldn't calculate complete serving size, set to nil
         if !hasAllServingSizes {
             aggregateServingSize = nil
         }
 
-        // Create nutrition values from totals
-        let nutritionValues = NutritionValues(
-            calories: totalCalories > 0 ? totalCalories : nil,
-            carbs: totalCarbs,
-            fat: totalFat,
-            fiber: totalFiber > 0 ? totalFiber : nil,
-            protein: totalProtein,
-            sugars: totalSugars > 0 ? totalSugars : nil
-        )
+        var nutritionValues: NutritionValues = [:]
+        for nutrient in NutrientType.allCases {
+            let total = totals[nutrient, default: 0]
+            if total > 0 || nutrient.isPrimary {
+                nutritionValues[nutrient] = total
+            }
+        }
 
-        // Generate name from section
         let sectionName = foodItemGroup.briefDescription ?? foodItemGroup.textQuery ?? foodItemGroup.title
 
-        // Create new food item with per-serving nutrition
         let savedItem = FoodItemDetailed(
             name: sectionName,
             nutritionPerServing: nutritionValues,

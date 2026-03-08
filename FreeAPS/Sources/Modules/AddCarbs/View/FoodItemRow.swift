@@ -22,10 +22,8 @@ struct FoodItemRow: View {
 
     private var hasNutritionInfo: Bool {
         switch foodItem.nutrition {
-        case let .per100(values):
-            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
-        case let .perServing(values):
-            return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+        case let .per100(values): return !values.isEmpty
+        case let .perServing(values): return !values.isEmpty
         }
     }
 
@@ -118,50 +116,18 @@ struct FoodItemRow: View {
             }
 
             HStack(spacing: 6) {
-                switch foodItem.nutrition {
-                case .per100:
+                ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
                     NutritionBadgePlain(
-                        value: foodItem.carbsInPortion(portion: portionSize) ?? 0,
-                        label: "carbs",
-                        color: NutritionBadgeConfig.carbsColor
-                    )
-                    NutritionBadgePlain(
-                        value: foodItem.proteinInPortion(portion: portionSize) ?? 0,
-                        label: "protein",
-                        color: NutritionBadgeConfig.proteinColor
-                    )
-                    NutritionBadgePlain(
-                        value: foodItem.fatInPortion(portion: portionSize) ?? 0,
-                        label: "fat",
-                        color: NutritionBadgeConfig.fatColor
-                    )
-                    NutritionBadgePlain(
-                        value: foodItem.caloriesInPortion(portion: portionSize) ?? 0,
-                        unit: "kcal",
-                        color: NutritionBadgeConfig.caloriesColor
-                    )
-                case .perServing:
-                    NutritionBadgePlain(
-                        value: foodItem.carbsInServings(multiplier: portionSize) ?? 0,
-                        label: "carbs",
-                        color: NutritionBadgeConfig.carbsColor
-                    )
-                    NutritionBadgePlain(
-                        value: foodItem.proteinInServings(multiplier: portionSize) ?? 0,
-                        label: "protein",
-                        color: NutritionBadgeConfig.proteinColor
-                    )
-                    NutritionBadgePlain(
-                        value: foodItem.fatInServings(multiplier: portionSize) ?? 0,
-                        label: "fat",
-                        color: NutritionBadgeConfig.fatColor
-                    )
-                    NutritionBadgePlain(
-                        value: foodItem.caloriesInServings(multiplier: portionSize) ?? 0,
-                        unit: "kcal",
-                        color: NutritionBadgeConfig.caloriesColor
+                        value: foodItem.nutrient(nutrient, forPortion: portionSize),
+                        localizedLabel: nutrient.localizedLabel,
+                        color: nutrient.badgeColor
                     )
                 }
+                NutritionBadgePlain(
+                    value: foodItem.calories(forPortion: portionSize),
+                    unit: "kcal",
+                    color: NutritionBadgeConfig.caloriesColor
+                )
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
@@ -243,26 +209,10 @@ struct FoodItemRow: View {
                 .presentationDragIndicator(.visible)
         }
         .onChange(of: portionSize) { _, newValue in
-            // Update multiplier when portion size changes externally
-            switch foodItem.nutrition {
-            case .per100:
-                // For per100, slider directly represents grams/ml
-                sliderMultiplier = Double(newValue)
-            case .perServing:
-                // For perServing, slider represents multiplier
-                sliderMultiplier = Double(newValue)
-            }
+            sliderMultiplier = Double(newValue)
         }
         .onAppear {
-            // Calculate initial multiplier based on current portion size
-            switch foodItem.nutrition {
-            case .per100:
-                // For per100, slider directly represents grams/ml
-                sliderMultiplier = Double(portionSize)
-            case .perServing:
-                // For perServing, slider represents multiplier
-                sliderMultiplier = Double(portionSize)
-            }
+            sliderMultiplier = Double(portionSize)
         }
     }
 
@@ -343,14 +293,7 @@ extension FoodItemRow {
         }
 
         var calculatedPortion: Decimal {
-            switch foodItem.nutrition {
-            case .per100:
-                // For per100, slider directly controls grams/ml
-                return Decimal(sliderMultiplier)
-            case .perServing:
-                // For perServing, slider controls multiplier
-                return Decimal(sliderMultiplier)
-            }
+            Decimal(sliderMultiplier)
         }
 
         private let formatter: NumberFormatter = {
@@ -462,41 +405,21 @@ extension FoodItemRow {
                     // Display nutritional information if available
                     if hasNutritionInfo {
                         HStack(spacing: 8) {
-                            switch foodItem.nutrition {
-                            case .per100:
-                                if let carbs = foodItem.carbsInPortion(portion: calculatedPortion), carbs > 0 {
-                                    NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                                        .frame(maxWidth: .infinity)
+                            ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
+                                let value = foodItem.nutrient(nutrient, forPortion: calculatedPortion)
+                                if value > 0 {
+                                    NutritionBadge(
+                                        value: value,
+                                        localizedLabel: nutrient.localizedLabel,
+                                        color: nutrient.badgeColor
+                                    )
+                                    .frame(maxWidth: .infinity)
                                 }
-                                if let protein = foodItem.proteinInPortion(portion: calculatedPortion), protein > 0 {
-                                    NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                                        .frame(maxWidth: .infinity)
-                                }
-                                if let fat = foodItem.fatInPortion(portion: calculatedPortion), fat > 0 {
-                                    NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                                        .frame(maxWidth: .infinity)
-                                }
-                                if let calories = foodItem.caloriesInPortion(portion: calculatedPortion), calories > 0 {
-                                    NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                                        .frame(maxWidth: .infinity)
-                                }
-                            case .perServing:
-                                if let carbs = foodItem.carbsInServings(multiplier: calculatedPortion), carbs > 0 {
-                                    NutritionBadge(value: carbs, label: "carbs", color: NutritionBadgeConfig.carbsColor)
-                                        .frame(maxWidth: .infinity)
-                                }
-                                if let protein = foodItem.proteinInServings(multiplier: calculatedPortion), protein > 0 {
-                                    NutritionBadge(value: protein, label: "protein", color: NutritionBadgeConfig.proteinColor)
-                                        .frame(maxWidth: .infinity)
-                                }
-                                if let fat = foodItem.fatInServings(multiplier: calculatedPortion), fat > 0 {
-                                    NutritionBadge(value: fat, label: "fat", color: NutritionBadgeConfig.fatColor)
-                                        .frame(maxWidth: .infinity)
-                                }
-                                if let calories = foodItem.caloriesInServings(multiplier: calculatedPortion), calories > 0 {
-                                    NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
-                                        .frame(maxWidth: .infinity)
-                                }
+                            }
+                            let calories = foodItem.calories(forPortion: calculatedPortion)
+                            if calories > 0 {
+                                NutritionBadge(value: calories, unit: "kcal", color: NutritionBadgeConfig.caloriesColor)
+                                    .frame(maxWidth: .infinity)
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -572,10 +495,8 @@ extension FoodItemRow {
 
         private var hasNutritionInfo: Bool {
             switch foodItem.nutrition {
-            case let .per100(values):
-                return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
-            case let .perServing(values):
-                return values.calories != nil || values.carbs != nil || values.protein != nil || values.fat != nil
+            case let .per100(values): return !values.isEmpty
+            case let .perServing(values): return !values.isEmpty
             }
         }
     }

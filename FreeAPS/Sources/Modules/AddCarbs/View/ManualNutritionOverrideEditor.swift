@@ -5,21 +5,9 @@ struct ManualNutritionOverrideEditor: View {
     @ObservedObject var state: FoodSearchStateModel
     @Environment(\.dismiss) private var dismiss
 
-    @State private var editedCarbs: String = ""
-    @State private var editedProtein: String = ""
-    @State private var editedFat: String = ""
-    @State private var editedFiber: String = ""
-    @State private var editedSugars: String = ""
+    @State private var editedValues: [NutrientType: String] = [:]
 
-    @FocusState private var focusedField: NutritionField?
-
-    enum NutritionField {
-        case carbs
-        case protein
-        case fat
-        case fiber
-        case sugars
-    }
+    @FocusState private var focusedField: NutrientType?
 
     var body: some View {
         NavigationStack {
@@ -27,61 +15,26 @@ struct ManualNutritionOverrideEditor: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         VStack(spacing: 0) {
-                            NutritionOverrideRow(
-                                label: "Carbs",
-                                text: $editedCarbs,
-                                unit: "g",
-                                placeholder: formatDecimal(state.searchResultsState.baseTotalCarbs),
-                                focusedField: $focusedField,
-                                fieldTag: .carbs
-                            )
-                            Divider()
-                            NutritionOverrideRow(
-                                label: "Protein",
-                                text: $editedProtein,
-                                unit: "g",
-                                placeholder: formatDecimal(state.searchResultsState.baseTotalProtein),
-                                focusedField: $focusedField,
-                                fieldTag: .protein
-                            )
-                            Divider()
-                            NutritionOverrideRow(
-                                label: "Fat",
-                                text: $editedFat,
-                                unit: "g",
-                                placeholder: formatDecimal(state.searchResultsState.baseTotalFat),
-                                focusedField: $focusedField,
-                                fieldTag: .fat
-                            )
-                            Divider()
-                            NutritionOverrideRow(
-                                label: "Fiber",
-                                text: $editedFiber,
-                                unit: "g",
-                                placeholder: formatDecimal(state.searchResultsState.baseTotalFiber),
-                                focusedField: $focusedField,
-                                fieldTag: .fiber
-                            )
-                            Divider()
-                            NutritionOverrideRow(
-                                label: "Sugars",
-                                text: $editedSugars,
-                                unit: "g",
-                                placeholder: formatDecimal(state.searchResultsState.baseTotalSugars),
-                                focusedField: $focusedField,
-                                fieldTag: .sugars
-                            )
+                            ForEach(Array(NutrientType.allCases.enumerated()), id: \.element) { index, nutrient in
+                                if index > 0 { Divider() }
+                                NutritionOverrideRow(
+                                    localizedLabel: nutrient.localizedLabel,
+                                    text: Binding(
+                                        get: { editedValues[nutrient] ?? "" },
+                                        set: { editedValues[nutrient] = $0 }
+                                    ),
+                                    unit: nutrient.unitsAbbr,
+                                    placeholder: formatDecimal(state.searchResultsState.baseTotal(nutrient)),
+                                    focusedField: $focusedField,
+                                    fieldTag: nutrient
+                                )
+                            }
                         }
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(12)
 
                         Button(role: .destructive) {
-                            // Reset all overrides to nil
-                            state.searchResultsState.carbsOverride = nil
-                            state.searchResultsState.proteinOverride = nil
-                            state.searchResultsState.fatOverride = nil
-                            state.searchResultsState.fiberOverride = nil
-                            state.searchResultsState.sugarsOverride = nil
+                            state.searchResultsState.nutritionOverrides.removeAll()
                             dismiss()
                         } label: {
                             HStack {
@@ -147,107 +100,70 @@ struct ManualNutritionOverrideEditor: View {
         }
     }
 
-    // Calculate calories from current macro values (4 cal/g for carbs and protein, 9 cal/g for fat)
-    private var calculatedCalories: Decimal {
-        let carbs = parseDecimal(editedCarbs) ?? state.searchResultsState.baseTotalCarbs
-        let protein = parseDecimal(editedProtein) ?? state.searchResultsState.baseTotalProtein
-        let fat = parseDecimal(editedFat) ?? state.searchResultsState.baseTotalFat
-
-        return (carbs * 4) + (protein * 4) + (fat * 9)
-    }
-
     private func initializeValues() {
-        // Only populate fields if user has already set overrides (non-nil)
-        // Otherwise leave empty to show placeholder
-        if let override = state.searchResultsState.carbsOverride {
-            let total = state.searchResultsState.baseTotalCarbs + override
-            editedCarbs = formatDecimal(total)
-        }
-        if let override = state.searchResultsState.proteinOverride {
-            let total = state.searchResultsState.baseTotalProtein + override
-            editedProtein = formatDecimal(total)
-        }
-        if let override = state.searchResultsState.fatOverride {
-            let total = state.searchResultsState.baseTotalFat + override
-            editedFat = formatDecimal(total)
-        }
-        if let override = state.searchResultsState.fiberOverride {
-            let total = state.searchResultsState.baseTotalFiber + override
-            editedFiber = formatDecimal(total)
-        }
-        if let override = state.searchResultsState.sugarsOverride {
-            let total = state.searchResultsState.baseTotalSugars + override
-            editedSugars = formatDecimal(total)
+        for nutrient in NutrientType.allCases {
+            if let override = state.searchResultsState.nutritionOverrides[nutrient] {
+                let total = state.searchResultsState.baseTotal(nutrient) + override
+                editedValues[nutrient] = formatDecimal(total)
+            }
         }
     }
 
-    private func formatDecimal(_ value: Decimal) -> String {
-        let nsNumber = NSDecimalNumber(decimal: value)
+    private static let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         formatter.minimumFractionDigits = 0
-        formatter.usesGroupingSeparator = false // Don't use thousands separators
-        return formatter.string(from: nsNumber) ?? "0"
+        formatter.usesGroupingSeparator = false
+        return formatter
+    }()
+
+    private func formatDecimal(_ value: Decimal) -> String {
+        Self.decimalFormatter.string(from: NSDecimalNumber(decimal: value)) ?? "0"
     }
 
     private func parseDecimal(_ text: String) -> Decimal? {
-        // If text is empty, return nil
         guard !text.trimmingCharacters(in: .whitespaces).isEmpty else {
             return nil
         }
-
-        // Remove any grouping separators (spaces, commas in some locales)
         let cleaned = text
             .replacingOccurrences(of: " ", with: "")
             .replacingOccurrences(of: ",", with: ".")
-            .replacingOccurrences(of: "\u{202F}", with: "") // non-breaking space
-            .replacingOccurrences(of: "\u{00A0}", with: "") // narrow no-break space
-
+            .replacingOccurrences(of: "\u{202F}", with: "")
+            .replacingOccurrences(of: "\u{00A0}", with: "")
         return Decimal(string: cleaned)
     }
 
     private func saveChanges() {
-        // Parse the user-entered values (nil if empty)
-        let newCarbs = parseDecimal(editedCarbs)
-        let newProtein = parseDecimal(editedProtein)
-        let newFat = parseDecimal(editedFat)
-        let newFiber = parseDecimal(editedFiber)
-        let newSugars = parseDecimal(editedSugars)
-
-        // Calculate overrides as deltas from base
-        // If user value is nil (empty field), set override to nil
-        state.searchResultsState.carbsOverride = newCarbs.map { $0 - state.searchResultsState.baseTotalCarbs }
-        state.searchResultsState.proteinOverride = newProtein.map { $0 - state.searchResultsState.baseTotalProtein }
-        state.searchResultsState.fatOverride = newFat.map { $0 - state.searchResultsState.baseTotalFat }
-        state.searchResultsState.fiberOverride = newFiber.map { $0 - state.searchResultsState.baseTotalFiber }
-        state.searchResultsState.sugarsOverride = newSugars.map { $0 - state.searchResultsState.baseTotalSugars }
-
-        // Calories are automatically calculated from macros in totalCalories computed property
-        // No need to set anything here - the state handles it automatically
-
+        for nutrient in NutrientType.allCases {
+            let text = editedValues[nutrient] ?? ""
+            if let newValue = parseDecimal(text) {
+                state.searchResultsState.nutritionOverrides[nutrient] =
+                    newValue - state.searchResultsState.baseTotal(nutrient)
+            } else {
+                state.searchResultsState.nutritionOverrides.removeValue(forKey: nutrient)
+            }
+        }
         dismiss()
     }
 }
 
 private struct NutritionOverrideRow: View {
-    let label: String
+    let localizedLabel: String
     @Binding var text: String
     let unit: String
     let placeholder: String
-    @FocusState.Binding var focusedField: ManualNutritionOverrideEditor.NutritionField?
-    let fieldTag: ManualNutritionOverrideEditor.NutritionField
+    @FocusState.Binding var focusedField: NutrientType?
+    let fieldTag: NutrientType
 
     var body: some View {
         HStack(spacing: 8) {
-            Text(NSLocalizedString(label, comment: ""))
+            Text(localizedLabel)
                 .font(.subheadline)
                 .foregroundColor(.primary.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            // Custom text field with more visible placeholder
             ZStack(alignment: .trailing) {
-                // Background for the text field
                 RoundedRectangle(cornerRadius: 6)
                     .fill(Color(.systemBackground))
                     .overlay(

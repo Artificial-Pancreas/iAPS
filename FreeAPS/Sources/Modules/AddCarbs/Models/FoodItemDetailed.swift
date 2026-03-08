@@ -54,7 +54,7 @@ enum NutrientType: String, Equatable, Identifiable, CaseIterable {
 typealias NutritionValues = [NutrientType: Decimal]
 
 extension NutrientType {
-    var label: String {
+    var localizedLabel: String {
         switch self {
         case .carbs: NSLocalizedString("nutrient_carbs", comment: "display label for carbs")
         case .fat: NSLocalizedString("nutrient_fat", comment: "display label for fat")
@@ -71,7 +71,7 @@ extension NutrientType {
              .fiber,
              .protein,
              .sugars:
-            NSLocalizedString("nutrient_unit_grams_abbr", comment: "nutrient units - grams, abbrevated")
+            NSLocalizedString("unit_grams_abbr", comment: "")
         }
     }
 
@@ -111,6 +111,19 @@ extension NutrientType {
 enum FoodNutrition: Equatable {
     case per100([NutrientType: Decimal])
     case perServing([NutrientType: Decimal])
+}
+
+extension FoodNutrition {
+    var isEmpty: Bool {
+        switch self {
+        case let .per100(values): values.isEmpty
+        case let .perServing(values): values.isEmpty
+        }
+    }
+
+    var isNotEmpty: Bool {
+        !isEmpty
+    }
 }
 
 struct FoodItemDetailed: Identifiable, Equatable {
