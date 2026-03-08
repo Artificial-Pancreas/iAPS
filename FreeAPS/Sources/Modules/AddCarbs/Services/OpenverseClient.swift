@@ -73,7 +73,6 @@ actor OpenverseClient {
         pageSize: Int = 20,
         page: Int = 1
     ) async throws -> [OpenverseImageResult] {
-        // Build URL with query parameters
         guard var components = URLComponents(string: "\(baseURL)/images/") else {
             throw OpenverseClientError.invalidURL
         }
@@ -88,15 +87,12 @@ actor OpenverseClient {
             throw OpenverseClientError.invalidURL
         }
 
-        // Create request
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-        // Perform request
         let (data, response) = try await session.data(for: request)
 
-        // Validate response
         guard let httpResponse = response as? HTTPURLResponse else {
             throw OpenverseClientError.invalidResponse
         }
@@ -105,11 +101,9 @@ actor OpenverseClient {
             throw OpenverseClientError.httpError(statusCode: httpResponse.statusCode)
         }
 
-        // Decode response
         do {
             let searchResponse = try JSONDecoder().decode(OpenverseSearchResponse.self, from: data)
 
-            // Filter results to prefer smaller images (up to 1024x1024)
             let filteredResults = searchResponse.results.filter { result in
                 guard let width = result.width, let height = result.height else {
                     return true // Include if dimensions are unknown
@@ -117,7 +111,6 @@ actor OpenverseClient {
                 return width <= 1024 && height <= 1024
             }
 
-            // If filtering removed all results, return original results
             return filteredResults.isEmpty ? searchResponse.results : filteredResults
         } catch {
             throw OpenverseClientError.decodingError(error)
