@@ -32,6 +32,8 @@ final class OpenFoodFactsService {
     private let baseURL = "https://world.openfoodfacts.org"
     private let userAgent = "Loop-iOS-Diabetes-App/1.0"
     private let timeout: TimeInterval = 30.0
+    private let requestedFields =
+        "code,product_name,brands,categories,nutriments,serving_size,serving_quantity,image_url,image_front_url"
 
     init(session: URLSession? = nil) {
         if let session = session {
@@ -58,7 +60,7 @@ final class OpenFoodFactsService {
         let isBarcode = trimmedQuery.unicodeScalars.allSatisfy { numericCharacterSet.contains($0) }
 
         if isBarcode, trimmedQuery.count >= 8 {
-            let directURLString = "https://world.openfoodfacts.org/api/v2/product/\(trimmedQuery).json"
+            let directURLString = "https://world.openfoodfacts.org/api/v2/product/\(trimmedQuery).json?fields=\(requestedFields)"
 
             guard let directURL = URL(string: directURLString) else {
                 throw OpenFoodFactsError.invalidURL
@@ -87,7 +89,7 @@ final class OpenFoodFactsService {
 
         let clampedPageSize = min(max(pageSize, 1), 100)
         let urlString =
-            "\(baseURL)/cgi/search.pl?search_terms=\(encodedQuery)&search_simple=1&action=process&json=1&page_size=\(clampedPageSize)"
+            "\(baseURL)/cgi/search.pl?search_terms=\(encodedQuery)&search_simple=1&action=process&json=1&page_size=\(clampedPageSize)&fields=\(requestedFields)"
 
         guard let url = URL(string: urlString) else {
             throw OpenFoodFactsError.invalidURL
@@ -122,7 +124,7 @@ final class OpenFoodFactsService {
             throw OpenFoodFactsError.invalidBarcode
         }
 
-        let urlString = "\(baseURL)/api/v0/product/\(cleanBarcode).json"
+        let urlString = "\(baseURL)/api/v0/product/\(cleanBarcode).json?fields=\(requestedFields)"
 
         guard let url = URL(string: urlString) else {
             print("Failed to construct URL for barcode: \(cleanBarcode)")
