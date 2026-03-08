@@ -98,7 +98,7 @@ struct PumpView: View {
                         } else {
                             HStack(spacing: 0) {
                                 let amount: Decimal = (insulin * Decimal(concentration.last?.concentration ?? 1))
-                                if !(nano && amount > 100) {
+                                if !(nano && amount >= 100) {
                                     Text(reservoirFormatter.string(from: amount as NSNumber) ?? "")
                                     Text("U").foregroundStyle(.secondary)
                                 }
