@@ -3980,3 +3980,15 @@ Enact a temp Basal or a temp target */
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Y-axis labels";
+
+"nutrient_carbs" = "Carbs";
+
+"nutrient_fat" = "Fat";
+
+"nutrient_fiber" = "Fiber";
+
+"nutrient_protein" = "Protein";
+
+"nutrient_sugars" = "Sugars";
+
+"unit_grams_abbr" = "g";

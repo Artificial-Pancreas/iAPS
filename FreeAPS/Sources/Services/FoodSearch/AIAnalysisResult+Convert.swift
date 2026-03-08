@@ -12,16 +12,17 @@ extension AIAnalysisResult {
             case .low: .low
             case nil: nil
             }
+
+            var nutritionValues: NutritionValues = [:]
+            if let carbs = item.carbsPer100 { nutritionValues[.carbs] = carbs }
+            if let fat = item.fatPer100 { nutritionValues[.fat] = fat }
+            if let protein = item.proteinPer100 { nutritionValues[.protein] = protein }
+            if let fiber = item.fiberPer100 { nutritionValues[.fiber] = fiber }
+            if let sugars = item.sugarsPer100 { nutritionValues[.sugars] = sugars }
+
             return FoodItemDetailed(
                 name: item.name,
-                nutritionPer100: NutritionValues(
-                    calories: item.caloriesPer100,
-                    carbs: item.carbsPer100,
-                    fat: item.fatPer100,
-                    fiber: item.fiberPer100,
-                    protein: item.proteinPer100,
-                    sugars: item.sugarsPer100,
-                ),
+                nutritionPer100: nutritionValues,
                 portionSize: item.portionEstimateSize ?? 100,
                 confidence: confidence,
                 brand: item.brand,

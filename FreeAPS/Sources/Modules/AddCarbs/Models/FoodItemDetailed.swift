@@ -41,18 +41,76 @@ enum ConfidenceLevel: String, Codable, Identifiable, CaseIterable {
     var id: ConfidenceLevel { self }
 }
 
-struct NutritionValues: Equatable {
-    let calories: Decimal?
-    let carbs: Decimal?
-    let fat: Decimal?
-    let fiber: Decimal?
-    let protein: Decimal?
-    let sugars: Decimal?
+enum NutrientType: String, Equatable, Identifiable, CaseIterable {
+    case carbs
+    case protein
+    case fat
+    case fiber
+    case sugars
+
+    var id: NutrientType { self }
+}
+
+typealias NutritionValues = [NutrientType: Decimal]
+
+extension NutrientType {
+    var label: String {
+        switch self {
+        case .carbs: NSLocalizedString("nutrient_carbs", comment: "display label for carbs")
+        case .fat: NSLocalizedString("nutrient_fat", comment: "display label for fat")
+        case .fiber: NSLocalizedString("nutrient_fiber", comment: "display label for fiber")
+        case .protein: NSLocalizedString("nutrient_protein", comment: "display label for protein")
+        case .sugars: NSLocalizedString("nutrient_sugars", comment: "display label for sugars")
+        }
+    }
+
+    var unitsAbbr: String {
+        switch self {
+        case .carbs,
+             .fat,
+             .fiber,
+             .protein,
+             .sugars:
+            NSLocalizedString("nutrient_unit_grams_abbr", comment: "nutrient units - grams, abbrevated")
+        }
+    }
+
+    var isMacro: Bool {
+        switch self {
+        case .carbs,
+             .fat,
+             .fiber,
+             .protein,
+             .sugars:
+            true
+        }
+    }
+
+    var isMicro: Bool {
+        switch self {
+        case .carbs,
+             .fat,
+             .fiber,
+             .protein,
+             .sugars:
+            false
+        }
+    }
+
+    var isPrimary: Bool {
+        switch self {
+        case .carbs,
+             .fat,
+             .protein: true
+        case .fiber,
+             .sugars: false
+        }
+    }
 }
 
 enum FoodNutrition: Equatable {
-    case per100(NutritionValues)
-    case perServing(NutritionValues)
+    case per100([NutrientType: Decimal])
+    case perServing([NutrientType: Decimal])
 }
 
 struct FoodItemDetailed: Identifiable, Equatable {
@@ -103,7 +161,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
     init(
         id: UUID? = nil,
         name: String,
-        nutritionPer100: NutritionValues,
+        nutritionPer100: [NutrientType: Decimal],
         portionSize: Decimal,
         confidence: ConfidenceLevel? = nil,
         brand: String? = nil,
@@ -142,7 +200,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
     init(
         id: UUID? = nil,
         name: String,
-        nutritionPerServing: NutritionValues,
+        nutritionPerServing: [NutrientType: Decimal],
         servingsMultiplier: Decimal,
         confidence: ConfidenceLevel? = nil,
         brand: String? = nil,
@@ -237,102 +295,107 @@ extension FoodItemDetailed {
         return carbCals + proteinCals + fatCals
     }
 
-    func caloriesInPortion(portion: Decimal) -> Decimal? {
+    func nutrientInPortion(_ nutrient: NutrientType, portion: Decimal) -> Decimal? {
         guard case let .per100(per100) = nutrition else { return nil }
-
-        let caloriesPer100: Decimal
-        if let explicitCalories = per100.calories, explicitCalories > 0 {
-            caloriesPer100 = explicitCalories
-        } else {
-            // Calculate from macronutrients if calories not specified
-            caloriesPer100 = calculateCaloriesFromMacros(
-                carbs: per100.carbs,
-                protein: per100.protein,
-                fat: per100.fat
-            )
-        }
-
-        return caloriesPer100 / 100 * portion
+        guard let nutrientPer100 = per100[nutrient] else { return nil }
+        return nutrientPer100 / 100 * portion
     }
 
     func carbsInPortion(portion: Decimal) -> Decimal? {
-        guard case let .per100(per100) = nutrition else { return nil }
-        guard let carbsPer100 = per100.carbs else { return nil }
-        return carbsPer100 / 100 * portion
+        nutrientInPortion(.carbs, portion: portion)
     }
 
     func fatInPortion(portion: Decimal) -> Decimal? {
-        guard case let .per100(per100) = nutrition else { return nil }
-        guard let fatPer100 = per100.fat else { return nil }
-        return fatPer100 / 100 * portion
+        nutrientInPortion(.fat, portion: portion)
     }
 
     func proteinInPortion(portion: Decimal) -> Decimal? {
-        guard case let .per100(per100) = nutrition else { return nil }
-        guard let proteinPer100 = per100.protein else { return nil }
-        return proteinPer100 / 100 * portion
+        nutrientInPortion(.protein, portion: portion)
     }
 
     func fiberInPortion(portion: Decimal) -> Decimal? {
-        guard case let .per100(per100) = nutrition else { return nil }
-        guard let fiberPer100 = per100.fiber else { return nil }
-        return fiberPer100 / 100 * portion
+        nutrientInPortion(.fiber, portion: portion)
     }
 
     func sugarsInPortion(portion: Decimal) -> Decimal? {
-        guard case let .per100(per100) = nutrition else { return nil }
-        guard let sugarsPer100 = per100.sugars else { return nil }
-        return sugarsPer100 / 100 * portion
+        nutrientInPortion(.sugars, portion: portion)
+    }
+
+    func caloriesInPortion(portion: Decimal) -> Decimal? {
+        guard case .per100 = nutrition else { return nil }
+
+        return calculateCaloriesFromMacros(
+            carbs: carbsInPortion(portion: portion),
+            protein: proteinInPortion(portion: portion),
+            fat: fatInPortion(portion: portion)
+        )
     }
 
     // MARK: - Per serving calculations
 
-    func caloriesInServings(multiplier: Decimal) -> Decimal? {
+    func nutrientInServings(_ nutrient: NutrientType, multiplier: Decimal) -> Decimal? {
         guard case let .perServing(perServing) = nutrition else { return nil }
-
-        let caloriesPerServing: Decimal
-        if let explicitCalories = perServing.calories, explicitCalories > 0 {
-            caloriesPerServing = explicitCalories
-        } else {
-            // Calculate from macronutrients if calories not specified
-            caloriesPerServing = calculateCaloriesFromMacros(
-                carbs: perServing.carbs,
-                protein: perServing.protein,
-                fat: perServing.fat
-            )
-        }
-
-        return caloriesPerServing * multiplier
+        guard let nutrientPerServing = perServing[nutrient] else { return nil }
+        return nutrientPerServing * multiplier
     }
 
     func carbsInServings(multiplier: Decimal) -> Decimal? {
-        guard case let .perServing(perServing) = nutrition else { return nil }
-        guard let carbsPerServing = perServing.carbs else { return nil }
-        return carbsPerServing * multiplier
+        nutrientInServings(.carbs, multiplier: multiplier)
     }
 
     func fatInServings(multiplier: Decimal) -> Decimal? {
-        guard case let .perServing(perServing) = nutrition else { return nil }
-        guard let fatPerServing = perServing.fat else { return nil }
-        return fatPerServing * multiplier
+        nutrientInServings(.fat, multiplier: multiplier)
     }
 
     func proteinInServings(multiplier: Decimal) -> Decimal? {
-        guard case let .perServing(perServing) = nutrition else { return nil }
-        guard let proteinPerServing = perServing.protein else { return nil }
-        return proteinPerServing * multiplier
+        nutrientInServings(.protein, multiplier: multiplier)
     }
 
     func fiberInServings(multiplier: Decimal) -> Decimal? {
-        guard case let .perServing(perServing) = nutrition else { return nil }
-        guard let fiberPerServing = perServing.fiber else { return nil }
-        return fiberPerServing * multiplier
+        nutrientInServings(.fiber, multiplier: multiplier)
     }
 
     func sugarsInServings(multiplier: Decimal) -> Decimal? {
-        guard case let .perServing(perServing) = nutrition else { return nil }
-        guard let sugarsPerServing = perServing.sugars else { return nil }
-        return sugarsPerServing * multiplier
+        nutrientInServings(.sugars, multiplier: multiplier)
+    }
+
+    func caloriesInServings(multiplier: Decimal) -> Decimal? {
+        guard case .perServing = nutrition else { return nil }
+
+        return calculateCaloriesFromMacros(
+            carbs: carbsInServings(multiplier: multiplier),
+            protein: proteinInServings(multiplier: multiplier),
+            fat: fatInServings(multiplier: multiplier)
+        )
+    }
+
+    func nutrientInThisPortion(_ nutrient: NutrientType) -> Decimal? {
+        switch nutrition {
+        case .per100:
+            guard let portion = portionSize else { return nil }
+            return nutrientInPortion(nutrient, portion: portion)
+        case .perServing:
+            guard let multiplier = servingsMultiplier else { return nil }
+            return nutrientInServings(nutrient, multiplier: multiplier)
+        }
+    }
+
+    func nutrient(_ nutrient: NutrientType, forPortion portion: Decimal) -> Decimal {
+        switch nutrition {
+        case .per100:
+            return nutrientInPortion(nutrient, portion: portion) ?? 0
+        case .perServing:
+            return nutrientInServings(nutrient, multiplier: portion) ?? 0
+        }
+    }
+
+    func calories(forPortion portion: Decimal) -> Decimal {
+        switch nutrition {
+        case .per100:
+            return caloriesInPortion(portion: portion) ?? 0
+        case .perServing:
+            return caloriesInServings(multiplier: portion) ?? 0
+        }
     }
 
     /// Returns a copy of this food item with an updated portion size or servings multiplier
