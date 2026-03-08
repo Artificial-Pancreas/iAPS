@@ -114,15 +114,21 @@ enum FoodNutrition: Equatable {
 }
 
 extension FoodNutrition {
-    var isEmpty: Bool {
+    var values: NutritionValues {
         switch self {
-        case let .per100(values): values.isEmpty
-        case let .perServing(values): values.isEmpty
+        case let .per100(v): v
+        case let .perServing(v): v
         }
     }
 
-    var isNotEmpty: Bool {
-        !isEmpty
+    var isEmpty: Bool { values.isEmpty }
+
+    var isNotEmpty: Bool { !isEmpty }
+}
+
+extension NutritionValues {
+    var calories: Decimal {
+        ((self[.carbs] ?? 0) * 4) + ((self[.protein] ?? 0) * 4) + ((self[.fat] ?? 0) * 9)
     }
 }
 
@@ -262,17 +268,6 @@ extension FoodItemDetailed {
         }
     }
 
-    /// Calculates calories from macronutrients using standard conversion factors:
-    /// - Carbs: 4 kcal/g
-    /// - Protein: 4 kcal/g
-    /// - Fat: 9 kcal/g
-    private func calculateCaloriesFromMacros(carbs: Decimal?, protein: Decimal?, fat: Decimal?) -> Decimal {
-        let carbCals = (carbs ?? 0) * 4
-        let proteinCals = (protein ?? 0) * 4
-        let fatCals = (fat ?? 0) * 9
-        return carbCals + proteinCals + fatCals
-    }
-
     func nutrientInPortion(_ nutrient: NutrientType, portion: Decimal) -> Decimal? {
         guard case let .per100(per100) = nutrition else { return nil }
         guard let nutrientPer100 = per100[nutrient] else { return nil }
@@ -280,13 +275,8 @@ extension FoodItemDetailed {
     }
 
     func caloriesInPortion(portion: Decimal) -> Decimal? {
-        guard case .per100 = nutrition else { return nil }
-
-        return calculateCaloriesFromMacros(
-            carbs: nutrientInPortion(.carbs, portion: portion),
-            protein: nutrientInPortion(.protein, portion: portion),
-            fat: nutrientInPortion(.fat, portion: portion)
-        )
+        guard case let .per100(per100) = nutrition else { return nil }
+        return per100.calories * portion / 100
     }
 
     func nutrientInServings(_ nutrient: NutrientType, multiplier: Decimal) -> Decimal? {
@@ -296,13 +286,8 @@ extension FoodItemDetailed {
     }
 
     func caloriesInServings(multiplier: Decimal) -> Decimal? {
-        guard case .perServing = nutrition else { return nil }
-
-        return calculateCaloriesFromMacros(
-            carbs: nutrientInServings(.carbs, multiplier: multiplier),
-            protein: nutrientInServings(.protein, multiplier: multiplier),
-            fat: nutrientInServings(.fat, multiplier: multiplier)
-        )
+        guard case let .perServing(perServing) = nutrition else { return nil }
+        return perServing.calories * multiplier
     }
 
     func nutrientInThisPortion(_ nutrient: NutrientType) -> Decimal? {

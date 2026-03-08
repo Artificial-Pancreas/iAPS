@@ -236,17 +236,11 @@ class SearchResultsState: ObservableObject {
     }
 
     var baseTotalCalories: Decimal {
-        let carbs = baseTotal(.carbs)
-        let protein = baseTotal(.protein)
-        let fat = baseTotal(.fat)
-        return (carbs * 4) + (protein * 4) + (fat * 9)
+        [NutrientType.carbs: baseTotal(.carbs), .protein: baseTotal(.protein), .fat: baseTotal(.fat)].calories
     }
 
     var totalCalories: Decimal {
-        let carbs = total(.carbs)
-        let protein = total(.protein)
-        let fat = total(.fat)
-        return max((carbs * 4) + (protein * 4) + (fat * 9), 0)
+        max([NutrientType.carbs: total(.carbs), .protein: total(.protein), .fat: total(.fat)].calories, 0)
     }
 
     var hasNutritionOverrides: Bool {

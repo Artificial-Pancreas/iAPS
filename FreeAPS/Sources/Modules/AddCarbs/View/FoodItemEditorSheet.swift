@@ -516,13 +516,6 @@ private struct FoodItemNutritionEditor: View {
         nutritionMode.nutritionType
     }
 
-    private var calculatedCalories: Decimal {
-        let carbs = nutrients[.carbs] ?? 0
-        let protein = nutrients[.protein] ?? 0
-        let fat = nutrients[.fat] ?? 0
-        return (carbs * 4) + (protein * 4) + (fat * 9)
-    }
-
     private var sliderRange: ClosedRange<Double> {
         switch nutritionType {
         case .per100:
@@ -641,8 +634,8 @@ private struct FoodItemNutritionEditor: View {
 
                     // Calculated calories (always visible, read-only)
                     FoodItemCaloriesDisplayRow(
-                        portionCalories: calculatePortionValue(baseValue: calculatedCalories),
-                        baseCalories: calculatedCalories
+                        portionCalories: calculatePortionValue(baseValue: nutrients.calories),
+                        baseCalories: nutrients.calories
                     )
 
                     // Secondary nutrients (shown when expanded)

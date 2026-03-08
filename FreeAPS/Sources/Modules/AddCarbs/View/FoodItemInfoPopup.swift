@@ -5,25 +5,6 @@ struct FoodItemInfoPopup: View {
     let foodItem: FoodItemDetailed
     let portionSize: Decimal
 
-    // Helper to extract nutrition values
-    private var nutritionValues: NutritionValues? {
-        switch foodItem.nutrition {
-        case let .per100(values):
-            return values
-        case let .perServing(values):
-            return values
-        }
-    }
-
-    private var caloriesPer100: Decimal? {
-        guard let values = nutritionValues else { return nil }
-        let carbs = values[.carbs] ?? 0
-        let protein = values[.protein] ?? 0
-        let fat = values[.fat] ?? 0
-        return carbs * 4 + protein * 4 + fat * 9
-    }
-
-    // Helper functions to avoid type inference issues
     private func shouldShowStandardServing(_ item: FoodItemDetailed) -> Bool {
         let hasDescription = item.standardServing != nil && !(item.standardServing?.isEmpty ?? true)
         let hasSize = item.standardServingSize != nil
@@ -144,7 +125,7 @@ struct FoodItemInfoPopup: View {
                     .padding(.top, 8)
 
                     ForEach(NutrientType.allCases) { nutrient in
-                        let nutrientValue = nutritionValues?[nutrient]
+                        let nutrientValue = foodItem.nutrition.values[nutrient]
                         if nutrient.isPrimary || (nutrientValue != nil && nutrientValue! > 0) {
                             Divider()
                             DetailedNutritionRow(
@@ -160,7 +141,7 @@ struct FoodItemInfoPopup: View {
                     DetailedNutritionRow(
                         localizedLabel: NSLocalizedString("Calories", comment: ""),
                         portionValue: foodItem.caloriesInThisPortion,
-                        per100Value: caloriesPer100,
+                        per100Value: foodItem.nutrition.values.calories,
                         unit: UnitEnergy.kilocalories
                     )
                 }
