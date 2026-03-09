@@ -5,9 +5,9 @@ struct FoodItemInfoPopup: View {
     let foodItem: FoodItemDetailed
     let portionSize: Decimal
 
-    private func shouldShowStandardServing(_ item: FoodItemDetailed) -> Bool {
-        let hasDescription = item.standardServing != nil && !(item.standardServing?.isEmpty ?? true)
-        let hasSize = item.standardServingSize != nil
+    private var shouldShowStandardServing: Bool {
+        let hasDescription = foodItem.standardServing != nil && !(foodItem.standardServing?.isEmpty ?? true)
+        let hasSize = foodItem.standardServingSize != nil
         return hasDescription || hasSize
     }
 
@@ -19,7 +19,7 @@ struct FoodItemInfoPopup: View {
         }
     }
 
-    private func standardServingTitle(foodItem: FoodItemDetailed, unit: String) -> String {
+    private func standardServingTitle(unit: String) -> String {
         if let servingSize = foodItem.standardServingSize {
             let formattedSize = String(format: "%.0f", Double(truncating: servingSize as NSNumber))
             return "Standard Serving - \(formattedSize) \(unit)"
@@ -153,9 +153,9 @@ struct FoodItemInfoPopup: View {
                 .padding(.horizontal)
 
                 // Standard serving information
-                if shouldShowStandardServing(foodItem) {
+                if shouldShowStandardServing {
                     VStack(alignment: .leading, spacing: 6) {
-                        Label(standardServingTitle(foodItem: foodItem, unit: unit), systemImage: "chart.bar.doc.horizontal")
+                        Label(standardServingTitle(unit: unit), systemImage: "chart.bar.doc.horizontal")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)

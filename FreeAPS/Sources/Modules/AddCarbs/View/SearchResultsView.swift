@@ -16,10 +16,6 @@ struct SearchResultsView: View {
     @State private var isDownloadingImage = false
     @State private var showNutritionOverrideEditor = false
 
-    private var nonDeletedItemCount: Int {
-        state.searchResultsState.nonDeletedItemCount
-    }
-
     private var hasVisibleContent: Bool {
         state.searchResultsState.hasVisibleContent
     }
@@ -200,7 +196,7 @@ struct SearchResultsView: View {
 
     private var actionButtonRow: some View {
         HStack(alignment: .center) {
-            if nonDeletedItemCount > 0 {
+            if state.searchResultsState.nonDeletedItemCount > 0 {
                 // Time picker button
                 Button(action: {
                     showTimePicker = true

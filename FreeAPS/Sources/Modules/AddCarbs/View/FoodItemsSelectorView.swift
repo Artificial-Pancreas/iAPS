@@ -288,8 +288,7 @@ private struct FoodItemsSelectorItemRow: View {
                                 color: .primary
                             )
                         } else {
-                            VStack {}
-                                .frame(maxWidth: .infinity)
+                            Spacer().frame(maxWidth: .infinity)
                         }
 
                         ForEach(displayNutrients, id: \.self) { nutrient in
@@ -305,8 +304,7 @@ private struct FoodItemsSelectorItemRow: View {
                                 )
                                 .frame(maxWidth: .infinity)
                             } else {
-                                VStack {}
-                                    .frame(maxWidth: .infinity)
+                                Spacer().frame(maxWidth: .infinity)
                             }
                         }
                         let kcal = switch foodItem.nutrition {
@@ -322,8 +320,7 @@ private struct FoodItemsSelectorItemRow: View {
                             )
                             .frame(maxWidth: .infinity)
                         } else {
-                            VStack {}
-                                .frame(maxWidth: .infinity)
+                            Spacer().frame(maxWidth: .infinity)
                         }
                     }
                     .padding(.trailing, 40)
