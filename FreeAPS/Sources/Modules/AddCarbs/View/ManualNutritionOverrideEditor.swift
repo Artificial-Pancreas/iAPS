@@ -16,18 +16,20 @@ struct ManualNutritionOverrideEditor: View {
                     VStack(spacing: 16) {
                         VStack(spacing: 0) {
                             ForEach(Array(NutrientType.allCases.enumerated()), id: \.element) { index, nutrient in
-                                if index > 0 { Divider() }
-                                NutritionOverrideRow(
-                                    localizedLabel: nutrient.localizedLabel,
-                                    text: Binding(
-                                        get: { editedValues[nutrient] ?? "" },
-                                        set: { editedValues[nutrient] = $0 }
-                                    ),
-                                    unit: nutrient.unit,
-                                    placeholder: formatDecimal(state.searchResultsState.baseTotal(nutrient)),
-                                    focusedField: $focusedField,
-                                    fieldTag: nutrient
-                                )
+                                if nutrient.isMacro {
+                                    if index > 0 { Divider() }
+                                    NutritionOverrideRow(
+                                        localizedLabel: nutrient.localizedLabel,
+                                        text: Binding(
+                                            get: { editedValues[nutrient] ?? "" },
+                                            set: { editedValues[nutrient] = $0 }
+                                        ),
+                                        unit: nutrient.unit,
+                                        placeholder: formatDecimal(state.searchResultsState.baseTotal(nutrient)),
+                                        focusedField: $focusedField,
+                                        fieldTag: nutrient
+                                    )
+                                }
                             }
                         }
                         .background(Color(.secondarySystemBackground))
@@ -123,15 +125,8 @@ struct ManualNutritionOverrideEditor: View {
     }
 
     private func parseDecimal(_ text: String) -> Decimal? {
-        guard !text.trimmingCharacters(in: .whitespaces).isEmpty else {
-            return nil
-        }
-        let cleaned = text
-            .replacingOccurrences(of: " ", with: "")
-            .replacingOccurrences(of: ",", with: ".")
-            .replacingOccurrences(of: "\u{202F}", with: "")
-            .replacingOccurrences(of: "\u{00A0}", with: "")
-        return Decimal(string: cleaned)
+        guard !text.trimmingCharacters(in: .whitespaces).isEmpty else { return nil }
+        return Self.decimalFormatter.number(from: text)?.decimalValue
     }
 
     private func saveChanges() {
@@ -184,6 +179,7 @@ private struct NutritionOverrideRow: View {
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                     .focused($focusedField, equals: fieldTag)
+                    .cursorAtEndOnFocus()
                     .padding(.horizontal, 8)
                     .background(Color.clear)
             }

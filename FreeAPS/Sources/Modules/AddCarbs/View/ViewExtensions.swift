@@ -1,7 +1,22 @@
+import Combine
 import Foundation
 import SwiftUI
 
 extension View {
+    /// Moves the cursor to the end of a UITextField when it gains focus.
+    func cursorAtEndOnFocus() -> some View {
+        onReceive(
+            Foundation.NotificationCenter.default
+                .publisher(for: UITextField.textDidBeginEditingNotification)
+        ) { notification in
+            guard let textField = notification.object as? UITextField else { return }
+            DispatchQueue.main.async {
+                let end = textField.endOfDocument
+                textField.selectedTextRange = textField.textRange(from: end, to: end)
+            }
+        }
+    }
+
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
     }
