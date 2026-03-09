@@ -23,12 +23,11 @@ class SearchResultsState: ObservableObject {
 
         init(from foodItem: FoodItemDetailed) {
             original = foodItem
-            // Initialize with the appropriate value based on nutrition type
             switch foodItem.nutrition {
             case .per100:
-                portionSize = foodItem.portionSize ?? 0
+                portionSize = foodItem.portionSize ?? 100
             case .perServing:
-                portionSize = foodItem.servingsMultiplier ?? 0
+                portionSize = foodItem.servingsMultiplier ?? 1
             }
         }
     }
