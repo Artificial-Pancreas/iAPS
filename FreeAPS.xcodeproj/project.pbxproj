@@ -486,7 +486,6 @@
 		F2C73D642EB6603900B700AB /* MainChartConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D632EB6603900B700AB /* MainChartConfigProvider.swift */; };
 		F2C73D662EB6604500B700AB /* MainChartConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */; };
 		F2C73D682EB8022C00B700AB /* CalculatedGeometries.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */; };
-		F2D361002EE21D83004CC6B1 /* ModelQueryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D360FF2EE21D83004CC6B1 /* ModelQueryEditor.swift */; };
 		F2DCBC522F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */; };
 		F2DCBC562F0B30A2005D713E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */; };
 		F2E8D1492F0960820097F482 /* FoodItemBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1482F0960820097F482 /* FoodItemBadges.swift */; };
@@ -498,7 +497,6 @@
 		F2E8D1632F09661C0097F482 /* FoodItemEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1622F09661C0097F482 /* FoodItemEditorSheet.swift */; };
 		F2E8D1672F09676D0097F482 /* NoSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1662F09676D0097F482 /* NoSearchesView.swift */; };
 		F2E8D16B2F0967B50097F482 /* FoodItemsSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D16A2F0967B50097F482 /* FoodItemsSelectorView.swift */; };
-		F2E8D16D2F098B8E0097F482 /* DismissPreventionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D16C2F098B8E0097F482 /* DismissPreventionKey.swift */; };
 		F2EE83BF2E739AD200D7177E /* CalendarShareRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */; };
 		F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */; };
 		F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */; };
@@ -1175,7 +1173,6 @@
 		F2C73D632EB6603900B700AB /* MainChartConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartConfigProvider.swift; sourceTree = "<group>"; };
 		F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartConfigStateModel.swift; sourceTree = "<group>"; };
 		F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatedGeometries.swift; sourceTree = "<group>"; };
-		F2D360FF2EE21D83004CC6B1 /* ModelQueryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelQueryEditor.swift; sourceTree = "<group>"; };
 		F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualNutritionOverrideEditor.swift; sourceTree = "<group>"; };
 		F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		F2E8D1482F0960820097F482 /* FoodItemBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemBadges.swift; sourceTree = "<group>"; };
@@ -1187,7 +1184,6 @@
 		F2E8D1622F09661C0097F482 /* FoodItemEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemEditorSheet.swift; sourceTree = "<group>"; };
 		F2E8D1662F09676D0097F482 /* NoSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSearchesView.swift; sourceTree = "<group>"; };
 		F2E8D16A2F0967B50097F482 /* FoodItemsSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemsSelectorView.swift; sourceTree = "<group>"; };
-		F2E8D16C2F098B8E0097F482 /* DismissPreventionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissPreventionKey.swift; sourceTree = "<group>"; };
 		F2EE83BE2E739AD200D7177E /* CalendarShareRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareRootView.swift; sourceTree = "<group>"; };
 		F2EE83C02E739AE500D7177E /* CalendarShareDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareDataFlow.swift; sourceTree = "<group>"; };
 		F2EE83C22E739AF200D7177E /* CalendarShareProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarShareProvider.swift; sourceTree = "<group>"; };
@@ -2461,8 +2457,6 @@
 				F25284682F01C7BC0084D094 /* ImageSelectorView.swift */,
 				F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */,
 				F2FA68932EEC87D200476D7B /* AIProgressView.swift */,
-				F2D360FF2EE21D83004CC6B1 /* ModelQueryEditor.swift */,
-				F2E8D16C2F098B8E0097F482 /* DismissPreventionKey.swift */,
 				F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */,
 				F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */,
 			);
@@ -3422,7 +3416,6 @@
 				19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */,
 				F2E8D16B2F0967B50097F482 /* FoodItemsSelectorView.swift in Sources */,
 				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
-				F2E8D16D2F098B8E0097F482 /* DismissPreventionKey.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */,
 				F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */,
@@ -3685,7 +3678,6 @@
 				23888883D4EA091C88480FF2 /* BolusProvider.swift in Sources */,
 				38E98A2D25F52DC400C0CED0 /* NSLocking+Extensions.swift in Sources */,
 				19C3C72F2E97AE520000BE4D /* SearchResultsView.swift in Sources */,
-				F2D361002EE21D83004CC6B1 /* ModelQueryEditor.swift in Sources */,
 				19C3C7302E97AE520000BE4D /* FoodSearchStateModel.swift in Sources */,
 				19C3C7312E97AE520000BE4D /* BarcodeScannerService.swift in Sources */,
 				19C3C7342E97AE520000BE4D /* UserDefaults+AI.swift in Sources */,
