@@ -230,103 +230,28 @@ struct FoodSearchSettingsView: View {
                     .padding(.vertical, 4)
                 }
 
-                // Claude API Configuration
-                Section(
-                    header: Text("Anthropic (Claude API) Configuration"),
-
-                    footer: Text(
-                        "Get an API key at console.anthropic.com."
+                Section {
+                    APIKeyRow(
+                        label: "Claude API Key",
+                        hint: "Get an API key at console.anthropic.com.",
+                        placeholder: "Enter your Claude API key",
+                        text: $claudeKey,
+                        isVisible: $showClaudeKey
                     )
-                ) {
-                    VStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Text("Claude API Key")
-                                    .font(.headline)
-                                Spacer()
-                                Button(action: {
-                                    showClaudeKey.toggle()
-                                }) {
-                                    Image(systemName: showClaudeKey ? "eye.slash" : "eye")
-                                        .foregroundColor(.blue)
-                                }
-                            }
-
-                            HStack {
-                                StableSecureField(
-                                    placeholder: "Enter your Claude API key",
-                                    text: $claudeKey,
-                                    isSecure: !showClaudeKey
-                                )
-                            }
-                        }
-                    }
-                }
-
-                // Google Gemini API Configuration
-                Section(
-                    header: Text("Google (Gemini API) Configuration"),
-
-                    footer: Text(
-                        "Get a free API key at ai.google.dev."
+                    APIKeyRow(
+                        label: "Google Gemini API Key",
+                        hint: "Get a free API key at ai.google.dev.",
+                        placeholder: "Enter your Google Gemini API key",
+                        text: $googleGeminiKey,
+                        isVisible: $showGoogleGeminiKey
                     )
-                ) {
-                    VStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Text("Google Gemini API Key")
-                                    .font(.headline)
-                                Spacer()
-                                Button(action: {
-                                    showGoogleGeminiKey.toggle()
-                                }) {
-                                    Image(systemName: showGoogleGeminiKey ? "eye.slash" : "eye")
-                                        .foregroundColor(.blue)
-                                }
-                            }
-
-                            HStack {
-                                StableSecureField(
-                                    placeholder: "Enter your Google Gemini API key",
-                                    text: $googleGeminiKey,
-                                    isSecure: !showGoogleGeminiKey
-                                )
-                            }
-                        }
-                    }
-                }
-
-                // OpenAI (ChatGPT) API Configuration
-                Section(
-                    header: Text("OpenAI (ChatGPT API) Configuration"),
-
-                    footer: Text(
-                        "Get an API key at platform.openai.com."
+                    APIKeyRow(
+                        label: "ChatGPT (OpenAI) API Key",
+                        hint: "Get an API key at platform.openai.com.",
+                        placeholder: "Enter your OpenAI API key",
+                        text: $openAIKey,
+                        isVisible: $showOpenAIKey
                     )
-                ) {
-                    VStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Text("ChatGPT (OpenAI) API Key")
-                                    .font(.headline)
-                                Spacer()
-                                Button(action: {
-                                    showOpenAIKey.toggle()
-                                }) {
-                                    Image(systemName: showOpenAIKey ? "eye.slash" : "eye")
-                                        .foregroundColor(.blue)
-                                }
-                            }
-
-                            HStack {
-                                StableSecureField(
-                                    placeholder: "Enter your OpenAI API key",
-                                    text: $openAIKey,
-                                    isSecure: !showOpenAIKey
-                                )
-                            }
-                        }
-                    }
                 }
 
                 Section(
@@ -625,6 +550,39 @@ struct FoodSearchSettingsView: View {
         UserDefaults.standard.aiProgressAnimation = aiProgressAnimation
 
         dismiss()
+    }
+}
+
+private struct APIKeyRow: View {
+    let label: String
+    let hint: String
+    let placeholder: String
+    @Binding var text: String
+    @Binding var isVisible: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(NSLocalizedString(label, comment: ""))
+                        .font(.subheadline)
+                    Text(NSLocalizedString(hint, comment: ""))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+                Button {
+                    isVisible.toggle()
+                } label: {
+                    Image(systemName: isVisible ? "eye.slash" : "eye")
+                        .foregroundColor(.secondary)
+                        .font(.subheadline)
+                }
+                .buttonStyle(.plain)
+            }
+            StableSecureField(placeholder: NSLocalizedString(placeholder, comment: ""), text: $text, isSecure: !isVisible)
+        }
+        .padding(.vertical, 2)
     }
 }
 
