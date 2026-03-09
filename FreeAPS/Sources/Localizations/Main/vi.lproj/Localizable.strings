@@ -1490,7 +1490,6 @@ Enact a temp Basal or a temp target */
 
 "Available Search Providers:" = "Các nhà cung cấp tìm kiếm:";
 
-"Provider Information" = "Thông tin nhà cung cấp";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Chọn 'Anthropic (Claude API)', 'Google (Gemini API)' hoặc 'OpenAI (ChatGPT API)' để phân tích hình ảnh bằng AI và sử dụng khóa trả phí của bạn";
 
@@ -1761,7 +1760,6 @@ Enact a temp Basal or a temp target */
 
 "Available Search Providers:" = "Các nhà cung cấp tìm kiếm:";
 
-"Provider Information" = "Thông tin nhà cung cấp";
 
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Chọn 'OpenFoodFacts' hoặc 'USDA' sẽ khiến camera phân tích chỉ dùng ước tính cơ bản, không dùng AI";
 

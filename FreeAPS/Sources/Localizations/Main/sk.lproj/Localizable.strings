@@ -1491,7 +1491,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Available Search Providers:" = "Dostupní poskytovatelia vyhľadávania:";
 
-"Provider Information" = "Informácie o poskytovateľovi";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Vyberte „Anthropic (Claude API)“, „Google (Gemini API)“ alebo „OpenAI (ChatGPT API)“, aby AI analýza obrázkov využívala vaše platené kľúče";
 
@@ -1762,7 +1761,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Available Search Providers:" = "Dostupní poskytovatelia vyhľadávania:";
 
-"Provider Information" = "Informácie o poskytovateľovi";
 
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Ak vyberiete „OpenFoodFacts“ alebo „USDA“, analýza kamerou použije základný odhad namiesto AI";
 

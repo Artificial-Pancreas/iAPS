@@ -486,17 +486,6 @@ struct FoodSearchSettingsView: View {
                     Toggle("AI Progress Animation", isOn: $aiProgressAnimation)
                 }
 
-                Section(header: Text("Provider Information")) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(
-                            "OpenFoodFacts and USDA FoodData Central are free. Anthropic, Google, and OpenAI require API keys from their respective developer portals."
-                        )
-                        .font(.headline)
-                    }
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                }
-
                 Section(header: Text("Medical Disclaimer")) {
                     Text(
                         "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk."
