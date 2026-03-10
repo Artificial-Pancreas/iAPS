@@ -158,6 +158,7 @@ struct FoodSearchView: View {
 
                         HStack(spacing: 10) {
                             Button {
+                                UIApplication.shared.endEditing()
                                 state.showingSettings = true
                             }
                             label: {
@@ -168,25 +169,25 @@ struct FoodSearchView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
 
-                            if state.showingFoodSearch {
-                                Button {
-                                    state.showManualEntry = true
-                                    state.showingFoodSearch = true
-                                } label: {
-                                    Image(systemName: FoodItemSource.manual.icon)
-                                        .font(.system(size: 20, weight: .medium))
-                                        .foregroundColor(.green)
-                                        .frame(width: 46, height: 46)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                                .fill(Color.green.opacity(0.12))
-                                        )
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                            Button {
+                                UIApplication.shared.endEditing()
+                                state.showManualEntry = true
+                                state.showingFoodSearch = true
+                            } label: {
+                                Image(systemName: FoodItemSource.manual.icon)
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.green)
+                                    .frame(width: 46, height: 46)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                            .fill(Color.green.opacity(0.12))
+                                    )
                             }
+                            .buttonStyle(PlainButtonStyle())
 
                             Button {
                                 withAnimation(.easeInOut(duration: 0.3)) {
+                                    UIApplication.shared.endEditing()
                                     state.showSavedFoods = true
                                     state.showingFoodSearch = true
                                 }
@@ -203,6 +204,7 @@ struct FoodSearchView: View {
                             .buttonStyle(PlainButtonStyle())
 
                             Button {
+                                UIApplication.shared.endEditing()
                                 state.showingFoodSearch = true
                                 state.foodSearchRoute = .barcodeScanner
                             } label: {
@@ -227,11 +229,13 @@ struct FoodSearchView: View {
                                 )
                                 .contentShape(Rectangle())
                                 .onTapGesture {
+                                    UIApplication.shared.endEditing()
                                     state.foodSearchRoute = .camera
                                     state.showingFoodSearch = true
                                 }
                                 .contextMenu {
                                     Button {
+                                        UIApplication.shared.endEditing()
                                         state.foodSearchRoute = .camera
                                         state.showingFoodSearch = true
                                     } label: {
@@ -239,6 +243,7 @@ struct FoodSearchView: View {
                                     }
 
                                     Button {
+                                        UIApplication.shared.endEditing()
                                         showPhotoPicker = true
                                         state.showingFoodSearch = true
                                     } label: {
@@ -248,6 +253,7 @@ struct FoodSearchView: View {
                                     Divider()
 
                                     Button {
+                                        UIApplication.shared.endEditing()
                                         state.forceShowCommentForNextImage = true
                                         state.foodSearchRoute = .camera
                                         state.showingFoodSearch = true
@@ -256,6 +262,7 @@ struct FoodSearchView: View {
                                     }
 
                                     Button {
+                                        UIApplication.shared.endEditing()
                                         state.forceShowCommentForNextImage = true
                                         showPhotoPicker = true
                                         state.showingFoodSearch = true
