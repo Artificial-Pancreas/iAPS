@@ -1999,9 +1999,9 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Kal";
 
-" servings" = "portioner";
+"servings" = "portioner";
 
-" serving" = "portion";
+"serving" = "portion";
 
 "Reset to " = "Återställ till ";
 
