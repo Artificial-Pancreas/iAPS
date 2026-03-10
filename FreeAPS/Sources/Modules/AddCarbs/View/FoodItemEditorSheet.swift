@@ -690,7 +690,7 @@ private struct FoodItemServingSizeRow: View {
 
     private var servingSizeFieldLabel: some View {
         HStack(spacing: 8) {
-            Text("Standard Serving Size")
+            Text("Standard Serving")
                 .font(.subheadline)
                 .foregroundColor(.primary.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)

@@ -22,7 +22,7 @@ struct FoodItemInfoPopup: View {
     private func standardServingTitle(unit: String) -> String {
         if let servingSize = foodItem.standardServingSize {
             let formattedSize = String(format: "%.0f", Double(truncating: servingSize as NSNumber))
-            return "Standard Serving - \(formattedSize) \(unit)"
+            return NSLocalizedString("Standard Serving", comment: "") + " - \(formattedSize) \(unit)"
         }
         return "Standard Serving"
     }
