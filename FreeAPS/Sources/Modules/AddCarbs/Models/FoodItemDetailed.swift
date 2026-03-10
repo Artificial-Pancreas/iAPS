@@ -257,65 +257,36 @@ struct FoodItemDetailed: Identifiable, Equatable {
 }
 
 extension FoodItemDetailed {
-    var caloriesInThisPortion: Decimal? {
+    func nutrientInPortionOrServings(_ nutrient: NutrientType, portionOrMultiplier: Decimal) -> Decimal? {
         switch nutrition {
-        case .per100:
-            guard let portion = portionSize else { return nil }
-            return caloriesInPortion(portion: portion)
-        case .perServing:
-            guard let multiplier = servingsMultiplier else { return nil }
-            return caloriesInServings(multiplier: multiplier)
+        case let .per100(per100):
+            guard let nutrientPer100 = per100[nutrient] else { return nil }
+            return nutrientPer100 / 100 * portionOrMultiplier
+        case let .perServing(perServing):
+            guard let nutrientPerServing = perServing[nutrient] else { return nil }
+            return nutrientPerServing * portionOrMultiplier
         }
     }
 
-    func nutrientInPortion(_ nutrient: NutrientType, portion: Decimal) -> Decimal? {
-        guard case let .per100(per100) = nutrition else { return nil }
-        guard let nutrientPer100 = per100[nutrient] else { return nil }
-        return nutrientPer100 / 100 * portion
-    }
-
-    func caloriesInPortion(portion: Decimal) -> Decimal? {
-        guard case let .per100(per100) = nutrition else { return nil }
-        return per100.calories * portion / 100
-    }
-
-    func nutrientInServings(_ nutrient: NutrientType, multiplier: Decimal) -> Decimal? {
-        guard case let .perServing(perServing) = nutrition else { return nil }
-        guard let nutrientPerServing = perServing[nutrient] else { return nil }
-        return nutrientPerServing * multiplier
-    }
-
-    func caloriesInServings(multiplier: Decimal) -> Decimal? {
-        guard case let .perServing(perServing) = nutrition else { return nil }
-        return perServing.calories * multiplier
+    func caloriesInPortionOrServings(portionOrMultiplier: Decimal) -> Decimal? {
+        switch nutrition {
+        case let .per100(per100):
+            return per100.calories / 100 * portionOrMultiplier
+        case let .perServing(perServing):
+            return perServing.calories * portionOrMultiplier
+        }
     }
 
     func nutrientInThisPortion(_ nutrient: NutrientType) -> Decimal? {
         switch nutrition {
-        case .per100:
+        case let .per100(per100):
             guard let portion = portionSize else { return nil }
-            return nutrientInPortion(nutrient, portion: portion)
-        case .perServing:
+            guard let nutrientPer100 = per100[nutrient] else { return nil }
+            return nutrientPer100 / 100 * portion
+        case let .perServing(perServing):
             guard let multiplier = servingsMultiplier else { return nil }
-            return nutrientInServings(nutrient, multiplier: multiplier)
-        }
-    }
-
-    func nutrient(_ nutrient: NutrientType, forPortion portion: Decimal) -> Decimal {
-        switch nutrition {
-        case .per100:
-            return nutrientInPortion(nutrient, portion: portion) ?? 0
-        case .perServing:
-            return nutrientInServings(nutrient, multiplier: portion) ?? 0
-        }
-    }
-
-    func calories(forPortion portion: Decimal) -> Decimal {
-        switch nutrition {
-        case .per100:
-            return caloriesInPortion(portion: portion) ?? 0
-        case .perServing:
-            return caloriesInServings(multiplier: portion) ?? 0
+            guard let nutrientPerServing = perServing[nutrient] else { return nil }
+            return nutrientPerServing * multiplier
         }
     }
 

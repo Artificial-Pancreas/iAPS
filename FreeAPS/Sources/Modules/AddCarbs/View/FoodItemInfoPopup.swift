@@ -28,7 +28,6 @@ struct FoodItemInfoPopup: View {
     }
 
     var body: some View {
-        let amount = String(format: "%.0f", Double(truncating: portionSize as NSNumber))
         let unit = (foodItem.units ?? .grams).dimension.symbol
 
         ScrollView {
@@ -51,9 +50,7 @@ struct FoodItemInfoPopup: View {
                         .padding(.horizontal)
                 }
 
-                // Portion badge with source icon and confidence on same row
                 HStack(spacing: 8) {
-                    // Portion badge (neutral style matching food row)
                     HStack(spacing: 6) {
                         Image(systemName: "scalemass.fill")
                             .font(.system(size: 12))
@@ -61,19 +58,17 @@ struct FoodItemInfoPopup: View {
                             .opacity(0.3)
 
                         HStack(spacing: 3) {
+                            Text(String(format: "%.0f", Double(truncating: portionSize as NSNumber)))
+                                .font(.system(size: 17, weight: .bold))
+                                .foregroundColor(.primary)
+
                             switch foodItem.nutrition {
                             case .per100:
-                                Text("\(amount)")
-                                    .font(.system(size: 17, weight: .bold))
-                                    .foregroundColor(.primary)
                                 Text(unit)
                                     .font(.system(size: 15, weight: .semibold))
                                     .foregroundColor(.primary)
                                     .opacity(0.4)
                             case .perServing:
-                                Text("\(amount)")
-                                    .font(.system(size: 17, weight: .bold))
-                                    .foregroundColor(.primary)
                                 Text(portionSize == 1 ? "serving" : "servings")
                                     .font(.system(size: 15, weight: .semibold))
                                     .foregroundColor(.primary)
@@ -88,14 +83,11 @@ struct FoodItemInfoPopup: View {
 
                     Spacer()
 
-                    // Source icon and confidence on the right
                     HStack(spacing: 8) {
-                        // Confidence badge (if AI source)
                         if foodItem.source.isAI, let confidence = foodItem.confidence {
                             ConfidenceBadge(level: confidence)
                         }
 
-                        // Source icon
                         Image(systemName: foodItem.source.icon)
                             .font(.system(size: 16))
                             .foregroundColor(.secondary)
@@ -130,7 +122,7 @@ struct FoodItemInfoPopup: View {
                             Divider()
                             DetailedNutritionRow(
                                 localizedLabel: nutrient.localizedLabel,
-                                portionValue: foodItem.nutrientInThisPortion(nutrient),
+                                portionValue: foodItem.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize),
                                 per100Value: nutrientValue,
                                 unit: nutrient.unit
                             )
@@ -140,7 +132,7 @@ struct FoodItemInfoPopup: View {
                     Divider()
                     DetailedNutritionRow(
                         localizedLabel: NSLocalizedString("Calories", comment: ""),
-                        portionValue: foodItem.caloriesInThisPortion,
+                        portionValue: foodItem.caloriesInPortionOrServings(portionOrMultiplier: portionSize),
                         per100Value: foodItem.nutrition.values.calories,
                         unit: UnitEnergy.kilocalories
                     )
@@ -152,7 +144,6 @@ struct FoodItemInfoPopup: View {
                 )
                 .padding(.horizontal)
 
-                // Standard serving information
                 if shouldShowStandardServing {
                     VStack(alignment: .leading, spacing: 6) {
                         Label(standardServingTitle(unit: unit), systemImage: "chart.bar.doc.horizontal")
@@ -168,7 +159,7 @@ struct FoodItemInfoPopup: View {
                     .cornerRadius(12)
                     .padding(.horizontal)
                 }
-                // Metadata sections (preparation, visual cues, notes)
+
                 VStack(alignment: .leading, spacing: 12) {
                     if let preparation = foodItem.preparationMethod, !preparation.isEmpty {
                         InfoCard(icon: "flame.fill", title: "Preparation", content: preparation, color: .orange, embedIcon: true)

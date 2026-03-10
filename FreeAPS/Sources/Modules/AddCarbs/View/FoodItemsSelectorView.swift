@@ -292,11 +292,7 @@ private struct FoodItemsSelectorItemRow: View {
                         }
 
                         ForEach(displayNutrients, id: \.self) { nutrient in
-                            let value = switch foodItem.nutrition {
-                            case .per100: foodItem.nutrientInPortion(nutrient, portion: portionSize)
-                            case .perServing: foodItem.nutrientInServings(nutrient, multiplier: portionSize)
-                            }
-                            if let value {
+                            if let value = foodItem.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize) {
                                 NutritionBadgePlainStacked(
                                     value: value,
                                     localizedLabel: nutrient.localizedLabel,
@@ -307,12 +303,7 @@ private struct FoodItemsSelectorItemRow: View {
                                 Spacer().frame(maxWidth: .infinity)
                             }
                         }
-                        let kcal = switch foodItem.nutrition {
-                        case .per100: foodItem.caloriesInPortion(portion: portionSize)
-                        case .perServing: foodItem.caloriesInServings(multiplier: portionSize)
-                        }
-
-                        if let kcal, kcal > 0 {
+                        if let kcal = foodItem.caloriesInPortionOrServings(portionOrMultiplier: portionSize), kcal > 0 {
                             NutritionBadgePlainStacked(
                                 value: kcal,
                                 localizedLabel: UnitEnergy.kilocalories.symbol,

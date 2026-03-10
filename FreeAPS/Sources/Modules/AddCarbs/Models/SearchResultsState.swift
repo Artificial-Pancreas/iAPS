@@ -226,7 +226,7 @@ class SearchResultsState: ObservableObject {
 
     func baseTotal(_ nutrient: NutrientType) -> Decimal {
         nonDeletedItems.reduce(0) { sum, item in
-            sum + item.nutrient(nutrient, forPortion: portionSize(for: item))
+            sum + (item.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize(for: item)) ?? 0)
         }
     }
 
@@ -264,7 +264,9 @@ class SearchResultsState: ObservableObject {
     func nutritionValues(for items: [FoodItemDetailed]) -> NutritionValues {
         var values: NutritionValues = [:]
         for nutrient in NutrientType.allCases {
-            let sum = items.reduce(Decimal(0)) { $0 + $1.nutrient(nutrient, forPortion: portionSize(for: $1)) }
+            let sum = items
+                .reduce(Decimal(0)) {
+                    $0 + ($1.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize(for: $1)) ?? 0) }
             if sum > 0 || nutrient.isPrimary {
                 values[nutrient] = sum
             }

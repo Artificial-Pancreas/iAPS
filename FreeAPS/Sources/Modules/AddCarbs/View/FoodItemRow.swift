@@ -111,13 +111,13 @@ struct FoodItemRow: View {
             HStack(spacing: 6) {
                 ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
                     NutritionBadgePlain(
-                        value: foodItem.nutrient(nutrient, forPortion: portionSize),
+                        value: foodItem.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize) ?? 0,
                         localizedLabel: nutrient.localizedLabel,
                         color: nutrient.badgeColor
                     )
                 }
                 NutritionBadgePlain(
-                    value: foodItem.calories(forPortion: portionSize),
+                    value: foodItem.caloriesInPortionOrServings(portionOrMultiplier: portionSize) ?? 0,
                     unit: UnitEnergy.kilocalories,
                     color: NutritionBadgeConfig.caloriesColor
                 )
@@ -378,12 +378,13 @@ extension FoodItemRow {
                             .foregroundColor(.secondary)
                     }
 
-                    // Display nutritional information if available
                     if foodItem.hasNutritionValues {
                         HStack(spacing: 8) {
                             ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
-                                let value = foodItem.nutrient(nutrient, forPortion: calculatedPortion)
-                                if value > 0 {
+                                if let value = foodItem.nutrientInPortionOrServings(
+                                    nutrient,
+                                    portionOrMultiplier: calculatedPortion
+                                ), value > 0 {
                                     NutritionBadge(
                                         value: value,
                                         localizedLabel: nutrient.localizedLabel,
@@ -392,8 +393,9 @@ extension FoodItemRow {
                                     .frame(maxWidth: .infinity)
                                 }
                             }
-                            let calories = foodItem.calories(forPortion: calculatedPortion)
-                            if calories > 0 {
+                            if let calories = foodItem.caloriesInPortionOrServings(portionOrMultiplier: calculatedPortion),
+                               calories > 0
+                            {
                                 NutritionBadge(
                                     value: calories,
                                     unit: UnitEnergy.kilocalories,
