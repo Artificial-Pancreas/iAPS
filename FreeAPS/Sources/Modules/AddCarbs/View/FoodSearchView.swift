@@ -112,30 +112,21 @@ struct FoodSearchView: View {
                                 .foregroundColor(.secondary)
                         }
 
-                        TextField(
+                        DismissableTextField(
                             state
                                 .showSavedFoods ? "Search saved foods..." :
                                 (state.aiTextAnalysis ? "Ask AI..." : "Search foods..."),
-                            text: $state.foodSearchText
-                        )
-                        .font(.body)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                        .submitLabel(.search)
-                        .focused($isTextFieldFocused)
-                        .onSubmit {
-                            state.searchByText(query: state.foodSearchText)
-                            state.showingFoodSearch = true
-                        }
-                        .onChange(of: isTextFieldFocused) { _, newValue in
-                            if newValue {
+                            text: $state.foodSearchText,
+                            textFieldDidBeginEditing: {
+                                state.showingFoodSearch = true
+                            },
+                            returnKeyType: .search,
+                            liveEditing: true,
+                            onSubmit: {
+                                state.searchByText(query: state.foodSearchText)
                                 state.showingFoodSearch = true
                             }
-                        }
-                        .onChange(of: state.foodSearchText) { _, newValue in
-                            // Update the saved foods filter text
-                            state.filterText = newValue
-                        }
+                        )
 
                         // Clear button
                         if !state.foodSearchText.isEmpty {
@@ -277,21 +268,6 @@ struct FoodSearchView: View {
                                     selection: $selectedPhotoItem,
                                     matching: .images
                                 )
-                        }
-                    }
-                }
-            }
-            .toolbar {
-                // Only show toolbar when search field is focused
-                if isTextFieldFocused {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-                        Button {
-                            isTextFieldFocused = false
-                        } label: {
-                            Image(systemName: "keyboard.chevron.compact.down")
-                                .font(.body.weight(.semibold))
-                                .foregroundStyle(.blue)
                         }
                     }
                 }

@@ -94,7 +94,7 @@ struct SearchResultsView: View {
                         onPersist: persistFoodItem,
                         onDelete: onDelete,
                         useTransparentBackground: false,
-                        filterText: state.filterText,
+                        filterText: state.foodSearchText,
                         showTagCloud: true
                     )
                 }

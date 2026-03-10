@@ -59,7 +59,6 @@ final class FoodSearchStateModel: ObservableObject {
     @Published var showSavedFoods = false
     @Published var isLoading = false
     @Published var mealView = false
-    @Published var filterText = ""
     @Published var showManualEntry = false
     @Published var showNewSavedFoodEntry = false
     @Published var newFoodEntryToEdit: FoodItemDetailed? = nil

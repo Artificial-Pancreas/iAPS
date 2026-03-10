@@ -1,9 +1,9 @@
 import SwiftUI
 import UIKit
 
-public struct DecimalTextField: UIViewRepresentable {
+public struct OptionalDecimalTextField: UIViewRepresentable {
     var placeholder: String
-    @Binding var value: Decimal
+    @Binding var value: Decimal?
     var textColor: UIColor
     var textAlignment: NSTextAlignment
     var keyboardType: UIKeyboardType
@@ -19,7 +19,7 @@ public struct DecimalTextField: UIViewRepresentable {
 
     public init(
         _ placeholder: String,
-        value: Binding<Decimal>,
+        value: Binding<Decimal?>,
         textColor: UIColor = .label,
         textAlignment: NSTextAlignment = .right,
         keyboardType: UIKeyboardType = .decimalPad,
@@ -50,9 +50,10 @@ public struct DecimalTextField: UIViewRepresentable {
         self.liveEditing = liveEditing
     }
 
-    private func valueAsText() -> String? {
+    private func valueAsText() -> String {
+        guard let value = value else { return "" }
         /// show no value initially, i.e. empty String
-        value == 0 ? "" : formatter.string(for: value)
+        return value == 0 ? "" : (formatter.string(for: value) ?? "")
     }
 
     public func makeUIView(context: Context) -> UITextField {
@@ -70,15 +71,12 @@ public struct DecimalTextField: UIViewRepresentable {
         textField.delegate = context.coordinator
         textField.text = valueAsText()
         textField.placeholder = placeholder
-
-        textField.setContentHuggingPriority(.required, for: .vertical)
-        textField.setContentCompressionResistancePriority(.required, for: .vertical)
-
         return textField
     }
 
     private func makeDoneToolbar(for textField: UITextField, context: Context) -> UIToolbar {
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let doneButton = UIBarButtonItem(
             image: UIImage(systemName: "keyboard.chevron.compact.down"),
@@ -102,12 +100,21 @@ public struct DecimalTextField: UIViewRepresentable {
         toolbar
             .items = liveEditing ? [clearButton, flexibleSpace, doneButton] :
             [clearButton, flexibleSpace, cancelButton, doneButton]
+
         toolbar.sizeToFit()
+
         return toolbar
     }
 
     public func updateUIView(_ textField: UITextField, context: Context) {
-        if !context.coordinator.isEditing || abs(context.coordinator.previousSeenValue - value) > 0.0000001 {
+        if !context.coordinator.isEditing ||
+            (context.coordinator.previousSeenValue == nil && value != nil) ||
+            (context.coordinator.previousSeenValue != nil && value == nil) ||
+            (
+                (context.coordinator.previousSeenValue != nil && value != nil) &&
+                    abs(context.coordinator.previousSeenValue! - value!) > 0.0000001
+            )
+        {
             context.coordinator.previousSeenValue = value
             let newText = valueAsText()
             if textField.text != newText {
@@ -119,6 +126,9 @@ public struct DecimalTextField: UIViewRepresentable {
         textField.keyboardType = keyboardType
         textField.autocapitalizationType = autocapitalizationType
         textField.autocorrectionType = autocorrectionType
+
+        textField.setContentHuggingPriority(.required, for: .vertical)
+        textField.setContentCompressionResistancePriority(.required, for: .vertical)
 
         if autofocus, !context.coordinator.didBecomeFirstResponder {
             if textField.window != nil, textField.becomeFirstResponder() {
@@ -136,17 +146,17 @@ public struct DecimalTextField: UIViewRepresentable {
     fileprivate static let allowedCharacters = CharacterSet(charactersIn: "0123456789,.")
 
     public final class Coordinator: NSObject {
-        var parent: DecimalTextField
+        var parent: OptionalDecimalTextField
         var textField: UITextField?
         let maxLength: Int?
         var didBecomeFirstResponder = false
         let decimalFormatter: NumberFormatter
         var isEditing: Bool = false
-        var previousSeenValue: Decimal = 0
+        var previousSeenValue: Decimal?
 
         var cachedToolbar: UIToolbar?
 
-        init(_ parent: DecimalTextField, maxLength: Int?) {
+        init(_ parent: OptionalDecimalTextField, maxLength: Int?) {
             self.parent = parent
             self.maxLength = maxLength
             decimalFormatter = NumberFormatter()
@@ -155,7 +165,9 @@ public struct DecimalTextField: UIViewRepresentable {
         }
 
         @objc fileprivate func clearText() {
-            textField?.text = ""
+            guard let textField = textField else { return }
+            let fullRange = NSRange(location: 0, length: textField.text?.count ?? 0)
+            _ = self.textField(textField, shouldChangeCharactersIn: fullRange, replacementString: "")
         }
 
         @objc func cancelEdit() {
@@ -175,7 +187,9 @@ public struct DecimalTextField: UIViewRepresentable {
 
             let proposedText = textField.text ?? ""
 
-            if let number = parent.formatter.number(from: proposedText) {
+            if proposedText.trimmingCharacters(in: .whitespaces).isEmpty {
+                parent.value = nil
+            } else if let number = parent.formatter.number(from: proposedText) {
                 let decimalNumber = number.decimalValue
                 parent.value = decimalNumber
                 textField.text = parent.formatter.string(for: decimalNumber) ?? ""
@@ -191,8 +205,10 @@ public struct DecimalTextField: UIViewRepresentable {
             guard let textField = self.textField else { return }
 
             let proposedText = textField.text ?? ""
-
-            if let number = parent.formatter.number(from: proposedText) {
+            if proposedText.trimmingCharacters(in: .whitespaces).isEmpty {
+                parent.value = nil
+                previousSeenValue = nil
+            } else if let number = parent.formatter.number(from: proposedText) {
                 let decimalNumber = number.decimalValue
                 parent.value = decimalNumber
                 previousSeenValue = decimalNumber
@@ -204,14 +220,14 @@ public struct DecimalTextField: UIViewRepresentable {
     }
 }
 
-extension DecimalTextField.Coordinator: UITextFieldDelegate {
+extension OptionalDecimalTextField.Coordinator: UITextFieldDelegate {
     public func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
         // Check if the input is a number or the decimal separator
-        let isAllowed = DecimalTextField.allowedCharacters.isSuperset(of: CharacterSet(charactersIn: string))
+        let isAllowed = OptionalDecimalTextField.allowedCharacters.isSuperset(of: CharacterSet(charactersIn: string))
         if !isAllowed { return false }
 
         if let text = textField.text {
@@ -231,19 +247,5 @@ extension DecimalTextField.Coordinator: UITextFieldDelegate {
 
     public func textFieldDidBeginEditing(_: UITextField) {
         parent.textFieldDidBeginEditing?()
-    }
-}
-
-extension UITextField {
-    func moveCursorToEnd() {
-        dispatchPrecondition(condition: .onQueue(.main))
-        let newPosition = endOfDocument
-        selectedTextRange = textRange(from: newPosition, to: newPosition)
-    }
-}
-
-extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

@@ -5,9 +5,7 @@ struct ManualNutritionOverrideEditor: View {
     @ObservedObject var state: FoodSearchStateModel
     @Environment(\.dismiss) private var dismiss
 
-    @State private var editedValues: [NutrientType: String] = [:]
-
-    @FocusState private var focusedField: NutrientType?
+    @State private var editedValues: [NutrientType: Decimal] = [:]
 
     var body: some View {
         NavigationStack {
@@ -20,13 +18,18 @@ struct ManualNutritionOverrideEditor: View {
                                     if index > 0 { Divider() }
                                     NutritionOverrideRow(
                                         localizedLabel: nutrient.localizedLabel,
-                                        text: Binding(
-                                            get: { editedValues[nutrient] ?? "" },
-                                            set: { editedValues[nutrient] = $0 }
+                                        value: Binding(
+                                            get: { editedValues[nutrient] },
+                                            set: { updated in
+                                                if let updated {
+                                                    editedValues[nutrient] = updated
+                                                } else {
+                                                    editedValues.removeValue(forKey: nutrient)
+                                                }
+                                            }
                                         ),
                                         unit: nutrient.unit,
                                         placeholder: formatDecimal(state.searchResultsState.baseTotal(nutrient)),
-                                        focusedField: $focusedField,
                                         fieldTag: nutrient
                                     )
                                 }
@@ -79,26 +82,9 @@ struct ManualNutritionOverrideEditor: View {
             }
             .navigationTitle("Edit Totals")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .keyboard) {
-                    HStack {
-                        Spacer()
-                        Button {
-                            focusedField = nil
-                        } label: {
-                            Image(systemName: "keyboard.chevron.compact.down")
-                                .font(.body.weight(.semibold))
-                                .foregroundStyle(.blue)
-                        }
-                    }
-                }
-            }
         }
         .onAppear {
             initializeValues()
-        }
-        .onDisappear {
-            focusedField = nil
         }
     }
 
@@ -106,12 +92,12 @@ struct ManualNutritionOverrideEditor: View {
         for nutrient in NutrientType.allCases {
             if let override = state.searchResultsState.nutritionOverrides[nutrient] {
                 let total = state.searchResultsState.baseTotal(nutrient) + override
-                editedValues[nutrient] = formatDecimal(total)
+                editedValues[nutrient] = total
             }
         }
     }
 
-    private static let decimalFormatter: NumberFormatter = {
+    fileprivate static let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
@@ -124,15 +110,9 @@ struct ManualNutritionOverrideEditor: View {
         Self.decimalFormatter.string(from: NSDecimalNumber(decimal: value)) ?? "0"
     }
 
-    private func parseDecimal(_ text: String) -> Decimal? {
-        guard !text.trimmingCharacters(in: .whitespaces).isEmpty else { return nil }
-        return Self.decimalFormatter.number(from: text)?.decimalValue
-    }
-
     private func saveChanges() {
         for nutrient in NutrientType.allCases {
-            let text = editedValues[nutrient] ?? ""
-            if let newValue = parseDecimal(text) {
+            if let newValue = editedValues[nutrient] {
                 state.searchResultsState.nutritionOverrides[nutrient] =
                     newValue - state.searchResultsState.baseTotal(nutrient)
             } else {
@@ -145,10 +125,9 @@ struct ManualNutritionOverrideEditor: View {
 
 private struct NutritionOverrideRow: View {
     let localizedLabel: String
-    @Binding var text: String
+    @Binding var value: Decimal?
     let unit: Dimension
     let placeholder: String
-    @FocusState.Binding var focusedField: NutrientType?
     let fieldTag: NutrientType
 
     var body: some View {
@@ -166,22 +145,23 @@ private struct NutritionOverrideRow: View {
                             .strokeBorder(Color(.separator), lineWidth: 0.5)
                     )
 
-                if text.isEmpty {
+                if value == nil {
                     Text(placeholder)
                         .font(.subheadline)
-                        .foregroundColor(.primary.opacity(0.5))
+                        .foregroundColor(.secondary.opacity(0.7))
                         .padding(.trailing, 8)
                 }
 
-                TextField("", text: $text)
-                    .font(.subheadline)
-                    .foregroundColor(.primary)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .focused($focusedField, equals: fieldTag)
-                    .cursorAtEndOnFocus()
-                    .padding(.horizontal, 8)
-                    .background(Color.clear)
+                OptionalDecimalTextField(
+                    "",
+                    value: $value,
+                    formatter: ManualNutritionOverrideEditor.decimalFormatter,
+                    liveEditing: true
+                )
+                .foregroundColor(.primary)
+                .padding(.horizontal, 8)
+                .cornerRadius(4)
+                .background(Color.clear)
             }
             .frame(width: 100, height: 32)
 

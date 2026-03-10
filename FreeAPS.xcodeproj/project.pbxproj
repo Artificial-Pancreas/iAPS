@@ -455,6 +455,8 @@
 		F281B4A22ECF9087007185A9 /* LabelPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B4A12ECF9087007185A9 /* LabelPlacement.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
+		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
+		F292C1D12F5F0BF800B08D81 /* OptionalDecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1D02F5F0BF300B08D81 /* OptionalDecimalTextField.swift */; };
 		F2941FA12E787F6500A9DD5D /* AppGroupCGM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA02E787F6500A9DD5D /* AppGroupCGM.swift */; };
 		F2941FA32E787F9F00A9DD5D /* AppGroupCGM+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA22E787F9F00A9DD5D /* AppGroupCGM+UI.swift */; };
 		F2941FA52E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA42E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift */; };
@@ -1142,6 +1144,8 @@
 		F281B4A12ECF9087007185A9 /* LabelPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPlacement.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
+		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
+		F292C1D02F5F0BF300B08D81 /* OptionalDecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalDecimalTextField.swift; sourceTree = "<group>"; };
 		F2941FA02E787F6500A9DD5D /* AppGroupCGM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGM.swift; sourceTree = "<group>"; };
 		F2941FA22E787F9F00A9DD5D /* AppGroupCGM+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppGroupCGM+UI.swift"; sourceTree = "<group>"; };
 		F2941FA42E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMSettingsViewController.swift; sourceTree = "<group>"; };
@@ -2038,6 +2042,8 @@
 				F2FEE7032D2DB1A000A91BB2 /* BGTextField.swift */,
 				38EA05FF262091870064E39B /* BolusProgressViewStyle.swift */,
 				3883581B25EE79BB00E024B2 /* DecimalTextField.swift */,
+				F292C1D02F5F0BF300B08D81 /* OptionalDecimalTextField.swift */,
+				F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */,
 				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
 				383420D825FFEB3F002D46C1 /* Popup.swift */,
 				38DF1785276A73D400B3528F /* TagCloudView.swift */,
@@ -3342,6 +3348,7 @@
 				F273F9602DE73ABE00BF0FFC /* IOBTick0.swift in Sources */,
 				195D80B72AF697B800D25097 /* DynamicDataFlow.swift in Sources */,
 				3862CC2E2743F9F700BF832C /* CalendarManager.swift in Sources */,
+				F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */,
 				CEA4F62329BE10F70011ADF7 /* SavitzkyGolayFilter.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
 				38E4453C274E411700EC9A94 /* Disk+Codable.swift in Sources */,
@@ -3471,6 +3478,7 @@
 				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				190EBCCB29FF13CB00BA767D /* UIUXRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
+				F292C1D12F5F0BF800B08D81 /* OptionalDecimalTextField.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				F2E8D1512F0961CC0097F482 /* FoodTagCloudView.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
