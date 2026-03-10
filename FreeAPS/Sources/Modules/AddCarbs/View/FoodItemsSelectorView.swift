@@ -391,9 +391,8 @@ private struct FoodItemsSelectorItemRow: View {
             FoodItemEditorSheet(
                 existingItem: foodItem,
                 title: "Edit Saved Food",
-                allowServingMultiplierEdit: false, // Don't allow editing multiplier for saved foods
                 allExistingTags: allExistingTags,
-                showTagsAndFavorite: true, // Always show tags when editing saved foods
+                showTagsAndFavorite: true,
                 onSave: handleSave,
                 onCancel: {
                     showEditSheet = false

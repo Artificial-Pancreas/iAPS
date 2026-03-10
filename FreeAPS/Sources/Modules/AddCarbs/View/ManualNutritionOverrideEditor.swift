@@ -29,8 +29,7 @@ struct ManualNutritionOverrideEditor: View {
                                             }
                                         ),
                                         unit: nutrient.unit,
-                                        placeholder: formatDecimal(state.searchResultsState.baseTotal(nutrient)),
-                                        fieldTag: nutrient
+                                        placeholder: formatDecimal(state.searchResultsState.baseTotal(nutrient))
                                     )
                                 }
                             }
@@ -128,7 +127,6 @@ private struct NutritionOverrideRow: View {
     @Binding var value: Decimal?
     let unit: Dimension
     let placeholder: String
-    let fieldTag: NutrientType
 
     var body: some View {
         HStack(spacing: 8) {
