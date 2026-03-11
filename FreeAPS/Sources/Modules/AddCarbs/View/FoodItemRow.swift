@@ -259,6 +259,29 @@ extension FoodItemRow {
         let onReset: (() -> Void)?
         let onCancel: () -> Void
 
+        @State private var sliderUpperBound: Double
+
+        init(
+            currentPortion: Decimal,
+            foodItem: FoodItemDetailed,
+            sliderMultiplier: Binding<Double>,
+            onSave: @escaping (Decimal) -> Void,
+            onReset: (() -> Void)?,
+            onCancel: @escaping () -> Void
+        ) {
+            self.currentPortion = currentPortion
+            self.foodItem = foodItem
+            _sliderMultiplier = sliderMultiplier
+            self.onSave = onSave
+            self.onReset = onReset
+            self.onCancel = onCancel
+            let initialMax: Double = switch foodItem.nutrition {
+            case .per100: 600.0
+            case .perServing: 10.0
+            }
+            _sliderUpperBound = State(initialValue: initialMax)
+        }
+
         private var unit: String {
             switch foodItem.nutrition {
             case .per100:
@@ -297,21 +320,17 @@ extension FoodItemRow {
             return String(format: "%.2f×", doubleValue)
         }
 
-        private var sliderRange: ClosedRange<Double> {
+        private var sliderMin: Double {
             switch foodItem.nutrition {
-            case .per100:
-                10.0 ... 600.0
-            case .perServing:
-                0.25 ... 10.0
+            case .per100: 10.0
+            case .perServing: 0.25
             }
         }
 
-        private var sliderStep: Double.Stride {
+        private var sliderStep: Double {
             switch foodItem.nutrition {
-            case .per100:
-                5.0
-            case .perServing:
-                0.25
+            case .per100: 5.0
+            case .perServing: 0.25
             }
         }
 
@@ -327,10 +346,22 @@ extension FoodItemRow {
         private var sliderMaxLabel: String {
             switch foodItem.nutrition {
             case .per100:
-                return "600\(unit)"
+                return "\(Int(sliderUpperBound))\(unit)"
             case .perServing:
-                return "10x"
+                return String(format: "%.2g×", sliderUpperBound)
             }
+        }
+
+        private func stepDown() {
+            sliderMultiplier = max(sliderMin, sliderMultiplier - sliderStep)
+        }
+
+        private func stepUp() {
+            let newValue = sliderMultiplier + sliderStep
+            if newValue > sliderUpperBound {
+                sliderUpperBound = newValue
+            }
+            sliderMultiplier = newValue
         }
 
         var body: some View {
@@ -365,8 +396,23 @@ extension FoodItemRow {
                 }
 
                 VStack(spacing: 12) {
-                    Slider(value: $sliderMultiplier, in: sliderRange, step: sliderStep)
-                        .tint(.orange)
+                    HStack(spacing: 8) {
+                        Button(action: stepDown) {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(sliderMultiplier <= sliderMin ? .secondary : .orange)
+                        }
+                        .disabled(sliderMultiplier <= sliderMin)
+
+                        Slider(value: $sliderMultiplier, in: sliderMin ... sliderUpperBound, step: sliderStep)
+                            .tint(.orange)
+
+                        Button(action: stepUp) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(.orange)
+                        }
+                    }
 
                     HStack {
                         Text(NSLocalizedString(sliderMinLabel, comment: ""))
