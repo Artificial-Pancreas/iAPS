@@ -204,9 +204,11 @@ struct SearchResultsView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "clock")
                             .font(.system(size: 14, weight: .medium))
-                        Text(selectedTime == nil ? "Now" : timeString(for: selectedTime!))
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
+                        Text(
+                            selectedTime.map { timeString(for: $0) } ?? NSLocalizedString("Now", comment: "")
+                        )
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                     }
                     .foregroundColor(.accentColor)
                     .padding(.horizontal, 14)
@@ -222,7 +224,7 @@ struct SearchResultsView: View {
 
             Spacer()
 
-            if state.searchResultsState.hasVisibleContent {
+            if state.searchResultsState.nonDeletedItemCount > 0 {
                 if let onHypoTreatment = self.onHypoTreatment {
                     Button(action: {
                         let combinedFoodItem = createCombinedFoodItem()
@@ -279,11 +281,7 @@ struct SearchResultsView: View {
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         // Save current state for undo
-                        clearedResultsViewState = SearchResultsState()
-                        clearedResultsViewState?.searchResults = state.searchResultsState.searchResults
-                        clearedResultsViewState?.editedItems = state.searchResultsState.editedItems
-                        clearedResultsViewState?.collapsedSections = state.searchResultsState.collapsedSections
-                        clearedResultsViewState?.nutritionOverrides = state.searchResultsState.nutritionOverrides
+                        clearedResultsViewState = state.searchResultsState.copy()
 
                         // Clear everything
                         state.searchResultsState.clear()
@@ -423,11 +421,7 @@ struct SearchResultsView: View {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     // Restore cleared results and state
                     if let savedState = clearedResultsViewState {
-                        state.searchResultsState.searchResults = savedState.searchResults
-                        state.searchResultsState.editedItems = savedState.editedItems
-                        state.searchResultsState.collapsedSections = savedState.collapsedSections
-                        // Restore nutrition overrides
-                        state.searchResultsState.nutritionOverrides = savedState.nutritionOverrides
+                        state.searchResultsState.restore(from: savedState)
                     }
 
                     clearedResultsViewState = nil

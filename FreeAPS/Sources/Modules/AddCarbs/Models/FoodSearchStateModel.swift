@@ -296,7 +296,12 @@ import SwiftUI
                 self.analysisEnd = Date.now
                 // TODO: delay before hiding the progress screen, do we want it?
                 try? await Task.sleep(for: .seconds(1))
-                self.onFoodAnalyzed(result, analysisRequest)
+                if result.source == .aiMenu {
+                    latestMultipleSelectSearch = result
+                } else {
+                    searchResultsState.searchResults = [result] + searchResultsState.searchResults
+                }
+                foodSearchRoute = nil
             } catch is CancellationError {
                 // cancelled, already reset by cancelSearchTask()
             } catch {
@@ -316,19 +321,6 @@ import SwiftUI
         } else if message.hasPrefix("MODEL: ") {
             analysisModel = String(message.dropFirst("MODEL: ".count))
         }
-    }
-
-    private func onFoodAnalyzed(
-        _ analysisResult: FoodItemGroup,
-        _ analysisRequest: AnalysisRequest
-    ) {
-        if analysisResult.source == .aiMenu {
-            latestMultipleSelectSearch = analysisResult
-        } else {
-            searchResultsState.searchResults = [analysisResult] + searchResultsState.searchResults
-        }
-        aiAnalysisRequest = analysisRequest
-        foodSearchRoute = nil
     }
 
     private func isBarcode(_ str: String) -> Bool {

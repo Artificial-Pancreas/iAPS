@@ -26,21 +26,19 @@ struct FoodSearchView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            SearchResultsView(
-                state: state,
-                onContinue: { totalMeal, selectedTime in
-                    onContinue(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
-                },
-                onHypoTreatment: onHypoTreatment != nil ? { totalMeal, selectedTime in
-                    onHypoTreatment?(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
-                } : nil,
-                onPersist: onPersist,
-                onDelete: onDelete,
-                continueButtonLabelKey: continueButtonLabelKey,
-                hypoTreatmentButtonLabelKey: hypoTreatmentButtonLabelKey
-            )
-        }
+        SearchResultsView(
+            state: state,
+            onContinue: { totalMeal, selectedTime in
+                onContinue(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
+            },
+            onHypoTreatment: onHypoTreatment != nil ? { totalMeal, selectedTime in
+                onHypoTreatment?(totalMeal, state.aiAnalysisRequest?.image, selectedTime)
+            } : nil,
+            onPersist: onPersist,
+            onDelete: onDelete,
+            continueButtonLabelKey: continueButtonLabelKey,
+            hypoTreatmentButtonLabelKey: hypoTreatmentButtonLabelKey
+        )
         .fullScreenCover(item: foodSearchFullScreenRoute) { route in
             switch route {
             case .camera:

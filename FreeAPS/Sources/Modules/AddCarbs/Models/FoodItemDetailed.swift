@@ -109,17 +109,6 @@ extension NutrientType {
         }
     }
 
-    var isMicro: Bool {
-        switch self {
-        case .carbs,
-             .fat,
-             .fiber,
-             .protein,
-             .sugars:
-            false
-        }
-    }
-
     var isPrimary: Bool {
         switch self {
         case .carbs,

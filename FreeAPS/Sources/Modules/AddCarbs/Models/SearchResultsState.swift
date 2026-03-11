@@ -32,10 +32,6 @@ class SearchResultsState: ObservableObject {
         }
     }
 
-    var currentEditedItems: [EditableFoodItem] {
-        editedItems.values.filter { !$0.isDeleted }
-    }
-
     func portionSize(for foodItem: FoodItemDetailed) -> Decimal {
         let key = foodItem.id.uuidString
         if let edited = editedItems[key] {
@@ -86,27 +82,14 @@ class SearchResultsState: ObservableObject {
 
     // Hard delete an item (permanently removes it from search results) - used when removing a food that was added from Saved Foods, or when adding/deleting from a multiple-choise selector
     func hardDeleteItem(_ foodItem: FoodItemDetailed) {
-        // Remove from search results
         for (index, group) in searchResults.enumerated() {
             if group.foodItemsDetailed.contains(where: { $0.id == foodItem.id }) {
-                // Create new array without the deleted item
                 let updatedFoodItems = group.foodItemsDetailed.filter { $0.id != foodItem.id }
 
-                // If the group is now empty, remove the entire group
                 if updatedFoodItems.isEmpty {
                     searchResults.remove(at: index)
                 } else {
-                    // Create new group with updated items
-                    let updatedGroup = FoodItemGroup(
-                        foodItemsDetailed: updatedFoodItems,
-                        briefDescription: group.briefDescription,
-                        overallDescription: group.overallDescription,
-                        diabetesConsiderations: group.diabetesConsiderations,
-                        source: group.source,
-                        barcode: group.barcode,
-                        textQuery: group.textQuery
-                    )
-                    searchResults[index] = updatedGroup
+                    searchResults[index] = group.copyWithItems(updatedFoodItems)
                 }
                 break
             }
@@ -119,7 +102,6 @@ class SearchResultsState: ObservableObject {
 
     // Hard delete entire section (removes from searchResults and cleans up editedItems)
     func deleteSection(_ sectionId: UUID) {
-        // Find the section to delete
         guard let sectionIndex = searchResults.firstIndex(where: { $0.id == sectionId }) else {
             return
         }
@@ -132,37 +114,22 @@ class SearchResultsState: ObservableObject {
             editedItems.removeValue(forKey: key)
         }
 
-        // Remove the section from searchResults
         searchResults.remove(at: sectionIndex)
 
-        // Clean up collapsed state if it exists
         collapsedSections.remove(sectionId)
     }
 
     /// Updates an existing food item in the search results while preserving portion size/multiplier
     func updateExistingItem(_ updatedItem: FoodItemDetailed) {
-        // Find all instances of this item across all search results
         for (groupIndex, group) in searchResults.enumerated() {
             for (itemIndex, existingItem) in group.foodItemsDetailed.enumerated() {
                 if existingItem.id == updatedItem.id {
-                    // Preserve the current portion size or multiplier
                     let preservedPortion = portionSize(for: existingItem)
 
-                    // Create a new group with the updated item
                     var updatedFoodItems = group.foodItemsDetailed
                     updatedFoodItems[itemIndex] = updatedItem
 
-                    let updatedGroup = FoodItemGroup(
-                        foodItemsDetailed: updatedFoodItems,
-                        briefDescription: group.briefDescription,
-                        overallDescription: group.overallDescription,
-                        diabetesConsiderations: group.diabetesConsiderations,
-                        source: group.source,
-                        barcode: group.barcode,
-                        textQuery: group.textQuery
-                    )
-
-                    searchResults[groupIndex] = updatedGroup
+                    searchResults[groupIndex] = group.copyWithItems(updatedFoodItems)
 
                     // Update editedItems to preserve the portion with the new item reference
                     let key = updatedItem.id.uuidString
@@ -171,7 +138,6 @@ class SearchResultsState: ObservableObject {
                         editedItems[key]?.portionSize = preservedPortion
                         editedItems[key]?.isDeleted = edited.isDeleted
                     } else {
-                        // Create new edited item with preserved portion
                         var newEdited = EditableFoodItem(from: updatedItem)
                         newEdited.portionSize = preservedPortion
                         editedItems[key] = newEdited
@@ -193,6 +159,22 @@ class SearchResultsState: ObservableObject {
         } else {
             collapsedSections.insert(sectionId)
         }
+    }
+
+    func copy() -> SearchResultsState {
+        let snapshot = SearchResultsState()
+        snapshot.searchResults = searchResults
+        snapshot.editedItems = editedItems
+        snapshot.collapsedSections = collapsedSections
+        snapshot.nutritionOverrides = nutritionOverrides
+        return snapshot
+    }
+
+    func restore(from snapshot: SearchResultsState) {
+        searchResults = snapshot.searchResults
+        editedItems = snapshot.editedItems
+        collapsedSections = snapshot.collapsedSections
+        nutritionOverrides = snapshot.nutritionOverrides
     }
 
     func clear() {
@@ -226,10 +208,6 @@ class SearchResultsState: ObservableObject {
 
     func total(_ nutrient: NutrientType) -> Decimal {
         max(baseTotal(nutrient) + (nutritionOverrides[nutrient] ?? 0), 0)
-    }
-
-    var baseTotalCalories: Decimal {
-        [NutrientType.carbs: baseTotal(.carbs), .protein: baseTotal(.protein), .fat: baseTotal(.fat)].calories
     }
 
     var totalCalories: Decimal {
