@@ -384,7 +384,7 @@ extension FoodItemRow {
                     case .per100:
                         Text(
                             (FoodItemRow.PortionAdjusterView.formatter.string(from: calculatedPortion as NSNumber) ?? "") +
-                                NSLocalizedString(unit, comment: "")
+                                unit
                         )
                         .font(.system(size: 32, weight: .bold))
                         .foregroundColor(.orange)
@@ -415,11 +415,11 @@ extension FoodItemRow {
                     }
 
                     HStack {
-                        Text(NSLocalizedString(sliderMinLabel, comment: ""))
+                        Text(sliderMinLabel)
                             .font(.caption)
                             .foregroundColor(.secondary)
                         Spacer()
-                        Text(NSLocalizedString(sliderMaxLabel, comment: ""))
+                        Text(sliderMaxLabel)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

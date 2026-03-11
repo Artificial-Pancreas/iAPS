@@ -21,7 +21,7 @@ struct AIProgressView: View {
                         .padding(.horizontal, 20)
                         .frame(
                             maxWidth: .infinity,
-                            maxHeight: geometry.size.height - geometry.safeAreaInsets.bottom - 140
+                            maxHeight: Swift.max(geometry.size.height - geometry.safeAreaInsets.bottom - 140, 20)
                         )
 
                     Spacer(minLength: 0)
@@ -135,101 +135,6 @@ struct AIProgressView: View {
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: state.analysisError)
-    }
-}
-
-struct TelemetryWindow: View {
-    let logs: [String]
-
-    @Environment(\.colorScheme) private var colorScheme
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Header
-            HStack {
-                Image(systemName: "antenna.radiowaves.left.and.right")
-                    .foregroundColor(.green)
-                    .font(.caption2)
-                    .symbolEffect(.variableColor.iterative.reversing, options: .repeating)
-                Text("Analysis Status")
-                    .font(.caption2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.primary)
-                Spacer()
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .background(.ultraThinMaterial)
-
-            Divider()
-                .opacity(0.3)
-
-            // Scrolling logs
-            ScrollView {
-                ScrollViewReader { proxy in
-                    LazyVStack(alignment: .leading, spacing: 6) {
-                        ForEach(Array(logs.enumerated()), id: \.offset) { index, log in
-                            HStack(alignment: .top, spacing: 8) {
-                                Text("•")
-                                    .font(.system(.caption2, design: .monospaced))
-                                    .foregroundColor(.secondary)
-                                    .opacity(0.6)
-
-                                Text(NSLocalizedString(log, comment: "Log"))
-                                    .font(.system(.caption2, design: .monospaced))
-                                    .foregroundColor(.primary)
-                                    .multilineTextAlignment(.leading)
-
-                                Spacer()
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 4)
-                            .id(index)
-                            .transition(.opacity.combined(with: .move(edge: .top)))
-                        }
-                        Color.clear.frame(height: 12)
-                    }
-                    .padding(.top, 8)
-                    .onAppear {
-                        if !logs.isEmpty {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                proxy.scrollTo(logs.count - 1, anchor: .bottom)
-                            }
-                        }
-                    }
-                    .onChange(of: logs.count) {
-                        if !logs.isEmpty {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                proxy.scrollTo(logs.count - 1, anchor: .bottom)
-                            }
-                        }
-                    }
-                }
-            }
-            .frame(height: 280)
-        }
-        .background(.regularMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .shadow(
-            color: Color.black.opacity(colorScheme == .dark ? 0.5 : 0.15),
-            radius: 20,
-            x: 0,
-            y: 10
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(
-                    LinearGradient(
-                        colors: [
-                            Color.white.opacity(colorScheme == .dark ? 0.2 : 0.4),
-                            Color.white.opacity(colorScheme == .dark ? 0.05 : 0.1)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
-                    lineWidth: 1
-                )
-        )
     }
 }
 
@@ -446,21 +351,6 @@ struct AnalyzingPill: View {
                 .blendMode(.plusLighter)
                 .mask(Capsule())
             )
-            // Running wave (outer halo) – larger around the hotspot
-//            .overlay(
-//                Capsule()
-//                    .strokeBorder(
-//                        AngularGradient(
-//                            gradient: Gradient(colors: waveColors),
-//                            center: .center,
-//                            angle: .degrees(rotation)
-//                        ),
-//                        lineWidth: waveOuterLineWidth
-//                    )
-//                    .blur(radius: waveOuterBlur)
-//                    .opacity(colorScheme == .dark ? waveOuterOpacityDark : waveOuterOpacityLight)
-//                    .blendMode(.plusLighter)
-//            )
             // Subtle border that blends with the glow
             .overlay(
                 Capsule()

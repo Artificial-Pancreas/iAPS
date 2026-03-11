@@ -3,7 +3,7 @@ import Foundation
 extension OpenFoodFactsService: TextAnalysisService {
     func analyzeText(
         prompt: String,
-        telemetryCallback _: ((String) -> Void)?
+        telemetryCallback _: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         let products = try await searchProducts(query: prompt, pageSize: 15)
         var result = OpenFoodFactsProduct.createFoodItemGroup(products: products, confidence: nil, source: .search)
@@ -15,7 +15,7 @@ extension OpenFoodFactsService: TextAnalysisService {
 extension OpenFoodFactsService: BarcodeAnalysisService {
     func analyzeBarcode(
         barcode: String,
-        telemetryCallback _: ((String) -> Void)?
+        telemetryCallback _: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         let item = try await searchProduct(barcode: barcode)
         var result = OpenFoodFactsProduct.createFoodItemGroup(products: [item], confidence: .high, source: .barcode)

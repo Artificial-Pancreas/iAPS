@@ -3,7 +3,7 @@ import Foundation
 extension USDAFoodDataService: TextAnalysisService {
     func analyzeText(
         prompt: String,
-        telemetryCallback _: ((String) -> Void)?
+        telemetryCallback _: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         let products = try await searchProducts(query: prompt, pageSize: 25)
         var result = OpenFoodFactsProduct.createFoodItemGroup(products: products, confidence: nil, source: .search)

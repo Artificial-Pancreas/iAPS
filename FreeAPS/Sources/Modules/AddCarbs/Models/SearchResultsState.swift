@@ -32,34 +32,28 @@ class SearchResultsState: ObservableObject {
         }
     }
 
-    // Public accessor for current edited state
     var currentEditedItems: [EditableFoodItem] {
         editedItems.values.filter { !$0.isDeleted }
     }
 
-    // Helper to get current portion size for a food item
-    // Note: For perServing items, this returns the servings multiplier
     func portionSize(for foodItem: FoodItemDetailed) -> Decimal {
         let key = foodItem.id.uuidString
         if let edited = editedItems[key] {
             return edited.portionSize
         }
-        // Return the appropriate default based on nutrition type
         switch foodItem.nutrition {
         case .per100:
-            return foodItem.portionSize ?? 0
+            return foodItem.portionSize ?? 100
         case .perServing:
-            return foodItem.servingsMultiplier ?? 0
+            return foodItem.servingsMultiplier ?? 1
         }
     }
 
-    // Helper to check if item is deleted
     func isDeleted(_ foodItem: FoodItemDetailed) -> Bool {
         let key = foodItem.id.uuidString
         return editedItems[key]?.isDeleted ?? false
     }
 
-    // Update portion size for an item
     func updatePortion(for foodItem: FoodItemDetailed, to newPortion: Decimal) {
         let key = foodItem.id.uuidString
         if editedItems[key] == nil {

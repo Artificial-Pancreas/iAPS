@@ -6,21 +6,21 @@ protocol ImageAnalysisService: Sendable, AnalysisServiceBase {
     func analyzeImage(
         prompt: String,
         images: [String],
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup
 }
 
 protocol TextAnalysisService: Sendable, AnalysisServiceBase {
     func analyzeText(
         prompt: String,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup
 }
 
 protocol BarcodeAnalysisService: Sendable, AnalysisServiceBase {
     func analyzeBarcode(
         barcode: String,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup
 }
 
@@ -47,7 +47,7 @@ extension AIAnalysisService: ImageAnalysisService {
     func analyzeImage(
         prompt: String,
         images: [String],
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         let response = try await client.executeQuery(
             prompt: prompt,
@@ -72,7 +72,7 @@ extension AIAnalysisService: ImageAnalysisService {
 extension AIAnalysisService: TextAnalysisService {
     func analyzeText(
         prompt: String,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         let response = try await client.executeQuery(
             prompt: prompt,

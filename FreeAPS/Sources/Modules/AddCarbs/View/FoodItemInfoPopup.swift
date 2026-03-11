@@ -242,7 +242,7 @@ struct SectionInfoPopup: View {
             VStack(alignment: .leading, spacing: 16) {
                 // Title
                 if let title = foodItemGroup.briefDescription, !title.isEmpty {
-                    Text(NSLocalizedString(title, comment: ""))
+                    Text(title)
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
@@ -292,7 +292,6 @@ private struct InfoCard: View {
     var body: some View {
         if embedIcon {
             HStack(alignment: .center, spacing: 0) {
-                // Icon section with darker background
                 ZStack(alignment: .center) {
                     color.opacity(0.25)
                         .cornerRadius(12, corners: [.topLeft, .bottomLeft])
@@ -303,8 +302,7 @@ private struct InfoCard: View {
                 }
                 .frame(width: 40)
 
-                // Content section
-                Text(NSLocalizedString(content, comment: ""))
+                Text(content)
                     .font(.subheadline)
                     .foregroundColor(.primary.opacity(0.85))
                     .padding(.horizontal, 12)
@@ -319,7 +317,7 @@ private struct InfoCard: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(color)
-                Text(NSLocalizedString(content, comment: ""))
+                Text(content)
                     .font(.subheadline)
                     .foregroundColor(.primary.opacity(0.85))
             }

@@ -290,48 +290,6 @@ extension FoodItemDetailed {
         }
     }
 
-    /// Returns a copy of this food item with an updated portion size or servings multiplier
-    func withPortion(_ newPortion: Decimal) -> FoodItemDetailed {
-        switch nutrition {
-        case let .per100(nutrition):
-            return FoodItemDetailed(
-                name: name,
-                nutritionPer100: nutrition,
-                portionSize: newPortion,
-                confidence: confidence,
-                brand: brand,
-                standardServing: standardServing,
-                standardServingSize: standardServingSize,
-                units: units,
-                preparationMethod: preparationMethod,
-                visualCues: visualCues,
-                glycemicIndex: glycemicIndex,
-                assessmentNotes: assessmentNotes,
-                imageURL: imageURL,
-                tags: tags,
-                source: source
-            )
-        case let .perServing(nutrition):
-            return FoodItemDetailed(
-                name: name,
-                nutritionPerServing: nutrition,
-                servingsMultiplier: newPortion,
-                confidence: confidence,
-                brand: brand,
-                standardServing: standardServing,
-                standardServingSize: standardServingSize,
-                units: units,
-                preparationMethod: preparationMethod,
-                visualCues: visualCues,
-                glycemicIndex: glycemicIndex,
-                assessmentNotes: assessmentNotes,
-                imageURL: imageURL,
-                tags: tags,
-                source: source
-            )
-        }
-    }
-
     func withImageURL(_ newImageURL: String?) -> FoodItemDetailed {
         switch nutrition {
         case let .per100(nutritionValues):

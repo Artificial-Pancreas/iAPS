@@ -4,6 +4,9 @@ import UIKit
 @MainActor class FoodImageStorageManager {
     static let shared = FoodImageStorageManager()
 
+    private let documentsPath: URL
+    private let foodItemsPath: URL
+
     private var imageCache: NSCache<NSString, UIImage> = {
         let cache = NSCache<NSString, UIImage>()
         cache.countLimit = 100
@@ -11,17 +14,18 @@ import UIKit
         return cache
     }()
 
-    private init() {}
+    private init() {
+        documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        foodItemsPath = documentsPath.appendingPathComponent("FoodItems", isDirectory: true)
+        try? FileManager.default.createDirectory(at: foodItemsPath, withIntermediateDirectories: true)
+    }
 
     private func fileURL(for itemId: UUID) -> URL {
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let foodItemsPath = documentsPath.appendingPathComponent("FoodItems", isDirectory: true)
-        try? FileManager.default.createDirectory(at: foodItemsPath, withIntermediateDirectories: true)
-        return foodItemsPath.appendingPathComponent("\(itemId.uuidString).png")
+        foodItemsPath.appendingPathComponent("\(itemId.uuidString).png")
     }
 
     private func downloadAndCacheImage(from urlString: String) async -> UIImage? {
-        guard let url = URL(string: urlString), !url.isFileURL else {
+        guard let url = URL(string: urlString) else {
             return nil
         }
 
@@ -102,34 +106,6 @@ import UIKit
             let fileURL = fileURL(for: uuid)
             let filePath = fileURL.path(percentEncoded: false)
 
-            guard FileManager.default.fileExists(atPath: filePath),
-                  let image = UIImage(contentsOfFile: filePath)
-            else {
-                return nil
-            }
-
-            imageCache.setObject(image, forKey: urlString as NSString)
-            return image
-        }
-
-        guard let url = URL(string: urlString) else { return nil }
-
-        if url.isFileURL {
-            // Legacy file:// format — try to reconstruct path from UUID in filename
-            if let filename = url.lastPathComponent.components(separatedBy: ".").first,
-               let uuid = UUID(uuidString: filename)
-            {
-                let reconstructedURL = fileURL(for: uuid)
-                let reconstructedPath = reconstructedURL.path(percentEncoded: false)
-                if FileManager.default.fileExists(atPath: reconstructedPath),
-                   let image = UIImage(contentsOfFile: reconstructedPath)
-                {
-                    imageCache.setObject(image, forKey: urlString as NSString)
-                    return image
-                }
-            }
-
-            let filePath = url.path(percentEncoded: false)
             guard FileManager.default.fileExists(atPath: filePath),
                   let image = UIImage(contentsOfFile: filePath)
             else {

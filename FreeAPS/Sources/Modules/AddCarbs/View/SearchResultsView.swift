@@ -579,7 +579,7 @@ struct SearchResultsView: View {
     }
 
     private func persistFoodItem(_ foodItem: FoodItemDetailed) {
-        if let imageURL = foodItem.imageURL, let url = URL(string: imageURL), !url.isFileURL {
+        if let imageURL = foodItem.imageURL, !imageURL.hasPrefix("local://") {
             Task {
                 isDownloadingImage = true
                 let updatedItem = await ensureLocalImageURLHelper(for: foodItem)
@@ -597,11 +597,7 @@ struct SearchResultsView: View {
     }
 
     private func ensureLocalImageURLHelper(for foodItem: FoodItemDetailed) async -> FoodItemDetailed {
-        guard let imageURL = foodItem.imageURL else {
-            return foodItem
-        }
-
-        guard let url = URL(string: imageURL), !url.isFileURL else {
+        guard let imageURL = foodItem.imageURL, !imageURL.hasPrefix("local://") else {
             return foodItem
         }
 

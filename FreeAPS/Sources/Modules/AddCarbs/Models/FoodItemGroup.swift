@@ -37,7 +37,9 @@ struct FoodItemGroup: Identifiable, Equatable {
             briefDescription: briefDescription,
             overallDescription: overallDescription,
             diabetesConsiderations: diabetesConsiderations,
-            source: source
+            source: source,
+            barcode: barcode,
+            textQuery: textQuery
         )
     }
 

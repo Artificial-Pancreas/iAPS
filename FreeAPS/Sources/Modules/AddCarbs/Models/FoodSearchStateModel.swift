@@ -16,18 +16,12 @@ enum FoodSearchRoute {
     case imageCommentInput(UIImage)
 }
 
-enum FoodSearchFullScreenRoute: Identifiable {
+enum FoodSearchFullScreenRoute: String, Identifiable {
     case camera
     case barcodeScanner
     case aiProgress
 
-    var id: String {
-        switch self {
-        case .camera: return "camera"
-        case .barcodeScanner: return "barcodeScanner"
-        case .aiProgress: return "aiProgress"
-        }
-    }
+    var id: FoodSearchFullScreenRoute { self }
 }
 
 enum FoodSearchSheetRoute: Identifiable {
@@ -40,7 +34,7 @@ enum FoodSearchSheetRoute: Identifiable {
     }
 }
 
-final class FoodSearchStateModel: ObservableObject {
+@MainActor final class FoodSearchStateModel: ObservableObject {
     @Published var foodSearchText = ""
     @Published var isBarcode = false
 
@@ -71,16 +65,14 @@ final class FoodSearchStateModel: ObservableObject {
 
     // analysis progress
 
-    @Published var isAnalyzing: Bool = false
     @Published var analysisError: String?
-//    @Published var showingErrorAlert = false
     @Published var telemetryLogs: [String] = []
     @Published var analysisStart: Date? = nil
     @Published var analysisEnd: Date? = nil
     @Published var analysisEta: TimeInterval?
     @Published var analysisModel: String?
 
-    @Published var searchTask: Task<Void, Never>? = nil
+    nonisolated(unsafe) private var searchTask: Task<Void, Never>?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -171,69 +163,47 @@ final class FoodSearchStateModel: ObservableObject {
     }
 
     private func saveImageToLibrary(_ image: UIImage) {
-        // Check current authorization status without requesting
-        let status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
+        Task {
+            let status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
+            guard status == .authorized || status == .limited else { return }
 
-        guard status == .authorized || status == .limited else {
-            print("Photo library access not granted")
-            return
-        }
-
-        getOrCreateAlbum(named: "iAPS") { album in
-            guard let album = album else {
-                // Fallback: save to camera roll if album creation fails
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAsset(from: image)
-                })
-                return
-            }
-
-            PHPhotoLibrary.shared().performChanges({
-                let assetRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
-                guard let placeholder = assetRequest.placeholderForCreatedAsset,
-                      let albumChangeRequest = PHAssetCollectionChangeRequest(for: album)
-                else {
-                    return
+            let album = await getOrCreateAlbum(named: "iAPS")
+            do {
+                try await PHPhotoLibrary.shared().performChanges {
+                    let assetRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
+                    if let placeholder = assetRequest.placeholderForCreatedAsset,
+                       let album,
+                       let albumChangeRequest = PHAssetCollectionChangeRequest(for: album)
+                    {
+                        albumChangeRequest.addAssets([placeholder] as NSArray)
+                    }
+                    // If album is nil, the asset is still saved to the camera roll
                 }
-                albumChangeRequest.addAssets([placeholder] as NSArray)
-            }) { success, error in
-                if success {
-                    print("✅ Image saved to iAPS album")
-                } else if let error = error {
-                    print("❌ Failed to save image: \(error.localizedDescription)")
-                }
+            } catch {
+                print("❌ Failed to save image: \(error.localizedDescription)")
             }
         }
     }
 
-    private func getOrCreateAlbum(named albumName: String, completion: @escaping (PHAssetCollection?) -> Void) {
-        // Check if album already exists
+    private func getOrCreateAlbum(named albumName: String) async -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "title = %@", albumName)
-        let collection = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
 
-        if let album = collection.firstObject {
-            completion(album)
-            return
-        }
+        let existing = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+        if let album = existing.firstObject { return album }
 
-        // Create new album
-        var albumPlaceholder: PHObjectPlaceholder?
-        PHPhotoLibrary.shared().performChanges({
-            let createAlbumRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
-            albumPlaceholder = createAlbumRequest.placeholderForCreatedAssetCollection
-        }) { success, error in
-            if success, let placeholder = albumPlaceholder {
-                let fetchResult = PHAssetCollection.fetchAssetCollections(
-                    withLocalIdentifiers: [placeholder.localIdentifier],
-                    options: nil
-                )
-                completion(fetchResult.firstObject)
-            } else {
-                print("Failed to create album: \(error?.localizedDescription ?? "unknown error")")
-                completion(nil)
+        do {
+            try await PHPhotoLibrary.shared().performChanges {
+                _ = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName)
             }
+        } catch {
+            print("Failed to create album: \(error.localizedDescription)")
+            return nil
         }
+
+        // Fetch by name again — avoids capturing a var placeholder across a @Sendable boundary
+        let created = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+        return created.firstObject
     }
 
     func searchByText(query: String) {
@@ -374,51 +344,48 @@ final class FoodSearchStateModel: ObservableObject {
         case .image:
             guard aiService.isImageAnalysisConfigured else {
                 analysisError = "AI service not configured. Please check settings."
-//                showingErrorAlert = true
                 return
             }
         case .query:
             guard aiService.isAiTextAnalysisConfigured else {
                 analysisError = "AI service not configured. Please check settings."
-//                showingErrorAlert = true
                 return
             }
         }
 
-        searchTask = Task {
+        searchTask = Task { @MainActor in
             do {
                 switch analysisRequest {
                 case let .image(image, comment):
-                    let result = try await aiService.analyzeFoodImage(image, comment: comment) { telemetryMessage in
-                        Task { @MainActor in
-                            if telemetryMessage.hasPrefix("ETA: ") {
-                                let etaString = telemetryMessage.dropFirst(5)
-                                if let etaValue = Double(etaString.trimmingCharacters(in: .whitespaces)) {
+                    let result = try await aiService
+                        .analyzeFoodImage(image, comment: comment) { @Sendable [weak self] telemetryMessage in
+                            Task { @MainActor [weak self] in
+                                guard let self else { return }
+                                if telemetryMessage.hasPrefix("ETA: "),
+                                   let etaValue = Double(telemetryMessage.dropFirst(5).trimmingCharacters(in: .whitespaces))
+                                {
                                     self.analysisEta = etaValue * 1.2
+                                } else if telemetryMessage.hasPrefix("MODEL: ") {
+                                    self.analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
+                                } else {
+                                    self.addTelemetryLog(telemetryMessage)
                                 }
-                            } else if telemetryMessage.hasPrefix("MODEL: ") {
-                                self.analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
-                            } else {
-                                self.addTelemetryLog(telemetryMessage)
                             }
                         }
-                    }
-                    await MainActor.run {
-                        self.addTelemetryLog("✅ Analysis complete!")
-                        self.analysisEnd = Date.now
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            self.isAnalyzing = false
-                            self.onFoodAnalyzed(result, analysisRequest)
-                        }
-                    }
+                    self.analysisEnd = Date.now
+                    try? await Task.sleep(for: .seconds(1))
+                    self.onFoodAnalyzed(result, analysisRequest)
                 case let .query(query):
-                    let result = try await aiService.analyzeFoodQuery(query) { telemetryMessage in
-                        Task { @MainActor in
-                            if telemetryMessage.hasPrefix("ETA: ") {
-                                let etaString = telemetryMessage.dropFirst("ETA: ".count)
-                                if let etaValue = Double(etaString.trimmingCharacters(in: .whitespaces)) {
-                                    self.analysisEta = etaValue * 1.2
-                                }
+                    let result = try await aiService.analyzeFoodQuery(query) { @Sendable [weak self] telemetryMessage in
+                        Task { @MainActor [weak self] in
+                            guard let self else { return }
+                            if telemetryMessage.hasPrefix("ETA: "),
+                               let etaValue = Double(
+                                   telemetryMessage.dropFirst("ETA: ".count)
+                                       .trimmingCharacters(in: .whitespaces)
+                               )
+                            {
+                                self.analysisEta = etaValue * 1.2
                             } else if telemetryMessage.hasPrefix("MODEL: ") {
                                 self.analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
                             } else {
@@ -426,31 +393,17 @@ final class FoodSearchStateModel: ObservableObject {
                             }
                         }
                     }
-                    await MainActor.run {
-                        self.addTelemetryLog("✅ Analysis complete!")
-                        self.analysisEnd = Date.now
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            self.isAnalyzing = false
-                            self.onFoodAnalyzed(result, analysisRequest)
-                        }
-                    }
+                    self.analysisEnd = Date.now
+                    try? await Task.sleep(for: .seconds(1))
+                    self.onFoodAnalyzed(result, analysisRequest)
                 }
-
+            } catch is CancellationError {
+                // cancelled, already reset by cancelSearchTask()
             } catch {
-                await MainActor.run {
-                    self.addTelemetryLog("⚠️ Connection interrupted")
-                }
-                await MainActor.run {
-                    self.addTelemetryLog("❌ Analysis failed")
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.isAnalyzing = false
-                        self.analysisStart = nil
-                        self.analysisEnd = nil
-                        self.analysisError = error.localizedDescription
-//                        showingErrorAlert = true
-                    }
-                }
+                try? await Task.sleep(for: .seconds(1))
+                self.analysisStart = nil
+                self.analysisEnd = nil
+                self.analysisError = error.localizedDescription
             }
         }
     }
@@ -465,8 +418,9 @@ final class FoodSearchStateModel: ObservableObject {
             searchResultsState.searchResults = [analysisResult] + searchResultsState.searchResults
         }
         aiAnalysisRequest = analysisRequest
-        // TODO: delay before hiding the progress screen, do we want it?
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        Task { @MainActor in
+            // TODO: delay before hiding the progress screen, do we want it?
+            try? await Task.sleep(for: .seconds(1))
             self.foodSearchRoute = nil
         }
     }
@@ -493,10 +447,8 @@ final class FoodSearchStateModel: ObservableObject {
         analysisStart = nil
         analysisEnd = nil
         isLoading = false
-        isAnalyzing = false
         aiAnalysisRequest = nil
         analysisError = nil
-        analysisEnd = nil
         analysisEta = nil
         foodSearchRoute = nil
     }
@@ -505,7 +457,7 @@ final class FoodSearchStateModel: ObservableObject {
         foodSearchRoute = nil
     }
 
-    @MainActor func addItem(_ item: FoodItemDetailed, group: FoodItemGroup?) {
+    func addItem(_ item: FoodItemDetailed, group: FoodItemGroup?) {
         if searchResultsState.isDeleted(item) {
             searchResultsState.undeleteItem(item)
             return
@@ -513,7 +465,7 @@ final class FoodSearchStateModel: ObservableObject {
 
         let targetGroupIndex: Int?
         var targetGroup: FoodItemGroup
-        if let group = group, group.source.isAI == true {
+        if let group = group, group.source.isAI {
             // Find existing group with same ID (for AI sources)
             targetGroupIndex = searchResultsState.searchResults.firstIndex { $0.id == group.id }
             if let targetGroupIndex {
@@ -549,7 +501,7 @@ final class FoodSearchStateModel: ObservableObject {
 
     /// Updates an existing food item in the search results (typically used for manual entries)
     /// The edited item must have the same ID as the original item
-    @MainActor func updateItem(_ editedItem: FoodItemDetailed) {
+    func updateItem(_ editedItem: FoodItemDetailed) {
         // Find which group contains this item
         guard let groupIndex = searchResultsState.searchResults.firstIndex(where: { group in
             group.foodItemsDetailed.contains(where: { $0.id == editedItem.id })

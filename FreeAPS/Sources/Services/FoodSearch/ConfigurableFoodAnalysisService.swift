@@ -74,7 +74,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
     func analyzeFoodImage(
         _ image: UIImage,
         comment: String?,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.aiImageProvider.description) …")
         let providerImpl = switch UserDefaults.standard.aiImageProvider {
@@ -164,7 +164,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
 
     func analyzeFoodQuery(
         _ query: String,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.textSearchProvider.description) …")
         switch UserDefaults.standard.aiTextProvider {
@@ -216,7 +216,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
 
     func analyzeBarcode(
         _ barcode: String,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.barcodeSearchProvider.description) …")
         switch UserDefaults.standard.barcodeSearchProvider {
