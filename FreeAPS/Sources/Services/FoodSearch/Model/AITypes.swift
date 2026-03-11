@@ -162,6 +162,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
     case gemini_2_5_pro = "gemini-2.5-pro"
     case gemini_2_5_flash = "gemini-2.5-flash"
     case gemini_3_pro_preview = "gemini-3-pro-preview"
+    case gemini_3_flash_preview = "gemini-3-flash-preview"
     case gemini_3_1_pro_preview = "gemini-3.1-pro-preview"
 
     var fast: Bool {
@@ -169,6 +170,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: false
         case .gemini_2_5_flash: true
         case .gemini_3_pro_preview: false
+        case .gemini_3_flash_preview: true
         case .gemini_3_1_pro_preview: false
         }
     }
@@ -178,6 +180,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: 0.01
         case .gemini_2_5_flash: 0.01
         case .gemini_3_pro_preview: 0.01
+        case .gemini_3_flash_preview: 0.01
         case .gemini_3_1_pro_preview: 0.01
         }
     }
@@ -187,6 +190,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: "2.5 Pro"
         case .gemini_2_5_flash: "2.5 Flash"
         case .gemini_3_pro_preview: "3 Pro Preview"
+        case .gemini_3_flash_preview: "3 Flash Preview"
         case .gemini_3_1_pro_preview: "3.1 Pro Preview"
         }
     }
@@ -196,6 +200,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: 40
         case .gemini_2_5_flash: 30
         case .gemini_3_pro_preview: 45
+        case .gemini_3_flash_preview: 30
         case .gemini_3_1_pro_preview: 45
         }
     }
@@ -205,6 +210,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_pro: 15
         case .gemini_2_5_flash: 10
         case .gemini_3_pro_preview: 15
+        case .gemini_3_flash_preview: 10
         case .gemini_3_1_pro_preview: 15
         }
     }
@@ -224,6 +230,7 @@ enum GeminiModel: String, AIModelBase, Encodable {
         case .gemini_2_5_flash,
              .gemini_2_5_pro,
              .gemini_3_1_pro_preview,
+             .gemini_3_flash_preview,
              .gemini_3_pro_preview: 2048
         }
     }
@@ -385,17 +392,18 @@ enum ImageSearchProvider {
     }
 
     static let allCases: [ImageSearchProvider] = [
-        .aiModel(.openAI(.gpt_4o)),
-        .aiModel(.openAI(.gpt_4o_mini)),
-        .aiModel(.openAI(.gpt_5)),
-        .aiModel(.openAI(.gpt_5_mini)),
-        .aiModel(.openAI(.gpt_5_1)),
-        .aiModel(.openAI(.gpt_5_2)),
-        .aiModel(.openAI(.gpt_5_4)),
-        .aiModel(.gemini(.gemini_3_pro_preview)),
         .aiModel(.gemini(.gemini_3_1_pro_preview)),
+        .aiModel(.gemini(.gemini_3_flash_preview)),
+        .aiModel(.gemini(.gemini_3_pro_preview)),
         .aiModel(.gemini(.gemini_2_5_pro)),
         .aiModel(.gemini(.gemini_2_5_flash)),
+        .aiModel(.openAI(.gpt_5_4)),
+        .aiModel(.openAI(.gpt_5_2)),
+        .aiModel(.openAI(.gpt_5_1)),
+        .aiModel(.openAI(.gpt_5)),
+        .aiModel(.openAI(.gpt_5_mini)),
+        .aiModel(.openAI(.gpt_4o)),
+        .aiModel(.openAI(.gpt_4o_mini)),
         .aiModel(.claude(.sonnet_4_5)),
         .aiModel(.claude(.sonnet_4_6)),
         .aiModel(.claude(.opus_4_6)),
@@ -435,17 +443,18 @@ enum AITextProvider {
     }
 
     static let allCases: [AITextProvider] = [
-        .aiModel(.openAI(.gpt_4o)),
-        .aiModel(.openAI(.gpt_4o_mini)),
-        .aiModel(.openAI(.gpt_5)),
-        .aiModel(.openAI(.gpt_5_mini)),
-        .aiModel(.openAI(.gpt_5_1)),
-        .aiModel(.openAI(.gpt_5_2)),
-        .aiModel(.openAI(.gpt_5_4)),
         .aiModel(.gemini(.gemini_3_1_pro_preview)),
+        .aiModel(.gemini(.gemini_3_flash_preview)),
         .aiModel(.gemini(.gemini_3_pro_preview)),
         .aiModel(.gemini(.gemini_2_5_pro)),
         .aiModel(.gemini(.gemini_2_5_flash)),
+        .aiModel(.openAI(.gpt_5_4)),
+        .aiModel(.openAI(.gpt_5_2)),
+        .aiModel(.openAI(.gpt_5_1)),
+        .aiModel(.openAI(.gpt_5)),
+        .aiModel(.openAI(.gpt_5_mini)),
+        .aiModel(.openAI(.gpt_4o)),
+        .aiModel(.openAI(.gpt_4o_mini)),
         .aiModel(.claude(.sonnet_4_5)),
         .aiModel(.claude(.sonnet_4_6)),
         .aiModel(.claude(.opus_4_6)),
