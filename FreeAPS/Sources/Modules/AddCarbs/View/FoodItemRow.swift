@@ -20,10 +20,6 @@ struct FoodItemRow: View {
         savedFoodIds.contains(foodItem.id)
     }
 
-    private var isManualEntry: Bool {
-        foodItem.source == .manual
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             // Main Row Content

@@ -458,49 +458,6 @@ struct FoodSearchSettingsView: View {
         }
     }
 
-    @ViewBuilder private func modelRow(provider: String, model: String) -> some View {
-        HStack {
-            Text(NSLocalizedString(provider, comment: ""))
-                .font(.caption2)
-                .foregroundColor(.secondary)
-            Text(NSLocalizedString(model, comment: ""))
-                .font(.caption2)
-                .fontWeight(.medium)
-                .foregroundColor(.primary)
-        }
-    }
-
-    // MARK: - Statistics Helpers
-
-    struct ProviderStatisticsGroup {
-        let provider: AIProvider
-        let providerDisplayName: String
-        let models: [AIUsageStatistics.Statistics]
-    }
-
-    private func groupStatisticsByProvider(_ stats: [AIUsageStatistics.Statistics]) -> [ProviderStatisticsGroup] {
-        // Group by provider
-        var grouped: [AIProvider: [AIUsageStatistics.Statistics]] = [:]
-
-        for stat in stats {
-            // Parse the modelKey to get the provider
-            if let model = AIModel(rawValue: stat.modelKey) {
-                let provider = model.provider
-                grouped[provider, default: []].append(stat)
-            }
-        }
-
-        // Convert to sorted array
-        return grouped.map { provider, models in
-            ProviderStatisticsGroup(
-                provider: provider,
-                providerDisplayName: provider.displayName,
-                models: models.sorted { $0.modelKey < $1.modelKey }
-            )
-        }
-        .sorted { $0.providerDisplayName < $1.providerDisplayName }
-    }
-
     private func modelDisplayName(for modelKey: String) -> String {
         guard let model = AIModel(rawValue: modelKey) else {
             return modelKey

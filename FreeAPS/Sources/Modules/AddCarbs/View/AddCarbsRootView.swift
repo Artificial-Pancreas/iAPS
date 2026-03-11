@@ -24,11 +24,6 @@ extension AddCarbs {
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
         // Food Search States
-        @State private var foodSearchText = ""
-        @State private var isLoading = false
-        @State private var errorMessage: String?
-        @State private var portionGrams: Decimal = 100.00001
-        @State private var selectedFoodImage: UIImage?
         @State private var showCancelConfirmation = false
 
         @FetchRequest(
