@@ -55,6 +55,28 @@ struct FoodItemGroup: Identifiable, Equatable {
             lhs.foodItemsDetailed == rhs.foodItemsDetailed &&
             lhs.briefDescription == rhs.briefDescription &&
             lhs.overallDescription == rhs.overallDescription &&
-            lhs.diabetesConsiderations == rhs.diabetesConsiderations
+            lhs.diabetesConsiderations == rhs.diabetesConsiderations &&
+            lhs.source == rhs.source &&
+            lhs.barcode == rhs.barcode &&
+            lhs.textQuery == rhs.textQuery
+    }
+}
+
+extension FoodItemGroup {
+    var title: String {
+        switch source {
+        case .manual: NSLocalizedString("Manual entry", comment: "Section with manualy entered foods")
+        case .database: NSLocalizedString("Saved foods", comment: "Section with saved foods")
+        case .barcode: NSLocalizedString("Barcode scan", comment: "Section with bar code scan results")
+        case .search: NSLocalizedString("Online database search", comment: "Section with online database search results")
+        case .aiMenu,
+             .aiPhoto,
+             .aiReceipe,
+             .aiText:
+            briefDescription ?? textQuery ?? NSLocalizedString(
+                "AI Results",
+                comment: "Section with AI food analysis results, when details are unavailable"
+            )
+        }
     }
 }

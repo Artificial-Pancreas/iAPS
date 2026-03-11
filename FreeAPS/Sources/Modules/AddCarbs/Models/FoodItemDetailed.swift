@@ -33,6 +33,29 @@ enum FoodItemSource {
     }
 }
 
+extension FoodItemSource {
+    var icon: String {
+        switch self {
+        case .aiPhoto:
+            return "camera.viewfinder"
+        case .aiMenu:
+            return "list.clipboard"
+        case .aiReceipe:
+            return "book.fill"
+        case .aiText:
+            return "character.bubble"
+        case .search:
+            return "magnifyingglass.circle"
+        case .barcode:
+            return "barcode.viewfinder"
+        case .manual:
+            return "square.and.pencil"
+        case .database:
+            return "archivebox.fill"
+        }
+    }
+}
+
 enum ConfidenceLevel: String, Codable, Identifiable, CaseIterable {
     case high
     case medium

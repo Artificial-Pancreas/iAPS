@@ -46,7 +46,7 @@ struct FoodItemInfoPopup: View {
                 .padding(.horizontal)
 
                 if let visualCues = foodItem.visualCues, !visualCues.isEmpty {
-                    InfoCard(icon: "eye.fill", title: "Visual Cues", content: visualCues, color: .blue, embedIcon: true)
+                    FoodInfoCard(icon: "eye.fill", title: "Visual Cues", content: visualCues, color: .blue, embedIcon: true)
                         .padding(.horizontal)
                 }
 
@@ -162,10 +162,16 @@ struct FoodItemInfoPopup: View {
 
                 VStack(alignment: .leading, spacing: 12) {
                     if let preparation = foodItem.preparationMethod, !preparation.isEmpty {
-                        InfoCard(icon: "flame.fill", title: "Preparation", content: preparation, color: .orange, embedIcon: true)
+                        FoodInfoCard(
+                            icon: "flame.fill",
+                            title: "Preparation",
+                            content: preparation,
+                            color: .orange,
+                            embedIcon: true
+                        )
                     }
                     if let notes = foodItem.assessmentNotes, !notes.isEmpty {
-                        InfoCard(icon: "note.text", title: "Notes", content: notes, color: .gray, embedIcon: true)
+                        FoodInfoCard(icon: "note.text", title: "Notes", content: notes, color: .gray, embedIcon: true)
                     }
                 }
                 .padding(.horizontal)
@@ -231,100 +237,5 @@ private struct DetailedNutritionRow: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
-    }
-}
-
-struct SectionInfoPopup: View {
-    let foodItemGroup: FoodItemGroup
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                // Title
-                if let title = foodItemGroup.briefDescription, !title.isEmpty {
-                    Text(title)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                        .padding(.horizontal)
-                }
-
-                // Description
-                if let description = foodItemGroup.overallDescription, !description.isEmpty {
-                    InfoCard(icon: "text.quote", title: "Description", content: description, color: .gray, embedIcon: true)
-                        .padding(.horizontal)
-                }
-
-                // Diabetes Recommendations
-                if let diabetesInfo = foodItemGroup.diabetesConsiderations, !diabetesInfo.isEmpty {
-                    InfoCard(
-                        icon: "cross.case.fill",
-                        title: "Diabetes Recommendations",
-                        content: diabetesInfo,
-                        color: .blue,
-                        embedIcon: true
-                    )
-                    .padding(.horizontal)
-                }
-
-                Spacer(minLength: 8)
-            }
-            .padding(.vertical)
-        }
-    }
-}
-
-private struct InfoCard: View {
-    let icon: String
-    let title: String
-    let content: String
-    let color: Color
-    let embedIcon: Bool
-
-    init(icon: String, title: String, content: String, color: Color, embedIcon: Bool = false) {
-        self.icon = icon
-        self.title = title
-        self.content = content
-        self.color = color
-        self.embedIcon = embedIcon
-    }
-
-    var body: some View {
-        if embedIcon {
-            HStack(alignment: .center, spacing: 0) {
-                ZStack(alignment: .center) {
-                    color.opacity(0.25)
-                        .cornerRadius(12, corners: [.topLeft, .bottomLeft])
-
-                    Image(systemName: icon)
-                        .font(.system(size: 16))
-                        .foregroundColor(color)
-                }
-                .frame(width: 40)
-
-                Text(content)
-                    .font(.subheadline)
-                    .foregroundColor(.primary.opacity(0.85))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .background(color.opacity(0.08))
-            .cornerRadius(12)
-        } else {
-            VStack(alignment: .leading, spacing: 8) {
-                Label(NSLocalizedString(title, comment: ""), systemImage: icon)
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(color)
-                Text(content)
-                    .font(.subheadline)
-                    .foregroundColor(.primary.opacity(0.85))
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(12)
-            .background(color.opacity(0.08))
-            .cornerRadius(12)
-        }
     }
 }

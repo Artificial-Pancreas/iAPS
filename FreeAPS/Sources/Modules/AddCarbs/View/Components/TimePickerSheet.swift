@@ -6,15 +6,12 @@ struct TimePickerSheet: View {
     @Binding var isPresented: Bool
     @State private var pickerDate = Date()
 
-    // Computed property that adjusts the date to ensure the time is within ±12 hours of now
     private var adjustedMealTime: Date {
         let now = Date()
         let calendar = Calendar.current
 
-        // Get the time components from the picker
         let timeComponents = calendar.dateComponents([.hour, .minute], from: pickerDate)
 
-        // Create a date with today's date and the selected time
         guard let todayWithSelectedTime = calendar.date(
             bySettingHour: timeComponents.hour ?? 0,
             minute: timeComponents.minute ?? 0,
@@ -24,20 +21,14 @@ struct TimePickerSheet: View {
             return pickerDate
         }
 
-        // Calculate the time difference in seconds
         let timeDifference = todayWithSelectedTime.timeIntervalSince(now)
         let twelveHoursInSeconds: TimeInterval = 12 * 60 * 60
 
-        // If the selected time is more than 12 hours in the future, it was probably meant for yesterday
         if timeDifference > twelveHoursInSeconds {
             return calendar.date(byAdding: .day, value: -1, to: todayWithSelectedTime) ?? todayWithSelectedTime
-        }
-        // If the selected time is more than 12 hours in the past, it was probably meant for tomorrow
-        else if timeDifference < -twelveHoursInSeconds {
+        } else if timeDifference < -twelveHoursInSeconds {
             return calendar.date(byAdding: .day, value: 1, to: todayWithSelectedTime) ?? todayWithSelectedTime
-        }
-        // Otherwise, use today with the selected time
-        else {
+        } else {
             return todayWithSelectedTime
         }
     }
@@ -45,7 +36,6 @@ struct TimePickerSheet: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
-                // Time picker (wheel style for time only)
                 DatePicker(
                     "Select Time",
                     selection: $pickerDate,
@@ -55,9 +45,7 @@ struct TimePickerSheet: View {
                 .labelsHidden()
                 .padding(.horizontal)
 
-                // Action buttons
                 HStack(spacing: 12) {
-                    // Reset to "now" button
                     if selectedTime != nil {
                         Button(action: {
                             selectedTime = nil
@@ -72,7 +60,6 @@ struct TimePickerSheet: View {
                         }
                     }
 
-                    // Set time button
                     Button(action: {
                         selectedTime = adjustedMealTime
                         isPresented = false
@@ -100,7 +87,6 @@ struct TimePickerSheet: View {
             }
         }
         .onAppear {
-            // Initialize picker with current selected time or now
             pickerDate = selectedTime ?? Date()
         }
     }

@@ -54,16 +54,16 @@ extension AddCarbs {
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
-        private var formatter: NumberFormatter {
+        private static let formatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
             return formatter
-        }
+        }()
 
         var body: some View {
             VStack(spacing: 0) {
-                FoodSearchView.SearchBar(state: foodSearchState).padding(.horizontal)
+                FoodSearchBar(state: foodSearchState).padding(.horizontal)
 
                 if foodSearchState.showingFoodSearch {
                     FoodSearchView(
@@ -188,7 +188,7 @@ extension AddCarbs {
                         HStack {
                             Text("Carbs required")
                             Spacer()
-                            Text((formatter.string(from: carbsReq as NSNumber) ?? "") + " g")
+                            Text((Self.formatter.string(from: carbsReq as NSNumber) ?? "") + " g")
                         }
                     }
                 }
@@ -200,7 +200,7 @@ extension AddCarbs {
                         DecimalTextField(
                             "0",
                             value: $state.carbs,
-                            formatter: formatter,
+                            formatter: Self.formatter,
                             autofocus: false,
                             liveEditing: true
                         )
@@ -269,7 +269,7 @@ extension AddCarbs {
         }
 
         private var meal: Bool {
-            mode == .meal || foodSearchState.mealView
+            mode == .meal
         }
 
         private var hasUnsavedFoodSearchResults: Bool {
@@ -285,7 +285,7 @@ extension AddCarbs {
                 DecimalTextField(
                     "0",
                     value: $state.fat,
-                    formatter: formatter,
+                    formatter: Self.formatter,
                     autofocus: false,
                     liveEditing: true
                 )
@@ -297,7 +297,7 @@ extension AddCarbs {
                 DecimalTextField(
                     "0",
                     value: $state.protein,
-                    formatter: formatter,
+                    formatter: Self.formatter,
                     autofocus: false,
                     liveEditing: true
                 )
@@ -447,9 +447,9 @@ extension AddCarbs {
                                 Text("Save as Preset")
                                 Spacer()
                                 Text(
-                                    "[Carbs: " + (formatter.string(from: state.carbs as NSNumber) ?? "") + ", Fat: " +
-                                        (formatter.string(from: state.fat as NSNumber) ?? "") + ", Protein: " +
-                                        (formatter.string(from: state.protein as NSNumber) ?? "") + "]"
+                                    "[Carbs: " + (Self.formatter.string(from: state.carbs as NSNumber) ?? "") + ", Fat: " +
+                                        (Self.formatter.string(from: state.fat as NSNumber) ?? "") + ", Protein: " +
+                                        (Self.formatter.string(from: state.protein as NSNumber) ?? "") + "]"
                                 )
                             }
                         }.frame(maxWidth: .infinity, alignment: .center)
@@ -638,17 +638,17 @@ extension AddCarbs {
                     HStack {
                         Text("Carbs").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter, liveEditing: true)
+                        DecimalTextField("0", value: $newPreset.carbs, formatter: Self.formatter, liveEditing: true)
                     }
                     HStack {
                         Text("Fat").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter, liveEditing: true)
+                        DecimalTextField("0", value: $newPreset.fat, formatter: Self.formatter, liveEditing: true)
                     }
                     HStack {
                         Text("Protein").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter, liveEditing: true)
+                        DecimalTextField("0", value: $newPreset.protein, formatter: Self.formatter, liveEditing: true)
                     }
                 } header: { Text("Saved Food") }
 

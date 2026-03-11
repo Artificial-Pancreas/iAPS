@@ -2,38 +2,6 @@ import Combine
 import Photos
 import SwiftUI
 
-struct ImageSearchResult: Identifiable {
-    let id: String
-    let thumbnailURL: String?
-    let fullURL: String
-    let attribution: String?
-}
-
-enum FoodSearchRoute {
-    case camera
-    case barcodeScanner
-    case aiProgress
-    case imageCommentInput(UIImage)
-}
-
-enum FoodSearchFullScreenRoute: String, Identifiable {
-    case camera
-    case barcodeScanner
-    case aiProgress
-
-    var id: FoodSearchFullScreenRoute { self }
-}
-
-enum FoodSearchSheetRoute: Identifiable {
-    case imageCommentInput(UIImage)
-
-    var id: String {
-        switch self {
-        case .imageCommentInput: return "imageCommentInput"
-        }
-    }
-}
-
 @MainActor final class FoodSearchStateModel: ObservableObject {
     @Published var foodSearchText = ""
     @Published var isBarcode = false
@@ -52,7 +20,6 @@ enum FoodSearchSheetRoute: Identifiable {
     @Published var showingSettings = false
     @Published var showSavedFoods = false
     @Published var isLoading = false
-    @Published var mealView = false
     @Published var showManualEntry = false
     @Published var showNewSavedFoodEntry = false
     @Published var newFoodEntryToEdit: FoodItemDetailed? = nil
@@ -66,7 +33,6 @@ enum FoodSearchSheetRoute: Identifiable {
     // analysis progress
 
     @Published var analysisError: String?
-    @Published var telemetryLogs: [String] = []
     @Published var analysisStart: Date? = nil
     @Published var analysisEnd: Date? = nil
     @Published var analysisEta: TimeInterval?
@@ -75,44 +41,6 @@ enum FoodSearchSheetRoute: Identifiable {
     nonisolated(unsafe) private var searchTask: Task<Void, Never>?
 
     private var cancellables = Set<AnyCancellable>()
-
-    var foodSearchFullScreenRouteBinding: Binding<FoodSearchFullScreenRoute?> {
-        Binding(
-            get: { [weak self] in
-                switch self?.foodSearchRoute {
-                case .camera: .camera
-                case .aiProgress: .aiProgress
-                case .barcodeScanner: .barcodeScanner
-                default: nil
-                }
-            },
-            set: { [weak self] newValue in
-                self?.foodSearchRoute = switch newValue {
-                case .camera: .camera
-                case .barcodeScanner: .barcodeScanner
-                case .aiProgress: .aiProgress
-                default: nil
-                }
-            }
-        )
-    }
-
-    var foodSearchSheetRouteBinding: Binding<FoodSearchSheetRoute?> {
-        Binding(
-            get: { [weak self] in
-                switch self?.foodSearchRoute {
-                case let .imageCommentInput(image): .imageCommentInput(image)
-                default: nil
-                }
-            },
-            set: { [weak self] newValue in
-                self?.foodSearchRoute = switch newValue {
-                case let .imageCommentInput(image): .imageCommentInput(image)
-                default: nil
-                }
-            }
-        )
-    }
 
     init() {
         searchResultsState.objectWillChange.sink { [weak self] _ in
@@ -354,49 +282,21 @@ enum FoodSearchSheetRoute: Identifiable {
         }
 
         searchTask = Task { @MainActor in
-            do {
-                switch analysisRequest {
-                case let .image(image, comment):
-                    let result = try await aiService
-                        .analyzeFoodImage(image, comment: comment) { @Sendable [weak self] telemetryMessage in
-                            Task { @MainActor [weak self] in
-                                guard let self else { return }
-                                if telemetryMessage.hasPrefix("ETA: "),
-                                   let etaValue = Double(telemetryMessage.dropFirst(5).trimmingCharacters(in: .whitespaces))
-                                {
-                                    self.analysisEta = etaValue * 1.2
-                                } else if telemetryMessage.hasPrefix("MODEL: ") {
-                                    self.analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
-                                } else {
-                                    self.addTelemetryLog(telemetryMessage)
-                                }
-                            }
-                        }
-                    self.analysisEnd = Date.now
-                    try? await Task.sleep(for: .seconds(1))
-                    self.onFoodAnalyzed(result, analysisRequest)
-                case let .query(query):
-                    let result = try await aiService.analyzeFoodQuery(query) { @Sendable [weak self] telemetryMessage in
-                        Task { @MainActor [weak self] in
-                            guard let self else { return }
-                            if telemetryMessage.hasPrefix("ETA: "),
-                               let etaValue = Double(
-                                   telemetryMessage.dropFirst("ETA: ".count)
-                                       .trimmingCharacters(in: .whitespaces)
-                               )
-                            {
-                                self.analysisEta = etaValue * 1.2
-                            } else if telemetryMessage.hasPrefix("MODEL: ") {
-                                self.analysisModel = String(telemetryMessage.dropFirst("MODEL: ".count))
-                            } else {
-                                self.addTelemetryLog(telemetryMessage)
-                            }
-                        }
-                    }
-                    self.analysisEnd = Date.now
-                    try? await Task.sleep(for: .seconds(1))
-                    self.onFoodAnalyzed(result, analysisRequest)
+            let telemetry: @Sendable(String) -> Void = { [weak self] message in
+                Task { @MainActor [weak self] in
+                    self?.handleTelemetry(message)
                 }
+            }
+            do {
+                let result = switch analysisRequest {
+                case let .image(image, comment): try await aiService
+                    .analyzeFoodImage(image, comment: comment, telemetryCallback: telemetry)
+                case let .query(query): try await aiService.analyzeFoodQuery(query, telemetryCallback: telemetry)
+                }
+                self.analysisEnd = Date.now
+                // TODO: delay before hiding the progress screen, do we want it?
+                try? await Task.sleep(for: .seconds(1))
+                self.onFoodAnalyzed(result, analysisRequest)
             } catch is CancellationError {
                 // cancelled, already reset by cancelSearchTask()
             } catch {
@@ -405,6 +305,16 @@ enum FoodSearchSheetRoute: Identifiable {
                 self.analysisEnd = nil
                 self.analysisError = error.localizedDescription
             }
+        }
+    }
+
+    private func handleTelemetry(_ message: String) {
+        if message.hasPrefix("ETA: "),
+           let eta = Double(message.dropFirst("ETA: ".count).trimmingCharacters(in: .whitespaces))
+        {
+            analysisEta = eta * 1.2
+        } else if message.hasPrefix("MODEL: ") {
+            analysisModel = String(message.dropFirst("MODEL: ".count))
         }
     }
 
@@ -418,18 +328,7 @@ enum FoodSearchSheetRoute: Identifiable {
             searchResultsState.searchResults = [analysisResult] + searchResultsState.searchResults
         }
         aiAnalysisRequest = analysisRequest
-        Task { @MainActor in
-            // TODO: delay before hiding the progress screen, do we want it?
-            try? await Task.sleep(for: .seconds(1))
-            self.foodSearchRoute = nil
-        }
-    }
-
-    private func addTelemetryLog(_ message: String) {
-        telemetryLogs.append(NSLocalizedString(message, comment: "Telemetry log"))
-        if telemetryLogs.count > 10 {
-            telemetryLogs.removeFirst()
-        }
+        foodSearchRoute = nil
     }
 
     private func isBarcode(_ str: String) -> Bool {
@@ -443,17 +342,12 @@ enum FoodSearchSheetRoute: Identifiable {
         latestSearchError = nil
         latestSearchIcon = nil
         latestMultipleSelectSearch = nil
-        telemetryLogs = []
         analysisStart = nil
         analysisEnd = nil
         isLoading = false
         aiAnalysisRequest = nil
         analysisError = nil
         analysisEta = nil
-        foodSearchRoute = nil
-    }
-
-    func resetNavigationState() {
         foodSearchRoute = nil
     }
 
@@ -502,38 +396,25 @@ enum FoodSearchSheetRoute: Identifiable {
     /// Updates an existing food item in the search results (typically used for manual entries)
     /// The edited item must have the same ID as the original item
     func updateItem(_ editedItem: FoodItemDetailed) {
-        // Find which group contains this item
         guard let groupIndex = searchResultsState.searchResults.firstIndex(where: { group in
             group.foodItemsDetailed.contains(where: { $0.id == editedItem.id })
         }) else {
             return
         }
 
-        var updatedGroup = searchResultsState.searchResults[groupIndex]
+        let group = searchResultsState.searchResults[groupIndex]
 
-        // Replace the food item in the group
-        guard let itemIndex = updatedGroup.foodItemsDetailed.firstIndex(where: { $0.id == editedItem.id }) else {
+        guard let itemIndex = group.foodItemsDetailed.firstIndex(where: { $0.id == editedItem.id }) else {
             return
         }
 
-        var updatedItems = updatedGroup.foodItemsDetailed
+        var updatedItems = group.foodItemsDetailed
         updatedItems[itemIndex] = editedItem
 
-        // Create updated group with the same metadata
-        updatedGroup = FoodItemGroup(
-            foodItemsDetailed: updatedItems,
-            briefDescription: updatedGroup.briefDescription,
-            overallDescription: updatedGroup.overallDescription,
-            diabetesConsiderations: updatedGroup.diabetesConsiderations,
-            source: updatedGroup.source,
-            barcode: updatedGroup.barcode,
-            textQuery: updatedGroup.textQuery
-        )
+        let updatedGroup = group.copyWithItems(updatedItems)
 
-        // Update the group in search results
         searchResultsState.searchResults[groupIndex] = updatedGroup
 
-        // Also update the portion in editedItems to match the edited item's current portion
         let newPortion: Decimal
         switch editedItem.nutrition {
         case .per100:

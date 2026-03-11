@@ -6,9 +6,7 @@ struct NoSearchesView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            // Main capabilities
             VStack(spacing: 12) {
-                // Saved Foods Card (always visible)
                 Group {
                     if let savedFoods = state.savedFoods, !savedFoods.foodItemsDetailed.isEmpty {
                         Button(action: {
@@ -44,7 +42,6 @@ struct NoSearchesView: View {
                     isDisabled: false
                 )
 
-                // Barcode Scanner Card
                 Button(action: {
                     state.foodSearchRoute = .barcodeScanner
                 }) {
@@ -58,7 +55,6 @@ struct NoSearchesView: View {
                 }
                 .buttonStyle(.plain)
 
-                // Photo Analysis Card
                 Button(action: {
                     state.foodSearchRoute = .camera
                 }) {
@@ -72,7 +68,6 @@ struct NoSearchesView: View {
                 }
                 .buttonStyle(.plain)
 
-                // Manual Entry Card
                 Button(action: {
                     state.showManualEntry = true
                 }) {
@@ -88,7 +83,6 @@ struct NoSearchesView: View {
             }
             .padding(.horizontal)
 
-            // Photography tips
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 6) {
                     Image(systemName: "camera.metering.center.weighted")

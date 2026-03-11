@@ -178,7 +178,6 @@ struct FoodItemsSelectorView: View {
             }
         }
         .onChange(of: allExistingTags) { _, newValue in
-            // Remove any selected tags that no longer exist
             selectedTags = selectedTags.intersection(newValue)
         }
     }
@@ -408,9 +407,7 @@ private struct FoodItemsSelectorItemRow: View {
         showImageSelector = false
 
         Task {
-            // Save the image and get the file URL
             if let imageURL = await FoodImageStorageManager.shared.saveImage(image, for: foodItem.id) {
-                // Update the food item with the new image URL
                 let updatedItem = foodItem.withImageURL(imageURL)
 
                 await MainActor.run {
@@ -425,11 +422,9 @@ private struct FoodItemsSelectorItemRow: View {
         }
     }
 
-    /// Removes the image from the food item
     private func removeImage() {
         guard let onPersist = onPersist else { return }
 
-        // Update the food item with nil imageURL
         let updatedItem = foodItem.withImageURL(nil)
         onPersist(updatedItem)
     }

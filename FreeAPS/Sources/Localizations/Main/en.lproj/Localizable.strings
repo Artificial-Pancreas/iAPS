@@ -3954,3 +3954,7 @@ Enact a temp Basal or a temp target */
 "nutrient_protein" = "Protein";
 
 "nutrient_sugars" = "Sugars";
+
+"Search Results" = "Search Results";
+
+"Results for" = "Results for";

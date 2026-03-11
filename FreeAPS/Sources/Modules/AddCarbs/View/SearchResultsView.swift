@@ -16,10 +16,6 @@ struct SearchResultsView: View {
     @State private var isDownloadingImage = false
     @State private var showNutritionOverrideEditor = false
 
-    private var hasVisibleContent: Bool {
-        state.searchResultsState.hasVisibleContent
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             // Only show these elements when NOT showing saved foods inline
@@ -60,7 +56,7 @@ struct SearchResultsView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 6) {
-                    if hasVisibleContent {
+                    if state.searchResultsState.hasVisibleContent {
                         mealTotalsView
                     }
                     actionButtonRow
@@ -99,7 +95,7 @@ struct SearchResultsView: View {
                     )
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
-            } else if !hasVisibleContent {
+            } else if !state.searchResultsState.hasVisibleContent {
                 noSearchesView
                     .transition(.opacity)
                     .scrollDismissesKeyboard(.immediately)
@@ -143,7 +139,11 @@ struct SearchResultsView: View {
                     onDelete: nil,
                     useTransparentBackground: true
                 )
-                .navigationTitle(searchResult.textQuery == nil ? "Search Results" : "Results for '\(searchResult.textQuery!)'")
+                .navigationTitle(
+                    searchResult.textQuery
+                        .map { NSLocalizedString("Results for", comment: "") + " '\($0)'" } ??
+                        NSLocalizedString("Search Results", comment: "")
+                )
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -222,7 +222,7 @@ struct SearchResultsView: View {
 
             Spacer()
 
-            if hasVisibleContent {
+            if state.searchResultsState.hasVisibleContent {
                 if let onHypoTreatment = self.onHypoTreatment {
                     Button(action: {
                         let combinedFoodItem = createCombinedFoodItem()
@@ -530,7 +530,6 @@ struct SearchResultsView: View {
                     FoodItemGroupListSection(
                         foodItemGroup: foodItemGroup,
                         state: state,
-                        selectedTime: selectedTime,
                         onPersist: persistFoodItem,
                         savedFoodIds: Set(state.savedFoods?.foodItemsDetailed.map(\.id) ?? []),
                         allExistingTags: Set(state.savedFoods?.foodItemsDetailed.flatMap { $0.tags ?? [] } ?? [])
@@ -627,52 +626,9 @@ struct SearchResultsView: View {
     }
 }
 
-extension FoodItemSource {
-    var icon: String {
-        switch self {
-        case .aiPhoto:
-            return "camera.viewfinder"
-        case .aiMenu:
-            return "list.clipboard"
-        case .aiReceipe:
-            return "book.fill"
-        case .aiText:
-            return "character.bubble"
-        case .search:
-            return "magnifyingglass.circle"
-        case .barcode:
-            return "barcode.viewfinder"
-        case .manual:
-            return "square.and.pencil"
-        case .database:
-            return "archivebox.fill"
-        }
-    }
-}
-
-extension FoodItemGroup {
-    var title: String {
-        switch source {
-        case .manual: NSLocalizedString("Manual entry", comment: "Section with manualy entered foods")
-        case .database: NSLocalizedString("Saved foods", comment: "Section with saved foods")
-        case .barcode: NSLocalizedString("Barcode scan", comment: "Section with bar code scan results")
-        case .search: NSLocalizedString("Online database search", comment: "Section with online database search results")
-        case .aiMenu,
-             .aiPhoto,
-             .aiReceipe,
-             .aiText:
-            briefDescription ?? textQuery ?? NSLocalizedString(
-                "AI Results",
-                comment: "Section with AI food analysis results, when details are unavailable"
-            )
-        }
-    }
-}
-
 private struct FoodItemGroupListSection: View {
     let foodItemGroup: FoodItemGroup
     @ObservedObject var state: FoodSearchStateModel
-    let selectedTime: Date?
     let onPersist: (FoodItemDetailed) -> Void
     let savedFoodIds: Set<UUID>
     let allExistingTags: Set<String>
@@ -684,10 +640,6 @@ private struct FoodItemGroupListSection: View {
         if let desc = foodItemGroup.overallDescription, !desc.isEmpty { base += 60 }
         if let diabetes = foodItemGroup.diabetesConsiderations, !diabetes.isEmpty { base += 60 }
         return min(max(base, 400), 640)
-    }
-
-    private var nonDeletedItemCount: Int {
-        foodItemGroup.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }.count
     }
 
     private func saveSectionAsFoodItem() {
