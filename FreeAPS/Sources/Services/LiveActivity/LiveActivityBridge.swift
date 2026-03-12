@@ -235,18 +235,11 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
 
     /// attempts to present this live activity state, creating a new activity if none exists yet
     @MainActor private func pushUpdate(_ state: LiveActivityAttributes.ContentState) async {
-        // re-use previous activity if still active
-        if currentActivity == nil,
-           let existing = Activity<LiveActivityAttributes>.activities
-           .first(where: { $0.activityState == .active })
+        // hide duplicate/unknown activities
+        for unknownActivity in Activity<LiveActivityAttributes>.activities
+            .filter({ self.currentActivity?.activity.id != $0.id })
         {
-            currentActivity = ActiveActivity(activity: existing, startDate: Date.now)
-            // end other activities
-            for extra in Activity<LiveActivityAttributes>.activities
-                .filter({ $0.id != existing.id })
-            {
-                await extra.end(nil, dismissalPolicy: .immediate)
-            }
+            await unknownActivity.end(nil, dismissalPolicy: .immediate)
         }
 
         if let currentActivity {
