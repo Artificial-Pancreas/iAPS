@@ -62,7 +62,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("Threshold Setting", comment: ""),
                     type: .glucose(keypath: \.threshold_setting),
                     infoText: NSLocalizedString(
-                        "This setting lets you choose a limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism (any insulin > 0 IOB).\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.",
+                        "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.",
                         comment: ""
                     ),
                     settable: self
