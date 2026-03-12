@@ -3,8 +3,6 @@ import Foundation
 
 class SearchResultsState: ObservableObject {
     @Published var searchResults: [FoodItemGroup] = []
-
-    @Published var editedItems: [String: EditableFoodItem] = [:]
     @Published var collapsedSections: Set<UUID> = []
 
     // Nutrition overrides (deltas applied to totals)
@@ -15,76 +13,27 @@ class SearchResultsState: ObservableObject {
         SearchResultsState()
     }
 
-    struct EditableFoodItem: Identifiable {
-        let id = UUID()
-        let original: FoodItemDetailed
-        var portionSize: Decimal
-        var isDeleted: Bool = false
-
-        init(from foodItem: FoodItemDetailed) {
-            original = foodItem
-            switch foodItem.nutrition {
-            case .per100:
-                portionSize = foodItem.portionSize ?? 100
-            case .perServing:
-                portionSize = foodItem.servingsMultiplier ?? 1
-            }
-        }
-    }
-
-    func portionSize(for foodItem: FoodItemDetailed) -> Decimal {
-        let key = foodItem.id.uuidString
-        if let edited = editedItems[key] {
-            return edited.portionSize
-        }
-        switch foodItem.nutrition {
-        case .per100:
-            return foodItem.portionSize ?? 100
-        case .perServing:
-            return foodItem.servingsMultiplier ?? 1
-        }
-    }
-
-    func isDeleted(_ foodItem: FoodItemDetailed) -> Bool {
-        let key = foodItem.id.uuidString
-        return editedItems[key]?.isDeleted ?? false
-    }
-
-    func updatePortion(for foodItem: FoodItemDetailed, to newPortion: Decimal) {
-        let key = foodItem.id.uuidString
-        if editedItems[key] == nil {
-            editedItems[key] = EditableFoodItem(from: foodItem)
-        }
-        editedItems[key]?.portionSize = newPortion
-    }
-
     func deleteItem(_ foodItem: FoodItemDetailed) {
-        if let section = searchResults.first(where: { $0.foodItemsDetailed.contains(where: { $0.id == foodItem.id }) }) {
+        if let section = searchResults.first(where: { $0.foodItems.contains(where: { $0.id == foodItem.id }) }),
+           section.source == .database
+        {
             // if the food was added from saved foods - hard delete
-            if section.source == .database {
-                hardDeleteItem(foodItem)
-                return
-            }
+            hardDeleteItem(foodItem)
+        } else {
+            // otherwise, soft delete
+            updateExistingItem(foodItem.copy(deleted: true))
         }
-
-        // otherwise, soft delete
-        let key = foodItem.id.uuidString
-        if editedItems[key] == nil {
-            editedItems[key] = EditableFoodItem(from: foodItem)
-        }
-        editedItems[key]?.isDeleted = true
     }
 
     func undeleteItem(_ foodItem: FoodItemDetailed) {
-        let key = foodItem.id.uuidString
-        editedItems[key]?.isDeleted = false
+        updateExistingItem(foodItem.copy(deleted: false))
     }
 
-    // Hard delete an item (permanently removes it from search results) - used when removing a food that was added from Saved Foods, or when adding/deleting from a multiple-choise selector
+    // Hard delete an item (permanently removes it from search results) - used when removing a food that was added from Saved Foods, or when adding/deleting from a multiple-choice selector
     func hardDeleteItem(_ foodItem: FoodItemDetailed) {
         for (index, group) in searchResults.enumerated() {
-            if group.foodItemsDetailed.contains(where: { $0.id == foodItem.id }) {
-                let updatedFoodItems = group.foodItemsDetailed.filter { $0.id != foodItem.id }
+            if group.foodItems.contains(where: { $0.id == foodItem.id }) {
+                let updatedFoodItems = group.foodItems.filter { $0.id != foodItem.id }
 
                 if updatedFoodItems.isEmpty {
                     searchResults.remove(at: index)
@@ -94,55 +43,24 @@ class SearchResultsState: ObservableObject {
                 break
             }
         }
-
-        // Also remove from edited items if it exists
-        let key = foodItem.id.uuidString
-        editedItems.removeValue(forKey: key)
     }
 
-    // Hard delete entire section (removes from searchResults and cleans up editedItems)
+    // Hard delete entire section
     func deleteSection(_ sectionId: UUID) {
         guard let sectionIndex = searchResults.firstIndex(where: { $0.id == sectionId }) else {
             return
         }
-
-        let section = searchResults[sectionIndex]
-
-        // Clean up editedItems for all items in this section
-        for item in section.foodItemsDetailed {
-            let key = item.id.uuidString
-            editedItems.removeValue(forKey: key)
-        }
-
         searchResults.remove(at: sectionIndex)
-
         collapsedSections.remove(sectionId)
     }
 
-    /// Updates an existing food item in the search results while preserving portion size/multiplier
     func updateExistingItem(_ updatedItem: FoodItemDetailed) {
         for (groupIndex, group) in searchResults.enumerated() {
-            for (itemIndex, existingItem) in group.foodItemsDetailed.enumerated() {
-                if existingItem.id == updatedItem.id {
-                    let preservedPortion = portionSize(for: existingItem)
-
-                    var updatedFoodItems = group.foodItemsDetailed
-                    updatedFoodItems[itemIndex] = updatedItem
-
-                    searchResults[groupIndex] = group.copyWithItems(updatedFoodItems)
-
-                    // Update editedItems to preserve the portion with the new item reference
-                    let key = updatedItem.id.uuidString
-                    if let edited = editedItems[key] {
-                        editedItems[key] = EditableFoodItem(from: updatedItem)
-                        editedItems[key]?.portionSize = preservedPortion
-                        editedItems[key]?.isDeleted = edited.isDeleted
-                    } else {
-                        var newEdited = EditableFoodItem(from: updatedItem)
-                        newEdited.portionSize = preservedPortion
-                        editedItems[key] = newEdited
-                    }
-                }
+            if let itemIndex = group.foodItems.firstIndex(where: { $0.id == updatedItem.id }) {
+                var updatedFoodItems = group.foodItems
+                updatedFoodItems[itemIndex] = updatedItem
+                searchResults[groupIndex] = group.copyWithItems(updatedFoodItems)
+                return // same item will not be in different groups
             }
         }
     }
@@ -164,7 +82,6 @@ class SearchResultsState: ObservableObject {
     func copy() -> SearchResultsState {
         let snapshot = SearchResultsState()
         snapshot.searchResults = searchResults
-        snapshot.editedItems = editedItems
         snapshot.collapsedSections = collapsedSections
         snapshot.nutritionOverrides = nutritionOverrides
         return snapshot
@@ -172,14 +89,12 @@ class SearchResultsState: ObservableObject {
 
     func restore(from snapshot: SearchResultsState) {
         searchResults = snapshot.searchResults
-        editedItems = snapshot.editedItems
         collapsedSections = snapshot.collapsedSections
         nutritionOverrides = snapshot.nutritionOverrides
     }
 
     func clear() {
         searchResults = []
-        editedItems.removeAll()
         collapsedSections.removeAll()
         nutritionOverrides.removeAll()
     }
@@ -187,7 +102,7 @@ class SearchResultsState: ObservableObject {
     // MARK: - Computed Properties
 
     var nonDeletedItems: [FoodItemDetailed] {
-        searchResults.flatMap(\.foodItemsDetailed).filter { !isDeleted($0) }
+        searchResults.flatMap(\.foodItems).filter { !$0.deleted }
     }
 
     var nonDeletedItemCount: Int {
@@ -202,7 +117,7 @@ class SearchResultsState: ObservableObject {
 
     func baseTotal(_ nutrient: NutrientType) -> Decimal {
         nonDeletedItems.reduce(0) { sum, item in
-            sum + (item.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize(for: item)) ?? 0)
+            sum + (item.nutrientInThisPortion(nutrient) ?? 0)
         }
     }
 
@@ -238,7 +153,7 @@ class SearchResultsState: ObservableObject {
         for nutrient in NutrientType.allCases {
             let sum = items
                 .reduce(Decimal(0)) {
-                    $0 + ($1.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize(for: $1)) ?? 0) }
+                    $0 + ($1.nutrientInThisPortion(nutrient) ?? 0) }
             if sum > 0 || nutrient.isPrimary {
                 values[nutrient] = sum
             }
@@ -246,17 +161,15 @@ class SearchResultsState: ObservableObject {
         return values
     }
 
-    /// Compute aggregate serving size from a list of items; returns nil if any perServing item lacks a standardServingSize
     func aggregateServingSize(for items: [FoodItemDetailed]) -> Decimal? {
         var total: Decimal = 0
         for item in items {
-            let portion = portionSize(for: item)
             switch item.nutrition {
-            case .per100:
-                total += portion
-            case .perServing:
+            case let .per100(_, portionSize):
+                total += portionSize
+            case let .perServing(_, multiplier):
                 guard let servingSize = item.standardServingSize else { return nil }
-                total += servingSize * portion
+                total += servingSize * multiplier
             }
         }
         return total

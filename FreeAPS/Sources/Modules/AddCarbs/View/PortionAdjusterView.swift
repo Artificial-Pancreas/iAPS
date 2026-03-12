@@ -2,34 +2,28 @@ import Foundation
 import SwiftUI
 
 struct PortionAdjusterView: View {
-    let currentPortion: Decimal
     let foodItem: FoodItemDetailed
-    @Binding var sliderMultiplier: Double
     let onSave: (Decimal) -> Void
-    let onReset: (() -> Void)?
     let onCancel: () -> Void
 
+    @State private var sliderValue: Double
     @State private var sliderUpperBound: Double
 
     init(
-        currentPortion: Decimal,
         foodItem: FoodItemDetailed,
-        sliderMultiplier: Binding<Double>,
         onSave: @escaping (Decimal) -> Void,
-        onReset: (() -> Void)?,
         onCancel: @escaping () -> Void
     ) {
-        self.currentPortion = currentPortion
         self.foodItem = foodItem
-        _sliderMultiplier = sliderMultiplier
         self.onSave = onSave
-        self.onReset = onReset
         self.onCancel = onCancel
         let initialMax: Double = switch foodItem.nutrition {
         case .per100: 600.0
         case .perServing: 10.0
         }
-        _sliderUpperBound = State(initialValue: initialMax)
+        let initialSliderValue = NSDecimalNumber(decimal: foodItem.portionSizeOrMultiplier).doubleValue
+        _sliderValue = State(initialValue: initialSliderValue)
+        _sliderUpperBound = State(initialValue: Swift.max(initialMax, initialSliderValue))
     }
 
     private var unit: String {
@@ -41,10 +35,6 @@ struct PortionAdjusterView: View {
         }
     }
 
-    var calculatedPortion: Decimal {
-        Decimal(sliderMultiplier)
-    }
-
     private static let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -54,20 +44,11 @@ struct PortionAdjusterView: View {
 
     private func resetSliderToOriginal() {
         switch foodItem.nutrition {
-        case .per100:
-            if let original = foodItem.portionSize {
-                sliderMultiplier = Double(original)
-            }
-        case .perServing:
-            if let original = foodItem.servingsMultiplier {
-                sliderMultiplier = Double(original)
-            }
+        case let .per100(_, portionSize):
+            sliderValue = Double(portionSize)
+        case let .perServing(_, multiplier):
+            sliderValue = Double(multiplier)
         }
-    }
-
-    private func formattedServingMultiplier(_ value: Decimal) -> String {
-        let doubleValue = Double(truncating: value as NSNumber)
-        return String(format: "%.2f×", doubleValue)
     }
 
     private var sliderMin: Double {
@@ -103,15 +84,15 @@ struct PortionAdjusterView: View {
     }
 
     private func stepDown() {
-        sliderMultiplier = max(sliderMin, sliderMultiplier - sliderStep)
+        sliderValue = max(sliderMin, sliderValue - sliderStep)
     }
 
     private func stepUp() {
-        let newValue = sliderMultiplier + sliderStep
+        let newValue = sliderValue + sliderStep
         if newValue > sliderUpperBound {
             sliderUpperBound = newValue
         }
-        sliderMultiplier = newValue
+        sliderValue = newValue
     }
 
     var body: some View {
@@ -133,13 +114,13 @@ struct PortionAdjusterView: View {
                 switch foodItem.nutrition {
                 case .per100:
                     Text(
-                        (Self.formatter.string(from: calculatedPortion as NSNumber) ?? "") +
+                        (Self.formatter.string(from: sliderValue as NSNumber) ?? "") +
                             unit
                     )
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.orange)
                 case .perServing:
-                    Text(formattedServingMultiplier(calculatedPortion))
+                    Text(String(format: "%.2f×", sliderValue))
                         .font(.system(size: 32, weight: .bold))
                         .foregroundColor(.orange)
                 }
@@ -150,11 +131,11 @@ struct PortionAdjusterView: View {
                     Button(action: stepDown) {
                         Image(systemName: "minus.circle.fill")
                             .font(.title2)
-                            .foregroundColor(sliderMultiplier <= sliderMin ? .secondary : .orange)
+                            .foregroundColor(sliderValue <= sliderMin ? .secondary : .orange)
                     }
-                    .disabled(sliderMultiplier <= sliderMin)
+                    .disabled(sliderValue <= sliderMin)
 
-                    Slider(value: $sliderMultiplier, in: sliderMin ... sliderUpperBound, step: sliderStep)
+                    Slider(value: $sliderValue, in: sliderMin ... sliderUpperBound, step: sliderStep)
                         .tint(.orange)
 
                     Button(action: stepUp) {
@@ -179,7 +160,7 @@ struct PortionAdjusterView: View {
                         ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
                             if let value = foodItem.nutrientInPortionOrServings(
                                 nutrient,
-                                portionOrMultiplier: calculatedPortion
+                                portionOrMultiplier: Decimal(sliderValue)
                             ), value > 0 {
                                 NutritionBadge(
                                     value: value,
@@ -189,7 +170,7 @@ struct PortionAdjusterView: View {
                                 .frame(maxWidth: .infinity)
                             }
                         }
-                        if let calories = foodItem.caloriesInPortionOrServings(portionOrMultiplier: calculatedPortion),
+                        if let calories = foodItem.caloriesInPortionOrServings(portionOrMultiplier: Decimal(sliderValue)),
                            calories > 0
                         {
                             NutritionBadge(
@@ -208,44 +189,40 @@ struct PortionAdjusterView: View {
 
             // Show reset button if original portion size or servings multiplier is available
             switch foodItem.nutrition {
-            case .per100:
-                if let original = foodItem.portionSize {
-                    Button(action: resetSliderToOriginal) {
-                        HStack {
-                            Text(
-                                NSLocalizedString("Reset to ", comment: "") +
-                                    (Self.formatter.string(from: original as NSNumber) ?? "") +
-                                    unit
-                            )
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.blue.opacity(0.1))
-                        .foregroundColor(.blue)
-                        .cornerRadius(10)
+            case let .per100(_, portionSize):
+                Button(action: resetSliderToOriginal) {
+                    HStack {
+                        Text(
+                            NSLocalizedString("Reset to ", comment: "") +
+                                (Self.formatter.string(from: portionSize as NSNumber) ?? "") +
+                                unit
+                        )
                     }
-                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color.blue.opacity(0.1))
+                    .foregroundColor(.blue)
+                    .cornerRadius(10)
                 }
-            case .perServing:
-                if let original = foodItem.servingsMultiplier {
-                    let servingString = original == 1 ? "serving" : "servings"
-                    Button(action: resetSliderToOriginal) {
-                        HStack {
-                            Text(
-                                NSLocalizedString("Reset to ", comment: "") +
-                                    (Self.formatter.string(from: original as NSNumber) ?? "") +
-                                    " " +
-                                    NSLocalizedString(servingString, comment: "")
-                            )
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.blue.opacity(0.1))
-                        .foregroundColor(.blue)
-                        .cornerRadius(10)
+                .padding(.horizontal)
+            case let .perServing(_, multiplier):
+                let servingString = multiplier == 1 ? "serving" : "servings"
+                Button(action: resetSliderToOriginal) {
+                    HStack {
+                        Text(
+                            NSLocalizedString("Reset to ", comment: "") +
+                                (Self.formatter.string(from: multiplier as NSNumber) ?? "") +
+                                " " +
+                                NSLocalizedString(servingString, comment: "")
+                        )
                     }
-                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color.blue.opacity(0.1))
+                    .foregroundColor(.blue)
+                    .cornerRadius(10)
                 }
+                .padding(.horizontal)
             }
 
             HStack(spacing: 12) {
@@ -259,7 +236,7 @@ struct PortionAdjusterView: View {
                 .cornerRadius(10)
 
                 Button("Apply") {
-                    onSave(calculatedPortion)
+                    onSave(Decimal(sliderValue))
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)

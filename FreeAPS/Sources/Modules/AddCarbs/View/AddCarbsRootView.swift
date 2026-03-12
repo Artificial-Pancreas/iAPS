@@ -330,7 +330,7 @@ extension AddCarbs {
         private func updateSavedFoods() {
             let foodItems = transformPresetsToFoodItems(carbPresets)
             foodSearchState.savedFoods = FoodItemGroup(
-                foodItemsDetailed: foodItems,
+                foodItems: foodItems,
                 briefDescription: nil,
                 overallDescription: nil,
                 diabetesConsiderations: nil,

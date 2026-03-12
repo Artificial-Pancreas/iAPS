@@ -56,7 +56,7 @@ import SwiftUI
                     return
                 }
                 let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
-                self.isBarcode = trimmedQuery.isNotEmpty && isBarcode(trimmedQuery)
+                self.isBarcode = trimmedQuery.isNotEmpty && isStringABarcode(trimmedQuery)
             }
             .store(in: &cancellables)
     }
@@ -140,7 +140,7 @@ import SwiftUI
             return
         }
 
-        let isBarcode = isBarcode(trimmedQuery)
+        let isBarcode = isStringABarcode(trimmedQuery)
 
         if isBarcode {
             startBarcodeSearch(barcode: trimmedQuery)
@@ -200,8 +200,8 @@ import SwiftUI
 
                 self.isLoading = false
                 if !Task.isCancelled {
-                    if let first = result.foodItemsDetailed.first {
-                        if result.foodItemsDetailed.count == 1 {
+                    if let first = result.foodItems.first {
+                        if result.foodItems.count == 1 {
                             addItem(first, group: result)
                         } else {
                             self.latestMultipleSelectSearch = result
@@ -237,8 +237,8 @@ import SwiftUI
 
                 self.isLoading = false
                 if !Task.isCancelled {
-                    if let first = result.foodItemsDetailed.first {
-                        if result.foodItemsDetailed.count == 1 {
+                    if let first = result.foodItems.first {
+                        if result.foodItems.count == 1 {
                             addItem(first, group: result)
                         } else {
                             self.latestMultipleSelectSearch = result
@@ -323,7 +323,7 @@ import SwiftUI
         }
     }
 
-    private func isBarcode(_ str: String) -> Bool {
+    private func isStringABarcode(_ str: String) -> Bool {
         let numericCharacterSet = CharacterSet.decimalDigits
         return str.unicodeScalars.allSatisfy { numericCharacterSet.contains($0) }
     }
@@ -344,7 +344,7 @@ import SwiftUI
     }
 
     func addItem(_ item: FoodItemDetailed, group: FoodItemGroup?) {
-        if searchResultsState.isDeleted(item) {
+        if item.deleted {
             searchResultsState.undeleteItem(item)
             return
         }
@@ -367,7 +367,7 @@ import SwiftUI
                 targetGroup = searchResultsState.searchResults[targetGroupIndex].copyWithItemPrepended(item)
             } else {
                 targetGroup = FoodItemGroup(
-                    foodItemsDetailed: [item],
+                    foodItems: [item],
                     source: source,
                 )
             }
@@ -383,37 +383,5 @@ import SwiftUI
         } else {
             searchResultsState.searchResults.insert(targetGroup, at: 0)
         }
-    }
-
-    /// Updates an existing food item in the search results (typically used for manual entries)
-    /// The edited item must have the same ID as the original item
-    func updateItem(_ editedItem: FoodItemDetailed) {
-        guard let groupIndex = searchResultsState.searchResults.firstIndex(where: { group in
-            group.foodItemsDetailed.contains(where: { $0.id == editedItem.id })
-        }) else {
-            return
-        }
-
-        let group = searchResultsState.searchResults[groupIndex]
-
-        guard let itemIndex = group.foodItemsDetailed.firstIndex(where: { $0.id == editedItem.id }) else {
-            return
-        }
-
-        var updatedItems = group.foodItemsDetailed
-        updatedItems[itemIndex] = editedItem
-
-        let updatedGroup = group.copyWithItems(updatedItems)
-
-        searchResultsState.searchResults[groupIndex] = updatedGroup
-
-        let newPortion: Decimal
-        switch editedItem.nutrition {
-        case .per100:
-            newPortion = editedItem.portionSize ?? 100
-        case .perServing:
-            newPortion = editedItem.servingsMultiplier ?? 1
-        }
-        searchResultsState.updatePortion(for: editedItem, to: newPortion)
     }
 }

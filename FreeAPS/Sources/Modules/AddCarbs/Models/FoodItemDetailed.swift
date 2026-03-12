@@ -1,5 +1,17 @@
 import Foundation
 
+enum NutrientType: String, Equatable, Identifiable, CaseIterable {
+    case carbs
+    case protein
+    case fat
+    case fiber
+    case sugars
+
+    var id: NutrientType { self }
+}
+
+typealias NutritionValues = [NutrientType: Decimal]
+
 enum MealUnits: String, Codable {
     case grams
     case milliliters
@@ -15,7 +27,7 @@ enum MealUnits: String, Codable {
 enum FoodItemSource {
     case aiPhoto
     case aiMenu
-    case aiReceipe
+    case aiRecipe
     case aiText
     case search
     case barcode
@@ -26,7 +38,7 @@ enum FoodItemSource {
         switch self {
         case .aiMenu,
              .aiPhoto,
-             .aiReceipe,
+             .aiRecipe,
              .aiText: true
         default: false
         }
@@ -40,7 +52,7 @@ extension FoodItemSource {
             return "camera.viewfinder"
         case .aiMenu:
             return "list.clipboard"
-        case .aiReceipe:
+        case .aiRecipe:
             return "book.fill"
         case .aiText:
             return "character.bubble"
@@ -64,26 +76,14 @@ enum ConfidenceLevel: String, Codable, Identifiable, CaseIterable {
     var id: ConfidenceLevel { self }
 }
 
-enum NutrientType: String, Equatable, Identifiable, CaseIterable {
-    case carbs
-    case protein
-    case fat
-    case fiber
-    case sugars
-
-    var id: NutrientType { self }
-}
-
-typealias NutritionValues = [NutrientType: Decimal]
-
 extension NutrientType {
     var localizedLabel: String {
         switch self {
-        case .carbs: NSLocalizedString("nutrient_carbs", comment: "display label for carbs")
-        case .fat: NSLocalizedString("nutrient_fat", comment: "display label for fat")
-        case .fiber: NSLocalizedString("nutrient_fiber", comment: "display label for fiber")
-        case .protein: NSLocalizedString("nutrient_protein", comment: "display label for protein")
-        case .sugars: NSLocalizedString("nutrient_sugars", comment: "display label for sugars")
+        case .carbs: NSLocalizedString("Carbs", comment: "")
+        case .fat: NSLocalizedString("Fat", comment: "")
+        case .fiber: NSLocalizedString("Fiber", comment: "")
+        case .protein: NSLocalizedString("Protein", comment: "")
+        case .sugars: NSLocalizedString("Sugars", comment: "")
         }
     }
 
@@ -121,15 +121,15 @@ extension NutrientType {
 }
 
 enum FoodNutrition: Equatable {
-    case per100([NutrientType: Decimal])
-    case perServing([NutrientType: Decimal])
+    case per100(values: [NutrientType: Decimal], portionSize: Decimal)
+    case perServing(values: [NutrientType: Decimal], servingsMultiplier: Decimal)
 }
 
 extension FoodNutrition {
     var values: NutritionValues {
         switch self {
-        case let .per100(v): v
-        case let .perServing(v): v
+        case let .per100(v, _): v
+        case let .perServing(v, _): v
         }
     }
 
@@ -150,8 +150,6 @@ struct FoodItemDetailed: Identifiable, Equatable {
     let standardName: String?
     let confidence: ConfidenceLevel?
     let brand: String?
-    let portionSize: Decimal?
-    let servingsMultiplier: Decimal?
     let standardServing: String?
     let standardServingSize: Decimal?
     let units: MealUnits?
@@ -169,31 +167,32 @@ struct FoodItemDetailed: Identifiable, Equatable {
 
     let source: FoodItemSource
 
+    let deleted: Bool
+
     static func == (lhs: FoodItemDetailed, rhs: FoodItemDetailed) -> Bool {
         lhs.id == rhs.id &&
             lhs.name == rhs.name &&
             lhs.confidence == rhs.confidence &&
             lhs.brand == rhs.brand &&
-            lhs.portionSize == rhs.portionSize &&
-            lhs.servingsMultiplier == rhs.servingsMultiplier &&
             lhs.standardServing == rhs.standardServing &&
             lhs.standardServingSize == rhs.standardServingSize &&
             lhs.units == rhs.units &&
             lhs.preparationMethod == rhs.preparationMethod &&
             lhs.visualCues == rhs.visualCues &&
             lhs.glycemicIndex == rhs.glycemicIndex &&
+            lhs.standardName == rhs.standardName &&
             lhs.nutrition == rhs.nutrition &&
             lhs.assessmentNotes == rhs.assessmentNotes &&
             lhs.imageURL == rhs.imageURL &&
             lhs.tags == rhs.tags &&
-            lhs.source == rhs.source
+            lhs.source == rhs.source &&
+            lhs.deleted == rhs.deleted
     }
 
     init(
         id: UUID? = nil,
         name: String,
-        nutritionPer100: [NutrientType: Decimal],
-        portionSize: Decimal,
+        nutrition: FoodNutrition,
         confidence: ConfidenceLevel? = nil,
         brand: String? = nil,
         standardServing: String? = nil,
@@ -206,190 +205,88 @@ struct FoodItemDetailed: Identifiable, Equatable {
         imageURL: String? = nil,
         standardName: String? = nil,
         tags: [String]? = nil,
-        source: FoodItemSource
+        source: FoodItemSource,
+        deleted: Bool = false
     ) {
         self.id = id ?? UUID()
         self.name = name
         self.standardName = standardName
         self.confidence = confidence
         self.brand = brand
-        self.portionSize = portionSize
-        servingsMultiplier = nil
         self.standardServing = standardServing
         self.standardServingSize = standardServingSize
         self.units = units
         self.preparationMethod = preparationMethod
         self.visualCues = visualCues
         self.glycemicIndex = glycemicIndex
-        nutrition = .per100(nutritionPer100)
+        self.nutrition = nutrition
         self.assessmentNotes = assessmentNotes
         self.imageURL = imageURL
         self.tags = tags
         self.source = source
-    }
-
-    init(
-        id: UUID? = nil,
-        name: String,
-        nutritionPerServing: [NutrientType: Decimal],
-        servingsMultiplier: Decimal,
-        confidence: ConfidenceLevel? = nil,
-        brand: String? = nil,
-        standardServing: String? = nil,
-        standardServingSize: Decimal? = nil,
-        units: MealUnits? = nil,
-        preparationMethod: String? = nil,
-        visualCues: String? = nil,
-        glycemicIndex: Decimal? = nil,
-        assessmentNotes: String? = nil,
-        imageURL: String? = nil,
-        standardName: String? = nil,
-        tags: [String]? = nil,
-        source: FoodItemSource
-    ) {
-        self.id = id ?? UUID()
-        self.name = name
-        self.standardName = standardName
-        self.confidence = confidence
-        self.brand = brand
-        portionSize = nil
-        self.servingsMultiplier = servingsMultiplier
-        self.standardServing = standardServing
-        self.standardServingSize = standardServingSize
-        self.units = units
-        self.preparationMethod = preparationMethod
-        self.visualCues = visualCues
-        self.glycemicIndex = glycemicIndex
-        nutrition = .perServing(nutritionPerServing)
-        self.assessmentNotes = assessmentNotes
-        self.imageURL = imageURL
-        self.tags = tags
-        self.source = source
+        self.deleted = deleted
     }
 }
 
 extension FoodItemDetailed {
-    func nutrientInPortionOrServings(_ nutrient: NutrientType, portionOrMultiplier: Decimal) -> Decimal? {
-        switch nutrition {
-        case let .per100(per100):
-            guard let nutrientPer100 = per100[nutrient] else { return nil }
-            return nutrientPer100 / 100 * portionOrMultiplier
-        case let .perServing(perServing):
-            guard let nutrientPerServing = perServing[nutrient] else { return nil }
-            return nutrientPerServing * portionOrMultiplier
-        }
-    }
-
-    func caloriesInPortionOrServings(portionOrMultiplier: Decimal) -> Decimal? {
-        switch nutrition {
-        case let .per100(per100):
-            return per100.calories / 100 * portionOrMultiplier
-        case let .perServing(perServing):
-            return perServing.calories * portionOrMultiplier
-        }
-    }
-
     func nutrientInThisPortion(_ nutrient: NutrientType) -> Decimal? {
         switch nutrition {
-        case let .per100(per100):
-            guard let portion = portionSize else { return nil }
+        case let .per100(per100, portion):
             guard let nutrientPer100 = per100[nutrient] else { return nil }
             return nutrientPer100 / 100 * portion
-        case let .perServing(perServing):
-            guard let multiplier = servingsMultiplier else { return nil }
+        case let .perServing(perServing, multiplier):
             guard let nutrientPerServing = perServing[nutrient] else { return nil }
             return nutrientPerServing * multiplier
         }
     }
 
-    func withImageURL(_ newImageURL: String?) -> FoodItemDetailed {
+    var caloriesInThisPortion: Decimal {
         switch nutrition {
-        case let .per100(nutritionValues):
-            return FoodItemDetailed(
-                id: id,
-                name: name,
-                nutritionPer100: nutritionValues,
-                portionSize: portionSize ?? 100,
-                confidence: confidence,
-                brand: brand,
-                standardServing: standardServing,
-                standardServingSize: standardServingSize,
-                units: units,
-                preparationMethod: preparationMethod,
-                visualCues: visualCues,
-                glycemicIndex: glycemicIndex,
-                assessmentNotes: assessmentNotes,
-                imageURL: newImageURL,
-                standardName: standardName,
-                tags: tags,
-                source: source
-            )
-        case let .perServing(nutritionValues):
-            return FoodItemDetailed(
-                id: id,
-                name: name,
-                nutritionPerServing: nutritionValues,
-                servingsMultiplier: servingsMultiplier ?? 1,
-                confidence: confidence,
-                brand: brand,
-                standardServing: standardServing,
-                standardServingSize: standardServingSize,
-                units: units,
-                preparationMethod: preparationMethod,
-                visualCues: visualCues,
-                glycemicIndex: glycemicIndex,
-                assessmentNotes: assessmentNotes,
-                imageURL: newImageURL,
-                standardName: standardName,
-                tags: tags,
-                source: source
-            )
+        case let .per100(per100, portionSize):
+            return per100.calories / 100 * portionSize
+        case let .perServing(perServing, multiplier):
+            return perServing.calories * multiplier
         }
     }
 
-    func withTags(_ newTags: [String]?) -> FoodItemDetailed {
-        switch nutrition {
-        case let .per100(nutritionValues):
-            return FoodItemDetailed(
-                id: id,
-                name: name,
-                nutritionPer100: nutritionValues,
-                portionSize: portionSize ?? 100,
-                confidence: confidence,
-                brand: brand,
-                standardServing: standardServing,
-                standardServingSize: standardServingSize,
-                units: units,
-                preparationMethod: preparationMethod,
-                visualCues: visualCues,
-                glycemicIndex: glycemicIndex,
-                assessmentNotes: assessmentNotes,
-                imageURL: imageURL,
-                standardName: standardName,
-                tags: newTags,
-                source: source
-            )
-        case let .perServing(nutritionValues):
-            return FoodItemDetailed(
-                id: id,
-                name: name,
-                nutritionPerServing: nutritionValues,
-                servingsMultiplier: servingsMultiplier ?? 1,
-                confidence: confidence,
-                brand: brand,
-                standardServing: standardServing,
-                standardServingSize: standardServingSize,
-                units: units,
-                preparationMethod: preparationMethod,
-                visualCues: visualCues,
-                glycemicIndex: glycemicIndex,
-                assessmentNotes: assessmentNotes,
-                imageURL: imageURL,
-                standardName: standardName,
-                tags: newTags,
-                source: source
-            )
-        }
+    func copy(
+        id: UUID? = nil,
+        name: String? = nil,
+        nutrition: FoodNutrition? = nil,
+        confidence: ConfidenceLevel?? = nil,
+        brand: String?? = nil,
+        standardServing: String?? = nil,
+        standardServingSize: Decimal?? = nil,
+        units: MealUnits?? = nil,
+        preparationMethod: String?? = nil,
+        visualCues: String?? = nil,
+        glycemicIndex: Decimal?? = nil,
+        assessmentNotes: String?? = nil,
+        imageURL: String?? = nil,
+        standardName: String?? = nil,
+        tags: [String]?? = nil,
+        source: FoodItemSource? = nil,
+        deleted: Bool? = nil
+    ) -> FoodItemDetailed {
+        FoodItemDetailed(
+            id: id ?? self.id,
+            name: name ?? self.name,
+            nutrition: nutrition ?? self.nutrition,
+            confidence: confidence ?? self.confidence,
+            brand: brand ?? self.brand,
+            standardServing: standardServing ?? self.standardServing,
+            standardServingSize: standardServingSize ?? self.standardServingSize,
+            units: units ?? self.units,
+            preparationMethod: preparationMethod ?? self.preparationMethod,
+            visualCues: visualCues ?? self.visualCues,
+            glycemicIndex: glycemicIndex ?? self.glycemicIndex,
+            assessmentNotes: assessmentNotes ?? self.assessmentNotes,
+            imageURL: imageURL ?? self.imageURL,
+            standardName: standardName ?? self.standardName,
+            tags: tags ?? self.tags,
+            source: source ?? self.source,
+            deleted: deleted ?? self.deleted
+        )
     }
 
     var isPerServing: Bool {
@@ -399,5 +296,49 @@ extension FoodItemDetailed {
 
     var hasNutritionValues: Bool {
         nutrition.isNotEmpty
+    }
+
+    // used to display nutrition previews while changing the portion size with the slider, before saving the changes in the food-editing views
+    func nutrientInPortionOrServings(_ nutrient: NutrientType, portionOrMultiplier: Decimal) -> Decimal? {
+        switch nutrition {
+        case let .per100(per100, _):
+            guard let nutrientPer100 = per100[nutrient] else { return nil }
+            return nutrientPer100 / 100 * portionOrMultiplier
+        case let .perServing(perServing, _):
+            guard let nutrientPerServing = perServing[nutrient] else { return nil }
+            return nutrientPerServing * portionOrMultiplier
+        }
+    }
+
+    // used to display nutrition previews while changing the portion size with the slider, before saving the changes in the food-editing views
+    func caloriesInPortionOrServings(portionOrMultiplier: Decimal) -> Decimal? {
+        switch nutrition {
+        case let .per100(per100, _):
+            return per100.calories / 100 * portionOrMultiplier
+        case let .perServing(perServing, _):
+            return perServing.calories * portionOrMultiplier
+        }
+    }
+
+    // used to display the value in the UI
+    var portionSizeOrMultiplier: Decimal {
+        switch nutrition {
+        case let .per100(_, portionSize): portionSize
+        case let .perServing(_, multiplier): multiplier
+        }
+    }
+
+    // a helper for updating a food item from UI - we have a single slider for both cases
+    func withPortionSizeOrMultiplier(_ portionOrMultiplier: Decimal) -> FoodItemDetailed {
+        let newNutrition: FoodNutrition =
+            switch nutrition {
+        case let .per100(per100, _):
+            .per100(values: per100, portionSize: portionOrMultiplier)
+        case let .perServing(perServing, _):
+            .perServing(values: perServing, servingsMultiplier: portionOrMultiplier)
+        }
+        return copy(
+            nutrition: newNutrition
+        )
     }
 }

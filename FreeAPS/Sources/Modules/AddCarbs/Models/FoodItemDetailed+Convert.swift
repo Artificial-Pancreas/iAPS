@@ -24,37 +24,21 @@ extension FoodItemDetailed {
             .sugars: (preset.sugars as Decimal?) ?? 0
         ]
 
-        if nutritionPer100 {
-            return FoodItemDetailed(
-                id: foodID,
-                name: foodName,
-                nutritionPer100: nutritionValues,
-                portionSize: (preset.portionSize as Decimal?) ?? 100,
-                standardServing: preset.standardServing,
-                standardServingSize: preset.standardServingSize as Decimal?,
-                units: mealUnits,
-                glycemicIndex: preset.glycemicIndex as Decimal?,
-                imageURL: preset.imageURL,
-                standardName: preset.standardName,
-                tags: preset.tags?.lowercased().split(separator: ",", omittingEmptySubsequences: true).map(String.init),
-                source: .database
-            )
-        } else {
-            return FoodItemDetailed(
-                id: foodID,
-                name: foodName,
-                nutritionPerServing: nutritionValues,
-                servingsMultiplier: 1,
-                standardServing: preset.standardServing,
-                standardServingSize: preset.standardServingSize as Decimal?,
-                units: mealUnits,
-                glycemicIndex: preset.glycemicIndex as Decimal?,
-                imageURL: preset.imageURL,
-                standardName: preset.standardName,
-                tags: preset.tags?.lowercased().split(separator: ",", omittingEmptySubsequences: true).map(String.init),
-                source: .database
-            )
-        }
+        return FoodItemDetailed(
+            id: foodID,
+            name: foodName,
+            nutrition: nutritionPer100 ?
+                .per100(values: nutritionValues, portionSize: (preset.portionSize as Decimal?) ?? 100) :
+                .perServing(values: nutritionValues, servingsMultiplier: 1),
+            standardServing: preset.standardServing,
+            standardServingSize: preset.standardServingSize as Decimal?,
+            units: mealUnits,
+            glycemicIndex: preset.glycemicIndex as Decimal?,
+            imageURL: preset.imageURL,
+            standardName: preset.standardName,
+            tags: preset.tags?.lowercased().split(separator: ",", omittingEmptySubsequences: true).map(String.init),
+            source: .database
+        )
     }
 
     func updatePreset(preset: Presets) {
@@ -63,15 +47,15 @@ extension FoodItemDetailed {
         preset.foodID = food.id
         let foodNutrition: NutritionValues
         switch food.nutrition {
-        case let .perServing(nutrition):
+        case let .perServing(nutrition, _):
             foodNutrition = nutrition
             preset.per100 = false
-        case let .per100(nutrition):
+            preset.portionSize = nil
+        case let .per100(nutrition, portionSize):
             foodNutrition = nutrition
             preset.per100 = true
+            preset.portionSize = NSDecimalNumber(decimal: max(portionSize, 0))
         }
-
-        preset.portionSize = food.portionSize.map { NSDecimalNumber(decimal: max($0, 0)) }
 
         preset.carbs = foodNutrition[.carbs].map { NSDecimalNumber(decimal: max($0, 0)) }
         preset.fat = foodNutrition[.fat].map { NSDecimalNumber(decimal: max($0, 0)) }

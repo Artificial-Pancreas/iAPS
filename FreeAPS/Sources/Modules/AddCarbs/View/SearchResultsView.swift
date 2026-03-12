@@ -160,7 +160,7 @@ struct SearchResultsView: View {
             FoodItemEditorSheet(
                 existingItem: nil,
                 title: "Add Food Manually",
-                allExistingTags: Set(state.savedFoods?.foodItemsDetailed.flatMap { $0.tags ?? [] } ?? []),
+                allExistingTags: Set(state.savedFoods?.foodItems.flatMap { $0.tags ?? [] } ?? []),
                 showTagsAndFavorite: false, // Don't show tags when adding manually to meal
                 onSave: { foodItem in
                     state.addItem(foodItem, group: nil)
@@ -177,7 +177,7 @@ struct SearchResultsView: View {
             FoodItemEditorSheet(
                 existingItem: state.newFoodEntryToEdit,
                 title: "Create Saved Food",
-                allExistingTags: Set(state.savedFoods?.foodItemsDetailed.flatMap { $0.tags ?? [] } ?? []),
+                allExistingTags: Set(state.savedFoods?.foodItems.flatMap { $0.tags ?? [] } ?? []),
                 showTagsAndFavorite: true, // Show tags when creating a saved food
                 onSave: { foodItem in
                     persistFoodItem(foodItem)
@@ -402,8 +402,7 @@ struct SearchResultsView: View {
 
         let savedItem = FoodItemDetailed(
             name: "Complete Meal",
-            nutritionPerServing: state.searchResultsState.mealNutritionValues,
-            servingsMultiplier: 1,
+            nutrition: .perServing(values: state.searchResultsState.mealNutritionValues, servingsMultiplier: 1),
             standardServingSize: state.searchResultsState.aggregateServingSize(for: allItems),
             units: .grams,
             source: .manual
@@ -525,8 +524,8 @@ struct SearchResultsView: View {
                         foodItemGroup: foodItemGroup,
                         state: state,
                         onPersist: persistFoodItem,
-                        savedFoodIds: Set(state.savedFoods?.foodItemsDetailed.map(\.id) ?? []),
-                        allExistingTags: Set(state.savedFoods?.foodItemsDetailed.flatMap { $0.tags ?? [] } ?? [])
+                        savedFoodIds: Set(state.savedFoods?.foodItems.map(\.id) ?? []),
+                        allExistingTags: Set(state.savedFoods?.foodItems.flatMap { $0.tags ?? [] } ?? [])
                     )
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -563,9 +562,8 @@ struct SearchResultsView: View {
 
     private func createCombinedFoodItem() -> FoodItemDetailed {
         FoodItemDetailed(
-            name: "Complete Meal",
-            nutritionPerServing: state.searchResultsState.mealNutritionValues,
-            servingsMultiplier: 1,
+            name: NSLocalizedString("Complete Meal", comment: ""),
+            nutrition: .perServing(values: state.searchResultsState.mealNutritionValues, servingsMultiplier: 1),
             units: .grams,
             source: .manual
         )
@@ -602,7 +600,7 @@ struct SearchResultsView: View {
             return foodItem
         }
 
-        return foodItem.withImageURL(localURL)
+        return foodItem.copy(imageURL: localURL)
     }
 
     private func downloadAndResolveImage(_ urlString: String) async -> UIImage? {
@@ -637,15 +635,14 @@ private struct FoodItemGroupListSection: View {
     }
 
     private func saveSectionAsFoodItem() {
-        let items = foodItemGroup.foodItemsDetailed.filter { !state.searchResultsState.isDeleted($0) }
+        let items = foodItemGroup.foodItems.filter { !$0.deleted }
         guard !items.isEmpty else { return }
 
         let sectionName = foodItemGroup.briefDescription ?? foodItemGroup.textQuery ?? foodItemGroup.title
 
         let savedItem = FoodItemDetailed(
             name: sectionName,
-            nutritionPerServing: state.searchResultsState.nutritionValues(for: items),
-            servingsMultiplier: 1,
+            nutrition: .perServing(values: state.searchResultsState.nutritionValues(for: items), servingsMultiplier: 1),
             standardServingSize: state.searchResultsState.aggregateServingSize(for: items),
             units: .grams,
             source: .manual
@@ -755,9 +752,9 @@ private struct FoodItemGroupListSection: View {
 
             // Food Items
             if !state.searchResultsState.isSectionCollapsed(foodItemGroup.id) {
-                ForEach(Array(foodItemGroup.foodItemsDetailed.enumerated()), id: \.element.id) { index, foodItem in
+                ForEach(Array(foodItemGroup.foodItems.enumerated()), id: \.element.id) { index, foodItem in
                     Group {
-                        if state.searchResultsState.isDeleted(foodItem) {
+                        if foodItem.deleted {
                             DeletedFoodItemRow(
                                 foodItem: foodItem,
                                 onUndelete: {
@@ -766,14 +763,13 @@ private struct FoodItemGroupListSection: View {
                                     }
                                 },
                                 isFirst: index == 0,
-                                isLast: index == foodItemGroup.foodItemsDetailed.count - 1
+                                isLast: index == foodItemGroup.foodItems.count - 1
                             )
                         } else {
                             FoodItemRow(
                                 foodItem: foodItem,
-                                portionSize: state.searchResultsState.portionSize(for: foodItem),
                                 onPortionChange: { newPortion in
-                                    state.searchResultsState.updatePortion(for: foodItem, to: newPortion)
+                                    state.searchResultsState.updateExistingItem(foodItem.withPortionSizeOrMultiplier(newPortion))
                                 },
                                 onDelete: {
                                     withAnimation(.easeInOut(duration: 0.2)) {
@@ -787,11 +783,11 @@ private struct FoodItemGroupListSection: View {
                                 savedFoodIds: savedFoodIds,
                                 allExistingTags: allExistingTags,
                                 isFirst: index == 0,
-                                isLast: index == foodItemGroup.foodItemsDetailed.count - 1
+                                isLast: index == foodItemGroup.foodItems.count - 1
                             )
                         }
                     }
-                    .listRowSeparator(index == foodItemGroup.foodItemsDetailed.count - 1 ? .hidden : .visible)
+                    .listRowSeparator(index == foodItemGroup.foodItems.count - 1 ? .hidden : .visible)
                 }
             }
         }

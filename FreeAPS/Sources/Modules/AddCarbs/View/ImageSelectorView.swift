@@ -8,6 +8,7 @@ struct ImageSelectorView: View {
     let onSearch: (String) async -> [ImageSearchResult]
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
 
     @State private var imageURLs: [ImageSearchResult] = []
     @State private var isSearching: Bool = false
@@ -129,15 +130,14 @@ struct ImageSelectorView: View {
         .onReceive(SwiftUI.NotificationCenter.default.publisher(for: UIPasteboard.changedNotification)) { _ in
             checkClipboard()
         }
-        .onReceive(SwiftUI.NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            // Check clipboard when app becomes active (catches Handoff scenarios)
+        .onChange(of: scenePhase) {
+            guard scenePhase == .active else { return }
             checkClipboard()
         }
         .task {
-            // Periodic clipboard check while view is visible
             while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(5))
                 checkClipboard()
-                try? await Task.sleep(for: .seconds(3))
             }
         }
         .task {
@@ -456,6 +456,8 @@ struct ImageSelectorView: View {
         guard !showPhotoPicker, !showCamera, selectedImage == nil else { return }
         if UIPasteboard.general.hasImages {
             clipboardImage = UIPasteboard.general.image
+        } else {
+            clipboardImage = nil
         }
     }
 
@@ -532,7 +534,6 @@ private struct ImageGridCell: View {
     let onTap: () -> Void
 
     @State private var loadedImage: UIImage?
-    @State private var isLoadingThumbnail = false
     @State private var loadFailed = false
 
     var body: some View {
@@ -583,14 +584,12 @@ private struct ImageGridCell: View {
         }
         .buttonStyle(.plain)
         .task(id: thumbnailURL) {
-            isLoadingThumbnail = true
             loadFailed = false
             if let image = await FoodImageStorageManager.shared.loadImage(from: thumbnailURL) {
                 loadedImage = image
             } else {
                 loadFailed = true
             }
-            isLoadingThumbnail = false
         }
     }
 }

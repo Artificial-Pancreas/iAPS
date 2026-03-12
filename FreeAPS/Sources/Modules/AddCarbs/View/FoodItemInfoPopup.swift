@@ -3,7 +3,6 @@ import SwiftUI
 
 struct FoodItemInfoPopup: View {
     let foodItem: FoodItemDetailed
-    let portionSize: Decimal
 
     private var shouldShowStandardServing: Bool {
         let hasDescription = foodItem.standardServing != nil && !(foodItem.standardServing?.isEmpty ?? true)
@@ -58,18 +57,20 @@ struct FoodItemInfoPopup: View {
                             .opacity(0.3)
 
                         HStack(spacing: 3) {
-                            Text(String(format: "%.0f", Double(truncating: portionSize as NSNumber)))
-                                .font(.system(size: 17, weight: .bold))
-                                .foregroundColor(.primary)
-
                             switch foodItem.nutrition {
-                            case .per100:
+                            case let .per100(_, portionSize):
+                                Text(String(format: "%.0f", Double(truncating: portionSize as NSNumber)))
+                                    .font(.system(size: 17, weight: .bold))
+                                    .foregroundColor(.primary)
                                 Text(unit)
                                     .font(.system(size: 15, weight: .semibold))
                                     .foregroundColor(.primary)
                                     .opacity(0.4)
-                            case .perServing:
-                                Text(portionSize == 1 ? "serving" : "servings")
+                            case let .perServing(_, multiplier):
+                                Text(String(format: "%.0f", Double(truncating: multiplier as NSNumber)))
+                                    .font(.system(size: 17, weight: .bold))
+                                    .foregroundColor(.primary)
+                                Text(multiplier == 1 ? "serving" : "servings")
                                     .font(.system(size: 15, weight: .semibold))
                                     .foregroundColor(.primary)
                                     .opacity(0.4)
@@ -122,7 +123,7 @@ struct FoodItemInfoPopup: View {
                             Divider()
                             DetailedNutritionRow(
                                 localizedLabel: nutrient.localizedLabel,
-                                portionValue: foodItem.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize),
+                                portionValue: foodItem.nutrientInThisPortion(nutrient),
                                 per100Value: nutrientValue,
                                 unit: nutrient.unit
                             )
@@ -132,7 +133,7 @@ struct FoodItemInfoPopup: View {
                     Divider()
                     DetailedNutritionRow(
                         localizedLabel: NSLocalizedString("Calories", comment: ""),
-                        portionValue: foodItem.caloriesInPortionOrServings(portionOrMultiplier: portionSize),
+                        portionValue: foodItem.caloriesInThisPortion,
                         per100Value: foodItem.nutrition.values.calories,
                         unit: UnitEnergy.kilocalories
                     )

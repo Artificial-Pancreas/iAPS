@@ -208,7 +208,7 @@ extension AnalysiedFoodItem {
 struct AIAnalysisResult: Identifiable, Equatable {
     let id = UUID()
     let imageType: ImageAnalysisType?
-    let foodItemsDetailed: [AnalysiedFoodItem]
+    let foodItems: [AnalysiedFoodItem]
     let briefDescription: String?
     let overallDescription: String?
     let diabetesConsiderations: String?
@@ -224,8 +224,8 @@ extension AIAnalysisResult: Decodable {
         let imageType: ImageAnalysisType? = try container
             .decodeIfPresent(ImageAnalysisType.self, forKey: .imageType) ?? .foodPhoto
 
-        let foodItemsDetailed: [AnalysiedFoodItem] = try container
-            .decode([AnalysiedFoodItem].self, forKey: .foodItemsDetailed)
+        let foodItems: [AnalysiedFoodItem] = try container
+            .decode([AnalysiedFoodItem].self, forKey: .foodItems)
 
         let briefDescription: String? = try container.decodeTrimmedIfPresent(forKey: .briefDescription)
         let overallDescription: String? = try container.decodeTrimmedIfPresent(forKey: .overallDescription)
@@ -233,7 +233,7 @@ extension AIAnalysisResult: Decodable {
         let diabetesConsiderations: String? = try container.decodeTrimmedIfPresent(forKey: .diabetesConsiderations)
 
         self.imageType = imageType
-        self.foodItemsDetailed = foodItemsDetailed
+        self.foodItems = foodItems
         self.briefDescription = briefDescription
         self.overallDescription = overallDescription
         self.diabetesConsiderations = diabetesConsiderations
@@ -241,7 +241,7 @@ extension AIAnalysisResult: Decodable {
 
     private enum CodingKeys: String, CodingKey {
         case imageType = "image_type"
-        case foodItemsDetailed = "food_items"
+        case foodItems = "food_items"
         case briefDescription = "brief_description"
         case overallDescription = "overall_description"
         case diabetesConsiderations = "diabetes_considerations"
@@ -259,7 +259,7 @@ extension AIAnalysisResult {
     static var schemaVisual: [(String, Any)] {
         let fields = [
             (.imageType, "string enum: food_photo or menu_photo or recipe_photo"),
-            (.foodItemsDetailed, AnalysiedFoodItem.schemaVisual),
+            (.foodItems, AnalysiedFoodItem.schemaVisual),
             (.overallDescription, "describe what you see on the photo; (language)")
         ] + self.fields
 
@@ -270,7 +270,7 @@ extension AIAnalysisResult {
 
     static var schemaText: [(String, Any)] {
         let fields = [
-            (.foodItemsDetailed, [AnalysiedFoodItem.schemaText]),
+            (.foodItems, [AnalysiedFoodItem.schemaText]),
             (.overallDescription, "describe what you perceived from the user input; (language)")
         ] + self.fields
 

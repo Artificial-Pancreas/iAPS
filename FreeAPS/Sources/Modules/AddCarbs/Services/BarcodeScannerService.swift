@@ -5,8 +5,6 @@ import UIKit
 import Vision
 
 class BarcodeScannerService: NSObject, ObservableObject {
-    // MARK: - Published Properties (main thread only)
-
     @Published var lastScanResult: BarcodeScanResult?
     @Published var isScanning: Bool = false
     @Published var scanError: BarcodeScanError?
@@ -648,7 +646,7 @@ class BarcodeScannerService: NSObject, ObservableObject {
 
 extension BarcodeScannerService: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from _: AVCaptureConnection) {
-        guard isScanning, !isProcessingScan else { return }
+        guard captureSession.isRunning, !isProcessingScan else { return }
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         guard Int.random(in: 0 ..< 3) == 0 else { return }
 

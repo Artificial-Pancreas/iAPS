@@ -3,7 +3,6 @@ import SwiftUI
 
 struct FoodItemRow: View {
     let foodItem: FoodItemDetailed
-    let portionSize: Decimal
     let onPortionChange: ((Decimal) -> Void)?
     let onDelete: (() -> Void)?
     let onPersist: ((FoodItemDetailed) -> Void)?
@@ -14,7 +13,6 @@ struct FoodItemRow: View {
 
     @State private var showItemInfo = false
     @State private var showPortionAdjuster = false
-    @State private var sliderMultiplier: Double = 1.0
 
     private var isSaved: Bool {
         savedFoodIds.contains(foodItem.id)
@@ -44,7 +42,7 @@ struct FoodItemRow: View {
                             showPortionAdjuster = true
                         }) {
                             PortionSizeBadge(
-                                value: portionSize,
+                                value: foodItem.portionSizeOrMultiplier,
                                 color: .orange,
                                 icon: "scalemass.fill",
                                 foodItem: foodItem
@@ -54,7 +52,7 @@ struct FoodItemRow: View {
 
                         if case .per100 = foodItem.nutrition {
                             if let servingSize = foodItem.standardServingSize {
-                                Text("\(Double(portionSize / servingSize), specifier: "%.1f")× serving")
+                                Text("\(Double(foodItem.portionSizeOrMultiplier / servingSize), specifier: "%.1f")× serving")
                                     .font(.caption)
                                     .foregroundColor(.primary)
                                     .opacity(0.7)
@@ -107,13 +105,13 @@ struct FoodItemRow: View {
             HStack(spacing: 6) {
                 ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
                     NutritionBadgePlain(
-                        value: foodItem.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize) ?? 0,
+                        value: foodItem.nutrientInThisPortion(nutrient) ?? 0,
                         localizedLabel: nutrient.localizedLabel,
                         color: nutrient.badgeColor
                     )
                 }
                 NutritionBadgePlain(
-                    value: foodItem.caloriesInPortionOrServings(portionOrMultiplier: portionSize) ?? 0,
+                    value: foodItem.caloriesInThisPortion,
                     unit: UnitEnergy.kilocalories,
                     color: NutritionBadgeConfig.caloriesColor
                 )
@@ -147,61 +145,25 @@ struct FoodItemRow: View {
         .when(onPortionChange != nil) { view in
             view.sheet(isPresented: $showPortionAdjuster) {
                 PortionAdjusterView(
-                    currentPortion: portionSize,
                     foodItem: foodItem,
-                    sliderMultiplier: $sliderMultiplier,
                     onSave: { newPortion in
                         onPortionChange?(newPortion)
                         showPortionAdjuster = false
                     },
-                    onReset: {
-                        switch foodItem.nutrition {
-                        case .per100:
-                            return foodItem.portionSize != nil
-                        case .perServing:
-                            return foodItem.servingsMultiplier != nil
-                        }
-                    }() ? {
-                        switch foodItem.nutrition {
-                        case .per100:
-                            if let original = foodItem.portionSize {
-                                onPortionChange?(original)
-                                showPortionAdjuster = false
-                            }
-                        case .perServing:
-                            if let original = foodItem.servingsMultiplier {
-                                onPortionChange?(original)
-                                showPortionAdjuster = false
-                            }
-                        }
-                    } : nil,
                     onCancel: {
                         showPortionAdjuster = false
                     }
                 )
-                .presentationDetents([.height({
-                    let hasReset: Bool
-                    switch foodItem.nutrition {
-                    case .per100:
-                        hasReset = foodItem.portionSize != nil
-                    case .perServing:
-                        hasReset = foodItem.servingsMultiplier != nil
-                    }
-                    return foodItem.hasNutritionValues ? (hasReset ? 420 : 400) : (hasReset ? 340 : 300)
-                }())])
+                .presentationDetents([
+                    .height(foodItem.hasNutritionValues ? 420 : 340)
+                ])
                 .presentationDragIndicator(.visible)
             }
         }
         .sheet(isPresented: $showItemInfo) {
-            FoodItemInfoPopup(foodItem: foodItem, portionSize: portionSize)
+            FoodItemInfoPopup(foodItem: foodItem)
                 .presentationDetents([.height(foodItem.preferredInfoSheetHeight()), .large])
                 .presentationDragIndicator(.visible)
-        }
-        .onChange(of: portionSize) { _, newValue in
-            sliderMultiplier = Double(newValue)
-        }
-        .onAppear {
-            sliderMultiplier = Double(portionSize)
         }
     }
 }

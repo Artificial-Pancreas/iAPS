@@ -59,7 +59,7 @@ extension AIAnalysisService: ImageAnalysisService {
         let source: FoodItemSource = switch result.imageType {
         case .foodPhoto: .aiPhoto
         case .menuPhoto: .aiMenu
-        case .recipePhoto: .aiReceipe
+        case .recipePhoto: .aiRecipe
         case nil: .aiPhoto
         }
         return AIAnalysisResult.createFoodItemGroup(

@@ -77,12 +77,12 @@ struct FoodItemEditorSheet: View {
             _editedTags = State(initialValue: Set(item.tags ?? []))
 
             switch item.nutrition {
-            case let .per100(values):
+            case let .per100(values, _):
                 let mode: NutritionEntryMode = (item.units ?? .grams) == .milliliters ? .per100ml : .per100g
                 _nutritionMode = State(initialValue: mode)
                 _nutrientValues = State(initialValue: values)
 
-            case let .perServing(values):
+            case let .perServing(values, _):
                 _nutritionMode = State(initialValue: .perServing)
                 _servingSizeUnit = State(initialValue: item.units ?? .grams)
                 _nutrientValues = State(initialValue: values)
@@ -341,88 +341,29 @@ struct FoodItemEditorSheet: View {
             return result
         }()
 
-        let foodItem: FoodItemDetailed
+        let nutrition: FoodNutrition = switch nutritionMode.nutritionType {
+        case .per100: .per100(values: nutrientValuesCopy, portionSize: standardServingSize ?? 100)
+        case .perServing: .perServing(values: nutrientValuesCopy, servingsMultiplier: 1)
+        }
 
+        let foodItem: FoodItemDetailed
         if let existingItem = existingItem {
-            switch nutritionMode.nutritionType {
-            case .per100:
-                foodItem = FoodItemDetailed(
-                    id: existingItem.id,
-                    name: finalName,
-                    nutritionPer100: nutrientValuesCopy,
-                    portionSize: standardServingSize ?? 100,
-                    confidence: existingItem.confidence,
-                    brand: existingItem.brand,
-                    standardServing: existingItem.standardServing,
-                    standardServingSize: standardServingSize,
-                    units: selectedUnit,
-                    preparationMethod: existingItem.preparationMethod,
-                    visualCues: existingItem.visualCues,
-                    glycemicIndex: existingItem.glycemicIndex,
-                    assessmentNotes: existingItem.assessmentNotes,
-                    imageURL: existingItem.imageURL,
-                    tags: tagsArray,
-                    source: existingItem.source
-                )
-            case .perServing:
-                foodItem = FoodItemDetailed(
-                    id: existingItem.id,
-                    name: finalName,
-                    nutritionPerServing: nutrientValuesCopy,
-                    servingsMultiplier: 1,
-                    confidence: existingItem.confidence,
-                    brand: existingItem.brand,
-                    standardServing: existingItem.standardServing,
-                    standardServingSize: standardServingSize,
-                    units: selectedUnit,
-                    preparationMethod: existingItem.preparationMethod,
-                    visualCues: existingItem.visualCues,
-                    glycemicIndex: existingItem.glycemicIndex,
-                    assessmentNotes: existingItem.assessmentNotes,
-                    imageURL: existingItem.imageURL,
-                    tags: tagsArray,
-                    source: existingItem.source
-                )
-            }
+            foodItem = existingItem.copy(
+                name: finalName,
+                nutrition: nutrition,
+                standardServingSize: standardServingSize,
+                units: selectedUnit,
+                tags: tagsArray
+            )
         } else {
-            switch nutritionMode.nutritionType {
-            case .per100:
-                foodItem = FoodItemDetailed(
-                    name: finalName,
-                    nutritionPer100: nutrientValuesCopy,
-                    portionSize: standardServingSize ?? 100,
-                    confidence: nil,
-                    brand: nil,
-                    standardServing: nil,
-                    standardServingSize: standardServingSize,
-                    units: selectedUnit,
-                    preparationMethod: nil,
-                    visualCues: nil,
-                    glycemicIndex: nil,
-                    assessmentNotes: nil,
-                    imageURL: nil,
-                    tags: tagsArray,
-                    source: .manual
-                )
-            case .perServing:
-                foodItem = FoodItemDetailed(
-                    name: finalName,
-                    nutritionPerServing: nutrientValuesCopy,
-                    servingsMultiplier: 1,
-                    confidence: nil,
-                    brand: nil,
-                    standardServing: nil,
-                    standardServingSize: standardServingSize,
-                    units: selectedUnit,
-                    preparationMethod: nil,
-                    visualCues: nil,
-                    glycemicIndex: nil,
-                    assessmentNotes: nil,
-                    imageURL: nil,
-                    tags: tagsArray,
-                    source: .manual
-                )
-            }
+            foodItem = FoodItemDetailed(
+                name: finalName,
+                nutrition: nutrition,
+                standardServingSize: standardServingSize,
+                units: selectedUnit,
+                tags: tagsArray,
+                source: .manual
+            )
         }
 
         onSave(foodItem)

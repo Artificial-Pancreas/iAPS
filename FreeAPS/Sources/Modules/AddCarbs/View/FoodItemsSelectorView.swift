@@ -19,7 +19,7 @@ struct FoodItemsSelectorView: View {
 
     // All tags from all food items in this selector
     private var allExistingTags: Set<String> {
-        Set(searchResult.foodItemsDetailed.flatMap { $0.tags ?? [] })
+        Set(searchResult.foodItems.flatMap { $0.tags ?? [] })
     }
 
     private var displayTitle: String {
@@ -42,9 +42,9 @@ struct FoodItemsSelectorView: View {
         // Get foods that match currently selected tags (or all foods if nothing selected)
         let matchingFoods: [FoodItemDetailed]
         if selectedTags.isEmpty {
-            matchingFoods = searchResult.foodItemsDetailed
+            matchingFoods = searchResult.foodItems
         } else {
-            matchingFoods = searchResult.foodItemsDetailed.filter { foodItem in
+            matchingFoods = searchResult.foodItems.filter { foodItem in
                 guard let tags = foodItem.tags else { return false }
                 // Food item must have ALL selected tags
                 return selectedTags.allSatisfy { selectedTag in
@@ -80,7 +80,7 @@ struct FoodItemsSelectorView: View {
 
     private var filteredFoodItems: [FoodItemDetailed] {
         let trimmedFilter = filterText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        var items = searchResult.foodItemsDetailed
+        var items = searchResult.foodItems
 
         // Filter by text search
         if !trimmedFilter.isEmpty {
@@ -141,16 +141,6 @@ struct FoodItemsSelectorView: View {
                         if foodItem.name.isNotEmpty {
                             FoodItemsSelectorItemRow(
                                 foodItem: foodItem,
-                                portionSize: {
-                                    // For per-serving nutrition, use servingsMultiplier (default 1.0)
-                                    // For per-100 nutrition, use portionSize in grams (default to standardServingSize or 100)
-                                    switch foodItem.nutrition {
-                                    case .perServing:
-                                        return foodItem.servingsMultiplier ?? 1.0
-                                    case .per100:
-                                        return foodItem.portionSize ?? foodItem.standardServingSize ?? 100
-                                    }
-                                }(),
                                 onAdd: {
                                     onFoodItemSelected(foodItem)
                                 },
@@ -185,7 +175,6 @@ struct FoodItemsSelectorView: View {
 
 private struct FoodItemsSelectorItemRow: View {
     let foodItem: FoodItemDetailed
-    let portionSize: Decimal
     let onAdd: () -> Void
     let onRemove: () -> Void
     let isAdded: Bool
@@ -279,7 +268,7 @@ private struct FoodItemsSelectorItemRow: View {
                     }
 
                     HStack(spacing: 8) {
-                        if case .per100 = foodItem.nutrition {
+                        if case let .per100(_, portionSize) = foodItem.nutrition {
                             NutritionBadgePlain(
                                 value: portionSize,
                                 unit: foodItem.units?.dimension ?? UnitMass.grams,
@@ -291,7 +280,7 @@ private struct FoodItemsSelectorItemRow: View {
                         }
 
                         ForEach(displayNutrients, id: \.self) { nutrient in
-                            if let value = foodItem.nutrientInPortionOrServings(nutrient, portionOrMultiplier: portionSize) {
+                            if let value = foodItem.nutrientInThisPortion(nutrient) {
                                 NutritionBadgePlainStacked(
                                     value: value,
                                     localizedLabel: nutrient.localizedLabel,
@@ -302,9 +291,9 @@ private struct FoodItemsSelectorItemRow: View {
                                 Spacer().frame(maxWidth: .infinity)
                             }
                         }
-                        if let kcal = foodItem.caloriesInPortionOrServings(portionOrMultiplier: portionSize), kcal > 0 {
+                        if foodItem.caloriesInThisPortion > 0 {
                             NutritionBadgePlainStacked(
-                                value: kcal,
+                                value: foodItem.caloriesInThisPortion,
                                 localizedLabel: UnitEnergy.kilocalories.symbol,
                                 color: NutritionBadgeConfig.caloriesColor
                             )
@@ -364,7 +353,7 @@ private struct FoodItemsSelectorItemRow: View {
             )
         }
         .sheet(isPresented: $showItemInfo) {
-            FoodItemInfoPopup(foodItem: foodItem, portionSize: portionSize)
+            FoodItemInfoPopup(foodItem: foodItem)
                 .presentationDetents([.height(foodItem.preferredInfoSheetHeight()), .large])
                 .presentationDragIndicator(.visible)
         }
@@ -406,26 +395,19 @@ private struct FoodItemsSelectorItemRow: View {
         isSavingImage = true
         showImageSelector = false
 
-        Task {
+        Task { @MainActor in
             if let imageURL = await FoodImageStorageManager.shared.saveImage(image, for: foodItem.id) {
-                let updatedItem = foodItem.withImageURL(imageURL)
-
-                await MainActor.run {
-                    onPersist(updatedItem)
-                    isSavingImage = false
-                }
-            } else {
-                await MainActor.run {
-                    isSavingImage = false
-                }
+                let updatedItem = foodItem.copy(imageURL: imageURL)
+                onPersist(updatedItem)
             }
+            isSavingImage = false
         }
     }
 
     private func removeImage() {
         guard let onPersist = onPersist else { return }
 
-        let updatedItem = foodItem.withImageURL(nil)
+        let updatedItem = foodItem.copy(imageURL: .some(nil))
         onPersist(updatedItem)
     }
 }

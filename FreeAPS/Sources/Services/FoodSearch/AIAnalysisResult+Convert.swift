@@ -5,7 +5,7 @@ extension AIAnalysisResult {
         result: AIAnalysisResult,
         source: FoodItemSource
     ) -> FoodItemGroup {
-        let items: [FoodItemDetailed] = result.foodItemsDetailed.map { item in
+        let items: [FoodItemDetailed] = result.foodItems.map { item in
             let confidence: ConfidenceLevel? = switch item.confidence {
             case .high: .high
             case .medium: .medium
@@ -22,8 +22,7 @@ extension AIAnalysisResult {
 
             return FoodItemDetailed(
                 name: item.name,
-                nutritionPer100: nutritionValues,
-                portionSize: item.portionEstimateSize ?? 100,
+                nutrition: .per100(values: nutritionValues, portionSize: item.portionEstimateSize ?? 100),
                 confidence: confidence,
                 brand: item.brand,
                 standardServing: item.standardServing,
@@ -40,7 +39,7 @@ extension AIAnalysisResult {
         }
 
         return FoodItemGroup(
-            foodItemsDetailed: items,
+            foodItems: items,
             briefDescription: result.briefDescription,
             overallDescription: result.overallDescription,
             diabetesConsiderations: result.diabetesConsiderations,

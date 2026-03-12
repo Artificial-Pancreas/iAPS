@@ -14,37 +14,28 @@ extension OpenFoodFactsProduct {
             if let fiber = item.nutriments.fiber { nutritionValues[.fiber] = fiber }
             if let sugars = item.nutriments.sugars { nutritionValues[.sugars] = sugars }
 
+            let nutrition: FoodNutrition
             if let servingQuantity = item.servingQuantity {
-                return FoodItemDetailed(
-                    name: item.productName ?? "Product without name",
-                    nutritionPer100: nutritionValues,
-                    portionSize: servingQuantity,
-                    confidence: confidence,
-                    brand: item.brands,
-                    standardServing: item.servingSize,
-                    standardServingSize: item.servingQuantity,
-                    units: MealUnits.grams,
-                    imageURL: item.imageURL,
-                    source: source
-                )
+                nutrition = .per100(values: nutritionValues, portionSize: servingQuantity)
             } else {
-                return FoodItemDetailed(
-                    name: item.productName ?? "Product without name",
-                    nutritionPerServing: nutritionValues,
-                    servingsMultiplier: 1,
-                    confidence: confidence,
-                    brand: item.brands,
-                    standardServing: item.servingSize,
-                    standardServingSize: item.servingQuantity,
-                    units: MealUnits.grams,
-                    imageURL: item.imageURL,
-                    source: source
-                )
+                nutrition = .perServing(values: nutritionValues, servingsMultiplier: 1)
             }
+
+            return FoodItemDetailed(
+                name: item.productName ?? "Product without name",
+                nutrition: nutrition,
+                confidence: confidence,
+                brand: item.brands,
+                standardServing: item.servingSize,
+                standardServingSize: item.servingQuantity,
+                units: MealUnits.grams,
+                imageURL: item.imageURL,
+                source: source
+            )
         }
 
         return FoodItemGroup(
-            foodItemsDetailed: items,
+            foodItems: items,
             briefDescription: nil,
             overallDescription: nil,
             diabetesConsiderations: nil,

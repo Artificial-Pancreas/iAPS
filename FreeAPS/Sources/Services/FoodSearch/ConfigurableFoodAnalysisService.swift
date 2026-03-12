@@ -125,7 +125,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
                 requestType: .image,
                 processingTime: processingTime,
                 success: true,
-                foodItemCount: result.foodItemsDetailed.count
+                foodItemCount: result.foodItems.count
             )
 
             return result
@@ -159,7 +159,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
         telemetryCallback: ((String) -> Void)?
     ) async -> [String] {
         let result = try? await OpenFoodFactsService.shared.analyzeText(prompt: query, telemetryCallback: telemetryCallback)
-        return result?.foodItemsDetailed.compactMap(\.imageURL) ?? []
+        return result?.foodItems.compactMap(\.imageURL) ?? []
     }
 
     func analyzeFoodQuery(
@@ -197,7 +197,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
                     requestType: .text,
                     processingTime: processingTime,
                     success: true,
-                    foodItemCount: result.foodItemsDetailed.count
+                    foodItemCount: result.foodItems.count
                 )
 
                 return result

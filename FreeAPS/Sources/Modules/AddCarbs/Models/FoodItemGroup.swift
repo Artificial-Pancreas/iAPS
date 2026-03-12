@@ -2,7 +2,7 @@ import Foundation
 
 struct FoodItemGroup: Identifiable, Equatable {
     let id: UUID
-    let foodItemsDetailed: [FoodItemDetailed]
+    let foodItems: [FoodItemDetailed]
     let briefDescription: String?
     let overallDescription: String?
     let diabetesConsiderations: String?
@@ -12,7 +12,7 @@ struct FoodItemGroup: Identifiable, Equatable {
 
     init(
         id: UUID? = nil,
-        foodItemsDetailed: [FoodItemDetailed],
+        foodItems: [FoodItemDetailed],
         briefDescription: String? = nil,
         overallDescription: String? = nil,
         diabetesConsiderations: String? = nil,
@@ -21,7 +21,7 @@ struct FoodItemGroup: Identifiable, Equatable {
         textQuery: String? = nil
     ) {
         self.id = id ?? UUID()
-        self.foodItemsDetailed = foodItemsDetailed
+        self.foodItems = foodItems
         self.briefDescription = briefDescription
         self.overallDescription = overallDescription
         self.diabetesConsiderations = diabetesConsiderations
@@ -33,7 +33,7 @@ struct FoodItemGroup: Identifiable, Equatable {
     func copyWithItems(_ items: [FoodItemDetailed]) -> Self {
         Self.init(
             id: id,
-            foodItemsDetailed: items,
+            foodItems: items,
             briefDescription: briefDescription,
             overallDescription: overallDescription,
             diabetesConsiderations: diabetesConsiderations,
@@ -44,15 +44,15 @@ struct FoodItemGroup: Identifiable, Equatable {
     }
 
     func copyWithItemPrepended(_ item: FoodItemDetailed) -> Self {
-        guard !foodItemsDetailed.contains(where: { $0.id == item.id }) else {
+        guard !foodItems.contains(where: { $0.id == item.id }) else {
             return self
         }
-        return copyWithItems([item] + foodItemsDetailed)
+        return copyWithItems([item] + foodItems)
     }
 
     static func == (lhs: FoodItemGroup, rhs: FoodItemGroup) -> Bool {
         lhs.id == rhs.id &&
-            lhs.foodItemsDetailed == rhs.foodItemsDetailed &&
+            lhs.foodItems == rhs.foodItems &&
             lhs.briefDescription == rhs.briefDescription &&
             lhs.overallDescription == rhs.overallDescription &&
             lhs.diabetesConsiderations == rhs.diabetesConsiderations &&
@@ -71,7 +71,7 @@ extension FoodItemGroup {
         case .search: NSLocalizedString("Online database search", comment: "Section with online database search results")
         case .aiMenu,
              .aiPhoto,
-             .aiReceipe,
+             .aiRecipe,
              .aiText:
             briefDescription ?? textQuery ?? NSLocalizedString(
                 "AI Results",

@@ -8,7 +8,7 @@ struct NoSearchesView: View {
         VStack(spacing: 20) {
             VStack(spacing: 12) {
                 Group {
-                    if let savedFoods = state.savedFoods, !savedFoods.foodItemsDetailed.isEmpty {
+                    if let savedFoods = state.savedFoods, !savedFoods.foodItems.isEmpty {
                         Button(action: {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 state.showSavedFoods = true
