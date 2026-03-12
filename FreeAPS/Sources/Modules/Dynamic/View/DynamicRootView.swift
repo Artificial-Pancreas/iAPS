@@ -139,34 +139,6 @@ extension Dynamic {
                     } header: { Text("Settings") }
                 }
 
-                Section {
-                    HStack {
-                        Text("Threshold Setting")
-                            .onTapGesture {
-                                scrollView = true
-                                graphics = thresholdTable().asAny()
-                                let unitString = state.unit.rawValue
-                                info(
-                                    header: "Minimum Threshold Setting",
-                                    body: NSLocalizedString(
-                                        "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ",
-                                        comment: "Threshold string part 1"
-                                    ) + "\(glucoseString(100)) \(unitString) , " +
-                                        NSLocalizedString("the threshold will be ", comment: "Threshold string part 2") +
-                                        " \(glucoseString(70)) \(unitString), " + NSLocalizedString(
-                                            "unless your threshold setting is set higher:",
-                                            comment: "Threshold string part 3"
-                                        ),
-                                    useGraphics: graphics
-                                )
-                            }
-                        Spacer()
-                        DecimalTextField("0", value: $state.threshold_setting, formatter: glucoseFormatter)
-                            .disabled(isPresented)
-                        Text(state.unit.rawValue)
-                    }
-                } header: { Text("Safety") }
-
                 if let averages = state.averages {
                     Section {
                         HStack {
