@@ -30,7 +30,7 @@ enum KnownPlugins {
         return switch cgmManager.pluginIdentifier {
         case G6CGMManager.pluginIdentifier: 10 * secondsOfDay
         case G7CGMManager.pluginIdentifier: 10.5 * secondsOfDay
-        case LibreTransmitterManagerV3.pluginIdentifier: 14.5 * secondsOfDay
+        case LibreTransmitterManagerV3.pluginIdentifier: libreExpirationSeconds
         case MinimedPumpManager.pluginIdentifier: 6 * secondsOfDay
         default: nil
         }
