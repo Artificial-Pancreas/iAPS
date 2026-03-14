@@ -56,7 +56,7 @@ struct PumpView: View {
                 if let date = expiresAtDate {
                     // Insulin amount (U)
                     if let insulin = reservoir {
-                        // 120 % due to being non rectangular. +10 because of bottom inserter
+                        // 120 % due to being non rectangular. +10 because of bottom inserter.
                         let amountFraction = 1.0 - (Double(insulin + 10) * 1.2 / 200)
                         if insulin == 0xDEAD_BEEF {
                             if nano {
@@ -98,7 +98,7 @@ struct PumpView: View {
                         } else {
                             HStack(spacing: 0) {
                                 let amount: Decimal = (insulin * Decimal(concentration.last?.concentration ?? 1))
-                                if !(nano && amount > 100) {
+                                if !(nano && amount >= 100) {
                                     Text(reservoirFormatter.string(from: amount as NSNumber) ?? "")
                                     Text("U").foregroundStyle(.secondary)
                                 }
@@ -291,7 +291,7 @@ struct PumpView: View {
         ZStack {
             let pump = colorScheme == .dark ? "pod_dark" : "pod_light"
             UIImage(imageLiteralResourceName: pump)
-                .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: portion)
+                .fillImageUpToPortion(color: insulinColour(portion).opacity(0.8), portion: portion)
                 .resizable()
                 .aspectRatio(0.72, contentMode: .fit)
                 .frame(width: IAPSconfig.iconSize, height: IAPSconfig.iconSize)
@@ -314,7 +314,7 @@ struct PumpView: View {
         ZStack {
             let pump = colorScheme == .dark ? "pump_dark" : "pump_light"
             UIImage(imageLiteralResourceName: pump)
-                .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
+                .fillImageUpToPortion(color: insulinColour(portion).opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
                 .frame(maxWidth: 17, maxHeight: 36)
                 .symbolRenderingMode(.palette)
@@ -327,7 +327,7 @@ struct PumpView: View {
     private func medtrumInsulinAmount(portion: Double) -> some View {
         ZStack {
             UIImage(imageLiteralResourceName: "nano")
-                .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
+                .fillImageUpToPortion(color: insulinColour(portion).opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
                 .aspectRatio(0.7, contentMode: .fit)
                 .frame(height: IAPSconfig.iconSize)
@@ -337,5 +337,9 @@ struct PumpView: View {
                 .padding(5)
                 .offset(y: -5)
         }
+    }
+
+    private func insulinColour(_ emptyFactor: Double) -> Color {
+        emptyFactor > 0.85 ? Color.orange : Color.insulin
     }
 }
