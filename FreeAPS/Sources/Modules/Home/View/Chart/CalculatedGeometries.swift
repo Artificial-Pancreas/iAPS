@@ -1195,29 +1195,29 @@ private final class GeometriesBuilder {
             }
         }
 
-         // Case 1: Found bracketing pair → weighted average of glucose values by time
-         if let i = matchIndex {
-             let cur = lookupGlucoseDots[i]
-             let nxt = lookupGlucoseDots[i + 1]
-             let t0 = cur.date.timeIntervalSince1970
-             let t1 = nxt.date.timeIntervalSince1970
+        // Case 1: Found bracketing pair → weighted average of glucose values by time
+        if let i = matchIndex {
+            let cur = lookupGlucoseDots[i]
+            let nxt = lookupGlucoseDots[i + 1]
+            let t0 = cur.date.timeIntervalSince1970
+            let t1 = nxt.date.timeIntervalSince1970
 
-             let dt = t1 - t0
-             if dt <= 0 {
-                 let y = glucoseToYCoordinate(cur.glucose)
-                 glucoseStartIndex = i // for subsequent searches
-                 return CGPoint(x: x, y: y)
-             }
+            let dt = t1 - t0
+            if dt <= 0 {
+                let y = glucoseToYCoordinate(cur.glucose)
+                glucoseStartIndex = i // for subsequent searches
+                return CGPoint(x: x, y: y)
+            }
 
-             // Weighted average of glucose
-             let g0 = Double(cur.glucose)
-             let g1 = Double(nxt.glucose)
-             let w = (time - t0) / dt
-             let g = g0 + (g1 - g0) * w
-             let y = glucoseToYCoordinate(Int(g.rounded()))
-             glucoseStartIndex = i // for subsequent searches
-             return CGPoint(x: x, y: y)
-         }
+            // Weighted average of glucose
+            let g0 = Double(cur.glucose)
+            let g1 = Double(nxt.glucose)
+            let w = (time - t0) / dt
+            let g = g0 + (g1 - g0) * w
+            let y = glucoseToYCoordinate(Int(g.rounded()))
+            glucoseStartIndex = i // for subsequent searches
+            return CGPoint(x: x, y: y)
+        }
 
         // Case 2: No match found → use last glucose
         if let last = lookupGlucoseDots.last {
