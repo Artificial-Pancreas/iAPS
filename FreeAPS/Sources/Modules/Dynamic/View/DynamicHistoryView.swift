@@ -60,6 +60,8 @@ struct DynamicHistoryView: View {
         history
     }
 
+    let device = UIDevice.current.getDeviceId
+
     private var history: some View {
         VStack(spacing: 0) {
             Button { dismiss() }
@@ -117,6 +119,12 @@ struct DynamicHistoryView: View {
                             (item.tdd ?? 0) != 0 ? (tddFormatter.string(from: (item.tdd ?? 0) as NSNumber) ?? "") : "--"
                         ]
 
+                        let proMaxInset: CGFloat =
+                            (
+                                device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max" || device ==
+                                    "iPhone 17 Pro Max"
+                            ) ? 25 : 15
+
                         Grid(horizontalSpacing: 0) {
                             GridRow {
                                 // Time
@@ -132,8 +140,10 @@ struct DynamicHistoryView: View {
                                     .foregroundStyle(Color(.basal))
                                     .frame(maxWidth: .infinity, alignment: .leading).offset(x: -1)
                                 // Ratio
-                                Text(formatter.string(from: item.ratio ?? 1) ?? "").foregroundStyle(.red)
+                                Text(tddFormatter.string(from: item.ratio ?? 1) ?? "").foregroundStyle(.red)
+                                    .activeOverride(item.override)
                                     .frame(maxWidth: .infinity, alignment: .leading)
+
                                 // ISF.
                                 Text(dynamicReasons.first ?? "")
                                     .foregroundStyle(.orange)
@@ -159,10 +169,19 @@ struct DynamicHistoryView: View {
                                 ).foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                             }
-                        }.listRowBackground(item.override ? Color.purpleOverrides : nil)
+                        }
+                        .listRowInsets(.init(
+                            top: 0,
+                            leading: proMaxInset,
+                            bottom: 0,
+                            trailing: 10
+                        ))
                     }
                 }
-            }.font(.system(size: 12)).listStyle(.plain)
+            }
+            .environment(\.defaultMinListRowHeight, 30)
+            .font(.system(size: 12))
+            .listStyle(.plain)
         }.background(Color(.systemGray5))
     }
 }

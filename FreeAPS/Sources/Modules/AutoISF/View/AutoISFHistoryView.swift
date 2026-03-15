@@ -41,6 +41,14 @@ struct AutoISFHistoryView: View {
         return formatter
     }
 
+    private var singleDigitFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = "."
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "sv")
@@ -83,8 +91,16 @@ struct AutoISFHistoryView: View {
 
             Divider()
 
-            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -21 : -9
-            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -10 : 0
+            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max") ?
+                -21 : -9
+            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max") ?
+                -10 : 0
+            let proMaxInset: CGFloat =
+                (
+                    device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max" || device ==
+                        "iPhone 17 Pro Max"
+                ) ? 25 :
+                15
 
             // Subtitle with non-localized variable acronyms
             HStack(spacing: 10) {
@@ -137,7 +153,8 @@ struct AutoISFHistoryView: View {
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .offset(x: 4)
                                     // Ratio
-                                    Text((formatter.string(from: item.ratio ?? 1) ?? "") + "  ").foregroundStyle(.red)
+                                    Text((singleDigitFormatter.string(from: item.ratio ?? 1) ?? "") + "  ").foregroundStyle(.red)
+                                        .activeOverride(item.override)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     // acce.
                                     Text((reasonParsed.first ?? "") + "  ")
@@ -182,11 +199,18 @@ struct AutoISFHistoryView: View {
                                     .foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
-                            }.listRowBackground(item.override ? Color.purpleOverrides : nil)
+                            }
+                            .listRowInsets(.init(
+                                top: 0,
+                                leading: proMaxInset,
+                                bottom: 0,
+                                trailing: 10
+                            ))
                         }
                     }
                 }
             }
+            .environment(\.defaultMinListRowHeight, 30)
             .font(.system(size: 12))
             .listStyle(.plain)
         }.background(Color(.systemGray5))

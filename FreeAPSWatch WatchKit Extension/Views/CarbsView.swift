@@ -39,7 +39,7 @@ struct CarbsView: View {
             }
             buttonStack
         }
-        .onAppear { carbAmount = Double(state.carbsRequired ?? 0) }
+        // .onAppear { carbAmount = Double(state.carbsRequired ?? 0) }
     }
 
     var nutrient: some View {

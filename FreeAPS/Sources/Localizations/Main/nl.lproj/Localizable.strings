@@ -3013,6 +3013,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Enable Auto ISF" = "Auto ISF inschakelen";
 
 /* */
+"Enable Auto CR" = "Auto CR inschakelen";
+
+/* */
+"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Hoogst experimenteel!\n\nPast elke loop aan in dezelfde hoeveelheid als je profiel ISF via autoISF-instellingen.\n\nGebruik de boluscalculator met grote voorzichtigheid, dit kan ervoor zorgen dat de dosis van aanbevelingen te sterk is.\n\nAutoCR + autoISF kan opstapelen. Verminder eerst de agressiviteit van autoISF (bijvoorbeeld lagere max/waarde), schakel AutoCR in en volg nauwlettend.";
+
+/* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Auto ISF. Dit schakelt eventuele dynamische ISF/CR instellingen uit";
 
 /* */
@@ -3338,14 +3344,8 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* Dynamic ISF Setting Title */
 "Minimum Threshold Setting" = "Instelling minimale grenswaarde";
 
-/* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Met deze instelling kun je een grenswaarde kiezen waaronder geen insuline wordt toegediend. De grenswaarde is de grootste waarde van je grenswaarde-instelling en de berekende grenswaarde: \n\nStreefwaarde Glucose - (Streefwaarde Glucose - 2,2) / 2 = 1,1) \n---> hier met mmol/l als glucose-eenheid ";
-
-/* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "de grenswaarde wordt ";
-
-/* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "tenzij je grenswaarde hoger is ingesteld:";
+/* Minimum Threshold Setting */
+"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
 
 /* Threshold Table Columns Title */
 "Setting" = "Instelling";
