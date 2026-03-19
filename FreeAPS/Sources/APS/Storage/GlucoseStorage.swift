@@ -99,6 +99,21 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         notes = "\(notes) activated on \(a)"
                     }
 
+                    let sessionStartDate = sensorSessionStart.sessionStartDate
+                    // When a new Dexcom sensor is started, it produces multiple consecutive
+                    // startDates with sub-second jitter due to activationDate being recomputed
+                    // from the BLE clock on every session. Only append if no existing entry
+                    // is within 60 seconds of this one, to avoid flooding Nightscout with
+                    // thousands of duplicate "Sensor Start" treatments.
+                    // See: https://github.com/Artificial-Pancreas/iAPS/issues/XXXX
+                    if let lastTreatment = treatments.last,
+                       let lastCreatedAt = lastTreatment.createdAt,
+                       let sessionStart = sessionStartDate,
+                       abs(lastCreatedAt.timeIntervalSince(sessionStart)) < 60
+                    {
+                        return
+                    }
+
                     let treatment = NigtscoutTreatment(
                         duration: nil,
                         rawDuration: nil,
@@ -106,7 +121,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         absolute: nil,
                         rate: nil,
                         eventType: .nsSensorChange,
-                        createdAt: sensorSessionStart.sessionStartDate,
+                        createdAt: sessionStartDate,
                         enteredBy: NigtscoutTreatment.local,
                         bolus: nil,
                         insulin: nil,
