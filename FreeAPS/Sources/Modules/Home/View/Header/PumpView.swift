@@ -43,7 +43,6 @@ struct PumpView: View {
     ) var concentration: FetchedResults<InsulinConcentration>
 
     var body: some View {
-        let nano = state.pumpName.contains("Medtrum")
         // let sim = state.pumpName.contains("Simulator") // Just For Testing
         HStack(spacing: 5) {
             // OmniPods and Medtrum nanos
@@ -203,6 +202,10 @@ struct PumpView: View {
         .offset(x: (nano && expiresAtDate != nil) ? 5 : 0, y: (nano && expiresAtDate != nil) ? 10 : 5)
     }
 
+    private var nano: Bool {
+        state.pumpName.contains("Medtrum")
+    }
+
     private func remainingTime(time: TimeInterval) -> some View {
         HStack {
             if time > 0 {
@@ -235,6 +238,12 @@ struct PumpView: View {
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
                     }
                 }
+            } else if nano {
+                let hours = Int(time / 1.hours.timeInterval)
+                HStack(spacing: 0) {
+                    Text(" \(hours)")
+                    Text(NSLocalizedString("h", comment: "abbreviation for hours"))
+                }.foregroundStyle(.orange)
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
             }
