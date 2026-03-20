@@ -32,7 +32,7 @@ jobs:
 
       # Checks-out the repo
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set special variables
         run: |
@@ -113,7 +113,7 @@ jobs:
           run: echo "new_certificate_needed=${{ needs.create_certs.outputs.new_certificate_needed }}"
 
         - name: Checkout repository
-          uses: actions/checkout@v4
+          uses: actions/checkout@v5
 
         - name: Set special variables
           run: |
