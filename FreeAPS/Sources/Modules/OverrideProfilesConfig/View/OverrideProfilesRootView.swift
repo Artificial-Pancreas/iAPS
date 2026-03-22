@@ -100,7 +100,7 @@ extension OverrideProfilesConfig {
 
         var overridesView: some View {
             Form {
-                if state.presets.isNotEmpty, !isEditingPreset {
+                if !isEditingPreset {
                     Section {
                         ForEach(fetchedProfiles.uniqued(on: \.id)) { preset in
                             profilesView(for: preset)
