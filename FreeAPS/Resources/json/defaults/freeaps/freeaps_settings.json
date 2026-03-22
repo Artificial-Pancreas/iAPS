@@ -73,6 +73,7 @@
     "displayDelta": false,
     "profileID": "Hypo Treatment",
     "autoisf": false,
+    "autocr": false,
     "smbDeliveryRatioBGrange": 0,
     "smbDeliveryRatioMin": 0.5,
     "smbDeliveryRatioMax": 0.5,

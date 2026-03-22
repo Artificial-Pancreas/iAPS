@@ -152,10 +152,16 @@ extension DataTable {
             }
         }
 
-        func deleteCarbs(_ date: Date) {
-            provider.deleteCarbs(date)
+        func deleteCarbs(_ treatment: Treatment, storage: Carbohydrates?) {
+            provider.deleteCarbs(treatment.creationDate)
 
-            if date.timeIntervalSinceNow > -2.hours.timeInterval {
+            // In need of CoreData deletion?
+            if let data = storage {
+                OverrideStorage().DeleteBatch(identifier: data.id, entity: "Carbohydrates")
+            }
+
+            // In need of a loop update?
+            if treatment.creationDate.timeIntervalSinceNow > -2.hours.timeInterval {
                 aps.determineBasalSync()
             }
         }
@@ -257,8 +263,9 @@ extension DataTable {
             if let deleteOld = computed {
                 OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
             }
-            carbStorage.storeCarbs([newCarbs])
+
             nightscout.deleteCarbs(old.creationDate)
+            carbStorage.storeCarbs([newCarbs])
             debug(.apsManager, "Carbs updated: \(old.amountText) -> \(meal.carbs) g")
             if newCarbs.carbs != oldCarbs, (newCarbs.actualDate ?? .distantPast).timeIntervalSinceNow > -3.hours.timeInterval {
                 aps.determineBasalSync()

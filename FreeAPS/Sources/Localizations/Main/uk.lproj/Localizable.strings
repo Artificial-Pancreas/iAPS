@@ -1392,9 +1392,283 @@ Enact a temp Basal or a temp target */
 // --------- AI ---------
 /* */
 
-"AI Image Analysis" = "AI Image Analysis";
+"Ask AI..." = "Запитайте ШІ...";
 
-"Barcode" = "Barcode";
+"Search saved foods..." = "Пошук збережених страв...";
+
+"Search foods..." = "Пошук продуктів...";
+
+"Saved Foods" = "Збережена їжа";
+
+"Add Food Manually" = "Додати Їжу Вручну";
+
+"Per Serving" = "На порцію
+";
+
+"Per 100g" = "На 100 г";
+
+"Per 100ml" = "На 100 мл";
+
+"This portion" = "Ця порція";
+
+"Serving Size" = "Розмір порції";
+
+"Food Name" = "Назва Страви";
+
+"Food" = "Страва";
+
+"Quick access to your frequently used foods" = "Швидкий доступ до часто використовуваних страв";
+
+"Search databases or describe food for AI analysis" = "Пошук по базах даних або опис їжі для аналізу ШІ";
+
+"Scan packaged foods for nutrition information" = "Скануйте упаковані продукти, щоб отримати інформацію про харчову цінність";
+
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Зробіть знімок для аналізу харчування за допомогою штучного інтелекту. Натисніть і утримуйте, щоб вибрати з бібліотеки.";
+
+"Enter nutrition information manually" = "Введіть інформацію про харчову цінність вручну";
+
+"Place a reference object (coin, hand) for scale" = "Розмістіть контрольний об'єкт (монету, руку) для масштабування";
+
+"Include the full plate or package in frame" = "Включіть повну тарілку або упаковку в рамку";
+
+"Use good lighting for best results" = "Використовуйте гарне освітлення для найкращих результатів";
+
+"Photography Tips" = "Поради щодо Фотографії";
+
+"Manual Entry" = "Ручне Введення";
+
+"Photo Analysis" = "Аналіз Фотографій";
+
+"Barcode Scanner" = "Сканер Штрих-Кодів";
+
+"Text Search" = "Пошук Тексту";
+
+"AI Image Analysis" = "Аналіз Зображень зі ШІ";
+
+"Barcode" = "Штрих-Код";
+
+"AI Model Statistics" = "Статистика Моделі ШІ";
+
+"Slide to Clear All Statistics" = "Проведіть Пальцем, щоб Очистити всю Статистику";
+
+"Avg Time" = "Середній Час";
+
+"Count" = "Кількість";
+
+"Statistics will appear here after you use AI models for food analysis." = "Статистика з’явиться тут після того, як ви використаєте моделі ШІ для аналізу їжі.";
+
+"No Statistics Yet" = "Поки що Немає Статистики";
+
+"Food Search Settings" = "Налаштування пошуку їжі";
+
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "Оцінки харчової цінності, отримані за допомогою штучного інтелекту, є лише приблизними. Завжди консультуйтеся зі своїм лікарем щодо прийняття медичних рішень. Перевіряйте інформацію про харчову цінність, коли це можливо. Використовуйте на свій страх і ризик.";
+
+"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
+
+"**AI Image Analysis:**" = "**Аналіз зображень за допомогою штучного інтелекту**:";
+
+"OpenFoodFacts" = "OpenFoodFacts (Відкриті факти про їжу)";
+
+"**Barcode Scanning:**" = "**Сканування штрих-кодів:**";
+
+"USDA FoodData Central → OpenFoodFacts" = "Центр даних про харчові продукти Міністерства сільського господарства США → Відкриті факти про харчові продукти";
+
+"**Text/Voice Search:**" = "**Текстовий/голосовий пошук:**";
+
+"Search Type Recommendations" = "Рекомендації щодо типу пошуку";
+
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Безкоштовна офіційна база даних про харчування. Чудові дані про харчування нефасованих продуктів, таких як фрукти, овочі та м’ясо.";
+
+"**Text/Voice Search:**" = "**Текстовий/голосовий пошук:**";
+
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Безкоштовна, відкрита база даних із широким охопленням штрих-кодів та текстовим пошуком для упакованих продуктів. За замовчуванням для пошуку тексту та штрих-кодів.";
+
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Найточніший аналіз за допомогою ШІ з використанням GPT-4 Vision. Потрібен ключ API (~$0.01 за зображення). Відмінно підходить для аналізу зображень та запитів природною мовою.";
+
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Безкоштовний штучний інтелект зі щедрими лімітами (1500/день). Відмінне розпізнавання їжі за допомогою штучного інтелекту Vision від Google. Ідеальний баланс якості та вартості.";
+
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Розширений ШІ з детальним мисленням. Відмінно аналізує їжу та оцінює порції. Потрібен ключ API (~$0,25 за мільйон токенів).";
+
+"Available Search Providers:" = "Доступні пошукові системи:";
+
+"Provider Information" = "Інформація про постачальника";
+
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Виберіть «Anthropic (Claude API)», «Google (Gemini API)» або «OpenAI (ChatGPT API)» для аналізу зображень за допомогою штучного інтелекту, щоб використовувати ваші платні ключі";
+
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Коли ви фотографуєте їжу, додаток використовує постачальника, вибраного в розділі «Аналіз зображень зі штучним інтелектом» вище.";
+
+"Camera Food Analysis" = "Аналіз харчових продуктів камерою";
+
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Щоб використовувати платні ключі API, переконайтеся, що ви вибрали відповідного постачальника в розділі «Аналіз зображень зі штучним інтелектом» вище. Постачальник, якого ви оберете для аналізу зображень зі штучним інтелектом, буде використовуватися під час фотографування їжі.";
+
+"Important: How to Use Your API Keys" = "Важливо: Як використовувати ключі API";
+
+"AI Progress Animation" = "Анімація Прогресу зі ШІ";
+
+"Miscellaneous" = "Різне";
+
+"AI Usage Statistics" = "Статистика Використання ШІ";
+
+"View performance metrics for AI models you've used." = "Перегляньте показники продуктивності для моделей ШІ, які ви використовували.";
+
+"Usage Statistics" = "Статистика Використання";
+
+"Photo library access is required to save images." = "Для збереження зображень потрібен доступ до фотобібліотеки.";
+
+"Enable Photo Library Access" = "Увімкнути Доступ до Бібліотеки Фотографій";
+
+"Save Photos" = "Зберегти Фото";
+
+"When enabled, photos taken will be saved into the iAPS album in your photo library." = "Якщо цю функцію ввімкнено, зроблені фотографії будуть збережені в альбомі iAPS у вашій фотобібліотеці.";
+
+"Photo Library" = "Фотобібліотека";
+
+"Send smaller images to AI" = "Надсилайте менші зображення до ШІ";
+
+"When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail." = "Коли цю функцію ввімкнено, зображення змінюються на меншу роздільну здатність перед надсиланням до штучного інтелекту. Це зменшує використання даних і пришвидшує аналіз, але штучний інтелект бачитиме менше деталей.";
+
+"Image Processing" = "Обробка Зображень";
+
+"Show annotation prompt for images" = "Показувати запит на анотацію для зображень";
+
+"When enabled, you'll be prompted to add optional text descriptions to food images." = "Якщо цю функцію ввімкнено, вам буде запропоновано додати додаткові текстові описи до зображень їжі.";
+
+"Image Annotations" = "Анотації Зображень";
+
+"Default to AI search" = "За замовчуванням для пошуку зі ШІ";
+
+"Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field." = "Встановлює метод пошуку, який вибирається за замовчуванням під час відкриття вікна пошуку продуктів. Ви завжди можете перемикатися між пошуком за допомогою штучного інтелекту та пошуку за базою даних за допомогою кнопки поруч із полем пошуку.";
+
+"Default Text Search Method" = "Метод Пошуку Тексту за Замовчуванням";
+
+"Preferred Region" = "Бажаний Регіон";
+
+"Preferred Language" = "Бажана Мова";
+
+"Nutrition Authority" = "Управління з Питань Харчування";
+
+"Choose a specific language and region for AI output." = "Виберіть певну мову та регіон для виводу ШІ.";
+
+"Localization" = "Регіональні Налаштування";
+
+"Enter your OpenAI API key" = "Введіть свій ключ API OpenAI";
+
+"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API Key";
+
+"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Отримайте ключ API з platform.openai.com. Налаштуйте запит на аналіз, щоб отримати розподіл компонентів страв та загальну харчову цінність. (~$0.01 за зображення)";
+
+"OpenAI (ChatGPT API) Configuration" = "Конфігурація OpenAI (ChatGPT API)";
+
+"Enter your Google Gemini API key" = "Введіть свій ключ API Google Gemini";
+
+"Google Gemini API Key" = "Ключ API Google Gemini";
+
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Отримайте безкоштовний ключ API від ai.google.dev. Google Gemini забезпечує чудове розпізнавання їжі завдяки щедрому безкоштовному плану (1500 запитів на день).";
+
+"Google (Gemini API) Configuration" = "Конфігурація Google (Gemini API)";
+
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Отримайте безкоштовний ключ API від ai.google.dev. Google Gemini забезпечує чудове розпізнавання їжі завдяки щедрому безкоштовному плану (1500 запитів на день).";
+
+"Enter your Claude API key" = "Введіть свій Ключ API Claude";
+
+"Claude API Key" = "Ключ API Claude";
+
+"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Отримайте ключ Claude API  на сайті console.anthropic.com. Клод чудово справляється з детальним мисленням та аналізом їжі. Ціна починається від 0,25 долара за мільйон токенів для моделі Haiku.";
+
+"Anthropic (Claude API) Configuration" = "Anthropic Конфігурація (Claude API))";
+
+"Provider for Barcode Scanning" = "Постачальник Послуг Сканування Штрих-Кодів";
+
+"Provider for Text/Voice Search" = "Постачальник Текстового/Голосового Пошуку";
+
+"Provider for AI Text Analysis" = "Постачальник Послуг Аналізу Тексту зі ШІ";
+
+"Fast" = "Швидкий";
+
+"Provider for AI Image Analysis" = "Постачальник Послуг Аналізу Зображень зі ШІ";
+
+"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Налаштуйте службу API, яка використовується для кожного типу пошуку їжі. Аналіз зображень за допомогою штучного інтелекту контролює, що відбувається, коли ви фотографуєте їжу. Різні постачальники послуг чудово володіють різними методами пошуку.";
+
+"Food Search Provider Configuration" = "Конфігурація Постачальника Послуг Пошуку їжі";
+
+"Barcode Scanner" = "Сканер Штрих-Кодів";
+
+"Photography Tips" = "Поради щодо Фотографії";
+
+"Manual Entry" = "Ручне Введення";
+
+"Manual Entry" = "Ручне Введення";
+
+"Photo Analysis" = "Аналіз Фотографій";
+
+"Text Search" = "Пошук Тексту";
+
+"Place a reference object (coin, hand) for scale" = "Розмістіть контрольний об'єкт (монету, руку) для масштабування";
+
+"Include the full plate or package in frame" = "Включіть повну тарілку або упаковку в рамку";
+
+"Use good lighting for best results" = "Використовуйте гарне освітлення для найкращих результатів";
+
+"Enter nutrition information manually" = "Введіть інформацію про харчову цінність вручну";
+
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Зробіть знімок для аналізу харчування за допомогою штучного інтелекту. Натисніть і утримуйте, щоб вибрати з бібліотеки.";
+
+"Scan packaged foods for nutrition information" = "Скануйте упаковані продукти, щоб отримати інформацію про харчову цінність";
+
+"Search databases or describe food for AI analysis" = "Пошук по базах даних або опис їжі для аналізу ШІ";
+
+"Quick access to your frequently used foods" = "Швидкий доступ до часто використовуваних страв";
+
+"Food" = "Страва";
+
+"Food Name" = "Назва Страви";
+
+"Serving Size" = "Розмір порції";
+
+"This portion" = "Ця порція";
+
+"Per 100g" = "На 100 г";
+
+"Per Serving" = "На порцію
+";
+
+"Add Food Manually" = "Додати Їжу Вручну";
+
+"Saved Foods" = "Збережена їжа";
+
+"United States (USDA / FDA)" = "Сполучені Штати (USDA / FDA)";
+
+"European Union (EFSA / EU labeling)" = "Європейський Союз (маркування EFSA / ЄС)";
+
+"United Kingdom (CoFID / NHS)" = "Велика Британія (CoFID / NHS)";
+
+"Canada (Health Canada)" = "Канада (Health Canada)";
+
+"Australia & New Zealand (FSANZ)" = "Австралія та Нова Зеландія (FSANZ)";
+
+"Japan (MHLW)" = "Японія (MHLW)";
+
+"International (WHO / FAO / Codex)" = "Міжнародний (WHO / FAO / Codex)";
+
+"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "Міністерство Сільського Господарства США (USDA), FDA Nutrition Facts";
+
+"European Food Safety Authority (EFSA), EU food labeling standards" = "Європейське Агентство з Безпеки Харчових Продуктів (EFSA), стандарти маркування харчових продуктів ЄС";
+
+"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "Інтегрований Набір Даних про Склад Харчових Продуктів у Великій Британії (CoFID), NHS";
+
+"Health Canada, Canadian Nutrition Facts Table" = "Міністерство Охорони Здоров'я Канади, таблиця Канадських Харчових Цінностей";
+
+"Food Standards Australia New Zealand (FSANZ)" = "Стандарти Харчових Продуктів Австралії та Нової Зеландії (FSANZ)";
+
+"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Міністерство Охорони Здоров'я, Праці та Соціального Забезпечення (MHLW), Японські Стандарти Маркування Харчових Продуктів";
+
+"World Health Organization (WHO), FAO, Codex Alimentarius" = "Всесвітня Організація Охорони Здоров'я (WHO), FAO, Кодекс Аліментаріус";
+
+"protein" = "білок";
+
+"carbs" = "вуглеводи";
+
+"fat" = "жир";
 
 "📝 Notes" = "📝 Примітка";
 
@@ -1729,6 +2003,15 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Кал";
 
+" servings" = "порції";
+
+" serving" = "порція";
+
+"Reset to " = "Скинути до";
+
+"Apply" = "Застосувати";
+
+"Carbs" = "Вуглеводи";
 
 // --------- End of AI ---------
 /* */
@@ -2402,13 +2685,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Змінити одиницю HbA1c";
 
 /* */
-"Vertical grid lines" = "Vertical grid lines";
+"Vertical grid lines" = "Вертикальні лінії сітки";
 
 /* */
-"Horizontal grid lines" = "Horizontal grid lines";
+"Horizontal grid lines" = "Горизонтальні лінії сітки";
 
 /* */
-"Threshold lines (Low / High)" = "Threshold lines (Low / High)";
+"Threshold lines (Low / High)" = "Порогові лінії (низький / високий)";
 
 /* */
 "Standing / Laying TIR Chart" = "Короткий вигляд діаграми часу у TIR";
@@ -2576,7 +2859,7 @@ Enact a temp Basal or a temp target */
 "Display Insulin Activity Chart" = "Відображення діаграми активності Інсуліну";
 
 /* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Don't ask for saving search result as meal preset";
+"Don't ask for saving search result as meal preset" = "Не запитувати збереження результатів пошуку як попереднього налаштування страв";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3013,6 +3296,12 @@ Enact a temp Basal or a temp target */
 "Enable Auto ISF" = "Увімкнути автоматичний ISF";
 
 /* */
+"Enable Auto CR" = "Увімкнути автоматичний Вуглеводний Коефіцієнт";
+
+/* */
+"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Високоекспериментально!\n\nКоригує вуглеводний коефіцієнт вашого профілю в кожному циклі на ту саму величину, що й ISF вашого профілю, використовуючи налаштування autoISF.\n\nВикористовуйте калькулятор болюса з великою обережністю, це може призвести до занадто суворих рекомендацій щодо дози.\n\nAutoCR + autoISF можуть сумуватися. Спочатку зменште агресивність autoISF (наприклад, зменшіть максимум/вагу), потім увімкніть AutoCR та уважно стежте.";
+
+/* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Вмикає автоматичний ISF. Це вимкне будь-яке можливе динамічне налаштування ISF/CR";
 
 /* */
@@ -3334,14 +3623,8 @@ Enact a temp Basal or a temp target */
 /* Dynamic ISF Setting Title */
 "Minimum Threshold Setting" = "Налаштування Мінімального Порогу";
 
-/* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Цей параметр дає змогу вибрати рівень, нижче якого інсулін не вводитиметься.\n\nПорогове значення використовує найбільшу кількість вашого порогового налаштування та обчисленого порогу:\n\nЦільовий рівень глюкози - (Цільовий рівень глюкози - 40) / 2\n , тут використовується мг/дл як одиниця глюкози.\n\nНаприклад, якщо ваш цільовий рівень глюкози";
-
-/* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "поріг буде";
-
-/* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "якщо ваше порогове значення не встановлено вище:";
+/* Minimum Threshold Setting */
+"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
 
 /* Threshold Table Columns Title */
 "Setting" = "Налаштування";
@@ -3508,7 +3791,7 @@ Enact a temp Basal or a temp target */
 "Neglect Carbohydrates in oref0" = "Не враховуйте вуглеводи в oref0";
 
 /* Debug option */
-"Hide Predictions" = "Hide Predictions";
+"Hide Predictions" = "Приховати передбачення";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
@@ -3655,31 +3938,31 @@ Enact a temp Basal or a temp target */
 "iAPS will fetch announcements, carbs and temp targets from Nightscout" = "iAPS отримуватиме оголошення, інформацію про вуглеводи та тимчасові цілі від Nightscout";
 
 /* main chart settings - toggle, controls whether to draw the in-range area backdrop (fill) */
-"In-range area highlight" = "In-range area highlight";
+"In-range area highlight" = "Підсвічування області в межах досяжності";
 
 /* main chart settings - toggle, controls whether to show inline BG peaks */
-"Glucose peaks" = "Glucose peaks";
+"Glucose peaks" = "Піки Глюкози";
 
 /* main chart settings - toggle, controls whether to show the predictions legend */
-"Predictions legend" = "Predictions legend";
+"Predictions legend" = "Легенда Прогнозів";
 
 /* main chart settings - toggle, controls whether to draw the secondary chart backdrop (fill) */
-"Secondary chart backdrop" = "Secondary chart backdrop";
+"Secondary chart backdrop" = "Фон додаткової діаграми";
 
 /* main chart settings - toggle, controls whether to show insulin activity grid lines */
-"Insulin activity grid lines" = "Insulin activity grid lines";
+"Insulin activity grid lines" = "Лінії сітки активності Інсуліну";
 
 /* main chart settings - toggle, controls whether to show insulin activity axis labels */
-"Insulin activity labels" = "Insulin activity labels";
+"Insulin activity labels" = "Мітки активності Інсуліну";
 
 /* main chart settings - secondary chart section header */
-"Secondary chart" = "Secondary chart";
+"Secondary chart" = "Додаткова діаграма";
 
 /* main chart settings - navigation title and the navigation link label */
-"Main Chart settings" = "Main Chart settings";
+"Main Chart settings" = "Основні налаштування Діаграми";
 
 /* UI/UX settings - main chart section header */
-"Main Chart" = "Main Chart";
+"Main Chart" = "Основна Діаграма";
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
-"Y-axis labels" = "Y-axis labels";
+"Y-axis labels" = "Мітки осі Y";

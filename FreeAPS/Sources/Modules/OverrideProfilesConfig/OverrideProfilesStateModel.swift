@@ -55,7 +55,7 @@ extension OverrideProfilesConfig {
             defaultmaxIOB = settingsManager.preferences.maxIOB
             extended_overrides = settingsManager.settings.extended_overrides
             currentSettings = settings()
-            presets = [OverridePresets(context: coredataContext)]
+            // presets = [OverridePresets(context: coredataContext)]
         }
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -420,6 +420,7 @@ extension OverrideProfilesConfig {
             coredataContext.perform { [self] in
                 saveAutoISF.autoISFhourlyChange = autoISFsettings.autoISFhourlyChange as NSDecimalNumber
                 saveAutoISF.autoisf = autoISFsettings.autoisf
+                saveAutoISF.autocr = autoISFsettings.autocr
                 saveAutoISF.autoisf_min = autoISFsettings.autoisf_min as NSDecimalNumber
                 saveAutoISF.autoisf_max = autoISFsettings.autoisf_max as NSDecimalNumber
                 saveAutoISF.enableBGacceleration = autoISFsettings.enableBGacceleration
@@ -456,6 +457,7 @@ extension OverrideProfilesConfig {
 
             return AutoISFsettings(
                 autoisf: settings.autoisf,
+                autocr: settings.autocr,
                 smbDeliveryRatioBGrange: settings.smbDeliveryRatioBGrange as Decimal,
                 smbDeliveryRatioMin: settings.smbDeliveryRatioMin as Decimal,
                 smbDeliveryRatioMax: settings.smbDeliveryRatioMax as Decimal,
@@ -488,6 +490,7 @@ extension OverrideProfilesConfig {
         func fetch(fetched: Auto_ISF) -> AutoISFsettings {
             AutoISFsettings(
                 autoisf: fetched.autoisf,
+                autocr: fetched.autocr,
                 smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
                 smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
                 smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,

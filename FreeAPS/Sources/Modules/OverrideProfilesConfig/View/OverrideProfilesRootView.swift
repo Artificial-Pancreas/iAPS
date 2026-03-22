@@ -100,7 +100,7 @@ extension OverrideProfilesConfig {
 
         var overridesView: some View {
             Form {
-                if state.presets.isNotEmpty, !isEditingPreset {
+                if !isEditingPreset {
                     Section {
                         ForEach(fetchedProfiles.uniqued(on: \.id)) { preset in
                             profilesView(for: preset)
@@ -341,6 +341,10 @@ extension OverrideProfilesConfig {
                         if state.autoISFsettings.autoisf {
                             Toggle(isOn: $state.autoISFsettings.enableBGacceleration) {
                                 Text("Enable BG acceleration")
+                            }
+
+                            Toggle(isOn: $state.autoISFsettings.autocr) {
+                                Text("Enable Auto CR")
                             }
 
                             HStack {
@@ -728,6 +732,7 @@ extension OverrideProfilesConfig {
                         durationString != "" ? Text(durationString).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF {
                             bool(bool: aisf.autoisf, setting: state.currentSettings.autoisf, label: "Auto ISF")
+                            bool(bool: aisf.autocr, setting: state.currentSettings.autocr, label: "Auto CR")
                         }
 
                         if preset.glucoseOverrideThresholdActive || preset.glucoseOverrideThresholdActiveDown {

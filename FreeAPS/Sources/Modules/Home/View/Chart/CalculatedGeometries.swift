@@ -1182,14 +1182,16 @@ private final class GeometriesBuilder {
 
         var matchIndex: Int?
 
-        for i in glucoseStartIndex ..< (lookupGlucoseDots.count - 1) {
-            let cur = lookupGlucoseDots[i]
-            let nxt = lookupGlucoseDots[i + 1]
-            let t0 = cur.date.timeIntervalSince1970
-            let t1 = nxt.date.timeIntervalSince1970
-            if t0 <= time, time < t1 {
-                matchIndex = i
-                break
+        if glucoseStartIndex < lookupGlucoseDots.count {
+            for i in glucoseStartIndex ..< (lookupGlucoseDots.count - 1) {
+                let cur = lookupGlucoseDots[i]
+                let nxt = lookupGlucoseDots[i + 1]
+                let t0 = cur.date.timeIntervalSince1970
+                let t1 = nxt.date.timeIntervalSince1970
+                if t0 <= time, time < t1 {
+                    matchIndex = i
+                    break
+                }
             }
         }
 
@@ -1218,9 +1220,9 @@ private final class GeometriesBuilder {
         }
 
         // Case 2: No match found → use last glucose
-        if let last = glucose.last {
-            let y = glucoseToYCoordinate(last.glucose ?? 0)
-            glucoseStartIndex = glucose.count - 1 // for subsequent searches
+        if let last = lookupGlucoseDots.last {
+            let y = glucoseToYCoordinate(last.glucose)
+            glucoseStartIndex = lookupGlucoseDots.count - 1 // for subsequent searches
             return CGPoint(x: x, y: y)
         }
 

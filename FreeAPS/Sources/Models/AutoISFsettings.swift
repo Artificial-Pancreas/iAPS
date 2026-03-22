@@ -2,6 +2,7 @@ import Foundation
 
 struct AutoISFsettings: JSON, Codable {
     var autoisf: Bool = false
+    var autocr: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
     var smbDeliveryRatioMin: Decimal = 0.5
     var smbDeliveryRatioMax: Decimal = 0.5

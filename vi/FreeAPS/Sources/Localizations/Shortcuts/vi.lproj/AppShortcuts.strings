@@ -41,10 +41,10 @@
 "Activates an ${applicationName} Loop Mode" = "Kích hoạt chế độ Vòng lặp của ${applicationName}";
 
 /* iAPS Basal shortcut */
-"${applicationName} Temp Basal" = "Chế độ liều nền tạm thời trong ${applicationName}";
+"${applicationName} Temp Basal" = "${applicationName} Liều nền tạm thời";
 
 /* iAPS Basal shortcut description */
-"Enacts an ${applicationName} Temp Basal" = "${applicationName} thực hiện liều nền tạm thời";
+"Enacts an ${applicationName} Temp Basal" = "Kích hoạt liều nền tạm thời ${applicationName}";
 
 /* iAPS Suspend/Resume shortcut */
 "${applicationName} Suspend/Resume" = "Tạm dừng/Tiếp tục của ${applicationName}";

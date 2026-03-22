@@ -1393,9 +1393,281 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 // --------- AI ---------
 /* */
 
+"Ask AI..." = "Spýtať sa umelej inteligencie...";
+
+"Search saved foods..." = "Vyhľadávanie uložených jedál...";
+
+"Search foods..." = "Vyhľadávanie jedál...";
+
+"Saved Foods" = "Uložené jedlá";
+
+"Add Food Manually" = "Pridať jedlo manuálne";
+
+"Per Serving" = "Na porciu";
+
+"Per 100g" = "Na 100g";
+
+"Per 100ml" = "Na 100ml";
+
+"This portion" = "Táto porcia";
+
+"Serving Size" = "Veľkosť porcie";
+
+"Food Name" = "Názov jedla";
+
+"Food" = "Jedlo";
+
+"Quick access to your frequently used foods" = "Rýchly prístup k často používaným potravinám";
+
+"Search databases or describe food for AI analysis" = "Vyhľadajte v databázach alebo opíšte jedlo pre analýzu pomocou AI";
+
+"Scan packaged foods for nutrition information" = "Skenujte balené potraviny pre nutričné informácie";
+
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Odfotografujte jedlo pre výživovú analýzu pomocou AI. Dlhým stlačením vyberte z fotiek.";
+
+"Enter nutrition information manually" = "Manuálne zadanie nutričných informácií";
+
+"Place a reference object (coin, hand) for scale" = "Umiestnite referenčný predmet (mincu, ruku) pre určenie mierky";
+
+"Include the full plate or package in frame" = "Zahrňte do záberu celý tanier alebo balenie";
+
+"Use good lighting for best results" = "Používajte dobré osvetlenie pre najlepšie výsledky";
+
+"Photography Tips" = "Tipy na fotografovanie";
+
+"Manual Entry" = "Manuálne zadanie";
+
+"Photo Analysis" = "Analýza fotografií";
+
+"Barcode Scanner" = "Skener čiarových kódov";
+
+"Text Search" = "Vyhľadávanie textu";
+
 "AI Image Analysis" = "AI analýza obrázka";
 
 "Barcode" = "Čiarový kód";
+
+"AI Model Statistics" = "Štatistika modelu AI";
+
+"Slide to Clear All Statistics" = "Posunutím vymažete všetky štatistiky";
+
+"Avg Time" = "Priemerný čas";
+
+"Count" = "Počet";
+
+"Statistics will appear here after you use AI models for food analysis." = "Štatistiky sa tu zobrazia po použití modelov umelej inteligencie na analýzu potravín.";
+
+"No Statistics Yet" = "Zatiaľ žiadne štatistiky";
+
+"Food Search Settings" = "Nastavenia vyhľadávania jedla";
+
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "Odhady nutričných hodnôt pomocou AI sú len približné. Pri zdravotných rozhodnutiach sa vždy poraďte so svojím lekárom. Kedykoľvek je to možné, overte si nutričné informácie. Používanie je na vlastné riziko.";
+
+"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
+
+"**AI Image Analysis:**" = "**AI analýza obrázka:**";
+
+"OpenFoodFacts" = "OpenFoodFacts";
+
+"**Barcode Scanning:**" = "**Skenovanie čiarového kódu:**";
+
+"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
+
+"**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
+
+"Search Type Recommendations" = "Odporúčania typu vyhľadávania";
+
+"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Bezplatná, oficiálna databáza nutričných hodnôt. Poskytuje kvalitné nutričné údaje pre nebalené potraviny ako ovocie, zelenina a mäso.";
+
+"**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
+
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Bezplatná, otvorená databáza s rozsiahlym pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny. Predvolená pre textové a čiarové vyhľadávania.";
+
+"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Najpresnejšia AI analýza s použitím GPT-4 Vision. Vyžaduje API kľúč (~0,01 $ za obrázok). Vynikajúca pri analýze obrázkov a prirodzených jazykových dopytoch.";
+
+"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Bezplatná AI so štedrými limitmi (1500/deň). Vynikajúce rozpoznávanie jedla pomocou Google Vision AI. Ideálna rovnováha medzi kvalitou a nákladmi.";
+
+"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Pokročilá AI s detailným uvažovaním. Vynikajúca pri analýze jedla a odhadovaní porcií. Vyžaduje API kľúč (~0,25 $ za milión tokenov).";
+
+"Available Search Providers:" = "Dostupní poskytovatelia vyhľadávania:";
+
+"Provider Information" = "Informácie o poskytovateľovi";
+
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Vyberte „Anthropic (Claude API)“, „Google (Gemini API)“ alebo „OpenAI (ChatGPT API)“, aby AI analýza obrázkov využívala vaše platené kľúče";
+
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Keď odfotíte jedlo, aplikácia použije poskytovateľa zvoleného vyššie v „AI analýze obrázkov“.";
+
+"Camera Food Analysis" = "Analýza jedla cez kameru";
+
+"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Aby ste mohli používať svoje platené API kľúče, nezabudnite vyššie v „AI analýze obrázkov“ vybrať príslušného poskytovateľa. Poskytovateľ zvolený pre AI analýzu obrázkov bude použitý pri fotení jedla.";
+
+"Important: How to Use Your API Keys" = "Dôležité: Ako používať vaše API kľúče";
+
+"AI Progress Animation" = "Animácia postupu umelej inteligencie";
+
+"Miscellaneous" = "Rôzne";
+
+"AI Usage Statistics" = "Štatistiky používania umelej inteligencie";
+
+"View performance metrics for AI models you've used." = "Zobraziť metriky výkonnosti pre modely umelej inteligencie, ktoré ste použili.";
+
+"Usage Statistics" = "Štatistika používania";
+
+"Photo library access is required to save images." = "Na ukladanie obrázkov je potrebný prístup k fotkám.";
+
+"Enable Photo Library Access" = "Povoliť prístup k fotkám";
+
+"Save Photos" = "Uložiť fotografie";
+
+"When enabled, photos taken will be saved into the iAPS album in your photo library." = "Keď je táto možnosť povolená, nasnímané fotografie sa uložia do albumu iAPS vo fotkách.";
+
+"Photo Library" = "Knižnica fotografií";
+
+"Send smaller images to AI" = "Odosielať menšie obrázky do AI";
+
+"When enabled, images are resized to a smaller resolution before sending to AI. This reduces data usage and speeds up analysis, but the AI will see less detail." = "Ak je táto možnosť povolená, obrázky sa pred odoslaním do AI zmenšia na nižšie rozlíšenie. Zníži sa tým spotreba dát a zrýchli analýza, ale AI uvidí menej detailov.";
+
+"Image Processing" = "Spracovanie obrázkov";
+
+"Show annotation prompt for images" = "Zobraziť výzvu na anotáciu obrázkov";
+
+"When enabled, you'll be prompted to add optional text descriptions to food images." = "Ak je táto možnosť povolená, budete vyzvaní na pridanie voliteľného textového popisu k obrázkom jedla.";
+
+"Image Annotations" = "Anotácie obrázkov";
+
+"Default to AI search" = "Predvolene použiť vyhľadávanie pomocou AI";
+
+"Sets which search method is selected by default when you open the food search view. You can always toggle between AI and database search using the button next to the search field." = "Nastavuje, ktorá metóda vyhľadávania je predvolene vybraná pri otvorení zobrazenia vyhľadávania potravín. Vždy môžete prepínať medzi vyhľadávaním pomocou AI a databázovým vyhľadávaním pomocou tlačidla vedľa vyhľadávacieho poľa.";
+
+"Default Text Search Method" = "Predvolená metóda vyhľadávania textu";
+
+"Preferred Region" = "Preferovaný región";
+
+"Preferred Language" = "Preferovaný jazyk";
+
+"Nutrition Authority" = "Úrad pre výživu";
+
+"Choose a specific language and region for AI output." = "Vyberte konkrétny jazyk a región pre výstup umelej inteligencie.";
+
+"Localization" = "Lokalizácia";
+
+"Enter your OpenAI API key" = "Zadajte svoj OpenAI API kľúč";
+
+"ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API kľúč";
+
+"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Získajte API kľúč z platform.openai.com. Prispôsobte zadanie pre analýzu, aby ste získali konkrétne rozdelenie zložiek jedla a súčty nutričných hodnôt. (~0,01 $ za obrázok)";
+
+"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
+
+"Enter your Google Gemini API key" = "Zadajte svoj Google Gemini API kľúč";
+
+"Google Gemini API Key" = "Google Gemini API kľúč";
+
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Získajte bezplatný API kľúč z ai.google.dev. Google Gemini poskytuje vynikajúce rozpoznávanie jedla so štedrým bezplatným limitom (1500 požiadaviek denne).";
+
+"Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
+
+"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Získajte bezplatný API kľúč z ai.google.dev. Google Gemini poskytuje vynikajúce rozpoznávanie jedla so štedrým bezplatným limitom (1500 požiadaviek denne).";
+
+"Enter your Claude API key" = "Zadajte svoj Claude API kľúč";
+
+"Claude API Key" = "Claude API kľúč";
+
+"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Získajte Claude API kľúč z console.anthropic.com. Claude vyniká v detailnom uvažovaní a analýze potravín. Cena modelu Haiku začína na 0,25 USD za milión tokenov.";
+
+"Anthropic (Claude API) Configuration" = "Konfigurácia Anthropic (Claude API)";
+
+"Provider for Barcode Scanning" = "Poskytovateľ pre skenovanie čiarových kódov";
+
+"Provider for Text/Voice Search" = "Poskytovateľ pre textové/hlasové vyhľadávanie";
+
+"Provider for AI Text Analysis" = "Poskytovateľ analýzy textu s umelou inteligenciou";
+
+"Fast" = "Rýchly";
+
+"Provider for AI Image Analysis" = "Poskytovateľ pre analýzu obrázkov pomocou AI";
+
+"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Nastavte API službu používanú pre každý typ vyhľadávania potravín. Analýza obrázkov pomocou AI určuje, čo sa stane, keď odfotografujete jedlo. Rôzni poskytovatelia vynikajú v rôznych metódach vyhľadávania.";
+
+"Food Search Provider Configuration" = "Konfigurácia poskytovateľa vyhľadávania potravín";
+
+"Barcode Scanner" = "Skener čiarových kódov";
+
+"Photography Tips" = "Tipy na fotografovanie";
+
+"Manual Entry" = "Manuálne zadanie";
+
+"Manual Entry" = "Manuálne zadanie";
+
+"Photo Analysis" = "Analýza fotografií";
+
+"Text Search" = "Vyhľadávanie textu";
+
+"Place a reference object (coin, hand) for scale" = "Umiestnite referenčný predmet (mincu, ruku) pre určenie mierky";
+
+"Include the full plate or package in frame" = "Zahrňte do záberu celý tanier alebo balenie";
+
+"Use good lighting for best results" = "Používajte dobré osvetlenie pre najlepšie výsledky";
+
+"Enter nutrition information manually" = "Manuálne zadanie nutričných informácií";
+
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Odfotografujte jedlo pre výživovú analýzu pomocou AI. Dlhým stlačením vyberte z fotiek.";
+
+"Scan packaged foods for nutrition information" = "Skenujte balené potraviny pre nutričné informácie";
+
+"Search databases or describe food for AI analysis" = "Vyhľadajte v databázach alebo opíšte jedlo pre analýzu pomocou AI";
+
+"Quick access to your frequently used foods" = "Rýchly prístup k často používaným potravinám";
+
+"Food" = "Jedlo";
+
+"Food Name" = "Názov jedla";
+
+"Serving Size" = "Veľkosť porcie";
+
+"This portion" = "Táto porcia";
+
+"Per 100g" = "Na 100g";
+
+"Per Serving" = "Na porciu";
+
+"Add Food Manually" = "Pridať jedlo manuálne";
+
+"Saved Foods" = "Uložené jedlá";
+
+"United States (USDA / FDA)" = "Spojené štáty (USDA / FDA)";
+
+"European Union (EFSA / EU labeling)" = "Európska únia (EFSA / označovanie EÚ)";
+
+"United Kingdom (CoFID / NHS)" = "Spojené kráľovstvo (CoFID / NHS)";
+
+"Canada (Health Canada)" = "Kanada (Health Canada)";
+
+"Australia & New Zealand (FSANZ)" = "Austrália a Nový Zéland (FSANZ)";
+
+"Japan (MHLW)" = "Japonsko (MHLW)";
+
+"International (WHO / FAO / Codex)" = "Medzinárodné (WHO / FAO / Codex)";
+
+"United States Department of Agriculture (USDA), FDA Nutrition Facts" = "Ministerstvo poľnohospodárstva Spojených štátov amerických (USDA), výživové údaje FDA";
+
+"European Food Safety Authority (EFSA), EU food labeling standards" = "Európsky úrad pre bezpečnosť potravín (EFSA), normy EÚ pre označovanie potravín";
+
+"UK Composition of Foods Integrated Dataset (CoFID), NHS" = "Integrovaná databáza zloženia potravín Spojeného kráľovstva (CoFID), NHS";
+
+"Health Canada, Canadian Nutrition Facts Table" = "Health Canada, tabuľka kanadských nutričných údajov";
+
+"Food Standards Australia New Zealand (FSANZ)" = "Potravinové normy Austrália Nový Zéland (FSANZ)";
+
+"Ministry of Health, Labour and Welfare (MHLW), Japanese Food Labeling Standards" = "Ministerstvo zdravotníctva, práce a sociálnych vecí (MHLW), Japonské normy pre označovanie potravín";
+
+"World Health Organization (WHO), FAO, Codex Alimentarius" = "Svetová zdravotnícka organizácia (WHO), FAO, Codex Alimentarius";
+
+"protein" = "bielkoviny";
+
+"carbs" = "sacharidy";
+
+"fat" = "tuky";
 
 "📝 Notes" = "📝 Poznámky";
 
@@ -1730,6 +2002,15 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Cal" = "Cal";
 
+" servings" = "porcie";
+
+" serving" = "porcia";
+
+"Reset to " = "Obnoviť na ";
+
+"Apply" = "Použiť";
+
+"Carbs" = "Sacharidy";
 
 // --------- End of AI ---------
 /* */
@@ -2577,7 +2858,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Display Insulin Activity Chart" = "Zobraziť graf aktivity inzulínu";
 
 /* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Don't ask for saving search result as meal preset";
+"Don't ask for saving search result as meal preset" = "Nepýtať sa na uloženie výsledkov vyhľadávania do zoznamu jedál";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3016,6 +3297,12 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Enable Auto ISF" = "Zapnúť Auto ISF";
 
 /* */
+"Enable Auto CR" = "Enable Auto CR";
+
+/* */
+"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely.";
+
+/* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Povolí Auto ISF. Týmto sa deaktivuje akékoľvek dynamické nastavenie ISF/CR";
 
 /* */
@@ -3337,14 +3624,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* Dynamic ISF Setting Title */
 "Minimum Threshold Setting" = "Nastavenie minimálneho prahu";
 
-/* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Toto nastavenie vám umožňuje zvoliť úroveň, pod ktorou sa nebude podávať inzulín.\n\nPrahová hodnota sa vypočíta ako najväčšia hodnota medzi vaším nastavením prahovej hodnoty a vypočítaným prahom:\n\nCieľová glykémia - (cieľová glykémia - 40) / 2\n, pričom jednotkou glykémie je mg/dl.\n\nNapríklad, ak je vaša cieľová glykémia ";
-
-/* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "prahová hodnota bude ";
-
-/* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "pokiaľ nie je nastavená vyššia prahová hodnota:";
+/* Minimum Threshold Setting */
+"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
 
 /* Threshold Table Columns Title */
 "Setting" = "Nastavenia";
