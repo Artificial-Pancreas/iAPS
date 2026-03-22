@@ -55,7 +55,7 @@ extension OverrideProfilesConfig {
             defaultmaxIOB = settingsManager.preferences.maxIOB
             extended_overrides = settingsManager.settings.extended_overrides
             currentSettings = settings()
-            presets = [OverridePresets(context: coredataContext)]
+            // presets = [OverridePresets(context: coredataContext)]
         }
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
