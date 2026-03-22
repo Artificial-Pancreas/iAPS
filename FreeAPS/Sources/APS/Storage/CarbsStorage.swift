@@ -136,7 +136,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 }
             }
 
-            // MARK: Save to CoreData. Currently not used
+            // MARK: Save to CoreData.
 
             self.coredataContext.perform {
                 let carbDataForStats = Carbohydrates(context: self.coredataContext)
@@ -179,7 +179,9 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedCarbs, as: [NigtscoutTreatment].self) ?? []
 
         let eventsManual = recent()
-            .filter { ($0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote) && $0.carbs > 0 }
+            .filter {
+                ($0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote || $0.enteredBy == CarbsEntry.shortcut) &&
+                    $0.carbs > 0 }
         let treatments = eventsManual.map {
             NigtscoutTreatment(
                 duration: nil,
@@ -189,7 +191,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 rate: nil,
                 eventType: .nsCarbCorrection,
                 createdAt: $0.actualDate ?? .distantPast,
-                enteredBy: CarbsEntry.manual,
+                enteredBy: $0.enteredBy ?? CarbsEntry.manual,
                 bolus: nil,
                 insulin: nil,
                 carbs: $0.carbs,
