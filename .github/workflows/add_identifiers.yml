@@ -16,7 +16,7 @@ jobs:
       
       # Checks-out the repo
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       
       # Ensure compatible Bundler version for Fastlane (fastlane requires bundler < 3)
       - name: Install Bundler 2.x
