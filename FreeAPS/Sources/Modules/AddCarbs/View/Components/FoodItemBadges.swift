@@ -178,49 +178,6 @@ struct NutritionBadgePlainStacked: View {
     }
 }
 
-struct TotalNutritionBadge: View {
-    let value: Decimal
-    let unit: Dimension?
-    let localizedLabel: String?
-    let color: Color
-
-    init(value: Decimal, unit: Dimension? = nil, localizedLabel: String? = nil, color: Color) {
-        self.value = value
-        self.unit = unit
-        self.localizedLabel = localizedLabel
-        self.color = color
-    }
-
-    var body: some View {
-        VStack {
-            HStack(spacing: 3) {
-                // Larger, bolder text for totals
-                Text("\(Double(value), specifier: "%.0f")")
-                    .font(.system(size: 17, weight: .bold, design: .rounded)) // Larger
-                    .foregroundColor(.primary)
-
-                if let unit = unit {
-                    Text(unit.symbol)
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .foregroundColor(.secondary)
-                }
-            }
-            HStack {
-                if let localizedLabel = localizedLabel {
-                    Text(localizedLabel)
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .foregroundColor(.secondary)
-                }
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 10) // More padding
-        .padding(.vertical, 8)
-        .background(color.opacity(0.2)) // Stronger color
-        .cornerRadius(10) // Slightly larger radius
-    }
-}
-
 struct ConfidenceBadge: View {
     let level: ConfidenceLevel
 

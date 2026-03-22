@@ -10,7 +10,6 @@ struct SearchResultsView: View {
     let continueButtonLabelKey: LocalizedStringKey
     let hypoTreatmentButtonLabelKey: LocalizedStringKey
 
-    @State private var clearedResultsViewState: SearchResultsState?
     @State private var selectedTime: Date?
     @State private var showTimePicker = false
     @State private var isDownloadingImage = false
@@ -43,30 +42,33 @@ struct SearchResultsView: View {
                     .padding(.top, 12)
                     .padding(.horizontal)
                 }
-                // Error message (only when not loading)
                 else if let latestSearchError = state.latestSearchError {
                     errorMessageBanner(message: latestSearchError, icon: state.latestSearchIcon)
                         .padding(.top, 12)
                         .padding(.horizontal)
                 }
 
-                // Undo button (shown after clearing, regardless of empty/non-empty state)
-                if clearedResultsViewState != nil {
-                    undoButton
-                }
-
-                VStack(alignment: .leading, spacing: 6) {
-                    if state.searchResultsState.hasVisibleContent {
+                if state.searchResultsState.nonDeletedItemCount > 0 {
+                    VStack(alignment: .leading, spacing: 10) {
                         mealTotalsView
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(Color(.systemGray5).opacity(0.5))
+                            )
+
+                        actionButtonRow
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 10)
                     }
-                    actionButtonRow
+                    .padding(.horizontal, 6)
+                    .padding(.top, 16)
+                    .padding(.bottom, 10)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 20)
             }
 
             if let savedFoods = state.savedFoods, state.showSavedFoods {
-                // Show saved foods inline
                 VStack(spacing: 0) {
                     FoodItemsSelectorView(
                         searchResult: savedFoods,
@@ -103,17 +105,6 @@ struct SearchResultsView: View {
                 searchResultsView
                     .transition(.opacity)
                     .scrollDismissesKeyboard(.immediately)
-            }
-        }
-        .onChange(of: state.searchResultsState.searchResults) {
-            // Only clear undo state if we have new visible content
-            let hasNewVisibleContent = !state.searchResultsState.searchResults.isEmpty &&
-                !state.searchResultsState.nonDeletedItems.isEmpty
-
-            if clearedResultsViewState != nil, hasNewVisibleContent {
-                withAnimation(.easeOut(duration: 0.2)) {
-                    clearedResultsViewState = nil
-                }
             }
         }
         .sheet(item: $state.latestMultipleSelectSearch) { searchResult in
@@ -197,7 +188,6 @@ struct SearchResultsView: View {
     private var actionButtonRow: some View {
         HStack(alignment: .center) {
             if state.searchResultsState.nonDeletedItemCount > 0 {
-                // Time picker button
                 Button(action: {
                     showTimePicker = true
                 }) {
@@ -220,11 +210,9 @@ struct SearchResultsView: View {
                 }
                 .buttonStyle(.plain)
                 .padding(.trailing, 8)
-            }
 
-            Spacer()
+                Spacer()
 
-            if state.searchResultsState.nonDeletedItemCount > 0 {
                 if let onHypoTreatment = self.onHypoTreatment {
                     Button(action: {
                         let combinedFoodItem = createCombinedFoodItem()
@@ -269,52 +257,29 @@ struct SearchResultsView: View {
     }
 
     private var mealTotalsView: some View {
-        VStack(spacing: 10) {
-            HStack {
-                Text("Meal Totals")
-                    .font(.caption)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.secondary)
-                Spacer()
-
-                // Clear All button
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        // Save current state for undo
-                        clearedResultsViewState = state.searchResultsState.copy()
-
-                        // Clear everything
-                        state.searchResultsState.clear()
-                        state.latestSearchError = nil
-                        state.latestSearchIcon = nil
-                    }
-                }) {
-                    Text("Clear All")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-            }
-
+        VStack(spacing: 12) {
             Button(action: {
                 showNutritionOverrideEditor = true
             }) {
                 HStack(spacing: 8) {
                     ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
-                        TotalNutritionBadge(
+                        NutritionBadgePlainStacked(
                             value: state.searchResultsState.total(nutrient),
                             localizedLabel: nutrient.localizedLabel,
                             color: nutrient.badgeColor
                         )
                         .id("\(nutrient.rawValue)-\(state.searchResultsState.total(nutrient))")
                         .transition(.scale.combined(with: .opacity))
+                        .scaleEffect(1.2)
                     }
-                    TotalNutritionBadge(
+                    NutritionBadgePlainStacked(
                         value: state.searchResultsState.totalCalories,
                         localizedLabel: UnitEnergy.kilocalories.symbol,
                         color: NutritionBadgeConfig.caloriesColor
                     )
                     .id("calories-\(state.searchResultsState.totalCalories)")
                     .transition(.scale.combined(with: .opacity))
+                    .scaleEffect(1.2)
                 }
             }
             .buttonStyle(.plain)
@@ -326,18 +291,10 @@ struct SearchResultsView: View {
                     showNutritionOverrideEditor = true
                 }) {
                     VStack(spacing: 6) {
-                        Divider()
-                            .padding(.vertical, 4)
-
-                        HStack {
-                            HStack(spacing: 4) {
-                                Image(systemName: "pencil.circle.fill")
-                                    .font(.caption2)
-                                    .foregroundColor(.orange)
-                                Text("Manual Adjustments")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-                            }
+                        HStack(spacing: 4) {
+                            Text("Manual Adjustments")
+                                .font(.caption2.smallCaps())
+                                .foregroundColor(.secondary)
                             Spacer()
                         }
 
@@ -360,28 +317,6 @@ struct SearchResultsView: View {
                 .buttonStyle(.plain)
             }
         }
-        .padding(.bottom, 12)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
-        )
-        .background(
-            LinearGradient(
-                colors: [
-                    Color(.systemGray6).opacity(0.5),
-                    Color(.systemGray6).opacity(0.3)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        )
-        .overlay(
-            Rectangle()
-                .frame(height: 0.5)
-                .foregroundColor(Color.gray.opacity(0.2)),
-            alignment: .bottom
-        )
         .contextMenu {
             Button {
                 saveMealTotalsAsFoodItem()
@@ -410,57 +345,6 @@ struct SearchResultsView: View {
 
         state.newFoodEntryToEdit = savedItem
         state.showNewSavedFoodEntry = true
-    }
-
-    private var undoButton: some View {
-        HStack(alignment: .center) {
-            Spacer()
-
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    // Restore cleared results and state
-                    if let savedState = clearedResultsViewState {
-                        state.searchResultsState.restore(from: savedState)
-                    }
-
-                    clearedResultsViewState = nil
-                }
-            }) {
-                HStack(spacing: 4) {
-                    Image(systemName: "arrow.uturn.backward")
-                        .font(.system(size: 13))
-                    Text("Undo Clear")
-                        .font(.subheadline)
-                }
-                .foregroundColor(.blue)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(.systemGray5))
-                )
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 20)
-        .background(
-            LinearGradient(
-                colors: [
-                    Color(.systemGray6).opacity(0.5),
-                    Color(.systemGray6).opacity(0.3)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        )
-        .overlay(
-            Rectangle()
-                .frame(height: 0.5)
-                .foregroundColor(Color.gray.opacity(0.2)),
-            alignment: .bottom
-        )
-        .transition(.move(edge: .top).combined(with: .opacity))
     }
 
     private func loadingBanner() -> some View {
