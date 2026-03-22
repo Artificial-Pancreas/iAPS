@@ -343,6 +343,10 @@ extension OverrideProfilesConfig {
                                 Text("Enable BG acceleration")
                             }
 
+                            Toggle(isOn: $state.autoISFsettings.autocr) {
+                                Text("Enable Auto CR")
+                            }
+
                             HStack {
                                 Text("Auto ISF Min")
                                 DecimalTextField(
@@ -728,6 +732,7 @@ extension OverrideProfilesConfig {
                         durationString != "" ? Text(durationString).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF {
                             bool(bool: aisf.autoisf, setting: state.currentSettings.autoisf, label: "Auto ISF")
+                            bool(bool: aisf.autocr, setting: state.currentSettings.autocr, label: "Auto CR")
                         }
 
                         if preset.glucoseOverrideThresholdActive || preset.glucoseOverrideThresholdActiveDown {

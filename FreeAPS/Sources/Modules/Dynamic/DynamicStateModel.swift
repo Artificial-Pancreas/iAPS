@@ -10,7 +10,6 @@ extension Dynamic {
         @Published var sigmoid: Bool = false
         @Published var adjustmentFactor: Decimal = 0.5
         @Published var weightPercentage: Decimal = 0.65
-        @Published var threshold_setting: Decimal = 65
         @Published var unit: GlucoseUnits = .mmolL
         @Published var averages: (isf: Double, cr: Double, days: Double)?
         @Published var aisf = false
@@ -28,28 +27,14 @@ extension Dynamic {
             weightPercentage = settings.preferences.weightPercentage
             averages = thirtyDaysAverages()
             aisf = settingsManager.settings.autoisf
-
-            if unit == .mmolL {
-                threshold_setting = settings.preferences.threshold_setting.asMmolL
-            } else {
-                threshold_setting = settings.preferences.threshold_setting
-            }
         }
 
         var unChanged: Bool {
             preferences.enableDynamicCR == enableDynamicCR &&
                 preferences.adjustmentFactor == adjustmentFactor &&
                 preferences.sigmoid == sigmoid &&
-                preferences.threshold_setting == convertBack(threshold_setting) &&
                 preferences.useNewFormula == useNewFormula &&
                 preferences.weightPercentage == weightPercentage
-        }
-
-        func convertBack(_ glucose: Decimal) -> Decimal {
-            if unit == .mmolL {
-                return glucose.asMgdL
-            }
-            return glucose
         }
 
         func saveIfChanged() {
@@ -58,7 +43,6 @@ extension Dynamic {
                 newSettings.enableDynamicCR = enableDynamicCR
                 newSettings.adjustmentFactor = adjustmentFactor
                 newSettings.sigmoid = sigmoid
-                newSettings.threshold_setting = convertBack(threshold_setting)
                 newSettings.useNewFormula = useNewFormula
                 newSettings.weightPercentage = weightPercentage
                 newSettings.timestamp = Date()
