@@ -41,8 +41,7 @@ struct SearchResultsView: View {
                     .background(Color(.secondarySystemGroupedBackground))
                     .padding(.top, 12)
                     .padding(.horizontal)
-                }
-                else if let latestSearchError = state.latestSearchError {
+                } else if let latestSearchError = state.latestSearchError {
                     errorMessageBanner(message: latestSearchError, icon: state.latestSearchIcon)
                         .padding(.top, 12)
                         .padding(.horizontal)
