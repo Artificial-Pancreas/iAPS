@@ -96,6 +96,7 @@ extension AddCarbs {
                     mealView
                 }
             }
+            .background(Color(.systemGroupedBackground))
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle(foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal")
