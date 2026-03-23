@@ -66,7 +66,7 @@ extension FoodItemGroup {
     var title: String {
         switch source {
         case .manual: NSLocalizedString("Manual entry", comment: "Section with manualy entered foods")
-        case .database: NSLocalizedString("Saved foods", comment: "Section with saved foods")
+        case .database: NSLocalizedString("Saved Foods", comment: "Section with saved foods")
         case .barcode: NSLocalizedString("Barcode scan", comment: "Section with bar code scan results")
         case .search: NSLocalizedString("Online database search", comment: "Section with online database search results")
         case .aiMenu,
