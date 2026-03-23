@@ -157,7 +157,11 @@ struct FoodItemsSelectorView: View {
                                 allExistingTags: allExistingTags
                             )
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            .listRowSeparator(index == filteredFoodItems.count - 1 ? .hidden : .visible)
+                            .listRowSeparator(.hidden, edges: .top)
+                            .listRowSeparator(
+                                index != filteredFoodItems.count - 1 ? .visible : .hidden,
+                                edges: .bottom
+                            )
                             .listRowBackground(useTransparentBackground ? Color.clear : Color(.systemGray6))
                         }
                     }
