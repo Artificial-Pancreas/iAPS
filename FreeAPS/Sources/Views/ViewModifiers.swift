@@ -257,7 +257,7 @@ struct HeaderBackground: View {
                     endPoint: .center
                 )
             }
-            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+            // .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: .black.opacity(0.35), radius: 20, x: 0, y: 10)
         } else {
             Rectangle()

@@ -91,36 +91,36 @@ struct CurrentGlucoseView: View {
         glucoseView
             .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xLarge)
     }
-    
-    // Test a floating compass View:
-    /*private var compass: some View {
-        glucoseView
-         .padding(12)
-         .background(
-             ZStack {
-                 Circle()
-                     .fill(
-                         RadialGradient(
-                             colors: [
-                                 Color.white.opacity(colorScheme == .dark ? 0.08 : 0.2),
-                                 Color.clear
-                             ],
-                             center: .center,
-                             startRadius: 10,:
-                             endRadius: 120
-                         )
-                     )
 
-                 Circle()
-                     .fill(.ultraThinMaterial)
-             }
-         )
-         .overlay(
-             Circle()
-                 .stroke(Color.white.opacity(0.08), lineWidth: 1)
-         )
-         .shadow(color: .black.opacity(0.4), radius: 12, y: 6)
-    }*/
+    // Test a floating compass View:
+    /* private var compass: some View {
+         glucoseView
+          .padding(12)
+          .background(
+              ZStack {
+                  Circle()
+                      .fill(
+                          RadialGradient(
+                              colors: [
+                                  Color.white.opacity(colorScheme == .dark ? 0.08 : 0.2),
+                                  Color.clear
+                              ],
+                              center: .center,
+                              startRadius: 10,:
+                              endRadius: 120
+                          )
+                      )
+
+                  Circle()
+                      .fill(.ultraThinMaterial)
+              }
+          )
+          .overlay(
+              Circle()
+                  .stroke(Color.white.opacity(0.08), lineWidth: 1)
+          )
+          .shadow(color: .black.opacity(0.4), radius: 12, y: 6)
+     } */
 
     var glucoseView: some View {
         ZStack {
