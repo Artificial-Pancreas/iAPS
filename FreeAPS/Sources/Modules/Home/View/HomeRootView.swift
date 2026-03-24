@@ -903,7 +903,27 @@ extension Home {
                         buttonPanel(geo)
                     }
                     .background(
-                        colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
+                        ZStack {
+                            (
+                                colorScheme == .light
+                                    ? IAPSconfig.homeViewBackgroundLight
+                                    : IAPSconfig.homeViewBackgrundDark
+                            )
+
+                            // Depth
+                            LinearGradient(
+                                colors: [
+                                    Color.white.opacity(colorScheme == .dark ? 0.05 : 0.15),
+                                    Color.clear
+                                ],
+                                startPoint: .top,
+                                endPoint: .center
+                            )
+
+                            Rectangle()
+                                .fill(.ultraThinMaterial)
+                                .opacity(colorScheme == .dark ? 0.25 : 0.1)
+                        }
                     )
                     .ignoresSafeArea(edges: .vertical)
                     .overlay {

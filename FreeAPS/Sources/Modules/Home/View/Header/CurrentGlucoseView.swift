@@ -91,6 +91,36 @@ struct CurrentGlucoseView: View {
         glucoseView
             .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xLarge)
     }
+    
+    // Test a floating compass View:
+    /*private var compass: some View {
+        glucoseView
+         .padding(12)
+         .background(
+             ZStack {
+                 Circle()
+                     .fill(
+                         RadialGradient(
+                             colors: [
+                                 Color.white.opacity(colorScheme == .dark ? 0.08 : 0.2),
+                                 Color.clear
+                             ],
+                             center: .center,
+                             startRadius: 10,:
+                             endRadius: 120
+                         )
+                     )
+
+                 Circle()
+                     .fill(.ultraThinMaterial)
+             }
+         )
+         .overlay(
+             Circle()
+                 .stroke(Color.white.opacity(0.08), lineWidth: 1)
+         )
+         .shadow(color: .black.opacity(0.4), radius: 12, y: 6)
+    }*/
 
     var glucoseView: some View {
         ZStack {
@@ -106,8 +136,11 @@ struct CurrentGlucoseView: View {
                         formatter
                             .string(from: Double(units == .mmolL ? $0.asMmolL : $0) as NSNumber) ?? "" })
                     {
-                        glucoseText(string).asAny()
+                        glucoseText(string)
+                            .asAny()
                             .background { glucoseDrop }
+                            .contentTransition(.numericText())
+                            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: recent.glucose)
                         if !scrolling {
                             let minutesAgo = timerDate.timeIntervalSince(recent.dateString) / 60
                             let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
@@ -227,7 +260,12 @@ struct CurrentGlucoseView: View {
                 }
                 .tracking(-1)
                 .offset(x: -2, y: 14)
-                .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
+                .foregroundStyle(
+                    alwaysUseColors
+                        ? colorOfGlucose
+                        : (alarm == nil ? Color.primary : Color.loopRed)
+                )
+                .shadow(color: .black.opacity(colorScheme == .dark ? 0.6 : 0.15), radius: 2, x: 0, y: 1)
             } else {
                 Text(string)
                     .font(scrolling ? .glucoseSmallFont : .glucoseFontMdDl.width(.condensed)) // .tracking(-2)

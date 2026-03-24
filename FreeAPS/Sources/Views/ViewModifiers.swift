@@ -231,11 +231,48 @@ struct TimeEllipse: View {
 struct HeaderBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
-        Rectangle()
-            .fill(
-                colorScheme == .light ? IAPSconfig.headerBackgroundLight : IAPSconfig.headerBackgroundDark
-            )
+        if colorScheme == .dark {
+            ZStack {
+                LinearGradient(
+                    colors: [
+                        Color(.systemBackground),
+                        Color(.secondarySystemBackground)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+
+                // Glass effect (?)
+                Rectangle()
+                    .fill(.ultraThinMaterial)
+                    .opacity(0.6)
+
+                // Hhighlight (depth)
+                LinearGradient(
+                    colors: [
+                        Color.white.opacity(0.08),
+                        Color.clear
+                    ],
+                    startPoint: .top,
+                    endPoint: .center
+                )
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+            .shadow(color: .black.opacity(0.35), radius: 20, x: 0, y: 10)
+        } else {
+            Rectangle()
+                .fill(IAPSconfig.headerBackgroundLight)
+        }
     }
+
+    /*
+     @Environment(\.colorScheme) var colorScheme
+     var body: some View {
+         Rectangle()
+             .fill(
+                 colorScheme == .light ? IAPSconfig.headerBackgroundLight : IAPSconfig.headerBackgroundDark
+             )
+     }*/
 }
 
 struct ClockOffset: View {

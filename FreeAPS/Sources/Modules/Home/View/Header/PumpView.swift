@@ -194,7 +194,17 @@ struct PumpView: View {
                         .resizable()
                         .rotationEffect(.degrees(-90))
                         .frame(maxWidth: 32, maxHeight: 12)
-                        .foregroundColor(batteryColor)
+                        // .foregroundColor(batteryColor)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [
+                                    batteryColor,
+                                    batteryColor.opacity(0.6)
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
                         .offset(x: -5, y: -0.7)
                 }
             }
