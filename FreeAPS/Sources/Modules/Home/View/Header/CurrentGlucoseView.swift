@@ -108,6 +108,8 @@ struct CurrentGlucoseView: View {
                     {
                         glucoseText(string).asAny()
                             .background { glucoseDrop }
+                            .contentTransition(.numericText())
+                            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: recent.glucose)
                         if !scrolling {
                             let minutesAgo = timerDate.timeIntervalSince(recent.dateString) / 60
                             let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
@@ -115,6 +117,7 @@ struct CurrentGlucoseView: View {
                                 minutesAgo <= 1 ? NSLocalizedString("Now", comment: "") :
                                     (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
                             )
+                            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: minutesAgo)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .offset(x: 1, y: fontSize >= .extraLarge ? -3 : 0)
