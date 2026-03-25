@@ -85,6 +85,7 @@ extension AddCarbs {
                 .onChange(of: shouldPreventDismiss) { syncDismissState() }
                 .onChange(of: foodSearchState.showSavedFoods) { syncDismissState() }
                 .onChange(of: carbPresets.count) { updateSavedFoods() }
+                .sheet(isPresented: $foodSearchState.showNewSavedFoodEntry) { foodItemEditorSheet }
         }
 
         @ViewBuilder private var content: some View {
@@ -110,6 +111,26 @@ extension AddCarbs {
                 continueButtonLabelKey: continueLabel,
                 hypoTreatmentButtonLabelKey: "Hypo Treatment"
             )
+        }
+
+        @ViewBuilder private var foodItemEditorSheet: some View {
+            FoodItemEditorSheet(
+                existingItem: foodSearchState.newFoodEntryToEdit,
+                title: NSLocalizedString("Create Saved Food", comment: ""),
+                allExistingTags: Set(foodSearchState.savedFoods?.foodItems.flatMap { $0.tags ?? [] } ?? []),
+                showTagsAndFavorite: true,
+                onSave: { foodItem in
+                    saveOrUpdatePreset(foodItem)
+                    foodSearchState.showNewSavedFoodEntry = false
+                    foodSearchState.newFoodEntryToEdit = nil
+                },
+                onCancel: {
+                    foodSearchState.showNewSavedFoodEntry = false
+                    foodSearchState.newFoodEntryToEdit = nil
+                }
+            )
+            .presentationDetents([.height(600), .large])
+            .presentationDragIndicator(.visible)
         }
 
         private var hypoHandler: ((FoodItemDetailed, UIImage?, Date?) -> Void)? {
@@ -270,10 +291,19 @@ extension AddCarbs {
 
         // Opens an edit-and-save View
         private func saveAsPreset() {
-            state.presetToEdit = Presets(context: moc)
-            newPreset = (NSLocalizedString("New", comment: ""), state.carbs, state.fat, state.protein)
-            state.edit = true
-            isPromptPresented.toggle() // Back to super View
+            foodSearchState.newFoodEntryToEdit = FoodItemDetailed(
+                name: "New",
+                nutrition: FoodNutrition.perServing(
+                    values: [
+                        .carbs: state.carbs,
+                        .protein: state.protein,
+                        .fat: state.fat
+                    ],
+                    servingsMultiplier: 1.0
+                ),
+                source: .manual
+            )
+            foodSearchState.showNewSavedFoodEntry = true
         }
 
         private func handleFoodContinue(_ food: FoodItemDetailed, _: UIImage?, date: Date?) {

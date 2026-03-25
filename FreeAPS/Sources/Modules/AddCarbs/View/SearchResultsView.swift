@@ -163,25 +163,6 @@ struct SearchResultsView: View {
             .presentationDetents([.height(600), .large])
             .presentationDragIndicator(.visible)
         }
-        .sheet(isPresented: $state.showNewSavedFoodEntry) {
-            FoodItemEditorSheet(
-                existingItem: state.newFoodEntryToEdit,
-                title: "Create Saved Food",
-                allExistingTags: Set(state.savedFoods?.foodItems.flatMap { $0.tags ?? [] } ?? []),
-                showTagsAndFavorite: true, // Show tags when creating a saved food
-                onSave: { foodItem in
-                    persistFoodItem(foodItem)
-                    state.showNewSavedFoodEntry = false
-                    state.newFoodEntryToEdit = nil
-                },
-                onCancel: {
-                    state.showNewSavedFoodEntry = false
-                    state.newFoodEntryToEdit = nil
-                }
-            )
-            .presentationDetents([.height(600), .large])
-            .presentationDragIndicator(.visible)
-        }
     }
 
     private var actionButtonRow: some View {
