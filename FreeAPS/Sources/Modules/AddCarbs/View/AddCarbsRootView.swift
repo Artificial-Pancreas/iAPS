@@ -72,6 +72,7 @@ extension AddCarbs {
                 .sheet(isPresented: $foodSearchState.showingSettings) {
                     FoodSearchSettingsView()
                 }
+                .sheet(isPresented: $isPromptPresented) { editView }
                 .confirmationDialog(
                     "Discard Meal?",
                     isPresented: $showCancelConfirmation,
@@ -213,6 +214,17 @@ extension AddCarbs {
                         }
                     }
                 }
+
+                if !empty {
+                    Button { saveAsPreset() }
+                    label: {
+                        Text("Save as preset").foregroundStyle(.orange)
+                    }
+                    .buttonStyle(.borderless)
+                    .listRowBackground(Color(.systemGroupedBackground))
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+
                 // Optional Hypo Treatment
                 if state.carbs > 0, let profile = state.id, profile != "None", state.carbsRequired != nil {
                     Section {
@@ -255,6 +267,14 @@ extension AddCarbs {
         }
 
         // MARK: - Helper Functions
+
+        // Opens an edit-and-save View
+        private func saveAsPreset() {
+            state.presetToEdit = Presets(context: moc)
+            newPreset = (NSLocalizedString("New", comment: ""), state.carbs, state.fat, state.protein)
+            state.edit = true
+            isPromptPresented.toggle() // Back to super View
+        }
 
         private func handleFoodContinue(_ food: FoodItemDetailed, _: UIImage?, date: Date?) {
             button.toggle()
@@ -585,6 +605,7 @@ extension AddCarbs {
                 } catch { debug(.apsManager, "Failed to save \(moc.updatedObjects)") }
             }
             state.edit = false
+            isPromptPresented.toggle()
         }
 
         private func update() {
