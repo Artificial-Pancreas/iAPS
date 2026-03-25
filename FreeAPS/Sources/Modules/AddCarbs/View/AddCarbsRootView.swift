@@ -62,124 +62,101 @@ extension AddCarbs {
         }()
 
         var body: some View {
+            content
+                .background(Color(.systemGroupedBackground))
+                .compactSectionSpacing()
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .navigationTitle(navigationTitle)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(leading: leadingNavItem, trailing: trailingNavItem)
+                .sheet(isPresented: $foodSearchState.showingSettings) {
+                    FoodSearchSettingsView()
+                }
+                .confirmationDialog(
+                    "Discard Meal?",
+                    isPresented: $showCancelConfirmation,
+                    titleVisibility: .visible,
+                    actions: cancelDialogActions,
+                    message: { Text("Do you want to discard this meal?") }
+                )
+                .onAppear(perform: handleOnAppear)
+                .onDisappear { mainState.shouldPreventModalDismiss = false }
+                .onChange(of: shouldPreventDismiss) { syncDismissState() }
+                .onChange(of: foodSearchState.showSavedFoods) { syncDismissState() }
+                .onChange(of: carbPresets.count) { updateSavedFoods() }
+        }
+
+        @ViewBuilder private var content: some View {
             VStack(spacing: 0) {
-                FoodSearchBar(state: foodSearchState).padding(.horizontal)
+                FoodSearchBar(state: foodSearchState)
+                    .padding(.horizontal)
 
                 if foodSearchState.showingFoodSearch {
-                    FoodSearchView(
-                        state: foodSearchState,
-                        onContinue: { selectedFood, _, date in
-                            button.toggle()
-                            if button {
-                                state.hypoTreatment = false
-                                state.addAIFood(override, fetch: editMode, food: selectedFood, date: date)
-                            }
-                        },
-                        onHypoTreatment: state.id != nil && state.id != "None" && state
-                            .carbsRequired != nil ? { selectedFood, _, date in
-                                button.toggle()
-                                if button {
-                                    state.hypoTreatment = true
-                                    state.addAIFood(override, fetch: editMode, food: selectedFood, date: date)
-                                }
-                            } : nil,
-                        onPersist: { food in
-                            saveOrUpdatePreset(food)
-                        },
-                        onDelete: { food in
-                            deletePreset(food)
-                        },
-                        continueButtonLabelKey: (state.skipBolus && !override && !editMode) ? "Save" : "Continue",
-                        hypoTreatmentButtonLabelKey: "Hypo Treatment"
-                    )
+                    foodSearchView
                 } else {
                     mealView
                 }
             }
-            .background(Color(.systemGroupedBackground))
-            .compactSectionSpacing()
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .navigationTitle(foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal")
-            .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: shouldPreventDismiss) {
-                mainState.shouldPreventModalDismiss = shouldPreventDismiss
-            }
-            .onChange(of: foodSearchState.showSavedFoods) {
-                mainState.shouldPreventModalDismiss = shouldPreventDismiss
-            }
-            .onAppear {
-                mainState.shouldPreventModalDismiss = shouldPreventDismiss
-            }
-            .onDisappear {
-                mainState.shouldPreventModalDismiss = false
-            }
-            .navigationBarItems(
-                leading:
-                Group {
-                    if foodSearchState.showSavedFoods {
-                        Button(action: {
-                            foodSearchState.showNewSavedFoodEntry = true
-                        }) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 16))
-                                Text("New")
-                                    .font(.body)
-                                    .fontWeight(.semibold)
-                            }
-                            .foregroundColor(.blue)
-                        }
-                    }
-                }
+        }
+
+        private var foodSearchView: some View {
+            FoodSearchView(
+                state: foodSearchState,
+                onContinue: handleFoodContinue,
+                onHypoTreatment: hypoHandler,
+                onPersist: saveOrUpdatePreset,
+                onDelete: deletePreset,
+                continueButtonLabelKey: continueLabel,
+                hypoTreatmentButtonLabelKey: "Hypo Treatment"
             )
-            .navigationBarItems(
-                trailing:
+        }
+
+        private var hypoHandler: ((FoodItemDetailed, UIImage?, Date?) -> Void)? {
+            guard state.id != nil,
+                  state.id != "None",
+                  state.carbsRequired != nil else { return nil }
+
+            return { food, _, date in
+                button.toggle()
+                guard button else { return }
+
+                state.hypoTreatment = true
+                state.addAIFood(override, fetch: editMode, food: food, date: date)
+            }
+        }
+
+        private var navigationTitle: String {
+            foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal"
+        }
+
+        @ViewBuilder private var leadingNavItem: some View {
+            if foodSearchState.showSavedFoods {
                 Button(action: {
-                    handleDismissAction()
+                    foodSearchState.showNewSavedFoodEntry = true
                 }) {
-                    Text(foodSearchState.showSavedFoods ? "Done" : "Cancel")
-                }
-            )
-            .sheet(isPresented: $foodSearchState.showingSettings) {
-                FoodSearchSettingsView()
-            }
-            .confirmationDialog(
-                "Discard Meal?",
-                isPresented: $showCancelConfirmation,
-                titleVisibility: .visible
-            ) {
-                Button("Discard", role: .destructive) {
-                    state.hideModal()
-                    if editMode { state.apsManager.determineBasalSync() }
-                }
-                Button("Cancel", role: .cancel) {}
-            } message: {
-                Text("Do you want to discard this meal?")
-            }
-            .onAppear {
-                state.loadEntries(editMode)
-                addMissingFoodIDs()
-                updateSavedFoods() // Initialize savedFoods on appear
-                if !meal {
-                    switch mode {
-                    case .image:
-                        foodSearchState.foodSearchRoute = .camera
-                        foodSearchState.showingFoodSearch = true
-                    case .barcode:
-                        foodSearchState.foodSearchRoute = .barcodeScanner
-                        foodSearchState.showingFoodSearch = true
-                    case .presets:
-                        presentPresets.toggle()
-                    case .search:
-                        foodSearchState.showingFoodSearch = true
-                    default:
-                        break
-                    }
+                    Label("New", systemImage: "plus.circle.fill")
+                        .font(.body.weight(.semibold))
+                        .foregroundColor(.blue)
                 }
             }
-            .onChange(of: carbPresets.count) {
-                updateSavedFoods()
+        }
+
+        private var trailingNavItem: some View {
+            Button(action: handleDismissAction) {
+                Text(foodSearchState.showSavedFoods ? "Done" : "Cancel")
             }
+        }
+
+        private var continueLabel: LocalizedStringKey {
+            (state.skipBolus && !override && !editMode) ? "Save" : "Continue"
+        }
+
+        @ViewBuilder private func cancelDialogActions() -> some View {
+            Button("Discard", role: .destructive) {
+                state.hideModal()
+                if editMode { state.apsManager.determineBasalSync() }
+            }
+            Button("Cancel", role: .cancel) {}
         }
 
         private var mealView: some View {
@@ -278,6 +255,46 @@ extension AddCarbs {
         }
 
         // MARK: - Helper Functions
+
+        private func handleFoodContinue(_ food: FoodItemDetailed, _: UIImage?, date: Date?) {
+            button.toggle()
+            guard button else { return }
+
+            state.hypoTreatment = false
+            state.addAIFood(override, fetch: editMode, food: food, date: date)
+        }
+
+        private func handleOnAppear() {
+            syncDismissState()
+
+            state.loadEntries(editMode)
+            addMissingFoodIDs()
+            updateSavedFoods()
+
+            guard !meal else { return }
+
+            switch mode {
+            case .image:
+                showFoodSearch(.camera)
+            case .barcode:
+                showFoodSearch(.barcodeScanner)
+            case .presets:
+                presentPresets.toggle()
+            case .search:
+                foodSearchState.showingFoodSearch = true
+            default:
+                break
+            }
+        }
+
+        private func syncDismissState() {
+            mainState.shouldPreventModalDismiss = shouldPreventDismiss
+        }
+
+        private func showFoodSearch(_ route: FoodSearchRoute) {
+            foodSearchState.foodSearchRoute = route
+            foodSearchState.showingFoodSearch = true
+        }
 
         @ViewBuilder private func proteinAndFat() -> some View {
             HStack {
