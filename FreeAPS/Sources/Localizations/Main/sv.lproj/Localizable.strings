@@ -1412,7 +1412,7 @@ Enact a temp Basal or a temp target */
 
 "Serving Size" = "Portionsstorlek";
 
-"Standard Serving" = "Standard Serving";
+"Standard Serving" = "Standardportion";
 
 "Food Name" = "Matnamn";
 
@@ -1482,7 +1482,7 @@ Enact a temp Basal or a temp target */
 
 "**Text/Voice Search:**" = "**Text/Ljud-sökning:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Gratis, öppen databas med omfattande streckkodsdata och textsökning för förpackade livsmedel. Standard för text- och streckkodssökningar.";
 
 "AI Progress Animation" = "AI-progessanimering";
 
@@ -1536,7 +1536,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-nyckel";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Skaffa en API-nyckel på platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) - konfiguration";
 
@@ -1544,17 +1544,17 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Google Gemini API-nyckel";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Skaffa en API-nyckel på ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) - konfiguration";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Skaffa en API-nyckel på ai.google.dev.";
 
 "Enter your Claude API key" = "Ange din Claude API-nyckel";
 
 "Claude API Key" = "Claude API-nyckel";
 
-"Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
+"Get an API key at console.anthropic.com." = "Skaffa en API-nyckel på console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Antropisk (Claude API) konfiguration";
 
@@ -1732,7 +1732,7 @@ Enact a temp Basal or a temp target */
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis, officiell näringsdatabas. Överlägsen näringsdata för icke-förpackade livsmedel som frukt, grönsaker och kött.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Gratis, öppen databas med omfattande streckkodsdata och textsökning för förpackade livsmedel. Standard för text- och streckkodssökningar.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Om du väljer 'OpenFoodFacts' eller 'USDA', kommer kameraanalys att använda grundläggande uppskattning istället för AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Välj 'Anthropic (Claude API)', 'Google (Gemini API)' eller 'OpenAI (ChatGPT API)' för AI bildanalys för att använda dina betalda nycklar";
@@ -1754,7 +1754,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-nyckel";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Skaffa en API-nyckel på platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) - konfiguration";
 
@@ -1768,7 +1768,7 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Google Gemini API-nyckel";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Skaffa en API-nyckel på ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) - konfiguration";
 
@@ -1964,9 +1964,9 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Kal";
 
-"servings" = "servings";
+"servings" = "portioner";
 
-"serving" = "serving";
+"serving" = "portion";
 
 "Reset to " = "Återställ till ";
 
@@ -3926,11 +3926,11 @@ Enact a temp Basal or a temp target */
 
 "Fiber" = "Fiber";
 
-"Sugars" = "Sugars";
+"Sugars" = "Socker";
 
-"Search Results" = "Search Results";
+"Search Results" = "Sökresultat";
 
-"Results for" = "Results for";
+"Results for" = "Resultat för";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Complete Meal";
+"Complete Meal" = "Fullständig måltid";
