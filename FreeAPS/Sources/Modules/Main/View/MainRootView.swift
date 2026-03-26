@@ -19,9 +19,13 @@ extension Main {
         var body: some View {
             router.view(for: .home)
                 .sheet(isPresented: $state.isModalPresented) {
-                    NavigationView { self.state.modal!.view }
-                        .navigationViewStyle(StackNavigationViewStyle())
-                        .environment(\.colorScheme, colorScheme)
+                    NavigationView {
+                        self.state.modal!.view
+                            .environmentObject(state)
+                    }
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .interactiveDismissDisabled(state.shouldPreventModalDismiss)
+                    .environment(\.colorScheme, colorScheme)
                 }
                 .sheet(isPresented: $state.isSecondaryModalPresented) {
                     state.secondaryModalView ?? EmptyView().asAny()

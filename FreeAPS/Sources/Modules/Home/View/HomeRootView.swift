@@ -310,16 +310,14 @@ extension Home {
                                 label: { Label("Meal Presets", systemImage: "menucard")
                                 }
                                 Button {
-                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .search)) }
-                                label: { Label("Search", systemImage: "network")
-                                }
-                                Button {
                                     state.showModal(for: .addCarbs(editMode: false, override: false, mode: .barcode)) }
                                 label: { Label("Barcode", systemImage: "barcode.viewfinder")
                                 }
-                                Button {
-                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .image)) }
-                                label: { Label("AI Image Analysis", systemImage: "photo.badge.magnifyingglass")
+                                if state.ai {
+                                    Button {
+                                        state.showModal(for: .addCarbs(editMode: false, override: false, mode: .image)) }
+                                    label: { Label("AI Image Analysis", systemImage: "photo.badge.magnifyingglass")
+                                    }
                                 }
                                 Button {
                                     state.showModal(for: .addCarbs(editMode: false, override: false, mode: .meal)) }

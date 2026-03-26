@@ -100,12 +100,12 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                     }
 
                     let sessionStartDate = sensorSessionStart.sessionStartDate
-                    // When a new Dexcom sensor is started, it produces multiple consecutive
-                    // startDates with sub-second jitter due to activationDate being recomputed
-                    // from the BLE clock on every session. Only append if no existing entry
-                    // is within 60 seconds of this one, to avoid flooding Nightscout with
-                    // thousands of duplicate "Sensor Start" treatments.
-                    // See: https://github.com/Artificial-Pancreas/iAPS/issues/XXXX
+                    // For Dexcom, each glucose event contains the sessionStartDate (which contains the correct timestamp of the latest sensor start)
+                    // We only need to send the "Sensor Start" event once per change.
+                    // This guard ensures we send a new "Sensor Start" event to NS only if the previously sent event happened more than 60 seconds before this one.
+                    //
+                    // As a side effect, if there is jitter in the sessionStartDate (+/- few milliseconds each time), we will flood NS with the duplicated Session Start events over time.
+                    // See: https://github.com/Artificial-Pancreas/iAPS/issues/1806
                     if let lastTreatment = treatments.last,
                        let lastCreatedAt = lastTreatment.createdAt,
                        let sessionStart = sessionStartDate,

@@ -1491,7 +1491,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Available Search Providers:" = "Beschikbare zoekdiensten:";
 
-"Provider Information" = "Provider-informatie";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Selecteer 'Anthropic (Claude API)', 'Google (Gemini API)', of 'OpenAI (ChatGPT API)' voor AI Image Analyse om je betaalde sleutels te gebruiken";
 
@@ -1762,7 +1761,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Available Search Providers:" = "Beschikbare zoekdiensten:";
 
-"Provider Information" = "Provider-informatie";
 
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Als u 'OpenFoodFacts' of 'USDA' selecteert, zal de camera analyse gebruik maken van basisschattingen in plaats van AI";
 
@@ -2002,9 +2000,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Cal" = "Cal";
 
-" servings" = "porties";
+"servings" = "porties";
 
-" serving" = "portie";
+"serving" = "portie";
 
 "Reset to " = "Herstellen naar ";
 
@@ -2856,9 +2854,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Geef insuline activiteitenoverzicht weer";
-
-/* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Vraag niet om het zoekresultaat op te slaan als maaltijd preset";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 

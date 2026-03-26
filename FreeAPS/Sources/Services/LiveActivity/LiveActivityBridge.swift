@@ -166,6 +166,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
         injectServices(resolver)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(EnactedSuggestionObserver.self, observer: self)
+        broadcaster.register(PumpHistoryObserver.self, observer: self)
 
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didEnterBackgroundNotification,
@@ -331,7 +332,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
 
 extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, PumpHistoryObserver {
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
-        iob = CoreDataStorage().fetchInsulinData(interval: DateFilter().oneHour).first?.iob
+        iob = coreDataStorage.fetchInsulinData(interval: DateFilter().oneHour).first?.iob
     }
 
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
@@ -347,8 +348,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
         }
         defer { self.suggestion = suggestion }
 
-        let cd = CoreDataStorage()
-        let glucose = cd.fetchGlucose(interval: DateFilter().threeHours)
+        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter().threeHours)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
@@ -358,7 +358,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             suggestion: suggestion,
             iob: suggestion.iob,
             loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
-                (cd.fetchLastLoop()?.timestamp ?? .distantPast),
+                (coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast),
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
@@ -386,8 +386,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
         }
         defer { self.suggestion = suggestion }
 
-        let cd = CoreDataStorage()
-        let glucose = cd.fetchGlucose(interval: DateFilter().threeHours)
+        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter().threeHours)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
@@ -396,7 +395,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             mmol: settings.units == .mmolL,
             suggestion: suggestion,
             iob: suggestion.iob,
-            loopDate: settings.closedLoop ? (cd.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion
+            loopDate: settings.closedLoop ? (coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion
                 .timestamp ?? .distantPast,
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
