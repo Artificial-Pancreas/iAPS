@@ -25,7 +25,6 @@ extension AddCarbs {
         @Published var hypoTreatment = false
         @Published var presetToEdit: Presets?
         @Published var edit = false
-        @Published var ai = false
         @Published var skipSave = false
 
         @Published var combinedPresets: [(preset: Presets?, portions: Double)] = []
@@ -41,7 +40,6 @@ extension AddCarbs {
             maxCarbs = settings.settings.maxCarbs
             skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
             useFPUconversion = settingsManager.settings.useFPUconversion
-            ai = settingsManager.settings.ai
             skipSave = settingsManager.settings.skipSave
         }
 
