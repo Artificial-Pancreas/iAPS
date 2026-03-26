@@ -1566,7 +1566,6 @@ Enact a temp Basal or a temp target */
 
 "Provider for AI Image Analysis" = "Provider for AI Image Analysis";
 
-"Configure which service handles each type of food search." = "Configure which service handles each type of food search.";
 
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
 
@@ -2815,9 +2814,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Display Insulin Activity Chart";
-
-/* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Don't ask for saving search result as meal preset";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 

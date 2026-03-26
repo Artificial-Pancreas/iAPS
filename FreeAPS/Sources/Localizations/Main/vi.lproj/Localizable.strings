@@ -2854,9 +2854,6 @@ Enact a temp Basal or a temp target */
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Hiển thị biểu đồ hoạt động của insulin";
 
-/* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Không yêu cầu lưu kết quả tìm kiếm làm bữa ăn mẫu";
-
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "Cấu hình CGM";

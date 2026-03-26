@@ -70,7 +70,7 @@ extension AddCarbs {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(leading: leadingNavItem, trailing: trailingNavItem)
                 .sheet(isPresented: $foodSearchState.showingSettings) {
-                    FoodSearchSettingsView()
+                    FoodSearchSettingsView(state: state)
                 }
                 .sheet(isPresented: $isPromptPresented) { editView }
                 .confirmationDialog(
@@ -90,7 +90,7 @@ extension AddCarbs {
 
         @ViewBuilder private var content: some View {
             VStack(spacing: 0) {
-                FoodSearchBar(state: foodSearchState)
+                FoodSearchBar(rootState: state, state: foodSearchState)
                     .padding(.horizontal)
 
                 if foodSearchState.showingFoodSearch {
@@ -326,7 +326,9 @@ extension AddCarbs {
 
             switch mode {
             case .image:
-                showFoodSearch(.camera)
+                if state.ai {
+                    showFoodSearch(.camera)
+                }
             case .barcode:
                 showFoodSearch(.barcodeScanner)
             case .presets:

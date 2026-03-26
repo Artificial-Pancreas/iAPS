@@ -67,7 +67,7 @@ import SwiftUI
 
     func enterBarcodeAndSearch(barcode: String) {
         foodSearchText = barcode
-        searchByText(query: barcode)
+        searchByText(query: barcode, useAI: false)
     }
 
     func startImageAnalysis(image: UIImage, comment: String?) {
@@ -134,7 +134,7 @@ import SwiftUI
         return created.firstObject
     }
 
-    func searchByText(query: String) {
+    func searchByText(query: String, useAI: Bool) {
         let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard trimmedQuery.isNotEmpty else {
             return
@@ -144,7 +144,7 @@ import SwiftUI
 
         if isBarcode {
             startBarcodeSearch(barcode: trimmedQuery)
-        } else if aiTextAnalysis {
+        } else if aiTextAnalysis, useAI {
             startAIAnalysis(analysisRequest: .query(trimmedQuery))
         } else {
             startTextSearch(query: trimmedQuery)

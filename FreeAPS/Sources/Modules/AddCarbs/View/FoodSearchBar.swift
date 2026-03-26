@@ -3,6 +3,7 @@ import PhotosUI
 import SwiftUI
 
 struct FoodSearchBar: View {
+    @ObservedObject var rootState: AddCarbs.StateModel
     @ObservedObject var state: FoodSearchStateModel
     @State private var showPhotoPicker = false
     @State private var selectedPhotoItem: PhotosPickerItem?
@@ -11,13 +12,28 @@ struct FoodSearchBar: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack(spacing: 10) {
-                if !state.showSavedFoods {
+                if state.showSavedFoods {
+                    Image(systemName: FoodItemSource.database.icon)
+                        .font(.system(size: 18, weight: .medium))
+                        .frame(width: 36, height: 36)
+                        .foregroundColor(.secondary)
+                } else if state.isBarcode {
+                    Image(systemName: FoodItemSource.barcode.icon)
+                        .font(.system(size: 18, weight: .medium))
+                        .frame(width: 36, height: 36)
+                        .foregroundColor(.secondary)
+                } else if !rootState.ai {
+                    Image(systemName: FoodItemSource.search.icon)
+                        .font(.system(size: 18, weight: .medium))
+                        .frame(width: 36, height: 36)
+                        .foregroundColor(.secondary)
+                } else {
+                    // ai/search toggle
                     Button {
                         state.aiTextAnalysis.toggle()
                     } label: {
                         Image(
-                            systemName: state.isBarcode ? FoodItemSource.barcode
-                                .icon : (state.aiTextAnalysis ? FoodItemSource.aiText.icon : FoodItemSource.search.icon)
+                            systemName: state.aiTextAnalysis ? FoodItemSource.aiText.icon : FoodItemSource.search.icon
                         )
                         .font(.system(size: 18, weight: .medium))
                         .foregroundColor(state.isBarcode ? .blue.opacity(0.5) : (state.aiTextAnalysis ? .purple : .blue))
@@ -25,35 +41,45 @@ struct FoodSearchBar: View {
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .fill(
-                                    (state.isBarcode ? Color.blue : (state.aiTextAnalysis ? Color.purple : Color.blue))
-                                        .opacity(0.12)
+                                    (state.aiTextAnalysis ? Color.purple : Color.blue).opacity(0.12)
                                 )
                         )
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .disabled(state.isBarcode)
-                } else {
-                    Image(systemName: FoodItemSource.database.icon)
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.secondary)
                 }
 
                 HStack(spacing: 10) {
-                    DismissableTextField(
-                        state
-                            .showSavedFoods ? "Search saved foods..." :
-                            (state.aiTextAnalysis ? "Ask AI..." : "Search foods..."),
-                        text: $state.foodSearchText,
-                        textFieldDidBeginEditing: {
-                            state.showingFoodSearch = true
-                        },
-                        returnKeyType: .search,
-                        liveEditing: true,
-                        onSubmit: {
-                            state.searchByText(query: state.foodSearchText)
-                            state.showingFoodSearch = true
+                    ZStack {
+                        if state.foodSearchText.isEmpty {
+                            // "fake" placeholder; TODO: fix DismissableTextField to update the placeholder dynamically
+                            HStack {
+                                Text(
+                                    state
+                                        .showSavedFoods ? NSLocalizedString("Search saved foods...", comment: "") :
+                                        (
+                                            rootState.ai && state.aiTextAnalysis ?
+                                                NSLocalizedString("Ask AI...", comment: "") :
+                                                NSLocalizedString("Search foods...", comment: "")
+                                        )
+                                )
+                                .foregroundStyle(.secondary.opacity(0.5))
+                                Spacer()
+                            }
                         }
-                    )
+                        DismissableTextField(
+                            "",
+                            text: $state.foodSearchText,
+                            textFieldDidBeginEditing: {
+                                state.showingFoodSearch = true
+                            },
+                            returnKeyType: .search,
+                            liveEditing: true,
+                            onSubmit: {
+                                state.searchByText(query: state.foodSearchText, useAI: rootState.ai)
+                                state.showingFoodSearch = true
+                            }
+                        )
+                    }
 
                     if !state.foodSearchText.isEmpty {
                         Button(action: {
@@ -145,62 +171,64 @@ struct FoodSearchBar: View {
                         }
                         .buttonStyle(PlainButtonStyle())
 
-                        Image(systemName: "camera.fill")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.purple)
-                            .frame(width: 46, height: 46)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(Color.purple.opacity(0.12))
-                            )
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                UIApplication.shared.endEditing()
-                                state.foodSearchRoute = .camera
-                                state.showingFoodSearch = true
-                            }
-                            .contextMenu {
-                                Button {
+                        if rootState.ai {
+                            Image(systemName: "camera.fill")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.purple)
+                                .frame(width: 46, height: 46)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .fill(Color.purple.opacity(0.12))
+                                )
+                                .contentShape(Rectangle())
+                                .onTapGesture {
                                     UIApplication.shared.endEditing()
                                     state.foodSearchRoute = .camera
                                     state.showingFoodSearch = true
-                                } label: {
-                                    Label("Take Photo", systemImage: "camera")
                                 }
+                                .contextMenu {
+                                    Button {
+                                        UIApplication.shared.endEditing()
+                                        state.foodSearchRoute = .camera
+                                        state.showingFoodSearch = true
+                                    } label: {
+                                        Label("Take Photo", systemImage: "camera")
+                                    }
 
-                                Button {
-                                    UIApplication.shared.endEditing()
-                                    showPhotoPicker = true
-                                    state.showingFoodSearch = true
-                                } label: {
-                                    Label("Choose from Library", systemImage: "photo.on.rectangle")
+                                    Button {
+                                        UIApplication.shared.endEditing()
+                                        showPhotoPicker = true
+                                        state.showingFoodSearch = true
+                                    } label: {
+                                        Label("Choose from Library", systemImage: "photo.on.rectangle")
+                                    }
+
+                                    Divider()
+
+                                    Button {
+                                        UIApplication.shared.endEditing()
+                                        state.forceShowCommentForNextImage = true
+                                        state.foodSearchRoute = .camera
+                                        state.showingFoodSearch = true
+                                    } label: {
+                                        Label("Photo (+ comment)", systemImage: "camera.badge.ellipsis")
+                                    }
+
+                                    Button {
+                                        UIApplication.shared.endEditing()
+                                        state.forceShowCommentForNextImage = true
+                                        showPhotoPicker = true
+                                        state.showingFoodSearch = true
+                                    } label: {
+                                        Label("Library (+ comment)", systemImage: "square.and.pencil")
+                                    }
                                 }
-
-                                Divider()
-
-                                Button {
-                                    UIApplication.shared.endEditing()
-                                    state.forceShowCommentForNextImage = true
-                                    state.foodSearchRoute = .camera
-                                    state.showingFoodSearch = true
-                                } label: {
-                                    Label("Photo (+ comment)", systemImage: "camera.badge.ellipsis")
-                                }
-
-                                Button {
-                                    UIApplication.shared.endEditing()
-                                    state.forceShowCommentForNextImage = true
-                                    showPhotoPicker = true
-                                    state.showingFoodSearch = true
-                                } label: {
-                                    Label("Library (+ comment)", systemImage: "square.and.pencil")
-                                }
-                            }
-                            .photosPicker(
-                                isPresented: $showPhotoPicker,
-                                selection: $selectedPhotoItem,
-                                matching: .images
-                            )
+                                .photosPicker(
+                                    isPresented: $showPhotoPicker,
+                                    selection: $selectedPhotoItem,
+                                    matching: .images
+                                )
+                        }
                     }
                 }
             }
