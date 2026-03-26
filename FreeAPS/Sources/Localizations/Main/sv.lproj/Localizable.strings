@@ -1490,7 +1490,6 @@ Enact a temp Basal or a temp target */
 
 "Available Search Providers:" = "Tillgängliga sökleverantörer:";
 
-"Provider Information" = "Information om leverantör";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Välj 'Anthropic (Claude API)', 'Google (Gemini API)' eller 'OpenAI (ChatGPT API)' för AI bildanalys för att använda dina betalda nycklar";
 
@@ -1761,7 +1760,6 @@ Enact a temp Basal or a temp target */
 
 "Available Search Providers:" = "Tillgängliga sökleverantörer:";
 
-"Provider Information" = "Information om leverantör";
 
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Om du väljer 'OpenFoodFacts' eller 'USDA', kommer kameraanalys att använda grundläggande uppskattning istället för AI";
 
@@ -2001,9 +1999,9 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Kal";
 
-" servings" = "portioner";
+"servings" = "portioner";
 
-" serving" = "portion";
+"serving" = "portion";
 
 "Reset to " = "Återställ till ";
 
@@ -2855,9 +2853,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Visa diagram för insulinaktivitet";
-
-/* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Fråga inte om att spara sökresultat som förval";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 

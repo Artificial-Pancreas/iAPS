@@ -2,10 +2,8 @@ import AVFoundation
 import Combine
 import SwiftUI
 
-/// SwiftUI view for barcode scanning with camera preview and overlay
 struct BarcodeScannerView: View {
     @ObservedObject private var scannerService = BarcodeScannerService.shared
-    @Environment(\.presentationMode) var presentationMode
     @Environment(\.dismiss) private var dismiss
 
     let onBarcodeScanned: (String) -> Void
@@ -13,267 +11,154 @@ struct BarcodeScannerView: View {
 
     @State private var showingPermissionAlert = false
     @State private var cancellables = Set<AnyCancellable>()
-    @State private var scanningStage: ScanningStage = .initializing
-    @State private var progressValue: Double = 0.0
-
-    enum ScanningStage: LocalizedStringKey, CaseIterable {
-        case initializing = "Initializing camera..."
-        case positioning = "Position camera over barcode or QR code"
-        case scanning = "Scanning for barcode or QR code..."
-        case detected = "Code detected!"
-        case validating = "Validating format..."
-        case lookingUp = "Looking up product..."
-        case found = "Product found!"
-        case error = "Scan failed"
-    }
+    @State private var deviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
+    @State private var torchIsOn = false
+    @State private var barcodeDetected = false
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                // Camera preview background
-                CameraPreviewView(scanner: scannerService)
-                    .edgesIgnoringSafeArea(.all)
+        ZStack {
+            // Camera preview — full screen including safe areas
+            CameraPreviewView(scanner: scannerService)
+                .ignoresSafeArea()
 
-                // Scanning overlay with proper safe area handling
-                scanningOverlay(geometry: geometry)
+            // Dimmed overlay with transparent cutout — also full screen
+            dimmingOverlay
+                .ignoresSafeArea()
 
-                // Error overlay
-                if let error = scannerService.scanError {
-                    errorOverlay(error: error)
-                }
+            // Scanning frame + hint label, centered on screen
+            VStack(spacing: 16) {
+                scanningFrame
+                Text("Position the barcode within the frame")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.9))
+                    .opacity(scannerService.isScanning ? 1 : 0)
             }
-        }
-        .ignoresSafeArea(.container, edges: .bottom)
-        .navigationBarTitle("Scan Barcode", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel") {
-                    print("🎥 ========== Cancel button tapped ==========")
-                    print("🎥 Stopping scanner...")
-                    scannerService.stopScanning()
 
-                    print("🎥 Calling onCancel callback...")
-                    onCancel()
-
-                    print("🎥 Attempting to dismiss view...")
-                    // Try multiple dismiss approaches
-                    DispatchQueue.main.async {
-                        if #available(iOS 15.0, *) {
-                            print("🎥 Using iOS 15+ dismiss()")
-                            dismiss()
-                        } else {
-                            print("🎥 Using presentationMode dismiss()")
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }
-
-                    print("🎥 Cancel button action complete")
-                }
-                .foregroundColor(.white)
+            // Error card — shown when the service reports an error
+            if let error = scannerService.scanError {
+                errorOverlay(for: error)
+                    .rotationEffect(controlRotation)
+                    .animation(.easeInOut(duration: 0.3), value: deviceOrientation)
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+
+            // UI chrome: torch top-right, cancel bottom-center, safe-area aware
+            VStack(spacing: 0) {
                 HStack {
-                    Button("Retry") {
-                        print("🎥 Retry button tapped")
-                        scannerService.resetSession()
-                        setupScanner()
-                    }
-                    .foregroundColor(.white)
-
-                    flashlightButton
+                    Spacer()
+                    torchButton
+                        .rotationEffect(controlRotation)
+                        .animation(.easeInOut(duration: 0.3), value: deviceOrientation)
                 }
+                .padding(.top, 12)
+                .padding(.horizontal, 20)
+
+                Spacer()
+
+                Button {
+                    scannerService.stopScanning()
+                    onCancel()
+                    dismiss()
+                } label: {
+                    Text("Cancel")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(minWidth: 120)
+                        .padding(.vertical, 14)
+                        .background(.ultraThinMaterial, in: Capsule())
+                }
+                .rotationEffect(controlRotation)
+                .animation(.easeInOut(duration: 0.3), value: deviceOrientation)
+                .padding(.bottom, 28)
             }
+            .safeAreaPadding()
         }
         .onAppear {
-            print("🎥 ========== BarcodeScannerView.onAppear() ==========")
-            print("🎥 Current thread: \(Thread.isMainThread ? "MAIN" : "BACKGROUND")")
-
-            // Clear any existing observers first to prevent duplicates
             cancellables.removeAll()
-
-            // Check if we can reuse existing session or need to reset
             if scannerService.hasExistingSession && !scannerService.isScanning {
-                print("🎥 Scanner has existing session but not running, attempting quick restart...")
-                // Try to restart existing session first
                 scannerService.startScanning()
-                setupScannerAfterReset()
+                observeResults()
             } else if scannerService.hasExistingSession {
-                print("🎥 Scanner has existing session and is running, performing reset...")
                 scannerService.resetService()
-
-                // Wait a moment for reset to complete before proceeding (reduced delay)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.setupScannerAfterReset()
+                    setupScannerAfterReset()
                 }
             } else {
                 setupScannerAfterReset()
             }
-
-            print("🎥 BarcodeScannerView onAppear setup complete")
-
-            // Start scanning stage progression
-            simulateScanningStages()
         }
         .onDisappear {
             scannerService.stopScanning()
         }
+        .onReceive(scannerService.$lastScanResult) { result in
+            guard result != nil else { return }
+            withAnimation(.easeInOut(duration: 0.15)) { barcodeDetected = true }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.easeInOut(duration: 0.2)) { barcodeDetected = false }
+            }
+        }
+        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+            let new = UIDevice.current.orientation
+            if new.isValidInterfaceOrientation {
+                withAnimation(.easeInOut(duration: 0.3)) { deviceOrientation = new }
+            }
+        }
         .alert(isPresented: $showingPermissionAlert) {
-            permissionAlert
+            Alert(
+                title: Text("Camera Access Required"),
+                message: Text("iAPS needs camera access to scan barcodes. Please enable it in Settings."),
+                primaryButton: .default(Text("Open Settings")) { openSettings() },
+                secondaryButton: .cancel()
+            )
         }
-        // .supportedInterfaceOrientations(.all)
     }
 
-    // MARK: - Subviews
+    // MARK: - Dimming Overlay
 
-    private func scanningOverlay(geometry: GeometryProxy) -> some View {
-        // Calculate the actual camera preview area
-        let cameraPreviewArea = calculateActualCameraPreviewArea(geometry: geometry)
-
-        // Position the cutout at the center of the actual camera preview
-        let cutoutCenter = CGPoint(
-            x: cameraPreviewArea.midX,
-            y: cameraPreviewArea.midY
-        )
-
-        // Position the white frame with fine-tuning offset
-        let finetuneOffset: CGFloat = 0 // Adjust this value to fine-tune white frame positioning
-        let whiteFrameCenter = CGPoint(
-            x: cameraPreviewArea.midX,
-            y: cameraPreviewArea.midY - 55
-
-            // Positive values (like +10) move the frame DOWN
-            // Negative values (like -10) move the frame UP
-        )
-
-        return ZStack {
-            // Full screen semi-transparent overlay with cutout
-            Rectangle()
-                .fill(Color.black.opacity(0.5))
-                .mask(
-                    Rectangle()
-                        .overlay(
-                            Rectangle()
-                                .frame(width: 250, height: 150)
-                                .position(cutoutCenter)
-                                .blendMode(.destinationOut)
-                        )
-                )
-                .edgesIgnoringSafeArea(.all)
-
-            // Progress feedback at the top
-            VStack {
-                ProgressiveScanFeedback(
-                    stage: scanningStage,
-                    progress: progressValue
-                )
-                .padding(.top, 20)
-
-                Spacer()
-            }
-
-            // Scanning frame positioned at center of camera preview area
-            ZStack {
+    /// Full-screen dim layer with a transparent rounded cutout for the scanning area.
+    private var dimmingOverlay: some View {
+        Color.black.opacity(0.55)
+            .mask(
                 Rectangle()
-                    .stroke(scanningStage == .detected ? Color.green : Color.white, lineWidth: scanningStage == .detected ? 3 : 2)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 250, height: 150)
+                            .blendMode(.destinationOut)
+                    )
+            )
+    }
+
+    // MARK: - Scanning Frame
+
+    private var scanningFrame: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(
+                    barcodeDetected ? Color.green : Color.white,
+                    lineWidth: barcodeDetected ? 3 : 1.5
+                )
+                .frame(width: 250, height: 150)
+                .animation(.easeInOut(duration: 0.15), value: barcodeDetected)
+
+            if barcodeDetected {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 32, weight: .semibold))
+                    .foregroundColor(.green)
+                    .transition(.scale(scale: 0.5).combined(with: .opacity))
+            } else if scannerService.isScanning {
+                AnimatedScanLine()
                     .frame(width: 250, height: 150)
-                    .animation(.easeInOut(duration: 0.3), value: scanningStage)
-
-                if scannerService.isScanning && scanningStage != .detected {
-                    AnimatedScanLine()
-                }
-
-                if scanningStage == .detected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 30))
-                        .foregroundColor(.green)
-                        .scaleEffect(1.2)
-                        .animation(.spring(response: 0.5, dampingFraction: 0.6), value: scanningStage)
-                }
-            }
-            .position(whiteFrameCenter)
-
-            // Instructions at the bottom
-            VStack {
-                Spacer()
-
-                VStack(spacing: 8) {
-                    Text(scanningStage.rawValue)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .animation(.easeInOut(duration: 0.2), value: scanningStage)
-
-                    if scanningStage == .positioning || scanningStage == .scanning {
-                        VStack(spacing: 4) {
-                            Text("Hold steady for best results")
-                                .font(.caption)
-                                .foregroundColor(.white.opacity(0.8))
-                                .multilineTextAlignment(.center)
-
-                            Text("Supports traditional barcodes and QR codes")
-                                .font(.caption2)
-                                .foregroundColor(.white.opacity(0.6))
-                                .multilineTextAlignment(.center)
-                        }
-                    }
-                }
-                .padding(.horizontal, 20)
-                .padding(.bottom, geometry.safeAreaInsets.bottom + 60)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
         }
+        .frame(width: 250, height: 150)
     }
 
-    private func calculateActualCameraPreviewArea(geometry: GeometryProxy) -> CGRect {
-        let screenSize = geometry.size
-        let safeAreaTop = geometry.safeAreaInsets.top
-        let safeAreaBottom = geometry.safeAreaInsets.bottom
+    // MARK: - Error Overlay
 
-        // Account for the top navigation area (Cancel/Retry buttons)
-        let topNavigationHeight: CGFloat = 44 + safeAreaTop
-
-        // Account for bottom instruction area
-        let bottomInstructionHeight: CGFloat = 120 + safeAreaBottom
-
-        // Available height for camera preview
-        let availableHeight = screenSize.height - topNavigationHeight - bottomInstructionHeight
-        let availableWidth = screenSize.width
-
-        // Camera typically uses 4:3 aspect ratio
-        let cameraAspectRatio: CGFloat = 4.0 / 3.0
-        let availableAspectRatio = availableWidth / availableHeight
-
-        let cameraRect: CGRect
-
-        if availableAspectRatio > cameraAspectRatio {
-            // Screen is wider than camera - camera will be letterboxed horizontally
-            let cameraWidth = availableHeight * cameraAspectRatio
-            let xOffset = (availableWidth - cameraWidth) / 2
-            cameraRect = CGRect(
-                x: xOffset,
-                y: topNavigationHeight,
-                width: cameraWidth,
-                height: availableHeight
-            )
-        } else {
-            // Screen is taller than camera - camera will be letterboxed vertically
-            let cameraHeight = availableWidth / cameraAspectRatio
-            let yOffset = topNavigationHeight + (availableHeight - cameraHeight) / 2
-            cameraRect = CGRect(
-                x: 0,
-                y: yOffset,
-                width: availableWidth,
-                height: cameraHeight
-            )
-        }
-
-        return cameraRect
-    }
-
-    private func errorOverlay(error: BarcodeScanError) -> some View {
+    private func errorOverlay(for error: BarcodeScanError) -> some View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .font(.largeTitle)
+                .font(.system(size: 36))
                 .foregroundColor(.orange)
 
             Text(error.localizedDescription)
@@ -287,240 +172,126 @@ struct BarcodeScannerView: View {
                     .multilineTextAlignment(.center)
             }
 
-            HStack(spacing: 16) {
+            HStack(spacing: 12) {
                 if error == .cameraPermissionDenied {
-                    Button("Settings") {
-                        print("🎥 Settings button tapped")
+                    Button("Open Settings") {
                         openSettings()
+                    }
+                    .buttonStyle(.borderedProminent)
+                } else {
+                    Button("Try Again") {
+                        scannerService.scanError = nil
+                        scannerService.resetSession()
+                        setupScanner()
                     }
                     .buttonStyle(.borderedProminent)
                 }
 
-                VStack(spacing: 8) {
-                    Button("Try Again") {
-                        print("🎥 Try Again button tapped in error overlay")
-                        scannerService.resetSession()
-                        setupScanner()
-                    }
-
-                    Button("Check Permissions") {
-                        print("🎥 Check Permissions button tapped")
-                        let status = AVCaptureDevice.authorizationStatus(for: .video)
-                        print("🎥 Current system status: \(status)")
-                        scannerService.testCameraAccess()
-
-                        // Clear the current error to test button functionality
-                        scannerService.scanError = nil
-
-                        // Request permission again if needed
-                        if status == .notDetermined {
-                            scannerService.requestCameraPermission()
-                                .sink { granted in
-                                    print("🎥 Permission request result: \(granted)")
-                                    if granted {
-                                        setupScanner()
-                                    }
-                                }
-                                .store(in: &cancellables)
-                        } else if status != .authorized {
-                            showingPermissionAlert = true
-                        } else {
-                            // Permission is granted, try simple setup
-                            setupScanner()
-                        }
-                    }
-                    .font(.caption)
+                Button("Cancel") {
+                    scannerService.stopScanning()
+                    onCancel()
+                    dismiss()
                 }
                 .buttonStyle(.bordered)
             }
         }
-        .padding()
+        .padding(24)
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
-        .padding()
+        .padding(.horizontal, 40)
     }
 
-    private var flashlightButton: some View {
-        Button(action: toggleFlashlight) {
-            Image(systemName: "flashlight.on.fill")
-                .foregroundColor(.white)
+    // MARK: - Torch Button
+
+    private var torchButton: some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            toggleTorch()
+        } label: {
+            Image(systemName: torchIsOn ? "flashlight.on.fill" : "flashlight.off.fill")
+                .font(.system(size: 18, weight: .medium))
+                .foregroundColor(torchIsOn ? .yellow : .white)
+                .frame(width: 44, height: 44)
+                .background(.ultraThinMaterial, in: Circle())
         }
     }
 
-    private var permissionAlert: Alert {
-        Alert(
-            title: Text("Camera Access Required"),
-            message: Text("iAPS needs camera access to scan barcodes. Please enable camera access in Settings."),
-            primaryButton: .default(Text("Settings")) {
-                openSettings()
-            },
-            secondaryButton: .cancel()
-        )
+    // MARK: - Rotation
+
+    private var controlRotation: Angle {
+        switch deviceOrientation {
+        case .landscapeLeft: return .degrees(90)
+        case .landscapeRight: return .degrees(-90)
+        case .portraitUpsideDown: return .degrees(180)
+        default: return .degrees(0)
+        }
     }
 
-    // MARK: - Methods
+    // MARK: - Setup
 
     private func setupScannerAfterReset() {
-        print("🎥 Setting up scanner after reset...")
-
-        // Get fresh camera authorization status
-        let currentStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        print("🎥 Camera authorization from system: \(currentStatus)")
-        print("🎥 Scanner service authorization: \(scannerService.cameraAuthorizationStatus)")
-
-        // Update scanner service status
-        scannerService.cameraAuthorizationStatus = currentStatus
-        print("🎥 Updated scanner service authorization to: \(scannerService.cameraAuthorizationStatus)")
-
-        // Test camera access first
-        print("🎥 Running camera access test...")
-        scannerService.testCameraAccess()
-
-        // Start scanning immediately
-        print("🎥 Calling setupScanner()...")
+        scannerService.cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
         setupScanner()
+        observeResults()
+    }
 
-        // Listen for scan results
-        print("🎥 Setting up scan result observer...")
+    private func observeResults() {
         scannerService.$lastScanResult
             .compactMap { $0 }
-            .removeDuplicates { $0.barcodeString == $1.barcodeString } // Remove duplicate barcodes
-            .throttle(for: .milliseconds(500), scheduler: DispatchQueue.main, latest: false) // Throttle rapid scans
+            .removeDuplicates { $0.barcodeString == $1.barcodeString }
+            .throttle(for: .milliseconds(500), scheduler: DispatchQueue.main, latest: false)
             .sink { result in
-                print("🎥 ✅ Code result received: \(result.barcodeString) (Type: \(result.barcodeType))")
                 self.onBarcodeScanned(result.barcodeString)
-
-                // Clear scan state immediately to prevent rapid duplicate scans
                 self.scannerService.clearScanState()
-                print("🔍 Cleared scan state immediately to prevent duplicates")
             }
             .store(in: &cancellables)
     }
 
     private func setupScanner() {
-        print("🎥 Setting up scanner, camera status: \(scannerService.cameraAuthorizationStatus)")
-
         #if targetEnvironment(simulator)
-            print("🎥 WARNING: Running in iOS Simulator - barcode scanning not supported")
-            // For simulator, immediately show an error
-            DispatchQueue.main.async {
-                self.scannerService.scanError = BarcodeScanError.cameraNotAvailable
+            scannerService.scanError = BarcodeScanError.cameraNotAvailable
+        #else
+            guard scannerService.cameraAuthorizationStatus != .denied else {
+                showingPermissionAlert = true
+                return
             }
-            return
-        #endif
-
-        guard scannerService.cameraAuthorizationStatus != .denied else {
-            print("🎥 Camera access denied, showing permission alert")
-            showingPermissionAlert = true
-            return
-        }
-
-        if scannerService.cameraAuthorizationStatus == .notDetermined {
-            print("🎥 Camera permission not determined, requesting...")
-            scannerService.requestCameraPermission()
-                .sink { granted in
-                    print("🎥 Camera permission granted: \(granted)")
-                    if granted {
-                        self.startScanning()
-                    } else {
-                        self.showingPermissionAlert = true
+            if scannerService.cameraAuthorizationStatus == .notDetermined {
+                scannerService.requestCameraPermission()
+                    .sink { granted in
+                        if granted {
+                            self.scannerService.startScanning()
+                        } else {
+                            self.showingPermissionAlert = true
+                        }
                     }
-                }
-                .store(in: &cancellables)
-        } else if scannerService.cameraAuthorizationStatus == .authorized {
-            print("🎥 Camera authorized, starting scanning")
-            startScanning()
-        }
+                    .store(in: &cancellables)
+            } else if scannerService.cameraAuthorizationStatus == .authorized {
+                scannerService.startScanning()
+            }
+        #endif
     }
 
-    private func startScanning() {
-        print("🎥 BarcodeScannerView.startScanning() called")
+    // MARK: - Helpers
 
-        // Simply call the service method - observer already set up in onAppear
-        scannerService.startScanning()
-    }
-
-    private func toggleFlashlight() {
-        guard let device = AVCaptureDevice.default(for: .video),
-              device.hasTorch else { return }
-
+    private func toggleTorch() {
+        guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else { return }
         do {
             try device.lockForConfiguration()
             device.torchMode = device.torchMode == .on ? .off : .on
+            torchIsOn = device.torchMode == .on
             device.unlockForConfiguration()
         } catch {
-            print("Flashlight unavailable")
-        }
-    }
-
-    private func simulateScanningStages() {
-        // Progress through scanning stages with timing
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                scanningStage = .positioning
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                scanningStage = .scanning
-            }
-        }
-
-        // This would be triggered by actual barcode detection
-        // DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-        //     withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-        //         scanningStage = .detected
-        //     }
-        // }
-    }
-
-    private func onBarcodeDetected(_ barcode: String) {
-        // Called when barcode is actually detected
-        withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-            scanningStage = .detected
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                scanningStage = .validating
-                progressValue = 0.3
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                scanningStage = .lookingUp
-                progressValue = 0.7
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-                scanningStage = .found
-                progressValue = 1.0
-            }
-
-            // Call the original callback
-            onBarcodeScanned(barcode)
+            print("Torch unavailable: \(error)")
         }
     }
 
     private func openSettings() {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-            print("🎥 ERROR: Could not create settings URL")
-            return
-        }
-
-        print("🎥 Opening settings URL: \(settingsUrl)")
-        UIApplication.shared.open(settingsUrl) { success in
-            print("🎥 Settings URL opened successfully: \(success)")
-        }
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(url)
     }
 }
 
 // MARK: - Camera Preview
 
-/// UIViewRepresentable wrapper for AVCaptureVideoPreviewLayer
 struct CameraPreviewView: UIViewRepresentable {
     @ObservedObject var scanner: BarcodeScannerService
 
@@ -531,170 +302,78 @@ struct CameraPreviewView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIView, context _: Context) {
-        // Only proceed if the view has valid bounds and camera is authorized
         guard uiView.bounds.width > 0, uiView.bounds.height > 0,
               scanner.cameraAuthorizationStatus == .authorized
-        else {
-            return
-        }
+        else { return }
 
-        // Check if we already have a preview layer with the same bounds
         let existingLayers = uiView.layer.sublayers?.compactMap { $0 as? AVCaptureVideoPreviewLayer } ?? []
 
-        // If we already have a preview layer with correct bounds, don't recreate
-        if let existingLayer = existingLayers.first,
-           existingLayer.frame == uiView.bounds
-        {
-            print("🎥 Preview layer already exists with correct bounds, skipping")
+        if let existingLayer = existingLayers.first, existingLayer.frame == uiView.bounds {
             return
         }
 
-        // Remove any existing preview layers
         for layer in existingLayers {
             layer.removeFromSuperlayer()
         }
 
-        // Create new preview layer
         if let previewLayer = scanner.getPreviewLayer() {
             previewLayer.frame = uiView.bounds
             previewLayer.videoGravity = .resizeAspectFill
 
-            // Handle rotation
-            if let connection = previewLayer.connection, connection.isVideoOrientationSupported {
-                let orientation = UIDevice.current.orientation
-                switch orientation {
-                case .portrait:
-                    connection.videoOrientation = .portrait
-                case .portraitUpsideDown:
-                    connection.videoOrientation = .portraitUpsideDown
-                case .landscapeLeft:
-                    connection.videoOrientation = .landscapeRight
-                case .landscapeRight:
-                    connection.videoOrientation = .landscapeLeft
-                default:
-                    connection.videoOrientation = .portrait
+            if let connection = previewLayer.connection {
+                if #available(iOS 17.0, *) {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                        let rotationAngle: CGFloat
+                        switch windowScene.interfaceOrientation {
+                        case .portrait: rotationAngle = 90
+                        case .portraitUpsideDown: rotationAngle = 270
+                        case .landscapeLeft: rotationAngle = 180
+                        case .landscapeRight: rotationAngle = 0
+                        default: rotationAngle = 90
+                        }
+                        connection.videoRotationAngle = rotationAngle
+                    }
+                } else {
+                    if connection.isVideoOrientationSupported,
+                       let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                    {
+                        switch windowScene.interfaceOrientation {
+                        case .portrait: connection.videoOrientation = .portrait
+                        case .portraitUpsideDown: connection.videoOrientation = .portraitUpsideDown
+                        case .landscapeLeft: connection.videoOrientation = .landscapeLeft
+                        case .landscapeRight: connection.videoOrientation = .landscapeRight
+                        default: connection.videoOrientation = .portrait
+                        }
+                    }
                 }
             }
 
             uiView.layer.insertSublayer(previewLayer, at: 0)
-            print("🎥 Preview layer added to view with frame: \(previewLayer.frame)")
         }
     }
 }
 
 // MARK: - Animated Scan Line
 
-/// Animated scanning line overlay
 struct AnimatedScanLine: View {
-    @State private var animationOffset: CGFloat = -75
+    @State private var offset: CGFloat = -75
 
     var body: some View {
         Rectangle()
             .fill(
                 LinearGradient(
-                    colors: [.clear, .green, .clear],
+                    colors: [.clear, .green.opacity(0.8), .clear],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
             )
             .frame(height: 2)
-            .offset(y: animationOffset)
+            .offset(y: offset)
             .onAppear {
-                withAnimation(
-                    .easeInOut(duration: 2.0)
-                        .repeatForever(autoreverses: true)
-                ) {
-                    animationOffset = 75
+                withAnimation(.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
+                    offset = 75
                 }
             }
-    }
-}
-
-// MARK: - Progressive Scan Feedback Component
-
-/// Progressive feedback panel showing scanning status and progress
-struct ProgressiveScanFeedback: View {
-    let stage: BarcodeScannerView.ScanningStage
-    let progress: Double
-
-    var body: some View {
-        VStack(spacing: 12) {
-            // Progress indicator
-            HStack(spacing: 8) {
-                if stage == .lookingUp || stage == .validating {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                        .foregroundColor(.white)
-                } else {
-                    Circle()
-                        .fill(stageColor)
-                        .frame(width: 12, height: 12)
-                        .scaleEffect(stage == .detected ? 1.3 : 1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: stage)
-                }
-
-                Text(stage.rawValue)
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.white)
-            }
-
-            // Progress bar for certain stages
-            if shouldShowProgress {
-                ProgressView(value: progress, total: 1.0)
-                    .progressViewStyle(LinearProgressViewStyle(tint: stageColor))
-                    .frame(width: 200, height: 4)
-                    .background(Color.white.opacity(0.3))
-                    .cornerRadius(2)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(Color.black.opacity(0.7))
-        .cornerRadius(12)
-        .onAppear {
-            simulateProgress()
-        }
-        .onChange(of: stage) {
-            simulateProgress()
-        }
-    }
-
-    private var stageColor: Color {
-        switch stage {
-        case .initializing,
-             .positioning:
-            return .orange
-        case .scanning:
-            return .blue
-        case .detected,
-             .found:
-            return .green
-        case .lookingUp,
-             .validating:
-            return .yellow
-        case .error:
-            return .red
-        }
-    }
-
-    private var shouldShowProgress: Bool {
-        switch stage {
-        case .lookingUp,
-             .validating:
-            return true
-        default:
-            return false
-        }
-    }
-
-    private func simulateProgress() {
-        // Simulate progress for stages that show progress bar
-        if shouldShowProgress {
-            withAnimation(.easeInOut(duration: 1.5)) {
-                // This would be replaced with actual progress in a real implementation
-            }
-        }
     }
 }
 
@@ -704,12 +383,8 @@ struct ProgressiveScanFeedback: View {
     struct BarcodeScannerView_Previews: PreviewProvider {
         static var previews: some View {
             BarcodeScannerView(
-                onBarcodeScanned: { barcode in
-                    print("Scanned: \(barcode)")
-                },
-                onCancel: {
-                    print("Cancelled")
-                }
+                onBarcodeScanned: { _ in },
+                onCancel: {}
             )
         }
     }

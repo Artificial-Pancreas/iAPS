@@ -83,6 +83,7 @@ extension Home {
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
         @Published var mealData = MealData()
+        @Published var ai: Bool = false
 
         // Chart data
         var data = ChartModel(
@@ -221,6 +222,7 @@ extension Home {
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
             displaySAGE = settingsManager.settings.displaySAGE
+            ai = settingsManager.settings.ai
 
             updateSensorDays()
 
@@ -813,6 +815,7 @@ extension Home.StateModel:
 //        cgm = settingsManager.settings.cgm
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton
+        ai = settingsManager.settings.ai
         updateSensorDays()
 
         setupGlucose()
