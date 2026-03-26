@@ -1093,7 +1093,7 @@ Enact a temp Basal or a temp target */
 "Additional notification types" = "Ytterligare notistyper";
 
 /* */
-"Misc" = "Övrigt";
+"Miscellaneous" = "Diverse";
 
 /* */
 "Unit override" = "Åsidosätt enhet";
@@ -1412,6 +1412,8 @@ Enact a temp Basal or a temp target */
 
 "Serving Size" = "Portionsstorlek";
 
+"Standard Serving" = "Standardportion";
+
 "Food Name" = "Matnamn";
 
 "Food" = "Mat";
@@ -1480,26 +1482,7 @@ Enact a temp Basal or a temp target */
 
 "**Text/Voice Search:**" = "**Text/Ljud-sökning:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Gratis, öppen databas med omfattande streckkodstäckning och textsökning för förpackade livsmedel. Standard för text- och streckkodssökningar.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Den mest exakta AI-analysen med GPT-4 Vision. Kräver API-nyckel (~$0.01 per bild). Utmärkt vid bildanalys och frågor om naturligt språk.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Fri AI med generösa gränser (1500/dag). Utmärkt matigenkänning med hjälp av Googles Vision AI. Perfekt balans mellan kvalitet och kostnad.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Antropisk (Claude API)**: Avancerad AI med detaljerat resonemang. Utmärkt på livsmedelsanalys och portion uppskattning. Kräver API-nyckel (~$0,25 per miljon tokens).";
-
-"Available Search Providers:" = "Tillgängliga sökleverantörer:";
-
-
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Välj 'Anthropic (Claude API)', 'Google (Gemini API)' eller 'OpenAI (ChatGPT API)' för AI bildanalys för att använda dina betalda nycklar";
-
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "När du tar ett foto av mat, använder appen leverantören som valts i \"AI bildanalys\" ovan.";
-
-"Camera Food Analysis" = "AI kameralivsmedelsanalys";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "För att använda dina betalda API-nycklar, se till att välja motsvarande leverantör i \"AI bildanalys\" ovan. Leverantören du väljer för AI bildanalys är vad som kommer att användas när du tar foton av mat.";
-
-"Important: How to Use Your API Keys" = "Viktigt: Hur man använder dina API-nycklar";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Gratis, öppen databas med omfattande streckkodsdata och textsökning för förpackade livsmedel. Standard för text- och streckkodssökningar.";
 
 "AI Progress Animation" = "AI-progessanimering";
 
@@ -1553,7 +1536,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-nyckel";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Skaffa en API-nyckel från platform.openai.com. Anpassa analysen snabbt för att få specifika måltidskomponenthaverier och näringssummor (~$0.01 per bild)";
+"Get an API key at platform.openai.com." = "Skaffa en API-nyckel på platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) - konfiguration";
 
@@ -1561,17 +1544,17 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Google Gemini API-nyckel";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Få en gratis API-nyckel från ai.google.dev. Google Gemini ger utmärkt matavläsning med ett generöst gratiskonto (1500 förfrågningar per dag).";
+"Get a free API key at ai.google.dev." = "Skaffa en API-nyckel på ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) - konfiguration";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Få en gratis API-nyckel från ai.google.dev. Google Gemini ger utmärkt matavläsning med ett generöst gratiskonto (1500 förfrågningar per dag).";
+"Get a free API key at ai.google.dev." = "Skaffa en API-nyckel på ai.google.dev.";
 
 "Enter your Claude API key" = "Ange din Claude API-nyckel";
 
 "Claude API Key" = "Claude API-nyckel";
 
-"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Få en Claude API-nyckel från console.anthropic.com. Claude utmärker sig på detaljerad resonemang och livsmedelsanalys. Prissättningen börjar på $ 0,25 per miljon tokens för Haiku-modellen.";
+"Get an API key at console.anthropic.com." = "Skaffa en API-nyckel på console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Antropisk (Claude API) konfiguration";
 
@@ -1585,7 +1568,6 @@ Enact a temp Basal or a temp target */
 
 "Provider for AI Image Analysis" = "Leverantör av AI-bildanalys";
 
-"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Konfigurera API-tjänsten som används för varje typ av matsökning. AI-bildanalys styr vad som händer när du tar foton på mat. Olika leverantörer utmärker sig på olika sökmetoder.";
 
 "Food Search Provider Configuration" = "Konfiguration av matsökleverantör";
 
@@ -1750,29 +1732,12 @@ Enact a temp Basal or a temp target */
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis, officiell näringsdatabas. Överlägsen näringsdata för icke-förpackade livsmedel som frukt, grönsaker och kött.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Gratis, öppen databas med omfattande streckkodstäckning och textsökning för förpackade livsmedel. Standard för text- och streckkodssökningar.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Den mest exakta AI-analysen med GPT-4 Vision. Kräver API-nyckel (~$0.01 per bild). Utmärkt vid bildanalys och frågor om naturligt språk.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Fri AI med generösa gränser (1500/dag). Utmärkt matigenkänning med hjälp av Googles Vision AI. Perfekt balans mellan kvalitet och kostnad.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Antropisk (Claude API)**: Avancerad AI med detaljerat resonemang. Utmärkt på livsmedelsanalys och portion uppskattning. Kräver API-nyckel (~$0,25 per miljon tokens).";
-
-"Available Search Providers:" = "Tillgängliga sökleverantörer:";
-
-
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Gratis, öppen databas med omfattande streckkodsdata och textsökning för förpackade livsmedel. Standard för text- och streckkodssökningar.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Om du väljer 'OpenFoodFacts' eller 'USDA', kommer kameraanalys att använda grundläggande uppskattning istället för AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Välj 'Anthropic (Claude API)', 'Google (Gemini API)' eller 'OpenAI (ChatGPT API)' för AI bildanalys för att använda dina betalda nycklar";
 
 "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "När du tar ett foto av mat, använder appen leverantören som valts i \"AI bildanalys\" ovan.";
-
-"Camera Food Analysis" = "AI kameralivsmedelsanalys";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "För att använda dina betalda API-nycklar, se till att välja motsvarande leverantör i \"AI bildanalys\" ovan. Leverantören du väljer för AI bildanalys är vad som kommer att användas när du tar foton av mat.";
-
-"Important: How to Use Your API Keys" = "Viktigt: Hur man använder dina API-nycklar";
-
 "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Bryt ner denna måltid i enskilda komponenter med fullständiga makronäringsprofiler (kolhydrater, protein, fett, kalorier) per objekt och kombinerade summor.";
 
 "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifiera alla livsmedel i denna bild med fokus på kolhydratinnehåll för diabeteshantering. Ge detaljerad kolhydratberäkning för varje komponent och total måltid.";
@@ -1789,7 +1754,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-nyckel";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Skaffa en API-nyckel från platform.openai.com. Anpassa analysen snabbt för att få specifika måltidskomponenthaverier och näringssummor (~$0.01 per bild)";
+"Get an API key at platform.openai.com." = "Skaffa en API-nyckel på platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) - konfiguration";
 
@@ -1803,7 +1768,7 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Google Gemini API-nyckel";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Få en gratis API-nyckel från ai.google.dev. Google Gemini ger utmärkt matavläsning med ett generöst gratiskonto (1500 förfrågningar per dag).";
+"Get a free API key at ai.google.dev." = "Skaffa en API-nyckel på ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) - konfiguration";
 
@@ -3958,3 +3923,14 @@ Enact a temp Basal or a temp target */
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Y-axeletiketter";
+
+"Fiber" = "Fiber";
+
+"Sugars" = "Socker";
+
+"Search Results" = "Sökresultat";
+
+"Results for" = "Resultat för";
+
+/* name of complete meals when saving */
+"Complete Meal" = "Fullständig måltid";
