@@ -329,9 +329,8 @@ extension AddCarbs {
             case .barcode:
                 showFoodSearch(.barcodeScanner)
             case .presets:
-                presentPresets.toggle()
-            case .search:
                 foodSearchState.showingFoodSearch = true
+                foodSearchState.showSavedFoods = true
             default:
                 break
             }

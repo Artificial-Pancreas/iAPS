@@ -310,10 +310,6 @@ extension Home {
                                 label: { Label("Meal Presets", systemImage: "menucard")
                                 }
                                 Button {
-                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .search)) }
-                                label: { Label("Search", systemImage: "network")
-                                }
-                                Button {
                                     state.showModal(for: .addCarbs(editMode: false, override: false, mode: .barcode)) }
                                 label: { Label("Barcode", systemImage: "barcode.viewfinder")
                                 }

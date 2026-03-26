@@ -5,7 +5,6 @@ class MealMode: ObservableObject {
         case image
         case barcode
         case presets
-        case search
         case meal
     }
 
