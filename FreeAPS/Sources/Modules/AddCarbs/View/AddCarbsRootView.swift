@@ -236,7 +236,7 @@ extension AddCarbs {
                     }
                 }
 
-                if !empty {
+                if !empty, !saved {
                     Button { saveAsPreset() }
                     label: {
                         Text("Save as preset").foregroundStyle(.orange)
@@ -304,6 +304,7 @@ extension AddCarbs {
                 source: .manual
             )
             foodSearchState.showNewSavedFoodEntry = true
+            saved.toggle()
         }
 
         private func handleFoodContinue(_ food: FoodItemDetailed, _: UIImage?, date: Date?) {
