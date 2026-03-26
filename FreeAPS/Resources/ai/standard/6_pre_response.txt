@@ -1,0 +1,5 @@
+FINAL SELF-CHECK BEFORE RESPONDING:
+• Verify that standard_serving_size was NOT derived from portion_estimate_size.
+• If both values are equal, explain why this is justified by a reference standard;
+  otherwise set standard_serving and standard_serving_size to null.
+• It is better to return null than to conflate portion and standard serving.

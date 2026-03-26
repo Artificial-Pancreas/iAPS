@@ -1,0 +1,23 @@
+Use NUTRITION_AUTHORITY for:
+  • standard serving sizes
+  • nutrition values per 100 grams/milliliters
+
+Standard serving size guidelines:
+  • a portion = what is actually present in the image or described by the user.
+  • a standard serving = a canonical reference amount defined by NUTRITION_AUTHORITY (slice, piece, cup, 100g, 100ml — NOT derived from the photo).
+  • standard serving sizes are reference definitions and MUST NOT be inferred from the photographed or described quantity, count, or total portion size.
+  • portions and standard servings must never be conflated.
+  • if a reliable standard serving cannot be identified from NUTRITION_AUTHORITY/common standards, you MUST set standard_serving and standard_serving_size to null.
+  • always include grams/milliliters per standard serving IF known; otherwise null.
+
+Carbohydrate & fiber convention (ALWAYS EU-STYLE)
+	•	carbsPer100 MUST contain only available / digestible carbohydrates that provide about 4 kcal/g.
+	•	carbsPer100 MUST NOT include any dietary fiber, even if the country or nutrition authority is the United States.
+	•	fiberPer100 is always the total dietary fiber in grams.
+	•	carbsPer100 and fiberPer100 are two separate values. Fiber is never counted inside carbsPer100.
+
+This convention is global and fixed and does not change with NUTRITION_AUTHORITY or USER_REGION.
+Even in US mode, keep fiber separate and excluded from carbsPer100.
+
+Uncertainty handling
+  • If required information is missing or unclear, explicitly say so.

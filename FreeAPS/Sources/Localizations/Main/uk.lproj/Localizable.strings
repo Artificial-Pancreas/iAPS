@@ -1491,7 +1491,6 @@ Enact a temp Basal or a temp target */
 
 "Available Search Providers:" = "Доступні пошукові системи:";
 
-"Provider Information" = "Інформація про постачальника";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Виберіть «Anthropic (Claude API)», «Google (Gemini API)» або «OpenAI (ChatGPT API)» для аналізу зображень за допомогою штучного інтелекту, щоб використовувати ваші платні ключі";
 
@@ -1763,7 +1762,6 @@ Enact a temp Basal or a temp target */
 
 "Available Search Providers:" = "Доступні пошукові системи:";
 
-"Provider Information" = "Інформація про постачальника";
 
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Якщо ви оберете «OpenFoodFacts» або «USDA», аналіз камери використовуватиме базову оцінку замість штучного інтелекту";
 
@@ -2003,9 +2001,9 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Кал";
 
-" servings" = "порції";
+"servings" = "порції";
 
-" serving" = "порція";
+"serving" = "порція";
 
 "Reset to " = "Скинути до";
 
@@ -2857,9 +2855,6 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Відображення діаграми активності Інсуліну";
-
-/* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Не запитувати збереження результатів пошуку як попереднього налаштування страв";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
