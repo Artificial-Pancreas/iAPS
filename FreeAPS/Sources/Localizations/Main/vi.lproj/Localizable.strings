@@ -1412,7 +1412,7 @@ Enact a temp Basal or a temp target */
 
 "Serving Size" = "Khẩu phần ăn";
 
-"Standard Serving" = "Standard Serving";
+"Standard Serving" = "Phần ăn tiêu chuẩn";
 
 "Food Name" = "Tên thực phẩm";
 
@@ -1482,7 +1482,7 @@ Enact a temp Basal or a temp target */
 
 "**Text/Voice Search:**" = "**Tìm kiếm văn bản/giọng nói:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• OpenFoodFacts: Cơ sở dữ liệu miễn phí, mã nguồn mở với phạm vi mã vạch rất rộng và hỗ trợ tìm kiếm văn bản cho thực phẩm đóng gói.";
 
 "AI Progress Animation" = "Hoạt ảnh tiến trình xử lý AI";
 
@@ -1536,7 +1536,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "Khóa API ChatGPT (OpenAI)";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Tạo khóa API tại platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "Cấu hình OpenAI (ChatGPT API)";
 
@@ -1544,17 +1544,17 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Khóa API Google Gemini";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Tạo khóa API miễn phí tại ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Cấu hình Google (Gemini API)";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Tạo khóa API miễn phí tại ai.google.dev.";
 
 "Enter your Claude API key" = "Nhập khóa API Claude của bạn";
 
 "Claude API Key" = "Khóa API Claude";
 
-"Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
+"Get an API key at console.anthropic.com." = "Tạo khóa API tại console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Cấu hình Anthropic (Claude API)";
 
@@ -1732,7 +1732,7 @@ Enact a temp Basal or a temp target */
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• USDA FoodData Central: Cơ sở dữ liệu dinh dưỡng miễn phí, chính thức. Thông tin chi tiết cho thực phẩm tươi như trái cây, rau và thịt.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• OpenFoodFacts: Cơ sở dữ liệu miễn phí, mã nguồn mở với phạm vi mã vạch rất rộng và hỗ trợ tìm kiếm văn bản cho thực phẩm đóng gói.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Chọn 'OpenFoodFacts' hoặc 'USDA' sẽ khiến camera phân tích chỉ dùng ước tính cơ bản, không dùng AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Chọn 'Anthropic (Claude API)', 'Google (Gemini API)' hoặc 'OpenAI (ChatGPT API)' để phân tích hình ảnh bằng AI và sử dụng khóa trả phí của bạn";
@@ -1754,7 +1754,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "Khóa API ChatGPT (OpenAI)";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Tạo khóa API tại platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "Cấu hình OpenAI (ChatGPT API)";
 
@@ -1768,7 +1768,7 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Khóa API Google Gemini";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Tạo khóa API miễn phí tại ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Cấu hình Google (Gemini API)";
 
@@ -1964,9 +1964,9 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Cal";
 
-"servings" = "servings";
+"servings" = "phần ăn";
 
-"serving" = "serving";
+"serving" = "phần ăn";
 
 "Reset to " = "Đặt lại về 0 ";
 
@@ -3925,13 +3925,13 @@ Enact a temp Basal or a temp target */
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Nhãn trục Y";
 
-"Fiber" = "Fiber";
+"Fiber" = "Chất xơ";
 
-"Sugars" = "Sugars";
+"Sugars" = "Chất đường";
 
-"Search Results" = "Search Results";
+"Search Results" = "Kết quả tìm kiếm";
 
-"Results for" = "Results for";
+"Results for" = "Kết quả cho";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Complete Meal";
+"Complete Meal" = "Bữa ăn đầy đủ";
