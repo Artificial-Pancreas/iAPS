@@ -1093,7 +1093,7 @@ Enact a temp Basal or a temp target */
 "Additional notification types" = "Thêm các loại thông báo";
 
 /* */
-"Misc" = "Misc";
+"Miscellaneous" = "Khác";
 
 /* */
 "Unit override" = "Đơn vị ghi đè";
@@ -1412,6 +1412,8 @@ Enact a temp Basal or a temp target */
 
 "Serving Size" = "Khẩu phần ăn";
 
+"Standard Serving" = "Phần ăn tiêu chuẩn";
+
 "Food Name" = "Tên thực phẩm";
 
 "Food" = "Thực phẩm";
@@ -1480,26 +1482,7 @@ Enact a temp Basal or a temp target */
 
 "**Text/Voice Search:**" = "**Tìm kiếm văn bản/giọng nói:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Cơ sở dữ liệu mở, miễn phí, với mã vạch phong phú và tìm kiếm văn bản cho thực phẩm đóng gói. Mặc định cho các tìm kiếm.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: AI phân tích chính xác với GPT-4 Vision. Cần khóa API (~0,01 USD/hình). Rất tốt cho phân tích ảnh và truy vấn bằng ngôn ngữ tự nhiên.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: AI miễn phí, giới hạn 1500 yêu cầu/ngày. Nhận diện thực phẩm tốt nhờ Google Vision AI. Chất lượng và chi phí cân đối.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: AI tiên tiến với khả năng suy luận chi tiết. Xuất sắc trong phân tích thực phẩm và ước lượng khẩu phần. Yêu cầu khóa API (~0,25 USD cho mỗi triệu token).";
-
-"Available Search Providers:" = "Các nhà cung cấp tìm kiếm:";
-
-
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Chọn 'Anthropic (Claude API)', 'Google (Gemini API)' hoặc 'OpenAI (ChatGPT API)' để phân tích hình ảnh bằng AI và sử dụng khóa trả phí của bạn";
-
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Ảnh món ăn sẽ được phân tích bởi nhà cung cấp đã chọn ở 'Phân tích hình ảnh bằng AI'.";
-
-"Camera Food Analysis" = "Phân tích món ăn bằng camera";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Để dùng khóa API trả phí, chọn nhà cung cấp tương ứng trong 'Phân tích hình ảnh bằng AI'. Đây sẽ là nhà cung cấp dùng khi chụp ảnh món ăn.";
-
-"Important: How to Use Your API Keys" = "Lưu ý: Sử dụng khóa API";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• OpenFoodFacts: Cơ sở dữ liệu miễn phí, mã nguồn mở với phạm vi mã vạch rất rộng và hỗ trợ tìm kiếm văn bản cho thực phẩm đóng gói.";
 
 "AI Progress Animation" = "Hoạt ảnh tiến trình xử lý AI";
 
@@ -1553,7 +1536,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "Khóa API ChatGPT (OpenAI)";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Lấy khóa API từ platform.openai.com. Tùy chỉnh lệnh phân tích để nhận chi tiết từng thành phần món ăn và tổng giá trị dinh dưỡng. (~0,01 USD cho mỗi hình ảnh)";
+"Get an API key at platform.openai.com." = "Tạo khóa API tại platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "Cấu hình OpenAI (ChatGPT API)";
 
@@ -1561,17 +1544,17 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Khóa API Google Gemini";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Nhận khóa API miễn phí tại ai.google.dev. Google Gemini cung cấp khả năng nhận diện món ăn rất tốt, với mức miễn phí (1.500 yêu cầu mỗi ngày).";
+"Get a free API key at ai.google.dev." = "Tạo khóa API miễn phí tại ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Cấu hình Google (Gemini API)";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Nhận khóa API miễn phí tại ai.google.dev. Google Gemini cung cấp khả năng nhận diện món ăn rất tốt, với mức miễn phí (1.500 yêu cầu mỗi ngày).";
+"Get a free API key at ai.google.dev." = "Tạo khóa API miễn phí tại ai.google.dev.";
 
 "Enter your Claude API key" = "Nhập khóa API Claude của bạn";
 
 "Claude API Key" = "Khóa API Claude";
 
-"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Nhận khóa API Claude tại console.anthropic.com. Claude chuyên phân tích thực phẩm. Giá từ 0,25 USD/mỗi triệu token (mô hình Haiku).";
+"Get an API key at console.anthropic.com." = "Tạo khóa API tại console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Cấu hình Anthropic (Claude API)";
 
@@ -1585,7 +1568,6 @@ Enact a temp Basal or a temp target */
 
 "Provider for AI Image Analysis" = "Nhà cung cấp phân tích hình ảnh AI";
 
-"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Cấu hình dịch vụ API được sử dụng cho từng loại tìm kiếm thực phẩm. AI Phân tích hình ảnh quyết định kết quả khi bạn chụp ảnh thực phẩm. Các nhà cung cấp khác nhau sẽ mạnh ở các phương thức tìm kiếm khác nhau.";
 
 "Food Search Provider Configuration" = "Cấu hình tìm kiếm thực phẩm";
 
@@ -1750,29 +1732,12 @@ Enact a temp Basal or a temp target */
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• USDA FoodData Central: Cơ sở dữ liệu dinh dưỡng miễn phí, chính thức. Thông tin chi tiết cho thực phẩm tươi như trái cây, rau và thịt.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Cơ sở dữ liệu mở, miễn phí, với mã vạch phong phú và tìm kiếm văn bản cho thực phẩm đóng gói. Mặc định cho các tìm kiếm.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: AI phân tích chính xác với GPT-4 Vision. Cần khóa API (~0,01 USD/hình). Rất tốt cho phân tích ảnh và truy vấn bằng ngôn ngữ tự nhiên.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: AI miễn phí, giới hạn 1500 yêu cầu/ngày. Nhận diện thực phẩm tốt nhờ Google Vision AI. Chất lượng và chi phí cân đối.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: AI tiên tiến với khả năng suy luận chi tiết. Xuất sắc trong phân tích thực phẩm và ước lượng khẩu phần. Yêu cầu khóa API (~0,25 USD cho mỗi triệu token).";
-
-"Available Search Providers:" = "Các nhà cung cấp tìm kiếm:";
-
-
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• OpenFoodFacts: Cơ sở dữ liệu miễn phí, mã nguồn mở với phạm vi mã vạch rất rộng và hỗ trợ tìm kiếm văn bản cho thực phẩm đóng gói.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Chọn 'OpenFoodFacts' hoặc 'USDA' sẽ khiến camera phân tích chỉ dùng ước tính cơ bản, không dùng AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Chọn 'Anthropic (Claude API)', 'Google (Gemini API)' hoặc 'OpenAI (ChatGPT API)' để phân tích hình ảnh bằng AI và sử dụng khóa trả phí của bạn";
 
 "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Ảnh món ăn sẽ được phân tích bởi nhà cung cấp đã chọn ở 'Phân tích hình ảnh bằng AI'.";
-
-"Camera Food Analysis" = "Phân tích món ăn bằng camera";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Để dùng khóa API trả phí, chọn nhà cung cấp tương ứng trong 'Phân tích hình ảnh bằng AI'. Đây sẽ là nhà cung cấp dùng khi chụp ảnh món ăn.";
-
-"Important: How to Use Your API Keys" = "Lưu ý: Sử dụng khóa API";
-
 "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Phân tách bữa ăn này thành từng thành phần riêng lẻ, kèm thông tin đầy đủ về các chất dinh dưỡng (carbs, chất đạm, chất béo, calo) cho mỗi món và tổng hợp tất cả.";
 
 "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Xác định tất cả các món ăn trong hình, chú trọng vào lượng carbohydrate để quản lý bệnh tiểu đường. Cung cấp chi tiết lượng carb cho từng món và tổng lượng carbohydrate của bữa ăn.";
@@ -1789,7 +1754,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "Khóa API ChatGPT (OpenAI)";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Lấy khóa API từ platform.openai.com. Tùy chỉnh lệnh phân tích để nhận chi tiết từng thành phần món ăn và tổng giá trị dinh dưỡng. (~0,01 USD cho mỗi hình ảnh)";
+"Get an API key at platform.openai.com." = "Tạo khóa API tại platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "Cấu hình OpenAI (ChatGPT API)";
 
@@ -1803,7 +1768,7 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Khóa API Google Gemini";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Nhận khóa API miễn phí tại ai.google.dev. Google Gemini cung cấp khả năng nhận diện món ăn rất tốt, với mức miễn phí (1.500 yêu cầu mỗi ngày).";
+"Get a free API key at ai.google.dev." = "Tạo khóa API miễn phí tại ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Cấu hình Google (Gemini API)";
 
@@ -1999,7 +1964,7 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Cal";
 
-"servings" = "khẩu phần";
+"servings" = "phần ăn";
 
 "serving" = "phần ăn";
 
@@ -3616,7 +3581,7 @@ Enact a temp Basal or a temp target */
 "Minimum Threshold Setting" = "Thiết lập ngưỡng tối thiểu";
 
 /* Minimum Threshold Setting */
-"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
+"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "Cài đặt này cho phép bạn chọn một giới hạn mục tiêu đường huyết; dưới mức này sẽ không bao giờ có SMB hoặc insulin nền tạm thời bổ sung được đưa ra. Insulin nền tạm thời bổ sung là lượng insulin vượt quá lượng insulin cần thiết cho chuyển hóa nền.\n\nNgưỡng đường huyết thực tế được sử dụng trong thuật toán OpenAPS sẽ luôn là giá trị lớn hơn giữa cài đặt này và giá trị được tính toán:\n\nĐường huyết mục tiêu - (Đường huyết mục tiêu - 40) / 2.";
 
 /* Threshold Table Columns Title */
 "Setting" = "Cài đặt";
@@ -3959,3 +3924,14 @@ Enact a temp Basal or a temp target */
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Nhãn trục Y";
+
+"Fiber" = "Chất xơ";
+
+"Sugars" = "Chất đường";
+
+"Search Results" = "Kết quả tìm kiếm";
+
+"Results for" = "Kết quả cho";
+
+/* name of complete meals when saving */
+"Complete Meal" = "Bữa ăn đầy đủ";
