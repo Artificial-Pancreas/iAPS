@@ -336,8 +336,11 @@ extension Bolus {
                             if state.fraction != 1, state.insulin > 0 {
                                 Divider()
                                 HStack {
-                                    Text((entries.last?.variable ?? "") + " " + (entries.last?.value ?? "") + "  ->")
-                                        .foregroundStyle(.secondary)
+                                    if let recent = entries.last {
+                                        Text("\(recent.variable) \(recent.value)  ->")
+                                            .foregroundStyle(.secondary)
+                                    }
+
                                     Text(
                                         state.insulinCalculated.formatted() + unit
                                     ).fontWeight(fontWeight).font(.title3).foregroundStyle(.blue).bold()

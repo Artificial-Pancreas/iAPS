@@ -61,6 +61,10 @@ extension AddCarbs {
             return formatter
         }()
 
+        private func format(_ value: Decimal) -> String {
+            Self.formatter.string(from: value as NSNumber) ?? ""
+        }
+
         var body: some View {
             content
                 .background(Color(.systemGroupedBackground))
@@ -517,9 +521,7 @@ extension AddCarbs {
                                 Text("Save as Preset")
                                 Spacer()
                                 Text(
-                                    "[Carbs: " + (Self.formatter.string(from: state.carbs as NSNumber) ?? "") + ", Fat: " +
-                                        (Self.formatter.string(from: state.fat as NSNumber) ?? "") + ", Protein: " +
-                                        (Self.formatter.string(from: state.protein as NSNumber) ?? "") + "]"
+                                    "[Carbs: \(format(state.carbs)), Fat: \(format(state.fat)), Protein: \(format(state.protein))]"
                                 )
                             }
                         }.frame(maxWidth: .infinity, alignment: .center)
