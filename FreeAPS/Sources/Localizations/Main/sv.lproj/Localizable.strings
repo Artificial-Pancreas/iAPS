@@ -1394,9 +1394,9 @@ Enact a temp Basal or a temp target */
 
 "Ask AI..." = "Fråga AI...";
 
-"Search saved foods..." = "Sök efter sparade mat...";
+"Search saved foods..." = "Sök efter sparad mat...";
 
-"Search foods..." = "Söker efter mat...";
+"Search foods..." = "Söker på webben efter mat...";
 
 "Saved Foods" = "Sparad mat";
 
