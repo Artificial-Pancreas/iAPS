@@ -18,7 +18,7 @@ struct FoodItemEditorSheet: View {
     @State private var showingAddNewTag = false
     @State private var newTagText: String = ""
 
-    enum NutritionEntryMode: String, CaseIterable, Hashable {
+    enum NutritionEntryMode: LocalizedStringKey, CaseIterable, Hashable {
         case perServing = "Per Serving"
         case per100g = "Per 100g"
         case per100ml = "Per 100ml"
@@ -248,7 +248,7 @@ struct FoodItemEditorSheet: View {
                 .padding(.vertical, 16)
                 .background(Color(.systemBackground))
             }
-            .navigationTitle(title)
+            .navigationTitle(NSLocalizedString(title, comment: "Title"))
             .navigationBarTitleDisplayMode(.inline)
         }
         .alert("Add New Tag", isPresented: $showingAddNewTag) {
