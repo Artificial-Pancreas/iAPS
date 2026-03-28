@@ -1093,7 +1093,7 @@ Enact a temp Basal or a temp target */
 "Additional notification types" = "Aggiungi tipi di notifica";
 
 /* */
-"Misc" = "Varie";
+"Miscellaneous" = "Miscellaneous";
 
 /* */
 "Unit override" = "Sovrascrizione unità";
@@ -1411,6 +1411,8 @@ Enact a temp Basal or a temp target */
 "This portion" = "This portion";
 
 "Serving Size" = "Serving Size";
+
+"Standard Serving" = "Standard Serving";
 
 "Food Name" = "Food Name";
 
@@ -1733,7 +1735,9 @@ Enact a temp Basal or a temp target */
 "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI";
 
+"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys";
 
+"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.";
 "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals.";
 
 "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
@@ -3920,3 +3924,14 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Y-axis labels";
+
+"Fiber" = "Fiber";
+
+"Sugars" = "Sugars";
+
+"Search Results" = "Search Results";
+
+"Results for" = "Results for";
+
+/* name of complete meals when saving */
+"Complete Meal" = "Complete Meal";
