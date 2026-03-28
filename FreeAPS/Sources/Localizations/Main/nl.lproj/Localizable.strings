@@ -1419,6 +1419,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Food" = "Maaltijd";
 
+"Tag name" = "Tag name";
+
+"Add New Tag" = "Add New Tag";
+
+"Tags" = "Tags";
+
+"Show All Nutrients" = "Show All Nutrients";
+
+"Calories" = "Calories";
+
 "Quick access to your frequently used foods" = "Snelle toegang tot je vaak gebruikte voedingsmiddelen";
 
 "Search databases or describe food for AI analysis" = "Zoek databases of beschrijf voedsel voor AI analyse";
