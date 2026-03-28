@@ -151,7 +151,7 @@ extension AddCarbs {
             }
         }
 
-        private var navigationTitle: String {
+        private var navigationTitle: LocalizedStringKey {
             foodSearchState.showSavedFoods ? "Saved Foods" : "Add Meal"
         }
 
