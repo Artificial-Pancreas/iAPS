@@ -1421,6 +1421,14 @@ Enact a temp Basal or a temp target */
 
 "Food" = "Food";
 
+"Tag name" = "Tag name";
+
+"Add New Tag" = "Add New Tag";
+
+"Tags" = "Tags";
+
+"Calories" = "Calories";
+
 "Quick access to your frequently used foods" = "Quick access to your frequently used foods";
 
 "Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
