@@ -1419,6 +1419,16 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "Food" = "Food";
 
+"Tag name" = "Tag name";
+
+"Add New Tag" = "Add New Tag";
+
+"Tags" = "Tags";
+
+"Show All Nutrients" = "Show All Nutrients";
+
+"Calories" = "Calories";
+
 "Quick access to your frequently used foods" = "Quick access to your frequently used foods";
 
 "Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
