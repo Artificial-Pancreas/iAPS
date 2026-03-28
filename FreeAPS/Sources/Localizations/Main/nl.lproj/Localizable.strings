@@ -1094,7 +1094,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Additional notification types" = "Andere meldingsinstellingen";
 
 /* */
-"Misc" = "Overige";
+"Miscellaneous" = "Diversen";
 
 /* */
 "Unit override" = "Eenheid aanpassen";
@@ -1413,6 +1413,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Serving Size" = "Portiegrootte";
 
+"Standard Serving" = "Standard Serving";
+
 "Food Name" = "Naam maaltijd";
 
 "Food" = "Maaltijd";
@@ -1481,27 +1483,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "**Text/Voice Search:**" = "**Tekst/Spraak zoeken:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Meest nauwkeurige AI analyse met behulp van GPT-4 Vision. Vereist API key (~$0,01 per afbeelding). Uitstekend bij beeldanalyse en natuurlijke taal zoekopdrachten.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "**Google (Gemini API)**: Gratis AI met royale limieten (1500/dag). Uitstekende herkenning van levensmiddelen met behulp van Google's Vision AI. Perfecte balans van kwaliteit en kosten.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (lengtegraad API)**: Geavanceerde AI met gedetailleerde redenering. Uitstekend bij voedselanalyse en portie inschatting. Vereist een API-sleutel (~$0,25 per miljoen munten).";
-
-"Available Search Providers:" = "Beschikbare zoekdiensten:";
-
-"Provider Information" = "Provider-informatie";
-
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Selecteer 'Anthropic (Claude API)', 'Google (Gemini API)', of 'OpenAI (ChatGPT API)' voor AI Image Analyse om je betaalde sleutels te gebruiken";
-
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Wanneer je een voedselfoto neemt, gebruikt de app de geselecteerde provider in 'AI Image Analysis' hierboven.";
-
-"Camera Food Analysis" = "Camera voedselanalyse";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Om je betaalde API-sleutels te gebruiken, zorg ervoor dat je de bijbehorende provider selecteert in 'AI Image Analysis' hierboven. De aanbieder die je selecteert voor AI Image Analyse is wat wordt gebruikt wanneer je voedsel foto's maakt.";
-
-"Important: How to Use Your API Keys" = "Belangrijk: Hoe je API-sleutels te gebruiken";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
 
 "AI Progress Animation" = "AI Voortgangsanimatie";
 
@@ -1555,7 +1537,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-sleutel";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Krijg een API-sleutel van platform.openai.com. Pas de analyse aan om specifieke maaltijdfragmenten en voedingswaarden te krijgen. (~$0,01 per afbeelding)";
+"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) configuratie";
 
@@ -1563,17 +1545,17 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Google Gemini API Key" = "Google Gemini API-sleutel";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Krijg een gratis API-sleutel van ai.google.dev. Google Gemini biedt uitstekende herkenning van voedsel met een royale prijs (1500 verzoeken per dag).";
+"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) configuratie";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Krijg een gratis API-sleutel van ai.google.dev. Google Gemini biedt uitstekende herkenning van voedsel met een royale prijs (1500 verzoeken per dag).";
+"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
 "Enter your Claude API key" = "Voer je Claude API-sleutel in";
 
 "Claude API Key" = "Claude API sleutel";
 
-"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Krijg een Claude API-sleutel van console.anthropic.com. Claude excels met gedetailleerde redeneringen en voedselanalyse. De prijzen beginnen op 0,25 dollar per miljoen tokens voor Haiku model.";
+"Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Anthropische (Claude API) configuratie";
 
@@ -1587,7 +1569,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Provider for AI Image Analysis" = "Provider voor AI afbeeldingsanalyse";
 
-"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Configureer de API-dienst die wordt gebruikt voor elk type voedselzoekopdracht. De AI afbeeldingsanalyse bepaalt wat er gebeurt als je foto's van voedsel neemt. Verschillende aanbieders resulteren via verschillende zoekmethoden.";
 
 "Food Search Provider Configuration" = "Voedsel zoekmachine configuratie";
 
@@ -1752,30 +1733,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis officiële voedingsdatabase. Superieure voedingsgegevens voor niet-verpakte voedingsmiddelen zoals fruit, groenten en vlees.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Meest nauwkeurige AI analyse met behulp van GPT-4 Vision. Vereist API key (~$0,01 per afbeelding). Uitstekend bij beeldanalyse en natuurlijke taal zoekopdrachten.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "**Google (Gemini API)**: Gratis AI met royale limieten (1500/dag). Uitstekende herkenning van levensmiddelen met behulp van Google's Vision AI. Perfecte balans van kwaliteit en kosten.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (lengtegraad API)**: Geavanceerde AI met gedetailleerde redenering. Uitstekend bij voedselanalyse en portie inschatting. Vereist een API-sleutel (~$0,25 per miljoen munten).";
-
-"Available Search Providers:" = "Beschikbare zoekdiensten:";
-
-"Provider Information" = "Provider-informatie";
-
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Als u 'OpenFoodFacts' of 'USDA' selecteert, zal de camera analyse gebruik maken van basisschattingen in plaats van AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Selecteer 'Anthropic (Claude API)', 'Google (Gemini API)', of 'OpenAI (ChatGPT API)' voor AI Image Analyse om je betaalde sleutels te gebruiken";
 
 "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Wanneer je een voedselfoto neemt, gebruikt de app de geselecteerde provider in 'AI Image Analysis' hierboven.";
-
-"Camera Food Analysis" = "Camera voedselanalyse";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Om je betaalde API-sleutels te gebruiken, zorg ervoor dat je de bijbehorende provider selecteert in 'AI Image Analysis' hierboven. De aanbieder die je selecteert voor AI Image Analyse is wat wordt gebruikt wanneer je voedsel foto's maakt.";
-
-"Important: How to Use Your API Keys" = "Belangrijk: Hoe je API-sleutels te gebruiken";
-
 "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Verdeel deze maaltijd in individuele onderdelen met volledige macronutriënte profielen (koolhydraten, eiwit, vetten, calorieën) per artikel en gecombineerde totaal.";
 
 "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identificeer alle levensmiddelen in dit beeld met de focus op het koolhydratengehalte voor diabetesbeheer. Geef gedetailleerde koolhydraten op voor elk onderdeel en voor alle koolhydraten.";
@@ -1792,7 +1755,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-sleutel";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Krijg een API-sleutel van platform.openai.com. Pas de analyse aan om specifieke maaltijdfragmenten en voedingswaarden te krijgen. (~$0,01 per afbeelding)";
+"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) configuratie";
 
@@ -1806,7 +1769,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Google Gemini API Key" = "Google Gemini API-sleutel";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Krijg een gratis API-sleutel van ai.google.dev. Google Gemini biedt uitstekende herkenning van voedsel met een royale prijs (1500 verzoeken per dag).";
+"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) configuratie";
 
@@ -2002,9 +1965,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Cal" = "Cal";
 
-" servings" = "porties";
+"servings" = "servings";
 
-" serving" = "portie";
+"serving" = "serving";
 
 "Reset to " = "Herstellen naar ";
 
@@ -2856,9 +2819,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Geef insuline activiteitenoverzicht weer";
-
-/* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Vraag niet om het zoekresultaat op te slaan als maaltijd preset";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3968,3 +3928,14 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Y-as labels";
+
+"Fiber" = "Fiber";
+
+"Sugars" = "Sugars";
+
+"Search Results" = "Search Results";
+
+"Results for" = "Results for";
+
+/* name of complete meals when saving */
+"Complete Meal" = "Complete Meal";

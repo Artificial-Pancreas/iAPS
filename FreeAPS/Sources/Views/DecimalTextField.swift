@@ -58,11 +58,22 @@ public struct DecimalTextField: UIViewRepresentable {
     public func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
         context.coordinator.textField = textField
-        textField.inputAccessoryView = cleanInput ? makeDoneToolbar(for: textField, context: context) : nil
+
+        if cleanInput {
+            if context.coordinator.cachedToolbar == nil {
+                context.coordinator.cachedToolbar = makeDoneToolbar(for: textField, context: context)
+            }
+            textField.inputAccessoryView = context.coordinator.cachedToolbar
+        }
+
         textField.addTarget(context.coordinator, action: #selector(Coordinator.editingDidBegin), for: .editingDidBegin)
         textField.delegate = context.coordinator
         textField.text = valueAsText()
         textField.placeholder = placeholder
+
+        textField.setContentHuggingPriority(.required, for: .vertical)
+        textField.setContentCompressionResistancePriority(.required, for: .vertical)
+
         return textField
     }
 
@@ -122,6 +133,8 @@ public struct DecimalTextField: UIViewRepresentable {
         Coordinator(self, maxLength: maxLength)
     }
 
+    fileprivate static let allowedCharacters = CharacterSet(charactersIn: "0123456789,.")
+
     public final class Coordinator: NSObject {
         var parent: DecimalTextField
         var textField: UITextField?
@@ -130,6 +143,8 @@ public struct DecimalTextField: UIViewRepresentable {
         let decimalFormatter: NumberFormatter
         var isEditing: Bool = false
         var previousSeenValue: Decimal = 0
+
+        var cachedToolbar: UIToolbar?
 
         init(_ parent: DecimalTextField, maxLength: Int?) {
             self.parent = parent
@@ -189,8 +204,6 @@ public struct DecimalTextField: UIViewRepresentable {
     }
 }
 
-let allowedCharacters = CharacterSet(charactersIn: "0123456789,.")
-
 extension DecimalTextField.Coordinator: UITextFieldDelegate {
     public func textField(
         _ textField: UITextField,
@@ -198,7 +211,7 @@ extension DecimalTextField.Coordinator: UITextFieldDelegate {
         replacementString string: String
     ) -> Bool {
         // Check if the input is a number or the decimal separator
-        let isAllowed = allowedCharacters.isSuperset(of: CharacterSet(charactersIn: string))
+        let isAllowed = DecimalTextField.allowedCharacters.isSuperset(of: CharacterSet(charactersIn: string))
         if !isAllowed { return false }
 
         if let text = textField.text {

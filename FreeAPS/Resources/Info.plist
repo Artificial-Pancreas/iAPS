@@ -134,5 +134,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>iAPS will save food photos to your photo library.</string>
 </dict>
 </plist>

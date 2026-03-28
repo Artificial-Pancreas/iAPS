@@ -1093,7 +1093,7 @@ Enact a temp Basal or a temp target */
 "Additional notification types" = "Ďalšie typy oznámení";
 
 /* */
-"Misc" = "Rôzne";
+"Miscellaneous" = "Rôzne";
 
 /* */
 "Unit override" = "Prepis jednotky";
@@ -1413,6 +1413,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Serving Size" = "Veľkosť porcie";
 
+"Standard Serving" = "Standard Serving";
+
 "Food Name" = "Názov jedla";
 
 "Food" = "Jedlo";
@@ -1481,27 +1483,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Bezplatná, otvorená databáza s rozsiahlym pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny. Predvolená pre textové a čiarové vyhľadávania.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Najpresnejšia AI analýza s použitím GPT-4 Vision. Vyžaduje API kľúč (~0,01 $ za obrázok). Vynikajúca pri analýze obrázkov a prirodzených jazykových dopytoch.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Bezplatná AI so štedrými limitmi (1500/deň). Vynikajúce rozpoznávanie jedla pomocou Google Vision AI. Ideálna rovnováha medzi kvalitou a nákladmi.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Pokročilá AI s detailným uvažovaním. Vynikajúca pri analýze jedla a odhadovaní porcií. Vyžaduje API kľúč (~0,25 $ za milión tokenov).";
-
-"Available Search Providers:" = "Dostupní poskytovatelia vyhľadávania:";
-
-"Provider Information" = "Informácie o poskytovateľovi";
-
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Vyberte „Anthropic (Claude API)“, „Google (Gemini API)“ alebo „OpenAI (ChatGPT API)“, aby AI analýza obrázkov využívala vaše platené kľúče";
-
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Keď odfotíte jedlo, aplikácia použije poskytovateľa zvoleného vyššie v „AI analýze obrázkov“.";
-
-"Camera Food Analysis" = "Analýza jedla cez kameru";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Aby ste mohli používať svoje platené API kľúče, nezabudnite vyššie v „AI analýze obrázkov“ vybrať príslušného poskytovateľa. Poskytovateľ zvolený pre AI analýzu obrázkov bude použitý pri fotení jedla.";
-
-"Important: How to Use Your API Keys" = "Dôležité: Ako používať vaše API kľúče";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
 
 "AI Progress Animation" = "Animácia postupu umelej inteligencie";
 
@@ -1555,7 +1537,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API kľúč";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Získajte API kľúč z platform.openai.com. Prispôsobte zadanie pre analýzu, aby ste získali konkrétne rozdelenie zložiek jedla a súčty nutričných hodnôt. (~0,01 $ za obrázok)";
+"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
 
@@ -1563,17 +1545,17 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Google Gemini API Key" = "Google Gemini API kľúč";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Získajte bezplatný API kľúč z ai.google.dev. Google Gemini poskytuje vynikajúce rozpoznávanie jedla so štedrým bezplatným limitom (1500 požiadaviek denne).";
+"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Získajte bezplatný API kľúč z ai.google.dev. Google Gemini poskytuje vynikajúce rozpoznávanie jedla so štedrým bezplatným limitom (1500 požiadaviek denne).";
+"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
 "Enter your Claude API key" = "Zadajte svoj Claude API kľúč";
 
 "Claude API Key" = "Claude API kľúč";
 
-"Get a Claude API key from console.anthropic.com. Claude excels at detailed reasoning and food analysis. Pricing starts at $0.25 per million tokens for Haiku model." = "Získajte Claude API kľúč z console.anthropic.com. Claude vyniká v detailnom uvažovaní a analýze potravín. Cena modelu Haiku začína na 0,25 USD za milión tokenov.";
+"Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Konfigurácia Anthropic (Claude API)";
 
@@ -1587,7 +1569,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Provider for AI Image Analysis" = "Poskytovateľ pre analýzu obrázkov pomocou AI";
 
-"Configure the API service used for each type of food search. AI Image Analysis controls what happens when you take photos of food. Different providers excel at different search methods." = "Nastavte API službu používanú pre každý typ vyhľadávania potravín. Analýza obrázkov pomocou AI určuje, čo sa stane, keď odfotografujete jedlo. Rôzni poskytovatelia vynikajú v rôznych metódach vyhľadávania.";
 
 "Food Search Provider Configuration" = "Konfigurácia poskytovateľa vyhľadávania potravín";
 
@@ -1752,30 +1733,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Bezplatná, oficiálna databáza nutričných hodnôt. Poskytuje kvalitné nutričné údaje pre nebalené potraviny ako ovocie, zelenina a mäso.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods. Default for text and barcode searches." = "• **OpenFoodFacts**: Bezplatná, otvorená databáza s rozsiahlym pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny. Predvolená pre textové a čiarové vyhľadávania.";
-
-"• **OpenAI (ChatGPT API)**: Most accurate AI analysis using GPT-4 Vision. Requires API key (~$0.01 per image). Excellent at image analysis and natural language queries." = "• **OpenAI (ChatGPT API)**: Najpresnejšia AI analýza s použitím GPT-4 Vision. Vyžaduje API kľúč (~0,01 $ za obrázok). Vynikajúca pri analýze obrázkov a prirodzených jazykových dopytoch.";
-
-"• **Google (Gemini API)**: Free AI with generous limits (1500/day). Excellent food recognition using Google's Vision AI. Perfect balance of quality and cost." = "• **Google (Gemini API)**: Bezplatná AI so štedrými limitmi (1500/deň). Vynikajúce rozpoznávanie jedla pomocou Google Vision AI. Ideálna rovnováha medzi kvalitou a nákladmi.";
-
-"• **Anthropic (Claude API)**: Advanced AI with detailed reasoning. Excellent at food analysis and portion estimation. Requires API key (~$0.25 per million tokens)." = "• **Anthropic (Claude API)**: Pokročilá AI s detailným uvažovaním. Vynikajúca pri analýze jedla a odhadovaní porcií. Vyžaduje API kľúč (~0,25 $ za milión tokenov).";
-
-"Available Search Providers:" = "Dostupní poskytovatelia vyhľadávania:";
-
-"Provider Information" = "Informácie o poskytovateľovi";
-
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Ak vyberiete „OpenFoodFacts“ alebo „USDA“, analýza kamerou použije základný odhad namiesto AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Vyberte „Anthropic (Claude API)“, „Google (Gemini API)“ alebo „OpenAI (ChatGPT API)“, aby AI analýza obrázkov využívala vaše platené kľúče";
 
 "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Keď odfotíte jedlo, aplikácia použije poskytovateľa zvoleného vyššie v „AI analýze obrázkov“.";
-
-"Camera Food Analysis" = "Analýza jedla cez kameru";
-
-"To use your paid API keys, make sure to select the corresponding provider in 'AI Image Analysis' above. The provider you select for AI Image Analysis is what will be used when you take photos of food." = "Aby ste mohli používať svoje platené API kľúče, nezabudnite vyššie v „AI analýze obrázkov“ vybrať príslušného poskytovateľa. Poskytovateľ zvolený pre AI analýzu obrázkov bude použitý pri fotení jedla.";
-
-"Important: How to Use Your API Keys" = "Dôležité: Ako používať vaše API kľúče";
-
 "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Rozdeľ toto jedlo na jednotlivé komponenty s úplnými makronutričnými profilmi (sacharidy, bielkoviny, tuky, kalórie) pre každú položku a so súhrnnými celkovými hodnotami.";
 
 "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifikuj všetky potraviny na tomto obrázku so zameraním na obsah sacharidov pre manažment diabetu. PoskytnI detailné množstvá sacharidov pre každú položku a celkový počet sacharidov v jedle.";
@@ -1792,7 +1755,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API kľúč";
 
-"Get an API key from platform.openai.com. Customize the analysis prompt to get specific meal component breakdowns and nutrition totals. (~$0.01 per image)" = "Získajte API kľúč z platform.openai.com. Prispôsobte zadanie pre analýzu, aby ste získali konkrétne rozdelenie zložiek jedla a súčty nutričných hodnôt. (~0,01 $ za obrázok)";
+"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
 
@@ -1806,7 +1769,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Google Gemini API Key" = "Google Gemini API kľúč";
 
-"Get a free API key from ai.google.dev. Google Gemini provides excellent food recognition with generous free tier (1500 requests per day)." = "Získajte bezplatný API kľúč z ai.google.dev. Google Gemini poskytuje vynikajúce rozpoznávanie jedla so štedrým bezplatným limitom (1500 požiadaviek denne).";
+"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
 
@@ -2002,9 +1965,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Cal" = "Cal";
 
-" servings" = "porcie";
+"servings" = "servings";
 
-" serving" = "porcia";
+"serving" = "serving";
 
 "Reset to " = "Obnoviť na ";
 
@@ -2856,9 +2819,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* UI/UX-setting */
 "Display Insulin Activity Chart" = "Zobraziť graf aktivity inzulínu";
-
-/* UI/UX-setting */
-"Don't ask for saving search result as meal preset" = "Nepýtať sa na uloženie výsledkov vyhľadávania do zoznamu jedál";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -3967,3 +3927,14 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Označenia osi Y";
+
+"Fiber" = "Fiber";
+
+"Sugars" = "Sugars";
+
+"Search Results" = "Search Results";
+
+"Results for" = "Results for";
+
+/* name of complete meals when saving */
+"Complete Meal" = "Complete Meal";

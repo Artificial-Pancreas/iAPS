@@ -98,10 +98,9 @@ struct PumpView: View {
                         } else {
                             HStack(spacing: 0) {
                                 let amount: Decimal = (insulin * Decimal(concentration.last?.concentration ?? 1))
-                                if !(nano && amount >= 100) {
-                                    Text(reservoirFormatter.string(from: amount as NSNumber) ?? "")
-                                    Text("U").foregroundStyle(.secondary)
-                                }
+                                Text(reservoirFormatter.string(from: amount as NSNumber) ?? "")
+                                    .padding(.trailing, 2)
+                                Text("U").foregroundStyle(.secondary)
                             }.offset(x: 6)
                             if nano {
                                 medtrumInsulinAmount(portion: amountFraction)
@@ -141,7 +140,7 @@ struct PumpView: View {
                     }
                     remainingTime(time: date.timeIntervalSince(timerDate))
                         .font(.pumpFont)
-                        .offset(x: nano ? -7 : -5)
+                        .offset(x: nano ? -8.5 : -5)
                 } else if state.pumpName.contains("Omni") {
                     Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
                         .offset(y: -4)

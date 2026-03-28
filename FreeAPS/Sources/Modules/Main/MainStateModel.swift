@@ -11,6 +11,7 @@ extension Main {
         @Published var isSecondaryModalPresented = false
         @Published var secondaryModalView: AnyView? = nil
         @Published var lightMode = LightMode.auto
+        @Published var shouldPreventModalDismiss = false
 
         override func subscribe() {
             lightMode = settingsManager.settings.lightMode
