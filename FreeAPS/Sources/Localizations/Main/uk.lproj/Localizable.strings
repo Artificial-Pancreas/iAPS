@@ -1413,21 +1413,21 @@ Enact a temp Basal or a temp target */
 
 "Serving Size" = "Розмір порції";
 
-"Standard Serving" = "Standard Serving";
+"Standard Serving" = "Стандартна Порція";
 
 "Food Name" = "Назва Страви";
 
 "Food" = "Страва";
 
-"Tag name" = "Tag name";
+"Tag name" = "Назва тегу";
 
-"Add New Tag" = "Add New Tag";
+"Add New Tag" = "Додати Новий Тег";
 
-"Tags" = "Tags";
+"Tags" = "Теги";
 
-"Show All Nutrients" = "Show All Nutrients";
+"Show All Nutrients" = "Показати всі Поживні Речовини";
 
-"Calories" = "Calories";
+"Calories" = "Калорії";
 
 "Quick access to your frequently used foods" = "Швидкий доступ до часто використовуваних страв";
 
@@ -1493,7 +1493,7 @@ Enact a temp Basal or a temp target */
 
 "**Text/Voice Search:**" = "**Текстовий/голосовий пошук:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Безкоштовна, відкрита база даних із широким охопленням штрих-кодів та текстовим пошуком для упакованих продуктів.";
 
 "AI Progress Animation" = "Анімація Прогресу зі ШІ";
 
@@ -1547,7 +1547,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API Key";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Отримайте ключ API на сайті platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "Конфігурація OpenAI (ChatGPT API)";
 
@@ -1555,17 +1555,17 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Ключ API Google Gemini";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Отримайте безкоштовний ключ API на сайті ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Конфігурація Google (Gemini API)";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Отримайте безкоштовний ключ API на сайті ai.google.dev.";
 
 "Enter your Claude API key" = "Введіть свій Ключ API Claude";
 
 "Claude API Key" = "Ключ API Claude";
 
-"Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
+"Get an API key at console.anthropic.com." = "Отримайте ключ API на сайті console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Anthropic Конфігурація (Claude API))";
 
@@ -1744,7 +1744,7 @@ Enact a temp Basal or a temp target */
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Безкоштовна офіційна база даних про харчування. Чудові дані про харчування нефасованих продуктів, таких як фрукти, овочі та м’ясо.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Безкоштовна, відкрита база даних із широким охопленням штрих-кодів та текстовим пошуком для упакованих продуктів.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Якщо ви оберете «OpenFoodFacts» або «USDA», аналіз камери використовуватиме базову оцінку замість штучного інтелекту";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Виберіть «Anthropic (Claude API)», «Google (Gemini API)» або «OpenAI (ChatGPT API)» для аналізу зображень за допомогою штучного інтелекту, щоб використовувати ваші платні ключі";
@@ -1766,7 +1766,7 @@ Enact a temp Basal or a temp target */
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API Key";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Отримайте ключ API на сайті platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "Конфігурація OpenAI (ChatGPT API)";
 
@@ -1780,7 +1780,7 @@ Enact a temp Basal or a temp target */
 
 "Google Gemini API Key" = "Ключ API Google Gemini";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Отримайте безкоштовний ключ API на сайті ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Конфігурація Google (Gemini API)";
 
@@ -1976,9 +1976,9 @@ Enact a temp Basal or a temp target */
 
 "Cal" = "Кал";
 
-"servings" = "servings";
+"servings" = "порції";
 
-"serving" = "serving";
+"serving" = "порція";
 
 "Reset to " = "Скинути до";
 
@@ -3594,7 +3594,7 @@ Enact a temp Basal or a temp target */
 "Minimum Threshold Setting" = "Налаштування Мінімального Порогу";
 
 /* Minimum Threshold Setting */
-"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
+"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "Цей параметр дозволяє вибрати цільовий рівень глюкози, нижче якого ніколи не вводитиметься інсулін SMB або додатковий тимчасовий базальний інсулін. Додатковий тимчасовий базальний інсулін – це інсулін, що перевищує інсулін, необхідний для базального метаболізму.\n\nФактичний поріг глюкози, який використовується в алгоритмі OpenAPS, завжди буде більшим значенням цього параметра та обчисленого значення:\n\nЦільова глюкоза - (Цільова глюкоза - 40) / 2.";
 
 /* Threshold Table Columns Title */
 "Setting" = "Налаштування";
@@ -3937,13 +3937,13 @@ Enact a temp Basal or a temp target */
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Мітки осі Y";
 
-"Fiber" = "Fiber";
+"Fiber" = "Клітковина";
 
-"Sugars" = "Sugars";
+"Sugars" = "Цукор";
 
-"Search Results" = "Search Results";
+"Search Results" = "Результати Пошуку";
 
-"Results for" = "Results for";
+"Results for" = "Результати для";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Complete Meal";
+"Complete Meal" = "Повний обід";
