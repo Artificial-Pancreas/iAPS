@@ -1419,6 +1419,16 @@ Enact a temp Basal or a temp target */
 
 "Food" = "Страва";
 
+"Tag name" = "Tag name";
+
+"Add New Tag" = "Add New Tag";
+
+"Tags" = "Tags";
+
+"Show All Nutrients" = "Show All Nutrients";
+
+"Calories" = "Calories";
+
 "Quick access to your frequently used foods" = "Швидкий доступ до часто використовуваних страв";
 
 "Search databases or describe food for AI analysis" = "Пошук по базах даних або опис їжі для аналізу ШІ";

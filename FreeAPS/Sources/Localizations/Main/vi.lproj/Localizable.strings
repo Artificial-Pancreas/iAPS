@@ -1418,6 +1418,16 @@ Enact a temp Basal or a temp target */
 
 "Food" = "Thực phẩm";
 
+"Tag name" = "Tag name";
+
+"Add New Tag" = "Add New Tag";
+
+"Tags" = "Tags";
+
+"Show All Nutrients" = "Show All Nutrients";
+
+"Calories" = "Calories";
+
 "Quick access to your frequently used foods" = "Truy cập nhanh thực phẩm thường dùng";
 
 "Search databases or describe food for AI analysis" = "Tìm dữ liệu hoặc mô tả thực phẩm để AI phân tích";

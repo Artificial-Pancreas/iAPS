@@ -1418,6 +1418,16 @@ Enact a temp Basal or a temp target */
 
 "Food" = "Mat";
 
+"Tag name" = "Märkning";
+
+"Add New Tag" = "Lägg till märkning";
+
+"Tags" = "Märkningar";
+
+"Show All Nutrients" = "Visa alla näringsämnen";
+
+"Calories" = "Kalorier";
+
 "Quick access to your frequently used foods" = "Snabb tillgång till din vanliga mat";
 
 "Search databases or describe food for AI analysis" = "Sök i databaser eller beskriv mat för AI-analys";
