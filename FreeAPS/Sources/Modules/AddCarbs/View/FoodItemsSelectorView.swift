@@ -141,8 +141,8 @@ struct FoodItemsSelectorView: View {
                         if foodItem.name.isNotEmpty {
                             FoodItemsSelectorItemRow(
                                 foodItem: foodItem,
-                                onAdd: {
-                                    onFoodItemSelected(foodItem)
+                                onAdd: { multiplier in
+                                    onFoodItemSelected(foodItem.withPortionSizeOrMultiplier(multiplier))
                                 },
                                 onRemove: {
                                     onFoodItemRemoved(foodItem)
@@ -179,7 +179,7 @@ struct FoodItemsSelectorView: View {
 
 private struct FoodItemsSelectorItemRow: View {
     let foodItem: FoodItemDetailed
-    let onAdd: () -> Void
+    let onAdd: (Decimal) -> Void
     let onRemove: () -> Void
     let isAdded: Bool
     let isFirst: Bool
@@ -195,6 +195,7 @@ private struct FoodItemsSelectorItemRow: View {
     @State private var showDeleteConfirmation = false
     @State private var showImageSelector = false
     @State private var isSavingImage = false
+    @State private var showPortionPicker = false
 
     private let displayNutrients: [NutrientType] = [.carbs, .protein, .fat]
 
@@ -262,7 +263,13 @@ private struct FoodItemsSelectorItemRow: View {
                             .truncationMode(.tail)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Button(action: isAdded ? onRemove : onAdd) {
+                        Button(action: {
+                            if isAdded {
+                                onRemove()
+                            } else {
+                                showPortionPicker = true
+                            }
+                        }) {
                             Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle.fill")
                                 .font(.system(size: 28))
                                 .foregroundColor(isAdded ? .green : .accentColor)
@@ -355,6 +362,20 @@ private struct FoodItemsSelectorItemRow: View {
             Text(
                 "Are you sure you want to permanently delete \"\(foodItem.name)\" from your saved foods? This action cannot be undone."
             )
+        }
+        .sheet(isPresented: $showPortionPicker) {
+            PortionAdjusterView(
+                foodItem: foodItem,
+                onSave: { multiplier in
+                    onAdd(multiplier)
+                    showPortionPicker = false
+                },
+                onCancel: {
+                    showPortionPicker = false
+                }
+            )
+            .presentationDetents([.height(foodItem.hasNutritionValues ? 420 : 340)])
+            .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showItemInfo) {
             FoodItemInfoPopup(foodItem: foodItem)

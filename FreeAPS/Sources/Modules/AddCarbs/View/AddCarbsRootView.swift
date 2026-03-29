@@ -26,6 +26,15 @@ extension AddCarbs {
         // Food Search States
         @State private var showCancelConfirmation = false
 
+        @State private var showFddbImportSheet = false
+        @State private var fddbURLString: String = ""
+        @State private var fddbIsImporting = false
+        @State private var fddbErrorMessage: String? = nil
+        @State private var fddbImportInfo: String? = nil
+
+        // NOTE: We keep the import UI simple and manual on purpose (no deep-link handler).
+        // The importer normalizes values to per serving (1 portion) where possible.
+
         @FetchRequest(
             entity: Presets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate:
@@ -90,6 +99,7 @@ extension AddCarbs {
                 .onChange(of: foodSearchState.showSavedFoods) { syncDismissState() }
                 .onChange(of: carbPresets.count) { updateSavedFoods() }
                 .sheet(isPresented: $foodSearchState.showNewSavedFoodEntry) { foodItemEditorSheet }
+                .sheet(isPresented: $showFddbImportSheet) { fddbImportSheet }
         }
 
         @ViewBuilder private var content: some View {
@@ -137,6 +147,112 @@ extension AddCarbs {
             .presentationDragIndicator(.visible)
         }
 
+        @ViewBuilder private var fddbImportSheet: some View {
+            NavigationStack {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Import from FDDB")
+                        .font(.headline)
+                        .padding(.top, 8)
+
+                    Text(
+                        "Füge den FDDB-Share-Link ein (z. B. https://share.fddbextender.de/3975627). Wir lesen Name und Nährwerte und normalisieren auf eine Portion."
+                    )
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Share URL")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        HStack(spacing: 8) {
+                            TextField("https://share.fddbextender.de/...", text: $fddbURLString)
+                                .keyboardType(.URL)
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled(true)
+                                .disabled(fddbIsImporting)
+                                .textFieldStyle(.roundedBorder)
+
+                            if !fddbURLString.isEmpty {
+                                Button(action: { fddbURLString = "" }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(.plain)
+                                .disabled(fddbIsImporting)
+                            }
+                        }
+                    }
+
+                    if let error = fddbErrorMessage {
+                        HStack(spacing: 8) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundColor(.orange)
+                            Text(error)
+                                .font(.footnote)
+                        }
+                        .padding(8)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(8)
+                    }
+                    if let info = fddbImportInfo {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                            Text(info)
+                                .font(.footnote)
+                        }
+                        .padding(8)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(8)
+                    }
+
+                    Spacer(minLength: 0)
+
+                    HStack(spacing: 12) {
+                        Button("Cancel") {
+                            showFddbImportSheet = false
+                            fddbErrorMessage = nil
+                            fddbImportInfo = nil
+                            fddbURLString = ""
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(Color.gray.opacity(0.2))
+                        .foregroundColor(.primary)
+                        .cornerRadius(10)
+
+                        Button(action: { performFddbImport() }) {
+                            HStack(spacing: 8) {
+                                if fddbIsImporting {
+                                    ProgressView()
+                                }
+                                Text("Import")
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            (!fddbURLString.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !fddbIsImporting) ?
+                                Color.accentColor : Color.gray.opacity(0.2)
+                        )
+                        .foregroundColor((
+                            !fddbURLString.trimmingCharacters(in: .whitespacesAndNewlines)
+                                .isEmpty && !fddbIsImporting
+                        ) ? .white : .secondary)
+                        .cornerRadius(10)
+                        .disabled(fddbURLString.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || fddbIsImporting)
+                    }
+                }
+                .padding()
+                .navigationTitle("FDDB Import")
+                .navigationBarTitleDisplayMode(.inline)
+            }
+            .presentationDetents([.height(260), .medium])
+            .presentationDragIndicator(.visible)
+        }
+
         private var hypoHandler: ((FoodItemDetailed, UIImage?, Date?) -> Void)? {
             guard state.id != nil,
                   state.id != "None",
@@ -157,12 +273,23 @@ extension AddCarbs {
 
         @ViewBuilder private var leadingNavItem: some View {
             if foodSearchState.showSavedFoods {
-                Button(action: {
-                    foodSearchState.showNewSavedFoodEntry = true
-                }) {
-                    Label("New", systemImage: "plus.circle.fill")
-                        .font(.body.weight(.semibold))
-                        .foregroundColor(.blue)
+                HStack(spacing: 12) {
+                    Button(action: {
+                        foodSearchState.showNewSavedFoodEntry = true
+                    }) {
+                        Label("New", systemImage: "plus.circle.fill")
+                            .font(.body.weight(.semibold))
+                            .foregroundColor(.blue)
+                    }
+
+                    Button(action: {
+                        // Open the FDDB import sheet where the user can paste a share link
+                        showFddbImportSheet = true
+                    }) {
+                        Label("Import", systemImage: "link.badge.plus")
+                            .font(.body.weight(.semibold))
+                            .foregroundColor(.blue)
+                    }
                 }
             }
         }
@@ -734,6 +861,102 @@ extension AddCarbs {
                         .disabled(disabled)
                 }
             }.environment(\.colorScheme, colorScheme)
+        }
+
+        /// Triggers the FDDB import flow: downloads the share page, parses it, and opens the Saved Food editor prefilled.
+        private func performFddbImport() {
+            let trimmed = fddbURLString.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else {
+                fddbErrorMessage = NSLocalizedString("Bitte eine gültige FDDB-Share-URL eingeben.", comment: "")
+                return
+            }
+
+            fddbIsImporting = true
+            fddbErrorMessage = nil
+
+            Task {
+                do {
+                    // 1) Load + parse the FDDB share page
+                    let result = try await FddbExtenderImporter.importFrom(urlString: trimmed)
+
+                    // 2) Map to the app's FoodItemDetailed structure
+                    var values: [NutrientType: Decimal] = [:]
+                    if let c = result.carbs { values[.carbs] = max(0, c) }
+                    if let p = result.protein { values[.protein] = max(0, p) }
+                    if let f = result.fat { values[.fat] = max(0, f) }
+                    if let fi = result.fiber { values[.fiber] = max(0, fi) }
+                    if let su = result.sugars { values[.sugars] = max(0, su) }
+
+                    // Standard serving (if detected)
+                    let standardSize = result.standardServingSize
+                    let units: MealUnits? = {
+                        switch result.standardServingUnit {
+                        case .grams?: return .grams
+                        case .milliliters?: return .milliliters
+                        case nil: return nil
+                        }
+                    }()
+
+                    let importedItem: FoodItemDetailed
+                    switch result.mode {
+                    case .perServing:
+                        importedItem = FoodItemDetailed(
+                            name: result.name,
+                            nutrition: .perServing(values: values, servingsMultiplier: 1),
+                            standardServingSize: standardSize,
+                            units: units ?? .grams,
+                            source: .manual
+                        )
+
+                    case let .per100(unit):
+                        // If only per-100 is available, prefill the editor in per-100 mode.
+                        // Portion size defaults to 100 of the detected unit unless we have a clear standard serving size.
+                        let portionSize = standardSize ?? 100
+                        let portionUnits: MealUnits = (unit == .milliliters) ? .milliliters : .grams
+                        importedItem = FoodItemDetailed(
+                            name: result.name,
+                            nutrition: .per100(values: values, portionSize: portionSize),
+                            standardServingSize: standardSize,
+                            units: portionUnits,
+                            source: .manual
+                        )
+                    }
+
+                    // Show a short info banner about the detected mode before opening the editor
+                    let modeInfo: String = {
+                        switch result.mode {
+                        case .perServing:
+                            return NSLocalizedString("Erkannt: pro Portion", comment: "")
+                        case let .per100(unit):
+                            return unit == .milliliters ? NSLocalizedString("Erkannt: pro 100 ml", comment: "") :
+                                NSLocalizedString("Erkannt: pro 100 g", comment: "")
+                        }
+                    }()
+
+                    await MainActor.run { fddbImportInfo = modeInfo }
+                    try? await Task.sleep(nanoseconds: 700_000_000)
+
+                    await MainActor.run {
+                        // Close the import sheet first
+                        showFddbImportSheet = false
+                        fddbIsImporting = false
+
+                        // Open the Saved Food editor with prefilled values
+                        foodSearchState.newFoodEntryToEdit = importedItem
+                        foodSearchState.showNewSavedFoodEntry = true
+
+                        // Reset the form
+                        fddbURLString = ""
+                        fddbErrorMessage = nil
+                        fddbImportInfo = nil
+                    }
+                } catch {
+                    await MainActor.run {
+                        fddbIsImporting = false
+                        fddbErrorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+                    }
+                }
+            }
         }
     }
 }
