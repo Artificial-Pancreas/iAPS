@@ -1418,15 +1418,15 @@ Enact a temp Basal or a temp target */
 
 "Food" = "Thực phẩm";
 
-"Tag name" = "Tag name";
+"Tag name" = "Tên thẻ";
 
-"Add New Tag" = "Add New Tag";
+"Add New Tag" = "Thêm thẻ mới";
 
-"Tags" = "Tags";
+"Tags" = "Các thẻ";
 
-"Show All Nutrients" = "Show All Nutrients";
+"Show All Nutrients" = "Hiển thị tất cả chất dinh dưỡng";
 
-"Calories" = "Calories";
+"Calories" = "Lượng Calo";
 
 "Quick access to your frequently used foods" = "Truy cập nhanh thực phẩm thường dùng";
 
