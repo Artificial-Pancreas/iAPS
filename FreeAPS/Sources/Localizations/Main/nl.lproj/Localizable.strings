@@ -1413,21 +1413,21 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Serving Size" = "Portiegrootte";
 
-"Standard Serving" = "Standard Serving";
+"Standard Serving" = "Standaard portie";
 
 "Food Name" = "Naam maaltijd";
 
 "Food" = "Maaltijd";
 
-"Tag name" = "Tag name";
+"Tag name" = "Labelnaam";
 
-"Add New Tag" = "Add New Tag";
+"Add New Tag" = "Nieuw label toevoegen";
 
-"Tags" = "Tags";
+"Tags" = "Labels";
 
-"Show All Nutrients" = "Show All Nutrients";
+"Show All Nutrients" = "Toon alle voedingswaarden";
 
-"Calories" = "Calories";
+"Calories" = "Calorieën";
 
 "Quick access to your frequently used foods" = "Snelle toegang tot je vaak gebruikte voedingsmiddelen";
 
@@ -1493,7 +1493,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "**Text/Voice Search:**" = "**Tekst/Spraak zoeken:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
 
 "AI Progress Animation" = "AI Voortgangsanimatie";
 
@@ -1547,7 +1547,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-sleutel";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Ontvang een API-sleutel op platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) configuratie";
 
@@ -1555,17 +1555,17 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Google Gemini API Key" = "Google Gemini API-sleutel";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Ontvang een API-sleutel op ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) configuratie";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Ontvang een API-sleutel op ai.google.dev.";
 
 "Enter your Claude API key" = "Voer je Claude API-sleutel in";
 
 "Claude API Key" = "Claude API sleutel";
 
-"Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
+"Get an API key at console.anthropic.com." = "Ontvang een API-sleutel op console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Anthropische (Claude API) configuratie";
 
@@ -1743,7 +1743,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis officiële voedingsdatabase. Superieure voedingsgegevens voor niet-verpakte voedingsmiddelen zoals fruit, groenten en vlees.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Als u 'OpenFoodFacts' of 'USDA' selecteert, zal de camera analyse gebruik maken van basisschattingen in plaats van AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Selecteer 'Anthropic (Claude API)', 'Google (Gemini API)', of 'OpenAI (ChatGPT API)' voor AI Image Analyse om je betaalde sleutels te gebruiken";
@@ -1765,7 +1765,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API-sleutel";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Ontvang een API-sleutel op platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) configuratie";
 
@@ -1779,7 +1779,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Google Gemini API Key" = "Google Gemini API-sleutel";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Ontvang een API-sleutel op ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) configuratie";
 
@@ -1975,9 +1975,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Cal" = "Cal";
 
-"servings" = "servings";
+"servings" = "Porties";
 
-"serving" = "serving";
+"serving" = "Porties";
 
 "Reset to " = "Herstellen naar ";
 
@@ -3596,7 +3596,12 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Minimum Threshold Setting" = "Instelling minimale grenswaarde";
 
 /* Minimum Threshold Setting */
-"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
+"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "Deze instelling laat je een glucosegrens kiezen waaronder nooit SMB-insuline of extra tijdelijke basale insuline wordt toegediend. Extra tijdelijke basale insuline is de hoeveelheid insuline bovenop wat nodig is voor het basaal metabolisme.
+De daadwerkelijke glucosegrens die in het OpenAPS-algoritme wordt gebruikt, is altijd de hoogste waarde van:
+	•	deze instelling, en
+	•	de berekende waarde:
+
+Doelglucose − (Doelglucose − 2,2) / 2.";
 
 /* Threshold Table Columns Title */
 "Setting" = "Instelling";
@@ -3939,13 +3944,13 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Y-as labels";
 
-"Fiber" = "Fiber";
+"Fiber" = "Vezels";
 
-"Sugars" = "Sugars";
+"Sugars" = "Suikers";
 
-"Search Results" = "Search Results";
+"Search Results" = "Zoekresultaten";
 
-"Results for" = "Results for";
+"Results for" = "Resultaten voor";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Complete Meal";
+"Complete Meal" = "Volledige maaltijd";
