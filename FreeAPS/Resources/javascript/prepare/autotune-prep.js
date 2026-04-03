@@ -1,4 +1,4 @@
-function generate(pumphistory_data, profile_data, glucose_data, pumpprofile_data, carb_data = {} , categorize_uam_as_basal = false, tune_insulin_curve = false) {
+function generate(pumphistory_data, profile_data, glucose_data, pumpprofile_data, carb_data = {}, categorize_uam_as_basal = false, tune_insulin_curve = false, isf_schedule = {}) {
     if (typeof(profile_data.carb_ratio) === 'undefined' || profile_data.carb_ratio < 0.1) {
         if (typeof(pumpprofile_data.carb_ratio) === 'undefined' || pumpprofile_data.carb_ratio < 0.1) {
             console.log('{ "carbs": 0, "mealCOB": 0, "reason": "carb_ratios ' + profile_data.carb_ratio + ' and ' + pumpprofile_data.carb_ratio + ' out of bounds" }');
@@ -21,6 +21,27 @@ function generate(pumphistory_data, profile_data, glucose_data, pumpprofile_data
 
     // Always keep the curve value up to date with what's in the user preferences
     profile_data.curve = pumpprofile_data.curve;
+
+    // When a dynamic ISF algorithm (AutoISF/DynamicISF) is active, the loop applies a
+    // different ISF every 5 minutes, but autotune's BGI calculation uses the static
+    // profile.sens. This creates systematic deviation errors that corrupt basal suggestions.
+    //
+    // If an isf_schedule is provided (built from CoreData Reasons entries - the actual
+    // per-loop ISF values), compute the overall median actual ISF and override profile.sens
+    // before the bundle runs. This makes deviation = actual_BG_delta - IOB × actual_ISF,
+    // which is the correct formula, and produces reliable basal profile suggestions.
+    if (isf_schedule && typeof isf_schedule === 'object') {
+        var isfValues = Object.values(isf_schedule).filter(function(v) {
+            return typeof v === 'number' && v > 10 && v < 600;
+        });
+        if (isfValues.length >= 12) {
+            var sortedISF = isfValues.slice().sort(function(a, b) { return a - b; });
+            var medianISF = sortedISF[Math.floor(sortedISF.length / 2)];
+            profile_data.sens = medianISF;
+            pumpprofile_data.sens = medianISF;
+            console.log('Dynamic autotune: overriding profile.sens with actual median ISF from Reasons: ' + medianISF.toFixed(1) + ' mg/dL/U (from ' + isfValues.length + ' hourly data points)');
+        }
+    }
 
     // Have to sort history - NS sort doesn't account for different zulu and local timestamps
     pumphistory_data.sort( function( firstValue, secondValue ) {

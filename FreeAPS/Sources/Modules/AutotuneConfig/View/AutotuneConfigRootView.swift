@@ -108,6 +108,28 @@ extension AutotuneConfig {
                 Toggle("Use Autotune", isOn: $state.useAutotune)
                 if state.useAutotune {
                     Toggle("Only Autotune Basal Insulin", isOn: $state.onlyAutotuneBasals)
+                    if state.dynamicAlgorithmActive {
+                        // With AutoISF/DynamicISF, autotune now measures ISF directly from the
+                        // actual per-loop ISF values stored in CoreData, rather than inferring
+                        // it from deviations using a static profile ISF.  Basal suggestions
+                        // also use this corrected ISF for the BGI calculation.
+                        // CR tuning is less reliable because the carb-absorption model assumes
+                        // a fixed ISF; leaving "Only Autotune Basal Insulin" on is recommended
+                        // unless you want to review the ISF measurement.
+                        HStack(spacing: 8) {
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.blue)
+                            Text(
+                                "\(state.algorithmName) is active. ISF is now measured directly " +
+                                "from actual loop data, so the ISF value shown below reflects what " +
+                                "the algorithm truly applied. Carb-ratio tuning may still be less " +
+                                "accurate — keeping \"Only Autotune Basal Insulin\" on is recommended."
+                            )
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                        }
+                        .padding(.vertical, 4)
+                    }
                 }
             }
         }

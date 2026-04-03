@@ -11,6 +11,12 @@ extension AutotuneConfig {
         @Published var onlyAutotuneBasals = false
         @Published var autotune: Autotune?
         private(set) var units: GlucoseUnits = .mmolL
+        /// True when AutoISF or Dynamic ISF is the active algorithm.
+        /// When active, ISF is measured directly from CoreData Reasons entries rather than
+        /// inferred by oref0 deviation analysis. CR tuning may still be less reliable.
+        @Published private(set) var dynamicAlgorithmActive = false
+        /// Human-readable name of the active ISF algorithm for display in the UI.
+        @Published private(set) var algorithmName = ""
         @Published var publishedDate = Date()
         @Published var increment: Double = 0.1
         @Published var running: Bool = false
@@ -32,6 +38,32 @@ extension AutotuneConfig {
             useAutotune = settingsManager.settings.useAutotune
             publishedDate = lastAutotuneDate
             increment = Double(settingsManager.preferences.bolusIncrement)
+
+            // Detect active algorithm.
+            // With AutoISF or DynamicISF, autotune now uses CoreData Reasons entries to
+            // build a per-hour median ISF schedule (the actual ISF the loop applied), which
+            // corrects the BGI calculation and gives a reliable ISF measurement.
+            // Carb-ratio tuning remains less reliable under dynamic algorithms because the
+            // carb-absorption model assumes a fixed ISF; onlyAutotuneBasals still defaults
+            // to true on first activation, but users may override it if they want ISF output.
+            let prefs = settingsManager.preferences
+            let s = settingsManager.settings
+            let isDynamic = s.autoisf || prefs.useNewFormula
+            dynamicAlgorithmActive = isDynamic
+            if s.autoisf {
+                algorithmName = "AutoISF"
+            } else if prefs.sigmoid, prefs.enableDynamicCR {
+                algorithmName = "Dynamic ISF + CR (Sigmoid)"
+            } else if prefs.sigmoid {
+                algorithmName = "Dynamic ISF (Sigmoid)"
+            } else if prefs.useNewFormula, prefs.enableDynamicCR {
+                algorithmName = "Dynamic ISF + CR (Logarithmic)"
+            } else if prefs.useNewFormula {
+                algorithmName = "Dynamic ISF (Logarithmic)"
+            } else {
+                algorithmName = "oref0"
+            }
+
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
 
             currentProfile = provider.profile

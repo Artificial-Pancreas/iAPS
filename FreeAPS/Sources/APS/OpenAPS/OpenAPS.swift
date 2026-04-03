@@ -242,6 +242,40 @@ final class OpenAPS {
                 let pumpProfile = self.loadFileFromStorage(name: Settings.pumpProfile)
                 let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
 
+                // When a dynamic ISF algorithm is active (AutoISF or Dynamic ISF), autotune's
+                // deviation calculation is inaccurate because it uses the static profile ISF
+                // (profile.sens) for BGI, while the loop actually applied a different ISF every
+                // 5 minutes.  We address this on two levels:
+                //
+                // 1. Attribute more data to basal: force categorizeUamAsBasal=true so UAM data
+                //    is assigned to the basal bucket, reducing the ISF data pool and focusing
+                //    the deviation analysis on periods where basal accuracy matters most.
+                //
+                // 2. Correct the BGI calculation: build a per-hour median ISF schedule from
+                //    the last 14 days of CoreData Reasons entries (the actual ISF the loop used)
+                //    and pass it to autotune-prep so it can override profile.sens with the real
+                //    measured value.  This makes deviation = BG_delta − IOB × actual_ISF, which
+                //    is the correct formula and produces reliable basal suggestions.
+                //
+                // 3. Replace autotune's inferred ISF output with the Reasons-based measurement:
+                //    oref0 cannot reliably infer ISF when it changes every 5 minutes; the
+                //    CoreData Reasons entries record the exact ISF the algorithm applied each loop,
+                //    which is the ground-truth value to report back to the user.
+                let freeapsRaw = self.loadFileFromStorage(name: FreeAPS.settings)
+                let freeapsSettings = FreeAPSSettings(from: freeapsRaw)
+                let preferencesRaw = self.loadFileFromStorage(name: Settings.preferences)
+                let preferences = Preferences(from: preferencesRaw)
+                let dynamicAlgorithmActive = freeapsSettings.autoisf || preferences.useNewFormula
+                let effectiveCategorizeUamAsBasal = categorizeUamAsBasal || dynamicAlgorithmActive
+
+                // When a dynamic ISF algorithm is active, build a per-hour median ISF schedule
+                // from the last 14 days of CoreData Reasons entries.  This is used for two purposes:
+                //   1. Correct autotune-prep's BGI calculation (override profile.sens with actual ISF)
+                //   2. Replace autotune's inferred ISF output with the direct Reasons measurement
+                let (isfScheduleJSON, reasonsMedianISF) = dynamicAlgorithmActive
+                    ? self.buildReasonsISFSchedule()
+                    : (.empty, nil)
+
                 Task {
                     let autotunePreppedGlucose = await self.autotunePrepare(
                         pumphistory: pumpHistory,
@@ -249,8 +283,9 @@ final class OpenAPS {
                         glucose: glucose,
                         pumpprofile: pumpProfile,
                         carbs: carbs,
-                        categorizeUamAsBasal: categorizeUamAsBasal,
-                        tuneInsulinCurve: tuneInsulinCurve
+                        categorizeUamAsBasal: effectiveCategorizeUamAsBasal,
+                        tuneInsulinCurve: tuneInsulinCurve,
+                        isfSchedule: isfScheduleJSON
                     )
                     debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
 
@@ -264,7 +299,16 @@ final class OpenAPS {
 
                     debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
 
-                    if let autotune = Autotune(from: autotuneResult) {
+                    if var autotune = Autotune(from: autotuneResult) {
+                        // When the dynamic algorithm is active and we have sufficient Reasons data,
+                        // replace autotune's inferred ISF with the actual median ISF directly
+                        // measured from loop data.  The oref0 deviation analysis cannot reliably
+                        // infer ISF when it changes every 5 minutes; the Reasons-based median is
+                        // the ground truth for what ISF the algorithm actually applied.
+                        if dynamicAlgorithmActive, let medianISF = reasonsMedianISF {
+                            debug(.openAPS, "AUTOTUNE ISF: replacing inferred \(autotune.sensitivity) → \(Decimal(medianISF)) mg/dL/U from Reasons data")
+                            autotune.sensitivity = Decimal(medianISF)
+                        }
                         self.storage.save(autotuneResult, as: Settings.autotune)
                         promise(.success(autotune))
                     } else {
@@ -1163,7 +1207,8 @@ final class OpenAPS {
         pumpprofile: JSON,
         carbs: JSON,
         categorizeUamAsBasal: Bool,
-        tuneInsulinCurve: Bool
+        tuneInsulinCurve: Bool,
+        isfSchedule: RawJSON = .empty
     ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
         await scriptExecutor.call(name: OpenAPS.Prepare.autotunePrep, with: [
@@ -1173,8 +1218,82 @@ final class OpenAPS {
             pumpprofile,
             carbs,
             categorizeUamAsBasal,
-            tuneInsulinCurve
+            tuneInsulinCurve,
+            isfSchedule
         ])
+    }
+
+    /// Builds a per-hour median ISF schedule (keys "0".."23") from CoreData Reasons entries
+    /// recorded over the past 14 days, filtered to near-basal conditions (sensitivityRatio ≈ 1.0).
+    /// Returns `.empty` when there is insufficient data (< 12 hours covered).
+    ///
+    /// This data is used to correct autotune's BGI calculation when AutoISF or DynamicISF is
+    /// active: those algorithms change ISF every 5 minutes, so using the static profile ISF
+    /// in autotune's deviation formula produces systematic errors.  Replacing it with the
+    /// actual measured ISF makes basal suggestions reliable and gives an accurate ISF reading.
+    ///
+    /// - Returns: `(schedule, median)` where schedule is a JSON dict `{"0": 42.5, …}` and
+    ///            median is the overall median across all hours, or `nil` if data is insufficient.
+    private func buildReasonsISFSchedule() -> (schedule: RawJSON, median: Double?) {
+        let twoWeeksAgo = Date().addingTimeInterval(-14 * 24 * 3600) as NSDate
+        let reasons = CoreDataStorage().fetchReasons(interval: twoWeeksAgo)
+
+        guard !reasons.isEmpty else {
+            debug(.openAPS, "AUTOTUNE ISF: No Reasons data available")
+            return (.empty, nil)
+        }
+
+        // Bucket valid ISF readings by hour-of-day.
+        // Only use entries where sensitivityRatio is between 0.85–1.15 (near-basal conditions —
+        // excluding meal/exercise spikes where dynamic ISF diverges most from basal ISF).
+        var hourlyISFs: [Int: [Double]] = [:]
+        for reason in reasons {
+            guard
+                let isf = reason.isf?.doubleValue, isf > 10, isf < 600,
+                let ratio = reason.ratio?.doubleValue, abs(ratio - 1.0) <= 0.15,
+                let date = reason.date
+            else { continue }
+            let hour = Calendar.current.component(.hour, from: date)
+            hourlyISFs[hour, default: []].append(isf)
+        }
+
+        // Require at least 12 distinct hours to have ≥ 3 data points each.
+        let hoursWithEnoughData = hourlyISFs.filter { $0.value.count >= 3 }
+        guard hoursWithEnoughData.count >= 12 else {
+            debug(.openAPS, "AUTOTUNE ISF: Insufficient Reasons data — only \(hoursWithEnoughData.count) hours with ≥ 3 basal-condition entries")
+            return (.empty, nil)
+        }
+
+        // Compute per-hour median ISF.
+        var schedule: [String: Double] = [:]
+        for hour in 0 ..< 24 {
+            if let values = hourlyISFs[hour], values.count >= 3 {
+                let sorted = values.sorted()
+                schedule[String(hour)] = sorted[sorted.count / 2]
+            }
+        }
+
+        // For hours with insufficient individual data, interpolate from nearest covered hours.
+        for hour in 0 ..< 24 {
+            guard schedule[String(hour)] == nil else { continue }
+            var nearest: Double?
+            for offset in 1 ..< 12 {
+                if let v = schedule[String((hour - offset + 24) % 24)] { nearest = v; break }
+                if let v = schedule[String((hour + offset) % 24)]      { nearest = v; break }
+            }
+            if let v = nearest { schedule[String(hour)] = v }
+        }
+
+        // Overall median across all hourly medians.
+        let allMedians = schedule.values.sorted()
+        let overallMedian = allMedians.isEmpty ? nil : allMedians[allMedians.count / 2]
+
+        guard let data = try? JSONSerialization.data(withJSONObject: schedule),
+              let json = String(data: data, encoding: .utf8)
+        else { return (.empty, nil) }
+
+        debug(.openAPS, "AUTOTUNE ISF: Built schedule from \(reasons.count) Reasons entries; median ISF = \(overallMedian.map { String(format: "%.1f", $0) } ?? "?") mg/dL/U")
+        return (RawJSON(json), overallMedian)
     }
 
     private func autotuneRun(
