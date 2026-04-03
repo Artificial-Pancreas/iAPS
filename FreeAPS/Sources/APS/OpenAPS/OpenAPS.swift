@@ -265,7 +265,7 @@ final class OpenAPS {
                 let freeapsSettings = FreeAPSSettings(from: freeapsRaw)
                 let preferencesRaw = self.loadFileFromStorage(name: Settings.preferences)
                 let preferences = Preferences(from: preferencesRaw)
-                let dynamicAlgorithmActive = freeapsSettings.autoisf || preferences.useNewFormula
+                let dynamicAlgorithmActive = (freeapsSettings?.autoisf ?? false) || (preferences?.useNewFormula ?? false)
                 let effectiveCategorizeUamAsBasal = categorizeUamAsBasal || dynamicAlgorithmActive
 
                 // When a dynamic ISF algorithm is active, build a per-hour median ISF schedule
