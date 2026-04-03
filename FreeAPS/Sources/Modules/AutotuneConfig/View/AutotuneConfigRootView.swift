@@ -6,6 +6,7 @@ extension AutotuneConfig {
         let resolver: Resolver
         @StateObject var state: StateModel
         @State var replaceAlert = false
+        @State var isfReplaceAlert = false
 
         private var isfFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -88,6 +89,13 @@ extension AutotuneConfig {
                     deleteSection
                     saveSection
                 }
+
+                // ISF schedule section — shown whenever dynamic algo is active and a schedule exists,
+                // independent of the autotune result or the onlyAutotuneBasals toggle.
+                if state.dynamicAlgorithmActive, let schedule = state.reasonsISFSchedule, !state.running {
+                    isfScheduleSection(schedule)
+                    isfSaveSection
+                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle("Autotune")
@@ -100,6 +108,21 @@ extension AutotuneConfig {
                 Button("No") {
                     replaceAlert.toggle()
                 }
+            }
+            .alert(Text("Save ISF Schedule?"), isPresented: $isfReplaceAlert) {
+                Button("Save") {
+                    state.replaceISF()
+                    isfReplaceAlert.toggle()
+                }
+                Button("Cancel", role: .cancel) {
+                    isfReplaceAlert.toggle()
+                }
+            } message: {
+                Text(
+                    "This will replace your current ISF schedule with 24 hourly values " +
+                    "measured from actual loop data over the last 14 days. " +
+                    "Your previous schedule will be overwritten."
+                )
             }
         }
 
@@ -270,6 +293,122 @@ extension AutotuneConfig {
             Section(header: Text("Save on Pump")) {
                 Button("Save as your Normal Basal Rates") {
                     replaceAlert = true
+                }
+            }
+        }
+
+        // MARK: - ISF schedule section
+
+        @ViewBuilder private func isfScheduleSection(_ schedule: ReasonsISFSchedule) -> some View {
+            let totalPoints = schedule.counts.values.reduce(0, +)
+            let measuredHours = schedule.counts.values.filter { $0 >= 3 }.count
+            let hasInterpolated = measuredHours < 24
+
+            Section(
+                header: Text("Measured ISF Schedule"),
+                footer: VStack(alignment: .leading, spacing: 4) {
+                    Text("Based on \(totalPoints) near-basal loop readings over the last 14 days (\(measuredHours)/24 hours with direct data).")
+                    if hasInterpolated {
+                        Text("Hours shown in grey had fewer than 3 data points and were interpolated from neighbouring hours.")
+                    }
+                    Text("Generated \(dateFormatter.string(from: schedule.generatedAt)).")
+                }
+                .font(.footnote)
+                .foregroundColor(.secondary)
+            ) {
+                Grid(alignment: .trailing) {
+                    // Header row
+                    GridRow {
+                        Text("Hour")
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Current")
+                            .foregroundColor(.secondary)
+                        Text("")
+                        Text("Measured")
+                            .foregroundColor(.secondary)
+                        Text(state.units.rawValue)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.footnote)
+                    .padding(.bottom, 2)
+
+                    Divider()
+
+                    ForEach(0 ..< 24, id: \.self) { hour in
+                        isfScheduleRow(hour: hour, schedule: schedule)
+                        Divider()
+                    }
+
+                    // Overall median row
+                    GridRow {
+                        Text("Median")
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("")
+                        Text("")
+                        Text(isfFormatter.string(from: state.displayISF(mgdl: schedule.overallMedian) as NSNumber) ?? "—")
+                            .bold()
+                        Text(state.units.rawValue).foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 4)
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+        }
+
+        @ViewBuilder private func isfScheduleRow(hour: Int, schedule: ReasonsISFSchedule) -> some View {
+            let count     = schedule.counts[String(hour)] ?? 0
+            let measured  = schedule.hours[String(hour)]
+            let current   = state.currentISFForHour(hour)
+            let isInterp  = count < 3
+            let labelColor: Color = isInterp ? .secondary : .primary
+
+            GridRow {
+                // Hour label
+                Text(String(format: "%02d:00", hour))
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                // Current profile ISF
+                if let cur = current {
+                    Text(isfFormatter.string(from: cur as NSNumber) ?? "—")
+                        .foregroundColor(.secondary)
+                } else {
+                    Text("—").foregroundColor(.secondary)
+                }
+
+                // Arrow — only shown when there's a meaningful difference (> 0.5 mg/dL or > 0.03 mmol/L)
+                if let measuredVal = measured, let cur = current {
+                    let measuredDisplay = state.displayISF(mgdl: measuredVal)
+                    let diff = abs(measuredDisplay - cur)
+                    let threshold: Decimal = state.units == .mmolL ? 0.05 : 1
+                    Text(diff > threshold ? "⇢" : "")
+                        .foregroundColor(.secondary)
+                } else {
+                    Text("")
+                }
+
+                // Measured ISF
+                if let measuredVal = measured {
+                    Text(isfFormatter.string(from: state.displayISF(mgdl: measuredVal) as NSNumber) ?? "—")
+                        .foregroundColor(labelColor)
+                } else {
+                    Text("—").foregroundColor(.secondary)
+                }
+
+                // Data point count badge
+                Text(isInterp ? "~" : "(\(count))")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.vertical, 2)
+        }
+
+        private var isfSaveSection: some View {
+            Section {
+                Button("Save as ISF Schedule") {
+                    isfReplaceAlert = true
                 }
             }
         }

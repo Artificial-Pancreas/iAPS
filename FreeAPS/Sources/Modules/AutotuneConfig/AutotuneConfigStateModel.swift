@@ -32,6 +32,12 @@ extension AutotuneConfig {
         @Published var currentProfile: [BasalProfileEntry] = []
         @Published var currentTotal: Decimal = 0.0
 
+        /// The ISF schedule derived from CoreData Reasons entries, if available.
+        /// Only populated when a dynamic algorithm is active and autotune has run at least once.
+        @Published private(set) var reasonsISFSchedule: ReasonsISFSchedule?
+        /// The current ISF profile, used for side-by-side comparison in the UI.
+        @Published private(set) var currentISFProfile: InsulinSensitivities?
+
         override func subscribe() {
             autotune = provider.autotune
             units = settingsManager.settings.units
@@ -68,6 +74,8 @@ extension AutotuneConfig {
 
             currentProfile = provider.profile
             calcTotal()
+
+            loadISFSchedule()
 
             $useAutotune
                 .removeDuplicates()
@@ -118,6 +126,8 @@ extension AutotuneConfig {
                     DispatchQueue.main.async {
                         self?.lastAutotuneDate = Date()
                         self?.running.toggle()
+                        // Reload the ISF schedule — autotune may have just generated a fresh one.
+                        self?.loadISFSchedule()
                     }
                 }.store(in: &lifetime)
         }
@@ -129,6 +139,76 @@ extension AutotuneConfig {
                 .cancellable()
                 .store(in: &lifetime)
         }
+
+        // MARK: - ISF schedule helpers
+
+        private func loadISFSchedule() {
+            reasonsISFSchedule = provider.reasonsISFSchedule
+            currentISFProfile   = provider.currentISFProfile
+        }
+
+        /// Returns the ISF value from the current profile that covers the given hour-of-day.
+        /// The returned value is in whatever units the profile stores (matching `units`).
+        func currentISFForHour(_ hour: Int) -> Decimal? {
+            guard let profile = currentISFProfile, !profile.sensitivities.isEmpty else { return nil }
+            let targetMinutes = hour * 60
+            return profile.sensitivities
+                .sorted { $0.offset < $1.offset }
+                .last { $0.offset <= targetMinutes }
+                .map { $0.sensitivity }
+        }
+
+        /// Converts a raw mg/dL ISF value from the Reasons schedule into the user's display unit.
+        func displayISF(mgdl: Double) -> Decimal {
+            if units == .mmolL {
+                // Round to 1 decimal place in mmol/L
+                let mmol = mgdl * Double(GlucoseUnits.exchangeRate)
+                return Decimal((mmol * 10).rounded() / 10)
+            } else {
+                return Decimal(Int(mgdl.rounded()))
+            }
+        }
+
+        /// Writes the Reasons-based ISF schedule to the insulin_sensitivities profile file.
+        /// Creates one entry per hour (24 entries) and triggers a profile rebuild.
+        func replaceISF() {
+            guard let schedule = reasonsISFSchedule else { return }
+
+            let formatter = DateFormatter()
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "HH:mm:ss"
+
+            let entries: [InsulinSensitivityEntry] = (0 ..< 24).compactMap { hour in
+                guard let mgdl = schedule.hours[String(hour)] else { return nil }
+                let offsetMinutes = hour * 60
+                let date = Date(timeIntervalSince1970: TimeInterval(offsetMinutes * 60))
+                return InsulinSensitivityEntry(
+                    sensitivity: displayISF(mgdl: mgdl),
+                    offset: offsetMinutes,
+                    start: formatter.string(from: date)
+                )
+            }
+
+            guard !entries.isEmpty else { return }
+
+            let userUnits = settingsManager.settings.units
+            let profile = InsulinSensitivities(
+                units: userUnits,
+                userPrefferedUnits: userUnits,
+                sensitivities: entries
+            )
+            provider.saveISFProfile(profile)
+            debug(.service, "ISF profile replaced with Reasons-based 24-hour schedule by user.")
+
+            // Refresh the local copy so the comparison grid updates immediately.
+            currentISFProfile = profile
+
+            apsManager.makeProfiles()
+                .cancellable()
+                .store(in: &lifetime)
+        }
+
+        // MARK: - Basal replace
 
         func replace() {
             if let autotunedBasals = autotune {

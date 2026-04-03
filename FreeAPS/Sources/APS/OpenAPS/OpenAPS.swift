@@ -1264,16 +1264,21 @@ final class OpenAPS {
             return (.empty, nil)
         }
 
-        // Compute per-hour median ISF.
+        // Compute per-hour median ISF and record how many data points each hour had.
         var schedule: [String: Double] = [:]
+        var counts: [String: Int] = [:]
         for hour in 0 ..< 24 {
             if let values = hourlyISFs[hour], values.count >= 3 {
                 let sorted = values.sorted()
                 schedule[String(hour)] = sorted[sorted.count / 2]
+                counts[String(hour)] = values.count
+            } else {
+                counts[String(hour)] = hourlyISFs[hour]?.count ?? 0
             }
         }
 
         // For hours with insufficient individual data, interpolate from nearest covered hours.
+        // counts stays at its raw value (0 or < 3) so the UI can distinguish interpolated hours.
         for hour in 0 ..< 24 {
             guard schedule[String(hour)] == nil else { continue }
             var nearest: Double?
@@ -1284,16 +1289,29 @@ final class OpenAPS {
             if let v = nearest { schedule[String(hour)] = v }
         }
 
-        // Overall median across all hourly medians.
-        let allMedians = schedule.values.sorted()
-        let overallMedian = allMedians.isEmpty ? nil : allMedians[allMedians.count / 2]
+        // Overall median across all directly-measured hourly medians.
+        let measuredMedians = (0 ..< 24)
+            .filter { (counts[String($0)] ?? 0) >= 3 }
+            .compactMap { schedule[String($0)] }
+            .sorted()
+        let overallMedian = measuredMedians.isEmpty ? nil : measuredMedians[measuredMedians.count / 2]
 
-        guard let data = try? JSONSerialization.data(withJSONObject: schedule),
+        guard let median = overallMedian,
+              let data = try? JSONSerialization.data(withJSONObject: schedule),
               let json = String(data: data, encoding: .utf8)
         else { return (.empty, nil) }
 
-        debug(.openAPS, "AUTOTUNE ISF: Built schedule from \(reasons.count) Reasons entries; median ISF = \(overallMedian.map { String(format: "%.1f", $0) } ?? "?") mg/dL/U")
-        return (RawJSON(json), overallMedian)
+        // Persist the schedule so the AutotuneConfig UI can display and apply it independently.
+        let isfScheduleFile = ReasonsISFSchedule(
+            hours: schedule,
+            counts: counts,
+            overallMedian: median,
+            generatedAt: Date()
+        )
+        self.storage.save(isfScheduleFile, as: Settings.reasonsISFSchedule)
+
+        debug(.openAPS, "AUTOTUNE ISF: Built schedule from \(reasons.count) Reasons entries; median ISF = \(String(format: "%.1f", median)) mg/dL/U")
+        return (RawJSON(json), median)
     }
 
     private func autotuneRun(

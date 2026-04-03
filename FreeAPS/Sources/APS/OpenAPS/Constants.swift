@@ -52,6 +52,7 @@ extension OpenAPS {
         static let model = "settings/model.json"
         static let contactTrick = "settings/contact_trick.json"
         static let autoisf = "settings/autoisf.json"
+        static let reasonsISFSchedule = "settings/reasons_isf_schedule.json"
     }
 
     enum Monitor {
