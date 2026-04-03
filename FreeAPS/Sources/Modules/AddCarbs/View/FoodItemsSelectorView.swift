@@ -381,8 +381,8 @@ private struct FoodItemsSelectorItemRow: View {
                     showEditSheet = false
                 }
             )
-            .presentationDetents([.height(600), .large])
-            .presentationDragIndicator(.visible)
+            // .presentationDetents([.height(600), .large])
+            // .presentationDragIndicator(.visible)
         }
     }
 

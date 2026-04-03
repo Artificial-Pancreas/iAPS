@@ -133,8 +133,8 @@ extension AddCarbs {
                     foodSearchState.newFoodEntryToEdit = nil
                 }
             )
-            .presentationDetents([.height(600), .large])
-            .presentationDragIndicator(.visible)
+            // .presentationDetents([.height(600), .large])
+            // .presentationDragIndicator(.visible)
         }
 
         private var hypoHandler: ((FoodItemDetailed, UIImage?, Date?) -> Void)? {
