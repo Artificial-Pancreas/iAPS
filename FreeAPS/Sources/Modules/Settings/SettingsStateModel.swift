@@ -66,6 +66,22 @@ extension Settings {
             subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
         }
 
+        private static let logFileDateFormatter: DateFormatter = {
+            let f = DateFormatter()
+            f.dateFormat = "yyyy-MM-dd"
+            f.locale = Locale.current
+            f.timeZone = TimeZone.current
+            return f
+        }()
+
+        private static let logZipDateFormatter: DateFormatter = {
+            let f = DateFormatter()
+            f.dateFormat = "yyyyMMdd-HHmm"
+            f.locale = Locale.current
+            f.timeZone = TimeZone.current
+            return f
+        }()
+
         func logItems() -> [URL] {
             var items: [URL] = []
 
@@ -77,6 +93,47 @@ extension Settings {
                 items.append(URL(fileURLWithPath: SimpleLogReporter.logFilePrev))
             }
 
+            guard !items.isEmpty else { return [] }
+
+            let zipTimestamp = Self.logZipDateFormatter.string(from: Date())
+
+            let stagingDir = FileManager.default.temporaryDirectory
+                .appendingPathComponent("iaps-logs-\(zipTimestamp)", isDirectory: true)
+            do {
+                if fileManager.fileExists(atPath: stagingDir.path) {
+                    try fileManager.removeItem(at: stagingDir)
+                }
+                try fileManager.createDirectory(at: stagingDir, withIntermediateDirectories: true)
+                for url in items {
+                    let attrs = try fileManager.attributesOfItem(atPath: url.path)
+                    let creationDate = attrs[.creationDate] as? Date ?? Date()
+                    let dateSuffix = Self.logFileDateFormatter.string(from: creationDate)
+                    let stem = url.deletingPathExtension().lastPathComponent
+                    let ext = url.pathExtension
+                    let fileName = "iaps-\(stem)-\(dateSuffix).\(ext)"
+                    try fileManager.copyItem(at: url, to: stagingDir.appendingPathComponent(fileName))
+                }
+            } catch {
+                return items
+            }
+
+            var zipURL: URL?
+            var coordinatorError: NSError?
+            let coordinator = NSFileCoordinator()
+
+            coordinator.coordinate(readingItemAt: stagingDir, options: .forUploading, error: &coordinatorError) { url in
+                let dest = FileManager.default.temporaryDirectory
+                    .appendingPathComponent("iaps-logs-\(zipTimestamp).zip")
+                try? FileManager.default.removeItem(at: dest)
+                try? FileManager.default.copyItem(at: url, to: dest)
+                zipURL = dest
+            }
+
+            try? fileManager.removeItem(at: stagingDir)
+
+            if let zipURL {
+                return [zipURL]
+            }
             return items
         }
 
