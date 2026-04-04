@@ -60,7 +60,7 @@ struct ClaudeProtocol: AIProviderProtocol {
             if let apiError = try? JSONDecoder().decode(ClaudeErrorResponse.self, from: data) {
                 let message = apiError.error.message
                 let type = apiError.error.type ?? ""
-                print("Claude API error \(httpResponse.statusCode): \(message) [type: \(type)]")
+                debug(.service, "Claude API error \(httpResponse.statusCode): \(message) [type: \(type)]")
 
                 if message.localizedCaseInsensitiveContains("credit") || message
                     .localizedCaseInsensitiveContains("billing") || message.localizedCaseInsensitiveContains("usage")
@@ -79,7 +79,7 @@ struct ClaudeProtocol: AIProviderProtocol {
                     throw AIFoodAnalysisError.customError("Invalid Claude API key. Please check your configuration.")
                 }
             } else {
-                print("Claude API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
+                debug(.service, "Claude API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
             }
 
             if httpResponse.statusCode == 429 {
@@ -107,12 +107,12 @@ struct ClaudeProtocol: AIProviderProtocol {
         do {
             claudeResponse = try JSONDecoder().decode(ClaudeMessagesResponse.self, from: data)
         } catch {
-            print("Failed to decode Claude response: \(error)")
+            debug(.service, "Failed to decode Claude response: \(error): \(String(decoding: data, as: UTF8.self))")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
         guard let contentItems = claudeResponse.content, !contentItems.isEmpty else {
-            print("Claude response contains no content items")
+            debug(.service, "Claude response contains no content items: \(String(decoding: data, as: UTF8.self))")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
@@ -120,7 +120,7 @@ struct ClaudeProtocol: AIProviderProtocol {
             .first(where: { ($0.type == nil || $0.type == "text") && ($0.text?.isEmpty == false) })?
             .text
         else {
-            print("Claude response has no text content block")
+            debug(.service, "Claude response has no text content block: \(String(decoding: data, as: UTF8.self))")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
