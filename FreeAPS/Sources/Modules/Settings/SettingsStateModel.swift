@@ -66,6 +66,23 @@ extension Settings {
             subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
         }
 
+        func logItems() -> [URL] {
+            var items: [URL] = []
+
+            if fileManager.fileExists(atPath: SimpleLogReporter.logFile) {
+                items.append(URL(fileURLWithPath: SimpleLogReporter.logFile))
+            }
+
+            if fileManager.fileExists(atPath: SimpleLogReporter.logFilePrev) {
+                items.append(URL(fileURLWithPath: SimpleLogReporter.logFilePrev))
+            }
+
+            if let zipURL = createZipFile(items: items) {
+                return [zipURL]
+            }
+            return items
+        }
+
         private static let logFileDateFormatter: DateFormatter = {
             let f = DateFormatter()
             f.dateFormat = "yyyy-MM-dd"
@@ -82,18 +99,8 @@ extension Settings {
             return f
         }()
 
-        func logItems() -> [URL] {
-            var items: [URL] = []
-
-            if fileManager.fileExists(atPath: SimpleLogReporter.logFile) {
-                items.append(URL(fileURLWithPath: SimpleLogReporter.logFile))
-            }
-
-            if fileManager.fileExists(atPath: SimpleLogReporter.logFilePrev) {
-                items.append(URL(fileURLWithPath: SimpleLogReporter.logFilePrev))
-            }
-
-            guard !items.isEmpty else { return [] }
+        private func createZipFile(items: [URL]) -> URL? {
+            guard !items.isEmpty else { return nil }
 
             let zipTimestamp = Self.logZipDateFormatter.string(from: Date())
 
@@ -114,7 +121,7 @@ extension Settings {
                     try fileManager.copyItem(at: url, to: stagingDir.appendingPathComponent(fileName))
                 }
             } catch {
-                return items
+                return nil
             }
 
             var zipURL: URL?
@@ -130,11 +137,7 @@ extension Settings {
             }
 
             try? fileManager.removeItem(at: stagingDir)
-
-            if let zipURL {
-                return [zipURL]
-            }
-            return items
+            return zipURL
         }
 
         func uploadProfileAndSettings(_ force: Bool) {
