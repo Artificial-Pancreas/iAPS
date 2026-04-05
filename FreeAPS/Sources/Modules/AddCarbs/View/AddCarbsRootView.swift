@@ -205,7 +205,7 @@ extension AddCarbs {
                             "0",
                             value: $state.carbs,
                             formatter: Self.formatter,
-                            autofocus: false,
+                            autofocus: true,
                             liveEditing: true
                         )
                         Text("grams").foregroundColor(.secondary)
