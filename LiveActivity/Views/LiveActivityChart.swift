@@ -6,6 +6,7 @@ import WidgetKit
 
 struct LiveActivityChart: View {
     let context: ActivityViewContext<LiveActivityAttributes>
+    var isWatch: Bool = false
 
     private let EventualSymbol = "⇢"
     private let dropWidth = CGFloat(80)
@@ -33,26 +34,33 @@ struct LiveActivityChart: View {
     var body: some View {
         HStack(alignment: .top) {
             chartView(for: context.state)
-                .padding(.bottom, 10)
-                .padding(.top, 30)
-                .padding(.leading, 15)
-                .padding(.trailing, 10)
+                .padding(.bottom, isWatch ? 4 : 10)
+                .padding(.top, isWatch ? 4 : 30)
+                .padding(.leading, isWatch ? 8 : 15)
+                .padding(.trailing, isWatch ? 5 : 10)
                 .background(.black.opacity(0.30))
 
             ZStack(alignment: .topTrailing) {
                 VStack(alignment: .trailing, spacing: 0) {
-                    chartRightHandView(for: context)
+                    if isWatch {
+                        chartRightHandViewWatch(for: context)
+                    } else {
+                        chartRightHandView(for: context)
+                    }
                 }
             }
+            .fixedSize(horizontal: true, vertical: false)
             .frame(maxHeight: .infinity)
-            .padding(.top, 15)
-            .padding(.bottom, 15)
-            .padding(.trailing, 15)
+            .padding(.top, isWatch ? 4 : 15)
+            .padding(.bottom, isWatch ? 8 : 15)
+            .padding(.trailing, isWatch ? 8 : 15)
         }
         .foregroundStyle(.white)
         .overlay {
-            ZStack {
-                timeAndEventualOverlay(for: context)
+            if !isWatch {
+                ZStack {
+                    timeAndEventualOverlay(for: context)
+                }
             }
         }
         .privacySensitive()
@@ -64,11 +72,13 @@ struct LiveActivityChart: View {
     private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
         let ConversionConstant: Double = (state.mmol ? 0.0555 : 1)
 
+        let predictions = isWatch ? nil : state.predictions
+
         // Prediction data
-        let iob: [Int16] = state.predictions?.iob?.values ?? []
-        let cob: [Int16] = state.predictions?.cob?.values ?? []
-        let zt: [Int16] = state.predictions?.zt?.values ?? []
-        let uam: [Int16] = state.predictions?.uam?.values ?? []
+        let iob: [Int16] = predictions?.iob?.values ?? []
+        let cob: [Int16] = predictions?.cob?.values ?? []
+        let zt: [Int16] = predictions?.zt?.values ?? []
+        let uam: [Int16] = predictions?.uam?.values ?? []
 
         // Prepare for domain range
         let lowThreshold = Double(state.chartLowThreshold) * ConversionConstant
@@ -83,10 +93,10 @@ struct LiveActivityChart: View {
         let yEnd = highThreshold
         let xStart = state.readings?.dates.min()
         let xEnd = maxOptional(
-            state.predictions?.iob?.dates.max(),
-            state.predictions?.cob?.dates.max(),
-            state.predictions?.zt?.dates.max(),
-            state.predictions?.uam?.dates.max(),
+            predictions?.iob?.dates.max(),
+            predictions?.cob?.dates.max(),
+            predictions?.zt?.dates.max(),
+            predictions?.uam?.dates.max(),
             state.readings?.dates.max()
         )
 
@@ -129,10 +139,10 @@ struct LiveActivityChart: View {
         let bgPoints = state.readings.map({
             makePoints($0.dates, $0.values, conversion: ConversionConstant)
         })
-        let iobPoints = state.predictions?.iob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
-        let ztPoints = state.predictions?.zt.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
-        let cobPoints = state.predictions?.cob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
-        let uamPoints = state.predictions?.uam.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let iobPoints = predictions?.iob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let ztPoints = predictions?.zt.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let cobPoints = predictions?.cob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let uamPoints = predictions?.uam.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
 
         return Chart {
             if let bg = bgPoints {
@@ -231,8 +241,9 @@ struct LiveActivityChart: View {
         .chartXAxis {
             AxisMarks(position: .bottom, values: .stride(by: .hour, count: 1)) { _ in
                 AxisGridLine().foregroundStyle(.white.opacity(0.2))
-                AxisValueLabel(format: .dateTime.hour())
+                AxisValueLabel(format: .dateTime.hour(), offsetsMarks: isWatch ? false : nil)
                     .foregroundStyle(.secondary)
+                    .font(isWatch ? .system(size: 10) : .caption)
             }
         }
         .chartYAxis {
@@ -250,9 +261,10 @@ struct LiveActivityChart: View {
                 ) { _ in
                     AxisValueLabel(
                         format: glucoseFormatter,
-                        horizontalSpacing: 10
+                        horizontalSpacing: isWatch ? 8 : 10
                     )
                     .foregroundStyle(.secondary)
+                    .font(isWatch ? .system(size: 12) : .caption)
                 }
             }
         }
@@ -314,6 +326,43 @@ struct LiveActivityChart: View {
             .padding(.vertical, 10).padding(.leading, 50)
     }
 
+    @ViewBuilder private func chartRightHandViewWatch(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        VStack(alignment: .trailing, spacing: 0) {
+            glucoseDisplayWatch(context.state)
+
+            updatedLabel(context: context)
+                .font(.system(size: 11))
+                .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
+                .padding(.top, -2)
+
+            Spacer(minLength: 0)
+
+            Grid(horizontalSpacing: 1, verticalSpacing: -3) {
+                GridRow {
+                    Text(context.state.iob)
+                        .font(.system(size: 13))
+                        .foregroundStyle(Color(.insulin))
+                        .gridColumnAlignment(.trailing)
+                    Text("U")
+                        .font(.system(size: 13).smallCaps())
+                        .foregroundStyle(Color(.insulin))
+                        .gridColumnAlignment(.leading)
+                }
+                GridRow {
+                    Text(context.state.cob)
+                        .font(.system(size: 13))
+                        .foregroundStyle(Color(.loopYellow))
+                    Text("g")
+                        .font(.system(size: 13))
+                        .foregroundStyle(Color(.loopYellow))
+                }
+            }
+            .fontWidth(.condensed)
+        }
+        .fixedSize(horizontal: true, vertical: false)
+        .frame(maxHeight: .infinity)
+    }
+
     private func glucoseDrop(_ state: LiveActivityAttributes.ContentState) -> some View {
         ZStack {
             let degree = dropAngle(state)
@@ -344,6 +393,35 @@ struct LiveActivityChart: View {
                     .font(Font.custom("SuggestionSmallPartsFontMgDl", fixedSize: 23).width(.condensed))
                     .foregroundColor(colorOfGlucose)
                     .offset(x: -2)
+            }
+        }
+    }
+
+    private func glucoseDisplayWatch(_ state: LiveActivityAttributes.ContentState) -> some View {
+        HStack(alignment: .center, spacing: 2) {
+            let string = state.bg
+            let decimalSeparator =
+                string.contains(decimalString) ? decimalString : "."
+
+            let decimal = string.components(separatedBy: decimalSeparator)
+            if decimal.count > 1 {
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text(decimal[0]).font(Font.custom("SuggestionSmallPartsFont", size: 22))
+                    Text(decimalSeparator).font(.system(size: 15).weight(.semibold))
+                    Text(decimal[1]).font(.system(size: 15))
+                }
+                .tracking(-1)
+                .foregroundColor(colorOfGlucose)
+            } else {
+                Text(string)
+                    .font(Font.custom("SuggestionSmallPartsFontMgDl", fixedSize: 20).width(.condensed))
+                    .foregroundColor(colorOfGlucose)
+            }
+
+            if let direction = state.direction {
+                Text(direction)
+                    .font(.system(size: 12))
+                    .foregroundColor(colorOfGlucose)
             }
         }
     }

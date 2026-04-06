@@ -25,7 +25,7 @@ struct LiveActivity: Widget {
     }()
 
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: LiveActivityAttributes.self) { context in
+        let config = ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
             if !context.state.showChart {
                 bannerWithoutChart(for: context)
@@ -87,6 +87,12 @@ struct LiveActivity: Widget {
             .contentMargins(.horizontal, 0, for: .minimal)
             .contentMargins(.trailing, 0, for: .compactLeading)
             .contentMargins(.leading, 0, for: .compactTrailing)
+        }
+
+        if #available(iOS 18.0, *) {
+            return config.supplementalActivityFamilies([.small])
+        } else {
+            return config
         }
     }
 
@@ -191,7 +197,7 @@ struct LiveActivity: Widget {
     }
 
     private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        LiveActivityChart(context: context)
+        LiveActivityChartWrapper(context: context)
     }
 
     @ViewBuilder private func bannerWithoutChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
@@ -536,6 +542,27 @@ extension Color {
     LiveActivityAttributes.ContentState.chart3
     LiveActivityAttributes.ContentState.chart4
     LiveActivityAttributes.ContentState.chart5
+}
+
+private struct LiveActivityChartWrapper: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        if #available(iOS 18.0, *) {
+            LiveActivityChartWrapperIOS18(context: context)
+        } else {
+            LiveActivityChart(context: context, isWatch: false)
+        }
+    }
+}
+
+@available(iOS 18.0, *) private struct LiveActivityChartWrapperIOS18: View {
+    @Environment(\.activityFamily) private var activityFamily
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        LiveActivityChart(context: context, isWatch: activityFamily == .small)
+    }
 }
 
 struct LoopActivity: View {
