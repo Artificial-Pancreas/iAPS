@@ -32,37 +32,57 @@ struct LiveActivityChart: View {
     }()
 
     var body: some View {
-        HStack(alignment: .top) {
-            chartView(for: context.state)
-                .padding(.bottom, isWatch ? 4 : 10)
-                .padding(.top, isWatch ? 4 : 30)
-                .padding(.leading, isWatch ? 8 : 15)
-                .padding(.trailing, isWatch ? 5 : 10)
-                .background(.black.opacity(0.30))
+        Group {
+            if isWatch {
+                VStack(spacing: 0) {
+                    HStack(alignment: .center) {
+                        watchIOBCOBView(context.state)
+                        Spacer()
+                        if context.isStale || Date().timeIntervalSince(context.state.loopDate) > 7 * 60 {
+                            updatedLabel(context: context)
+                                .font(.system(size: 12))
+                                .foregroundStyle(Color(.loopRed))
+                                .brightness(0.3)
+                        }
+                        Spacer()
+                        glucoseDisplayWatch(context.state)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.top, 4)
 
-            ZStack(alignment: .topTrailing) {
-                VStack(alignment: .trailing, spacing: 0) {
-                    if isWatch {
-                        chartRightHandViewWatch(for: context)
-                    } else {
-                        chartRightHandView(for: context)
+                    chartView(for: context.state)
+                        .padding(.bottom, 4)
+                        .padding(.leading, 5)
+                        .padding(.trailing, 5)
+                }
+            } else {
+                HStack(alignment: .top) {
+                    chartView(for: context.state)
+                        .padding(.bottom, 10)
+                        .padding(.top, 30)
+                        .padding(.leading, 15)
+                        .padding(.trailing, 10)
+                        .background(.black.opacity(0.30))
+
+                    ZStack(alignment: .topTrailing) {
+                        VStack(alignment: .trailing, spacing: 0) {
+                            chartRightHandView(for: context)
+                        }
+                    }
+                    .fixedSize(horizontal: true, vertical: false)
+                    .frame(maxHeight: .infinity)
+                    .padding(.top, 15)
+                    .padding(.bottom, 15)
+                    .padding(.trailing, 15)
+                }
+                .overlay {
+                    ZStack {
+                        timeAndEventualOverlay(for: context)
                     }
                 }
             }
-            .fixedSize(horizontal: true, vertical: false)
-            .frame(maxHeight: .infinity)
-            .padding(.top, isWatch ? 4 : 15)
-            .padding(.bottom, isWatch ? 8 : 15)
-            .padding(.trailing, isWatch ? 8 : 15)
         }
         .foregroundStyle(.white)
-        .overlay {
-            if !isWatch {
-                ZStack {
-                    timeAndEventualOverlay(for: context)
-                }
-            }
-        }
         .privacySensitive()
         .padding(0)
         .background(Color.black.opacity(0.6))
@@ -72,7 +92,7 @@ struct LiveActivityChart: View {
     private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
         let ConversionConstant: Double = (state.mmol ? 0.0555 : 1)
 
-        let predictions = isWatch ? nil : state.predictions
+        let predictions = isWatch ? limitedPredictions(state.predictions, to: 10) : state.predictions
 
         // Prediction data
         let iob: [Int16] = predictions?.iob?.values ?? []
@@ -143,6 +163,9 @@ struct LiveActivityChart: View {
         let ztPoints = predictions?.zt.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
         let cobPoints = predictions?.cob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
         let uamPoints = predictions?.uam.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+
+        let nowDate = Date()
+        let xScaleEnd: Date = isWatch ? max(xEnd ?? nowDate, nowDate) : (xEnd ?? nowDate)
 
         return Chart {
             if let bg = bgPoints {
@@ -227,10 +250,16 @@ struct LiveActivityChart: View {
                 }
             }
 
+            if isWatch {
+                RuleMark(x: .value("Now", nowDate))
+                    .foregroundStyle(.white.opacity(0.4))
+                    .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [3, 3]))
+            }
+
             if let xStart = xStart, let xEnd = xEnd {
                 RectangleMark(
                     xStart: .value("Start", xStart),
-                    xEnd: .value("End", xEnd),
+                    xEnd: .value("End", isWatch ? xScaleEnd : xEnd),
                     yStart: .value("Bottom", yStart),
                     yEnd: .value("Top", yEnd)
                 )
@@ -241,15 +270,17 @@ struct LiveActivityChart: View {
         .chartXAxis {
             AxisMarks(position: .bottom, values: .stride(by: .hour, count: 1)) { _ in
                 AxisGridLine().foregroundStyle(.white.opacity(0.2))
-                AxisValueLabel(format: .dateTime.hour(), offsetsMarks: isWatch ? false : nil)
-                    .foregroundStyle(.secondary)
-                    .font(isWatch ? .system(size: 10) : .caption)
+                if !isWatch {
+                    AxisValueLabel(format: .dateTime.hour())
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                }
             }
         }
         .chartYAxis {
             if let minValue, let maxValue {
                 AxisMarks(
-                    position: .leading,
+                    position: isWatch ? .trailing : .leading,
                     values:
                     abs(maxValue - minValue) < 0.8 ? [
                         (maxValue + minValue) / 2
@@ -268,6 +299,7 @@ struct LiveActivityChart: View {
                 }
             }
         }
+        .applyingChartXScale(domain: isWatch ? xStart.map { $0 ... xScaleEnd } : nil)
     }
 
     @ViewBuilder private func chartRightHandView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
@@ -324,6 +356,34 @@ struct LiveActivityChart: View {
             .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(.vertical, 10).padding(.leading, 50)
+    }
+
+    @ViewBuilder private func watchIOBCOBView(_ state: LiveActivityAttributes.ContentState) -> some View {
+        HStack(spacing: 10) {
+            HStack(spacing: 0.5) {
+                Text(state.iob)
+                    .font(.system(size: 19))
+                    .tracking(-0.5)
+                    .foregroundStyle(.white)
+                Text("U")
+                    .font(.system(size: 19).smallCaps())
+                    .foregroundStyle(.white.opacity(0.7))
+            }
+            .fontWidth(.compressed)
+
+            if state.cob != "0" {
+                HStack(spacing: 0.5) {
+                    Text(state.cob)
+                        .font(.system(size: 19))
+                        .tracking(-0.5)
+                        .foregroundStyle(.white)
+                    Text("g")
+                        .font(.system(size: 19))
+                        .foregroundStyle(.white.opacity(0.7))
+                }
+                .fontWidth(.compressed)
+            }
+        }
     }
 
     @ViewBuilder private func chartRightHandViewWatch(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
@@ -398,7 +458,7 @@ struct LiveActivityChart: View {
     }
 
     private func glucoseDisplayWatch(_ state: LiveActivityAttributes.ContentState) -> some View {
-        HStack(alignment: .center, spacing: 2) {
+        HStack(alignment: .center, spacing: 6) {
             let string = state.bg
             let decimalSeparator =
                 string.contains(decimalString) ? decimalString : "."
@@ -406,21 +466,20 @@ struct LiveActivityChart: View {
             let decimal = string.components(separatedBy: decimalSeparator)
             if decimal.count > 1 {
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text(decimal[0]).font(Font.custom("SuggestionSmallPartsFont", size: 22))
-                    Text(decimalSeparator).font(.system(size: 15).weight(.semibold))
-                    Text(decimal[1]).font(.system(size: 15))
+                    Text(decimal[0]).font(.system(size: 28, weight: .semibold, design: .rounded))
+                    Text(decimalSeparator).font(.system(size: 20, weight: .semibold, design: .rounded))
+                    Text(decimal[1]).font(.system(size: 20, weight: .semibold, design: .rounded))
                 }
-                .tracking(-1)
                 .foregroundColor(colorOfGlucose)
             } else {
                 Text(string)
-                    .font(Font.custom("SuggestionSmallPartsFontMgDl", fixedSize: 20).width(.condensed))
+                    .font(.system(size: 28, weight: .semibold, design: .rounded))
                     .foregroundColor(colorOfGlucose)
             }
 
             if let direction = state.direction {
                 Text(direction)
-                    .font(.system(size: 12))
+                    .font(.system(size: 16))
                     .foregroundColor(colorOfGlucose)
             }
         }
@@ -428,6 +487,23 @@ struct LiveActivityChart: View {
 
     private var colorOfGlucose: Color {
         Color.white
+    }
+
+    private func limitedPredictions(
+        _ predictions: LiveActivityAttributes.ActivityPredictions?,
+        to count: Int
+    ) -> LiveActivityAttributes.ActivityPredictions? {
+        guard let predictions else { return nil }
+        func limit(_ series: LiveActivityAttributes.ValueSeries?) -> LiveActivityAttributes.ValueSeries? {
+            guard let series else { return nil }
+            return .init(dates: Array(series.dates.prefix(count)), values: Array(series.values.prefix(count)))
+        }
+        return .init(
+            iob: limit(predictions.iob),
+            zt: limit(predictions.zt),
+            cob: limit(predictions.cob),
+            uam: limit(predictions.uam)
+        )
     }
 
     private func maxOptional<T: Comparable>(_ values: T?...) -> T? {
@@ -499,5 +575,15 @@ struct LiveActivityChart: View {
 
     func makePoints(_ dates: [Date], _ values: [Int16], conversion: Double) -> [(date: Date, value: Double)] {
         zip(dates, displayValues(values, conversion: conversion)).map { ($0, $1) }
+    }
+}
+
+private extension View {
+    @ViewBuilder func applyingChartXScale(domain: ClosedRange<Date>?) -> some View {
+        if let domain {
+            chartXScale(domain: domain)
+        } else {
+            self
+        }
     }
 }
