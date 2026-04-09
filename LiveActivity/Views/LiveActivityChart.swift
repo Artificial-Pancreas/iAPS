@@ -85,7 +85,7 @@ struct LiveActivityChart: View {
         .foregroundStyle(.white)
         .privacySensitive()
         .padding(0)
-        .background(Color.black.opacity(0.6))
+        .background(isWatch ? Color.black : Color.black.opacity(0.6))
         .activityBackgroundTint(Color.clear)
     }
 
