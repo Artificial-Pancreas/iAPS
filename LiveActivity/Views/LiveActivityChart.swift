@@ -32,66 +32,78 @@ struct LiveActivityChart: View {
     }()
 
     var body: some View {
+        if isWatch {
+            watchView
+        } else {
+            defaultView
+        }
+    }
+
+    private var defaultView: some View {
         Group {
-            if isWatch {
-                VStack(spacing: 0) {
-                    HStack(alignment: .center) {
-                        watchIOBCOBView(context.state)
-                        Spacer()
-                        if context.isStale || Date().timeIntervalSince(context.state.loopDate) > 7 * 60 {
-                            updatedLabel(context: context)
-                                .font(.system(size: 12))
-                                .foregroundStyle(Color(.loopRed))
-                                .brightness(0.3)
-                        }
-                        Spacer()
-                        glucoseDisplayWatch(context.state)
-                    }
-                    .padding(.horizontal, 8)
-                    .padding(.top, 4)
+            HStack(alignment: .top) {
+                chartView
+                    .padding(.bottom, 10)
+                    .padding(.top, 30)
+                    .padding(.leading, 15)
+                    .padding(.trailing, 10)
+                    .background(.black.opacity(0.30))
 
-                    chartView(for: context.state)
-                        .padding(.bottom, 4)
-                        .padding(.leading, 5)
-                        .padding(.trailing, 5)
+                ZStack(alignment: .topTrailing) {
+                    chartRightHandView
                 }
-            } else {
-                HStack(alignment: .top) {
-                    chartView(for: context.state)
-                        .padding(.bottom, 10)
-                        .padding(.top, 30)
-                        .padding(.leading, 15)
-                        .padding(.trailing, 10)
-                        .background(.black.opacity(0.30))
-
-                    ZStack(alignment: .topTrailing) {
-                        VStack(alignment: .trailing, spacing: 0) {
-                            chartRightHandView(for: context)
-                        }
-                    }
-                    .fixedSize(horizontal: true, vertical: false)
-                    .frame(maxHeight: .infinity)
-                    .padding(.top, 15)
-                    .padding(.bottom, 15)
-                    .padding(.trailing, 15)
-                }
-                .overlay {
-                    ZStack {
-                        timeAndEventualOverlay(for: context)
-                    }
-                }
+                .fixedSize(horizontal: true, vertical: false)
+                .frame(maxHeight: .infinity)
+                .padding(.vertical, 15)
+                .padding(.trailing, 15)
+            }
+            .overlay {
+                timeAndEventualOverlay
             }
         }
         .foregroundStyle(.white)
         .privacySensitive()
         .padding(0)
-        .background(isWatch ? Color.black : Color.black.opacity(0.6))
+        .background(Color.black.opacity(0.6))
         .activityBackgroundTint(Color.clear)
     }
 
-    private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
+    private var watchView: some View {
+        Group {
+            VStack(spacing: 0) {
+                watchTopRow
+                chartView
+            }
+            .padding(.vertical, 4)
+            .padding(.horizontal, 8)
+        }
+        .foregroundStyle(.white)
+        .privacySensitive()
+        .padding(0)
+        .background(Color.black)
+        .activityBackgroundTint(Color.black)
+    }
+
+    private var watchTopRow: some View {
+        HStack(alignment: .center) {
+            watchIOBCOBView
+            Spacer()
+            if context.isStale || Date().timeIntervalSince(context.state.loopDate) > 7 * 60 {
+                updatedLabel
+                    .font(.system(size: 12))
+                    .foregroundStyle(Color(.loopRed))
+                    .brightness(0.3)
+            }
+            Spacer()
+            glucoseDisplayWatch
+        }
+    }
+
+    private var chartView: some View {
+        let state = context.state
         let ConversionConstant: Double = (state.mmol ? 0.0555 : 1)
 
+        // on the watch, we display only up to 10 prediction points
         let predictions = isWatch ? limitedPredictions(state.predictions, to: 10) : state.predictions
 
         // Prediction data
@@ -302,8 +314,9 @@ struct LiveActivityChart: View {
         .applyingChartXScale(domain: isWatch ? xStart.map { $0 ... xScaleEnd } : nil)
     }
 
-    @ViewBuilder private func chartRightHandView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        glucoseDrop(context.state).offset(y: -7)
+    @ViewBuilder private var chartRightHandView: some View {
+        glucoseDrop
+            .offset(y: -7)
             .frame(width: dropWidth, height: dropHeight)
 
         Grid(horizontalSpacing: 0) {
@@ -333,7 +346,7 @@ struct LiveActivityChart: View {
         .frame(width: dropWidth)
     }
 
-    @ViewBuilder private func timeAndEventualOverlay(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+    @ViewBuilder private var timeAndEventualOverlay: some View {
         // Eventual Glucose
         HStack(spacing: 4) {
             Text(EventualSymbol)
@@ -351,17 +364,17 @@ struct LiveActivityChart: View {
         .padding(.trailing, 110)
 
         // Timestamp
-        updatedLabel(context: context)
+        updatedLabel
             .font(.system(size: 11))
             .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(.vertical, 10).padding(.leading, 50)
     }
 
-    @ViewBuilder private func watchIOBCOBView(_ state: LiveActivityAttributes.ContentState) -> some View {
+    @ViewBuilder private var watchIOBCOBView: some View {
         HStack(spacing: 10) {
             HStack(spacing: 0.5) {
-                Text(state.iob)
+                Text(context.state.iob)
                     .font(.system(size: 19))
                     .tracking(-0.5)
                     .foregroundStyle(.white)
@@ -371,9 +384,9 @@ struct LiveActivityChart: View {
             }
             .fontWidth(.compressed)
 
-            if state.cob != "0" {
+            if context.state.cob != "0" {
                 HStack(spacing: 0.5) {
-                    Text(state.cob)
+                    Text(context.state.cob)
                         .font(.system(size: 19))
                         .tracking(-0.5)
                         .foregroundStyle(.white)
@@ -386,46 +399,9 @@ struct LiveActivityChart: View {
         }
     }
 
-    @ViewBuilder private func chartRightHandViewWatch(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        VStack(alignment: .trailing, spacing: 0) {
-            glucoseDisplayWatch(context.state)
-
-            updatedLabel(context: context)
-                .font(.system(size: 11))
-                .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
-                .padding(.top, -2)
-
-            Spacer(minLength: 0)
-
-            Grid(horizontalSpacing: 1, verticalSpacing: -3) {
-                GridRow {
-                    Text(context.state.iob)
-                        .font(.system(size: 13))
-                        .foregroundStyle(Color(.insulin))
-                        .gridColumnAlignment(.trailing)
-                    Text("U")
-                        .font(.system(size: 13).smallCaps())
-                        .foregroundStyle(Color(.insulin))
-                        .gridColumnAlignment(.leading)
-                }
-                GridRow {
-                    Text(context.state.cob)
-                        .font(.system(size: 13))
-                        .foregroundStyle(Color(.loopYellow))
-                    Text("g")
-                        .font(.system(size: 13))
-                        .foregroundStyle(Color(.loopYellow))
-                }
-            }
-            .fontWidth(.condensed)
-        }
-        .fixedSize(horizontal: true, vertical: false)
-        .frame(maxHeight: .infinity)
-    }
-
-    private func glucoseDrop(_ state: LiveActivityAttributes.ContentState) -> some View {
+    private var glucoseDrop: some View {
         ZStack {
-            let degree = dropAngle(state)
+            let degree = dropAngle
             let shadowDirection = direction(degree: degree)
 
             Image("SmallGlucoseDrops")
@@ -434,7 +410,7 @@ struct LiveActivityChart: View {
                 .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
                 .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
 
-            let string = state.bg
+            let string = context.state.bg
             let decimalSeparator =
                 string.contains(decimalString) ? decimalString : "."
 
@@ -457,9 +433,9 @@ struct LiveActivityChart: View {
         }
     }
 
-    private func glucoseDisplayWatch(_ state: LiveActivityAttributes.ContentState) -> some View {
+    private var glucoseDisplayWatch: some View {
         HStack(alignment: .center, spacing: 6) {
-            let string = state.bg
+            let string = context.state.bg
             let decimalSeparator =
                 string.contains(decimalString) ? decimalString : "."
 
@@ -477,7 +453,7 @@ struct LiveActivityChart: View {
                     .foregroundColor(colorOfGlucose)
             }
 
-            if let direction = state.direction {
+            if let direction = context.state.direction {
                 Text(direction)
                     .font(.system(size: 16))
                     .foregroundColor(colorOfGlucose)
@@ -522,8 +498,8 @@ struct LiveActivityChart: View {
         values.compactMap { $0 }.min().map { min($0, first) } ?? first
     }
 
-    private func dropAngle(_ state: LiveActivityAttributes.ContentState) -> Double {
-        guard let direction = state.direction else {
+    private var dropAngle: Double {
+        guard let direction = context.state.direction else {
             return 90
         }
 
@@ -564,16 +540,15 @@ struct LiveActivityChart: View {
         }
     }
 
-    private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        let text = Text("\(dateFormatter.string(from: context.state.loopDate))")
-        return text
+    private var updatedLabel: Text {
+        Text("\(dateFormatter.string(from: context.state.loopDate))")
     }
 
-    func displayValues(_ values: [Int16], conversion: Double) -> [Double] {
+    private func displayValues(_ values: [Int16], conversion: Double) -> [Double] {
         values.map { Double($0) * conversion }
     }
 
-    func makePoints(_ dates: [Date], _ values: [Int16], conversion: Double) -> [(date: Date, value: Double)] {
+    private func makePoints(_ dates: [Date], _ values: [Int16], conversion: Double) -> [(date: Date, value: Double)] {
         zip(dates, displayValues(values, conversion: conversion)).map { ($0, $1) }
     }
 }
