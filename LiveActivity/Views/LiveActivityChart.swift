@@ -50,7 +50,9 @@ struct LiveActivityChart: View {
                     .background(.black.opacity(0.30))
 
                 ZStack(alignment: .topTrailing) {
-                    chartRightHandView
+                    VStack(alignment: .trailing, spacing: 0) {
+                        chartRightHandView
+                    }
                 }
                 .fixedSize(horizontal: true, vertical: false)
                 .frame(maxHeight: .infinity)
