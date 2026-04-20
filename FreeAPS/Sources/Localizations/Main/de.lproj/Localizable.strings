@@ -2888,7 +2888,7 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Nur iAPS Versionsnummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Alle Informationen, die Sie teilen möchten, werden anonym hochgeladen. Um das Hochladen von Duplikaten zu verhindern, werden die Daten mit einer einzigartigen zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird, dem Wiederherstellungs-Token.Um doppelte Uploads zu verhindern, werden die Daten durch eine eindeutige, zufällige Zeichenfolge identifiziert, die auf deinem Telefon als Wiederherstellungs-Token gespeichert wird.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Alle Informationen, die Sie teilen möchten, werden anonym hochgeladen. Um das Hochladen von Duplikaten zu verhindern, werden die Daten mit einer einzigartigen zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird, dem Wiederherstellungs-Token.Um doppelte Uploads zu verhindern, werden die Daten durch eine eindeutige, zufällige Zeichenfolge identifiziert, die auf deinem Telefon als Wiederherstellungs-Token gespeichert wird.";
 
 /* Token section title */
 "Your recovery token" = "Ihr Wiederherstellungs-Token";

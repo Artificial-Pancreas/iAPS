@@ -2888,7 +2888,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Just iAPS version number" = "Len číslo verzie iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Každá informácia, ktorú sa rozhodnete zdieľať, je nahraná anonymne. Aby sa predišlo duplicitným odosielaniam, údaje sú identifikované pomocou jedinečného náhodného reťazca uloženého vo vašom telefóne – obnovovacieho tokenu.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Každá informácia, ktorú sa rozhodnete zdieľať, je nahraná anonymne. Aby sa predišlo duplicitným odosielaniam, údaje sú identifikované pomocou jedinečného náhodného reťazca uloženého vo vašom telefóne – obnovovacieho tokenu.";
 
 /* Token section title */
 "Your recovery token" = "Váš token pre obnovu";

@@ -18,6 +18,7 @@ protocol NightscoutManager {
     func uploadVersion(json: BareMinimum)
     func uploadPreferences(_ preferences: NightscoutPreferences)
     func uploadProfileAndSettings(_: Bool)
+    func uploadPreviousDayLog()
     func uploadOverride(_ profile: String, _ duration: Double, _ date: Date)
     func deleteAnnouncements()
     func deleteAllNSoverrrides()
@@ -47,6 +48,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private var lifetime = Lifetime()
 
+    // Pending log upload — set when upload fails or network is unavailable at rotation time.
+    // Persisted to disk (log_pending.txt + UserDefaults) so the upload survives app restarts.
+    // Cleared automatically on successful upload.
+    private var pendingLogDate: String?
+    private var pendingLogData: Data?
+    private let pendingLogDateKey = "iAPS.pendingLogUploadDate"
+
     private var isNetworkReachable: Bool {
         reachabilityManager.isReachable
     }
@@ -57,6 +65,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private var isStatsUploadEnabled: Bool {
         settingsManager.settings.uploadStats
+    }
+
+    private var isLogUploadEnabled: Bool {
+        settingsManager.settings.uploadLogs
     }
 
     private var isUploadGlucoseEnabled: Bool {
@@ -80,6 +92,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     init(resolver: Resolver) {
         injectServices(resolver)
         subscribe()
+        checkPendingUpload()
     }
 
     private func subscribe() {
@@ -87,9 +100,149 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         broadcaster.register(CarbsObserver.self, observer: self)
         broadcaster.register(TempTargetsObserver.self, observer: self)
         broadcaster.register(GlucoseObserver.self, observer: self)
-        _ = reachabilityManager.startListening(onQueue: processQueue) { status in
+        _ = reachabilityManager.startListening(onQueue: processQueue) { [weak self] status in
             debug(.nightscout, "Network status: \(status)")
+            // Retry any queued log upload when connectivity is restored
+            if self?.isNetworkReachable == true {
+                self?.retryPendingLogUpload()
+            }
         }
+        Foundation.NotificationCenter.default.addObserver(
+            forName: .logDidRotate,
+            object: nil,
+            queue: nil
+        ) { [weak self] notification in
+            self?.handleLogRotation(notification)
+        }
+    }
+
+    private func handleLogRotation(_ notification: Notification) {
+        guard isLogUploadEnabled else { return }
+        guard let logDate = notification.userInfo?["logDate"] as? Date else { return }
+
+        let dateFmt = DateFormatter()
+        dateFmt.dateFormat = "yyyy-MM-dd"
+        dateFmt.locale = Locale(identifier: "en_US_POSIX")
+        let dateString = dateFmt.string(from: logDate)
+        let appId = keychain.getIdentifier()
+
+        guard let logData = try? Data(contentsOf: URL(fileURLWithPath: SimpleLogReporter.logFilePrev)),
+              !logData.isEmpty
+        else {
+            debug(.nightscout, "Log upload skipped — log_prev.txt missing or empty")
+            return
+        }
+
+        guard isNetworkReachable else {
+            debug(.nightscout, "Log upload queued for \(dateString) — no network at rotation time")
+            savePendingUpload(date: dateString, data: logData)
+            return
+        }
+
+        performLogUpload(logData: logData, dateString: dateString, appId: appId)
+    }
+
+    private func performLogUpload(logData: Data, dateString: String, appId: String) {
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
+        nightscout.uploadLog(logData, logDate: dateString, appId: appId)
+            .retry(2)
+            .sink(
+                receiveCompletion: { [weak self] completion in
+                    if case let .failure(error) = completion {
+                        debug(
+                            .nightscout,
+                            "Log upload failed for \(dateString) (will retry on next network reconnect): \(error.localizedDescription)"
+                        )
+                        self?.savePendingUpload(date: dateString, data: logData)
+                    }
+                },
+                receiveValue: { [weak self] _ in
+                    debug(.nightscout, "Log upload succeeded for \(dateString)")
+                    self?.clearPendingUpload()
+                }
+            )
+            .store(in: &lifetime)
+    }
+
+    private func retryPendingLogUpload() {
+        guard isLogUploadEnabled,
+              let dateString = pendingLogDate,
+              let logData = pendingLogData
+        else { return }
+
+        debug(.nightscout, "Retrying log upload for \(dateString)")
+        performLogUpload(logData: logData, dateString: dateString, appId: keychain.getIdentifier())
+    }
+
+    // ── Pending-upload persistence ────────────────────────────────────────────
+
+    /// Writes the failed log to disk and records its date in UserDefaults so the
+    /// upload can be resumed after the app is killed and relaunched.
+    private func savePendingUpload(date: String, data: Data) {
+        try? data.write(to: URL(fileURLWithPath: SimpleLogReporter.logFilePending))
+        UserDefaults.standard.set(date, forKey: pendingLogDateKey)
+        pendingLogDate = date
+        pendingLogData = data
+    }
+
+    /// Removes the pending log file and UserDefaults entry after a successful upload.
+    private func clearPendingUpload() {
+        try? FileManager.default.removeItem(atPath: SimpleLogReporter.logFilePending)
+        UserDefaults.standard.removeObject(forKey: pendingLogDateKey)
+        pendingLogDate = nil
+        pendingLogData = nil
+    }
+
+    /// Called at app launch — restores pending state from disk and triggers an
+    /// upload attempt if the network is already available.
+    private func checkPendingUpload() {
+        guard let date = UserDefaults.standard.string(forKey: pendingLogDateKey),
+              let data = try? Data(contentsOf: URL(fileURLWithPath: SimpleLogReporter.logFilePending)),
+              !data.isEmpty
+        else {
+            // No valid pending file — remove any orphaned UserDefaults key
+            UserDefaults.standard.removeObject(forKey: pendingLogDateKey)
+            return
+        }
+
+        pendingLogDate = date
+        pendingLogData = data
+        debug(.nightscout, "Found pending log upload for \(date) — will upload when network is available")
+
+        if isNetworkReachable {
+            retryPendingLogUpload()
+        }
+    }
+
+    func uploadPreviousDayLog() {
+        let dateFmt = DateFormatter()
+        dateFmt.dateFormat = "yyyy-MM-dd"
+        dateFmt.locale = Locale(identifier: "en_US_POSIX")
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
+        let dateString = dateFmt.string(from: yesterday)
+        let appId = keychain.getIdentifier()
+
+        guard let logData = try? Data(contentsOf: URL(fileURLWithPath: SimpleLogReporter.logFilePrev)),
+              !logData.isEmpty
+        else {
+            debug(.nightscout, "Manual log upload skipped — log_prev.txt missing or empty")
+            return
+        }
+
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
+        nightscout.uploadLog(logData, logDate: dateString, appId: appId)
+            .retry(2)
+            .sink(
+                receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        debug(.nightscout, "Manual log upload failed: \(error.localizedDescription)")
+                    }
+                },
+                receiveValue: { _ in
+                    debug(.nightscout, "Manual log upload succeeded for \(dateString)")
+                }
+            )
+            .store(in: &lifetime)
     }
 
     private func saveToCoreData(_ name: String) {

@@ -386,14 +386,14 @@ final class OpenAPS {
 
     private func aisfEnabled(override: Override?) -> Bool {
         guard let current = override, current.enabled else { return false }
-        guard current.overrideAutoISF, let settings = OverrideStorage().fetchLatestAutoISFsettings().first,
+        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
               settings.autoisf else { return false }
         return true
     }
 
     private func notDisabled(override: Override?) -> Bool {
         guard let current = override, current.enabled else { return true }
-        guard current.overrideAutoISF, let settings = OverrideStorage().fetchLatestAutoISFsettings().first,
+        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
               !settings.autoisf else { return true }
         return false
     }

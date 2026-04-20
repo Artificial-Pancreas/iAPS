@@ -696,6 +696,36 @@ extension NightscoutAPI {
             .map { _ in () }
             .eraseToAnyPublisher()
     }
+
+    /// Upload the previous day's log file (zlib-compressed) to open-iaps.app.
+    func uploadLog(_ logData: Data, logDate: String, appId: String) -> AnyPublisher<Void, Swift.Error> {
+        let statURL = IAPSconfig.statURL
+        var components = URLComponents()
+        components.scheme = statURL.scheme
+        components.host = statURL.host
+        components.port = statURL.port
+        components.path = "/api/v1/upload/logs"
+
+        guard let url = components.url else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        guard let compressed = try? (logData as NSData).compressed(using: .zlib) as Data else {
+            return Fail(error: URLError(.cannotCreateFile)).eraseToAnyPublisher()
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.timeoutInterval = 120
+        request.addValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
+        request.addValue("deflate", forHTTPHeaderField: "Content-Encoding")
+        request.addValue(appId, forHTTPHeaderField: "X-App-Id")
+        request.addValue(logDate, forHTTPHeaderField: "X-Log-Date")
+        request.httpBody = compressed
+
+        return service.run(request)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
 }
 
 private extension String {

@@ -2888,7 +2888,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Just iAPS version number" = "Alleen iAPS versienummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
 
 /* Token section title */
 "Your recovery token" = "Je herstelcode";
