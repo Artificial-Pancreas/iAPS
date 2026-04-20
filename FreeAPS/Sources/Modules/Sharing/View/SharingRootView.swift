@@ -41,7 +41,7 @@ extension Sharing {
                 } header: { Text("Upload Daily Log") }
                 footer: {
                     Text(
-                        "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default."
+                        "When enabled, each day's log file is automatically uploaded to open-iaps.app after midnight. Uploaded logs power personalised features including multi-day AI analysis, ISF profile calculation, and remote monitoring access. Off by default."
                     )
                 }
 
