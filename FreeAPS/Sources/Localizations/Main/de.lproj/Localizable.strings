@@ -2879,7 +2879,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Geburtsdatum";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nWenn Sie \"Freigeben und Sichern\" aktivieren, werden täglich Sicherungen Ihrer Einstellungen und Statistiken in der Online-Datenbank erstellt.\n\nStellen Sie daher sicher, dass Sie Ihr Wiederherstellungs-Token unten kopieren und speichern. Das Wiederherstellungs-Token wird benötigt, um Ihre Einstellungen auf ein anderes Telefon zu importieren, wenn Sie die Onboarding view verwenden.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Nur das absolute Minimum teilen";
@@ -2888,7 +2888,7 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Nur iAPS Versionsnummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Alle Informationen, die Sie teilen möchten, werden anonym hochgeladen. Um das Hochladen von Duplikaten zu verhindern, werden die Daten mit einer einzigartigen zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird, dem Wiederherstellungs-Token.Um doppelte Uploads zu verhindern, werden die Daten durch eine eindeutige, zufällige Zeichenfolge identifiziert, die auf deinem Telefon als Wiederherstellungs-Token gespeichert wird.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
 
 /* Token section title */
 "Your recovery token" = "Ihr Wiederherstellungs-Token";
@@ -2907,6 +2907,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Daten anonym teilen";
+
+/* */
+"Upload Daily Log" = "Upload Daily Log";
+
+/* */
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
