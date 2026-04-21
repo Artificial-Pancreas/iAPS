@@ -103,6 +103,70 @@ extension AutoISF {
                     } header: { Text("Toggles") }
 
                     Section {
+                        Toggle(isOn: $state.nightTime.enabled) {
+                            Text("Disable during nighttime")
+                                .onTapGesture {
+                                    info(
+                                        header: "Disable during nighttime",
+                                        body: "Disables Auto ISF during nighttime, or any other period selected.",
+                                        useGraphics: nil
+                                    )
+                                }
+                        }
+                        .disabled(isPresented)
+
+                        if state.nightTime.enabled {
+                            HStack {
+                                Text("From")
+
+                                DatePicker(
+                                    "",
+                                    selection: Binding(
+                                        get: {
+                                            timeFrom(
+                                                hour: state.nightTime.startHour,
+                                                minute: state.nightTime.startMinute
+                                            )
+                                        },
+                                        set: { newValue in
+                                            let components = Calendar.current.dateComponents([.hour, .minute], from: newValue)
+                                            state.nightTime.startHour = components.hour ?? 0
+                                            state.nightTime.startMinute = components.minute ?? 0
+                                        }
+                                    ), displayedComponents: .hourAndMinute
+                                )
+                                .datePickerStyle(.graphical)
+                                .labelsHidden()
+                            }
+                            .padding(.vertical, 2)
+
+                            HStack {
+                                Text("To")
+
+                                DatePicker(
+                                    "",
+                                    selection: Binding(
+                                        get: {
+                                            timeFrom(
+                                                hour: state.nightTime.endHour,
+                                                minute: state.nightTime.endMinute
+                                            )
+                                        },
+                                        set: { newValue in
+                                            let components = Calendar.current.dateComponents([.hour, .minute], from: newValue)
+                                            state.nightTime.endHour = components.hour ?? 0
+                                            state.nightTime.endMinute = components.minute ?? 0
+                                        }
+                                    ), displayedComponents: .hourAndMinute
+                                )
+                                .datePickerStyle(.graphical)
+                                .labelsHidden()
+                            }
+                            .padding(.vertical, 2)
+                        }
+                    } header: { Text("Nighttime") }
+
+                    Section {
                         HStack {
                             Text("Auto ISF Max")
                                 .onTapGesture {
@@ -485,6 +549,13 @@ extension AutoISF {
                 AutoISFHistoryView(units: state.units)
                     .environment(\.colorScheme, colorScheme)
             }
+        }
+
+        private func timeFrom(hour: Int, minute: Int) -> Date {
+            var components = DateComponents()
+            components.hour = hour
+            components.minute = minute
+            return Calendar.current.date(from: components) ?? Date()
         }
 
         private func info(header: String, body: String, useGraphics: (any View)?) {

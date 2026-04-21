@@ -38,6 +38,7 @@
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
 		192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */; };
 		193339772E05BC8400E80EF5 /* DynamicHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193339762E05BC7700E80EF5 /* DynamicHistoryView.swift */; };
+		19336DA62F97B0A5003D57C3 /* NightTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19336DA52F97B096003D57C3 /* NightTime.swift */; };
 		1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Dynamic structs.swift */; };
 		19389E552D69393900636E49 /* TemporaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19389E542D69393900636E49 /* TemporaryData.swift */; };
 		193CA2DA2E1E72B200DF9998 /* WebViewScriptExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193CA2D92E1E72A500DF9998 /* WebViewScriptExecutor.swift */; };
@@ -656,6 +657,7 @@
 		1927C8FE274489BA00347C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsShortcuts.swift; sourceTree = "<group>"; };
 		193339762E05BC7700E80EF5 /* DynamicHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHistoryView.swift; sourceTree = "<group>"; };
+		19336DA52F97B096003D57C3 /* NightTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightTime.swift; sourceTree = "<group>"; };
 		1935363F28496F7D001E0B16 /* Dynamic structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dynamic structs.swift"; sourceTree = "<group>"; };
 		19389E542D69393900636E49 /* TemporaryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryData.swift; sourceTree = "<group>"; };
 		193CA2D92E1E72A500DF9998 /* WebViewScriptExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptExecutor.swift; sourceTree = "<group>"; };
@@ -2170,6 +2172,7 @@
 				192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */,
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */,
+				19336DA52F97B096003D57C3 /* NightTime.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
@@ -3598,6 +3601,7 @@
 				F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */,
 				F2941FA72E78806800A9DD5D /* AppGroupCGMSettingsView.swift in Sources */,
 				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
+				19336DA62F97B0A5003D57C3 /* NightTime.swift in Sources */,
 				E39E418C56A5A46B61D960EE /* ConfigEditorStateModel.swift in Sources */,
 				45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */,
 				CE7CA3532A064973004BE681 /* tempPresetIntent.swift in Sources */,
