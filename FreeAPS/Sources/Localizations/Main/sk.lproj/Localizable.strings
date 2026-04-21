@@ -2879,7 +2879,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Birth Date" = "Dátum narodenia";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nAk povolíte funkciu \"Zdieľanie a zálohovanie\", vaše nastavenia a štatistiky budú denne zálohované do online databázy.\n\nNezabudnite si skopírovať a uložiť svoj obnovovací token uvedený nižšie. Tento token je potrebný na importovanie vašich nastavení do iného telefónu pri úvodnom zobrazení.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Zdieľať základné údaje";
@@ -2888,7 +2888,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Just iAPS version number" = "Len číslo verzie iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Každá informácia, ktorú sa rozhodnete zdieľať, je nahraná anonymne. Aby sa predišlo duplicitným odosielaniam, údaje sú identifikované pomocou jedinečného náhodného reťazca uloženého vo vašom telefóne – obnovovacieho tokenu.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
 
 /* Token section title */
 "Your recovery token" = "Váš token pre obnovu";
@@ -2907,6 +2907,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* */
 "Share your data anonymously" = "Anonymné zdieľanie vašich dát";
+
+/* */
+"Upload Daily Log" = "Upload Daily Log";
+
+/* */
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
