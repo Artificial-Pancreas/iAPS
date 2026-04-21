@@ -2878,7 +2878,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Ngày sinh";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nNếu bạn bật “Chia sẻ & Sao lưu”, các bản sao lưu hàng ngày của cài đặt và thống kê sẽ được tạo trên cơ sở dữ liệu trực tuyến.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Chia sẻ tối thiểu";
@@ -2887,7 +2887,7 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Chỉ phiên bản iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Mọi thông tin bạn chọn chia sẻ đều được tải lên một cách ẩn danh. Để tránh tải lên trùng lặp, dữ liệu được định danh bằng một chuỗi ngẫu nhiên duy nhất được lưu trên điện thoại của bạn – token khôi phục.";
 
 /* Token section title */
 "Your recovery token" = "Mã khôi phục của bạn";
@@ -2908,10 +2908,10 @@ Enact a temp Basal or a temp target */
 "Share your data anonymously" = "Ẩn danh chia sẻ dữ liệu của bạn";
 
 /* */
-"Upload Daily Log" = "Upload Daily Log";
+"Upload Daily Log" = "Tải nhật ký hàng ngày lên";
 
 /* */
-"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Khi bật, tệp log của ngày hôm trước sẽ được tự động tải lên sau nửa đêm. Các log chỉ được dùng để cung cấp tính năng phân tích nhiều ngày trên open-iaps.app. Mặc định là tắt.";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
