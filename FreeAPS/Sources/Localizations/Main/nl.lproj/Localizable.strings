@@ -2888,7 +2888,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Just iAPS version number" = "Alleen iAPS versienummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
 
 /* Token section title */
 "Your recovery token" = "Je herstelcode";
@@ -3075,6 +3075,18 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld omdat Auto ISF is ingeschakeld";
+
+/* */
+"Nighttime" = "Nighttime";
+
+/* */
+"Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
+
+/* */
+"To" = "To";
+
+/* */
+"From" = "From";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Standaardwaarde: 1.2 De bovengrens van ISF aanpassing";
