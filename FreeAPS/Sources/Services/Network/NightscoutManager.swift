@@ -532,7 +532,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private func uploadPumpSettingsToDatabase(_ settings: PumpSettings, token: String, name: String?) {
-        let upload = DatabasePumpSettings(settings: settings, enteredBy: token, profile: name)
+        let concentration = CoreDataStorage().insulinConcentration().concentration
+        let upload = DatabasePumpSettings(
+            settings: settings,
+            enteredBy: token,
+            profile: name,
+            insulinConcentration: concentration
+        )
         processQueue.async {
             Database(token: token).uploadPumpSettings(upload)
                 .sink { completion in
