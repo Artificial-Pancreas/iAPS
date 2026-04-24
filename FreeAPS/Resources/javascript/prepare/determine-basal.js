@@ -91,7 +91,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     var glucose_status = freeaps_glucoseGetLast(glucose)
     
     // Auto ISF
-    if (isAISFenabled(profile)) {
+    if (isAISFenabled(profile) && profile.aisf) {
         autosens_data.ratio = profile.aisf;
         console.log("Auto ISF ratio: " + autosens_data.ratio);
         
@@ -285,5 +285,5 @@ function disableSMBs(dynamicVariables, now) {
 
 function isAISFenabled(profile) {
     const dynamicVariables = profile.dynamicVariables || { } ;
-    return (profile.iaps.autoisf && !(dynamicVariables.aisfOverridden && !dynamicVariables.autoISFoverrides.autoisf)) || (dynamicVariables.aisfOverridden && dynamicVariables.autoISFoverrides.autoisf)
+    return (profile.iaps.autoisfEffective && !(dynamicVariables.aisfOverridden && !dynamicVariables.autoISFoverrides.autoisf)) || (dynamicVariables.aisfOverridden && dynamicVariables.autoISFoverrides.autoisf)
 }

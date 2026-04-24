@@ -484,3 +484,49 @@ final class CoreDataStorage {
         return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
     }
 }
+
+@objc(NightTimeConfigurationBox) public final class NightTimeConfigurationBox: NSObject, NSSecureCoding {
+    public static var supportsSecureCoding: Bool { true }
+
+    let startHour: Int
+    let startMinute: Int
+    let endHour: Int
+    let endMinute: Int
+    let enabled: Bool
+
+    init(_ value: NightTimeConfiguration) {
+        startHour = value.startHour
+        startMinute = value.startMinute
+        endHour = value.endHour
+        endMinute = value.endMinute
+        enabled = value.enabled
+        super.init()
+    }
+
+    var value: NightTimeConfiguration {
+        NightTimeConfiguration(
+            startHour: startHour,
+            startMinute: startMinute,
+            endHour: endHour,
+            endMinute: endMinute,
+            enabled: enabled
+        )
+    }
+
+    public func encode(with coder: NSCoder) {
+        coder.encode(startHour, forKey: "startHour")
+        coder.encode(startMinute, forKey: "startMinute")
+        coder.encode(endHour, forKey: "endHour")
+        coder.encode(endMinute, forKey: "endMinute")
+        coder.encode(enabled, forKey: "enabled")
+    }
+
+    public required init?(coder: NSCoder) {
+        startHour = coder.decodeInteger(forKey: "startHour")
+        startMinute = coder.decodeInteger(forKey: "startMinute")
+        endHour = coder.decodeInteger(forKey: "endHour")
+        endMinute = coder.decodeInteger(forKey: "endMinute")
+        enabled = coder.decodeBool(forKey: "enabled")
+        super.init()
+    }
+}

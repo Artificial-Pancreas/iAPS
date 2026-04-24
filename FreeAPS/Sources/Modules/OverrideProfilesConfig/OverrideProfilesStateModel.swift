@@ -483,7 +483,8 @@ extension OverrideProfilesConfig {
                 ketoProtectBasalPercent: settings.ketoProtectBasalPercent as Decimal,
                 ketoProtectAbsolut: settings.ketoProtectAbsolut,
                 ketoProtectBasalAbsolut: settings.ketoProtectBasalAbsolut as Decimal,
-                id: ""
+                id: "",
+                nightTime: settings.nightTime as NightTimeConfiguration
             )
         }
 
@@ -516,7 +517,8 @@ extension OverrideProfilesConfig {
                 ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
                 ketoProtectAbsolut: fetched.ketoProtectAbsolut,
                 ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
-                id: fetched.id ?? ""
+                id: fetched.id ?? "",
+                nightTime: fetched.nightTime?.value ?? .default
             )
         }
     }

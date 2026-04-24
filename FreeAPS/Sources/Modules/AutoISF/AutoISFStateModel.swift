@@ -38,6 +38,9 @@ extension AutoISF {
         @Published var ketoProtectBasalPercent: Decimal = 20
         @Published var ketoProtectBasalAbsolut: Decimal = 0
 
+        // Nighttime settings
+        @Published var nightTime = NightTimeConfiguration.default
+
         // General settings
         @Published var units: GlucoseUnits = .mgdL
 
@@ -72,6 +75,7 @@ extension AutoISF {
             subscribeSetting(\.ketoProtectAbsolut, on: $ketoProtectAbsolut) { ketoProtectAbsolut = $0 }
             subscribeSetting(\.ketoProtectBasalPercent, on: $ketoProtectBasalPercent) { ketoProtectBasalPercent = $0 }
             subscribeSetting(\.ketoProtectBasalAbsolut, on: $ketoProtectBasalAbsolut) { ketoProtectBasalAbsolut = $0 }
+            subscribeSetting(\.nightTime, on: $nightTime) { nightTime = $0 }
 
             subscribeSetting(\.units, on: $units) { units = $0 }
         }
