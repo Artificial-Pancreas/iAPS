@@ -3079,7 +3079,7 @@ Enact a temp Basal or a temp target */
 "Nighttime" = "Ban đêm";
 
 /* */
-"Disable during nighttime" = "Disable during nighttime";
+"Disable during nighttime" = "Tắt vào ban đêm";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Tắt Auto ISF trong ban đêm hoặc trong bất kỳ khoảng thời gian nào được chọn.";
