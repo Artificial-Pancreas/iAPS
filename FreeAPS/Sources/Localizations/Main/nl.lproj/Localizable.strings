@@ -3080,6 +3080,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Nighttime" = "Nighttime";
 
 /* */
+"Disable during nighttime" = "Disable during nighttime";
+
+/* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
 
 /* */
