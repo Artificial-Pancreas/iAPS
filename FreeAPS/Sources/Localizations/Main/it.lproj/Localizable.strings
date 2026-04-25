@@ -2878,7 +2878,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Data di nascita";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nSe abiliti \"Condividi e Backup\" i backup giornalieri delle tue impostazioni e delle tue statistiche saranno effettuati sul database online.\n\nAssicurati di copiare e salvare il tuo token di recupero qui sotto. Il token di recupero è necessario per importare le tue impostazioni su un altro telefono quando si utilizza la vista onboarding.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Condividi Minimo Nullo";
@@ -2887,7 +2887,7 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Solo il numero di versione iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Ogni bit di informazione che si sceglie di condividere viene caricato in forma anonima. Per evitare duplicati caricamenti, i dati vengono identificati con una stringa casuale univoca salvata sul telefono, il token di recupero.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
 
 /* Token section title */
 "Your recovery token" = "Il tuo token di recupero";
@@ -2906,6 +2906,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Condividi i tuoi dati in modo anonimo";
+
+/* */
+"Upload Daily Log" = "Upload Daily Log";
+
+/* */
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */

@@ -133,8 +133,8 @@ extension AddCarbs {
                     foodSearchState.newFoodEntryToEdit = nil
                 }
             )
-            .presentationDetents([.height(600), .large])
-            .presentationDragIndicator(.visible)
+            // .presentationDetents([.height(600), .large])
+            // .presentationDragIndicator(.visible)
         }
 
         private var hypoHandler: ((FoodItemDetailed, UIImage?, Date?) -> Void)? {
@@ -205,7 +205,7 @@ extension AddCarbs {
                             "0",
                             value: $state.carbs,
                             formatter: Self.formatter,
-                            autofocus: false,
+                            autofocus: true,
                             liveEditing: true
                         )
                         Text("grams").foregroundColor(.secondary)

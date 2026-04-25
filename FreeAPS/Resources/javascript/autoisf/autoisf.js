@@ -428,7 +428,7 @@ function floor(value, digits) {
 function exercising(profile, dynamicVariables) {
     // One of two exercise settings (they share the same purpose).
     if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {
-        // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
+        // Turn auto ISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
         if (profile.temptargetSet && profile.min_bg >= 118 || (dynamicVariables.useOverride && dynamicVariables.overrideTarget >= 118)) {
             return true;
         }

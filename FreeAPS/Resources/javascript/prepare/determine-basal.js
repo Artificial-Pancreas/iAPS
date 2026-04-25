@@ -84,14 +84,14 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     }
     
     // Dynamic ISF
-    if (profile.useNewFormula) {
+    if (profile.useNewFormula && !isAISFenabled(profile)) {
         dynisf(profile, autosens_data, dynamicVariables, glucose);
     }
     
     var glucose_status = freeaps_glucoseGetLast(glucose)
     
     // Auto ISF
-    if (profile.iaps.autoisf) {
+    if (isAISFenabled(profile) && profile.aisf) {
         autosens_data.ratio = profile.aisf;
         console.log("Auto ISF ratio: " + autosens_data.ratio);
         
@@ -122,7 +122,7 @@ function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     var dynISFenabled = true;
     
     //Turn off when Auto ISF is used
-    if (profile.iaps.autoisf) {
+    if (isAISFenabled(profile)) {
         console.log("Dynamic ISF disabled due to Auto ISF.");
         return;
     }
@@ -281,4 +281,9 @@ function disableSMBs(dynamicVariables, now) {
         }
     }
     return false
+}
+
+function isAISFenabled(profile) {
+    const dynamicVariables = profile.dynamicVariables || { } ;
+    return (profile.iaps.autoisfEffective && !(dynamicVariables.aisfOverridden && !dynamicVariables.autoISFoverrides.autoisf)) || (dynamicVariables.aisfOverridden && dynamicVariables.autoISFoverrides.autoisf)
 }

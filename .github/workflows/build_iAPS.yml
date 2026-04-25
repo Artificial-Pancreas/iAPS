@@ -123,7 +123,7 @@ jobs:
           echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }}" >> $GITHUB_OUTPUT
 
       - name: Checkout Repo for building
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_PAT }}
           submodules: recursive
@@ -172,7 +172,7 @@ jobs:
       # Upload Build artifacts
       - name: Upload build log, IPA and Symbol artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build-artifacts
           path: |

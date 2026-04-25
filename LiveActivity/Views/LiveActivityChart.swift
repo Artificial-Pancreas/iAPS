@@ -6,6 +6,7 @@ import WidgetKit
 
 struct LiveActivityChart: View {
     let context: ActivityViewContext<LiveActivityAttributes>
+    var isWatch: Bool = false
 
     private let EventualSymbol = "⇢"
     private let dropWidth = CGFloat(80)
@@ -31,44 +32,87 @@ struct LiveActivityChart: View {
     }()
 
     var body: some View {
-        HStack(alignment: .top) {
-            chartView(for: context.state)
-                .padding(.bottom, 10)
-                .padding(.top, 30)
-                .padding(.leading, 15)
-                .padding(.trailing, 10)
-                .background(.black.opacity(0.30))
+        if isWatch {
+            watchView
+        } else {
+            defaultView
+        }
+    }
 
-            ZStack(alignment: .topTrailing) {
-                VStack(alignment: .trailing, spacing: 0) {
-                    chartRightHandView(for: context)
+    private var defaultView: some View {
+        Group {
+            HStack(alignment: .top) {
+                chartView
+                    .padding(.bottom, 10)
+                    .padding(.top, 30)
+                    .padding(.leading, 15)
+                    .padding(.trailing, 10)
+                    .background(.black.opacity(0.30))
+
+                ZStack(alignment: .topTrailing) {
+                    VStack(alignment: .trailing, spacing: 0) {
+                        chartRightHandView
+                    }
                 }
+                .fixedSize(horizontal: true, vertical: false)
+                .frame(maxHeight: .infinity)
+                .padding(.vertical, 15)
+                .padding(.trailing, 15)
             }
-            .frame(maxHeight: .infinity)
-            .padding(.top, 15)
-            .padding(.bottom, 15)
-            .padding(.trailing, 15)
+            .overlay {
+                timeAndEventualOverlay
+            }
         }
         .foregroundStyle(.white)
-        .overlay {
-            ZStack {
-                timeAndEventualOverlay(for: context)
-            }
-        }
         .privacySensitive()
         .padding(0)
         .background(Color.black.opacity(0.6))
         .activityBackgroundTint(Color.clear)
     }
 
-    private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
+    private var watchView: some View {
+        Group {
+            VStack(spacing: 0) {
+                watchTopRow
+                chartView
+            }
+            .padding(.vertical, 4)
+            .padding(.horizontal, 8)
+        }
+        .foregroundStyle(.white)
+        .privacySensitive()
+        .padding(0)
+        .background(Color.black)
+        .activityBackgroundTint(Color.black)
+    }
+
+    private var watchTopRow: some View {
+        HStack(alignment: .center) {
+            watchIOBCOBView
+            Spacer()
+            if context.isStale || Date().timeIntervalSince(context.state.loopDate) > 7 * 60 {
+                updatedLabel
+                    .font(.system(size: 12))
+                    .foregroundStyle(Color(.loopRed))
+                    .brightness(0.3)
+            }
+            Spacer()
+            glucoseDisplayWatch
+        }
+    }
+
+    private var chartView: some View {
+        let state = context.state
         let ConversionConstant: Double = (state.mmol ? 0.0555 : 1)
 
+        // on the watch, we display only up to 10 prediction points
+        let predictions = isWatch ? limitedPredictions(state.predictions, to: 10) : state.predictions
+
         // Prediction data
-        let iob: [Int16] = state.predictions?.iob?.values ?? []
-        let cob: [Int16] = state.predictions?.cob?.values ?? []
-        let zt: [Int16] = state.predictions?.zt?.values ?? []
-        let uam: [Int16] = state.predictions?.uam?.values ?? []
+        let iob: [Int16] = predictions?.iob?.values ?? []
+        let cob: [Int16] = predictions?.cob?.values ?? []
+        let zt: [Int16] = predictions?.zt?.values ?? []
+        let uam: [Int16] = predictions?.uam?.values ?? []
 
         // Prepare for domain range
         let lowThreshold = Double(state.chartLowThreshold) * ConversionConstant
@@ -83,10 +127,10 @@ struct LiveActivityChart: View {
         let yEnd = highThreshold
         let xStart = state.readings?.dates.min()
         let xEnd = maxOptional(
-            state.predictions?.iob?.dates.max(),
-            state.predictions?.cob?.dates.max(),
-            state.predictions?.zt?.dates.max(),
-            state.predictions?.uam?.dates.max(),
+            predictions?.iob?.dates.max(),
+            predictions?.cob?.dates.max(),
+            predictions?.zt?.dates.max(),
+            predictions?.uam?.dates.max(),
             state.readings?.dates.max()
         )
 
@@ -129,10 +173,13 @@ struct LiveActivityChart: View {
         let bgPoints = state.readings.map({
             makePoints($0.dates, $0.values, conversion: ConversionConstant)
         })
-        let iobPoints = state.predictions?.iob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
-        let ztPoints = state.predictions?.zt.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
-        let cobPoints = state.predictions?.cob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
-        let uamPoints = state.predictions?.uam.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let iobPoints = predictions?.iob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let ztPoints = predictions?.zt.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let cobPoints = predictions?.cob.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+        let uamPoints = predictions?.uam.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
+
+        let nowDate = Date()
+        let xScaleEnd: Date = isWatch ? max(xEnd ?? nowDate, nowDate) : (xEnd ?? nowDate)
 
         return Chart {
             if let bg = bgPoints {
@@ -217,10 +264,16 @@ struct LiveActivityChart: View {
                 }
             }
 
+            if isWatch {
+                RuleMark(x: .value("Now", nowDate))
+                    .foregroundStyle(.white.opacity(0.4))
+                    .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [3, 3]))
+            }
+
             if let xStart = xStart, let xEnd = xEnd {
                 RectangleMark(
                     xStart: .value("Start", xStart),
-                    xEnd: .value("End", xEnd),
+                    xEnd: .value("End", isWatch ? xScaleEnd : xEnd),
                     yStart: .value("Bottom", yStart),
                     yEnd: .value("Top", yEnd)
                 )
@@ -231,14 +284,17 @@ struct LiveActivityChart: View {
         .chartXAxis {
             AxisMarks(position: .bottom, values: .stride(by: .hour, count: 1)) { _ in
                 AxisGridLine().foregroundStyle(.white.opacity(0.2))
-                AxisValueLabel(format: .dateTime.hour())
-                    .foregroundStyle(.secondary)
+                if !isWatch {
+                    AxisValueLabel(format: .dateTime.hour())
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                }
             }
         }
         .chartYAxis {
             if let minValue, let maxValue {
                 AxisMarks(
-                    position: .leading,
+                    position: isWatch ? .trailing : .leading,
                     values:
                     abs(maxValue - minValue) < 0.8 ? [
                         (maxValue + minValue) / 2
@@ -250,16 +306,19 @@ struct LiveActivityChart: View {
                 ) { _ in
                     AxisValueLabel(
                         format: glucoseFormatter,
-                        horizontalSpacing: 10
+                        horizontalSpacing: isWatch ? 8 : 10
                     )
                     .foregroundStyle(.secondary)
+                    .font(isWatch ? .system(size: 12) : .caption)
                 }
             }
         }
+        .applyingChartXScale(domain: isWatch ? xStart.map { $0 ... xScaleEnd } : nil)
     }
 
-    @ViewBuilder private func chartRightHandView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        glucoseDrop(context.state).offset(y: -7)
+    @ViewBuilder private var chartRightHandView: some View {
+        glucoseDrop
+            .offset(y: -7)
             .frame(width: dropWidth, height: dropHeight)
 
         Grid(horizontalSpacing: 0) {
@@ -289,7 +348,7 @@ struct LiveActivityChart: View {
         .frame(width: dropWidth)
     }
 
-    @ViewBuilder private func timeAndEventualOverlay(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+    @ViewBuilder private var timeAndEventualOverlay: some View {
         // Eventual Glucose
         HStack(spacing: 4) {
             Text(EventualSymbol)
@@ -307,16 +366,44 @@ struct LiveActivityChart: View {
         .padding(.trailing, 110)
 
         // Timestamp
-        updatedLabel(context: context)
+        updatedLabel
             .font(.system(size: 11))
             .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(.vertical, 10).padding(.leading, 50)
     }
 
-    private func glucoseDrop(_ state: LiveActivityAttributes.ContentState) -> some View {
+    @ViewBuilder private var watchIOBCOBView: some View {
+        HStack(spacing: 10) {
+            HStack(spacing: 0.5) {
+                Text(context.state.iob)
+                    .font(.system(size: 19))
+                    .tracking(-0.5)
+                    .foregroundStyle(.white)
+                Text("U")
+                    .font(.system(size: 19).smallCaps())
+                    .foregroundStyle(.white.opacity(0.7))
+            }
+            .fontWidth(.compressed)
+
+            if context.state.cob != "0" {
+                HStack(spacing: 0.5) {
+                    Text(context.state.cob)
+                        .font(.system(size: 19))
+                        .tracking(-0.5)
+                        .foregroundStyle(.white)
+                    Text("g")
+                        .font(.system(size: 19))
+                        .foregroundStyle(.white.opacity(0.7))
+                }
+                .fontWidth(.compressed)
+            }
+        }
+    }
+
+    private var glucoseDrop: some View {
         ZStack {
-            let degree = dropAngle(state)
+            let degree = dropAngle
             let shadowDirection = direction(degree: degree)
 
             Image("SmallGlucoseDrops")
@@ -325,7 +412,7 @@ struct LiveActivityChart: View {
                 .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
                 .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
 
-            let string = state.bg
+            let string = context.state.bg
             let decimalSeparator =
                 string.contains(decimalString) ? decimalString : "."
 
@@ -348,8 +435,53 @@ struct LiveActivityChart: View {
         }
     }
 
+    private var glucoseDisplayWatch: some View {
+        HStack(alignment: .center, spacing: 6) {
+            let string = context.state.bg
+            let decimalSeparator =
+                string.contains(decimalString) ? decimalString : "."
+
+            let decimal = string.components(separatedBy: decimalSeparator)
+            if decimal.count > 1 {
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text(decimal[0]).font(.system(size: 28, weight: .semibold, design: .rounded))
+                    Text(decimalSeparator).font(.system(size: 20, weight: .semibold, design: .rounded))
+                    Text(decimal[1]).font(.system(size: 20, weight: .semibold, design: .rounded))
+                }
+                .foregroundColor(colorOfGlucose)
+            } else {
+                Text(string)
+                    .font(.system(size: 28, weight: .semibold, design: .rounded))
+                    .foregroundColor(colorOfGlucose)
+            }
+
+            if let direction = context.state.direction {
+                Text(direction)
+                    .font(.system(size: 16))
+                    .foregroundColor(colorOfGlucose)
+            }
+        }
+    }
+
     private var colorOfGlucose: Color {
         Color.white
+    }
+
+    private func limitedPredictions(
+        _ predictions: LiveActivityAttributes.ActivityPredictions?,
+        to count: Int
+    ) -> LiveActivityAttributes.ActivityPredictions? {
+        guard let predictions else { return nil }
+        func limit(_ series: LiveActivityAttributes.ValueSeries?) -> LiveActivityAttributes.ValueSeries? {
+            guard let series else { return nil }
+            return .init(dates: Array(series.dates.prefix(count)), values: Array(series.values.prefix(count)))
+        }
+        return .init(
+            iob: limit(predictions.iob),
+            zt: limit(predictions.zt),
+            cob: limit(predictions.cob),
+            uam: limit(predictions.uam)
+        )
     }
 
     private func maxOptional<T: Comparable>(_ values: T?...) -> T? {
@@ -368,8 +500,8 @@ struct LiveActivityChart: View {
         values.compactMap { $0 }.min().map { min($0, first) } ?? first
     }
 
-    private func dropAngle(_ state: LiveActivityAttributes.ContentState) -> Double {
-        guard let direction = state.direction else {
+    private var dropAngle: Double {
+        guard let direction = context.state.direction else {
             return 90
         }
 
@@ -410,16 +542,25 @@ struct LiveActivityChart: View {
         }
     }
 
-    private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        let text = Text("\(dateFormatter.string(from: context.state.loopDate))")
-        return text
+    private var updatedLabel: Text {
+        Text("\(dateFormatter.string(from: context.state.loopDate))")
     }
 
-    func displayValues(_ values: [Int16], conversion: Double) -> [Double] {
+    private func displayValues(_ values: [Int16], conversion: Double) -> [Double] {
         values.map { Double($0) * conversion }
     }
 
-    func makePoints(_ dates: [Date], _ values: [Int16], conversion: Double) -> [(date: Date, value: Double)] {
+    private func makePoints(_ dates: [Date], _ values: [Int16], conversion: Double) -> [(date: Date, value: Double)] {
         zip(dates, displayValues(values, conversion: conversion)).map { ($0, $1) }
+    }
+}
+
+private extension View {
+    @ViewBuilder func applyingChartXScale(domain: ClosedRange<Date>?) -> some View {
+        if let domain {
+            chartXScale(domain: domain)
+        } else {
+            self
+        }
     }
 }

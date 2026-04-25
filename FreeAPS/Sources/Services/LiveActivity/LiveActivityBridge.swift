@@ -264,12 +264,12 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
                         )
                         return ActivityContent(
                             state: state.withoutPredictions(),
-                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(12 * 60))
+                            staleDate: Date.now.addingTimeInterval(TimeInterval(12 * 60))
                         )
                     } else {
                         return ActivityContent(
                             state: state,
-                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(12 * 60))
+                            staleDate: Date.now.addingTimeInterval(TimeInterval(12 * 60))
                         )
                     }
                 }()

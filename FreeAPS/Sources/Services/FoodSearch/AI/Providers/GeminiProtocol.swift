@@ -57,7 +57,7 @@ struct GeminiProtocol: AIProviderProtocol {
             if let apiError = try? JSONDecoder().decode(GeminiErrorResponse.self, from: data) {
                 let message = apiError.error.message
                 let status = apiError.error.status ?? ""
-                print("Gemini API error \(httpResponse.statusCode): \(message) [status: \(status)]")
+                debug(.service, "Gemini API error \(httpResponse.statusCode): \(message) [status: \(status)]")
 
                 if message.localizedCaseInsensitiveContains("quota") ||
                     message.localizedCaseInsensitiveContains("QUOTA_EXCEEDED") ||
@@ -81,7 +81,7 @@ struct GeminiProtocol: AIProviderProtocol {
                     throw AIFoodAnalysisError.creditsExhausted(provider: "Google Gemini")
                 }
             } else {
-                print("Gemini API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
+                debug(.service, "Gemini API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
             }
 
             if httpResponse.statusCode == 429 {
@@ -94,7 +94,7 @@ struct GeminiProtocol: AIProviderProtocol {
         }
 
         guard !data.isEmpty else {
-            print("Gemini returned an empty response body")
+            debug(.service, "Gemini returned an empty response body")
             throw AIFoodAnalysisError.invalidResponse
         }
     }
@@ -107,12 +107,12 @@ struct GeminiProtocol: AIProviderProtocol {
         do {
             geminiResponse = try JSONDecoder().decode(GeminiGenerateContentResponse.self, from: data)
         } catch {
-            print("Failed to decode Gemini response: \(error)")
+            debug(.service, "Failed to decode Gemini response: \(error)\n\(String(decoding: data, as: UTF8.self))")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
         guard let firstCandidate = geminiResponse.candidates?.first else {
-            print("Gemini response contains no candidates")
+            debug(.service, "Gemini response contains no candidates: \(String(decoding: data, as: UTF8.self))")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
@@ -124,7 +124,10 @@ struct GeminiProtocol: AIProviderProtocol {
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !text.isEmpty else {
-            print("Gemini candidates produced no text content (finishReason: \(firstCandidate.finishReason ?? "nil"))")
+            debug(
+                .service,
+                "Gemini candidates produced no text content (finishReason: \(firstCandidate.finishReason ?? "nil")): \(String(decoding: data, as: UTF8.self))"
+            )
             throw AIFoodAnalysisError.responseParsingFailed
         }
 

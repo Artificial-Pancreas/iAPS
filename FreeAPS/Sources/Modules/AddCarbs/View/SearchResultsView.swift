@@ -160,8 +160,8 @@ struct SearchResultsView: View {
                     state.showManualEntry = false
                 }
             )
-            .presentationDetents([.height(600), .large])
-            .presentationDragIndicator(.visible)
+            // .presentationDetents([.height(600), .large])
+            // .presentationDragIndicator(.visible)
         }
     }
 

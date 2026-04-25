@@ -30,4 +30,5 @@ struct AutoISFsettings: JSON, Codable {
     var ketoProtectAbsolut: Bool = false
     var ketoProtectBasalAbsolut: Decimal = 0
     var id: String = UUID().uuidString
+    var nightTime = NightTimeConfiguration.default
 }

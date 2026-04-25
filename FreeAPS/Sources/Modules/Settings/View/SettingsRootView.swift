@@ -89,15 +89,15 @@ extension Settings {
                     } header: { Text("OpenAPS") }
 
                     Section {
-                        Text("UI/UX").navigationLink(to: .uiConfig, from: self)
                         Text("App Icons").navigationLink(to: .iconConfig, from: self)
+                        Text("Auto ISF").navigationLink(to: .autoISF, from: self)
                         Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
-                        Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
-                        Text("Sharing").navigationLink(to: .sharing, from: self)
                         Text("Calendar").navigationLink(to: .calendar, from: self)
                         Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                         Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
-                        Text("Auto ISF").navigationLink(to: .autoISF, from: self)
+                        Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
+                        Text("Sharing").navigationLink(to: .sharing, from: self)
+                        Text("UI/UX").navigationLink(to: .uiConfig, from: self)
                     } header: { Text("Extra Features") }
 
                     Section {
@@ -119,6 +119,13 @@ extension Settings {
                                 HStack {
                                     Text("NS Upload Profile and Settings")
                                     Button("Upload") { state.uploadProfileAndSettings(true) }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .buttonStyle(.borderedProminent)
+                                }
+
+                                HStack {
+                                    Text("Upload Previous Day's Log")
+                                    Button("Upload") { state.uploadPreviousDayLog() }
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                         .buttonStyle(.borderedProminent)
                                 }

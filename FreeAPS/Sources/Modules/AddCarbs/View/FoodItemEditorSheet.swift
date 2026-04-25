@@ -251,6 +251,7 @@ struct FoodItemEditorSheet: View {
             .navigationTitle(NSLocalizedString(title, comment: "Title"))
             .navigationBarTitleDisplayMode(.inline)
         }
+        .background(Color(.systemGroupedBackground))
         .alert("Add New Tag", isPresented: $showingAddNewTag) {
             TextField("Tag name", text: $newTagText)
                 .autocapitalization(.none)

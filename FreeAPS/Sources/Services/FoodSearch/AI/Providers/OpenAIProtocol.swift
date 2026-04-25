@@ -63,7 +63,7 @@ struct OpenAIProtocol: AIProviderProtocol {
             if let apiError = try? JSONDecoder().decode(OpenAIErrorResponse.self, from: data) {
                 let message = apiError.error.message ?? "Unknown error"
                 let code = apiError.error.code ?? apiError.error.type ?? ""
-                print("OpenAI API error \(httpResponse.statusCode): \(message) [code: \(code)]")
+                debug(.service, "OpenAI API error \(httpResponse.statusCode): \(message) [code: \(code)]")
 
                 switch code {
                 case "insufficient_quota":
@@ -90,7 +90,7 @@ struct OpenAIProtocol: AIProviderProtocol {
                     }
                 }
             } else {
-                print("OpenAI API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
+                debug(.service, "OpenAI API error \(httpResponse.statusCode) (response body not decodable as error JSON)")
             }
 
             if httpResponse.statusCode == 429 {
@@ -113,12 +113,15 @@ struct OpenAIProtocol: AIProviderProtocol {
         do {
             responsesPayload = try JSONDecoder().decode(OpenAIResponsesResponse.self, from: data)
         } catch {
-            print("Failed to decode OpenAI response: \(error)")
+            debug(.service, "Failed to decode OpenAI response: \(error): \(String(decoding: data, as: UTF8.self))")
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
         guard let content = extractContent(from: responsesPayload), !content.isEmpty else {
-            print("Could not extract text content from OpenAI response payload")
+            debug(
+                .service,
+                "Could not extract text content from OpenAI response payload: \(String(decoding: data, as: UTF8.self))"
+            )
             throw AIFoodAnalysisError.responseParsingFailed
         }
 

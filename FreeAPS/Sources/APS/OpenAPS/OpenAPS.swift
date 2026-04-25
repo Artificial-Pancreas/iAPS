@@ -120,8 +120,9 @@ final class OpenAPS {
 
                     now = Date.now
                     // Auto ISF Layer
-                    if let freeAPSSettings = settings, freeAPSSettings.autoisf || self.autoISF(override: override),
-                       self.notDisabled(override: override)
+                    if let freeAPSSettings = settings,
+                       (freeAPSSettings.autoisfEffective && self.notDisabled(override: override, settings: freeAPSSettings)) ||
+                       (self.aisfEnabled(override: override) && !freeAPSSettings.isNighttime)
                     {
                         now = Date.now
                         profile = await self.autosisf(
@@ -159,7 +160,7 @@ final class OpenAPS {
                         now = Date.now
 
                         // Auto ISF
-                        if let mySettings = settings, mySettings.autoisf, let iob = suggestion.iob {
+                        if let mySettings = settings, mySettings.autoisfEffective, let iob = suggestion.iob {
                             // If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate
                             if mySettings.ketoProtect, iob < 0,
                                let rate = suggestion.rate, rate <= 0,
@@ -428,18 +429,18 @@ final class OpenAPS {
 
     // MARK: - Private
 
-    private func autoISF(override: Override?) -> Bool {
+    private func aisfEnabled(override: Override?) -> Bool {
         guard let current = override, current.enabled else { return false }
-        guard current.overrideAutoISF, let settings = OverrideStorage().fetchLatestAutoISFsettings().first,
+        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
               settings.autoisf else { return false }
         return true
     }
 
-    private func notDisabled(override: Override?) -> Bool {
+    private func notDisabled(override: Override?, settings: FreeAPSSettings) -> Bool {
         guard let current = override, current.enabled else { return true }
-        guard current.overrideAutoISF, let settings = OverrideStorage().fetchLatestAutoISFsettings().first,
-              settings.autoisf else { return true }
-        return true
+        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
+              !settings.autoisf else { return true }
+        return false
     }
 
     private func pumpHistory() async -> RawJSON {
@@ -541,8 +542,9 @@ final class OpenAPS {
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
             // Auto ISF
-            if let freeAPSSettings = settings, freeAPSSettings.autoisf,
-               self.notDisabled(override: override) || autoISF(override: override)
+            if let freeAPSSettings = settings,
+               (freeAPSSettings.autoisfEffective && notDisabled(override: override, settings: freeAPSSettings)) ||
+               (aisfEnabled(override: override) && !freeAPSSettings.isNighttime)
             {
                 let reasons = profile.autoISFreasons ?? ""
                 // If disabled in middleware or Auto ISF layer
@@ -558,26 +560,38 @@ final class OpenAPS {
                     reasonString.insert(contentsOf: insertedResons + tddString + ", \(reasons), ", at: startIndex)
                 }
                 aisf = true
-            } else if let settings = preferences {
+            } else if let pref = preferences {
                 // Dynamic
-                if settings.useNewFormula {
+                if pref.useNewFormula {
                     var insertedResons = "Dynamic Ratio: \(isf)"
-                    if settings.sigmoid {
+                    if pref.sigmoid {
                         insertedResons += ", Sigmoid function"
                     } else {
                         insertedResons += ", Logarithmic function"
                     }
-                    insertedResons += ", AF: \(settings.adjustmentFactor)"
-                    if settings.enableDynamicCR {
+                    insertedResons += ", AF: \(pref.adjustmentFactor)"
+                    if pref.enableDynamicCR {
                         insertedResons += ", Dynamic ISF/CR is: On/On"
                     } else {
                         insertedResons += ", Dynamic ISF/CR is: On/Off"
                     }
+
                     insertedResons += tddString + ", "
+
+                    if let settings = settings, autoisfDisabledByNighttime(settings: settings) {
+                        debugAutoISF(settings: settings)
+                        insertedResons += "Auto ISF disabled during nighttime" + ", "
+                    }
+
                     reasonString.insert(contentsOf: insertedResons, at: startIndex)
                 } else {
                     // Autosens
-                    reasonString.insert(contentsOf: "Autosens ratio: \(isf)" + tddString + ", ", at: startIndex)
+                    var comment = ""
+                    if let settings = settings, autoisfDisabledByNighttime(settings: settings) {
+                        debugAutoISF(settings: settings)
+                        comment = "Auto ISF disabled during nighttime" + ", "
+                    }
+                    reasonString.insert(contentsOf: "Autosens ratio: \(isf)" + tddString + ", " + comment, at: startIndex)
                 }
             }
 
@@ -706,6 +720,17 @@ final class OpenAPS {
             }
         }
         return reasonString
+    }
+
+    private func autoisfDisabledByNighttime(settings: FreeAPSSettings) -> Bool {
+        settings.autoisf && settings.isNighttime
+    }
+
+    private func debugAutoISF(settings: FreeAPSSettings) {
+        debug(
+            .openAPS,
+            "Auto ISF disabled during nighttime \(settings.nightTime.startHour):\(settings.nightTime.startMinute) - \(settings.nightTime.endHour):\(settings.nightTime.endMinute) ."
+        )
     }
 
     private var formatter: NumberFormatter {
@@ -1107,7 +1132,8 @@ final class OpenAPS {
                     ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
                     ketoProtectAbsolut: fetched.ketoProtectAbsolut,
                     ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
-                    id: fetched.id ?? ""
+                    id: fetched.id ?? "",
+                    nightTime: fetched.nightTime?.value ?? .default
                 )
             }
 
@@ -1452,8 +1478,6 @@ final class OpenAPS {
         autosens: JSON,
         pumpHistory: JSON
     ) async -> RawJSON {
-        // dispatchPrecondition(condition: .onQueue(processQueue))
-
         await scriptExecutor.call(
             name: OpenAPS.AutoISF.autoisf,
             with: [
