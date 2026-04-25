@@ -9,6 +9,7 @@ extension AutotuneConfig {
         @Injected() private var storage: FileStorage!
         @Published var useAutotune = false
         @Published var onlyAutotuneBasals = false
+        @Published var calculateISFSuggestions = false
         @Published var autotune: Autotune?
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
@@ -26,6 +27,9 @@ extension AutotuneConfig {
         @Published var currentProfile: [BasalProfileEntry] = []
         @Published var currentTotal: Decimal = 0.0
 
+        @Published private(set) var isfSchedule: ReasonsISFSchedule?
+        @Published private(set) var currentISFProfile: InsulinSensitivities?
+
         override func subscribe() {
             autotune = provider.autotune
             units = settingsManager.settings.units
@@ -33,9 +37,11 @@ extension AutotuneConfig {
             publishedDate = lastAutotuneDate
             increment = Double(settingsManager.preferences.bolusIncrement)
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
+            subscribeSetting(\.calculateISFSuggestions, on: $calculateISFSuggestions) { calculateISFSuggestions = $0 }
 
             currentProfile = provider.profile
             calcTotal()
+            loadISFSchedule()
 
             $useAutotune
                 .removeDuplicates()
@@ -86,6 +92,7 @@ extension AutotuneConfig {
                     DispatchQueue.main.async {
                         self?.lastAutotuneDate = Date()
                         self?.running.toggle()
+                        self?.loadISFSchedule()
                     }
                 }.store(in: &lifetime)
         }
@@ -126,6 +133,67 @@ extension AutotuneConfig {
                     }
                 }
             }
+        }
+
+        // MARK: - Calculated ISF
+
+        private func loadISFSchedule() {
+            isfSchedule = provider.reasonsISFSchedule
+            currentISFProfile = provider.currentISFProfile
+        }
+
+        /// Returns the profile ISF covering the given hour in the user's display units.
+        func currentISFForHour(_ hour: Int) -> Decimal? {
+            guard let profile = currentISFProfile, !profile.sensitivities.isEmpty else { return nil }
+            let targetMinutes = hour * 60
+            return profile.sensitivities
+                .sorted { $0.offset < $1.offset }
+                .last { $0.offset <= targetMinutes }
+                .map(\.sensitivity)
+        }
+
+        /// Converts a raw mg/dL ISF value to the user's display unit.
+        func displayISF(mgdl: Double) -> Decimal {
+            if units == .mmolL {
+                let mmol = mgdl * Double(GlucoseUnits.exchangeRate)
+                return Decimal((mmol * 10).rounded() / 10)
+            } else {
+                return Decimal(Int(mgdl.rounded()))
+            }
+        }
+
+        /// Writes the calculated ISF schedule to the profile and triggers a profile rebuild.
+        func saveISFToProfile() {
+            guard let schedule = isfSchedule else { return }
+
+            let formatter = DateFormatter()
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "HH:mm:ss"
+
+            let entries: [InsulinSensitivityEntry] = (0 ..< 24).compactMap { hour in
+                guard let mgdl = schedule.hours[String(hour)] else { return nil }
+                let offsetMinutes = hour * 60
+                let date = Date(timeIntervalSince1970: TimeInterval(offsetMinutes * 60))
+                return InsulinSensitivityEntry(
+                    sensitivity: displayISF(mgdl: mgdl),
+                    offset: offsetMinutes,
+                    start: formatter.string(from: date)
+                )
+            }
+            guard !entries.isEmpty else { return }
+
+            let profile = InsulinSensitivities(
+                units: units,
+                userPrefferedUnits: units,
+                sensitivities: entries
+            )
+            provider.saveISFProfile(profile)
+            currentISFProfile = profile
+            debug(.service, "Profile ISF replaced with Calculated ISF schedule by user.")
+
+            apsManager.makeProfiles()
+                .cancellable()
+                .store(in: &lifetime)
         }
     }
 }

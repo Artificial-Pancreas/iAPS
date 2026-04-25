@@ -108,6 +108,24 @@ extension AutotuneConfig {
                 Toggle("Use Autotune", isOn: $state.useAutotune)
                 if state.useAutotune {
                     Toggle("Only Autotune Basal Insulin", isOn: $state.onlyAutotuneBasals)
+                    Toggle("Calculate ISF Suggestions", isOn: $state.calculateISFSuggestions)
+                    if state.calculateISFSuggestions {
+                        NavigationLink(destination: CalculatedISFView(state: state)) {
+                            HStack {
+                                Text("Calculated ISF")
+                                Spacer()
+                                if let schedule = state.isfSchedule {
+                                    Text(dateFormatter.string(from: schedule.generatedAt))
+                                        .font(.footnote)
+                                        .foregroundColor(.secondary)
+                                } else {
+                                    Text("No data yet")
+                                        .font(.footnote)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

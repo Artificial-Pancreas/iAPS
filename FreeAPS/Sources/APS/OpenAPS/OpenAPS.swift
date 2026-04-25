@@ -271,6 +271,12 @@ final class OpenAPS {
                     } else {
                         promise(.success(nil))
                     }
+
+                    // Build the improved ISF schedule if the user has opted in.
+                    let freeapsRaw = self.loadFileFromStorage(name: Settings.settings)
+                    if FreeAPSSettings(from: freeapsRaw)?.calculateISFSuggestions == true {
+                        self.buildReasonsISFSchedule()
+                    }
                 }
             }
         }
@@ -1389,5 +1395,127 @@ final class OpenAPS {
             return ""
         }
         return (try? String(contentsOf: url)) ?? ""
+    }
+
+    // MARK: - Calculated ISF Schedule
+
+    /// Builds a per-hour median ISF schedule from CoreData Reasons entries using the
+    /// improved algorithm: back-calculates isf_before = isf × ratio for every entry
+    /// (no near-basal filter), applies a global p5/p95 trim, then buckets by hour.
+    ///
+    /// Uses a 21-day window to match the web ISF Profiler. Requires at least 12 hours
+    /// with ≥ 3 direct data points each before the schedule is considered reliable.
+    @discardableResult
+    func buildReasonsISFSchedule() -> ReasonsISFSchedule? {
+        let cutoff = Date().addingTimeInterval(-21 * 24 * 3600) as NSDate
+        let reasons = CoreDataStorage().fetchReasons(interval: cutoff)
+
+        guard !reasons.isEmpty else {
+            debug(.openAPS, "Calculated ISF: no Reasons data available")
+            return nil
+        }
+
+        // Back-calculate isf_before = applied_isf × sensitivity_ratio for every entry.
+        // This recovers the profile (or autosens-adjusted) ISF before any dynamic scaling,
+        // which is the quantity we want regardless of how aggressively AutoISF was working.
+        var allEstimates: [(value: Double, hour: Int, date: Date)] = []
+
+        for r in reasons {
+            guard
+                let isfDecimal = r.isf?.decimalValue, isfDecimal > 0,
+                let ratioDecimal = r.ratio?.decimalValue, ratioDecimal > 0,
+                let date = r.date
+            else { continue }
+
+            let isfBefore = isfDecimal * ratioDecimal
+            if isfBefore <= 0 { continue }
+
+            let hour = Calendar.current.component(.hour, from: date)
+            allEstimates.append((value: Double(truncating: isfBefore as NSDecimalNumber), hour: hour, date: date))
+        }
+
+        guard !allEstimates.isEmpty else {
+            debug(.openAPS, "Calculated ISF: no valid estimates after back-calculation")
+            return nil
+        }
+
+        let totalEntries = allEstimates.count
+        let fromDate = allEstimates.map(\.date).min() ?? cutoff as Date
+        let toDate = allEstimates.map(\.date).max() ?? Date()
+
+        // Count distinct calendar days represented.
+        let calendar = Calendar.current
+        let daysAnalyzed = Set(allEstimates.map { calendar.startOfDay(for: $0.date) }).count
+
+        // Global p5/p95 trim — eliminates extreme outliers without filtering by ratio.
+        let sorted = allEstimates.map(\.value).sorted()
+        let n = sorted.count
+        let p5Index  = Int((Double(n - 1) * 0.05).rounded())
+        let p95Index = Int((Double(n - 1) * 0.95).rounded())
+        let p5  = sorted[p5Index]
+        let p95 = sorted[p95Index]
+
+        var hourBuckets: [Int: [Double]] = [:]
+        for e in allEstimates {
+            guard e.value >= p5, e.value <= p95 else { continue }
+            hourBuckets[e.hour, default: []].append(e.value)
+        }
+
+        let qualifyingEntries = hourBuckets.values.reduce(0) { $0 + $1.count }
+
+        // Per-hour median (minimum 3 points for a direct measurement).
+        var hourMedians: [Int: Double] = [:]
+        var counts: [String: Int] = [:]
+
+        for hour in 0 ..< 24 {
+            let pts = hourBuckets[hour] ?? []
+            counts[String(hour)] = pts.count
+            if pts.count >= 3 {
+                let s = pts.sorted()
+                hourMedians[hour] = s[s.count / 2]
+            }
+        }
+
+        // Require at least 12 hours with direct measurements.
+        guard hourMedians.count >= 12 else {
+            debug(.openAPS, "Calculated ISF: only \(hourMedians.count) hours have ≥ 3 data points (need 12)")
+            return nil
+        }
+
+        // Interpolate hours with insufficient data from the nearest measured neighbour.
+        var schedule: [String: Double] = [:]
+        for (hour, median) in hourMedians {
+            schedule[String(hour)] = median
+        }
+        for hour in 0 ..< 24 {
+            guard schedule[String(hour)] == nil else { continue }
+            for offset in 1 ..< 12 {
+                if let v = schedule[String((hour - offset + 24) % 24)] { schedule[String(hour)] = v; break }
+                if let v = schedule[String((hour + offset) % 24)]      { schedule[String(hour)] = v; break }
+            }
+        }
+
+        // Overall median from directly-measured hours only.
+        let measuredMedians = (0 ..< 24)
+            .filter { (counts[String($0)] ?? 0) >= 3 }
+            .compactMap { schedule[String($0)] }
+            .sorted()
+        let overallMedian = measuredMedians[measuredMedians.count / 2]
+
+        let result = ReasonsISFSchedule(
+            hours: schedule,
+            counts: counts,
+            overallMedian: overallMedian,
+            generatedAt: Date(),
+            daysAnalyzed: daysAnalyzed,
+            totalEntries: totalEntries,
+            qualifyingEntries: qualifyingEntries,
+            fromDate: fromDate,
+            toDate: toDate
+        )
+
+        storage.save(result, as: Settings.reasonsISFSchedule)
+        debug(.openAPS, "Calculated ISF: built schedule from \(totalEntries) entries (\(daysAnalyzed) days); median \(String(format: "%.1f", overallMedian)) mg/dL/U")
+        return result
     }
 }

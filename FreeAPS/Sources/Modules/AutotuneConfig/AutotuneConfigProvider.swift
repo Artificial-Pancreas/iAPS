@@ -21,5 +21,18 @@ extension AutotuneConfig {
                 ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
                 ?? []
         }
+
+        var reasonsISFSchedule: ReasonsISFSchedule? {
+            storage.retrieve(OpenAPS.Settings.reasonsISFSchedule, as: ReasonsISFSchedule.self)
+        }
+
+        var currentISFProfile: InsulinSensitivities? {
+            storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self)
+                ?? InsulinSensitivities(from: OpenAPS.defaults(for: OpenAPS.Settings.insulinSensitivities))
+        }
+
+        func saveISFProfile(_ profile: InsulinSensitivities) {
+            storage.save(profile, as: OpenAPS.Settings.insulinSensitivities)
+        }
     }
 }
