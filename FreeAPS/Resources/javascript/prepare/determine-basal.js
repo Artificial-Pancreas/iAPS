@@ -285,5 +285,5 @@ function disableSMBs(dynamicVariables, now) {
 
 function isAISFenabled(profile) {
     const dynamicVariables = profile.dynamicVariables || { } ;
-    return (profile.iaps.autoisfEffective && !(dynamicVariables.aisfOverridden && !dynamicVariables.autoISFoverrides.autoisf)) || (dynamicVariables.aisfOverridden && dynamicVariables.autoISFoverrides.autoisf)
+    return (profile.iaps.autoisf && !(dynamicVariables.aisfOverridden && !dynamicVariables.autoISFoverrides.autoisf)) || (dynamicVariables.aisfOverridden && dynamicVariables.autoISFoverrides.autoisf)
 }
