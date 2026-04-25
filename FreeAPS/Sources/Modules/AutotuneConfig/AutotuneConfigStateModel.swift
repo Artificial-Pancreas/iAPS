@@ -171,7 +171,8 @@ extension AutotuneConfig {
             formatter.dateFormat = "HH:mm:ss"
 
             let entries: [InsulinSensitivityEntry] = (0 ..< 24).compactMap { hour in
-                guard let mgdl = schedule.hours[String(hour)] else { return nil }
+                let mgdl = schedule.suggestedHours?[String(hour)] ?? schedule.hours[String(hour)]
+                guard let mgdl = mgdl else { return nil }
                 let offsetMinutes = hour * 60
                 let date = Date(timeIntervalSince1970: TimeInterval(offsetMinutes * 60))
                 return InsulinSensitivityEntry(

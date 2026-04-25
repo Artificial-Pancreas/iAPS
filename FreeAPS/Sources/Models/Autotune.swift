@@ -21,6 +21,12 @@ struct ReasonsISFSchedule: JSON {
     let fromDate: Date
     /// Latest Reasons entry date included.
     let toDate: Date
+    /// Deviation-adjusted suggested ISF per hour, mg/dL. Nil when insufficient deviation data.
+    let suggestedHours: [String: Double]?
+    /// Overall median of directly-measured deviation-suggested ISF values, mg/dL.
+    let overallSuggestedMedian: Double?
+    /// Number of loop entries that passed the deviation-analysis filter.
+    let devQualifyingEntries: Int?
 }
 
 struct Autotune: JSON, Equatable {

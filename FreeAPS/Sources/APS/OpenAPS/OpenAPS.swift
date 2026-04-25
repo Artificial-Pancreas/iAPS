@@ -1502,6 +1502,93 @@ final class OpenAPS {
             .sorted()
         let overallMedian = measuredMedians[measuredMedians.count / 2]
 
+        // MARK: - Deviation analysis
+        // Sort by date ascending and compute per-entry BG delta from consecutive readings.
+        // deviation = actual_delta - expectedBGI, where expectedBGI = -IOB × isf_before × (elapsed/60).
+        // Positive deviation → BG dropped less than expected → profile ISF is too high → suggest lower ISF.
+        let sortedReasons = reasons.sorted { ($0.date ?? .distantPast) < ($1.date ?? .distantPast) }
+
+        var devHourBuckets: [Int: [(isfBefore: Double, deviation: Double, absExpBGI: Double)]] = [:]
+        var devQualifyingEntries = 0
+
+        for i in 1 ..< sortedReasons.count {
+            let prev = sortedReasons[i - 1]
+            let curr = sortedReasons[i]
+
+            guard
+                let prevDate = prev.date,
+                let currDate = curr.date,
+                let currGlucoseDecimal = curr.glucose?.decimalValue,
+                let prevGlucoseDecimal = prev.glucose?.decimalValue,
+                let iobDecimal = curr.iob?.decimalValue,
+                let isfDecimal = curr.isf?.decimalValue, isfDecimal > 0,
+                let ratioDecimal = curr.ratio?.decimalValue, ratioDecimal > 0,
+                let cobDecimal = curr.cob?.decimalValue
+            else { continue }
+
+            let elapsedMin = currDate.timeIntervalSince(prevDate) / 60.0
+            guard elapsedMin >= 3, elapsedMin <= 10 else { continue }
+
+            let iob = Double(truncating: iobDecimal as NSDecimalNumber)
+            guard iob > 0 else { continue }
+
+            let cob = Double(truncating: cobDecimal as NSDecimalNumber)
+            guard cob <= 5 else { continue }
+
+            let isfBefore = Double(truncating: (isfDecimal * ratioDecimal) as NSDecimalNumber)
+            guard isfBefore > 0 else { continue }
+
+            let delta = Double(truncating: currGlucoseDecimal as NSDecimalNumber)
+                - Double(truncating: prevGlucoseDecimal as NSDecimalNumber)
+            let expectedBGI = -iob * isfBefore * (elapsedMin / 60.0)
+            guard abs(expectedBGI) > 0.5 else { continue }
+
+            let deviation = delta - expectedBGI
+            let hour = Calendar.current.component(.hour, from: currDate)
+            devHourBuckets[hour, default: []].append((isfBefore, deviation, abs(expectedBGI)))
+            devQualifyingEntries += 1
+        }
+
+        // Per-hour: median deviation → adjustment fraction → suggested ISF.
+        var suggestedDirect: [String: Double] = [:]
+        for (hour, entries) in devHourBuckets {
+            guard entries.count >= 5 else { continue }
+
+            let deviations  = entries.map(\.deviation).sorted()
+            let expBGIs     = entries.map(\.absExpBGI).sorted()
+            let isfBefores  = entries.map(\.isfBefore).sorted()
+
+            let medDev      = deviations[deviations.count / 2]
+            let medExpBGI   = expBGIs[expBGIs.count / 2]
+            let medISFBefore = isfBefores[isfBefores.count / 2]
+
+            guard medExpBGI > 0.5 else { continue }
+
+            var adjFraction = medDev / medExpBGI
+            adjFraction = max(-0.20, min(0.20, adjFraction))
+
+            suggestedDirect[String(hour)] = medISFBefore * (1.0 - adjFraction)
+        }
+
+        // Interpolate suggested hours from nearest neighbour (require ≥6 directly-computed hours).
+        var suggestedSchedule: [String: Double]? = nil
+        if suggestedDirect.count >= 6 {
+            var interpolated = suggestedDirect
+            for hour in 0 ..< 24 {
+                guard interpolated[String(hour)] == nil else { continue }
+                for offset in 1 ..< 12 {
+                    if let v = interpolated[String((hour - offset + 24) % 24)] { interpolated[String(hour)] = v; break }
+                    if let v = interpolated[String((hour + offset) % 24)]      { interpolated[String(hour)] = v; break }
+                }
+            }
+            suggestedSchedule = interpolated
+        }
+
+        let suggestedMeasured = suggestedDirect.values.sorted()
+        let overallSuggestedMedian: Double? = suggestedMeasured.isEmpty
+            ? nil
+            : suggestedMeasured[suggestedMeasured.count / 2]
+
         let result = ReasonsISFSchedule(
             hours: schedule,
             counts: counts,
@@ -1511,11 +1598,14 @@ final class OpenAPS {
             totalEntries: totalEntries,
             qualifyingEntries: qualifyingEntries,
             fromDate: fromDate,
-            toDate: toDate
+            toDate: toDate,
+            suggestedHours: suggestedSchedule,
+            overallSuggestedMedian: overallSuggestedMedian,
+            devQualifyingEntries: devQualifyingEntries
         )
 
         storage.save(result, as: Settings.reasonsISFSchedule)
-        debug(.openAPS, "Calculated ISF: built schedule from \(totalEntries) entries (\(daysAnalyzed) days); median \(String(format: "%.1f", overallMedian)) mg/dL/U")
+        debug(.openAPS, "Calculated ISF: built schedule from \(totalEntries) entries (\(daysAnalyzed) days); median \(String(format: "%.1f", overallMedian)) mg/dL/U; deviation entries \(devQualifyingEntries), suggested hours \(suggestedDirect.count)")
         return result
     }
 }

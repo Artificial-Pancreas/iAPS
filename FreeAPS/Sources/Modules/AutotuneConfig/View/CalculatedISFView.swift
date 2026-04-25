@@ -97,6 +97,22 @@ extension AutotuneConfig {
                     Text("\(median) \(isfUnit)")
                         .foregroundColor(.secondary)
                 }
+                if let suggestedMedian = schedule.overallSuggestedMedian {
+                    HStack {
+                        Text("Suggested median ISF")
+                        Spacer()
+                        let suggested = state.displayISF(mgdl: suggestedMedian)
+                        Text("\(suggested) \(isfUnit)")
+                            .foregroundColor(.accentColor)
+                            .fontWeight(.semibold)
+                    }
+                }
+                HStack {
+                    Text("Deviation entries")
+                    Spacer()
+                    Text("\(schedule.devQualifyingEntries ?? 0)")
+                        .foregroundColor(.secondary)
+                }
 
                 infoNote
             }
@@ -137,7 +153,7 @@ extension AutotuneConfig {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     Text("Calculated")
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                    Text("Rounded")
+                    Text("Adjusted")
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     Text("n")
                         .frame(width: 30, alignment: .trailing)
@@ -153,7 +169,9 @@ extension AutotuneConfig {
             let isInterpolated = count < 3
             let calculatedMgdl = schedule.hours[String(hour)]
             let calculated = calculatedMgdl.map { state.displayISF(mgdl: $0) }
-            let rounded = calculatedMgdl.map { roundedISF(mgdl: $0) }
+            let suggestedMgdl = schedule.suggestedHours?[String(hour)]
+            let adjusted = (suggestedMgdl ?? calculatedMgdl).map { roundedISF(mgdl: $0) }
+            let hasDeviation = suggestedMgdl != nil && !isInterpolated
             let current = state.currentISFForHour(hour)
 
             Grid {
@@ -182,10 +200,10 @@ extension AutotuneConfig {
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
 
-                    if let r = rounded {
+                    if let r = adjusted {
                         Text("\(r)")
-                            .foregroundColor(isInterpolated ? .secondary : .accentColor)
-                            .fontWeight(isInterpolated ? .regular : .semibold)
+                            .foregroundColor(isInterpolated ? .secondary : hasDeviation ? .accentColor : .primary)
+                            .fontWeight(hasDeviation ? .semibold : isInterpolated ? .regular : .regular)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     } else {
                         Text("—")
