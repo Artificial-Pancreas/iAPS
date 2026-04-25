@@ -1420,6 +1420,8 @@ final class OpenAPS {
         // which is the quantity we want regardless of how aggressively AutoISF was working.
         var allEstimates: [(value: Double, hour: Int, date: Date)] = []
 
+        let mmolToMgdl = 1.0 / Double(GlucoseUnits.exchangeRate)
+
         for r in reasons {
             guard
                 let isfDecimal = r.isf?.decimalValue, isfDecimal > 0,
@@ -1427,11 +1429,14 @@ final class OpenAPS {
                 let date = r.date
             else { continue }
 
-            let isfBefore = isfDecimal * ratioDecimal
+            // Reasons.isf is stored in the profile's display units (mmol/L/U or mg/dL/U).
+            // Normalize to mg/dL/U so displayISF(mgdl:) in the view produces correct output.
+            var isfBefore = Double(truncating: (isfDecimal * ratioDecimal) as NSDecimalNumber)
+            if r.mmol { isfBefore *= mmolToMgdl }
             if isfBefore <= 0 { continue }
 
             let hour = Calendar.current.component(.hour, from: date)
-            allEstimates.append((value: Double(truncating: isfBefore as NSDecimalNumber), hour: hour, date: date))
+            allEstimates.append((value: isfBefore, hour: hour, date: date))
         }
 
         guard !allEstimates.isEmpty else {
@@ -1535,11 +1540,13 @@ final class OpenAPS {
             let cob = Double(truncating: cobDecimal as NSDecimalNumber)
             guard cob <= 5 else { continue }
 
-            let isfBefore = Double(truncating: (isfDecimal * ratioDecimal) as NSDecimalNumber)
+            var isfBefore = Double(truncating: (isfDecimal * ratioDecimal) as NSDecimalNumber)
+            if curr.mmol { isfBefore *= mmolToMgdl }
             guard isfBefore > 0 else { continue }
 
-            let delta = Double(truncating: currGlucoseDecimal as NSDecimalNumber)
-                - Double(truncating: prevGlucoseDecimal as NSDecimalNumber)
+            let scale = curr.mmol ? mmolToMgdl : 1.0
+            let delta = (Double(truncating: currGlucoseDecimal as NSDecimalNumber)
+                - Double(truncating: prevGlucoseDecimal as NSDecimalNumber)) * scale
             let expectedBGI = -iob * isfBefore * (elapsedMin / 60.0)
             guard abs(expectedBGI) > 0.5 else { continue }
 
