@@ -3081,7 +3081,7 @@ Enact a temp Basal or a temp target */
 "Nighttime" = "Ніч";
 
 /* */
-"Disable during nighttime" = "Disable during nighttime";
+"Disable during nighttime" = "Вимкнути вночі";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Вимикає Автоматичну функцію ISF вночі або в будь-який інший вибраний період.";
