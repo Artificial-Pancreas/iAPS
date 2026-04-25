@@ -122,8 +122,7 @@ final class OpenAPS {
                     // Auto ISF Layer
                     if let freeAPSSettings = settings,
                        (freeAPSSettings.autoisfEffective && self.notDisabled(override: override, settings: freeAPSSettings)) ||
-                       self
-                       .aisfEnabled(override: override)
+                       (self.aisfEnabled(override: override) && !freeAPSSettings.isNighttime)
                     {
                         now = Date.now
                         profile = await self.autosisf(
@@ -501,7 +500,7 @@ final class OpenAPS {
             // Auto ISF
             if let freeAPSSettings = settings,
                (freeAPSSettings.autoisfEffective && notDisabled(override: override, settings: freeAPSSettings)) ||
-               aisfEnabled(override: override)
+               (aisfEnabled(override: override) && !freeAPSSettings.isNighttime)
             {
                 let reasons = profile.autoISFreasons ?? ""
                 // If disabled in middleware or Auto ISF layer
