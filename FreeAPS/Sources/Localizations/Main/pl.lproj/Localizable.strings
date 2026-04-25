@@ -3081,6 +3081,9 @@ Połączono z Nightscout!";
 "Nighttime" = "Nighttime";
 
 /* */
+"Disable during nighttime" = "Disable during nighttime";
+
+/* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
 
 /* */
