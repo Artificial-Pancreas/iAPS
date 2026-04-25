@@ -125,7 +125,7 @@ extension AutotuneConfig {
                     .fontWeight(.semibold)
                     .foregroundColor(.primary)
                 Text(
-                    "Calculated — Each loop cycle records the applied ISF and the sensitivity ratio. " +
+                    "Historical — Each loop cycle records the applied ISF and the sensitivity ratio. " +
                     "The profile ISF is back-calculated as ISF × ratio across the past 21 days, " +
                     "the top and bottom 5% are trimmed, and per-hour medians are computed. " +
                     "Hours with fewer than 3 data points are interpolated from the nearest measured hour."
@@ -138,7 +138,7 @@ extension AutotuneConfig {
                     "back-calculated ISF predicted. If BG consistently drops more than expected at a given hour, " +
                     "the ISF suggestion is raised; if it drops less, it is lowered. " +
                     "The adjustment is capped at ±20% per run to prevent overcorrection. " +
-                    "A large gap between Calculated and Adjusted means the actual glucose response at that hour " +
+                    "A large gap between Historical and Adjusted means the actual glucose response at that hour " +
                     "differs meaningfully from what the profile predicts — for example, the end of dawn phenomenon " +
                     "around 04–06 h often shows insulin becoming noticeably more effective."
                 )
@@ -164,7 +164,7 @@ extension AutotuneConfig {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Text("Current")
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                    Text("Calculated")
+                    Text("Historical")
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     Text("Adjusted")
                         .frame(maxWidth: .infinity, alignment: .trailing)
