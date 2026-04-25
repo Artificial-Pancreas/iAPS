@@ -273,7 +273,7 @@ final class OpenAPS {
                     }
 
                     // Build the improved ISF schedule if the user has opted in.
-                    let freeapsRaw = self.loadFileFromStorage(name: Settings.settings)
+                    let freeapsRaw = self.loadFileFromStorage(name: FreeAPS.settings)
                     if FreeAPSSettings(from: freeapsRaw)?.calculateISFSuggestions == true {
                         self.buildReasonsISFSchedule()
                     }
