@@ -33,10 +33,10 @@ extension AutotuneConfig {
         }()
 
         private func roundToNearestBasalStep(_ value: Decimal) -> Decimal {
-            let step = Decimal(0.05)
+            let step = Decimal(state.increment)
             let scaled = value / step
             let roundedDouble = (scaled as NSDecimalNumber).doubleValue.rounded()
-            return Decimal(roundedDouble * 0.05)
+            return Decimal(roundedDouble * state.increment)
         }
 
         private func matchingProfileEntry(forSuggestedIndex index: Int) -> BasalProfileEntry? {
