@@ -12,10 +12,7 @@ struct LiveActivityChart: View {
     private let dropWidth = CGFloat(80)
     private let dropHeight = CGFloat(80)
 
-    private let decimalString: String = {
-        let formatter = NumberFormatter()
-        return formatter.decimalSeparator
-    }()
+    private let decimalString: String = NumberFormatter().decimalSeparator
 
     private let dateFormatter: DateFormatter = {
         var formatter = DateFormatter()
@@ -78,6 +75,21 @@ struct LiveActivityChart: View {
             }
             .padding(.vertical, 4)
             .padding(.horizontal, 8)
+            .overlay(alignment: .bottomLeading) {
+                HStack(spacing: 3) {
+                    loop
+                        .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
+                        .padding(.trailing, 2)
+                    updatedLabel
+                        .font(.system(size: 11))
+                        .foregroundStyle(.white.opacity(0.6))
+                }
+                .padding(.horizontal, 5)
+                .padding(.vertical, 2)
+                .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
+                .padding(.leading, 5)
+                .padding(.bottom, 6)
+            }
         }
         .foregroundStyle(.white)
         .privacySensitive()
@@ -89,13 +101,6 @@ struct LiveActivityChart: View {
     private var watchTopRow: some View {
         HStack(alignment: .center) {
             watchIOBCOBView
-            Spacer()
-            if context.isStale || Date().timeIntervalSince(context.state.loopDate) > 7 * 60 {
-                updatedLabel
-                    .font(.system(size: 12))
-                    .foregroundStyle(Color(.loopRed))
-                    .brightness(0.3)
-            }
             Spacer()
             glucoseDisplayWatch
         }
@@ -540,6 +545,12 @@ struct LiveActivityChart: View {
         default:
             return (2, 0)
         }
+    }
+
+    private var loop: some View {
+        let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
+        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
+        return LoopActivity(stroke: color, compact: false).frame(width: 9)
     }
 
     private var updatedLabel: Text {

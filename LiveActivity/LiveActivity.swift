@@ -3,7 +3,7 @@ import Charts
 import SwiftUI
 import WidgetKit
 
-private enum Size {
+enum LiveActivitySize {
     case minimal
     case compact
     case expanded
@@ -113,7 +113,7 @@ struct LiveActivity: Widget {
         return text
     }
 
-    private func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, size: Size) -> (some View, Int) {
+    private func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, size: LiveActivitySize) -> (some View, Int) {
         var characters = 0
 
         let bgText = context.state.bg
@@ -170,7 +170,7 @@ struct LiveActivity: Widget {
         return (stack, characters)
     }
 
-    private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
+    private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: LiveActivitySize) -> some View {
         HStack(spacing: 0) {
             Text(context.state.iob)
             Text(" U")
@@ -178,7 +178,7 @@ struct LiveActivity: Widget {
         .foregroundStyle(.insulin)
     }
 
-    private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
+    private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: LiveActivitySize) -> some View {
         HStack(spacing: 0) {
             Text(context.state.cob)
             Text(" g")
@@ -192,63 +192,69 @@ struct LiveActivity: Widget {
         return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
     }
 
-    private var emptyText: some View {
-        Text(" ").font(.caption).offset(x: 0, y: -5)
-    }
-
     private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         LiveActivityChartWrapper(context: context)
     }
 
-    @ViewBuilder private func bannerWithoutChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        VStack(spacing: 2) {
-            ZStack {
-                updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-            HStack {
-                VStack {
-                    loop(context: context, size: 22)
-                    emptyText
-                }.offset(x: 0, y: 2)
-                Spacer()
-                VStack {
-                    bgAndTrend(context: context, size: .expanded).0.font(.title)
-                    changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7)).offset(x: -12, y: -5)
-                }
-                Spacer()
-                VStack {
-                    iob(context: context, size: .expanded).font(.title)
-                    emptyText
-                }
-                Spacer()
-                VStack {
-                    cob(context: context, size: .expanded).font(.title)
-                    emptyText
-                }
-            }
-            HStack {
-                Spacer()
-                Text(NSLocalizedString("Eventual Glucose", comment: ""))
-                Spacer()
-                Text(context.state.eventual)
-                Text(context.state.mmol ? NSLocalizedString(
-                    "mmol/L",
-                    comment: "The short unit display string for millimoles of glucose per liter"
-                ) : NSLocalizedString(
-                    "mg/dL",
-                    comment: "The short unit display string for milligrams of glucose per decilter"
-                )).foregroundStyle(.secondary)
-            }.padding(.top, 10)
+    private func bannerWithoutChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        LiveActivityBannerWrapper(context: context)
+    }
+}
+
+extension Color {
+    static let uam = Color("UAM")
+    static let zt = Color("ZT")
+}
+
+private struct LiveActivityChartWrapper: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        if #available(iOS 18.0, *) {
+            LiveActivityChartWrapperIOS18(context: context)
+        } else {
+            LiveActivityChart(context: context, isWatch: false)
         }
-        .privacySensitive()
-        .padding(.vertical, 10).padding(.horizontal, 15)
-        // Semantic BackgroundStyle and Color values work here. They adapt to the given interface style (light mode, dark mode)
-        // Semantic UIColors do NOT (as of iOS 17.1.1). Like UIColor.systemBackgroundColor (it does not adapt to changes of the interface style)
-        // The colorScheme environment varaible that is usually used to detect dark mode does NOT work here (it reports false values)
-        .foregroundStyle(Color.primary)
-        .background(BackgroundStyle.background.opacity(0.4))
-        .activityBackgroundTint(Color.clear)
+    }
+}
+
+@available(iOS 18.0, *) private struct LiveActivityChartWrapperIOS18: View {
+    @Environment(\.activityFamily) private var activityFamily
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        LiveActivityChart(context: context, isWatch: activityFamily == .small)
+    }
+}
+
+private struct LiveActivityBannerWrapper: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        if #available(iOS 18.0, *) {
+            LiveActivityBannerWrapperIOS18(context: context)
+        } else {
+            LiveActivityBanner(context: context, isWatch: false)
+        }
+    }
+}
+
+@available(iOS 18.0, *) private struct LiveActivityBannerWrapperIOS18: View {
+    @Environment(\.activityFamily) private var activityFamily
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        LiveActivityBanner(context: context, isWatch: activityFamily == .small)
+    }
+}
+
+struct LoopActivity: View {
+    @Environment(\.colorScheme) var colorScheme
+    let stroke: Color
+    let compact: Bool
+    var body: some View {
+        Circle()
+            .stroke(stroke, lineWidth: compact ? 1.5 : 3)
     }
 }
 
@@ -524,11 +530,6 @@ struct SampleData {
     }
 }
 
-extension Color {
-    static let uam = Color("UAM")
-    static let zt = Color("ZT")
-}
-
 #Preview("Notification", as: .content, using: LiveActivityAttributes.preview) {
     LiveActivity()
 } contentStates: {
@@ -542,35 +543,4 @@ extension Color {
     LiveActivityAttributes.ContentState.chart3
     LiveActivityAttributes.ContentState.chart4
     LiveActivityAttributes.ContentState.chart5
-}
-
-private struct LiveActivityChartWrapper: View {
-    let context: ActivityViewContext<LiveActivityAttributes>
-
-    var body: some View {
-        if #available(iOS 18.0, *) {
-            LiveActivityChartWrapperIOS18(context: context)
-        } else {
-            LiveActivityChart(context: context, isWatch: false)
-        }
-    }
-}
-
-@available(iOS 18.0, *) private struct LiveActivityChartWrapperIOS18: View {
-    @Environment(\.activityFamily) private var activityFamily
-    let context: ActivityViewContext<LiveActivityAttributes>
-
-    var body: some View {
-        LiveActivityChart(context: context, isWatch: activityFamily == .small)
-    }
-}
-
-struct LoopActivity: View {
-    @Environment(\.colorScheme) var colorScheme
-    let stroke: Color
-    let compact: Bool
-    var body: some View {
-        Circle()
-            .stroke(stroke, lineWidth: compact ? 1.5 : 3)
-    }
 }
