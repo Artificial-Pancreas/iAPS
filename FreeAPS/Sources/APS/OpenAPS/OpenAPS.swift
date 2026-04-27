@@ -1452,32 +1452,58 @@ final class OpenAPS {
         let calendar = Calendar.current
         let daysAnalyzed = Set(allEstimates.map { calendar.startOfDay(for: $0.date) }).count
 
-        // Global p5/p95 trim — eliminates extreme outliers without filtering by ratio.
-        let sorted = allEstimates.map(\.value).sorted()
-        let n = sorted.count
-        let p5Index  = Int((Double(n - 1) * 0.05).rounded())
-        let p95Index = Int((Double(n - 1) * 0.95).rounded())
-        let p5  = sorted[p5Index]
-        let p95 = sorted[p95Index]
-
-        var hourBuckets: [Int: [Double]] = [:]
-        for e in allEstimates {
-            guard e.value >= p5, e.value <= p95 else { continue }
-            hourBuckets[e.hour, default: []].append(e.value)
+        // Weighted percentile over a pre-sorted (ascending) parallel (values, weights) pair.
+        func weightedPercentile(_ values: [Double], weights: [Double], p: Double) -> Double {
+            guard values.count > 1 else { return values.first ?? 0 }
+            let totalWeight = weights.reduce(0, +)
+            guard totalWeight > 0 else { return values[values.count / 2] }
+            let target = p / 100.0 * totalWeight
+            var cumulative = 0.0
+            for i in 0 ..< values.count {
+                let prevCum = cumulative
+                cumulative += weights[i]
+                if cumulative >= target {
+                    if i == 0 || weights[i] <= 0 { return values[i] }
+                    let frac = (target - prevCum) / weights[i]
+                    return values[i - 1] + frac * (values[i] - values[i - 1])
+                }
+            }
+            return values.last!
         }
 
-        let qualifyingEntries = hourBuckets.values.reduce(0) { $0 + $1.count }
+        // Recency weighting: weight = exp(-ln(2)/7 × daysSince), half-life 7 days.
+        // A settings change a week ago already outweighs data from three weeks ago.
+        let decayLambda = log(2.0) / 7.0
 
-        // Per-hour median (minimum 3 points for a direct measurement).
+        // Per-hour bucket fill — no global trim; each hour trims its own 5% tails.
+        var hourBuckets: [Int: [(value: Double, weight: Double)]] = [:]
+        for e in allEstimates {
+            let daysSince = toDate.timeIntervalSince(e.date) / 86400.0
+            let weight = exp(-decayLambda * daysSince)
+            hourBuckets[e.hour, default: []].append((value: e.value, weight: weight))
+        }
+
+        var qualifyingEntries = 0
         var hourMedians: [Int: Double] = [:]
         var counts: [String: Int] = [:]
 
         for hour in 0 ..< 24 {
-            let pts = hourBuckets[hour] ?? []
+            var pts = (hourBuckets[hour] ?? []).sorted { $0.value < $1.value }
+            let n = pts.count
+
+            // Trim bottom and top 5% by count (only when n is large enough to be meaningful).
+            if n >= 10 {
+                let trimN = Int(floor(Double(n) * 0.05))
+                pts = Array(pts.dropFirst(trimN).dropLast(trimN))
+            }
+
+            qualifyingEntries += pts.count
             counts[String(hour)] = pts.count
+
             if pts.count >= 3 {
-                let s = pts.sorted()
-                hourMedians[hour] = s[s.count / 2]
+                let values  = pts.map(\.value)
+                let weights = pts.map(\.weight)
+                hourMedians[hour] = weightedPercentile(values, weights: weights, p: 50.0)
             }
         }
 
@@ -1513,7 +1539,7 @@ final class OpenAPS {
         // Positive deviation → BG dropped less than expected → profile ISF is too high → suggest lower ISF.
         let sortedReasons = reasons.sorted { ($0.date ?? .distantPast) < ($1.date ?? .distantPast) }
 
-        var devHourBuckets: [Int: [(isfBefore: Double, deviation: Double, absExpBGI: Double)]] = [:]
+        var devHourBuckets: [Int: [(isfBefore: Double, deviation: Double, absExpBGI: Double, weight: Double)]] = [:]
         var devQualifyingEntries = 0
 
         for i in 1 ..< sortedReasons.count {
@@ -1552,7 +1578,9 @@ final class OpenAPS {
 
             let deviation = delta - expectedBGI
             let hour = Calendar.current.component(.hour, from: currDate)
-            devHourBuckets[hour, default: []].append((isfBefore, deviation, abs(expectedBGI)))
+            let devDaysSince = toDate.timeIntervalSince(currDate) / 86400.0
+            let devWeight = exp(-decayLambda * devDaysSince)
+            devHourBuckets[hour, default: []].append((isfBefore, deviation, abs(expectedBGI), devWeight))
             devQualifyingEntries += 1
         }
 
@@ -1561,13 +1589,13 @@ final class OpenAPS {
         for (hour, entries) in devHourBuckets {
             guard entries.count >= 5 else { continue }
 
-            let deviations  = entries.map(\.deviation).sorted()
-            let expBGIs     = entries.map(\.absExpBGI).sorted()
-            let isfBefores  = entries.map(\.isfBefore).sorted()
+            let sortedDev    = entries.sorted { $0.deviation < $1.deviation }
+            let sortedExpBGI = entries.sorted { $0.absExpBGI < $1.absExpBGI }
+            let sortedISF    = entries.sorted { $0.isfBefore < $1.isfBefore }
 
-            let medDev      = deviations[deviations.count / 2]
-            let medExpBGI   = expBGIs[expBGIs.count / 2]
-            let medISFBefore = isfBefores[isfBefores.count / 2]
+            let medDev       = weightedPercentile(sortedDev.map(\.deviation),    weights: sortedDev.map(\.weight),    p: 50.0)
+            let medExpBGI    = weightedPercentile(sortedExpBGI.map(\.absExpBGI), weights: sortedExpBGI.map(\.weight), p: 50.0)
+            let medISFBefore = weightedPercentile(sortedISF.map(\.isfBefore),    weights: sortedISF.map(\.weight),    p: 50.0)
 
             guard medExpBGI > 0.5 else { continue }
 
