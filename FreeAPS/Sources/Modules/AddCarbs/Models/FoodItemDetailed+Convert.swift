@@ -24,12 +24,40 @@ extension FoodItemDetailed {
             .sugars: (preset.sugars as Decimal?) ?? 0
         ]
 
+        let micronutrients: [MicronutrientValue] = (preset.micronutrients ?? [])
+            .compactMap { entry in
+                guard
+                    let substanceName = entry.micronutrients.name,
+                    let unit = entry.micronutrients.unit,
+                    let amount = entry.amount?.decimalValue
+                else { return nil }
+
+                guard let micro = MicroNutrient(coreDataName: substanceName) else { return nil }
+
+                let amountPer100: Decimal
+                if preset.per100 {
+                    amountPer100 = amount
+                } else if let portion = preset.portionSize?.decimalValue, portion > 0 {
+                    amountPer100 = amount / portion * 100
+                } else {
+                    amountPer100 = amount
+                }
+
+                return MicronutrientValue(
+                    substance: micro,
+                    amount: amount,
+                    amountPer100: amountPer100
+                )
+            }
+            .sorted { $0.name < $1.name }
+
         return FoodItemDetailed(
             id: foodID,
             name: foodName,
             nutrition: nutritionPer100 ?
                 .per100(values: nutritionValues, portionSize: (preset.portionSize as Decimal?) ?? 100) :
                 .perServing(values: nutritionValues, servingsMultiplier: 1),
+            micronutrients: preset.micronutrientValuesTyped(),
             standardServing: preset.standardServing,
             standardServingSize: preset.standardServingSize as Decimal?,
             units: mealUnits,

@@ -51,6 +51,37 @@ enum USDANutrientCode: Int {
     /// Energy, metabolizable
     case energyMetabolizable = 1062
 
+    // MARK: Vitamins
+
+    case vitaminA_RAE = 320
+    case vitaminA_IU = 318
+    case vitaminC = 401
+    case vitaminD = 328
+    case vitaminE = 323
+    case vitaminK = 430
+
+    case thiamin = 404 // B1
+    case riboflavin = 405 // B2
+    case niacin = 406 // B3
+    case pantothenicAcid = 410 // B5
+    case vitaminB6 = 415
+    case folateTotal = 417 // B9
+    case vitaminB12 = 418
+
+    // MARK: Minerals
+
+    case calcium = 301
+    case iron = 303
+    case magnesium = 304
+    case phosphorus = 305
+    case potassium = 306
+    case sodium = 307
+    case zinc = 309
+    case copper = 312
+    case manganese = 315
+    case selenium = 317
+    case salt = 2047
+
     /// Category of the nutrient for easier grouping
     var category: NutrientCategory {
         switch self {
@@ -75,6 +106,34 @@ enum USDANutrientCode: Int {
              .energyKcal,
              .energyMetabolizable:
             return .energy
+
+        case .folateTotal,
+             .niacin,
+             .pantothenicAcid,
+             .riboflavin,
+             .thiamin,
+             .vitaminA_IU,
+             .vitaminA_RAE,
+             .vitaminB6,
+             .vitaminB12,
+             .vitaminC,
+             .vitaminD,
+             .vitaminE,
+             .vitaminK:
+            return .vitamin
+
+        case .calcium,
+             .copper,
+             .iron,
+             .magnesium,
+             .manganese,
+             .phosphorus,
+             .potassium,
+             .salt,
+             .selenium,
+             .sodium,
+             .zinc:
+            return .mineral
         }
     }
 
@@ -102,6 +161,8 @@ enum USDANutrientCode: Int {
              .energyMetabolizable,
              .sugarsAdded:
             return 3
+        default:
+            return 3
         }
     }
 
@@ -112,6 +173,8 @@ enum USDANutrientCode: Int {
         case fiber
         case sugar
         case energy
+        case vitamin
+        case mineral
     }
 }
 
@@ -188,5 +251,68 @@ struct USDAFoodNutrient: Codable {
     var nutrientCode: USDANutrientCode? {
         guard let number = nutrientNumberAsInt else { return nil }
         return USDANutrientCode(rawValue: number)
+    }
+}
+
+extension USDANutrientCode {
+    var microNutrient: MicroNutrient? {
+        switch self {
+        // Vitamins
+        case .vitaminA_IU,
+             .vitaminA_RAE: return .vitaminA
+        case .vitaminC: return .vitaminC
+        case .vitaminD: return .vitaminD
+        case .vitaminE: return .vitaminE
+        case .vitaminK: return .vitaminK
+        case .thiamin: return .vitaminB1
+        case .riboflavin: return .vitaminB2
+        case .niacin: return .vitaminB3
+        case .pantothenicAcid: return .vitaminB5
+        case .vitaminB6: return .vitaminB6
+        case .folateTotal: return .vitaminB9
+        case .vitaminB12: return .vitaminB12
+
+        // Minerals
+        case .calcium: return .calcium
+        case .iron: return .iron
+        case .magnesium: return .magnesium
+        case .phosphorus: return .phosphorus
+        case .potassium: return .potassium
+        case .sodium: return .sodium
+        case .zinc: return .zinc
+        case .copper: return .copper
+        case .manganese: return .manganese
+        case .selenium: return .selenium
+        case .salt: return .salt
+
+        default:
+            return nil
+        }
+    }
+}
+
+extension USDAFoodNutrient {
+    func normalizedValue(for micro: MicroNutrient) -> Decimal? {
+        guard let value = value else { return nil }
+
+        let decimal = Decimal(value)
+
+        switch unitName?.lowercased() {
+        case "ug",
+             "µg":
+            return decimal / 1000 // → mg
+        case "mg":
+            return decimal
+        case "g":
+            return decimal * 1000
+        case "iu":
+            // Example: Vitamin A IU → µg conversion (rough)
+            if micro == .vitaminA {
+                return decimal * 0.3 / 1000 // IU → µg → mg
+            }
+            return decimal
+        default:
+            return decimal
+        }
     }
 }

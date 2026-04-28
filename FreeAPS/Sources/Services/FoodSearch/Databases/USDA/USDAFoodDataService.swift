@@ -10,6 +10,63 @@ extension USDAFoodDataService: TextAnalysisService {
         result.textQuery = prompt
         return result
     }
+
+    private func mapUSDANutrientToMicro(_ nutrient: USDAFoodNutrient) -> MicroNutrient? {
+        guard let name = nutrient.nutrientName?.lowercased() else { return nil }
+
+        switch name {
+        case "vitamin c, total ascorbic acid":
+            return .vitaminC
+        case "vitamin a, iu",
+             "vitamin a, rae":
+            return .vitaminA
+        case "vitamin d (d2 + d3)":
+            return .vitaminD
+        case "vitamin e (alpha-tocopherol)":
+            return .vitaminE
+        case "vitamin k (phylloquinone)":
+            return .vitaminK
+
+        case "thiamin":
+            return .vitaminB1
+        case "riboflavin":
+            return .vitaminB2
+        case "niacin":
+            return .vitaminB3
+        case "pantothenic acid":
+            return .vitaminB5
+        case "vitamin b-6":
+            return .vitaminB6
+        case "folate, total":
+            return .vitaminB9
+        case "vitamin b-12":
+            return .vitaminB12
+
+        case "calcium, ca":
+            return .calcium
+        case "iron, fe":
+            return .iron
+        case "magnesium, mg":
+            return .magnesium
+        case "phosphorus, p":
+            return .phosphorus
+        case "potassium, k":
+            return .potassium
+        case "sodium, na":
+            return .sodium
+        case "zinc, zn":
+            return .zinc
+        case "copper, cu":
+            return .copper
+        case "manganese, mn":
+            return .manganese
+        case "selenium, se":
+            return .selenium
+
+        default:
+            return nil
+        }
+    }
 }
 
 /// Service for accessing USDA FoodData Central API for comprehensive nutrition data
@@ -96,21 +153,35 @@ final class USDAFoodDataService {
         var sugars: Decimal = 0
         var energy: Decimal = 0
 
+        var micronutrients: [MicroNutrient: Decimal] = [:]
+
         if let foodNutrients = foodData.foodNutrients {
             for nutrient in foodNutrients {
-                guard let nutrientCode = nutrient.nutrientCode,
-                      let value = nutrient.value
-                else { continue }
+                // MACRO HANDLING ---
+                if let nutrientCode = nutrient.nutrientCode,
+                   let value = nutrient.value
+                {
+                    let decimalValue = Decimal(value)
 
-                let decimalValue = Decimal(value)
+                    switch nutrientCode.category {
+                    case .carbohydrate: if carbs == 0 { carbs = decimalValue }
+                    case .protein: if protein == 0 { protein = decimalValue }
+                    case .fat: if fat == 0 { fat = decimalValue }
+                    case .fiber: if fiber == 0 { fiber = decimalValue }
+                    case .sugar: if sugars == 0 { sugars = decimalValue }
+                    case .energy: if energy == 0 { energy = decimalValue }
+                    case .mineral,
+                         .vitamin:
+                        break // handled below
+                    }
+                }
 
-                switch nutrientCode.category {
-                case .carbohydrate: if carbs == 0 { carbs = decimalValue }
-                case .protein: if protein == 0 { protein = decimalValue }
-                case .fat: if fat == 0 { fat = decimalValue }
-                case .fiber: if fiber == 0 { fiber = decimalValue }
-                case .sugar: if sugars == 0 { sugars = decimalValue }
-                case .energy: if energy == 0 { energy = decimalValue }
+                // MICRO. To Do: refactor
+                if let code = nutrient.nutrientCode,
+                   let micro = code.microNutrient,
+                   let normalized = nutrient.normalizedValue(for: micro)
+                {
+                    micronutrients[micro] = normalized
                 }
             }
         }

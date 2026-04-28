@@ -130,6 +130,20 @@ struct FoodItemInfoPopup: View {
                         }
                     }
 
+                    ForEach(
+                        foodItem.micronutrients.sorted { $0.name < $1.name }
+                    ) { micronutrient in
+                        if micronutrient.amount > 0 || micronutrient.amountPer100 > 0 {
+                            Divider()
+                            DetailedNutritionRow(
+                                localizedLabel: micronutrient.name,
+                                portionValue: micronutrient.amount,
+                                per100Value: micronutrient.amountPer100,
+                                unit: micronutrient.substance.dimension
+                            )
+                        }
+                    }
+
                     Divider()
                     DetailedNutritionRow(
                         localizedLabel: NSLocalizedString("Calories", comment: ""),

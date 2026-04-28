@@ -1581,7 +1581,6 @@ Enact a temp Basal or a temp target */
 
 "Provider for AI Image Analysis" = "Provider for AI Image Analysis";
 
-
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
 
 "Barcode Scanner" = "Barcode Scanner";
@@ -1988,6 +1987,10 @@ Enact a temp Basal or a temp target */
 "Apply" = "Apply";
 
 "Carbs" = "Carbs";
+
+"Discard" = "Discard";
+
+"Do you want to discard this meal?" = "Do you want to discard this meal?";
 
 // --------- End of AI ---------
 

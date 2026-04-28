@@ -485,6 +485,285 @@ final class CoreDataStorage {
     }
 }
 
+// public typealias PresetsCoreDataClassSet = NSSet
+
+@objc(Presets) class Presets: NSManagedObject {
+    @NSManaged public var carbs: NSDecimalNumber?
+    @NSManaged public var dish: String?
+    @NSManaged public var fat: NSDecimalNumber?
+    @NSManaged public var fiber: NSDecimalNumber?
+    @NSManaged public var foodID: UUID?
+    @NSManaged public var glycemicIndex: NSDecimalNumber?
+    @NSManaged public var imageURL: String?
+    @NSManaged public var mealUnits: String?
+    @NSManaged public var per100: Bool
+    @NSManaged public var portionSize: NSDecimalNumber?
+    @NSManaged public var protein: NSDecimalNumber?
+    @NSManaged public var standardName: String?
+    @NSManaged public var standardServing: String?
+    @NSManaged public var standardServingSize: NSDecimalNumber?
+    @NSManaged public var sugars: NSDecimalNumber?
+    @NSManaged public var tags: String?
+    @NSManaged public var micronutrients: Set<PresetMicronutrient>?
+}
+
+@objc(Micronutrient) class Micronutrient: NSManagedObject {
+    @NSManaged public var id: UUID
+    @NSManaged public var name: String?
+    @NSManaged public var type: String
+    @NSManaged public var unit: String?
+    @NSManaged public var entries: Set<PresetMicronutrient>
+}
+
+@objc(PresetMicronutrient) class PresetMicronutrient: NSManagedObject {
+    @NSManaged public var id: UUID
+    @NSManaged var amount: NSDecimalNumber?
+    @NSManaged var per100: Bool
+    @NSManaged var preset: Presets
+    @NSManaged var micronutrients: Micronutrient
+}
+
+extension Presets {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Presets> {
+        NSFetchRequest<Presets>(entityName: "Presets")
+    }
+
+    @objc(addMicronutrientObject:)
+    @NSManaged public func addToMicronutrient(_ value: PresetMicronutrient)
+
+    @objc(removeMicronutrientObject:)
+    @NSManaged public func removeFromMicronutrient(_ value: PresetMicronutrient)
+
+    @objc(addMicronutrient:)
+    @NSManaged public func addToMicronutrient(_ values: NSSet)
+
+    @objc(removeMicronutrient:)
+    @NSManaged public func removeFromMicronutrient(_ values: NSSet)
+
+    func micronutrientValues() -> [PresetMicronutrient] {
+        let set = micronutrients ?? []
+
+        return set.sorted {
+            ($0.micronutrients.name ?? "") < ($1.micronutrients.name ?? "")
+        }
+    }
+
+    func setMicronutrient(
+        name: String,
+        type: String,
+        unit: String,
+        amount: Decimal,
+        per100: Bool,
+        context: NSManagedObjectContext
+    ) throws {
+        // 1. Fetch or create Micronutrient definition
+        let micronutrient: Micronutrient
+
+        if let existing = try Micronutrient.fetchByName(name, context: context) {
+            micronutrient = existing
+        } else {
+            let new = Micronutrient(context: context)
+            new.id = UUID()
+            new.name = name
+            new.type = type
+            new.unit = unit
+            micronutrient = new
+        }
+
+        // 2. Check if this preset already has this micronutrient
+        let existingEntry = (self.micronutrients ?? [])
+            .first(where: { $0.micronutrients == micronutrient })
+
+        if let entry = existingEntry {
+            // Update
+            entry.amount = NSDecimalNumber(decimal: amount)
+            entry.per100 = per100
+        } else {
+            // Create
+            let entry = PresetMicronutrient(context: context)
+            entry.id = UUID()
+            entry.amount = NSDecimalNumber(decimal: amount)
+            entry.per100 = per100
+            entry.preset = self
+            entry.micronutrients = micronutrient
+        }
+    }
+
+    func replaceMicronutrients(
+        with values: [(name: String, type: String, unit: String, amount: Decimal, per100: Bool)],
+        context: NSManagedObjectContext
+    ) throws {
+        // Remove
+        if let existing = micronutrients {
+            for item in existing {
+                context.delete(item)
+            }
+        }
+
+        // New
+        for value in values {
+            try setMicronutrient(
+                name: value.name,
+                type: value.type,
+                unit: value.unit,
+                amount: value.amount,
+                per100: value.per100,
+                context: context
+            )
+        }
+    }
+
+    func allNutrients() -> [NutrientValue] {
+        var results: [NutrientValue] = []
+
+        // Macro nutrients
+        if let carbs = carbs?.decimalValue {
+            results.append(NutrientValue(name: "Carbs", amount: carbs, unit: "g"))
+        }
+
+        if let fat = fat?.decimalValue {
+            results.append(NutrientValue(name: "Fat", amount: fat, unit: "g"))
+        }
+
+        if let protein = protein?.decimalValue {
+            results.append(NutrientValue(name: "Protein", amount: protein, unit: "g"))
+        }
+
+        if let fiber = fiber?.decimalValue {
+            results.append(NutrientValue(name: "Fiber", amount: fiber, unit: "g"))
+        }
+
+        if let sugars = sugars?.decimalValue {
+            results.append(NutrientValue(name: "Sugars", amount: sugars, unit: "g"))
+        }
+
+        // Micro nutrients
+        let micros = micronutrientValuesTyped()
+
+        for micro in micros {
+            results.append(
+                NutrientValue(
+                    name: micro.name,
+                    amount: micro.amount,
+                    unit: micro.unit
+                )
+            )
+        }
+        return results
+    }
+
+    func setMicronutrient(
+        _ nutrient: MicroNutrient,
+        amount: Decimal,
+        per100: Bool,
+        context: NSManagedObjectContext
+    ) throws {
+        // 1. Fetch or create definition
+        let micronutrient: Micronutrient
+
+        if let existing = try Micronutrient.fetchByName(nutrient.coreDataName, context: context) {
+            micronutrient = existing
+        } else {
+            let new = Micronutrient(context: context)
+            new.id = UUID()
+            new.name = nutrient.coreDataName
+            new.type = nutrient.coreDataType
+            new.unit = nutrient.unit
+            micronutrient = new
+        }
+
+        let existingEntry = (self.micronutrients ?? [])
+            .first(where: { $0.micronutrients == micronutrient })
+
+        if let entry = existingEntry {
+            entry.amount = NSDecimalNumber(decimal: amount)
+            entry.per100 = per100
+        } else {
+            let entry = PresetMicronutrient(context: context)
+            entry.id = UUID()
+            entry.amount = NSDecimalNumber(decimal: amount)
+            entry.per100 = per100
+            entry.preset = self
+            entry.micronutrients = micronutrient
+        }
+    }
+
+    func applyMicronutrients(
+        from values: [MicronutrientValue],
+        context: NSManagedObjectContext
+    ) throws {
+        for value in values {
+            try setMicronutrient(
+                value.substance,
+                amount: value.amountPer100,
+                per100: true,
+                context: context
+            )
+        }
+    }
+
+    func micronutrientValuesTyped() -> [MicronutrientValue] {
+        let entries = micronutrients ?? []
+        return entries.compactMap { entry in
+            guard
+                let name = entry.micronutrients.name,
+                let substance = MicroNutrient(coreDataName: name),
+                let amountPer100 = entry.amount?.decimalValue
+            else {
+                return nil
+            }
+
+            let amount: Decimal
+
+            if let portion = portionSize?.decimalValue, entry.per100 {
+                amount = (amountPer100 / 100) * portion
+            } else {
+                amount = amountPer100
+            }
+
+            return MicronutrientValue(
+                substance: substance,
+                amount: amount,
+                amountPer100: amountPer100
+            )
+        }
+        .sorted { $0.name < $1.name }
+    }
+}
+
+extension Micronutrient {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Micronutrient> {
+        NSFetchRequest<Micronutrient>(entityName: "Micronutrient")
+    }
+
+    static func fetchAll(
+        context: NSManagedObjectContext
+    ) throws -> [Micronutrient] {
+        let request: NSFetchRequest<Micronutrient> = Micronutrient.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "type", ascending: true),
+            NSSortDescriptor(key: "name", ascending: true)
+        ]
+        return try context.fetch(request)
+    }
+
+    static func fetchByName(
+        _ name: String,
+        context: NSManagedObjectContext
+    ) throws -> Micronutrient? {
+        let request: NSFetchRequest<Micronutrient> = Micronutrient.fetchRequest()
+        request.predicate = NSPredicate(format: "name ==[c] %@", name)
+        request.fetchLimit = 1
+        return try context.fetch(request).first
+    }
+}
+
+struct NutrientValue {
+    let name: String
+    let amount: Decimal
+    let unit: String
+}
+
 @objc(NightTimeConfigurationBox) public final class NightTimeConfigurationBox: NSObject, NSSecureCoding {
     public static var supportsSecureCoding: Bool { true }
 

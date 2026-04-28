@@ -238,8 +238,9 @@ extension OpenFoodFactsProduct: Codable {
     }
 }
 
-/// Nutritional information for a food product - simplified to essential nutrients only
 struct Nutriments: Codable {
+    // MARK: - Macro nutrients
+
     let carbohydrates: Decimal?
     let proteins: Decimal?
     let fat: Decimal?
@@ -248,42 +249,82 @@ struct Nutriments: Codable {
     let fiber: Decimal?
     let energy: Decimal?
 
+    /// Raw-ish OpenFoodFacts micronutrient key → raw value.
+    /// Keep unit/context suffixes so normalization can be correct.
+    ///
+    /// Examples:
+    /// - calcium_100g
+    /// - vitamin_d_100g
+    /// - vitamin_d_value
+    /// - vitamin_b12_100g
+    let micronutrients: [String: Decimal]
+
     enum CodingKeys: String, CodingKey {
-        case carbohydratesServing = "carbohydrates_serving"
         case carbohydrates100g = "carbohydrates_100g"
-        case proteinsServing = "proteins_serving"
         case proteins100g = "proteins_100g"
-        case fatServing = "fat_serving"
         case fat100g = "fat_100g"
-        case caloriesServing = "energy-kcal_serving"
         case calories100g = "energy-kcal_100g"
-        case sugarsServing = "sugars_serving"
         case sugars100g = "sugars_100g"
-        case fiberServing = "fiber_serving"
         case fiber100g = "fiber_100g"
-        case energyServing = "energy_serving"
         case energy100g = "energy_100g"
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        // Use 100g values as base since serving sizes are often incorrect in the database
-        // The app will handle serving size calculations based on actual product weight
-        carbohydrates = try container.decodeIfPresent(Decimal.self, forKey: .carbohydrates100g)
-        proteins = try container.decodeIfPresent(Decimal.self, forKey: .proteins100g)
-        fat = try container.decodeIfPresent(Decimal.self, forKey: .fat100g)
-        calories = try container.decodeIfPresent(Decimal.self, forKey: .calories100g)
-        sugars = try container.decodeIfPresent(Decimal.self, forKey: .sugars100g)
-        fiber = try container.decodeIfPresent(Decimal.self, forKey: .fiber100g)
-        energy = try container.decodeIfPresent(Decimal.self, forKey: .energy100g)
+        carbohydrates = try container.decodeFlexibleDecimalIfPresent(forKey: .carbohydrates100g)
+        proteins = try container.decodeFlexibleDecimalIfPresent(forKey: .proteins100g)
+        fat = try container.decodeFlexibleDecimalIfPresent(forKey: .fat100g)
+        calories = try container.decodeFlexibleDecimalIfPresent(forKey: .calories100g)
+        sugars = try container.decodeFlexibleDecimalIfPresent(forKey: .sugars100g)
+        fiber = try container.decodeFlexibleDecimalIfPresent(forKey: .fiber100g)
+        energy = try container.decodeFlexibleDecimalIfPresent(forKey: .energy100g)
+
+        let raw = (try? decoder.singleValueContainer().decode([String: AnyDecodable].self)) ?? [:]
+
+        var micros: [String: Decimal] = [:]
+
+        for (rawKey, rawValue) in raw {
+            let key = rawKey
+                .lowercased()
+                .replacingOccurrences(of: "-", with: "_")
+                .replacingOccurrences(of: " ", with: "_")
+
+            guard let decimal = rawValue.decimalValue else {
+                continue
+            }
+
+            let isMicronutrientCandidate =
+                key.hasSuffix("_100g") ||
+                key.hasSuffix("_value")
+
+            guard isMicronutrientCandidate else {
+                continue
+            }
+
+            if Self.isMacroOrNonMicroKey(key) {
+                continue
+            }
+
+            if MicroNutrient(openFoodFactsKey: key) == nil {
+                continue
+            }
+
+            micros[key] = decimal
+        }
+
+        micronutrients = micros
+
+        #if DEBUG
+            debugLogVitaminKeys(raw)
+            debugLogMappedMicronutrients(micros)
+        #endif
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        // Encode as 100g values since that's what we're using internally
-        try container.encode(carbohydrates, forKey: .carbohydrates100g)
+        try container.encodeIfPresent(carbohydrates, forKey: .carbohydrates100g)
         try container.encodeIfPresent(proteins, forKey: .proteins100g)
         try container.encodeIfPresent(fat, forKey: .fat100g)
         try container.encodeIfPresent(calories, forKey: .calories100g)
@@ -292,15 +333,15 @@ struct Nutriments: Codable {
         try container.encodeIfPresent(energy, forKey: .energy100g)
     }
 
-    /// Manual initializer for programmatic creation (e.g., AI analysis)
     init(
-        carbohydrates: Decimal,
-        proteins: Decimal? = nil,
-        fat: Decimal? = nil,
-        calories: Decimal? = nil,
-        sugars: Decimal? = nil,
-        fiber: Decimal? = nil,
-        energy: Decimal? = nil
+        carbohydrates: Decimal?,
+        proteins: Decimal?,
+        fat: Decimal?,
+        calories: Decimal?,
+        sugars: Decimal?,
+        fiber: Decimal?,
+        energy: Decimal?,
+        micronutrients: [String: Decimal] = [:]
     ) {
         self.carbohydrates = carbohydrates
         self.proteins = proteins
@@ -309,10 +350,134 @@ struct Nutriments: Codable {
         self.sugars = sugars
         self.fiber = fiber
         self.energy = energy
+        self.micronutrients = micronutrients
     }
 
     static func empty() -> Nutriments {
-        Nutriments(carbohydrates: 0.0, proteins: nil, fat: nil, calories: nil, sugars: nil, fiber: nil, energy: nil)
+        Nutriments(
+            carbohydrates: 0,
+            proteins: nil,
+            fat: nil,
+            calories: nil,
+            sugars: nil,
+            fiber: nil,
+            energy: nil,
+            micronutrients: [:]
+        )
+    }
+
+    // Exclusion filter for micro nutrients. To Do: is there a less verbose or simpler method?
+    private static func isMacroOrNonMicroKey(_ key: String) -> Bool {
+        key.contains("carbohydrates") ||
+            key.contains("proteins") ||
+            key.contains("protein") ||
+            key.contains("fat") ||
+            key.contains("energy") ||
+            key.contains("sugars") ||
+            key.contains("fiber") ||
+            key.contains("saturated") ||
+            key.contains("trans_fat") ||
+            key.contains("cholesterol") ||
+            key.contains("alcohol") ||
+            key.contains("sodium")
+    }
+
+    // MARK: - Debug
+
+    #if DEBUG
+        private func debugLogVitaminKeys(_ raw: [String: AnyDecodable]) {
+            for key in raw.keys.sorted() {
+                let k = key.lowercased()
+                if k.contains("vitamin") ||
+                    k.contains("riboflavin") ||
+                    k.contains("thiamin") ||
+                    k.contains("pantothenic") ||
+                    k.contains("b12") ||
+                    k.contains("folate") ||
+                    k.contains("biotin")
+                {
+                    print("🧪 OFF raw vitamin key:", key, "=", raw[key]?.value ?? "")
+                }
+            }
+        }
+
+        private func debugLogMappedMicronutrients(_ micros: [String: Decimal]) {
+            if micros.isEmpty {
+                print("⚠️ OFF micronutrients: none mapped for this product")
+            } else {
+                for (key, value) in micros.sorted(by: { $0.key < $1.key }) {
+                    print("✅ OFF mapped micronutrient candidate:", key, "=", value)
+                }
+            }
+        }
+    #endif
+}
+
+struct AnyDecodable: Decodable {
+    let value: Any
+
+    var decimalValue: Decimal? {
+        if let decimal = value as? Decimal {
+            return decimal
+        }
+
+        if let double = value as? Double {
+            return Decimal(double)
+        }
+
+        if let int = value as? Int {
+            return Decimal(int)
+        }
+
+        if let string = value as? String {
+            return Decimal(string: string.replacingOccurrences(of: ",", with: "."))
+        }
+
+        return nil
+    }
+
+    var stringValue: String? {
+        value as? String
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+
+        if let int = try? container.decode(Int.self) {
+            value = int
+        } else if let double = try? container.decode(Double.self) {
+            value = double
+        } else if let decimal = try? container.decode(Decimal.self) {
+            value = decimal
+        } else if let string = try? container.decode(String.self) {
+            value = string
+        } else if container.decodeNil() {
+            value = ""
+        } else {
+            value = ""
+        }
+    }
+}
+
+private extension KeyedDecodingContainer {
+    func decodeFlexibleDecimalIfPresent(forKey key: Key) throws -> Decimal? {
+        if let decimal = try? decodeIfPresent(Decimal.self, forKey: key) {
+            return decimal
+        }
+
+        if let double = try? decodeIfPresent(Double.self, forKey: key) {
+            return Decimal(double)
+        }
+
+        if let int = try? decodeIfPresent(Int.self, forKey: key) {
+            return Decimal(int)
+        }
+
+        if let string = try? decodeIfPresent(String.self, forKey: key) {
+            return Decimal(string: string.replacingOccurrences(of: ",", with: "."))
+        }
+
+        return nil
     }
 }
 
@@ -379,6 +544,207 @@ enum OpenFoodFactsError: Error, LocalizedError {
             return "API usage limit exceeded"
         case .serverError:
             return "OpenFoodFacts server is experiencing issues"
+        }
+    }
+}
+
+extension Nutriments {
+    func toMicronutrientValues() -> [MicronutrientValue] {
+        micronutrients.compactMap { rawKey, rawValue in
+            guard let micro = MicroNutrient(openFoodFactsKey: rawKey) else {
+                print("⚠️ Unmapped micronutrient:", rawKey, "=", rawValue)
+                return nil
+            }
+
+            let normalized = normalizeOpenFoodFactsValue(
+                rawValue,
+                rawKey: rawKey,
+                micro: micro
+            )
+
+            print("✅ Micro:", rawKey, "raw:", rawValue, "→", micro.displayName, normalized, micro.unit)
+
+            return MicronutrientValue(
+                substance: micro,
+                amount: normalized,
+                amountPer100: normalized
+            )
+        }
+        .filter({ $0.amount > 0.01 }) // To Do: shouldn't be needed here
+        .sorted { $0.name < $1.name }
+        .uniqued(on: { $0.substance.displayName }) // Removes duplicates. Would be better if not needed...
+    }
+
+    private func normalizeOpenFoodFactsValue(
+        _ value: Decimal,
+        rawKey: String,
+        micro: MicroNutrient
+    ) -> Decimal {
+        let key = rawKey
+            .lowercased()
+            .replacingOccurrences(of: "-", with: "_")
+            .replacingOccurrences(of: " ", with: "_")
+
+        if key.hasSuffix("_value") {
+            return value
+        }
+
+        if key.contains("_mg_100g") {
+            switch micro.unit {
+            case "ug",
+                 "µg":
+                return value * 1000
+            default:
+                return value
+            }
+        }
+
+        if key.contains("_µg_100g") || key.contains("_ug_100g") {
+            switch micro.unit {
+            case "mg":
+                return value / 1000
+            default:
+                return value
+            }
+        }
+
+        if key.contains("_g_100g") {
+            switch micro.unit {
+            case "mg":
+                return value * 1000
+            case "ug",
+                 "µg":
+                return value * 1_000_000
+            default:
+                return value
+            }
+        }
+
+        switch micro.unit {
+        case "mg":
+            return value * 1000
+        case "ug",
+             "µg":
+            return value * 1_000_000
+        default:
+            return value
+        }
+    }
+}
+
+extension OpenFoodFactsProduct {
+    var micronutrientValues: [MicronutrientValue] {
+        nutriments.toMicronutrientValues()
+    }
+}
+
+extension OpenFoodFactsProduct {
+    func toFoodItemDetailed() -> FoodItemDetailed {
+        FoodItemDetailed(
+            name: displayName,
+            nutrition: .per100(
+                values: [
+                    .carbs: nutriments.carbohydrates ?? 0,
+                    .protein: nutriments.proteins ?? 0,
+                    .fat: nutriments.fat ?? 0,
+                    .fiber: nutriments.fiber ?? 0,
+                    .sugars: nutriments.sugars ?? 0
+                ],
+                portionSize: 100
+            ),
+            micronutrients: micronutrientValues,
+            source: .database
+        )
+    }
+}
+
+extension MicroNutrient {
+    init?(openFoodFactsKey rawKey: String) {
+        var key = rawKey
+            .lowercased()
+            .replacingOccurrences(of: "-", with: "_")
+            .replacingOccurrences(of: " ", with: "_")
+
+        key = key
+            .replacingOccurrences(of: "_100g", with: "")
+            .replacingOccurrences(of: "_serving", with: "")
+            .replacingOccurrences(of: "_value", with: "")
+            .replacingOccurrences(of: "_unit", with: "")
+            .replacingOccurrences(of: "_mg", with: "")
+            .replacingOccurrences(of: "_µg", with: "")
+            .replacingOccurrences(of: "_ug", with: "")
+            .replacingOccurrences(of: "_g", with: "")
+
+        switch key {
+        case "vitamin_a",
+             "vitamin_a_rae":
+            self = .vitaminA
+        case "thiamin",
+             "thiamine",
+             "vitamin_b1":
+            self = .vitaminB1
+        case "riboflavin",
+             "vitamin_b2":
+            self = .vitaminB2
+        case "niacin",
+             "vitamin_b3":
+            self = .vitaminB3
+        case "pantothenate",
+             "pantothenic_acid",
+             "vitamin_b5":
+            self = .vitaminB5
+        case "vitamin_b6":
+            self = .vitaminB6
+        case "biotin",
+             "vitamin_b7":
+            self = .vitaminB7
+        case "folate",
+             "folate_total",
+             "folic_acid",
+             "vitamin_b9":
+            self = .vitaminB9
+        case "vitamin_b12":
+            self = .vitaminB12
+        case "ascorbic_acid",
+             "vitamin_c":
+            self = .vitaminC
+        case "vitamin_d":
+            self = .vitaminD
+        case "tocopherol",
+             "vitamin_e":
+            self = .vitaminE
+        case "vitamin_k":
+            self = .vitaminK
+
+        case "calcium":
+            self = .calcium
+        case "iron":
+            self = .iron
+        case "magnesium":
+            self = .magnesium
+        case "phosphorous",
+             "phosphorus":
+            self = .phosphorus
+        case "potassium":
+            self = .potassium
+        case "sodium":
+            self = .sodium
+        case "zinc":
+            self = .zinc
+        case "copper":
+            self = .copper
+        case "manganese":
+            self = .manganese
+        case "selenium":
+            self = .selenium
+        case "iodide",
+             "iodine":
+            self = .iodine
+        case "salt":
+            self = .salt
+
+        default:
+            return nil
         }
     }
 }

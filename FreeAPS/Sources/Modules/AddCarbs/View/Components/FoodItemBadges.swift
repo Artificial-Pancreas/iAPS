@@ -278,3 +278,77 @@ struct PortionSizeBadge: View {
         .cornerRadius(8)
     }
 }
+
+extension MicroNutrient {
+    var isVitamin: Bool {
+        coreDataType == "vitamin"
+    }
+
+    var badgeColor: Color {
+        if isVitamin {
+            return .purple
+        }
+
+        switch self {
+        case .calcium,
+             .magnesium,
+             .potassium,
+             .sodium:
+            return .blue
+        case .copper,
+             .iron,
+             .manganese,
+             .selenium,
+             .zinc:
+            return .green
+        default:
+            return .gray
+        }
+    }
+}
+
+struct MicronutrientBadge: View {
+    let micronutrient: MicronutrientValue
+
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var color: Color {
+        micronutrient.substance.badgeColor
+    }
+
+    private var formattedValue: String {
+        let value = micronutrient.amount
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
+
+        if value < 1 {
+            formatter.maximumFractionDigits = 2
+        } else if value < 10 {
+            formatter.maximumFractionDigits = 1
+        } else {
+            formatter.maximumFractionDigits = 0
+        }
+
+        return formatter.string(from: NSDecimalNumber(decimal: value)) ?? "\(value)"
+    }
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(micronutrient.name)
+                .font(.caption2)
+                .fontWeight(.semibold)
+                .lineLimit(1)
+
+            Text("\(formattedValue) \(micronutrient.unit)")
+                .font(.caption2)
+                .foregroundColor(.secondary)
+                .lineLimit(1)
+        }
+        .foregroundColor(adaptiveNutritionColor(color, colorScheme: colorScheme))
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(color.opacity(colorScheme == .dark ? 0.22 : 0.12))
+        .clipShape(Capsule())
+    }
+}

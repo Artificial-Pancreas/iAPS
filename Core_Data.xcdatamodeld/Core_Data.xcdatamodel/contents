@@ -100,6 +100,14 @@
         <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="protein" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Micronutrient" representedClassName="Micronutrient" syncable="YES">
+        <attribute name="dailyValue" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PresetMicronutrient" inverseName="micronutrients" inverseEntity="PresetMicronutrient"/>
+    </entity>
     <entity name="NotUploaded" representedClassName="NotUploaded" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -172,7 +180,14 @@
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
     </entity>
-    <entity name="Presets" representedClassName="Presets" syncable="YES" codeGenerationType="class">
+    <entity name="PresetMicronutrient" representedClassName="PresetMicronutrient" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="per100" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="micronutrients" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Micronutrient" inverseName="entries" inverseEntity="Micronutrient"/>
+        <relationship name="preset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Presets" inverseName="micronutrients" inverseEntity="Presets"/>
+    </entity>
+    <entity name="Presets" representedClassName="Presets" syncable="YES">
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="dish" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -189,6 +204,7 @@
         <attribute name="standardServingSize" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="sugars" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="tags" optional="YES" attributeType="String"/>
+        <relationship name="micronutrients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PresetMicronutrient" inverseName="preset" inverseEntity="PresetMicronutrient"/>
     </entity>
     <entity name="Profiles" representedClassName="Profiles" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

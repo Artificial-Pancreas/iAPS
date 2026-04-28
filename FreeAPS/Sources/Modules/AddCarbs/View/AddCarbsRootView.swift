@@ -13,6 +13,8 @@ extension AddCarbs {
         @StateObject var state: StateModel
         @StateObject var foodSearchState = FoodSearchStateModel()
 
+        let viewModel = MealViewModel()
+
         @State var dish: String = ""
         @State var isPromptPresented = false
         @State var saved = false
@@ -22,7 +24,13 @@ extension AddCarbs {
         @State private var showAlert = false
         @State private var presentPresets = false
         @State private var string = ""
-        @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
+        @State private var newPreset: (
+            dish: String,
+            carbs: Decimal,
+            fat: Decimal,
+            protein: Decimal,
+            micronutrients: [MicronutrientValue]
+        ) = ("", 0, 0, 0, [])
         // Food Search States
         @State private var showCancelConfirmation = false
 
@@ -133,8 +141,6 @@ extension AddCarbs {
                     foodSearchState.newFoodEntryToEdit = nil
                 }
             )
-            // .presentationDetents([.height(600), .large])
-            // .presentationDragIndicator(.visible)
         }
 
         private var hypoHandler: ((FoodItemDetailed, UIImage?, Date?) -> Void)? {
@@ -297,7 +303,7 @@ extension AddCarbs {
         private func saveAsPreset() {
             foodSearchState.newFoodEntryToEdit = FoodItemDetailed(
                 name: "New",
-                nutrition: FoodNutrition.perServing(
+                nutrition: .perServing(
                     values: [
                         .carbs: state.carbs,
                         .protein: state.protein,
@@ -305,8 +311,10 @@ extension AddCarbs {
                     ],
                     servingsMultiplier: 1.0
                 ),
+                micronutrients: state.micronutrients,
                 source: .manual
             )
+
             foodSearchState.showNewSavedFoodEntry = true
             saved.toggle()
         }
@@ -549,7 +557,7 @@ extension AddCarbs {
                         Text("Saved Food")
                         Button {
                             state.presetToEdit = Presets(context: moc)
-                            newPreset = (NSLocalizedString("New", comment: ""), 0, 0, 0)
+                            newPreset = (NSLocalizedString("New", comment: ""), 0, 0, 0, [])
                             state.edit = true
                         } label: { Image(systemName: "plus").font(.system(size: 22)) }
                             .buttonStyle(.borderless).frame(maxWidth: .infinity, alignment: .trailing)
@@ -625,19 +633,51 @@ extension AddCarbs {
                 preset.carbs = newPreset.carbs as NSDecimalNumber
                 preset.fat = newPreset.fat as NSDecimalNumber
                 preset.protein = newPreset.protein as NSDecimalNumber
+
+                try? preset.replaceMicronutrients(
+                    with: newPreset.micronutrients.map {
+                        (
+                            name: $0.substance.coreDataName,
+                            type: $0.substance.coreDataType,
+                            unit: $0.substance.unit,
+                            amount: $0.amount,
+                            per100: false
+                        )
+                    },
+                    context: moc
+                )
+
             } else if !disabled {
                 let preset = Presets(context: moc)
+                preset.foodID = UUID()
                 preset.carbs = newPreset.carbs as NSDecimalNumber
                 preset.fat = newPreset.fat as NSDecimalNumber
                 preset.protein = newPreset.protein as NSDecimalNumber
                 preset.dish = newPreset.dish
+                preset.per100 = false
+
+                try? preset.replaceMicronutrients(
+                    with: newPreset.micronutrients.map {
+                        (
+                            name: $0.substance.coreDataName,
+                            type: $0.substance.coreDataType,
+                            unit: $0.substance.unit,
+                            amount: $0.amount,
+                            per100: false
+                        )
+                    },
+                    context: moc
+                )
             }
 
             if moc.hasChanges {
                 do {
                     try moc.save()
-                } catch { debug(.apsManager, "Failed to save \(moc.updatedObjects)") }
+                } catch {
+                    debug(.apsManager, "Failed to save \(moc.updatedObjects)")
+                }
             }
+
             state.edit = false
             isPromptPresented.toggle()
         }
@@ -647,6 +687,7 @@ extension AddCarbs {
             newPreset.carbs = (state.presetToEdit?.carbs ?? 0) as Decimal
             newPreset.fat = (state.presetToEdit?.fat ?? 0) as Decimal
             newPreset.protein = (state.presetToEdit?.protein ?? 0) as Decimal
+            newPreset.micronutrients = state.presetToEdit?.micronutrientValuesTyped() ?? []
         }
 
         private func addfromCarbsView() {
@@ -654,8 +695,10 @@ extension AddCarbs {
                 NSLocalizedString("New", comment: ""),
                 state.carbs.rounded(to: 1),
                 state.fat.rounded(to: 1),
-                state.protein.rounded(to: 1)
+                state.protein.rounded(to: 1),
+                state.micronutrients ?? []
             )
+
             state.edit = true
         }
 
@@ -665,8 +708,11 @@ extension AddCarbs {
         }
 
         private var disabled: Bool {
-            (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
-                (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
+            let isDefaultName = newPreset.dish == NSLocalizedString("New", comment: "")
+            let hasNoMacros = newPreset.carbs + newPreset.fat + newPreset.protein <= 0
+            let hasNoMicros = newPreset.micronutrients.isEmpty
+
+            return newPreset.dish.isEmpty || (isDefaultName && hasNoMacros && hasNoMicros)
         }
 
         /// Determines if the view should prevent interactive dismissal (swipe down)

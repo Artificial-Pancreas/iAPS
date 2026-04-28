@@ -27,6 +27,8 @@ extension AddCarbs {
         @Published var edit = false
         @Published var ai = false
 
+        @Published var micronutrients: [MicronutrientValue] = []
+
         @Published var combinedPresets: [(preset: Presets?, portions: Double)] = []
 
         let now = Date.now
@@ -118,6 +120,11 @@ extension AddCarbs {
                 carbs -= ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
                 fat -= ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
                 protein -= ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+
+                if let presetMicros = selection?.micronutrientValuesTyped() {
+                    mergeMicronutrients(presetMicros, multiplier: -1)
+                }
+
                 try? coredataContext.delete(selection!)
                 try? coredataContext.save()
             }
@@ -208,17 +215,27 @@ extension AddCarbs {
             let presetCarbs = ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
             if carbs != 0, carbs - presetCarbs >= 0 {
                 carbs -= presetCarbs * 0.5
-            } else { carbs = 0 }
+            } else {
+                carbs = 0
+            }
 
             let presetFat = ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
             if fat != 0, presetFat >= 0 {
                 fat -= presetFat * 0.5
-            } else { fat = 0 }
+            } else {
+                fat = 0
+            }
 
             let presetProtein = ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
             if protein != 0, presetProtein >= 0 {
                 protein -= presetProtein * 0.5
-            } else { protein = 0 }
+            } else {
+                protein = 0
+            }
+
+            if let presetMicros = selection?.micronutrientValuesTyped() {
+                mergeMicronutrients(presetMicros, multiplier: -0.5)
+            }
 
             removePresetFromNewMeal()
         }
@@ -227,6 +244,11 @@ extension AddCarbs {
             carbs += (((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal * 0.5)
             fat += (((selection?.fat ?? 0) as NSDecimalNumber) as Decimal * 0.5)
             protein += (((selection?.protein ?? 0) as NSDecimalNumber) as Decimal * 0.5)
+
+            if let presetMicros = selection?.micronutrientValuesTyped() {
+                mergeMicronutrients(presetMicros, multiplier: 0.5)
+            }
+
             addPresetToNewMeal(half: true)
         }
 
@@ -234,6 +256,11 @@ extension AddCarbs {
             carbs += ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
             fat += ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
             protein += ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+
+            if let presetMicros = selection?.micronutrientValuesTyped() {
+                mergeMicronutrients(presetMicros, multiplier: 1)
+            }
+
             addPresetToNewMeal()
         }
 
@@ -294,6 +321,51 @@ extension AddCarbs {
             } else {
                 os.activatePreset(profileID)
             }
+        }
+
+        private func mergeMicronutrients(
+            _ values: [MicronutrientValue],
+            multiplier: Decimal
+        ) {
+            var dict: [MicroNutrient: MicronutrientValue] = Dictionary(
+                uniqueKeysWithValues: micronutrients.map { ($0.substance, $0) }
+            )
+
+            for value in values {
+                let adjustedAmount = value.amount * multiplier
+                let adjustedPer100 = value.amountPer100 * multiplier
+
+                if let existing = dict[value.substance] {
+                    let newAmount = max(0, existing.amount + adjustedAmount)
+                    let newPer100 = max(0, existing.amountPer100 + adjustedPer100)
+
+                    dict[value.substance] = MicronutrientValue(
+                        substance: value.substance,
+                        amount: newAmount,
+                        amountPer100: newPer100
+                    )
+                } else if adjustedAmount > 0 || adjustedPer100 > 0 {
+                    dict[value.substance] = MicronutrientValue(
+                        substance: value.substance,
+                        amount: adjustedAmount,
+                        amountPer100: adjustedPer100
+                    )
+                }
+            }
+
+            micronutrients = dict.values
+                .filter { $0.amount > 0 || $0.amountPer100 > 0 }
+                .sorted { $0.name < $1.name }
+        }
+
+        var aggregatedMicronutrients: [MicroNutrient: Decimal] {
+            var result: [MicroNutrient: Decimal] = [:]
+
+            for value in micronutrients {
+                result[value.substance, default: 0] += value.amount
+            }
+
+            return result
         }
     }
 }

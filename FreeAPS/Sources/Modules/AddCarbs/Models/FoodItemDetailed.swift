@@ -12,6 +12,56 @@ enum NutrientType: String, Equatable, Identifiable, CaseIterable {
 
 typealias NutritionValues = [NutrientType: Decimal]
 
+struct AggregatedNutrition {
+    let macros: NutritionValues
+    let micros: [MicroNutrient: Decimal]
+
+    func value(for macro: NutrientType) -> Decimal {
+        macros[macro] ?? 0
+    }
+
+    func value(for micro: MicroNutrient) -> Decimal {
+        micros[micro] ?? 0
+    }
+}
+
+extension AggregatedNutrition {
+    var macroDisplay: [DisplayNutrient] {
+        NutrientType.allCases.compactMap { type in
+            guard let value = macros[type], value > 0 || type.isPrimary else { return nil }
+
+            return DisplayNutrient(
+                name: type.localizedLabel,
+                value: value,
+                unit: "g",
+                isPrimary: type.isPrimary
+            )
+        }
+    }
+
+    var microDisplay: [DisplayNutrient] {
+        micros
+            .filter { $0.value > 0 }
+            .sorted { $0.key.displayName < $1.key.displayName }
+            .map { key, value in
+                DisplayNutrient(
+                    name: key.displayName,
+                    value: value,
+                    unit: key.unit,
+                    isPrimary: false
+                )
+            }
+    }
+}
+
+struct DisplayNutrient: Identifiable {
+    let id = UUID()
+    let name: String
+    let value: Decimal
+    let unit: String
+    let isPrimary: Bool
+}
+
 enum MealUnits: String, Codable {
     case grams
     case milliliters
@@ -159,6 +209,8 @@ struct FoodItemDetailed: Identifiable, Equatable {
 
     let nutrition: FoodNutrition
 
+    let micronutrients: [MicronutrientValue]
+
     let assessmentNotes: String?
 
     let imageURL: String?
@@ -182,6 +234,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
             lhs.glycemicIndex == rhs.glycemicIndex &&
             lhs.standardName == rhs.standardName &&
             lhs.nutrition == rhs.nutrition &&
+            lhs.micronutrients == rhs.micronutrients &&
             lhs.assessmentNotes == rhs.assessmentNotes &&
             lhs.imageURL == rhs.imageURL &&
             lhs.tags == rhs.tags &&
@@ -193,6 +246,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
         id: UUID? = nil,
         name: String,
         nutrition: FoodNutrition,
+        micronutrients: [MicronutrientValue] = [],
         confidence: ConfidenceLevel? = nil,
         brand: String? = nil,
         standardServing: String? = nil,
@@ -220,6 +274,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
         self.visualCues = visualCues
         self.glycemicIndex = glycemicIndex
         self.nutrition = nutrition
+        self.micronutrients = micronutrients
         self.assessmentNotes = assessmentNotes
         self.imageURL = imageURL
         self.tags = tags
@@ -253,6 +308,7 @@ extension FoodItemDetailed {
         id: UUID? = nil,
         name: String? = nil,
         nutrition: FoodNutrition? = nil,
+        micronutrients: [MicronutrientValue]? = nil,
         confidence: ConfidenceLevel?? = nil,
         brand: String?? = nil,
         standardServing: String?? = nil,
@@ -272,6 +328,7 @@ extension FoodItemDetailed {
             id: id ?? self.id,
             name: name ?? self.name,
             nutrition: nutrition ?? self.nutrition,
+            micronutrients: micronutrients ?? self.micronutrients,
             confidence: confidence ?? self.confidence,
             brand: brand ?? self.brand,
             standardServing: standardServing ?? self.standardServing,
@@ -341,4 +398,66 @@ extension FoodItemDetailed {
             nutrition: newNutrition
         )
     }
+
+    func micronutrientInThisPortion(_ nutrient: MicroNutrient) -> Decimal? {
+        guard let value = micronutrients.first(where: { $0.substance == nutrient }) else {
+            return nil
+        }
+
+        switch nutrition {
+        case let .per100(_, portion):
+            return value.amountPer100 / 100 * portion
+
+        case let .perServing(_, multiplier):
+            return value.amount * multiplier
+        }
+    }
+
+    func micronutrientInPortionOrServings(
+        _ nutrient: MicroNutrient,
+        portionOrMultiplier: Decimal
+    ) -> Decimal? {
+        guard let value = micronutrients.first(where: { $0.substance == nutrient }) else {
+            return nil
+        }
+
+        switch nutrition {
+        case .per100:
+            return value.amountPer100 / 100 * portionOrMultiplier
+
+        case .perServing:
+            return value.amount * portionOrMultiplier
+        }
+    }
+
+    var micronutrientTotals: [MicroNutrient: Decimal] {
+        Dictionary(
+            uniqueKeysWithValues: micronutrients.map {
+                ($0.substance, micronutrientInThisPortion($0.substance) ?? 0)
+            }
+        )
+    }
+
+    /*
+     func micronutrient(_ nutrient: MicroNutrient) -> Decimal? {
+         micronutrients?[nutrient]
+     }
+
+     var micronutrientList: [MicronutrientValue] {
+         (micronutrients ?? [:]).map {
+             MicronutrientValue(
+                 substance: $0.key,
+                 amount: $0.value,
+                 amountPer100: $0.value
+             )
+         }
+         .sorted { $0.name < $1.name }
+     }*/
 }
+
+/*
+ struct FullNutrition {
+     let macros: FoodNutrition
+     let micros: [MicroNutrient: Decimal]
+ }
+ */
