@@ -124,8 +124,8 @@ struct LiveActivityBanner: View {
                     .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
                     .padding(.trailing, 2)
                 updatedLabel
-                    .font(.system(size: 11))
-                    .foregroundStyle(.white.opacity(0.6))
+                    .font(.system(size: 13))
+                    .foregroundStyle(.white.opacity(0.7))
                 Spacer()
                 HStack(spacing: 3) {
                     Text(eventualSymbol)
