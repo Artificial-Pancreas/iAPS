@@ -2821,7 +2821,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "DQT il y a 3 jours";
 
 /* COB View */
-"Carbohydrates on Board" = "Carbohydrates on Board";
+"Meals on Board" = "Meals on Board";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Display COB Chart";
@@ -3773,7 +3773,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Mode clair/sombre";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+"Neglect Meals in oref0" = "Neglect Meals in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Hide Predictions";

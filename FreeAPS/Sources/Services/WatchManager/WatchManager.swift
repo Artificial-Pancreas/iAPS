@@ -77,7 +77,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.eventualGlucose = Decimal(self.suggestion?.eventualBG ?? 0)
 
-            let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+            let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
             let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
             self.state.trend = glucoseValues.trend

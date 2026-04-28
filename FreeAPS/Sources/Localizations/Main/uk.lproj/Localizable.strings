@@ -2823,7 +2823,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "TDD 3 дні тому";
 
 /* COB View */
-"Carbohydrates on Board" = "Вуглеводи на борту";
+"Meals on Board" = "Вуглеводи на борту";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Відображення діаграми COB";
@@ -3776,7 +3776,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Світло/Темний Режим";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Не враховуйте вуглеводи в oref0";
+"Neglect Meals in oref0" = "Не враховуйте вуглеводи в oref0";
 
 /* Debug option */
 "Hide Predictions" = "Приховати передбачення";

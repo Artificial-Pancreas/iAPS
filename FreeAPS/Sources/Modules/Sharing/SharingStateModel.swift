@@ -25,32 +25,6 @@ extension Sharing {
         private func getIdentifier() -> String {
             keychain.getIdentifier()
         }
-
-        func savedSettings() {
-            switch sexSetting {
-            case 0:
-                sex = .woman
-            case 1:
-                sex = .man
-            case 2:
-                sex = .other
-            default:
-                sex = .secret
-            }
-        }
-
-        func saveSetting() {
-            switch sex {
-            case .woman:
-                sexSetting = 0
-            case .man:
-                sexSetting = 1
-            case .other:
-                sexSetting = 2
-            case .secret:
-                sexSetting = 3
-            }
-        }
     }
 }
 

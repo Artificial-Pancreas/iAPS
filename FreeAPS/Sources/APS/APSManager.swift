@@ -683,7 +683,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
 
-            carbsStorage.storeCarbs([CarbsEntry(
+            let item = [CarbsEntry(
                 id: UUID().uuidString,
                 createdAt: date,
                 actualDate: date,
@@ -693,7 +693,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 note: "Remote",
                 enteredBy: "Nightscout operator",
                 isFPU: false
-            )])
+            )]
+
+            CoreDataStorage().saveMeal(item, now: date, savedToFile: true)
+            carbsStorage.storeCarbs(item)
 
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(
@@ -1059,12 +1062,12 @@ final class BaseAPSManager: APSManager, Injectable {
             let preferences = settingsManager.preferences
 
             // Carbs
-            let carbs = CoreDataStorage().fetcarbs(interval: DateFilter().day)
+            let carbs = CoreDataStorage().fetchMealData(interval: DateFilter.day.startDate)
             var carbTotal: Decimal = 0
             carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
 
             // TDD
-            let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().fourteen)
+            let tdds = CoreDataStorage().fetchTDD(interval: DateFilter.fourteenDays.startDate)
             var currentTDD: Decimal = 0
             var tddTotalAverage: Decimal = 0
             if !tdds.isEmpty {
@@ -1108,10 +1111,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 iPa = 50
             }
             // CGM Readings
-            let glucose_24 = CoreDataStorage().fetchGlucose(interval: DateFilter().day) // Day
-            let glucose_7 = CoreDataStorage().fetchGlucose(interval: DateFilter().week) // Week
-            let glucose_30 = CoreDataStorage().fetchGlucose(interval: DateFilter().month) // Month
-            let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter().total) // Total
+            let glucose_24 = CoreDataStorage().fetchGlucose(interval: DateFilter.day.startDate) // Day
+            let glucose_7 = CoreDataStorage().fetchGlucose(interval: DateFilter.week.startDate) // Week
+            let glucose_30 = CoreDataStorage().fetchGlucose(interval: DateFilter.month.startDate) // Month
+            let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter.total.startDate) // Total
 
             // First date
             let previous = glucose.last?.date ?? Date()

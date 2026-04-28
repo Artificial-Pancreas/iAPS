@@ -51,7 +51,7 @@ extension Dynamic {
         }
 
         var reasons: [Reasons] {
-            CoreDataStorage().fetchReasons(interval: DateFilter().month)
+            CoreDataStorage().fetchReasons(interval: DateFilter.month.startDate)
         }
 
         private var sameUnit: Bool {

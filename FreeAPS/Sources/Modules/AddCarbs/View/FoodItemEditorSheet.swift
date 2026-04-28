@@ -13,6 +13,7 @@ struct FoodItemEditorSheet: View {
     @State private var servingSizeUnit: MealUnits = .grams
     @State private var editedName: String = ""
     @State private var nutrientValues: [NutrientType: Decimal] = [:]
+    @State private var micronutrientValues: [MicroNutrient: Decimal] = [:]
     @State private var servingSize: Decimal? = nil
     @State private var editedTags: Set<String> = []
     @State private var showingAddNewTag = false
@@ -25,17 +26,21 @@ struct FoodItemEditorSheet: View {
 
         var nutritionType: NutritionEntryType {
             switch self {
-            case .perServing: return .perServing
+            case .perServing:
+                return .perServing
             case .per100g,
-                 .per100ml: return .per100
+                 .per100ml:
+                return .per100
             }
         }
 
         var unit: MealUnits {
             switch self {
             case .per100g,
-                 .perServing: return .grams
-            case .per100ml: return .milliliters
+                 .perServing:
+                return .grams
+            case .per100ml:
+                return .milliliters
             }
         }
     }
@@ -45,16 +50,14 @@ struct FoodItemEditorSheet: View {
         case per100
     }
 
-    private var nutritionType: NutritionEntryType {
-        nutritionMode.nutritionType
-    }
-
     private var selectedUnit: MealUnits {
         nutritionMode == .perServing ? servingSizeUnit : nutritionMode.unit
     }
 
     private var canSave: Bool {
-        NutrientType.allCases.filter { $0.isPrimary }.allSatisfy { (nutrientValues[$0] ?? 0) >= 0 }
+        NutrientType.allCases
+            .filter { $0.isPrimary }
+            .allSatisfy { (nutrientValues[$0] ?? 0) >= 0 }
     }
 
     init(
@@ -82,10 +85,26 @@ struct FoodItemEditorSheet: View {
                 _nutritionMode = State(initialValue: mode)
                 _nutrientValues = State(initialValue: values)
 
+                _micronutrientValues = State(
+                    initialValue: Dictionary(
+                        uniqueKeysWithValues: item.micronutrient.map {
+                            ($0.substance, $0.amountPer100)
+                        }
+                    )
+                )
+
             case let .perServing(values, _):
                 _nutritionMode = State(initialValue: .perServing)
                 _servingSizeUnit = State(initialValue: item.units ?? .grams)
                 _nutrientValues = State(initialValue: values)
+
+                _micronutrientValues = State(
+                    initialValue: Dictionary(
+                        uniqueKeysWithValues: item.micronutrient.map {
+                            ($0.substance, $0.amount)
+                        }
+                    )
+                )
             }
 
             if let servingSize = item.standardServingSize, servingSize > 0 {
@@ -154,7 +173,7 @@ struct FoodItemEditorSheet: View {
                         .cornerRadius(4)
 
                         if showTagsAndFavorite {
-                            Button(action: {
+                            Button {
                                 withAnimation(.easeInOut(duration: 0.2)) {
                                     if editedTags.contains(FoodTags.favorites) {
                                         editedTags.remove(FoodTags.favorites)
@@ -162,7 +181,7 @@ struct FoodItemEditorSheet: View {
                                         editedTags.insert(FoodTags.favorites)
                                     }
                                 }
-                            }) {
+                            } label: {
                                 Image(systemName: editedTags.contains(FoodTags.favorites) ? "star.fill" : "star")
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(editedTags.contains(FoodTags.favorites) ? .white : .orange)
@@ -171,16 +190,18 @@ struct FoodItemEditorSheet: View {
                                     .background(
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                                             .fill(
-                                                editedTags.contains(FoodTags.favorites) ? Color.orange.opacity(0.75) : Color
-                                                    .orange.opacity(0.08)
+                                                editedTags.contains(FoodTags.favorites)
+                                                    ? Color.orange.opacity(0.75)
+                                                    : Color.orange.opacity(0.08)
                                             )
                                     )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                                             .strokeBorder(
-                                                editedTags.contains(FoodTags.favorites) ? Color.clear : Color.orange
-                                                    .opacity(0.35),
-                                                lineWidth: 1.0
+                                                editedTags.contains(FoodTags.favorites)
+                                                    ? Color.clear
+                                                    : Color.orange.opacity(0.35),
+                                                lineWidth: 1
                                             )
                                     )
                             }
@@ -210,6 +231,7 @@ struct FoodItemEditorSheet: View {
                     nutritionMode: $nutritionMode,
                     servingSizeUnit: $servingSizeUnit,
                     nutrientValues: $nutrientValues,
+                    micronutrientValues: $micronutrientValues,
                     servingSize: $servingSize
                 )
 
@@ -255,9 +277,11 @@ struct FoodItemEditorSheet: View {
         .alert("Add New Tag", isPresented: $showingAddNewTag) {
             TextField("Tag name", text: $newTagText)
                 .autocapitalization(.none)
+
             Button("Cancel", role: .cancel) {
                 newTagText = ""
             }
+
             Button("Add") {
                 let trimmed = newTagText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
                 if !trimmed.isEmpty, trimmed != FoodTags.favorites {
@@ -275,29 +299,44 @@ struct FoodItemEditorSheet: View {
 
         switch (oldMode.nutritionType, newMode.nutritionType) {
         case (.per100, .perServing):
-            if let servingSize = servingSize, servingSize > 0 {
+            if let servingSize, servingSize > 0 {
                 let scaleFactor = servingSize / 100
+
                 for nutrient in NutrientType.allCases {
                     if let value = nutrientValues[nutrient] {
                         nutrientValues[nutrient] = round(value * scaleFactor, to: 1)
                     }
                 }
+
+                for micro in MicroNutrient.allCases {
+                    if let value = micronutrientValues[micro] {
+                        micronutrientValues[micro] = round(value * scaleFactor, to: 3)
+                    }
+                }
             }
+
             switch oldMode {
             case .per100g:
                 servingSizeUnit = .grams
             case .per100ml:
                 servingSizeUnit = .milliliters
             default:
-                servingSizeUnit = servingSizeUnit // NOOP
+                break
             }
 
         case (.perServing, .per100):
-            if let servingSize = servingSize, servingSize > 0 {
+            if let servingSize, servingSize > 0 {
                 let scaleFactor = 100 / servingSize
+
                 for nutrient in NutrientType.allCases {
                     if let value = nutrientValues[nutrient] {
                         nutrientValues[nutrient] = round(value * scaleFactor, to: 1)
+                    }
+                }
+
+                for micro in MicroNutrient.allCases {
+                    if let value = micronutrientValues[micro] {
+                        micronutrientValues[micro] = round(value * scaleFactor, to: 3)
                     }
                 }
             }
@@ -315,10 +354,12 @@ struct FoodItemEditorSheet: View {
     }
 
     private func saveFoodItem() {
-        let finalName = editedName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?
-            autoGeneratedName() : editedName
+        let finalName = editedName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? autoGeneratedName()
+            : editedName
 
         var nutrientValuesCopy: [NutrientType: Decimal] = [:]
+
         for nutrient in NutrientType.allCases {
             if let value = nutrientValues[nutrient] {
                 nutrientValuesCopy[nutrient] = value
@@ -334,25 +375,57 @@ struct FoodItemEditorSheet: View {
 
         let tagsArray: [String]? = {
             guard !editedTags.isEmpty else { return nil }
+
             var result = Array(editedTags)
             result.sort { tag1, tag2 in
                 if tag1 == FoodTags.favorites { return true }
                 if tag2 == FoodTags.favorites { return false }
                 return tag1 < tag2
             }
+
             return result
         }()
 
         let nutrition: FoodNutrition = switch nutritionMode.nutritionType {
-        case .per100: .per100(values: nutrientValuesCopy, portionSize: standardServingSize ?? 100)
-        case .perServing: .perServing(values: nutrientValuesCopy, servingsMultiplier: 1)
+        case .per100:
+            .per100(values: nutrientValuesCopy, portionSize: standardServingSize ?? 100)
+
+        case .perServing:
+            .perServing(values: nutrientValuesCopy, servingsMultiplier: 1)
         }
 
+        let finalMicronutrients: [MicronutrientValue] = micronutrientValues
+            .filter { $0.value > 0 }
+            .map { nutrient, amount in
+                let amountPer100: Decimal
+
+                switch nutritionMode.nutritionType {
+                case .per100:
+                    amountPer100 = amount
+
+                case .perServing:
+                    if let standardServingSize, standardServingSize > 0 {
+                        amountPer100 = amount / standardServingSize * 100
+                    } else {
+                        amountPer100 = amount
+                    }
+                }
+
+                return MicronutrientValue(
+                    substance: nutrient,
+                    amount: amount,
+                    amountPer100: amountPer100
+                )
+            }
+            .sorted { $0.name < $1.name }
+
         let foodItem: FoodItemDetailed
-        if let existingItem = existingItem {
+
+        if let existingItem {
             foodItem = existingItem.copy(
                 name: finalName,
                 nutrition: nutrition,
+                micronutrient: finalMicronutrients,
                 standardServingSize: standardServingSize,
                 units: selectedUnit,
                 tags: tagsArray
@@ -361,6 +434,7 @@ struct FoodItemEditorSheet: View {
             foodItem = FoodItemDetailed(
                 name: finalName,
                 nutrition: nutrition,
+                micronutrient: finalMicronutrients,
                 standardServingSize: standardServingSize,
                 units: selectedUnit,
                 tags: tagsArray,
@@ -376,6 +450,7 @@ private struct FoodItemNutritionEditor: View {
     @Binding var nutritionMode: FoodItemEditorSheet.NutritionEntryMode
     @Binding var servingSizeUnit: MealUnits
     @Binding var nutrientValues: [NutrientType: Decimal]
+    @Binding var micronutrientValues: [MicroNutrient: Decimal]
     @Binding var servingSize: Decimal?
 
     @State private var showAllNutrients: Bool = false
@@ -384,61 +459,34 @@ private struct FoodItemNutritionEditor: View {
         nutritionMode: Binding<FoodItemEditorSheet.NutritionEntryMode>,
         servingSizeUnit: Binding<MealUnits>,
         nutrientValues: Binding<[NutrientType: Decimal]>,
+        micronutrientValues: Binding<[MicroNutrient: Decimal]>,
         servingSize: Binding<Decimal?>
     ) {
         _nutritionMode = nutritionMode
         _servingSizeUnit = servingSizeUnit
         _nutrientValues = nutrientValues
+        _micronutrientValues = micronutrientValues
         _servingSize = servingSize
 
         let hasOptionalNutrients = NutrientType.allCases.contains {
             !$0.isPrimary && (nutrientValues.wrappedValue[$0] ?? 0) > 0
         }
-        _showAllNutrients = State(initialValue: hasOptionalNutrients)
-    }
 
-    private var unit: String {
-        nutritionMode == .perServing ? "serving" : nutritionMode.unit.dimension.symbol
+        let hasMicronutrients = MicroNutrient.allCases.contains {
+            (micronutrientValues.wrappedValue[$0] ?? 0) > 0
+        }
+
+        _showAllNutrients = State(initialValue: hasOptionalNutrients || hasMicronutrients)
     }
 
     private var nutritionType: FoodItemEditorSheet.NutritionEntryType {
         nutritionMode.nutritionType
     }
 
-    private var sliderRange: ClosedRange<Double> {
-        switch nutritionType {
-        case .per100: return 10.0 ... 600.0
-        case .perServing: return 0.25 ... 10.0
-        }
-    }
-
-    private var sliderStep: Double.Stride {
-        switch nutritionType {
-        case .per100: return 5.0
-        case .perServing: return 0.25
-        }
-    }
-
-    private var sliderMinLabel: String {
-        switch nutritionType {
-        case .per100: return "10 \(nutritionMode.unit.dimension.symbol)"
-        case .perServing: return "0.25×"
-        }
-    }
-
-    private var sliderMaxLabel: String {
-        switch nutritionType {
-        case .per100: return "600 \(nutritionMode.unit.dimension.symbol)"
-        case .perServing: return "10×"
-        }
-    }
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // Nutrition Table
                 VStack(spacing: 8) {
-                    // Primary nutrients (always visible)
                     ForEach(NutrientType.allCases.filter { $0.isPrimary }) { nutrient in
                         FoodItemNutritionRow(
                             localizedLabel: nutrient.localizedLabel,
@@ -454,6 +502,7 @@ private struct FoodItemNutritionEditor: View {
                             ),
                             unit: nutrient.unit
                         )
+
                         Divider()
                     }
 
@@ -461,34 +510,69 @@ private struct FoodItemNutritionEditor: View {
                         baseCalories: nutrientValues.calories
                     )
 
-                    // Secondary nutrients (shown when expanded)
+                    // Fiber, Sugar, Vitamins and minerals
                     if showAllNutrients {
                         ForEach(NutrientType.allCases.filter { !$0.isPrimary }) { nutrient in
                             Divider()
+
                             FoodItemNutritionRow(
                                 localizedLabel: nutrient.localizedLabel,
                                 value: Binding(
                                     get: { nutrientValues[nutrient] ?? 0 },
-                                    set: { nutrientValues[nutrient] = $0 }
+                                    set: { updated in
+                                        if let updated, updated > 0 {
+                                            nutrientValues[nutrient] = updated
+                                        } else {
+                                            nutrientValues.removeValue(forKey: nutrient)
+                                        }
+                                    }
                                 ),
                                 unit: nutrient.unit
                             )
                         }
 
                         Divider()
+
+                        Text("Micronutrients")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 12)
+                            .padding(.top, 8)
+
+                        ForEach(MicroNutrient.allCases) { micronutrient in
+                            Divider()
+
+                            FoodItemNutritionRow(
+                                localizedLabel: micronutrient.displayName,
+                                value: Binding(
+                                    get: { micronutrientValues[micronutrient] ?? 0 },
+                                    set: { updated in
+                                        if let updated, updated > 0 {
+                                            micronutrientValues[micronutrient] = updated
+                                        } else {
+                                            micronutrientValues.removeValue(forKey: micronutrient)
+                                        }
+                                    }
+                                ),
+                                unit: micronutrient.dimension
+                            )
+                        }
+
+                        Divider()
                     }
 
-                    // Button to reveal optional nutrients
                     if !showAllNutrients {
-                        Button(action: {
+                        Button {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 showAllNutrients = true
                             }
-                        }) {
+                        } label: {
                             HStack {
                                 Image(systemName: "chevron.down")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
+
                                 Text("Show All Nutrients")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
@@ -496,7 +580,7 @@ private struct FoodItemNutritionEditor: View {
                             .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(.plain)
                     }
 
                     FoodItemServingSizeRow(
@@ -528,7 +612,7 @@ private struct FoodItemNutritionRow: View {
     private static let nutritionValueFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
+        formatter.maximumFractionDigits = 3
         formatter.minimumFractionDigits = 0
         formatter.usesGroupingSeparator = false
         return formatter
@@ -543,7 +627,8 @@ private struct FoodItemNutritionRow: View {
 
             HStack(spacing: 4) {
                 OptionalDecimalTextField(
-                    "0", value: $value,
+                    "0",
+                    value: $value,
                     formatter: Self.nutritionValueFormatter,
                     liveEditing: true
                 )
@@ -574,6 +659,7 @@ private struct FoodItemCaloriesDisplayRow: View {
                 Text(NSLocalizedString("Calories", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.primary.opacity(0.8))
+
                 Image(systemName: "function")
                     .font(.system(size: 11))
                     .foregroundColor(.blue.opacity(0.8))
@@ -584,6 +670,7 @@ private struct FoodItemCaloriesDisplayRow: View {
                 Text("\(Int(truncating: baseCalories as NSNumber))")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
+
                 Text(UnitEnergy.kilocalories.symbol)
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.7))
@@ -614,7 +701,8 @@ private struct FoodItemServingSizeRow: View {
     private var servingSizeField: some View {
         HStack(spacing: 4) {
             OptionalDecimalTextField(
-                "", value: $value,
+                "",
+                value: $value,
                 formatter: Self.servingSizeFormatter,
                 liveEditing: true
             )
@@ -632,18 +720,18 @@ private struct FoodItemServingSizeRow: View {
     }
 
     private var servingSizeFieldLabel: some View {
-        HStack(spacing: 8) {
-            Text("Standard Serving")
-                .font(.subheadline)
-                .foregroundColor(.primary.opacity(0.8))
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
+        Text("Standard Serving")
+            .font(.subheadline)
+            .foregroundColor(.primary.opacity(0.8))
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var unitSelector: some View {
         HStack(spacing: 0) {
             ForEach([MealUnits.grams, MealUnits.milliliters], id: \.self) { option in
-                Button(action: { unit = option }) {
+                Button {
+                    unit = option
+                } label: {
                     Text(option.dimension.symbol)
                         .font(.footnote)
                         .fontWeight(.semibold)
@@ -668,7 +756,7 @@ private struct FoodItemServingSizeRow: View {
 
                 HStack(spacing: 8) {
                     unitSelector
-                    Spacer().frame(maxWidth: .infinity)
+                    Spacer()
                     servingSizeField
                 }
             }

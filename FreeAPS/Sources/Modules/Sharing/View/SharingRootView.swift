@@ -9,6 +9,30 @@ public enum Sex: String, CaseIterable, Identifiable {
     public var id: Self { self }
 }
 
+extension Sex {
+    static func savedSettings(_ sexSetting: Int) -> Sex {
+        switch sexSetting {
+        case 0:
+            return .woman
+        case 1:
+            return .man
+        case 2:
+            return .other
+        default:
+            return .secret
+        }
+    }
+
+    func saveSetting() -> Int {
+        switch self {
+        case .woman: return 0
+        case .man: return 1
+        case .other: return 2
+        case .secret: return 3
+        }
+    }
+}
+
 extension Sharing {
     struct RootView: BaseView {
         let resolver: Resolver
@@ -44,7 +68,7 @@ extension Sharing {
                                 Text(NSLocalizedString(sex.rawValue, comment: "")).tag(Optional(sex.rawValue))
                             }
                         }.onChange(of: state.sex) {
-                            state.saveSetting()
+                            state.sexSetting = state.sex.saveSetting()
                         }
                         HStack {
                             DatePicker("Birth Date", selection: $state.birthDate, in: dateRange, displayedComponents: [.date])
@@ -110,7 +134,7 @@ extension Sharing {
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
-                state.savedSettings()
+                state.sex = Sex.savedSettings(state.sexSetting)
             }
             .navigationBarTitle("Share and Backup")
         }

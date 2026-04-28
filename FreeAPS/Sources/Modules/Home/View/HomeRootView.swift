@@ -21,6 +21,7 @@ extension Home {
         @State var showBolusActiveAlert = false
         @State var displayAutoHistory = false
         @State var displayDynamicHistory = false
+        @State var displayMicronutrients = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
@@ -581,13 +582,14 @@ extension Home {
 
         var mealsView: some View {
             addBackground()
-                .frame(minHeight: 190)
+                .frame(minHeight: frameHeight)
                 .overlay {
-                    MealsSummaryView(data: $state.mealData)
+                    mealsSummaryView
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
+                .dynamicTypeSize(...DynamicTypeSize.medium)
         }
 
         var loopPreview: some View {
@@ -806,6 +808,302 @@ extension Home {
                 }
             }
             .offset(x: 130)
+        }
+
+        private var mealIntervalPicker: some View {
+            HStack(spacing: 10) {
+                ForEach([DateFilter.today, DateFilter.day, DateFilter.week, DateFilter.month]) { interval in
+                    Button {
+                        state.selectedMealInterval = interval
+                        state.setupMeals()
+                    } label: {
+                        Text(NSLocalizedString(interval.title, comment: "Interval"))
+                            .font(.caption.weight(.semibold))
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(
+                                state.selectedMealInterval == interval
+                                    ? Color.secondary
+                                    : Color.gray.opacity(0.15)
+                            )
+                            .foregroundStyle(
+                                state.selectedMealInterval == interval
+                                    ? .white
+                                    : .primary
+                            )
+                            .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+
+        private var mealsSummaryView: some View {
+            VStack {
+                Text("Meals")
+                    .font(.previewHeadline)
+                    .padding(.top, 20)
+                    .padding(.bottom, 15)
+
+                mealIntervalPicker
+                    .padding(.bottom, 10)
+
+                servingsView
+                    .padding(.horizontal, 23)
+
+                caloriesView
+                    .padding(.horizontal, 23)
+
+                nutrientsView
+                    .padding(.horizontal, 23)
+                    .padding(.bottom, savedMicronutrients.isEmpty ? 10 : 0)
+
+                if !savedMicronutrients.isEmpty {
+                    micronutrientToggle
+
+                    if displayMicronutrients {
+                        micronutrientsView
+                            .padding(.horizontal, 23)
+                            .padding(.bottom, 10)
+                    }
+                }
+            }
+            .dynamicTypeSize(...DynamicTypeSize.xLarge)
+        }
+
+        private var micronutrientToggle: some View {
+            Button {
+                displayMicronutrients.toggle()
+            } label: {
+                Label(
+                    micronutrientTitle(),
+                    systemImage: "pills.fill"
+                )
+                .font(.caption.weight(.semibold))
+                .labelStyle(.titleAndIcon)
+                .padding(.vertical, 10)
+                .padding(.leading, 20)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .buttonStyle(.borderless)
+            .foregroundStyle(.blue)
+            .padding(.bottom, !displayMicronutrients ? 20 : 10)
+        }
+
+        private func micronutrientTitle() -> String {
+            let count = state.mealData.micronutrients.count
+            guard count > 1 else {
+                return "\(count) " + NSLocalizedString("Micronutrient", comment: "")
+            }
+            return "\(count) " + NSLocalizedString("Micronutrients", comment: "")
+        }
+
+        /// Currently constant. The Average Day Title
+        private var intervalTitle: String { "Day" }
+
+        private var displayedServings: Decimal {
+            state.mealData.averaged(state.mealData.servings)
+        }
+
+        private var displayedCarbs: Decimal {
+            state.mealData.averaged(state.mealData.carbs)
+        }
+
+        private var displayedFat: Decimal {
+            state.mealData.averaged(state.mealData.fat)
+        }
+
+        private var displayedProtein: Decimal {
+            state.mealData.averaged(state.mealData.protein)
+        }
+
+        private var displayedCalories: Decimal {
+            state.mealData.averaged(state.mealData.kcal)
+        }
+
+        private var savedMicronutrients: [(nutrient: MicroNutrient, amount: Decimal)] {
+            state.mealData.micronutrients
+                .filter { $0.value > 0 }
+                .sorted {
+                    MicronutrientProgress.percentOfRDI(
+                        nutrient: $0.key,
+                        amount: NSDecimalNumber(decimal: $0.value).doubleValue,
+                        age: state.individual.age,
+                        sex: state.individual.sex
+                    ) >
+                        MicronutrientProgress.percentOfRDI(
+                            nutrient: $1.key,
+                            amount: NSDecimalNumber(decimal: $1.value).doubleValue,
+                            age: state.individual.age,
+                            sex: state.individual.sex
+                        )
+                }
+                .map { ($0.key, $0.value) }
+        }
+
+        private var caloriesView: some View {
+            HStack {
+                Text(localizedIntervalTitle("Kilo Calories"))
+                Spacer()
+                Text(
+                    tirFormatter.string(
+                        from: displayedCalories as NSNumber
+                    ) ?? ""
+                )
+            }
+            .foregroundStyle(.secondary)
+        }
+
+        private var servingsView: some View {
+            HStack {
+                Text(localizedIntervalTitle("Servings"))
+                Spacer()
+                Text(
+                    tirFormatter.string(
+                        from: displayedServings as NSNumber
+                    ) ?? ""
+                )
+            }
+            .foregroundStyle(.secondary)
+        }
+
+        private var nutrientsView: some View {
+            VStack {
+                if state.mealData.carbs > 0 {
+                    nutrientRow(
+                        localizedIntervalTitle("Carbs"),
+                        value: displayedCarbs,
+                        unit: "g",
+                        formatter: tirFormatter
+                    )
+                }
+
+                if state.mealData.fat > 0 {
+                    nutrientRow(
+                        localizedIntervalTitle("Fat"),
+                        value: displayedFat,
+                        unit: "g",
+                        formatter: tirFormatter
+                    )
+                }
+
+                if state.mealData.protein > 0 {
+                    nutrientRow(
+                        localizedIntervalTitle("Protein"),
+                        value: displayedProtein,
+                        unit: "g",
+                        formatter: tirFormatter
+                    )
+                }
+            }
+            .foregroundStyle(.secondary)
+        }
+
+        private var micronutrientsView: some View {
+            VStack(spacing: 4) {
+                Divider()
+                    .padding(.bottom, 4)
+
+                ForEach(savedMicronutrients, id: \.nutrient) { item in
+                    let value = state.mealData.averaged(item.amount)
+
+                    micronutrientRow(
+                        item.nutrient.displayName,
+                        value: value,
+                        unit: item.nutrient.unit,
+                        rdi: MicronutrientProgress.percentOfRDI(
+                            nutrient: item.nutrient,
+                            amount: NSDecimalNumber(decimal: value).doubleValue,
+                            age: state.individual.age,
+                            sex: state.individual.sex
+                        ),
+                        formatter: targetFormatter
+                    )
+                }
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+
+        private func localizedIntervalTitle(
+            _ base: String
+        ) -> String {
+            guard state.mealData.isAveraged else {
+                return NSLocalizedString(base, comment: "")
+            }
+
+            return String(
+                format: NSLocalizedString("%@ / %@", comment: "Meal interval title"),
+                NSLocalizedString(base, comment: ""),
+                NSLocalizedString(intervalTitle, comment: "Interval")
+            )
+        }
+
+        private func micronutrientRow(
+            _ title: String,
+            value: Decimal,
+            unit: String,
+            rdi: Double? = nil,
+            formatter: NumberFormatter
+        ) -> some View {
+            HStack {
+                Text(title)
+                    .lineLimit(1)
+                Spacer(minLength: 8)
+
+                if let rdi = rdi {
+                    Text(
+                        (tirFormatter.string(from: NSNumber(value: rdi)) ?? "") + " %"
+                    )
+                    .foregroundStyle(.blue)
+                    .frame(minWidth: 45, alignment: .trailing)
+                }
+
+                Text(
+                    formatter.string(
+                        from: NSDecimalNumber(decimal: value)
+                    ) ?? ""
+                ).frame(minWidth: 45, alignment: .trailing)
+
+                Text(unit)
+                    .frame(minWidth: 28, alignment: .leading)
+            }
+        }
+
+        private func nutrientRow(
+            _ title: String,
+            value: Decimal,
+            unit: String,
+            rdi: Double? = nil,
+            formatter: NumberFormatter
+        ) -> some View {
+            HStack {
+                Text(title)
+                Spacer()
+                if let rdi = rdi {
+                    Text(
+                        (tirFormatter.string(from: NSNumber(value: rdi)) ?? "") + " %"
+                    )
+                    .foregroundStyle(.blue)
+                }
+
+                Text(
+                    formatter.string(
+                        from: NSDecimalNumber(decimal: value)
+                    ) ?? ""
+                )
+
+                Text(unit)
+            }
+        }
+
+        private var frameHeight: CGFloat {
+            CGFloat(
+                260 +
+                    (state.mealData.micronutrients.isEmpty ? 0 : 50) +
+                    (displayMicronutrients ? 1 : 0) *
+                    state.mealData.micronutrients.count * 20
+            )
         }
 
         private func enabled() -> Bool {
