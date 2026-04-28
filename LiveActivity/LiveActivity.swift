@@ -27,18 +27,14 @@ struct LiveActivity: Widget {
     var body: some WidgetConfiguration {
         let config = ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
-            if !context.state.showChart {
-                bannerWithoutChart(for: context)
-            } else {
-                bannerWithChart(for: context)
-            }
+            LiveActivityBannerWrapper(context: context)
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
                     HStack {
-                        loop(context: context, size: 23)
+                        LoopCircle(context: context, compact: false, size: 23)
                     }.padding(10)
                 }
 
@@ -58,13 +54,14 @@ struct LiveActivity: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    updatedLabel(context: context).font(.caption)
+                    TimestampLabel(context: context)
+                        .font(.caption)
                         .padding(.trailing, 10)
                 }
                 DynamicIslandExpandedRegion(.bottom) {}
             } compactLeading: {
                 HStack {
-                    loop(context: context, size: 12)
+                    LoopCircle(context: context, compact: true, size: 12)
                     bgAndTrend(context: context, size: .compact).0.padding(.leading, 4)
                 }
             } compactTrailing: {
@@ -106,11 +103,6 @@ struct LiveActivity: Widget {
         } else {
             Text("--")
         }
-    }
-
-    private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        let text = Text("\(dateFormatter.string(from: context.state.loopDate))")
-        return text
     }
 
     private func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, size: LiveActivitySize) -> (some View, Int) {
@@ -185,46 +177,11 @@ struct LiveActivity: Widget {
         }
         .foregroundStyle(.loopYellow)
     }
-
-    private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
-        let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
-        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
-        return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
-    }
-
-    private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        LiveActivityChartWrapper(context: context)
-    }
-
-    private func bannerWithoutChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        LiveActivityBannerWrapper(context: context)
-    }
 }
 
 extension Color {
     static let uam = Color("UAM")
     static let zt = Color("ZT")
-}
-
-private struct LiveActivityChartWrapper: View {
-    let context: ActivityViewContext<LiveActivityAttributes>
-
-    var body: some View {
-        if #available(iOS 18.0, *) {
-            LiveActivityChartWrapperIOS18(context: context)
-        } else {
-            LiveActivityChart(context: context, isWatch: false)
-        }
-    }
-}
-
-@available(iOS 18.0, *) private struct LiveActivityChartWrapperIOS18: View {
-    @Environment(\.activityFamily) private var activityFamily
-    let context: ActivityViewContext<LiveActivityAttributes>
-
-    var body: some View {
-        LiveActivityChart(context: context, isWatch: activityFamily == .small)
-    }
 }
 
 private struct LiveActivityBannerWrapper: View {
@@ -234,7 +191,11 @@ private struct LiveActivityBannerWrapper: View {
         if #available(iOS 18.0, *) {
             LiveActivityBannerWrapperIOS18(context: context)
         } else {
-            LiveActivityBanner(context: context, isWatch: false)
+            if context.state.showChart {
+                LiveActivityChart(context: context, isWatch: false)
+            } else {
+                LiveActivityBanner(context: context, isWatch: false)
+            }
         }
     }
 }
@@ -244,17 +205,91 @@ private struct LiveActivityBannerWrapper: View {
     let context: ActivityViewContext<LiveActivityAttributes>
 
     var body: some View {
-        LiveActivityBanner(context: context, isWatch: activityFamily == .small)
+        if context.state.showChart {
+            LiveActivityChart(context: context, isWatch: activityFamily == .small)
+        } else {
+            LiveActivityBanner(context: context, isWatch: activityFamily == .small)
+        }
     }
 }
 
-struct LoopActivity: View {
+struct LoopCircle: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
     @Environment(\.colorScheme) var colorScheme
-    let stroke: Color
     let compact: Bool
+    let size: CGFloat
+
     var body: some View {
+        let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
+        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
+
         Circle()
-            .stroke(stroke, lineWidth: compact ? 1.5 : 3)
+            .stroke(color, lineWidth: compact ? 1.5 : 3)
+            .frame(width: size)
+    }
+}
+
+struct BannerLoopCircle: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+    let size: CGFloat
+
+    var body: some View {
+        LoopCircle(context: context, compact: false, size: size)
+    }
+}
+
+struct TimestampLabel: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    private static let dateFormatter: DateFormatter = {
+        var formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
+    var body: some View {
+        Text("\(Self.dateFormatter.string(from: context.state.loopDate))")
+    }
+}
+
+struct BannerTimestampLabel: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        TimestampLabel(context: context)
+            .font(.system(size: 13))
+            .foregroundStyle(.white.opacity(0.7))
+    }
+}
+
+struct WatchLoopCircleAndTimestamp: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        HStack(spacing: 3) {
+            BannerLoopCircle(context: context, size: 9)
+                .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
+                .padding(.trailing, 2)
+            BannerTimestampLabel(context: context)
+        }
+    }
+}
+
+struct BannerEventualGlucose: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    private let eventualSymbol = "⇢"
+
+    var body: some View {
+        HStack(spacing: 3) {
+            Text(eventualSymbol)
+                .opacity(0.7)
+            Text(context.state.eventual)
+                .opacity(0.8)
+                .fontWidth(.condensed)
+        }
     }
 }
 

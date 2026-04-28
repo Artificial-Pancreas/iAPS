@@ -8,7 +8,6 @@ struct LiveActivityChart: View {
     let context: ActivityViewContext<LiveActivityAttributes>
     var isWatch: Bool = false
 
-    private let EventualSymbol = "⇢"
     private let dropWidth = CGFloat(80)
     private let dropHeight = CGFloat(80)
 
@@ -28,37 +27,37 @@ struct LiveActivityChart: View {
         return formatter
     }()
 
+    private let glucoseColor = Color.white
+
     var body: some View {
         if isWatch {
-            watchView
+            watchBody
         } else {
-            defaultView
+            standardBody
         }
     }
 
-    private var defaultView: some View {
-        Group {
-            HStack(alignment: .top) {
-                chartView
-                    .padding(.bottom, 10)
-                    .padding(.top, 30)
-                    .padding(.leading, 15)
-                    .padding(.trailing, 10)
-                    .background(.black.opacity(0.30))
+    private var standardBody: some View {
+        HStack(alignment: .top) {
+            chartView
+                .padding(.bottom, 10)
+                .padding(.top, 30)
+                .padding(.leading, 15)
+                .padding(.trailing, 10)
+                .background(.black.opacity(0.30))
 
-                ZStack(alignment: .topTrailing) {
-                    VStack(alignment: .trailing, spacing: 0) {
-                        chartRightHandView
-                    }
+            ZStack(alignment: .topTrailing) {
+                VStack(alignment: .trailing, spacing: 0) {
+                    chartRightHandView
                 }
-                .fixedSize(horizontal: true, vertical: false)
-                .frame(maxHeight: .infinity)
-                .padding(.vertical, 15)
-                .padding(.trailing, 15)
             }
-            .overlay {
-                timeAndEventualOverlay
-            }
+            .fixedSize(horizontal: true, vertical: false)
+            .frame(maxHeight: .infinity)
+            .padding(.vertical, 15)
+            .padding(.trailing, 15)
+        }
+        .overlay {
+            timeAndEventualOverlay
         }
         .foregroundStyle(.white)
         .privacySensitive()
@@ -67,29 +66,20 @@ struct LiveActivityChart: View {
         .activityBackgroundTint(Color.clear)
     }
 
-    private var watchView: some View {
-        Group {
-            VStack(spacing: 0) {
-                watchTopRow
-                chartView
-            }
-            .padding(.vertical, 4)
-            .padding(.horizontal, 8)
-            .overlay(alignment: .bottomLeading) {
-                HStack(spacing: 3) {
-                    loop
-                        .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
-                        .padding(.trailing, 2)
-                    updatedLabel
-                        .font(.system(size: 13))
-                        .foregroundStyle(.white.opacity(0.7))
-                }
+    private var watchBody: some View {
+        VStack(spacing: 0) {
+            watchTopRow
+            chartView
+        }
+        .padding(.vertical, 4)
+        .padding(.horizontal, 8)
+        .overlay(alignment: .bottomLeading) {
+            WatchLoopCircleAndTimestamp(context: context)
                 .padding(.horizontal, 5)
                 .padding(.vertical, 2)
                 .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
                 .padding(.leading, 5)
-                .padding(.bottom, 6)
-            }
+                .padding(.bottom, 5)
         }
         .foregroundStyle(.white)
         .privacySensitive()
@@ -354,24 +344,14 @@ struct LiveActivityChart: View {
     }
 
     @ViewBuilder private var timeAndEventualOverlay: some View {
-        // Eventual Glucose
-        HStack(spacing: 4) {
-            Text(EventualSymbol)
-                .font(.system(size: 16))
-                .opacity(0.7)
+        BannerEventualGlucose(context: context)
+            .font(.system(size: 16))
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            .padding(.top, 10)
+            .padding(.trailing, 110)
 
-            Text(context.state.eventual)
-                .font(.system(size: 16))
-                .opacity(0.8)
-                .fontWidth(.condensed)
-        }
-        .foregroundStyle(.white)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-        .padding(.top, 10)
-        .padding(.trailing, 110)
-
-        // Timestamp
-        updatedLabel
+        BannerTimestampLabel(context: context)
             .font(.system(size: 11))
             .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -430,11 +410,11 @@ struct LiveActivityChart: View {
                 }
                 .tracking(-1)
                 .offset(x: -2)
-                .foregroundColor(colorOfGlucose)
+                .foregroundColor(glucoseColor)
             } else {
                 Text(string)
                     .font(Font.custom("SuggestionSmallPartsFontMgDl", fixedSize: 23).width(.condensed))
-                    .foregroundColor(colorOfGlucose)
+                    .foregroundColor(glucoseColor)
                     .offset(x: -2)
             }
         }
@@ -453,23 +433,19 @@ struct LiveActivityChart: View {
                     Text(decimalSeparator).font(.system(size: 20, weight: .semibold, design: .rounded))
                     Text(decimal[1]).font(.system(size: 20, weight: .semibold, design: .rounded))
                 }
-                .foregroundColor(colorOfGlucose)
+                .foregroundColor(glucoseColor)
             } else {
                 Text(string)
                     .font(.system(size: 28, weight: .semibold, design: .rounded))
-                    .foregroundColor(colorOfGlucose)
+                    .foregroundColor(glucoseColor)
             }
 
             if let direction = context.state.direction {
                 Text(direction)
                     .font(.system(size: 16))
-                    .foregroundColor(colorOfGlucose)
+                    .foregroundColor(glucoseColor)
             }
         }
-    }
-
-    private var colorOfGlucose: Color {
-        Color.white
     }
 
     private func limitedPredictions(
@@ -545,16 +521,6 @@ struct LiveActivityChart: View {
         default:
             return (2, 0)
         }
-    }
-
-    private var loop: some View {
-        let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
-        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
-        return LoopActivity(stroke: color, compact: false).frame(width: 9)
-    }
-
-    private var updatedLabel: Text {
-        Text("\(dateFormatter.string(from: context.state.loopDate))")
     }
 
     private func displayValues(_ values: [Int16], conversion: Double) -> [Double] {

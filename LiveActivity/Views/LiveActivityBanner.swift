@@ -8,8 +8,6 @@ struct LiveActivityBanner: View {
     let context: ActivityViewContext<LiveActivityAttributes>
     var isWatch: Bool = false
 
-    private let eventualSymbol = "⇢"
-
     private let decimalString: String = NumberFormatter().decimalSeparator
 
     private let dateFormatter: DateFormatter = {
@@ -30,14 +28,14 @@ struct LiveActivityBanner: View {
     private var standardBody: some View {
         VStack(spacing: 2) {
             ZStack {
-                updatedLabel
+                BannerTimestampLabel(context: context)
                     .font(.caption)
                     .foregroundStyle(.primary.opacity(0.7))
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             HStack {
                 VStack {
-                    loop(size: 22)
+                    BannerLoopCircle(context: context, size: 22)
                     Spacer()
                 }.offset(x: 0, y: 2)
                 Spacer()
@@ -50,13 +48,13 @@ struct LiveActivityBanner: View {
                 }
                 Spacer()
                 VStack {
-                    iob(context: context, size: .expanded).font(.title)
-                    Spacer() // emptyText
+                    iob.font(.title)
+                    Spacer()
                 }
                 Spacer()
                 VStack {
-                    cob(context: context, size: .expanded).font(.title)
-                    Spacer() // emptyText
+                    cob.font(.title)
+                    Spacer()
                 }
             }
             HStack {
@@ -75,9 +73,6 @@ struct LiveActivityBanner: View {
         }
         .privacySensitive()
         .padding(.vertical, 10).padding(.horizontal, 15)
-        // Semantic BackgroundStyle and Color values work here. They adapt to the given interface style (light mode, dark mode)
-        // Semantic UIColors do NOT (as of iOS 17.1.1). Like UIColor.systemBackgroundColor (it does not adapt to changes of the interface style)
-        // The colorScheme environment varaible that is usually used to detect dark mode does NOT work here (it reports false values)
         .foregroundStyle(Color.primary)
         .background(BackgroundStyle.background.opacity(0.4))
         .activityBackgroundTint(Color.clear)
@@ -119,22 +114,13 @@ struct LiveActivityBanner: View {
 
             Spacer(minLength: 0)
 
-            HStack(spacing: 3) {
-                loop(size: 9)
-                    .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
-                    .padding(.trailing, 2)
-                updatedLabel
-                    .font(.system(size: 13))
-                    .foregroundStyle(.white.opacity(0.7))
+            HStack {
+                WatchLoopCircleAndTimestamp(context: context)
+
                 Spacer()
-                HStack(spacing: 3) {
-                    Text(eventualSymbol)
-                        .font(.system(size: 13))
-                        .opacity(0.7)
-                    Text(context.state.eventual)
-                        .font(.system(size: 13))
-                        .fontWidth(.condensed)
-                }
+
+                BannerEventualGlucose(context: context)
+                    .font(.system(size: 13))
             }
             .padding(.leading, 10)
             .padding(.trailing, 8)
@@ -183,7 +169,7 @@ struct LiveActivityBanner: View {
         return stack
     }
 
-    private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: LiveActivitySize) -> some View {
+    private var iob: some View {
         HStack(spacing: 0) {
             Text(context.state.iob)
             Text(" U")
@@ -191,22 +177,12 @@ struct LiveActivityBanner: View {
         .foregroundStyle(.insulin)
     }
 
-    private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: LiveActivitySize) -> some View {
+    private var cob: some View {
         HStack(spacing: 0) {
             Text(context.state.cob)
             Text(" g")
         }
         .foregroundStyle(.loopYellow)
-    }
-
-    private func loop(size: CGFloat) -> some View {
-        let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
-        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
-        return LoopActivity(stroke: color, compact: false).frame(width: size)
-    }
-
-    private var updatedLabel: Text {
-        Text("\(dateFormatter.string(from: context.state.loopDate))")
     }
 
     @ViewBuilder private var changeLabel: some View {
