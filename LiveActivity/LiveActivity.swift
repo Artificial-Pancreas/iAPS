@@ -10,20 +10,6 @@ enum LiveActivitySize {
 }
 
 struct LiveActivity: Widget {
-    private let dateFormatter: DateFormatter = {
-        var formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        return formatter
-    }()
-
-    private let minuteFormatter: NumberFormatter = {
-        var formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
-
     var body: some WidgetConfiguration {
         let config = ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
@@ -216,7 +202,6 @@ private struct LiveActivityBannerWrapper: View {
 struct LoopCircle: View {
     let context: ActivityViewContext<LiveActivityAttributes>
 
-    @Environment(\.colorScheme) var colorScheme
     let compact: Bool
     let size: CGFloat
 
@@ -250,7 +235,7 @@ struct TimestampLabel: View {
     }()
 
     var body: some View {
-        Text("\(Self.dateFormatter.string(from: context.state.loopDate))")
+        Text(Self.dateFormatter.string(from: context.state.loopDate))
     }
 }
 
@@ -273,6 +258,67 @@ struct WatchLoopCircleAndTimestamp: View {
                 .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
                 .padding(.trailing, 2)
             BannerTimestampLabel(context: context)
+        }
+    }
+}
+
+struct WatchGlucoseDisplay: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+    private let decimalString: String = Locale.current.decimalSeparator ?? "."
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 6) {
+            let string = context.state.bg
+            let decimalSeparator = string.contains(decimalString) ? decimalString : "."
+            let decimal = string.components(separatedBy: decimalSeparator)
+            if decimal.count > 1 {
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text(decimal[0]).font(.system(size: 28, weight: .semibold, design: .rounded))
+                    Text(decimalSeparator).font(.system(size: 20, weight: .semibold, design: .rounded))
+                    Text(decimal[1]).font(.system(size: 20, weight: .semibold, design: .rounded))
+                }
+            } else {
+                Text(string)
+                    .font(.system(size: 28, weight: .semibold, design: .rounded))
+            }
+
+            if let direction = context.state.direction {
+                Text(direction)
+                    .font(.system(size: 16))
+            }
+        }
+        .foregroundStyle(Color.white)
+    }
+}
+
+struct WatchIOBCOBDisplay: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    @ViewBuilder var body: some View {
+        HStack(spacing: 10) {
+            HStack(spacing: 0.5) {
+                Text(context.state.iob)
+                    .font(.system(size: 19))
+                    .tracking(-0.5)
+                    .foregroundStyle(.white)
+                Text("U")
+                    .font(.system(size: 19).smallCaps())
+                    .foregroundStyle(.white.opacity(0.7))
+            }
+            .fontWidth(.compressed)
+
+            if context.state.cob != "0" {
+                HStack(spacing: 0.5) {
+                    Text(context.state.cob)
+                        .font(.system(size: 19))
+                        .tracking(-0.5)
+                        .foregroundStyle(.white)
+                    Text("g")
+                        .font(.system(size: 19))
+                        .foregroundStyle(.white.opacity(0.7))
+                }
+                .fontWidth(.compressed)
+            }
         }
     }
 }
