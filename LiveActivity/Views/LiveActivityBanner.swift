@@ -120,7 +120,7 @@ struct LiveActivityBanner: View {
                 Spacer()
 
                 BannerEventualGlucose(context: context)
-                    .font(.system(size: 13))
+                    .font(.system(size: 16))
             }
             .padding(.leading, 10)
             .padding(.trailing, 8)

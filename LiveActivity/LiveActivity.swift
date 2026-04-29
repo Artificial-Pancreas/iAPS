@@ -259,7 +259,7 @@ struct BannerTimestampLabel: View {
 
     var body: some View {
         TimestampLabel(context: context)
-            .font(.system(size: 13))
+            .font(.system(size: 14))
             .foregroundStyle(.white.opacity(0.7))
     }
 }

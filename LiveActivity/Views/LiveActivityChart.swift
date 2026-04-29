@@ -81,6 +81,15 @@ struct LiveActivityChart: View {
                 .padding(.leading, 5)
                 .padding(.bottom, 5)
         }
+        .overlay(alignment: .bottomTrailing) {
+            BannerEventualGlucose(context: context)
+                .font(.system(size: 16))
+                .padding(.horizontal, 5)
+                .padding(.vertical, 2)
+                .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
+                .padding(.trailing, 5)
+                .padding(.bottom, 5)
+        }
         .foregroundStyle(.white)
         .privacySensitive()
         .padding(0)
@@ -174,7 +183,7 @@ struct LiveActivityChart: View {
         let uamPoints = predictions?.uam.map({ makePoints($0.dates, $0.values, conversion: ConversionConstant) })
 
         let nowDate = Date()
-        let xScaleEnd: Date = isWatch ? max(xEnd ?? nowDate, nowDate) : (xEnd ?? nowDate)
+        let xScaleEnd: Date = isWatch ? max(xEnd ?? nowDate, nowDate.addingTimeInterval(80 * 60)) : (xEnd ?? nowDate)
 
         return Chart {
             if let bg = bgPoints {
@@ -287,24 +296,19 @@ struct LiveActivityChart: View {
             }
         }
         .chartYAxis {
-            if let minValue, let maxValue {
+            if !isWatch, let minValue, let maxValue {
                 AxisMarks(
-                    position: isWatch ? .trailing : .leading,
-                    values:
-                    abs(maxValue - minValue) < 0.8 ? [
+                    position: .leading,
+                    values: abs(maxValue - minValue) < 0.8 ? [
                         (maxValue + minValue) / 2
-                    ] :
-                        [
-                            minValue,
-                            maxValue
-                        ]
+                    ] : [
+                        minValue,
+                        maxValue
+                    ]
                 ) { _ in
-                    AxisValueLabel(
-                        format: glucoseFormatter,
-                        horizontalSpacing: isWatch ? 8 : 10
-                    )
-                    .foregroundStyle(.secondary)
-                    .font(isWatch ? .system(size: 12) : .caption)
+                    AxisValueLabel(format: glucoseFormatter, horizontalSpacing: 10)
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
                 }
             }
         }
