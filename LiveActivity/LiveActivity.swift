@@ -222,7 +222,7 @@ struct LoopCircle: View {
 
     var body: some View {
         let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
-        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
+        let color: Color = timeAgo > 12 ? .loopRed : timeAgo > 8 ? .loopYellow : .loopGreen
 
         Circle()
             .stroke(color, lineWidth: compact ? 1.5 : 3)
