@@ -65,12 +65,9 @@ extension Settings {
 
             subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
 
-            // Refresh version on record when Settings opens; HomeStateModel's 5 s timer
+            // Always fetch the latest version when Settings opens; HomeStateModel's 5 s timer
             // will fire the outdated-version alert once the new VNr is stored
-            let storedVNr = CoreDataStorage().fetchVNr()
-            if storedVNr == nil || (storedVNr?.date ?? .distantFuture) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
-                nightscoutManager.fetchVersion()
-            }
+            nightscoutManager.fetchVersion()
         }
 
         func logItems() -> [URL] {

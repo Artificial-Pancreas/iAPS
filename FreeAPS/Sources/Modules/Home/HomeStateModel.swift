@@ -353,14 +353,12 @@ extension Home {
                 }
                 .store(in: &lifetime)
 
-            // Ensure we have a version on record; fetch now if missing or stale (> 23 h old)
-            let storedVNr = CoreDataStorage().fetchVNr()
-            if storedVNr == nil || (storedVNr?.date ?? .distantFuture) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
-                nightscoutManager.fetchVersion()
-            }
+            // Always fetch the latest version on launch — lightweight call, ensures the alert
+            // fires promptly even if the server version changed since the last fetch.
+            // The 5 s timer picks up the alert once fetchVersion() stores its result.
+            nightscoutManager.fetchVersion()
 
-            // Delay slightly so the view is fully presented before the alert fires;
-            // the 5 s timer will also pick up the alert once fetchVersion() stores its result
+            // Delay slightly so the view is fully presented before the alert fires
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                 self?.checkOutdatedVersionAlert()
             }
