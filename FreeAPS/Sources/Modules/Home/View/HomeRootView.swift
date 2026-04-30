@@ -424,6 +424,18 @@ extension Home {
                     showBolusActiveAlert = false
                 }
             }
+            .alert("iAPS is Out of Date", isPresented: $state.isOutdatedVersionAlertPresented) {
+                Button("Remind Me Later", role: .cancel) {
+                    state.dismissOutdatedVersionAlert(permanently: false)
+                }
+                Button("Don't Remind Me Until Next Release") {
+                    state.dismissOutdatedVersionAlert(permanently: true)
+                }
+            } message: {
+                Text(
+                    "You're running v\(state.outdatedVersionCurrent). The current release is v\(state.outdatedVersionLatest).\n\niAPS controls your insulin pump directly. Running an older version may expose you to bugs that have since been fixed, including fixes affecting dosing accuracy.\n\nPlease upgrade at your earliest convenience. For help: discord.com/invite/ptkk2Y264Z"
+                )
+            }
         }
 
         var chart: some View {

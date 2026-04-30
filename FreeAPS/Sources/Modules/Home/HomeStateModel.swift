@@ -84,6 +84,9 @@ extension Home {
         @Published var profileButton: Bool = true
         @Published var mealData = MealData()
         @Published var ai: Bool = false
+        @Published var isOutdatedVersionAlertPresented: Bool = false
+        @Published var outdatedVersionCurrent: String = ""
+        @Published var outdatedVersionLatest: String = ""
 
         // Chart data
         var data = ChartModel(
@@ -262,6 +265,7 @@ extension Home {
                 DispatchQueue.main.async { [weak self] in
                     self?.data.timerDate = Date()
                     self?.setupCurrentTempTarget()
+                    self?.checkOutdatedVersionAlert()
                 }
             }
 
@@ -348,6 +352,59 @@ extension Home {
                     }
                 }
                 .store(in: &lifetime)
+
+            // Delay slightly so the view is fully presented before the alert fires
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                self?.checkOutdatedVersionAlert()
+            }
+        }
+
+        private func checkOutdatedVersionAlert() {
+            guard !isOutdatedVersionAlertPresented else { return }
+
+            // Re-show at most once every 24 h after a "Remind Me Later" dismissal
+            let lastShownKey = "iAPS.outdatedAlert.lastShown"
+            if let lastShown = UserDefaults.standard.object(forKey: lastShownKey) as? Date,
+               Date().timeIntervalSince(lastShown) < 24 * 3600
+            { return }
+
+            guard let currentVersion = Bundle.main.releaseVersionNumber,
+                  let stored = CoreDataStorage().fetchVNr(),
+                  let mainVersion = stored.nr, !mainVersion.isEmpty
+            else { return }
+
+            guard isVersionOutdated(currentVersion, comparedTo: mainVersion) else { return }
+
+            // Key to the exact main version string — any new release resets the dismiss
+            let dismissKey = "iAPS.outdatedAlert.main." + mainVersion
+            guard !UserDefaults.standard.bool(forKey: dismissKey) else { return }
+
+            outdatedVersionCurrent = currentVersion
+            outdatedVersionLatest = mainVersion
+            isOutdatedVersionAlertPresented = true
+        }
+
+        /// Returns true when `version` is strictly older than `reference` (full semver).
+        private func isVersionOutdated(_ version: String, comparedTo reference: String) -> Bool {
+            let parse: (String) -> (Int, Int, Int) = { v in
+                let p = v.split(separator: ".").compactMap { Int($0) }
+                return (p.count > 0 ? p[0] : 0, p.count > 1 ? p[1] : 0, p.count > 2 ? p[2] : 0)
+            }
+            let (aMaj, aMin, aPatch) = parse(version)
+            let (bMaj, bMin, bPatch) = parse(reference)
+            if aMaj != bMaj { return aMaj < bMaj }
+            if aMin != bMin { return aMin < bMin }
+            return aPatch < bPatch
+        }
+
+        func dismissOutdatedVersionAlert(permanently: Bool) {
+            if permanently {
+                UserDefaults.standard.set(true, forKey: "iAPS.outdatedAlert.main." + outdatedVersionLatest)
+            } else {
+                // "Remind Me Later" — record dismissal time so we re-show after 24 h
+                UserDefaults.standard.set(Date(), forKey: "iAPS.outdatedAlert.lastShown")
+            }
+            isOutdatedVersionAlertPresented = false
         }
 
         private func updateSensorDays() {
