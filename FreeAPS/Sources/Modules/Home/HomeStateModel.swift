@@ -353,32 +353,65 @@ extension Home {
                 }
                 .store(in: &lifetime)
 
-            // Delay slightly so the view is fully presented before the alert fires
+            // Ensure we have a version on record; fetch now if missing or stale (> 23 h old)
+            let storedVNr = CoreDataStorage().fetchVNr()
+            if storedVNr == nil || (storedVNr?.date ?? .distantFuture) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
+                nightscoutManager.fetchVersion()
+            }
+
+            // Delay slightly so the view is fully presented before the alert fires;
+            // the 5 s timer will also pick up the alert once fetchVersion() stores its result
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                 self?.checkOutdatedVersionAlert()
             }
         }
 
         private func checkOutdatedVersionAlert() {
-            guard !isOutdatedVersionAlertPresented else { return }
+            debug(.service, "OutdatedVersionAlert: check started")
+
+            guard !isOutdatedVersionAlertPresented else {
+                debug(.service, "OutdatedVersionAlert: skipped — alert already presented")
+                return
+            }
 
             // Re-show at most once every 24 h after a "Remind Me Later" dismissal
             let lastShownKey = "iAPS.outdatedAlert.lastShown"
             if let lastShown = UserDefaults.standard.object(forKey: lastShownKey) as? Date,
                Date().timeIntervalSince(lastShown) < 24 * 3600
-            { return }
+            {
+                let hours = Int(Date().timeIntervalSince(lastShown) / 3600)
+                debug(.service, "OutdatedVersionAlert: skipped — 24h gate active (last shown \(hours)h ago)")
+                return
+            }
 
-            guard let currentVersion = Bundle.main.releaseVersionNumber,
-                  let stored = CoreDataStorage().fetchVNr(),
-                  let mainVersion = stored.nr, !mainVersion.isEmpty
-            else { return }
+            guard let currentVersion = Bundle.main.releaseVersionNumber else {
+                debug(.service, "OutdatedVersionAlert: skipped — could not read bundle version")
+                return
+            }
+            guard let stored = CoreDataStorage().fetchVNr() else {
+                debug(.service, "OutdatedVersionAlert: skipped — no stored VNr in CoreData (version_check not yet run?)")
+                return
+            }
+            guard let mainVersion = stored.nr, !mainVersion.isEmpty else {
+                debug(.service, "OutdatedVersionAlert: skipped — stored VNr.nr is nil or empty")
+                return
+            }
 
-            guard isVersionOutdated(currentVersion, comparedTo: mainVersion) else { return }
+            debug(.service, "OutdatedVersionAlert: running \(currentVersion), stored main=\(mainVersion)")
+
+            guard isVersionOutdated(currentVersion, comparedTo: mainVersion) else {
+                debug(.service, "OutdatedVersionAlert: up to date (\(currentVersion) >= \(mainVersion)), no alert")
+                return
+            }
 
             // Key to the exact main version string — any new release resets the dismiss
             let dismissKey = "iAPS.outdatedAlert.main." + mainVersion
-            guard !UserDefaults.standard.bool(forKey: dismissKey) else { return }
+            guard !UserDefaults.standard.bool(forKey: dismissKey) else {
+                debug(.service, "OutdatedVersionAlert: skipped — permanently dismissed for \(mainVersion)")
+                return
+            }
 
+            debug(.service, "OutdatedVersionAlert: presenting alert (running \(currentVersion), latest \(mainVersion))")
             outdatedVersionCurrent = currentVersion
             outdatedVersionLatest = mainVersion
             isOutdatedVersionAlertPresented = true
@@ -399,11 +432,14 @@ extension Home {
 
         func dismissOutdatedVersionAlert(permanently: Bool) {
             if permanently {
+                debug(.service, "OutdatedVersionAlert: user chose 'Don't Remind Until Next Release' for \(outdatedVersionLatest)")
                 UserDefaults.standard.set(true, forKey: "iAPS.outdatedAlert.main." + outdatedVersionLatest)
             } else {
+                debug(.service, "OutdatedVersionAlert: user chose 'Remind Me Later' — will re-show after 24h")
                 // "Remind Me Later" — record dismissal time so we re-show after 24 h
                 UserDefaults.standard.set(Date(), forKey: "iAPS.outdatedAlert.lastShown")
             }
+            debug(.service, "OutdatedVersionAlert: alert dismissed")
             isOutdatedVersionAlertPresented = false
         }
 

@@ -1047,7 +1047,7 @@ final class BaseAPSManager: APSManager, Injectable {
     // Add to statistics.JSON for upload to NS.
     private func statistics() {
         let stats = CoreDataStorage().fetchStats()
-        versionCheack()
+        versionCheck()
         let newVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
         // Only save and upload twice per day
         guard ((-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 10) || newVersion else {
@@ -1317,11 +1317,10 @@ final class BaseAPSManager: APSManager, Injectable {
         return identfier
     }
 
-    private func versionCheack() {
+    private func versionCheck() {
         if Date.now.hour % 2 == 0 {
-            if let last = CoreDataStorage().fetchVNr(),
-               (last.date ?? .distantFuture) < Date.now.addingTimeInterval(-23.hours.timeInterval)
-            {
+            let last = CoreDataStorage().fetchVNr()
+            if last == nil || (last?.date ?? .distantFuture) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
                 nightscout.fetchVersion()
             }
         }
