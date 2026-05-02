@@ -339,19 +339,6 @@ extension AutoISF {
                                 .disabled(isPresented)
                         }
 
-                        HStack {
-                            Text("ISF Scale")
-                                .onTapGesture {
-                                    info(
-                                        header: "ISF Scale",
-                                        body: "Multiplier applied to the entire autotune-calculated ISF schedule before it is written to your profile. Default is 1.0 (no adjustment). Reduce below 1.0 (e.g. 0.93) if AutoISF is consistently hitting its autoisf_max ceiling — this lowers the profile ISF anchor, giving the algorithm more headroom on meal responses. Increase above 1.0 to make the profile more conservative. Change in small steps (0.02–0.05) and allow 2–3 days to evaluate.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            DecimalTextField("1", value: $state.isfScale, formatter: formatter)
-                                .disabled(isPresented)
-                        }
                     } header: { Text("Settings") }
 
                     Section {

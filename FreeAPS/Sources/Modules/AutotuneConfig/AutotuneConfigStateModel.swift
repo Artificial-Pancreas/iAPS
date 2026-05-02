@@ -15,6 +15,7 @@ extension AutotuneConfig {
         @Published var publishedDate = Date()
         @Published var increment: Double = 0.1
         @Published var running: Bool = false
+        @Published var isfScale: Decimal = 1.0
 
         @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date() {
             didSet {
@@ -38,6 +39,7 @@ extension AutotuneConfig {
             increment = Double(settingsManager.preferences.bolusIncrement)
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
             subscribeSetting(\.calculateISFSuggestions, on: $calculateISFSuggestions) { calculateISFSuggestions = $0 }
+            subscribeSetting(\.isfScale, on: $isfScale) { isfScale = $0 }
 
             currentProfile = provider.profile
             calcTotal()

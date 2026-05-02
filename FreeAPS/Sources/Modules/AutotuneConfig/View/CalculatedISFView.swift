@@ -233,8 +233,34 @@ extension AutotuneConfig {
             .opacity(isInterpolated ? 0.6 : 1.0)
         }
 
+        private let scaleFormatter: NumberFormatter = {
+            let f = NumberFormatter()
+            f.numberStyle = .decimal
+            f.minimumFractionDigits = 2
+            f.maximumFractionDigits = 2
+            return f
+        }()
+
         private var saveSection: some View {
             Section {
+                HStack {
+                    Text("ISF Scale")
+                    Spacer()
+                    DecimalTextField("1.00", value: $state.isfScale, formatter: scaleFormatter)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        .frame(width: 80)
+                }
+
+                Text(
+                    "Scale multiplier applied to the calculated schedule before saving. " +
+                    "Default 1.0 (no change). Reduce (e.g. 0.93) if the algorithm consistently " +
+                    "needs more insulin than the calculated ISF provides. Change in small steps " +
+                    "(0.02–0.05) and allow 2–3 days to evaluate."
+                )
+                .font(.footnote)
+                .foregroundColor(.secondary)
+
                 Button(action: { saveAlert = true }) {
                     HStack {
                         Spacer()

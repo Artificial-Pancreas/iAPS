@@ -22,7 +22,6 @@ extension AutoISF {
         @Published var bgAccelISFweight: Decimal = 0
         @Published var bgBrakeISFweight: Decimal = 0.10
         @Published var iobThresholdPercent: Decimal = 100
-        @Published var isfScale: Decimal = 1.0
 
         // B30
         @Published var iTime_Start_Bolus: Decimal = 1.5
@@ -62,7 +61,6 @@ extension AutoISF {
             subscribeSetting(\.bgAccelISFweight, on: $bgAccelISFweight) { bgAccelISFweight = $0 }
             subscribeSetting(\.bgBrakeISFweight, on: $bgBrakeISFweight) { bgBrakeISFweight = $0 }
             subscribeSetting(\.iobThresholdPercent, on: $iobThresholdPercent) { iobThresholdPercent = $0 }
-            subscribeSetting(\.isfScale, on: $isfScale) { isfScale = $0 }
 
             subscribeSetting(\.use_B30, on: $use_B30) { use_B30 = $0 }
             subscribeSetting(\.iTime_Start_Bolus, on: $iTime_Start_Bolus) { iTime_Start_Bolus = $0 }
