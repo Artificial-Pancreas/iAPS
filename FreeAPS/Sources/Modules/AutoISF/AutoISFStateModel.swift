@@ -22,7 +22,7 @@ extension AutoISF {
         @Published var bgAccelISFweight: Decimal = 0
         @Published var bgBrakeISFweight: Decimal = 0.10
         @Published var iobThresholdPercent: Decimal = 100
-        @Published var isfScale: Double = 1.0
+        @Published var isfScale: Decimal = 1.0
 
         // B30
         @Published var iTime_Start_Bolus: Decimal = 1.5

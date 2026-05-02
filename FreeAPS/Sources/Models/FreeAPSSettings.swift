@@ -128,7 +128,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var iobThresholdPercent: Decimal = 100
     var autoisf_max: Decimal = 1.2
     var autoisf_min: Decimal = 0.8
-    var isfScale: Double = 1.0
+    var isfScale: Decimal = 1.0
     // B30
     var use_B30 = false
     var iTime_Start_Bolus: Decimal = 1.5
@@ -687,7 +687,7 @@ extension FreeAPSSettings: Decodable {
             settings.autoisf_min = autoisf_min
         }
 
-        if let isfScale = try? container.decode(Double.self, forKey: .isfScale) {
+        if let isfScale = try? container.decode(Decimal.self, forKey: .isfScale) {
             settings.isfScale = isfScale
         }
 

@@ -175,7 +175,7 @@ extension AutotuneConfig {
                 guard let mgdl = mgdl else { return nil }
                 let offsetMinutes = hour * 60
                 let date = Date(timeIntervalSince1970: TimeInterval(offsetMinutes * 60))
-                let scaledMgdl = mgdl * settingsManager.settings.isfScale
+                let scaledMgdl = mgdl * (settingsManager.settings.isfScale as NSDecimalNumber).doubleValue
                 return InsulinSensitivityEntry(
                     sensitivity: displayISF(mgdl: scaledMgdl),
                     offset: offsetMinutes,
