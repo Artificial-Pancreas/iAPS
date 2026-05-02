@@ -13,6 +13,14 @@ extension AutotuneConfig {
             return formatter
         }
 
+        private var scaleFormatter: NumberFormatter {
+            let f = NumberFormatter()
+            f.numberStyle = .decimal
+            f.minimumFractionDigits = 2
+            f.maximumFractionDigits = 2
+            return f
+        }
+
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -38,6 +46,24 @@ extension AutotuneConfig {
                 if state.useAutotune {
                     Toggle("Only Autotune Basal Insulin", isOn: $state.onlyAutotuneBasals)
                     Toggle("Calculate ISF Suggestions", isOn: $state.calculateISFSuggestions)
+
+                    if state.calculateISFSuggestions {
+                        HStack {
+                            Text("ISF Scale")
+                                .onTapGesture {
+                                    info(
+                                        header: "ISF Scale",
+                                        body: "Multiplier applied to the calculated ISF schedule when saving to your profile. Default is 1.0 (no change). Reduce below 1.0 (e.g. 0.93) if the algorithm consistently needs more insulin than the calculated ISF provides — this shifts the entire 24-hour schedule proportionally. Increase above 1.0 to make the profile more conservative. Change in small steps (0.02–0.05) and allow 2–3 days to evaluate.",
+                                        useGraphics: nil
+                                    )
+                                }
+                            Spacer()
+                            DecimalTextField("1.00", value: $state.isfScale, formatter: scaleFormatter)
+                                .multilineTextAlignment(.trailing)
+                                .keyboardType(.decimalPad)
+                                .frame(width: 80)
+                        }
+                    }
 
                     NavigationLink(destination: CalculatedBasalView(state: state)) {
                         subPageRow(
