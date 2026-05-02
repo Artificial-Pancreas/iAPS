@@ -39,6 +39,7 @@ extension AutotuneConfig {
 
         // MARK: - Sections
 
+        @ViewBuilder
         private var togglesSection: some View {
             Section {
                 Toggle("Use Autotune", isOn: $state.useAutotune)
@@ -46,6 +47,15 @@ extension AutotuneConfig {
                 if state.useAutotune {
                     Toggle("Only Autotune Basal Insulin", isOn: $state.onlyAutotuneBasals)
                     Toggle("Calculate ISF Suggestions", isOn: $state.calculateISFSuggestions)
+
+                    NavigationLink(destination: CalculatedBasalView(state: state)) {
+                        subPageRow(
+                            label: "Calculated Basal",
+                            subtitle: state.autotune != nil
+                                ? dateFormatter.string(from: state.publishedDate)
+                                : "No data yet"
+                        )
+                    }
 
                     if state.calculateISFSuggestions {
                         HStack {
@@ -63,18 +73,7 @@ extension AutotuneConfig {
                                 .keyboardType(.decimalPad)
                                 .frame(width: 80)
                         }
-                    }
 
-                    NavigationLink(destination: CalculatedBasalView(state: state)) {
-                        subPageRow(
-                            label: "Calculated Basal",
-                            subtitle: state.autotune != nil
-                                ? dateFormatter.string(from: state.publishedDate)
-                                : "No data yet"
-                        )
-                    }
-
-                    if state.calculateISFSuggestions {
                         NavigationLink(destination: CalculatedISFView(state: state)) {
                             subPageRow(
                                 label: "Calculated ISF",
