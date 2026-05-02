@@ -2880,7 +2880,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Дата народження";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nЯкщо ви ввімкнете функцію «Спільний доступ та резервне копіювання», щоденні резервні копії ваших налаштувань та статистики створюватимуться в онлайн-базі даних.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Мінімум розподілу";
@@ -2889,7 +2889,7 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Номер версії iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Кожна інформація, якою ви вирішите поділитися, завантажується анонімно. Щоб запобігти дублікату завантажень, дані ідентифікуються за допомогою унікального випадкового рядка, що зберігається на вашому телефоні – токену відновлення.";
 
 /* Token section title */
 "Your recovery token" = "Ваш токен для відновлення";
@@ -2910,10 +2910,10 @@ Enact a temp Basal or a temp target */
 "Share your data anonymously" = "Надсилайте свої дані анонімно";
 
 /* */
-"Upload Daily Log" = "Upload Daily Log";
+"Upload Daily Log" = "Завантажити Щоденний Журнал";
 
 /* */
-"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Якщо цю функцію ввімкнено, файл журналу за попередній день автоматично завантажується після півночі. Журнали використовуються лише для забезпечення функції багатоденного аналізу на open-iaps.app. За замовчуванням вимкнено.";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -3076,6 +3076,18 @@ Enact a temp Basal or a temp target */
 /* */
 
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Динамічний ISF вимкнено, а Auto ISF увімкнено";
+
+/* */
+"Nighttime" = "Ніч";
+
+/* */
+"Disables Auto ISF during nighttime, or any other period selected." = "Вимикає Автоматичну функцію ISF вночі або в будь-який інший вибраний період.";
+
+/* */
+"To" = "До";
+
+/* */
+"From" = "Від";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Значення за замовчуванням: 1,2 Верхня межа налаштування ISF";

@@ -811,13 +811,13 @@ extension Home {
 
         private func enabled() -> Bool {
             guard let or = fetchedPercent.first, or.enabled else { return false }
-            guard let aisf = fetchedAISF.first else { return false }
+            guard let aisf = fetchedAISF.first(where: { $0.id == or.id }) else { return false }
             return aisf.autoisf
         }
 
         private func disabled() -> Bool {
             guard let or = fetchedPercent.first, or.enabled else { return false }
-            guard let aisf = fetchedAISF.first else { return false }
+            guard let aisf = fetchedAISF.first(where: { $0.id == or.id }) else { return false }
             return !aisf.autoisf
         }
 

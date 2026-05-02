@@ -5,6 +5,8 @@ struct DatabasePumpSettings: JSON {
     let settings: PumpSettings?
     let enteredBy: String
     let profile: String?
+    /// Insulin concentration factor: 1.0 = U100 (standard), 2.0 = U200, etc.
+    let insulinConcentration: Double?
 }
 
 struct DatabaseTempTargets: JSON {
