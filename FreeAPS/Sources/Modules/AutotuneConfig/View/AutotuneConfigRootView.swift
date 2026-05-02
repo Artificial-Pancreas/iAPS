@@ -6,6 +6,12 @@ extension AutotuneConfig {
         let resolver: Resolver
         @StateObject var state: StateModel
 
+        @State private var isPresented = false
+        @State private var description = Text("")
+        @State private var descriptionHeader = Text("")
+        @State private var graphics: (any View)?
+        @State private var scrollView = false
+
         private var dateFormatter: DateFormatter {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
@@ -31,6 +37,10 @@ extension AutotuneConfig {
                 togglesSection
                 runSection
                 runningIndicator
+            }
+            .blur(radius: isPresented ? 5 : 0)
+            .description(isPresented: isPresented, alignment: .center) {
+                infoView()
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle("Autotune")
@@ -109,6 +119,26 @@ extension AutotuneConfig {
                         ActivityIndicator(isAnimating: .constant(true), style: .medium)
                     }
                 }
+            }
+        }
+
+        // MARK: - Info popup
+
+        private func info(header: String, body: String, useGraphics: (any View)?) {
+            isPresented.toggle()
+            description = Text(LocalizedStringKey(body))
+            descriptionHeader = Text(NSLocalizedString(header, comment: "Autotune setting title"))
+            graphics = useGraphics
+        }
+
+        private func infoView() -> some View {
+            VStack(spacing: 20) {
+                descriptionHeader.font(.title2).bold()
+                description.font(.body)
+            }
+            .formatDescription()
+            .onTapGesture {
+                isPresented.toggle()
             }
         }
 
