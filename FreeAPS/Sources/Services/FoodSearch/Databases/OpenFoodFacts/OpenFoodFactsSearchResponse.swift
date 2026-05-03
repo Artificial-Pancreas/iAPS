@@ -295,8 +295,8 @@ struct Nutriments: Codable {
             }
 
             let isMicronutrientCandidate =
-                key.hasSuffix("_100g") ||
-                key.hasSuffix("_value")
+                key.hasSuffix("_100g") /* ||
+                 key.hasSuffix("_value") */
 
             guard isMicronutrientCandidate else {
                 continue
@@ -550,87 +550,173 @@ enum OpenFoodFactsError: Error, LocalizedError {
 
 extension Nutriments {
     func toMicronutrientValues() -> [MicronutrientValue] {
-        micronutrients.compactMap { rawKey, rawValue in
-            guard let micro = MicroNutrient(openFoodFactsKey: rawKey) else {
-                print("⚠️ Unmapped micronutrient:", rawKey, "=", rawValue)
-                return nil
+        var aggregated: [MicroNutrient: Decimal] = [:]
+
+        for (key, value) in micronutrients {
+            guard key.hasSuffix("_100g"),
+                  let micro = MicroNutrient(openFoodFactsKey: key)
+            else {
+                continue
             }
 
-            let normalized = normalizeOpenFoodFactsValue(
-                rawValue,
-                rawKey: rawKey,
-                micro: micro
-            )
+            let normalized = normalize(value: value, for: key)
 
-            print("✅ Micro:", rawKey, "raw:", rawValue, "→", micro.displayName, normalized, micro.unit)
-
-            return MicronutrientValue(
-                substance: micro,
-                amount: normalized,
-                amountPer100: normalized
-            )
+            aggregated[micro, default: 0] += normalized
         }
-        .filter({ $0.amount > 0.01 }) // To Do: shouldn't be needed here
-        .sorted { $0.name < $1.name }
-        .uniqued(on: { $0.substance.displayName }) // Removes duplicates. Would be better if not needed...
+
+        return aggregated
+            .filter { $0.value > 0 }
+            .map {
+                MicronutrientValue(
+                    substance: $0.key,
+                    amount: $0.value,
+                    amountPer100: $0.value
+                )
+            }
+            .sorted { $0.name < $1.name }
     }
 
-    private func normalizeOpenFoodFactsValue(
-        _ value: Decimal,
-        rawKey: String,
-        micro: MicroNutrient
-    ) -> Decimal {
-        let key = rawKey
-            .lowercased()
-            .replacingOccurrences(of: "-", with: "_")
-            .replacingOccurrences(of: " ", with: "_")
+    private func normalize(value: Decimal, for key: String) -> Decimal {
+        let k = key.lowercased()
 
-        if key.hasSuffix("_value") {
+        if k.contains("_mg_100g") {
             return value
         }
 
-        if key.contains("_mg_100g") {
-            switch micro.unit {
-            case "ug",
-                 "µg":
-                return value * 1000
-            default:
-                return value
+        if k.contains("_µg_100g") || k.contains("_ug_100g") {
+            return value
+        }
+
+        if k.contains("_g_100g") {
+            if let micro = MicroNutrient(openFoodFactsKey: key) {
+                switch micro.unit {
+                case "mg":
+                    return value * 1000
+                case "ug",
+                     "µg":
+                    return value * 1_000_000
+                default:
+                    return value
+                }
             }
         }
 
-        if key.contains("_µg_100g") || key.contains("_ug_100g") {
-            switch micro.unit {
-            case "mg":
-                return value / 1000
-            default:
-                return value
-            }
-        }
-
-        if key.contains("_g_100g") {
-            switch micro.unit {
-            case "mg":
-                return value * 1000
-            case "ug",
-                 "µg":
-                return value * 1_000_000
-            default:
-                return value
-            }
-        }
-
-        switch micro.unit {
+        switch MicroNutrient(openFoodFactsKey: key)?.unit {
         case "mg":
-            return value * 1000
+            return value < 1 ? value * 1000 : value
         case "ug",
              "µg":
-            return value * 1_000_000
+            return value < 1 ? value * 1_000_000 : value
         default:
             return value
         }
     }
 }
+
+/*
+ extension Nutriments {
+     func toMicronutrientValues() -> [MicronutrientValue] {
+         var aggregated: [MicroNutrient: Decimal] = [:]
+
+         for (key, value) in micronutrients {
+             guard key.hasSuffix("_100g"),
+                   let decimal = value.decimalValue,
+                   let micro = MicroNutrient(openFoodFactsKey: key) else { continue }
+
+             let normalized = normalize(value: decimal, for: key)
+
+             // ✅ accumulate instead of duplicate
+             aggregated[micro, default: 0] += normalized
+         }
+
+         return aggregated.filter({ $0.value > 0 }).map {
+             MicronutrientValue(
+                 substance: $0.key,
+                 amount: $0.value,
+                 amountPer100: $0.value
+             )
+         }
+     }
+
+     private func normalize(value: Decimal, for key: String) -> Decimal {
+         let k = key.lowercased()
+
+         // OFF units:
+         // minerals → usually grams
+         // vitamins → often micrograms or milligrams
+
+         if k.contains("calcium") ||
+             k.contains("potassium") ||
+             k.contains("phosphorus") ||
+             k.contains("sodium") ||
+             k.contains("magnesium") ||
+             k.contains("iron") ||
+             k.contains("zinc")
+         {
+             // assume grams → convert to mg
+             return value < 1 ? value * 1000 : value   // ✅ avoid double conversion
+         }
+
+         return value
+     }
+
+     private func normalizeOpenFoodFactsValue(
+         _ value: Decimal,
+         rawKey: String,
+         micro: MicroNutrient
+     ) -> Decimal {
+         let key = rawKey
+             .lowercased()
+             .replacingOccurrences(of: "-", with: "_")
+             .replacingOccurrences(of: " ", with: "_")
+
+         if key.hasSuffix("_value") {
+             return value
+         }
+
+         if key.contains("_mg_100g") {
+             switch micro.unit {
+             case "ug",
+                  "µg":
+                 return value * 1000
+             default:
+                 return value
+             }
+         }
+
+         if key.contains("_µg_100g") || key.contains("_ug_100g") {
+             switch micro.unit {
+             case "mg":
+                 return value / 1000
+             default:
+                 return value
+             }
+         }
+
+         if key.contains("_g_100g") {
+             switch micro.unit {
+             case "mg":
+                 return value * 1000
+             case "ug",
+                  "µg":
+                 return value * 1_000_000
+             default:
+                 return value
+             }
+         }
+
+         switch micro.unit {
+         case "mg":
+             return value * 1000
+         case "ug",
+              "µg":
+             return value * 1_000_000
+         default:
+             return value
+         }
+     }
+ }
+  */
 
 extension OpenFoodFactsProduct {
     var micronutrientValues: [MicronutrientValue] {
