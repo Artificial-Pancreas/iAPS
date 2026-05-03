@@ -702,9 +702,9 @@ extension Home {
                                 HStack {
                                     carbsAndInsulinView
                                         .frame(maxHeight: .infinity, alignment: .bottom)
-                                    Spacer()
+                                    // Spacer()
                                     pumpView
-                                        .frame(maxHeight: .infinity, alignment: .bottom)
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 }
                                 .dynamicTypeSize(...DynamicTypeSize.xLarge)
                                 .padding(.horizontal, 10)
