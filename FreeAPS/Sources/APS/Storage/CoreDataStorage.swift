@@ -652,6 +652,7 @@ extension Presets {
         return results
     }
 
+    /*
     func setMicronutrient(
         _ nutrient: MicroNutrient,
         amount: Decimal,
@@ -728,7 +729,7 @@ extension Presets {
             )
         }
         .sorted { $0.name < $1.name }
-    }
+    }*/
 }
 
 extension Micronutrient {
@@ -807,5 +808,108 @@ struct NutrientValue {
         endMinute = coder.decodeInteger(forKey: "endMinute")
         enabled = coder.decodeBool(forKey: "enabled")
         super.init()
+    }
+}
+
+extension Presets {
+    func replaceMicronutrients(
+        from values: [MicronutrientValue],
+        context: NSManagedObjectContext
+    ) throws {
+        if let existing = micronutrients {
+            for entry in existing {
+                context.delete(entry)
+            }
+        }
+        
+        for value in values where value.amount > 0 || value.amountPer100 > 0 {
+            try setMicronutrient(
+                value.substance,
+                amount: value.amountPer100,
+                per100: true,
+                context: context
+            )
+        }
+    }
+    
+    func setMicronutrient(
+        _ nutrient: MicroNutrient,
+        amount: Decimal,
+        per100: Bool,
+        context: NSManagedObjectContext
+    ) throws {
+        let definition: Micronutrient
+        
+        if let existing = try Micronutrient.fetchByName(
+            nutrient.coreDataName,
+            context: context
+        ) {
+            definition = existing
+            definition.type = nutrient.coreDataType
+            definition.unit = nutrient.unit
+        } else {
+            let new = Micronutrient(context: context)
+            new.id = UUID()
+            new.name = nutrient.coreDataName
+            new.type = nutrient.coreDataType
+            new.unit = nutrient.unit
+            definition = new
+        }
+        
+        let existingEntry = (micronutrients ?? [])
+            .first { $0.micronutrients == definition }
+        
+        if let entry = existingEntry {
+            entry.amount = NSDecimalNumber(decimal: amount)
+            entry.per100 = per100
+        } else {
+            let entry = PresetMicronutrient(context: context)
+            entry.id = UUID()
+            entry.amount = NSDecimalNumber(decimal: amount)
+            entry.per100 = per100
+            entry.preset = self
+            entry.micronutrients = definition
+        }
+    }
+    
+    func micronutrientValuesTyped() -> [MicronutrientValue] {
+        (micronutrients ?? [])
+            .compactMap { entry in
+                guard
+                    let name = entry.micronutrients.name,
+                    let substance = MicroNutrient(coreDataName: name),
+                    let storedAmount = entry.amount?.decimalValue
+                else {
+                    return nil
+                }
+                
+                let amountPer100: Decimal
+                let amount: Decimal
+                
+                if entry.per100 {
+                    amountPer100 = storedAmount
+                    
+                    if let portion = portionSize?.decimalValue, portion > 0 {
+                        amount = storedAmount / 100 * portion
+                    } else {
+                        amount = storedAmount
+                    }
+                } else {
+                    amount = storedAmount
+                    
+                    if let portion = portionSize?.decimalValue, portion > 0 {
+                        amountPer100 = storedAmount / portion * 100
+                    } else {
+                        amountPer100 = storedAmount
+                    }
+                }
+                
+                return MicronutrientValue(
+                    substance: substance,
+                    amount: amount,
+                    amountPer100: amountPer100
+                )
+            }
+            .sorted { $0.name < $1.name }
     }
 }

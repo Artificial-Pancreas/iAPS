@@ -437,22 +437,6 @@ extension FoodItemDetailed {
             }
         )
     }
-
-    /*
-     func micronutrient(_ nutrient: MicroNutrient) -> Decimal? {
-         micronutrients?[nutrient]
-     }
-
-     var micronutrientList: [MicronutrientValue] {
-         (micronutrients ?? [:]).map {
-             MicronutrientValue(
-                 substance: $0.key,
-                 amount: $0.value,
-                 amountPer100: $0.value
-             )
-         }
-         .sorted { $0.name < $1.name }
-     }*/
 }
 
 /*
@@ -461,3 +445,91 @@ extension FoodItemDetailed {
      let micros: [MicroNutrient: Decimal]
  }
  */
+
+extension FoodItemDetailed {
+    static func fromPreset(preset: Presets) -> FoodItemDetailed? {
+        guard let foodName = preset.dish,
+              !foodName.isEmpty,
+              foodName != "Empty"
+        else {
+            return nil
+        }
+
+        let foodID = preset.foodID ?? UUID()
+
+        let units = preset.mealUnits
+            .flatMap { MealUnits(rawValue: $0) } ?? .grams
+
+        let nutritionValues: NutritionValues = [
+            .carbs: preset.carbs?.decimalValue ?? 0,
+            .fat: preset.fat?.decimalValue ?? 0,
+            .fiber: preset.fiber?.decimalValue ?? 0,
+            .protein: preset.protein?.decimalValue ?? 0,
+            .sugars: preset.sugars?.decimalValue ?? 0
+        ]
+
+        let nutrition: FoodNutrition = preset.per100
+            ? .per100(
+                values: nutritionValues,
+                portionSize: preset.portionSize?.decimalValue ?? 100
+            )
+            : .perServing(
+                values: nutritionValues,
+                servingsMultiplier: 1
+            )
+
+        return FoodItemDetailed(
+            id: foodID,
+            name: foodName,
+            nutrition: nutrition,
+            micronutrients: preset.micronutrientValuesTyped(),
+            standardServing: preset.standardServing,
+            standardServingSize: preset.standardServingSize?.decimalValue,
+            units: units,
+            glycemicIndex: preset.glycemicIndex?.decimalValue,
+            imageURL: preset.imageURL,
+            standardName: preset.standardName,
+            tags: preset.tags?
+                .split(separator: ",")
+                .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty },
+            source: .database
+        )
+    }
+
+    func updatePreset(preset: Presets) {
+        preset.foodID = id
+        preset.dish = name
+        preset.standardServing = standardServing
+        preset.standardServingSize = standardServingSize.map { NSDecimalNumber(decimal: $0) }
+        preset.mealUnits = units?.rawValue
+        preset.glycemicIndex = glycemicIndex.map { NSDecimalNumber(decimal: $0) }
+        preset.imageURL = imageURL
+        preset.standardName = standardName
+        preset.tags = tags?.joined(separator: ",")
+
+        switch nutrition {
+        case let .per100(values, portionSize):
+            preset.per100 = true
+            preset.portionSize = NSDecimalNumber(decimal: portionSize)
+            preset.carbs = values[.carbs].map { NSDecimalNumber(decimal: $0) }
+            preset.fat = values[.fat].map { NSDecimalNumber(decimal: $0) }
+            preset.fiber = values[.fiber].map { NSDecimalNumber(decimal: $0) }
+            preset.protein = values[.protein].map { NSDecimalNumber(decimal: $0) }
+            preset.sugars = values[.sugars].map { NSDecimalNumber(decimal: $0) }
+
+        case let .perServing(values, _):
+            preset.per100 = false
+            preset.portionSize = standardServingSize.map { NSDecimalNumber(decimal: $0) }
+            preset.carbs = values[.carbs].map { NSDecimalNumber(decimal: $0) }
+            preset.fat = values[.fat].map { NSDecimalNumber(decimal: $0) }
+            preset.fiber = values[.fiber].map { NSDecimalNumber(decimal: $0) }
+            preset.protein = values[.protein].map { NSDecimalNumber(decimal: $0) }
+            preset.sugars = values[.sugars].map { NSDecimalNumber(decimal: $0) }
+        }
+
+        if let context = preset.managedObjectContext {
+            try? preset.replaceMicronutrients(from: micronutrients, context: context)
+        }
+    }
+}

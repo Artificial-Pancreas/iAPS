@@ -1,6 +1,6 @@
 import Foundation
 
-extension FoodItemDetailed {
+/*extension FoodItemDetailed {
     static func fromPreset(preset: Presets) -> FoodItemDetailed? {
         guard let foodName = preset.dish, !foodName.isEmpty, foodName != "Empty" else {
             return nil
@@ -107,4 +107,4 @@ extension FoodItemDetailed {
 
         preset.dish = food.name
     }
-}
+}*/
