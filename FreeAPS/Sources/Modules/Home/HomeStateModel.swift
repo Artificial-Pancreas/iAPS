@@ -432,12 +432,11 @@ extension Home {
                 self.readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today)
                 self.recentGlucose = self.data.glucose.last
                 if self.data.glucose.count >= 2 {
-                    self.glucoseDelta =
-                        NSDecimalNumber(
-                            decimal:
-                            (self.recentGlucose?.unfiltered ?? 0) -
-                                (self.data.glucose[self.data.glucose.count - 2].unfiltered ?? 0)
-                        ).intValue
+                    let recent = self.recentGlucose
+                    let previous = self.data.glucose[self.data.glucose.count - 2]
+                    let recentValue = Decimal(recent?.glucose ?? recent?.sgv ?? 0)
+                    let previousValue = Decimal(previous.glucose ?? previous.sgv ?? 0)
+                    self.glucoseDelta = NSDecimalNumber(decimal: recentValue - previousValue).intValue
                 } else {
                     self.glucoseDelta = nil
                 }

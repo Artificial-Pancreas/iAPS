@@ -102,9 +102,9 @@ struct CurrentGlucoseView: View {
                 }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
-                    if let string = recent.unfiltered.map({
+                    if let string = (recent.glucose ?? recent.sgv).map({
                         formatter
-                            .string(from: Double(units == .mmolL ? $0.asMmolL : $0) as NSNumber) ?? "" })
+                            .string(from: Double(units == .mmolL ? Decimal($0).asMmolL : Decimal($0)) as NSNumber) ?? "" })
                     {
                         glucoseText(string).asAny()
                             .background { glucoseDrop }
