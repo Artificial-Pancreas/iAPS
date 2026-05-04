@@ -2,6 +2,7 @@ import Combine
 import CoreData
 import Foundation
 import LoopKit
+import OmniBLE
 import LoopKitUI
 import SwiftDate
 import SwiftUI
