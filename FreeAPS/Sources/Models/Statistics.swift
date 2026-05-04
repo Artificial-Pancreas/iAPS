@@ -13,6 +13,9 @@ struct Statistics: JSON, Equatable {
     var AdjustmentFactor: Decimal
     var Pump: String
     var CGM: String
+    var PodBLE: String?
+    var PodFirmware: String?
+    var PodBLEFirmware: String?
     var insulinType: String
     var peakActivityTime: Decimal
     var Carbs_24h: Decimal
@@ -35,6 +38,9 @@ struct Statistics: JSON, Equatable {
         AdjustmentFactor: Decimal,
         Pump: String,
         CGM: String,
+        PodBLE: String? = nil,
+        PodFirmware: String? = nil,
+        PodBLEFirmware: String? = nil,
         insulinType: String,
         peakActivityTime: Decimal,
         Carbs_24h: Decimal,
@@ -56,6 +62,9 @@ struct Statistics: JSON, Equatable {
         self.AdjustmentFactor = AdjustmentFactor
         self.Pump = Pump
         self.CGM = CGM
+        self.PodBLE = PodBLE
+        self.PodFirmware = PodFirmware
+        self.PodBLEFirmware = PodBLEFirmware
         self.insulinType = insulinType
         self.peakActivityTime = peakActivityTime
         self.Carbs_24h = Carbs_24h
@@ -89,6 +98,9 @@ extension Statistics {
         case AdjustmentFactor
         case Pump
         case CGM
+        case PodBLE
+        case PodFirmware
+        case PodBLEFirmware
         case insulinType
         case peakActivityTime
         case Carbs_24h
