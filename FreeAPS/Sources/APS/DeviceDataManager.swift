@@ -568,6 +568,18 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             self.pumpManager = newPumpManager
         }
         pumpName.send(pumpManager.localizedTitle)
+
+        if let omniBLE = pumpManager as? OmniBLEPumpManager,
+           let podState = omniBLE.state.podState,
+           podState.isFaulted,
+           let fault = podState.fault
+        {
+            let faultId = "\(podState.address):\(fault.faultEventCode.rawValue)"
+            if UserDefaults.standard.string(forKey: "iaps.lastLoggedPodFault") != faultId {
+                UserDefaults.standard.set(faultId, forKey: "iaps.lastLoggedPodFault")
+                debug(.deviceManager, "Pod fault detected: \(fault.faultEventCode) (\(fault.faultEventCode.rawValue))")
+            }
+        }
     }
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
