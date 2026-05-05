@@ -15,7 +15,7 @@ final class CrashReportService: NSObject, ObservableObject {
         // Install crash handlers as early as possible.
         // KSCrash installs Mach exception and POSIX signal handlers; they are idle until a crash.
         let config = KSCrashConfiguration()
-        KSCrash.shared.install(with: config)
+        try? KSCrash.shared.install(with: config)
 
         // Reload any reports that were captured and stored but not yet uploaded
         // (e.g., user dismissed the alert, app relaunched).
@@ -71,8 +71,8 @@ final class CrashReportService: NSObject, ObservableObject {
         var newPayloads: [Data] = []
         for idNum in ids {
             let reportID = idNum.int64Value
-            if let reportData = store.reportData(forID: reportID) {
-                newPayloads.append(reportData.value as Data)
+            if let reportData = store.reportData(for: reportID) {
+                newPayloads.append(reportData.value)
             }
         }
         // Delete from KSCrash's internal store immediately; we own them now.
