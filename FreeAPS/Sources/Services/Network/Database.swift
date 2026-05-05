@@ -52,6 +52,13 @@ extension Database {
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
+            .catch { error -> AnyPublisher<Data, Swift.Error> in
+                // 404 means no preferences have been stored for this token yet — not an error.
+                if case NetworkError.badStatusCode(.notFound, _) = error {
+                    return Empty().eraseToAnyPublisher()
+                }
+                return Fail(error: error).eraseToAnyPublisher()
+            }
             .retry(Config.retryCount)
             .decode(type: Preferences.self, decoder: JSONCoding.decoder)
             .eraseToAnyPublisher()
