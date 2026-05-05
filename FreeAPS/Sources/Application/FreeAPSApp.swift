@@ -10,6 +10,8 @@ import Swinject
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     @StateObject var dataController = CoreDataStack.shared
+    @StateObject private var crashReporter = CrashReportService()
+    @State private var showCrashAlert = false
 
     // Dependencies Assembler
     // contain all dependencies Assemblies
@@ -48,6 +50,19 @@ import Swinject
                 .environmentObject(Icons())
                 .onOpenURL(perform: handleURL)
                 .environmentObject(appServices)
+                .alert("Crash Detected", isPresented: $showCrashAlert) {
+                    Button("Upload Report") { crashReporter.uploadAndDismiss() }
+                    Button("Skip", role: .cancel) { crashReporter.dismiss() }
+                } message: {
+                    Text(
+                        "iAPS crashed during a previous session. Would you like to send a crash report to open-iaps.app to help diagnose the issue? No personal data is included."
+                    )
+                }
+                .onChange(of: crashReporter.pendingCount) {
+                    if crashReporter.pendingCount > 0 {
+                        showCrashAlert = true
+                    }
+                }
         }
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")
