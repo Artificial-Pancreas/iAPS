@@ -71,8 +71,10 @@ final class CrashReportService: NSObject, ObservableObject {
         var newPayloads: [Data] = []
         for idNum in ids {
             let reportID = idNum.int64Value
-            if let reportData = store.reportData(for: reportID) {
-                newPayloads.append(reportData.value)
+            if let report = store.report(for: reportID),
+               let data = try? JSONSerialization.data(withJSONObject: report.value)
+            {
+                newPayloads.append(data)
             }
         }
         // Delete from KSCrash's internal store immediately; we own them now.
