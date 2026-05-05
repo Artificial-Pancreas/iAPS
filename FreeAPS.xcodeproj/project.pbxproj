@@ -485,6 +485,7 @@
 		F2A4B7C32E6C8CA7000E0E85 /* CGMManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */; };
 		F2A4B7C62E6C9180000E0E85 /* BloodGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */; };
 		F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */; };
+		1D6732A75D39807685D21FD3 /* CrashReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5A714FB12AC2EC42D95BB2 /* CrashReportService.swift */; };
 		F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */; };
 		F2ACC0332EF87CC800C86FBC /* FoodItemDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */; };
 		F2ACC0352EF87CD200C86FBC /* FoodItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */; };
@@ -1188,6 +1189,7 @@
 		F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerExtensions.swift; sourceTree = "<group>"; };
 		F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucoseManager.swift; sourceTree = "<group>"; };
 		F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
+		CF5A714FB12AC2EC42D95BB2 /* CrashReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportService.swift; sourceTree = "<group>"; };
 		F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemDetailed.swift; sourceTree = "<group>"; };
 		F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemGroup.swift; sourceTree = "<group>"; };
@@ -1833,6 +1835,7 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CF5A714FB12AC2EC42D95BB2 /* CrashReportService.swift */,
 				F2159A552BA6238D00A0B716 /* ContactTrick */,
 				6B1A8D2C2B156EC100E76752 /* LiveActivity */,
 				CEB434E128B8F9BC00B70274 /* Bluetooth */,
@@ -3495,6 +3498,7 @@
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */,
 				F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */,
+				1D6732A75D39807685D21FD3 /* CrashReportService.swift in Sources */,
 				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
 				190EBCC629FF138000BA767D /* UIUXProvider.swift in Sources */,
 				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
