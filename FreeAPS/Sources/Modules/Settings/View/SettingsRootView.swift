@@ -228,7 +228,7 @@ extension Settings {
                             }
                             .alert("Trigger Test Crash?", isPresented: $showCrashConfirm) {
                                 Button("Crash Now", role: .destructive) {
-                                    fatalError("Manual test crash — MetricKit crash reporting test")
+                                    fatalError("Manual test crash — KSCrash reporting test")
                                 }
                                 Button("Cancel", role: .cancel) {}
                             } message: {
