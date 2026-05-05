@@ -58,6 +58,13 @@ import Swinject
                         "iAPS crashed during a previous session. Would you like to send a crash report to open-iaps.app to help diagnose the issue? No personal data is included."
                     )
                 }
+                .onAppear {
+                    // pendingCount is set during init() before onChange is attached,
+                    // so we must also check on first appearance.
+                    if crashReporter.pendingCount > 0 {
+                        showCrashAlert = true
+                    }
+                }
                 .onChange(of: crashReporter.pendingCount) {
                     if crashReporter.pendingCount > 0 {
                         showCrashAlert = true
