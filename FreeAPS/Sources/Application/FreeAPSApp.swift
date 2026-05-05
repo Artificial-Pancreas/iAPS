@@ -12,6 +12,8 @@ import Swinject
     @StateObject var dataController = CoreDataStack.shared
     @StateObject private var crashReporter = CrashReportService()
     @State private var showCrashAlert = false
+    @State private var showCrashUploadResult = false
+    @State private var crashUploadSucceeded = false
 
     // Dependencies Assembler
     // contain all dependencies Assemblies
@@ -58,6 +60,18 @@ import Swinject
                         "iAPS crashed during a previous session. Would you like to send a crash report to open-iaps.app to help diagnose the issue? No personal data is included."
                     )
                 }
+                .alert(
+                    crashUploadSucceeded ? "Report Sent" : "Upload Failed",
+                    isPresented: $showCrashUploadResult
+                ) {
+                    Button("OK") {}
+                } message: {
+                    Text(
+                        crashUploadSucceeded
+                            ? "The crash report was uploaded successfully. Thank you."
+                            : "The report could not be uploaded right now. It has been saved and you will be asked again next launch."
+                    )
+                }
                 .onAppear {
                     // pendingCount is set during init() before onChange is attached,
                     // so we must also check on first appearance.
@@ -68,6 +82,18 @@ import Swinject
                 .onChange(of: crashReporter.pendingCount) {
                     if crashReporter.pendingCount > 0 {
                         showCrashAlert = true
+                    }
+                }
+                .onChange(of: crashReporter.uploadState) {
+                    switch crashReporter.uploadState {
+                    case .succeeded:
+                        crashUploadSucceeded = true
+                        showCrashUploadResult = true
+                    case .failed:
+                        crashUploadSucceeded = false
+                        showCrashUploadResult = true
+                    default:
+                        break
                     }
                 }
         }

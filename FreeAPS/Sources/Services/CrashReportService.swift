@@ -1,10 +1,18 @@
 import Foundation
 import KSCrashRecording
 
+enum CrashUploadState: Equatable {
+    case idle
+    case uploading
+    case succeeded
+    case failed
+}
+
 /// Installs KSCrash signal handlers at startup, collects crash reports from the previous
 /// session on next launch, and queues them for upload with user consent.
 final class CrashReportService: NSObject, ObservableObject {
     @Published private(set) var pendingCount: Int = 0
+    @Published private(set) var uploadState: CrashUploadState = .idle
 
     private let storageKey = "io.openIAPS.pendingCrashPayloads"
     private var pendingPayloads: [Data] = []
@@ -30,13 +38,21 @@ final class CrashReportService: NSObject, ObservableObject {
 
     // MARK: - Public
 
-    /// Upload all queued crash reports then clear local storage.
+    /// Upload all queued crash reports. Shows uploadState feedback when complete.
+    /// Reports are only removed from persistent storage on confirmed success; on failure
+    /// they remain so the user is prompted again next launch.
     func uploadAndDismiss() {
         let payloads = pendingPayloads
-        clear()
+        // Clear in-memory state now so this session won't re-prompt,
+        // but leave UserDefaults intact until upload is confirmed.
+        pendingPayloads = []
+        pendingCount = 0
+        uploadState = .uploading
 
         let appId = Token().getIdentifier()
         let baseURL = IAPSconfig.statURL
+        let group = DispatchGroup()
+        var anyFailed = false
 
         for payload in payloads {
             var components = URLComponents()
@@ -44,7 +60,7 @@ final class CrashReportService: NSObject, ObservableObject {
             components.host = baseURL.host
             components.port = baseURL.port
             components.path = "/api/v1/upload/crash"
-            guard let url = components.url else { continue }
+            guard let url = components.url else { anyFailed = true; continue }
 
             var request = URLRequest(url: url, timeoutInterval: 60)
             request.httpMethod = "POST"
@@ -52,7 +68,27 @@ final class CrashReportService: NSObject, ObservableObject {
             request.setValue(appId, forHTTPHeaderField: "X-App-Id")
             request.httpBody = payload
 
-            URLSession.shared.dataTask(with: request).resume()
+            group.enter()
+            URLSession.shared.dataTask(with: request) { _, response, error in
+                if error != nil || (response as? HTTPURLResponse).map({ $0.statusCode >= 400 }) == true {
+                    anyFailed = true
+                }
+                group.leave()
+            }.resume()
+        }
+
+        group.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            if anyFailed {
+                self.uploadState = .failed
+                // Leave UserDefaults intact — reports will be offered again next launch.
+            } else {
+                UserDefaults.standard.removeObject(forKey: self.storageKey)
+                self.uploadState = .succeeded
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
+                self?.uploadState = .idle
+            }
         }
     }
 
