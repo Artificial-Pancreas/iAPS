@@ -1,9 +1,8 @@
-import Combine
 import Foundation
-import MetricKit
+import KSCrashRecording
 
-/// Receives MetricKit crash diagnostics on next app launch after a crash,
-/// queues them for upload, and publishes state for the UI to present a consent alert.
+/// Installs KSCrash signal handlers at startup, collects crash reports from the previous
+/// session on next launch, and queues them for upload with user consent.
 final class CrashReportService: NSObject, ObservableObject {
     @Published private(set) var pendingCount: Int = 0
 
@@ -12,18 +11,26 @@ final class CrashReportService: NSObject, ObservableObject {
 
     override init() {
         super.init()
+
+        // Install crash handlers as early as possible.
+        // KSCrash installs Mach exception and POSIX signal handlers; they are idle until a crash.
+        let config = KSCrashConfiguration()
+        KSCrash.shared.install(with: config)
+
+        // Reload any reports that were captured and stored but not yet uploaded
+        // (e.g., user dismissed the alert, app relaunched).
         if let stored = UserDefaults.standard.array(forKey: storageKey) as? [Data], !stored.isEmpty {
             pendingPayloads = stored
             pendingCount = stored.count
         }
-        MXMetricManager.shared.add(self)
+
+        // Harvest any new crash reports written by the previous session.
+        harvestPendingReports()
     }
 
-    deinit {
-        MXMetricManager.shared.remove(self)
-    }
+    // MARK: - Public
 
-    /// Upload all pending crash payloads then clear them.
+    /// Upload all queued crash reports then clear local storage.
     func uploadAndDismiss() {
         let payloads = pendingPayloads
         clear()
@@ -54,27 +61,33 @@ final class CrashReportService: NSObject, ObservableObject {
         clear()
     }
 
+    // MARK: - Private
+
+    private func harvestPendingReports() {
+        guard let store = KSCrash.shared.reportStore else { return }
+        let ids = store.reportIDs
+        guard !ids.isEmpty else { return }
+
+        var newPayloads: [Data] = []
+        for idNum in ids {
+            let reportID = idNum.int64Value
+            if let reportData = store.reportData(forID: reportID) {
+                newPayloads.append(reportData.value as Data)
+            }
+        }
+        // Delete from KSCrash's internal store immediately; we own them now.
+        store.deleteAllReports()
+
+        guard !newPayloads.isEmpty else { return }
+
+        pendingPayloads.append(contentsOf: newPayloads)
+        pendingCount = pendingPayloads.count
+        UserDefaults.standard.set(pendingPayloads, forKey: storageKey)
+    }
+
     private func clear() {
         pendingPayloads = []
         pendingCount = 0
         UserDefaults.standard.removeObject(forKey: storageKey)
-    }
-}
-
-extension CrashReportService: MXMetricManagerSubscriber {
-    func didReceive(_: [MXMetricPayload]) {}
-
-    func didReceive(_ payloads: [MXDiagnosticPayload]) {
-        let crashes = payloads.compactMap(\.crashDiagnostics).flatMap { $0 }
-        guard !crashes.isEmpty else { return }
-
-        let jsonPayloads = crashes.map { $0.jsonRepresentation() }
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.pendingPayloads.append(contentsOf: jsonPayloads)
-            self.pendingCount = self.pendingPayloads.count
-            UserDefaults.standard.set(self.pendingPayloads, forKey: self.storageKey)
-        }
     }
 }
