@@ -10,6 +10,7 @@ extension Settings {
         @State private var showShareSheet = false
         @State private var entity: String = "Readings"
         @State private var deletionAlert = false
+        @State private var showCrashConfirm = false
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -214,6 +215,24 @@ extension Settings {
 
                             Group {
                                 NavigationLink("Delete CoreData database records", destination: clearView)
+                            }
+
+                            Group {
+                                HStack {
+                                    Text("Trigger Test Crash")
+                                    Button("Crash") { showCrashConfirm = true }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.red)
+                                }
+                            }
+                            .alert("Trigger Test Crash?", isPresented: $showCrashConfirm) {
+                                Button("Crash Now", role: .destructive) {
+                                    fatalError("Manual test crash — MetricKit crash reporting test")
+                                }
+                                Button("Cancel", role: .cancel) {}
+                            } message: {
+                                Text("This will immediately crash iAPS. On next launch you will be prompted to upload the crash report.")
                             }
                         }
                     } header: { Text("Developer") }
