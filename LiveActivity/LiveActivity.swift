@@ -3,42 +3,24 @@ import Charts
 import SwiftUI
 import WidgetKit
 
-private enum Size {
+enum LiveActivitySize {
     case minimal
     case compact
     case expanded
 }
 
 struct LiveActivity: Widget {
-    private let dateFormatter: DateFormatter = {
-        var formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        return formatter
-    }()
-
-    private let minuteFormatter: NumberFormatter = {
-        var formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
-
     var body: some WidgetConfiguration {
         let config = ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
-            if !context.state.showChart {
-                bannerWithoutChart(for: context)
-            } else {
-                bannerWithChart(for: context)
-            }
+            LiveActivityBannerWrapper(context: context)
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
                     HStack {
-                        loop(context: context, size: 23)
+                        LoopCircle(context: context, compact: false, size: 23)
                     }.padding(10)
                 }
 
@@ -58,13 +40,14 @@ struct LiveActivity: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    updatedLabel(context: context).font(.caption)
+                    TimestampLabel(context: context)
+                        .font(.caption)
                         .padding(.trailing, 10)
                 }
                 DynamicIslandExpandedRegion(.bottom) {}
             } compactLeading: {
                 HStack {
-                    loop(context: context, size: 12)
+                    LoopCircle(context: context, compact: true, size: 12)
                     bgAndTrend(context: context, size: .compact).0.padding(.leading, 4)
                 }
             } compactTrailing: {
@@ -108,12 +91,7 @@ struct LiveActivity: Widget {
         }
     }
 
-    private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        let text = Text("\(dateFormatter.string(from: context.state.loopDate))")
-        return text
-    }
-
-    private func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, size: Size) -> (some View, Int) {
+    private func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, size: LiveActivitySize) -> (some View, Int) {
         var characters = 0
 
         let bgText = context.state.bg
@@ -170,7 +148,7 @@ struct LiveActivity: Widget {
         return (stack, characters)
     }
 
-    private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
+    private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: LiveActivitySize) -> some View {
         HStack(spacing: 0) {
             Text(context.state.iob)
             Text(" U")
@@ -178,68 +156,169 @@ struct LiveActivity: Widget {
         .foregroundStyle(.insulin)
     }
 
-    private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
+    private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: LiveActivitySize) -> some View {
         HStack(spacing: 0) {
             Text(context.state.cob)
             Text(" g")
         }
         .foregroundStyle(.loopYellow)
     }
+}
 
-    private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
+extension Color {
+    static let uam = Color("UAM")
+    static let zt = Color("ZT")
+}
+
+private struct LiveActivityBannerWrapper: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        if #available(iOS 18.0, *) {
+            LiveActivityBannerWrapperIOS18(context: context)
+        } else {
+            if context.state.showChart {
+                LiveActivityChart(context: context, isWatch: false)
+            } else {
+                LiveActivityBanner(context: context, isWatch: false)
+            }
+        }
+    }
+}
+
+@available(iOS 18.0, *) private struct LiveActivityBannerWrapperIOS18: View {
+    @Environment(\.activityFamily) private var activityFamily
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        if context.state.showChart {
+            LiveActivityChart(context: context, isWatch: activityFamily == .small)
+        } else {
+            LiveActivityBanner(context: context, isWatch: activityFamily == .small)
+        }
+    }
+}
+
+struct LoopCircle: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    let compact: Bool
+    let size: CGFloat
+
+    var body: some View {
         let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
-        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
-        return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
-    }
+        let color: Color = timeAgo > 12 ? .loopRed : timeAgo > 8 ? .loopYellow : .loopGreen
 
-    private var emptyText: some View {
-        Text(" ").font(.caption).offset(x: 0, y: -5)
+        Circle()
+            .stroke(color, lineWidth: compact ? 1.5 : 3)
+            .frame(width: size)
     }
+}
 
-    private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        LiveActivityChartWrapper(context: context)
+struct BannerLoopCircle: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+    let size: CGFloat
+
+    var body: some View {
+        LoopCircle(context: context, compact: false, size: size)
     }
+}
 
-    @ViewBuilder private func bannerWithoutChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        VStack(spacing: 2) {
-            ZStack {
-                updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+struct TimestampLabel: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    private static let dateFormatter: DateFormatter = {
+        var formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
+    var body: some View {
+        Text(Self.dateFormatter.string(from: context.state.loopDate))
+    }
+}
+
+struct BannerTimestampLabel: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        TimestampLabel(context: context)
+            .font(.system(size: 14))
+            .foregroundStyle(.white.opacity(0.7))
+    }
+}
+
+struct WatchLoopCircleAndTimestamp: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        HStack(spacing: 3) {
+            BannerLoopCircle(context: context, size: 9)
+                .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
+                .padding(.trailing, 2)
+            BannerTimestampLabel(context: context)
+        }
+    }
+}
+
+struct WatchGlucoseDisplay: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+    private let decimalString: String = Locale.current.decimalSeparator ?? "."
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 6) {
+            let string = context.state.bg
+            let decimalSeparator = string.contains(decimalString) ? decimalString : "."
+            let decimal = string.components(separatedBy: decimalSeparator)
+            if decimal.count > 1 {
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text(decimal[0]).font(.system(size: 28, weight: .semibold, design: .rounded))
+                    Text(decimalSeparator).font(.system(size: 20, weight: .semibold, design: .rounded))
+                    Text(decimal[1]).font(.system(size: 20, weight: .semibold, design: .rounded))
+                }
+            } else {
+                Text(string)
+                    .font(.system(size: 28, weight: .semibold, design: .rounded))
             }
-            HStack {
-                VStack {
-                    loop(context: context, size: 22)
-                    emptyText
-                }.offset(x: 0, y: 2)
-                Spacer()
-                VStack {
-                    bgAndTrend(context: context, size: .expanded).0.font(.title)
-                    changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7)).offset(x: -12, y: -5)
-                }
-                Spacer()
-                VStack {
-                    iob(context: context, size: .expanded).font(.title)
-                    emptyText
-                }
-                Spacer()
-                VStack {
-                    cob(context: context, size: .expanded).font(.title)
-                    emptyText
-                }
+
+            if let direction = context.state.direction {
+                Text(direction)
+                    .font(.system(size: 16))
             }
-            HStack {
-                Spacer()
-                Text(NSLocalizedString("Eventual Glucose", comment: ""))
-                Spacer()
-                Text(context.state.eventual)
-                Text(context.state.mmol ? NSLocalizedString(
-                    "mmol/L",
-                    comment: "The short unit display string for millimoles of glucose per liter"
-                ) : NSLocalizedString(
-                    "mg/dL",
-                    comment: "The short unit display string for milligrams of glucose per decilter"
-                )).foregroundStyle(.secondary)
-            }.padding(.top, 10)
+        }
+        .foregroundStyle(Color.white)
+    }
+}
+
+struct WatchIOBCOBDisplay: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    @ViewBuilder var body: some View {
+        HStack(spacing: 10) {
+            HStack(spacing: 0.5) {
+                Text(context.state.iob)
+                    .font(.system(size: 19))
+                    .tracking(-0.5)
+                    .foregroundStyle(.white)
+                Text("U")
+                    .font(.system(size: 19).smallCaps())
+                    .foregroundStyle(.white.opacity(0.7))
+            }
+            .fontWidth(.compressed)
+
+            if context.state.cob != "0" {
+                HStack(spacing: 0.5) {
+                    Text(context.state.cob)
+                        .font(.system(size: 19))
+                        .tracking(-0.5)
+                        .foregroundStyle(.white)
+                    Text("g")
+                        .font(.system(size: 19))
+                        .foregroundStyle(.white.opacity(0.7))
+                }
+                .fontWidth(.compressed)
+            }
         }
         .privacySensitive()
         .padding(.vertical, 10).padding(.horizontal, 15)
@@ -249,6 +328,22 @@ struct LiveActivity: Widget {
         .foregroundStyle(Color.primary)
         .background(BackgroundStyle.background.opacity(0.4))
         .activityBackgroundTint(Color.clear)
+    }
+}
+
+struct BannerEventualGlucose: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    private let eventualSymbol = "⇢"
+
+    var body: some View {
+        HStack(spacing: 3) {
+            Text(eventualSymbol)
+                .opacity(0.7)
+            Text(context.state.eventual)
+                .opacity(0.8)
+                .fontWidth(.condensed)
+        }
     }
 }
 
@@ -522,11 +617,6 @@ struct SampleData {
             uam: uam
         )
     }
-}
-
-extension Color {
-    static let uam = Color("UAM")
-    static let zt = Color("ZT")
 }
 
 #Preview("Notification", as: .content, using: LiveActivityAttributes.preview) {

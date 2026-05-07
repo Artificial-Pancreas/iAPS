@@ -3076,6 +3076,18 @@ Enact a temp Basal or a temp target */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamisk insulinkänslighet är inaktiverad medan Auto ISF är aktiverad";
 
 /* */
+"Nighttime" = "På natten";
+
+/* */
+"Disables Auto ISF during nighttime, or any other period selected." = "Inaktiverar automatisk ISF under nattetid, eller någon annan vald period.";
+
+/* */
+"To" = "Till";
+
+/* */
+"From" = "Från";
+
+/* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Standardvärde: 1,2. Den övre gränsen för automatisk justering av din insulinkänslighet";
 
 

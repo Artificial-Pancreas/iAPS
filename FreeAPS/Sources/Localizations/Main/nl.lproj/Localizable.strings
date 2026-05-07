@@ -2879,7 +2879,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Birth Date" = "Geboortedatum";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nAls u de dagelijkse back-ups van uw instellingen en statistieken inschakelt, worden er back-ups van uw online database gemaakt.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Deel alleen het minimale";
@@ -2888,7 +2888,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Just iAPS version number" = "Alleen iAPS versienummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
 
 /* Token section title */
 "Your recovery token" = "Je herstelcode";
@@ -2909,10 +2909,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Share your data anonymously" = "Deel je gegevens anoniem";
 
 /* */
-"Upload Daily Log" = "Upload Daily Log";
+"Upload Daily Log" = "Upload dagelijkse log";
 
 /* */
-"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Wanneer ingeschakeld, wordt het logbestand van de vorige dag na middernacht automatisch geüpload. Logboeken worden alleen gebruikt om de meerdaagse analysefunctie te bieden op open-iaps.app. Standaard uitgeschakeld.";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -3075,6 +3075,18 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld omdat Auto ISF is ingeschakeld";
+
+/* */
+"Nighttime" = "Nighttime";
+
+/* */
+"Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
+
+/* */
+"To" = "To";
+
+/* */
+"From" = "From";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Standaardwaarde: 1.2 De bovengrens van ISF aanpassing";

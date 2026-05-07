@@ -3076,6 +3076,18 @@ Enact a temp Basal or a temp target */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF bị vô hiệu hóa trong khi Auto ISF được bật";
 
 /* */
+"Nighttime" = "Ban đêm";
+
+/* */
+"Disables Auto ISF during nighttime, or any other period selected." = "Tắt Auto ISF trong ban đêm hoặc trong bất kỳ khoảng thời gian nào được chọn.";
+
+/* */
+"To" = "Đến";
+
+/* */
+"From" = "Từ";
+
+/* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Giá trị mặc định: 1,2. Đây là giới hạn giá trị cao nhất của điều chỉnh ISF";
 
 

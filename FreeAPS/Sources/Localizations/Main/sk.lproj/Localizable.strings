@@ -1413,21 +1413,21 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Serving Size" = "Veľkosť porcie";
 
-"Standard Serving" = "Standard Serving";
+"Standard Serving" = "Štandardná porcia";
 
 "Food Name" = "Názov jedla";
 
 "Food" = "Jedlo";
 
-"Tag name" = "Tag name";
+"Tag name" = "Názov štítku";
 
-"Add New Tag" = "Add New Tag";
+"Add New Tag" = "Pridať nový štítok";
 
-"Tags" = "Tags";
+"Tags" = "Štítky";
 
-"Show All Nutrients" = "Show All Nutrients";
+"Show All Nutrients" = "Zobraziť všetky živiny";
 
-"Calories" = "Calories";
+"Calories" = "Kalórie";
 
 "Quick access to your frequently used foods" = "Rýchly prístup k často používaným potravinám";
 
@@ -1493,7 +1493,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**:: Bezplatná, otvorená databáza so širokým pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny.";
 
 "AI Progress Animation" = "Animácia postupu umelej inteligencie";
 
@@ -1547,7 +1547,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API kľúč";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Získajte API kľúč na platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
 
@@ -1555,17 +1555,17 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Google Gemini API Key" = "Google Gemini API kľúč";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Získajte API kľúč na ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Získajte API kľúč na ai.google.dev.";
 
 "Enter your Claude API key" = "Zadajte svoj Claude API kľúč";
 
 "Claude API Key" = "Claude API kľúč";
 
-"Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
+"Get an API key at console.anthropic.com." = "Získajte API kľúč na console.anthropic.com.";
 
 "Anthropic (Claude API) Configuration" = "Konfigurácia Anthropic (Claude API)";
 
@@ -1743,7 +1743,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Bezplatná, oficiálna databáza nutričných hodnôt. Poskytuje kvalitné nutričné údaje pre nebalené potraviny ako ovocie, zelenina a mäso.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
+"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**:: Bezplatná, otvorená databáza so širokým pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny.";
 "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Ak vyberiete „OpenFoodFacts“ alebo „USDA“, analýza kamerou použije základný odhad namiesto AI";
 
 "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Vyberte „Anthropic (Claude API)“, „Google (Gemini API)“ alebo „OpenAI (ChatGPT API)“, aby AI analýza obrázkov využívala vaše platené kľúče";
@@ -1765,7 +1765,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "ChatGPT (OpenAI) API Key" = "ChatGPT (OpenAI) API kľúč";
 
-"Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
+"Get an API key at platform.openai.com." = "Získajte API kľúč na platform.openai.com.";
 
 "OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
 
@@ -1779,7 +1779,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Google Gemini API Key" = "Google Gemini API kľúč";
 
-"Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
+"Get a free API key at ai.google.dev." = "Získajte API kľúč na ai.google.dev.";
 
 "Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
 
@@ -1975,9 +1975,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Cal" = "Cal";
 
-"servings" = "servings";
+"servings" = "porcie";
 
-"serving" = "serving";
+"serving" = "porcia";
 
 "Reset to " = "Obnoviť na ";
 
@@ -2879,7 +2879,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Birth Date" = "Dátum narodenia";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nAk povolíte „Zdieľanie a zálohovanie“, denne sa budú vytvárať zálohy vašich nastavení a štatistík do online databázy.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Zdieľať základné údaje";
@@ -2888,7 +2888,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Just iAPS version number" = "Len číslo verzie iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Každá informácia, ktorú sa rozhodnete zdieľať, sa nahráva anonymne. Aby sa zabránilo duplicitným nahrávaniam, údaje sú identifikované jedinečným náhodným reťazcom uloženým vo vašom telefóne – obnovovacím tokenom.";
 
 /* Token section title */
 "Your recovery token" = "Váš token pre obnovu";
@@ -2909,10 +2909,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Share your data anonymously" = "Anonymné zdieľanie vašich dát";
 
 /* */
-"Upload Daily Log" = "Upload Daily Log";
+"Upload Daily Log" = "Nahrať denný log";
 
 /* */
-"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Po zapnutí sa súbor záznamu z predchádzajúceho dňa automaticky nahrá po polnoci. Záznamy sa používajú iba na poskytovanie funkcie viacdňovej analýzy na open-iaps.app. V predvolenom nastavení vypnuté.";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -3075,6 +3075,18 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamické ISF je vypnuté, ak je Auto ISF zapnuté";
+
+/* */
+"Nighttime" = "Nighttime";
+
+/* */
+"Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
+
+/* */
+"To" = "To";
+
+/* */
+"From" = "From";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Predvolená hodnota: 1,2 Horná hranica nastavenia ISF";
@@ -3273,10 +3285,10 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Enable Auto ISF" = "Zapnúť Auto ISF";
 
 /* */
-"Enable Auto CR" = "Enable Auto CR";
+"Enable Auto CR" = "Zapnúť Auto CR";
 
 /* */
-"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely.";
+"Highly Experimental!\n\nAdjusts your profile Carb Ratio each loop by the same amount as your profile ISF using autoISF settings.\n\nUse the bolus calculator with great care, this may cause dose recommendations to be too strong.\n\nAutoCR + autoISF can stack. Reduce autoISF aggressiveness first (e.g., lower max/weights), then enable AutoCR and monitor closely." = "Veľmi experimentálne!\n\nUpravuje váš profilový sacharidový pomer pri každom cykle o rovnakú hodnotu ako váš profilový ISF pomocou nastavení autoISF.\n\nPoužívajte bolusový kalkulátor s veľkou opatrnosťou, môže to spôsobiť, že odporúčania dávok budú príliš veľké.\n\nAutoCR + autoISF sa môžu kumulovať. Najprv znížte agresivitu autoISF (napr. znížením max/weights), potom povoľte AutoCR a pozorne sledujte.";
 
 /* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Povolí Auto ISF. Týmto sa deaktivuje akékoľvek dynamické nastavenie ISF/CR";
@@ -3601,7 +3613,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Minimum Threshold Setting" = "Nastavenie minimálneho prahu";
 
 /* Minimum Threshold Setting */
-"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
+"This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "Toto nastavenie vám umožňuje zvoliť limit cieľovej glykémie, pod ktorým sa nikdy nepodá žiadny SMB inzulín ani dodatočný dočasný bazál. Dodatočný dočasný bazál je inzulín presahujúci množstvo inzulínu potrebné pre bazálny metabolizmus.\n\nSkutočný prah glykémie použitý v algoritme OpenAPS bude vždy väčšia hodnota z tohto nastavenia a vypočítanej hodnoty:\n\nCieľová glykémia - (Cieľová glykémia - 40) / 2.";
 
 /* Threshold Table Columns Title */
 "Setting" = "Nastavenia";
@@ -3944,13 +3956,13 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* main chart settings - toggle, controls whether to show y-axis labels (glucose) */
 "Y-axis labels" = "Označenia osi Y";
 
-"Fiber" = "Fiber";
+"Fiber" = "Vláknina";
 
-"Sugars" = "Sugars";
+"Sugars" = "Cukry";
 
-"Search Results" = "Search Results";
+"Search Results" = "Výsledky vyhľadávania";
 
-"Results for" = "Results for";
+"Results for" = "Výsledky pre";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Complete Meal";
+"Complete Meal" = "Celé jedlo";

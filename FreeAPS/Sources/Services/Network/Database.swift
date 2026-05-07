@@ -7,10 +7,26 @@ class Database {
     }
 
     private enum Config {
-        static let sharePath = "/upload.php"
-        static let versionPath = "/vcheck.php"
-        static let download = "/download.php?token="
-        static let profileList = "&section=profile_list"
+        static let uploadStatisticsPath = "/api/v1/upload/statistics"
+        static let uploadPreferencesPath = "/api/v1/upload/preferences"
+        static let uploadSettingsPath = "/api/v1/upload/settings"
+        static let uploadProfilesPath = "/api/v1/upload/profiles"
+        static let uploadPumpSettingsPath = "/api/v1/upload/pump-settings"
+        static let uploadTempTargetsPath = "/api/v1/upload/temp-targets"
+        static let uploadMealPresetsPath = "/api/v1/upload/meal-presets"
+        static let uploadOverridePresetsPath = "/api/v1/upload/override-presets"
+        static let versionPath = "/api/v1/version_check"
+        static let downloadListPath = "/api/v1/download/list"
+        static let downloadPreferencesPath = "/api/v1/download/preferences"
+        static let downloadSettingsPath = "/api/v1/download/settings"
+        static let downloadProfilePath = "/api/v1/download/profile"
+        static let downloadPumpSettingsPath = "/api/v1/download/pump-settings"
+        static let downloadTempTargetsPath = "/api/v1/download/temp-targets"
+        static let downloadMealPresetsPath = "/api/v1/download/meal-presets"
+        static let downloadOverridePresetsPath = "/api/v1/download/override-presets"
+        static let downloadDeletePath = "/api/v1/download/delete"
+        static let downloadRestorePath = "/api/v1/download/restore"
+
         static let retryCount = 2
         static let timeout: TimeInterval = 60
     }
@@ -27,9 +43,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=preferences&profile=" + name
+        components.path = Config.downloadPreferencesPath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -43,9 +62,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + restoreToken + "&new_token=" + token
+        components.path = Config.downloadRestorePath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "restore_token": restoreToken])
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -59,9 +81,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + Config.profileList
+        components.path = Config.downloadListPath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token])
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -75,9 +100,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=settings&profile=" + name
+        components.path = Config.downloadSettingsPath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.timeoutInterval = Config.timeout
 
         let decoder = JSONDecoder()
@@ -94,9 +122,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=profile&profile=" + name
+        components.path = Config.downloadProfilePath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
 
@@ -111,9 +142,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=profiles_delete&profile=" + name
+        components.path = Config.downloadDeletePath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -127,9 +161,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=pumpSettings&profile=" + name
+        components.path = Config.downloadPumpSettingsPath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
@@ -146,9 +183,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=tempTargets&profile=" + name
+        components.path = Config.downloadTempTargetsPath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
@@ -163,9 +203,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=mealPresets&profile=" + name
+        components.path = Config.downloadMealPresetsPath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -179,9 +222,12 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.download + token + "&section=overridePresets&profile=" + name
+        components.path = Config.downloadOverridePresetsPath
 
         var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
         request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
@@ -196,7 +242,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadProfilesPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -216,7 +262,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadStatisticsPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -235,7 +281,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadPreferencesPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -255,7 +301,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadSettingsPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -275,7 +321,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadPumpSettingsPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -295,7 +341,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadTempTargetsPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -315,7 +361,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadMealPresetsPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -335,7 +381,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.sharePath
+        components.path = Config.uploadOverridePresetsPath
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout

@@ -16,8 +16,11 @@ class NightscoutAPI {
         static let treatmentsPath = "/api/v1/treatments.json"
         static let statusPath = "/api/v1/devicestatus.json"
         static let profilePath = "/api/v1/profile.json"
-        static let sharePath = "/upload.php"
-        static let versionPath = "/vcheck.php"
+        static let uploadStatisticsPath = "/api/v1/upload/statistics"
+        static let uploadPreferencesPath = "/api/v1/upload/preferences"
+        static let uploadSettingsPath = "/api/v1/upload/settings"
+        static let uploadProfilesPath = "/api/v1/upload/profiles"
+        static let versionPath = "/api/v1/version_check"
         static let retryCount = 2
         static let timeout: TimeInterval = 60
     }
@@ -522,7 +525,7 @@ extension NightscoutAPI {
         components.scheme = statURL.scheme
         components.host = statURL.host
         components.port = statURL.port
-        components.path = Config.sharePath
+        components.path = Config.uploadStatisticsPath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
@@ -589,7 +592,7 @@ extension NightscoutAPI {
         components.scheme = statURL.scheme
         components.host = statURL.host
         components.port = statURL.port
-        components.path = Config.sharePath
+        components.path = Config.uploadPreferencesPath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
@@ -611,7 +614,7 @@ extension NightscoutAPI {
         components.scheme = statURL.scheme
         components.host = statURL.host
         components.port = statURL.port
-        components.path = Config.sharePath
+        components.path = Config.uploadSettingsPath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
@@ -657,7 +660,7 @@ extension NightscoutAPI {
         components.scheme = statURL.scheme
         components.host = statURL.host
         components.port = statURL.port
-        components.path = Config.sharePath
+        components.path = Config.uploadProfilesPath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
