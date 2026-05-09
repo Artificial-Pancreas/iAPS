@@ -516,6 +516,9 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
+        let maxBasal = Double(settingsManager.pumpSettings.maxBasal)
+        let rate = duration > 0 ? min(rate, maxBasal) : rate
+
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
