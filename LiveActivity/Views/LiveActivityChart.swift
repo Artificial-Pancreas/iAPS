@@ -315,6 +315,7 @@ struct LiveActivityChart: View {
                         .foregroundStyle(Color(.insulin))
                 }
                 .fontWidth(.condensed)
+                .fixedSize(horizontal: true, vertical: false)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 HStack(spacing: 0.5) {
@@ -325,6 +326,7 @@ struct LiveActivityChart: View {
                 }
                 .font(.system(size: 20))
                 .fontWidth(.condensed)
+                .fixedSize(horizontal: true, vertical: false)
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
