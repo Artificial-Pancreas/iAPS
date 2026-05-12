@@ -203,8 +203,11 @@ extension NotificationsConfig {
                                 if state.liveActivityChart {
                                     Toggle("Show Predictions", isOn: $state.liveActivityChartShowPredictions)
                                     Toggle("Watch: Show Chart", isOn: $state.liveActivityWatchChart)
-                                    if state.liveActivityWatchChart, state.liveActivityChartShowPredictions {
-                                        Toggle("Watch: Show Predictions", isOn: $state.liveActivityWatchPredictions)
+                                    if state.liveActivityWatchChart {
+                                        Toggle("Watch: Show Eventual", isOn: $state.liveActivityWatchEventual)
+                                        if state.liveActivityChartShowPredictions {
+                                            Toggle("Watch: Show Predictions", isOn: $state.liveActivityWatchPredictions)
+                                        }
                                     }
                                 }
                             }

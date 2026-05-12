@@ -48,6 +48,7 @@ extension LiveActivityAttributes.ContentState {
         watchChart: Bool,
         watchPredictions: Bool,
         watchDelta: Bool,
+        watchEventual: Bool,
         chartLowThreshold: Int,
         chartHighThreshold: Int
     ) {
@@ -118,6 +119,7 @@ extension LiveActivityAttributes.ContentState {
             watchChart: watchChart,
             watchPredictions: watchPredictions,
             watchDelta: watchDelta,
+            watchEventual: watchEventual,
             chartLowThreshold: Int16(clamping: chartLowThreshold),
             chartHighThreshold: Int16(clamping: chartHighThreshold)
         )
@@ -306,6 +308,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
                         watchChart: settings.liveActivityWatchChart,
                         watchPredictions: settings.liveActivityWatchPredictions,
                         watchDelta: settings.liveActivityWatchDelta,
+                        watchEventual: settings.liveActivityWatchEventual,
                         chartLowThreshold: Int16(clamping: (settings.low as NSDecimalNumber).intValue),
                         chartHighThreshold: Int16(clamping: (settings.high as NSDecimalNumber).intValue)
                     ),
@@ -377,6 +380,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             watchChart: settings.liveActivityWatchChart,
             watchPredictions: settings.liveActivityWatchPredictions,
             watchDelta: settings.liveActivityWatchDelta,
+            watchEventual: settings.liveActivityWatchEventual,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
         ) else {
@@ -418,6 +422,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             watchChart: settings.liveActivityWatchChart,
             watchPredictions: settings.liveActivityWatchPredictions,
             watchDelta: settings.liveActivityWatchDelta,
+            watchEventual: settings.liveActivityWatchEventual,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
         ) else {

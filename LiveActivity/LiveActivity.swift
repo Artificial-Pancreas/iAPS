@@ -367,6 +367,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: false,
             watchPredictions: false,
             watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -387,6 +388,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: false,
             watchPredictions: false,
             watchDelta: false,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -407,6 +409,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: false,
             watchPredictions: false,
             watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -428,6 +431,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: false,
             watchPredictions: false,
             watchDelta: false,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -448,6 +452,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: false,
             watchPredictions: false,
             watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -469,6 +474,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: false,
             watchPredictions: false,
             watchDelta: false,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -490,6 +496,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: true,
             watchPredictions: true,
             watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -511,6 +518,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: true,
             watchPredictions: true,
             watchDelta: false,
+            watchEventual: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -532,6 +540,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: true,
             watchPredictions: true,
             watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -553,6 +562,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: true,
             watchPredictions: false,
             watchDelta: false,
+            watchEventual: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -574,6 +584,7 @@ private extension LiveActivityAttributes.ContentState {
             watchChart: true,
             watchPredictions: false,
             watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )

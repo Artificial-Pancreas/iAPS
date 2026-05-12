@@ -62,6 +62,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var liveActivityWatchChart: Bool = false
     var liveActivityWatchPredictions: Bool = true
     var liveActivityWatchDelta: Bool = true
+    var liveActivityWatchEventual: Bool = true
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
@@ -488,6 +489,10 @@ extension FreeAPSSettings: Decodable {
 
         if let liveActivityWatchDelta = try? container.decode(Bool.self, forKey: .liveActivityWatchDelta) {
             settings.liveActivityWatchDelta = liveActivityWatchDelta
+        }
+
+        if let liveActivityWatchEventual = try? container.decode(Bool.self, forKey: .liveActivityWatchEventual) {
+            settings.liveActivityWatchEventual = liveActivityWatchEventual
         }
 
         // ----

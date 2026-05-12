@@ -58,22 +58,29 @@ struct LiveActivityChart: View {
         .padding(.vertical, 4)
         .padding(.horizontal, 8)
         .overlay(alignment: .bottomLeading) {
-            WatchLoopCircleAndTimestamp(context: context)
-                .padding(.horizontal, 5)
-                .padding(.vertical, 2)
-                .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
-                .padding(.leading, 5)
-                .padding(.bottom, 5)
+            if context.state.watchEventual {
+                WatchLoopCircleAndTimestamp(context: context)
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 2)
+                    .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
+                    .padding(.leading, 5)
+                    .padding(.bottom, 5)
+            }
         }
         .overlay(alignment: .bottomTrailing) {
             VStack(alignment: .trailing, spacing: 0) {
                 if context.state.watchDelta, !context.state.change.isEmpty, !context.isStale {
                     Text(context.state.change)
+                        .font(.system(size: 16))
                         .opacity(0.7)
                 }
-                BannerEventualGlucose(context: context)
+                if context.state.watchEventual {
+                    BannerEventualGlucose(context: context)
+                        .font(.system(size: 16))
+                } else {
+                    WatchLoopCircleAndTimestamp(context: context)
+                }
             }
-            .font(.system(size: 16))
             .padding(.horizontal, 5)
             .padding(.vertical, 2)
             .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
