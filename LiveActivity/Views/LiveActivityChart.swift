@@ -66,13 +66,19 @@ struct LiveActivityChart: View {
                 .padding(.bottom, 5)
         }
         .overlay(alignment: .bottomTrailing) {
-            BannerEventualGlucose(context: context)
-                .font(.system(size: 16))
-                .padding(.horizontal, 5)
-                .padding(.vertical, 2)
-                .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
-                .padding(.trailing, 5)
-                .padding(.bottom, 5)
+            VStack(alignment: .trailing, spacing: 0) {
+                if context.state.watchDelta, !context.state.change.isEmpty, !context.isStale {
+                    Text(context.state.change)
+                        .opacity(0.7)
+                }
+                BannerEventualGlucose(context: context)
+            }
+            .font(.system(size: 16))
+            .padding(.horizontal, 5)
+            .padding(.vertical, 2)
+            .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 4))
+            .padding(.trailing, 5)
+            .padding(.bottom, 5)
         }
         .foregroundStyle(.white)
         .privacySensitive()
@@ -93,8 +99,9 @@ struct LiveActivityChart: View {
         let state = context.state
         let conversionConstant: Double = (state.mmol ? 0.0555 : 1)
 
-        // on the watch, we display only up to 10 prediction points
-        let predictions = isWatch ? limitedPredictions(state.predictions, to: 10) : state.predictions
+        let predictions = isWatch
+            ? (state.watchPredictions ? limitedPredictions(state.predictions, to: 10) : nil)
+            : state.predictions
 
         // Prediction data
         let iob: [Int16] = predictions?.iob?.values ?? []

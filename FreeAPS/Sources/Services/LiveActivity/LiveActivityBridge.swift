@@ -45,6 +45,9 @@ extension LiveActivityAttributes.ContentState {
         readings: [Readings]?,
         predictions: Predictions?,
         showChart: Bool,
+        watchChart: Bool,
+        watchPredictions: Bool,
+        watchDelta: Bool,
         chartLowThreshold: Int,
         chartHighThreshold: Int
     ) {
@@ -112,6 +115,9 @@ extension LiveActivityAttributes.ContentState {
             readings: preparedReadings,
             predictions: activityPredictions,
             showChart: showChart,
+            watchChart: watchChart,
+            watchPredictions: watchPredictions,
+            watchDelta: watchDelta,
             chartLowThreshold: Int16(clamping: chartLowThreshold),
             chartHighThreshold: Int16(clamping: chartHighThreshold)
         )
@@ -194,7 +200,10 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
         if let knownSettings = self.knownSettings {
             if newSettings.useLiveActivity != knownSettings.useLiveActivity ||
                 newSettings.liveActivityChart != knownSettings.liveActivityChart ||
-                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions
+                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions ||
+                newSettings.liveActivityWatchChart != knownSettings.liveActivityWatchChart ||
+                newSettings.liveActivityWatchPredictions != knownSettings.liveActivityWatchPredictions ||
+                newSettings.liveActivityWatchDelta != knownSettings.liveActivityWatchDelta
             {
                 print("live activity settings changed")
                 forceActivityUpdate(force: true)
@@ -294,6 +303,9 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
                         readings: nil,
                         predictions: nil,
                         showChart: settings.liveActivityChart,
+                        watchChart: settings.liveActivityWatchChart,
+                        watchPredictions: settings.liveActivityWatchPredictions,
+                        watchDelta: settings.liveActivityWatchDelta,
                         chartLowThreshold: Int16(clamping: (settings.low as NSDecimalNumber).intValue),
                         chartHighThreshold: Int16(clamping: (settings.high as NSDecimalNumber).intValue)
                     ),
@@ -362,6 +374,9 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
+            watchChart: settings.liveActivityWatchChart,
+            watchPredictions: settings.liveActivityWatchPredictions,
+            watchDelta: settings.liveActivityWatchDelta,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
         ) else {
@@ -400,6 +415,9 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
+            watchChart: settings.liveActivityWatchChart,
+            watchPredictions: settings.liveActivityWatchPredictions,
+            watchDelta: settings.liveActivityWatchDelta,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
         ) else {
