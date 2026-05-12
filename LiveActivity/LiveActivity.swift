@@ -253,13 +253,21 @@ struct BannerTimestampLabel: View {
 
 struct WatchLoopCircleAndTimestamp: View {
     let context: ActivityViewContext<LiveActivityAttributes>
+    var reversed: Bool = false
 
     var body: some View {
         HStack(spacing: 3) {
-            BannerLoopCircle(context: context, size: 9)
-                .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
-                .padding(.trailing, 2)
-            BannerTimestampLabel(context: context)
+            if reversed {
+                BannerTimestampLabel(context: context)
+                BannerLoopCircle(context: context, size: 9)
+                    .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
+                    .padding(.leading, 2)
+            } else {
+                BannerLoopCircle(context: context, size: 9)
+                    .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
+                    .padding(.trailing, 2)
+                BannerTimestampLabel(context: context)
+            }
         }
     }
 }

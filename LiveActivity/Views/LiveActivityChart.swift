@@ -78,7 +78,7 @@ struct LiveActivityChart: View {
                     BannerEventualGlucose(context: context)
                         .font(.system(size: 16))
                 } else {
-                    WatchLoopCircleAndTimestamp(context: context)
+                    WatchLoopCircleAndTimestamp(context: context, reversed: true)
                 }
             }
             .padding(.horizontal, 5)
