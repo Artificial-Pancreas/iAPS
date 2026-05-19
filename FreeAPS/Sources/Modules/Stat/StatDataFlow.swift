@@ -2,4 +2,7 @@ enum Stat {
     enum Config {}
 }
 
-protocol StatProvider: Provider {}
+protocol StatProvider: Provider {
+    var dynamicVariables: DynamicVariables? { get }
+    func reasons() -> [IOBData]?
+}
