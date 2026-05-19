@@ -642,9 +642,9 @@ struct GlucoseAGPCard: View {
                         agpThresholds(high: highThreshold, low: lowThreshold)
                     }
                     .chartForegroundStyleScale([
-                        "10-90%": Color.darkerBlue.opacity(0.3),
-                        "25-75%": Color.darkerBlue.opacity(0.5),
-                        "Median": Color.darkerBlue
+                        "10-90%": Color.blue.opacity(0.3),
+                        "25-75%": Color.blue.opacity(0.5),
+                        "Median": Color.blue
                     ])
                     .chartLegend(.hidden)
                     .if(selectedInterval == .today) {
@@ -673,20 +673,20 @@ struct GlucoseAGPCard: View {
                     HStack(spacing: 14) {
                         HStack(spacing: 4) {
                             RoundedRectangle(cornerRadius: 1)
-                                .fill(Color.darkerBlue)
+                                .fill(Color.blue)
                                 .frame(width: 14, height: 2.5)
                             Text(showBands ? "Median" : NSLocalizedString("Glucose (Median/h)", comment: ""))
                         }
                         if showBands {
                             HStack(spacing: 4) {
                                 RoundedRectangle(cornerRadius: 2)
-                                    .fill(Color.darkerBlue.opacity(0.3))
+                                    .fill(Color.blue.opacity(0.3))
                                     .frame(width: 14, height: 10)
                                 Text("25–75%")
                             }
                             HStack(spacing: 4) {
                                 RoundedRectangle(cornerRadius: 2)
-                                    .fill(Color.darkerBlue.opacity(0.15))
+                                    .fill(Color.blue.opacity(0.15))
                                     .frame(width: 14, height: 10)
                                 Text("10–90%")
                             }
