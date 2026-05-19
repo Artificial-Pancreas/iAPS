@@ -29,11 +29,11 @@ struct InsulinStatsTileView: View {
         HStack(alignment: .center, spacing: 14) {
             ZStack {
                 Circle()
-                    .fill(Color.loopRed.opacity(colorScheme == .dark ? 0.20 : 0.12))
+                    .fill(Color.insulin.opacity(colorScheme == .dark ? 0.20 : 0.12))
                     .frame(width: 56, height: 56)
                 Image(systemName: "syringe.fill")
                     .font(.system(size: 24, weight: .semibold))
-                    .foregroundStyle(Color.loopRed)
+                    .foregroundStyle(Color.insulin)
             }
 
             VStack(alignment: .leading, spacing: 2) {
@@ -65,7 +65,7 @@ struct InsulinStatsTileView: View {
             Text("\(neg)")
                 .font(.system(size: 15, weight: .bold, design: .rounded))
                 .monospacedDigit()
-                .foregroundStyle(Color.loopRed)
+                .foregroundStyle(Color.insulin)
             Text(NSLocalizedString("neg min", comment: "Negative insulin minutes"))
                 .font(.system(size: 9, weight: .medium, design: .rounded))
                 .foregroundStyle(.secondary)
@@ -75,7 +75,7 @@ struct InsulinStatsTileView: View {
         .padding(.vertical, 6)
         .background(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.loopRed.opacity(colorScheme == .dark ? 0.18 : 0.12))
+                .fill(Color.insulin.opacity(colorScheme == .dark ? 0.18 : 0.12))
         )
     }
 

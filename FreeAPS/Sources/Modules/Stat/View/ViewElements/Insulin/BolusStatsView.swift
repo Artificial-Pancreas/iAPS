@@ -34,34 +34,44 @@ struct BolusStatsView: View {
                 if isHourly {
                     StatChartUtils.statView(
                         title: NSLocalizedString("Bolus Today", comment: "Bolus delivered today"),
-                        value: totalBolus.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                        value: totalBolus
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                     Spacer()
                     StatChartUtils.statView(
                         title: NSLocalizedString("Basal Today", comment: "Basal delivered today"),
-                        value: totalBasal.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                        value: totalBasal
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                     Spacer()
                     StatChartUtils.statView(
                         title: NSLocalizedString("Total", comment: ""),
                         value: (totalBolus + totalBasal)
-                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                 } else {
                     StatChartUtils.statView(
                         title: NSLocalizedString("Ø Bolus/d", comment: "Average bolus per day"),
-                        value: avgBolus.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                        value: avgBolus
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                     Spacer()
                     StatChartUtils.statView(
                         title: NSLocalizedString("Ø Basal/d", comment: "Average basal per day"),
-                        value: avgBasal.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                        value: avgBasal
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                     Spacer()
                     StatChartUtils.statView(
                         title: NSLocalizedString("Total", comment: ""),
                         value: (totalBolus + totalBasal)
-                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                 }
             }
@@ -71,7 +81,7 @@ struct BolusStatsView: View {
 
             // Legend
             HStack(spacing: 16) {
-                StatChartUtils.legendItem(label: NSLocalizedString("Bolus", comment: ""), color: Color.loopRed)
+                StatChartUtils.legendItem(label: NSLocalizedString("Bolus", comment: ""), color: Color.insulin)
                 StatChartUtils.legendItem(label: NSLocalizedString("Basal", comment: ""), color: Color.loopGreen)
             }
 
@@ -83,7 +93,7 @@ struct BolusStatsView: View {
                         x: .value("Date", stat.date, unit: isHourly ? .hour : .day),
                         y: .value("Bolus", stat.manualBolus)
                     )
-                    .foregroundStyle(Color.loopRed)
+                    .foregroundStyle(Color.insulin)
                     .cornerRadius(3)
                     .opacity(dimmed ? 0.35 : 1.0)
 
@@ -132,19 +142,25 @@ struct BolusStatsView: View {
                         : sel.date.formatted(.dateTime.weekday(.wide).day().month(.abbreviated))
                     InsulinBarDetailPopover(
                         title: title,
-                        color: Color.loopRed,
+                        color: Color.insulin,
                         items: [
                             (
                                 NSLocalizedString("Bolus", comment: ""),
-                                sel.manualBolus.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                                sel.manualBolus
+                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                                    NSLocalizedString("U", comment: "Unit")
                             ),
                             (
                                 NSLocalizedString("Basal", comment: ""),
-                                sel.external.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                                sel.external
+                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                                    NSLocalizedString("U", comment: "Unit")
                             ),
                             (
                                 NSLocalizedString("Total", comment: ""),
-                                total.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                                total
+                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                                    NSLocalizedString("U", comment: "Unit")
                             )
                         ]
                     )

@@ -95,7 +95,10 @@ struct StatOverviewView: View {
 
                 HStack {
                     Image(systemName: "hand.draw.fill").foregroundStyle(.primary)
-                    Text(NSLocalizedString("Tap a ring for details. Tap a card to open the full view.", comment: "Overview screen hint"))
+                    Text(NSLocalizedString(
+                        "Tap a ring for details. Tap a card to open the full view.",
+                        comment: "Overview screen hint"
+                    ))
                         .foregroundStyle(.secondary)
                 }
                 .font(.footnote)
@@ -420,14 +423,14 @@ private struct OverviewInsulinCard: View {
         MiniCard(
             title: NSLocalizedString("Insulin", comment: ""),
             icon: "syringe.fill",
-            color: Color.loopRed,
+            color: Color.insulin,
             navigate: navigate
         ) {
             if hasData {
                 InteractiveDonut(showPopover: {
                     showPopover(PopoverData(
                         title: NSLocalizedString("Insulin Details", comment: ""),
-                        color: Color.loopRed,
+                        color: Color.insulin,
                         items: [
                             (NSLocalizedString("Bolus", comment: ""), fmtU(todayBolus)),
                             (NSLocalizedString("Basal", comment: ""), fmtU(todayBasal)),
@@ -445,7 +448,7 @@ private struct OverviewInsulinCard: View {
                             innerRadius: .ratio(0.618), outerRadius: .ratio(0.88),
                             angularInset: 1.5
                         )
-                        .foregroundStyle(Color.loopRed).cornerRadius(4)
+                        .foregroundStyle(Color.insulin).cornerRadius(4)
                         SectorMark(
                             angle: .value("Basal", max(todayBasal, 0.001)),
                             innerRadius: .ratio(0.618), outerRadius: .ratio(0.88),
@@ -476,7 +479,7 @@ private struct OverviewInsulinCard: View {
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
             } else {
-                MiniNoData(icon: "syringe.fill", color: Color.loopRed)
+                MiniNoData(icon: "syringe.fill", color: Color.insulin)
             }
         }
     }

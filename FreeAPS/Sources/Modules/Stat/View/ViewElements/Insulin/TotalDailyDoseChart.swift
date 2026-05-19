@@ -35,17 +35,23 @@ struct TotalDailyDoseChart: View {
                         title: selectedInterval == .today
                             ? NSLocalizedString("TDD Today", comment: "Total Daily Dose for today")
                             : NSLocalizedString("TDD 24h", comment: "Total Daily Dose last 24 hours"),
-                        value: total.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                        value: total
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                 } else {
                     StatChartUtils.statView(
                         title: NSLocalizedString("Ø / Day", comment: "Average per day"),
-                        value: average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                        value: average
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                     Spacer()
                     StatChartUtils.statView(
                         title: NSLocalizedString("Total", comment: ""),
-                        value: total.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                        value: total
+                            .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                            NSLocalizedString("U", comment: "Unit")
                     )
                 }
             }
@@ -60,7 +66,7 @@ struct TotalDailyDoseChart: View {
                         x: .value("Date", stat.date, unit: isHourly ? .hour : .day),
                         y: .value("TDD", stat.amount)
                     )
-                    .foregroundStyle(Color.loopRed.gradient)
+                    .foregroundStyle(Color.insulin.gradient)
                     .cornerRadius(3)
                     .opacity(selectable && selectedStat != nil && selectedStat?.id != stat.id ? 0.35 : 1.0)
                 }
@@ -104,11 +110,13 @@ struct TotalDailyDoseChart: View {
                         : NSLocalizedString("TDD", comment: "")
                     InsulinBarDetailPopover(
                         title: title,
-                        color: Color.loopRed,
+                        color: Color.insulin,
                         items: [
                             (
                                 label,
-                                sel.amount.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " + NSLocalizedString("U", comment: "Unit")
+                                sel.amount
+                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " " +
+                                    NSLocalizedString("U", comment: "Unit")
                             )
                         ]
                     )
