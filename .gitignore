@@ -86,3 +86,6 @@ package-lock.json
 node_modules
 oref0
 .temp
+
+# Claude Code local state (sessions, worktrees, scratch)
+.claude/
