@@ -155,3 +155,40 @@ struct StatChartUtils {
         }
     }
 }
+
+private struct StatElegantBackground: ViewModifier {
+    var colorScheme: ColorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity)
+            .background(
+                ZStack {
+                    if colorScheme != .dark {
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(Color.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .stroke(Color.black.opacity(0.06), lineWidth: 1)
+                            )
+                            .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 8)
+                            .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+                    } else {
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(Color.white.opacity(0.01))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .stroke(Color.white.opacity(0.10), lineWidth: 1)
+                            )
+                            .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+                    }
+                }
+            )
+    }
+}
+
+extension View {
+    func elegantShadow(scheme: ColorScheme) -> some View {
+        modifier(StatElegantBackground(colorScheme: scheme))
+    }
+}
