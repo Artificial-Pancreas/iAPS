@@ -1571,6 +1571,16 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Anthropic (Claude API) Configuration";
 
+"USDA Food Database" = "USDA Food Database";
+
+"USDA FoodData API Key" = "USDA FoodData API Key";
+
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+
+"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+
 "Provider for Barcode Scanning" = "Provider for Barcode Scanning";
 
 "Provider for Text/Voice Search" = "Provider for Text/Voice Search";
