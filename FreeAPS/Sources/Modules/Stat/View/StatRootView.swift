@@ -74,7 +74,10 @@ extension Stat {
 
         @ViewBuilder var glucoseView: some View {
             // Duration picker
-            Picker(NSLocalizedString("Duration", comment: "Duration picker label"), selection: $state.selectedIntervalForGlucoseStats) {
+            Picker(
+                NSLocalizedString("Duration", comment: "Duration picker label"),
+                selection: $state.selectedIntervalForGlucoseStats
+            ) {
                 ForEach(StatsTimeIntervalWithToday.allCases) { interval in
                     Text(interval.displayName)
                 }
@@ -91,7 +94,10 @@ extension Stat {
                     .lineLimit(1)
                     .fixedSize(horizontal: true, vertical: false)
                 Spacer()
-                Picker(NSLocalizedString("Glucose Chart Type", comment: "Glucose chart type picker label"), selection: $state.selectedGlucoseChartType) {
+                Picker(
+                    NSLocalizedString("Glucose Chart Type", comment: "Glucose chart type picker label"),
+                    selection: $state.selectedGlucoseChartType
+                ) {
                     Text(GlucoseChartType.percentileByTime.displayName)
                         .tag(GlucoseChartType.percentileByTime)
                     Text(GlucoseChartType.distribution.displayName)
@@ -169,7 +175,10 @@ extension Stat {
                     .lineLimit(1)
                     .fixedSize(horizontal: true, vertical: false)
                 Spacer()
-                Picker(NSLocalizedString("Insulin Chart Type", comment: "Insulin chart type picker label"), selection: $state.selectedInsulinChartType) {
+                Picker(
+                    NSLocalizedString("Insulin Chart Type", comment: "Insulin chart type picker label"),
+                    selection: $state.selectedInsulinChartType
+                ) {
                     ForEach(InsulinChartType.allCases, id: \.self) { type in
                         Text(type.displayName).tag(type)
                     }
@@ -179,7 +188,10 @@ extension Stat {
                 .fixedSize(horizontal: true, vertical: false)
             }.padding(.horizontal)
 
-            Picker(NSLocalizedString("Duration", comment: "Duration picker label"), selection: $state.selectedIntervalForInsulinStats) {
+            Picker(
+                NSLocalizedString("Duration", comment: "Duration picker label"),
+                selection: $state.selectedIntervalForInsulinStats
+            ) {
                 ForEach(StatsTimeIntervalWithToday.allCases) { interval in
                     Text(interval.displayName).tag(interval)
                 }
@@ -218,7 +230,10 @@ extension Stat {
                         ContentUnavailableView(
                             NSLocalizedString("No TDD Data", comment: ""),
                             systemImage: "chart.bar.xaxis",
-                            description: Text(NSLocalizedString("Total Daily Doses will appear here once data is available.", comment: "Empty state for TDD chart"))
+                            description: Text(NSLocalizedString(
+                                "Total Daily Doses will appear here once data is available.",
+                                comment: "Empty state for TDD chart"
+                            ))
                         )
                     } else {
                         TotalDailyDoseChart(
@@ -240,7 +255,10 @@ extension Stat {
                         ContentUnavailableView(
                             NSLocalizedString("No Bolus Data", comment: ""),
                             systemImage: "cross.vial",
-                            description: Text(NSLocalizedString("Bolus statistics will appear here once data is available.", comment: "Empty state for bolus chart"))
+                            description: Text(NSLocalizedString(
+                                "Bolus statistics will appear here once data is available.",
+                                comment: "Empty state for bolus chart"
+                            ))
                         )
                     } else {
                         BolusStatsView(
@@ -255,7 +273,10 @@ extension Stat {
         // MARK: - Looping
 
         @ViewBuilder var loopingView: some View {
-            Picker(NSLocalizedString("Duration", comment: "Duration picker label"), selection: $state.selectedIntervalForLoopStats) {
+            Picker(
+                NSLocalizedString("Duration", comment: "Duration picker label"),
+                selection: $state.selectedIntervalForLoopStats
+            ) {
                 ForEach(StatsTimeIntervalWithToday.allCases) { interval in
                     Text(interval.displayName)
                 }
@@ -268,7 +289,10 @@ extension Stat {
         // MARK: - Meals
 
         @ViewBuilder var mealsView: some View {
-            Picker(NSLocalizedString("Duration", comment: "Duration picker label"), selection: $state.selectedIntervalForMealStats) {
+            Picker(
+                NSLocalizedString("Duration", comment: "Duration picker label"),
+                selection: $state.selectedIntervalForMealStats
+            ) {
                 ForEach(StatsTimeIntervalWithToday.allCases) { interval in
                     Text(interval.displayName).tag(interval)
                 }
@@ -284,7 +308,10 @@ extension Stat {
                     ContentUnavailableView(
                         NSLocalizedString("No Meal Data", comment: ""),
                         systemImage: "fork.knife",
-                        description: Text(NSLocalizedString("Meal statistics will appear here once data is available.", comment: "Empty state for meal chart"))
+                        description: Text(NSLocalizedString(
+                            "Meal statistics will appear here once data is available.",
+                            comment: "Empty state for meal chart"
+                        ))
                     )
                 } else {
                     MealStatsView(
@@ -370,7 +397,10 @@ private struct GlucoseOverviewCard: View {
                 ContentUnavailableView(
                     NSLocalizedString("No Glucose Data", comment: ""),
                     systemImage: "chart.bar.fill",
-                    description: Text(NSLocalizedString("Glucose statistics will appear here once data is available.", comment: "Empty state for glucose chart"))
+                    description: Text(NSLocalizedString(
+                        "Glucose statistics will appear here once data is available.",
+                        comment: "Empty state for glucose chart"
+                    ))
                 )
             }
         } else {
@@ -397,7 +427,10 @@ private struct GlucoseOverviewCard: View {
             // Hint
             HStack {
                 Image(systemName: "hand.draw.fill").foregroundStyle(.primary)
-                Text(NSLocalizedString("Tap and hold the ring chart to reveal more details.", comment: "Hint for glucose ring chart"))
+                Text(NSLocalizedString(
+                    "Tap and hold the ring chart to reveal more details.",
+                    comment: "Hint for glucose ring chart"
+                ))
                     .foregroundStyle(.secondary)
             }.font(.footnote)
         }
@@ -578,7 +611,10 @@ struct GlucoseAGPCard: View {
                 ContentUnavailableView(
                     NSLocalizedString("No Glucose Data", comment: ""),
                     systemImage: "chart.bar.fill",
-                    description: Text(NSLocalizedString("Glucose statistics will appear here once data is available.", comment: "Empty state for glucose chart"))
+                    description: Text(NSLocalizedString(
+                        "Glucose statistics will appear here once data is available.",
+                        comment: "Empty state for glucose chart"
+                    ))
                 )
             }
         } else {
@@ -740,7 +776,10 @@ struct GlucoseDistributionCard: View {
                 ContentUnavailableView(
                     NSLocalizedString("No Glucose Data", comment: ""),
                     systemImage: "chart.bar.fill",
-                    description: Text(NSLocalizedString("Glucose statistics will appear here once data is available.", comment: "Empty state for glucose chart"))
+                    description: Text(NSLocalizedString(
+                        "Glucose statistics will appear here once data is available.",
+                        comment: "Empty state for glucose chart"
+                    ))
                 )
             }
         } else {

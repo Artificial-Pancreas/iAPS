@@ -82,7 +82,7 @@ struct BolusStatsView: View {
             // Legend
             HStack(spacing: 16) {
                 StatChartUtils.legendItem(label: NSLocalizedString("Bolus", comment: ""), color: Color.insulin)
-                StatChartUtils.legendItem(label: NSLocalizedString("Basal", comment: ""), color: Color.loopGreen)
+                StatChartUtils.legendItem(label: NSLocalizedString("Basal", comment: ""), color: Color.lightBlue)
             }
 
             // Chart
@@ -101,7 +101,7 @@ struct BolusStatsView: View {
                         x: .value("Date", stat.date, unit: isHourly ? .hour : .day),
                         y: .value("Basal", stat.external)
                     )
-                    .foregroundStyle(Color.loopGreen)
+                    .foregroundStyle(Color.lightBlue)
                     .cornerRadius(3)
                     .opacity(dimmed ? 0.35 : 1.0)
                 }

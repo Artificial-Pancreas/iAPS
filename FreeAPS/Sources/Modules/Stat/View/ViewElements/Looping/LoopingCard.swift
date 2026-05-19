@@ -32,7 +32,10 @@ struct LoopingCard: View {
                 ContentUnavailableView(
                     NSLocalizedString("No Loop Data", comment: ""),
                     systemImage: "clock.arrow.2.circlepath",
-                    description: Text(NSLocalizedString("Loop statistics will appear here once data is available.", comment: "Empty state for loop chart"))
+                    description: Text(NSLocalizedString(
+                        "Loop statistics will appear here once data is available.",
+                        comment: "Empty state for loop chart"
+                    ))
                 )
             }
         } else {

@@ -454,7 +454,7 @@ private struct OverviewInsulinCard: View {
                             innerRadius: .ratio(0.618), outerRadius: .ratio(0.88),
                             angularInset: 1.5
                         )
-                        .foregroundStyle(Color.loopGreen).cornerRadius(4)
+                        .foregroundStyle(Color.lightBlue).cornerRadius(4)
                     }
                 }
 
