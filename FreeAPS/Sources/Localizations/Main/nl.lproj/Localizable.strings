@@ -2822,7 +2822,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "TDD 3 days ago" = "TDD 3 dagen terug";
 
 /* COB View */
-"Meals on Board" = "Koolhydraten aan boord";
+"Carbohydrates on Board" = "Koolhydraten aan boord";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Geef COB grafiek weer";
@@ -3783,7 +3783,7 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Light / Dark Mode" = "Lichte / Donkere modus";
 
 /* Debug option */
-"Neglect Meals in oref0" = "Negeer koolhydraten in oref0";
+"Neglect Carbs in oref0" = "Negeer koolhydraten in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Voorspellingen verbergen";

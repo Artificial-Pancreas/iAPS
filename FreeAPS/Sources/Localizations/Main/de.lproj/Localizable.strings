@@ -2822,7 +2822,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "TDD vor 3 Tagen";
 
 /* COB View */
-"Meals on Board" = "Aktive Kohlenhydrate (COB)";
+"Carbohydrates on Board" = "Aktive Kohlenhydrate (COB)";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Diagramm der Aktiven Kohlenhydrate (COB) anzeigen";
@@ -3774,7 +3774,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Light / Dark Mode";
 
 /* Debug option */
-"Neglect Meals in oref0" = "Kohlenhydrate in oref0 vernachlässigen";
+"Neglect Carbs in oref0" = "Kohlenhydrate in oref0 vernachlässigen";
 
 /* Debug option */
 "Hide Predictions" = "Hide Predictions";

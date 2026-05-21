@@ -2822,7 +2822,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "TDD 3 days ago" = "TDD pred 3 dňami";
 
 /* COB View */
-"Meals on Board" = "Aktívne sacharidy";
+"Carbohydrates on Board" = "Aktívne sacharidy";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Zobraziť graf zostávajúcich sacharidov";
@@ -3777,7 +3777,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Light / Dark Mode" = "Svetlý / tmavý režim";
 
 /* Debug option */
-"Neglect Meals in oref0" = "Ignorovať sacharidy v oref0";
+"Neglect Carbs in oref0" = "Ignorovať sacharidy v oref0";
 
 /* Debug option */
 "Hide Predictions" = "Skryť predpovede";

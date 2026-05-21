@@ -2821,7 +2821,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
 /* COB View */
-"Meals on Board" = "Carbohydrate đang hoạt động";
+"Carbohydrates on Board" = "Carbohydrate đang hoạt động";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Hiển thị biểu đồ COB";
@@ -3773,7 +3773,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Chế độ Sáng/Tối";
 
 /* Debug option */
-"Neglect Meals in oref0" = "Bỏ qua carbohydrate trong oref0";
+"Neglect Carbs in oref0" = "Bỏ qua carbohydrate trong oref0";
 
 /* Debug option */
 "Hide Predictions" = "Ẩn dự đoán";

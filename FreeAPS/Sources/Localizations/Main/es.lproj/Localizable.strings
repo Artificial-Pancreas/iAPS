@@ -2832,7 +2832,7 @@ Ajustes predeterminados:\n
 "TDD 3 days ago" = "TDD 3 days ago";
 
 /* COB View */
-"Meals on Board" = "Meals on Board";
+"Carbohydrates on Board" = "Carbohydrates on Board";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Display COB Chart";
@@ -3890,7 +3890,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Light / Dark Mode" = "Light / Dark Mode";
 
 /* Debug option */
-"Neglect Meals in oref0" = "Neglect Meals in oref0";
+"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Hide Predictions";

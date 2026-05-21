@@ -2821,7 +2821,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "TDD för 3 dagar sedan";
 
 /* COB View */
-"Meals on Board" = "Kolhydrater ombord";
+"Carbohydrates on Board" = "Kolhydrater ombord";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Visa COB-diagram";
@@ -3773,7 +3773,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Ljust / Mörkt";
 
 /* Debug option */
-"Neglect Meals in oref0" = "Negligera kolhydrater i oref0";
+"Neglect Carbs in oref0" = "Negligera kolhydrater i oref0";
 
 /* Debug option */
 "Hide Predictions" = "Dölj prognoser";
