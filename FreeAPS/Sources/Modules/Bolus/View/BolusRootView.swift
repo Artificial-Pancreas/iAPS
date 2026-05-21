@@ -148,7 +148,7 @@ extension Bolus {
                     HStack {
                         Text("Carbs")
                         Spacer()
-                        Text(carbs.formatted())
+                        Text(carbs.formatted(.number.precision(.fractionLength(0 ... 1))))
                         Text("g")
                     }.foregroundColor(.secondary)
                 }
@@ -156,7 +156,7 @@ extension Bolus {
                     HStack {
                         Text("Fat")
                         Spacer()
-                        Text(fat.formatted())
+                        Text(fat.formatted(.number.precision(.fractionLength(0 ... 1))))
                         Text("g")
                     }.foregroundColor(.secondary)
                 }
@@ -164,7 +164,7 @@ extension Bolus {
                     HStack {
                         Text("Protein")
                         Spacer()
-                        Text(protein.formatted())
+                        Text(protein.formatted(.number.precision(.fractionLength(0 ... 1))))
                         Text("g")
                     }.foregroundColor(.secondary)
                 }

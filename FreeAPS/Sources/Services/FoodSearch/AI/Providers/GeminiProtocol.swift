@@ -32,7 +32,8 @@ struct GeminiProtocol: AIProviderProtocol {
                 temperature: model.temperature,
                 topP: 0.95,
                 topK: 8,
-                maxOutputTokens: 8000
+                maxOutputTokens: 8000,
+                responseMimeType: "application/json"
             )
         )
 
@@ -170,6 +171,7 @@ private struct GeminiGenerationConfig: Encodable {
     let topP: Double
     let topK: Int
     let maxOutputTokens: Int
+    let responseMimeType: String?
 }
 
 // Response payload
