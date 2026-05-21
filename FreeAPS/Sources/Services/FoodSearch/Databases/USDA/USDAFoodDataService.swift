@@ -34,9 +34,11 @@ final class USDAFoodDataService {
             throw OpenFoodFactsError.invalidURL
         }
 
+        let apiKey = UserDefaults.standard.usdaAPIKey.isEmpty ? "DEMO_KEY" : UserDefaults.standard.usdaAPIKey
+
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         components.queryItems = [
-            URLQueryItem(name: "api_key", value: "DEMO_KEY"),
+            URLQueryItem(name: "api_key", value: apiKey),
             URLQueryItem(name: "query", value: query),
             URLQueryItem(name: "pageSize", value: String(pageSize)),
             URLQueryItem(name: "dataType", value: "Foundation,SR Legacy,Survey"),
