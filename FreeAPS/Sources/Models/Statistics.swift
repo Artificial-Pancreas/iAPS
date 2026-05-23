@@ -148,11 +148,10 @@ struct TIRs: JSON, Equatable {
 }
 
 struct Ins: JSON, Equatable {
-    let TDD: Decimal?
+    let TDD: Durations
     let bolus: Decimal?
     let temp_basal: Decimal?
     let scheduled_basal: Decimal?
-    let total_average: Decimal?
 }
 
 struct Variance: JSON, Equatable {
@@ -212,7 +211,6 @@ extension Ins {
         case bolus
         case temp_basal
         case scheduled_basal
-        case total_average
     }
 }
 

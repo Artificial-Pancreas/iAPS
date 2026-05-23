@@ -1066,15 +1066,19 @@ final class BaseAPSManager: APSManager, Injectable {
             var carbTotal: Decimal = 0
             carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
 
-            // TDD
-            let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().fourteen)
-            var currentTDD: Decimal = 0
-            var tddTotalAverage: Decimal = 0
-            if !tdds.isEmpty {
-                currentTDD = tdds[0].tdd?.decimalValue ?? 0
-                let tddArray = tdds.compactMap({ insulin in insulin.tdd as? Decimal ?? 0 })
-                tddTotalAverage = tddArray.reduce(0, +) / Decimal(tddArray.count)
+            // TDD averages per time window
+            let df = DateFilter()
+            func tddMean(_ records: [TDD]) -> Decimal {
+                let values = records.compactMap { $0.tdd as? Decimal }.filter { $0 > 0 }
+                guard !values.isEmpty else { return 0 }
+                return roundDecimal(values.reduce(0, +) / Decimal(values.count), 1)
             }
+            let tddDurations = Durations(
+                day: tddMean(CoreDataStorage().fetchTDD(interval: df.day)),
+                week: tddMean(CoreDataStorage().fetchTDD(interval: df.week)),
+                month: tddMean(CoreDataStorage().fetchTDD(interval: df.month)),
+                total: tddMean(CoreDataStorage().fetchTDD(interval: df.total))
+            )
 
             var algo_ = "Oref0"
 
@@ -1250,21 +1254,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
             // Insulin
             let insulinDistribution = CoreDataStorage().fetchInsulinDistribution()
-            var insulin = Ins(
-                TDD: 0,
-                bolus: 0,
-                temp_basal: 0,
-                scheduled_basal: 0,
-                total_average: 0
-            )
-
-            insulin = Ins(
-                TDD: roundDecimal(currentTDD, 2),
-                bolus: insulinDistribution.first != nil ? ((insulinDistribution.first?.bolus ?? 0) as Decimal) : 0,
-                temp_basal: insulinDistribution.first != nil ? ((insulinDistribution.first?.tempBasal ?? 0) as Decimal) : 0,
-                scheduled_basal: insulinDistribution
-                    .first != nil ? ((insulinDistribution.first?.scheduledBasal ?? 0) as Decimal) : 0,
-                total_average: roundDecimal(tddTotalAverage, 1)
+            let insulin = Ins(
+                TDD: tddDurations,
+                bolus: (insulinDistribution.first?.bolus ?? 0) as Decimal,
+                temp_basal: (insulinDistribution.first?.tempBasal ?? 0) as Decimal,
+                scheduled_basal: (insulinDistribution.first?.scheduledBasal ?? 0) as Decimal
             )
 
             let hbA1cUnit = !overrideHbA1cUnit ? (units == .mmolL ? "mmol/mol" : "%") : (units == .mmolL ? "%" : "mmol/mol")
