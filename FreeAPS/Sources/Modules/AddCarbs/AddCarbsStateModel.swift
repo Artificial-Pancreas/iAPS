@@ -49,11 +49,6 @@ extension AddCarbs {
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
-            /* guard carbs > 0 || fat > 0 || protein > 0 else {
-                 showModal(for: nil)
-                 return
-             } */
-
             carbs = min(carbs, maxCarbs)
             id_ = UUID().uuidString
 
@@ -93,7 +88,7 @@ extension AddCarbs {
                 )
             }
 
-            guard carbs > 0 || fat > 0 || protein > 0 || !micronutrients.isEmpty else {
+            guard carbs > 0 || fat > 0 || protein > 0 || fibers > 0 || !micronutrients.isEmpty else {
                 showModal(for: nil)
                 return
             }
@@ -123,6 +118,7 @@ extension AddCarbs {
             let carbs = carbsToStore.map(\.carbs).reduce(0, +)
             let fat = carbsToStore.compactMap(\.fat).reduce(0, +)
             let protein = carbsToStore.compactMap(\.protein).reduce(0, +)
+            let fiber = carbsToStore.compactMap(\.fiber).reduce(0, +)
             var hasMicronutrients = false
 
             // To Do: Remove
@@ -136,7 +132,7 @@ extension AddCarbs {
                 }
             }
 
-            let empty = carbs <= 0 && fat <= 0 && protein <= 0 && !hasMicronutrients
+            let empty = carbs <= 0 && fat <= 0 && protein <= 0 && fiber <= 0 && !hasMicronutrients
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
                 saveToCoreData(carbsToStore, savedToFile: true)
@@ -296,10 +292,6 @@ extension AddCarbs {
             }
 
             CoreDataStorage().saveMeal(stored, now: now, savedToFile: savedToFile)
-        }
-
-        private var empty: Bool {
-            carbs <= 0 && fat <= 0 && protein <= 0
         }
 
         private func hypo() {

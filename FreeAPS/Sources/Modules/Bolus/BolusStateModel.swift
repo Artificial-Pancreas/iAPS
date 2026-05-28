@@ -507,7 +507,7 @@ extension Bolus {
 
         private var empty: Bool {
             (carbToStore.first?.carbs ?? 0) == 0 && (carbToStore.first?.fat ?? 0) == 0 && (carbToStore.first?.protein ?? 0) ==
-                0 &&
+                0 && (carbToStore.first?.fiber ?? 0) == 0 &&
                 ((carbToStore.first?.micronutrient?.first(where: { $0.amount != 0 })) != nil)
         }
     }

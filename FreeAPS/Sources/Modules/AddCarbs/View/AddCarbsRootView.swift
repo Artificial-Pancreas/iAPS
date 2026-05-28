@@ -851,6 +851,7 @@ extension AddCarbs {
             state.carbs <= 0 &&
                 state.fat <= 0 &&
                 state.protein <= 0 &&
+                state.fiber <= 0 &&
                 state.micronutrient.allSatisfy { $0.amount <= 0 }
         }
 

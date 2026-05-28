@@ -308,6 +308,7 @@ extension Bolus {
             return (meal.carbs?.decimalValue ?? 0) <= 0 &&
                 (meal.fat?.decimalValue ?? 0) <= 0 &&
                 (meal.protein?.decimalValue ?? 0) <= 0 &&
+                (meal.fiber?.decimalValue ?? 0) <= 0 &&
                 !hasMicros
         }
 
