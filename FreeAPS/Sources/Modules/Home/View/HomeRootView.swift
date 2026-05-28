@@ -1113,7 +1113,7 @@ extension Home {
                     Text(
                         (tirFormatter.string(from: NSNumber(value: rdi)) ?? "") + " %"
                     )
-                    .foregroundStyle(.lightBlue)
+                    .foregroundStyle(MicronutrientProgress.colour(rdi))
                     .frame(minWidth: 45, alignment: .trailing)
                 }
 

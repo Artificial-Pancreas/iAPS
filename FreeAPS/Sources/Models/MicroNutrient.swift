@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 enum MicronutrientType: String, CaseIterable, Codable {
     case vitamin
@@ -604,6 +605,16 @@ enum MicronutrientProgress {
         )
 
         return (amount / reference.value) * 100
+    }
+
+    /// RDI foreground style colour
+    static func colour(_ rdi: Double) -> Color {
+        switch rdi {
+        case 0 ... 20: Color.red
+        case 21 ... 74: Color.orange
+        case 75 ... 150: Color.green
+        default: Color.blue
+        }
     }
 }
 
