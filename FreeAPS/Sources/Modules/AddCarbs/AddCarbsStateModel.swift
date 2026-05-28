@@ -12,6 +12,7 @@ extension AddCarbs {
         @Published var carbs: Decimal = 0
         @Published var date = Date()
         @Published var protein: Decimal = 0
+        @Published var fiber: Decimal = 0
         @Published var fat: Decimal = 0
         @Published var carbsRequired: Decimal?
         @Published var useFPUconversion: Bool = false
@@ -63,6 +64,7 @@ extension AddCarbs {
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
+                fiber: fiber,
                 note: note,
                 enteredBy: CarbsEntry.manual,
                 isFPU: false,
@@ -75,6 +77,7 @@ extension AddCarbs {
             var carbs = food.nutrientInThisPortion(.carbs) ?? 0
             let fat = food.nutrientInThisPortion(.fat) ?? 0
             let protein = food.nutrientInThisPortion(.protein) ?? 0
+            let fibers = food.nutrientInThisPortion(.fiber) ?? 0
 
             let micronutrients = food.micronutrient.compactMap { value -> MicronutrientValue? in
                 guard let amount = food.micronutrientInThisPortion(value.substance),
@@ -105,6 +108,7 @@ extension AddCarbs {
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
+                fiber: fibers,
                 note: nil,
                 enteredBy: CarbsEntry.manual,
                 isFPU: false,
@@ -261,6 +265,7 @@ extension AddCarbs {
                     self.carbs = (mealToEdit.first?.carbs ?? 0) as Decimal
                     self.fat = (mealToEdit.first?.fat ?? 0) as Decimal
                     self.protein = (mealToEdit.first?.protein ?? 0) as Decimal
+                    self.fiber = (mealToEdit.first?.fiber ?? 0) as Decimal
                     self.note = mealToEdit.first?.note ?? ""
                     self.id_ = mealToEdit.first?.id ?? ""
                 }
@@ -271,6 +276,7 @@ extension AddCarbs {
             carbs += ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
             fat += ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
             protein += ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+            fiber += ((selection?.fiber ?? 0) as NSDecimalNumber) as Decimal
 
             if let presetMicros = selection?.micronutrientValuesTyped() {
                 mergeMicronutrients(presetMicros, multiplier: 1)

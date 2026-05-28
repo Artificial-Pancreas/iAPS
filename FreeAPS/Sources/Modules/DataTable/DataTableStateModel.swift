@@ -254,6 +254,7 @@ extension DataTable {
                 carbs: meal.carbs,
                 fat: meal.fat,
                 protein: meal.protein,
+                fiber: meal.fiber,
                 note: old.note,
                 enteredBy: CarbsEntry.manual,
                 isFPU: false,
@@ -302,6 +303,7 @@ extension DataTable {
             oldCarbs = meal.carbs
             meal.fat = (complex?.fat ?? 0) as Decimal
             meal.protein = (complex?.protein ?? 0) as Decimal
+            meal.fiber = (complex?.fiber ?? 0) as Decimal
             meal.micronutrient = complex?.micronutrientValues ?? []
         }
     }

@@ -32,8 +32,9 @@ extension AddCarbs {
             carbs: Decimal,
             fat: Decimal,
             protein: Decimal,
+            fiber: Decimal,
             micronutrient: [MicronutrientValue]
-        ) = ("", 0, 0, 0, [])
+        ) = ("", 0, 0, 0, 0, [])
 
         @FetchRequest(
             entity: Presets.entity(),
@@ -192,128 +193,436 @@ extension AddCarbs {
             Button("Cancel", role: .cancel) {}
         }
 
+        // MARK: - Main Meal Section
+
         private var mealView: some View {
             Form {
-                if let carbsReq = state.carbsRequired, state.carbs < carbsReq {
+                if let carbsReq = state.carbsRequired,
+                   state.carbs < carbsReq
+                {
                     Section {
                         HStack {
                             Text("Carbs required")
+
                             Spacer()
-                            Text((Self.formatter.string(from: carbsReq as NSNumber) ?? "") + " g")
+
+                            Text(
+                                (Self.formatter.string(
+                                    from: carbsReq as NSNumber
+                                ) ?? "") + " g"
+                            )
                         }
                     }
                 }
 
                 Section {
-                    HStack {
-                        Text("Carbs").fontWeight(.semibold)
-                        Spacer()
-                        DecimalTextField(
-                            "0",
-                            value: $state.carbs,
-                            formatter: Self.formatter,
-                            autofocus: true,
-                            liveEditing: true
-                        )
-                        Text("grams").foregroundColor(.secondary)
-                    }
-                    proteinAndFat()
+                    macroRow(
+                        title: "Carbs",
+                        value: $state.carbs,
+                        color: .primary,
+                        bold: true,
+                        autofocus: true
+                    )
 
-                    if state.mealViewMicronutrients {
-                        HStack {
-                            Text("Micronutrients")
-                                .foregroundStyle(.secondary)
+                    macroRow(
+                        title: "Fat",
+                        value: $state.fat,
+                        color: .blue
+                    )
 
-                            Spacer()
+                    macroRow(
+                        title: "Protein",
+                        value: $state.protein,
+                        color: .green
+                    )
 
-                            Button {
-                                showMicronutrients = true
-                            } label: {
-                                Label(
-                                    state.micronutrient.isEmpty ? "Add" : "\(state.micronutrient.count)",
-                                    systemImage: "plus.circle"
-                                )
-                                .font(.caption.weight(.semibold))
-                                .labelStyle(.titleAndIcon)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                            }
-                            .buttonStyle(.borderless)
-                            .foregroundStyle(.blue)
-                        }
-                    }
+                    otherNutritionButton
 
-                    // Time
-                    HStack {
-                        Text("Time")
-                        Spacer()
-                        if !pushed {
-                            Button {
-                                pushed = true
-                            } label: { Text("Now") }.buttonStyle(.borderless).foregroundColor(.secondary).padding(.trailing, 5)
-                        } else {
-                            Button { state.date = state.date.addingTimeInterval(-15.minutes.timeInterval) }
-                            label: { Image(systemName: "minus.circle") }.tint(.blue).buttonStyle(.borderless)
-                            DatePicker(
-                                "Time",
-                                selection: $state.date,
-                                displayedComponents: [.hourAndMinute]
-                            ).controlSize(.mini)
-                                .labelsHidden()
-                            Button {
-                                state.date = state.date.addingTimeInterval(15.minutes.timeInterval)
-                            }
-                            label: { Image(systemName: "plus.circle") }.tint(.blue).buttonStyle(.borderless)
-                        }
-                    }
+                    timeRow
                 }
 
                 if !empty, !saved {
-                    Button { saveAsPreset() }
-                    label: {
-                        Text("Save as preset").foregroundStyle(.orange)
-                    }
-                    .buttonStyle(.borderless)
-                    .listRowBackground(Color(.systemGroupedBackground))
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    savePresetButton
                 }
 
-                // Optional Hypo Treatment
-                if state.carbs > 0, let profile = state.id, profile != "None", state.carbsRequired != nil {
-                    Section {
-                        Button {
-                            state.hypoTreatment = true
-                            button.toggle()
-                            if button { state.add(override, fetch: editMode) }
-                        }
-                        label: {
-                            Text("Hypo Treatment")
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    }.listRowBackground(Color(.orange).opacity(0.9)).tint(.white)
+                if state.carbs > 0,
+                   let profile = state.id,
+                   profile != "None",
+                   state.carbsRequired != nil
+                {
+                    hypoTreatmentSection
                 }
 
-                Section {
-                    Button {
-                        button.toggle()
-                        if button { state.add(override, fetch: editMode) }
-                    }
-                    label: {
-                        Text(
-                            ((state.skipBolus && !override && !editMode) || state.carbs <= 0) ? "Save" :
-                                "Continue"
-                        ) }
-                        .disabled(empty)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
-                    .tint(.white)
+                continueSection
             }
-            .sheet(isPresented: $presentPresets, content: { presetView })
+            .sheet(isPresented: $presentPresets) {
+                presetView
+            }
             .sheet(isPresented: $showMicronutrients) {
-                MicronutrientEntrySheet(
-                    values: $state.micronutrient,
+                OtherNutritionSheet(
+                    fiber: $state.fiber,
+                    micronutrients: $state.micronutrient,
                     formatter: Self.formatter
                 )
+            }
+        }
+
+        // MARK: - Compact Macro Row
+
+        @ViewBuilder private func macroRow(
+            title: LocalizedStringKey,
+            value: Binding<Decimal>,
+            color: Color,
+            bold: Bool = false,
+            autofocus: Bool = false
+        ) -> some View {
+            HStack {
+                Text(title)
+                    .foregroundStyle(color)
+                    .fontWeight(bold ? .semibold : .regular)
+
+                Spacer()
+
+                DecimalTextField(
+                    "0",
+                    value: value,
+                    formatter: Self.formatter,
+                    autofocus: autofocus,
+                    liveEditing: true
+                )
+
+                Text("g")
+                    .foregroundStyle(.secondary)
+            }
+        }
+
+        // MARK: - Other Button
+
+        private var otherNutritionButton: some View {
+            Button {
+                showMicronutrients = true
+            } label: {
+                HStack {
+                    Label("Other", systemImage: "ellipsis.circle")
+                        .foregroundStyle(.secondary)
+
+                    Spacer()
+
+                    Text(otherNutritionSummary)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+
+        private var otherNutritionSummary: String {
+            let hasFiber = state.fiber > 0
+            let microCount = state.micronutrient.count
+
+            switch (hasFiber, microCount > 0) {
+            case (false, false):
+                return "Optional"
+
+            case (true, false):
+                return "Fiber"
+
+            case (false, true):
+                return "\(microCount) micros"
+
+            case (true, true):
+                return "Fiber • \(microCount)"
+            }
+        }
+
+        // MARK: - Time Row
+
+        private var timeRow: some View {
+            HStack {
+                Text("Time")
+
+                Spacer()
+
+                if !pushed {
+                    Button {
+                        pushed = true
+                    } label: {
+                        Text("Now")
+                    }
+                    .buttonStyle(.borderless)
+                    .foregroundColor(.secondary)
+                    .padding(.trailing, 5)
+
+                } else {
+                    Button {
+                        state.date = state.date.addingTimeInterval(
+                            -15.minutes.timeInterval
+                        )
+                    } label: {
+                        Image(systemName: "minus.circle")
+                    }
+                    .tint(.blue)
+                    .buttonStyle(.borderless)
+
+                    DatePicker(
+                        "Time",
+                        selection: $state.date,
+                        displayedComponents: [.hourAndMinute]
+                    )
+                    .controlSize(.mini)
+                    .labelsHidden()
+
+                    Button {
+                        state.date = state.date.addingTimeInterval(
+                            15.minutes.timeInterval
+                        )
+                    } label: {
+                        Image(systemName: "plus.circle")
+                    }
+                    .tint(.blue)
+                    .buttonStyle(.borderless)
+                }
+            }
+        }
+
+        // MARK: - Save Preset
+
+        private var savePresetButton: some View {
+            Button {
+                saveAsPreset()
+            } label: {
+                Text("Save as preset")
+                    .foregroundStyle(.orange)
+            }
+            .buttonStyle(.borderless)
+            .listRowBackground(Color(.systemGroupedBackground))
+            .frame(maxWidth: .infinity, alignment: .trailing)
+        }
+
+        // MARK: - Hypo Section
+
+        private var hypoTreatmentSection: some View {
+            Section {
+                Button {
+                    state.hypoTreatment = true
+
+                    button.toggle()
+
+                    if button {
+                        state.add(override, fetch: editMode)
+                    }
+
+                } label: {
+                    Text("Hypo Treatment")
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+            .listRowBackground(Color(.orange).opacity(0.9))
+            .tint(.white)
+        }
+
+        // MARK: - Continue Section
+
+        private var continueSection: some View {
+            Section {
+                Button {
+                    button.toggle()
+
+                    if button {
+                        state.add(override, fetch: editMode)
+                    }
+
+                } label: {
+                    Text(
+                        (
+                            (state.skipBolus && !override && !editMode)
+                                || state.carbs <= 0
+                        )
+                            ? "Save"
+                            : "Continue"
+                    )
+                }
+                .disabled(empty)
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+            .listRowBackground(
+                !empty
+                    ? Color(.systemBlue)
+                    : Color(.systemGray4)
+            )
+            .tint(.white)
+        }
+
+        // MARK: - Other Nutrition Sheet
+
+        private struct OtherNutritionSheet: View {
+            @Binding var fiber: Decimal
+            @Binding var micronutrients: [MicronutrientValue]
+
+            let formatter: NumberFormatter
+
+            @Environment(\.dismiss) private var dismiss
+
+            var body: some View {
+                NavigationStack {
+                    Form {
+                        Section("Fiber") {
+                            HStack {
+                                Text("Fiber")
+
+                                Spacer()
+
+                                DecimalTextField(
+                                    "0",
+                                    value: $fiber,
+                                    formatter: formatter,
+                                    autofocus: false,
+                                    liveEditing: true
+                                )
+
+                                Text("g")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+
+                        MicronutrientSection(
+                            values: $micronutrients,
+                            formatter: formatter
+                        )
+                    }
+                    .navigationTitle("Other")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                dismiss()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // MARK: - Micronutrient Section
+
+        private struct MicronutrientSection: View {
+            @Binding var values: [MicronutrientValue]
+
+            let formatter: NumberFormatter
+
+            @State private var selected = MicroNutrient.allCases.first!
+            @State private var amount: Decimal = 0
+
+            private var sortedNutrients: [MicroNutrient] {
+                MicroNutrient.allCases.sorted {
+                    $0.displayName < $1.displayName
+                }
+            }
+
+            var body: some View {
+                Section("Micronutrients") {
+                    Picker("Nutrient", selection: $selected) {
+                        ForEach(sortedNutrients, id: \.self) { nutrient in
+
+                            Text(nutrient.displayName)
+                                .tag(nutrient)
+                        }
+                    }
+
+                    HStack {
+                        Text("Amount")
+
+                        Spacer()
+
+                        DecimalTextField(
+                            "0",
+                            value: $amount,
+                            formatter: formatter,
+                            autofocus: false,
+                            liveEditing: true
+                        )
+
+                        Text(selected.unit)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Button {
+                        addOrUpdate()
+
+                    } label: {
+                        Text("Add Micronutrient")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .disabled(amount <= 0)
+                }
+
+                if !values.isEmpty {
+                    Section("Added") {
+                        ForEach(
+                            values.sorted { $0.name < $1.name }
+                        ) { value in
+
+                            HStack {
+                                VStack(
+                                    alignment: .leading,
+                                    spacing: 2
+                                ) {
+                                    Text(value.name)
+
+                                    Text(
+                                        value.substance.coreDataType
+                                            .capitalized
+                                    )
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                }
+
+                                Spacer()
+
+                                Text(value.formattedAmount)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .onDelete(perform: delete)
+                    }
+                }
+            }
+
+            private func addOrUpdate() {
+                var dict = Dictionary(
+                    uniqueKeysWithValues: values.map {
+                        ($0.substance, $0)
+                    }
+                )
+
+                dict[selected] = MicronutrientValue(
+                    substance: selected,
+                    amount: amount,
+                    amountPer100: 0
+                )
+
+                values = dict.values
+                    .filter {
+                        $0.amount > 0 || $0.amountPer100 > 0
+                    }
+                    .sorted {
+                        $0.name < $1.name
+                    }
+
+                amount = 0
+            }
+
+            private func delete(at offsets: IndexSet) {
+                let sortedValues = values.sorted {
+                    $0.name < $1.name
+                }
+
+                let substancesToDelete = offsets.map {
+                    sortedValues[$0].substance
+                }
+
+                values.removeAll {
+                    substancesToDelete.contains($0.substance)
+                }
             }
         }
 
@@ -344,6 +653,60 @@ extension AddCarbs {
             }
         }
 
+        private var otherSummary: some View {
+            let hasFiber = state.fiber > 0
+            let microCount = state.micronutrient.count
+
+            return Text(summaryText(hasFiber: hasFiber, microCount: microCount))
+        }
+
+        private func summaryText(
+            hasFiber: Bool,
+            microCount: Int
+        ) -> String {
+            switch (hasFiber, microCount > 0) {
+            case (false, false):
+                return "Optional"
+
+            case (true, false):
+                return "Fiber"
+
+            case (false, true):
+                return "\(microCount) micros"
+
+            case (true, true):
+                return "Fiber • \(microCount)"
+            }
+        }
+
+        @ViewBuilder private func macroRow(
+            title: LocalizedStringKey,
+            value: Binding<Decimal>,
+            color: Color,
+            bold: Bool = false
+        ) -> some View {
+            HStack {
+                Text(title)
+                    .foregroundStyle(color)
+                    .fontWeight(bold ? .semibold : .regular)
+
+                Spacer()
+
+                DecimalTextField(
+                    "0",
+                    value: value,
+                    formatter: Self.formatter,
+                    autofocus: false,
+                    liveEditing: true
+                )
+
+                Text("grams")
+                    .foregroundStyle(.secondary)
+            }
+        }
+
+        // MARK: - Helper Functions
+
         private var meal: Bool {
             mode == .meal
         }
@@ -351,8 +714,6 @@ extension AddCarbs {
         private var hasUnsavedFoodSearchResults: Bool {
             foodSearchState.showingFoodSearch && foodSearchState.searchResultsState.nonDeletedItems.isNotEmpty
         }
-
-        // MARK: - Helper Functions
 
         // Opens an edit-and-save View
         private func saveAsPreset() {
@@ -362,7 +723,8 @@ extension AddCarbs {
                     values: [
                         .carbs: state.carbs,
                         .protein: state.protein,
-                        .fat: state.fat
+                        .fat: state.fat,
+                        .fiber: state.fiber
                     ],
                     servingsMultiplier: 1.0
                 ),
@@ -534,7 +896,7 @@ extension AddCarbs {
                         Text("Saved Food")
                         Button {
                             state.presetToEdit = Presets(context: moc)
-                            newPreset = (NSLocalizedString("New", comment: ""), 0, 0, 0, [])
+                            newPreset = (NSLocalizedString("New", comment: ""), 0, 0, 0, 0, [])
                             state.edit = true
                         } label: { Image(systemName: "plus").font(.system(size: 22)) }
                             .buttonStyle(.borderless).frame(maxWidth: .infinity, alignment: .trailing)
@@ -610,6 +972,7 @@ extension AddCarbs {
                 preset.carbs = newPreset.carbs as NSDecimalNumber
                 preset.fat = newPreset.fat as NSDecimalNumber
                 preset.protein = newPreset.protein as NSDecimalNumber
+                preset.fiber = newPreset.fiber as NSDecimalNumber
 
                 try? preset.replaceMicronutrients(
                     with: newPreset.micronutrient.map {
@@ -630,6 +993,7 @@ extension AddCarbs {
                 preset.carbs = newPreset.carbs as NSDecimalNumber
                 preset.fat = newPreset.fat as NSDecimalNumber
                 preset.protein = newPreset.protein as NSDecimalNumber
+                preset.fiber = newPreset.fiber as NSDecimalNumber
                 preset.dish = newPreset.dish
                 preset.per100 = false
 
@@ -664,6 +1028,7 @@ extension AddCarbs {
             newPreset.carbs = (state.presetToEdit?.carbs ?? 0) as Decimal
             newPreset.fat = (state.presetToEdit?.fat ?? 0) as Decimal
             newPreset.protein = (state.presetToEdit?.protein ?? 0) as Decimal
+            newPreset.fiber = (state.presetToEdit?.fiber ?? 0) as Decimal
             newPreset.micronutrient = state.presetToEdit?.micronutrientValuesTyped() ?? []
         }
 
@@ -673,6 +1038,7 @@ extension AddCarbs {
                 state.carbs.rounded(to: 1),
                 state.fat.rounded(to: 1),
                 state.protein.rounded(to: 1),
+                state.fiber.rounded(to: 1),
                 state.micronutrient
             )
 

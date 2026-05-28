@@ -685,6 +685,7 @@ extension Home {
                     carbs: sum(\.carbs, in: meals),
                     fat: sum(\.fat, in: meals),
                     protein: sum(\.protein, in: meals),
+                    fiber: sum(\.fiber, in: meals),
                     kcal: 0,
                     servings: meals.count,
                     micronutrients: self.microCount(meals),

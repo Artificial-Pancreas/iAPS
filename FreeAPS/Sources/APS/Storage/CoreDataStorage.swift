@@ -316,6 +316,7 @@ final class CoreDataStorage {
                 save.carbs = entry.carbs as NSDecimalNumber
                 save.fat = (entry.fat ?? 0) as NSDecimalNumber
                 save.protein = (entry.protein ?? 0) as NSDecimalNumber
+                save.fiber = (entry.fiber ?? 0) as NSDecimalNumber
                 save.note = entry.note
                 save.savedToFile = savedToFile
 
@@ -358,6 +359,7 @@ final class CoreDataStorage {
                 save.carbs = entry.carbs as NSDecimalNumber
                 save.fat = (entry.fat ?? 0) as NSDecimalNumber
                 save.protein = (entry.protein ?? 0) as NSDecimalNumber
+                save.fiber = (entry.fiber ?? 0) as NSDecimalNumber
                 save.note = entry.note
                 save.savedToFile = true
             }
@@ -939,6 +941,7 @@ extension Meals {
     @NSManaged var id: String?
     @NSManaged var note: String?
     @NSManaged var protein: NSDecimalNumber?
+    @NSManaged var fiber: NSDecimalNumber?
     @NSManaged var fpuID: String?
     @NSManaged var savedToFile: Bool
     @NSManaged var micronutrient: NSSet?

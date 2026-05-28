@@ -5,6 +5,12 @@ enum MicronutrientType: String, CaseIterable, Codable {
     case mineral
 }
 
+/// Only needed for EFSA RDI values
+enum MacroNutrient {
+    case protein
+    case fiber
+}
+
 enum MicroNutrient: String, CaseIterable, Codable, Identifiable {
     var id: String { rawValue }
 
@@ -526,11 +532,47 @@ enum EFSAReferenceIntakes {
              } */
         }
     }
+
+    /// Macro API
+    static func value(
+        for nutrient: MacroNutrient,
+        age: Int,
+        sex: Sex
+    ) -> RDIValue {
+        let group = AgeGroup.from(age: age)
+
+        switch nutrient {
+        case .protein:
+            switch (group, sex) {
+            case (.adult, .man):
+                return .init(value: 62, unit: "g")
+
+            case (.adult, .woman):
+                return .init(value: 52, unit: "g")
+
+            default:
+                return .init(value: 52, unit: "g")
+            }
+
+        case .fiber:
+            switch group {
+            case .adult:
+                return .init(value: 25, unit: "g")
+
+            case .child11to14:
+                return .init(value: 21, unit: "g")
+
+            default:
+                return .init(value: 16, unit: "g")
+            }
+        }
+    }
 }
 
 // MARK: - Daily Percentage Calculation
 
 enum MicronutrientProgress {
+    /// Micros
     static func percentOfRDI(
         nutrient: MicroNutrient,
         amount: Double,
@@ -544,6 +586,22 @@ enum MicronutrientProgress {
         )
 
         guard reference.value > 0 else { return 0 }
+
+        return (amount / reference.value) * 100
+    }
+
+    /// Macros
+    static func percentOfRDI(
+        nutrient: MacroNutrient,
+        amount: Double,
+        age: Int,
+        sex: Sex
+    ) -> Double {
+        let reference = EFSAReferenceIntakes.value(
+            for: nutrient,
+            age: age,
+            sex: sex
+        )
 
         return (amount / reference.value) * 100
     }

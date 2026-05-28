@@ -21,7 +21,7 @@ extension Home {
         @State var showBolusActiveAlert = false
         @State var displayAutoHistory = false
         @State var displayDynamicHistory = false
-        @State var displayMicronutrients = false
+        @State var displayAllNutrients = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
@@ -854,15 +854,15 @@ extension Home {
                 caloriesView
                     .padding(.horizontal, 23)
 
-                nutrientsView
+                carbNutrientsView
                     .padding(.horizontal, 23)
-                    .padding(.bottom, savedMicronutrients.isEmpty ? 10 : 0)
+                    .padding(.bottom, (savedMicronutrients.isEmpty && !otherMacros) ? 10 : 0)
 
-                if !savedMicronutrients.isEmpty {
+                if !(savedMicronutrients.isEmpty && !otherMacros) {
                     micronutrientToggle
 
-                    if displayMicronutrients {
-                        micronutrientsView
+                    if displayAllNutrients {
+                        micronutrientsAndMoreView
                             .padding(.horizontal, 23)
                             .padding(.bottom, 10)
                     }
@@ -873,7 +873,7 @@ extension Home {
 
         private var micronutrientToggle: some View {
             Button {
-                displayMicronutrients.toggle()
+                displayAllNutrients.toggle()
             } label: {
                 Label(
                     micronutrientTitle(),
@@ -887,15 +887,40 @@ extension Home {
             .frame(maxWidth: .infinity, alignment: .leading)
             .buttonStyle(.borderless)
             .foregroundStyle(.blue)
-            .padding(.bottom, !displayMicronutrients ? 20 : 10)
+            .padding(.bottom, !displayAllNutrients ? 20 : 10)
+        }
+
+        private var otherMacros: Bool {
+            state.mealData.fat > 0 || state.mealData.protein > 0 || state.mealData.fiber > 0
         }
 
         private func micronutrientTitle() -> String {
             let count = state.mealData.micronutrients.count
-            guard count > 1 else {
-                return "\(count) " + NSLocalizedString("Micronutrient", comment: "")
+
+            guard count > 0 || otherMacros else {
+                return String.empty
             }
-            return "\(count) " + NSLocalizedString("Micronutrients", comment: "")
+            guard count > 0 else {
+                if otherMacros {
+                    return NSLocalizedString("More", comment: "")
+                } else {
+                    return String.empty
+                }
+            }
+            guard count > 1 else {
+                if otherMacros {
+                    return "\(count) " + NSLocalizedString("Micronutrient", comment: "")
+                        + NSLocalizedString(" and more", comment: "")
+                } else {
+                    return "\(count) " + NSLocalizedString("Micronutrient", comment: "")
+                }
+            }
+            if otherMacros {
+                return "\(count) " + NSLocalizedString("Micronutrients", comment: "")
+                    + NSLocalizedString(" and more", comment: "")
+            } else {
+                return "\(count) " + NSLocalizedString("Micronutrients", comment: "")
+            }
         }
 
         /// Currently constant. The Average Day Title
@@ -915,6 +940,10 @@ extension Home {
 
         private var displayedProtein: Decimal {
             state.mealData.averaged(state.mealData.protein)
+        }
+
+        private var displayedFiber: Decimal {
+            state.mealData.averaged(state.mealData.fiber)
         }
 
         private var displayedCalories: Decimal {
@@ -967,19 +996,23 @@ extension Home {
             .foregroundStyle(.secondary)
         }
 
-        private var nutrientsView: some View {
-            VStack {
-                if state.mealData.carbs > 0 {
-                    nutrientRow(
-                        localizedIntervalTitle("Carbs"),
-                        value: displayedCarbs,
-                        unit: "g",
-                        formatter: tirFormatter
-                    )
-                }
+        private var carbNutrientsView: some View {
+            HStack {
+                Text(localizedIntervalTitle("Carbs"))
+                Spacer()
+                Text(
+                    tirFormatter.string(
+                        from: displayedCarbs as NSNumber
+                    ) ?? ""
+                )
+            }
+            .foregroundStyle(.secondary)
+        }
 
+        private var otherMacroNutrientsView: some View {
+            VStack {
                 if state.mealData.fat > 0 {
-                    nutrientRow(
+                    micronutrientRow(
                         localizedIntervalTitle("Fat"),
                         value: displayedFat,
                         unit: "g",
@@ -988,21 +1021,46 @@ extension Home {
                 }
 
                 if state.mealData.protein > 0 {
-                    nutrientRow(
+                    micronutrientRow(
                         localizedIntervalTitle("Protein"),
                         value: displayedProtein,
                         unit: "g",
+                        rdi: MicronutrientProgress.percentOfRDI(
+                            nutrient: MacroNutrient.protein,
+                            amount: NSDecimalNumber(decimal: displayedProtein).doubleValue,
+                            age: state.individual.age,
+                            sex: state.individual.sex
+                        ),
+                        formatter: tirFormatter
+                    )
+                }
+
+                if state.mealData.fiber > 0 {
+                    micronutrientRow(
+                        localizedIntervalTitle("Fiber"),
+                        value: displayedFiber,
+                        unit: "g",
+                        rdi: MicronutrientProgress.percentOfRDI(
+                            nutrient: MacroNutrient.fiber,
+                            amount: NSDecimalNumber(decimal: displayedFiber).doubleValue,
+                            age: state.individual.age,
+                            sex: state.individual.sex
+                        ),
                         formatter: tirFormatter
                     )
                 }
             }
             .foregroundStyle(.secondary)
+            .font(.caption)
         }
 
-        private var micronutrientsView: some View {
+        private var micronutrientsAndMoreView: some View {
             VStack(spacing: 4) {
-                Divider()
-                    .padding(.bottom, 4)
+                otherMacroNutrientsView
+
+                if otherMacros {
+                    Divider().padding(.bottom, 4)
+                }
 
                 ForEach(savedMicronutrients, id: \.nutrient) { item in
                     let value = state.mealData.averaged(item.amount)
@@ -1055,18 +1113,18 @@ extension Home {
                     Text(
                         (tirFormatter.string(from: NSNumber(value: rdi)) ?? "") + " %"
                     )
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.lightBlue)
                     .frame(minWidth: 45, alignment: .trailing)
                 }
 
-                Text(
-                    formatter.string(
-                        from: NSDecimalNumber(decimal: value)
-                    ) ?? ""
-                ).frame(minWidth: 45, alignment: .trailing)
-
-                Text(unit)
-                    .frame(minWidth: 28, alignment: .leading)
+                HStack {
+                    Text(
+                        formatter.string(
+                            from: NSDecimalNumber(decimal: value)
+                        ) ?? ""
+                    )
+                    Text(unit)
+                }.frame(minWidth: 80, alignment: .trailing)
             }
         }
 
@@ -1097,11 +1155,13 @@ extension Home {
             }
         }
 
+        /// Meal Summary Frame Height
         private var frameHeight: CGFloat {
             CGFloat(
-                260 +
+                220 +
                     (state.mealData.micronutrients.isEmpty ? 0 : 50) +
-                    (displayMicronutrients ? 1 : 0) *
+                    (otherMacros && displayAllNutrients ? 35 : 0) +
+                    (displayAllNutrients ? 1 : 0) *
                     state.mealData.micronutrients.count * 20
             )
         }

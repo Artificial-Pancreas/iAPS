@@ -253,7 +253,8 @@ extension DataTable {
                     if meal.carbs != 0 {
                         HStack(spacing: 0) {
                             Text("Carbs").frame(maxWidth: .infinity, alignment: .leading)
-                            Text(item.amountText).frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
+                            Text(item.amountText + NSLocalizedString(" g", comment: ""))
+                                .frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
                         }
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
@@ -271,6 +272,7 @@ extension DataTable {
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
                         .foregroundStyle(.secondary)
+                        .font(.caption)
                     }
 
                     if meal.protein != 0 {
@@ -284,6 +286,21 @@ extension DataTable {
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
                         .foregroundStyle(.secondary)
+                        .font(.caption)
+                    }
+
+                    if meal.fiber != 0 {
+                        HStack(spacing: 0) {
+                            Text("Fiber").frame(maxWidth: .infinity, alignment: .leading)
+                            Text(
+                                (hourFormatter.string(from: (meal.fiber ?? 0) as NSNumber) ?? "") +
+                                    NSLocalizedString(" g", comment: "")
+                            ).frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
+                        }
+                        .frame(maxHeight: height)
+                        .padding(.leading, leading)
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
                     }
 
                     // MARK: Micronutrients
@@ -581,6 +598,21 @@ extension DataTable {
 
                                 Text("grams").foregroundColor(.secondary)
                             }
+
+                            HStack {
+                                Text("Fiber")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.meal.fiber,
+                                    formatter: hourFormatter,
+                                    autofocus: false,
+                                    liveEditing: true
+                                )
+
+                                Text("grams")
+                            }
+                            .foregroundColor(.secondary)
                         } header: {
                             Text("Meal")
                         }

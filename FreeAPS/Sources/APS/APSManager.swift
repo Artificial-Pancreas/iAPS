@@ -676,10 +676,11 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 }
             }
-        case let .meal(carbs, fat, protein):
+        case let .meal(carbs, fat, protein, fiber):
             let date = announcement.createdAt.date
+            let fibers = fiber != nil ? fiber : 0
 
-            guard carbs > 0 || fat > 0 || protein > 0 else {
+            guard carbs > 0 || fat > 0 || protein > 0 || (fibers! > 0) else {
                 return
             }
 
@@ -690,6 +691,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
+                fiber: fiber,
                 note: "Remote",
                 enteredBy: "Nightscout operator",
                 isFPU: false

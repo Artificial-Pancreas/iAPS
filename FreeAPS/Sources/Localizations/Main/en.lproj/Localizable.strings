@@ -1677,6 +1677,12 @@ Enact a temp Basal or a temp target */
 
 "fat" = "fat";
 
+/* Display more macro nutrients */
+"More" = "More";
+
+/* and more macro nutrients */
+" and more" = " and more";
+
 "📝 Notes" = "📝 Notes";
 
 /* */

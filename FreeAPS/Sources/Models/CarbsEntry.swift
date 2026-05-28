@@ -7,6 +7,7 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     var carbs: Decimal
     let fat: Decimal?
     let protein: Decimal?
+    let fiber: Decimal?
     let note: String?
     let enteredBy: String?
     let isFPU: Bool?
@@ -36,6 +37,7 @@ extension CarbsEntry {
         case carbs
         case fat
         case protein
+        case fiber
         case note
         case enteredBy
         case isFPU
@@ -51,6 +53,7 @@ extension CarbsEntry {
         carbs = try container.decode(Decimal.self, forKey: .carbs)
         fat = try container.decodeIfPresent(Decimal.self, forKey: .fat)
         protein = try container.decodeIfPresent(Decimal.self, forKey: .protein)
+        fiber = try container.decodeIfPresent(Decimal.self, forKey: .fiber)
         note = try container.decodeIfPresent(String.self, forKey: .note)
         enteredBy = try container.decodeIfPresent(String.self, forKey: .enteredBy)
         isFPU = try container.decodeIfPresent(Bool.self, forKey: .isFPU)

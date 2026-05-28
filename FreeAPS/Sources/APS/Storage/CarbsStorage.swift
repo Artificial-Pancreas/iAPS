@@ -79,7 +79,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
 
                     let eachCarbEntry = CarbsEntry(
                         id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
-                        carbs: equivalent, fat: 0, protein: 0, note: nil,
+                        carbs: equivalent, fat: 0, protein: 0, fiber: nil, note: nil,
                         enteredBy: CarbsEntry.manual, isFPU: true
                     )
                     futureCarbArray.append(eachCarbEntry)
@@ -105,7 +105,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     actualDate: entry.actualDate ?? entry.createdAt,
                     carbs: entry.carbs,
                     fat: fat,
-                    protein: protein,
+                    protein: protein, fiber: entry.fiber,
                     note: entry.note ?? "",
                     enteredBy: entry.enteredBy ?? "",
                     isFPU: false,
