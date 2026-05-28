@@ -665,6 +665,61 @@ enum OpenFoodFactsError: Error, LocalizedError {
     case invalidBarcode
     case rateLimitExceeded
     case serverError(Int)
+
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return NSLocalizedString("Invalid API URL", comment: "Error message for invalid OpenFoodFacts URL")
+        case .invalidResponse:
+            return NSLocalizedString("Invalid API response", comment: "Error message for invalid OpenFoodFacts response")
+        case .noData:
+            return NSLocalizedString("No data received", comment: "Error message when no data received from OpenFoodFacts")
+        case let .decodingError(error):
+            return String(
+                format: NSLocalizedString("Failed to decode response: %@", comment: "Error message for JSON decoding failure"),
+                error.localizedDescription
+            )
+        case let .networkError(error):
+            return String(
+                format: NSLocalizedString("Network error: %@", comment: "Error message for network failures"),
+                error.localizedDescription
+            )
+        case .productNotFound:
+            return NSLocalizedString(
+                "Product not found",
+                comment: "Error message when product is not found in OpenFoodFacts database"
+            )
+        case .invalidBarcode:
+            return NSLocalizedString("Invalid barcode format", comment: "Error message for invalid barcode")
+        case .rateLimitExceeded:
+            return NSLocalizedString("Too many requests. Please try again later.", comment: "Error message for API rate limiting")
+        case let .serverError(code):
+            return String(format: NSLocalizedString("Server error (%d)", comment: "Error message for server errors"), code)
+        }
+    }
+
+    var failureReason: String? {
+        switch self {
+        case .invalidURL:
+            return "The OpenFoodFacts API URL is malformed"
+        case .invalidResponse:
+            return "The API response format is invalid"
+        case .noData:
+            return "The API returned no data"
+        case .decodingError:
+            return "The API response format is unexpected"
+        case .networkError:
+            return "Network connectivity issue"
+        case .productNotFound:
+            return "The barcode or product is not in the database"
+        case .invalidBarcode:
+            return "The barcode format is not valid"
+        case .rateLimitExceeded:
+            return "API usage limit exceeded"
+        case .serverError:
+            return "OpenFoodFacts server is experiencing issues"
+        }
+    }
 }
 
 // MARK: - Product Conversion
