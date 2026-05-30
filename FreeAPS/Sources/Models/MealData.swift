@@ -30,4 +30,12 @@ struct MealData: Codable {
     func averaged(_ value: Int) -> Decimal {
         averaged(Decimal(value))
     }
+
+    var additionalNutrients: Int {
+        let micros = micronutrients.count
+        let fat = self.fat > 0 ? 1 : 0
+        let protein = self.protein > 0 ? 1 : 0
+
+        return micros + fat + protein
+    }
 }

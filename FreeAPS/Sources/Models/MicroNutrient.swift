@@ -1,6 +1,10 @@
 import Foundation
 import SwiftUI
 
+protocol RDITrackable {
+    var shouldLimitExcess: Bool { get }
+}
+
 enum MicronutrientType: String, CaseIterable, Codable {
     case vitamin
     case mineral
@@ -10,7 +14,13 @@ enum MicronutrientType: String, CaseIterable, Codable {
 enum MacroNutrient {
     case protein
     case fiber
+
+    var shouldLimitExcess: Bool {
+        false
+    }
 }
+
+extension MacroNutrient: RDITrackable {}
 
 enum MicroNutrient: String, CaseIterable, Codable, Identifiable {
     var id: String { rawValue }
@@ -45,6 +55,8 @@ enum MicroNutrient: String, CaseIterable, Codable, Identifiable {
     case iodine
     case salt
 }
+
+extension MicroNutrient: RDITrackable {}
 
 extension MicroNutrient {
     var displayName: String {
@@ -302,6 +314,22 @@ extension MicroNutrient {
 
     var isVitamin: Bool {
         coreDataType == "vitamin"
+    }
+
+    var shouldLimitExcess: Bool {
+        switch self {
+        case .iodine,
+             .iron,
+             .phosphorus,
+             .salt,
+             .selenium,
+             .vitaminA,
+             .vitaminD:
+            return true
+
+        default:
+            return false
+        }
     }
 
     init?(coreDataName: String) {
@@ -574,46 +602,86 @@ enum EFSAReferenceIntakes {
 
 enum MicronutrientProgress {
     /// Micros
-    static func percentOfRDI(
+    static func progress(
         nutrient: MicroNutrient,
         amount: Double,
         age: Int,
         sex: Sex
-    ) -> Double {
+    ) -> NutrientProgress {
         let reference = EFSAReferenceIntakes.value(
             for: nutrient,
             age: age,
             sex: sex
         )
 
-        guard reference.value > 0 else { return 0 }
+        guard reference.value > 0 else {
+            return NutrientProgress(
+                percent: 0,
+                color: .secondary
+            )
+        }
 
-        return (amount / reference.value) * 100
+        let percent = (amount / reference.value) * 100
+
+        return NutrientProgress(
+            percent: percent,
+            color: NutrientProgressColor.color(
+                nutrient: nutrient,
+                percent: percent
+            )
+        )
     }
 
-    /// Macros
-    static func percentOfRDI(
+    /// Macros overload
+    static func progress(
         nutrient: MacroNutrient,
         amount: Double,
         age: Int,
         sex: Sex
-    ) -> Double {
+    ) -> NutrientProgress {
         let reference = EFSAReferenceIntakes.value(
             for: nutrient,
             age: age,
             sex: sex
         )
 
-        return (amount / reference.value) * 100
-    }
+        let percent = (amount / reference.value) * 100
 
-    /// RDI foreground style colour
-    static func colour(_ rdi: Double) -> Color {
-        switch rdi {
-        case 0 ... 20: Color.red
-        case 21 ... 74: Color.orange
-        case 75 ... 150: Color.green
-        default: Color.blue
+        return NutrientProgress(
+            percent: percent,
+            color: NutrientProgressColor.color(
+                nutrient: nutrient,
+                percent: percent
+            )
+        )
+    }
+}
+
+enum NutrientProgressColor {
+    static func color<T: RDITrackable>(
+        nutrient: T,
+        percent: Double
+    ) -> Color {
+        if nutrient.shouldLimitExcess {
+            switch percent {
+            case 20 ..< 75:
+                return .cyan
+            case 75 ... 125:
+                return .mint
+            case 125 ... 200:
+                return .yellow
+            default:
+                return .orange
+            }
+        }
+
+        switch percent {
+        case 0 ..< 25:
+            return .orange
+        case 25 ..< 75:
+            return .mint
+        default:
+            return .green
         }
     }
 }
@@ -627,40 +695,7 @@ extension Individual {
     static let `default` = Individual(age: 35, sex: .woman)
 }
 
-// MARK: - Example Usage
-
-/*
-
- let vitaminC = EFSAReferenceIntakes.value(
-     for: .vitaminC,
-     age: 34,
-     sex: .male
- )
-
- // print(vitaminC.value) // 110
- // print(vitaminC.unit)  // mg
-
- let progress = MicronutrientProgress.percentOfRDI(
-     nutrient: .vitaminC,
-     amount: 55,
-     age: 34,
-     sex: .male
- )
-
- // print(progress) // 50%
-
- // MARK: Notes
-     /*
-      * Values are based on EFSA Dietary Reference Values (DRV) and Adequate Intake (AI) guidance.
-      * Some nutrients use Adequate Intake instead of Population Reference Intake.
-      * Pregnancy and lactation adjustments are not included in this version.
-      * You can extend this model with:
-
-      * pregnancy/lactation
-      * upper tolerable intake levels (UL)
-      * localization
-      * HealthKit integration
-      * unit conversion helpers
-      * age in months for pediatric precision
-      */
- */
+struct NutrientProgress {
+    let percent: Double
+    let color: Color
+}

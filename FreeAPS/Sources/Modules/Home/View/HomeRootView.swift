@@ -890,86 +890,6 @@ extension Home {
             .padding(.bottom, !displayAllNutrients ? 20 : 10)
         }
 
-        private var otherMacros: Bool {
-            state.mealData.fat > 0 || state.mealData.protein > 0 || state.mealData.fiber > 0
-        }
-
-        private func micronutrientTitle() -> String {
-            let count = state.mealData.micronutrients.count
-
-            guard count > 0 || otherMacros else {
-                return String.empty
-            }
-            guard count > 0 else {
-                if otherMacros {
-                    return NSLocalizedString("More", comment: "")
-                } else {
-                    return String.empty
-                }
-            }
-            guard count > 1 else {
-                if otherMacros {
-                    return "\(count) " + NSLocalizedString("Micronutrient", comment: "")
-                        + NSLocalizedString(" and more", comment: "")
-                } else {
-                    return "\(count) " + NSLocalizedString("Micronutrient", comment: "")
-                }
-            }
-            if otherMacros {
-                return "\(count) " + NSLocalizedString("Micronutrients", comment: "")
-                    + NSLocalizedString(" and more", comment: "")
-            } else {
-                return "\(count) " + NSLocalizedString("Micronutrients", comment: "")
-            }
-        }
-
-        /// Currently constant. The Average Day Title
-        private var intervalTitle: String { "Day" }
-
-        private var displayedServings: Decimal {
-            state.mealData.averaged(state.mealData.servings)
-        }
-
-        private var displayedCarbs: Decimal {
-            state.mealData.averaged(state.mealData.carbs)
-        }
-
-        private var displayedFat: Decimal {
-            state.mealData.averaged(state.mealData.fat)
-        }
-
-        private var displayedProtein: Decimal {
-            state.mealData.averaged(state.mealData.protein)
-        }
-
-        private var displayedFiber: Decimal {
-            state.mealData.averaged(state.mealData.fiber)
-        }
-
-        private var displayedCalories: Decimal {
-            state.mealData.averaged(state.mealData.kcal)
-        }
-
-        private var savedMicronutrients: [(nutrient: MicroNutrient, amount: Decimal)] {
-            state.mealData.micronutrients
-                .filter { $0.value > 0 }
-                .sorted {
-                    MicronutrientProgress.percentOfRDI(
-                        nutrient: $0.key,
-                        amount: NSDecimalNumber(decimal: $0.value).doubleValue,
-                        age: state.individual.age,
-                        sex: state.individual.sex
-                    ) >
-                        MicronutrientProgress.percentOfRDI(
-                            nutrient: $1.key,
-                            amount: NSDecimalNumber(decimal: $1.value).doubleValue,
-                            age: state.individual.age,
-                            sex: state.individual.sex
-                        )
-                }
-                .map { ($0.key, $0.value) }
-        }
-
         private var caloriesView: some View {
             HStack {
                 Text(localizedIntervalTitle("Kilo Calories"))
@@ -1025,8 +945,8 @@ extension Home {
                         localizedIntervalTitle("Protein"),
                         value: displayedProtein,
                         unit: "g",
-                        rdi: MicronutrientProgress.percentOfRDI(
-                            nutrient: MacroNutrient.protein,
+                        progress: MicronutrientProgress.progress(
+                            nutrient: .protein,
                             amount: NSDecimalNumber(decimal: displayedProtein).doubleValue,
                             age: state.individual.age,
                             sex: state.individual.sex
@@ -1040,8 +960,8 @@ extension Home {
                         localizedIntervalTitle("Fiber"),
                         value: displayedFiber,
                         unit: "g",
-                        rdi: MicronutrientProgress.percentOfRDI(
-                            nutrient: MacroNutrient.fiber,
+                        progress: MicronutrientProgress.progress(
+                            nutrient: .fiber,
                             amount: NSDecimalNumber(decimal: displayedFiber).doubleValue,
                             age: state.individual.age,
                             sex: state.individual.sex
@@ -1051,16 +971,13 @@ extension Home {
                 }
             }
             .foregroundStyle(.secondary)
-            .font(.caption)
+            .font(.callout)
         }
 
         private var micronutrientsAndMoreView: some View {
             VStack(spacing: 4) {
                 otherMacroNutrientsView
-
-                if otherMacros {
-                    Divider().padding(.bottom, 4)
-                }
+                    .padding(.bottom, otherMacros ? 10 : 0)
 
                 ForEach(savedMicronutrients, id: \.nutrient) { item in
                     let value = state.mealData.averaged(item.amount)
@@ -1069,7 +986,7 @@ extension Home {
                         item.nutrient.displayName,
                         value: value,
                         unit: item.nutrient.unit,
-                        rdi: MicronutrientProgress.percentOfRDI(
+                        progress: MicronutrientProgress.progress(
                             nutrient: item.nutrient,
                             amount: NSDecimalNumber(decimal: value).doubleValue,
                             age: state.individual.age,
@@ -1081,6 +998,101 @@ extension Home {
             }
             .font(.caption)
             .foregroundStyle(.secondary)
+        }
+
+        private func micronutrientRow(
+            _ title: String,
+            value: Decimal,
+            unit: String,
+            progress: NutrientProgress? = nil,
+            formatter: NumberFormatter
+        ) -> some View {
+            VStack(alignment: .leading, spacing: 2) {
+                HStack {
+                    Text(title)
+
+                    Spacer()
+
+                    if let progress {
+                        Text("\(Int(progress.percent.rounded())) %")
+                            .foregroundStyle(progress.color)
+                    }
+
+                    Text(formatter.string(from: NSDecimalNumber(decimal: value)) ?? "")
+
+                    Text(unit)
+                }
+
+                if let progress {
+                    NutrientProgressBar(progress: progress)
+                }
+            }
+        }
+
+        private var otherMacros: Bool {
+            state.mealData.fat > 0 || state.mealData.protein > 0 || state.mealData.fiber > 0
+        }
+
+        private func micronutrientTitle() -> String {
+            let count = state.mealData.additionalNutrients
+
+            guard count > 0 else {
+                return String.empty
+            }
+
+            guard count > 1 else {
+                return "\(count) " + NSLocalizedString("more nutrient", comment: "")
+            }
+
+            return "\(count) " + NSLocalizedString("more nutrients", comment: "")
+        }
+
+        /// Currently constant. The Average Day Title
+        private var intervalTitle: String { "Day" }
+
+        private var displayedServings: Decimal {
+            state.mealData.averaged(state.mealData.servings)
+        }
+
+        private var displayedCarbs: Decimal {
+            state.mealData.averaged(state.mealData.carbs)
+        }
+
+        private var displayedFat: Decimal {
+            state.mealData.averaged(state.mealData.fat)
+        }
+
+        private var displayedProtein: Decimal {
+            state.mealData.averaged(state.mealData.protein)
+        }
+
+        private var displayedFiber: Decimal {
+            state.mealData.averaged(state.mealData.fiber)
+        }
+
+        private var displayedCalories: Decimal {
+            state.mealData.averaged(state.mealData.kcal)
+        }
+
+        private var savedMicronutrients: [(nutrient: MicroNutrient, amount: Decimal)] {
+            state.mealData.micronutrients
+                .filter { $0.value > 0 }
+                .sorted {
+                    MicronutrientProgress.progress(
+                        nutrient: $0.key,
+                        amount: NSDecimalNumber(decimal: $0.value).doubleValue,
+                        age: state.individual.age,
+                        sex: state.individual.sex
+                    ).percent
+                        >
+                        MicronutrientProgress.progress(
+                            nutrient: $1.key,
+                            amount: NSDecimalNumber(decimal: $1.value).doubleValue,
+                            age: state.individual.age,
+                            sex: state.individual.sex
+                        ).percent
+                }
+                .map { ($0.key, $0.value) }
         }
 
         private func localizedIntervalTitle(
@@ -1097,72 +1109,14 @@ extension Home {
             )
         }
 
-        private func micronutrientRow(
-            _ title: String,
-            value: Decimal,
-            unit: String,
-            rdi: Double? = nil,
-            formatter: NumberFormatter
-        ) -> some View {
-            HStack {
-                Text(title)
-                    .lineLimit(1)
-                Spacer(minLength: 8)
-
-                if let rdi = rdi {
-                    Text(
-                        (tirFormatter.string(from: NSNumber(value: rdi)) ?? "") + " %"
-                    )
-                    .foregroundStyle(MicronutrientProgress.colour(rdi))
-                    .frame(minWidth: 45, alignment: .trailing)
-                }
-
-                HStack {
-                    Text(
-                        formatter.string(
-                            from: NSDecimalNumber(decimal: value)
-                        ) ?? ""
-                    )
-                    Text(unit)
-                }.frame(minWidth: 80, alignment: .trailing)
-            }
-        }
-
-        private func nutrientRow(
-            _ title: String,
-            value: Decimal,
-            unit: String,
-            rdi: Double? = nil,
-            formatter: NumberFormatter
-        ) -> some View {
-            HStack {
-                Text(title)
-                Spacer()
-                if let rdi = rdi {
-                    Text(
-                        (tirFormatter.string(from: NSNumber(value: rdi)) ?? "") + " %"
-                    )
-                    .foregroundStyle(.blue)
-                }
-
-                Text(
-                    formatter.string(
-                        from: NSDecimalNumber(decimal: value)
-                    ) ?? ""
-                )
-
-                Text(unit)
-            }
-        }
-
         /// Meal Summary Frame Height
         private var frameHeight: CGFloat {
             CGFloat(
                 220 +
-                    (state.mealData.micronutrients.isEmpty ? 0 : 50) +
-                    (otherMacros && displayAllNutrients ? 35 : 0) +
+                    (state.mealData.micronutrients.isEmpty ? 0 : 70) +
+                    (otherMacros && displayAllNutrients ? 30 : 0) +
                     (displayAllNutrients ? 1 : 0) *
-                    state.mealData.micronutrients.count * 20
+                    state.mealData.micronutrients.count * 30
             )
         }
 

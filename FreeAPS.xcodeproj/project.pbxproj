@@ -130,6 +130,7 @@
 		19F95FF529F10FCF00314DDC /* StatProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F95FF429F10FCF00314DDC /* StatProvider.swift */; };
 		19F95FF729F10FEE00314DDC /* StatStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F95FF629F10FEE00314DDC /* StatStateModel.swift */; };
 		19F95FFA29F1102A00314DDC /* StatRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F95FF929F1102A00314DDC /* StatRootView.swift */; };
+		19FFF08C2FCB3457009DBC48 /* NutrientProgressBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFF08B2FCB3442009DBC48 /* NutrientProgressBars.swift */; };
 		1BBB001DAD60F3B8CEA4B1C7 /* ISFEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E09DC17A0C3D0AF4B66FE /* ISFEditorStateModel.swift */; };
 		1D845DF2E3324130E1D95E67 /* DataTableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60744C3E9BB3652895C908CC /* DataTableProvider.swift */; };
 		23888883D4EA091C88480FF2 /* BolusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19984D62EFC0035A9E9644D /* BolusProvider.swift */; };
@@ -812,6 +813,7 @@
 		19F95FF429F10FCF00314DDC /* StatProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatProvider.swift; sourceTree = "<group>"; };
 		19F95FF629F10FEE00314DDC /* StatStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatStateModel.swift; sourceTree = "<group>"; };
 		19F95FF929F1102A00314DDC /* StatRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatRootView.swift; sourceTree = "<group>"; };
+		19FFF08B2FCB3442009DBC48 /* NutrientProgressBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientProgressBars.swift; sourceTree = "<group>"; };
 		1CAE81192B118804DCD23034 /* SnoozeProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnoozeProvider.swift; sourceTree = "<group>"; };
 		212E8BFE6D66EE65AA26A114 /* CalibrationsProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalibrationsProvider.swift; sourceTree = "<group>"; };
 		223EC0494F55A91E3EA69EF4 /* BolusStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusStateModel.swift; sourceTree = "<group>"; };
@@ -2074,6 +2076,7 @@
 				3883581B25EE79BB00E024B2 /* DecimalTextField.swift */,
 				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
 				F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */,
+				19FFF08B2FCB3442009DBC48 /* NutrientProgressBars.swift */,
 				F292C1D02F5F0BF300B08D81 /* OptionalDecimalTextField.swift */,
 				383420D825FFEB3F002D46C1 /* Popup.swift */,
 				38DF1785276A73D400B3528F /* TagCloudView.swift */,
@@ -3545,6 +3548,7 @@
 				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				190EBCCB29FF13CB00BA767D /* UIUXRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
+				19FFF08C2FCB3457009DBC48 /* NutrientProgressBars.swift in Sources */,
 				F292C1D12F5F0BF800B08D81 /* OptionalDecimalTextField.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				F2E8D1512F0961CC0097F482 /* FoodTagCloudView.swift in Sources */,
