@@ -996,7 +996,7 @@ extension Home {
                     )
                 }
             }
-            .font(.caption)
+            .font(.callout)
             .foregroundStyle(.secondary)
         }
 
@@ -1102,7 +1102,7 @@ extension Home {
                     (state.mealData.micronutrients.isEmpty ? 0 : 70) +
                     (otherMacros && displayAllNutrients ? 30 : 0) +
                     (displayAllNutrients ? 1 : 0) *
-                    state.mealData.micronutrients.count * 30
+                    state.mealData.micronutrients.count * 35
             )
         }
 
