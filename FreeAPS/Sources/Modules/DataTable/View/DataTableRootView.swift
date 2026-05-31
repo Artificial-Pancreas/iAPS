@@ -272,7 +272,7 @@ extension DataTable {
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
                         .foregroundStyle(.secondary)
-                        .font(.caption)
+                        .font(.callout)
                     }
 
                     if meal.protein != 0 {
@@ -286,7 +286,7 @@ extension DataTable {
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
                         .foregroundStyle(.secondary)
-                        .font(.caption)
+                        .font(.callout)
                     }
 
                     if meal.fiber != 0 {
@@ -300,7 +300,7 @@ extension DataTable {
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
                         .foregroundStyle(.secondary)
-                        .font(.caption)
+                        .font(.callout)
                     }
 
                     // MARK: Micronutrients
@@ -334,7 +334,7 @@ extension DataTable {
                                     .frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
                                 }
                                 .padding(.leading, leading)
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.callout).foregroundStyle(.secondary)
                             }
                         }
                     }
