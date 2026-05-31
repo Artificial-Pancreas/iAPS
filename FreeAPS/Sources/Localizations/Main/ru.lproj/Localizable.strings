@@ -3773,7 +3773,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Светлый/тёмный режим";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Игнорировать углеводы в oref0";
+"Neglect Carbs in oref0" = "Игнорировать углеводы в oref0";
 
 /* Debug option */
 "Hide Predictions" = "Hide Predictions";

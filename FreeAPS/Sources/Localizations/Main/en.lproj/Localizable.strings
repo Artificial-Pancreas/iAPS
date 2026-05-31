@@ -1392,6 +1392,12 @@ Enact a temp Basal or a temp target */
 
 "Today's Meals" = "Today's Meals";
 
+"Micronutrient" = "Micronutrient";
+
+"Micronutrients"  = "Micronutrients";
+
+"Allow Meal View Micronutrients entries" = "Allow Meal View Micronutrients entries";
+
 // --------- AI ---------
 /* */
 
@@ -1591,7 +1597,6 @@ Enact a temp Basal or a temp target */
 
 "Provider for AI Image Analysis" = "Provider for AI Image Analysis";
 
-
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
 
 "Barcode Scanner" = "Barcode Scanner";
@@ -1671,6 +1676,15 @@ Enact a temp Basal or a temp target */
 "carbs" = "carbs";
 
 "fat" = "fat";
+
+/* Display more macro nutrients */
+"More" = "More";
+
+/* Additional nutrient */
+"more nutrient" = "more nutrient";
+
+/* Additional nutrients */
+"more nutrients" = "more nutrients";
 
 "📝 Notes" = "📝 Notes";
 
@@ -1998,6 +2012,10 @@ Enact a temp Basal or a temp target */
 "Apply" = "Apply";
 
 "Carbs" = "Carbs";
+
+"Discard" = "Discard";
+
+"Do you want to discard this meal?" = "Do you want to discard this meal?";
 
 // --------- End of AI ---------
 
@@ -3797,7 +3815,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Light / Dark Mode";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Hide Predictions";

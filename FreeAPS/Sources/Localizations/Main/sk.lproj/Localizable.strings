@@ -3777,7 +3777,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Light / Dark Mode" = "Svetlý / tmavý režim";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Ignorovať sacharidy v oref0";
+"Neglect Carbs in oref0" = "Ignorovať sacharidy v oref0";
 
 /* Debug option */
 "Hide Predictions" = "Skryť predpovede";
