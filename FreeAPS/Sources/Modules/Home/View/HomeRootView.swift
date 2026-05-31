@@ -1112,7 +1112,7 @@ extension Home {
         /// Meal Summary Frame Height
         private var frameHeight: CGFloat {
             CGFloat(
-                220 +
+                200 +
                     (state.mealData.micronutrients.isEmpty ? 0 : 70) +
                     (otherMacros && displayAllNutrients ? 30 : 0) +
                     (displayAllNutrients ? 1 : 0) *
