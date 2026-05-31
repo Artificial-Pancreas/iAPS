@@ -1389,11 +1389,11 @@ Enact a temp Basal or a temp target */
 
 "Today's Meals" = "Dagens måltider";
 
-"Micronutrient" = "Micronutrient";
+"Micronutrient" = "Näringsämne";
 
-"Micronutrients" = "Micronutrients";
+"Micronutrients" = "Näringsämnen";
 
-"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Tillåt inmatning av kostfibrer och andra näringsämnen";
 
 // --------- AI ---------
 /* */
@@ -1574,15 +1574,15 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Antropisk (Claude API) konfiguration";
 
-"USDA Food Database" = "USDA Food Database";
+"USDA Food Database" = "USDA Livsmedelsdatabas";
 
-"USDA FoodData API Key" = "USDA FoodData API Key";
+"USDA FoodData API Key" = "USDA FoodData API-nyckel";
 
-"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Skaffa en API-nyckel på fdc.nal.usda.gov/api-key-signup.";
 
-"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+"Optional — uses DEMO_KEY if empty" = "Valfritt — använder DEMO_KEY om tomt";
 
-"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Lämna tomt för att använda standard DEMO_KEY, som är hastighetsbegränsad. En gratis personlig API-nyckel tillåter fler förfrågningar.";
 
 "Provider for Barcode Scanning" = "Leverantör av streckkodssökning";
 
@@ -1675,13 +1675,13 @@ Enact a temp Basal or a temp target */
 "fat" = "fett";
 
 /* Display more macro nutrients */
-"More" = "More";
+"More" = "Mer";
 
 /* Additional nutrient */
-"more nutrient" = "more nutrient";
+"more nutrient" = "fler näringsämne";
 
 /* Additional nutrients */
-"more nutrients" = "more nutrients";
+"more nutrients" = "fler näringsämnen";
 
 "📝 Notes" = "📝 Anteckningar";
 
@@ -2008,9 +2008,9 @@ Enact a temp Basal or a temp target */
 
 "Carbs" = "Kolhydrater";
 
-"Discard" = "Discard";
+"Discard" = "Avfärda";
 
-"Do you want to discard this meal?" = "Do you want to discard this meal?";
+"Do you want to discard this meal?" = "Vill du kassera denna måltid?";
 
 // --------- End of AI ---------
 
@@ -3804,7 +3804,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Ljust / Mörkt";
 
 /* Debug option */
-"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
+"Neglect Carbs in oref0" = "Negligera kolhydrater i oref0";
 
 /* Debug option */
 "Hide Predictions" = "Dölj prognoser";
@@ -3995,7 +3995,7 @@ Enact a temp Basal or a temp target */
 "Complete Meal" = "Fullständig måltid";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
-"Max Basal Exceeded" = "Max Basal Exceeded";
+"Max Basal Exceeded" = "Maximal basaldos överskriden";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
 "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
