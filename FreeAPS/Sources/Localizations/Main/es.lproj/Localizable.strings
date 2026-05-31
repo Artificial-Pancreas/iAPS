@@ -3893,7 +3893,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Light / Dark Mode" = "Light / Dark Mode";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Hide Predictions";

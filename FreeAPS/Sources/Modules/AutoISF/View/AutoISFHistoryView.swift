@@ -10,7 +10,7 @@ struct AutoISFHistoryView: View {
     @FetchRequest(
         entity: Reasons.entity(),
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
-        predicate: NSPredicate(format: "date > %@", DateFilter().day)
+        predicate: NSPredicate(format: "date > %@", DateFilter.day.startDate)
     ) var reasons: FetchedResults<Reasons>
 
     private var formatter: NumberFormatter {

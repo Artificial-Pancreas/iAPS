@@ -34,9 +34,11 @@ final class USDAFoodDataService {
             throw OpenFoodFactsError.invalidURL
         }
 
+        let apiKey = UserDefaults.standard.usdaAPIKey.isEmpty ? "DEMO_KEY" : UserDefaults.standard.usdaAPIKey
+
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         components.queryItems = [
-            URLQueryItem(name: "api_key", value: "DEMO_KEY"),
+            URLQueryItem(name: "api_key", value: apiKey),
             URLQueryItem(name: "query", value: query),
             URLQueryItem(name: "pageSize", value: String(pageSize)),
             URLQueryItem(name: "dataType", value: "Foundation,SR Legacy,Survey"),
@@ -88,7 +90,9 @@ final class USDAFoodDataService {
         }
     }
 
-    private func convertUSDAFoodToProduct(_ foodData: USDAFood) -> OpenFoodFactsProduct? {
+    private func convertUSDAFoodToProduct(
+        _ foodData: USDAFood
+    ) -> OpenFoodFactsProduct? {
         var carbs: Decimal = 0
         var protein: Decimal = 0
         var fat: Decimal = 0
@@ -96,26 +100,90 @@ final class USDAFoodDataService {
         var sugars: Decimal = 0
         var energy: Decimal = 0
 
+        var micronutrients: [MicronutrientValue] = []
+
         if let foodNutrients = foodData.foodNutrients {
             for nutrient in foodNutrients {
-                guard let nutrientCode = nutrient.nutrientCode,
-                      let value = nutrient.value
-                else { continue }
+                guard let value = nutrient.value else {
+                    continue
+                }
 
                 let decimalValue = Decimal(value)
 
-                switch nutrientCode.category {
-                case .carbohydrate: if carbs == 0 { carbs = decimalValue }
-                case .protein: if protein == 0 { protein = decimalValue }
-                case .fat: if fat == 0 { fat = decimalValue }
-                case .fiber: if fiber == 0 { fiber = decimalValue }
-                case .sugar: if sugars == 0 { sugars = decimalValue }
-                case .energy: if energy == 0 { energy = decimalValue }
+                // MARK: Macronutrients
+
+                if let nutrientCode = nutrient.nutrientCode {
+                    switch nutrientCode.category {
+                    case .carbohydrate:
+                        if carbs == 0 {
+                            carbs = decimalValue
+                        }
+
+                    case .protein:
+                        if protein == 0 {
+                            protein = decimalValue
+                        }
+
+                    case .fat:
+                        if fat == 0 {
+                            fat = decimalValue
+                        }
+
+                    case .fiber:
+                        if fiber == 0 {
+                            fiber = decimalValue
+                        }
+
+                    case .sugar:
+                        if sugars == 0 {
+                            sugars = decimalValue
+                        }
+
+                    case .energy:
+                        if energy == 0 {
+                            energy = decimalValue
+                        }
+
+                    case .mineral,
+                         .vitamin:
+                        break
+                    }
                 }
+
+                // MARK: Micronutrients
+
+                guard let micro = nutrient.resolvedMicroNutrient,
+                      let normalized = nutrient.normalizedValue(for: micro)
+                else {
+                    continue
+                }
+
+                print(
+                    "USDA MICRO:",
+                    micro.rawValue,
+                    normalized,
+                    nutrient.unitName ?? ""
+                )
+
+                micronutrients.append(
+                    MicronutrientValue(
+                        substance: micro,
+                        amount: normalized,
+                        amountPer100: normalized
+                    )
+                )
             }
         }
 
-        guard carbs > 0 || protein > 0 || fat > 0 || energy > 0 else { return nil }
+        print("USDA FINAL MICROS:", micronutrients)
+
+        guard carbs > 0 ||
+            protein > 0 ||
+            fat > 0 ||
+            energy > 0
+        else {
+            return nil
+        }
 
         let nutriments = Nutriments(
             carbohydrates: carbs,
@@ -124,7 +192,8 @@ final class USDAFoodDataService {
             calories: energy > 0 ? energy : nil,
             sugars: sugars > 0 ? sugars : nil,
             fiber: fiber > 0 ? fiber : nil,
-            energy: energy > 0 ? energy : nil
+            energy: energy > 0 ? energy : nil,
+            micronutrient: micronutrients
         )
 
         return OpenFoodFactsProduct(
@@ -162,7 +231,9 @@ final class USDAFoodDataService {
         cleaned = cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
 
         if !cleaned.isEmpty {
-            cleaned = cleaned.prefix(1).uppercased() + cleaned.dropFirst()
+            cleaned =
+                String(cleaned.prefix(1)).uppercased()
+                    + cleaned.dropFirst()
         }
 
         return cleaned.isEmpty ? "USDA Food Item" : cleaned
@@ -189,5 +260,102 @@ final class USDAFoodDataService {
         }
 
         return nil
+    }
+}
+
+extension USDAFoodNutrient {
+    var resolvedMicroNutrient: MicroNutrient? {
+        // First try USDA numeric codes
+        if let micro = nutrientCode?.microNutrient {
+            return micro
+        }
+
+        // Fallback to nutrient names
+        guard let name = nutrientName?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+        else {
+            return nil
+        }
+
+        switch name {
+        // Vitamins
+
+        case "vitamin c, total ascorbic acid":
+            return .vitaminC
+
+        case "vitamin a, iu",
+             "vitamin a, rae":
+            return .vitaminA
+
+        case "vitamin d (d2 + d3)":
+            return .vitaminD
+
+        case "vitamin e (alpha-tocopherol)":
+            return .vitaminE
+
+        case "vitamin k (phylloquinone)":
+            return .vitaminK
+
+        case "thiamin":
+            return .vitaminB1
+
+        case "riboflavin":
+            return .vitaminB2
+
+        case "niacin":
+            return .vitaminB3
+
+        case "pantothenic acid":
+            return .vitaminB5
+
+        case "vitamin b-6":
+            return .vitaminB6
+
+        case "folate, dfe",
+             "folate, total":
+            return .vitaminB9
+
+        case "vitamin b-12":
+            return .vitaminB12
+
+        // Minerals
+
+        case "calcium, ca":
+            return .calcium
+
+        case "iron, fe":
+            return .iron
+
+        case "magnesium, mg":
+            return .magnesium
+
+        case "phosphorus, p":
+            return .phosphorus
+
+        case "potassium, k":
+            return .potassium
+
+        case "zinc, zn":
+            return .zinc
+
+        case "copper, cu":
+            return .copper
+
+        case "manganese, mn":
+            return .manganese
+
+        case "selenium, se":
+            return .selenium
+
+        case "iodine, i":
+            return .iodine
+
+        case "sodium, na":
+            return .salt
+
+        default:
+            return nil
+        }
     }
 }

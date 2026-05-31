@@ -3776,7 +3776,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Ljust / Mörkt";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Negligera kolhydrater i oref0";
+"Neglect Carbs in oref0" = "Negligera kolhydrater i oref0";
 
 /* Debug option */
 "Hide Predictions" = "Dölj prognoser";

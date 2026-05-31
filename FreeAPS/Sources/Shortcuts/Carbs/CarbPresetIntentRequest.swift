@@ -2,8 +2,14 @@ import CoreData
 import Foundation
 
 final class CarbPresetIntentRequest: BaseIntentsRequest {
-    func addCarbs(_ quantityCarbs: Double, _ quantityFat: Double, _ quantityProtein: Double, _ dateAdded: Date) throws -> String {
-        guard quantityCarbs >= 0.0 || quantityFat >= 0.0 || quantityProtein >= 0.0 else {
+    func addCarbs(
+        _ quantityCarbs: Double,
+        _ quantityFat: Double,
+        _ quantityProtein: Double,
+        _ quantityFiber: Double,
+        _ dateAdded: Date
+    ) throws -> String {
+        guard quantityCarbs >= 0.0 || quantityFat >= 0.0 || quantityProtein >= 0.0 || quantityFiber >= 0.0 else {
             return "no carbs or carb equivalents to add"
         }
 
@@ -17,6 +23,7 @@ final class CarbPresetIntentRequest: BaseIntentsRequest {
                 carbs: carbs,
                 fat: Decimal(quantityFat),
                 protein: Decimal(quantityProtein),
+                fiber: Decimal(quantityFiber),
                 note: "with shortcut",
                 enteredBy: CarbsEntry.shortcut,
                 isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false

@@ -3786,7 +3786,7 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Light / Dark Mode" = "Lichte / Donkere modus";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Negeer koolhydraten in oref0";
+"Neglect Carbs in oref0" = "Negeer koolhydraten in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Voorspellingen verbergen";
