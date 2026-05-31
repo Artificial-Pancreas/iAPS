@@ -166,7 +166,7 @@ extension Home {
                     state.setupPump = true
                 }
             }
-            .offset(y: 1)
+            .offset(y: 2)
         }
 
         var loopView: some View {
@@ -704,9 +704,9 @@ extension Home {
                                 HStack {
                                     carbsAndInsulinView
                                         .frame(maxHeight: .infinity, alignment: .bottom)
-                                    Spacer()
+                                    // Spacer()
                                     pumpView
-                                        .frame(maxHeight: .infinity, alignment: .bottom)
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 }
                                 .dynamicTypeSize(...DynamicTypeSize.xLarge)
                                 .padding(.horizontal, 10)
