@@ -165,7 +165,7 @@ extension Home {
                     state.setupPump = true
                 }
             }
-            .offset(y: 1)
+            .offset(y: 2)
         }
 
         var loopView: some View {
