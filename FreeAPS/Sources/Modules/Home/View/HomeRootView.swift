@@ -892,7 +892,7 @@ extension Home {
 
         private var caloriesView: some View {
             HStack {
-                Text(localizedIntervalTitle("Kilo Calories"))
+                Text("Kilo Calories")
                 Spacer()
                 Text(
                     tirFormatter.string(
@@ -905,7 +905,7 @@ extension Home {
 
         private var servingsView: some View {
             HStack {
-                Text(localizedIntervalTitle("Servings"))
+                Text("Servings")
                 Spacer()
                 Text(
                     tirFormatter.string(
@@ -918,7 +918,7 @@ extension Home {
 
         private var carbNutrientsView: some View {
             HStack {
-                Text(localizedIntervalTitle("Carbs"))
+                Text("Carbs")
                 Spacer()
                 Text(
                     tirFormatter.string(
@@ -933,7 +933,7 @@ extension Home {
             VStack {
                 if state.mealData.fat > 0 {
                     micronutrientRow(
-                        localizedIntervalTitle("Fat"),
+                        "Fat",
                         value: displayedFat,
                         unit: "g",
                         formatter: tirFormatter
@@ -942,7 +942,7 @@ extension Home {
 
                 if state.mealData.protein > 0 {
                     micronutrientRow(
-                        localizedIntervalTitle("Protein"),
+                        "Protein",
                         value: displayedProtein,
                         unit: "g",
                         progress: MicronutrientProgress.progress(
@@ -957,7 +957,7 @@ extension Home {
 
                 if state.mealData.fiber > 0 {
                     micronutrientRow(
-                        localizedIntervalTitle("Fiber"),
+                        "Fiber",
                         value: displayedFiber,
                         unit: "g",
                         progress: MicronutrientProgress.progress(
@@ -1093,20 +1093,6 @@ extension Home {
                         ).percent
                 }
                 .map { ($0.key, $0.value) }
-        }
-
-        private func localizedIntervalTitle(
-            _ base: String
-        ) -> String {
-            guard state.mealData.isAveraged else {
-                return NSLocalizedString(base, comment: "")
-            }
-
-            return String(
-                format: NSLocalizedString("%@ / %@", comment: "Meal interval title"),
-                NSLocalizedString(base, comment: ""),
-                NSLocalizedString(intervalTitle, comment: "Interval")
-            )
         }
 
         /// Meal Summary Frame Height
