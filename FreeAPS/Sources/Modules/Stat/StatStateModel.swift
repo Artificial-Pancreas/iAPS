@@ -328,7 +328,7 @@ extension Stat {
 
         private func setupMealStats() {
             let context = CoreDataStack.shared.persistentContainer.viewContext
-            let request = NSFetchRequest<Carbohydrates>(entityName: "Carbohydrates")
+            let request = NSFetchRequest<Meals>(entityName: "Meals")
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
             request.predicate = NSPredicate(format: "date > %@", Date().addingTimeInterval(-90 * 24 * 3600) as NSDate)
 
