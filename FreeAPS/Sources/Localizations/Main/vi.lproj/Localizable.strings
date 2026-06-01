@@ -3999,4 +3999,4 @@ Enact a temp Basal or a temp target */
 "Max Basal Exceeded" = "Đã vượt quá mức liều nền tối đa";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
-"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Tỷ lệ liều nền %.2f U/giờ vượt quá giới hạn liều nềm tối đa đã cài đặt là %.2f U/giờ.";
