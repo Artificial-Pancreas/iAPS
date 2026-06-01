@@ -2012,7 +2012,7 @@ Enact a temp Basal or a temp target */
 
 "Discard" = "Відкинути";
 
-"Do you want to discard this meal?" = "Do you want to discard this meal?";
+"Do you want to discard this meal?" = "Ви хочете відмовитися від цієї страви?";
 
 // --------- End of AI ---------
 
@@ -3807,7 +3807,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Світло/Темний Режим";
 
 /* Debug option */
-"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
+"Neglect Carbs in oref0" = "Не враховуйте вуглеводи в oref0";
 
 /* Debug option */
 "Hide Predictions" = "Приховати передбачення";
@@ -3998,7 +3998,7 @@ Enact a temp Basal or a temp target */
 "Complete Meal" = "Повний обід";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
-"Max Basal Exceeded" = "Max Basal Exceeded";
+"Max Basal Exceeded" = "Перевищено Максимальну Базальну Дозу";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
-"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Швидкість %.2f од/год перевищує ваше налаштування Максимальної Базальної Дози %.2f од/год.";
