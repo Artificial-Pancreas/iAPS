@@ -9,7 +9,7 @@ extension Stat {
         }
 
         func reasons() -> [IOBData]? {
-            let reasons = coreDataStorage.fetchReasons(interval: DateFilter().day)
+            let reasons = coreDataStorage.fetchReasons(interval: DateFilter.day.startDate)
             guard reasons.count > 3 else { return nil }
             return reasons.compactMap { entry -> IOBData in
                 IOBData(

@@ -1,18 +1,110 @@
 import Foundation
 import SwiftUI
 
-struct DateFilter {
-    var oneHour = Date().addingTimeInterval(-1.hours.timeInterval) as NSDate
-    var twoHours = Date().addingTimeInterval(-2.hours.timeInterval) as NSDate
-    var threeHours = Date().addingTimeInterval(-3.hours.timeInterval) as NSDate
-    var today = Calendar.current.startOfDay(for: Date()) as NSDate
-    var day = Date().addingTimeInterval(-24.hours.timeInterval) as NSDate
-    var twoDays = Date().addingTimeInterval(-2.days.timeInterval) as NSDate
-    var week = Date().addingTimeInterval(-7.days.timeInterval) as NSDate
-    var month = Date().addingTimeInterval(-30.days.timeInterval) as NSDate
-    var total = Date().addingTimeInterval(-90.days.timeInterval) as NSDate
-    var tenDays = Date().addingTimeInterval(-10.days.timeInterval) as NSDate
-    var fourteen = Date().addingTimeInterval(-14.days.timeInterval) as NSDate
+enum DateFilter: String, CaseIterable, Identifiable, Codable {
+    case oneHour
+    case twoHours
+    case threeHours
+    case today
+    case day
+    case twoDays
+    case week
+    case tenDays
+    case fourteenDays
+    case month
+    case total
+    case all
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .oneHour:
+            "1 Hour"
+
+        case .twoHours:
+            "2 Hours"
+
+        case .threeHours:
+            "3 Hours"
+
+        case .today:
+            "Today"
+
+        case .day:
+            "Day"
+
+        case .twoDays:
+            "2 Days"
+
+        case .week:
+            "Week"
+
+        case .tenDays:
+            "10 Days"
+
+        case .fourteenDays:
+            "14 Days"
+
+        case .month:
+            "Month"
+
+        case .total:
+            "90 Days"
+
+        case .all:
+            "All"
+        }
+    }
+
+    var startDate: NSDate {
+        let now = Date()
+
+        switch self {
+        case .oneHour:
+            return now.addingTimeInterval(-1.hours.timeInterval) as NSDate
+
+        case .twoHours:
+            return now.addingTimeInterval(-2.hours.timeInterval) as NSDate
+
+        case .threeHours:
+            return now.addingTimeInterval(-3.hours.timeInterval) as NSDate
+
+        case .today:
+            return Calendar.current.startOfDay(for: now) as NSDate
+
+        case .day:
+            return now.addingTimeInterval(-24.hours.timeInterval) as NSDate
+
+        case .twoDays:
+            return now.addingTimeInterval(-2.days.timeInterval) as NSDate
+
+        case .week:
+            return now.addingTimeInterval(-7.days.timeInterval) as NSDate
+
+        case .tenDays:
+            return now.addingTimeInterval(-10.days.timeInterval) as NSDate
+
+        case .fourteenDays:
+            return now.addingTimeInterval(-14.days.timeInterval) as NSDate
+
+        case .month:
+            return now.addingTimeInterval(-30.days.timeInterval) as NSDate
+
+        case .total:
+            return now.addingTimeInterval(-90.days.timeInterval) as NSDate
+
+        case .all:
+            return Date.distantPast as NSDate
+        }
+    }
+
+    /// The actual interval
+    static func interval(_ data: [Meals]) -> Double? {
+        guard let first = data.first, let last = data.last, let new = first.actualDate,
+              let old = last.actualDate else { return nil }
+        return new.timeIntervalSince(old).hours / 24
+    }
 }
 
 public enum IAPSconfig {

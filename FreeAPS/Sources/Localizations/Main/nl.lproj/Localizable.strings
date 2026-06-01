@@ -1390,6 +1390,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Today's Meals" = "Maaltijden van vandaag";
 
+"Micronutrient" = "Micronutrient";
+
+"Micronutrients" = "Micronutrients";
+
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+
 // --------- AI ---------
 /* */
 
@@ -1569,6 +1575,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Anthropic (Claude API) Configuration" = "Anthropische (Claude API) configuratie";
 
+"USDA Food Database" = "USDA Food Database";
+
+"USDA FoodData API Key" = "USDA FoodData API Key";
+
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+
+"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+
 "Provider for Barcode Scanning" = "Provider voor Barcode Scannen";
 
 "Provider for Text/Voice Search" = "Zoekmachine voor tekst/spraakzoeken";
@@ -1578,7 +1594,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Fast" = "Snel";
 
 "Provider for AI Image Analysis" = "Provider voor AI afbeeldingsanalyse";
-
 
 "Food Search Provider Configuration" = "Voedsel zoekmachine configuratie";
 
@@ -1659,6 +1674,15 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "carbs" = "koolhydraten";
 
 "fat" = "vet";
+
+/* Display more macro nutrients */
+"More" = "More";
+
+/* Additional nutrient */
+"more nutrient" = "more nutrient";
+
+/* Additional nutrients */
+"more nutrients" = "more nutrients";
 
 "📝 Notes" = "📝 Opmerking";
 
@@ -1985,9 +2009,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Carbs" = "Koolhydraten";
 
-// --------- End of AI ---------
-/* */
+"Discard" = "Discard";
 
+"Do you want to discard this meal?" = "Do you want to discard this meal?";
+
+// --------- End of AI ---------
+
+/* */
 "Temp Basal" = "Tijdelijk basaal";
 
 /* */
@@ -2058,8 +2086,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Bolus already in Progress!" = "Er is al een bolus actief!";
 
 /* -------------- Developer settings ---------------------- */
-/* Debug options */
 
+/* Debug options */
 "Developer" = "Ontwikkelaar";
 
 /* Debug option view NS Upload Profile */
@@ -2176,8 +2204,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Total" = "Totaal";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Enable FPU */
 
+/* Enable FPU */
 "Enable" = "Activeer";
 
 /* Header */
@@ -2408,8 +2436,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Hide Future" = "Verberg toekomstig";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-/* Warning about bolus recommendation. Title */
 
+/* Warning about bolus recommendation. Title */
 "Warning!" = "Waarschuwing!";
 
 /* Alert to confirm bolus amount to add */
@@ -2620,10 +2648,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Failed to Suspend Insulin Delivery" = "Onderbreken van insuline toediening mislukt";
 
 //* -----------------------------------------------------------------------*/
+
 /* ----------------------Statistics strings -------------------------------*/
+
 /* */
-
-
 "Today" = "Vandaag";
 
 /* */
@@ -2847,8 +2875,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Vloeiende glucosewaarde";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* Setting Title */
 
+/* Setting Title */
 "Sharing" = "Delen van statistieken";
 
 /* Share and Backup page header */
@@ -2915,8 +2943,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Wanneer ingeschakeld, wordt het logbestand van de vorige dag na middernacht automatisch geüpload. Logboeken worden alleen gebruikt om de meerdaagse analysefunctie te bieden op open-iaps.app. Standaard uitgeschakeld.";
 
 /* ——————————Contact Image ————————*/
-/* Contact Image, contacts list - prefix before the contact given name */
 
+/* Contact Image, contacts list - prefix before the contact given name */
 "Contact" = "Contact";
 
 /* Contact Image, settings, header of the contacts list */
@@ -3067,17 +3095,20 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "LoopStatusContactValue" = "Loop status";
 
 /* --------------------------  Dana Pump  ---------------------- */
-/* Dana footer */
 
+/* Dana footer */
 "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "De Dana-pomp staat het niet toe om de maximale basaal- en boluswaarden aan te passen. Stel deze in bij de arts/doktersinstellingen van de pomp. Als je de instellingen opslaat, worden de nieuwste waarden van de pomp opgehaald";
 
 /* --------- Auto ISF --------- */
-/* */
 
+/* */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld omdat Auto ISF is ingeschakeld";
 
 /* */
 "Nighttime" = "Nighttime";
+
+/* */
+"Disable during nighttime" = "Disable during nighttime";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
@@ -3324,8 +3355,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
-/* Headline Rewind Resets Autosens */
 
+/* Headline Rewind Resets Autosens */
 "Rewind Resets Autosens" = "Terughalen resets autosens";
 
 /* ”Rewind Resets Autosens” */
@@ -3557,8 +3588,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Standaardwaarde: 0,5 Dit is een andere belangrijke veiligheidsgrens van OpenAPS, en bepaalt welk deel van de totale vereiste insuline als SMB kan worden geleverd. Verhoog deze experimentele waarde langzaam en voorzichtig.";
 
 // Dynamic ISF + CR Settings:
-/* Headline "Adjust Dynamic ISF constant" */
 
+/* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Dynamische ISF-constante aanpassen";
 
 /* Adjust Dynamic ISF constant */
@@ -3783,7 +3814,7 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Light / Dark Mode" = "Lichte / Donkere modus";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Negeer koolhydraten in oref0";
+"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Voorspellingen verbergen";
@@ -3972,3 +4003,9 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 
 /* name of complete meals when saving */
 "Complete Meal" = "Volledige maaltijd";
+
+/* Alert title when manual temp basal rate exceeds Max Basal setting */
+"Max Basal Exceeded" = "Max Basal Exceeded";
+
+/* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";

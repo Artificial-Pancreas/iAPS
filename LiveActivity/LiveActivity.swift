@@ -320,6 +320,7 @@ struct WatchIOBCOBDisplay: View {
                 .fontWidth(.compressed)
             }
         }
+        .fixedSize(horizontal: true, vertical: false)
     }
 }
 
