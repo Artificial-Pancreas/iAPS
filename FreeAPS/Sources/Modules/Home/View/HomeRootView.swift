@@ -864,7 +864,7 @@ extension Home {
                     if displayAllNutrients {
                         micronutrientsAndMoreView
                             .padding(.horizontal, 23)
-                            .background(Color(.systemGray4))
+                            .background(Color(.systemGray5))
                     }
                 }
             }
@@ -1103,7 +1103,7 @@ extension Home {
             CGFloat(
                 200 +
                     (state.mealData.micronutrients.isEmpty ? 0 : 70) +
-                    (otherMacros && displayAllNutrients ? 60 : 0) +
+                    (otherMacros && displayAllNutrients ? 88 : 0) +
                     (displayAllNutrients ? 1 : 0) *
                     state.mealData.micronutrients.count * 35
             )
