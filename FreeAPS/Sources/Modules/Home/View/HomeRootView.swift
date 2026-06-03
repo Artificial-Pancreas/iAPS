@@ -1036,8 +1036,20 @@ extension Home {
             state.mealData.fat > 0 || state.mealData.protein > 0 || state.mealData.fiber > 0
         }
 
+        private func countOtherMacros() -> Int {
+            var total = 0
+            total += state.mealData.fat > 0 ? 1 : 0
+            total += state.mealData.protein > 0 ? 1 : 0
+            total += state.mealData.fiber > 0 ? 1 : 0
+            return total
+        }
+
+        private var nutrientsCount: Int {
+            state.mealData.micronutrients.count + countOtherMacros()
+        }
+
         private func micronutrientTitle() -> String {
-            let count = state.mealData.additionalNutrients
+            let count = state.mealData.additionalNutrients + countOtherMacros()
 
             guard count > 0 else {
                 return String.empty
@@ -1102,10 +1114,9 @@ extension Home {
         private var frameHeight: CGFloat {
             CGFloat(
                 200 +
-                    (state.mealData.micronutrients.isEmpty ? 0 : 70) +
-                    (otherMacros && displayAllNutrients ? 88 : 0) +
-                    (displayAllNutrients ? 1 : 0) *
-                    state.mealData.micronutrients.count * 35
+                    ((state.mealData.micronutrients.isEmpty && !otherMacros) ? 0 : 53) +
+                    (displayAllNutrients && state.mealData.micronutrients.isEmpty ? 43 : displayAllNutrients ? 63 : 0) +
+                    (displayAllNutrients ? 1 : 0) * nutrientsCount * 31
             )
         }
 
