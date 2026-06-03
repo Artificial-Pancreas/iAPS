@@ -1390,11 +1390,11 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Today's Meals" = "Maaltijden van vandaag";
 
-"Micronutrient" = "Micronutrient";
+"Micronutrient" = "Micronutriënten";
 
-"Micronutrients" = "Micronutrients";
+"Micronutrients" = "Micronutriënten";
 
-"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Sta maaltijdweergave micronutrients en vezels toe";
 
 // --------- AI ---------
 /* */
@@ -1575,15 +1575,15 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Anthropic (Claude API) Configuration" = "Anthropische (Claude API) configuratie";
 
-"USDA Food Database" = "USDA Food Database";
+"USDA Food Database" = "USDA voedseldatabase";
 
-"USDA FoodData API Key" = "USDA FoodData API Key";
+"USDA FoodData API Key" = "USDA voedseldata API-sleutel";
 
-"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Ontvang een API-sleutel op fdc.nal.usda.gov/api-key-signup.";
 
-"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+"Optional — uses DEMO_KEY if empty" = "Optioneel - maakt gebruik van DEMO_KEY indien leeg";
 
-"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Laat leeg om de standaard DEMO_KEY te gebruiken, die beperkt is. Een gratis persoonlijke API-sleutel maakt meer verzoeken mogelijk.";
 
 "Provider for Barcode Scanning" = "Provider voor Barcode Scannen";
 
@@ -1676,13 +1676,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "fat" = "vet";
 
 /* Display more macro nutrients */
-"More" = "More";
+"More" = "Meer";
 
 /* Additional nutrient */
-"more nutrient" = "more nutrient";
+"more nutrient" = "meer nutriënten";
 
 /* Additional nutrients */
-"more nutrients" = "more nutrients";
+"more nutrients" = "meer nutriënten";
 
 "📝 Notes" = "📝 Opmerking";
 
@@ -2009,9 +2009,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Carbs" = "Koolhydraten";
 
-"Discard" = "Discard";
+"Discard" = "Negeer";
 
-"Do you want to discard this meal?" = "Do you want to discard this meal?";
+"Do you want to discard this meal?" = "Wil je deze maaltijd verwijderen?";
 
 // --------- End of AI ---------
 
@@ -3105,19 +3105,19 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld omdat Auto ISF is ingeschakeld";
 
 /* */
-"Nighttime" = "Nighttime";
+"Nighttime" = "In de nacht";
 
 /* */
-"Disable during nighttime" = "Disable during nighttime";
+"Disable during nighttime" = "Schakel 's-nachts uit";
 
 /* */
-"Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
+"Disables Auto ISF during nighttime, or any other period selected." = "Zet Auto ISF uit tijdens de nacht, of elke andere geselecteerde periode.";
 
 /* */
-"To" = "To";
+"To" = "Tot";
 
 /* */
-"From" = "From";
+"From" = "Vanaf";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Standaardwaarde: 1.2 De bovengrens van ISF aanpassing";
@@ -3814,7 +3814,7 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Light / Dark Mode" = "Lichte / Donkere modus";
 
 /* Debug option */
-"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
+"Neglect Carbs in oref0" = "Negeer koolhydraten in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Voorspellingen verbergen";
@@ -4005,7 +4005,7 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Complete Meal" = "Volledige maaltijd";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
-"Max Basal Exceeded" = "Max Basal Exceeded";
+"Max Basal Exceeded" = "Maximale bolus overschreden";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
-"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "De ratio %.2f E/uur overschrijdt je Max Basaal instelling van %.2f E/hr.";
