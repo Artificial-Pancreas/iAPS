@@ -1389,11 +1389,11 @@ Enact a temp Basal or a temp target */
 
 "Today's Meals" = "Bữa ăn hôm nay";
 
-"Micronutrient" = "Micronutrient";
+"Micronutrient" = "Vi chất dinh dưỡng";
 
-"Micronutrients" = "Micronutrients";
+"Micronutrients" = "Vi chất dinh dưỡng";
 
-"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Cho phép nhập vi chất dinh dưỡng và chất xơ trong màn hình Bữa ăn";
 
 // --------- AI ---------
 /* */
@@ -1574,15 +1574,15 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Cấu hình Anthropic (Claude API)";
 
-"USDA Food Database" = "USDA Food Database";
+"USDA Food Database" = "Cơ sở dữ liệu thực phẩm USDA";
 
-"USDA FoodData API Key" = "USDA FoodData API Key";
+"USDA FoodData API Key" = "Khóa API FoodData của USDA";
 
-"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Tạo khóa Api miễn phí tại fdc.nal.usda.gov/api-key-signup.";
 
-"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+"Optional — uses DEMO_KEY if empty" = "Tùy chọn — sẽ sử dụng DEMO_KEY nếu để trống";
 
-"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Để trống để sử dụng DEMO_KEY mặc định, khóa này có giới hạn số lượng yêu cầu. Sử dụng khóa API cá nhân miễn phí sẽ cho phép thực hiện nhiều yêu cầu hơn.";
 
 "Provider for Barcode Scanning" = "Nhà cung cấp quét mã vạch";
 
@@ -1675,13 +1675,13 @@ Enact a temp Basal or a temp target */
 "fat" = "chất béo";
 
 /* Display more macro nutrients */
-"More" = "More";
+"More" = "Nhiều hơn";
 
 /* Additional nutrient */
-"more nutrient" = "more nutrient";
+"more nutrient" = "thêm dinh dưỡng khác";
 
 /* Additional nutrients */
-"more nutrients" = "more nutrients";
+"more nutrients" = "thêm dinh dưỡng khác";
 
 "📝 Notes" = "📝 Ghi chú";
 
@@ -2008,9 +2008,9 @@ Enact a temp Basal or a temp target */
 
 "Carbs" = "Carbs";
 
-"Discard" = "Discard";
+"Discard" = "Bỏ qua";
 
-"Do you want to discard this meal?" = "Do you want to discard this meal?";
+"Do you want to discard this meal?" = "Bạn có muốn hủy bữa ăn này không?";
 
 // --------- End of AI ---------
 
@@ -3804,7 +3804,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Chế độ Sáng/Tối";
 
 /* Debug option */
-"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
+"Neglect Carbs in oref0" = "Không tính carb trong oref0";
 
 /* Debug option */
 "Hide Predictions" = "Ẩn dự đoán";
@@ -3996,7 +3996,7 @@ Enact a temp Basal or a temp target */
 "Complete Meal" = "Bữa ăn đầy đủ";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
-"Max Basal Exceeded" = "Max Basal Exceeded";
+"Max Basal Exceeded" = "Đã vượt quá mức liều nền tối đa";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
-"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Tỷ lệ liều nền %.2f U/giờ vượt quá giới hạn liều nềm tối đa đã cài đặt là %.2f U/giờ.";
