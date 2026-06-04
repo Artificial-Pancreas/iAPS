@@ -73,6 +73,7 @@ extension AddCarbs {
             let fat = food.nutrientInThisPortion(.fat) ?? 0
             let protein = food.nutrientInThisPortion(.protein) ?? 0
             let fibers = food.nutrientInThisPortion(.fiber) ?? 0
+            let note = food.name
 
             let micronutrients = food.micronutrient.compactMap { value -> MicronutrientValue? in
                 guard let amount = food.micronutrientInThisPortion(value.substance),
@@ -104,7 +105,7 @@ extension AddCarbs {
                 fat: fat,
                 protein: protein,
                 fiber: fibers,
-                note: nil,
+                note: note,
                 enteredBy: CarbsEntry.manual,
                 isFPU: false,
                 micronutrient: micronutrients
@@ -203,49 +204,6 @@ extension AddCarbs {
             } else {
                 combinedPresets.append((selection, 1))
             }
-        }
-
-        func waitersNotepad() -> [String] {
-            guard combinedPresets.isNotEmpty else { return [] }
-
-            if carbs == 0, protein == 0, fat == 0 {
-                return []
-            }
-
-            var presetsString: [String] = combinedPresets.map { item in
-                "\(item.portions) \(item.preset?.dish ?? "")"
-            }
-
-            if presetsString.isNotEmpty {
-                let totCarbs = combinedPresets
-                    .compactMap({ each in (each.preset?.carbs ?? 0) as Decimal * Decimal(each.portions) })
-                    .reduce(0, +)
-                let totFat = combinedPresets.compactMap({ each in (each.preset?.fat ?? 0) as Decimal * Decimal(each.portions) })
-                    .reduce(0, +)
-                let totProtein = combinedPresets
-                    .compactMap({ each in (each.preset?.protein ?? 0) as Decimal * Decimal(each.portions) }).reduce(0, +)
-                let margins: Decimal = 1.8
-
-                if carbs > totCarbs + margins {
-                    presetsString.append("+ \(carbs - totCarbs) carbs")
-                } else if carbs + margins < totCarbs {
-                    presetsString.append("- \(totCarbs - carbs) carbs")
-                }
-
-                if fat > totFat + margins {
-                    presetsString.append("+ \(fat - totFat) fat")
-                } else if fat + margins < totFat {
-                    presetsString.append("- \(totFat - fat) fat")
-                }
-
-                if protein > totProtein + margins {
-                    presetsString.append("+ \(protein - totProtein) protein")
-                } else if protein + margins < totProtein {
-                    presetsString.append("- \(totProtein - protein) protein")
-                }
-            }
-
-            return presetsString.removeDublicates()
         }
 
         func loadEntries(_ editMode: Bool) {

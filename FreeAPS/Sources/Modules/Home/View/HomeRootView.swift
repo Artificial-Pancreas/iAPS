@@ -1115,7 +1115,7 @@ extension Home {
             CGFloat(
                 200 +
                     ((state.mealData.micronutrients.isEmpty && !otherMacros) ? 0 : 53) +
-                    (displayAllNutrients && state.mealData.micronutrients.isEmpty ? 43 : displayAllNutrients ? 63 : 0) +
+                    (displayAllNutrients && state.mealData.micronutrients.isEmpty ? 43 : displayAllNutrients ? 64 : 0) +
                     (displayAllNutrients ? 1 : 0) * nutrientsCount * 31
             )
         }

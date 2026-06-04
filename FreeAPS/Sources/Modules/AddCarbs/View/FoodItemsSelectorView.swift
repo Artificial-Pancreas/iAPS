@@ -24,7 +24,7 @@ struct FoodItemsSelectorView: View {
 
     private var displayTitle: String {
         if searchResult.source == .database {
-            return "Saved Foods"
+            return searchResult.title
         } else if let query = searchResult.textQuery {
             return query
         } else {

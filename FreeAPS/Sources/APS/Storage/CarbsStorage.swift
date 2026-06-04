@@ -106,7 +106,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     carbs: entry.carbs,
                     fat: fat,
                     protein: protein, fiber: entry.fiber,
-                    note: entry.note ?? "",
+                    note: entry.note,
                     enteredBy: entry.enteredBy ?? "",
                     isFPU: false,
                     micronutrient: entry.micronutrient
