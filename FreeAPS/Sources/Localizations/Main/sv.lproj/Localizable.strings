@@ -1678,7 +1678,7 @@ Enact a temp Basal or a temp target */
 "More" = "Mer";
 
 /* Additional nutrient */
-"more nutrient" = "fler näringsämne";
+"more nutrient" = "till näringsämne";
 
 /* Additional nutrients */
 "more nutrients" = "fler näringsämnen";
@@ -3998,4 +3998,4 @@ Enact a temp Basal or a temp target */
 "Max Basal Exceeded" = "Maximal basaldos överskriden";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
-"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Hastigheten %.2f U/hr överskrider din maximala basaldosinställning på %.2f U/hr.";

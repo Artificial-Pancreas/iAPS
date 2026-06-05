@@ -1389,11 +1389,11 @@ Enact a temp Basal or a temp target */
 
 "Today's Meals" = "Сьогоднішні Страви";
 
-"Micronutrient" = "Micronutrient";
+"Micronutrient" = "Мікронутрієнт";
 
-"Micronutrients" = "Micronutrients";
+"Micronutrients" = "Мікронутрієнти";
 
-"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Дозволити записи про Мікронутрієнти та Харчові Волокна в режимі перегляду страв";
 
 // --------- AI ---------
 /* */
@@ -1575,15 +1575,15 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Anthropic Конфігурація (Claude API))";
 
-"USDA Food Database" = "USDA Food Database";
+"USDA Food Database" = "База даних харчових продуктів Міністерства сільського господарства США (USDA)";
 
-"USDA FoodData API Key" = "USDA FoodData API Key";
+"USDA FoodData API Key" = "Ключ API даних про харчові продукти USDA";
 
-"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Отримайте безкоштовний ключ на fdc.nal.usda.gov/api-key-signup.";
 
-"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+"Optional — uses DEMO_KEY if empty" = "Необов'язково — використовується DEMO_KEY, якщо порожнє";
 
-"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Залиште поле порожнім, щоб використовувати DEMO_KEY за замовчуванням, який обмежений за кількістю запитів. Безкоштовний персональний ключ API дозволяє виконувати більше запитів.";
 
 "Provider for Barcode Scanning" = "Постачальник Послуг Сканування Штрих-Кодів";
 
@@ -1677,13 +1677,13 @@ Enact a temp Basal or a temp target */
 "fat" = "жир";
 
 /* Display more macro nutrients */
-"More" = "More";
+"More" = "Більше";
 
 /* Additional nutrient */
-"more nutrient" = "more nutrient";
+"more nutrient" = "більше поживних речовин";
 
 /* Additional nutrients */
-"more nutrients" = "more nutrients";
+"more nutrients" = "більше поживних речовин";
 
 "📝 Notes" = "📝 Примітка";
 
@@ -2010,9 +2010,9 @@ Enact a temp Basal or a temp target */
 
 "Carbs" = "Вуглеводи";
 
-"Discard" = "Discard";
+"Discard" = "Відкинути";
 
-"Do you want to discard this meal?" = "Do you want to discard this meal?";
+"Do you want to discard this meal?" = "Ви хочете відмовитися від цієї страви?";
 
 // --------- End of AI ---------
 
@@ -3807,7 +3807,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Світло/Темний Режим";
 
 /* Debug option */
-"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
+"Neglect Carbs in oref0" = "Не враховуйте вуглеводи в oref0";
 
 /* Debug option */
 "Hide Predictions" = "Приховати передбачення";
@@ -3998,7 +3998,7 @@ Enact a temp Basal or a temp target */
 "Complete Meal" = "Повний обід";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
-"Max Basal Exceeded" = "Max Basal Exceeded";
+"Max Basal Exceeded" = "Перевищено Максимальну Базальну Дозу";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
-"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Швидкість %.2f од/год перевищує ваше налаштування Максимальної Базальної Дози %.2f од/год.";
