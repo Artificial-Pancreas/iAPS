@@ -5,5 +5,6 @@ struct EditableMeal {
     var fat: Decimal = 0
     var protein: Decimal = 0
     var fiber: Decimal = 0
+    var note: String = ""
     var micronutrient: [MicronutrientValue] = []
 }

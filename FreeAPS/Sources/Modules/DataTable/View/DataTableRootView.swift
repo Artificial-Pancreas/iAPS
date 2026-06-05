@@ -239,8 +239,15 @@ extension DataTable {
                 if item.type == .carbs, let meal = filtered(id: item.id) {
                     HStack {
                         Image(systemName: "fork.knife.circle.fill").foregroundStyle(Color.loopYellow)
-                        Text("Meal")
+
+                        if let note = meal.note, !note.isEmpty {
+                            Text(note)
+                        } else {
+                            Text("Meal")
+                        }
+
                         Spacer()
+
                         Text(dateFormatter.string(from: item.date))
                             .moveDisabled(true)
                     }.padding(.bottom, 1)
@@ -325,7 +332,7 @@ extension DataTable {
                             let micros = typed(meals: meal.micronutrientTotals)
                             ForEach(micros, id: \.id) { micronutrient in
                                 HStack(spacing: 0) {
-                                    Text(micronutrient.nutrient.displayName)
+                                    Text(NSLocalizedString(micronutrient.nutrient.displayName, comment: ""))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(
                                         (hourFormatter.string(from: micronutrient.value as NSNumber) ?? "") +
@@ -555,9 +562,15 @@ extension DataTable {
                 if let item = state.treatment {
                     Button { editIsPresented = false }
                     label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .trailing)
-                        .tint(.blue).buttonStyle(.borderless).padding(.top, 20).padding(.trailing, 20)
+                        .tint(.blue).buttonStyle(.borderless).padding(.top, 20).padding(.trailing, 20).padding(.bottom, 10)
+                        .background(Color(.systemGroupedBackground))
                     Form {
                         Section {
+                            TextField(
+                                "Meal",
+                                text: $state.meal.note,
+                            )
+
                             HStack {
                                 Text("Carbs")
                                 Spacer()
@@ -623,7 +636,7 @@ extension DataTable {
                             Section {
                                 ForEach(Array(state.meal.micronutrient.enumerated()), id: \.offset) { index, nutrient in
                                     HStack {
-                                        Text(nutrient.substance.displayName)
+                                        Text(NSLocalizedString(nutrient.substance.displayName, comment: ""))
 
                                         Spacer()
 
@@ -650,8 +663,6 @@ extension DataTable {
                                 Text("Micronutrients")
                             }
                         }
-
-                        // MARK: Save
 
                         Section {
                             Button {

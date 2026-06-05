@@ -335,7 +335,7 @@ struct SearchResultsView: View {
         .sorted { $0.name < $1.name }
 
         let savedItem = FoodItemDetailed(
-            name: "Complete Meal",
+            name: state.searchResultsState.searchResults.description,
             nutrition: .perServing(
                 values: state.searchResultsState.mealNutritionValues,
                 servingsMultiplier: 1
@@ -464,8 +464,11 @@ struct SearchResultsView: View {
         }
         .sorted { $0.name < $1.name }
 
+        let shortenedDescription = (state.searchResultsState.searchResults.first?.title ?? "Meal.").components(separatedBy: ".")
+            .first ?? "Meal"
+
         return FoodItemDetailed(
-            name: NSLocalizedString("Complete Meal", comment: ""),
+            name: NSLocalizedString(shortenedDescription, comment: ""),
             nutrition: .perServing(
                 values: state.searchResultsState.mealNutritionValues,
                 servingsMultiplier: 1

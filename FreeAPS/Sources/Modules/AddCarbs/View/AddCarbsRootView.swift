@@ -261,6 +261,7 @@ extension AddCarbs {
             .sheet(isPresented: $showMicronutrients) {
                 OtherNutritionSheet(
                     fiber: $state.fiber,
+                    note: $state.note,
                     micronutrients: $state.micronutrient,
                     formatter: Self.formatter
                 )
@@ -295,8 +296,6 @@ extension AddCarbs {
                     .foregroundStyle(.secondary)
             }
         }
-
-        // MARK: - Other Button
 
         private var otherNutritionButton: some View {
             Button {
@@ -384,8 +383,6 @@ extension AddCarbs {
             }
         }
 
-        // MARK: - Save Preset
-
         private var savePresetButton: some View {
             Button {
                 saveAsPreset()
@@ -452,10 +449,9 @@ extension AddCarbs {
             .tint(.white)
         }
 
-        // MARK: - Other Nutrition Sheet
-
         private struct OtherNutritionSheet: View {
             @Binding var fiber: Decimal
+            @Binding var note: String
             @Binding var micronutrients: [MicronutrientValue]
 
             let formatter: NumberFormatter
@@ -465,6 +461,10 @@ extension AddCarbs {
             var body: some View {
                 NavigationStack {
                     Form {
+                        Section("Note") {
+                            TextField("Meal", text: $note)
+                        }
+
                         Section("Fiber") {
                             HStack {
                                 Text("Fiber")
@@ -1035,7 +1035,7 @@ extension AddCarbs {
 
         private func addfromCarbsView() {
             newPreset = (
-                NSLocalizedString("New", comment: ""),
+                state.note,
                 state.carbs.rounded(to: 1),
                 state.fat.rounded(to: 1),
                 state.protein.rounded(to: 1),
