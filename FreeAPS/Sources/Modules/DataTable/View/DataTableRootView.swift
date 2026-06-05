@@ -332,7 +332,7 @@ extension DataTable {
                             let micros = typed(meals: meal.micronutrientTotals)
                             ForEach(micros, id: \.id) { micronutrient in
                                 HStack(spacing: 0) {
-                                    Text(micronutrient.nutrient.displayName)
+                                    Text(NSLocalizedString(micronutrient.nutrient.displayName, comment: ""))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(
                                         (hourFormatter.string(from: micronutrient.value as NSNumber) ?? "") +
@@ -636,7 +636,7 @@ extension DataTable {
                             Section {
                                 ForEach(Array(state.meal.micronutrient.enumerated()), id: \.offset) { index, nutrient in
                                     HStack {
-                                        Text(nutrient.substance.displayName)
+                                        Text(NSLocalizedString(nutrient.substance.displayName, comment: ""))
 
                                         Spacer()
 

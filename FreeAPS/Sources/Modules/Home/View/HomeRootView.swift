@@ -1012,7 +1012,7 @@ extension Home {
         ) -> some View {
             VStack(alignment: .leading, spacing: 2) {
                 HStack {
-                    Text(title)
+                    Text(NSLocalizedString(title, comment: ""))
 
                     Spacer()
 
@@ -1023,7 +1023,7 @@ extension Home {
 
                     Text(formatter.string(from: NSDecimalNumber(decimal: value)) ?? "")
 
-                    Text(unit)
+                    Text(NSLocalizedString(unit, comment: ""))
                 }
 
                 if let progress {
