@@ -15,7 +15,7 @@ extension NightscoutConfig {
         @FetchRequest(
             entity: ImportError.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
-                format: "date > %@", Date().addingTimeInterval(-1.minutes.timeInterval) as NSDate
+                format: "date > %@", Date().removingTimeInterval(.minutes(1)) as NSDate
             )
         ) var fetchedErrors: FetchedResults<ImportError>
 
@@ -74,11 +74,7 @@ extension NightscoutConfig {
                     Text("Allow Uploads")
                 }
 
-                if let cgmManager = state.deviceManager.cgmManager,
-                   KnownPlugins.glucoseUploadingAvailable(for: cgmManager),
-                   !cgmManager.shouldSyncToRemoteService,
-                   state.isUploadEnabled
-                {
+                if state.cgmDisablesGlucoseUpload, state.isUploadEnabled {
                     Section {
                         HStack {
                             Text("Glucose upload disabled in CGM settings").foregroundStyle(.red)
@@ -154,7 +150,7 @@ extension NightscoutConfig {
                 header: { Text("Backfill glucose") }
                 footer: { Text("Fetches old glucose readings from Nightscout") }
 
-                if state.isUploadEnabled, appCoordinator.shouldUploadGlucose {
+                if state.isUploadEnabled, state.cgmSupportsGlucoseUpload, state.cgmEnablesGlucoseUpload {
                     Section {
                         HStack {
                             Text("Days").foregroundStyle(.secondary)

@@ -2,4 +2,4 @@ enum FPUConfig {
     enum Config {}
 }
 
-protocol FPUConfigProvider {}
+protocol FPUConfigProvider: Provider {}

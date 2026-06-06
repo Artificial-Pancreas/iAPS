@@ -7,79 +7,85 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
         case noDurationDefined
     }
 
-    private func convert(tt: [TempTarget]) -> [tempPreset] {
+    private func convert(tt: [TempTarget]) -> [TempPreset] {
         let presets = tt + [TempTarget.cancel(at: Date())]
-        return presets.map { tempPreset.convert($0) }
+        return presets.map { TempPreset.convert($0) }
     }
 
-    func fetchAll() -> [tempPreset] {
-        convert(tt: tempTargetsStorage.presets())
+    func fetchAll() async -> [TempPreset] {
+        convert(tt: await tempTargetsStorage.presets())
     }
 
-    func fetchIDs(_ uuid: [tempPreset.ID]) -> [tempPreset] {
-        let UUIDTempTarget = tempTargetsStorage.presets().filter { uuid.contains(UUID(uuidString: $0.id)!) }
+    func fetchIDs(_ uuid: [TempPreset.ID]) async -> [TempPreset] {
+        let UUIDTempTarget = await tempTargetsStorage.presets().filter { uuid.contains(UUID(uuidString: $0.id)!) }
         return convert(tt: UUIDTempTarget)
     }
 
-    func fetchOne(_ uuid: tempPreset.ID) -> tempPreset? {
-        let UUIDTempTarget = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == uuid }
+    func fetchOne(_ uuid: TempPreset.ID) async -> TempPreset? {
+        let UUIDTempTarget = await tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == uuid }
         guard let OneTempTarget = UUIDTempTarget.first else { return nil }
-        return tempPreset.convert(OneTempTarget)
+        return TempPreset.convert(OneTempTarget)
     }
 
-    func findTempTarget(_ tempPreset: tempPreset) throws -> TempTarget {
-        let tempTargetFound = tempTargetsStorage.presets().filter { $0.id == tempPreset.id.uuidString }
+    func findTempTarget(_ tempPreset: TempPreset) async throws -> TempTarget {
+        let tempTargetFound = await tempTargetsStorage.presets().filter { $0.id == tempPreset.id.uuidString }
         guard let tempOneTarget = tempTargetFound.first else { throw TempPresetsError.noTempTargetFound }
         return tempOneTarget
     }
 
-    func enactTempTarget(_ presetTarget: TempTarget) throws -> TempTarget {
+    func enactTempTarget(_ presetTarget: TempTarget) async throws -> TempTarget {
         var tempTarget = presetTarget
         tempTarget.createdAt = Date()
-        storage.storeTempTargets([tempTarget])
+        await tempTargetsStorage.storeTempTargets([tempTarget])
 
-        coredataContext.performAndWait {
+        let tempTargetID = tempTarget.id
+
+        let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+
+        await coredataContext.perform {
             var tempTargetsArray = [TempTargetsSlider]()
             let requestTempTargets = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
             let sortTT = NSSortDescriptor(key: "date", ascending: false)
             requestTempTargets.sortDescriptors = [sortTT]
             try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
 
-            let whichID = tempTargetsArray.first(where: { $0.id == tempTarget.id })
+            let whichID = tempTargetsArray.first(where: { $0.id == tempTargetID })
 
             if whichID != nil {
-                let saveToCoreData = TempTargets(context: self.coredataContext)
+                let saveToCoreData = TempTargets(context: coredataContext)
                 saveToCoreData.active = true
                 saveToCoreData.date = Date()
                 saveToCoreData.hbt = whichID?.hbt ?? 160
                 saveToCoreData.startDate = Date()
                 saveToCoreData.duration = whichID?.duration ?? 0
 
-                try? self.coredataContext.save()
+                try? coredataContext.save()
             } else {
-                let saveToCoreData = TempTargets(context: self.coredataContext)
+                let saveToCoreData = TempTargets(context: coredataContext)
                 saveToCoreData.active = false
                 saveToCoreData.date = Date()
-                try? self.coredataContext.save()
+                try? coredataContext.save()
             }
         }
 
         return tempTarget
     }
 
-    func cancelTempTarget() throws {
-        storage.storeTempTargets([TempTarget.cancel(at: Date())])
-        try coredataContext.perform {
-            let saveToCoreData = TempTargets(context: self.coredataContext)
+    func cancelTempTarget() async throws {
+        await tempTargetsStorage.storeTempTargets([TempTarget.cancel(at: Date())])
+
+        let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+        await coredataContext.perform {
+            let saveToCoreData = TempTargets(context: coredataContext)
             saveToCoreData.active = false
 
-            let setHBT = TempTargetsSlider(context: self.coredataContext)
+            let setHBT = TempTargetsSlider(context: coredataContext)
             setHBT.enabled = false
 
-            if self.coredataContext.hasChanges {
+            if coredataContext.hasChanges {
                 saveToCoreData.date = Date()
                 setHBT.date = Date()
-                try self.coredataContext.save()
+                try? coredataContext.save()
             }
         }
     }

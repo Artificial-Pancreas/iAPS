@@ -4,9 +4,9 @@ import SwiftUI
 
 extension AddCarbs {
     final class StateModel: BaseStateModel<Provider> {
+        @Injected() var storage: FileStorage!
         @Injected() var carbsStorage: CarbsStorage!
         @Injected() var apsManager: APSManager!
-        @Injected() var settings: SettingsManager!
         @Injected() var nightscoutManager: NightscoutManager!
 
         @Published var carbs: Decimal = 0
@@ -38,84 +38,91 @@ extension AddCarbs {
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         let coredataContextBackground = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
-        override func subscribe() {
-            carbsRequired = provider.suggestion?.carbsReq
-            id = settings.settings.profileID
-            maxCarbs = settings.settings.maxCarbs
-            skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
-            useFPUconversion = settingsManager.settings.useFPUconversion
-            ai = settingsManager.settings.ai
-            mealViewMicronutrients = settingsManager.settings.mealViewMicronutrients
+        override func subscribe() async {
+            carbsRequired = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)?.carbsReq
+            let settings = await settingsManager.settings
+            id = settings.profileID
+            maxCarbs = settings.maxCarbs
+            skipBolus = settings.skipBolusScreenAfterCarbs
+            useFPUconversion = settings.useFPUconversion
+            ai = settings.ai
+            mealViewMicronutrients = settings.mealViewMicronutrients
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
-            carbs = min(carbs, maxCarbs)
-            id_ = UUID().uuidString
+            Task {
+                carbs = min(carbs, maxCarbs)
+                id_ = UUID().uuidString
 
-            let carbsToStore = [CarbsEntry(
-                id: id_,
-                createdAt: now,
-                actualDate: date,
-                carbs: carbs,
-                fat: fat,
-                protein: protein,
-                fiber: fiber,
-                note: note,
-                enteredBy: CarbsEntry.manual,
-                isFPU: false,
-                micronutrient: micronutrient
-            )]
-            add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+                let carbsToStore = [CarbsEntry(
+                    id: id_,
+                    createdAt: now,
+                    actualDate: date,
+                    carbs: carbs,
+                    fat: fat,
+                    protein: protein,
+                    fiber: fiber,
+                    note: note,
+                    enteredBy: CarbsEntry.manual,
+                    isFPU: false,
+                    micronutrient: micronutrient
+                )]
+                await add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+            }
         }
 
         func addAIFood(_ continue_: Bool, fetch: Bool, food: FoodItemDetailed, date: Date?) {
-            var carbs = food.nutrientInThisPortion(.carbs) ?? 0
-            let fat = food.nutrientInThisPortion(.fat) ?? 0
-            let protein = food.nutrientInThisPortion(.protein) ?? 0
-            let fibers = food.nutrientInThisPortion(.fiber) ?? 0
-            let note = food.name
+            Task {
+                var carbs = food.nutrientInThisPortion(.carbs) ?? 0
+                let fat = food.nutrientInThisPortion(.fat) ?? 0
+                let protein = food.nutrientInThisPortion(.protein) ?? 0
+                let fibers = food.nutrientInThisPortion(.fiber) ?? 0
+                let note = food.name
 
-            let micronutrients = food.micronutrient.compactMap { value -> MicronutrientValue? in
-                guard let amount = food.micronutrientInThisPortion(value.substance),
-                      amount > 0
-                else {
-                    return nil
+                let micronutrients = food.micronutrient.compactMap { value -> MicronutrientValue? in
+                    guard let amount = food.micronutrientInThisPortion(value.substance),
+                          amount > 0
+                    else {
+                        return nil
+                    }
+
+                    return MicronutrientValue(
+                        substance: value.substance,
+                        amount: amount,
+                        amountPer100: value.amountPer100
+                    )
                 }
 
-                return MicronutrientValue(
-                    substance: value.substance,
-                    amount: amount,
-                    amountPer100: value.amountPer100
-                )
+                guard carbs > 0 || fat > 0 || protein > 0 || fibers > 0 || !micronutrients.isEmpty else {
+                    showModal(for: nil)
+                    return
+                }
+
+                carbs = min(carbs, maxCarbs)
+                id_ = UUID().uuidString
+
+                let carbsToStore = [CarbsEntry(
+                    id: id_,
+                    createdAt: now,
+                    actualDate: date,
+                    carbs: carbs,
+                    fat: fat,
+                    protein: protein,
+                    fiber: fibers,
+                    note: note,
+                    enteredBy: CarbsEntry.manual,
+                    isFPU: false,
+                    micronutrient: micronutrients
+                )]
+
+                await add(continue_, fetch: fetch, carbsToStore: carbsToStore)
             }
-
-            guard carbs > 0 || fat > 0 || protein > 0 || fibers > 0 || !micronutrients.isEmpty else {
-                showModal(for: nil)
-                return
-            }
-
-            carbs = min(carbs, maxCarbs)
-            id_ = UUID().uuidString
-
-            let carbsToStore = [CarbsEntry(
-                id: id_,
-                createdAt: now,
-                actualDate: date,
-                carbs: carbs,
-                fat: fat,
-                protein: protein,
-                fiber: fibers,
-                note: note,
-                enteredBy: CarbsEntry.manual,
-                isFPU: false,
-                micronutrient: micronutrients
-            )]
-
-            add(continue_, fetch: fetch, carbsToStore: carbsToStore)
         }
 
-        func add(_ continue_: Bool, fetch: Bool, carbsToStore: [CarbsEntry]) {
-            if hypoTreatment { hypo() }
+        func add(_ continue_: Bool, fetch: Bool, carbsToStore: [CarbsEntry]) async {
+            if hypoTreatment {
+                await hypo()
+            }
             let carbs = carbsToStore.map(\.carbs).reduce(0, +)
             let fat = carbsToStore.compactMap(\.fat).reduce(0, +)
             let protein = carbsToStore.compactMap(\.protein).reduce(0, +)
@@ -137,16 +144,16 @@ extension AddCarbs {
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
                 saveToCoreData(carbsToStore, savedToFile: true)
-                carbsStorage.storeCarbs(carbsToStore)
-                apsManager.determineBasalSync()
+                await carbsStorage.storeCarbs(carbsToStore)
+                _ = await apsManager.determineBasal(temporaryCarbs: nil)
                 showModal(for: nil)
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore, savedToFile: false)
                 showModal(for: .bolus(waitForSuggestion: true, fetch: true))
             } else if !empty {
                 saveToCoreData(carbsToStore, savedToFile: true)
-                carbsStorage.storeCarbs(carbsToStore)
-                apsManager.determineBasalSync()
+                await carbsStorage.storeCarbs(carbsToStore)
+                _ = await apsManager.determineBasal(temporaryCarbs: nil)
                 showModal(for: nil)
             } else {
                 hideModal()
@@ -182,7 +189,7 @@ extension AddCarbs {
                     mergeMicronutrients(presetMicros, multiplier: -1)
                 }
 
-                try? coredataContext.delete(selection!)
+                coredataContext.delete(selection!)
                 try? coredataContext.save()
             }
         }
@@ -216,12 +223,15 @@ extension AddCarbs {
                     requestMeal.fetchLimit = 1
                     try? mealToEdit = self.coredataContext.fetch(requestMeal)
 
-                    self.carbs = (mealToEdit.first?.carbs ?? 0) as Decimal
-                    self.fat = (mealToEdit.first?.fat ?? 0) as Decimal
-                    self.protein = (mealToEdit.first?.protein ?? 0) as Decimal
-                    self.fiber = (mealToEdit.first?.fiber ?? 0) as Decimal
-                    self.note = mealToEdit.first?.note ?? ""
-                    self.id_ = mealToEdit.first?.id ?? ""
+                    // TODO: is this hop needed?
+                    Task { @MainActor in
+                        self.carbs = (mealToEdit.first?.carbs ?? 0) as Decimal
+                        self.fat = (mealToEdit.first?.fat ?? 0) as Decimal
+                        self.protein = (mealToEdit.first?.protein ?? 0) as Decimal
+                        self.fiber = (mealToEdit.first?.fiber ?? 0) as Decimal
+                        self.note = mealToEdit.first?.note ?? ""
+                        self.id_ = mealToEdit.first?.id ?? ""
+                    }
                 }
             }
         }
@@ -252,7 +262,7 @@ extension AddCarbs {
             CoreDataStorage().saveMeal(stored, now: now, savedToFile: savedToFile)
         }
 
-        private func hypo() {
+        private func hypo() async {
             let os = OverrideStorage()
 
             // Cancel any eventual Other Override already active
@@ -262,17 +272,17 @@ extension AddCarbs {
                 if let preset = presetName {
                     if let duration = os.cancelProfile() {
                         // Update in Nightscout
-                        nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                        await nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
                     }
                 } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
                     if let duration = os.cancelProfile() {
-                        nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                        await nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
                     }
                 } else {
                     let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                         .formatted() + " %" : "Custom"
                     if let duration = os.cancelProfile() {
-                        nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                        await nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
                     }
                 }
             }
@@ -293,7 +303,7 @@ extension AddCarbs {
                 override.indefinite = false
                 os.overrideFromPreset(override, profileID)
                 // Upload to Nightscout
-                nightscoutManager.uploadOverride(
+                await nightscoutManager.uploadOverride(
                     "📉",
                     Double(45),
                     override.date ?? Date.now

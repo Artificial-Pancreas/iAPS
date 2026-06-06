@@ -4,9 +4,11 @@ import LoopKit
 import SwiftUI
 import Swinject
 import UIKit
-import UserNotifications
+@preconcurrency import UserNotifications
 
-protocol UserNotificationsManager {}
+protocol UserNotificationsManager {
+    func stopSound() async
+}
 
 enum GlucoseSourceKey: String {
     case transmitterBattery
@@ -20,16 +22,16 @@ enum NotificationAction: String {
     case snooze
 }
 
-protocol BolusFailureObserver {
-    func bolusDidFail()
-}
+// protocol BolusFailureObserver {
+//    func bolusDidFail()
+// }
 
-protocol PumpNotificationObserver {
-    func pumpNotification(alert: AlertEntry)
-    func pumpRemoveNotification()
-}
+// protocol PumpNotificationObserver {
+//    func pumpNotification(alert: AlertEntry)
+//    func pumpRemoveNotification()
+// }
 
-final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
+actor BaseUserNotificationsManager: UserNotificationsManager, Injectable {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
@@ -40,67 +42,122 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var apsManager: APSManager!
     @Injected() private var deviceDataManager: DeviceDataManager!
     @Injected() private var router: Router!
+    @Injected() private var appCoordinator: AppCoordinator!
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
 
+    private var settings: FreeAPSSettings!
+
     private let center = UNUserNotificationCenter.current()
+    private let userNotificationCenterDelegate: UserNotificationCenterDelegate
     private var lifetime = Lifetime()
 
     init(resolver: Resolver) {
-        super.init()
-        center.delegate = self
+        self.userNotificationCenterDelegate = UserNotificationCenterDelegate()
         injectServices(resolver)
-        broadcaster.register(GlucoseObserver.self, observer: self)
-        broadcaster.register(SuggestionObserver.self, observer: self)
-        broadcaster.register(BolusFailureObserver.self, observer: self)
-        broadcaster.register(PumpNotificationObserver.self, observer: self)
 
-        requestNotificationPermissionsIfNeeded()
-        sendGlucoseNotification()
-        subscribeOnLoop()
+        Task {
+            await self.subscribe()
+        }
     }
 
-    private func subscribeOnLoop() {
-        apsManager.lastLoopDateSubject
-            .sink { [weak self] date in
-                self?.scheduleMissingLoopNotifiactions(date: date)
-            }
-            .store(in: &lifetime)
-    }
+    private func subscribe() async {
+        self.settings = await settingsManager.settings
 
-    private func addAppBadge(glucose: Int?) {
-        guard let glucose = glucose, settingsManager.settings.glucoseBadge else {
-            DispatchQueue.main.async {
-                UIApplication.shared.applicationIconBadgeNumber = 0
-            }
-            return
+        userNotificationCenterDelegate.manager = self
+        center.delegate = userNotificationCenterDelegate
+
+        observe(appCoordinator.settingsUpdates, in: &lifetime) { settings in
+            await self.settingsUpdated(settings)
+        }
+        observe(appCoordinator.glucoseHistoryUpdates, in: &lifetime) { glucose in
+            await self.glucoseUpdated(glucose)
+        }
+        observe(appCoordinator.suggestions, in: &lifetime) { suggestion in
+            await self.suggestionUpdated(suggestion)
+        }
+        observe(appCoordinator.bolusFailures, in: &lifetime) { _ in
+            await self.notifyBolusFailure()
+        }
+        observe(appCoordinator.pumpNotifications, in: &lifetime) { alert in
+            await self.pumpNotificationTriggered(alert)
+        }
+        observe(appCoordinator.pumpNotificationsRemove, in: &lifetime) { _ in
+            await self.pumpNotificationsRemoved()
         }
 
+        observe(appCoordinator.lastLoopDate, in: &lifetime) { date in
+            await self.scheduleMissingLoopNotifiactions(date)
+        }
+
+        await requestNotificationPermissionsIfNeeded()
+        await sendGlucoseNotification()
+    }
+
+    private func settingsUpdated(_ settings: FreeAPSSettings) {
+        self.settings = settings
+    }
+
+    private func glucoseUpdated(_: [BloodGlucose]) async {
+        await sendGlucoseNotification()
+    }
+
+    private func suggestionUpdated(_ suggestion: Suggestion) async {
+        guard let carndRequired = suggestion.carbsReq else { return }
+        await notifyCarbsRequired(Int(carndRequired))
+    }
+
+    private func pumpNotificationTriggered(_ alert: AlertEntry) async {
+        if await ensureCanSendNotification() {
+            let content = UNMutableNotificationContent()
+            content.title = alert.contentTitle ?? "Unknown"
+            content.body = alert.contentBody ?? "Unknown"
+            content.sound = .default
+            await self.addRequest(
+                identifier: .pumpNotification,
+                content: content,
+                deleteOld: true,
+                trigger: nil
+            )
+        }
+    }
+
+    private func pumpNotificationsRemoved() async {
+        self.center.removeDeliveredNotifications(withIdentifiers: [Identifier.pumpNotification.rawValue])
+        self.center.removePendingNotificationRequests(withIdentifiers: [Identifier.pumpNotification.rawValue])
+    }
+
+    private func addAppBadge(glucose: Int?) async {
         let badge: Int
-        if settingsManager.settings.units == .mmolL {
-            badge = Int(round(Double((glucose * 10).asMmolL)))
+        if let glucose = glucose, settings.glucoseBadge {
+            if settings.units == .mmolL {
+                badge = Int(round(Double((glucose * 10).asMmolL)))
+            } else {
+                badge = glucose
+            }
         } else {
-            badge = glucose
+            badge = 0
         }
 
-        DispatchQueue.main.async {
-            UIApplication.shared.applicationIconBadgeNumber = badge
+        do {
+            try await center.setBadgeCount(badge)
+        } catch {
+            debug(.service, "Failed to set badge count: \(error.localizedDescription)")
         }
     }
 
-    private func notifyCarbsRequired(_ carbs: Int) {
-        guard settingsManager.settings.carbsRequiredAlert,
-              Decimal(carbs) >= settingsManager.settings.carbsRequiredThreshold
+    private func notifyCarbsRequired(_ carbs: Int) async {
+        guard settings.carbsRequiredAlert,
+              Decimal(carbs) >= settings.carbsRequiredThreshold
         else { return
         }
-        let sound = settingsManager.settings.carbSound
+        let sound = settings.carbSound
 
-        ensureCanSendNotification {
+        if await ensureCanSendNotification() {
             var titles: [String] = []
 
             let content = UNMutableNotificationContent()
@@ -109,7 +166,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else {
                 if sound == "Default" {
-                    if self.settingsManager.settings.useAlarmSound {
+                    if self.settings.useAlarmSound {
                         content.sound = .default
                     }
                 } else if sound != "Silent" {
@@ -128,13 +185,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 carbs
             )
 
-            self.addRequest(identifier: .carbsRequiredNotification, content: content, deleteOld: true)
+            await self.addRequest(identifier: .carbsRequiredNotification, content: content, deleteOld: true)
         }
     }
 
-    private func scheduleMissingLoopNotifiactions(date _: Date) {
-        let sound = settingsManager.settings.missingLoops
-        ensureCanSendNotification {
+    private func scheduleMissingLoopNotifiactions(_: Date?) async {
+        let sound = settings.missingLoops
+        if await ensureCanSendNotification() {
             let title = NSLocalizedString("iAPS not active", comment: "iAPS not active")
             let body = NSLocalizedString("Last loop was more than %d min ago", comment: "Last loop was more than %d min ago")
 
@@ -154,13 +211,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             let firstTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(firstInterval), repeats: false)
             let secondTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(secondInterval), repeats: false)
 
-            self.addRequest(
+            await self.addRequest(
                 identifier: .noLoopFirstNotification,
                 content: firstContent,
                 deleteOld: true,
                 trigger: firstTrigger
             )
-            self.addRequest(
+            await self.addRequest(
                 identifier: .noLoopSecondNotification,
                 content: secondContent,
                 deleteOld: true,
@@ -169,9 +226,9 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
-    private func notifyBolusFailure() {
-        let sound = settingsManager.settings.bolusFailure
-        ensureCanSendNotification {
+    private func notifyBolusFailure() async {
+        let sound = settings.bolusFailure
+        if await ensureCanSendNotification() {
             let title = NSLocalizedString("Bolus failed", comment: "Bolus failed")
             let body = NSLocalizedString(
                 "Bolus failed or inaccurate. Check pump history before repeating.",
@@ -182,14 +239,14 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             content.title = title
             content.body = body
             if sound == "Default" {
-                if self.settingsManager.settings.useAlarmSound {
+                if self.settings.useAlarmSound {
                     content.sound = .default
                 }
             } else if sound != "Silent" {
                 self.playSoundIfNeeded(sound: sound)
             }
 
-            self.addRequest(
+            await self.addRequest(
                 identifier: .bolusFailedNotification,
                 content: content,
                 deleteOld: true
@@ -197,43 +254,44 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
-    private func sendGlucoseNotification() {
-        addAppBadge(glucose: nil)
+    private func sendGlucoseNotification() async {
+        await addAppBadge(glucose: nil)
 
-        let glucose = glucoseStorage.retrieveRaw()
+        let glucose = await glucoseStorage.retrieveRaw()
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
 
-        addAppBadge(glucose: lastGlucose.glucose)
+        await addAppBadge(glucose: lastGlucose.glucose)
 
-        guard glucoseStorage.alarm != nil || settingsManager.settings.glucoseNotificationsAlways else {
+        let alarm = await glucoseStorage.getAlarm()
+        guard alarm != nil || settings.glucoseNotificationsAlways else {
             return
         }
 
-        ensureCanSendNotification {
+        if await ensureCanSendNotification() {
             var titles: [String] = []
             var sound: String = "New/Anticipalte.caf"
             var alert = true
 
-            switch self.glucoseStorage.alarm {
+            switch alarm {
             case .none:
                 titles.append(NSLocalizedString("Glucose", comment: "Glucose"))
                 sound = "Silent"
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
-                sound = self.settingsManager.settings.hypoSound
-                alert = self.settingsManager.settings.lowAlert
+                sound = self.settings.hypoSound
+                alert = self.settings.lowAlert
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
-                sound = self.settingsManager.settings.hyperSound
-                alert = self.settingsManager.settings.highAlert
+                sound = self.settings.hyperSound
+                alert = self.settings.highAlert
             case .ascending:
                 titles.append(NSLocalizedString("RAPIDLY ASCENDING GLUCOSE!", comment: "RAPIDLY ASCENDING GLUCOSE!"))
-                sound = self.settingsManager.settings.ascending
-                alert = self.settingsManager.settings.ascendingAlert
+                sound = self.settings.ascending
+                alert = self.settings.ascendingAlert
             case .descending:
                 titles.append(NSLocalizedString("RAPIDLY DESCENDING GLUCOSE!", comment: "RAPIDLY DESCENDING GLUCOSE!"))
-                sound = self.settingsManager.settings.descending
-                alert = self.settingsManager.settings.descendingAlert
+                sound = self.settings.descending
+                alert = self.settings.descendingAlert
             }
 
             let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
@@ -247,7 +305,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 content.title = titles.joined(separator: " ")
                 content.body = body
 
-                if sound != "Silent", self.settingsManager.settings.useAlarmSound {
+                if sound != "Silent", self.settings.useAlarmSound {
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
                     if sound == "Default" {
                         content.sound = .default
@@ -256,13 +314,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                     }
                 }
 
-                self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
+                await self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
             }
         }
     }
 
     private func glucoseText(glucoseValue: Int, delta: Int?, direction: BloodGlucose.Direction?) -> String {
-        let units = settingsManager.settings.units
+        let units = settings.units
         let glucoseText = glucoseFormatter
             .string(from: Double(
                 units == .mmolL ? glucoseValue
@@ -271,7 +329,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         let directionText = direction?.symbol ?? "↔︎"
         let deltaText = delta
             .map {
-                self.deltaFormatter
+                Self.deltaFormatter
                     .string(from: Double(
                         units == .mmolL ? $0
                             .asMmolL : Decimal($0)
@@ -282,7 +340,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private func infoBody() -> String {
-        guard settingsManager.settings.addSourceInfoToGlucoseNotifications,
+        guard settings.addSourceInfoToGlucoseNotifications,
               let info = deviceDataManager.cgmInfo()
         else {
             return ""
@@ -309,37 +367,41 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         return body
     }
 
-    private func requestNotificationPermissionsIfNeeded() {
-        center.getNotificationSettings { settings in
-            debug(.service, "UNUserNotificationCenter.authorizationStatus: \(String(describing: settings.authorizationStatus))")
-            if ![.authorized, .provisional].contains(settings.authorizationStatus) {
-                self.requestNotificationPermissions()
-            }
+    private func requestNotificationPermissionsIfNeeded() async {
+        let notificationSettings = await center.notificationSettings()
+        debug(
+            .service,
+            "UNUserNotificationCenter.authorizationStatus: \(String(describing: notificationSettings.authorizationStatus))"
+        )
+        if ![.authorized, .provisional].contains(notificationSettings.authorizationStatus) {
+            await self.requestNotificationPermissions()
         }
     }
 
-    private func requestNotificationPermissions() {
+    private func requestNotificationPermissions() async {
         debug(.service, "requestNotificationPermissions")
-        center.requestAuthorization(options: [.badge, .sound, .alert]) { granted, error in
+        do {
+            let granted = try await center.requestAuthorization(options: [.badge, .sound, .alert])
             if granted {
                 debug(.service, "requestNotificationPermissions was granted")
             } else {
-                warning(.service, "requestNotificationPermissions failed", error: error)
+                warning(.service, "requestNotificationPermissions failed")
             }
+        } catch {
+            warning(.service, "requestNotificationPermissions failed", error: error)
         }
     }
 
-    private func ensureCanSendNotification(_ completion: @escaping () -> Void) {
-        center.getNotificationSettings { settings in
-            guard settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional else {
-                warning(.service, "ensureCanSendNotification failed, authorization denied")
-                return
-            }
-
-            debug(.service, "Sending notification was allowed")
-
-            completion()
+    private func ensureCanSendNotification() async -> Bool {
+        let notificationSettings = await center.notificationSettings()
+        guard notificationSettings.authorizationStatus == .authorized || notificationSettings.authorizationStatus == .provisional
+        else {
+            warning(.service, "ensureCanSendNotification failed, authorization denied")
+            return false
         }
+        debug(.service, "Sending notification was allowed")
+
+        return true
     }
 
     private func addRequest(
@@ -347,131 +409,107 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         content: UNMutableNotificationContent,
         deleteOld: Bool = false,
         trigger: UNNotificationTrigger? = nil
-    ) {
-        let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: trigger)
-
+    ) async {
         if deleteOld {
-            DispatchQueue.main.async {
-                self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
-                self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
-            }
+            self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+            self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.center.add(request) { error in
-                if let error = error {
-                    warning(.service, "Unable to addNotificationRequest", error: error)
-                    return
-                }
+        let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: trigger)
 
-                debug(.service, "Sending \(identifier) notification")
-            }
+        do {
+            try await self.center.add(request)
+            debug(.service, "Sending \(identifier) notification")
+        } catch {
+            warning(.service, "Unable to addNotificationRequest", error: error)
         }
     }
 
     private func playSoundIfNeeded(sound: String) {
-        guard settingsManager.settings.useAlarmSound, snoozeUntilDate < Date() else { return }
+        guard settings.useAlarmSound, snoozeUntilDate < Date() else { return }
         guard sound != "Silent" else { return }
 
-        Self.stopPlaying = false
         playSound(sound: sound)
     }
 
-    private func playSoundWithoutSnooze(_ sound: String) {
-        guard settingsManager.settings.useAlarmSound else { return }
-        guard sound != "Silent" else { return }
+//    private func playSoundWithoutSnooze(_ sound: String) {
+//        guard settings.useAlarmSound else { return }
+//        guard sound != "Silent" else { return }
+//
+//        playSound(sound: sound)
+//    }
 
-        Self.stopPlaying = false
-        playSound(sound: sound)
+    private var soundTask: Task<Void, Never>?
+
+    private func playSound(sound: String, times: Int = 1) {
+        soundTask?.cancel()
+        soundTask = Task {
+            let path = "/System/Library/Audio/UISounds/" + sound
+            guard let url = URL(string: path) else { return }
+
+            var id: UInt32 = 0
+            AudioServicesCreateSystemSoundID(url as CFURL, &id)
+            defer { AudioServicesDisposeSystemSoundID(id) }
+
+            for _ in 0 ..< times {
+                guard !Task.isCancelled else { return }
+                await withCheckedContinuation { continuation in
+                    AudioServicesPlaySystemSoundWithCompletion(id) {
+                        continuation.resume()
+                    }
+                }
+            }
+        }
     }
 
-    static var soundID: UInt32 = 1336
-    private static var stopPlaying = false
-
-    private func playSound(times: Int = 1, sound: String) {
-        guard times > 0, !Self.stopPlaying else {
-            return
-        }
-        let path = "/System/Library/Audio/UISounds/" + sound
-        let soundURL = URL(string: path)
-        AudioServicesCreateSystemSoundID(soundURL! as CFURL, &Self.soundID)
-
-        AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(Self.soundID)) {
-            self.playSound(times: times - 1, sound: sound)
-        }
-    }
-
-    static func stopSound() {
-        stopPlaying = true
-        AudioServicesDisposeSystemSoundID(soundID)
+    func stopSound() {
+        soundTask?.cancel()
+        soundTask = nil
     }
 
     private var glucoseFormatter: NumberFormatter {
+        switch settings.units {
+        case .mmolL: return Self.glucoseFormatterMmol
+        case .mgdL: return Self.glucoseFormatterMgdl
+        }
+    }
+
+    private static let glucoseFormatterMmol = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.roundingMode = .halfUp
+        return formatter
+    }()
+
+    private static let glucoseFormatterMgdl = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        if settingsManager.settings.units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-        }
         formatter.roundingMode = .halfUp
         return formatter
-    }
+    }()
 
-    private var deltaFormatter: NumberFormatter {
+    private static let deltaFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+"
         return formatter
-    }
-}
+    }()
 
-extension BaseUserNotificationsManager: GlucoseObserver {
-    func glucoseDidUpdate(_: [BloodGlucose]) {
-        sendGlucoseNotification()
-    }
-}
-
-extension BaseUserNotificationsManager: PumpNotificationObserver {
-    func pumpNotification(alert: AlertEntry) {
-        ensureCanSendNotification {
-            let content = UNMutableNotificationContent()
-            content.title = alert.contentTitle ?? "Unknown"
-            content.body = alert.contentBody ?? "Unknown"
-            content.sound = .default
-            self.addRequest(
-                identifier: .pumpNotification,
-                content: content,
-                deleteOld: true,
-                trigger: nil
-            )
-        }
-    }
-
-    func pumpRemoveNotification() {
-        let identifier: Identifier = .pumpNotification
-        DispatchQueue.main.async {
-            self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
-            self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+    fileprivate func handleNotificationAction(_ action: NotificationAction) async {
+        switch action {
+        case .snooze:
+            router.mainModalScreen.send(.snooze)
         }
     }
 }
 
-extension BaseUserNotificationsManager: SuggestionObserver {
-    func suggestionDidUpdate(_ suggestion: Suggestion) {
-        guard let carndRequired = suggestion.carbsReq else { return }
-        notifyCarbsRequired(Int(carndRequired))
-    }
-}
+final class UserNotificationCenterDelegate: NSObject, UNUserNotificationCenterDelegate {
+    weak var manager: BaseUserNotificationsManager?
 
-extension BaseUserNotificationsManager: BolusFailureObserver {
-    func bolusDidFail() {
-        notifyBolusFailure()
-    }
-}
-
-extension BaseUserNotificationsManager: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _: UNUserNotificationCenter,
         willPresent _: UNNotification,
@@ -487,12 +525,11 @@ extension BaseUserNotificationsManager: UNUserNotificationCenterDelegate {
     ) {
         defer { completionHandler() }
         guard let actionRaw = response.notification.request.content.userInfo[NotificationAction.key] as? String,
-              let action = NotificationAction(rawValue: actionRaw)
-        else { return }
-
-        switch action {
-        case .snooze:
-            router.mainModalScreen.send(.snooze)
+              let action = NotificationAction(rawValue: actionRaw),
+              let manager
+        else {
+            return
         }
+        Task { await manager.handleNotificationAction(action) }
     }
 }

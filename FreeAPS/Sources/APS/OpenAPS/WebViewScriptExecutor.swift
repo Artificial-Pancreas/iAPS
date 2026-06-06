@@ -1,9 +1,10 @@
 import WebKit
 
-@MainActor class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
-    private var webView: WKWebView!
-    private var continuationStreams = [String: AsyncThrowingStream<RawJSON, Error>.Continuation]()
-    private var scripts = [
+final class WebViewScriptExecutor: Sendable {
+    @MainActor private var webView: WKWebView?
+    @MainActor private var continuations = [String: CheckedContinuation<RawJSON, Error>]()
+
+    private let scripts = [
         FunctionScript(name: OpenAPS.Bundle.autosens, function: "freeaps_autosens"),
         FunctionScript(name: OpenAPS.Bundle.autotuneCore, function: "freeaps_autotuneCore"),
         FunctionScript(name: OpenAPS.Bundle.autotunePrep, function: "freeaps_autotunePrep"),
@@ -27,27 +28,31 @@ import WebKit
         ], function: "generate", variable: "iaps_autoisf")
     ]
 
-    init(frame _: CGRect = .zero) {
-        super.init()
-
-        webView = createWebView()
+    nonisolated init(frame _: CGRect = .zero) {
+        Task {
+            await self.createWebView()
+        }
     }
 
-    private func createWebView() -> WKWebView {
-        let contentController = WKUserContentController()
-        contentController.add(self, name: "consoleLog")
-        contentController.add(self, name: "jsBridge")
-        contentController.add(self, name: "scriptError")
+    private func createWebView() async {
+        await MainActor.run {
+            let contentController = WKUserContentController()
+            let messageHandler = JSMessageBridge()
+            messageHandler.executor = self
+            contentController.add(messageHandler, name: "consoleLog")
+            contentController.add(messageHandler, name: "jsBridge")
+            contentController.add(messageHandler, name: "scriptError")
 
-        let config = WKWebViewConfiguration()
-        config.userContentController = contentController
+            let config = WKWebViewConfiguration()
+            config.userContentController = contentController
 
-        let webView = WKWebView(frame: .zero, configuration: config)
+            let webView = WKWebView(frame: .zero, configuration: config)
 
-        injectConsoleLogHandler(webView: webView)
-        loadScripts(webView: webView)
+            injectConsoleLogHandler(webView: webView)
+            loadScripts(webView: webView)
 
-        return webView
+            self.webView = webView
+        }
     }
 
     private func injectConsoleLogHandler(webView: WKWebView) {
@@ -64,7 +69,7 @@ import WebKit
     }
 
     private func script(for name: String) -> FunctionScript? {
-        scripts.filter { $0.name == name }.first
+        scripts.first(where: { $0.name == name })
     }
 
     private func loadScripts(webView: WKWebView) {
@@ -138,22 +143,43 @@ import WebKit
         })();
         """
 
-        let stream = AsyncThrowingStream<RawJSON, Error> { continuation in
-            continuationStreams[requestId] = continuation
+        let timeoutTask = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(15))
+            guard !Task.isCancelled else { return }
+            if let timedOut = continuations.removeValue(forKey: requestId) {
+                timedOut.resume(throwing: NSError(
+                    domain: "WebViewScriptExecutor", code: 408,
+                    userInfo: [NSLocalizedDescriptionKey: "Timed out after 15 seconds"]
+                ))
+            }
         }
+        defer { timeoutTask.cancel() }
 
         do {
-            try await webView.evaluateJavaScript(script)
+            return try await withCheckedThrowingContinuation { continuation in
+                Task { @MainActor in
+                    guard let webView else {
+                        continuation.resume(throwing: NSError(
+                            domain: "WebViewScriptExecutor", code: 2,
+                            userInfo: [NSLocalizedDescriptionKey: "WebView not initialized yet"]
+                        ))
+                        return
+                    }
+                    continuations[requestId] = continuation
 
-            for try await value in stream {
-                return value
+                    do {
+                        try await webView.evaluateJavaScript(script)
+                    } catch {
+                        if let continuation = continuations.removeValue(forKey: requestId) {
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                }
             }
-            throw NSError(domain: "WebViewScriptExecutor", code: 2, userInfo: [NSLocalizedDescriptionKey: "No result emitted"])
         } catch {
             print("Javascript function (\(requestId)) attempt \(attempts + 1) failed with error: \(error)")
-            continuationStreams.removeValue(forKey: requestId)
             if attempts < maxAttempts {
-                webView = createWebView()
+                await createWebView()
                 return try await evaluateFunction(body: body, attempts: attempts + 1)
             } else {
                 throw error
@@ -162,7 +188,7 @@ import WebKit
     }
 
     // Handle messages from JavaScript (e.g., console.log)
-    func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
+    @MainActor fileprivate func didReceive(_ message: WKScriptMessage) {
         if message.name == "consoleLog", let logMessage = message.body as? String {
             if logMessage.count > 3 { // Remove the cryptic test logs created during development of Autosens
                 debug(.openAPS, "JavaScript log: \(logMessage)")
@@ -175,24 +201,31 @@ import WebKit
         if message.name == "jsBridge",
            let body = message.body as? [String: Any],
            let id = body["id"] as? String,
-           let continuation = continuationStreams.removeValue(forKey: id)
+           let continuation = continuations.removeValue(forKey: id)
         {
             if let value = body["value"] as? RawJSON {
-                continuation.yield(value)
-                continuation.finish()
+                continuation.resume(returning: value)
             } else if let error = body["error"] as? String {
-                continuation.finish(throwing: NSError(
+                continuation.resume(throwing: NSError(
                     domain: "WebViewScriptExecutor",
                     code: 500,
                     userInfo: [NSLocalizedDescriptionKey: error]
                 ))
             } else {
-                continuation.finish(throwing: NSError(
+                continuation.resume(throwing: NSError(
                     domain: "WebViewScriptExecutor",
                     code: 500,
                     userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
                 ))
             }
         }
+    }
+}
+
+@MainActor private final class JSMessageBridge: NSObject, WKScriptMessageHandler {
+    weak var executor: WebViewScriptExecutor?
+
+    func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
+        executor?.didReceive(message)
     }
 }

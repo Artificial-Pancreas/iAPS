@@ -3,8 +3,8 @@ import CoreData
 import Foundation
 import SwiftDate
 
-final class OverrideStorage {
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+final class OverrideStorage: Sendable {
+    private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     func fetchOverrides(interval: NSDate) -> [Override] {
         var overrideArray = [Override]()
@@ -106,9 +106,9 @@ final class OverrideStorage {
                 history.duration = -1 * (latest.date ?? Date()).timeIntervalSinceNow.minutes
                 history.date = latest.date ?? Date()
                 // Looks better in Home View Main Chart when target isn't == 0.
-                if Double(latest.target ?? 100) < 6 {
+                if Double(truncating: latest.target ?? 100) < 6 {
                     history.target = 6
-                } else { history.target = Double(latest.target ?? 100) }
+                } else { history.target = Double(truncating: latest.target ?? 100) }
                 duration = history.duration
             }
             profiles.enabled = false

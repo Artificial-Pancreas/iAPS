@@ -5,7 +5,7 @@ import Swinject
 extension CGM {
     struct RootView: BaseView {
         let resolver: Resolver
-        let displayGlucosePreference: DisplayGlucosePreference
+//        let displayGlucosePreference: DisplayGlucosePreference
         @StateObject var state: StateModel
 
         private var daysFormatter: NumberFormatter {
@@ -18,29 +18,28 @@ extension CGM {
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
-            displayGlucosePreference = resolver.resolve(DisplayGlucosePreference.self)!
+//            displayGlucosePreference = resolver.resolve(DisplayGlucosePreference.self)!
         }
 
         var body: some View {
             NavigationView {
                 Form {
-                    if let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
-                       cgmManager.isOnboarded
+                    if let cgmInfo = state.cgmInfo, cgmInfo.isOnboarded, !cgmInfo.pumpIsCgm
                     {
                         Section(header: Text("Active CGM")) {
                             HStack {
                                 Text("Type")
                                 Spacer()
-                                Text(cgmManager.localizedTitle)
+                                Text(cgmInfo.name)
                             }
                         }
                         Section {
-                            if let status = cgmManager.cgmStatusHighlight?.localizedMessage {
+                            if let status = state.cgmStatus?.statusHighlight {
                                 HStack {
                                     Text(status.replacingOccurrences(of: "\n", with: " "))
                                 }
                             }
-                            if !cgmManager.providesBLEHeartbeat {
+                            if !cgmInfo.providesHeartbeat {
                                 HStack {
                                     Text("CGM is not used as heartbeat.")
                                 }
@@ -48,15 +47,15 @@ extension CGM {
                         }
                         Section {
                             Button("CGM Configuration") {
-                                state.setupCGM(cgmManager.pluginIdentifier)
+                                state.showCurrentCgmSettings()
                             }
                         }
-                    } else if let pumpManager = state.deviceManager.cgmManager as? PumpManagerUI {
+                    } else if let cgmInfo = state.cgmInfo, cgmInfo.pumpIsCgm {
                         Section(header: Text("Active CGM")) {
                             HStack {
                                 Text("Pump+CGM")
                                 Spacer()
-                                Text(pumpManager.localizedTitle)
+                                Text(cgmInfo.name)
                             }
                             Button("Stop using the pump as CGM") {
                                 state.removePumpAsCGM()
@@ -67,7 +66,7 @@ extension CGM {
                             ForEach(state.deviceManager.availableCGMManagers, id: \.identifier) { cgm in
                                 VStack(alignment: .leading) {
                                     Button(cgm.localizedTitle) {
-                                        state.setupCGM(cgm.identifier)
+                                        state.setupNewCgm(cgm.identifier)
                                     }
                                 }
                             }
@@ -83,16 +82,15 @@ extension CGM {
                         }
                     }
 
-                    if let cgmManager = state.deviceManager.cgmManager,
-                       cgmManager.isOnboarded
+                    if let cgmInfo = state.cgmInfo, cgmInfo.isOnboarded
                     {
-                        if KnownPlugins.allowCalibrations(for: cgmManager)
+                        if cgmInfo.allowCalibrations
                         {
                             Text("Calibrations").navigationLink(to: .calibrations, from: self)
                         }
 
                         // if CGM/App is selected but sensor life-span is not known...
-                        if KnownPlugins.cgmExpirationByPluginIdentifier(state.deviceManager.cgmManager) == nil
+                        if cgmInfo.sensorDays == nil
                         {
                             Section {
                                 HStack {
@@ -103,7 +101,7 @@ extension CGM {
                             header: { Text("Sensor Life-Span") }
                             footer: {
                                 Text(
-                                    "When using \(cgmManager.localizedTitle) iAPS doesn't know the type of sensor used or the sensor life-span."
+                                    "When using \(cgmInfo.name) iAPS doesn't know the type of sensor used or the sensor life-span."
                                 )
                             }
                         }
@@ -126,16 +124,10 @@ extension CGM {
                     }
                 }
                 .sheet(isPresented: $state.cgmSettingsPresented) {
-                    if let identifier = state.cgmIdentifierToSetUp,
-                       let cgmManager = state.deviceManager.cgmManager as? CGMManagerUI,
-                       cgmManager.pluginIdentifier == identifier
-                    {
-                        CGMSettingsView(
-                            cgmManager: cgmManager,
-                            deviceManager: state.deviceManager,
-                            completionDelegate: state,
-                        )
-                    }
+                    CGMSettingsView(
+                        deviceManager: state.deviceManager,
+                        completionDelegate: state,
+                    )
                 }
             }
         }

@@ -18,53 +18,9 @@ struct Statistics: JSON, Equatable {
     var Carbs_24h: Decimal
     var GlucoseStorage_Days: Decimal
     var Statistics: Stats
-    var id: String
     var dob: Date
     var sex: Int
-
-    init(
-        created_at: Date,
-        iPhone: String,
-        iOS: String,
-        Build_Version: String,
-        Build_Number: String,
-        Branch: String,
-        CopyRightNotice: String,
-        Build_Date: Date,
-        Algorithm: String,
-        AdjustmentFactor: Decimal,
-        Pump: String,
-        CGM: String,
-        insulinType: String,
-        peakActivityTime: Decimal,
-        Carbs_24h: Decimal,
-        GlucoseStorage_Days: Decimal,
-        Statistics: Stats,
-        id: String,
-        dob: Date,
-        sex: Int
-    ) {
-        self.created_at = created_at
-        self.iPhone = iPhone
-        self.iOS = iOS
-        self.Build_Version = Build_Version
-        self.Build_Number = Build_Number
-        self.Branch = Branch
-        self.CopyRightNotice = CopyRightNotice
-        self.Build_Date = Build_Date
-        self.Algorithm = Algorithm
-        self.AdjustmentFactor = AdjustmentFactor
-        self.Pump = Pump
-        self.CGM = CGM
-        self.insulinType = insulinType
-        self.peakActivityTime = peakActivityTime
-        self.Carbs_24h = Carbs_24h
-        self.GlucoseStorage_Days = GlucoseStorage_Days
-        self.Statistics = Statistics
-        self.id = id
-        self.dob = dob
-        self.sex = sex
-    }
+    var id: String?
 
     static func == (lhs: Statistics, rhs: Statistics) -> Bool {
         lhs.created_at == rhs.created_at
@@ -94,7 +50,6 @@ extension Statistics {
         case Carbs_24h
         case GlucoseStorage_Days
         case Statistics
-        case id
         case dob
         case sex
     }

@@ -38,7 +38,9 @@ extension ConfigEditor {
                         trailing: Button("Save", action: state.save)
                     )
                     .sheet(isPresented: $showShareSheet) {
-                        ShareSheet(activityItems: [state.provider.urlFor(file: state.file)!])
+                        if let url = state.urlForFile {
+                            ShareSheet(activityItems: [url])
+                        }
                     }
                     .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                     .navigationTitle(file)

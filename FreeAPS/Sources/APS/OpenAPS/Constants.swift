@@ -56,17 +56,28 @@ extension OpenAPS {
 
     enum Monitor {
         static let pumpHistory = "monitor/pumphistory-24h-zoned.json"
-        static let reservoir = "monitor/reservoir.json"
-        static let battery = "monitor/battery.json"
+
+        // TODO: read from app coordinator
+//        static let reservoir = "monitor/reservoir.json"
+
+        // TODO: read from app coordinator
+//        static let battery = "monitor/battery.json"
+
         static let carbHistory = "monitor/carbhistory.json"
         static let clock = "monitor/clock-zoned.json"
-        static let status = "monitor/status.json"
+
+        // TODO: read from app coordinator (pump status)
+//        static let status = "monitor/status.json"
+
         static let tempBasal = "monitor/temp_basal.json"
         static let meal = "monitor/meal.json"
         static let glucose = "monitor/glucose.json"
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
-        static let podAge = "monitor/pod-age.json"
+
+        // TODO: read from app coordinator
+//        static let podAge = "monitor/pod-age.json"
+
         static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"

@@ -36,27 +36,32 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     }
 
     @Injected() var storage: FileStorage!
-    @Injected() var notificationCenter: NotificationCenter!
+    @Injected() var appCoordinator: AppCoordinator!
+
     private var lifetime = Lifetime()
 
-    private(set) var calibrations: [Calibration] = [] {
-        didSet {
-            storage.save(calibrations, as: OpenAPS.FreeAPS.calibrations)
-        }
-    }
+    private(set) var calibrations: [Calibration] = []
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        calibrations = storage.retrieve(OpenAPS.FreeAPS.calibrations, as: [Calibration].self) ?? []
-        subscribe()
+        Task {
+            await subscribe()
+        }
     }
 
-    private func subscribe() {
-        notificationCenter.publisher(for: .newSensorDetected)
-            .sink { [weak self] _ in
-                self?.removeAllCalibrations()
-            }
-            .store(in: &lifetime)
+    private func subscribe() async {
+        // TODO: this happens asynchronously, there's an (unlikely) possibility of cgm reading arriving before it's read (milliseconds after the app starts?)
+        // need to figure this out
+        calibrations = await storage.retrieve(OpenAPS.FreeAPS.calibrations, as: [Calibration].self) ?? []
+
+        observe(appCoordinator.newSensorDetectedEvents, in: &lifetime) {
+            await self.removeAllCalibrations()
+        }
+    }
+
+    private func save() {
+        let snapshot = calibrations
+        Task { await storage.save(snapshot, as: OpenAPS.FreeAPS.calibrations) }
     }
 
     var slope: Double {
@@ -91,18 +96,22 @@ final class BaseCalibrationService: CalibrationService, Injectable {
 
     func addCalibration(_ calibration: Calibration) {
         calibrations.append(calibration)
+        save()
     }
 
     func removeCalibration(_ calibration: Calibration) {
         calibrations.removeAll { $0 == calibration }
+        save()
     }
 
     func removeAllCalibrations() {
         calibrations.removeAll()
+        save()
     }
 
     func removeLast() {
         calibrations.removeLast()
+        save()
     }
 
     private func average(_ input: [Double]) -> Double {

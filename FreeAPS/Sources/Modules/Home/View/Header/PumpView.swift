@@ -47,8 +47,8 @@ struct PumpView: View {
         // let sim = state.pumpName.contains("Simulator") // Just For Testing
         HStack(spacing: 5) {
             // OmniPods and Medtrum nanos
-            if let pumpManager = state.deviceDataManager.pumpManager,
-               !pumpManager.isOnboarded
+            if let pumpInfo = state.pumpInfo,
+               !pumpInfo.isOnboarded
             {
                 Text("Re-connect pump!").font(.statusFont).foregroundStyle(.red)
                     .offset(y: -4)
@@ -69,8 +69,7 @@ struct PumpView: View {
                                             ClockOffset(mdtPump: false)
                                         }
                                         if (concentration.last?.concentration ?? 1) != 1,
-                                           !state.settingsManager.settings
-                                           .hideInsulinBadge
+                                           state.settings?.hideInsulinBadge != true
                                         {
                                             NonStandardInsulin(
                                                 concentration: concentration.last?.concentration ?? 1,
@@ -88,8 +87,7 @@ struct PumpView: View {
                                             ClockOffset(mdtPump: false)
                                         }
                                         if (concentration.last?.concentration ?? 1) != 1,
-                                           !state.settingsManager.settings
-                                           .hideInsulinBadge
+                                           state.settings?.hideInsulinBadge != true
                                         {
                                             NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .pod)
                                         }
@@ -112,7 +110,7 @@ struct PumpView: View {
                                             ClockOffset(mdtPump: false)
                                         }
                                         if (concentration.last?.concentration ?? 1) != 1,
-                                           !state.settingsManager.settings.hideInsulinBadge
+                                           state.settings?.hideInsulinBadge != true
                                         {
                                             NonStandardInsulin(
                                                 concentration: concentration.last?.concentration ?? 1,
@@ -130,7 +128,7 @@ struct PumpView: View {
                                             ClockOffset(mdtPump: false)
                                         }
                                         if (concentration.last?.concentration ?? 1) != 1,
-                                           !state.settingsManager.settings.hideInsulinBadge
+                                           state.settings?.hideInsulinBadge != true
                                         {
                                             NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .pod)
                                         }
@@ -150,7 +148,7 @@ struct PumpView: View {
                 }
                 // Other pumps
                 else if let reservoir = reservoir {
-                    if (concentration.last?.concentration ?? 1) != 1, !state.settingsManager.settings.hideInsulinBadge {
+                    if (concentration.last?.concentration ?? 1) != 1, state.settings?.hideInsulinBadge != true {
                         NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .other)
                     }
                     let amountFraction = 1.0 - (Double(reservoir + 10) * 1.2 / 200)

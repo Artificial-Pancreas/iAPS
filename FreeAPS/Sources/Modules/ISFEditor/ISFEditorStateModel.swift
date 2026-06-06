@@ -1,13 +1,27 @@
 import SwiftUI
+import Swinject
 
 extension ISFEditor {
     final class StateModel: BaseStateModel<Provider> {
+        @Injected() private var storage: FileStorage!
+        @Injected() private var appCoordinator: AppCoordinator!
+        private let coreDataStorage = CoreDataStorage()
+
         @Published var items: [Item] = []
         private(set) var autosensISF: Decimal?
         private(set) var autosensRatio: Decimal = 0
+
+        @Published var suggestion: Suggestion?
         @Published var autotune: Autotune?
+        @Published var settings: FreeAPSSettings?
+        @Published var preferences: Preferences?
+        @Published var sensitivity: NSDecimalNumber?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
+
+        override init(resolver: Resolver) {
+            super.init(resolver: resolver)
+        }
 
         var rateValues: [Decimal] {
             switch units {
@@ -25,17 +39,25 @@ extension ISFEditor {
 
         private(set) var units: GlucoseUnits = .mmolL
 
-        override func subscribe() {
-            let profile = provider.profile
-            units = profile.units
-            items = profile.sensitivities.map { value in
+        override func subscribe() async {
+            suggestion = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+
+            settings = await settingsManager.settings
+            preferences = await settingsManager.preferences
+
+            fetchSensitivity()
+
+            let isfSchedule = await provider.isfSchedule
+            units = isfSchedule.units
+            items = isfSchedule.sensitivities.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: value.sensitivity) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
-            autotune = provider.autotune
+            autotune = await provider.autotune
 
-            if let newISF = provider.autosense.newisf {
+            let autosens = await provider.autosense
+            if let newISF = autosens.newisf {
                 switch units {
                 case .mgdL:
                     autosensISF = newISF
@@ -44,7 +66,38 @@ extension ISFEditor {
                 }
             }
 
-            autosensRatio = provider.autosense.ratio
+            autosensRatio = autosens.ratio
+
+            observe(appCoordinator.suggestions) { suggestion in
+                await self.suggestionUpdated(suggestion)
+            }
+            observe(appCoordinator.settingsUpdates) { settings in
+                await self.settingsUpdated(settings)
+            }
+            observe(appCoordinator.preferencesUpdates) { preferences in
+                await self.preferencesUpdated(preferences)
+            }
+        }
+
+        private func suggestionUpdated(_ suggestion: Suggestion?) {
+            self.suggestion = suggestion
+            fetchSensitivity()
+        }
+
+        private func settingsUpdated(_ settings: FreeAPSSettings?) {
+            self.settings = settings
+        }
+
+        private func preferencesUpdated(_ preferences: Preferences?) {
+            self.preferences = preferences
+        }
+
+        private func fetchSensitivity() {
+            if let suggestion = coreDataStorage.fetchReason() {
+                sensitivity = suggestion.isf ?? 15
+            } else {
+                sensitivity = nil
+            }
         }
 
         func add() {
@@ -60,35 +113,45 @@ extension ISFEditor {
             items.append(newItem)
         }
 
+        private let formatter = {
+            let formatter = DateFormatter()
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "HH:mm:ss"
+
+            return formatter
+        }()
+
         func save() {
-            let sensitivities = items.map { item -> InsulinSensitivityEntry in
-                let fotmatter = DateFormatter()
-                fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
-                fotmatter.dateFormat = "HH:mm:ss"
-                let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
-                let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = self.rateValues[item.rateIndex]
-                return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: fotmatter.string(from: date))
+            Task {
+                let settings = await settingsManager.settings
+
+                let sensitivities = items.map { item -> InsulinSensitivityEntry in
+                    let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
+                    let minutes = Int(date.timeIntervalSince1970 / 60)
+                    let rate = self.rateValues[item.rateIndex]
+                    return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: formatter.string(from: date))
+                }
+                let profile = InsulinSensitivities(
+                    units: units,
+                    userPrefferedUnits: settings.units,
+                    sensitivities: sensitivities
+                )
+                await provider.saveProfile(profile)
             }
-            let profile = InsulinSensitivities(
-                units: units,
-                userPrefferedUnits: settingsManager.settings.units,
-                sensitivities: sensitivities
-            )
-            provider.saveProfile(profile)
         }
 
         func validate() {
+            let uniq = Array(Set(items))
+            let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
+            sorted.first?.timeIndex = 0
             DispatchQueue.main.async {
-                let uniq = Array(Set(self.items))
-                let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
-                sorted.first?.timeIndex = 0
                 self.items = sorted
-
-                if self.items.isEmpty {
-                    self.units = self.settingsManager.settings.units
-                }
             }
+
+            // TODO: what is this for?
+//            if self.items.isEmpty {
+//                self.units = self.settingsManager.settings.units
+//            }
         }
     }
 }

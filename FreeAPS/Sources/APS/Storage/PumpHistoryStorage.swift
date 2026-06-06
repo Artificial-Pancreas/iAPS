@@ -3,76 +3,70 @@ import LoopKit
 import SwiftDate
 import Swinject
 
-protocol PumpHistoryObserver {
-    func pumpHistoryDidUpdate(_ events: [PumpHistoryEvent])
+extension NewPumpEvent: @retroactive @unchecked Sendable {}
+
+protocol PumpHistoryStorage: Sendable {
+    func storePumpEvents(_ events: [NewPumpEvent]) async
+    func storeEvents(_ events: [PumpHistoryEvent]) async
+    func storeJournalCarbs(_ carbs: Int) async
+    func recent() async -> [PumpHistoryEvent]
+    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment]
+    func saveCancelTempEvents() async
+    func deleteInsulin(at date: Date) async
 }
 
-protocol PumpHistoryStorage {
-    func storePumpEvents(_ events: [NewPumpEvent])
-    func storeEvents(_ events: [PumpHistoryEvent])
-    func storeJournalCarbs(_ carbs: Int)
-    func recent() -> [PumpHistoryEvent]
-    func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
-    func saveCancelTempEvents()
-    func deleteInsulin(at date: Date)
-}
-
-final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
-    private let processQueue = DispatchQueue(label: "BasePumpHistoryStorage.processQueue")
+actor BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     @Injected() private var storage: FileStorage!
-    @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var appCoordinator: AppCoordinator!
+
+    private var lifetime = Lifetime()
+
+    private let coreDataStorage = CoreDataStorage()
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        Task {
+            await subscribe()
+        }
+    }
+
+    private func subscribe() async {
+        observe(appCoordinator.pumpEvents, in: &lifetime) { events in
+            await self.storePumpEvents(events)
+        }
     }
 
     var concentration: (concentration: Double, increment: Double) {
-        CoreDataStorage().insulinConcentration()
+        coreDataStorage.insulinConcentration()
     }
 
-    func storePumpEvents(_ events: [NewPumpEvent]) {
+    func storePumpEvents(_ events: [NewPumpEvent]) async {
         guard !events.isEmpty else { return }
 
         let insulinConcentration = concentration
-        processQueue.async {
-            let storedEvents = self.recent()
-            let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
-                let id = event.raw.md5String
-                switch event.type {
-                case .bolus:
-                    guard let dose = event.dose else { return [] }
-                    var amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
+        let storedEvents = await self.recent()
+        let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
+            let id = event.raw.md5String
+            switch event.type {
+            case .bolus:
+                guard let dose = event.dose else { return [] }
+                var amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
 
-                    if insulinConcentration.concentration != 1, var needingAdjustment = amount {
-                        needingAdjustment *= Decimal(insulinConcentration.concentration)
-                        amount = needingAdjustment
-                            .roundBolusIncrements(increment: insulinConcentration.concentration * 0.05)
-                    }
+                if insulinConcentration.concentration != 1, var needingAdjustment = amount {
+                    needingAdjustment *= Decimal(insulinConcentration.concentration)
+                    amount = needingAdjustment
+                        .roundBolusIncrements(increment: insulinConcentration.concentration * 0.05)
+                }
 
-                    let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
-                    if let duplicatedEvent = storedEvents
-                        .first(where: { x in
-                            Int(x.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970) && x.type == .bolus })
-                    {
-                        return [PumpHistoryEvent(
-                            id: duplicatedEvent.id,
-                            type: .bolus,
-                            timestamp: duplicatedEvent.timestamp,
-                            amount: amount,
-                            duration: minutes,
-                            durationMin: nil,
-                            rate: nil,
-                            temp: nil,
-                            carbInput: nil,
-                            isSMB: dose.automatic,
-                            isExternal: dose.manuallyEntered
-                        )]
-                    }
-
+                let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
+                if let duplicatedEvent = storedEvents
+                    .first(where: { x in
+                        Int(x.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970) && x.type == .bolus })
+                {
                     return [PumpHistoryEvent(
-                        id: id,
+                        id: duplicatedEvent.id,
                         type: .bolus,
-                        timestamp: event.date,
+                        timestamp: duplicatedEvent.timestamp,
                         amount: amount,
                         duration: minutes,
                         durationMin: nil,
@@ -82,172 +76,178 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         isSMB: dose.automatic,
                         isExternal: dose.manuallyEntered
                     )]
-                case .tempBasal:
-                    guard let dose = event.dose else { return [] }
-                    var rate = Decimal(dose.unitsPerHour)
-
-                    // Eventual adjustment for concentration
-                    if insulinConcentration.concentration != 1, rate >= 0.05 {
-                        rate *= Decimal(insulinConcentration.concentration)
-                        rate = rate.roundBolusIncrements(increment: insulinConcentration.concentration * 0.05)
-                    }
-
-                    let minutes = (dose.endDate - dose.startDate).timeInterval / 60
-                    let delivered = dose.deliveredUnits
-                    let date = event.date
-
-                    let isCancel = delivered != nil //! event.isMutable && delivered != nil
-                    guard !isCancel else { return [] }
-
-                    return [
-                        PumpHistoryEvent(
-                            id: id,
-                            type: .tempBasalDuration,
-                            timestamp: date,
-                            amount: nil,
-                            duration: nil,
-                            durationMin: Int(round(minutes)),
-                            rate: nil,
-                            temp: nil,
-                            carbInput: nil
-                        ),
-                        PumpHistoryEvent(
-                            id: "_" + id,
-                            type: .tempBasal,
-                            timestamp: date,
-                            amount: nil,
-                            duration: nil,
-                            durationMin: nil,
-                            rate: rate,
-                            temp: .absolute,
-                            carbInput: nil
-                        )
-                    ]
-                case .suspend:
-                    return [
-                        PumpHistoryEvent(
-                            id: id,
-                            type: .pumpSuspend,
-                            timestamp: event.date,
-                            amount: nil,
-                            duration: nil,
-                            durationMin: nil,
-                            rate: nil,
-                            temp: nil,
-                            carbInput: nil
-                        )
-                    ]
-                case .resume:
-                    return [
-                        PumpHistoryEvent(
-                            id: id,
-                            type: .pumpResume,
-                            timestamp: event.date,
-                            amount: nil,
-                            duration: nil,
-                            durationMin: nil,
-                            rate: nil,
-                            temp: nil,
-                            carbInput: nil
-                        )
-                    ]
-                case .rewind:
-                    return [
-                        PumpHistoryEvent(
-                            id: id,
-                            type: .rewind,
-                            timestamp: event.date,
-                            amount: nil,
-                            duration: nil,
-                            durationMin: nil,
-                            rate: nil,
-                            temp: nil,
-                            carbInput: nil
-                        )
-                    ]
-                case .prime:
-                    return [
-                        PumpHistoryEvent(
-                            id: id,
-                            type: .prime,
-                            timestamp: event.date,
-                            amount: nil,
-                            duration: nil,
-                            durationMin: nil,
-                            rate: nil,
-                            temp: nil,
-                            carbInput: nil
-                        )
-                    ]
-                case .alarm:
-                    return [
-                        PumpHistoryEvent(
-                            id: id,
-                            type: .pumpAlarm,
-                            timestamp: event.date,
-                            note: event.title
-                        )
-                    ]
-                default:
-                    return []
                 }
-            }
 
-            self.storeEvents(eventsToStore)
-        }
-    }
-
-    func storeJournalCarbs(_ carbs: Int) {
-        processQueue.async {
-            let eventsToStore = [
-                PumpHistoryEvent(
-                    id: UUID().uuidString,
-                    type: .journalCarbs,
-                    timestamp: Date(),
-                    amount: nil,
-                    duration: nil,
+                return [PumpHistoryEvent(
+                    id: id,
+                    type: .bolus,
+                    timestamp: event.date,
+                    amount: amount,
+                    duration: minutes,
                     durationMin: nil,
                     rate: nil,
                     temp: nil,
-                    carbInput: carbs
-                )
-            ]
-            self.storeEvents(eventsToStore)
+                    carbInput: nil,
+                    isSMB: dose.automatic,
+                    isExternal: dose.manuallyEntered
+                )]
+            case .tempBasal:
+                guard let dose = event.dose else { return [] }
+                var rate = Decimal(dose.unitsPerHour)
+
+                // Eventual adjustment for concentration
+                if insulinConcentration.concentration != 1, rate >= 0.05 {
+                    rate *= Decimal(insulinConcentration.concentration)
+                    rate = rate.roundBolusIncrements(increment: insulinConcentration.concentration * 0.05)
+                }
+
+                let minutes = (dose.endDate - dose.startDate).timeInterval / 60
+                let delivered = dose.deliveredUnits
+                let date = event.date
+
+                let isCancel = delivered != nil //! event.isMutable && delivered != nil
+                guard !isCancel else { return [] }
+
+                return [
+                    PumpHistoryEvent(
+                        id: id,
+                        type: .tempBasalDuration,
+                        timestamp: date,
+                        amount: nil,
+                        duration: nil,
+                        durationMin: Int(round(minutes)),
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil
+                    ),
+                    PumpHistoryEvent(
+                        id: "_" + id,
+                        type: .tempBasal,
+                        timestamp: date,
+                        amount: nil,
+                        duration: nil,
+                        durationMin: nil,
+                        rate: rate,
+                        temp: .absolute,
+                        carbInput: nil
+                    )
+                ]
+            case .suspend:
+                return [
+                    PumpHistoryEvent(
+                        id: id,
+                        type: .pumpSuspend,
+                        timestamp: event.date,
+                        amount: nil,
+                        duration: nil,
+                        durationMin: nil,
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil
+                    )
+                ]
+            case .resume:
+                return [
+                    PumpHistoryEvent(
+                        id: id,
+                        type: .pumpResume,
+                        timestamp: event.date,
+                        amount: nil,
+                        duration: nil,
+                        durationMin: nil,
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil
+                    )
+                ]
+            case .rewind:
+                return [
+                    PumpHistoryEvent(
+                        id: id,
+                        type: .rewind,
+                        timestamp: event.date,
+                        amount: nil,
+                        duration: nil,
+                        durationMin: nil,
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil
+                    )
+                ]
+            case .prime:
+                return [
+                    PumpHistoryEvent(
+                        id: id,
+                        type: .prime,
+                        timestamp: event.date,
+                        amount: nil,
+                        duration: nil,
+                        durationMin: nil,
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil
+                    )
+                ]
+            case .alarm:
+                return [
+                    PumpHistoryEvent(
+                        id: id,
+                        type: .pumpAlarm,
+                        timestamp: event.date,
+                        note: event.title
+                    )
+                ]
+            default:
+                return []
+            }
         }
+
+        await self.storeEvents(eventsToStore)
     }
 
-    func storeEvents(_ events: [PumpHistoryEvent]) {
-        processQueue.async {
-            let file = OpenAPS.Monitor.pumpHistory
-            var uniqEvents: [PumpHistoryEvent] = []
-            self.storage.transaction { storage in
-                storage.append(events, to: file, uniqBy: \.id)
-                uniqEvents = storage.retrieve(file, as: [PumpHistoryEvent].self)?
-                    .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
-                    .sorted { $0.timestamp > $1.timestamp } ?? []
-                storage.save(Array(uniqEvents), as: file)
-            }
-            self.broadcaster.notify(PumpHistoryObserver.self, on: self.processQueue) {
-                $0.pumpHistoryDidUpdate(uniqEvents)
-            }
+    func storeJournalCarbs(_ carbs: Int) async {
+        let eventsToStore = [
+            PumpHistoryEvent(
+                id: UUID().uuidString,
+                type: .journalCarbs,
+                timestamp: Date(),
+                amount: nil,
+                duration: nil,
+                durationMin: nil,
+                rate: nil,
+                temp: nil,
+                carbInput: carbs
+            )
+        ]
+        await self.storeEvents(eventsToStore)
+    }
+
+    func storeEvents(_ events: [PumpHistoryEvent]) async {
+        let file = OpenAPS.Monitor.pumpHistory
+        let uniqEvents: [PumpHistoryEvent] = await self.storage.appendAndModify(events, to: file, uniqBy: \.id) {
+            $0
+                .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
+                .sorted { $0.timestamp > $1.timestamp }
         }
+        self.appCoordinator.pumpHistoryUpdates.send(uniqEvents)
     }
 
-    func recent() -> [PumpHistoryEvent] {
-        storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)?.reversed() ?? []
+    func recent() async -> [PumpHistoryEvent] {
+        await storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)?.reversed() ?? []
     }
 
-    func deleteInsulin(at date: Date) {
-        processQueue.sync {
-            var allValues = storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) ?? []
-            guard let entryIndex = allValues.firstIndex(where: { $0.timestamp == date }) else {
-                return
+    func deleteInsulin(at date: Date) async {
+        let (didModify, updatedValues) = await storage
+            .maybeModify(file: OpenAPS.Monitor.pumpHistory, as: PumpHistoryEvent.self) { inStorage in
+                var allValues = inStorage
+                guard let entryIndex = allValues.firstIndex(where: { $0.timestamp == date }) else {
+                    return nil // do not modify
+                }
+                allValues.remove(at: entryIndex)
+                return allValues
             }
-            allValues.remove(at: entryIndex)
-            storage.save(allValues, as: OpenAPS.Monitor.pumpHistory)
-            broadcaster.notify(PumpHistoryObserver.self, on: processQueue) {
-                $0.pumpHistoryDidUpdate(allValues)
-            }
+        if didModify {
+            self.appCoordinator.pumpHistoryUpdates.send(updatedValues)
         }
     }
 
@@ -261,8 +261,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         return event.type
     }
 
-    func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
-        let events = recent()
+    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment] {
+        let events = await recent()
         guard !events.isEmpty else { return [] }
 
         let temps: [NigtscoutTreatment] = events.reduce([]) { result, event in
@@ -407,14 +407,14 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             }
         }
 
-        let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
+        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
 
         let treatments = Array(Set([bolusesAndCarbs, temps, misc].flatMap { $0 }).subtracting(Set(uploaded)))
 
         return treatments.sorted { $0.createdAt! > $1.createdAt! }
     }
 
-    func saveCancelTempEvents() {
+    func saveCancelTempEvents() async {
         let basalID = UUID().uuidString
         let date = Date()
 
@@ -443,6 +443,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             )
         ]
 
-        storeEvents(events)
+        await storeEvents(events)
     }
 }

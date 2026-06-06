@@ -1,11 +1,6 @@
-import Foundation
-
-import CGMBLEKit
 import Combine
-import G7SensorKit
-import LoopKitUI
+import Foundation
 import SwiftUI
-import UIKit
 
 extension CalendarShare {
     final class StateModel: BaseStateModel<Provider> {
@@ -18,36 +13,36 @@ extension CalendarShare {
         @Published var currentCalendarID: String = ""
         @Persisted(key: "CalendarManager.currentCalendarID") var storedCalendarID: String? = nil
 
-        override func subscribe() {
+        override func subscribe() async {
             currentCalendarID = storedCalendarID ?? ""
-            calendarIDs = calendarManager.calendarIDs()
+            calendarIDs = await calendarManager.calendarIDs()
 
-            subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
-            subscribeSetting(\.displayCalendarIOBandCOB, on: $displayCalendarIOBandCOB) { displayCalendarIOBandCOB = $0 }
-            subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { displayCalendarEmojis = $0 }
+            subscribeSetting(
+                \.useCalendar,
+                on: $createCalendarEvents,
+                initial: { self.createCalendarEvents = $0 },
+                didSet: { [weak self] enabled in
+                    Task { [weak self] in
+                        guard let self else { return }
+                        guard enabled, await self.calendarManager.requestAccessIfNeeded() else {
+                            self.calendarIDs = []
+                            return
+                        }
+                        self.calendarIDs = await self.calendarManager.calendarIDs()
+                    }
+                }
+            )
 
-            $createCalendarEvents
-                .removeDuplicates()
-                .flatMap { [weak self] ok -> AnyPublisher<Bool, Never> in
-                    guard ok, let self = self else { return Just(false).eraseToAnyPublisher() }
-                    return self.calendarManager.requestAccessIfNeeded()
-                }
-                .map { [weak self] ok -> [String] in
-                    guard ok, let self = self else { return [] }
-                    return self.calendarManager.calendarIDs()
-                }
-                .receive(on: DispatchQueue.main)
-                .weakAssign(to: \.calendarIDs, on: self)
-                .store(in: &lifetime)
+            subscribeSetting(\.displayCalendarIOBandCOB, on: $displayCalendarIOBandCOB) { self.displayCalendarIOBandCOB = $0 }
+            subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { self.displayCalendarEmojis = $0 }
 
             $currentCalendarID
                 .removeDuplicates()
                 .sink { [weak self] id in
-                    guard id.isNotEmpty else {
-                        self?.calendarManager.currentCalendarID = nil
-                        return
+                    Task { [weak self] in
+                        guard let self else { return }
+                        await self.calendarManager.setCurrentCalendarID(id.isNotEmpty ? id : nil)
                     }
-                    self?.calendarManager.currentCalendarID = id
                 }
                 .store(in: &lifetime)
         }

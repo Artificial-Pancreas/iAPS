@@ -8,7 +8,7 @@ struct ApplyTempPresetIntent: AppIntent {
     // Description of the action in the Shortcuts app
     static let description = IntentDescription("Allow to apply or cancel a specific temporary target preset.")
 
-    @Parameter(title: "Preset") var preset: tempPreset?
+    @Parameter(title: "Preset") var preset: TempPreset?
 
     @Parameter(
         title: "Confirm Before applying",
@@ -29,43 +29,40 @@ struct ApplyTempPresetIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        do {
-            let intent = TempPresetsIntentRequest()
-            let presetToApply: tempPreset
-            if let preset = preset {
-                presetToApply = preset
-            } else {
-                presetToApply = try await $preset.requestDisambiguation(
-                    among: intent.fetchAll(),
-                    dialog: "Choose a temp preset."
-                )
-            }
+        let intent = TempPresetsIntentRequest()
+        let presetToApply: TempPreset
+        if let preset = preset {
+            presetToApply = preset
+        } else {
+            presetToApply = try await $preset.requestDisambiguation(
+                among: intent.fetchAll(),
+                dialog: "Choose a temp preset."
+            )
+        }
 
-            let displayName: String = presetToApply.name
-            if confirmBeforeApplying {
-                try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to apply the temp target \(displayName) ?")
-                )
-            }
+        let displayName: String = presetToApply.name
+        if confirmBeforeApplying {
+            // deprecated, but the fix is iOS 18+ only
+            try await requestConfirmation(
+                result: .result(dialog: "Are you sure you want to apply the temp target \(displayName) ?")
+            )
+        }
 
-            if presetToApply.duration == 0 {
-                try intent.cancelTempTarget()
-                let displayDetail: String =
-                    "Temp Target Canceled"
-                return .result(
-                    dialog: IntentDialog(stringLiteral: displayDetail)
-                )
-            } else {
-                let tempTarget = try intent.findTempTarget(presetToApply)
-                let finalTempTargetApply = try intent.enactTempTarget(tempTarget)
-                let displayDetail: String =
-                    "the target \(finalTempTargetApply.displayName) is applying during \(finalTempTargetApply.duration) min"
-                return .result(
-                    dialog: IntentDialog(stringLiteral: displayDetail)
-                )
-            }
-        } catch {
-            throw error
+        if presetToApply.duration == 0 {
+            try await intent.cancelTempTarget()
+            let displayDetail: String =
+                "Temp Target Canceled"
+            return .result(
+                dialog: IntentDialog(stringLiteral: displayDetail)
+            )
+        } else {
+            let tempTarget = try await intent.findTempTarget(presetToApply)
+            let finalTempTargetApply = try await intent.enactTempTarget(tempTarget)
+            let displayDetail: String =
+                "the target \(finalTempTargetApply.displayName) is applying during \(finalTempTargetApply.duration) min"
+            return .result(
+                dialog: IntentDialog(stringLiteral: displayDetail)
+            )
         }
     }
 }

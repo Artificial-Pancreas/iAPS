@@ -2,8 +2,7 @@ import SwiftUI
 
 extension Dynamic {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var settings: SettingsManager!
-        @Injected() var storage: FileStorage!
+        private let coreDataStorage = CoreDataStorage()
 
         @Published var useNewFormula: Bool = false
         @Published var enableDynamicCR: Bool = false
@@ -14,58 +13,51 @@ extension Dynamic {
         @Published var averages: (isf: Double, cr: Double, days: Double)?
         @Published var aisf = false
 
-        var preferences: Preferences {
-            settingsManager.preferences
-        }
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            let preferences = await settingsManager.preferences
 
-        override func subscribe() {
-            unit = settingsManager.settings.units
-            useNewFormula = settings.preferences.useNewFormula
-            enableDynamicCR = settings.preferences.enableDynamicCR
-            sigmoid = settings.preferences.sigmoid
-            adjustmentFactor = settings.preferences.adjustmentFactor
-            weightPercentage = settings.preferences.weightPercentage
+            unit = settings.units
+            useNewFormula = preferences.useNewFormula
+            enableDynamicCR = preferences.enableDynamicCR
+            sigmoid = preferences.sigmoid
+            adjustmentFactor = preferences.adjustmentFactor
+            weightPercentage = preferences.weightPercentage
             averages = thirtyDaysAverages()
-            aisf = settingsManager.settings.autoisf
-        }
-
-        var unChanged: Bool {
-            preferences.enableDynamicCR == enableDynamicCR &&
-                preferences.adjustmentFactor == adjustmentFactor &&
-                preferences.sigmoid == sigmoid &&
-                preferences.useNewFormula == useNewFormula &&
-                preferences.weightPercentage == weightPercentage
+            aisf = settings.autoisf
         }
 
         func saveIfChanged() {
-            if !unChanged {
-                var newSettings = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self) ?? Preferences()
+            Task {
+                let preferences = await settingsManager.preferences
+                let unChanged = preferences.enableDynamicCR == enableDynamicCR &&
+                    preferences.adjustmentFactor == adjustmentFactor &&
+                    preferences.sigmoid == sigmoid &&
+                    preferences.useNewFormula == useNewFormula &&
+                    preferences.weightPercentage == weightPercentage
+
+                guard !unChanged else { return }
+                var newSettings = preferences
                 newSettings.enableDynamicCR = enableDynamicCR
                 newSettings.adjustmentFactor = adjustmentFactor
                 newSettings.sigmoid = sigmoid
                 newSettings.useNewFormula = useNewFormula
                 newSettings.weightPercentage = weightPercentage
                 newSettings.timestamp = Date()
-                storage.save(newSettings, as: OpenAPS.Settings.preferences)
+                await settingsManager.updatePreferences(newSettings)
             }
         }
 
-        var reasons: [Reasons] {
-            CoreDataStorage().fetchReasons(interval: DateFilter.month.startDate)
-        }
-
-        private var sameUnit: Bool {
-            unit == .mmolL
-        }
-
         private func thirtyDaysAverages() -> (isf: Double, cr: Double, days: Double)? {
-            let history = reasons.filter({ $0.mmol == sameUnit }).sorted(by: { $0.date ?? Date() > $1.date ?? Date() })
+            let reasons = coreDataStorage.fetchReasons(interval: DateFilter.month.startDate)
+            let currentUnitIsMmol = unit == .mmolL
+            let history = reasons.filter({ $0.mmol == currentUnitIsMmol }).sorted(by: { $0.date ?? Date() > $1.date ?? Date() })
             let days = -1 * (history.last?.date ?? .now).timeIntervalSince(history.first?.date ?? .now) / 8.64E4
             // Avoid displaying "0 days"
-            guard !history.isEmpty, days >= 0.06 else { return nil }
-
             let isf = history.compactMap(\.isf)
             let cr = history.compactMap(\.cr)
+            guard !isf.isEmpty, !cr.isEmpty, days >= 0.06 else { return nil }
+
             let totalISF = isf.reduce(0, { x, y in
                 x + (y as Decimal)
             })

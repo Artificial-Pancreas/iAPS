@@ -1,14 +1,9 @@
 import Foundation
 import Swinject
 
-protocol IntentsRequestType {
-    var intentRequest: BaseIntentsRequest { get set }
-}
-
 class BaseIntentsRequest: NSObject, Injectable {
     @Injected() var tempTargetsStorage: TempTargetsStorage!
     @Injected() var settingsManager: SettingsManager!
-    @Injected() var storage: TempTargetsStorage!
     @Injected() var fileStorage: FileStorage!
     @Injected() var carbsStorage: CarbsStorage!
     @Injected() var glucoseStorage: GlucoseStorage!

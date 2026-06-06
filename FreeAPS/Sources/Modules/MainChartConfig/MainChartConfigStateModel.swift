@@ -26,46 +26,43 @@ extension MainChartConfig {
         @Published var hidePredictions: Bool = false
         @Published var useCarbBars: Bool = false
 
-        var units: GlucoseUnits = .mmolL
+        @Published var units: GlucoseUnits = .mmolL
 
-        override func subscribe() {
-            let units = settingsManager.settings.units
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            let units = settings.units
             self.units = units
 
-            subscribeSetting(\.xGridLines, on: $xGridLines) { xGridLines = $0 }
-            subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
-            subscribeSetting(\.yGridLabels, on: $yGridLabels) { yGridLabels = $0 }
-            subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
-            subscribeSetting(\.inRangeAreaFill, on: $inRangeAreaFill) { inRangeAreaFill = $0 }
-            subscribeSetting(\.secondaryChartBackdrop, on: $secondaryChartBackdrop) { secondaryChartBackdrop = $0 }
-            subscribeSetting(\.insulinActivityGridLines, on: $insulinActivityGridLines) { insulinActivityGridLines = $0 }
-            subscribeSetting(\.insulinActivityLabels, on: $insulinActivityLabels) { insulinActivityLabels = $0 }
-            subscribeSetting(\.chartGlucosePeaks, on: $chartGlucosePeaks) { chartGlucosePeaks = $0 }
-            subscribeSetting(\.showPredictionsLegend, on: $showPredictionsLegend) { showPredictionsLegend = $0 }
-            subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { skipGlucoseChart = $0 }
-            subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { alwaysUseColors = $0 }
-            subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
-            subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
-            subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { hideInsulinBadge = $0 }
-            subscribeSetting(\.fpus, on: $fpus) { fpus = $0 }
-            subscribeSetting(\.fpuAmounts, on: $fpuAmounts) { fpuAmounts = $0 }
-            subscribeSetting(\.showInsulinActivity, on: $showInsulinActivity) { showInsulinActivity = $0 }
-            subscribeSetting(\.showCobChart, on: $showCobChart) { showCobChart = $0 }
-            subscribeSetting(\.hidePredictions, on: $hidePredictions) { hidePredictions = $0 }
-            subscribeSetting(\.useCarbBars, on: $useCarbBars) { useCarbBars = $0 }
+            subscribeSetting(\.xGridLines, on: $xGridLines) { self.xGridLines = $0 }
+            subscribeSetting(\.yGridLines, on: $yGridLines) { self.yGridLines = $0 }
+            subscribeSetting(\.yGridLabels, on: $yGridLabels) { self.yGridLabels = $0 }
+            subscribeSetting(\.rulerMarks, on: $rulerMarks) { self.rulerMarks = $0 }
+            subscribeSetting(\.inRangeAreaFill, on: $inRangeAreaFill) { self.inRangeAreaFill = $0 }
+            subscribeSetting(\.secondaryChartBackdrop, on: $secondaryChartBackdrop) { self.secondaryChartBackdrop = $0 }
+            subscribeSetting(\.insulinActivityGridLines, on: $insulinActivityGridLines) { self.insulinActivityGridLines = $0 }
+            subscribeSetting(\.insulinActivityLabels, on: $insulinActivityLabels) { self.insulinActivityLabels = $0 }
+            subscribeSetting(\.chartGlucosePeaks, on: $chartGlucosePeaks) { self.chartGlucosePeaks = $0 }
+            subscribeSetting(\.showPredictionsLegend, on: $showPredictionsLegend) { self.showPredictionsLegend = $0 }
+            subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { self.skipGlucoseChart = $0 }
+            subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { self.alwaysUseColors = $0 }
+            subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { self.useFPUconversion = $0 }
+            subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { self.useInsulinBars = $0 }
+            subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { self.hideInsulinBadge = $0 }
+            subscribeSetting(\.fpus, on: $fpus) { self.fpus = $0 }
+            subscribeSetting(\.fpuAmounts, on: $fpuAmounts) { self.fpuAmounts = $0 }
+            subscribeSetting(\.showInsulinActivity, on: $showInsulinActivity) { self.showInsulinActivity = $0 }
+            subscribeSetting(\.showCobChart, on: $showCobChart) { self.showCobChart = $0 }
+            subscribeSetting(\.hidePredictions, on: $hidePredictions) { self.hidePredictions = $0 }
+            subscribeSetting(\.useCarbBars, on: $useCarbBars) { self.useCarbBars = $0 }
 
-            subscribeSetting(\.hours, on: $hours.map(Int.init), initial: {
+            subscribeSetting(\.hours, on: $hours.map(Int.init)) {
                 let value = max(min($0, 24), 2)
-                hours = Decimal(value)
-            }, map: {
-                $0
-            })
+                self.hours = Decimal(value)
+            }
 
-            subscribeSetting(\.minimumSMB, on: $minimumSMB, initial: {
-                minimumSMB = max(min($0, 10), 0)
-            }, map: {
-                $0
-            })
+            subscribeSetting(\.minimumSMB, on: $minimumSMB) {
+                self.minimumSMB = max(min($0, 10), 0)
+            }
         }
     }
 }

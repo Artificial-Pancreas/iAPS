@@ -28,7 +28,7 @@ extension ISFEditor {
 
         var body: some View {
             Form {
-                if let autotune = state.autotune, !state.settingsManager.settings.onlyAutotuneBasals {
+                if let autotune = state.autotune, !(state.settings?.onlyAutotuneBasals ?? false) {
                     Section(header: Text("Autotune")) {
                         HStack {
                             Text("Calculated Sensitivity")
@@ -44,11 +44,10 @@ extension ISFEditor {
                 }
                 if let newISF = state.autosensISF {
                     Section(
-                        header: !state.settingsManager.preferences
-                            .useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
+                        header: !(state.preferences?.useNewFormula ?? false) ? Text("Autosens") : Text("Dynamic Sensitivity")
                     ) {
-                        let ratio = state.provider.suggestion?.sensitivityRatio ?? 0
-                        let isf = state.provider.sensitivity
+                        let ratio = state.suggestion?.sensitivityRatio ?? 0
+                        let isf = state.sensitivity
                         HStack {
                             Text("Sensitivity Ratio")
                             Spacer()

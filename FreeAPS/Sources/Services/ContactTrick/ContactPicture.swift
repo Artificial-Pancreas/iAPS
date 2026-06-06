@@ -1,13 +1,9 @@
-import Foundation
 import SwiftUI
 
-struct ContactPicture: View {
+struct ContactPicture {
     private enum Config {
         static let lag: TimeInterval = 30
     }
-
-    @Binding var contact: ContactTrickEntry
-    @Binding var state: ContactTrickState
 
     private static let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -591,22 +587,13 @@ struct ContactPicture: View {
         }
         let delta = Date().timeIntervalSince(lastLoopDate) - Config.lag
 
-        if delta <= 5.minutes.timeInterval {
+        if delta <= 5 * 60 {
             return .loopGreen
-        } else if delta <= 10.minutes.timeInterval {
+        } else if delta <= 10 * 60 {
             return .loopYellow
         } else {
             return .loopRed
         }
-    }
-
-    var uiImage: UIImage {
-        ContactPicture.getImage(contact: contact, state: state)
-    }
-
-    var body: some View {
-        Image(uiImage: uiImage)
-            .frame(width: 256, height: 256)
     }
 }
 
@@ -640,7 +627,8 @@ struct ContactPicturePreview: View {
 
     var body: some View {
         ZStack {
-            ContactPicture(contact: $contact, state: $state)
+            Image(uiImage: ContactPicture.getImage(contact: contact, state: state))
+                .frame(width: 256, height: 256)
             Circle()
                 .stroke(lineWidth: 20)
                 .foregroundColor(.white)

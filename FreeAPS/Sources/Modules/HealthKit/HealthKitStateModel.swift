@@ -8,30 +8,34 @@ extension AppleHealthKit {
         @Published var useAppleHealth = false
         @Published var needShowInformationTextForSetPermissions = false
 
-        override func subscribe() {
-            useAppleHealth = settingsManager.settings.useAppleHealth
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            useAppleHealth = settings.useAppleHealth
 
-            needShowInformationTextForSetPermissions = healthKitManager.areAllowAllPermissions
+            needShowInformationTextForSetPermissions = await healthKitManager.areAllowAllPermissions
 
             subscribeSetting(\.useAppleHealth, on: $useAppleHealth) {
-                useAppleHealth = $0
+                self.useAppleHealth = $0
             } didSet: { [weak self] value in
-                guard let self = self else { return }
+                guard let self else { return }
 
                 guard value else {
                     self.needShowInformationTextForSetPermissions = false
                     return
                 }
 
-                self.healthKitManager.requestPermission { ok, error in
-                    self.needShowInformationTextForSetPermissions = !self.healthKitManager.checkAvailabilitySaveBG()
-
-                    guard ok, error == nil else {
+                Task {
+                    do {
+                        let granted = try await self.healthKitManager.requestPermission()
+                        if granted {
+                            debug(.service, "Permission granted for HealthKitManager")
+                        } else {
+                            debug(.service, "Permission not granted for HealthKitManager")
+                        }
+                    } catch {
                         warning(.service, "Permission not granted for HealthKitManager", error: error)
-                        return
                     }
-
-                    debug(.service, "Permission  granted HealthKitManager")
+                    self.needShowInformationTextForSetPermissions = await !self.healthKitManager.checkAvailabilitySaveBG()
                 }
             }
         }

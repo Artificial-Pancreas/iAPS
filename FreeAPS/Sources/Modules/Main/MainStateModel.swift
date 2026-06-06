@@ -5,7 +5,9 @@ import Swinject
 
 extension Main {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var broadcaster: Broadcaster!
+        @Injected() private var deviceManager: DeviceDataManager!
+        @Injected() private var appCoordinator: AppCoordinator!
+
         private(set) var modal: Modal?
         @Published var isModalPresented = false
         @Published var isSecondaryModalPresented = false
@@ -13,8 +15,16 @@ extension Main {
         @Published var lightMode = LightMode.auto
         @Published var shouldPreventModalDismiss = false
 
-        override func subscribe() {
-            lightMode = settingsManager.settings.lightMode
+        private let resolver: Resolver
+
+        override init(resolver: Resolver) {
+            self.resolver = resolver
+            super.init(resolver: resolver)
+        }
+
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            lightMode = settings.lightMode
 
             router.mainModalScreen
                 .map { $0?.modal(resolver: self.resolver) }
@@ -73,11 +83,10 @@ extension Main {
                         view.buttonTapHandler = { _ in
                             SwiftMessages.hide()
                             // display the pump configuration immediatly
-                            if let pump = self.provider.deviceManager.pumpManager
+                            if self.appCoordinator.pumpInfo.value != nil
                             {
                                 let view = PumpConfig.PumpSettingsView(
-                                    pumpManager: pump,
-                                    deviceManager: self.provider.deviceManager,
+                                    deviceManager: self.deviceManager,
                                     completionDelegate: self
                                 ).asAny()
                                 self.router.mainSecondaryModalView.send(view)
@@ -108,7 +117,13 @@ extension Main {
                 }
                 .store(in: &lifetime)
 
-            broadcaster.register(SettingsObserver.self, observer: self)
+            observe(appCoordinator.settingsUpdates) { settings in
+                await self.settingsUpdated(settings)
+            }
+        }
+
+        private func settingsUpdated(_ settings: FreeAPSSettings) {
+            lightMode = settings.lightMode
         }
     }
 }
@@ -117,11 +132,5 @@ extension Main.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         // close the window
         router.mainSecondaryModalView.send(nil)
-    }
-}
-
-extension Main.StateModel: SettingsObserver {
-    func settingsDidChange(_: FreeAPSSettings) {
-        lightMode = settingsManager.settings.lightMode
     }
 }

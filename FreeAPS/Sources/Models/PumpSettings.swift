@@ -1,6 +1,6 @@
 import Foundation
 
-struct PumpSettings: JSON {
+struct PumpSettings: JSON, Equatable {
     let insulinActionCurve: Decimal
     let maxBolus: Decimal
     let maxBasal: Decimal

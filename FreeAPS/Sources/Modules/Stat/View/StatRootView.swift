@@ -1,6 +1,4 @@
 import Charts
-import CoreData
-import SwiftDate
 import SwiftUI
 import Swinject
 
@@ -8,16 +6,6 @@ extension Stat {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state: StateModel
-
-        @FetchRequest(
-            entity: TDD.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)]
-        ) var fetchedTDD: FetchedResults<TDD>
-
-        @FetchRequest(
-            entity: InsulinDistribution.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var fetchedInsulin: FetchedResults<InsulinDistribution>
 
         enum Duration: String, CaseIterable, Identifiable {
             case Today
@@ -29,11 +17,6 @@ extension Stat {
         }
 
         @State private var selectedDuration: Duration = .Today
-        @State var paddingAmount: CGFloat? = 10
-        @State var headline: Color = .secondary
-        @State var days: Double = 0
-        @State var pointSize: CGFloat = 3
-        @State var conversionFactor = 0.0555
 
         init(resolver: Resolver) {
             self.resolver = resolver
@@ -145,7 +128,7 @@ extension Stat {
                 chart().padding(.top, 20)
                 Picker("Duration", selection: $selectedDuration) {
                     ForEach(Duration.allCases) { duration in
-                        Text(NSLocalizedString(duration.rawValue, comment: "")).tag(Optional(duration))
+                        Text(NSLocalizedString(duration.rawValue, comment: "")).tag(duration)
                     }
                 }
                 .pickerStyle(.segmented).background(.cyan.opacity(0.2))

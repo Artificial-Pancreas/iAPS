@@ -5,7 +5,7 @@ enum KeychainError: Error {
     case codingError(Error)
 }
 
-protocol Keychain: KeyValueStorage {
+protocol Keychain: KeyValueStorage, Sendable {
     func allKeys() -> Set<String>
     func hasValue(forKey key: String) -> Result<Bool, KeychainError>
     func accessibilityOfKey(_ key: String) -> Result<KeychainItemAccessibility, KeychainError>

@@ -6,19 +6,16 @@ enum Home {
 }
 
 protocol HomeProvider: Provider {
-    var suggestion: Suggestion? { get }
-    var enactedSuggestion: Suggestion? { get }
-    func heartbeatNow()
-    func filteredGlucose(hours: Int) -> [BloodGlucose]
-    func pumpHistory(hours: Int) -> [PumpHistoryEvent]
-    func pumpSettings() -> PumpSettings
-    func autotunedBasalProfile() -> [BasalProfileEntry]
-    func basalProfile() -> [BasalProfileEntry]
-    func tempTargets(hours: Int) -> [TempTarget]
-    func carbs(hours: Int) -> [CarbsEntry]
-    func pumpBattery() -> Battery?
-    func pumpReservoir() -> Decimal?
-    func tempTarget() -> TempTarget?
-    func announcement(_ hours: Int) -> [Announcement]
-    func overrides() -> [Override]
+    var suggestion: Suggestion? { get async }
+    var enactedSuggestion: Suggestion? { get async }
+    func heartbeatNow() async
+    func filteredGlucose(hours: Int) async -> [BloodGlucose]
+    func pumpHistory(hours: Int) async -> [PumpHistoryEvent]
+    func autotunedBasalProfile() async -> [BasalProfileEntry]
+    func basalProfile() async -> [BasalProfileEntry]
+    func tempTargets(hours: Int) async -> [TempTarget]
+    func carbs(hours: Int) async -> [CarbsEntry]
+    func tempTarget() async -> TempTarget?
+    func announcement(_ hours: Int) async -> [Announcement]
+    func overrides() async -> [Override]
 }

@@ -43,41 +43,47 @@ extension OverrideProfilesConfig {
 
         @Published var autoISFsettings = AutoISFsettings()
 
-        @Injected() var broadcaster: Broadcaster!
-        @Injected() var ns: NightscoutManager!
+        @Injected() private var ns: NightscoutManager!
+
+        private let overrideStorage = OverrideStorage()
+
+        private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         var units: GlucoseUnits = .mmolL
 
-        override func subscribe() {
-            units = settingsManager.settings.units
-            defaultSmbMinutes = settingsManager.preferences.maxSMBBasalMinutes
-            defaultUamMinutes = settingsManager.preferences.maxUAMSMBBasalMinutes
-            defaultmaxIOB = settingsManager.preferences.maxIOB
-            extended_overrides = settingsManager.settings.extended_overrides
-            currentSettings = settings()
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            let preferences = await settingsManager.preferences
+            units = settings.units
+            defaultSmbMinutes = preferences.maxSMBBasalMinutes
+            defaultUamMinutes = preferences.maxUAMSMBBasalMinutes
+            defaultmaxIOB = preferences.maxIOB
+            extended_overrides = settings.extended_overrides
+            currentSettings = makeAutoIsfSettings(from: settings)
             // presets = [OverridePresets(context: coredataContext)]
         }
 
-        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-
         func saveSettings() {
-            // Is other override already active?
-            let last = OverrideStorage().fetchLatestOverride().last
+            Task {
+                // Is other override already active?
+                let last = overrideStorage.fetchLatestOverride().last
 
-            percentage.round()
+                percentage.round()
 
-            // Is other already active?
-            if let active = last, active.enabled {
-                if let preset = OverrideStorage().isPresetName(), let duration = OverrideStorage().cancelProfile() {
-                    ns.editOverride(preset, duration, last?.date ?? Date.now)
-                } else if let duration = OverrideStorage().cancelProfile() {
-                    let nsString = active.percentage.formatted() != "100" ? active.percentage
-                        .formatted() + " %" : active.isPreset ? "📉" : "Custom"
-                    ns.editOverride(nsString, duration, last?.date ?? Date.now)
+                // for the ns.editOverride at the end:
+                var editInNightscout: (name: String, duration: Double, date: Date)?
+                // Is other already active?
+                if let active = last, active.enabled {
+                    let presetName = overrideStorage.isPresetName()
+                    if let duration = overrideStorage.cancelProfile() {
+                        let name = presetName ?? (
+                            active.percentage.formatted() != "100" ? active.percentage
+                                .formatted() + " %" : active.isPreset ? "📉" : "Custom"
+                        )
+                        editInNightscout = (name: name, duration: duration, date: last?.date ?? Date.now)
+                    }
                 }
-            }
-            // Save
-            coredataContext.perform { [self] in
+                // Save
                 let saveOverride = Override(context: self.coredataContext)
                 saveOverride.duration = self.duration as NSDecimalNumber
                 saveOverride.indefinite = self._indefinite
@@ -133,161 +139,174 @@ extension OverrideProfilesConfig {
                     updateAutoISF(saveOverride.id)
                 }
 
-                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
-                ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
-
                 try? self.coredataContext.save()
+
+                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
+                if let editInNightscout {
+                    await ns.editOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
+                await ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
             }
         }
 
         func savePreset() {
-            coredataContext.performAndWait { [self] in
-                let saveOverride = OverridePresets(context: coredataContext)
-                saveOverride.duration = duration as NSDecimalNumber
-                saveOverride.indefinite = _indefinite
-                saveOverride.percentage = percentage.rounded()
-                saveOverride.smbIsOff = smbIsOff
-                saveOverride.name = profileName
-                saveOverride.emoji = emoji
-                saveOverride.overrideAutoISF = overrideAutoISF
-                let useId = UUID().uuidString
-                saveOverride.id = useId
-                isPreset = true
-                saveOverride.date = Date()
-                if override_target {
-                    saveOverride.target = (
-                        units == .mmolL
-                            ? target.asMgdL
-                            : target
-                    ) as NSDecimalNumber
-                } else { saveOverride.target = 6 }
+            let saveOverride = OverridePresets(context: coredataContext)
+            saveOverride.duration = duration as NSDecimalNumber
+            saveOverride.indefinite = _indefinite
+            saveOverride.percentage = percentage.rounded()
+            saveOverride.smbIsOff = smbIsOff
+            saveOverride.name = profileName
+            saveOverride.emoji = emoji
+            saveOverride.overrideAutoISF = overrideAutoISF
+            let useId = UUID().uuidString
+            saveOverride.id = useId
+            isPreset = true
+            saveOverride.date = Date()
+            if override_target {
+                saveOverride.target = (
+                    units == .mmolL
+                        ? target.asMgdL
+                        : target
+                ) as NSDecimalNumber
+            } else { saveOverride.target = 6 }
 
-                saveOverride.advancedSettings = advancedSettings
-                saveOverride.isfAndCr = self.isfAndCr
-                saveOverride.isf = self.isf
-                saveOverride.cr = self.cr
-                saveOverride.basal = self.basal
-                saveOverride.endWIthNewCarbs = self.endWIthNewCarbs
+            saveOverride.advancedSettings = advancedSettings
+            saveOverride.isfAndCr = isfAndCr
+            saveOverride.isf = isf
+            saveOverride.cr = cr
+            saveOverride.basal = basal
+            saveOverride.endWIthNewCarbs = endWIthNewCarbs
 
-                if glucoseOverrideThresholdActive {
-                    saveOverride.glucoseOverrideThresholdActive = glucoseOverrideThresholdActive
-                    saveOverride.glucoseOverrideThreshold = glucoseOverrideThreshold as NSDecimalNumber
-                }
-
-                if glucoseOverrideThresholdActiveDown {
-                    saveOverride.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
-                    saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
-                }
-
-                if smbIsAlwaysOff {
-                    saveOverride.smbIsAlwaysOff = true
-                    saveOverride.start = start as NSDecimalNumber
-                    saveOverride.end = end as NSDecimalNumber
-                } else { smbIsAlwaysOff = false }
-
-                saveOverride.smbMinutes = self.smbMinutes as NSDecimalNumber
-                saveOverride.uamMinutes = self.uamMinutes as NSDecimalNumber
-                saveOverride.maxIOB = maxIOB as NSDecimalNumber
-                saveOverride.overrideMaxIOB = self.overrideMaxIOB
-                saveOverride.date = Date.now
-
-                if overrideAutoISF {
-                    updateAutoISF(useId)
-                }
-
-                try? coredataContext.save()
+            if glucoseOverrideThresholdActive {
+                saveOverride.glucoseOverrideThresholdActive = glucoseOverrideThresholdActive
+                saveOverride.glucoseOverrideThreshold = glucoseOverrideThreshold as NSDecimalNumber
             }
+
+            if glucoseOverrideThresholdActiveDown {
+                saveOverride.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
+                saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
+            }
+
+            if smbIsAlwaysOff {
+                saveOverride.smbIsAlwaysOff = true
+                saveOverride.start = start as NSDecimalNumber
+                saveOverride.end = end as NSDecimalNumber
+            } else {
+                saveOverride.smbIsAlwaysOff = false
+            }
+
+            saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
+            saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
+            saveOverride.maxIOB = maxIOB as NSDecimalNumber
+            saveOverride.overrideMaxIOB = overrideMaxIOB
+            saveOverride.date = Date.now
+
+            if overrideAutoISF {
+                updateAutoISF(useId)
+            }
+
+            try? coredataContext.save()
         }
 
         func selectProfile(id_: String) {
-            guard !id_.isEmpty else { return }
+            Task {
+                guard !id_.isEmpty else { return }
 
-            // Double Check that preset actually still exist in databasa (shouldn't really be necessary)
-            let profileArray = OverrideStorage().fetchProfiles()
-            guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
+                // Double Check that preset actually still exist in databasa (shouldn't really be necessary)
+                let profileArray = overrideStorage.fetchProfiles()
+                guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
 
-            // Is there already an active override?
-            let last = OverrideStorage().fetchLatestOverride().last
-            let lastPreset = OverrideStorage().isPresetName()
-            if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
-                ns.editOverride(
-                    (last?.isPreset ?? false) ? (lastPreset ?? "📉") : "Custom",
-                    duration,
-                    alreadyActive.date ?? Date.now
+                // Is there already an active override?
+                let last = overrideStorage.fetchLatestOverride().last
+                let lastPreset = overrideStorage.isPresetName()
+
+                // for the ns.editOverride at the end:
+                var editInNightscout: (name: String, duration: Double, date: Date)?
+                if let alreadyActive = last, alreadyActive.enabled, let duration = overrideStorage.cancelProfile() {
+                    editInNightscout = (
+                        name: (last?.isPreset ?? false) ? (lastPreset ?? "📉") : "Custom",
+                        duration: duration,
+                        date: alreadyActive.date ?? Date.now
+                    )
+                }
+                // New Override properties
+                let saveOverride = Override(context: coredataContext)
+                saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
+                saveOverride.indefinite = profile.indefinite
+                saveOverride.percentage = profile.percentage
+                saveOverride.enabled = true
+                saveOverride.smbIsOff = profile.smbIsOff
+                saveOverride.isPreset = true
+                saveOverride.date = Date()
+                saveOverride.id = id_
+                saveOverride.advancedSettings = profile.advancedSettings
+                saveOverride.isfAndCr = profile.isfAndCr
+                saveOverride.overrideAutoISF = profile.overrideAutoISF
+
+                if let tar = profile.target, tar == 0 {
+                    saveOverride.target = 6
+                } else {
+                    saveOverride.target = profile.target
+                }
+
+                if profile.advancedSettings {
+                    if !profile.isfAndCr {
+                        saveOverride.isf = profile.isf
+                        saveOverride.cr = profile.cr
+                        saveOverride.basal = profile.basal
+                    }
+                    if profile.smbIsAlwaysOff {
+                        saveOverride.smbIsAlwaysOff = true
+                        saveOverride.start = profile.start
+                        saveOverride.end = profile.end
+                    } else { saveOverride.smbIsAlwaysOff = false }
+
+                    saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
+                    saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
+                    saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB as NSDecimalNumber) as NSDecimalNumber
+                    saveOverride.overrideMaxIOB = profile.overrideMaxIOB
+                    saveOverride.endWIthNewCarbs = profile.endWIthNewCarbs
+                }
+
+                if profile.glucoseOverrideThresholdActive {
+                    saveOverride.glucoseOverrideThresholdActive = true
+                    saveOverride.glucoseOverrideThreshold = (profile.glucoseOverrideThreshold ?? 100) as NSDecimalNumber
+                }
+
+                if profile.glucoseOverrideThresholdActiveDown {
+                    saveOverride.glucoseOverrideThresholdActiveDown = true
+                    saveOverride.glucoseOverrideThresholdDown = (profile.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber
+                }
+
+                // Saves
+                try? self.coredataContext.save()
+
+                if let editInNightscout {
+                    await ns.editOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
+                // Uploads new Override to NS
+                await ns.uploadOverride(
+                    profile.name ?? "",
+                    Double(truncating: saveOverride.duration ?? 0),
+                    saveOverride.date ?? Date()
                 )
             }
-            // New Override properties
-            let saveOverride = Override(context: coredataContext)
-            saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
-            saveOverride.indefinite = profile.indefinite
-            saveOverride.percentage = profile.percentage
-            saveOverride.enabled = true
-            saveOverride.smbIsOff = profile.smbIsOff
-            saveOverride.isPreset = true
-            saveOverride.date = Date()
-            saveOverride.id = id_
-            saveOverride.advancedSettings = profile.advancedSettings
-            saveOverride.isfAndCr = profile.isfAndCr
-            saveOverride.overrideAutoISF = profile.overrideAutoISF
-
-            if let tar = profile.target, tar == 0 {
-                saveOverride.target = 6
-            } else {
-                saveOverride.target = profile.target
-            }
-
-            if profile.advancedSettings {
-                if !profile.isfAndCr {
-                    saveOverride.isf = profile.isf
-                    saveOverride.cr = profile.cr
-                    saveOverride.basal = profile.basal
-                }
-                if profile.smbIsAlwaysOff {
-                    saveOverride.smbIsAlwaysOff = true
-                    saveOverride.start = profile.start
-                    saveOverride.end = profile.end
-                } else { saveOverride.smbIsAlwaysOff = false }
-
-                saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
-                saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
-                saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB as NSDecimalNumber) as NSDecimalNumber
-                saveOverride.overrideMaxIOB = profile.overrideMaxIOB
-                saveOverride.endWIthNewCarbs = profile.endWIthNewCarbs
-            }
-
-            if profile.glucoseOverrideThresholdActive {
-                saveOverride.glucoseOverrideThresholdActive = true
-                saveOverride.glucoseOverrideThreshold = (profile.glucoseOverrideThreshold ?? 100) as NSDecimalNumber
-            }
-
-            if profile.glucoseOverrideThresholdActiveDown {
-                saveOverride.glucoseOverrideThresholdActiveDown = true
-                saveOverride.glucoseOverrideThresholdDown = (profile.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber
-            }
-
-            // Saves
-            coredataContext.perform { try? self.coredataContext.save() }
-
-            // Uploads new Override to NS
-            ns.uploadOverride(profile.name ?? "", Double(truncating: saveOverride.duration ?? 0), saveOverride.date ?? Date())
         }
 
         func savedSettings(edit: Bool, identifier: String?) {
-            let overrideArray = OverrideStorage()
+            let overrideArray = overrideStorage
                 .fetchLatestOverride().first
 
             if !edit, overrideArray == nil {
-                defaults()
+                resetToDefaults()
                 return
             }
 
             if !edit, !(overrideArray?.enabled ?? false) {
-                defaults()
+                resetToDefaults()
                 return
             }
             var presetArray: OverridePresets?
             if edit {
-                presetArray = OverrideStorage().fetchPreset(id: identifier ?? "No, I'm sorry.")
+                presetArray = overrideStorage.fetchPreset(id: identifier ?? "No, I'm sorry.")
                 profileName = presetArray?.name ?? ""
             }
 
@@ -343,8 +362,8 @@ extension OverrideProfilesConfig {
                 maxIOB = maxIOB_ as Decimal
             }
 
-            let aisf = !edit && (overrideArray?.enabled ?? false) ? OverrideStorage()
-                .fetchAutoISFsetting(id: overrideArray?.id ?? "No, I'm very sorry.") : edit ? OverrideStorage()
+            let aisf = !edit && (overrideArray?.enabled ?? false) ? overrideStorage
+                .fetchAutoISFsetting(id: overrideArray?.id ?? "No, I'm very sorry.") : edit ? overrideStorage
                 .fetchAutoISFsetting(id: identifier ?? "No, I'm very sorry.") : nil
 
             if let fetched = aisf {
@@ -368,26 +387,27 @@ extension OverrideProfilesConfig {
                 let duration = !edit ? overrideArray!.duration ?? 0 : presetArray?.duration ?? 0
                 let addedMinutes = Int(duration as Decimal)
                 let date = !edit ? overrideArray!.date ?? Date() : presetArray?.date ?? Date()
-                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !_indefinite {
+                if date.addingTimeInterval(.minutes(addedMinutes)) < Date(), !_indefinite {
                     isEnabled = false
                 }
-                newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
+                newDuration = Date().distance(to: date.addingTimeInterval(.minutes(addedMinutes))).minutes
             }
             if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
         }
 
         func cancelProfile() {
-            defaults()
-            let storage = OverrideStorage()
-            let duration_ = storage.cancelProfile()
-            let last_ = storage.fetchLatestOverride().last
-            let name = storage.isPresetName()
-            if let last = last_, let duration = duration_ {
-                ns.editOverride(name ?? "", duration, last.date ?? Date.now)
+            Task {
+                resetToDefaults()
+                let duration_ = overrideStorage.cancelProfile()
+                let last_ = overrideStorage.fetchLatestOverride().last
+                let name = overrideStorage.isPresetName()
+                if let last = last_, let duration = duration_ {
+                    await ns.editOverride(name ?? "", duration, last.date ?? Date.now)
+                }
             }
         }
 
-        private func defaults() {
+        private func resetToDefaults() {
             _indefinite = true
             percentage = 100
             duration = 0
@@ -414,48 +434,44 @@ extension OverrideProfilesConfig {
         func updateAutoISF(_ id_: String?) {
             guard let identifier = id_ else { return }
 
-            let oldObject = OverrideStorage().fetchAutoISFsetting(id: identifier)
+            let oldObject = overrideStorage.fetchAutoISFsetting(id: identifier)
             let saveAutoISF = oldObject != nil ? oldObject! : Auto_ISF(context: coredataContext)
 
-            coredataContext.perform { [self] in
-                saveAutoISF.autoISFhourlyChange = autoISFsettings.autoISFhourlyChange as NSDecimalNumber
-                saveAutoISF.autoisf = autoISFsettings.autoisf
-                saveAutoISF.autocr = autoISFsettings.autocr
-                saveAutoISF.autoisf_min = autoISFsettings.autoisf_min as NSDecimalNumber
-                saveAutoISF.autoisf_max = autoISFsettings.autoisf_max as NSDecimalNumber
-                saveAutoISF.enableBGacceleration = autoISFsettings.enableBGacceleration
-                saveAutoISF.bgAccelISFweight = autoISFsettings.bgAccelISFweight as NSDecimalNumber
-                saveAutoISF.bgBrakeISFweight = autoISFsettings.bgBrakeISFweight as NSDecimalNumber
-                saveAutoISF.lowerISFrangeWeight = autoISFsettings.lowerISFrangeWeight as NSDecimalNumber
-                saveAutoISF.higherISFrangeWeight = autoISFsettings.higherISFrangeWeight as NSDecimalNumber
-                saveAutoISF.iTime_Start_Bolus = autoISFsettings.iTime_Start_Bolus as NSDecimalNumber
-                saveAutoISF.iTime_target = autoISFsettings.iTime_target as NSDecimalNumber
-                saveAutoISF.use_B30 = autoISFsettings.use_B30
-                saveAutoISF.b30_duration = autoISFsettings.b30_duration as NSDecimalNumber
-                saveAutoISF.b30factor = autoISFsettings.b30factor as NSDecimalNumber
-                saveAutoISF.b30targetLevel = autoISFsettings.b30targetLevel as NSDecimalNumber
-                saveAutoISF.b30upperLimit = autoISFsettings.b30upperLimit as NSDecimalNumber
-                saveAutoISF.b30upperdelta = autoISFsettings.b30upperdelta as NSDecimalNumber
-                saveAutoISF.iobThresholdPercent = autoISFsettings.iobThresholdPercent as NSDecimalNumber
-                saveAutoISF.ketoProtect = autoISFsettings.ketoProtect
-                saveAutoISF.ketoProtectAbsolut = autoISFsettings.ketoProtectAbsolut
-                saveAutoISF.ketoProtectBasalAbsolut = autoISFsettings.ketoProtectBasalAbsolut as NSDecimalNumber
-                saveAutoISF.variableKetoProtect = autoISFsettings.variableKetoProtect
-                saveAutoISF.ketoProtectBasalPercent = autoISFsettings.ketoProtectBasalPercent as NSDecimalNumber
-                saveAutoISF.smbDeliveryRatioMin = autoISFsettings.smbDeliveryRatioMin as NSDecimalNumber
-                saveAutoISF.smbDeliveryRatioMax = autoISFsettings.smbDeliveryRatioMax as NSDecimalNumber
-                saveAutoISF.smbDeliveryRatioBGrange = autoISFsettings.smbDeliveryRatioBGrange as NSDecimalNumber
-                saveAutoISF.postMealISFweight = autoISFsettings.postMealISFweight as NSDecimalNumber
-                saveAutoISF.date = Date.now
-                if oldObject == nil { saveAutoISF.id = identifier }
-                try? self.coredataContext.save()
-            }
+            saveAutoISF.autoISFhourlyChange = autoISFsettings.autoISFhourlyChange as NSDecimalNumber
+            saveAutoISF.autoisf = autoISFsettings.autoisf
+            saveAutoISF.autocr = autoISFsettings.autocr
+            saveAutoISF.autoisf_min = autoISFsettings.autoisf_min as NSDecimalNumber
+            saveAutoISF.autoisf_max = autoISFsettings.autoisf_max as NSDecimalNumber
+            saveAutoISF.enableBGacceleration = autoISFsettings.enableBGacceleration
+            saveAutoISF.bgAccelISFweight = autoISFsettings.bgAccelISFweight as NSDecimalNumber
+            saveAutoISF.bgBrakeISFweight = autoISFsettings.bgBrakeISFweight as NSDecimalNumber
+            saveAutoISF.lowerISFrangeWeight = autoISFsettings.lowerISFrangeWeight as NSDecimalNumber
+            saveAutoISF.higherISFrangeWeight = autoISFsettings.higherISFrangeWeight as NSDecimalNumber
+            saveAutoISF.iTime_Start_Bolus = autoISFsettings.iTime_Start_Bolus as NSDecimalNumber
+            saveAutoISF.iTime_target = autoISFsettings.iTime_target as NSDecimalNumber
+            saveAutoISF.use_B30 = autoISFsettings.use_B30
+            saveAutoISF.b30_duration = autoISFsettings.b30_duration as NSDecimalNumber
+            saveAutoISF.b30factor = autoISFsettings.b30factor as NSDecimalNumber
+            saveAutoISF.b30targetLevel = autoISFsettings.b30targetLevel as NSDecimalNumber
+            saveAutoISF.b30upperLimit = autoISFsettings.b30upperLimit as NSDecimalNumber
+            saveAutoISF.b30upperdelta = autoISFsettings.b30upperdelta as NSDecimalNumber
+            saveAutoISF.iobThresholdPercent = autoISFsettings.iobThresholdPercent as NSDecimalNumber
+            saveAutoISF.ketoProtect = autoISFsettings.ketoProtect
+            saveAutoISF.ketoProtectAbsolut = autoISFsettings.ketoProtectAbsolut
+            saveAutoISF.ketoProtectBasalAbsolut = autoISFsettings.ketoProtectBasalAbsolut as NSDecimalNumber
+            saveAutoISF.variableKetoProtect = autoISFsettings.variableKetoProtect
+            saveAutoISF.ketoProtectBasalPercent = autoISFsettings.ketoProtectBasalPercent as NSDecimalNumber
+            saveAutoISF.smbDeliveryRatioMin = autoISFsettings.smbDeliveryRatioMin as NSDecimalNumber
+            saveAutoISF.smbDeliveryRatioMax = autoISFsettings.smbDeliveryRatioMax as NSDecimalNumber
+            saveAutoISF.smbDeliveryRatioBGrange = autoISFsettings.smbDeliveryRatioBGrange as NSDecimalNumber
+            saveAutoISF.postMealISFweight = autoISFsettings.postMealISFweight as NSDecimalNumber
+            saveAutoISF.date = Date.now
+            if oldObject == nil { saveAutoISF.id = identifier }
+            try? coredataContext.save()
         }
 
-        func settings() -> AutoISFsettings {
-            let settings = settingsManager.settings
-
-            return AutoISFsettings(
+        private func makeAutoIsfSettings(from settings: FreeAPSSettings) -> AutoISFsettings {
+            AutoISFsettings(
                 autoisf: settings.autoisf,
                 autocr: settings.autocr,
                 smbDeliveryRatioBGrange: settings.smbDeliveryRatioBGrange as Decimal,
@@ -488,7 +504,7 @@ extension OverrideProfilesConfig {
             )
         }
 
-        func fetch(fetched: Auto_ISF) -> AutoISFsettings {
+        private func fetch(fetched: Auto_ISF) -> AutoISFsettings {
             AutoISFsettings(
                 autoisf: fetched.autoisf,
                 autocr: fetched.autocr,

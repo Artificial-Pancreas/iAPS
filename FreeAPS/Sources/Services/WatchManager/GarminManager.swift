@@ -8,7 +8,7 @@ protocol GarminManager {
     func updateListDevices(devices: [IQDevice])
     var devices: [IQDevice] { get }
     func sendState(_ data: Data)
-    var stateRequet: (() -> (Data))? { get set }
+    var stateRequest: (() -> (Data))? { get set }
 }
 
 extension Notification.Name {
@@ -31,7 +31,7 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
 
     private var watchfaces: [IQApp] = []
 
-    var stateRequet: (() -> (Data))?
+    var stateRequest: (() -> (Data))?
 
     private let stateSubject = PassthroughSubject<NSDictionary, Never>()
 
@@ -187,8 +187,8 @@ extension BaseGarminManager: IQDeviceEventDelegate {
 
 extension BaseGarminManager: IQAppMessageDelegate {
     func receivedMessage(_ message: Any, from app: IQApp) {
-        print("ASDF: got message: \(message) from app: \(app.uuid!)")
-        if let status = message as? String, status == "status", let watchState = stateRequet?() {
+        debug(.service, "got message: \(message) from app: \(app.uuid!)")
+        if message as? String == "status", let watchState = stateRequest?() {
             sendState(watchState)
         }
     }

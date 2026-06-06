@@ -3,7 +3,7 @@ import Foundation
 import SwiftDate
 import Swinject
 
-final class CoreDataStorage {
+final class CoreDataStorage: Sendable {
     let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     func fetchGlucose(interval: NSDate) -> [Readings] {
@@ -54,6 +54,27 @@ final class CoreDataStorage {
             )
         }
         return result
+    }
+
+    func fetchLatestInsulinData() -> IOBTick0? {
+        var fetchTicks = [InsulinActivity]()
+        coredataContext.performAndWait {
+            let requestTicks = InsulinActivity.fetchRequest()
+            let sort = NSSortDescriptor(key: "date", ascending: true)
+            requestTicks.sortDescriptors = [sort]
+            requestTicks.fetchLimit = 1
+            try? fetchTicks = self.coredataContext.fetch(requestTicks)
+        }
+        return fetchTicks.firstNonNil { tick -> IOBTick0? in
+            guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
+                return nil
+            }
+            return IOBTick0(
+                time: date,
+                iob: iob as Decimal,
+                activity: activity as Decimal
+            )
+        }
     }
 
     func saveInsulinData(iobEntries: [IOBTick0]) -> Decimal? {
@@ -195,7 +216,7 @@ final class CoreDataStorage {
         }
     }
 
-    func fetchStats() -> [StatsData] {
+    func fetchStats() -> StatsData? {
         var stats = [StatsData]()
         coredataContext.performAndWait {
             let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>
@@ -204,7 +225,7 @@ final class CoreDataStorage {
             requestStats.fetchLimit = 1
             try? stats = coredataContext.fetch(requestStats)
         }
-        return stats
+        return stats.first
     }
 
     func fetchInsulinDistribution() -> [InsulinDistribution] {
@@ -266,7 +287,7 @@ final class CoreDataStorage {
         UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
     }
 
-    func saveVNr(_ versions: Version?) {
+    func saveVersion(_ versions: Version?) {
         guard let version = versions else { return }
         guard version.main != "" else { return }
         coredataContext.perform { [self] in
@@ -281,7 +302,7 @@ final class CoreDataStorage {
         }
     }
 
-    func fetchVNr() -> VNr? {
+    func fetchVersion() -> VNr? {
         var nr = [VNr]()
         coredataContext.performAndWait {
             let requestNr = VNr.fetchRequest() as NSFetchRequest<VNr>

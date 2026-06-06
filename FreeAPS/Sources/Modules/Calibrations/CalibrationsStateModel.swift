@@ -12,11 +12,11 @@ extension Calibrations {
         @Published var calibrations: [Calibration] = []
         @Published var calibrate: (Double) -> Double = { $0 }
         @Published var items: [Item] = []
+        @Published var units: GlucoseUnits = .mmolL
 
-        var units: GlucoseUnits = .mmolL
-
-        override func subscribe() {
-            units = settingsManager.settings.units
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            units = settings.units
             calibrate = calibrationService.calibrate
             setupCalibrations()
         }
@@ -31,27 +31,29 @@ extension Calibrations {
         }
 
         func addCalibration() {
-            defer {
-                UIApplication.shared.endEditing()
-                setupCalibrations()
+            Task {
+                defer {
+                    UIApplication.shared.endEditing()
+                    setupCalibrations()
+                }
+
+                var glucose = newCalibration
+                if units == .mmolL {
+                    glucose = newCalibration.asMgdL
+                }
+
+                guard let lastGlucose = await glucoseStorage.retrieveRaw().last,
+                      lastGlucose.dateString.addingTimeInterval(60 * 4.5) > Date(),
+                      let uncalibrated = lastGlucose.uncalibrated
+                else {
+                    info(.service, "Glucose is stale for calibration")
+                    return
+                }
+
+                let calibration = Calibration(x: Double(uncalibrated), y: Double(glucose))
+
+                calibrationService.addCalibration(calibration)
             }
-
-            var glucose = newCalibration
-            if units == .mmolL {
-                glucose = newCalibration.asMgdL
-            }
-
-            guard let lastGlucose = glucoseStorage.retrieveRaw().last,
-                  lastGlucose.dateString.addingTimeInterval(60 * 4.5) > Date(),
-                  let uncalibrated = lastGlucose.uncalibrated
-            else {
-                info(.service, "Glucose is stale for calibration")
-                return
-            }
-
-            let calibration = Calibration(x: Double(uncalibrated), y: Double(glucose))
-
-            calibrationService.addCalibration(calibration)
         }
 
         func removeLast() {

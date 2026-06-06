@@ -4,13 +4,19 @@ import SwiftUI
 import UIKit
 
 extension CGM {
-    struct CGMSettingsView: UIViewControllerRepresentable {
-        let cgmManager: CGMManagerUI
+    struct CGMSettingsView: UIViewControllerRepresentable, CompletionNotifying {
         let deviceManager: DeviceDataManager
         weak var completionDelegate: CompletionDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSettingsView>) -> UIViewController {
-            var vc = deviceManager.cgmManagerSettingsView(cgmManager: cgmManager)
+            guard var vc = deviceManager.cgmManagerSettingsView() else {
+                // race condition (extremely unlikely to ever happen): CGM manager got removed right after the user tapped the button but before the UI got built here
+                warning(.deviceManager, "CGM manager was removed")
+                DispatchQueue.main.async { [completionDelegate] in
+                    completionDelegate?.completionNotifyingDidComplete(self)
+                }
+                return UIViewController()
+            }
             vc.completionDelegate = completionDelegate
 
             return vc

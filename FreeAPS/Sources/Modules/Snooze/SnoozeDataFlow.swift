@@ -2,4 +2,4 @@ enum Snooze {
     enum Config {}
 }
 
-protocol SnoozeProvider {}
+protocol SnoozeProvider: Provider {}

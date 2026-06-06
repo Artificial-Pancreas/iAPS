@@ -196,7 +196,7 @@ extension Home {
             let rateString = numberFormatter.string(from: tempRate as NSNumber) ?? "0"
             var manualBasalString = ""
 
-            if state.apsManager.isManualTempBasal {
+            if state.manualTempBasal {
                 manualBasalString = NSLocalizedString(
                     " Manual",
                     comment: "Manual Temp basal"

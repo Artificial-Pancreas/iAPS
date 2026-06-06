@@ -10,4 +10,4 @@ enum Calibrations {
     }
 }
 
-protocol CalibrationsProvider {}
+protocol CalibrationsProvider: Provider {}

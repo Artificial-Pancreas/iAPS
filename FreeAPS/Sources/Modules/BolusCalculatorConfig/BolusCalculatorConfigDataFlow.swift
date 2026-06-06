@@ -2,4 +2,4 @@ enum BolusCalculatorConfig {
     enum Config {}
 }
 
-protocol BolusCalculatorConfigProvider {}
+protocol BolusCalculatorConfigProvider: Provider {}

@@ -29,31 +29,11 @@ extension AutoISF {
             predicate: NSPredicate(format: "date > %@", DateFilter.day.startDate)
         ) var reasons: FetchedResults<Reasons>
 
-        private var formatter: NumberFormatter {
+        private static let formatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             return formatter
-        }
-
-        private var glucoseFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            if state.settingsManager.settings.units == .mmolL {
-                formatter.maximumFractionDigits = 1
-                formatter.minimumFractionDigits = 1
-            } else {
-                formatter.maximumFractionDigits = 0
-            }
-            return formatter
-        }
-
-        private var dateFormatter: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "sv")
-            formatter.dateStyle = .none
-            formatter.timeStyle = .short
-            return formatter
-        }
+        }()
 
         var body: some View {
             Form {
@@ -177,7 +157,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.autoisf_max, formatter: formatter)
+                            DecimalTextField("0", value: $state.autoisf_max, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -191,7 +171,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.autoisf_min, formatter: formatter)
+                            DecimalTextField("0", value: $state.autoisf_min, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -205,7 +185,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.smbDeliveryRatioMin, formatter: formatter)
+                            DecimalTextField("0", value: $state.smbDeliveryRatioMin, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -219,7 +199,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.smbDeliveryRatioMax, formatter: formatter)
+                            DecimalTextField("0", value: $state.smbDeliveryRatioMax, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -251,7 +231,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.higherISFrangeWeight, formatter: formatter)
+                            DecimalTextField("0", value: $state.higherISFrangeWeight, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -265,7 +245,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.autoISFhourlyChange, formatter: formatter)
+                            DecimalTextField("0", value: $state.autoISFhourlyChange, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -279,7 +259,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.lowerISFrangeWeight, formatter: formatter)
+                            DecimalTextField("0", value: $state.lowerISFrangeWeight, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -293,7 +273,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.postMealISFweight, formatter: formatter)
+                            DecimalTextField("0", value: $state.postMealISFweight, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -307,7 +287,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.bgAccelISFweight, formatter: formatter)
+                            DecimalTextField("0", value: $state.bgAccelISFweight, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -321,7 +301,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.bgBrakeISFweight, formatter: formatter)
+                            DecimalTextField("0", value: $state.bgBrakeISFweight, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
 
@@ -335,7 +315,7 @@ extension AutoISF {
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.iobThresholdPercent, formatter: formatter)
+                            DecimalTextField("0", value: $state.iobThresholdPercent, formatter: Self.formatter)
                                 .disabled(isPresented)
                         }
                     } header: { Text("Settings") }
@@ -367,7 +347,7 @@ extension AutoISF {
                                         )
                                     }
                                 Spacer()
-                                DecimalTextField("0", value: $state.iTime_Start_Bolus, formatter: formatter)
+                                DecimalTextField("0", value: $state.iTime_Start_Bolus, formatter: Self.formatter)
                                     .disabled(isPresented)
                             }
 
@@ -435,7 +415,7 @@ extension AutoISF {
                                         )
                                     }
                                 Spacer()
-                                DecimalTextField("0", value: $state.b30factor, formatter: formatter)
+                                DecimalTextField("0", value: $state.b30factor, formatter: Self.formatter)
                                     .disabled(isPresented)
                             }
 
@@ -449,7 +429,7 @@ extension AutoISF {
                                         )
                                     }
                                 Spacer()
-                                DecimalTextField("0", value: $state.b30_duration, formatter: formatter)
+                                DecimalTextField("0", value: $state.b30_duration, formatter: Self.formatter)
                                     .disabled(isPresented)
                             }
                         }
@@ -493,7 +473,7 @@ extension AutoISF {
                                             )
                                         }
                                     Spacer()
-                                    DecimalTextField("0", value: $state.ketoProtectBasalPercent, formatter: formatter)
+                                    DecimalTextField("0", value: $state.ketoProtectBasalPercent, formatter: Self.formatter)
                                         .disabled(isPresented)
                                 }
                             }
@@ -522,7 +502,7 @@ extension AutoISF {
                                             )
                                         }
                                     Spacer()
-                                    DecimalTextField("0", value: $state.ketoProtectBasalAbsolut, formatter: formatter)
+                                    DecimalTextField("0", value: $state.ketoProtectBasalAbsolut, formatter: Self.formatter)
                                         .disabled(isPresented)
                                 }
                             }

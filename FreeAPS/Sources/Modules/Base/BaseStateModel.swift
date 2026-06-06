@@ -2,24 +2,24 @@ import Combine
 import SwiftUI
 import Swinject
 
-protocol StateModel: ObservableObject {
-    var resolver: Resolver { get }
-//    var isInitial: Bool { get set }
-    func subscribe()
+@MainActor protocol StateModel: ObservableObject {
     func showModal(for screen: Screen?)
     func hideModal()
     func view(for screen: Screen) -> AnyView
 }
 
+@MainActor
 class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.Provider {
     let router: Router
     let settingsManager: SettingsManager!
 
-//    var isInitial: Bool = true
+    //    var isInitial: Bool = true
 
     let provider: Provider
 
-    let resolver: Resolver
+    private let resolver: Resolver
+
+    var lifetime = Lifetime()
 
     init(resolver: Resolver) {
         self.resolver = resolver
@@ -28,12 +28,12 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
         provider = Provider(resolver: resolver)
         injectServices(resolver)
 //        self.isInitial = false
-        subscribe()
+        Task {
+            await subscribe()
+        }.store(in: &lifetime)
     }
 
-    var lifetime = Lifetime()
-
-    func subscribe() {}
+    func subscribe() async {}
 
     func showModal(for screen: Screen?) {
         router.mainModalScreen.send(screen)
@@ -47,18 +47,41 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
         router.view(for: screen)
     }
 
-    func subscribeSetting<T: Equatable, U: Publisher>(
+    func subscribeSetting<T: Equatable>(
         _ keyPath: WritableKeyPath<FreeAPSSettings, T>,
-        on settingPublisher: U, initial: (T) -> Void, map: ((T) -> (T))? = nil, didSet: ((T) -> Void)? = nil
-    ) where U.Output == T, U.Failure == Never {
-        initial(settingsManager.settings[keyPath: keyPath])
+        on settingPublisher: some Publisher<T, Never>,
+        initial: @escaping @MainActor(T) -> Void,
+        map: ((T) -> T)? = nil,
+        didSet: (@MainActor(T) -> Void)? = nil
+    ) {
+        Task { [weak self] in
+            guard let self else { return }
+            initial(await self.settingsManager.settings[keyPath: keyPath])
+        }
         settingPublisher
             .removeDuplicates()
+            .dropFirst()
             .map(map ?? { $0 })
             .sink { [weak self] value in
-                self?.settingsManager.settings[keyPath: keyPath] = value
-                didSet?(value)
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    var settings = await self.settingsManager.settings
+                    settings[keyPath: keyPath] = value
+                    await self.settingsManager.updateSettings(settings)
+                    didSet?(value)
+                }
             }
             .store(in: &lifetime)
+    }
+
+    func background(_ operation: @escaping () async -> Void) {
+        Task { await operation() }.store(in: &lifetime)
+    }
+
+    func observe<P: Publisher>(
+        _ publisher: P,
+        action: @escaping @Sendable(P.Output) async -> Void
+    ) where P.Output: Sendable, P.Failure == Never {
+        FreeAPS.observe(publisher, in: &lifetime, action: action)
     }
 }

@@ -1,16 +1,12 @@
-import Combine
 import Foundation
 import Swinject
 import UIKit
 
 final class BloodGlucoseManager {
-    private let processQueue = DispatchQueue(label: "BaseCGMPluginManager.processQueue")
     private let glucoseStorage: GlucoseStorage
-    private let broadcaster: Broadcaster
 
     init(resolver: Resolver) {
         glucoseStorage = resolver.resolve(GlucoseStorage.self)!
-        broadcaster = resolver.resolve(Broadcaster.self)!
     }
 
     /// return true if a newer blood glucose record was detected and stored
@@ -18,27 +14,30 @@ final class BloodGlucoseManager {
         bloodGlucose: [BloodGlucose],
         completion: @escaping (Bool) -> Void
     ) {
-        processQueue.async {
-            let newBloodGlucoseStored = self.glucoseStoreAndHeartDecision(
+        Task {
+            // TODO: this used to be serialized in the process queue, but now the storage calls are async
+            // investigate if this can be a problem
+            let newBloodGlucoseStored = await self.glucoseStoreAndHeartDecision(
                 glucose: bloodGlucose
             )
             completion(newBloodGlucoseStored)
         }
     }
 
-    private func glucoseStoreAndHeartDecision(glucose: [BloodGlucose]) -> Bool {
+    private func glucoseStoreAndHeartDecision(glucose: [BloodGlucose]) async -> Bool {
         guard glucose.isNotEmpty else { return false }
 
         // start background time extension
-        var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
-        backGroundFetchBGTaskID = UIApplication.shared.beginBackgroundTask(withName: "save BG starting") {
-            guard let bg = backGroundFetchBGTaskID else { return }
-            UIApplication.shared.endBackgroundTask(bg)
-            backGroundFetchBGTaskID = .invalid
+        let backgroundTaskIdBox = TaskIDBox()
+        let backgroundTimeRemaining = await MainActor.run { () -> TimeInterval in
+            backgroundTaskIdBox.id = UIApplication.shared.beginBackgroundTask(withName: "save BG starting") {
+                UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
+            }
+            return UIApplication.shared.backgroundTimeRemaining
         }
 
-        let previousLatestBG = glucoseStorage.latestDate()
-        let storedGlucose = glucoseStorage.storeGlucose(glucose)
+        let previousLatestBG = await glucoseStorage.latestDate()
+        let storedGlucose = await glucoseStorage.storeGlucose(glucose)
         let updatedLatestBG = storedGlucose.first?.dateString
 
         var newGlucoseStored = false
@@ -53,9 +52,10 @@ final class BloodGlucoseManager {
         }
 
         // end of the BG tasks
-        if let backgroundTask = backGroundFetchBGTaskID {
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            backGroundFetchBGTaskID = .invalid
+        await MainActor.run {
+            if backgroundTaskIdBox.id != .invalid {
+                UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
+            }
         }
 
         return newGlucoseStored
