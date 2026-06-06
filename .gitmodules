@@ -43,4 +43,4 @@
 [submodule "OmnipodKit"]
 	path = OmnipodKit
 	url = https://github.com/Artificial-Pancreas/OmnipodKit
-	branch = main
+	branch = jwoglom/osaid-keymanager
