@@ -1,4 +1,5 @@
 import Foundation
+import NightscoutKit
 
 struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
     enum Direction: String, JSON {
@@ -31,6 +32,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         case activationDate
         case sessionStartDate
         case transmitterID
+        case device
     }
 
     init(from decoder: Decoder) throws {
@@ -56,6 +58,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         activationDate = try container.decodeIfPresent(Date.self, forKey: .activationDate)
         sessionStartDate = try container.decodeIfPresent(Date.self, forKey: .sessionStartDate)
         transmitterID = try container.decodeIfPresent(String.self, forKey: .transmitterID)
+        device = try container.decodeIfPresent(String.self, forKey: .device)
     }
 
     init(
@@ -72,7 +75,8 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         type: String? = nil,
         activationDate: Date? = nil,
         sessionStartDate: Date? = nil,
-        transmitterID: String? = nil
+        transmitterID: String? = nil,
+        device: String? = nil,
     ) {
         self._id = _id
         self.sgv = sgv
@@ -88,6 +92,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         self.activationDate = activationDate
         self.sessionStartDate = sessionStartDate
         self.transmitterID = transmitterID
+        self.device = device
     }
 
     var _id = UUID().uuidString
@@ -109,6 +114,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
     var activationDate: Date? = nil
     var sessionStartDate: Date? = nil
     var transmitterID: String? = nil
+    var device: String? = nil
 
     var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
 

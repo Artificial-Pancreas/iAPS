@@ -54,11 +54,15 @@ struct StateBGQuery: EntityQuery {
 }
 
 final class StateIntentRequest: BaseIntentsRequest {
-    func getLastBG() throws -> (dateGlucose: Date, glucose: String, trend: String, delta: String) {
-        let glucose = glucoseStorage.retrieve()
+    func getLastBG() async throws -> (dateGlucose: Date, glucose: String, trend: String, delta: String) {
+        let glucose = await glucoseStorage.retrieve()
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { throw StateIntentError.NoBG }
         let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
-        let units = settingsManager.settings.units
+
+        let settings = await settingsManager.settings
+        let units = settings.units
+
+        let glucoseFormatter = self.glucoseFormatter(settings)
 
         let glucoseText = glucoseFormatter
             .string(from: Double(
@@ -68,7 +72,7 @@ final class StateIntentRequest: BaseIntentsRequest {
         let directionText = lastGlucose.direction?.rawValue ?? "none"
         let deltaText = delta
             .map {
-                self.deltaFormatter
+                Self.deltaFormatter
                     .string(from: Double(
                         units == .mmolL ? $0
                             .asMmolL : Decimal($0)
@@ -78,7 +82,8 @@ final class StateIntentRequest: BaseIntentsRequest {
         return (lastGlucose.dateString, glucoseText, directionText, deltaText)
     }
 
-    func getIOB_COB() throws -> (iob: Double, cob: Double) {
+    func getIOB_COB() async throws -> (iob: Double, cob: Double) {
+        let suggestion = await fileStorage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         let iob = suggestion?.iob ?? 0.0
         let cob = suggestion?.cob ?? 0.0
         let iob_double = Double(truncating: iob as NSNumber)
@@ -86,27 +91,35 @@ final class StateIntentRequest: BaseIntentsRequest {
         return (iob_double, cob_double)
     }
 
-    private var suggestion: Suggestion? {
-        fileStorage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+    private func glucoseFormatter(_ settings: FreeAPSSettings) -> NumberFormatter {
+        switch settings.units {
+        case .mmolL: return Self.glucoseFormatterMmol
+        case .mgdL: return Self.glucoseFormatterMgdl
+        }
     }
 
-    private var glucoseFormatter: NumberFormatter {
+    private static let glucoseFormatterMmol = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.roundingMode = .halfUp
+        return formatter
+    }()
+
+    private static let glucoseFormatterMgdl = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        if settingsManager.settings.units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-        }
         formatter.roundingMode = .halfUp
         return formatter
-    }
+    }()
 
-    private var deltaFormatter: NumberFormatter {
+    private static let deltaFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+"
         return formatter
-    }
+    }()
 }

@@ -2,4 +2,4 @@ enum NotificationsConfig {
     enum Config {}
 }
 
-protocol NotificationsConfigProvider {}
+protocol NotificationsConfigProvider: Provider {}

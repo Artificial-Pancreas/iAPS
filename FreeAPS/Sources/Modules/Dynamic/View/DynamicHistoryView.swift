@@ -12,49 +12,60 @@ struct DynamicHistoryView: View {
         predicate: NSPredicate(format: "date > %@", DateFilter.day.startDate)
     ) var reasons: FetchedResults<Reasons>
 
-    private var formatter: NumberFormatter {
+    private static let formatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = "."
         return formatter
-    }
+    }()
 
-    private var tddFormatter: NumberFormatter {
+    private static let tddFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = "."
         formatter.maximumFractionDigits = 1
         return formatter
-    }
+    }()
 
     private var glucoseFormatter: NumberFormatter {
+        switch units {
+        case .mmolL: return Self.glucoseFormatterMmol
+        case .mgdL: return Self.glucoseFormatterMgdl
+        }
+    }
+
+    private static let glucoseFormatterMmol = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = "."
-        if units == .mmolL {
-            formatter.maximumFractionDigits = 1
-            formatter.minimumFractionDigits = 1
-        } else {
-            formatter.maximumFractionDigits = 0
-        }
+        formatter.maximumFractionDigits = 1
+        formatter.minimumFractionDigits = 1
         return formatter
-    }
+    }()
 
-    private var reqFormatter: NumberFormatter {
+    private static let glucoseFormatterMgdl = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = "."
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }()
+
+    private static let reqFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = "."
         formatter.maximumFractionDigits = 2
         return formatter
-    }
+    }()
 
-    private var dateFormatter: DateFormatter {
+    private static let dateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "sv")
         formatter.dateStyle = .none
         formatter.timeStyle = .short
         return formatter
-    }
+    }()
 
     var body: some View {
         history
@@ -116,7 +127,7 @@ struct DynamicHistoryView: View {
                         let dynamicReasons = [
                             glucoseFormatter.string(from: isf as NSNumber) ?? "",
                             glucoseFormatter.string(from: cr as NSNumber) ?? "",
-                            (item.tdd ?? 0) != 0 ? (tddFormatter.string(from: (item.tdd ?? 0) as NSNumber) ?? "") : "--"
+                            (item.tdd ?? 0) != 0 ? (Self.tddFormatter.string(from: (item.tdd ?? 0) as NSNumber) ?? "") : "--"
                         ]
 
                         let proMaxInset: CGFloat =
@@ -128,7 +139,7 @@ struct DynamicHistoryView: View {
                         Grid(horizontalSpacing: 0) {
                             GridRow {
                                 // Time
-                                Text(dateFormatter.string(from: item.date ?? Date()))
+                                Text(Self.dateFormatter.string(from: item.date ?? Date()))
                                     .foregroundStyle(.primary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 // Glucose
@@ -140,7 +151,7 @@ struct DynamicHistoryView: View {
                                     .foregroundStyle(Color(.basal))
                                     .frame(maxWidth: .infinity, alignment: .leading).offset(x: -1)
                                 // Ratio
-                                Text(tddFormatter.string(from: item.ratio ?? 1) ?? "").foregroundStyle(.red)
+                                Text(Self.tddFormatter.string(from: item.ratio ?? 1) ?? "").foregroundStyle(.red)
                                     .activeOverride(item.override)
                                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -153,18 +164,18 @@ struct DynamicHistoryView: View {
                                     .foregroundStyle(.orange)
                                     .frame(maxWidth: .infinity, alignment: .center)
                                 // Insunlin Required
-                                let insReqString = reqFormatter.string(from: (item.insulinReq ?? 0) as NSNumber) ?? ""
+                                let insReqString = Self.reqFormatter.string(from: (item.insulinReq ?? 0) as NSNumber) ?? ""
                                 Text(insReqString != "0.00" ? insReqString : "0  ")
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                 // Basal Rate
-                                Text(formatter.string(from: (item.rate ?? 0) as NSNumber) ?? "")
+                                Text(Self.formatter.string(from: (item.rate ?? 0) as NSNumber) ?? "")
                                     .foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .trailing).offset(x: 5)
                                 // SMBs
                                 Text(
                                     (item.smb ?? 0) != 0 ?
-                                        "\(formatter.string(from: (item.smb ?? 0) as NSNumber) ?? "")"
+                                        "\(Self.formatter.string(from: (item.smb ?? 0) as NSNumber) ?? "")"
                                         : "   "
                                 ).foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .trailing)

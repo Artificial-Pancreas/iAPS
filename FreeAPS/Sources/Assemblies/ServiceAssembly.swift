@@ -6,11 +6,8 @@ import Swinject
 final class ServiceAssembly: Assembly {
     func assemble(container: Container) {
         container.register(AppCoordinator.self) { _ in AppCoordinator() }
-        container
-            .register(DisplayGlucosePreference.self) { _ in
-                DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter) }
         container.register(NotificationCenter.self) { _ in Foundation.NotificationCenter.default }
-        container.register(Broadcaster.self) { _ in BaseBroadcaster() }
+//        container.register(Broadcaster.self) { _ in BaseBroadcaster() }
         container.register(GroupedIssueReporter.self) { _ in
             let reporter = CollectionIssueReporter()
             reporter.add(reporters: [

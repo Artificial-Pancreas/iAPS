@@ -69,6 +69,13 @@ extension ContactTrick {
                         )
                     }
 
+                case .limited:
+                    Section {
+                        Text(
+                            "Access to contacts is limited"
+                        )
+                    }
+
                 @unknown default:
                     Section {
                         Text(

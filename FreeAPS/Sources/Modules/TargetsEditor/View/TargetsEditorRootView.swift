@@ -64,23 +64,19 @@ extension TargetsEditor {
                     }
                     HStack(spacing: 0) {
                         Picker(selection: $state.items[index].lowIndex, label: EmptyView()) {
-                            ForEach(0 ..< state.rateValues.count, id: \.self) { i in
+                            ForEach(Array(state.rateValues.enumerated()), id: \.offset) { i, rate in
                                 Text(
-                                    self.rateFormatter
-                                        .string(from: state.rateValues[i] as NSNumber) ?? ""
+                                    self.rateFormatter.string(from: rate as NSNumber) ?? ""
                                 ).tag(i)
                             }
                         }
                         .frame(maxWidth: geometry.size.width / 3)
                         .clipped()
                         Picker(selection: $state.items[index].timeIndex, label: EmptyView()) {
-                            ForEach(0 ..< state.timeValues.count, id: \.self) { i in
+                            ForEach(Array(state.timeValues.enumerated()), id: \.offset) { i, time in
                                 Text(
                                     self.dateFormatter
-                                        .string(from: Date(
-                                            timeIntervalSince1970: state
-                                                .timeValues[i]
-                                        ))
+                                        .string(from: Date(timeIntervalSince1970: time))
                                 ).tag(i)
                             }
                         }
@@ -120,14 +116,10 @@ extension TargetsEditor {
 
             switch editMode {
             case .inactive:
-                return AnyView(Button(action: onAdd) { Text("Add") })
+                return AnyView(Button(action: state.add) { Text("Add") })
             default:
                 return AnyView(EmptyView())
             }
-        }
-
-        func onAdd() {
-            state.add()
         }
 
         private func onDelete(offsets: IndexSet) {

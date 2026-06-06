@@ -1,6 +1,6 @@
 import Foundation
 
-struct Battery: JSON {
+struct Battery: JSON, Equatable, Sendable {
     let percent: Int?
     let voltage: Decimal?
     let string: BatteryState

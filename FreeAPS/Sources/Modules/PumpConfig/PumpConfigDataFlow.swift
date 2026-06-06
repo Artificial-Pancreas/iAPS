@@ -1,4 +1,3 @@
-import Combine
 import LoopKit
 import LoopKitUI
 
@@ -18,12 +17,4 @@ enum PumpConfig {
     }
 }
 
-struct PumpDisplayState {
-    let name: String
-    let image: UIImage?
-}
-
-protocol PumpConfigProvider: Provider {
-    func pumpSettings() -> PumpSettings
-    func basalProfile() -> [BasalProfileEntry]
-}
+protocol PumpConfigProvider: Provider {}

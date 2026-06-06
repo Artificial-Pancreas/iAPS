@@ -3,7 +3,7 @@ import Foundation
 import Intents
 import Swinject
 
-struct tempPreset: AppEntity, Identifiable {
+struct TempPreset: AppEntity, Identifiable {
     static let defaultQuery = tempPresetsQuery()
 
     let id: UUID
@@ -18,8 +18,8 @@ struct tempPreset: AppEntity, Identifiable {
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Presets"
 
-    static func convert(_ tempTarget: TempTarget) -> tempPreset {
-        tempPreset(
+    static func convert(_ tempTarget: TempTarget) -> TempPreset {
+        TempPreset(
             id: UUID(uuidString: tempTarget.id)!,
             name: tempTarget.displayName,
             targetTop: tempTarget.targetTop,

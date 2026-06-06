@@ -5,15 +5,12 @@ import Swinject
 
 struct AddCarbPresentIntent: AppIntent {
     // Title of the action in the Shortcuts app
-    static var title: LocalizedStringResource = "Add carbs"
+    static let title: LocalizedStringResource = "Add carbs"
 
     // Description of the action in the Shortcuts app
-    static var description = IntentDescription("Allow to add carbs in iAPS.")
-
-    internal var carbRequest: CarbPresetIntentRequest
+    static let description = IntentDescription("Allow to add carbs in iAPS.")
 
     init() {
-        carbRequest = CarbPresetIntentRequest()
         dateAdded = Date()
     }
 
@@ -74,34 +71,32 @@ struct AddCarbPresentIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        do {
-            let quantityCarbs: Double
-            if let cq = carbQuantity {
-                quantityCarbs = cq
-            } else {
-                quantityCarbs = try await $carbQuantity.requestValue("How many carbs ?")
-            }
-
-            let quantityCarbsName = quantityCarbs.description
-            if confirmBeforeApplying {
-                try await requestConfirmation(
-                    result: .result(dialog: "Are you sure to add \(quantityCarbsName) g of carbs ?")
-                )
-            }
-
-            let finalQuantityCarbsDisplay = try carbRequest.addCarbs(
-                quantityCarbs,
-                fatQuantity,
-                proteinQuantity,
-                fiberQuantity,
-                dateAdded
-            )
-            return .result(
-                dialog: IntentDialog(stringLiteral: finalQuantityCarbsDisplay)
-            )
-
-        } catch {
-            throw error
+        let quantityCarbs: Double
+        if let cq = carbQuantity {
+            quantityCarbs = cq
+        } else {
+            quantityCarbs = try await $carbQuantity.requestValue("How many carbs ?")
         }
+
+        let quantityCarbsName = quantityCarbs.description
+        if confirmBeforeApplying {
+            // deprecated, but the fix is iOS 18+ only
+            try await requestConfirmation(
+                result: .result(dialog: "Are you sure to add \(quantityCarbsName) g of carbs ?")
+            )
+        }
+
+        let carbRequest = CarbPresetIntentRequest()
+
+        let finalQuantityCarbsDisplay = try await carbRequest.addCarbs(
+            quantityCarbs,
+            fatQuantity,
+            proteinQuantity,
+            fiberQuantity,
+            dateAdded
+        )
+        return .result(
+            dialog: IntentDialog(stringLiteral: finalQuantityCarbsDisplay)
+        )
     }
 }

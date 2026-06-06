@@ -188,7 +188,11 @@ extension AddCarbs {
         @ViewBuilder private func cancelDialogActions() -> some View {
             Button("Discard", role: .destructive) {
                 state.hideModal()
-                if editMode { state.apsManager.determineBasalSync() }
+                if editMode {
+                    Task {
+                        _ = await state.apsManager.determineBasal(temporaryCarbs: nil)
+                    }
+                }
             }
             Button("Cancel", role: .cancel) {}
         }
@@ -1091,7 +1095,11 @@ extension AddCarbs {
 
             // Otherwise, just dismiss
             state.hideModal()
-            if editMode { state.apsManager.determineBasalSync() }
+            if editMode {
+                Task {
+                    _ = await state.apsManager.determineBasal(temporaryCarbs: nil)
+                }
+            }
         }
 
         private var editView: some View {

@@ -27,31 +27,28 @@ struct SuspendResumeIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        do {
-            let modeToApply: PumpMode
-            if let selection = mode {
-                modeToApply = selection
-            } else {
-                modeToApply = try await $mode.requestDisambiguation(
-                    among: whichMode(),
-                    dialog: "Choose what to do with your pump"
-                )
-            }
-
-            let displayName: String = modeToApply.rawValue
-            if confirmBeforeApplying {
-                try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to \(displayName)?")
-                )
-            }
-
-            let confirmation = try SuspendResumeIntentRequest().setMode(modeToApply)
-            return .result(
-                dialog: IntentDialog(stringLiteral: confirmation)
+        let modeToApply: PumpMode
+        if let selection = mode {
+            modeToApply = selection
+        } else {
+            modeToApply = try await $mode.requestDisambiguation(
+                among: whichMode(),
+                dialog: "Choose what to do with your pump"
             )
-        } catch {
-            throw error
         }
+
+        let displayName: String = modeToApply.rawValue
+        if confirmBeforeApplying {
+            // deprecated, but the fix is iOS 18+ only
+            try await requestConfirmation(
+                result: .result(dialog: "Are you sure you want to \(displayName)?")
+            )
+        }
+
+        let confirmation = try SuspendResumeIntentRequest().setMode(modeToApply)
+        return .result(
+            dialog: IntentDialog(stringLiteral: confirmation)
+        )
     }
 
     func whichMode() -> [PumpMode] {
@@ -63,12 +60,15 @@ final class SuspendResumeIntentRequest: BaseIntentsRequest {
     func setMode(_ mode: PumpMode) throws -> String {
         let resultDisplay: String =
             NSLocalizedString("Pump command", comment: "") + " \(mode) " + NSLocalizedString("enacted in iAPS", comment: "")
-        if mode == PumpMode.resume {
-            apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:resume"))
-        } else if mode == PumpMode.suspend {
-            apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:suspend"))
-        } else if mode == PumpMode.cancel {
-            apsManager.enactTempBasal(rate: 0, duration: 0)
+        Task {
+            if mode == PumpMode.resume {
+                _ = await apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:resume"))
+            } else if mode == PumpMode.suspend {
+                _ = await apsManager
+                    .enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:suspend"))
+            } else if mode == PumpMode.cancel {
+                _ = await apsManager.enactTempBasal(rate: 0, duration: 0)
+            }
         }
         return resultDisplay
     }

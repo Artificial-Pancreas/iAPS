@@ -14,23 +14,23 @@ extension PumpConfig {
         var body: some View {
             NavigationView {
                 Form {
-                    if let pumpManager = state.deviceManager.pumpManager, pumpManager.isOnboarded {
+                    if let pumpInfo = state.pumpInfo, pumpInfo.isOnboarded {
                         Section(header: Text("Model")) {
                             Button {
-                                state.setupPump(pumpManager.pluginIdentifier)
+                                state.showCurrentPumpSettings()
                             } label: {
                                 HStack {
-                                    Image(uiImage: pumpManager.smallImage ?? UIImage())
+                                    Image(uiImage: pumpInfo.image ?? UIImage())
                                         .resizable()
                                         .scaledToFit()
                                         .padding()
                                         .frame(maxWidth: 100)
-                                    Text(pumpManager.localizedTitle)
+                                    Text(pumpInfo.name)
                                 }
                             }
                         }
                         Section {
-                            if let status = pumpManager.pumpStatusHighlight?.localizedMessage {
+                            if let status = state.pumpManagerStatus?.statusHighlight {
                                 HStack {
                                     Text(status.replacingOccurrences(of: "\n", with: " "))
                                 }
@@ -50,7 +50,7 @@ extension PumpConfig {
                             ForEach(state.deviceManager.availablePumpManagers, id: \.identifier) { pump in
                                 VStack(alignment: .leading) {
                                     Button("Add " + pump.localizedTitle) {
-                                        state.setupPump(pump.identifier)
+                                        state.setupNewPump(pump.identifier)
                                     }
                                 }
                             }
@@ -62,21 +62,19 @@ extension PumpConfig {
                 .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $state.pumpSetupPresented) {
                     if let pumpIdentifier = state.pumpIdentifierToSetUp {
-                        if let pumpManager = state.deviceManager.pumpManager, pumpManager.isOnboarded {
-                            PumpSettingsView(
-                                pumpManager: pumpManager,
-                                deviceManager: state.deviceManager,
-                                completionDelegate: state
-                            )
-                        } else {
-                            PumpSetupView(
-                                pumpIdentifier: pumpIdentifier,
-                                pumpInitialSettings: state.initialSettings,
-                                deviceManager: state.deviceManager,
-                                completionDelegate: state
-                            )
-                        }
+                        PumpSetupView(
+                            pumpIdentifier: pumpIdentifier,
+                            pumpInitialSettings: state.initialSettings,
+                            deviceManager: state.deviceManager,
+                            completionDelegate: state
+                        )
                     }
+                }
+                .sheet(isPresented: $state.pumpSettingsPresented) {
+                    PumpSettingsView(
+                        deviceManager: state.deviceManager,
+                        completionDelegate: state
+                    )
                 }
             }
         }

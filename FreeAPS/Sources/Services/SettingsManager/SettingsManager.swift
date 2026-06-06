@@ -1,72 +1,88 @@
 import Foundation
 import LoopKit
-import LoopKitUI
 import Swinject
 
-protocol SettingsManager: AnyObject {
-    var settings: FreeAPSSettings { get set }
-    var preferences: Preferences { get }
-    var pumpSettings: PumpSettings { get }
-    func updateInsulinCurve(_ insulinType: InsulinType?)
+protocol SettingsManager: AnyObject, Sendable {
+    var settings: FreeAPSSettings { get async }
+    var preferences: Preferences { get async }
+    var pumpSettings: PumpSettings { get async }
+
+    func updateInsulinCurve(_ insulinType: InsulinType?) async
+    func updateSettings(_ settings: FreeAPSSettings) async
+    @discardableResult func updateSettings(_ update: @Sendable(FreeAPSSettings) -> FreeAPSSettings) async -> FreeAPSSettings
+    func updatePumpSettings(_ settings: PumpSettings) async
+    func updatePreferences(_ settings: Preferences) async
 }
 
-protocol SettingsObserver {
-    func settingsDidChange(_: FreeAPSSettings)
-}
+// protocol SettingsObserver {
+//    func settingsDidChange(_: FreeAPSSettings)
+// }
 
-final class BaseSettingsManager: SettingsManager, Injectable {
-    @Injected() var displayGlucosePreference: DisplayGlucosePreference!
-    @Injected() var broadcaster: Broadcaster!
-    @Injected() var storage: FileStorage!
+extension InsulinType: @retroactive @unchecked Sendable {}
 
-    @SyncAccess var settings: FreeAPSSettings {
-        didSet {
-            if oldValue != settings {
-                save()
-                if oldValue.units != settings.units {
-                    updateDisplayGlucosePreference()
-                }
-                DispatchQueue.main.async {
-                    self.broadcaster.notify(SettingsObserver.self, on: .main) {
-                        $0.settingsDidChange(self.settings)
-                    }
-                }
+actor BaseSettingsManager: SettingsManager {
+    private let storage: FileStorage
+    private let appCoordinator: AppCoordinator
+
+    private var cachedSettings: FreeAPSSettings?
+    private var cachedPreferences: Preferences?
+    private var cachedPumpSettings: PumpSettings?
+
+    var settings: FreeAPSSettings {
+        get async {
+            if let cachedSettings {
+                return cachedSettings
             }
+            let retrievedSettings = await storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
+                ?? FreeAPSSettings(from: OpenAPS.defaults(for: OpenAPS.FreeAPS.settings))
+                ?? FreeAPSSettings()
+            cachedSettings = retrievedSettings
+            return retrievedSettings
+        }
+    }
+
+    var preferences: Preferences {
+        get async {
+            if let cachedPreferences {
+                return cachedPreferences
+            }
+            let retrievedPreferences = await storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
+                ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
+                ?? Preferences()
+            cachedPreferences = retrievedPreferences
+            return retrievedPreferences
+        }
+    }
+
+    var pumpSettings: PumpSettings {
+        get async {
+            if let cachedPumpSettings {
+                return cachedPumpSettings
+            }
+            let retrievedPumpSettings = await storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
+                ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
+                ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
+            cachedPumpSettings = retrievedPumpSettings
+            return retrievedPumpSettings
         }
     }
 
     init(resolver: Resolver) {
-        let storage = resolver.resolve(FileStorage.self)!
-        settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
-            ?? FreeAPSSettings(from: OpenAPS.defaults(for: OpenAPS.FreeAPS.settings))
-            ?? FreeAPSSettings()
+        storage = resolver.resolve(FileStorage.self)!
+        appCoordinator = resolver.resolve(AppCoordinator.self)!
 
-        injectServices(resolver)
-        updateDisplayGlucosePreference()
+        Task {
+            let settings = await self.settings
+            await self.appCoordinator.settingsUpdates.send(settings)
+            let pumpSettings = await self.pumpSettings
+            await self.appCoordinator.pumpSettingsUpdates.send(pumpSettings)
+            let preferences = await self.preferences
+            await self.appCoordinator.preferencesUpdates.send(preferences)
+        }
     }
 
-    private func updateDisplayGlucosePreference() {
-        displayGlucosePreference.unitDidChange(to: settings.units == .mmolL ? .millimolesPerLiter : .milligramsPerDeciliter)
-    }
-
-    private func save() {
-        storage.save(settings, as: OpenAPS.FreeAPS.settings)
-    }
-
-    var preferences: Preferences {
-        storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
-            ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
-            ?? Preferences()
-    }
-
-    var pumpSettings: PumpSettings {
-        storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
-            ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
-            ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
-    }
-
-    func updateInsulinCurve(_ insulinType: InsulinType?) {
-        var prefs = preferences
+    func updateInsulinCurve(_ insulinType: InsulinType?) async {
+        var prefs = await self.preferences
 
         switch insulinType {
         case .apidra,
@@ -80,6 +96,36 @@ final class BaseSettingsManager: SettingsManager, Injectable {
         default:
             prefs.curve = .rapidActing
         }
-        storage.save(prefs, as: OpenAPS.Settings.preferences)
+        await updatePreferences(prefs)
+    }
+
+    func updateSettings(_ settings: FreeAPSSettings) async {
+        if self.cachedSettings != settings {
+            self.cachedSettings = settings
+            await storage.save(settings, as: OpenAPS.FreeAPS.settings)
+            await self.appCoordinator.settingsUpdates.send(settings)
+        }
+    }
+
+    @discardableResult func updateSettings(_ update: @Sendable(FreeAPSSettings) -> FreeAPSSettings) async -> FreeAPSSettings {
+        let updated = update(await settings)
+        await updateSettings(updated)
+        return updated
+    }
+
+    func updatePumpSettings(_ settings: PumpSettings) async {
+        if self.cachedPumpSettings != settings {
+            self.cachedPumpSettings = settings
+            await storage.save(settings, as: OpenAPS.Settings.settings)
+            await self.appCoordinator.pumpSettingsUpdates.send(settings)
+        }
+    }
+
+    func updatePreferences(_ preferences: Preferences) async {
+        if self.cachedPreferences != preferences {
+            self.cachedPreferences = preferences
+            await storage.save(preferences, as: OpenAPS.Settings.preferences)
+            await self.appCoordinator.preferencesUpdates.send(preferences)
+        }
     }
 }

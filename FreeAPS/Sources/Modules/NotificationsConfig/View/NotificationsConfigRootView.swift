@@ -53,14 +53,14 @@ extension NotificationsConfig {
             return NSLocalizedString(footer, comment: "Footer")
         }
 
-        private func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
-            guard state.alarmSound != "Silent" else { return }
+        private func playSound(_ sound: String, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
+            guard sound != "Silent" else { return }
 
             if sStop != nil {
                 AudioServicesDisposeSystemSoundID(sStop!)
                 return
             }
-            let path = "/System/Library/Audio/UISounds/" + (s ?? state.alarmSound)
+            let path = "/System/Library/Audio/UISounds/" + sound
             var theSoundID = SystemSoundID(1336)
             let soundURL = URL(string: path)
             AudioServicesCreateSystemSoundID(soundURL! as CFURL, &theSoundID)

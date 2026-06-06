@@ -22,20 +22,6 @@ extension UIUX {
             return formatter
         }
 
-        private var carbsFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 0
-            return formatter
-        }
-
-        private var insulinFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
-            return formatter
-        }
-
         var body: some View {
             Form {
                 Section {
@@ -91,7 +77,7 @@ extension UIUX {
                 Section {
                     Picker(selection: $state.lightMode, label: Text("Color Scheme")) {
                         ForEach(LightMode.allCases) { item in
-                            Text(NSLocalizedString(item.rawValue, comment: "ColorScheme Selection"))
+                            Text(NSLocalizedString(item.rawValue, comment: "ColorScheme Selection")).tag(item)
                         }
                     }
                 } header: { Text("Light / Dark Mode") }

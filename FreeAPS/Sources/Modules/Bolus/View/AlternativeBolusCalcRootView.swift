@@ -184,20 +184,22 @@ extension Bolus {
                 if state.amount > 0 {
                     Section {
                         Button {
-                            if let remoteBolus = state.remoteBolus() {
-                                remoteBolusAlert = Alert(
-                                    title: Text("A Remote Bolus Was Just Delivered!"),
-                                    message: Text(remoteBolus),
-                                    primaryButton: .destructive(Text("Bolus"), action: {
-                                        keepForNextWiew = true
-                                        state.add()
-                                    }),
-                                    secondaryButton: .cancel()
-                                )
-                                isRemoteBolusAlertPresented = true
-                            } else {
-                                keepForNextWiew = true
-                                state.add()
+                            Task {
+                                if let remoteBolus = await state.remoteBolus() {
+                                    remoteBolusAlert = Alert(
+                                        title: Text("A Remote Bolus Was Just Delivered!"),
+                                        message: Text(remoteBolus),
+                                        primaryButton: .destructive(Text("Bolus"), action: {
+                                            keepForNextWiew = true
+                                            state.add()
+                                        }),
+                                        secondaryButton: .cancel()
+                                    )
+                                    isRemoteBolusAlertPresented = true
+                                } else {
+                                    keepForNextWiew = true
+                                    state.add()
+                                }
                             }
                         }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
@@ -264,7 +266,7 @@ extension Bolus {
                 trailing: Button {
                     state.hideModal()
                     state.notActive()
-                    if fetch { state.apsManager.determineBasalSync() }
+                    if fetch { state.determineBasal() }
                 }
                 label: { Text("Cancel") }
             )

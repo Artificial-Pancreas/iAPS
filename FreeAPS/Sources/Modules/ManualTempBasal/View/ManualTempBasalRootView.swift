@@ -28,12 +28,12 @@ extension ManualTempBasal {
                         Text("U/hr").foregroundColor(.secondary)
                     }
                     Picker(selection: $state.durationIndex, label: Text("Duration")) {
-                        ForEach(0 ..< state.durationValues.count) { index in
+                        ForEach(Array(state.durationValues.enumerated()), id: \.offset) { index, value in
                             Text(
                                 String(
                                     format: "%.0f h %02.0f min",
-                                    state.durationValues[index] / 60 - 0.1,
-                                    state.durationValues[index].truncatingRemainder(dividingBy: 60)
+                                    value / 60 - 0.1,
+                                    value.truncatingRemainder(dividingBy: 60)
                                 )
                             ).tag(index)
                         }
@@ -64,7 +64,7 @@ extension ManualTempBasal {
                             comment: "Alert message when manual temp basal rate exceeds Max Basal"
                         ),
                         Double(state.rate),
-                        Double(state.settingsManager.pumpSettings.maxBasal)
+                        Double(state.maxBasal)
                     )
                 )
             }

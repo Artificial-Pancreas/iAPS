@@ -6,9 +6,9 @@ struct BasalProfileEntry: JSON, Equatable {
     let rate: Decimal
 }
 
-protocol BasalProfileObserver {
-    func basalProfileDidChange(_ basalProfile: [BasalProfileEntry])
-}
+// protocol BasalProfileObserver {
+//    func basalProfileDidChange(_ basalProfile: [BasalProfileEntry])
+// }
 
 extension BasalProfileEntry {
     private enum CodingKeys: String, CodingKey {

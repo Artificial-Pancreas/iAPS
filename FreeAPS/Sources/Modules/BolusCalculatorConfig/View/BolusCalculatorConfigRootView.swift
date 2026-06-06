@@ -122,18 +122,20 @@ extension BolusCalculatorConfig {
                             })
                     }
                     if state.allowBolusShortcut {
-                        HStack {
-                            Text(
-                                state.allowedRemoteBolusAmount > state.settingsManager.pumpSettings
-                                    .maxBolus ? "Max Bolus exceeded!" :
-                                    "Max allowed bolus amount using shortcuts "
-                            )
-                            .foregroundStyle(
-                                state.allowedRemoteBolusAmount > state.settingsManager.pumpSettings
-                                    .maxBolus ? .red : .primary
-                            )
-                            Spacer()
-                            DecimalTextField("0", value: $state.allowedRemoteBolusAmount, formatter: conversionFormatter)
+                        if let pumpSettings = state.pumpSettings {
+                            HStack {
+                                Text(
+                                    state.allowedRemoteBolusAmount > pumpSettings
+                                        .maxBolus ? "Max Bolus exceeded!" :
+                                        "Max allowed bolus amount using shortcuts "
+                                )
+                                .foregroundStyle(
+                                    state.allowedRemoteBolusAmount > pumpSettings
+                                        .maxBolus ? .red : .primary
+                                )
+                                Spacer()
+                                DecimalTextField("0", value: $state.allowedRemoteBolusAmount, formatter: conversionFormatter)
+                            }
                         }
                     }
                 } header: { Text("iOS Shortcuts") }

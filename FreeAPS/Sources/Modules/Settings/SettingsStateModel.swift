@@ -3,13 +3,14 @@ import SwiftUI
 
 extension Settings {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
+        @Injected() private var profileAndSettingsUploadManager: ProfileAndSettingsUploadManager!
         @Injected() private var nightscoutManager: NightscoutManager!
+        @Injected() private var databaseManager: DatabaseManager!
+        @Injected() private var appCoordinator: AppCoordinator!
 
         @Published var closedLoop = false
         @Published var debugOptions = false
-        @Published var animatedBackground = false
         @Published var profileID: String = "Hypo Treatment"
         @Published var allowDilution = false
         @Published var extended_overrides = false
@@ -26,17 +27,20 @@ extension Settings {
         private(set) var branch = ""
         private(set) var copyrightNotice = ""
 
-        override func subscribe() {
-            subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
-            subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
-            subscribeSetting(\.profileID, on: $profileID) { profileID = $0 }
-            subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
-            subscribeSetting(\.extended_overrides, on: $extended_overrides) { extended_overrides = $0 }
-            subscribeSetting(\.noCarbs, on: $noCarbs) { noCarbs = $0 }
-            subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { allowOneMinuteLoop = $0 }
-            subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { allowOneMinuteGlucose = $0 }
+        override func subscribe() async {
+            subscribeSetting(\.debugOptions, on: $debugOptions) { self.debugOptions = $0 }
+            subscribeSetting(\.closedLoop, on: $closedLoop) { self.closedLoop = $0 }
+            subscribeSetting(\.profileID, on: $profileID) { self.profileID = $0 }
+            subscribeSetting(\.allowDilution, on: $allowDilution) { self.allowDilution = $0 }
+            subscribeSetting(\.extended_overrides, on: $extended_overrides) { self.extended_overrides = $0 }
+            subscribeSetting(\.noCarbs, on: $noCarbs) { self.noCarbs = $0 }
+            subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { self.allowOneMinuteLoop = $0 }
+            subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { self.allowOneMinuteGlucose = $0 }
 
-            broadcaster.register(SettingsObserver.self, observer: self)
+            observe(appCoordinator.settingsUpdates) { settings in
+                await self.settingsUpdated(settings)
+            }
+
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
             versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
 
@@ -62,8 +66,12 @@ extension Settings {
             }
 
             copyrightNotice = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
+        }
 
-            subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
+        private func settingsUpdated(_ settings: FreeAPSSettings) {
+            closedLoop = settings.closedLoop
+            debugOptions = settings.debugOptions
+            allowDilution = settings.allowDilution
         }
 
         func logItems() -> [URL] {
@@ -141,13 +149,17 @@ extension Settings {
         }
 
         func uploadProfileAndSettings(_ force: Bool) {
-            NSLog("SettingsState Upload Profile and Settings")
-            nightscoutManager.uploadProfileAndSettings(force)
+            Task {
+                debug(.default, "SettingsState Upload Profile and Settings")
+                await profileAndSettingsUploadManager.uploadProfileAndSettings(force: force)
+            }
         }
 
         func uploadPreviousDayLog() {
-            NSLog("SettingsState Upload Previous Day Log")
-            nightscoutManager.uploadPreviousDayLog()
+            Task {
+                debug(.default, "SettingsState Upload Previous Day Log")
+                await databaseManager.uploadPreviousDayLog()
+            }
         }
 
         func hideSettingsModal() {
@@ -155,16 +167,10 @@ extension Settings {
         }
 
         func deleteOverrides() {
-            nightscoutManager.deleteAllNSoverrrides() // For testing
+            Task {
+                await nightscoutManager.deleteAllNSoverrrides() // For testing
+            }
         }
-    }
-}
-
-extension Settings.StateModel: SettingsObserver {
-    func settingsDidChange(_ settings: FreeAPSSettings) {
-        closedLoop = settings.closedLoop
-        debugOptions = settings.debugOptions
-        allowDilution = settings.allowDilution
     }
 }
 

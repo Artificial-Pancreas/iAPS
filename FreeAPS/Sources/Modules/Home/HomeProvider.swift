@@ -1,26 +1,44 @@
 import Foundation
 import LoopKitUI
 import SwiftDate
+import Swinject
 
 extension Home {
-    final class Provider: BaseProvider, HomeProvider {
-        @Injected() var appCoordinator: AppCoordinator!
-        @Injected() var apsManager: APSManager!
-        @Injected() var glucoseStorage: GlucoseStorage!
-        @Injected() var pumpHistoryStorage: PumpHistoryStorage!
-        @Injected() var tempTargetsStorage: TempTargetsStorage!
-        @Injected() var carbsStorage: CarbsStorage!
-        @Injected() var announcementStorage: AnnouncementsStorage!
+    final class Provider: HomeProvider, Sendable {
+        private let storage: FileStorage
+        private let appCoordinator: AppCoordinator
+        private let apsManager: APSManager
+        private let glucoseStorage: GlucoseStorage
+        private let pumpHistoryStorage: PumpHistoryStorage
+        private let tempTargetsStorage: TempTargetsStorage
+        private let carbsStorage: CarbsStorage
+        private let announcementStorage: AnnouncementsStorage
 
         let overrideStorage = OverrideStorage()
         let coreDateStorage = CoreDataStorage()
 
+        required init(resolver: Resolver) {
+            storage = resolver.resolve(FileStorage.self)!
+            appCoordinator = resolver.resolve(AppCoordinator.self)!
+            apsManager = resolver.resolve(APSManager.self)!
+            glucoseStorage = resolver.resolve(GlucoseStorage.self)!
+            pumpHistoryStorage = resolver.resolve(PumpHistoryStorage.self)!
+            tempTargetsStorage = resolver.resolve(TempTargetsStorage.self)!
+            carbsStorage = resolver.resolve(CarbsStorage.self)!
+            announcementStorage = resolver.resolve(AnnouncementsStorage.self)!
+        }
+
+        // TODO: should not be reading from the file here, app coordinator needs to always contain the current value (including on boot)
         var suggestion: Suggestion? {
-            storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+            get async {
+                await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+            }
         }
 
         var dynamicVariables: DynamicVariables? {
-            storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
+            get async {
+                await storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
+            }
         }
 
         func fetchedMeals(_ interval: NSDate) -> [Meals] {
@@ -29,27 +47,30 @@ extension Home {
             )
         }
 
-        func overrides() -> [Override] {
+        func overrides() async -> [Override] {
             overrideStorage.fetchOverrides(interval: DateFilter.day.startDate)
         }
 
-        func latestOverride() -> Override? {
+        func latestOverride() async -> Override? {
             overrideStorage.fetchLatestOverride().first
         }
 
-        func overrideHistory() -> [OverrideHistory] {
+        func overrideHistory() async -> [OverrideHistory] {
             overrideStorage.fetchOverrideHistory(interval: DateFilter.day.startDate)
         }
 
+        // TODO: should not be reading from the file here, app coordinator needs to always contain the current value (including on boot)
         var enactedSuggestion: Suggestion? {
-            storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+            get async {
+                await storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+            }
         }
 
         func iob() async throws -> Decimal? {
             await apsManager.iobSync()
         }
 
-        func reasons() -> [IOBData]? {
+        func reasons() async -> [IOBData]? {
             let reasons = coreDateStorage.fetchReasons(interval: DateFilter.day.startDate)
 
             guard reasons.count > 3 else {
@@ -66,84 +87,70 @@ extension Home {
             }
         }
 
-        func pumpTimeZone() -> TimeZone? {
-            deviceManager.pumpManager?.status.timeZone
-        }
-
         func heartbeatNow() {
             appCoordinator.sendHeartbeat()
         }
 
-        func filteredGlucose(hours: Int) -> [BloodGlucose] {
+        func filteredGlucose(hours: Int) async -> [BloodGlucose] {
             let now = Date()
             // .retrieve() will read glucose from storage and apply smoothing if needed
-            return glucoseStorage.retrieve().filter {
+            return await glucoseStorage.retrieve().filter {
                 $0.dateString.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
-        func manualGlucose(hours: Int) -> [BloodGlucose] {
+        func manualGlucose(hours: Int) async -> [BloodGlucose] {
             let now = Date()
-            return glucoseStorage.retrieve().filter {
+            return await glucoseStorage.retrieve().filter {
                 $0.type == GlucoseType.manual.rawValue &&
                     $0.dateString.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
-        func pumpHistory(hours: Int) -> [PumpHistoryEvent] {
+        func pumpHistory(hours: Int) async -> [PumpHistoryEvent] {
             let now = Date()
-            return pumpHistoryStorage.recent().filter {
+            return await pumpHistoryStorage.recent().filter {
                 $0.timestamp.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
-        func tempTargets(hours: Int) -> [TempTarget] {
+        func tempTargets(hours: Int) async -> [TempTarget] {
             let now = Date()
-            return tempTargetsStorage.recent().filter {
+            return await tempTargetsStorage.recent().filter {
                 $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
-        func tempTarget() -> TempTarget? {
-            tempTargetsStorage.current()
+        func tempTarget() async -> TempTarget? {
+            await tempTargetsStorage.current()
         }
 
-        func carbs(hours: Int) -> [CarbsEntry] {
+        func carbs(hours: Int) async -> [CarbsEntry] {
             let now = Date()
-            return carbsStorage.recent().filter {
+            return await carbsStorage.recent().filter {
                 $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now && $0.carbs > 0
             }
         }
 
-        func announcement(_ hours: Int) -> [Announcement] {
+        func announcement(_ hours: Int) async -> [Announcement] {
             let now = Date()
-            return announcementStorage.validate().filter {
+            return await announcementStorage.validate().filter {
                 $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }
 
-        func pumpSettings() -> PumpSettings {
-            storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
-                ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
-                ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
+        func autotunedBasalProfile() async -> [BasalProfileEntry] {
+            if let profile = await storage.retrieve(OpenAPS.Settings.profile, as: Autotune.self)?.basalProfile {
+                return profile
+            }
+            if let profile = await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile {
+                return profile
+            }
+            return [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
         }
 
-        func pumpBattery() -> Battery? {
-            storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
-        }
-
-        func pumpReservoir() -> Decimal? {
-            storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self)
-        }
-
-        func autotunedBasalProfile() -> [BasalProfileEntry] {
-            storage.retrieve(OpenAPS.Settings.profile, as: Autotune.self)?.basalProfile
-                ?? storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
-                ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
-        }
-
-        func basalProfile() -> [BasalProfileEntry] {
-            storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
+        func basalProfile() async -> [BasalProfileEntry] {
+            await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
                 ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
         }
     }

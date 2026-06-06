@@ -2,8 +2,11 @@ import SwiftUI
 
 extension CREditor {
     final class StateModel: BaseStateModel<Provider> {
+        @Injected() private var storage: FileStorage!
+
         @Published var items: [Item] = []
         @Published var autotune: Autotune?
+        @Published var onlyAutotuneBasals: Bool = false
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -14,14 +17,17 @@ extension CREditor {
             return lastItem.timeIndex < timeValues.count - 1
         }
 
-        override func subscribe() {
-            items = provider.profile.schedule.map { value in
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            onlyAutotuneBasals = settings.onlyAutotuneBasals
+            let profile = await retrieveProfile()
+            items = profile.schedule.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: value.ratio) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
 
-            autotune = provider.autotune
+            autotune = await retrieveAutotune()
         }
 
         func add() {
@@ -38,26 +44,47 @@ extension CREditor {
         }
 
         func save() {
-            let schedule = items.enumerated().map { _, item -> CarbRatioEntry in
-                let fotmatter = DateFormatter()
-                fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
-                fotmatter.dateFormat = "HH:mm:ss"
-                let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
-                let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = self.rateValues[item.rateIndex]
-                return CarbRatioEntry(start: fotmatter.string(from: date), offset: minutes, ratio: rate)
+            Task {
+                let schedule = items.map { item -> CarbRatioEntry in
+                    let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
+                    let minutes = Int(date.timeIntervalSince1970 / 60)
+                    let rate = self.rateValues[item.rateIndex]
+                    return CarbRatioEntry(start: Self.dateFormatter.string(from: date), offset: minutes, ratio: rate)
+                }
+                let profile = CarbRatios(units: .grams, schedule: schedule)
+                await saveProfile(profile)
             }
-            let profile = CarbRatios(units: .grams, schedule: schedule)
-            provider.saveProfile(profile)
         }
 
         func validate() {
+            let uniq = Array(Set(items))
+            let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
+            sorted.first?.timeIndex = 0
             DispatchQueue.main.async {
-                let uniq = Array(Set(self.items))
-                let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
-                sorted.first?.timeIndex = 0
                 self.items = sorted
             }
         }
+
+        private func retrieveProfile() async -> CarbRatios {
+            await storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self)
+                ?? CarbRatios(from: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios))
+                ?? CarbRatios(units: .grams, schedule: [])
+        }
+
+        private func saveProfile(_ profile: CarbRatios) async {
+            await storage.save(profile, as: OpenAPS.Settings.carbRatios)
+        }
+
+        private func retrieveAutotune() async -> Autotune? {
+            await storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+        }
+
+        private static let dateFormatter = {
+            let formatter = DateFormatter()
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "HH:mm:ss"
+            return formatter
+
+        }()
     }
 }

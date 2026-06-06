@@ -2,29 +2,30 @@ import CoreData
 import Foundation
 import Swinject
 
-final class CoreDataStorageGlucoseSaver: NewGlucoseObserver {
-    private let backgroundContext: NSManagedObjectContext
-    private let broadcaster: Broadcaster!
+final class CoreDataStorageGlucoseSaver {
+    private let appCoordinator: AppCoordinator
+
+    private var lifetime = Lifetime()
 
     init(resolver: Resolver) {
-        broadcaster = resolver.resolve(Broadcaster.self)!
-
-        backgroundContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        backgroundContext.undoManager = nil
-
+        appCoordinator = resolver.resolve(AppCoordinator.self)!
         subscribe()
     }
 
     private func subscribe() {
-        broadcaster.register(NewGlucoseObserver.self, observer: self)
+        observe(appCoordinator.newGlucoseRecords, in: &lifetime) { bloodGlucose in
+            await self.storeGlucose(bloodGlucose)
+        }
     }
 
     // nightscout backfill calls this version and waits for the `completion` callback
-    func storeGlucose(_ bloodGlucose: [BloodGlucose], completion: (() -> Void)? = nil) {
-        backgroundContext.perform {
+    func storeGlucose(_ bloodGlucose: [BloodGlucose]) async {
+        let backgroundContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        backgroundContext.undoManager = nil
+
+        await backgroundContext.perform {
             guard let earliestDate = bloodGlucose.min(by: { $0.dateString < $1.dateString }).map(\.dateString) else {
-                completion?()
                 return
             }
             do {
@@ -33,7 +34,7 @@ final class CoreDataStorageGlucoseSaver: NewGlucoseObserver {
                     format: "%K >= %@", #keyPath(Readings.date), earliestDate.addingTimeInterval(-60) as NSDate
                 )
 
-                let existing = try self.backgroundContext.fetch(requestReadings)
+                let existing = try backgroundContext.fetch(requestReadings)
                 var existingDates = existing.compactMap(\.date)
 
                 for bg in bloodGlucose {
@@ -43,22 +44,16 @@ final class CoreDataStorageGlucoseSaver: NewGlucoseObserver {
                         continue
                     }
                     existingDates.append(bg.dateString)
-                    let dataForForStats = Readings(context: self.backgroundContext)
+                    let dataForForStats = Readings(context: backgroundContext)
                     dataForForStats.date = bg.dateString
                     dataForForStats.glucose = Int16(glucose)
                     dataForForStats.id = bg.id
                     dataForForStats.direction = bg.direction?.symbol ?? "↔︎"
                 }
-                try self.backgroundContext.save()
-                completion?()
+                try backgroundContext.save()
             } catch {
                 debug(.service, "failed to save glucose to core data: \(error)")
-                completion?()
             }
         }
-    }
-
-    func newGlucoseStored(_ bloodGlucose: [BloodGlucose]) {
-        storeGlucose(bloodGlucose)
     }
 }

@@ -2,9 +2,11 @@ import SwiftUI
 
 extension TargetsEditor {
     final class StateModel: BaseStateModel<Provider> {
+        @Injected() private var storage: FileStorage!
+
         @Published var items: [Item] = []
 
-        let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
+        let timeValues = stride(from: 0.0, to: TimeInterval.days(1), by: TimeInterval.minutes(30)).map { $0 }
 
         var rateValues: [Decimal] {
             switch units {
@@ -22,8 +24,8 @@ extension TargetsEditor {
 
         private(set) var units: GlucoseUnits = .mmolL
 
-        override func subscribe() {
-            let profile = provider.profile
+        override func subscribe() async {
+            let profile = await retrieveProfile()
             units = profile.units
             items = profile.targets.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
@@ -49,34 +51,49 @@ extension TargetsEditor {
         }
 
         func save() {
-            let targets = items.map { item -> BGTargetEntry in
-                let formatter = DateFormatter()
-                formatter.timeZone = TimeZone(secondsFromGMT: 0)
-                formatter.dateFormat = "HH:mm:ss"
-                let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
-                let minutes = Int(date.timeIntervalSince1970 / 60)
-                let low = self.rateValues[item.lowIndex]
-                let high = low
-                return BGTargetEntry(low: low, high: high, start: formatter.string(from: date), offset: minutes)
+            Task {
+                let targets = items.map { item -> BGTargetEntry in
+                    let formatter = DateFormatter()
+                    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+                    formatter.dateFormat = "HH:mm:ss"
+                    let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
+                    let minutes = Int(date.timeIntervalSince1970 / 60)
+                    let low = self.rateValues[item.lowIndex]
+                    let high = low
+                    return BGTargetEntry(low: low, high: high, start: formatter.string(from: date), offset: minutes)
+                }
+                let settings = await settingsManager.settings
+                let profile = BGTargets(units: units, userPrefferedUnits: settings.units, targets: targets)
+                await saveProfile(profile)
             }
-            let profile = BGTargets(units: units, userPrefferedUnits: settingsManager.settings.units, targets: targets)
-            provider.saveProfile(profile)
         }
 
         func validate() {
-            DispatchQueue.main.async {
+            Task {
                 let uniq = Array(Set(self.items))
                 let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
                     .map { item -> Item in
                         Item(lowIndex: item.lowIndex, highIndex: item.highIndex, timeIndex: item.timeIndex)
                     }
                 sorted.first?.timeIndex = 0
+
                 self.items = sorted
 
                 if self.items.isEmpty {
-                    self.units = self.settingsManager.settings.units
+                    let settings = await settingsManager.settings
+                    self.units = settings.units
                 }
             }
+        }
+
+        private func retrieveProfile() async -> BGTargets {
+            await storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
+                ?? BGTargets(from: OpenAPS.defaults(for: OpenAPS.Settings.bgTargets))
+                ?? BGTargets(units: .mmolL, userPrefferedUnits: .mmolL, targets: [])
+        }
+
+        private func saveProfile(_ profile: BGTargets) async {
+            await storage.save(profile, as: OpenAPS.Settings.bgTargets)
         }
     }
 }

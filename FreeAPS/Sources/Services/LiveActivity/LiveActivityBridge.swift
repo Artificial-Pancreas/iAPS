@@ -62,7 +62,6 @@ extension LiveActivityAttributes.ContentState {
         let cobString = Self.carbFormatter((suggestion.cob ?? 0) as NSNumber)
         let iobString = Self.formatter((iob ?? 0) as NSNumber)
         let eventual = Self.formatGlucose(suggestion.eventualBG ?? 100, mmol: mmol, forceSign: false)
-        let mmol = mmol
 
         let activityPredictions: LiveActivityAttributes.ActivityPredictions?
         if let predictions = predictions, let bgDate = bg?.date {
@@ -136,9 +135,11 @@ private struct ActiveActivity {
              .ended,
              .stale:
             return true
-        case .active: break
+        case .active,
+             .pending:
+            break
         @unknown default:
-            return true
+            break
         }
 
         return -startDate.timeIntervalSinceNow >
@@ -146,110 +147,191 @@ private struct ActiveActivity {
     }
 }
 
-final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var storage: FileStorage!
-    @Injected() private var broadcaster: Broadcaster!
+final class LiveActivityBridge: Injectable, Sendable {
+    private let settingsManager: SettingsManager
+    private let storage: FileStorage
+    private let appCoordinator: AppCoordinator
 
     private let coreDataStorage = CoreDataStorage()
 
     private let activityAuthorizationInfo = ActivityAuthorizationInfo()
     @Published private(set) var systemEnabled: Bool
 
-    private var settings: FreeAPSSettings {
-        settingsManager.settings
-    }
+    private var lifetime = Lifetime()
 
     private var knownSettings: FreeAPSSettings?
 
     private var currentActivity: ActiveActivity?
-    private var latestGlucose: Readings?
-    private var loopDate: Date?
     private var suggestion: Suggestion?
-    private var iob: Decimal?
+    private var enactedSuggestion: Suggestion?
+    private var iob: IOBTick0?
 
     init(resolver: Resolver) {
+        settingsManager = resolver.resolve(SettingsManager.self)!
+        storage = resolver.resolve(FileStorage.self)!
+        appCoordinator = resolver.resolve(AppCoordinator.self)!
+
         systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
 
         injectServices(resolver)
-        broadcaster.register(SuggestionObserver.self, observer: self)
-        broadcaster.register(EnactedSuggestionObserver.self, observer: self)
-        broadcaster.register(PumpHistoryObserver.self, observer: self)
 
-        Foundation.NotificationCenter.default.addObserver(
-            forName: UIApplication.didEnterBackgroundNotification,
-            object: nil,
-            queue: nil
-        ) { _ in
-            self.forceActivityUpdate()
+        Task {
+            await subscribe()
         }
+    }
 
-        Foundation.NotificationCenter.default.addObserver(
-            forName: UIApplication.didBecomeActiveNotification,
-            object: nil,
-            queue: nil
-        ) { _ in
-            self.forceActivityUpdate()
-        }
-
+    private func subscribe() async {
+        let settings = await settingsManager.settings
         knownSettings = settings
-        broadcaster.register(SettingsObserver.self, observer: self)
+
+        suggestion = await storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
+        enactedSuggestion = await storage.retrieveFile(OpenAPS.Enact.enacted, as: Suggestion.self)
+        iob = coreDataStorage.fetchLatestInsulinData()
+
+        observe(appCoordinator.enactedSuggestions, in: &lifetime) { enactedSuggestion in
+            await self.newEnactedSuggestion(enactedSuggestion)
+        }
+        observe(appCoordinator.suggestions, in: &lifetime) { suggestion in
+            await self.newSuggestion(suggestion)
+        }
+        observe(appCoordinator.pumpHistoryUpdates, in: &lifetime) { pumpHistory in
+            await self.pumpHistoryUpdated(pumpHistory)
+        }
+        observe(appCoordinator.settingsUpdates, in: &lifetime) { newSettings in
+            await self.settingsUpdated(newSettings)
+        }
+
+        observe(notification: UIApplication.didEnterBackgroundNotification, in: &lifetime) {
+            await self.forceActivityUpdate()
+        }
+
+        observe(notification: UIApplication.didBecomeActiveNotification, in: &lifetime) {
+            await self.forceActivityUpdate()
+        }
 
         monitorForLiveActivityAuthorizationChanges()
     }
 
-    func settingsDidChange(_ newSettings: FreeAPSSettings) {
-        if let knownSettings = self.knownSettings {
-            if newSettings.useLiveActivity != knownSettings.useLiveActivity ||
-                newSettings.liveActivityChart != knownSettings.liveActivityChart ||
-                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions ||
-                newSettings.liveActivityWatchChart != knownSettings.liveActivityWatchChart ||
-                newSettings.liveActivityWatchPredictions != knownSettings.liveActivityWatchPredictions ||
-                newSettings.liveActivityWatchDelta != knownSettings.liveActivityWatchDelta
+    private func newEnactedSuggestion(_ enactedSuggestion: Suggestion) async {
+        self.enactedSuggestion = enactedSuggestion
+        await updateActivityContent()
+    }
+
+    private func newSuggestion(_ suggestion: Suggestion) async {
+        self.suggestion = suggestion
+        await updateActivityContent()
+    }
+
+    private func pumpHistoryUpdated(_: [PumpHistoryEvent]) async {
+        iob = coreDataStorage.fetchLatestInsulinData()
+        await updateActivityContent()
+    }
+
+    private func settingsUpdated(_ newSettings: FreeAPSSettings) async {
+        let oldSettings = knownSettings
+        knownSettings = newSettings
+        if let oldSettings {
+            if newSettings.useLiveActivity != oldSettings.useLiveActivity ||
+                newSettings.liveActivityChart != oldSettings.liveActivityChart ||
+                newSettings.liveActivityChartShowPredictions != oldSettings.liveActivityChartShowPredictions ||
+                newSettings.liveActivityWatchChart != oldSettings.liveActivityWatchChart ||
+                newSettings.liveActivityWatchPredictions != oldSettings.liveActivityWatchPredictions ||
+                newSettings.liveActivityWatchDelta != oldSettings.liveActivityWatchDelta
             {
                 print("live activity settings changed")
-                forceActivityUpdate(force: true)
+                await forceActivityUpdate(force: true)
             }
         }
-        knownSettings = newSettings
     }
 
     private func monitorForLiveActivityAuthorizationChanges() {
         Task {
             for await activityState in activityAuthorizationInfo.activityEnablementUpdates {
                 if activityState != systemEnabled {
-                    await MainActor.run {
-                        systemEnabled = activityState
+                    systemEnabled = activityState
+                    if systemEnabled {
+                        await self.forceActivityUpdate(force: true)
+                    } else {
+                        currentActivity = nil
                     }
                 }
             }
-        }
+        }.store(in: &lifetime)
     }
 
     /// creates and tries to present a new activity update from the current Suggestion values if live activities are enabled in settings
     /// Ends existing live activities if live activities are not enabled in settings
-    private func forceActivityUpdate(force: Bool = false) {
+    private func forceActivityUpdate(force: Bool = false) async {
+        guard let knownSettings, systemEnabled else { return }
         // just before app resigns active, show a new activity
         // only do this if there is no current activity or the current activity is older than 1h
-        if settings.useLiveActivity {
-            if force || currentActivity?.needsRecreation() ?? true,
-               let suggestion = storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
-            {
-                suggestionDidUpdate(suggestion)
+        if knownSettings.useLiveActivity {
+            if force || currentActivity?.needsRecreation() ?? true {
+                await updateActivityContent()
             }
         } else {
-            Task {
-                await self.endActivity()
-            }
+            await endActivity()
         }
     }
 
+    private func updateActivityContent() async {
+        guard let settings = knownSettings, systemEnabled else { return }
+
+        guard settings.useLiveActivity else {
+            if currentActivity != nil {
+                await endActivity()
+            }
+            return
+        }
+
+        let theSuggestion: Suggestion
+        let loopDate: Date
+        var iobValue: Decimal?
+
+        // TODO: this check should be like this instead:
+        // IF enactedSuggestion AND ((NOT suggestion) OR (suggestion is older than enactedSuggestion))
+        if let enactedSuggestion {
+            theSuggestion = enactedSuggestion
+            iobValue = enactedSuggestion.iob
+            if enactedSuggestion.recieved ?? false {
+                loopDate = enactedSuggestion.timestamp ?? .distantPast
+            } else {
+                loopDate = coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
+            }
+        } else if let suggestion {
+            theSuggestion = suggestion
+            iobValue = suggestion.iob
+            if settings.closedLoop {
+                loopDate = coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
+            } else {
+                loopDate = suggestion.timestamp ?? .distantPast
+            }
+        } else {
+            return
+        }
+
+        if let iob, iobValue == nil || iob.time > loopDate {
+            iobValue = iob.iob
+        }
+
+        guard let content = buildContentState(
+            settings: settings,
+            suggestion: theSuggestion,
+            iob: iobValue,
+            loopDate: loopDate
+        ) else {
+            return
+        }
+        await pushUpdate(content, settings: settings)
+    }
+
     /// attempts to present this live activity state, creating a new activity if none exists yet
-    @MainActor private func pushUpdate(_ state: LiveActivityAttributes.ContentState) async {
+    private func pushUpdate(_ state: LiveActivityAttributes.ContentState, settings: FreeAPSSettings) async {
+        guard systemEnabled else { return }
+
         // hide duplicate/unknown activities
-        for unknownActivity in Activity<LiveActivityAttributes>.activities
-            .filter({ self.currentActivity?.activity.id != $0.id })
-        {
+        for unknownActivity in Activity<LiveActivityAttributes>.activities {
+            guard unknownActivity.id != currentActivity?.activity.id else { continue }
             await unknownActivity.end(nil, dismissalPolicy: .immediate)
         }
 
@@ -257,7 +339,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
             if currentActivity.needsRecreation(), UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
                 await endActivity()
-                await pushUpdate(state)
+                await pushUpdate(state, settings: settings)
             } else {
                 let encoder = JSONEncoder()
                 let encodedLength: Int = {
@@ -270,7 +352,8 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
 
                 let content = {
                     if encodedLength > 4 * 1024 { // size limit
-                        print(
+                        debug(
+                            .service,
                             "live activity payload maximum size exceeded: \(encodedLength) bytes, updating live activity without predictions"
                         )
                         return ActivityContent(
@@ -291,8 +374,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
             do {
                 // always push a non-stale content as the first update
                 // pushing a stale content as the first content results in the activity not being shown at all
-                // we want it shown though even if it is iniially stale, as we expect new BG readings to become available soon, which should then be displayed
-                let settings = self.settings
+                // we want it shown though even if it is initially stale, as we expect new BG readings to become available soon, which should then be displayed
                 let nonStale = ActivityContent(
                     state: LiveActivityAttributes.ContentState(
                         bg: "--",
@@ -324,14 +406,14 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
                 currentActivity = ActiveActivity(activity: activity, startDate: Date.now)
 
                 // then show the actual content
-                await pushUpdate(state)
+                await pushUpdate(state, settings: settings)
             } catch {
-                print("activity creation error: \(error)")
+                debug(.service, "activity creation error: \(error)")
             }
         }
     }
 
-    /// ends all live activities immediateny
+    /// ends all live activities immediately
     private func endActivity() async {
         if let currentActivity {
             await currentActivity.activity.end(nil, dismissalPolicy: .immediate)
@@ -345,35 +427,23 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
     }
 }
 
-extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, PumpHistoryObserver {
-    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
-        iob = coreDataStorage.fetchInsulinData(interval: DateFilter.oneHour.startDate).first?.iob
-    }
-
-    func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
-        let settings = self.settings
-
-        guard settings.useLiveActivity else {
-            if currentActivity != nil {
-                Task {
-                    await self.endActivity()
-                }
-            }
-            return
-        }
-        defer { self.suggestion = suggestion }
-
+extension LiveActivityBridge {
+    private func buildContentState(
+        settings: FreeAPSSettings,
+        suggestion: Suggestion,
+        iob: Decimal?,
+        loopDate: Date
+    ) -> LiveActivityAttributes.ContentState? {
         let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
-        let prev = glucose.count > 1 ? glucose[1] : glucose.first
+        let previousGlucose = glucose.count > 1 ? glucose[1] : glucose.first
 
-        guard let content = LiveActivityAttributes.ContentState(
+        return LiveActivityAttributes.ContentState(
             new: glucose.first,
-            prev: prev,
+            prev: previousGlucose,
             mmol: settings.units == .mmolL,
             suggestion: suggestion,
-            iob: suggestion.iob,
-            loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
-                (coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast),
+            iob: iob,
+            loopDate: loopDate,
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
@@ -383,54 +453,6 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             watchEventual: settings.liveActivityWatchEventual,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
-        ) else {
-            return
-        }
-
-        Task {
-            await self.pushUpdate(content)
-        }
-    }
-
-    func suggestionDidUpdate(_ suggestion: Suggestion) {
-        let settings = self.settings
-
-        guard settings.useLiveActivity else {
-            if currentActivity != nil {
-                Task {
-                    await self.endActivity()
-                }
-            }
-            return
-        }
-        defer { self.suggestion = suggestion }
-
-        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
-        let prev = glucose.count > 1 ? glucose[1] : glucose.first
-
-        guard let content = LiveActivityAttributes.ContentState(
-            new: glucose.first,
-            prev: prev,
-            mmol: settings.units == .mmolL,
-            suggestion: suggestion,
-            iob: suggestion.iob,
-            loopDate: settings.closedLoop ? (coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion
-                .timestamp ?? .distantPast,
-            readings: settings.liveActivityChart ? glucose : nil,
-            predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
-            showChart: settings.liveActivityChart,
-            watchChart: settings.liveActivityWatchChart,
-            watchPredictions: settings.liveActivityWatchPredictions,
-            watchDelta: settings.liveActivityWatchDelta,
-            watchEventual: settings.liveActivityWatchEventual,
-            chartLowThreshold: Int(settings.low),
-            chartHighThreshold: Int(settings.high)
-        ) else {
-            return
-        }
-
-        Task {
-            await self.pushUpdate(content)
-        }
+        )
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-struct Preferences: JSON {
+struct Preferences: JSON, Equatable {
     var maxIOB: Decimal = 0
     var maxDailySafetyMultiplier: Decimal = 3
     var currentBasalSafetyMultiplier: Decimal = 4

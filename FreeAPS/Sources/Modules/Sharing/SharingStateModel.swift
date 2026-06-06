@@ -2,40 +2,21 @@ import SwiftUI
 
 extension Sharing {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var settings: SettingsManager!
-        @Injected() private var keychain: Keychain!
+        @Injected() private var userToken: Token!
 
         @Published var uploadStats: Bool = false
         @Published var uploadLogs: Bool = false
-        @Published var identfier: String = ""
+        @Published var identifier: String = ""
         @Published var birthDate = Date.distantPast
         @Published var sexSetting: Int = 3
         @Published var sex: Sex = .secret
 
-        override func subscribe() {
-            uploadStats = settingsManager.settings.uploadStats
-            subscribeSetting(\.uploadStats, on: $uploadStats) { uploadStats = $0 }
-            uploadLogs = settingsManager.settings.uploadLogs
-            subscribeSetting(\.uploadLogs, on: $uploadLogs) { uploadLogs = $0 }
-            subscribeSetting(\.birthDate, on: $birthDate) { birthDate = $0 }
-            subscribeSetting(\.sexSetting, on: $sexSetting) { sexSetting = $0 }
-            identfier = getIdentifier()
+        override func subscribe() async {
+            subscribeSetting(\.uploadStats, on: $uploadStats) { self.uploadStats = $0 }
+            subscribeSetting(\.uploadLogs, on: $uploadLogs) { self.uploadLogs = $0 }
+            subscribeSetting(\.birthDate, on: $birthDate) { self.birthDate = $0 }
+            subscribeSetting(\.sexSetting, on: $sexSetting) { self.sexSetting = $0 }
+            identifier = userToken.getIdentifier()
         }
-
-        private func getIdentifier() -> String {
-            keychain.getIdentifier()
-        }
-    }
-}
-
-extension Keychain {
-    func getIdentifier() -> String {
-        var identfier = getValue(String.self, forKey: IAPSconfig.id) ?? ""
-        guard identfier.count > 1 else {
-            identfier = UUID().uuidString
-            setValue(identfier, forKey: IAPSconfig.id)
-            return identfier
-        }
-        return identfier
     }
 }

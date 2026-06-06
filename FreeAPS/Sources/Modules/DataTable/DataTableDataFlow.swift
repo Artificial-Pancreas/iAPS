@@ -214,12 +214,4 @@ enum DataTable {
     }
 }
 
-protocol DataTableProvider: Provider {
-    func pumpHistory() -> [PumpHistoryEvent]
-    func tempTargets() -> [TempTarget]
-    func carbs() -> [CarbsEntry]
-    func glucose() -> [BloodGlucose]
-    func deleteCarbs(_ date: Date)
-    func deleteInsulin(_ treatement: DataTable.Treatment)
-    func deleteGlucose(id: String)
-}
+protocol DataTableProvider: Provider {}

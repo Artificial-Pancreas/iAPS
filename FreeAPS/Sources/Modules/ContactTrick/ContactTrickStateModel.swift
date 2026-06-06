@@ -1,4 +1,4 @@
-import ConnectIQ
+import Combine
 import SwiftUI
 
 enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
@@ -78,15 +78,19 @@ enum ContactTrickLargeRing: String, JSON, CaseIterable, Identifiable, Codable {
 
 extension ContactTrick {
     final class StateModel: BaseStateModel<Provider> {
+        @Injected() private var contactTrickManager: ContactTrickManager!
+
         @Published private(set) var syncInProgress = false
         @Published private(set) var items: [Item] = []
         @Published private(set) var changed: Bool = false
 
-        var units: GlucoseUnits = .mmolL
+        @Published private(set) var units: GlucoseUnits = .mmolL
 
-        override func subscribe() {
-            units = settingsManager.settings.units
-            items = provider.contacts.enumerated().map { index, contact in
+        override func subscribe() async {
+            let contacts = await contactTrickManager.currentContacts
+            let settings = await settingsManager.settings
+            units = settings.units
+            items = contacts.enumerated().map { index, contact in
                 Item(
                     index: index,
                     entry: contact
@@ -120,17 +124,15 @@ extension ContactTrick {
             let contacts = items.map { item -> ContactTrickEntry in
                 item.entry
             }
-            provider.saveContacts(contacts)
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    self.syncInProgress = false
-                    self.changed = false
-                } receiveValue: { contacts in
-                    contacts.enumerated().forEach { index, item in
-                        self.items[index].entry = item
-                    }
+            Task {
+                let updated = await self.contactTrickManager.updateContacts(contacts: contacts)
+                updated.enumerated().forEach { index, item in
+                    self.items[index].entry = item
                 }
-                .store(in: &lifetime)
+
+                self.syncInProgress = false
+                self.changed = false
+            }
         }
     }
 }

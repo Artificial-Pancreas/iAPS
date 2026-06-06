@@ -44,40 +44,40 @@ extension AutoISF {
         // General settings
         @Published var units: GlucoseUnits = .mgdL
 
-        override func subscribe() {
-            subscribeSetting(\.autoisf, on: $autoisf) { autoisf = $0 }
-            subscribeSetting(\.autocr, on: $autocr) { autocr = $0 }
-            subscribeSetting(\.enableBGacceleration, on: $enableBGacceleration) { enableBGacceleration = $0 }
-            subscribeSetting(\.smbDeliveryRatioBGrange, on: $smbDeliveryRatioBGrange) { smbDeliveryRatioBGrange = $0 }
+        override func subscribe() async {
+            subscribeSetting(\.autoisf, on: $autoisf) { self.autoisf = $0 }
+            subscribeSetting(\.autocr, on: $autocr) { self.autocr = $0 }
+            subscribeSetting(\.enableBGacceleration, on: $enableBGacceleration) { self.enableBGacceleration = $0 }
+            subscribeSetting(\.smbDeliveryRatioBGrange, on: $smbDeliveryRatioBGrange) { self.smbDeliveryRatioBGrange = $0 }
 
-            subscribeSetting(\.autoisf_min, on: $autoisf_min) { autoisf_min = $0 }
-            subscribeSetting(\.autoisf_max, on: $autoisf_max) { autoisf_max = $0 }
-            subscribeSetting(\.smbDeliveryRatioMin, on: $smbDeliveryRatioMin) { smbDeliveryRatioMin = $0 }
-            subscribeSetting(\.smbDeliveryRatioMax, on: $smbDeliveryRatioMax) { smbDeliveryRatioMax = $0 }
-            subscribeSetting(\.autoISFhourlyChange, on: $autoISFhourlyChange) { autoISFhourlyChange = $0 }
-            subscribeSetting(\.higherISFrangeWeight, on: $higherISFrangeWeight) { higherISFrangeWeight = $0 }
-            subscribeSetting(\.lowerISFrangeWeight, on: $lowerISFrangeWeight) { lowerISFrangeWeight = $0 }
-            subscribeSetting(\.postMealISFweight, on: $postMealISFweight) { postMealISFweight = $0 }
-            subscribeSetting(\.bgAccelISFweight, on: $bgAccelISFweight) { bgAccelISFweight = $0 }
-            subscribeSetting(\.bgBrakeISFweight, on: $bgBrakeISFweight) { bgBrakeISFweight = $0 }
-            subscribeSetting(\.iobThresholdPercent, on: $iobThresholdPercent) { iobThresholdPercent = $0 }
+            subscribeSetting(\.autoisf_min, on: $autoisf_min) { self.autoisf_min = $0 }
+            subscribeSetting(\.autoisf_max, on: $autoisf_max) { self.autoisf_max = $0 }
+            subscribeSetting(\.smbDeliveryRatioMin, on: $smbDeliveryRatioMin) { self.smbDeliveryRatioMin = $0 }
+            subscribeSetting(\.smbDeliveryRatioMax, on: $smbDeliveryRatioMax) { self.smbDeliveryRatioMax = $0 }
+            subscribeSetting(\.autoISFhourlyChange, on: $autoISFhourlyChange) { self.autoISFhourlyChange = $0 }
+            subscribeSetting(\.higherISFrangeWeight, on: $higherISFrangeWeight) { self.higherISFrangeWeight = $0 }
+            subscribeSetting(\.lowerISFrangeWeight, on: $lowerISFrangeWeight) { self.lowerISFrangeWeight = $0 }
+            subscribeSetting(\.postMealISFweight, on: $postMealISFweight) { self.postMealISFweight = $0 }
+            subscribeSetting(\.bgAccelISFweight, on: $bgAccelISFweight) { self.bgAccelISFweight = $0 }
+            subscribeSetting(\.bgBrakeISFweight, on: $bgBrakeISFweight) { self.bgBrakeISFweight = $0 }
+            subscribeSetting(\.iobThresholdPercent, on: $iobThresholdPercent) { self.iobThresholdPercent = $0 }
 
-            subscribeSetting(\.use_B30, on: $use_B30) { use_B30 = $0 }
-            subscribeSetting(\.iTime_Start_Bolus, on: $iTime_Start_Bolus) { iTime_Start_Bolus = $0 }
-            subscribeSetting(\.b30targetLevel, on: $b30targetLevel) { b30targetLevel = $0 }
-            subscribeSetting(\.b30upperLimit, on: $b30upperLimit) { b30upperLimit = $0 }
-            subscribeSetting(\.b30upperdelta, on: $b30upperdelta) { b30upperdelta = $0 }
-            subscribeSetting(\.b30factor, on: $b30factor) { b30factor = $0 }
-            subscribeSetting(\.b30_duration, on: $b30_duration) { b30_duration = $0 }
+            subscribeSetting(\.use_B30, on: $use_B30) { self.use_B30 = $0 }
+            subscribeSetting(\.iTime_Start_Bolus, on: $iTime_Start_Bolus) { self.iTime_Start_Bolus = $0 }
+            subscribeSetting(\.b30targetLevel, on: $b30targetLevel) { self.b30targetLevel = $0 }
+            subscribeSetting(\.b30upperLimit, on: $b30upperLimit) { self.b30upperLimit = $0 }
+            subscribeSetting(\.b30upperdelta, on: $b30upperdelta) { self.b30upperdelta = $0 }
+            subscribeSetting(\.b30factor, on: $b30factor) { self.b30factor = $0 }
+            subscribeSetting(\.b30_duration, on: $b30_duration) { self.b30_duration = $0 }
 
-            subscribeSetting(\.ketoProtect, on: $ketoProtect) { ketoProtect = $0 }
-            subscribeSetting(\.variableKetoProtect, on: $variableKetoProtect) { variableKetoProtect = $0 }
-            subscribeSetting(\.ketoProtectAbsolut, on: $ketoProtectAbsolut) { ketoProtectAbsolut = $0 }
-            subscribeSetting(\.ketoProtectBasalPercent, on: $ketoProtectBasalPercent) { ketoProtectBasalPercent = $0 }
-            subscribeSetting(\.ketoProtectBasalAbsolut, on: $ketoProtectBasalAbsolut) { ketoProtectBasalAbsolut = $0 }
-            subscribeSetting(\.nightTime, on: $nightTime) { nightTime = $0 }
+            subscribeSetting(\.ketoProtect, on: $ketoProtect) { self.ketoProtect = $0 }
+            subscribeSetting(\.variableKetoProtect, on: $variableKetoProtect) { self.variableKetoProtect = $0 }
+            subscribeSetting(\.ketoProtectAbsolut, on: $ketoProtectAbsolut) { self.ketoProtectAbsolut = $0 }
+            subscribeSetting(\.ketoProtectBasalPercent, on: $ketoProtectBasalPercent) { self.ketoProtectBasalPercent = $0 }
+            subscribeSetting(\.ketoProtectBasalAbsolut, on: $ketoProtectBasalAbsolut) { self.ketoProtectBasalAbsolut = $0 }
+            subscribeSetting(\.nightTime, on: $nightTime) { self.nightTime = $0 }
 
-            subscribeSetting(\.units, on: $units) { units = $0 }
+            subscribeSetting(\.units, on: $units) { self.units = $0 }
         }
     }
 }

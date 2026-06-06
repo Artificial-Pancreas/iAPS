@@ -7,6 +7,7 @@ extension AutotuneConfig {
         @Injected() var deviceManager: DeviceDataManager!
         @Injected() var apsManager: APSManager!
         @Injected() private var storage: FileStorage!
+
         @Published var useAutotune = false
         @Published var onlyAutotuneBasals = false
         @Published var autotune: Autotune?
@@ -26,28 +27,36 @@ extension AutotuneConfig {
         @Published var currentProfile: [BasalProfileEntry] = []
         @Published var currentTotal: Decimal = 0.0
 
-        override func subscribe() {
-            autotune = provider.autotune
-            units = settingsManager.settings.units
-            useAutotune = settingsManager.settings.useAutotune
+        override func subscribe() async {
+            let settings = await settingsManager.settings
+            let preferences = await settingsManager.preferences
+            autotune = await storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+            units = settings.units
+            useAutotune = settings.useAutotune
             publishedDate = lastAutotuneDate
-            increment = Double(settingsManager.preferences.bolusIncrement)
-            subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
+            increment = Double(preferences.bolusIncrement)
+            subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { self.onlyAutotuneBasals = $0 }
 
-            currentProfile = provider.profile
+            currentProfile = await retrieveProfile()
             calcTotal()
 
             $useAutotune
                 .removeDuplicates()
-                .flatMap { [weak self] use -> AnyPublisher<Bool, Never> in
-                    guard let self = self else {
-                        return Just(false).eraseToAnyPublisher()
-                    }
-                    self.settingsManager.settings.useAutotune = use
-                    return self.apsManager.makeProfiles()
+                .sink { [weak self] use in
+                    self?.setUseAutotune(use)
                 }
-                .cancellable()
                 .store(in: &lifetime)
+        }
+
+        private func setUseAutotune(_ use: Bool) {
+            Task {
+                await self.settingsManager.updateSettings { settings in
+                    var updated = settings
+                    updated.useAutotune = use
+                    return updated
+                }
+                _ = await self.apsManager.makeProfiles()
+            }
         }
 
         func calcTotal() {
@@ -57,75 +66,82 @@ extension AutotuneConfig {
             currentTotal = pr2.reduce(0) { $0 + (Decimal($1.1 - $1.0.minutes) / 60) * $1.0.rate }
         }
 
-        @MainActor func run() {
+        func run() {
             running.toggle()
-            provider.runAutotune()
-                .receive(on: DispatchQueue.main)
-                .flatMap { [weak self] result -> AnyPublisher<Bool, Never> in
-                    guard let self = self else {
-                        return Just(false).eraseToAnyPublisher()
-                    }
-                    self.autotune = result
+            Task {
+                self.autotune = await runAutotune()
 
-                    // Round
-                    if var tuned = self.autotune {
-                        let basal = tuned.basalProfile.map { basal in
-                            BasalProfileEntry(
-                                start: basal.start,
-                                minutes: basal.minutes,
-                                rate: basal.rate.roundBolusIncrements(increment: self.increment)
-                            )
-                        }
-                        tuned.basalProfile = basal
-                        self.autotune = tuned
+                if var tuned = self.autotune {
+                    // TODO: concentration is ignored?
+                    let basal = tuned.basalProfile.map { basal in
+                        BasalProfileEntry(
+                            start: basal.start,
+                            minutes: basal.minutes,
+                            rate: basal.rate.roundBolusIncrements(increment: self.increment)
+                        )
                     }
-
-                    return self.apsManager.makeProfiles()
+                    tuned.basalProfile = basal
+                    self.autotune = tuned
                 }
-                .sink { [weak self] _ in
-                    DispatchQueue.main.async {
-                        self?.lastAutotuneDate = Date()
-                        self?.running.toggle()
-                    }
-                }.store(in: &lifetime)
+
+                _ = await self.apsManager.makeProfiles()
+
+                self.lastAutotuneDate = Date()
+                self.running.toggle()
+            }
         }
 
         func delete() {
-            provider.deleteAutotune()
-            autotune = nil
-            apsManager.makeProfiles()
-                .cancellable()
-                .store(in: &lifetime)
+            Task {
+                await deleteAutotune()
+                autotune = nil
+                _ = await apsManager.makeProfiles()
+            }
         }
 
         func replace() {
-            if let autotunedBasals = autotune {
-                let basals = autotunedBasals.basalProfile
-                    .map { basal -> BasalProfileEntry in
-                        BasalProfileEntry(
-                            start: String(basal.start.prefix(5)),
-                            minutes: basal.minutes,
-                            rate: basal.rate.roundBolusIncrements(increment: increment)
-                        )
+            Task {
+                if let autotunedBasals = autotune {
+                    let basals = autotunedBasals.basalProfile
+                        .map { basal -> BasalProfileEntry in
+                            BasalProfileEntry(
+                                start: String(basal.start.prefix(5)),
+                                minutes: basal.minutes,
+                                rate: basal.rate.roundBolusIncrements(increment: increment)
+                            )
+                        }
+                    let syncValues = basals.map {
+                        RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
                     }
-                guard let pump = deviceManager.pumpManager else {
-                    storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                    debug(.service, "Basals have been replaced with Autotuned Basals by user.")
-                    return
-                }
-                let syncValues = basals.map {
-                    RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
-                }
-                pump.syncBasalRateSchedule(items: syncValues) { result in
-                    switch result {
-                    case .success:
-                        self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                        debug(.service, "Basals saved to pump!")
-                    case .failure:
+                    do {
+                        if let savedBasals = try await deviceManager.syncBasalRateSchedule(items: syncValues) {
+                            //                         TODO: get the actually saved basal (saved) and use it instead of assuming it was saved as is
+                            let adjustedBasals = basals // savedBasals.items ...
+                            await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
+                        } else {
+                            // no pump configured
+                            await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                            debug(.service, "Basals have been replaced with Autotuned Basals by user.")
+                        }
+                    } catch {
                         debug(.service, "Basals couldn't be saved to pump")
                     }
                 }
             }
+        }
+
+        private func deleteAutotune() async {
+            await storage.remove(OpenAPS.Settings.autotune)
+        }
+
+        private func retrieveProfile() async -> [BasalProfileEntry] {
+            await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
+                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
+                ?? []
+        }
+
+        private func runAutotune() async -> Autotune? {
+            await apsManager.autotune()
         }
     }
 }

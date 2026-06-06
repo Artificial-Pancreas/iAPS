@@ -2,7 +2,7 @@ import Combine
 import LocalAuthentication
 
 protocol UnlockManager {
-    func unlock() -> AnyPublisher<Void, Error>
+    func unlock() async throws
 }
 
 struct UnlockError: Error {
@@ -10,37 +10,31 @@ struct UnlockError: Error {
 }
 
 final class BaseUnlockManager: UnlockManager {
-    func unlock() -> AnyPublisher<Void, Error> {
-        Future { promise in
-            let context = LAContext()
-            var error: NSError?
-            var defaultOn = true
+    func unlock() async throws {
+        let context = LAContext()
+        var error: NSError?
+        var defaultOn = true
 
-            let handler: (Bool, Error?) -> Void = { success, error in
+        // If overridden in ConfigOverride.xcconfig or Config.xcconfig
+        if let override: Bool = try? Configuration.value(for: "AUTHENTICATE") {
+            defaultOn = override
+        }
+
+        guard defaultOn, context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
+            return
+        }
+
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            context.evaluatePolicy(
+                .deviceOwnerAuthentication,
+                localizedReason: "We need to make sure you are the owner of the device."
+            ) { success, error in
                 if success {
-                    promise(.success(()))
+                    continuation.resume()
                 } else {
-                    promise(.failure(UnlockError(error: error)))
+                    continuation.resume(throwing: UnlockError(error: error))
                 }
             }
-
-            let reason = "We need to make sure you are the owner of the device."
-
-            // If overridden in ConfigOverride.xcconfig or Config.xcconfig
-            if let override: Bool = try? Configuration.value(for: "AUTHENTICATE") {
-                defaultOn = override
-            }
-
-            if defaultOn, context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-                context.evaluatePolicy(
-                    .deviceOwnerAuthentication,
-                    localizedReason: reason,
-                    reply: handler
-                )
-            } else {
-                handler(true, nil)
-            }
         }
-        .eraseToAnyPublisher()
     }
 }

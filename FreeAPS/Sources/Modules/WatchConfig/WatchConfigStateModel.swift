@@ -28,39 +28,48 @@ enum AwConfig: String, JSON, CaseIterable, Identifiable, Codable {
 extension WatchConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() private var garmin: GarminManager!
+
         @Published var devices: [IQDevice] = []
         @Published var selectedAwConfig: AwConfig = .HR
         @Published var displayFatAndProteinOnWatch = false
         @Published var confirmBolusFaster = false
         @Published var profilesOrTempTargets = false
 
-        private(set) var preferences = Preferences()
-
-        override func subscribe() {
-            preferences = provider.preferences
-
-            subscribeSetting(\.displayFatAndProteinOnWatch, on: $displayFatAndProteinOnWatch) { displayFatAndProteinOnWatch = $0 }
-            subscribeSetting(\.confirmBolusFaster, on: $confirmBolusFaster) { confirmBolusFaster = $0 }
-            subscribeSetting(\.profilesOrTempTargets, on: $profilesOrTempTargets) { profilesOrTempTargets = $0 }
-            subscribeSetting(\.displayOnWatch, on: $selectedAwConfig) { selectedAwConfig = $0 }
-            didSet: { [weak self] value in
-                // for compatibility with old displayHR
-                switch value {
-                case .HR:
-                    self?.settingsManager.settings.displayHR = true
-                default:
-                    self?.settingsManager.settings.displayHR = false
+        override func subscribe() async {
+            subscribeSetting(\.displayFatAndProteinOnWatch, on: $displayFatAndProteinOnWatch) {
+                self.displayFatAndProteinOnWatch = $0 }
+            subscribeSetting(\.confirmBolusFaster, on: $confirmBolusFaster) { self.confirmBolusFaster = $0 }
+            subscribeSetting(\.profilesOrTempTargets, on: $profilesOrTempTargets) { self.profilesOrTempTargets = $0 }
+            subscribeSetting(
+                \.displayOnWatch, on: $selectedAwConfig,
+                initial: { self.selectedAwConfig = $0 },
+                didSet: { value in
+                    Task { [weak self] in
+                        guard let self else { return }
+                        // for compatibility with old displayHR
+                        await settingsManager.updateSettings { settings in
+                            var updated = settings
+                            switch value {
+                            case .HR:
+                                updated.displayHR = true
+                            default:
+                                updated.displayHR = false
+                            }
+                            return updated
+                        }
+                    }
                 }
-            }
+            )
 
             devices = garmin.devices
         }
 
         func selectGarminDevices() {
-            garmin.selectDevices()
-                .receive(on: DispatchQueue.main)
-                .weakAssign(to: \.devices, on: self)
-                .store(in: &lifetime)
+            Task {
+                for await selected in garmin.selectDevices().values {
+                    devices = selected
+                }
+            }
         }
 
         func deleteGarminDevice() {

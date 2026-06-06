@@ -31,7 +31,7 @@ struct AppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: CancelOverrideIntent(),
             phrases: [
-                "Cancel \(.applicationName) Overide",
+                "Cancel \(.applicationName) Overide", // TODO: typo, need to fix localization files as well?
                 "Cancels an active \(.applicationName) override"
             ], shortTitle: "Cancel override", systemImageName: "figure.stand"
         )

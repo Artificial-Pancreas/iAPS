@@ -100,7 +100,7 @@ extension Sharing {
 
                 Section {
                     HStack {
-                        Text(display ? state.identfier : NSLocalizedString("Tap to display", comment: "Token display button"))
+                        Text(display ? state.identifier : NSLocalizedString("Tap to display", comment: "Token display button"))
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .onTapGesture { display.toggle() }
@@ -108,7 +108,7 @@ extension Sharing {
                         if display {
                             let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                             impactHeavy.impactOccurred()
-                            UIPasteboard.general.string = state.identfier
+                            UIPasteboard.general.string = state.identifier
                             copied = true
                         }
                     }
@@ -123,7 +123,7 @@ extension Sharing {
 
                 Section {}
                 footer: {
-                    let statisticsLink = URL(string: "https://open-iaps.app/user/" + state.identfier)!
+                    let statisticsLink = URL(string: "https://open-iaps.app/user/" + state.identifier)!
 
                     Button("View Personal Statistics") {
                         UIApplication.shared.open(statisticsLink, options: [:], completionHandler: nil)

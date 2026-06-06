@@ -1,6 +1,6 @@
 import Foundation
 
-struct FreeAPSSettings: JSON, Equatable {
+struct FreeAPSSettings: JSON, Equatable, Sendable {
     var units: GlucoseUnits = .mmolL
     var closedLoop: Bool = false
     var allowAnnouncements: Bool = false

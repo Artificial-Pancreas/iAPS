@@ -266,16 +266,22 @@ extension BasalProfileEditor {
         }
 
         private func save() {
+            guard let preferences = state.preferences else {
+                return
+            }
             coredataContext.perform { [self] in
                 let newConfiguration = InsulinConcentration(context: self.coredataContext)
                 newConfiguration.concentration = Double(set)
-                newConfiguration.incrementSetting = Double(state.settingsManager.preferences.bolusIncrement)
+                newConfiguration.incrementSetting = Double(preferences.bolusIncrement)
                 newConfiguration.date = Date.now
-                do { try self.coredataContext.save()
+                do {
+                    try self.coredataContext.save()
                 } catch {
                     debug(.apsManager, "Insulin Concentration setting couldn't be saved to CoreData. Error: " + "\(error)")
                 }
-                self.state.save()
+                Task { @MainActor [self] in
+                    self.state.save()
+                }
             }
         }
     }

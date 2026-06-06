@@ -7,9 +7,11 @@ extension Restore {
         let coreData = CoreDataStorage()
 
         func saveFile(_ file: JSON, filename: String) {
-            let s = BaseFileStorage()
-            s.save(file, as: filename)
-            coreData.saveOnbarding()
+            Task {
+                let s = BaseFileStorage()
+                await s.save(file, as: filename)
+                coreData.saveOnbarding()
+            }
         }
     }
 }

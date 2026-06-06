@@ -1,107 +1,107 @@
-import Combine
 import Foundation
 import SwiftDate
 import Swinject
 
-protocol AlertObserver {
-    func alertDidUpdate(_ alerts: [AlertEntry])
+// protocol AlertObserver {
+//    func alertDidUpdate(_ alerts: [AlertEntry])
+// }
+
+protocol AlertHistoryStorage: Sendable {
+    func storeAlert(_ alerts: AlertEntry) async
+    func syncDate() async -> Date
+    func recentNotAck() async -> [AlertEntry]
+    func deleteAlert(managerIdentifier: String, alertIdentifier: String) async
+    func ackAlert(managerIdentifier: String, alertIdentifier: String, error: String?) async
+    func forceNotification() async
+
+    // moved to appCoordinator
+//    var alertNotAck: PassthroughSubject<Bool, Never> { get }
 }
 
-protocol AlertHistoryStorage {
-    func storeAlert(_ alerts: AlertEntry)
-    func syncDate() -> Date
-    func recentNotAck() -> [AlertEntry]
-    func deleteAlert(managerIdentifier: String, alertIdentifier: String)
-    func ackAlert(managerIdentifier: String, alertIdentifier: String, error: String?)
-    func forceNotification()
-    var alertNotAck: PassthroughSubject<Bool, Never> { get }
-}
-
-final class BaseAlertHistoryStorage: AlertHistoryStorage, Injectable {
-    private let processQueue = DispatchQueue.markedQueue(label: "BaseAlertsStorage.processQueue")
+actor BaseAlertHistoryStorage: AlertHistoryStorage, Injectable {
     @Injected() private var storage: FileStorage!
-    @Injected() private var broadcaster: Broadcaster!
-
-    let alertNotAck = PassthroughSubject<Bool, Never>()
+    @Injected() private var appCoordinator: AppCoordinator!
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        alertNotAck.send(recentNotAck().isNotEmpty)
+        Task {
+            let recent = await recentNotAck()
+            await self.appCoordinator.setAlertNotAck(recent.isNotEmpty)
+        }
     }
 
-    func storeAlert(_ alert: AlertEntry) {
-        processQueue.sync {
-            let file = OpenAPS.Monitor.alertHistory
-            var uniqEvents: [AlertEntry] = []
-            self.storage.transaction { storage in
-                storage.append(alert, to: file, uniqBy: \.issuedDate)
-                uniqEvents = storage.retrieve(file, as: [AlertEntry].self)?
-                    .filter { $0.issuedDate.addingTimeInterval(1.days.timeInterval) > Date() }
-                    .sorted { $0.issuedDate > $1.issuedDate } ?? []
-                storage.save(Array(uniqEvents), as: file)
-            }
-            alertNotAck.send(self.recentNotAck().isNotEmpty)
-            broadcaster.notify(AlertObserver.self, on: processQueue) {
-                $0.alertDidUpdate(uniqEvents)
-            }
+    private static func filterOldAndSort(_ entries: [AlertEntry]) -> [AlertEntry] {
+        let oneDayAgo = Date.now.addingTimeInterval(-1.days.timeInterval)
+        return entries
+            .filter { $0.issuedDate > oneDayAgo }
+            .sorted { $0.issuedDate > $1.issuedDate }
+    }
+
+    func storeAlert(_ alert: AlertEntry) async {
+        let file = OpenAPS.Monitor.alertHistory
+        let uniqEvents: [AlertEntry] = await self.storage.appendAndModify([alert], to: file, uniqBy: \.issuedDate) {
+            Self.filterOldAndSort($0)
         }
+        let hasAlert = uniqEvents.contains { $0.acknowledgedDate == nil }
+        await appCoordinator.setAlertNotAck(hasAlert)
+        await appCoordinator.alertsUpdates.send(uniqEvents)
     }
 
     func syncDate() -> Date {
         Date().addingTimeInterval(-1.days.timeInterval)
     }
 
-    func recentNotAck() -> [AlertEntry] {
-        storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self)?
-            .filter { $0.issuedDate.addingTimeInterval(1.days.timeInterval) > Date() && $0.acknowledgedDate == nil }
-            .sorted { $0.issuedDate > $1.issuedDate } ?? []
+    func recentNotAck() async -> [AlertEntry] {
+        let alerts = await storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self) ?? []
+        return Self.filterOldAndSort(alerts).filter { $0.acknowledgedDate == nil }
     }
 
-    func ackAlert(managerIdentifier: String, alertIdentifier: String, error: String?) {
-        processQueue.sync {
-            var allValues = storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self) ?? []
-            guard let entryIndex = allValues
-                .firstIndex(where: { $0.managerIdentifier == managerIdentifier && $0.alertIdentifier == alertIdentifier })
-            else {
-                return
+    func ackAlert(managerIdentifier: String, alertIdentifier: String, error: String?) async {
+        let (modified, updatedValues) = await storage
+            .maybeModify(file: OpenAPS.Monitor.alertHistory, as: AlertEntry.self) { inStorage in
+                var allValues = inStorage
+                guard let entryIndex = allValues
+                    .firstIndex(where: { $0.managerIdentifier == managerIdentifier && $0.alertIdentifier == alertIdentifier })
+                else {
+                    return nil // do not modify
+                }
+                if let error {
+                    allValues[entryIndex].errorMessage = error
+                } else {
+                    allValues[entryIndex].acknowledgedDate = Date()
+                }
+                return Self.filterOldAndSort(allValues)
             }
-
-            if let error {
-                allValues[entryIndex].errorMessage = error
-            } else {
-                allValues[entryIndex].acknowledgedDate = Date()
-            }
-            storage.save(allValues, as: OpenAPS.Monitor.alertHistory)
-            alertNotAck.send(self.recentNotAck().isNotEmpty)
+        if modified {
+            let hasAlert = updatedValues.contains { $0.acknowledgedDate == nil }
+            await appCoordinator.setAlertNotAck(hasAlert)
         }
     }
 
-    func deleteAlert(managerIdentifier: String, alertIdentifier: String) {
-        processQueue.sync {
-            var allValues = storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self) ?? []
-            guard let entryIndex = allValues
-                .firstIndex(where: { $0.managerIdentifier == managerIdentifier && $0.alertIdentifier == alertIdentifier })
-            else {
-                return
+    func deleteAlert(managerIdentifier: String, alertIdentifier: String) async {
+        let (modified, updatedValues) = await storage
+            .maybeModify(file: OpenAPS.Monitor.alertHistory, as: AlertEntry.self) { inStorage in
+                var allValues = inStorage
+                guard let entryIndex = allValues
+                    .firstIndex(where: { $0.managerIdentifier == managerIdentifier && $0.alertIdentifier == alertIdentifier })
+                else {
+                    return nil // do not modify
+                }
+                allValues.remove(at: entryIndex)
+                return Self.filterOldAndSort(allValues)
             }
-            allValues.remove(at: entryIndex)
-            storage.save(allValues, as: OpenAPS.Monitor.alertHistory)
-            alertNotAck.send(self.recentNotAck().isNotEmpty)
-            broadcaster.notify(AlertObserver.self, on: processQueue) {
-                $0.alertDidUpdate(allValues)
-            }
+        if modified {
+            let hasAlert = updatedValues.contains { $0.acknowledgedDate == nil }
+            await appCoordinator.setAlertNotAck(hasAlert)
+            await appCoordinator.alertsUpdates.send(updatedValues)
         }
     }
 
-    func forceNotification() {
-        processQueue.sync {
-            let uniqEvents = storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self)?
-                .filter { $0.issuedDate.addingTimeInterval(1.days.timeInterval) > Date() }
-                .sorted { $0.issuedDate > $1.issuedDate } ?? []
-            alertNotAck.send(self.recentNotAck().isNotEmpty)
-            broadcaster.notify(AlertObserver.self, on: processQueue) {
-                $0.alertDidUpdate(uniqEvents)
-            }
-        }
+    func forceNotification() async {
+        let alerts = await storage.retrieve(OpenAPS.Monitor.alertHistory, as: [AlertEntry].self) ?? []
+        let uniqEvents = Self.filterOldAndSort(alerts)
+        let hasAlert = uniqEvents.contains { $0.acknowledgedDate == nil }
+        await appCoordinator.setAlertNotAck(hasAlert)
+        await appCoordinator.alertsUpdates.send(uniqEvents)
     }
 }

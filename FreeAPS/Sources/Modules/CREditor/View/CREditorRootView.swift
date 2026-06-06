@@ -27,7 +27,7 @@ extension CREditor {
 
         var body: some View {
             Form {
-                if let autotune = state.autotune, !state.settingsManager.settings.onlyAutotuneBasals {
+                if let autotune = state.autotune, !state.onlyAutotuneBasals {
                     Section(header: Text("Autotune")) {
                         HStack {
                             Text("Calculated Ratio")
