@@ -40,3 +40,7 @@
 	path = MedtrumKit
 	url = https://github.com/Artificial-Pancreas/MedtrumKit.git
 	branch = dev
+[submodule "OmnipodKit"]
+	path = OmnipodKit
+	url = https://github.com/Artificial-Pancreas/OmnipodKit
+	branch = jwoglom/osaid-keymanager
