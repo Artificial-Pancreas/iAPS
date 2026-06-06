@@ -46,4 +46,7 @@
    <FileRef
       location = "container:MedtrumKit/MedtrumKit.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:OmnipodKit/OmnipodKit.xcodeproj">
+   </FileRef>
 </Workspace>

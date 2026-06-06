@@ -42,5 +42,5 @@
 	branch = dev
 [submodule "OmnipodKit"]
 	path = OmnipodKit
-	url = https://github.com/Artificial-Pancreas/OmnipodKit.git
+	url = https://github.com/Artificial-Pancreas/OmnipodKit
 	branch = main
