@@ -281,6 +281,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D889B2382D2B4BFE00C8E64C"
+               BuildableName = "OmnipodKitPlugin.loopplugin"
+               BlueprintName = "OmnipodKitPlugin"
+               ReferencedContainer = "container:OmnipodKit/OmnipodKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "388E595725AD948C0019842D"
                BuildableName = "FreeAPS.app"
                BlueprintName = "FreeAPS"
