@@ -37,6 +37,7 @@ public final class AppGroupCGMSettingsViewController: UIHostingController<AppGro
             .sink { [weak self] in
                 guard let self = self else { return }
                 self.cgmManager.notifyDelegateOfDeletion {
+                    self.cgmManager.deleted()
                     DispatchQueue.main.async {
                         self.completionDelegate?.completionNotifyingDidComplete(self)
                         self.dismiss(animated: true)

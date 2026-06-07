@@ -49,7 +49,7 @@ extension CGM {
 
 extension CGM.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
-        Task { @MainActor in            
+        Task { @MainActor in
             if cgmSetupPresented {
                 cgmSetupPresented = false
                 cgmIdentifierToSetUp = nil

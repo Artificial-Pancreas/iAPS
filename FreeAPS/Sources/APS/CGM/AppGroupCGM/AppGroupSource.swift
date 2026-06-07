@@ -143,7 +143,7 @@ final class AppGroupSource {
 //    }
 }
 
-protocol AppGroupCGMHeartBeatDelegate: AnyObject {
+protocol AppGroupCGMHeartBeatDelegate: AnyObject, Sendable {
     func heartbeat()
 }
 
