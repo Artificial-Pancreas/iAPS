@@ -15,6 +15,7 @@ extension Home {
         @Injected() private var database: Database!
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
+        @Injected() private var appUIState: AppUIState!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -39,31 +40,16 @@ extension Home {
         @Published var overrideUnit: Bool = false
         @Published var closedLoop = false
         @Published var pumpSuspended = false
-        @Published var isLooping = false
         @Published var statusTitle = ""
-        @Published var lastLoopDate: Date = .distantPast
         @Published var tempRate: Decimal?
-        @Published var battery: Battery?
-        @Published var reservoir: Decimal?
-        @Published var pumpName = ""
-        @Published var pumpExpiresAtDate: Date?
         @Published var tempTarget: TempTarget?
         @Published var setupPump = false
-        @Published var errorMessage: String? = nil
-        @Published var errorDate: Date? = nil
-        @Published var bolusProgress: Decimal?
-        @Published var bolusAmount: Decimal?
         @Published var eventualBG: Int?
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
-        @Published var pumpDisplayState: PumpDisplayStatus?
-        @Published var pumpInfo: PumpDisplayInfo?
-        @Published var cgmInfo: CgmDisplayInfo?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
-        @Published var manualTempBasal = false
         @Published var maxValue: Decimal = 1.2
-        @Published var timeZone: TimeZone?
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
         @Published var readings: [Readings] = []
@@ -171,19 +157,6 @@ extension Home {
             pumpHistory = await provider.pumpHistory(hours: filteredHours)
 
             cgmSensorDays = appCoordinator.cgmInfo.value?.sensorDays
-            isLooping = appCoordinator.isLooping.value
-            lastLoopDate = appCoordinator.lastLoopDate.value ?? .distantPast
-            manualTempBasal = appCoordinator.manualTempBasal.value
-
-            // initial pump setup
-            pumpInfo = appCoordinator.pumpInfo.value
-            pumpDisplayState = appCoordinator.pumpStatus.value
-            battery = pumpDisplayState?.battery
-            timeZone = pumpDisplayState?.pumpManagerStatus.timeZone
-            reservoir = appCoordinator.pumpReservoir.value
-
-            // initial cgm setup
-            cgmInfo = appCoordinator.cgmInfo.value
 
             data.tempTargets = await provider.tempTargets(hours: filteredHours)
 
@@ -264,30 +237,6 @@ extension Home {
                 await me.enactedSuggestionUpdated(enactedSuggstion)
             }
 
-            observe(appCoordinator.pumpStatus.map(\.?.battery).removeDuplicates()) { me, battery in
-                await me.pumpBatteryUpdated(battery)
-            }
-
-            observe(appCoordinator.pumpReservoir) { me, reservoir in
-                await me.pumpReservoirUpdated(reservoir)
-            }
-
-            observe(appCoordinator.pumpStatus.map(\.?.timeZone)) { me, pumpTimeZone in
-                await me.pumpTimeZoneUpdated(pumpTimeZone)
-            }
-
-            observe(appCoordinator.isLooping) { me, isLooping in
-                await me.isLoopingUpdated(isLooping)
-            }
-
-            observe(appCoordinator.manualTempBasal) { me, manualTempBasal in
-                await me.manualTempBasalUpdated(manualTempBasal)
-            }
-
-            observe(appCoordinator.lastLoopDate) { me, lastLoopDate in
-                await me.lastLoopDateUpdated(lastLoopDate)
-            }
-
             subscribeSetting(\.hours, on: $hours) {
                 let value = max(min($0, 24), 2)
                 self.hours = value
@@ -301,26 +250,6 @@ extension Home {
                 }
             }
 
-            observe(appCoordinator.pumpInfo.map(\.?.name)) { me, pumpName in
-                await me.pumpNameUpdated(pumpName)
-            }
-
-            observe(appCoordinator.pumpInfo.map(\.?.expiresAt)) { me, expiresAt in
-                await me.pumpExpiresAtUpdated(expiresAt)
-            }
-
-            observe(appCoordinator.lastLoopError) { me, error in
-                await me.lastLoopErrorUpdated(error)
-            }
-
-            observe(appCoordinator.bolusAmount) { me, bolusAmount in
-                await me.bolusAmountUpdated(bolusAmount)
-            }
-
-            observe(appCoordinator.bolusProgress) { me, bolusProgress in
-                await me.bolusProgressUpdated(bolusProgress)
-            }
-
             observe(appCoordinator.pumpStatus) { me, pumpStatus in
                 await me.pumpStatusUpdated(pumpStatus)
             }
@@ -329,14 +258,10 @@ extension Home {
                 await me.pumpInfoUpdated(pumpInfo)
             }
 
-            observe(appCoordinator.cgmInfo) { me, cgmInfo in
-                await me.cgmInfoUpdated(cgmInfo)
-            }
-
             $setupPump
                 .sink { [weak self] show in
                     guard let self = self else { return }
-                    guard show, let pumpInfo else {
+                    guard show, let pumpInfo = appUIState.pumpInfo else {
                         self.router.mainSecondaryModalView.send(nil)
                         return
                     }
@@ -378,47 +303,16 @@ extension Home {
             updateSensorDays()
         }
 
-        private func isLoopingUpdated(_ isLooping: Bool) async {
-            self.isLooping = isLooping
-        }
-
-        private func manualTempBasalUpdated(_ manualTempBasal: Bool) async {
-            self.manualTempBasal = manualTempBasal
-        }
-
-        private func lastLoopDateUpdated(_ lastLoopDate: Date?) async {
-            self.lastLoopDate = lastLoopDate ?? .distantPast
-        }
-
-        private func bolusAmountUpdated(_ bolusAmount: Decimal?) async {
-            self.bolusAmount = bolusAmount
-        }
-
-        private func bolusProgressUpdated(_ bolusProgress: Decimal?) async {
-            self.bolusProgress = bolusProgress
-        }
-
-        private func lastLoopErrorUpdated(_ error: Error?) async {
-            errorDate = error == nil ? nil : Date()
-            errorMessage = error?.localizedDescription
-        }
-
         private func pumpStatusUpdated(_ pumpStatus: PumpDisplayStatus?) async {
-            pumpDisplayState = pumpStatus
             if pumpStatus == nil {
                 setupPump = false
             }
         }
 
         private func pumpInfoUpdated(_ pumpInfo: PumpDisplayInfo?) async {
-            self.pumpInfo = pumpInfo
             if pumpInfo == nil {
                 setupPump = false
             }
-        }
-
-        private func cgmInfoUpdated(_ cgmInfo: CgmDisplayInfo?) async {
-            self.cgmInfo = cgmInfo
         }
 
         private func updateSensorDays() {
@@ -549,6 +443,7 @@ extension Home {
             let last = data.suspensions.last
             let tbr = data.tempBasals.first { $0.timestamp > (last?.timestamp ?? .distantPast) }
 
+            // TODO: should we read this from the pump manager instead?
             pumpSuspended = tbr == nil && last?.type == .pumpSuspend
         }
 
@@ -736,7 +631,7 @@ extension Home {
         }
 
         func openCGM() {
-            if let cgmInfo {
+            if let cgmInfo = appUIState.cgmInfo {
                 if let url = cgmInfo.appURL {
                     // if app url is provided (nightscout, xDrip) - open it
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -875,26 +770,6 @@ extension Home.StateModel {
         await setupOverrideHistory()
         setupLoopStatsBackground()
         await setupData()
-    }
-
-    private func pumpBatteryUpdated(_ battery: Battery?) async {
-        self.battery = battery
-    }
-
-    private func pumpReservoirUpdated(_ reservoir: Decimal?) async {
-        self.reservoir = reservoir
-    }
-
-    private func pumpTimeZoneUpdated(_ timeZone: TimeZone?) async {
-        self.timeZone = timeZone
-    }
-
-    private func pumpNameUpdated(_ pumpName: String?) async {
-        self.pumpName = pumpName ?? "Pump"
-    }
-
-    private func pumpExpiresAtUpdated(_ expiresAt: Date?) async {
-        pumpExpiresAtDate = expiresAt
     }
 }
 

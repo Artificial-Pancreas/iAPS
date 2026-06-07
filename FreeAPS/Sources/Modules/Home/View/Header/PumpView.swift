@@ -1,14 +1,10 @@
 import SwiftUI
 
 struct PumpView: View {
-    @Binding var reservoir: Decimal?
-    @Binding var battery: Battery?
-    @Binding var name: String
-    @Binding var expiresAtDate: Date?
-    @Binding var timerDate: Date
-    @Binding var timeZone: TimeZone?
+    @Environment(AppUIState.self) private var appUIState
 
-    @State var state: Home.StateModel
+    let hideInsulinBadge: Bool
+    let timerDate: Date
 
     @Environment(\.colorScheme) var colorScheme
 
@@ -43,103 +39,108 @@ struct PumpView: View {
     ) var concentration: FetchedResults<InsulinConcentration>
 
     var body: some View {
-        let nano = state.pumpName.contains("Medtrum")
-        // let sim = state.pumpName.contains("Simulator") // Just For Testing
+        let pumpInfo = appUIState.pumpInfo
+        let pumpStatus = appUIState.pumpStatus
+        let reservoir = appUIState.pumpReservoir
+
+        let nano = pumpInfo?.name.contains("Medtrum") ?? false
+        let omni = pumpInfo?.name.contains("Omni") ?? false
+        // let sim = pumpName?.contains("Simulator") ?? false // Just For Testing
         HStack(spacing: 5) {
             // OmniPods and Medtrum nanos
-            if let pumpInfo = state.pumpInfo,
-               !pumpInfo.isOnboarded
+            if let pumpInfo, !pumpInfo.isOnboarded
             {
                 Text("Re-connect pump!").font(.statusFont).foregroundStyle(.red)
                     .offset(y: -4)
             } else {
-                if let date = expiresAtDate {
+                if let date = pumpInfo?.expiresAt {
                     // Insulin amount (U)
-                    if let insulin = reservoir {
+                    if case let .units(insulin) = reservoir {
                         // 120 % due to being non rectangular. +10 because of bottom inserter.
                         let amountFraction = 1.0 - (Double(insulin + 10) * 1.2 / 200)
-                        if insulin == 0xDEAD_BEEF {
-                            if nano {
-                                medtrumInsulinAmount(portion: amountFraction)
-                                    .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
-                                    .overlay {
-                                        if let timeZone = timeZone,
-                                           timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
-                                        {
-                                            ClockOffset(mdtPump: false)
-                                        }
-                                        if (concentration.last?.concentration ?? 1) != 1,
-                                           state.settings?.hideInsulinBadge != true
-                                        {
-                                            NonStandardInsulin(
-                                                concentration: concentration.last?.concentration ?? 1,
-                                                pump: .medtrum
-                                            )
-                                        }
+
+                        HStack(spacing: 0) {
+                            let amount: Decimal = (insulin * Decimal(concentration.last?.concentration ?? 1))
+                            Text(reservoirFormatter.string(from: amount as NSNumber) ?? "")
+                                .padding(.trailing, 2)
+                            Text("U").foregroundStyle(.secondary)
+                        }.offset(x: 6)
+                        if nano {
+                            medtrumInsulinAmount(portion: amountFraction)
+                                .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                                .overlay {
+                                    if let timeZone = pumpStatus?.timeZone,
+                                       timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                                    {
+                                        ClockOffset(mdtPump: false)
                                     }
-                            } else {
-                                podInsulinAmount(portion: amountFraction)
-                                    .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
-                                    .overlay {
-                                        if let timeZone = timeZone,
-                                           timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
-                                        {
-                                            ClockOffset(mdtPump: false)
-                                        }
-                                        if (concentration.last?.concentration ?? 1) != 1,
-                                           state.settings?.hideInsulinBadge != true
-                                        {
-                                            NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .pod)
-                                        }
+                                    if (concentration.last?.concentration ?? 1) != 1,
+                                       !hideInsulinBadge
+                                    {
+                                        NonStandardInsulin(
+                                            concentration: concentration.last?.concentration ?? 1,
+                                            pump: .medtrum
+                                        )
                                     }
-                            }
+                                }
                         } else {
-                            HStack(spacing: 0) {
-                                let amount: Decimal = (insulin * Decimal(concentration.last?.concentration ?? 1))
-                                Text(reservoirFormatter.string(from: amount as NSNumber) ?? "")
-                                    .padding(.trailing, 2)
-                                Text("U").foregroundStyle(.secondary)
-                            }.offset(x: 6)
-                            if nano {
-                                medtrumInsulinAmount(portion: amountFraction)
-                                    .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
-                                    .overlay {
-                                        if let timeZone = timeZone,
-                                           timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
-                                        {
-                                            ClockOffset(mdtPump: false)
-                                        }
-                                        if (concentration.last?.concentration ?? 1) != 1,
-                                           state.settings?.hideInsulinBadge != true
-                                        {
-                                            NonStandardInsulin(
-                                                concentration: concentration.last?.concentration ?? 1,
-                                                pump: .medtrum
-                                            )
-                                        }
+                            podInsulinAmount(portion: amountFraction)
+                                .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                                .overlay {
+                                    if let timeZone = pumpStatus?.timeZone,
+                                       timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                                    {
+                                        ClockOffset(mdtPump: false)
                                     }
-                            } else {
-                                podInsulinAmount(portion: amountFraction)
-                                    .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
-                                    .overlay {
-                                        if let timeZone = timeZone,
-                                           timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
-                                        {
-                                            ClockOffset(mdtPump: false)
-                                        }
-                                        if (concentration.last?.concentration ?? 1) != 1,
-                                           state.settings?.hideInsulinBadge != true
-                                        {
-                                            NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .pod)
-                                        }
+                                    if (concentration.last?.concentration ?? 1) != 1,
+                                       !hideInsulinBadge
+                                    {
+                                        NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .pod)
                                     }
-                            }
+                                }
+                        }
+
+                    } else if reservoir == .aboveThreshold {
+                        if nano {
+                            medtrumInsulinAmount(portion: 0.0)
+                                .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                                .overlay {
+                                    if let timeZone = pumpStatus?.timeZone,
+                                       timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                                    {
+                                        ClockOffset(mdtPump: false)
+                                    }
+                                    if (concentration.last?.concentration ?? 1) != 1,
+                                       !hideInsulinBadge
+                                    {
+                                        NonStandardInsulin(
+                                            concentration: concentration.last?.concentration ?? 1,
+                                            pump: .medtrum
+                                        )
+                                    }
+                                }
+                        } else {
+                            podInsulinAmount(portion: 0.0)
+                                .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                                .overlay {
+                                    if let timeZone = pumpStatus?.timeZone,
+                                       timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                                    {
+                                        ClockOffset(mdtPump: false)
+                                    }
+                                    if (concentration.last?.concentration ?? 1) != 1,
+                                       !hideInsulinBadge
+                                    {
+                                        NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .pod)
+                                    }
+                                }
                         }
                     }
+
                     remainingTime(time: date.timeIntervalSince(timerDate))
                         .font(.pumpFont)
                         .offset(x: nano ? -8.5 : -5)
-                } else if state.pumpName.contains("Omni") {
+                } else if omni {
                     Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
                         .offset(y: -4)
                 } else if nano {
@@ -147,44 +148,49 @@ struct PumpView: View {
                         .offset(y: -4)
                 }
                 // Other pumps
-                else if let reservoir = reservoir {
-                    if (concentration.last?.concentration ?? 1) != 1, state.settings?.hideInsulinBadge != true {
+                else if case let .units(reservoir) = reservoir {
+                    if (concentration.last?.concentration ?? 1) != 1, !hideInsulinBadge {
                         NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .other)
                     }
                     let amountFraction = 1.0 - (Double(reservoir + 10) * 1.2 / 200)
-
-                    if reservoir == 0xDEAD_BEEF {
-                        pumpInsulinAmount(portion: amountFraction)
-                            .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
-                            .overlay {
-                                if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
-                                    ClockOffset(mdtPump: true)
-                                }
-                            }.offset(y: expiresAtDate == nil ? -4 : 0)
-                    } else {
-                        HStack(spacing: 0) {
-                            Text(
-                                reservoirFormatter
-                                    .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
-                            ).font(.statusFont)
-                            Text("U").font(.statusFont).foregroundStyle(.secondary)
-                        }
-                        .offset(y: 7)
-                        pumpInsulinAmount(portion: amountFraction)
-                            .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
-                            .overlay {
-                                if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
-                                    ClockOffset(mdtPump: false)
-                                }
-                            }
+                    HStack(spacing: 0) {
+                        Text(
+                            reservoirFormatter
+                                .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
+                        ).font(.statusFont)
+                        Text("U").font(.statusFont).foregroundStyle(.secondary)
                     }
+                    .offset(y: 7)
+                    pumpInsulinAmount(portion: amountFraction)
+                        .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                        .overlay {
+                            if let timeZone = pumpStatus?.timeZone,
+                               timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                            {
+                                ClockOffset(mdtPump: false)
+                            }
+                        }
+                } else if reservoir == .aboveThreshold {
+                    if (concentration.last?.concentration ?? 1) != 1, !hideInsulinBadge {
+                        NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .other)
+                    }
+
+                    pumpInsulinAmount(portion: 0.0)
+                        .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                        .overlay {
+                            if let timeZone = pumpStatus?.timeZone,
+                               timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                            {
+                                ClockOffset(mdtPump: true)
+                            }
+                        }.offset(y: pumpInfo?.expiresAt == nil ? -4 : 0)
                 } else {
                     Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
                         .offset(y: -4)
                 }
 
                 // MDT and Dana
-                if let battery = battery, !state.pumpName.contains("Omni"), !nano {
+                if let battery = pumpStatus?.battery, !omni, !nano {
                     let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
                         (battery.percent ?? 100) >
                         60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
@@ -197,7 +203,7 @@ struct PumpView: View {
                 }
             }
         }
-        .offset(x: (nano && expiresAtDate != nil) ? 5 : 0, y: (nano && expiresAtDate != nil) ? 10 : 5)
+        .offset(x: (nano && pumpInfo?.expiresAt != nil) ? 5 : 0, y: (nano && pumpInfo?.expiresAt != nil) ? 10 : 5)
     }
 
     private func remainingTime(time: TimeInterval) -> some View {
@@ -239,7 +245,7 @@ struct PumpView: View {
     }
 
     private var batteryColor: Color {
-        guard let battery = battery, let percent = battery.percent else {
+        guard let battery = appUIState.pumpStatus?.battery, let percent = battery.percent else {
             return .gray
         }
         switch percent {
@@ -252,8 +258,8 @@ struct PumpView: View {
         }
     }
 
-    private var reservoirColor: Color {
-        guard let reservoir = reservoir else {
+    private func reservoirColor(_ reservoir: Decimal?) -> Color {
+        guard let reservoir else {
             return .gray
         }
 
@@ -267,12 +273,12 @@ struct PumpView: View {
         }
     }
 
-    private var timerColor: Color {
-        guard let expisesAt = expiresAtDate else {
+    private func timerColor(_ expiresAt: Date?) -> Color {
+        guard let expiresAt else {
             return .gray
         }
 
-        let time = expisesAt.timeIntervalSince(timerDate)
+        let time = expiresAt.timeIntervalSince(timerDate)
 
         switch time {
         case ...8.hours.timeInterval:

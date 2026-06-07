@@ -24,8 +24,10 @@ extension Home {
         @State var displayDynamicHistory = false
         @State var displayAllNutrients = false
 
-        let buttonFont = Font.custom("TimeButtonFont", size: 14)
-        let viewPadding: CGFloat = 5
+        private let buttonFont = Font.custom("TimeButtonFont", size: 14)
+        private let viewPadding: CGFloat = 5
+
+        @Environment(AppUIState.self) private var appUIState
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.sizeCategory) private var fontSize
@@ -63,21 +65,21 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var onboarded: FetchedResults<Onboarding>
 
-        private let numberFormatter: NumberFormatter = {
+        private static let numberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             return formatter
         }()
 
-        private let fetchedTargetFormatterMmol: NumberFormatter = {
+        private static let fetchedTargetFormatterMmol = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
             return formatter
         }()
 
-        private let fetchedTargetFormatterMgdl: NumberFormatter = {
+        private static let fetchedTargetFormatterMgdl = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
@@ -85,27 +87,21 @@ extension Home {
         }()
 
         private var fetchedTargetFormatter: NumberFormatter {
-            state.data.units == .mmolL ? fetchedTargetFormatterMmol : fetchedTargetFormatterMgdl
+            state.data.units == .mmolL ? Self.fetchedTargetFormatterMmol : Self.fetchedTargetFormatterMgdl
         }
 
-        private let targetFormatter: NumberFormatter = {
+        private static let iobFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
             return formatter
         }()
 
-        private let tirFormatter: NumberFormatter = {
+        private static let tirFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             return formatter
-        }()
-
-        private let dateFormatter: DateFormatter = {
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = .short
-            return dateFormatter
         }()
 
         private var spriteScene: SKScene {
@@ -155,15 +151,11 @@ extension Home {
 
         var pumpView: some View {
             PumpView(
-                reservoir: $state.reservoir,
-                battery: $state.battery,
-                name: $state.pumpName,
-                expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.data.timerDate, timeZone: $state.timeZone,
-                state: state
+                hideInsulinBadge: state.settings?.hideInsulinBadge == true,
+                timerDate: state.data.timerDate
             )
             .onTapGesture {
-                if state.pumpDisplayState != nil {
+                if appUIState.pumpInfo != nil {
                     state.setupPump = true
                 }
             }
@@ -172,13 +164,10 @@ extension Home {
 
         var loopView: some View {
             LoopView(
-                suggestion: $state.data.suggestion,
-                enactedSuggestion: $state.enactedSuggestion,
-                closedLoop: $state.closedLoop,
-                timerDate: $state.data.timerDate,
-                isLooping: $state.isLooping,
-                lastLoopDate: $state.lastLoopDate,
-                manualTempBasal: $state.manualTempBasal
+                suggestion: state.data.suggestion,
+                enactedSuggestion: state.enactedSuggestion,
+                closedLoop: state.closedLoop,
+                timerDate: state.data.timerDate,
             )
             .onTapGesture {
                 state.isStatusPopupPresented.toggle()
@@ -187,22 +176,6 @@ extension Home {
                 impactHeavy.impactOccurred()
                 state.runLoop()
             }
-        }
-
-        var tempBasalString: String {
-            guard let tempRate = state.tempRate else {
-                return "?" + NSLocalizedString(" U/hr", comment: "Unit per hour with space")
-            }
-            let rateString = numberFormatter.string(from: tempRate as NSNumber) ?? "0"
-            var manualBasalString = ""
-
-            if state.manualTempBasal {
-                manualBasalString = NSLocalizedString(
-                    " Manual",
-                    comment: "Manual Temp basal"
-                )
-            }
-            return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
         }
 
         var tempTargetString: String? {
@@ -215,16 +188,7 @@ extension Home {
         var info: some View {
             HStack(spacing: 10) {
                 ZStack {
-                    HStack {
-                        if state.pumpSuspended {
-                            Text("Pump suspended")
-                                .font(.extraSmall).bold().foregroundColor(.loopGray)
-                        } else {
-                            Text(tempBasalString)
-                                .font(.statusFont).bold()
-                                .foregroundColor(.insulin)
-                        }
-                    }
+                    TempBasalView(pumpSuspended: state.pumpSuspended, tempRate: state.tempRate)
                 }
                 .padding(.leading, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -298,7 +262,7 @@ extension Home {
                                         .foregroundStyle(colorScheme == .dark ? .loopYellow : .orange)
                                         .padding(8)
                                     if let carbsReq = state.carbsRequired {
-                                        Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                        Text(Self.numberFormatter.string(from: carbsReq as NSNumber)!)
                                             .font(.caption)
                                             .foregroundStyle(.white)
                                             .padding(4)
@@ -329,7 +293,7 @@ extension Home {
                             Spacer()
                         }
                         Button {
-                            (state.bolusProgress != nil) ? showBolusActiveAlert = true :
+                            (appUIState.bolusProgress != nil) ? showBolusActiveAlert = true :
                                 state.showModal(for: .bolus(
                                     waitForSuggestion: state.useCalc ? true : false,
                                     fetch: false
@@ -460,7 +424,7 @@ extension Home {
                     .offset(y: -5)
                     HStack(spacing: 0) {
                         if let loop = state.data.suggestion, let cob = loop.cob {
-                            Text(numberFormatter.string(from: cob as NSNumber) ?? "0")
+                            Text(Self.numberFormatter.string(from: cob as NSNumber) ?? "0")
                                 .font(.statusFont).bold()
                             // Display last loop, unless very old
                         } else {
@@ -489,7 +453,7 @@ extension Home {
                     HStack(spacing: 0) {
                         if let iob = state.data.iob {
                             Text(
-                                targetFormatter.string(from: iob as NSNumber) ?? "0"
+                                Self.iobFormatter.string(from: iob as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
                         } else {
                             Text("?").font(.statusFont).bold()
@@ -633,7 +597,7 @@ extension Home {
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
                         } else if override.percentage != 100 {
-                            Text((tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
+                            Text((Self.tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
                                 .foregroundStyle(.secondary)
                         } else if override.smbIsOff, !override.smbIsAlwaysOff {
                             Text("No ").font(.statusFont).foregroundStyle(.secondary) // "No" as in no SMBs
@@ -648,33 +612,6 @@ extension Home {
                         }
                     }
                 }
-            }
-        }
-
-        func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
-            ZStack {
-                VStack {
-                    HStack {
-                        let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
-                        Text("Bolusing")
-                        Text(
-                            bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
-                                .formatted() + NSLocalizedString(" U", comment: "")
-                        )
-                    }.frame(width: 250, height: 25).font(.bolusProgressBarFont)
-                    HStack(alignment: .bottom, spacing: 5) {
-                        ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
-                            .overlay {
-                                Image(systemName: "pause.fill")
-                                    .symbolRenderingMode(.palette)
-                                    .foregroundStyle(.white, .blue)
-                                    .font(.bolusProgressStopFont)
-                            }
-                    }
-                    .onTapGesture { state.cancelBolus() }
-                }
-                .dynamicTypeSize(...DynamicTypeSize.large)
-                .padding(.bottom, 8)
             }
         }
 
@@ -1218,20 +1155,9 @@ extension Home {
                     )
                     .ignoresSafeArea(edges: .vertical)
                     .overlay {
-                        if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(
-                                        colorScheme == .light ? IAPSconfig
-                                            .homeViewBackgroundLight : IAPSconfig
-                                            .homeViewBackgrundDark
-                                    )
-                                    .frame(maxWidth: 320, maxHeight: 90)
-                                bolusProgressView(progress: progress, amount: amount)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .offset(y: -100)
-                        }
+                        BolusProgressOverlay(
+                            cancel: state.cancelBolus
+                        )
                     }
                     .onChange(of: scenePhase) {
                         switch scenePhase {
@@ -1317,17 +1243,7 @@ extension Home {
                 } else {
                     Text("No suggestion found").font(.suggestionHeadline).foregroundColor(.white)
                 }
-                if let errorMessage = state.errorMessage, let date = state.errorDate {
-                    Text(NSLocalizedString("Status at", comment: "") + " " + dateFormatter.string(from: date))
-                        .foregroundColor(.white)
-                        .font(.suggestionError)
-                        .padding(.bottom, 4)
-                        .padding(.top, 8)
-                    Text(errorMessage).font(.suggestionError).fontWeight(.semibold).foregroundColor(.orange)
-                } else if let suggestion = state.data.suggestion, (suggestion.bg ?? 100) == 400 {
-                    Text("Invalid CGM reading (HIGH).").font(.suggestionError).bold().foregroundColor(.loopRed).padding(.top, 8)
-                    Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
-                }
+                LastLoopErrorView(suggestion: state.data.suggestion)
             }
         }
 
@@ -1337,5 +1253,132 @@ extension Home {
                 openAPS: settings
             )
         }
+    }
+}
+
+private struct BolusProgressOverlay: View {
+    let cancel: () -> Void
+
+    @Environment(AppUIState.self) private var appUIState
+    @Environment(\.colorScheme) private var colorScheme
+
+    private static let formatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }()
+
+    var body: some View {
+        if let progress = appUIState.bolusProgress, let amount = appUIState.bolusAmount {
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(
+                        colorScheme == .light ? IAPSconfig
+                            .homeViewBackgroundLight : IAPSconfig
+                            .homeViewBackgrundDark
+                    )
+                    .frame(maxWidth: 320, maxHeight: 90)
+                bolusProgressView(progress: progress, amount: amount)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .offset(y: -100)
+        }
+    }
+
+    private func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
+        ZStack {
+            VStack {
+                HStack {
+                    let bolused = Self.formatter.string(from: (amount * progress) as NSNumber) ?? ""
+                    Text("Bolusing")
+                    Text(
+                        bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
+                            .formatted() + NSLocalizedString(" U", comment: "")
+                    )
+                }.frame(width: 250, height: 25).font(.bolusProgressBarFont)
+                HStack(alignment: .bottom, spacing: 5) {
+                    ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
+                        .overlay {
+                            Image(systemName: "pause.fill")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.white, .blue)
+                                .font(.bolusProgressStopFont)
+                        }
+                }
+                .onTapGesture { cancel() }
+            }
+            .dynamicTypeSize(...DynamicTypeSize.large)
+            .padding(.bottom, 8)
+        }
+    }
+}
+
+private struct LastLoopErrorView: View {
+    @Environment(AppUIState.self) private var appUIState
+    let suggestion: Suggestion?
+
+    private static let dateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        return dateFormatter
+    }()
+
+    var body: some View {
+        if let lastLoopError = appUIState.lastLoopError {
+            Text(NSLocalizedString("Status at", comment: "") + " " + Self.dateFormatter.string(from: lastLoopError.date))
+                .foregroundColor(.white)
+                .font(.suggestionError)
+                .padding(.bottom, 4)
+                .padding(.top, 8)
+            Text(
+                lastLoopError.error.localizedDescription
+            ).font(.suggestionError).fontWeight(.semibold).foregroundColor(.orange)
+        } else if let suggestion, (suggestion.bg ?? 100) == 400 {
+            Text("Invalid CGM reading (HIGH).").font(.suggestionError).bold().foregroundColor(.loopRed).padding(.top, 8)
+            Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
+        }
+    }
+}
+
+private struct TempBasalView: View {
+    @Environment(AppUIState.self) private var appUIState
+    let pumpSuspended: Bool
+    let tempRate: Decimal?
+
+    private static let numberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
+    var body: some View {
+        HStack {
+            if pumpSuspended {
+                Text("Pump suspended")
+                    .font(.extraSmall).bold().foregroundColor(.loopGray)
+            } else {
+                Text(tempBasalString)
+                    .font(.statusFont).bold()
+                    .foregroundColor(.insulin)
+            }
+        }
+    }
+
+    var tempBasalString: String {
+        guard let tempRate = tempRate else {
+            return "?" + NSLocalizedString(" U/hr", comment: "Unit per hour with space")
+        }
+        let rateString = Self.numberFormatter.string(from: tempRate as NSNumber) ?? "0"
+        var manualBasalString = ""
+
+        if appUIState.manualTempBasal {
+            manualBasalString = NSLocalizedString(
+                " Manual",
+                comment: "Manual Temp basal"
+            )
+        }
+        return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
     }
 }

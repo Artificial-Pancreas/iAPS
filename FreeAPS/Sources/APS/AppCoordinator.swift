@@ -6,18 +6,8 @@ import LoopKit
 // which are internally thread-safe for concurrent send/value/subscribe.
 // TODO: values flow across isolation domains via these subjects, so Output types should be Sendable (Combine won't enforce this).
 // * `Error` is not Sendable; we need to either replace it with something that is Sendable, or accepted as is - since those values are effectively immutable.
-// * non-Sendable types from LoopKit are still referenced in some of the structs; currently they are marked `@retroactive @unchecked Sendable`, but better not to do this.
-final class AppCoordinator: @unchecked Sendable {
-    //    @Published private(set) var shouldUploadGlucose: Bool = false
-    //    @Published private(set) var sensorDays: Double? = nil
-    //    @Published private(set) var pumpExpiresAtDate: Date? = nil
-    //    @Published private(set) var isLooping = false
-    //    @Published private(set) var pumpDisplayState: PumpDisplayState? = nil
-    //    @Published private(set) var pumpManagerStatus: PumpManagerStatus? = nil
-    //    @Published private(set) var pumpName = "Pump"
-    //    @Published private(set) var alertNotAck = false
-    //    @Published private(set) var lastLoopError: Error? = nil
 
+final class AppCoordinator: @unchecked Sendable {
     let pumpInfo = CurrentValueSubject<PumpDisplayInfo?, Never>(nil)
 
     let pumpStatus = CurrentValueSubject<PumpDisplayStatus?, Never>(nil)
@@ -36,27 +26,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let manualTempBasal = CurrentValueSubject<Bool, Never>(false)
 
-    let pumpReservoir = CurrentValueSubject<Decimal?, Never>(nil)
-
-    //    let pumpManagerStatus = CurrentValueSubject<PumpManagerStatus?, Never>(nil)
-
-    //    let pumpIdentifier = CurrentValueSubject<String?, Never>(nil)
-
-    //    let pumpIsCgm = CurrentValueSubject<Bool, Never>(false)
-
-    //    let pumpOnboarded = CurrentValueSubject<Bool, Never>(false)
-
-    //    let podStartTime = CurrentValueSubject<Date?, Never>(nil)
-
-    //    let pumpExpirationDate = CurrentValueSubject<Date?, Never>(nil)
-
-    //    let sensorDays = CurrentValueSubject<Double?, Never>(nil)
-
-    //    let pumpBattery = CurrentValueSubject<Battery?, Never>(nil)
-
-    //    let pumpName = CurrentValueSubject<String?, Never>(nil)
-
-    //    let pumpTimeZone = CurrentValueSubject<TimeZone?, Never>(nil)
+    let pumpReservoir = CurrentValueSubject<ReservoirReading?, Never>(nil)
 
     let pumpNotifications = PassthroughSubject<AlertEntry, Never>()
 
@@ -99,7 +69,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let lastLoopDate = CurrentValueSubject<Date?, Never>(nil)
 
-    let lastLoopError = CurrentValueSubject<Error?, Never>(nil)
+    let lastLoopError = CurrentValueSubject<(error: Error, date: Date)?, Never>(nil)
 
     let bolusFailures = PassthroughSubject<Void, Never>()
 
@@ -125,7 +95,7 @@ final class AppCoordinator: @unchecked Sendable {
         pumpStatus.send(value)
     }
 
-    func setPumpReservoir(_ value: Decimal?) {
+    func setPumpReservoir(_ value: ReservoirReading?) {
         pumpReservoir.send(value)
     }
 
@@ -154,7 +124,11 @@ final class AppCoordinator: @unchecked Sendable {
     }
 
     func setLastLoopError(_ value: Error?) {
-        lastLoopError.send(value)
+        if let value {
+            lastLoopError.send((error: value, date: .now))
+        } else {
+            lastLoopError.send(nil)
+        }
     }
 
     func sendDeviceError(_ value: Error) {

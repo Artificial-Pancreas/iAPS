@@ -726,7 +726,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "Reservoir Value \(units), at: \(date)")
 //        await storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
-        appCoordinator.setPumpReservoir(Decimal(units))
+        appCoordinator.setPumpReservoir(.units(Decimal(units)))
 
         completion(.success((
             newValue: Reservoir(startDate: Date(), unitVolume: units),
@@ -1041,12 +1041,13 @@ private extension BaseDeviceDataManager {
             deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
             isSuspended: isSuspended,
             isBolusing: isBolusing,
-            pumpManagerStatus: pumpManagerStatus,
             timestamp: Date.now
         )
 
         appCoordinator.setPumpStatus(status)
-        appCoordinator.setPumpReservoir(KnownPlugins.pumpReservoir(pumpManager))
+        if let reservoir = KnownPlugins.pumpReservoir(pumpManager) {
+            appCoordinator.setPumpReservoir(reservoir)
+        }
         if case .inProgress = pumpManagerStatus.bolusState {
             appCoordinator.setBolusInProgress(true)
         } else {

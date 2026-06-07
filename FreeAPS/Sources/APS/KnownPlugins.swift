@@ -115,16 +115,22 @@ enum KnownPlugins {
         }
     }
 
-    static func pumpReservoir(_ pumpManager: PumpManager) -> Decimal? {
+    static func pumpReservoir(_ pumpManager: PumpManager) -> ReservoirReading? {
         switch pumpManager.pluginIdentifier {
         case OmniPumpManager.pluginIdentifier:
-            let reservoirVal = (pumpManager as? OmniPumpManager)?.state.podState?.lastInsulinMeasurements?
-                .reservoirLevel ?? 0xDEAD_BEEF
-            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
-            return Decimal(reservoir)
+            if let reservoirVal = (pumpManager as? OmniPumpManager)?.state.podState?.lastInsulinMeasurements?.reservoirLevel,
+               reservoirVal <= 50
+            {
+                return .units(Decimal(reservoirVal))
+            } else {
+                return .aboveThreshold
+            }
         case MedtrumPumpManager.pluginIdentifier:
             guard let reservoir = (pumpManager as? MedtrumPumpManager)?.state.reservoir else { return nil }
-            return Decimal(reservoir)
+            return .units(Decimal(reservoir))
+        case MockPumpManager.pluginIdentifier:
+            guard let reservoir = (pumpManager as? MockPumpManager)?.state.reservoirUnitsRemaining else { return nil }
+            return .units(Decimal(reservoir))
         default: return nil
         }
     }

@@ -26,7 +26,10 @@ struct PumpDisplayStatus: Equatable, Sendable {
     let isSuspended: Bool
     let isBolusing: Bool
 
-    let pumpManagerStatus: PumpManagerStatus
-
     let timestamp: Date?
+}
+
+enum ReservoirReading: Sendable, Equatable {
+    case units(Decimal)
+    case aboveThreshold
 }
