@@ -31,7 +31,7 @@ enum NotificationAction: String {
 //    func pumpRemoveNotification()
 // }
 
-actor BaseUserNotificationsManager: UserNotificationsManager, Injectable {
+actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, LifetimeOwner {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
@@ -54,7 +54,7 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable {
 
     private let center = UNUserNotificationCenter.current()
     private let userNotificationCenterDelegate: UserNotificationCenterDelegate
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     init(resolver: Resolver) {
         self.userNotificationCenterDelegate = UserNotificationCenterDelegate()
@@ -71,27 +71,27 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable {
         userNotificationCenterDelegate.manager = self
         center.delegate = userNotificationCenterDelegate
 
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { settings in
-            await self.settingsUpdated(settings)
+        observe(appCoordinator.settingsUpdates) { me, settings in
+            await me.settingsUpdated(settings)
         }
-        observe(appCoordinator.glucoseHistoryUpdates, in: &lifetime) { glucose in
-            await self.glucoseUpdated(glucose)
+        observe(appCoordinator.glucoseHistoryUpdates) { me, glucose in
+            await me.glucoseUpdated(glucose)
         }
-        observe(appCoordinator.suggestions, in: &lifetime) { suggestion in
-            await self.suggestionUpdated(suggestion)
+        observe(appCoordinator.suggestions) { me, suggestion in
+            await me.suggestionUpdated(suggestion)
         }
-        observe(appCoordinator.bolusFailures, in: &lifetime) { _ in
-            await self.notifyBolusFailure()
+        observe(appCoordinator.bolusFailures) { me, _ in
+            await me.notifyBolusFailure()
         }
-        observe(appCoordinator.pumpNotifications, in: &lifetime) { alert in
-            await self.pumpNotificationTriggered(alert)
+        observe(appCoordinator.pumpNotifications) { me, alert in
+            await me.pumpNotificationTriggered(alert)
         }
-        observe(appCoordinator.pumpNotificationsRemove, in: &lifetime) { _ in
-            await self.pumpNotificationsRemoved()
+        observe(appCoordinator.pumpNotificationsRemove) { me, _ in
+            await me.pumpNotificationsRemoved()
         }
 
-        observe(appCoordinator.lastLoopDate, in: &lifetime) { date in
-            await self.scheduleMissingLoopNotifiactions(date)
+        observe(appCoordinator.lastLoopDate) { me, date in
+            await me.scheduleMissingLoopNotifiactions(date)
         }
 
         await requestNotificationPermissionsIfNeeded()

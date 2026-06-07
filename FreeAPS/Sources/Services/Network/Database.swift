@@ -1,11 +1,11 @@
 import Foundation
 import Swinject
 
-class Database: Injectable {
-    @Injected() private var userToken: Token!
+final class Database: Sendable {
+    private let userToken: Token
 
     init(resolver: Resolver) {
-        injectServices(resolver)
+        userToken = resolver.resolve(Token.self)!
     }
 
     private enum Config {

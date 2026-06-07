@@ -2,7 +2,7 @@ import CoreData
 import SwiftUI
 
 extension DataTable {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
         @Injected() var carbStorage: CarbsStorage!
@@ -47,26 +47,26 @@ extension DataTable {
             await setupTreatments()
             await setupGlucose()
 
-            observe(appCoordinator.settingsUpdates) { _ in
-                await self.setupTreatments()
+            observe(appCoordinator.settingsUpdates) { me, _ in
+                await me.setupTreatments()
             }
-            observe(appCoordinator.preferencesUpdates) { _ in
-                await self.setupTreatments()
+            observe(appCoordinator.preferencesUpdates) { me, _ in
+                await me.setupTreatments()
             }
-            observe(appCoordinator.pumpSettingsUpdates) { _ in
-                await self.setupTreatments()
+            observe(appCoordinator.pumpSettingsUpdates) { me, _ in
+                await me.setupTreatments()
             }
-            observe(appCoordinator.pumpHistoryUpdates) { _ in
-                await self.setupTreatments()
+            observe(appCoordinator.pumpHistoryUpdates) { me, _ in
+                await me.setupTreatments()
             }
-            observe(appCoordinator.tempTargetsUpdates) { _ in
-                await self.setupTreatments()
+            observe(appCoordinator.tempTargetsUpdates) { me, _ in
+                await me.setupTreatments()
             }
-            observe(appCoordinator.carbHistoryUpdates) { _ in
-                await self.setupTreatments()
+            observe(appCoordinator.carbHistoryUpdates) { me, _ in
+                await me.setupTreatments()
             }
-            observe(appCoordinator.glucoseHistoryUpdates) { _ in
-                await self.setupGlucose()
+            observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
+                await me.setupGlucose()
             }
         }
 
@@ -191,7 +191,7 @@ extension DataTable {
 
                 // In need of a loop update?
                 if treatment.creationDate.timeIntervalSinceNow > -2.hours.timeInterval {
-                    await aps.determineBasal(temporaryCarbs: nil)
+                    _ = await aps.determineBasal(temporaryCarbs: nil)
                 }
             }
         }

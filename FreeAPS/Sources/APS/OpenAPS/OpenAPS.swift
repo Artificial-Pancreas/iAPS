@@ -3,7 +3,7 @@ import Foundation
 import JavaScriptCore
 import Swinject
 
-final class OpenAPS {
+final class OpenAPS: Sendable {
     private let storage: FileStorage
     private let glucoseStorage: GlucoseStorage
     private let nightscout: NightscoutManager

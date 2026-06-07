@@ -44,7 +44,7 @@ extension CalendarShare {
                         await self.calendarManager.setCurrentCalendarID(id.isNotEmpty ? id : nil)
                     }
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
         }
     }
 }

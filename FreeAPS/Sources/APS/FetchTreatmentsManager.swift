@@ -5,16 +5,15 @@ import Swinject
 
 protocol FetchTreatmentsManager {}
 
-actor BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
+actor BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable, LifetimeOwner {
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var tempTargetsStorage: TempTargetsStorage!
     @Injected() var carbsStorage: CarbsStorage!
     @Injected() var appCoordinator: AppCoordinator!
     @Injected() var settingsManager: SettingsManager!
 
+    let lifetime = Lifetime()
     private let coreDataStorage = CoreDataStorage()
-
-    private var lifetime = Lifetime()
 
     private let interval: TimeInterval = .minutes(1)
     private var pollingTask: Task<Void, Never>?
@@ -31,8 +30,8 @@ actor BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
         let settings = await settingsManager.settings
         settingsUpdated(settings)
 
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { settings in
-            await self.settingsUpdated(settings)
+        observe(appCoordinator.settingsUpdates) { me, settings in
+            await me.settingsUpdated(settings)
         }
     }
 

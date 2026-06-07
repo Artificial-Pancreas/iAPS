@@ -24,7 +24,7 @@ protocol HealthKitManager: Sendable {
     func deleteInsulin(syncID: String) async
 }
 
-actor BaseHealthKitManager: HealthKitManager, Injectable {
+actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner {
     private enum Config {
         // unwraped HKObjects
         static var readPermissions: Set<HKSampleType> {
@@ -46,7 +46,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var appCoordinator: AppCoordinator!
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     var isAvailableOnCurrentDevice: Bool {
         HKHealthStore.isHealthDataAvailable()
@@ -73,17 +73,15 @@ actor BaseHealthKitManager: HealthKitManager, Injectable {
         guard isAvailableOnCurrentDevice,
               Config.healthBGObject != nil else { return }
 
-        observe(appCoordinator.carbHistoryUpdates, in: &lifetime) { carbs in
-            await self.saveIfNeeded(carbs: carbs)
+        observe(appCoordinator.carbHistoryUpdates) { me, carbs in
+            await me.saveIfNeeded(carbs: carbs)
         }
-        observe(appCoordinator.pumpHistoryUpdates, in: &lifetime) { events in
-            await self.saveIfNeeded(pumpEvents: events)
+        observe(appCoordinator.pumpHistoryUpdates) { me, events in
+            await me.saveIfNeeded(pumpEvents: events)
         }
-        observe(appCoordinator.newGlucoseRecords, in: &lifetime) { bloodGlucose in
-            await self.saveIfNeeded(bloodGlucose: bloodGlucose)
+        observe(appCoordinator.newGlucoseRecords) { me, bloodGlucose in
+            await me.saveIfNeeded(bloodGlucose: bloodGlucose)
         }
-
-        debug(.service, "HealthKitManager did create")
     }
 
     private func checkAvailabilitySave(objectTypeToHealthStore: HKObjectType) -> Bool {

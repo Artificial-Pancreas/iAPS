@@ -45,7 +45,7 @@ extension AutotuneConfig {
                 .sink { [weak self] use in
                     self?.setUseAutotune(use)
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
         }
 
         private func setUseAutotune(_ use: Bool) {

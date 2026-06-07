@@ -2,10 +2,10 @@ import CoreData
 import Foundation
 import Swinject
 
-final class CoreDataStorageGlucoseSaver {
+final class CoreDataStorageGlucoseSaver: LifetimeOwner {
     private let appCoordinator: AppCoordinator
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     init(resolver: Resolver) {
         appCoordinator = resolver.resolve(AppCoordinator.self)!
@@ -13,8 +13,8 @@ final class CoreDataStorageGlucoseSaver {
     }
 
     private func subscribe() {
-        observe(appCoordinator.newGlucoseRecords, in: &lifetime) { bloodGlucose in
-            await self.storeGlucose(bloodGlucose)
+        observe(appCoordinator.newGlucoseRecords) { me, bloodGlucose in
+            await me.storeGlucose(bloodGlucose)
         }
     }
 

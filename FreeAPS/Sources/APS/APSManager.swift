@@ -70,7 +70,7 @@ enum APSError: LocalizedError {
     }
 }
 
-actor BaseAPSManager: APSManager, Injectable {
+actor BaseAPSManager: APSManager, Injectable, LifetimeOwner {
     private let processQueue = DispatchQueue(label: "BaseAPSManager.processQueue")
     @Injected() private var appCoordinator: AppCoordinator!
     @Injected() private var storage: FileStorage!
@@ -93,7 +93,7 @@ actor BaseAPSManager: APSManager, Injectable {
     private let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
     private let coreDataStorage = CoreDataStorage()
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     private var wasManualTempBasal = false
 
@@ -150,90 +150,33 @@ actor BaseAPSManager: APSManager, Injectable {
     }
 
     private func subscribe() async {
-        Task {
-            for await _ in appCoordinator.recommendsLoop.sendableValues.debounce(for: .seconds(1)) {
-                await self.loop()
-            }
-        }.store(in: &lifetime)
-//        deviceDataManager.recommendsLoop
-//            // because of backfill, the recommendation might trigger before the backfill is received
-//            // debounce for 1 second to give the CGM a chance to send in the backfill
-//            .debounce(for: .seconds(1), scheduler: processQueue)
-//            .receive(on: processQueue)
-//            .sink { [weak self] in
-//                self?.loop()
-//            }
-//            .store(in: &lifetime)
-
-//        observe(appCoordinator.pumpManagerStatus, in: &lifetime) { pumpStatus in
-//            if let pumpStatus {
-//                await self.pumpStatusUpdated(pumpStatus)
-//            }
-//        }
-
-        observe(appCoordinator.deviceErrors, in: &lifetime) { error in
-            await self.processError(APSError.pumpError(error))
+        // because of backfill, the recommendation might trigger before the backfill is received
+        // debounce for 1 second to give the CGM a chance to send in the backfill
+        observe(
+            appCoordinator.recommendsLoop.sendableValues.debounce(for: .seconds(1))
+        ) { me, _ in
+            await me.loop()
         }
 
-//        deviceDataManager.errorSubject
-//            .receive(on: processQueue)
-//            .map { APSError.pumpError($0) }
-//            .sink {
-//                self.processError($0)
-//            }
-//            .store(in: &lifetime)
+        observe(appCoordinator.deviceErrors) { me, error in
+            await me.processError(APSError.pumpError(error))
+        }
 
-        observe(appCoordinator.bolusInProgress.dropFirst(), in: &lifetime) { bolusing in
+        observe(appCoordinator.bolusInProgress.dropFirst()) { me, bolusing in
             if bolusing {
-                await self.createBolusReporter()
+                await me.createBolusReporter()
             } else {
-                await self.clearBolusReporter()
+                await me.clearBolusReporter()
             }
         }
-
-//        deviceDataManager.bolusTrigger
-//            .receive(on: processQueue)
-//            .sink { bolusing in
-//                if bolusing {
-//                    self.createBolusReporter()
-//                } else {
-//                    self.clearBolusReporter()
-//                }
-//            }
-//            .store(in: &lifetime)
 
         // manage a manual Temp Basal from OmniPod - Force loop() after stop a temp basal or finished
-        observe(appCoordinator.manualTempBasal, in: &lifetime) { manualBasal in
-            await self.manualTempBasalUpdated(manualBasal)
+        observe(appCoordinator.manualTempBasal) { me, manualBasal in
+            await me.manualTempBasalUpdated(manualBasal)
         }
-//        deviceDataManager.manualTempBasal
-//            .receive(on: processQueue)
-//            .sink { manualBasal in
-//                if manualBasal {
-//                    self.isManualTempBasal = true
-//                } else {
-//                    if self.isManualTempBasal {
-//                        self.isManualTempBasal = false
-//                        self.loop()
-//                    }
-//                }
-//            }
-//            .store(in: &lifetime)
 
         appCoordinator.setLastLoopDate(lastLoopDate)
     }
-
-//    private func pumpStatusUpdated(_ status: PumpManagerStatus) async {
-//        let percent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
-//        let battery = Battery(
-//            percent: percent,
-//            voltage: nil,
-//            string: percent > 10 ? .normal : .low,
-//            display: status.pumpBatteryChargeRemaining != nil
-//        )
-//        await self.storage.save(battery, as: OpenAPS.Monitor.battery)
-//        await self.storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
-//    }
 
     private func manualTempBasalUpdated(_ manualBasal: Bool) async {
         if manualBasal {

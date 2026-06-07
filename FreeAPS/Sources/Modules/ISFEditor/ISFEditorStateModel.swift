@@ -2,7 +2,7 @@ import SwiftUI
 import Swinject
 
 extension ISFEditor {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var storage: FileStorage!
         @Injected() private var appCoordinator: AppCoordinator!
         private let coreDataStorage = CoreDataStorage()
@@ -68,14 +68,14 @@ extension ISFEditor {
 
             autosensRatio = autosens.ratio
 
-            observe(appCoordinator.suggestions) { suggestion in
-                await self.suggestionUpdated(suggestion)
+            observe(appCoordinator.suggestions) { me, suggestion in
+                await me.suggestionUpdated(suggestion)
             }
-            observe(appCoordinator.settingsUpdates) { settings in
-                await self.settingsUpdated(settings)
+            observe(appCoordinator.settingsUpdates) { me, settings in
+                await me.settingsUpdated(settings)
             }
-            observe(appCoordinator.preferencesUpdates) { preferences in
-                await self.preferencesUpdated(preferences)
+            observe(appCoordinator.preferencesUpdates) { me, preferences in
+                await me.preferencesUpdated(preferences)
             }
         }
 

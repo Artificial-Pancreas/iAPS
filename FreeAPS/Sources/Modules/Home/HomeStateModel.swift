@@ -7,7 +7,7 @@ import SwiftDate
 import SwiftUI
 
 extension Home {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var appCoordinator: AppCoordinator!
         @Injected() private var apsManager: APSManager!
         @Injected() private var nightscoutManager: NightscoutManager!
@@ -24,6 +24,7 @@ extension Home {
         private(set) var filteredHours = 24
 
         @Published private(set) var settings: FreeAPSSettings?
+
         private var preferences: Preferences!
         private var pumpSettings: PumpSettings!
         private var basalProfile: [BasalProfileEntry]!
@@ -218,73 +219,73 @@ extension Home {
             await setupOverrideHistory()
             await setupData()
 
-            observe(appCoordinator.cgmInfo.map(\.?.sensorDays).removeDuplicates()) { sensorDays in
-                await self.cgmCensorDaysUpdated(sensorDays)
+            observe(appCoordinator.cgmInfo.map(\.?.sensorDays).removeDuplicates()) { me, sensorDays in
+                await me.cgmCensorDaysUpdated(sensorDays)
             }
 
-            observe(appCoordinator.glucoseHistoryUpdates) { glucose in
+            observe(appCoordinator.glucoseHistoryUpdates) { me, glucose in
                 // TODO: use the provided value? currently it re-reads from the storage
-                await self.glucoseDidUpdate(glucose)
+                await me.glucoseDidUpdate(glucose)
             }
 
-            observe(appCoordinator.suggestions) { suggestion in
-                await self.suggestionDidUpdate(suggestion)
+            observe(appCoordinator.suggestions) { me, suggestion in
+                await me.suggestionDidUpdate(suggestion)
             }
 
-            observe(appCoordinator.settingsUpdates) { settings in
-                await self.settingsUpdated(settings)
+            observe(appCoordinator.settingsUpdates) { me, settings in
+                await me.settingsUpdated(settings)
             }
 
-            observe(appCoordinator.preferencesUpdates) { preferences in
-                await self.preferencesUpdated(preferences)
+            observe(appCoordinator.preferencesUpdates) { me, preferences in
+                await me.preferencesUpdated(preferences)
             }
 
-            observe(appCoordinator.pumpHistoryUpdates) { pumpHistory in
-                await self.pumpHistoryDidUpdate(pumpHistory)
+            observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
+                await me.pumpHistoryDidUpdate(pumpHistory)
             }
 
-            observe(appCoordinator.pumpSettingsUpdates) { pumpSettings in
-                await self.pumpSettingsUpdated(pumpSettings)
+            observe(appCoordinator.pumpSettingsUpdates) { me, pumpSettings in
+                await me.pumpSettingsUpdated(pumpSettings)
             }
 
-            observe(appCoordinator.basalProfileUpdates) { basalProfile in
-                await self.basalProfileUpdated(basalProfile)
+            observe(appCoordinator.basalProfileUpdates) { me, basalProfile in
+                await me.basalProfileUpdated(basalProfile)
             }
 
-            observe(appCoordinator.tempTargetsUpdates) { tempTargets in
-                await self.tempTargetsUpdated(tempTargets)
+            observe(appCoordinator.tempTargetsUpdates) { me, tempTargets in
+                await me.tempTargetsUpdated(tempTargets)
             }
 
-            observe(appCoordinator.carbHistoryUpdates) { carbHistory in
-                await self.carbsUpdated(carbHistory)
+            observe(appCoordinator.carbHistoryUpdates) { me, carbHistory in
+                await me.carbsUpdated(carbHistory)
             }
 
-            observe(appCoordinator.enactedSuggestions) { enactedSuggstion in
-                await self.enactedSuggestionUpdated(enactedSuggstion)
+            observe(appCoordinator.enactedSuggestions) { me, enactedSuggstion in
+                await me.enactedSuggestionUpdated(enactedSuggstion)
             }
 
-            observe(appCoordinator.pumpStatus.map(\.?.battery).removeDuplicates()) { battery in
-                await self.pumpBatteryUpdated(battery)
+            observe(appCoordinator.pumpStatus.map(\.?.battery).removeDuplicates()) { me, battery in
+                await me.pumpBatteryUpdated(battery)
             }
 
-            observe(appCoordinator.pumpReservoir) { reservoir in
-                await self.pumpReservoirUpdated(reservoir)
+            observe(appCoordinator.pumpReservoir) { me, reservoir in
+                await me.pumpReservoirUpdated(reservoir)
             }
 
-            observe(appCoordinator.pumpStatus.map(\.?.pumpManagerStatus.timeZone)) { pumpTimeZone in
-                await self.pumpTimeZoneUpdated(pumpTimeZone)
+            observe(appCoordinator.pumpStatus.map(\.?.timeZone)) { me, pumpTimeZone in
+                await me.pumpTimeZoneUpdated(pumpTimeZone)
             }
 
-            observe(appCoordinator.isLooping) { isLooping in
-                await self.isLoopingUpdated(isLooping)
+            observe(appCoordinator.isLooping) { me, isLooping in
+                await me.isLoopingUpdated(isLooping)
             }
 
-            observe(appCoordinator.manualTempBasal) { manualTempBasal in
-                await self.manualTempBasalUpdated(manualTempBasal)
+            observe(appCoordinator.manualTempBasal) { me, manualTempBasal in
+                await me.manualTempBasalUpdated(manualTempBasal)
             }
 
-            observe(appCoordinator.lastLoopDate) { lastLoopDate in
-                await self.lastLoopDateUpdated(lastLoopDate)
+            observe(appCoordinator.lastLoopDate) { me, lastLoopDate in
+                await me.lastLoopDateUpdated(lastLoopDate)
             }
 
             subscribeSetting(\.hours, on: $hours) {
@@ -300,36 +301,36 @@ extension Home {
                 }
             }
 
-            observe(appCoordinator.pumpInfo.map(\.?.name)) { pumpName in
-                await self.pumpNameUpdated(pumpName)
+            observe(appCoordinator.pumpInfo.map(\.?.name)) { me, pumpName in
+                await me.pumpNameUpdated(pumpName)
             }
 
-            observe(appCoordinator.pumpInfo.map(\.?.expiresAt)) { expiresAt in
-                await self.pumpExpiresAtUpdated(expiresAt)
+            observe(appCoordinator.pumpInfo.map(\.?.expiresAt)) { me, expiresAt in
+                await me.pumpExpiresAtUpdated(expiresAt)
             }
 
-            observe(appCoordinator.lastLoopError) { error in
-                await self.lastLoopErrorUpdated(error)
+            observe(appCoordinator.lastLoopError) { me, error in
+                await me.lastLoopErrorUpdated(error)
             }
 
-            observe(appCoordinator.bolusAmount) { bolusAmount in
-                await self.bolusAmountUpdated(bolusAmount)
+            observe(appCoordinator.bolusAmount) { me, bolusAmount in
+                await me.bolusAmountUpdated(bolusAmount)
             }
 
-            observe(appCoordinator.bolusProgress) { bolusProgress in
-                await self.bolusProgressUpdated(bolusProgress)
+            observe(appCoordinator.bolusProgress) { me, bolusProgress in
+                await me.bolusProgressUpdated(bolusProgress)
             }
 
-            observe(appCoordinator.pumpStatus) { pumpStatus in
-                await self.pumpStatusUpdated(pumpStatus)
+            observe(appCoordinator.pumpStatus) { me, pumpStatus in
+                await me.pumpStatusUpdated(pumpStatus)
             }
 
-            observe(appCoordinator.pumpInfo) { pumpInfo in
-                await self.pumpInfoUpdated(pumpInfo)
+            observe(appCoordinator.pumpInfo) { me, pumpInfo in
+                await me.pumpInfoUpdated(pumpInfo)
             }
 
-            observe(appCoordinator.cgmInfo) { cgmInfo in
-                await self.cgmInfoUpdated(cgmInfo)
+            observe(appCoordinator.cgmInfo) { me, cgmInfo in
+                await me.cgmInfoUpdated(cgmInfo)
             }
 
             $setupPump
@@ -350,7 +351,7 @@ extension Home {
                         self.showModal(for: .pumpConfig)
                     }
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
         }
 
         private func settingsUpdated(_ settings: FreeAPSSettings) async {

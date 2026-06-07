@@ -28,7 +28,7 @@ enum FetchGlucoseProgress {
     case done([BloodGlucose])
 }
 
-actor BaseNightscoutManager: NightscoutManager, Injectable {
+actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     @Injected() private var keychain: Keychain!
     @Injected() private var appCoordinator: AppCoordinator!
     @Injected() private var glucoseStorage: GlucoseStorage!
@@ -45,7 +45,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable {
 
     private var ping: TimeInterval?
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     private var isNetworkReachable: Bool {
         reachabilityManager.isReachable
@@ -71,26 +71,22 @@ actor BaseNightscoutManager: NightscoutManager, Injectable {
     private func subscribe() async {
         self.settings = await settingsManager.settings
 
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { settings in
-            await self.settingsChanged(settings)
+        observe(appCoordinator.settingsUpdates) { me, settings in
+            await me.settingsChanged(settings)
         }
 
-//        broadcaster.register(PumpHistoryObserver.self, observer: self)
         // TODO: use values from the stream instead of re-reading the files?..
-        observe(appCoordinator.pumpHistoryUpdates, in: &lifetime) { _ in
-            await self.uploadPumpHistory()
+        observe(appCoordinator.pumpHistoryUpdates) { me, _ in
+            await me.uploadPumpHistory()
         }
-//        broadcaster.register(CarbsObserver.self, observer: self)
-        observe(appCoordinator.carbHistoryUpdates, in: &lifetime) { _ in
-            await self.uploadCarbs()
+        observe(appCoordinator.carbHistoryUpdates) { me, _ in
+            await me.uploadCarbs()
         }
-//        broadcaster.register(TempTargetsObserver.self, observer: self)
-        observe(appCoordinator.tempTargetsUpdates, in: &lifetime) { _ in
-            await self.uploadTempTargets()
+        observe(appCoordinator.tempTargetsUpdates) { me, _ in
+            await me.uploadTempTargets()
         }
-//        broadcaster.register(GlucoseObserver.self, observer: self)
-        observe(appCoordinator.glucoseHistoryUpdates, in: &lifetime) { bloodGlucose in
-            await self.uploadGlucose(bloodGlucose: bloodGlucose)
+        observe(appCoordinator.glucoseHistoryUpdates) { me, bloodGlucose in
+            await me.uploadGlucose(bloodGlucose: bloodGlucose)
         }
     }
 

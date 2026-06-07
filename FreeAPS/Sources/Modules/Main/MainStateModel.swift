@@ -4,7 +4,7 @@ import SwiftUI
 import Swinject
 
 extension Main {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var appCoordinator: AppCoordinator!
 
@@ -34,14 +34,14 @@ extension Main {
                     self.modal = modal
                     self.isModalPresented = modal != nil
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
 
             $isModalPresented
                 .filter { !$0 }
                 .sink { _ in
                     self.router.mainModalScreen.send(nil)
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
 
             router.alertMessage
                 .receive(on: DispatchQueue.main)
@@ -99,7 +99,7 @@ extension Main {
 
                     SwiftMessages.show(config: config, view: view)
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
 
             router.mainSecondaryModalView
                 .receive(on: DispatchQueue.main)
@@ -107,7 +107,7 @@ extension Main {
                     self.secondaryModalView = view
                     self.isSecondaryModalPresented = view != nil
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
 
             $isSecondaryModalPresented
                 .removeDuplicates()
@@ -115,10 +115,11 @@ extension Main {
                 .sink { _ in
                     self.router.mainSecondaryModalView.send(nil)
                 }
-                .store(in: &lifetime)
+                .store(in: lifetime)
 
-            observe(appCoordinator.settingsUpdates) { settings in
-                await self.settingsUpdated(settings)
+            // TODO: AppUIState instead?
+            observe(appCoordinator.settingsUpdates) { me, settings in
+                await me.settingsUpdated(settings)
             }
         }
 

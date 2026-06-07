@@ -15,11 +15,11 @@ protocol PumpHistoryStorage: Sendable {
     func deleteInsulin(at date: Date) async
 }
 
-actor BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
+actor BasePumpHistoryStorage: PumpHistoryStorage, Injectable, LifetimeOwner {
     @Injected() private var storage: FileStorage!
     @Injected() private var appCoordinator: AppCoordinator!
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     private let coreDataStorage = CoreDataStorage()
 
@@ -31,8 +31,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     }
 
     private func subscribe() async {
-        observe(appCoordinator.pumpEvents, in: &lifetime) { events in
-            await self.storePumpEvents(events)
+        observe(appCoordinator.pumpEvents) { me, events in
+            await me.storePumpEvents(events)
         }
     }
 

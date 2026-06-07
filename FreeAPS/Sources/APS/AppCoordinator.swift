@@ -2,7 +2,12 @@ import Combine
 import Foundation
 import LoopKit
 
-final class AppCoordinator {
+// @unchecked Sendable - this class only contains immutable `let`s holding Combine subjects,
+// which are internally thread-safe for concurrent send/value/subscribe.
+// TODO: values flow across isolation domains via these subjects, so Output types should be Sendable (Combine won't enforce this).
+// * `Error` is not Sendable; we need to either replace it with something that is Sendable, or accepted as is - since those values are effectively immutable.
+// * non-Sendable types from LoopKit are still referenced in some of the structs; currently they are marked `@retroactive @unchecked Sendable`, but better not to do this.
+final class AppCoordinator: @unchecked Sendable {
     //    @Published private(set) var shouldUploadGlucose: Bool = false
     //    @Published private(set) var sensorDays: Double? = nil
     //    @Published private(set) var pumpExpiresAtDate: Date? = nil

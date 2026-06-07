@@ -25,7 +25,9 @@ protocol CalibrationService {
     func calibrate(value: Double) -> Double
 }
 
-final class BaseCalibrationService: CalibrationService, Injectable {
+// @unchecked Sendable - we have mutable state in this class, thus it is not inherently sendable;
+// we are conforming to this promise by gating access to the calibrations var behind the lock
+final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwner, @unchecked Sendable {
     private enum Config {
         static let minSlope = 0.8
         static let maxSlope = 1.25
@@ -35,14 +37,21 @@ final class BaseCalibrationService: CalibrationService, Injectable {
         static let minValue = 0.0
     }
 
-    @Injected() var storage: FileStorage!
-    @Injected() var appCoordinator: AppCoordinator!
+    private let storage: FileStorage!
+    private let appCoordinator: AppCoordinator!
 
-    private var lifetime = Lifetime()
+    // to make this class safely Sendable
+    // all access to the calibrations var MUST be gated behind this lock
+    private let lock = NSLock()
 
-    private(set) var calibrations: [Calibration] = []
+    let lifetime = Lifetime()
+
+    private var _calibrations: [Calibration] = []
+    var calibrations: [Calibration] { lock.withLock { _calibrations } }
 
     init(resolver: Resolver) {
+        storage = resolver.resolve(FileStorage.self)!
+        appCoordinator = resolver.resolve(AppCoordinator.self)!
         injectServices(resolver)
         Task {
             await subscribe()
@@ -52,19 +61,27 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     private func subscribe() async {
         // TODO: this happens asynchronously, there's an (unlikely) possibility of cgm reading arriving before it's read (milliseconds after the app starts?)
         // need to figure this out
-        calibrations = await storage.retrieve(OpenAPS.FreeAPS.calibrations, as: [Calibration].self) ?? []
+        let loaded = await storage.retrieve(OpenAPS.FreeAPS.calibrations, as: [Calibration].self) ?? []
+        lock.withLock { self._calibrations = loaded }
 
-        observe(appCoordinator.newSensorDetectedEvents, in: &lifetime) {
-            await self.removeAllCalibrations()
+        observe(appCoordinator.newSensorDetectedEvents) { me, _ in
+            me.removeAllCalibrations()
         }
     }
 
-    private func save() {
-        let snapshot = calibrations
+    private func mutate(_ body: (inout [Calibration]) -> Void) {
+        let snapshot: [Calibration] = lock.withLock { body(&_calibrations)
+            return _calibrations }
+        // Fire-and-forget save; rapid back-to-back mutations could persist out of order.
+        // Should be harmless here - mutations do not happen with sub-millisecond intervals (user-initiated or CGM readings).
         Task { await storage.save(snapshot, as: OpenAPS.FreeAPS.calibrations) }
     }
 
-    var slope: Double {
+    var slope: Double { Self.slope(calibrations) }
+    var intercept: Double { Self.intercept(calibrations) }
+    func calibrate(value: Double) -> Double { Self.calibrate(value, calibrations) }
+
+    private static func slope(_ calibrations: [Calibration]) -> Double {
         guard calibrations.count >= 2 else {
             return 1
         }
@@ -78,51 +95,47 @@ final class BaseCalibrationService: CalibrationService, Injectable {
         return min(max(slope, Config.minSlope), Config.maxSlope)
     }
 
-    var intercept: Double {
+    private static func intercept(_ calibrations: [Calibration]) -> Double {
         guard calibrations.count >= 1 else {
             return 0
         }
         let xs = calibrations.map(\.x)
         let ys = calibrations.map(\.y)
 
-        let intercept = average(ys) - slope * average(xs)
+        let intercept = average(ys) - slope(calibrations) * average(xs)
 
         return min(max(intercept, Config.minIntercept), Config.maxIntercept)
     }
 
-    func calibrate(value: Double) -> Double {
-        linearRegression(value)
+    private static func calibrate(_ value: Double, _ calibrations: [Calibration]) -> Double {
+        linearRegression(calibrations, value)
     }
 
     func addCalibration(_ calibration: Calibration) {
-        calibrations.append(calibration)
-        save()
+        mutate { $0.append(calibration) }
     }
 
     func removeCalibration(_ calibration: Calibration) {
-        calibrations.removeAll { $0 == calibration }
-        save()
+        mutate { $0.removeAll { $0 == calibration } }
     }
 
     func removeAllCalibrations() {
-        calibrations.removeAll()
-        save()
+        mutate { $0.removeAll() }
     }
 
     func removeLast() {
-        calibrations.removeLast()
-        save()
+        mutate { if !$0.isEmpty { $0.removeLast() } }
     }
 
-    private func average(_ input: [Double]) -> Double {
+    private static func average(_ input: [Double]) -> Double {
         input.reduce(0, +) / Double(input.count)
     }
 
-    private func multiply(_ a: [Double], _ b: [Double]) -> [Double] {
+    private static func multiply(_ a: [Double], _ b: [Double]) -> [Double] {
         zip(a, b).map(*)
     }
 
-    private func linearRegression(_ x: Double) -> Double {
-        (intercept + slope * x).clamped(Config.minValue ... Config.maxValue)
+    private static func linearRegression(_ calibrations: [Calibration], _ x: Double) -> Double {
+        (intercept(calibrations) + slope(calibrations) * x).clamped(Config.minValue ... Config.maxValue)
     }
 }

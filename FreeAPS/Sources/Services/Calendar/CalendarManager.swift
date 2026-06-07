@@ -10,7 +10,7 @@ protocol CalendarManager: Sendable {
     func createEvent(for glucose: BloodGlucose?, delta: Int?) async
 }
 
-actor BaseCalendarManager: CalendarManager, Injectable {
+actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var appCoordinator: AppCoordinator!
@@ -21,7 +21,7 @@ actor BaseCalendarManager: CalendarManager, Injectable {
 
     private var settings: FreeAPSSettings!
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -34,20 +34,20 @@ actor BaseCalendarManager: CalendarManager, Injectable {
     private func subscribe() async {
         self.settings = await settingsManager.settings
 
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { settings in
-            await self.settingsUpdated(settings)
+        observe(appCoordinator.settingsUpdates) { me, settings in
+            await me.settingsUpdated(settings)
         }
 
-        observe(appCoordinator.glucoseHistoryUpdates, in: &lifetime) { _ in
-            await self.setupGlucose()
+        observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
+            await me.setupGlucose()
         }
 
-        observe(appCoordinator.suggestions, in: &lifetime) { _ in
-            await self.setupGlucose()
+        observe(appCoordinator.suggestions) { me, _ in
+            await me.setupGlucose()
         }
 
-        observe(appCoordinator.pumpHistoryUpdates, in: &lifetime) { _ in
-            await self.setupGlucose()
+        observe(appCoordinator.pumpHistoryUpdates) { me, _ in
+            await me.setupGlucose()
         }
 
         await setupGlucose()

@@ -20,7 +20,7 @@ struct PumpDisplayStatus: Equatable, Sendable {
     let status: StatusType
 
     let statusHighlight: String?
-    //    let timeZone: TimeZone? // pumpManagerStatus.timeZone
+    let timeZone: TimeZone
     let battery: Battery?
     let deliveryIsUncertain: Bool
     let isSuspended: Bool
