@@ -147,7 +147,7 @@ private struct ActiveActivity {
     }
 }
 
-final class LiveActivityBridge: Injectable, Sendable {
+final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
     private let settingsManager: SettingsManager
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
@@ -155,9 +155,11 @@ final class LiveActivityBridge: Injectable, Sendable {
     private let coreDataStorage = CoreDataStorage()
 
     private let activityAuthorizationInfo = ActivityAuthorizationInfo()
+
+    // TODO: should not be here, move to AppCoordinator?
     @Published private(set) var systemEnabled: Bool
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     private var knownSettings: FreeAPSSettings?
 
@@ -188,28 +190,39 @@ final class LiveActivityBridge: Injectable, Sendable {
         enactedSuggestion = await storage.retrieveFile(OpenAPS.Enact.enacted, as: Suggestion.self)
         iob = coreDataStorage.fetchLatestInsulinData()
 
-        observe(appCoordinator.enactedSuggestions, in: &lifetime) { enactedSuggestion in
-            await self.newEnactedSuggestion(enactedSuggestion)
+        observe(appCoordinator.enactedSuggestions) { me, enactedSuggestion in
+            await me.newEnactedSuggestion(enactedSuggestion)
         }
-        observe(appCoordinator.suggestions, in: &lifetime) { suggestion in
-            await self.newSuggestion(suggestion)
+        observe(appCoordinator.suggestions) { me, suggestion in
+            await me.newSuggestion(suggestion)
         }
-        observe(appCoordinator.pumpHistoryUpdates, in: &lifetime) { pumpHistory in
-            await self.pumpHistoryUpdated(pumpHistory)
+        observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
+            await me.pumpHistoryUpdated(pumpHistory)
         }
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { newSettings in
-            await self.settingsUpdated(newSettings)
+        observe(appCoordinator.settingsUpdates) { me, newSettings in
+            await me.settingsUpdated(newSettings)
         }
-
-        observe(notification: UIApplication.didEnterBackgroundNotification, in: &lifetime) {
-            await self.forceActivityUpdate()
+        observe(notification: UIApplication.didEnterBackgroundNotification) { me in
+            await me.forceActivityUpdate()
         }
-
-        observe(notification: UIApplication.didBecomeActiveNotification, in: &lifetime) {
-            await self.forceActivityUpdate()
+        observe(notification: UIApplication.didBecomeActiveNotification) { me in
+            await me.forceActivityUpdate()
         }
 
-        monitorForLiveActivityAuthorizationChanges()
+        // cannot use observe here because ActivityKit's `ActivityEnablementUpdates` isn't Sendable
+        Task { [weak self] in
+            guard let self else { return }
+            for await activityState in activityAuthorizationInfo.activityEnablementUpdates {
+                if activityState != systemEnabled {
+                    systemEnabled = activityState
+                    if systemEnabled {
+                        await self.forceActivityUpdate(force: true)
+                    } else {
+                        currentActivity = nil
+                    }
+                }
+            }
+        }.store(in: lifetime)
     }
 
     private func newEnactedSuggestion(_ enactedSuggestion: Suggestion) async {
@@ -242,21 +255,6 @@ final class LiveActivityBridge: Injectable, Sendable {
                 await forceActivityUpdate(force: true)
             }
         }
-    }
-
-    private func monitorForLiveActivityAuthorizationChanges() {
-        Task {
-            for await activityState in activityAuthorizationInfo.activityEnablementUpdates {
-                if activityState != systemEnabled {
-                    systemEnabled = activityState
-                    if systemEnabled {
-                        await self.forceActivityUpdate(force: true)
-                    } else {
-                        currentActivity = nil
-                    }
-                }
-            }
-        }.store(in: &lifetime)
     }
 
     /// creates and tries to present a new activity update from the current Suggestion values if live activities are enabled in settings

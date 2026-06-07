@@ -78,7 +78,7 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
                 guard let url = notification.object as? URL else { return }
                 self.parseDevicesFor(url: url)
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
     }
 
     private func subscribeState() {
@@ -100,7 +100,7 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
             .sink { state in
                 sendToWatchface(state: state)
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
     }
 
     private func restoreDevices() {

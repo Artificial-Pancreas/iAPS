@@ -3,7 +3,7 @@ import LoopKitUI
 import SwiftUI
 
 extension PumpConfig {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() var deviceManager: DeviceDataManager!
         @Injected() private var alertHistoryStorage: AlertHistoryStorage!
         @Injected() private var appCoordinator: AppCoordinator!
@@ -24,14 +24,15 @@ extension PumpConfig {
 
             alertNotAck = await alertHistoryStorage.recentNotAck().isNotEmpty
 
-            observe(appCoordinator.alertNotAckUpdates) { alertNotAck in
-                await self.alertNotAckUpdated(alertNotAck)
+            // TODO: use AppUIState instead
+            observe(appCoordinator.alertNotAckUpdates) { me, alertNotAck in
+                await me.alertNotAckUpdated(alertNotAck)
             }
-            observe(appCoordinator.pumpInfo) { pumpInfo in
-                await self.pumpInfoUpdated(pumpInfo)
+            observe(appCoordinator.pumpInfo) { me, pumpInfo in
+                await me.pumpInfoUpdated(pumpInfo)
             }
-            observe(appCoordinator.pumpStatus) { pumpStatus in
-                await self.pumpStatusUpdated(pumpStatus)
+            observe(appCoordinator.pumpStatus) { me, pumpStatus in
+                await me.pumpStatusUpdated(pumpStatus)
             }
 
             let basalProfile = await fetchBasalProfile()

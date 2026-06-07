@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension ManualTempBasal {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var apsManager: APSManager!
         @Injected() private var appCoordinator: AppCoordinator!
 
@@ -14,8 +14,10 @@ extension ManualTempBasal {
 
         override func subscribe() async {
             maxBasal = await settingsManager.pumpSettings.maxBasal
-            observe(appCoordinator.pumpSettingsUpdates) { pumpSettings in
-                await self.pumpSettingsUpdated(pumpSettings)
+
+            // TODO: AppUIState instead
+            observe(appCoordinator.pumpSettingsUpdates) { me, pumpSettings in
+                await me.pumpSettingsUpdated(pumpSettings)
             }
         }
 

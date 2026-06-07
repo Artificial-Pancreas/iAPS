@@ -4,7 +4,7 @@ import SwiftUI
 import Swinject
 
 extension Bolus {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var unlockmanager: UnlockManager!
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var apsManager: APSManager!
@@ -117,11 +117,12 @@ extension Bolus {
             minBolus = Decimal(deviceManager.supportedBolusVolumes()?.first ?? Double(bolusIncrement)) *
                 Decimal(concentration.concentration)
 
-            observe(appCoordinator.lastLoopDate) { lastLoopDate in
-                await self.lastLoopDateUpdated(lastLoopDate)
+            // TODO: use AppUIState instead
+            observe(appCoordinator.lastLoopDate) { me, lastLoopDate in
+                await me.lastLoopDateUpdated(lastLoopDate)
             }
-            observe(appCoordinator.suggestions) { suggestion in
-                await self.suggestionDidUpdate(suggestion)
+            observe(appCoordinator.suggestions) { me, suggestion in
+                await me.suggestionDidUpdate(suggestion)
             }
         }
 

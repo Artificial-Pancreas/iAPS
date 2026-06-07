@@ -435,6 +435,8 @@
 		F20E9A932FCD0D5500FCACBD /* PumpDisplayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A922FCD0D5300FCACBD /* PumpDisplayInfo.swift */; };
 		F20E9A952FCD0D7100FCACBD /* CgmDisplayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A942FCD0D6B00FCACBD /* CgmDisplayInfo.swift */; };
 		F20E9A972FD1F6A600FCACBD /* TaskIDBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */; };
+		F20E9A992FD4CC4700FCACBD /* AppUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A982FD4CC3E00FCACBD /* AppUIState.swift */; };
+		F20E9A9A2FD59B5000FCACBD /* LifetimeOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25EBEFE2FC2312A009D275F /* LifetimeOwner.swift */; };
 		F21580A52E47B4FF003BC827 /* PeakPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21580A42E47B4FE003BC827 /* PeakPicker.swift */; };
 		F2159A4A2BA60A6000A0B716 /* ContactTrickDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */; };
 		F2159A4C2BA60A8E00A0B716 /* ContactTrickRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A4B2BA60A8E00A0B716 /* ContactTrickRootView.swift */; };
@@ -505,7 +507,6 @@
 		F2B259DF2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B259DE2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift */; };
 		F2B259E52FBCD764008F1F22 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B259E42FBCD764008F1F22 /* Broadcast.swift */; };
 		F2B259E82FBF1F97008F1F22 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = F2B259E72FBF1F97008F1F22 /* AsyncAlgorithms */; };
-		F2B259EA2FBF4BF3008F1F22 /* Task+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B259E92FBF4BF3008F1F22 /* Task+Extensions.swift */; };
 		F2C2EEA92F5CCD7E00A0AA7C /* USDAFoodDataSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */; };
 		F2C2EEAB2F5CCEFE00A0AA7C /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */; };
 		F2C2EEAD2F5CD2E400A0AA7C /* OpenFoodFactsProduct+Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEAC2F5CD2E100A0AA7C /* OpenFoodFactsProduct+Convert.swift */; };
@@ -1152,6 +1153,7 @@
 		F20E9A922FCD0D5300FCACBD /* PumpDisplayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpDisplayInfo.swift; sourceTree = "<group>"; };
 		F20E9A942FCD0D6B00FCACBD /* CgmDisplayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CgmDisplayInfo.swift; sourceTree = "<group>"; };
 		F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIDBox.swift; sourceTree = "<group>"; };
+		F20E9A982FD4CC3E00FCACBD /* AppUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUIState.swift; sourceTree = "<group>"; };
 		F21580A42E47B4FE003BC827 /* PeakPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakPicker.swift; sourceTree = "<group>"; };
 		F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickDataFlow.swift; sourceTree = "<group>"; };
 		F2159A4B2BA60A8E00A0B716 /* ContactTrickRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickRootView.swift; sourceTree = "<group>"; };
@@ -1223,7 +1225,6 @@
 		F2B1AFD72FB236400088219A /* ProfileAndSettingsUploadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndSettingsUploadManager.swift; sourceTree = "<group>"; };
 		F2B259DE2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseStatisticsFactory.swift; sourceTree = "<group>"; };
 		F2B259E42FBCD764008F1F22 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
-		F2B259E92FBF4BF3008F1F22 /* Task+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Extensions.swift"; sourceTree = "<group>"; };
 		F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USDAFoodDataSearchResponse.swift; sourceTree = "<group>"; };
 		F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
 		F2C2EEAC2F5CD2E100A0AA7C /* OpenFoodFactsProduct+Convert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenFoodFactsProduct+Convert.swift"; sourceTree = "<group>"; };
@@ -1995,6 +1996,7 @@
 				388E5A5825B6F0070019842D /* OpenAPS */,
 				38A0362725ECF05300FCBB52 /* Storage */,
 				F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */,
+				F20E9A982FD4CC3E00FCACBD /* AppUIState.swift */,
 				F2EE83C62E73A04200D7177E /* KnownPlugins.swift */,
 			);
 			path = APS;
@@ -2264,7 +2266,6 @@
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
 				056EB47D2B4C8B3D00CDE36E /* SystemSoundsManager.swift */,
 				F2B259E42FBCD764008F1F22 /* Broadcast.swift */,
-				F2B259E92FBF4BF3008F1F22 /* Task+Extensions.swift */,
 				F25EBEF82FC210F8009D275F /* Date+Extensions.swift */,
 				F25EBEFA2FC21228009D275F /* TimeInterval+Extensions.swift */,
 				F25EBEFE2FC2312A009D275F /* LifetimeOwner.swift */,
@@ -3517,7 +3518,6 @@
 				F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */,
 				19CE0E592DD9F30D0050FC89 /* Configuration.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
-				F2B259EA2FBF4BF3008F1F22 /* Task+Extensions.swift in Sources */,
 				CE94598229E9E3D30047C9C6 /* WatchConfigProvider.swift in Sources */,
 				191A9D162BED00A500028D48 /* Version.swift in Sources */,
 				38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */,
@@ -3693,6 +3693,7 @@
 				193CA2DC2E1E743500DF9998 /* FunctionScript.swift in Sources */,
 				2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */,
 				6B9625766B697D1C98E455A2 /* PumpSettingsEditorStateModel.swift in Sources */,
+				F20E9A992FD4CC4700FCACBD /* AppUIState.swift in Sources */,
 				19A910362A24D6D700C8951B /* Configs.swift in Sources */,
 				A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */,
 				E06B911A275B5EEA003C04B6 /* Array+Extension.swift in Sources */,
@@ -3915,6 +3916,7 @@
 				38E8752A27554D5700975559 /* FreeAPSApp.swift in Sources */,
 				38E8757B2757B1C300975559 /* TempTargetsView.swift in Sources */,
 				056EB4802B4C8B3D00CDE36E /* SystemSoundsManager.swift in Sources */,
+				F20E9A9A2FD59B5000FCACBD /* LifetimeOwner.swift in Sources */,
 				38E8753027554D5700975559 /* NotificationView.swift in Sources */,
 				38E8757E2758C86A00975559 /* ConvenienceExtensions.swift in Sources */,
 				38E8754727554DF100975559 /* Color+Extensions.swift in Sources */,

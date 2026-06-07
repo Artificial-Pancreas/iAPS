@@ -6,7 +6,7 @@ protocol ProfileAndSettingsUploadManager: Sendable {
     func uploadProfileAndSettings(force: Bool) async
 }
 
-actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Injectable {
+actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Injectable, LifetimeOwner {
     @Injected() private var storage: FileStorage!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var nightscoutManager: NightscoutManager!
@@ -15,7 +15,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Inje
 
     @Injected() private var statisticsFactory: DatabaseStatisticsFactory!
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     private let coreDataStorage = CoreDataStorage()
 
@@ -33,10 +33,10 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Inje
     private func subscribe() async {
         lastVersionCheck = coreDataStorage.fetchVersion()
         latestUploadedStats = coreDataStorage.fetchStats()
-        observe(appCoordinator.loopCompleted, in: &lifetime) { _ in
-            await self.versionCheck()
-            await self.uploadStatistics()
-            await self.databaseManager.retryPendingLogUpload()
+        observe(appCoordinator.loopCompleted) { me, _ in
+            await me.versionCheck()
+            await me.uploadStatistics()
+            await me.databaseManager.retryPendingLogUpload()
         }
     }
 

@@ -2,7 +2,7 @@ import LoopKit
 import SwiftUI
 
 extension BasalProfileEditor {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var storage: FileStorage!
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var appCoordinator: AppCoordinator!
@@ -43,8 +43,9 @@ extension BasalProfileEditor {
             }
             calcTotal()
             allowDilution = await settingsManager.settings.allowDilution
-            observe(appCoordinator.preferencesUpdates) { preferences in
-                await self.preferencesUpdated(preferences)
+            // TODO: use AppUIState instead
+            observe(appCoordinator.preferencesUpdates) { me, preferences in
+                await me.preferencesUpdated(preferences)
             }
         }
 

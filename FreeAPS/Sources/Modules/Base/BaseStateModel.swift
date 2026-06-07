@@ -19,7 +19,7 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
 
     private let resolver: Resolver
 
-    var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     init(resolver: Resolver) {
         self.resolver = resolver
@@ -30,7 +30,7 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
 //        self.isInitial = false
         Task {
             await subscribe()
-        }.store(in: &lifetime)
+        }.store(in: lifetime)
     }
 
     func subscribe() async {}
@@ -71,17 +71,10 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
                     didSet?(value)
                 }
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
     }
 
     func background(_ operation: @escaping () async -> Void) {
-        Task { await operation() }.store(in: &lifetime)
-    }
-
-    func observe<P: Publisher>(
-        _ publisher: P,
-        action: @escaping @Sendable(P.Output) async -> Void
-    ) where P.Output: Sendable, P.Failure == Never {
-        FreeAPS.observe(publisher, in: &lifetime, action: action)
+        Task { await operation() }.store(in: lifetime)
     }
 }

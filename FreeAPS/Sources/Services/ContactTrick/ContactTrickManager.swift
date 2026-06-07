@@ -6,7 +6,7 @@ protocol ContactTrickManager: Sendable {
     var currentContacts: [ContactTrickEntry] { get async }
 }
 
-actor BaseContactTrickManager: ContactTrickManager, Injectable {
+actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner {
     private let contactStore = CNContactStore()
 
     private var staleRenderTask: Task<Void, Never>?
@@ -24,7 +24,7 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable {
 
     private let coreDataStorage = CoreDataStorage()
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -41,11 +41,11 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable {
 
         knownIds = contacts.compactMap(\.contactId)
 
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { _ in
-            await self.renderContacts(forceSave: false)
+        observe(appCoordinator.settingsUpdates) { me, _ in
+            await me.renderContacts(forceSave: false)
         }
-        observe(appCoordinator.suggestions, in: &lifetime) { _ in
-            await self.renderContacts(forceSave: false)
+        observe(appCoordinator.suggestions) { me, _ in
+            await me.renderContacts(forceSave: false)
         }
 
         await self.renderContacts(forceSave: false)

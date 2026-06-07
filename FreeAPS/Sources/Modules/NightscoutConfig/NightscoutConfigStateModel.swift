@@ -6,7 +6,7 @@ import LoopKit
 import SwiftUI
 
 extension NightscoutConfig {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var keychain: Keychain!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
@@ -73,11 +73,11 @@ extension NightscoutConfig {
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { self.isUploadEnabled = $0 }
             subscribeSetting(\.nightscoutFetchEnabled, on: $nightscoutFetchEnabled) { self.nightscoutFetchEnabled = $0 }
 
-            observe(appCoordinator.cgmInfo) { _ in
-                await self.updatedShouldUploadGlucose()
+            observe(appCoordinator.cgmInfo) { me, _ in
+                await me.updatedShouldUploadGlucose()
             }
-            observe(appCoordinator.cgmStatus) { _ in
-                await self.updatedShouldUploadGlucose()
+            observe(appCoordinator.cgmStatus) { me, _ in
+                await me.updatedShouldUploadGlucose()
             }
         }
 

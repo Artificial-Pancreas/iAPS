@@ -112,7 +112,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     @Injected() private var router: Router!
     @Injected() private var appCoordinator: AppCoordinator!
 
-    private var lifetime = Lifetime()
+    private let lifetime = Lifetime()
 
     private let pluginManager = PluginManager()
 
@@ -205,14 +205,14 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                     }
                 }
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
 
         appCoordinator.heartbeat
             .receive(on: processQueue)
             .sink { _ in
                 self.heartbeat(forceRecommendLoop: true)
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
 
 //        appCoordinator.heartbeat
 //            .sink { [weak self] _ in
@@ -226,14 +226,14 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                 let loopkitUnit: HKUnit = units == .mmolL ? .millimolesPerLiter : .milligramsPerDeciliter
                 self.displayGlucosePreference.unitDidChange(to: loopkitUnit)
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
 
         displayGlucosePreference.$unit
             .receive(on: DispatchQueue.main)
             .sink { unit in
                 self.notifyObserversOfDisplayGlucoseUnitChange(to: unit)
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
     }
 
     var availablePumpManagers: [PumpManagerDescriptor] {
@@ -896,16 +896,11 @@ extension BaseDeviceDataManager {
                     debug(.deviceManager, "acknowledge failed with error \(error.localizedDescription)")
                 }
 
-                let managerIdentifier = alert.managerIdentifier
-                let alertIdentifier = alert.alertIdentifier
-                let errorLocalizedDescription = error?.localizedDescription
-                Task {
-                    await self.alertHistoryStorage.ackAlert(
-                        managerIdentifier: managerIdentifier,
-                        alertIdentifier: alertIdentifier,
-                        error: errorLocalizedDescription
-                    )
-                }
+                self.alertHistoryStorage.ackAlert(
+                    managerIdentifier: alert.managerIdentifier,
+                    alertIdentifier: alert.alertIdentifier,
+                    error: error?.localizedDescription
+                )
             }
 
 //            self.broadcaster.notify(PumpNotificationObserver.self, on: self.processQueue) {
@@ -1041,8 +1036,9 @@ private extension BaseDeviceDataManager {
         let status = PumpDisplayStatus(
             status: statusType,
             statusHighlight: pumpManager.pumpStatusHighlight?.localizedMessage,
+            timeZone: pumpManagerStatus.timeZone,
             battery: battery,
-            deliveryIsUncertain: pumpManager.status.deliveryIsUncertain,
+            deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
             isSuspended: isSuspended,
             isBolusing: isBolusing,
             pumpManagerStatus: pumpManagerStatus,

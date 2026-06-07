@@ -10,7 +10,7 @@ protocol DatabaseManager: Sendable {
     func retryPendingLogUpload() async
 }
 
-actor BaseDatabaseManager: DatabaseManager, Injectable {
+actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var database: Database!
@@ -20,7 +20,7 @@ actor BaseDatabaseManager: DatabaseManager, Injectable {
     private let coreDataStorage = CoreDataStorage()
     private let overrideStorage = OverrideStorage()
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     // Pending log upload — set when upload fails or network is unavailable at rotation time.
     // Persisted to disk (log_pending.txt + UserDefaults) so the upload survives app restarts.
@@ -53,8 +53,8 @@ actor BaseDatabaseManager: DatabaseManager, Injectable {
     private func subscribe() async {
         self.settings = await settingsManager.settings
 
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { settings in
-            await self.settingsUpdated(settings)
+        observe(appCoordinator.settingsUpdates) { me, settings in
+            await me.settingsUpdated(settings)
         }
 
         Foundation.NotificationCenter.default.addObserver(

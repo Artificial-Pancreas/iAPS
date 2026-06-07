@@ -2,7 +2,7 @@ import CoreData
 import SwiftUI
 
 extension Settings {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var fileManager: FileManager!
         @Injected() private var profileAndSettingsUploadManager: ProfileAndSettingsUploadManager!
         @Injected() private var nightscoutManager: NightscoutManager!
@@ -37,8 +37,9 @@ extension Settings {
             subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { self.allowOneMinuteLoop = $0 }
             subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { self.allowOneMinuteGlucose = $0 }
 
-            observe(appCoordinator.settingsUpdates) { settings in
-                await self.settingsUpdated(settings)
+            // TODO: use AppUIState instead
+            observe(appCoordinator.settingsUpdates) { me, settings in
+                await me.settingsUpdated(settings)
             }
 
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"

@@ -1,7 +1,7 @@
 import Combine
 import LocalAuthentication
 
-protocol UnlockManager {
+protocol UnlockManager: Sendable {
     func unlock() async throws
 }
 

@@ -28,6 +28,8 @@ import Swinject
     // TODO: Remove var after update "Use Dependencies" logic in Logger
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
+    private let appUIState = FreeAPSApp.resolver.resolve(AppUIState.self)!
+
     // TODO: do we want this? will this work with the Router?
     // can be shared with the rest of the views with @EnvironmentObject
     @StateObject private var appServices = AppServices(assembler: assembler)
@@ -46,6 +48,7 @@ import Swinject
             Main.RootView(resolver: FreeAPSApp.resolver)
                 .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
                 .environmentObject(Icons())
+                .environment(appUIState)
                 .onOpenURL(perform: handleURL)
                 .environmentObject(appServices)
         }

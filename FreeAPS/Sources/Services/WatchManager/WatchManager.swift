@@ -8,7 +8,7 @@ protocol WatchManager {}
 // maybe worth converting to something like this eventually?
 // https://github.com/ts95/WatchConnectivitySwift
 
-actor BaseWatchManager: WatchManager, Injectable {
+actor BaseWatchManager: WatchManager, Injectable, LifetimeOwner {
     private let session: WCSession
     private let delegate: WatchSessionDelegate
     private var state = WatchState()
@@ -34,7 +34,7 @@ actor BaseWatchManager: WatchManager, Injectable {
     private var suggestion: Suggestion!
     private var enactedSuggestion: Suggestion!
 
-    private var lifetime = Lifetime()
+    let lifetime = Lifetime()
 
     init(resolver: Resolver, session: WCSession = .default) {
         self.session = session
@@ -58,45 +58,45 @@ actor BaseWatchManager: WatchManager, Injectable {
             session.activate()
         }
 
-        observe(appCoordinator.glucoseHistoryUpdates, in: &lifetime) { _ in
-            await self.configureState()
+        observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
+            await me.configureState()
         }
-        observe(appCoordinator.suggestions, in: &lifetime) { suggestion in
-            await self.suggestionUpdated(suggestion)
-            await self.configureState()
+        observe(appCoordinator.suggestions) { me, suggestion in
+            await me.suggestionUpdated(suggestion)
+            await me.configureState()
         }
-        observe(appCoordinator.preferencesUpdates, in: &lifetime) { preferences in
-            await self.preferencesUpdated(preferences)
-            await self.configureState()
+        observe(appCoordinator.preferencesUpdates) { me, preferences in
+            await me.preferencesUpdated(preferences)
+            await me.configureState()
         }
-        observe(appCoordinator.settingsUpdates, in: &lifetime) { settings in
-            await self.settingsUpdated(settings)
-            await self.configureState()
+        observe(appCoordinator.settingsUpdates) { me, settings in
+            await me.settingsUpdated(settings)
+            await me.configureState()
         }
-//        observe(appCoordinator.pumpHistoryUpdates) { pumpHistory in
+//        observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
 //            // TODO:
 //        }
-        observe(appCoordinator.pumpSettingsUpdates, in: &lifetime) { pumpSettings in
-            await self.pumpSettingsUpdated(pumpSettings)
-            await self.configureState()
+        observe(appCoordinator.pumpSettingsUpdates) { me, pumpSettings in
+            await me.pumpSettingsUpdated(pumpSettings)
+            await me.configureState()
         }
-//        observe(appCoordinator.basalProfileUpdates) { basalProfile in
+//        observe(appCoordinator.basalProfileUpdates) { me, basalProfile in
 //            // TODO:
 //        }
-        observe(appCoordinator.tempTargetsUpdates, in: &lifetime) { _ in
-            await self.configureState()
+        observe(appCoordinator.tempTargetsUpdates) { me, _ in
+            await me.configureState()
         }
-//        observe(appCoordinator.carbHistoryUpdates) { carbs in
+//        observe(appCoordinator.carbHistoryUpdates) { me, carbs in
 //            // TODO:
 //        }
-        observe(appCoordinator.enactedSuggestions, in: &lifetime) { enactedSuggestion in
-            await self.enactedSuggestionUpdated(enactedSuggestion)
-            await self.configureState()
+        observe(appCoordinator.enactedSuggestions) { me, enactedSuggestion in
+            await me.enactedSuggestionUpdated(enactedSuggestion)
+            await me.configureState()
         }
-//        observe(appCoordinator.pumpBattery) { battery in
+//        observe(appCoordinator.pumpBattery) { me, battery in
 //            // TODO:
 //        }
-//        observe(appCoordinator.pumpReservoir) { reservoir in
+//        observe(appCoordinator.pumpReservoir) { me, reservoir in
 //            // TODO:
 //        }
 
