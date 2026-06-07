@@ -332,7 +332,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
 
 extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, PumpHistoryObserver {
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
-        iob = coreDataStorage.fetchInsulinData(interval: DateFilter().oneHour).first?.iob
+        iob = coreDataStorage.fetchInsulinData(interval: DateFilter.oneHour.startDate).first?.iob
     }
 
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
@@ -348,7 +348,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
         }
         defer { self.suggestion = suggestion }
 
-        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter().threeHours)
+        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
@@ -386,7 +386,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
         }
         defer { self.suggestion = suggestion }
 
-        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter().threeHours)
+        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
