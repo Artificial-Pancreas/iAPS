@@ -224,12 +224,12 @@ actor BaseAPSManager: APSManager, Injectable, LifetimeOwner {
         let lastStartLoopDate = Date()
         self.lastStartLoopDate = lastStartLoopDate
 
-        var interval: Double? = await coredataContext.perform {
+        let interval: Double? = await coredataContext.perform {
             let requestStats = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
             let sortStats = NSSortDescriptor(key: "end", ascending: false)
             requestStats.sortDescriptors = [sortStats]
             requestStats.fetchLimit = 1
-            var previousLoop = (try? self.coredataContext.fetch(requestStats)) ?? []
+            let previousLoop = (try? self.coredataContext.fetch(requestStats)) ?? []
 
             if (previousLoop.first?.end ?? .distantFuture) < lastStartLoopDate {
                 return Self.roundDouble((lastStartLoopDate - (previousLoop.first?.end ?? Date())).timeInterval / 60, 1)
@@ -237,7 +237,7 @@ actor BaseAPSManager: APSManager, Injectable, LifetimeOwner {
             return nil
         }
 
-        var loopStatRecord = LoopStats(
+        let loopStatRecord = LoopStats(
             start: lastStartLoopDate,
             loopStatus: "Starting",
             interval: interval
