@@ -539,6 +539,7 @@
 		FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42369F66CF91F30624C0B3A6 /* BasalProfileEditorProvider.swift */; };
 		FE22BF6B2E04080100231496 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FEBEEC142E03F45B005473DC /* Settings.bundle */; };
 		FE66D16B291F74F8005D6F77 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */; };
+		CC1A00032A000002000A708ED /* BuildExpirationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1A00022A000002000A708ED /* BuildExpirationManager.swift */; };
 		FEB27EA62E07D9310047CB66 /* NSUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB27EA52E07D90F0047CB66 /* NSUserDefaults.swift */; };
 		FEFA5C0F299F810B00765C17 /* Core_Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEFA5C0D299F810B00765C17 /* Core_Data.xcdatamodeld */; };
 		FEFA5C11299F814A00765C17 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFA5C10299F814A00765C17 /* CoreDataStack.swift */; };
@@ -1242,6 +1243,7 @@
 		F90692D5274B9A450037068D /* HealthKitStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitStateModel.swift; sourceTree = "<group>"; };
 		FBB3BAE7494CB771ABAC7B8B /* ISFEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorRootView.swift; sourceTree = "<group>"; };
 		FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		CC1A00022A000002000A708ED /* BuildExpirationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildExpirationManager.swift; sourceTree = "<group>"; };
 		FEB27EA52E07D90F0047CB66 /* NSUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSUserDefaults.swift; sourceTree = "<group>"; };
 		FEBEEC142E03F45B005473DC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FEFA5C0E299F810B00765C17 /* Core_Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Core_Data.xcdatamodel; sourceTree = "<group>"; };
@@ -2229,6 +2231,7 @@
 				E06B9119275B5EEA003C04B6 /* Array+Extension.swift */,
 				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
 				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
+				CC1A00022A000002000A708ED /* BuildExpirationManager.swift */,
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
 				056EB47D2B4C8B3D00CDE36E /* SystemSoundsManager.swift */,
@@ -3574,6 +3577,7 @@
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
 				FE66D16B291F74F8005D6F77 /* Bundle+Extensions.swift in Sources */,
+				CC1A00032A000002000A708ED /* BuildExpirationManager.swift in Sources */,
 				F2C73D622EB6602D00B700AB /* MainChartConfigDataFlow.swift in Sources */,
 				3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */,
 				6B1A8D2E2B156EEF00E76752 /* LiveActivityBridge.swift in Sources */,
