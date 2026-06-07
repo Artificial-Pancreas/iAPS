@@ -13,6 +13,7 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
+        @State var showExpirationAlert = false
         @State var triggerUpdate = false
         @State var display = false
         @State var displayGlucose = false
@@ -1236,6 +1237,7 @@ extension Home {
                         switch scenePhase {
                         case .active:
                             state.startTimer()
+                            checkBuildExpiration()
                         case .background,
                              .inactive:
                             state.stopTimer()
@@ -1249,6 +1251,20 @@ extension Home {
                 if onboarded.first?.firstRun ?? true {
                     state.fetchPreferences()
                 }
+                checkBuildExpiration()
+            }
+            .alert(
+                BuildExpirationManager.shared.alertTitle,
+                isPresented: $showExpirationAlert
+            ) {
+                Button("OK", role: .cancel) {}
+                Button("More Info") {
+                    if let url = URL(string: "https://github.com/Artificial-Pancreas/iAPS/releases") {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            } message: {
+                Text(BuildExpirationManager.shared.alertMessage)
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)
@@ -1280,6 +1296,13 @@ extension Home {
                             }
                     )
             }
+        }
+
+        private func checkBuildExpiration() {
+            let manager = BuildExpirationManager.shared
+            guard manager.shouldShowAlert else { return }
+            manager.markAlertShown()
+            showExpirationAlert = true
         }
 
         private var popup: some View {
