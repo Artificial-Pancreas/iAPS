@@ -45,17 +45,42 @@ final class BuildExpirationManager {
     // MARK: - Alert content
 
     var alertTitle: String {
-        hoursRemaining < 24 ? "Build Expires Soon!" : "Build Expiring in \(daysRemaining) Day\(daysRemaining == 1 ? "" : "s")"
+        if hoursRemaining < 24 {
+            return NSLocalizedString(
+                "Build Expires Soon!",
+                comment: "Build expiration alert title when less than a day remains"
+            )
+        }
+        let format = daysRemaining == 1
+            ? NSLocalizedString("Build Expiring in %d Day", comment: "Build expiration alert title, singular day")
+            : NSLocalizedString("Build Expiring in %d Days", comment: "Build expiration alert title, plural days")
+        return String(format: format, daysRemaining)
     }
 
     var alertMessage: String {
-        let dateStr = expirationDate.formatted(date: .abbreviated, time: .omitted)
         if hoursRemaining < 24 {
             let h = hoursRemaining
-            return "Your iAPS build expires in \(h) hour\(h == 1 ? "" : "s"). " +
-                "After expiration the app will not launch until you rebuild."
+            let format = h == 1
+                ? NSLocalizedString(
+                    "Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild.",
+                    comment: "Build expiration alert message under a day, singular hour"
+                )
+                : NSLocalizedString(
+                    "Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild.",
+                    comment: "Build expiration alert message under a day, plural hours"
+                )
+            return String(format: format, h)
         }
-        return "Your iAPS build expires on \(dateStr) (\(daysRemaining) day\(daysRemaining == 1 ? "" : "s") remaining). " +
-            "TestFlight builds must be renewed every 90 days."
+        let dateStr = expirationDate.formatted(date: .abbreviated, time: .omitted)
+        let format = daysRemaining == 1
+            ? NSLocalizedString(
+                "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.",
+                comment: "Build expiration alert message, singular day; %1$@ is the date, %2$d the days remaining"
+            )
+            : NSLocalizedString(
+                "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.",
+                comment: "Build expiration alert message, plural days; %1$@ is the date, %2$d the days remaining"
+            )
+        return String(format: format, dateStr, daysRemaining)
     }
 }
