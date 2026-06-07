@@ -4032,7 +4032,7 @@ Enact a temp Basal or a temp target */
 
 "Build Expires Soon!" = "App förfaller snart!";
 
-"Build Expiring in %d Day" = "App löper ut om %d dagar";
+"Build Expiring in %d Day" = "App löper ut om %d dag";
 
 "Build Expiring in %d Days" = "App löper ut om %d dagar";
 
