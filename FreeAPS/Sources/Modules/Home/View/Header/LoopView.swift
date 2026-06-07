@@ -7,13 +7,12 @@ struct LoopView: View {
         static let lag: TimeInterval = 30
     }
 
-    @Binding var suggestion: Suggestion?
-    @Binding var enactedSuggestion: Suggestion?
-    @Binding var closedLoop: Bool
-    @Binding var timerDate: Date
-    @Binding var isLooping: Bool
-    @Binding var lastLoopDate: Date
-    @Binding var manualTempBasal: Bool
+    @Environment(AppUIState.self) private var appUIState
+
+    let suggestion: Suggestion?
+    let enactedSuggestion: Suggestion?
+    let closedLoop: Bool
+    let timerDate: Date
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -25,6 +24,12 @@ struct LoopView: View {
     @Environment(\.sizeCategory) private var fontSize
 
     var body: some View {
+        let isLooping = appUIState.isLooping
+        let lastLoopDate = appUIState.lastLoopDate
+        let manualTempBasal = appUIState.manualTempBasal
+
+        let lastLoopMinutesAgo = minutesAgo(lastLoopDate)
+
         VStack(spacing: 2) {
             let multiplyForLargeFonts = fontSize > .extraLarge ? 1.1 : 1
 
@@ -35,19 +40,19 @@ struct LoopView: View {
             .foregroundStyle(.secondary.opacity(0.7))
             .carvingOrRelief(carve: colorScheme == .light)
 
-            LoopEllipse(stroke: color)
-                .frame(width: minutesAgo > 9 ? 50 * multiplyForLargeFonts : 50 * multiplyForLargeFonts, height: 27)
+            LoopEllipse(stroke: color(manualTempBasal: manualTempBasal, lastLoopDate: lastLoopDate))
+                .frame(width: lastLoopMinutesAgo > 9 ? 50 * multiplyForLargeFonts : 50 * multiplyForLargeFonts, height: 27)
                 .overlay {
                     HStack {
                         ZStack {
                             if closedLoop {
                                 if !isLooping, actualSuggestion?.timestamp != nil {
-                                    if minutesAgo > 999 {
+                                    if lastLoopMinutesAgo > 999 {
                                         Text("--").font(.caption).padding(.leading, 5).foregroundColor(.secondary)
                                     } else {
                                         let timeString = NSLocalizedString("m", comment: "Minutes ago since last loop")
                                         HStack(spacing: 0) {
-                                            Text("\(minutesAgo) ")
+                                            Text("\(lastLoopMinutesAgo) ")
                                             Text(timeString).foregroundColor(.secondary)
                                         }.font(.caption)
                                     }
@@ -64,19 +69,19 @@ struct LoopView: View {
         }
     }
 
-    private var minutesAgo: Int {
-        let minAgo = Int((timerDate.timeIntervalSince(lastLoopDate) - Config.lag) / 60) + 1
+    private func minutesAgo(_ lastLoopDate: Date?) -> Int {
+        let minAgo = Int((timerDate.timeIntervalSince(lastLoopDate ?? .distantPast) - Config.lag) / 60) + 1
         return minAgo
     }
 
-    private var color: Color {
+    private func color(manualTempBasal: Bool, lastLoopDate: Date?) -> Color {
         guard actualSuggestion?.timestamp != nil else {
             return .loopGray
         }
         guard manualTempBasal == false else {
             return .loopManualTemp
         }
-        let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
+        let delta = timerDate.timeIntervalSince(lastLoopDate ?? .distantPast) - Config.lag
 
         if delta <= 8.minutes.timeInterval {
             guard actualSuggestion?.deliverAt != nil else {

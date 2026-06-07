@@ -10,13 +10,13 @@ import Observation
     private(set) var cgmStatus: CgmDisplayStatus?
     private(set) var isLooping = false
     private(set) var manualTempBasal = false
-    private(set) var pumpReservoir: Decimal?
+    private(set) var pumpReservoir: ReservoirReading?
     private(set) var lastLoopDate: Date?
     private(set) var bolusProgress: Decimal?
     private(set) var bolusAmount: Decimal?
     private(set) var bolusInProgress: Bool = false
     private(set) var alertNotAckUpdates: Bool = false
-    private(set) var lastLoopError: Error?
+    private(set) var lastLoopError: (error: Error, date: Date)?
 
     @ObservationIgnored private var cancellables = Set<AnyCancellable>()
 

@@ -373,7 +373,12 @@ final class OpenAPS: Sendable {
     }
 
     private func reservoirHistory() async -> RawJSON {
-        let reservoir = appCoordinator.pumpReservoir.value ?? 100.0
+        let reservoir: Decimal
+        switch appCoordinator.pumpReservoir.value {
+        case let .units(units): reservoir = units
+        case .aboveThreshold: reservoir = 100.0
+        case nil: reservoir = 100.0
+        }
         return "\(reservoir)"
 //        await loadFileFromStorageAsync(name: Monitor.reservoir)
     }

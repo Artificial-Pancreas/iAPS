@@ -287,8 +287,12 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
         }
 
         let battery = appCoordinator.pumpStatus.value?.battery
-        var reservoir = appCoordinator.pumpReservoir.value // ?? 0
-        if reservoir == 0xDEAD_BEEF {
+        let pumpReservoir = appCoordinator.pumpReservoir.value
+        let reservoir: Decimal?
+
+        if case let .units(units) = pumpReservoir {
+            reservoir = units
+        } else {
             reservoir = nil
         }
 
