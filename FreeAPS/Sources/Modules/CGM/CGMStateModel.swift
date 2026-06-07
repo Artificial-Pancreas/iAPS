@@ -17,20 +17,9 @@ extension CGM {
         @Published var smoothGlucose = false
         @Published var sensorDays: Double = 10
 
-        @Published var cgmInfo: CgmDisplayInfo?
-        @Published var cgmStatus: CgmDisplayStatus?
-
         override func subscribe() async {
             subscribeSetting(\.smoothGlucose, on: $smoothGlucose) { self.smoothGlucose = $0 }
             subscribeSetting(\.sensorDays, on: $sensorDays) { self.sensorDays = $0 }
-
-            appCoordinator.cgmInfo
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$cgmInfo)
-
-            appCoordinator.cgmStatus
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$cgmStatus)
         }
 
         func removePumpAsCGM() {
@@ -38,22 +27,21 @@ extension CGM {
         }
 
         func setupNewCgm(_ identifier: String?) {
-            Task {
-                self.cgmIdentifierToSetUp = identifier
-                self.cgmSetupPresented = true
-                self.cgmSettingsPresented = false
-            }
+            cgmIdentifierToSetUp = identifier
+            cgmSetupPresented = true
+            cgmSettingsPresented = false
         }
 
         func showCurrentCgmSettings() {
-            guard let cgmInfo else { return }
-            let currentCgmIdentifier = cgmInfo.identifier
-            let isOnboarded = cgmInfo.isOnboarded
+            guard let cgmInfo = appCoordinator.cgmInfo.value else { return }
 
-            Task {
-                self.cgmIdentifierToSetUp = currentCgmIdentifier
-                self.cgmSetupPresented = isOnboarded == false
-                self.cgmSettingsPresented = isOnboarded == true
+            if cgmInfo.isOnboarded {
+                cgmIdentifierToSetUp = nil
+                cgmSetupPresented = false
+                cgmSettingsPresented = true
+            } else {
+                // CGM is set up but not fully onboarded, start the setup for the same CGM manager from scratch
+                setupNewCgm(cgmInfo.identifier)
             }
         }
     }
@@ -61,16 +49,19 @@ extension CGM {
 
 extension CGM.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
-        if cgmSetupPresented {
-            // setup finished -> keep the expected setup→settings progression
-            cgmSetupPresented = false
-            if cgmInfo?.isOnboarded == true {
+        Task { @MainActor in            
+            if cgmSetupPresented {
+                cgmSetupPresented = false
+                cgmIdentifierToSetUp = nil
+
                 // present settings after setup
-                DispatchQueue.main.async { self.cgmSettingsPresented = true }
+                // TODO: will this have propagated already, after setup is complete?
+                cgmSettingsPresented = appCoordinator.cgmInfo.value?.isOnboarded == true
+            } else if cgmSettingsPresented {
+                cgmSetupPresented = false
+                cgmSettingsPresented = false
+                cgmIdentifierToSetUp = nil
             }
-        } else if cgmSettingsPresented {
-            // settings finished -> close
-            cgmSettingsPresented = false
         }
     }
 }

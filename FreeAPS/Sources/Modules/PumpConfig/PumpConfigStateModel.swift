@@ -3,38 +3,18 @@ import LoopKitUI
 import SwiftUI
 
 extension PumpConfig {
-    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() var deviceManager: DeviceDataManager!
         @Injected() private var alertHistoryStorage: AlertHistoryStorage!
-        @Injected() private var appCoordinator: AppCoordinator!
         @Injected() private var storage: FileStorage!
 
         @Published var pumpSetupPresented: Bool = false
         @Published var pumpSettingsPresented: Bool = false
         @Published private(set) var pumpIdentifierToSetUp: String? = nil
-        @Published private(set) var pumpInfo: PumpDisplayInfo? = nil
-        @Published private(set) var pumpManagerStatus: PumpDisplayStatus? = nil
 
         private(set) var initialSettings: PumpInitialSettings = .default
-        @Published var alertNotAck: Bool = false
 
         override func subscribe() async {
-            pumpInfo = appCoordinator.pumpInfo.value
-            pumpManagerStatus = appCoordinator.pumpStatus.value
-
-            alertNotAck = await alertHistoryStorage.recentNotAck().isNotEmpty
-
-            // TODO: use AppUIState instead
-            observe(appCoordinator.alertNotAckUpdates) { me, alertNotAck in
-                await me.alertNotAckUpdated(alertNotAck)
-            }
-            observe(appCoordinator.pumpInfo) { me, pumpInfo in
-                await me.pumpInfoUpdated(pumpInfo)
-            }
-            observe(appCoordinator.pumpStatus) { me, pumpStatus in
-                await me.pumpStatusUpdated(pumpStatus)
-            }
-
             let basalProfile = await fetchBasalProfile()
             let basalSchedule = BasalRateSchedule(
                 dailyItems: basalProfile.map {
@@ -47,20 +27,8 @@ extension PumpConfig {
             initialSettings = PumpInitialSettings(
                 maxBolusUnits: Double(pumpSettings.maxBolus),
                 maxBasalRateUnitsPerHour: Double(pumpSettings.maxBasal),
-                basalSchedule: basalSchedule! // TODO: we're force-unwrapping the value, it works but we should fix this
+                basalSchedule: basalSchedule ?? PumpInitialSettings.default.basalSchedule
             )
-        }
-
-        private func alertNotAckUpdated(_ alertNotAck: Bool) {
-            self.alertNotAck = alertNotAck
-        }
-
-        private func pumpInfoUpdated(_ info: PumpDisplayInfo?) {
-            pumpInfo = info
-        }
-
-        private func pumpStatusUpdated(_ status: PumpDisplayStatus?) {
-            pumpManagerStatus = status
         }
 
         func showCurrentPumpSettings() {
@@ -76,9 +44,7 @@ extension PumpConfig {
         }
 
         func ack() {
-            Task {
-                await alertHistoryStorage.forceNotification()
-            }
+            alertHistoryStorage.forceNotification()
         }
 
         private func fetchBasalProfile() async -> [BasalProfileEntry] {
