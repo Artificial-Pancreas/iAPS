@@ -9,6 +9,7 @@ import MockKit
 import NightscoutRemoteCGM
 import OmniBLE
 import OmniKit
+import OmnipodKit
 
 enum KnownPlugins {
     static func allowCalibrations(for cgmManager: CGMManager) -> Bool {
@@ -113,6 +114,17 @@ enum KnownPlugins {
             } else {
                 return false
             }
+
+        case OmniPumpManager.pluginIdentifier:
+            if let omnipod = pumpManager as? OmniPumpManager,
+               let tempBasal = omnipod.state.podState?.unfinalizedTempBasal,
+               !tempBasal.isFinished(),
+               !tempBasal.automatic
+            {
+                return true
+            } else {
+                return false
+            }
         default: return nil
         }
     }
@@ -125,6 +137,8 @@ enum KnownPlugins {
             return (pumpManager as? OmniBLEPumpManager)?.state.podState?.activatedAt
         case MedtrumPumpManager.pluginIdentifier:
             return (pumpManager as? MedtrumPumpManager)?.state.patchActivatedAt
+        case OmniPumpManager.pluginIdentifier:
+            return (pumpManager as? OmniPumpManager)?.state.podState?.activatedAt
         default: return nil
         }
     }
@@ -137,6 +151,8 @@ enum KnownPlugins {
             return (pumpManager as? OmniBLEPumpManager)?.state.podState?.expiresAt
         case MedtrumPumpManager.pluginIdentifier:
             return (pumpManager as? MedtrumPumpManager)?.state.patchExpiresAt
+        case OmniPumpManager.pluginIdentifier:
+            return (pumpManager as? OmniPumpManager)?.state.podState?.expiresAt
         default: return nil
         }
     }
@@ -153,6 +169,11 @@ enum KnownPlugins {
             let reservoirVal = (pumpManager as? OmniBLEPumpManager)?.state.podState?.lastInsulinMeasurements?
                 .reservoirLevel ?? 0xDEAD_BEEF
             // TODO: find the value Pod.maximumReservoirReading
+            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
+            return Decimal(reservoir)
+        case OmniPumpManager.pluginIdentifier:
+            let reservoirVal = (pumpManager as? OmniPumpManager)?.state.podState?.lastInsulinMeasurements?
+                .reservoirLevel ?? 0xDEAD_BEEF
             let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
             return Decimal(reservoir)
         case MedtrumPumpManager.pluginIdentifier:
