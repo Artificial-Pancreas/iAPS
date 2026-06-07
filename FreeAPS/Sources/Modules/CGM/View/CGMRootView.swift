@@ -5,8 +5,10 @@ import Swinject
 extension CGM {
     struct RootView: BaseView {
         let resolver: Resolver
-//        let displayGlucosePreference: DisplayGlucosePreference
+
         @StateObject var state: StateModel
+
+        @Environment(AppUIState.self) private var appUIState
 
         private var daysFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -18,13 +20,14 @@ extension CGM {
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
-//            displayGlucosePreference = resolver.resolve(DisplayGlucosePreference.self)!
         }
 
         var body: some View {
+            let cgmInfo = appUIState.cgmInfo
+            let cgmStatus = appUIState.cgmStatus
             NavigationView {
                 Form {
-                    if let cgmInfo = state.cgmInfo, cgmInfo.isOnboarded, !cgmInfo.pumpIsCgm
+                    if let cgmInfo = cgmInfo, cgmInfo.isOnboarded, !cgmInfo.pumpIsCgm
                     {
                         Section(header: Text("Active CGM")) {
                             HStack {
@@ -34,7 +37,7 @@ extension CGM {
                             }
                         }
                         Section {
-                            if let status = state.cgmStatus?.statusHighlight {
+                            if let status = cgmStatus?.statusHighlight {
                                 HStack {
                                     Text(status.replacingOccurrences(of: "\n", with: " "))
                                 }
@@ -50,7 +53,7 @@ extension CGM {
                                 state.showCurrentCgmSettings()
                             }
                         }
-                    } else if let cgmInfo = state.cgmInfo, cgmInfo.pumpIsCgm {
+                    } else if let cgmInfo = cgmInfo, cgmInfo.pumpIsCgm {
                         Section(header: Text("Active CGM")) {
                             HStack {
                                 Text("Pump+CGM")
@@ -82,7 +85,7 @@ extension CGM {
                         }
                     }
 
-                    if let cgmInfo = state.cgmInfo, cgmInfo.isOnboarded
+                    if let cgmInfo = cgmInfo, cgmInfo.isOnboarded
                     {
                         if cgmInfo.allowCalibrations
                         {

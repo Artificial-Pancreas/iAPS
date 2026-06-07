@@ -15,7 +15,7 @@ import Observation
     private(set) var bolusProgress: Decimal?
     private(set) var bolusAmount: Decimal?
     private(set) var bolusInProgress: Bool = false
-    private(set) var alertNotAckUpdates: Bool = false
+    private(set) var alertNotAck: Bool = false
     private(set) var lastLoopError: (error: Error, date: Date)?
 
     @ObservationIgnored private var cancellables = Set<AnyCancellable>()
@@ -32,8 +32,8 @@ import Observation
         bind(appCoordinator.bolusProgress, to: \.bolusProgress)
         bind(appCoordinator.bolusAmount, to: \.bolusAmount)
         bind(appCoordinator.bolusInProgress, to: \.bolusInProgress)
-        bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAckUpdates)
         bind(appCoordinator.lastLoopError, to: \.lastLoopError)
+        bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAck)
     }
 
     private func bind<V>(

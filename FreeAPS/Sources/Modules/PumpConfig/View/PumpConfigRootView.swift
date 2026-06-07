@@ -6,6 +6,8 @@ extension PumpConfig {
         let resolver: Resolver
         @StateObject var state: StateModel
 
+        @Environment(AppUIState.self) private var appUIState
+
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -14,7 +16,7 @@ extension PumpConfig {
         var body: some View {
             NavigationView {
                 Form {
-                    if let pumpInfo = state.pumpInfo, pumpInfo.isOnboarded {
+                    if let pumpInfo = appUIState.pumpInfo, pumpInfo.isOnboarded {
                         Section(header: Text("Model")) {
                             Button {
                                 state.showCurrentPumpSettings()
@@ -30,17 +32,17 @@ extension PumpConfig {
                             }
                         }
                         Section {
-                            if let status = state.pumpManagerStatus?.statusHighlight {
+                            if let status = appUIState.pumpStatus?.statusHighlight {
                                 HStack {
                                     Text(status.replacingOccurrences(of: "\n", with: " "))
                                 }
                             }
-                            if state.pumpManagerStatus?.deliveryIsUncertain ?? false {
+                            if appUIState.pumpStatus?.deliveryIsUncertain ?? false {
                                 HStack {
                                     Text("Pump delivery uncertain").foregroundColor(.red)
                                 }
                             }
-                            if state.alertNotAck {
+                            if appUIState.alertNotAck {
                                 Spacer()
                                 Button("Acknowledge all alerts") { state.ack() }
                             }
