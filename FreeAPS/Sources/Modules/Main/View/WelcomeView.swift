@@ -52,10 +52,10 @@ struct WelcomeView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 HStack(spacing: 28) {
-                    Link(destination: docsURL) {
+                    SwiftUI.Link(destination: docsURL) {
                         Label("Documentation", systemImage: "book")
                     }
-                    Link(destination: discordURL) {
+                    SwiftUI.Link(destination: discordURL) {
                         Label("Discord support", systemImage: "bubble.left.and.bubble.right")
                     }
                 }
