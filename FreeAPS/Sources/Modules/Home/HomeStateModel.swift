@@ -141,6 +141,7 @@ extension Home {
         )
 
         func startTimer() {
+            timer.fire()
             timer.resume()
         }
 
