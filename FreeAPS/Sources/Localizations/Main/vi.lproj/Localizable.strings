@@ -1393,6 +1393,31 @@ Enact a temp Basal or a temp target */
 
 "Micronutrients" = "Vi chất dinh dưỡng";
 
+"Vitamin A" = "Vitamin A";
+"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
+"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
+"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
+"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
+"Vitamin B6" = "Vitamin B6";
+"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
+"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
+"Vitamin B12" = "Vitamin B12";
+"Vitamin C" = "Vitamin C";
+"Vitamin D" = "Vitamin D";
+"Vitamin E" = "Vitamin E";
+"Vitamin K" = "Vitamin K";
+"Calcium" = "Canxi";
+"Iron" = "Sắt";
+"Magnesium" = "Magiê";
+"Potassium" = "Kali";
+"Zinc" = "Kẽm";
+"Phosphorus" = "Phốt pho";
+"Copper" = "Đồng";
+"Manganese" = "Mangan";
+"Selenium" = "Selen";
+"Iodine" = "I-ốt";
+"Salt" = "Muối";
+
 "Allow Meal View Micronutrients and Dietary Fibers entries" = "Cho phép nhập vi chất dinh dưỡng và chất xơ trong màn hình Bữa ăn";
 
 // --------- AI ---------
@@ -4000,3 +4025,22 @@ Enact a temp Basal or a temp target */
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
 "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Tỷ lệ liều nền %.2f U/giờ vượt quá giới hạn liều nềm tối đa đã cài đặt là %.2f U/giờ.";
+
+/* --- Build expiration alert (TestFlight 90-day lifetime) --- */
+"OK" = "OK";
+
+"More Info" = "Thêm thông tin";
+
+"Build Expires Soon!" = "Bản dựng sắp hết hạn!";
+
+"Build Expiring in %d Day" = "Bản dựng sẽ hết hạn sau %d ngày";
+
+"Build Expiring in %d Days" = "Bản dựng sẽ hết hạn sau %d ngày";
+
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Bản dựng iAPS của bạn sẽ hết hạn sau %d giờ. Sau khi hết hạn, ứng dụng sẽ không thể khởi chạy cho đến khi bạn xây dựng lại.";
+
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Bản dựng iAPS của bạn sẽ hết hạn sau %d giờ. Sau khi hết hạn, ứng dụng sẽ không thể khởi chạy cho đến khi bạn xây dựng lại.";
+
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Bản dựng iAPS của bạn sẽ hết hạn vào %1$@ (còn %2$d ngày). Các bản dựng TestFlight phải được gia hạn sau 90 ngày.";
+
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Bản dựng iAPS của bạn sẽ hết hạn vào %1$@ (còn %2$d ngày). Các bản dựng TestFlight phải được gia hạn sau 90 ngày.";
