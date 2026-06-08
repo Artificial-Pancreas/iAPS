@@ -10,16 +10,17 @@ protocol AnnouncementsStorage: Sendable {
     func recentEnacted() async -> Announcement?
 }
 
-actor BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
+actor BaseAnnouncementsStorage: AnnouncementsStorage {
     enum Config {
         static let recentInterval = 10.minutes.timeInterval
     }
 
-//    private let processQueue = DispatchQueue(label: "BaseAnnouncementsStorage.processQueue")
-    @Injected() private var storage: FileStorage!
+    private let storage: FileStorage
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    init(
+        storage: FileStorage
+    ) {
+        self.storage = storage
     }
 
     func storeAnnouncements(_ announcements: [Announcement], enacted: Bool) async {

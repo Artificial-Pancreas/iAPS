@@ -28,18 +28,18 @@ enum FetchGlucoseProgress {
     case done([BloodGlucose])
 }
 
-actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
-    @Injected() private var keychain: Keychain!
-    @Injected() private var appCoordinator: AppCoordinator!
-    @Injected() private var glucoseStorage: GlucoseStorage!
-    @Injected() private var tempTargetsStorage: TempTargetsStorage!
-    @Injected() private var carbsStorage: CarbsStorage!
-    @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
-    @Injected() private var storage: FileStorage!
-    @Injected() private var announcementsStorage: AnnouncementsStorage!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var reachabilityManager: ReachabilityManager!
-    @Injected() private var healthkitManager: HealthKitManager!
+actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
+    private let keychain: Keychain
+    private let appCoordinator: AppCoordinator
+    private let glucoseStorage: GlucoseStorage
+    private let tempTargetsStorage: TempTargetsStorage
+    private let carbsStorage: CarbsStorage
+    private let pumpHistoryStorage: PumpHistoryStorage
+    private let storage: FileStorage
+    private let announcementsStorage: AnnouncementsStorage
+    private let settingsManager: SettingsManager
+    private let reachabilityManager: ReachabilityManager
+    private let healthkitManager: HealthKitManager
 
     private let overrideStorage = OverrideStorage()
 
@@ -61,12 +61,34 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
         return NightscoutAPI(url: url, secret: secret)
     }
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
-        Task { await self.subscribe() }
+    init(
+        keychain: Keychain,
+        appCoordinator: AppCoordinator,
+        glucoseStorage: GlucoseStorage,
+        tempTargetsStorage: TempTargetsStorage,
+        carbsStorage: CarbsStorage,
+        pumpHistoryStorage: PumpHistoryStorage,
+        storage: FileStorage,
+        announcementsStorage: AnnouncementsStorage,
+        settingsManager: SettingsManager,
+        reachabilityManager: ReachabilityManager,
+        healthkitManager: HealthKitManager
+    ) {
+        self.keychain = keychain
+        self.appCoordinator = appCoordinator
+        self.glucoseStorage = glucoseStorage
+        self.tempTargetsStorage = tempTargetsStorage
+        self.carbsStorage = carbsStorage
+        self.pumpHistoryStorage = pumpHistoryStorage
+        self.storage = storage
+        self.announcementsStorage = announcementsStorage
+        self.settingsManager = settingsManager
+        self.reachabilityManager = reachabilityManager
+        self.healthkitManager = healthkitManager
     }
 
-    private func subscribe() async {
+    // this is called at the start of the app
+    func start() async {
         // TODO: use values from the stream instead of re-reading the files?..
         observe(appCoordinator.pumpHistoryUpdates) { me, _ in
             await me.uploadPumpHistory()

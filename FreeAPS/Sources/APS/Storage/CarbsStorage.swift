@@ -10,14 +10,19 @@ protocol CarbsStorage: Sendable {
     func deleteCarbsAndFPUs(at date: Date) async
 }
 
-actor BaseCarbsStorage: CarbsStorage, Injectable {
-//    private let processQueue = DispatchQueue(label: "BaseCarbsStorage.processQueue")
-    @Injected() private var storage: FileStorage!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var appCoordinator: AppCoordinator!
+actor BaseCarbsStorage: CarbsStorage {
+    private let storage: FileStorage
+    private let settingsManager: SettingsManager
+    private let appCoordinator: AppCoordinator
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    init(
+        storage: FileStorage,
+        settingsManager: SettingsManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.settingsManager = settingsManager
+        self.appCoordinator = appCoordinator
     }
 
     func storeCarbs(_ entries: [CarbsEntry]) async {

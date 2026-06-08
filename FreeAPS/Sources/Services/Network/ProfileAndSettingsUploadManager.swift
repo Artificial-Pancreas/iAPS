@@ -6,12 +6,12 @@ protocol ProfileAndSettingsUploadManager: Sendable {
     func uploadProfileAndSettings(force: Bool) async
 }
 
-actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Injectable, LifetimeOwner {
-    @Injected() private var storage: FileStorage!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var nightscoutManager: NightscoutManager!
-    @Injected() private var databaseManager: DatabaseManager!
-    @Injected() private var appCoordinator: AppCoordinator!
+actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, LifetimeOwner, AppService {
+    private let storage: FileStorage
+    private let settingsManager: SettingsManager
+    private let nightscoutManager: NightscoutManager
+    private let databaseManager: DatabaseManager
+    private let appCoordinator: AppCoordinator
 
     @Injected() private var statisticsFactory: DatabaseStatisticsFactory!
 
@@ -23,14 +23,22 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Inje
 
     private var latestUploadedStats: StatsData?
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
-        Task {
-            await subscribe()
-        }
+    init(
+        storage: FileStorage,
+        settingsManager: SettingsManager,
+        nightscoutManager: NightscoutManager,
+        databaseManager: DatabaseManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.settingsManager = settingsManager
+        self.nightscoutManager = nightscoutManager
+        self.databaseManager = databaseManager
+        self.appCoordinator = appCoordinator
     }
 
-    private func subscribe() async {
+    // this is called at the start of the app
+    func start() async {
         lastVersionCheck = coreDataStorage.fetchVersion()
         latestUploadedStats = coreDataStorage.fetchStats()
         observe(appCoordinator.loopCompleted) { me, _ in

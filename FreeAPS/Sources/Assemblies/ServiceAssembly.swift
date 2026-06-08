@@ -85,7 +85,17 @@ final class ServiceAssembly: Assembly {
                 storage: storage
             )
         }
-        container.register(LiveActivityBridge.self) { r in LiveActivityBridge(resolver: r) }
+        container.register(LiveActivityBridge.self) { r in
+            let settingsManager = r.resolve(SettingsManager.self)!
+            let storage = r.resolve(FileStorage.self)!
+            let appCoordinator = r.resolve(AppCoordinator.self)!
+
+            return LiveActivityBridge(
+                settingsManager: settingsManager,
+                storage: storage,
+                appCoordinator: appCoordinator
+            )
+        }
         container.register(CoreDataStorageGlucoseSaver.self) { r in CoreDataStorageGlucoseSaver(resolver: r) }
     }
 }
