@@ -229,7 +229,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, Injectable, LifetimeOwner {
                 .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp }
         }
-        self.appCoordinator.pumpHistoryUpdates.send(uniqEvents)
+        // Broadcast in the same (ascending / oldest-first) order as `recent()`
+        self.appCoordinator.pumpHistoryUpdates.send(uniqEvents.reversed())
     }
 
     func recent() async -> [PumpHistoryEvent] {
@@ -247,7 +248,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, Injectable, LifetimeOwner {
                 return allValues
             }
         if didModify {
-            self.appCoordinator.pumpHistoryUpdates.send(updatedValues)
+            // Broadcast in the same (ascending / oldest-first) order as `recent()`
+            self.appCoordinator.pumpHistoryUpdates.send(updatedValues.reversed())
         }
     }
 
