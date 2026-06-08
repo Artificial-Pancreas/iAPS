@@ -20,7 +20,7 @@ protocol SettingsManager: AnyObject, Sendable {
 
 extension InsulinType: @retroactive @unchecked Sendable {}
 
-actor BaseSettingsManager: SettingsManager {
+actor BaseSettingsManager: SettingsManager, AppService {
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
 
@@ -70,15 +70,16 @@ actor BaseSettingsManager: SettingsManager {
     init(resolver: Resolver) {
         storage = resolver.resolve(FileStorage.self)!
         appCoordinator = resolver.resolve(AppCoordinator.self)!
+    }
 
-        Task {
-            let settings = await self.settings
-            await self.appCoordinator.settingsUpdates.send(settings)
-            let pumpSettings = await self.pumpSettings
-            await self.appCoordinator.pumpSettingsUpdates.send(pumpSettings)
-            let preferences = await self.preferences
-            await self.appCoordinator.preferencesUpdates.send(preferences)
-        }
+    // this is called on app start, before anything is rendered
+    func start() async {
+        let settings = await self.settings
+        self.appCoordinator.setSettings(settings)
+        let pumpSettings = await self.pumpSettings
+        self.appCoordinator.setPumpSettings(pumpSettings)
+        let preferences = await self.preferences
+        self.appCoordinator.setPreferences(preferences)
     }
 
     func updateInsulinCurve(_ insulinType: InsulinType?) async {
@@ -103,7 +104,7 @@ actor BaseSettingsManager: SettingsManager {
         if self.cachedSettings != settings {
             self.cachedSettings = settings
             await storage.save(settings, as: OpenAPS.FreeAPS.settings)
-            await self.appCoordinator.settingsUpdates.send(settings)
+            self.appCoordinator.setSettings(settings)
         }
     }
 
@@ -117,7 +118,7 @@ actor BaseSettingsManager: SettingsManager {
         if self.cachedPumpSettings != settings {
             self.cachedPumpSettings = settings
             await storage.save(settings, as: OpenAPS.Settings.settings)
-            await self.appCoordinator.pumpSettingsUpdates.send(settings)
+            self.appCoordinator.setPumpSettings(settings)
         }
     }
 
@@ -125,7 +126,7 @@ actor BaseSettingsManager: SettingsManager {
         if self.cachedPreferences != preferences {
             self.cachedPreferences = preferences
             await storage.save(preferences, as: OpenAPS.Settings.preferences)
-            await self.appCoordinator.preferencesUpdates.send(preferences)
+            self.appCoordinator.setPreferences(preferences)
         }
     }
 }

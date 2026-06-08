@@ -8,22 +8,8 @@ extension ManualTempBasal {
         @Published var rate: Decimal = 0
         @Published var durationIndex = 0
         @Published var maxBasalExceeded = false
-        @Published var maxBasal: Decimal = 0
 
         let durationValues = stride(from: 30.0, to: 720.1, by: 30.0).map { $0 }
-
-        override func subscribe() async {
-            maxBasal = await settingsManager.pumpSettings.maxBasal
-
-            // TODO: AppUIState instead
-            observe(appCoordinator.pumpSettingsUpdates) { me, pumpSettings in
-                await me.pumpSettingsUpdated(pumpSettings)
-            }
-        }
-
-        private func pumpSettingsUpdated(_ pumpSettings: PumpSettings) {
-            maxBasal = pumpSettings.maxBasal
-        }
 
         func cancel() {
             Task {
@@ -33,7 +19,7 @@ extension ManualTempBasal {
         }
 
         func enact() {
-            guard rate <= maxBasal else {
+            guard rate <= appCoordinator.pumpSettings.value.maxBasal else {
                 maxBasalExceeded = true
                 return
             }

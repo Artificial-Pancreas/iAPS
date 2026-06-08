@@ -89,8 +89,8 @@ final class BolusIntentRequest: BaseIntentsRequest {
                 comment: ""
             )
 
-        Task {
-            _ = await apsManager.enactBolus(amount: Double(bolus), isSMB: false)
+        Task { [apsManager] in
+            _ = await apsManager?.enactBolus(amount: Double(bolus), isSMB: false)
         }
         return resultDisplay
     }

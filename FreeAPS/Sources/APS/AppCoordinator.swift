@@ -8,6 +8,13 @@ import LoopKit
 // * `Error` is not Sendable; we need to either replace it with something that is Sendable, or accepted as is - since those values are effectively immutable.
 
 final class AppCoordinator: @unchecked Sendable {
+    // initial values will not be observed by tha app, SettingsManager sets the real values in its start(), and the app won't render before it's finished
+    let settings = CurrentValueSubject<FreeAPSSettings, Never>(FreeAPSSettings())
+    let pumpSettings = CurrentValueSubject<PumpSettings, Never>(PumpSettings.defaultValue)
+    let preferences = CurrentValueSubject<Preferences, Never>(Preferences())
+
+    // -----
+
     let pumpInfo = CurrentValueSubject<PumpDisplayInfo?, Never>(nil)
 
     let pumpStatus = CurrentValueSubject<PumpDisplayStatus?, Never>(nil)
@@ -59,12 +66,6 @@ final class AppCoordinator: @unchecked Sendable {
 
     let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
 
-    let settingsUpdates = PassthroughSubject<FreeAPSSettings, Never>()
-
-    let pumpSettingsUpdates = PassthroughSubject<PumpSettings, Never>()
-
-    let preferencesUpdates = PassthroughSubject<Preferences, Never>()
-
     let basalProfileUpdates = PassthroughSubject<[BasalProfileEntry], Never>()
 
     let lastLoopDate = CurrentValueSubject<Date?, Never>(nil)
@@ -81,7 +82,21 @@ final class AppCoordinator: @unchecked Sendable {
 
     let newSensorDetectedEvents = PassthroughSubject<Void, Never>()
 
+    let liveActivitiesSystemEnabled = CurrentValueSubject<Bool, Never>(false)
+
     // --------------
+
+    func setSettings(_ value: FreeAPSSettings) {
+        settings.send(value)
+    }
+
+    func setPreferences(_ value: Preferences) {
+        preferences.send(value)
+    }
+
+    func setPumpSettings(_ value: PumpSettings) {
+        pumpSettings.send(value)
+    }
 
     func setIsLooping(_ value: Bool) {
         isLooping.send(value)
@@ -185,5 +200,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendNewSensorDetected() {
         newSensorDetectedEvents.send(())
+    }
+
+    func setLiveActivitiesSystemEnabled(_ value: Bool) {
+        liveActivitiesSystemEnabled.send(value)
     }
 }

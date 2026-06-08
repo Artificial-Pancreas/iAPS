@@ -1,32 +1,59 @@
 import Foundation
 import Swinject
 
-class AppServices: ObservableObject {
-    let deviceManager: DeviceDataManager
-    let settingsManager: SettingsManager
-    let carbsStorage: CarbsStorage
-    let calendarManager: CalendarManager
-    let apsManager: APSManager
+@MainActor final class AppServices {
+    private(set) var deviceManager: DeviceDataManager?
 
-    let resolver: Resolver
+    private var startup: Task<Void, Error>?
 
-    init(assembler: Assembler) {
-        resolver = assembler.resolver
+    init(resolver: Resolver) {
+        start(resolver: resolver)
+    }
+
+    private func start(resolver: Resolver) {
+        guard startup == nil else { return }
+        startup = Task { try await self.performStartup(resolver: resolver) }
+    }
+
+    func started() async throws { try await startup?.value }
+
+    private func performStartup(resolver: Resolver) async throws {
+        try await startService(resolver.resolve(SettingsManager.self))
+
+        _ = resolver.resolve(BluetoothStateManager.self)!
+
+        try await startService(resolver.resolve(FetchTreatmentsManager.self))
+        try await startService(resolver.resolve(FetchAnnouncementsManager.self))
+        try await startService(resolver.resolve(UserNotificationsManager.self))
+        try await startService(resolver.resolve(WatchManager.self))
+        try await startService(resolver.resolve(HealthKitManager.self))
+        try await startService(resolver.resolve(LiveActivityBridge.self))
+        try await startService(resolver.resolve(CoreDataStorageGlucoseSaver.self))
+        try await startService(resolver.resolve(CalendarManager.self))
+        try await startService(resolver.resolve(DatabaseManager.self))
+        try await startService(resolver.resolve(ContactTrickManager.self))
 
         deviceManager = resolver.resolve(DeviceDataManager.self)!
-        apsManager = resolver.resolve(APSManager.self)!
-        _ = FreeAPSApp.resolver.resolve(BloodGlucoseManager.self)!
-        _ = FreeAPSApp.resolver.resolve(FetchTreatmentsManager.self)!
-        _ = FreeAPSApp.resolver.resolve(FetchAnnouncementsManager.self)!
-        _ = FreeAPSApp.resolver.resolve(CalendarManager.self)!
-        _ = FreeAPSApp.resolver.resolve(UserNotificationsManager.self)!
-        _ = FreeAPSApp.resolver.resolve(WatchManager.self)!
-        _ = FreeAPSApp.resolver.resolve(HealthKitManager.self)!
-        _ = FreeAPSApp.resolver.resolve(BluetoothStateManager.self)!
-        _ = FreeAPSApp.resolver.resolve(LiveActivityBridge.self)!
-        settingsManager = resolver.resolve(SettingsManager.self)!
-        carbsStorage = resolver.resolve(CarbsStorage.self)!
-        calendarManager = resolver.resolve(CalendarManager.self)!
-        _ = FreeAPSApp.resolver.resolve(CoreDataStorageGlucoseSaver.self)!
+
+        try await startService(resolver.resolve(APSManager.self)!)
+
+        try await startService(resolver.resolve(AppUIState.self))
     }
+
+    @discardableResult private func startService<Service>(_ service: Service?) async throws -> Service {
+        if let service, let startable = service as? AppService {
+            await startable.start()
+            return service
+        } else {
+            throw NSError(
+                domain: "APP_INIT",
+                code: 100,
+                userInfo: [NSLocalizedDescriptionKey: "not an AppService: \(String(describing: service))"]
+            )
+        }
+    }
+}
+
+protocol AppService: Sendable {
+    func start() async
 }

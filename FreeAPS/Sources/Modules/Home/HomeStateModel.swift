@@ -205,20 +205,20 @@ extension Home {
                 await me.suggestionDidUpdate(suggestion)
             }
 
-            observe(appCoordinator.settingsUpdates) { me, settings in
+            observe(appCoordinator.settings) { me, settings in
                 await me.settingsUpdated(settings)
             }
 
-            observe(appCoordinator.preferencesUpdates) { me, preferences in
+            observe(appCoordinator.preferences) { me, preferences in
                 await me.preferencesUpdated(preferences)
+            }
+
+            observe(appCoordinator.pumpSettings) { me, pumpSettings in
+                await me.pumpSettingsUpdated(pumpSettings)
             }
 
             observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
                 await me.pumpHistoryDidUpdate(pumpHistory)
-            }
-
-            observe(appCoordinator.pumpSettingsUpdates) { me, pumpSettings in
-                await me.pumpSettingsUpdated(pumpSettings)
             }
 
             observe(appCoordinator.basalProfileUpdates) { me, basalProfile in

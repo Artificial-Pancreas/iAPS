@@ -31,7 +31,7 @@ enum NotificationAction: String {
 //    func pumpRemoveNotification()
 // }
 
-actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, LifetimeOwner {
+actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, LifetimeOwner, AppService {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
@@ -41,12 +41,12 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         case pumpNotification = "FreeAPS.pumpNotification"
     }
 
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var glucoseStorage: GlucoseStorage!
-    @Injected() private var apsManager: APSManager!
-    @Injected() private var deviceDataManager: DeviceDataManager!
-    @Injected() private var router: Router!
-    @Injected() private var appCoordinator: AppCoordinator!
+    private let settingsManager: SettingsManager
+    private let glucoseStorage: GlucoseStorage
+    private let apsManager: APSManager
+    private let deviceDataManager: DeviceDataManager
+    private let router: Router
+    private let appCoordinator: AppCoordinator
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
 
@@ -56,22 +56,32 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
     private let userNotificationCenterDelegate: UserNotificationCenterDelegate
     let lifetime = Lifetime()
 
-    init(resolver: Resolver) {
-        self.userNotificationCenterDelegate = UserNotificationCenterDelegate()
-        injectServices(resolver)
+    init(
+        settingsManager: SettingsManager,
+        glucoseStorage: GlucoseStorage,
+        apsManager: APSManager,
+        deviceDataManager: DeviceDataManager,
+        router: Router,
+        appCoordinator: AppCoordinator
+    ) {
+        self.settingsManager = settingsManager
+        self.glucoseStorage = glucoseStorage
+        self.apsManager = apsManager
+        self.deviceDataManager = deviceDataManager
+        self.router = router
+        self.appCoordinator = appCoordinator
 
-        Task {
-            await self.subscribe()
-        }
+        self.userNotificationCenterDelegate = UserNotificationCenterDelegate()
     }
 
-    private func subscribe() async {
+    // this is called at the start of the app
+    func start() async {
         self.settings = await settingsManager.settings
 
         userNotificationCenterDelegate.manager = self
         center.delegate = userNotificationCenterDelegate
 
-        observe(appCoordinator.settingsUpdates) { me, settings in
+        observe(appCoordinator.settings) { me, settings in
             await me.settingsUpdated(settings)
         }
         observe(appCoordinator.glucoseHistoryUpdates) { me, glucose in

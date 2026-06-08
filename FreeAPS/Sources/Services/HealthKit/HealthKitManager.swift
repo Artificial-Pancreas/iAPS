@@ -24,7 +24,7 @@ protocol HealthKitManager: Sendable {
     func deleteInsulin(syncID: String) async
 }
 
-actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner {
+actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppService {
     private enum Config {
         // unwraped HKObjects
         static var readPermissions: Set<HKSampleType> {
@@ -42,9 +42,9 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner {
         static let freeAPSMetaKey = "From iAPS"
     }
 
-    @Injected() private var healthKitStore: HKHealthStore!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var appCoordinator: AppCoordinator!
+    private let healthKitStore: HKHealthStore
+    private let settingsManager: SettingsManager
+    private let appCoordinator: AppCoordinator
 
     let lifetime = Lifetime()
 
@@ -61,15 +61,18 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner {
             .isEmpty
     }
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
-
-        Task {
-            await subscribe()
-        }
+    init(
+        healthKitStore: HKHealthStore,
+        settingsManager: SettingsManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.healthKitStore = healthKitStore
+        self.settingsManager = settingsManager
+        self.appCoordinator = appCoordinator
     }
 
-    private func subscribe() async {
+    // this is called at the start of the app
+    func start() async {
         guard isAvailableOnCurrentDevice,
               Config.healthBGObject != nil else { return }
 

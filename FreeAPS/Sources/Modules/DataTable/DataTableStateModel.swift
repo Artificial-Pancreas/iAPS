@@ -47,13 +47,13 @@ extension DataTable {
             await setupTreatments()
             await setupGlucose()
 
-            observe(appCoordinator.settingsUpdates) { me, _ in
+            observe(appCoordinator.settings) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.preferencesUpdates) { me, _ in
+            observe(appCoordinator.preferences) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.pumpSettingsUpdates) { me, _ in
+            observe(appCoordinator.pumpSettings) { me, _ in
                 await me.setupTreatments()
             }
             observe(appCoordinator.pumpHistoryUpdates) { me, _ in

@@ -8,7 +8,8 @@ protocol GarminManager {
     func updateListDevices(devices: [IQDevice])
     var devices: [IQDevice] { get }
     func sendState(_ data: Data)
-    var stateRequest: (() -> (Data))? { get set }
+    var stateRequest: (() -> (Data))? { get }
+    func setStateRequest(_ req: (() -> (Data))?)
 }
 
 extension Notification.Name {
@@ -31,7 +32,11 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
 
     private var watchfaces: [IQApp] = []
 
-    var stateRequest: (() -> (Data))?
+    private(set) var stateRequest: (() -> (Data))?
+
+    func setStateRequest(_ req: (() -> (Data))?) {
+        stateRequest = req
+    }
 
     private let stateSubject = PassthroughSubject<NSDictionary, Never>()
 

@@ -118,7 +118,7 @@ extension Main {
                 .store(in: lifetime)
 
             // TODO: AppUIState instead?
-            observe(appCoordinator.settingsUpdates) { me, settings in
+            observe(appCoordinator.settings) { me, settings in
                 await me.settingsUpdated(settings)
             }
         }

@@ -147,7 +147,7 @@ private struct ActiveActivity {
     }
 }
 
-final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
+actor LiveActivityBridge: Injectable, Sendable, LifetimeOwner, AppService {
     private let settingsManager: SettingsManager
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
@@ -156,8 +156,7 @@ final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
 
     private let activityAuthorizationInfo = ActivityAuthorizationInfo()
 
-    // TODO: should not be here, move to AppCoordinator?
-    @Published private(set) var systemEnabled: Bool
+    private var systemEnabled: Bool = false
 
     let lifetime = Lifetime()
 
@@ -173,17 +172,15 @@ final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
         storage = resolver.resolve(FileStorage.self)!
         appCoordinator = resolver.resolve(AppCoordinator.self)!
 
-        systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
-
         injectServices(resolver)
-
-        Task {
-            await subscribe()
-        }
     }
 
-    private func subscribe() async {
-        let settings = await settingsManager.settings
+    // this is called at the start of the app
+    func start() async {
+        systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
+        appCoordinator.setLiveActivitiesSystemEnabled(systemEnabled)
+
+        let settings = appCoordinator.settings.value
         knownSettings = settings
 
         suggestion = await storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -199,7 +196,7 @@ final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
         observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
             await me.pumpHistoryUpdated(pumpHistory)
         }
-        observe(appCoordinator.settingsUpdates) { me, newSettings in
+        observe(appCoordinator.settings) { me, newSettings in
             await me.settingsUpdated(newSettings)
         }
         observe(notification: UIApplication.didEnterBackgroundNotification) { me in
@@ -210,11 +207,11 @@ final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
         }
 
         // cannot use observe here because ActivityKit's `ActivityEnablementUpdates` isn't Sendable
-        Task { [weak self] in
-            guard let self else { return }
+        Task {
             for await activityState in activityAuthorizationInfo.activityEnablementUpdates {
                 if activityState != systemEnabled {
                     systemEnabled = activityState
+                    appCoordinator.setLiveActivitiesSystemEnabled(systemEnabled)
                     if systemEnabled {
                         await self.forceActivityUpdate(force: true)
                     } else {
@@ -312,11 +309,12 @@ final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
             iobValue = iob.iob
         }
 
-        guard let content = buildContentState(
+        guard let content = Self.buildContentState(
             settings: settings,
             suggestion: theSuggestion,
             iob: iobValue,
-            loopDate: loopDate
+            loopDate: loopDate,
+            glucose: coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         ) else {
             return
         }
@@ -334,7 +332,7 @@ final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
         }
 
         if let currentActivity {
-            if currentActivity.needsRecreation(), UIApplication.shared.applicationState == .active {
+            if currentActivity.needsRecreation(), await UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
                 await endActivity()
                 await pushUpdate(state, settings: settings)
@@ -426,13 +424,13 @@ final class LiveActivityBridge: Injectable, Sendable, LifetimeOwner {
 }
 
 extension LiveActivityBridge {
-    private func buildContentState(
+    private static func buildContentState(
         settings: FreeAPSSettings,
         suggestion: Suggestion,
         iob: Decimal?,
-        loopDate: Date
+        loopDate: Date,
+        glucose: [Readings]
     ) -> LiveActivityAttributes.ContentState? {
-        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         let previousGlucose = glucose.count > 1 ? glucose[1] : glucose.first
 
         return LiveActivityAttributes.ContentState(

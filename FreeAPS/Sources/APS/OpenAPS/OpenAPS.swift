@@ -339,7 +339,7 @@ final class OpenAPS: Sendable {
         guard let current = override, current.enabled else { return true }
         guard current.overrideAutoISF,
               !settings.autoisf,
-              let settings = overrideStorage.fetchAutoISFsetting(id: current.id ?? "")
+              overrideStorage.fetchAutoISFsetting(id: current.id ?? "") != nil
         else { return true }
         return false
     }

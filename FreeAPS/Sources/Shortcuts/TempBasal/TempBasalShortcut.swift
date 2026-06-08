@@ -89,8 +89,8 @@ final class BasalIntentRequest: BaseIntentsRequest {
                 comment: ""
             )
 
-        Task {
-            _ = await apsManager.enactTempBasal(rate: Double(basal), duration: 1.8E3)
+        Task { [apsManager] in
+            _ = await apsManager?.enactTempBasal(rate: Double(basal), duration: 1.8E3)
         }
         return resultDisplay
     }

@@ -239,7 +239,7 @@ private final class GeometriesBuilder {
         let predictionDotsZT = calculatePredictionDots(type: .zt)
         let predictionDotsUAM = calculatePredictionDots(type: .uam)
 
-        let glucoseYRange = getGlucoseYRange()
+//        let glucoseYRange = getGlucoseYRange()
 
         let glucoseDots = calculateGlucoseDots()
 
@@ -254,7 +254,7 @@ private final class GeometriesBuilder {
         let manualGlucoseDotsCenter = calculateManualGlucoseDotsCenter()
 
         let announcementDots = calculateAnnouncementDots()
-        let announcementPath = makeAnnouncementPath(announcementDots: announcementDots)
+//        let announcementPath = makeAnnouncementPath(announcementDots: announcementDots)
 
         let unSmoothedGlucoseDots = calculateUnSmoothedGlucoseDots()
 
