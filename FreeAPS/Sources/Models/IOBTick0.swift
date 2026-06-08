@@ -15,7 +15,7 @@ extension JSONDecoder.DateDecodingStrategy {
     static let iso8601WithFractionalSeconds = custom { decoder in
         let container = try decoder.singleValueContainer()
         let dateStr = try container.decode(String.self)
-        guard let date = ISO8601DateFormatter.withFractionalSeconds.date(from: dateStr) else {
+        guard let date = try? Date(dateStr, strategy: .iso8601WithFractionalSeconds) else {
             throw DecodingError.dataCorruptedError(
                 in: container,
                 debugDescription: "Invalid date format: \(dateStr)"
@@ -23,14 +23,6 @@ extension JSONDecoder.DateDecodingStrategy {
         }
         return date
     }
-}
-
-extension ISO8601DateFormatter {
-    static let withFractionalSeconds: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        return formatter
-    }()
 }
 
 extension IOBTick0 {
