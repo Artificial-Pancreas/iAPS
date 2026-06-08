@@ -1181,6 +1181,7 @@ extension Home {
                 }
             }
             .onAppear {
+                state.startTimer()
                 if onboarded.first?.firstRun ?? true {
                     state.fetchPreferences()
                 }
