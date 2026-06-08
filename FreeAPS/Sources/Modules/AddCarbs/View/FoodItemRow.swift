@@ -18,6 +18,23 @@ struct FoodItemRow: View {
         savedFoodIds.contains(foodItem.id)
     }
 
+    private var topMicronutrients: [MicronutrientValue] {
+        foodItem.micronutrient
+            .filter { (foodItem.micronutrientInThisPortion($0.substance) ?? 0) > 0 }
+            .sorted { $0.name < $1.name }
+            .prefix(3)
+            .map { $0 }
+    }
+
+    private func formatted(_ value: Decimal) -> String {
+        let number = NSDecimalNumber(decimal: value)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 0
+        return formatter.string(from: number) ?? "\(number)"
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // Main Row Content
@@ -118,6 +135,19 @@ struct FoodItemRow: View {
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
+
+            if !topMicronutrients.isEmpty {
+                HStack(spacing: 6) {
+                    ForEach(topMicronutrients) { micronutrient in
+                        MicronutrientBadge(
+                            micronutrient: micronutrient,
+                            amount: foodItem.micronutrientInThisPortion(micronutrient.substance)
+                        )
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+            }
         }
         .padding(.top, isFirst ? 8 : 0)
         .padding(.bottom, isLast ? 8 : 0)
@@ -164,6 +194,20 @@ struct FoodItemRow: View {
             FoodItemInfoPopup(foodItem: foodItem)
                 .presentationDetents([.height(foodItem.preferredInfoSheetHeight()), .large])
                 .presentationDragIndicator(.visible)
+        }
+    }
+
+    private func micronutrientAmountInThisPortion(_ micronutrient: MicronutrientValue) -> Decimal {
+        switch foodItem.nutrition {
+        case .per100:
+            let amountPer100 = micronutrient.amountPer100 > 0
+                ? micronutrient.amountPer100
+                : micronutrient.amount
+
+            return amountPer100 * foodItem.portionSizeOrMultiplier / 100
+
+        case .perServing:
+            return micronutrient.amount * foodItem.portionSizeOrMultiplier
         }
     }
 }

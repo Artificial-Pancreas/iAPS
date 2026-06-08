@@ -65,15 +65,19 @@ struct FoodItemGroup: Identifiable, Equatable {
 extension FoodItemGroup {
     var title: String {
         switch source {
-        case .manual: NSLocalizedString("Manual entry", comment: "Section with manualy entered foods")
-        case .database: NSLocalizedString("Saved Foods", comment: "Section with saved foods")
-        case .barcode: NSLocalizedString("Barcode scan", comment: "Section with bar code scan results")
-        case .search: NSLocalizedString("Online database search", comment: "Section with online database search results")
+        case .manual: return NSLocalizedString("Manual entry", comment: "Section with manualy entered foods")
+        case .database:
+            return foodItems.first != nil ? foodItems.first!.name : NSLocalizedString(
+                "Saved Foods",
+                comment: "Section with saved foods"
+            )
+        case .barcode: return NSLocalizedString("Barcode scan", comment: "Section with bar code scan results")
+        case .search: return NSLocalizedString("Online database search", comment: "Section with online database search results")
         case .aiMenu,
              .aiPhoto,
              .aiRecipe,
              .aiText:
-            briefDescription ?? textQuery ?? NSLocalizedString(
+            return briefDescription ?? textQuery ?? NSLocalizedString(
                 "AI Results",
                 comment: "Section with AI food analysis results, when details are unavailable"
             )
