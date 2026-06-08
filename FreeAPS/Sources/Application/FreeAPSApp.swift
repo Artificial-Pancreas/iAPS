@@ -73,9 +73,15 @@ import Swinject
         userDefaults.set(false, forKey: IAPSconfig.inBolusView)
 
         guard version.count > 1, version == (Bundle.main.releaseVersionNumber ?? "") else {
+            let hadPriorVersion = version.count > 1 // distinguishes an upgrade from a fresh install
             version = Bundle.main.releaseVersionNumber ?? ""
             userDefaults.set(version, forKey: IAPSconfig.version)
             userDefaults.set(true, forKey: IAPSconfig.newVersion)
+            // Real upgrades get the "review your settings" notice (UpgradeNoticeView). Fresh
+            // installs go through WelcomeView instead, so don't flag them here.
+            if hadPriorVersion {
+                userDefaults.set(true, forKey: IAPSconfig.showUpgradeNotice)
+            }
             debug(.default, "Running new version: \(version)")
             return
         }

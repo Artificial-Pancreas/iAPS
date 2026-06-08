@@ -4058,3 +4058,33 @@ Enact a temp Basal or a temp target */
 "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
 
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";
+
+/* --- First-launch Welcome + post-upgrade notice (onboarding) --- */
+"Welcome to iAPS" = "Welcome to iAPS";
+
+"Let's get you set up." = "Let's get you set up.";
+
+"New User" = "New User";
+
+"Set up iAPS for the first time" = "Set up iAPS for the first time";
+
+"Existing User" = "Existing User";
+
+"Migrate my settings from a previous install" = "Migrate my settings from a previous install";
+
+"Stuck? Help is here" = "Stuck? Help is here";
+
+"Documentation" = "Documentation";
+
+"Discord support" = "Discord support";
+
+"iAPS updated" = "iAPS updated";
+
+"You're now running version %@." = "You're now running version %@.";
+
+"Updates can occasionally reset settings. Before relying on the loop, please confirm Closed Loop is on and Max IOB is not 0." = "Updates can occasionally reset settings. Before relying on the loop, please confirm Closed Loop is on and Max IOB is not 0.";
+
+"Review Settings" = "Review Settings";
+
+"Continue to Home" = "Continue to Home";
+
