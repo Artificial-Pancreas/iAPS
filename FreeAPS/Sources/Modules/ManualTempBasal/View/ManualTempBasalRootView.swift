@@ -6,6 +6,8 @@ extension ManualTempBasal {
         let resolver: Resolver
         @StateObject var state: StateModel
 
+        @Environment(AppUIState.self) private var appUIState
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -64,7 +66,7 @@ extension ManualTempBasal {
                             comment: "Alert message when manual temp basal rate exceeds Max Basal"
                         ),
                         Double(state.rate),
-                        Double(state.maxBasal)
+                        Double(appUIState.pumpSettings.maxBasal)
                     )
                 )
             }

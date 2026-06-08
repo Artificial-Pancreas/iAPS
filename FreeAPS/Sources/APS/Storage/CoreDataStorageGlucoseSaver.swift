@@ -2,17 +2,17 @@ import CoreData
 import Foundation
 import Swinject
 
-final class CoreDataStorageGlucoseSaver: LifetimeOwner {
+final class CoreDataStorageGlucoseSaver: LifetimeOwner, AppService {
     private let appCoordinator: AppCoordinator
 
     let lifetime = Lifetime()
 
     init(resolver: Resolver) {
         appCoordinator = resolver.resolve(AppCoordinator.self)!
-        subscribe()
     }
 
-    private func subscribe() {
+    // this is called at the start of the app
+    func start() async {
         observe(appCoordinator.newGlucoseRecords) { me, bloodGlucose in
             await me.storeGlucose(bloodGlucose)
         }

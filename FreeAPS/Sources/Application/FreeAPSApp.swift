@@ -28,11 +28,9 @@ import Swinject
     // TODO: Remove var after update "Use Dependencies" logic in Logger
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
-    private let appUIState = FreeAPSApp.resolver.resolve(AppUIState.self)!
+    private let appServices = AppServices(resolver: Self.resolver)
 
-    // TODO: do we want this? will this work with the Router?
-    // can be shared with the rest of the views with @EnvironmentObject
-    @StateObject private var appServices = AppServices(assembler: assembler)
+    private let appUIState = Self.resolver.resolve(AppUIState.self)!
 
     init() {
         debug(
@@ -45,17 +43,18 @@ import Swinject
 
     var body: some Scene {
         WindowGroup {
-            Main.RootView(resolver: FreeAPSApp.resolver)
-                .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
-                .environmentObject(Icons())
-                .environment(appUIState)
-                .onOpenURL(perform: handleURL)
-                .environmentObject(appServices)
+            StartupGate(start: appServices.started) {
+                Main.RootView(resolver: FreeAPSApp.resolver)
+                    .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
+                    .environmentObject(Icons())
+                    .environment(appUIState)
+                    .onOpenURL(perform: handleURL)
+            }
         }
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")
             if scenePhase == .active {
-                appServices.deviceManager.didBecomeActive()
+                appServices.deviceManager?.didBecomeActive()
             }
         }
     }
@@ -81,6 +80,44 @@ import Swinject
             userDefaults.set(true, forKey: IAPSconfig.newVersion)
             debug(.default, "Running new version: \(version)")
             return
+        }
+    }
+}
+
+private struct StartupGate<Content: View>: View {
+    let start: () async throws -> Void
+    @ViewBuilder var content: () -> Content
+
+    @State private var ready = false
+    @State private var error: String?
+
+    var body: some View {
+        ZStack {
+            if let error {
+                ZStack {
+                    Text(error)
+                }
+            } else if ready {
+                content()
+            } else {
+                LaunchPlaceholder()
+            }
+        }
+        .task {
+            do {
+                try await start()
+                ready = true
+            } catch {
+                self.error = error.localizedDescription
+            }
+        }
+    }
+}
+
+private struct LaunchPlaceholder: View {
+    var body: some View {
+        ZStack {
+            Text("Loading...")
         }
     }
 }

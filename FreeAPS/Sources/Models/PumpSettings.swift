@@ -13,3 +13,7 @@ extension PumpSettings {
         case maxBasal
     }
 }
+
+extension PumpSettings {
+    static let defaultValue = PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
+}

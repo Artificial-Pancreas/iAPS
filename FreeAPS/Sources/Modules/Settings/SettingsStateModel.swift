@@ -38,7 +38,7 @@ extension Settings {
             subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { self.allowOneMinuteGlucose = $0 }
 
             // TODO: use AppUIState instead
-            observe(appCoordinator.settingsUpdates) { me, settings in
+            observe(appCoordinator.settings) { me, settings in
                 await me.settingsUpdated(settings)
             }
 

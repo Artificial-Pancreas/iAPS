@@ -2,7 +2,7 @@ import Foundation
 import Swinject
 import UIKit
 
-final class BloodGlucoseManager {
+final class BloodGlucoseManager: Sendable {
     private let glucoseStorage: GlucoseStorage
 
     init(resolver: Resolver) {
@@ -12,7 +12,7 @@ final class BloodGlucoseManager {
     /// return true if a newer blood glucose record was detected and stored
     func storeNewBloodGlucose(
         bloodGlucose: [BloodGlucose],
-        completion: @escaping (Bool) -> Void
+        completion: @escaping @Sendable(Bool) -> Void
     ) {
         Task {
             // TODO: this used to be serialized in the process queue, but now the storage calls are async
@@ -29,11 +29,10 @@ final class BloodGlucoseManager {
 
         // start background time extension
         let backgroundTaskIdBox = TaskIDBox()
-        let backgroundTimeRemaining = await MainActor.run { () -> TimeInterval in
+        await MainActor.run {
             backgroundTaskIdBox.id = UIApplication.shared.beginBackgroundTask(withName: "save BG starting") {
                 UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
             }
-            return UIApplication.shared.backgroundTimeRemaining
         }
 
         let previousLatestBG = await glucoseStorage.latestDate()

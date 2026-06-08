@@ -10,34 +10,26 @@ protocol CalendarManager: Sendable {
     func createEvent(for glucose: BloodGlucose?, delta: Int?) async
 }
 
-actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner {
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var glucoseStorage: GlucoseStorage!
-    @Injected() private var appCoordinator: AppCoordinator!
+actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppService {
+    private let glucoseStorage: GlucoseStorage!
+    private let appCoordinator: AppCoordinator!
 
     @Persisted(key: "CalendarManager.currentCalendarID") var persistedCurrentCalendarID: String? = nil
 
     private let eventStore = EKEventStore()
 
-    private var settings: FreeAPSSettings!
-
     let lifetime = Lifetime()
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
-
-        Task {
-            await self.subscribe()
-        }
+    init(
+        glucoseStorage: GlucoseStorage,
+        appCoordinator: AppCoordinator
+    ) {
+        self.glucoseStorage = glucoseStorage
+        self.appCoordinator = appCoordinator
     }
 
-    private func subscribe() async {
-        self.settings = await settingsManager.settings
-
-        observe(appCoordinator.settingsUpdates) { me, settings in
-            await me.settingsUpdated(settings)
-        }
-
+    // this is called at the start of the app
+    func start() async {
         observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
             await me.setupGlucose()
         }
@@ -51,10 +43,6 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner {
         }
 
         await setupGlucose()
-    }
-
-    private func settingsUpdated(_ settings: FreeAPSSettings) {
-        self.settings = settings
     }
 
     func requestAccessIfNeeded() async -> Bool {
@@ -107,6 +95,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner {
     }
 
     func createEvent(for glucose: BloodGlucose?, delta: Int?) {
+        let settings = appCoordinator.settings.value
         guard settings.useCalendar else { return }
 
         guard let calendar = currentCalendar else { return }
@@ -137,7 +126,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner {
             glucoseIcon = freshLoop > 15 ? "🚫" : glucoseIcon
         }
 
-        let glucoseText = glucoseFormatter
+        let glucoseText = glucoseFormatter(settings)
             .string(from: (
                 settings.units == .mmolL ?glucoseValue.asMmolL : Decimal(glucoseValue)
             ) as NSNumber)!
@@ -207,7 +196,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner {
         }
     }
 
-    private var glucoseFormatter: NumberFormatter {
+    private func glucoseFormatter(_ settings: FreeAPSSettings) -> NumberFormatter {
         switch settings.units {
         case .mmolL: return Self.glucoseFormatterMmol
         case .mgdL: return Self.glucoseFormatterMgdl

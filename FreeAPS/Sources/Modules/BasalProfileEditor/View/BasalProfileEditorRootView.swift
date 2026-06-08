@@ -8,6 +8,8 @@ extension BasalProfileEditor {
         @State private var editMode = EditMode.inactive
         @Environment(\.dismiss) var dismiss
 
+        @Environment(AppUIState.self) private var appUIState
+
         @FetchRequest(
             entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
         ) var concentration: FetchedResults<InsulinConcentration>
@@ -266,9 +268,7 @@ extension BasalProfileEditor {
         }
 
         private func save() {
-            guard let preferences = state.preferences else {
-                return
-            }
+            let preferences = appUIState.preferences
             coredataContext.perform { [self] in
                 let newConfiguration = InsulinConcentration(context: self.coredataContext)
                 newConfiguration.concentration = Double(set)

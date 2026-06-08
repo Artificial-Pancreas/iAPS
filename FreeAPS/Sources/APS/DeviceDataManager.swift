@@ -195,7 +195,6 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     private func subscribe() {
-//        broadcaster.register(AlertObserver.self, observer: self)
         appCoordinator.alertsUpdates
             .receive(on: processQueue)
             .sink { alerts in
@@ -214,13 +213,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             }
             .store(in: lifetime)
 
-//        appCoordinator.heartbeat
-//            .sink { [weak self] _ in
-//                self?.heartbeat(forceRecommendLoop: true)
-//            }
-//            .store(in: &lifetime)
-
-        appCoordinator.settingsUpdates.map(\.units).removeDuplicates()
+        appCoordinator.settings.map(\.units).removeDuplicates()
             .receive(on: processQueue)
             .sink { units in
                 let loopkitUnit: HKUnit = units == .mmolL ? .millimolesPerLiter : .milligramsPerDeciliter
@@ -561,7 +554,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     private func processReceivedBloodGlucose(bloodGlucose: [BloodGlucose], forceRecommendLoop: Bool) {
-        // storeNewBloodGlucose runs in queue.async with callback so that we don't block the CGM manager
+        // storeNewBloodGlucose runs in a Task with callback so that we don't block the CGM manager
         bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) { newGlucoseStored in
             if newGlucoseStored || forceRecommendLoop {
                 guard !self.appCoordinator.isLooping.value else {

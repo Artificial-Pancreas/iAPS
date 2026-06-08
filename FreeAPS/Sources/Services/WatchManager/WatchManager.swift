@@ -8,7 +8,7 @@ protocol WatchManager {}
 // maybe worth converting to something like this eventually?
 // https://github.com/ts95/WatchConnectivitySwift
 
-actor BaseWatchManager: WatchManager, Injectable, LifetimeOwner {
+actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     private let session: WCSession
     private let delegate: WatchSessionDelegate
     private var state = WatchState()
@@ -16,14 +16,14 @@ actor BaseWatchManager: WatchManager, Injectable, LifetimeOwner {
     // a copy of state - updated every time state is updated, for the pre-concurrency interop, namely the `garmin.stateRequet`
     nonisolated(unsafe) private var cachedStateData = Data()
 
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var apsManager: APSManager!
-    @Injected() private var storage: FileStorage!
-    @Injected() private var carbsStorage: CarbsStorage!
-    @Injected() private var tempTargetsStorage: TempTargetsStorage!
-    @Injected() private var garmin: GarminManager!
-    @Injected() private var nightscout: NightscoutManager!
-    @Injected() private var appCoordinator: AppCoordinator!
+    private let settingsManager: SettingsManager
+    private let apsManager: APSManager
+    private let storage: FileStorage
+    private let carbsStorage: CarbsStorage
+    private let tempTargetsStorage: TempTargetsStorage
+    private let garmin: GarminManager
+    private let nightscout: NightscoutManager
+    private let appCoordinator: AppCoordinator
 
     private let overrideStorage = OverrideStorage()
     private let coreDataStorage = CoreDataStorage()
@@ -36,17 +36,32 @@ actor BaseWatchManager: WatchManager, Injectable, LifetimeOwner {
 
     let lifetime = Lifetime()
 
-    init(resolver: Resolver, session: WCSession = .default) {
+    init(
+        settingsManager: SettingsManager,
+        apsManager: APSManager,
+        storage: FileStorage,
+        carbsStorage: CarbsStorage,
+        tempTargetsStorage: TempTargetsStorage,
+        garmin: GarminManager,
+        nightscout: NightscoutManager,
+        appCoordinator: AppCoordinator,
+        session: WCSession = .default
+    ) {
+        self.settingsManager = settingsManager
+        self.apsManager = apsManager
+        self.storage = storage
+        self.carbsStorage = carbsStorage
+        self.tempTargetsStorage = tempTargetsStorage
+        self.garmin = garmin
+        self.nightscout = nightscout
+        self.appCoordinator = appCoordinator
+
         self.session = session
         self.delegate = WatchSessionDelegate()
-        injectServices(resolver)
-
-        Task {
-            await subscribe()
-        }
     }
 
-    private func subscribe() async {
+    // this is called at the start of the app
+    func start() async {
         self.settings = await settingsManager.settings
         self.preferences = await settingsManager.preferences
         self.pumpSettings = await settingsManager.pumpSettings
@@ -65,18 +80,18 @@ actor BaseWatchManager: WatchManager, Injectable, LifetimeOwner {
             await me.suggestionUpdated(suggestion)
             await me.configureState()
         }
-        observe(appCoordinator.preferencesUpdates) { me, preferences in
+        observe(appCoordinator.preferences) { me, preferences in
             await me.preferencesUpdated(preferences)
             await me.configureState()
         }
-        observe(appCoordinator.settingsUpdates) { me, settings in
+        observe(appCoordinator.settings) { me, settings in
             await me.settingsUpdated(settings)
             await me.configureState()
         }
 //        observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
 //            // TODO:
 //        }
-        observe(appCoordinator.pumpSettingsUpdates) { me, pumpSettings in
+        observe(appCoordinator.pumpSettings) { me, pumpSettings in
             await me.pumpSettingsUpdated(pumpSettings)
             await me.configureState()
         }
@@ -100,9 +115,9 @@ actor BaseWatchManager: WatchManager, Injectable, LifetimeOwner {
 //            // TODO:
 //        }
 
-        garmin.stateRequest = { [weak self] () -> Data in
+        garmin.setStateRequest({ [weak self] () -> Data in
             self?.cachedStateData ?? Data()
-        }
+        })
 
         await configureState()
     }

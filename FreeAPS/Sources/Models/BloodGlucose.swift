@@ -1,7 +1,7 @@
 import Foundation
 import NightscoutKit
 
-struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
+struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
     enum Direction: String, JSON {
         case tripleUp = "TripleUp"
         case doubleUp = "DoubleUp"

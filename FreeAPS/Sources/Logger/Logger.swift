@@ -2,8 +2,6 @@ import os.log
 import os.signpost
 import UIKit
 
-var LoggerTestMode = false
-
 private let baseReporter = FreeAPSApp.resolver.resolve(GroupedIssueReporter.self)!
 private let router = FreeAPSApp.resolver.resolve(Router.self)!
 
@@ -105,6 +103,8 @@ func check(
 }
 
 final class Logger {
+    static let LoggerTestMode = false
+
     static let `default` = Logger(category: .default, reporter: baseReporter)
     static let service = Logger(category: .service, reporter: baseReporter)
     static let businessLogic = Logger(category: .businessLogic, reporter: baseReporter)
@@ -254,7 +254,7 @@ final class Logger {
 
         os_log("%@ - %@ - %d %{public}@", log: log, type: .default, file.file, function, line, message)
         reporter.log(category.name, message, file: file, function: function, line: line)
-        if !LoggerTestMode, maybeError?.shouldReportNonFatalIssue ?? true {
+        if !Self.LoggerTestMode, maybeError?.shouldReportNonFatalIssue ?? true {
             reporter.reportNonFatalIssue(withError: loggerError.asNSError())
         }
     }

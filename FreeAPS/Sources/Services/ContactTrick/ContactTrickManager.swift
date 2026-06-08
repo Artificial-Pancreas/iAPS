@@ -6,14 +6,13 @@ protocol ContactTrickManager: Sendable {
     var currentContacts: [ContactTrickEntry] { get async }
 }
 
-actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner {
+actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, AppService {
     private let contactStore = CNContactStore()
 
     private var staleRenderTask: Task<Void, Never>?
 
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var appCoordinator: AppCoordinator!
-    @Injected() private var storage: FileStorage!
+    private let appCoordinator: AppCoordinator
+    private let storage: FileStorage
 
     private var knownIds: [String] = []
     private var contacts: [ContactTrickEntry] = []
@@ -26,22 +25,26 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner {
 
     let lifetime = Lifetime()
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
-
-        Task {
-            await subscribe()
-        }
+    init(
+        appCoordinator: AppCoordinator,
+        storage: FileStorage
+    ) {
+        self.appCoordinator = appCoordinator
+        self.storage = storage
     }
 
-    private func subscribe() async {
+    // this is called at the start of the app
+    func start() async {
         contacts = await storage.retrieve(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self)
             ?? [ContactTrickEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick))
             ?? []
 
         knownIds = contacts.compactMap(\.contactId)
 
-        observe(appCoordinator.settingsUpdates) { me, _ in
+        observe(appCoordinator.settings) { me, _ in
+            await me.renderContacts(forceSave: false)
+        }
+        observe(appCoordinator.preferences) { me, _ in
             await me.renderContacts(forceSave: false)
         }
         observe(appCoordinator.suggestions) { me, _ in
@@ -72,14 +75,15 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner {
     private func renderContacts(forceSave: Bool) async {
         staleRenderTask?.cancel()
 
-        let settings = await settingsManager.settings
+        let settings = appCoordinator.settings.value
+        let preferences = appCoordinator.preferences.value
 
         if contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized {
             let readings = coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
             let glucoseValues = glucoseText(readings, settings: settings)
 
             let suggestion: Suggestion? = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-            let preferences = await settingsManager.preferences
+
             let state = ContactTrickState(
                 glucose: glucoseValues.glucose,
                 trend: glucoseValues.trend,

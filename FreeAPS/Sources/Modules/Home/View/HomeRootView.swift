@@ -90,6 +90,13 @@ extension Home {
             state.data.units == .mmolL ? Self.fetchedTargetFormatterMmol : Self.fetchedTargetFormatterMgdl
         }
 
+        private static let targetFormatter = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }()
+
         private static let iobFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -833,7 +840,7 @@ extension Home {
                 Text("Kilo Calories")
                 Spacer()
                 Text(
-                    tirFormatter.string(
+                    Self.tirFormatter.string(
                         from: displayedCalories as NSNumber
                     ) ?? ""
                 )
@@ -846,7 +853,7 @@ extension Home {
                 Text("Servings")
                 Spacer()
                 Text(
-                    tirFormatter.string(
+                    Self.tirFormatter.string(
                         from: displayedServings as NSNumber
                     ) ?? ""
                 )
@@ -859,7 +866,7 @@ extension Home {
                 Text("Carbs")
                 Spacer()
                 Text(
-                    tirFormatter.string(
+                    Self.tirFormatter.string(
                         from: displayedCarbs as NSNumber
                     ) ?? ""
                 )
@@ -874,7 +881,7 @@ extension Home {
                         "Fat",
                         value: displayedFat,
                         unit: "g",
-                        formatter: tirFormatter
+                        formatter: Self.tirFormatter
                     )
                 }
 
@@ -889,7 +896,7 @@ extension Home {
                             age: state.individual.age,
                             sex: state.individual.sex
                         ),
-                        formatter: tirFormatter
+                        formatter: Self.tirFormatter
                     )
                 }
 
@@ -904,7 +911,7 @@ extension Home {
                             age: state.individual.age,
                             sex: state.individual.sex
                         ),
-                        formatter: tirFormatter
+                        formatter: Self.tirFormatter
                     )
                 }
             }
@@ -930,7 +937,7 @@ extension Home {
                             age: state.individual.age,
                             sex: state.individual.sex
                         ),
-                        formatter: targetFormatter
+                        formatter: Self.targetFormatter
                     )
                 }
             }

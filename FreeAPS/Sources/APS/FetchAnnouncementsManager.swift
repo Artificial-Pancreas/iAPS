@@ -5,12 +5,12 @@ import Swinject
 
 protocol FetchAnnouncementsManager {}
 
-actor BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable, LifetimeOwner {
-    @Injected() var announcementsStorage: AnnouncementsStorage!
-    @Injected() var nightscoutManager: NightscoutManager!
-    @Injected() var apsManager: APSManager!
-    @Injected() var settingsManager: SettingsManager!
-    @Injected() var appCoordinator: AppCoordinator!
+actor BaseFetchAnnouncementsManager: FetchAnnouncementsManager, LifetimeOwner, AppService {
+    private let announcementsStorage: AnnouncementsStorage
+    private let nightscoutManager: NightscoutManager
+    private let apsManager: APSManager
+    private let settingsManager: SettingsManager
+    private let appCoordinator: AppCoordinator
 
     let lifetime = Lifetime()
 
@@ -18,27 +18,39 @@ actor BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable, Life
     private var pollingTask: Task<Void, Never>?
     private var fetchEnabled = false
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
-        Task {
-            await self.subscribe()
-        }
+    init(
+        announcementsStorage: AnnouncementsStorage,
+        nightscoutManager: NightscoutManager,
+        apsManager: APSManager,
+        settingsManager: SettingsManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.announcementsStorage = announcementsStorage
+        self.nightscoutManager = nightscoutManager
+        self.apsManager = apsManager
+        self.settingsManager = settingsManager
+        self.appCoordinator = appCoordinator
     }
 
-    private func subscribe() async {
+    // this is called at the start of the app
+    func start() async {
         let settings = await settingsManager.settings
         settingsUpdated(settings)
 
-        observe(appCoordinator.settingsUpdates) { me, settings in
+        observe(appCoordinator.settings) { me, settings in
             await me.settingsUpdated(settings)
         }
     }
 
     func settingsUpdated(_ settings: FreeAPSSettings) {
-        let enabled = settings.nightscoutFetchEnabled
-        guard enabled != fetchEnabled else { return }
-        fetchEnabled = enabled
-        enabled ? startPolling() : stopPolling()
+        let newEnabled = settings.nightscoutFetchEnabled
+        guard newEnabled != fetchEnabled else { return }
+        fetchEnabled = newEnabled
+        if fetchEnabled {
+            startPolling()
+        } else {
+            stopPolling()
+        }
     }
 
     private func startPolling() {

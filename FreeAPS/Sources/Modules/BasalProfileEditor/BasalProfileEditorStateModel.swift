@@ -14,7 +14,6 @@ extension BasalProfileEditor {
         @Published var total: Decimal = 0.0
         @Published var saved = false
         @Published var allowDilution = false
-        @Published var preferences: Preferences?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -33,7 +32,6 @@ extension BasalProfileEditor {
         }()
 
         override func subscribe() async {
-            preferences = await settingsManager.preferences
             rateValues = readSupportedBasalRates() ?? stride(from: 5.0, to: 1001.0, by: 5.0)
                 .map { ($0.decimal ?? .zero) / 100 }
             items = await retrieveProfile().map { value in
@@ -43,14 +41,6 @@ extension BasalProfileEditor {
             }
             calcTotal()
             allowDilution = await settingsManager.settings.allowDilution
-            // TODO: use AppUIState instead
-            observe(appCoordinator.preferencesUpdates) { me, preferences in
-                await me.preferencesUpdated(preferences)
-            }
-        }
-
-        private func preferencesUpdated(_ preferences: Preferences) {
-            self.preferences = preferences
         }
 
         private func currentProfile() -> [BasalProfileEntry] {

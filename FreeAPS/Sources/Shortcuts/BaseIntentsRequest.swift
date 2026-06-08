@@ -1,7 +1,7 @@
 import Foundation
 import Swinject
 
-class BaseIntentsRequest: NSObject, Injectable {
+class BaseIntentsRequest: Injectable {
     @Injected() var tempTargetsStorage: TempTargetsStorage!
     @Injected() var settingsManager: SettingsManager!
     @Injected() var fileStorage: FileStorage!
@@ -15,11 +15,8 @@ class BaseIntentsRequest: NSObject, Injectable {
 
     let resolver: Resolver
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-
-    override init() {
+    init() {
         resolver = FreeAPSApp.resolver
-        super.init()
         injectServices(resolver)
     }
 }

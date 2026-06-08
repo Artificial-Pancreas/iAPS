@@ -60,14 +60,15 @@ final class SuspendResumeIntentRequest: BaseIntentsRequest {
     func setMode(_ mode: PumpMode) throws -> String {
         let resultDisplay: String =
             NSLocalizedString("Pump command", comment: "") + " \(mode) " + NSLocalizedString("enacted in iAPS", comment: "")
-        Task {
+        Task { [apsManager] in
             if mode == PumpMode.resume {
-                _ = await apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:resume"))
+                _ = await apsManager?
+                    .enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:resume"))
             } else if mode == PumpMode.suspend {
-                _ = await apsManager
+                _ = await apsManager?
                     .enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:suspend"))
             } else if mode == PumpMode.cancel {
-                _ = await apsManager.enactTempBasal(rate: 0, duration: 0)
+                _ = await apsManager?.enactTempBasal(rate: 0, duration: 0)
             }
         }
         return resultDisplay

@@ -70,7 +70,7 @@ enum APSError: LocalizedError {
     }
 }
 
-actor BaseAPSManager: APSManager, Injectable, LifetimeOwner {
+actor BaseAPSManager: APSManager, Injectable, LifetimeOwner, AppService {
     private let processQueue = DispatchQueue(label: "BaseAPSManager.processQueue")
     @Injected() private var appCoordinator: AppCoordinator!
     @Injected() private var storage: FileStorage!
@@ -97,35 +97,6 @@ actor BaseAPSManager: APSManager, Injectable, LifetimeOwner {
 
     private var wasManualTempBasal = false
 
-//    private var backGroundTaskID: UIBackgroundTaskIdentifier?
-
-//    private var pumpManager: PumpManagerUI? { deviceDataManager.pumpManager }
-
-//    @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
-//    @Persisted(key: "temporary") var temporaryData = TemporaryData()
-
-//    let lastLoopDateSubject = PassthroughSubject<Date, Never>()
-//    let lastError = CurrentValueSubject<Error?, Never>(nil)
-//    let bolusProgress = CurrentValueSubject<Decimal?, Never>(nil)
-//    let bolusAmount = CurrentValueSubject<Decimal?, Never>(nil)
-
-//    var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> {
-//        deviceDataManager.pumpDisplayState
-//    }
-//
-//    var pumpName: CurrentValueSubject<String, Never> {
-//        deviceDataManager.pumpName
-//    }
-//
-//    var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> {
-//        deviceDataManager.pumpExpiresAtDate
-//    }
-//
-//    var settings: FreeAPSSettings {
-//        get { settingsManager.settings }
-//        set { settingsManager.settings = newValue }
-//    }
-
     private var concentration: (concentration: Double, increment: Double) {
         coreDataStorage.insulinConcentration()
     }
@@ -137,19 +108,10 @@ actor BaseAPSManager: APSManager, Injectable, LifetimeOwner {
 
     init(resolver: Resolver) {
         injectServices(resolver)
-//        openAPS = OpenAPS(
-//            storage: storage,
-//            glucoseStorage: glucoseStorage,
-//            nightscout: nightscout,
-//            pumpStorage: pumpHistoryStorage,
-//            scriptExecutor: scriptExecutor
-//        )
-        Task {
-            await subscribe()
-        }
     }
 
-    private func subscribe() async {
+    // this is called at the app start
+    func start() async {
         // because of backfill, the recommendation might trigger before the backfill is received
         // debounce for 1 second to give the CGM a chance to send in the backfill
         observe(

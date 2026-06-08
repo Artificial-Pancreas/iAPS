@@ -3,7 +3,14 @@ import Foundation
 import Observation
 
 @MainActor
-@Observable final class AppUIState {
+@Observable final class AppUIState: AppService {
+    private let appCoordinator: AppCoordinator
+
+    // initial values will not be observed by tha app, SettingsManager sets the real values in its start(), and the app won't render before it's finished
+    private(set) var settings = FreeAPSSettings()
+    private(set) var preferences = Preferences()
+    private(set) var pumpSettings = PumpSettings.defaultValue
+
     private(set) var pumpInfo: PumpDisplayInfo?
     private(set) var pumpStatus: PumpDisplayStatus?
     private(set) var cgmInfo: CgmDisplayInfo?
@@ -18,9 +25,26 @@ import Observation
     private(set) var alertNotAck: Bool = false
     private(set) var lastLoopError: (error: Error, date: Date)?
 
+    private(set) var liveActivitiesSystemEnabled: Bool = false
+
     @ObservationIgnored private var cancellables = Set<AnyCancellable>()
 
     init(appCoordinator: AppCoordinator) {
+        self.appCoordinator = appCoordinator
+    }
+
+    private var started = false
+    func start() async {
+        guard !started else { return }
+        started = true
+        settings = appCoordinator.settings.value
+        preferences = appCoordinator.preferences.value
+        pumpSettings = appCoordinator.pumpSettings.value
+
+        bind(appCoordinator.settings, to: \.settings)
+        bind(appCoordinator.preferences, to: \.preferences)
+        bind(appCoordinator.pumpSettings, to: \.pumpSettings)
+
         bind(appCoordinator.pumpInfo, to: \.pumpInfo)
         bind(appCoordinator.pumpStatus, to: \.pumpStatus)
         bind(appCoordinator.cgmInfo, to: \.cgmInfo)
@@ -34,6 +58,7 @@ import Observation
         bind(appCoordinator.bolusInProgress, to: \.bolusInProgress)
         bind(appCoordinator.lastLoopError, to: \.lastLoopError)
         bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAck)
+        bind(appCoordinator.liveActivitiesSystemEnabled, to: \.liveActivitiesSystemEnabled)
     }
 
     private func bind<V>(

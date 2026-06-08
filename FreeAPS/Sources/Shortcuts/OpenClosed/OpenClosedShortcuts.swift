@@ -61,12 +61,12 @@ final class ModeIntentRequest: BaseIntentsRequest {
             NSLocalizedString("The Loop Mode", comment: "") + " \(mode.rawValue) " +
             NSLocalizedString("is now activated", comment: "")
 
-        Task {
+        Task { [apsManager] in
             if mode == Mode.closed {
-                _ = await apsManager
+                _ = await apsManager?
                     .enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "looping:true"))
             } else if mode == Mode.open {
-                _ = await apsManager
+                _ = await apsManager?
                     .enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "looping:false"))
             }
         }

@@ -10,8 +10,8 @@ protocol DatabaseManager: Sendable {
     func retryPendingLogUpload() async
 }
 
-actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
-    @Injected() private var settingsManager: SettingsManager!
+actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner, AppService {
+//    @Injected() private var settingsManager: SettingsManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var database: Database!
     @Injected() private var reachabilityManager: ReachabilityManager!
@@ -36,8 +36,6 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
         return dateFmt
     }()
 
-    private var settings: FreeAPSSettings!
-
     private var isNetworkReachable: Bool {
         reachabilityManager.isReachable
     }
@@ -45,18 +43,10 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
     init(resolver: Resolver) {
         injectServices(resolver)
         pendingLogDate = UserDefaults.standard.string(forKey: pendingLogDateKey)
-        Task {
-            await subscribe()
-        }
     }
 
-    private func subscribe() async {
-        self.settings = await settingsManager.settings
-
-        observe(appCoordinator.settingsUpdates) { me, settings in
-            await me.settingsUpdated(settings)
-        }
-
+    // this is called at the app start
+    func start() async {
         Foundation.NotificationCenter.default.addObserver(
             forName: .logDidRotate,
             object: nil,
@@ -67,10 +57,6 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
                 await self?.handleLogRotation(logDate: logDate)
             }
         }
-    }
-
-    private func settingsUpdated(_ settings: FreeAPSSettings) {
-        self.settings = settings
     }
 
     func fetchVersion() async {
@@ -114,7 +100,11 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
     }
 
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async {
+        let settings = appCoordinator.settings.value
         guard settings.uploadStats || force else { return }
+
+        let preferences = appCoordinator.preferences.value
+        let pumpSettings = appCoordinator.pumpSettings.value
 
         if let profile, let ps = profile.store[profile.defaultProfile] {
             let uploadedProfile = await storage.retrieveFile(
@@ -129,9 +119,6 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
             }
         }
 
-        let settings = await settingsManager.settings
-        let preferences = await settingsManager.preferences
-        let pumpSettings = await settingsManager.pumpSettings
         let tempTargets = await storage.retrieveFile(OpenAPS.FreeAPS.tempTargetsPresets, as: [TempTarget].self)
 
         let uploadedPreferences = await storage.retrieveFile(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self)
@@ -283,6 +270,7 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
     }
 
     private func handleLogRotation(logDate: Date) async {
+        let settings = appCoordinator.settings.value
         guard settings.uploadLogs else { return }
 
         let dateString = Self.dateFmt.string(from: logDate)
@@ -304,6 +292,7 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner {
     }
 
     func retryPendingLogUpload() async {
+        let settings = appCoordinator.settings.value
         guard settings.uploadLogs,
               let pendingLogDate = pendingLogDate,
               isNetworkReachable else { return }

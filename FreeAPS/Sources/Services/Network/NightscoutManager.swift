@@ -51,8 +51,6 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
         reachabilityManager.isReachable
     }
 
-    private var settings: FreeAPSSettings!
-
     private var nightscoutAPI: NightscoutAPI? {
         guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
               let url = URL(string: urlString),
@@ -69,12 +67,6 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     private func subscribe() async {
-        self.settings = await settingsManager.settings
-
-        observe(appCoordinator.settingsUpdates) { me, settings in
-            await me.settingsChanged(settings)
-        }
-
         // TODO: use values from the stream instead of re-reading the files?..
         observe(appCoordinator.pumpHistoryUpdates) { me, _ in
             await me.uploadPumpHistory()
@@ -88,10 +80,6 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
         observe(appCoordinator.glucoseHistoryUpdates) { me, bloodGlucose in
             await me.uploadGlucose(bloodGlucose: bloodGlucose)
         }
-    }
-
-    private func settingsChanged(_ settings: FreeAPSSettings) {
-        self.settings = settings
     }
 
     func isConfigured() async -> Bool {
@@ -187,6 +175,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func deleteCarbs(_ date: Date) async {
+        let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
             // TODO: what is this?
             await carbsStorage.deleteCarbsAndFPUs(at: date)
@@ -210,6 +199,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func deleteAnnouncements() async {
+        let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
             return
         }
@@ -226,6 +216,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func deleteInsulin(at date: Date) async {
+        let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
             // TODO: what is this?
             await pumpHistoryStorage.deleteInsulin(at: date)
@@ -242,6 +233,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func deleteManualGlucose(at date: Date) async {
+        let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
             return
         }
@@ -254,6 +246,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func uploadStatus() async {
+        let settings = appCoordinator.settings.value
         let iob = await storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
         var suggested = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         var enacted = await storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
@@ -341,10 +334,10 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
             debug(.nightscout, error.localizedDescription)
         }
 
-        await uploadPodAge()
+        await uploadPodAge(settings: settings)
     }
 
-    func uploadPodAge() async {
+    private func uploadPodAge(settings: FreeAPSSettings) async {
         let uploadedPodAge = await storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
         if let podAge = appCoordinator.pumpInfo.value?.podActivatedAt,
            uploadedPodAge.last?.createdAt != podAge
@@ -367,11 +360,12 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
                 targetTop: nil,
                 targetBottom: nil
             )
-            await uploadTreatments([siteTreatment], fileToSave: OpenAPS.Nightscout.uploadedPodAge)
+            await uploadTreatments([siteTreatment], fileToSave: OpenAPS.Nightscout.uploadedPodAge, settings: settings)
         }
     }
 
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async {
+        let settings = appCoordinator.settings.value
         guard settings.isUploadEnabled,
               let profile,
               let ps = profile.store[profile.defaultProfile],
@@ -406,15 +400,18 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func uploadOldGlucose(bloodGlucose: [BloodGlucose]) async -> AsyncStream<Double> {
-        uploadGlucose(
+        let settings = appCoordinator.settings.value
+        return uploadGlucose(
             upload: bloodGlucose,
             allGlucose: nil, // do not update the "already uploaded glucose" file
-            fileToSave: OpenAPS.Nightscout.uploadedGlucose
+            fileToSave: OpenAPS.Nightscout.uploadedGlucose,
+            settings: settings
         )
     }
 
     private func uploadGlucose(bloodGlucose: [BloodGlucose]) async {
-        guard !bloodGlucose.isEmpty, nightscoutAPI != nil, settings.isUploadEnabled else {
+        let settings = appCoordinator.settings.value
+        guard settings.isUploadEnabled, bloodGlucose.isNotEmpty, nightscoutAPI != nil else {
             return
         }
 
@@ -423,14 +420,20 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
         await uploadGlucose(
             upload: glucoseNotYetUploaded,
             allGlucose: bloodGlucose,
-            fileToSave: OpenAPS.Nightscout.uploadedGlucose
+            fileToSave: OpenAPS.Nightscout.uploadedGlucose,
+            settings: settings
         ).drain()
 
         let cgmStateNotUploaded = await nightscoutCGMStateNotUploaded()
-        await uploadTreatments(cgmStateNotUploaded, fileToSave: OpenAPS.Nightscout.uploadedCGMState)
+        await uploadTreatments(cgmStateNotUploaded, fileToSave: OpenAPS.Nightscout.uploadedCGMState, settings: settings)
     }
 
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date) async {
+        let settings = appCoordinator.settings.value
+        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
+            return
+        }
+
         let duration = Int(duration_ == 0 ? 2880 : duration_)
         let exercise =
             [NigtscoutExercise(
@@ -440,10 +443,6 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
                 enteredBy: NigtscoutTreatment.local,
                 notes: profile
             )]
-
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            return
-        }
 
         do {
             try await nightscout.deleteOverride(at: date)
@@ -467,6 +466,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date) async {
+        let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
             return
         }
@@ -491,6 +491,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func deleteOverride() async {
+        let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
             return
         }
@@ -504,6 +505,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     func deleteAllNSoverrrides() async {
+        let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
             return
         }
@@ -540,25 +542,29 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
     }
 
     private func uploadPumpHistory() async {
+        let settings = appCoordinator.settings.value
         let notUploaded = await pumpHistoryStorage.nightscoutTretmentsNotUploaded()
-        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
+        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedPumphistory, settings: settings)
     }
 
     private func uploadCarbs() async {
+        let settings = appCoordinator.settings.value
         let notUploaded = await carbsStorage.nightscoutTretmentsNotUploaded()
-        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedCarbs)
+        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedCarbs, settings: settings)
     }
 
     private func uploadTempTargets() async {
+        let settings = appCoordinator.settings.value
         let notUploaded = await tempTargetsStorage.nightscoutTretmentsNotUploaded()
-        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedTempTargets)
+        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedTempTargets, settings: settings)
     }
 
     /// upload `glucose` to nightscout, upon success - if provided, save `allGlucose` to storage so we don't upload any of it next time
     private func uploadGlucose(
         upload glucose: [BloodGlucose],
         allGlucose: [BloodGlucose]?,
-        fileToSave: String
+        fileToSave: String,
+        settings: FreeAPSSettings
     ) -> AsyncStream<Double> {
         AsyncStream { continuation in
             Task {
@@ -600,7 +606,7 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
         }
     }
 
-    private func checkForNotUploadedOverides() async {
+    private func checkForNotUploadedOverides(settings: FreeAPSSettings) async {
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else { return }
         // TODO: why is this "counter" needed?
 //        guard let count = overrideStorage.countNotUploaded() else { return }
@@ -627,10 +633,10 @@ actor BaseNightscoutManager: NightscoutManager, Injectable, LifetimeOwner {
         }
     }
 
-    private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String) async {
+    private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String, settings: FreeAPSSettings) async {
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else { return }
 
-        await checkForNotUploadedOverides()
+        await checkForNotUploadedOverides(settings: settings)
 
         guard !treatments.isEmpty else { return }
 
