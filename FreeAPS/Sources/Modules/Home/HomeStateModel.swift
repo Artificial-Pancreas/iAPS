@@ -737,7 +737,6 @@ extension Home.StateModel {
     }
 
     private func pumpHistoryDidUpdate(_ pumpHistory: [PumpHistoryEvent]) async {
-        // TODO: use the privided pump history instead of re-reading it
         self.pumpHistory = pumpHistory
         await setupBasals()
         await setupBoluses()
