@@ -21,18 +21,24 @@ protocol GlucoseStorage: Sendable {
     func getAlarm() async -> GlucoseAlarm?
 }
 
-actor BaseGlucoseStorage: GlucoseStorage, Injectable {
-    @Injected() private var storage: FileStorage!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var appCoordinator: AppCoordinator!
+actor BaseGlucoseStorage: GlucoseStorage {
+    private let storage: FileStorage
+    private let settingsManager: SettingsManager
+    private let appCoordinator: AppCoordinator
 
     private enum Config {
         static let filterTimeFiveMinutes: TimeInterval = 4.5 * 60
         static let filterTimeOneMinute: TimeInterval = 0.8 * 60
     }
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    init(
+        storage: FileStorage,
+        settingsManager: SettingsManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.settingsManager = settingsManager
+        self.appCoordinator = appCoordinator
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose] {

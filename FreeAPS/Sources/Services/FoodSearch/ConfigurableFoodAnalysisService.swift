@@ -143,7 +143,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
 
     func executeTextSearch(
         _ query: String,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
         telemetryCallback?("🤖 Connecting to \(UserDefaults.standard.textSearchProvider.description) …")
         switch UserDefaults.standard.textSearchProvider {
@@ -156,7 +156,7 @@ class ConfigurableFoodAnalysisService: ObservableObject, @unchecked Sendable {
 
     func executeImageSearch(
         _ query: String,
-        telemetryCallback: ((String) -> Void)?
+        telemetryCallback: (@Sendable(String) -> Void)?
     ) async -> [String] {
         let result = try? await OpenFoodFactsService.shared.analyzeText(prompt: query, telemetryCallback: telemetryCallback)
         return result?.foodItems.compactMap(\.imageURL) ?? []

@@ -16,7 +16,21 @@ final class APSAssembly: Assembly {
                 appCoordinator: r.resolve(AppCoordinator.self)!,
             )
         }
-        container.register(APSManager.self) { r in BaseAPSManager(resolver: r) }
+        container.register(APSManager.self) { r in
+            BaseAPSManager(
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                storage: r.resolve(FileStorage.self)!,
+                pumpHistoryStorage: r.resolve(PumpHistoryStorage.self)!,
+                glucoseStorage: r.resolve(GlucoseStorage.self)!,
+                tempTargetsStorage: r.resolve(TempTargetsStorage.self)!,
+                carbsStorage: r.resolve(CarbsStorage.self)!,
+                announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
+                deviceDataManager: r.resolve(DeviceDataManager.self)!,
+                nightscout: r.resolve(NightscoutManager.self)!,
+                settingsManager: r.resolve(SettingsManager.self)!,
+                openAPS: r.resolve(OpenAPS.self)!
+            )
+        }
         container.register(FetchTreatmentsManager.self) { r in
             let nightscoutManager = r.resolve(NightscoutManager.self)!
             let tempTargetsStorage = r.resolve(TempTargetsStorage.self)!

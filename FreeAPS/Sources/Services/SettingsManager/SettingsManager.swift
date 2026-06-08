@@ -67,9 +67,12 @@ actor BaseSettingsManager: SettingsManager, AppService {
         }
     }
 
-    init(resolver: Resolver) {
-        storage = resolver.resolve(FileStorage.self)!
-        appCoordinator = resolver.resolve(AppCoordinator.self)!
+    init(
+        storage: FileStorage,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.appCoordinator = appCoordinator
     }
 
     // this is called on app start, before anything is rendered

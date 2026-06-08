@@ -32,6 +32,8 @@ import Swinject
         try await startService(resolver.resolve(CalendarManager.self))
         try await startService(resolver.resolve(DatabaseManager.self))
         try await startService(resolver.resolve(ContactTrickManager.self))
+        try await startService(resolver.resolve(NightscoutManager.self))
+        try await startService(resolver.resolve(ProfileAndSettingsUploadManager.self))
 
         deviceManager = resolver.resolve(DeviceDataManager.self)!
 

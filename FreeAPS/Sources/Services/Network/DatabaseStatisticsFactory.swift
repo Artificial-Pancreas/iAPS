@@ -4,18 +4,26 @@ import LoopKitUI
 import SwiftDate
 import Swinject
 
-actor DatabaseStatisticsFactory: Injectable {
-    @Injected() private var storage: FileStorage!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var deviceDataManager: DeviceDataManager!
-    @Injected() private var appCoordinator: AppCoordinator!
+actor DatabaseStatisticsFactory {
+    private let storage: FileStorage
+    private let settingsManager: SettingsManager
+    private let deviceDataManager: DeviceDataManager
+    private let appCoordinator: AppCoordinator
 
     private let coreDataStorage = CoreDataStorage()
 
     private let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    init(
+        storage: FileStorage,
+        settingsManager: SettingsManager,
+        deviceDataManager: DeviceDataManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.settingsManager = settingsManager
+        self.deviceDataManager = deviceDataManager
+        self.appCoordinator = appCoordinator
     }
 }
 

@@ -16,12 +16,16 @@ protocol TempTargetsStorage: Sendable {
     func current() async -> TempTarget?
 }
 
-actor BaseTempTargetsStorage: TempTargetsStorage, Injectable {
-    @Injected() private var storage: FileStorage!
-    @Injected() private var appCoordinator: AppCoordinator!
+actor BaseTempTargetsStorage: TempTargetsStorage {
+    private let storage: FileStorage
+    private let appCoordinator: AppCoordinator
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    init(
+        storage: FileStorage,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.appCoordinator = appCoordinator
     }
 
     func storeTempTargets(_ targets: [TempTarget]) async {

@@ -147,7 +147,7 @@ private struct ActiveActivity {
     }
 }
 
-actor LiveActivityBridge: Injectable, Sendable, LifetimeOwner, AppService {
+actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
     private let settingsManager: SettingsManager
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
@@ -167,12 +167,14 @@ actor LiveActivityBridge: Injectable, Sendable, LifetimeOwner, AppService {
     private var enactedSuggestion: Suggestion?
     private var iob: IOBTick0?
 
-    init(resolver: Resolver) {
-        settingsManager = resolver.resolve(SettingsManager.self)!
-        storage = resolver.resolve(FileStorage.self)!
-        appCoordinator = resolver.resolve(AppCoordinator.self)!
-
-        injectServices(resolver)
+    init(
+        settingsManager: SettingsManager,
+        storage: FileStorage,
+        appCoordinator: AppCoordinator
+    ) {
+        self.settingsManager = settingsManager
+        self.storage = storage
+        self.appCoordinator = appCoordinator
     }
 
     // this is called at the start of the app

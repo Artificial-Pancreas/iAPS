@@ -70,19 +70,19 @@ enum APSError: LocalizedError {
     }
 }
 
-actor BaseAPSManager: APSManager, Injectable, LifetimeOwner, AppService {
+actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private let processQueue = DispatchQueue(label: "BaseAPSManager.processQueue")
-    @Injected() private var appCoordinator: AppCoordinator!
-    @Injected() private var storage: FileStorage!
-    @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
-    @Injected() private var glucoseStorage: GlucoseStorage!
-    @Injected() private var tempTargetsStorage: TempTargetsStorage!
-    @Injected() private var carbsStorage: CarbsStorage!
-    @Injected() private var announcementsStorage: AnnouncementsStorage!
-    @Injected() private var deviceDataManager: DeviceDataManager!
-    @Injected() private var nightscout: NightscoutManager!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var openAPS: OpenAPS!
+    private let appCoordinator: AppCoordinator
+    private let storage: FileStorage
+    private let pumpHistoryStorage: PumpHistoryStorage
+    private let glucoseStorage: GlucoseStorage
+    private let tempTargetsStorage: TempTargetsStorage
+    private let carbsStorage: CarbsStorage
+    private let announcementsStorage: AnnouncementsStorage
+    private let deviceDataManager: DeviceDataManager
+    private let nightscout: NightscoutManager
+    private let settingsManager: SettingsManager
+    private let openAPS: OpenAPS
 
     private let overrideStorage = OverrideStorage()
 
@@ -106,8 +106,30 @@ actor BaseAPSManager: APSManager, Injectable, LifetimeOwner, AppService {
         return last
     }
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    init(
+        appCoordinator: AppCoordinator,
+        storage: FileStorage,
+        pumpHistoryStorage: PumpHistoryStorage,
+        glucoseStorage: GlucoseStorage,
+        tempTargetsStorage: TempTargetsStorage,
+        carbsStorage: CarbsStorage,
+        announcementsStorage: AnnouncementsStorage,
+        deviceDataManager: DeviceDataManager,
+        nightscout: NightscoutManager,
+        settingsManager: SettingsManager,
+        openAPS: OpenAPS
+    ) {
+        self.appCoordinator = appCoordinator
+        self.storage = storage
+        self.pumpHistoryStorage = pumpHistoryStorage
+        self.glucoseStorage = glucoseStorage
+        self.tempTargetsStorage = tempTargetsStorage
+        self.carbsStorage = carbsStorage
+        self.announcementsStorage = announcementsStorage
+        self.deviceDataManager = deviceDataManager
+        self.nightscout = nightscout
+        self.settingsManager = settingsManager
+        self.openAPS = openAPS
     }
 
     // this is called at the app start

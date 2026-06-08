@@ -10,12 +10,11 @@ protocol DatabaseManager: Sendable {
     func retryPendingLogUpload() async
 }
 
-actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner, AppService {
-//    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var storage: FileStorage!
-    @Injected() private var database: Database!
-    @Injected() private var reachabilityManager: ReachabilityManager!
-    @Injected() private var appCoordinator: AppCoordinator!
+actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
+    private let storage: FileStorage
+    private let database: Database
+    private let reachabilityManager: ReachabilityManager
+    private let appCoordinator: AppCoordinator
 
     private let coreDataStorage = CoreDataStorage()
     private let overrideStorage = OverrideStorage()
@@ -40,8 +39,16 @@ actor BaseDatabaseManager: DatabaseManager, Injectable, LifetimeOwner, AppServic
         reachabilityManager.isReachable
     }
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    init(
+        storage: FileStorage,
+        database: Database,
+        reachabilityManager: ReachabilityManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.database = database
+        self.reachabilityManager = reachabilityManager
+        self.appCoordinator = appCoordinator
         pendingLogDate = UserDefaults.standard.string(forKey: pendingLogDateKey)
     }
 
