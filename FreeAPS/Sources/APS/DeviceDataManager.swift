@@ -66,7 +66,7 @@ protocol DeviceDataManager: Sendable {
 
     func supportedBolusVolumes() -> [Double]?
 
-    func syncBasalRateSchedule(items scheduleItems: [RepeatingScheduleValue<Double>]) async throws -> BasalRateSchedule?
+    func syncBasalRateSchedule(items basals: [BasalProfileEntry], concentration: Double) async throws -> [BasalProfileEntry]?
 
     func syncDeliveryLimits(pumpSettings: PumpSettings) async throws -> (maximumBolus: Double?, maximumBasalRate: Double?)?
 }
@@ -354,7 +354,7 @@ final class BaseDeviceDataManager: DeviceDataManager {
         return Manager.init(rawState: rawState) as? PumpManagerUI
     }
 
-    private func updatePumpData(completion: @escaping () -> Void) {
+    private func updatePumpData(completion: @escaping @Sendable() -> Void) {
         guard let pumpManager = pumpManager else {
             debug(.deviceManager, "Pump is not set, skip updating")
             completion()
@@ -1310,15 +1310,21 @@ extension BaseDeviceDataManager {
         pumpManager?.supportedBolusVolumes
     }
 
-    func syncBasalRateSchedule(items scheduleItems: [RepeatingScheduleValue<Double>]) async throws -> BasalRateSchedule? {
+    func syncBasalRateSchedule(items basals: [BasalProfileEntry], concentration: Double) async throws -> [BasalProfileEntry]? {
         guard let pump = pumpManager else { return nil }
+
+        let scheduleItems = basals.map {
+            RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate) / concentration)
+        }
 
         return try await withCheckedThrowingContinuation { continuation in
             pump.syncBasalRateSchedule(items: scheduleItems) { result in
                 switch result {
                 case let .success(saved):
                     debug(.service, "Basals saved to pump!")
-                    continuation.resume(returning: saved)
+                    let adjustedBasals = saved.items
+                        .map { BasalProfileEntry(startTime: $0.startTime, rate: $0.value * concentration) }
+                    continuation.resume(returning: adjustedBasals)
                 case let .failure(error):
                     continuation.resume(throwing: error)
                 }

@@ -17,6 +17,7 @@ extension NightscoutConfig {
         @Injected() private var appCoordinator: AppCoordinator!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        private let coreDataStorage = CoreDataStorage()
 
         @Published var url = ""
         @Published var secret = ""
@@ -117,6 +118,10 @@ extension NightscoutConfig {
                 }
                 connecting = false
             }
+        }
+
+        private func readConcentration() -> Double {
+            coreDataStorage.insulinConcentration().concentration
         }
 
         func importSettings() {
@@ -253,23 +258,17 @@ extension NightscoutConfig {
                     return
                 }
 
-                let syncValues = basals.map {
-                    RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
-                }
-
                 // SAVE TO STORAGE. SAVE TO PUMP (LoopKit)
+                let concentration = readConcentration()
                 do {
-                    let savedBasals = try await deviceManager.syncBasalRateSchedule(items: syncValues)
-                    // TODO: get the actually saved basal (saved) and use it instead of assuming it was saved as is
-                    let adjustedBasals = basals
-//                        let adjustedBasals = savedBasals.map { item in
-//                            BasalProfileEntry(
-//                                start: item.startTime.minutesSinceMidnight,
-//                                minutes: item.startTime.minutesSinceMidnight,
-//                                rate: Decimal
-//                            )
-//                        }
-                    await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
+                    if let adjustedBasals = try await deviceManager.syncBasalRateSchedule(
+                        items: basals,
+                        concentration: concentration
+                    ) {
+                        await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
+                    } else {
+                        await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                    }
                     await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
                     await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
                     await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
