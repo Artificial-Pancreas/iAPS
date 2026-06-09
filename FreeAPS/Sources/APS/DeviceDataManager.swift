@@ -60,10 +60,6 @@ protocol DeviceDataManager: Sendable {
 
     func createBolusProgressReporter(reportingOn dispatchQueue: DispatchQueue) throws -> DoseProgressReporter?
 
-    func supportedBasalRates() -> [Double]?
-
-    func supportedBolusVolumes() -> [Double]?
-
     func syncBasalRateSchedule(items basals: [BasalProfileEntry], concentration: Double) async throws -> [BasalProfileEntry]?
 
     func syncDeliveryLimits(pumpSettings: PumpSettings) async throws -> (maximumBolus: Double?, maximumBasalRate: Double?)?
@@ -1075,6 +1071,8 @@ private extension BaseDeviceDataManager {
             deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
             isSuspended: isSuspended,
             isBolusing: isBolusing,
+            supportedBasalRates: pumpManager.supportedBasalRates,
+            supportedBolusVolumes: pumpManager.supportedBolusVolumes,
             timestamp: Date.now
         )
 
@@ -1293,14 +1291,6 @@ extension BaseDeviceDataManager {
             throw APSError.invalidPumpState(message: "Pump not configured")
         }
         return pump.createBolusProgressReporter(reportingOn: dispatchQueue)
-    }
-
-    func supportedBasalRates() -> [Double]? {
-        pumpManager?.supportedBasalRates
-    }
-
-    func supportedBolusVolumes() -> [Double]? {
-        pumpManager?.supportedBolusVolumes
     }
 
     func syncBasalRateSchedule(items basals: [BasalProfileEntry], concentration: Double) async throws -> [BasalProfileEntry]? {

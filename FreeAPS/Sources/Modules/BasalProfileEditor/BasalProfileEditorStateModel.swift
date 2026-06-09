@@ -32,15 +32,12 @@ extension BasalProfileEditor {
         }()
 
         override func subscribe() async {
-            rateValues = readSupportedBasalRates() ?? stride(from: 5.0, to: 1001.0, by: 5.0)
-                .map { ($0.decimal ?? .zero) / 100 }
-            items = await retrieveProfile().map { value in
-                let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
-                let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
-                return Item(rateIndex: rateIndex, timeIndex: timeIndex)
-            }
+            await updateSupportedBasalRates(appCoordinator.pumpStatus.value)
             calcTotal()
             allowDilution = await settingsManager.settings.allowDilution
+            observe(appCoordinator.pumpStatus) { me, pumpStatus in
+                await me.updateSupportedBasalRates(pumpStatus)
+            }
         }
 
         private func currentProfile() -> [BasalProfileEntry] {
@@ -106,8 +103,17 @@ extension BasalProfileEditor {
                 ?? []
         }
 
-        private func readSupportedBasalRates() -> [Decimal]? {
-            deviceManager.supportedBasalRates()?.map { Decimal($0) }
+        private func updateSupportedBasalRates(_ pumpStatus: PumpDisplayStatus?) async {
+            let newRateValues = pumpStatus?.supportedBasalRates.map { Decimal($0) } ??
+                stride(from: 5.0, to: 1001.0, by: 5.0).map { ($0.decimal ?? .zero) / 100 }
+            if newRateValues != rateValues {
+                rateValues = newRateValues
+                items = await retrieveProfile().map { value in
+                    let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
+                    let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
+                    return Item(rateIndex: rateIndex, timeIndex: timeIndex)
+                }
+            }
         }
 
         private func readConcentration() -> Double {

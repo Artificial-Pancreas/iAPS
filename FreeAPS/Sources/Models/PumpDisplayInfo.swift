@@ -25,6 +25,8 @@ struct PumpDisplayStatus: Equatable, Sendable {
     let deliveryIsUncertain: Bool
     let isSuspended: Bool
     let isBolusing: Bool
+    let supportedBasalRates: [Double]
+    let supportedBolusVolumes: [Double]
 
     let timestamp: Date?
 }

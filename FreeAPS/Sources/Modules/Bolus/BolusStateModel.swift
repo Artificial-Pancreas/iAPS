@@ -114,8 +114,7 @@ extension Bolus {
             closedLoop = settings.closedLoop
             loopDate = appCoordinator.lastLoopDate.value ?? .distantPast
             disable15MinTrend = settings.disable15MinTrend
-            minBolus = Decimal(deviceManager.supportedBolusVolumes()?.first ?? Double(bolusIncrement)) *
-                Decimal(concentration.concentration)
+            updateMinBolus(appCoordinator.pumpStatus.value)
 
             // TODO: use AppUIState instead
             observe(appCoordinator.lastLoopDate) { me, lastLoopDate in
@@ -124,6 +123,14 @@ extension Bolus {
             observe(appCoordinator.suggestions) { me, suggestion in
                 await me.suggestionDidUpdate(suggestion)
             }
+            observe(appCoordinator.pumpStatus) { me, pumpStatus in
+                await me.updateMinBolus(pumpStatus)
+            }
+        }
+
+        private func updateMinBolus(_ pumpStatus: PumpDisplayStatus?) {
+            minBolus = Decimal(pumpStatus?.supportedBolusVolumes.first ?? Double(bolusIncrement)) *
+                Decimal(concentration.concentration)
         }
 
         private func suggestionDidUpdate(_ suggestion: Suggestion) async {
