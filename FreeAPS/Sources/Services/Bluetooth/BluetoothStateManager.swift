@@ -1,20 +1,22 @@
 import CoreBluetooth
 import LoopKit
 import LoopKitUI
-import Swinject
 
-protocol BluetoothStateManager: BluetoothProvider {}
+protocol BluetoothStateManager: BluetoothProvider, Sendable {}
 
-public class BaseBluetoothStateManager: NSObject, BluetoothStateManager, Injectable {
-    private var completion: ((BluetoothAuthorization) -> Void)?
-    private var centralManager: CBCentralManager?
-    private var bluetoothObservers = WeakSynchronizedSet<BluetoothObserver>()
+// @unchecked Sendable - needed because we have mutable state here;
+// access to the mutable state is gated with a lock, so our promise to be Sendable is honest
+public final class BaseBluetoothStateManager: NSObject, BluetoothStateManager, @unchecked Sendable {
+    private let lock = NSLock()
+    private var _completion: ((BluetoothAuthorization) -> Void)?
+    private var _centralManager: CBCentralManager?
+    private let bluetoothObservers = WeakSynchronizedSet<BluetoothObserver>()
 
-    init(resolver: Resolver) {
+    override init() {
         super.init()
-        injectServices(resolver)
         if bluetoothAuthorization != .notDetermined {
-            centralManager = CBCentralManager(delegate: self, queue: nil)
+            let centralManager = CBCentralManager(delegate: self, queue: nil)
+            lock.withLock { _centralManager = centralManager }
         }
     }
 
@@ -23,19 +25,21 @@ public class BaseBluetoothStateManager: NSObject, BluetoothStateManager, Injecta
     }
 
     public var bluetoothState: BluetoothState {
-        guard let centralManager = centralManager else {
+        let centralManager = lock.withLock { _centralManager }
+        guard let centralManager else {
             return .unknown
         }
         return BluetoothState(centralManager.state)
     }
 
     public func authorizeBluetooth(_ completion: @escaping (BluetoothAuthorization) -> Void) {
-        guard centralManager == nil else {
+        guard lock.withLock({ _centralManager }) == nil else {
             completion(bluetoothAuthorization)
             return
         }
-        self.completion = completion
-        centralManager = CBCentralManager(delegate: self, queue: nil)
+        let central = CBCentralManager(delegate: self, queue: nil)
+        lock.withLock { _completion = completion
+            _centralManager = central }
     }
 
     public func addBluetoothObserver(_ observer: BluetoothObserver, queue: DispatchQueue = .main) {
@@ -51,10 +55,10 @@ public class BaseBluetoothStateManager: NSObject, BluetoothStateManager, Injecta
 
 extension BaseBluetoothStateManager: CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if let completion = completion {
-            completion(bluetoothAuthorization)
-            self.completion = nil
-        }
+        let completion = lock.withLock { let c = _completion
+            _completion = nil
+            return c }
+        completion?(bluetoothAuthorization)
         bluetoothObservers.forEach { $0.bluetoothDidUpdateState(BluetoothState(central.state)) }
     }
 }

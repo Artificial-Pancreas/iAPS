@@ -5,7 +5,20 @@ final class APSAssembly: Assembly {
     func assemble(container: Container) {
         container.register(CalibrationService.self) { r in BaseCalibrationService(resolver: r) }
         container.register(BloodGlucoseManager.self) { r in BloodGlucoseManager(resolver: r) }
-        container.register(DeviceDataManager.self) { r in BaseDeviceDataManager(resolver: r) }
+        container.register(DeviceDataManager.self) { r in
+            BaseDeviceDataManager(
+                pumpHistoryStorage: r.resolve(PumpHistoryStorage.self)!,
+                alertHistoryStorage: r.resolve(AlertHistoryStorage.self)!,
+                storage: r.resolve(FileStorage.self)!,
+                glucoseStorage: r.resolve(GlucoseStorage.self)!,
+                settingsManager: r.resolve(SettingsManager.self)!,
+                bloodGlucoseManager: r.resolve(BloodGlucoseManager.self)!,
+                bluetoothProvider: r.resolve(BluetoothStateManager.self)!,
+                calibrationService: r.resolve(CalibrationService.self)!,
+                router: r.resolve(Router.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!
+            )
+        }
         container.register(OpenAPS.self) { r in
             OpenAPS(
                 storage: r.resolve(FileStorage.self)!,
@@ -61,6 +74,6 @@ final class APSAssembly: Assembly {
                 appCoordinator: appCoordinator
             )
         }
-        container.register(BluetoothStateManager.self) { r in BaseBluetoothStateManager(resolver: r) }
+        container.register(BluetoothStateManager.self) { _ in BaseBluetoothStateManager() }
     }
 }

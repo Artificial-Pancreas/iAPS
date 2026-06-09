@@ -1,6 +1,6 @@
 import Foundation
 
-@propertyWrapper public struct PersistedProperty<Value> {
+@propertyWrapper public struct PersistedProperty<Value>: Sendable {
     let key: String
     let storageURL: URL
 
@@ -52,7 +52,7 @@ import Foundation
             }
             return nil
         }
-        set {
+        nonmutating set {
             guard let newValue = newValue else {
                 do {
                     try FileManager.default.removeItem(at: storageURL)

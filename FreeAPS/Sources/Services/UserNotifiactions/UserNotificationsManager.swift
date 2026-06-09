@@ -6,7 +6,7 @@ import Swinject
 import UIKit
 @preconcurrency import UserNotifications
 
-protocol UserNotificationsManager {
+protocol UserNotificationsManager: Sendable {
     func stopSound() async
 }
 

@@ -3,10 +3,8 @@ import LoopKit
 import LoopKitUI
 import os.log
 
-class PluginManager {
+final class PluginManager: Sendable {
     let pluginBundles: [Bundle]
-
-    private let log = Logger.pluginManager
 
     public init(pluginsURL: URL? = Bundle.main.privateFrameworksURL) {
         var bundles = [Bundle]()
@@ -18,13 +16,13 @@ class PluginManager {
                 {
                     if let bundle = Bundle(url: pluginURL) {
                         if bundle.isLoopPlugin, !bundle.isSimulator /* || FeatureFlags.allowSimulators*/ {
-                            log.debug("Found loop plugin: \(pluginURL.absoluteString)",)
+                            Logger.pluginManager.debug("Found loop plugin: \(pluginURL.absoluteString)",)
                             bundles.append(bundle)
                         }
                     }
                 }
             } catch {
-                log.error("Error loading plugins: \(String(describing: error))")
+                Logger.pluginManager.error("Error loading plugins: \(String(describing: error))")
             }
         }
         pluginBundles = bundles
@@ -49,7 +47,7 @@ class PluginManager {
                         fatalError("PrincipalClass not found")
                     }
                 } catch {
-                    log.error("Error loading plugin: \(String(describing: error))")
+                    Logger.pluginManager.error("Error loading plugin: \(String(describing: error))")
                 }
             }
         }
@@ -88,7 +86,7 @@ class PluginManager {
                         fatalError("PrincipalClass not found")
                     }
                 } catch {
-                    log.error("Error loading plugin: \(String(describing: error))")
+                    Logger.pluginManager.error("Error loading plugin: \(String(describing: error))")
                 }
             }
         }
@@ -127,7 +125,7 @@ class PluginManager {
                         fatalError("PrincipalClass not found")
                     }
                 } catch {
-                    log.error("Error loading plugin: \(String(describing: error))")
+                    Logger.pluginManager.error("Error loading plugin: \(String(describing: error))")
                 }
             }
         }
@@ -165,7 +163,7 @@ class PluginManager {
                         fatalError("PrincipalClass not found")
                     }
                 } catch {
-                    log.error("Error loading plugin: \(String(describing: error))")
+                    Logger.pluginManager.error("Error loading plugin: \(String(describing: error))")
                 }
             }
         }
@@ -197,7 +195,7 @@ class PluginManager {
                         fatalError("PrincipalClass not found")
                     }
                 } catch {
-                    log.error("Error loading plugin: \(String(describing: error))")
+                    Logger.pluginManager.error("Error loading plugin: \(String(describing: error))")
                 }
             }
         }
@@ -229,7 +227,7 @@ class PluginManager {
                         fatalError("PrincipalClass not found")
                     }
                 } catch {
-                    log.error("Error loading plugin: \(String(describing: error))")
+                    Logger.pluginManager.error("Error loading plugin: \(String(describing: error))")
                 }
             }
         }

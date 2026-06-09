@@ -12,16 +12,9 @@ import SwiftDate
 import Swinject
 import UserNotifications
 
-extension PumpManagerStatus: @retroactive @unchecked Sendable {}
-extension DoseEntry: @retroactive @unchecked Sendable {}
-extension RepeatingScheduleValue: @retroactive @unchecked Sendable {}
-extension BasalRateSchedule: @retroactive @unchecked Sendable {}
-
-protocol DeviceDataManager {
+protocol DeviceDataManager: Sendable {
     var availableCGMManagers: [CGMManagerDescriptor] { get }
     var availablePumpManagers: [PumpManagerDescriptor] { get }
-
-    //    var pumpManager: PumpManagerUI? { get }
 
     // notify device manager when the app becomes active
     func didBecomeActive()
@@ -32,22 +25,20 @@ protocol DeviceDataManager {
 
     func removePumpAsCGM()
 
-//    var cgmManager: CGMManager? { get }
-
-    func setupCGMManager(
+    @MainActor func setupCGMManager(
         withIdentifier identifier: String,
         prefersToSkipUserInteraction: Bool
     ) -> Swift.Result<SetupUIResult<CGMManagerViewController, CGMManager>, Error>
 
-    func cgmManagerSettingsView() -> CGMManagerViewController?
-    func pumpManagerSettingsView() -> PumpManagerViewController?
-
-    func setupPumpManager(
+    @MainActor func setupPumpManager(
         withIdentifier identifier: String,
         initialSettings settings: PumpManagerSetupSettings,
         allowedInsulinTypes: [InsulinType],
         prefersToSkipUserInteraction: Bool
     ) -> Swift.Result<SetupUIResult<PumpManagerViewController, PumpManager>, Error>
+
+    @MainActor func cgmManagerSettingsView() -> CGMManagerViewController?
+    @MainActor func pumpManagerSettingsView() -> PumpManagerViewController?
 
     func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval) async throws
 
@@ -98,57 +89,99 @@ private let availableStaticPumpManagers: [PumpManagerDescriptor] = [
     PumpManagerDescriptor(identifier: MockPumpManager.pluginIdentifier, localizedTitle: MockPumpManager.localizedTitle)
 ]
 
-final class BaseDeviceDataManager: Injectable, DeviceDataManager {
+extension WeakSynchronizedSet: @retroactive @unchecked Sendable {}
+
+private let lastEventDateKey = "BaseDeviceDataManager.lastEventDate"
+
+final class BaseDeviceDataManager: DeviceDataManager {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
 
-    @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
-    @Injected() private var alertHistoryStorage: AlertHistoryStorage!
-    @Injected() private var storage: FileStorage!
-    @Injected() private var glucoseStorage: GlucoseStorage!
-    @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var bloodGlucoseManager: BloodGlucoseManager!
-    @Injected() private var bluetoothProvider: BluetoothStateManager!
-    @Injected() private var calibrationService: CalibrationService!
-    @Injected() private var router: Router!
-    @Injected() private var appCoordinator: AppCoordinator!
+    private let pumpHistoryStorage: PumpHistoryStorage
+    private let alertHistoryStorage: AlertHistoryStorage
+    private let storage: FileStorage
+    private let glucoseStorage: GlucoseStorage
+    private let settingsManager: SettingsManager
+    private let bloodGlucoseManager: BloodGlucoseManager
+    private let bluetoothProvider: BluetoothStateManager
+    private let calibrationService: CalibrationService
+    private let router: Router
+    private let appCoordinator: AppCoordinator
 
     private let lifetime = Lifetime()
 
     private let pluginManager = PluginManager()
 
-    private var displayGlucoseUnitObservers = WeakSynchronizedSet<DisplayGlucoseUnitObserver>()
+    private let displayGlucoseUnitObservers = WeakSynchronizedSet<DisplayGlucoseUnitObserver>()
 
-    private let displayGlucosePreference = DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter)
+    @MainActor private let displayGlucosePreference = DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter)
 
-    @Persisted(key: "BaseDeviceDataManager.lastEventDate") private var lastEventDate: Date? = nil
+    private let lastEventDate = Locked<Date?>(UserDefaults.standard.object(forKey: lastEventDateKey) as? Date)
 
-    private var latestCgmReadingDate: Date?
+    private let latestCgmReadingDate: Locked<Date?> = Locked(nil)
 
-    @PersistedProperty(key: "CGMManagerState") var rawCGMManager: CGMManager.RawValue?
+    // not using @PersistedProperty as an annotation directly because using a var breaks Sendable for DeviceDataManager
+    private let rawCGMManagerStore = PersistedProperty<CGMManager.RawValue>(key: "CGMManagerState")
+    private var rawCGMManager: CGMManager.RawValue? {
+        get { rawCGMManagerStore.wrappedValue }
+        set { rawCGMManagerStore.wrappedValue = newValue }
+    }
 
-    private var cgmManager: CGMManager?
+    private let cgmManagerLocked: ManagerBox<CGMManager?> = ManagerBox(nil)
 
-    @PersistedProperty(key: "PumpManagerState") var rawPumpManager: PumpManager.RawValue?
+    private var cgmManager: CGMManager? {
+        cgmManagerLocked.value
+    }
 
-    private var pumpManager: PumpManagerUI?
+    // not using @PersistedProperty as an annotation directly because using a var breaks Sendable for DeviceDataManager
+    private let rawPumpManagerStore = PersistedProperty<PumpManager.RawValue>(key: "PumpManagerState")
+    private var rawPumpManager: PumpManager.RawValue? {
+        get { rawPumpManagerStore.wrappedValue }
+        set { rawPumpManagerStore.wrappedValue = newValue }
+    }
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
+    private let pumpManagerLocked: ManagerBox<PumpManagerUI?> = ManagerBox(nil)
+
+    private var pumpManager: PumpManagerUI? {
+        pumpManagerLocked.value
+    }
+
+    init(
+        pumpHistoryStorage: PumpHistoryStorage,
+        alertHistoryStorage: AlertHistoryStorage,
+        storage: FileStorage,
+        glucoseStorage: GlucoseStorage,
+        settingsManager: SettingsManager,
+        bloodGlucoseManager: BloodGlucoseManager,
+        bluetoothProvider: BluetoothStateManager,
+        calibrationService: CalibrationService,
+        router: Router,
+        appCoordinator: AppCoordinator
+    ) {
+        self.pumpHistoryStorage = pumpHistoryStorage
+        self.alertHistoryStorage = alertHistoryStorage
+        self.storage = storage
+        self.glucoseStorage = glucoseStorage
+        self.settingsManager = settingsManager
+        self.bloodGlucoseManager = bloodGlucoseManager
+        self.bluetoothProvider = bluetoothProvider
+        self.calibrationService = calibrationService
+        self.router = router
+        self.appCoordinator = appCoordinator
 
         // TODO: does this belong here?
         UIDevice.current.isBatteryMonitoringEnabled = true
 
         processQueue.sync {
             if let pumpManagerRawValue = rawPumpManager ?? UserDefaults.standard.legacyPumpManagerRawValue {
-                pumpManager = pumpManagerFromRawValue(pumpManagerRawValue)
+                pumpManagerLocked.mutate { $0 = pumpManagerFromRawValue(pumpManagerRawValue) }
             }
 
             if let cgmManagerRawValue = rawCGMManager ?? UserDefaults.standard.legacyCgmManagerRawValue {
-                cgmManager = cgmManagerFromRawValue(cgmManagerRawValue)
+                cgmManagerLocked.mutate { $0 = cgmManagerFromRawValue(cgmManagerRawValue) }
 
                 // Handle case of PumpManager providing CGM
                 if cgmManager == nil, pumpManagerTypeFromRawValue(cgmManagerRawValue) != nil {
-                    cgmManager = pumpManager as? CGMManager
+                    cgmManagerLocked.mutate { $0 = pumpManager as? CGMManager }
                 }
             }
 
@@ -163,7 +196,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
         let oldValue = self.cgmManager
-        self.cgmManager = cgmManager
+        cgmManagerLocked.mutate { $0 = cgmManager }
 
         oldValue?.cgmManagerDelegate = nil
         oldValue?.delegateQueue = nil
@@ -178,7 +211,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
         let oldValue = self.pumpManager
-        self.pumpManager = pumpManager
+        pumpManagerLocked.mutate { $0 = pumpManager }
 
         oldValue?.pumpManagerDelegate = nil
         oldValue?.delegateQueue = nil
@@ -214,17 +247,13 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
             .store(in: lifetime)
 
         appCoordinator.settings.map(\.units).removeDuplicates()
-            .receive(on: processQueue)
+            .receive(on: DispatchQueue.main) // important to be on main because of MainActor.assumeIsolated below
             .sink { units in
                 let loopkitUnit: HKUnit = units == .mmolL ? .millimolesPerLiter : .milligramsPerDeciliter
-                self.displayGlucosePreference.unitDidChange(to: loopkitUnit)
-            }
-            .store(in: lifetime)
-
-        displayGlucosePreference.$unit
-            .receive(on: DispatchQueue.main)
-            .sink { unit in
-                self.notifyObserversOfDisplayGlucoseUnitChange(to: unit)
+                MainActor.assumeIsolated {
+                    self.displayGlucosePreference.unitDidChange(to: loopkitUnit)
+                    self.notifyObserversOfDisplayGlucoseUnitChange(to: loopkitUnit)
+                }
             }
             .store(in: lifetime)
     }
@@ -234,7 +263,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         return pumpManagers.sorted(by: { $0.localizedTitle < $1.localizedTitle })
     }
 
-    func setupPumpManager(
+    @MainActor func setupPumpManager(
         withIdentifier identifier: String,
         initialSettings settings: PumpManagerSetupSettings,
         allowedInsulinTypes: [InsulinType],
@@ -366,7 +395,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
                 allowCalibrations = false
             }
 
-            latestCgmReadingDate = values.map(\.date).max()
+            latestCgmReadingDate.mutate { $0 = values.map(\.date).max() }
 
             let bloodGlucose = values.map { newGlucoseSample -> BloodGlucose in
                 let quantity = newGlucoseSample.quantity
@@ -423,7 +452,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         return availableCGMManagers.sorted(by: { $0.localizedTitle < $1.localizedTitle })
     }
 
-    func setupCGMManager(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool = false) -> Swift
+    @MainActor func setupCGMManager(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool = false) -> Swift
         .Result<SetupUIResult<CGMManagerViewController, CGMManager>, Error>
     {
         if let cgmManager = setupCGMManagerFromPumpManager(withIdentifier: identifier) {
@@ -444,7 +473,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         }
     }
 
-    func cgmManagerSettingsView() -> CGMManagerViewController? {
+    @MainActor func cgmManagerSettingsView() -> CGMManagerViewController? {
         guard let cgmManager = self.cgmManager as? CGMManagerUI else { return nil }
         var vc = cgmManager.settingsViewController(
             bluetoothProvider: bluetoothProvider,
@@ -456,7 +485,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         return vc
     }
 
-    func pumpManagerSettingsView() -> PumpManagerViewController? {
+    @MainActor func pumpManagerSettingsView() -> PumpManagerViewController? {
         guard let pumpManager else { return nil }
         var vc = pumpManager.settingsViewController(
             bluetoothProvider: bluetoothProvider,
@@ -476,7 +505,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 
     struct UnknownCGMManagerIdentifierError: Error {}
 
-    fileprivate func setupCGMManagerUI(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool) -> Swift
+    @MainActor fileprivate func setupCGMManagerUI(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool) -> Swift
         .Result<SetupUIResult<CGMManagerViewController, CGMManagerUI>, Error>
     {
         guard let cgmManagerUIType = cgmManagerTypeByIdentifier(identifier) else {
@@ -592,10 +621,14 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     private func addDisplayGlucoseUnitObserver(_ observer: DisplayGlucoseUnitObserver) {
-        let queue = DispatchQueue.main
-        displayGlucoseUnitObservers.insert(observer, queue: queue)
-        queue.async {
-            observer.unitDidChange(to: self.displayGlucosePreference.unit)
+        displayGlucoseUnitObservers.insert(observer, queue: DispatchQueue.main)
+        // observer is a non-Sendable CGM manager, but LoopKit synchronizes its state internally,
+        // so handing it to the main actor for this one call is safe.
+        nonisolated(unsafe) let observer = observer
+        DispatchQueue.main.async {
+            MainActor.assumeIsolated {
+                observer.unitDidChange(to: self.displayGlucosePreference.unit)
+            }
         }
     }
 
@@ -698,7 +731,14 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
 
-        lastEventDate = events.last?.date
+        let date = lastEventDate.mutate {
+            $0 = events.last?.date
+        }
+        if let date {
+            UserDefaults.standard.set(date, forKey: lastEventDateKey)
+        } else {
+            UserDefaults.standard.removeObject(forKey: lastEventDateKey)
+        }
 
         appCoordinator.sendPumpEvents(events)
         // PumpHistoryStorage subscribes to appCoordinator.pumpEvents
@@ -748,7 +788,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
-        lastEventDate?.addingTimeInterval(-15.minutes.timeInterval) ?? Date().addingTimeInterval(-2.hours.timeInterval)
+        lastEventDate.value?.addingTimeInterval(-15.minutes.timeInterval) ?? Date().addingTimeInterval(-2.hours.timeInterval)
     }
 
     var automaticDosingEnabled: Bool {
@@ -798,7 +838,7 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     func startDateToFilterNewData(for _: CGMManager) -> Date? {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
-        return latestCgmReadingDate
+        return latestCgmReadingDate.value
 //            .map { $0.addingTimeInterval(-10.minutes.timeInterval) } // additional time to calculate directions
     }
 
@@ -1303,4 +1343,15 @@ extension BaseDeviceDataManager {
             }
         }
     }
+}
+
+// A Sendable wrapper around LoopKit's Locked.
+// BaseDeviceDataManager uses this class to hold and safely modify references to CGM/pump managers.
+// * Locked is not declared Sendable
+// * CGM/pump managers are not Sendable - so our `@retroactive @unchecked Sendable` from LoopKit+Extensions.swift does not apply
+private final class ManagerBox<T>: @unchecked Sendable {
+    private let locked: Locked<T>
+    init(_ value: T) { locked = Locked(value) }
+    var value: T { get { locked.value } set { locked.value = newValue } }
+    @discardableResult func mutate(_ body: (inout T) -> Void) -> T { locked.mutate(body) }
 }

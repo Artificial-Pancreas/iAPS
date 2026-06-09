@@ -1,5 +1,6 @@
 import Foundation
 import LibreTransmitter
+import LoopKit
 import Swinject
 
 struct Calibration: JSON, Hashable, Identifiable {
@@ -12,7 +13,7 @@ struct Calibration: JSON, Hashable, Identifiable {
     var id = UUID()
 }
 
-protocol CalibrationService {
+protocol CalibrationService: Sendable {
     var slope: Double { get }
     var intercept: Double { get }
     var calibrations: [Calibration] { get }
@@ -25,9 +26,7 @@ protocol CalibrationService {
     func calibrate(value: Double) -> Double
 }
 
-// @unchecked Sendable - we have mutable state in this class, thus it is not inherently sendable;
-// we are conforming to this promise by gating access to the calibrations var behind the lock
-final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwner, @unchecked Sendable {
+final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwner, Sendable {
     private enum Config {
         static let minSlope = 0.8
         static let maxSlope = 1.25
@@ -40,14 +39,10 @@ final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwne
     private let storage: FileStorage!
     private let appCoordinator: AppCoordinator!
 
-    // to make this class safely Sendable
-    // all access to the calibrations var MUST be gated behind this lock
-    private let lock = NSLock()
-
     let lifetime = Lifetime()
 
-    private var _calibrations: [Calibration] = []
-    var calibrations: [Calibration] { lock.withLock { _calibrations } }
+    private let calibrationsLocked: Locked<[Calibration]> = Locked([])
+    var calibrations: [Calibration] { calibrationsLocked.value }
 
     init(resolver: Resolver) {
         storage = resolver.resolve(FileStorage.self)!
@@ -62,7 +57,7 @@ final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwne
         // TODO: this happens asynchronously, there's an (unlikely) possibility of cgm reading arriving before it's read (milliseconds after the app starts?)
         // need to figure this out
         let loaded = await storage.retrieve(OpenAPS.FreeAPS.calibrations, as: [Calibration].self) ?? []
-        lock.withLock { self._calibrations = loaded }
+        calibrationsLocked.mutate { $0 = loaded }
 
         observe(appCoordinator.newSensorDetectedEvents) { me, _ in
             me.removeAllCalibrations()
@@ -70,8 +65,9 @@ final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwne
     }
 
     private func mutate(_ body: (inout [Calibration]) -> Void) {
-        let snapshot: [Calibration] = lock.withLock { body(&_calibrations)
-            return _calibrations }
+        let snapshot: [Calibration] = calibrationsLocked.mutate {
+            body(&$0)
+        }
         // Fire-and-forget save; rapid back-to-back mutations could persist out of order.
         // Should be harmless here - mutations do not happen with sub-millisecond intervals (user-initiated or CGM readings).
         Task { await storage.save(snapshot, as: OpenAPS.FreeAPS.calibrations) }

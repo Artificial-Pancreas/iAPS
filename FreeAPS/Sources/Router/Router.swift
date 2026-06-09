@@ -1,6 +1,6 @@
-import Combine
+@preconcurrency import Combine
 import SwiftUI
-import Swinject
+@preconcurrency import Swinject
 
 enum MessageType {
     case info
@@ -13,7 +13,7 @@ struct MessageContent {
     var type: MessageType = .info
 }
 
-protocol Router {
+protocol Router: Sendable {
     var mainModalScreen: CurrentValueSubject<Screen?, Never> { get }
     var mainSecondaryModalView: CurrentValueSubject<AnyView?, Never> { get }
     var alertMessage: PassthroughSubject<MessageContent, Never> { get }
