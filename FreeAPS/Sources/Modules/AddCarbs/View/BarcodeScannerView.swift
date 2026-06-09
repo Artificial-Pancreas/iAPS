@@ -255,15 +255,13 @@ struct BarcodeScannerView: View {
                 return
             }
             if scannerService.cameraAuthorizationStatus == .notDetermined {
-                scannerService.requestCameraPermission()
-                    .sink { granted in
-                        if granted {
-                            self.scannerService.startScanning()
-                        } else {
-                            self.showingPermissionAlert = true
-                        }
+                Task {
+                    if await scannerService.requestCameraPermission() {
+                        scannerService.startScanning()
+                    } else {
+                        showingPermissionAlert = true
                     }
-                    .store(in: &cancellables)
+                }
             } else if scannerService.cameraAuthorizationStatus == .authorized {
                 scannerService.startScanning()
             }
