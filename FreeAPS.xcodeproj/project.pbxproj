@@ -486,6 +486,7 @@
 		F2941FA92E78823C00A9DD5D /* AppGroupCGMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA82E78823C00A9DD5D /* AppGroupCGMPlugin.swift */; };
 		F299DCFC2FD7918C0048B96A /* LoopKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */; };
 		F299DD202FD7AED70048B96A /* BarcodeCaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299DD1F2FD7AED70048B96A /* BarcodeCaptureEngine.swift */; };
+		F299DD222FD84D840048B96A /* OverrideSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299DD212FD84D780048B96A /* OverrideSnapshot.swift */; };
 		F29E5E352EE4711D00D2CBC0 /* OpenAIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29E5E342EE4711D00D2CBC0 /* OpenAIProtocol.swift */; };
 		F29E5E372EE4724300D2CBC0 /* GeminiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29E5E362EE4724300D2CBC0 /* GeminiProtocol.swift */; };
 		F29E5E392EE4726A00D2CBC0 /* ClaudeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29E5E382EE4726A00D2CBC0 /* ClaudeProtocol.swift */; };
@@ -1204,6 +1205,7 @@
 		F2941FA82E78823C00A9DD5D /* AppGroupCGMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMPlugin.swift; sourceTree = "<group>"; };
 		F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopKit+Extensions.swift"; sourceTree = "<group>"; };
 		F299DD1F2FD7AED70048B96A /* BarcodeCaptureEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeCaptureEngine.swift; sourceTree = "<group>"; };
+		F299DD212FD84D780048B96A /* OverrideSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideSnapshot.swift; sourceTree = "<group>"; };
 		F29E5E342EE4711D00D2CBC0 /* OpenAIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIProtocol.swift; sourceTree = "<group>"; };
 		F29E5E362EE4724300D2CBC0 /* GeminiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiProtocol.swift; sourceTree = "<group>"; };
 		F29E5E382EE4726A00D2CBC0 /* ClaudeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeProtocol.swift; sourceTree = "<group>"; };
@@ -2214,6 +2216,7 @@
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */,
 				19336DA52F97B096003D57C3 /* NightTime.swift */,
+				F299DD212FD84D780048B96A /* OverrideSnapshot.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
 				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
@@ -3596,6 +3599,7 @@
 				38E87408274F9AD000975559 /* UserNotificationsManager.swift in Sources */,
 				CE82E02528E867BA00473A9C /* AlertStorage.swift in Sources */,
 				38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */,
+				F299DD222FD84D840048B96A /* OverrideSnapshot.swift in Sources */,
 				38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */,
 				198F67B82CFCBD5D00E538CB /* AutoISFStateModel.swift in Sources */,
 				3862CC05273D152B00BF832C /* CalibrationService.swift in Sources */,

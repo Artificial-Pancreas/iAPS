@@ -3,7 +3,7 @@ import Foundation
 import JavaScriptCore
 import Swinject
 
-final class OpenAPS: Sendable {
+actor OpenAPS: Sendable {
     private let storage: FileStorage
     private let glucoseStorage: GlucoseStorage
     private let nightscout: NightscoutManager
@@ -36,7 +36,7 @@ final class OpenAPS: Sendable {
         currentTemp: TempBasal,
         clock: Date = Date(),
         temporaryCarbs: CarbsEntry?,
-        override: Override?
+        override: OverrideSnapshot?
     ) async -> Suggestion? {
         // For debugging
         let start = Date.now
@@ -328,14 +328,14 @@ final class OpenAPS: Sendable {
 
     // MARK: - Private
 
-    private func aisfEnabled(override: Override?) -> Bool {
+    private func aisfEnabled(override: OverrideSnapshot?) -> Bool {
         guard let current = override, current.enabled else { return false }
         guard current.overrideAutoISF, let settings = overrideStorage.fetchAutoISFsetting(id: current.id ?? ""),
               settings.autoisf else { return false }
         return true
     }
 
-    private func notDisabled(override: Override?, settings: FreeAPSSettings) -> Bool {
+    private func notDisabled(override: OverrideSnapshot?, settings: FreeAPSSettings) -> Bool {
         guard let current = override, current.enabled else { return true }
         guard current.overrideAutoISF,
               !settings.autoisf,
@@ -356,17 +356,9 @@ final class OpenAPS: Sendable {
         await glucoseStorage.retrieveFiltered()
     }
 
-//    private func preferencesHistory() async -> RawJSON {
-//        await loadFileFromStorageAsync(name: Settings.preferences)
-//    }
-
     private func basalHistory() async -> RawJSON {
         await loadFileFromStorage(name: Settings.basalProfile)
     }
-
-//    private func dataHistory() async -> RawJSON {
-//        await loadFileFromStorageAsync(name: FreeAPS.settings)
-//    }
 
     private func autosensHistory() async -> RawJSON {
         await loadFileFromStorage(name: Settings.autosense)
@@ -430,7 +422,7 @@ final class OpenAPS: Sendable {
         profile: RawJSON,
         tdd: InsulinDistribution?,
         settings: FreeAPSSettings?,
-        override: Override?
+        override: OverrideSnapshot?
     ) async -> String {
         var reasonString = reason
         let startIndex = reasonString.startIndex
@@ -924,7 +916,7 @@ final class OpenAPS: Sendable {
                 if overrideStorage.cancelProfile() != nil {
                     debug(
                         .nightscout,
-                        "Override ended, because of new carbs: \(recent.carbs) g, duration: \(duration) minutes"
+                        "Override ended, because of new carbs: \(String(describing: recent.carbs)) g, duration: \(duration) minutes"
                     )
                 }
             }

@@ -101,8 +101,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         coreDataStorage.insulinConcentration()
     }
 
-    private var override: Override? {
-        guard let last = overrideStorage.fetchLatestOverride().first, last.enabled else { return nil }
+    private var override: OverrideSnapshot? {
+        guard let last = overrideStorage.fetchLatestOverrideSnapshot(), last.enabled else { return nil }
         return last
     }
 
@@ -928,10 +928,12 @@ private class BolusObserver: DoseProgressObserver {
     }
 
     func doseProgressReporterDidUpdate(_ doseProgressReporter: DoseProgressReporter) {
-        Task {
+        let percentComplete = doseProgressReporter.progress.percentComplete
+        let isComplete = doseProgressReporter.progress.isComplete
+        Task { [manager] in
             await manager.updateBolusProgress(
-                percentComplete: doseProgressReporter.progress.percentComplete,
-                isComplete: doseProgressReporter.progress.isComplete
+                percentComplete: percentComplete,
+                isComplete: isComplete
             )
         }
     }
