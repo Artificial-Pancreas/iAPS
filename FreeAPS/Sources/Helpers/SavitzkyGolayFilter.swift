@@ -1,8 +1,5 @@
 import Foundation
 
-/// allowed values are 0, 1, 2 or 3. It's the index in coefficients
-private var coefficientsRowToUse = 3
-
 /// Savitzky Golay coefficients
 private let coefficients = [
     [-3.0, 12.0, 17.0, 12.0, -3.0],
@@ -36,6 +33,9 @@ extension Array where Element: SavitzkyGolaySmoothable {
     mutating func smoothSavitzkyGolayQuaDratic(withFilterWidth filterWidth: Int = 5) {
         // filterWidthToUse is the value of filterWidth to use in the algorithm. By default filterWidthToUse = parameter value filterWidth
         var filterWidthToUse = filterWidth
+
+        /// allowed values are 0, 1, 2 or 3. It's the index in coefficients
+        var coefficientsRowToUse = 3
 
         // calculate coefficientsRowToUse based on filterWdith
         switch filterWidth {
