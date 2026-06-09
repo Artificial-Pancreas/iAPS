@@ -8,6 +8,8 @@ extension AutotuneConfig {
         @Injected() var apsManager: APSManager!
         @Injected() private var storage: FileStorage!
 
+        private let coreDataStorage = CoreDataStorage()
+
         @Published var useAutotune = false
         @Published var onlyAutotuneBasals = false
         @Published var autotune: Autotune?
@@ -99,6 +101,10 @@ extension AutotuneConfig {
             }
         }
 
+        private func readConcentration() -> Double {
+            coreDataStorage.insulinConcentration().concentration
+        }
+
         func replace() {
             Task {
                 if let autotunedBasals = autotune {
@@ -110,19 +116,18 @@ extension AutotuneConfig {
                                 rate: basal.rate.roundBolusIncrements(increment: increment)
                             )
                         }
-                    let syncValues = basals.map {
-                        RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
-                    }
+                    let concentration = readConcentration()
                     do {
-                        if let savedBasals = try await deviceManager.syncBasalRateSchedule(items: syncValues) {
-                            //                         TODO: get the actually saved basal (saved) and use it instead of assuming it was saved as is
-                            let adjustedBasals = basals // savedBasals.items ...
+                        if let adjustedBasals = try await deviceManager.syncBasalRateSchedule(
+                            items: basals,
+                            concentration: concentration
+                        ) {
                             await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
                         } else {
                             // no pump configured
                             await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                            debug(.service, "Basals have been replaced with Autotuned Basals by user.")
                         }
+                        debug(.service, "Basals have been replaced with Autotuned Basals by user.")
                     } catch {
                         debug(.service, "Basals couldn't be saved to pump")
                     }

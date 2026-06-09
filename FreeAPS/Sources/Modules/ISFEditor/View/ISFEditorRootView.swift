@@ -45,7 +45,7 @@ extension ISFEditor {
                     }
                 }
                 // TODO: was newISF meant to be used/displayed here?
-                if let newISF = state.autosensISF {
+                if let /* newISF */ _ = state.autosensISF {
                     Section(
                         header: !appUIState.preferences.useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
                     ) {

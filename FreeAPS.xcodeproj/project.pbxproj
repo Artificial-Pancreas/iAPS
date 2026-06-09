@@ -3421,7 +3421,6 @@
 				3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */,
 				F2E8D14D2F09616A0097F482 /* TimePickerSheet.swift in Sources */,
 				3811DEEB25CA063400A708ED /* Persisted.swift in Sources */,
-				3811DEEB25CA063400A708ED /* Persisted.swift in Sources */,
 				F21580A52E47B4FF003BC827 /* PeakPicker.swift in Sources */,
 				38E44537274E411700EC9A94 /* Disk+Helpers.swift in Sources */,
 				F2941FA32E787F9F00A9DD5D /* AppGroupCGM+UI.swift in Sources */,

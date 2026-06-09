@@ -116,16 +116,8 @@ extension BasalProfileEditor {
 
         private func saveProfile(_ profile: [BasalProfileEntry]) async throws {
             let concentration = readConcentration()
-            let syncValues = profile.map {
-                RepeatingScheduleValue(
-                    startTime: TimeInterval($0.minutes * 60),
-                    value: Double($0.rate) / concentration
-                )
-            }
 
-            if let savedProfile = try await deviceManager.syncBasalRateSchedule(items: syncValues) {
-                // TODO: save the returned schedule instead of assuming it was saved as is
-                let adjustedProfile = profile // savedProfile.items ...
+            if let adjustedProfile = try await deviceManager.syncBasalRateSchedule(items: profile, concentration: concentration) {
                 await storage.save(adjustedProfile, as: OpenAPS.Settings.basalProfile)
             } else {
                 // no pump configured
