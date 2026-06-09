@@ -444,7 +444,6 @@
 		F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A582BA78B7400A0B716 /* ContactTrickState.swift */; };
 		F2159A5B2BA7939C00A0B716 /* ContactPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */; };
 		F21957B12EF48B8E003C9F09 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21957B02EF48B8D003C9F09 /* Debug.swift */; };
-		F22651262FC517270007C099 /* PumpManager+AsyncExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22651252FC517210007C099 /* PumpManager+AsyncExtensions.swift */; };
 		F226D4F12E5E0B1400F8F43C /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */; };
 		F226D4F22E5E0B1400F8F43C /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F226D4F32E5E0B1400F8F43C /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; };
@@ -1161,7 +1160,6 @@
 		F2159A582BA78B7400A0B716 /* ContactTrickState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickState.swift; sourceTree = "<group>"; };
 		F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPicture.swift; sourceTree = "<group>"; };
 		F21957B02EF48B8D003C9F09 /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
-		F22651252FC517210007C099 /* PumpManager+AsyncExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PumpManager+AsyncExtensions.swift"; sourceTree = "<group>"; };
 		F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F226D4F82E5E109100F8F43C /* LibreTransmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1985,7 +1983,6 @@
 			isa = PBXGroup;
 			children = (
 				3811DF0F25CAAAE200A708ED /* APSManager.swift */,
-				F22651252FC517210007C099 /* PumpManager+AsyncExtensions.swift */,
 				38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */,
 				38A43597262E0E4900E80935 /* FetchAnnouncementsManager.swift */,
 				38192E06261BA9960094D973 /* FetchTreatmentsManager.swift */,
@@ -3758,7 +3755,6 @@
 				19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */,
 				F2DCBC562F0B30A2005D713E /* ViewExtensions.swift in Sources */,
 				1948C0662D35A8350032B6A2 /* AutoISFHistoryView.swift in Sources */,
-				F22651262FC517270007C099 /* PumpManager+AsyncExtensions.swift in Sources */,
 				9702FF92A09C53942F20D7EA /* TargetsEditorRootView.swift in Sources */,
 				1967DFBE29D052C200759F30 /* Icons.swift in Sources */,
 				38E8754F275556FA00975559 /* WatchManager.swift in Sources */,
