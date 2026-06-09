@@ -81,7 +81,6 @@
 		19914CDC2EDDC09400DC2051 /* MealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19914CDB2EDDC08F00DC2051 /* MealData.swift */; };
 		1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
-		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
 		19A910302A24BF6300C8951B /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9102F2A24BF6300C8951B /* StatsView.swift */; };
 		19A910362A24D6D700C8951B /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910352A24D6D700C8951B /* Configs.swift */; };
 		19A910382A24EF3200C8951B /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910372A24EF3200C8951B /* ChartsView.swift */; };
@@ -107,7 +106,6 @@
 		19D4E4EB29FC6A9F00351451 /* Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4E4EA29FC6A9F00351451 /* Charts.swift */; };
 		19D8FBC22ECE79C0009DA31F /* InsulinSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D8FBC12ECE79A2009DA31F /* InsulinSummaryView.swift */; };
 		19DA48E829CD339B00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
-		19DA48EA29CD339C00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		19DB70A72BF8F01E00C05381 /* ActiveCOBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB70A62BF8F01E00C05381 /* ActiveCOBView.swift */; };
 		19DB781D2D332F73007BBB54 /* AutoISFsettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB781C2D332F73007BBB54 /* AutoISFsettings.swift */; };
 		19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */; };
@@ -251,7 +249,7 @@
 		38DF1786276A73D400B3528F /* TagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF1785276A73D400B3528F /* TagCloudView.swift */; };
 		38DF1789276FC8C400B3528F /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 38DF1788276FC8C400B3528F /* SwiftMessages */; };
 		38DF178D27733E6800B3528F /* snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 38DF178B27733E6800B3528F /* snow.sks */; };
-		38DF178E27733E6800B3528F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38DF178C27733E6800B3528F /* Assets.xcassets */; };
+		38DF178E27733E6800B3528F /* AnimatedBackground.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38DF178C27733E6800B3528F /* AnimatedBackground.xcassets */; };
 		38DF179027733EAD00B3528F /* SnowScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF178F27733EAD00B3528F /* SnowScene.swift */; };
 		38E4451E274DB04600EC9A94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E4451D274DB04600EC9A94 /* AppDelegate.swift */; };
 		38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E44521274E3DDC00EC9A94 /* NetworkReachabilityManager.swift */; };
@@ -274,7 +272,7 @@
 		38E8752E27554D5700975559 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8752D27554D5700975559 /* NotificationController.swift */; };
 		38E8753027554D5700975559 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8752F27554D5700975559 /* NotificationView.swift */; };
 		38E8753227554D5700975559 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8753127554D5700975559 /* ComplicationController.swift */; };
-		38E8753427554D5800975559 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38E8753327554D5800975559 /* Assets.xcassets */; };
+		38E8753427554D5800975559 /* WatchKitAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38E8753327554D5800975559 /* WatchKitAssets.xcassets */; };
 		38E8753727554D5900975559 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38E8753627554D5800975559 /* Preview Assets.xcassets */; };
 		38E8753C27554D5900975559 /* FreeAPSWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 38E8751C27554D5500975559 /* FreeAPSWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		38E8754727554DF100975559 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F37827261260DC009DB701 /* Color+Extensions.swift */; };
@@ -954,7 +952,7 @@
 		38DAB27F260CBB7F00F74C1A /* PumpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpView.swift; sourceTree = "<group>"; };
 		38DF1785276A73D400B3528F /* TagCloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCloudView.swift; sourceTree = "<group>"; };
 		38DF178B27733E6800B3528F /* snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = snow.sks; sourceTree = "<group>"; };
-		38DF178C27733E6800B3528F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		38DF178C27733E6800B3528F /* AnimatedBackground.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AnimatedBackground.xcassets; sourceTree = "<group>"; };
 		38DF178F27733EAD00B3528F /* SnowScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowScene.swift; sourceTree = "<group>"; };
 		38E4451D274DB04600EC9A94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38E44521274E3DDC00EC9A94 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
@@ -973,13 +971,13 @@
 		38E87402274F78C000975559 /* libswiftCoreNFC.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftCoreNFC.tbd; path = usr/lib/swift/libswiftCoreNFC.tbd; sourceTree = SDKROOT; };
 		38E87407274F9AD000975559 /* UserNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationsManager.swift; sourceTree = "<group>"; };
 		38E8751C27554D5500975559 /* FreeAPSWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPSWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		38E8751E27554D5700975559 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		38E8751E27554D5700975559 /* WatchAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WatchAssets.xcassets; sourceTree = "<group>"; };
 		38E8752927554D5700975559 /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
 		38E8752B27554D5700975559 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		38E8752D27554D5700975559 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		38E8752F27554D5700975559 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		38E8753127554D5700975559 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
-		38E8753327554D5800975559 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		38E8753327554D5800975559 /* WatchKitAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WatchKitAssets.xcassets; sourceTree = "<group>"; };
 		38E8753627554D5800975559 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		38E8753827554D5900975559 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38E8753927554D5900975559 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
@@ -1306,7 +1304,6 @@
 			files = (
 				CE6B025728F350FF000C5502 /* HealthKit.framework in Frameworks */,
 				38E8755827567AE400975559 /* SwiftDate in Frameworks */,
-				199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2328,7 +2325,7 @@
 			isa = PBXGroup;
 			children = (
 				38DF178B27733E6800B3528F /* snow.sks */,
-				38DF178C27733E6800B3528F /* Assets.xcassets */,
+				38DF178C27733E6800B3528F /* AnimatedBackground.xcassets */,
 				38DF178F27733EAD00B3528F /* SnowScene.swift */,
 			);
 			path = AnimatedBackground;
@@ -2364,7 +2361,7 @@
 			children = (
 				1980131D29CC9839002FF024 /* Info.plist */,
 				38E8755627564B6100975559 /* FreeAPSWatch.entitlements */,
-				38E8751E27554D5700975559 /* Assets.xcassets */,
+				38E8751E27554D5700975559 /* WatchAssets.xcassets */,
 			);
 			path = FreeAPSWatch;
 			sourceTree = "<group>";
@@ -2380,7 +2377,7 @@
 				38E8752D27554D5700975559 /* NotificationController.swift */,
 				38E8752F27554D5700975559 /* NotificationView.swift */,
 				38E8753127554D5700975559 /* ComplicationController.swift */,
-				38E8753327554D5800975559 /* Assets.xcassets */,
+				38E8753327554D5800975559 /* WatchKitAssets.xcassets */,
 				38E8753827554D5900975559 /* Info.plist */,
 				38E8753927554D5900975559 /* PushNotificationPayload.apns */,
 				38E8753527554D5800975559 /* Preview Content */,
@@ -3310,7 +3307,7 @@
 				198377D2266BFFF6004DE65E /* Localizable.strings in Resources */,
 				38DF178D27733E6800B3528F /* snow.sks in Resources */,
 				388E597225AD9CF10019842D /* json in Resources */,
-				38DF178E27733E6800B3528F /* Assets.xcassets in Resources */,
+				38DF178E27733E6800B3528F /* AnimatedBackground.xcassets in Resources */,
 				19DA48E829CD339B00EEA1E7 /* Assets.xcassets in Resources */,
 				1972ECF52DC25CC4002DD59B /* AppShortcuts.strings in Resources */,
 				F29E5E532EE493A400D2CBC0 /* ai in Resources */,
@@ -3329,8 +3326,7 @@
 				38E8753727554D5900975559 /* Preview Assets.xcassets in Resources */,
 				19795118275953E50044850D /* Localizable.strings in Resources */,
 				1990DC532D6C1DDE00C4D967 /* Assets.xcassets in Resources */,
-				38E8753427554D5800975559 /* Assets.xcassets in Resources */,
-				19DA48EA29CD339C00EEA1E7 /* Assets.xcassets in Resources */,
+				38E8753427554D5800975559 /* WatchKitAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3357,6 +3353,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		3811DEF525CA169200A708ED /* Swiftformat */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -4226,10 +4223,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4280,10 +4274,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
