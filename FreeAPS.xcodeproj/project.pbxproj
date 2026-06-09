@@ -484,6 +484,7 @@
 		F2941FA52E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA42E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift */; };
 		F2941FA72E78806800A9DD5D /* AppGroupCGMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA62E78806800A9DD5D /* AppGroupCGMSettingsView.swift */; };
 		F2941FA92E78823C00A9DD5D /* AppGroupCGMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2941FA82E78823C00A9DD5D /* AppGroupCGMPlugin.swift */; };
+		F299DCFC2FD7918C0048B96A /* LoopKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */; };
 		F29E5E352EE4711D00D2CBC0 /* OpenAIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29E5E342EE4711D00D2CBC0 /* OpenAIProtocol.swift */; };
 		F29E5E372EE4724300D2CBC0 /* GeminiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29E5E362EE4724300D2CBC0 /* GeminiProtocol.swift */; };
 		F29E5E392EE4726A00D2CBC0 /* ClaudeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29E5E382EE4726A00D2CBC0 /* ClaudeProtocol.swift */; };
@@ -1200,6 +1201,7 @@
 		F2941FA42E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMSettingsViewController.swift; sourceTree = "<group>"; };
 		F2941FA62E78806800A9DD5D /* AppGroupCGMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMSettingsView.swift; sourceTree = "<group>"; };
 		F2941FA82E78823C00A9DD5D /* AppGroupCGMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCGMPlugin.swift; sourceTree = "<group>"; };
+		F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopKit+Extensions.swift"; sourceTree = "<group>"; };
 		F29E5E342EE4711D00D2CBC0 /* OpenAIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIProtocol.swift; sourceTree = "<group>"; };
 		F29E5E362EE4724300D2CBC0 /* GeminiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiProtocol.swift; sourceTree = "<group>"; };
 		F29E5E382EE4726A00D2CBC0 /* ClaudeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeProtocol.swift; sourceTree = "<group>"; };
@@ -2263,6 +2265,7 @@
 				F25EBEFA2FC21228009D275F /* TimeInterval+Extensions.swift */,
 				F25EBEFE2FC2312A009D275F /* LifetimeOwner.swift */,
 				F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */,
+				F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3689,6 +3692,7 @@
 				F2FA68882EE90B0F00476D7B /* AIPrompts.swift in Sources */,
 				F2E8D1572F0963530097F482 /* FoodItemRow.swift in Sources */,
 				19F95FF729F10FEE00314DDC /* StatStateModel.swift in Sources */,
+				F299DCFC2FD7918C0048B96A /* LoopKit+Extensions.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,
 				F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */,
 				8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */,
