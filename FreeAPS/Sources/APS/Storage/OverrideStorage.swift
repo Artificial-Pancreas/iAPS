@@ -20,16 +20,30 @@ final class OverrideStorage: Sendable {
         return overrideArray
     }
 
+    private func latestOverrideRequest() -> NSFetchRequest<Override> {
+        let request = Override.fetchRequest() as NSFetchRequest<Override>
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        request.fetchLimit = 1
+        return request
+    }
+
     func fetchLatestOverride() -> [Override] {
         var overrideArray = [Override]()
         coredataContext.performAndWait {
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = 1
-            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+            try? overrideArray = self.coredataContext.fetch(latestOverrideRequest())
         }
         return overrideArray
+    }
+
+    // return as a Snapshot - safe to send across threads
+    func fetchLatestOverrideSnapshot() -> OverrideSnapshot? {
+        var snapshot: OverrideSnapshot?
+        coredataContext.performAndWait {
+            if let override = try? coredataContext.fetch(latestOverrideRequest()).first {
+                snapshot = OverrideSnapshot.create(from: override)
+            }
+        }
+        return snapshot
     }
 
     func fetchPreset(id: String) -> OverridePresets? {
