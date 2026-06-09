@@ -691,8 +691,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPumpStatus()
 
         if status.insulinType != oldStatus.insulinType {
+            let newInsulinCurve = status.insulinType
             Task { [settingsManager] in
-                await settingsManager.updateInsulinCurve(status.insulinType)
+                await settingsManager.updateInsulinCurve(newInsulinCurve)
             }
         }
 
@@ -1305,9 +1306,7 @@ extension BaseDeviceDataManager {
     func syncBasalRateSchedule(items basals: [BasalProfileEntry], concentration: Double) async throws -> [BasalProfileEntry]? {
         guard let pump = pumpManager else { return nil }
 
-        let scheduleItems = basals.map {
-            RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate) / concentration)
-        }
+        let scheduleItems = basals.map { $0.toLoopKit(concentration: concentration) }
 
         return try await withCheckedThrowingContinuation { continuation in
             pump.syncBasalRateSchedule(items: scheduleItems) { result in

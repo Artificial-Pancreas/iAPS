@@ -8,6 +8,8 @@ extension PumpConfig {
         @Injected() private var alertHistoryStorage: AlertHistoryStorage!
         @Injected() private var storage: FileStorage!
 
+        private let coreDataStorage = CoreDataStorage()
+
         @Published var pumpSetupPresented: Bool = false
         @Published var pumpSettingsPresented: Bool = false
         @Published private(set) var pumpIdentifierToSetUp: String? = nil
@@ -16,9 +18,10 @@ extension PumpConfig {
 
         override func subscribe() async {
             let basalProfile = await fetchBasalProfile()
+            let concentration = readConcentration()
             let basalSchedule = BasalRateSchedule(
                 dailyItems: basalProfile.map {
-                    RepeatingScheduleValue(startTime: Double($0.minutes) * 60, value: Double($0.rate))
+                    $0.toLoopKit(concentration: concentration)
                 }
             )
 
@@ -29,6 +32,10 @@ extension PumpConfig {
                 maxBasalRateUnitsPerHour: Double(pumpSettings.maxBasal),
                 basalSchedule: basalSchedule ?? PumpInitialSettings.default.basalSchedule
             )
+        }
+
+        private func readConcentration() -> Double {
+            coreDataStorage.insulinConcentration().concentration
         }
 
         func showCurrentPumpSettings() {
