@@ -29,7 +29,7 @@ extension WatchConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() private var garmin: GarminManager!
 
-        @Published var devices: [IQDevice] = []
+        @Published var devices: [CodableDevice] = []
         @Published var selectedAwConfig: AwConfig = .HR
         @Published var displayFatAndProteinOnWatch = false
         @Published var confirmBolusFaster = false
@@ -66,9 +66,7 @@ extension WatchConfig {
 
         func selectGarminDevices() {
             Task {
-                for await selected in garmin.selectDevices().values {
-                    devices = selected
-                }
+                self.devices = await garmin.selectDevices()
             }
         }
 

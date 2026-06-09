@@ -34,7 +34,7 @@ extension WatchConfig {
 
                 Section(header: Text("Garmin Watch")) {
                     List {
-                        ForEach(state.devices, id: \.uuid) { device in
+                        ForEach(state.devices, id: \.id) { device in
                             Text(device.friendlyName)
                         }
                         .onDelete(perform: onDelete)

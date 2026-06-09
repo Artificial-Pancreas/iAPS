@@ -53,7 +53,7 @@ actor BaseTempTargetsStorage: TempTargetsStorage {
                 }
                 .sorted { $0.createdAt > $1.createdAt }
         }
-        await appCoordinator.tempTargetsUpdates.send(uniqEvents)
+        appCoordinator.tempTargetsUpdates.send(uniqEvents)
     }
 
     func syncDate() -> Date {

@@ -6,6 +6,9 @@ import Swinject
 final class ServiceAssembly: Assembly {
     func assemble(container: Container) {
         container.register(AppCoordinator.self) { _ in AppCoordinator() }
+
+        // Foundation.NotificationCenter.default is provided to GarminManager below without resolving it;
+        // if this ever needs to change - make sure to keep the GarminManager in-sync
         container.register(NotificationCenter.self) { _ in Foundation.NotificationCenter.default }
 
         container.register(GroupedIssueReporter.self) { _ in
@@ -75,7 +78,16 @@ final class ServiceAssembly: Assembly {
                 appCoordinator: appCoordinator
             )
         }
-        container.register(GarminManager.self) { r in BaseGarminManager(resolver: r) }
+        container.register(GarminManager.self) { _ in
+            // BaseGarminManager is @MainActor.
+            // All resolution happens on the main actor (AppServices.performStartup and StateModels),
+            // so asserting main isolation here is safe.
+            MainActor.assumeIsolated {
+                BaseGarminManager(
+                    notificationCenter: Foundation.NotificationCenter.default
+                )
+            }
+        }
         container.register(ContactTrickManager.self) { r in
             let appCoordinator = r.resolve(AppCoordinator.self)!
             let storage = r.resolve(FileStorage.self)!

@@ -13,8 +13,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     private let delegate: WatchSessionDelegate
     private var state = WatchState()
 
-    // a copy of state - updated every time state is updated, for the pre-concurrency interop, namely the `garmin.stateRequet`
-    nonisolated(unsafe) private var cachedStateData = Data()
+    private var cachedStateData = Data()
 
     private let settingsManager: SettingsManager
     private let apsManager: APSManager
@@ -115,8 +114,8 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
 //            // TODO:
 //        }
 
-        garmin.setStateRequest({ [weak self] () -> Data in
-            self?.cachedStateData ?? Data()
+        await garmin.setStateRequest({ [weak self] in
+            await self?.cachedStateData ?? Data()
         })
 
         await configureState()
@@ -264,7 +263,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         // cache the serialized state to be used by `garmin.stateRequet`
         self.cachedStateData = (try? JSONEncoder().encode(state)) ?? Data()
 
-        self.sendState()
+        await self.sendState()
     }
 
     private func getDeltaBG(_ glucose: [Readings]) -> Decimal? {
@@ -279,11 +278,11 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         return Decimal(round(Double(amount / bolusIncrement))) * bolusIncrement
     }
 
-    fileprivate func sendState() {
+    fileprivate func sendState() async {
         let data = cachedStateData
         guard !data.isEmpty else { return }
 
-        garmin.sendState(data)
+        await garmin.sendState(data)
 
         guard session.isReachable else { return }
         session.sendMessageData(data, replyHandler: nil) { error in
