@@ -74,7 +74,6 @@ extension AutotuneConfig {
                 self.autotune = await runAutotune()
 
                 if var tuned = self.autotune {
-                    // TODO: concentration is ignored?
                     let basal = tuned.basalProfile.map { basal in
                         BasalProfileEntry(
                             start: basal.start,

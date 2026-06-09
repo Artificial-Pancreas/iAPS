@@ -1,4 +1,5 @@
 import Foundation
+import LoopKit
 
 struct BasalProfileEntry: JSON, Equatable {
     let start: String
@@ -32,5 +33,9 @@ extension BasalProfileEntry {
             minutes: seconds / 60,
             rate: Decimal(rate)
         )
+    }
+
+    func toLoopKit(concentration: Double) -> RepeatingScheduleValue<Double> {
+        RepeatingScheduleValue(startTime: TimeInterval(minutes * 60), value: Double(rate) / concentration)
     }
 }
