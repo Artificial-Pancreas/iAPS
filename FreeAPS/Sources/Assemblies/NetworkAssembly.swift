@@ -45,7 +45,8 @@ final class NetworkAssembly: Assembly {
                 settingsManager: r.resolve(SettingsManager.self)!,
                 nightscoutManager: r.resolve(NightscoutManager.self)!,
                 databaseManager: r.resolve(DatabaseManager.self)!,
-                appCoordinator: r.resolve(AppCoordinator.self)!
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                statisticsFactory: r.resolve(DatabaseStatisticsFactory.self)!
             )
         }
     }

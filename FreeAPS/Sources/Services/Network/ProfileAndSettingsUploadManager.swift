@@ -1,6 +1,5 @@
 import Foundation
 import SwiftDate
-import Swinject
 
 protocol ProfileAndSettingsUploadManager: Sendable {
     func uploadProfileAndSettings(force: Bool) async
@@ -12,8 +11,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
     private let nightscoutManager: NightscoutManager
     private let databaseManager: DatabaseManager
     private let appCoordinator: AppCoordinator
-
-    @Injected() private var statisticsFactory: DatabaseStatisticsFactory!
+    private let statisticsFactory: DatabaseStatisticsFactory
 
     let lifetime = Lifetime()
 
@@ -28,13 +26,15 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
         settingsManager: SettingsManager,
         nightscoutManager: NightscoutManager,
         databaseManager: DatabaseManager,
-        appCoordinator: AppCoordinator
+        appCoordinator: AppCoordinator,
+        statisticsFactory: DatabaseStatisticsFactory
     ) {
         self.storage = storage
         self.settingsManager = settingsManager
         self.nightscoutManager = nightscoutManager
         self.databaseManager = databaseManager
         self.appCoordinator = appCoordinator
+        self.statisticsFactory = statisticsFactory
     }
 
     // this is called at the start of the app
