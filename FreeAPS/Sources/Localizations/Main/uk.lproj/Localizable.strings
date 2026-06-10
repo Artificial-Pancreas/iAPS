@@ -1482,6 +1482,10 @@ Enact a temp Basal or a temp target */
 
 "Photo Analysis" = "Аналіз Фотографій";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Сканер Штрих-Кодів";
 
 "Text Search" = "Пошук Тексту";
