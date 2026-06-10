@@ -1481,6 +1481,10 @@ Enact a temp Basal or a temp target */
 
 "Photo Analysis" = "Phân tích ảnh";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Quét mã vạch";
 
 "Text Search" = "Tìm kiếm theo từ";

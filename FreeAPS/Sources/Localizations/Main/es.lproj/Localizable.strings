@@ -1482,6 +1482,10 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "Photo Analysis" = "Photo Analysis";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Barcode Scanner";
 
 "Text Search" = "Text Search";
