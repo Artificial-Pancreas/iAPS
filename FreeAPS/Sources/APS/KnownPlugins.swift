@@ -7,8 +7,6 @@ import MedtrumKit
 import MinimedKit
 import MockKit
 import NightscoutRemoteCGM
-import OmniBLE
-import OmniKit
 import OmnipodKit
 
 enum KnownPlugins {
@@ -94,27 +92,6 @@ enum KnownPlugins {
 
     static func isManualTempBasalActive(_ pumpManager: PumpManager) -> Bool? {
         switch pumpManager.pluginIdentifier {
-        case OmnipodPumpManager.pluginIdentifier:
-            if let omnipod = pumpManager as? OmnipodPumpManager,
-               let tempBasal = omnipod.state.podState?.unfinalizedTempBasal,
-               !tempBasal.isFinished(),
-               !tempBasal.automatic
-            {
-                return true
-            } else {
-                return false
-            }
-        case OmniBLEPumpManager.pluginIdentifier:
-            if let omnipodBLE = pumpManager as? OmniBLEPumpManager,
-               let tempBasal = omnipodBLE.state.podState?.unfinalizedTempBasal,
-               !tempBasal.isFinished(),
-               !tempBasal.automatic
-            {
-                return true
-            } else {
-                return false
-            }
-
         case OmniPumpManager.pluginIdentifier:
             if let omnipod = pumpManager as? OmniPumpManager,
                let tempBasal = omnipod.state.podState?.unfinalizedTempBasal,
@@ -131,10 +108,6 @@ enum KnownPlugins {
 
     static func pumpActivationDate(_ pumpManager: PumpManager) -> Date? {
         switch pumpManager.pluginIdentifier {
-        case OmnipodPumpManager.pluginIdentifier:
-            return (pumpManager as? OmnipodPumpManager)?.state.podState?.activatedAt
-        case OmniBLEPumpManager.pluginIdentifier:
-            return (pumpManager as? OmniBLEPumpManager)?.state.podState?.activatedAt
         case MedtrumPumpManager.pluginIdentifier:
             return (pumpManager as? MedtrumPumpManager)?.state.patchActivatedAt
         case OmniPumpManager.pluginIdentifier:
@@ -145,10 +118,6 @@ enum KnownPlugins {
 
     static func pumpExpirationDate(_ pumpManager: PumpManager) -> Date? {
         switch pumpManager.pluginIdentifier {
-        case OmnipodPumpManager.pluginIdentifier:
-            return (pumpManager as? OmnipodPumpManager)?.state.podState?.expiresAt
-        case OmniBLEPumpManager.pluginIdentifier:
-            return (pumpManager as? OmniBLEPumpManager)?.state.podState?.expiresAt
         case MedtrumPumpManager.pluginIdentifier:
             return (pumpManager as? MedtrumPumpManager)?.state.patchExpiresAt
         case OmniPumpManager.pluginIdentifier:
@@ -159,18 +128,6 @@ enum KnownPlugins {
 
     static func pumpReservoir(_ pumpManager: PumpManager) -> Decimal? {
         switch pumpManager.pluginIdentifier {
-        case OmnipodPumpManager.pluginIdentifier:
-            let reservoirVal = (pumpManager as? OmnipodPumpManager)?.state.podState?.lastInsulinMeasurements?
-                .reservoirLevel ?? 0xDEAD_BEEF
-            // TODO: find the value Pod.maximumReservoirReading
-            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
-            return Decimal(reservoir)
-        case OmniBLEPumpManager.pluginIdentifier:
-            let reservoirVal = (pumpManager as? OmniBLEPumpManager)?.state.podState?.lastInsulinMeasurements?
-                .reservoirLevel ?? 0xDEAD_BEEF
-            // TODO: find the value Pod.maximumReservoirReading
-            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
-            return Decimal(reservoir)
         case OmniPumpManager.pluginIdentifier:
             let reservoirVal = (pumpManager as? OmniPumpManager)?.state.podState?.lastInsulinMeasurements?
                 .reservoirLevel ?? 0xDEAD_BEEF
