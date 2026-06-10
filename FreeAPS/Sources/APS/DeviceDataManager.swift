@@ -921,7 +921,11 @@ extension BaseDeviceDataManager {
 //                alertIdentifier: alert.alertIdentifier,
 //                error: nil
 //            )
-            self.router.alertMessage.send(messageCont)
+            Task {
+                await MainActor.run {
+                    self.router.alertMessage.send(messageCont)
+                }
+            }
 
             var alertResponder: AlertResponder?
             if let pumpManager = self.pumpManager, alert.managerIdentifier == pumpManager.pluginIdentifier {

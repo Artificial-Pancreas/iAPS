@@ -203,7 +203,9 @@ extension BaseGarminManager: IQUIOverrideDelegate {
                 ),
                 type: .warning
             )
-            router.alertMessage.send(messageCont)
+            await MainActor.run {
+                router.alertMessage.send(messageCont)
+            }
         }
     }
 }
