@@ -512,7 +512,9 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
     fileprivate func handleNotificationAction(_ action: NotificationAction) async {
         switch action {
         case .snooze:
-            router.mainModalScreen.send(.snooze)
+            await MainActor.run {
+                router.mainModalScreen.send(.snooze)
+            }
         }
     }
 }
