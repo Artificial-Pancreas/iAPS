@@ -4039,14 +4039,14 @@ Enact a temp Basal or a temp target */
 
 "Build Expires Soon!" = "Скоро закінчується збірка!";
 
-"Build Expiring in %d Day" = "Build Expiring in %d Day";
+"Build Expiring in %d Day" = "Термін дії збірки закінчується через %d день";
 
-"Build Expiring in %d Days" = "Build Expiring in %d Days";
+"Build Expiring in %d Days" = "Термін дії збірки закінчується через %d днів";
 
-"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Термін дії вашої збірки iAPS закінчується через %d годину. Після закінчення терміну дії програма не запускатиметься, доки ви не перебудуєте її.";
 
-"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Термін дії вашої збірки iAPS закінчується через %d годин. Після закінчення терміну дії програма не запускатиметься, доки ви не перебудуєте її.";
 
-"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Термін дії вашої збірки iAPS закінчується %1$@ (залишився %2$d день). Збірки TestFlight потрібно оновлювати кожні 90 днів.";
 
-"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Термін дії вашої збірки iAPS закінчується %1$@ (залишилося %2$d днів). Збірки TestFlight потрібно оновлювати кожні 90 днів.";
