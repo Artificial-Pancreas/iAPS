@@ -16,14 +16,12 @@ struct MessageContent {
 @MainActor protocol Router: Sendable {
     var mainModalScreen: CurrentValueSubject<Screen?, Never> { get }
     var mainSecondaryModalView: CurrentValueSubject<AnyView?, Never> { get }
-    var alertMessage: PassthroughSubject<MessageContent, Never> { get }
     func view(for screen: Screen) -> AnyView
 }
 
 @MainActor final class BaseRouter: Router {
     let mainModalScreen = CurrentValueSubject<Screen?, Never>(nil)
     let mainSecondaryModalView = CurrentValueSubject<AnyView?, Never>(nil)
-    let alertMessage = PassthroughSubject<MessageContent, Never>()
 
     nonisolated(unsafe) private let resolver: Resolver
 

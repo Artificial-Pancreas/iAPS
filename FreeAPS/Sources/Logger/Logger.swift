@@ -1,9 +1,7 @@
+import LoopKit
 import os.log
 import os.signpost
 import UIKit
-
-private let baseReporter = FreeAPSApp.resolver.resolve(GroupedIssueReporter.self)!
-private let router = FreeAPSApp.resolver.resolve(Router.self)!
 
 let loggerLock = NSRecursiveLock()
 
@@ -104,6 +102,23 @@ func check(
 
 final class Logger {
     static let LoggerTestMode = false
+
+    private static let baseReporter = {
+        let reporter = CollectionIssueReporter()
+        reporter.add(reporters: [
+            SimpleLogReporter()
+        ])
+        reporter.setup()
+        return reporter
+    }()
+
+    enum WarningLogHandler {
+        private static let _handler = Locked<(@Sendable(MessageContent) -> Void)?>(nil)
+        static var handler: (@Sendable(MessageContent) -> Void)? {
+            get { _handler.value }
+            set { _handler.value = newValue }
+        }
+    }
 
     static let `default` = Logger(category: .default, reporter: baseReporter)
     static let service = Logger(category: .service, reporter: baseReporter)
@@ -277,7 +292,7 @@ final class Logger {
     private func showAlert(_ message: String, type: MessageType = .info) {
         DispatchQueue.main.async {
             let messageCont = MessageContent(content: message, type: type)
-            router.alertMessage.send(messageCont)
+            WarningLogHandler.handler?(messageCont)
         }
     }
 

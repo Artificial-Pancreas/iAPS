@@ -22,6 +22,7 @@ import Swinject
 
         _ = resolver.resolve(BluetoothStateManager.self)!
 
+        let appCoordinator = resolver.resolve(AppCoordinator.self)!
         try await startService(resolver.resolve(FetchTreatmentsManager.self))
         try await startService(resolver.resolve(FetchAnnouncementsManager.self))
         try await startService(resolver.resolve(UserNotificationsManager.self))
@@ -40,6 +41,10 @@ import Swinject
         try await startService(resolver.resolve(APSManager.self)!)
 
         try await startService(resolver.resolve(AppUIState.self))
+
+        Logger.WarningLogHandler.handler = { messageCont in
+            appCoordinator.sendAlertMessage(messageCont)
+        }
     }
 
     @discardableResult private func startService<Service>(_ service: Service?) async throws -> Service {

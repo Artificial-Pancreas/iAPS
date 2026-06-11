@@ -25,6 +25,7 @@ import Observation
     private(set) var alertNotAck: Bool = false
     private(set) var lastLoopError: (error: Error, date: Date)?
 
+    private(set) var lightMode = LightMode.auto
     private(set) var liveActivitiesSystemEnabled: Bool = false
 
     @ObservationIgnored private var cancellables = Set<AnyCancellable>()
@@ -40,6 +41,7 @@ import Observation
         settings = appCoordinator.settings.value
         preferences = appCoordinator.preferences.value
         pumpSettings = appCoordinator.pumpSettings.value
+        lightMode = appCoordinator.settings.value.lightMode
 
         bind(appCoordinator.settings, to: \.settings)
         bind(appCoordinator.preferences, to: \.preferences)
@@ -59,6 +61,7 @@ import Observation
         bind(appCoordinator.lastLoopError, to: \.lastLoopError)
         bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAck)
         bind(appCoordinator.liveActivitiesSystemEnabled, to: \.liveActivitiesSystemEnabled)
+        bind(appCoordinator.settings.map(\.lightMode).removeDuplicates(), to: \.lightMode)
     }
 
     private func bind<V>(
