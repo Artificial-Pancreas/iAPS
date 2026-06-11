@@ -11,14 +11,6 @@ final class ServiceAssembly: Assembly {
         // if this ever needs to change - make sure to keep the GarminManager in-sync
         container.register(NotificationCenter.self) { _ in Foundation.NotificationCenter.default }
 
-        container.register(GroupedIssueReporter.self) { _ in
-            let reporter = CollectionIssueReporter()
-            reporter.add(reporters: [
-                SimpleLogReporter()
-            ])
-            reporter.setup()
-            return reporter
-        }
         container.register(CalendarManager.self) { r in
             let glucoseStorage = r.resolve(GlucoseStorage.self)!
             let appCoordinator = r.resolve(AppCoordinator.self)!
@@ -78,23 +70,22 @@ final class ServiceAssembly: Assembly {
                 appCoordinator: appCoordinator
             )
         }
-        container.register(GarminManager.self) { _ in
+        container.register(GarminManager.self) { r in
+            let appCoordinator = r.resolve(AppCoordinator.self)!
             // BaseGarminManager is @MainActor.
             // All resolution happens on the main actor (AppServices.performStartup and StateModels),
             // so asserting main isolation here is safe.
-            MainActor.assumeIsolated {
+            return MainActor.assumeIsolated {
                 BaseGarminManager(
-                    notificationCenter: Foundation.NotificationCenter.default
+                    notificationCenter: Foundation.NotificationCenter.default,
+                    appCoordinator: appCoordinator
                 )
             }
         }
         container.register(ContactTrickManager.self) { r in
-            let appCoordinator = r.resolve(AppCoordinator.self)!
-            let storage = r.resolve(FileStorage.self)!
-
-            return BaseContactTrickManager(
-                appCoordinator: appCoordinator,
-                storage: storage
+            BaseContactTrickManager(
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                storage: r.resolve(FileStorage.self)!
             )
         }
         container.register(LiveActivityBridge.self) { r in

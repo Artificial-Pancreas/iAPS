@@ -631,7 +631,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private func checkForNotUploadedOverides(settings: FreeAPSSettings) async {
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else { return }
         // TODO: why is this "counter" needed?
-//        guard let count = overrideStorage.countNotUploaded() else { return }
+//        guard let count = overrideStorage.countNotUploaded () else { return }
 
         let file = await storage.retrieve(OpenAPS.Nightscout.notUploadedOverrides, as: [NigtscoutExercise].self) ?? []
         guard file.isNotEmpty else { return }

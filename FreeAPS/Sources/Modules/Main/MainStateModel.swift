@@ -12,7 +12,6 @@ extension Main {
         @Published var isModalPresented = false
         @Published var isSecondaryModalPresented = false
         @Published var secondaryModalView: AnyView? = nil
-        @Published var lightMode = LightMode.auto
         @Published var shouldPreventModalDismiss = false
 
         private let resolver: Resolver
@@ -23,108 +22,103 @@ extension Main {
         }
 
         override func subscribe() async {
-            let settings = await settingsManager.settings
-            lightMode = settings.lightMode
+            observe(router.mainModalScreen.removeDuplicates { $0?.id == $1?.id }) { me, screen in
+                await me.mainModalScreenUpdated(screen)
+            }
 
-            router.mainModalScreen
-                .map { $0?.modal(resolver: self.resolver) }
-                .removeDuplicates { $0?.id == $1?.id }
-                .receive(on: DispatchQueue.main)
-                .sink { modal in
-                    self.modal = modal
-                    self.isModalPresented = modal != nil
-                }
-                .store(in: lifetime)
+            observe($isModalPresented.filter { !$0 }) { me, _ in
+                await me.modalDismissed()
+            }
 
-            $isModalPresented
-                .filter { !$0 }
-                .sink { _ in
-                    self.router.mainModalScreen.send(nil)
-                }
-                .store(in: lifetime)
+            observe(appCoordinator.alertMessages) { me, message in
+                await me.alertMessageReceived(message)
+            }
 
-            router.alertMessage
-                .receive(on: DispatchQueue.main)
-                .sink { message in
-                    var config = SwiftMessages.defaultConfig
-                    let view = MessageView.viewFromNib(layout: .cardView)
-
-                    let titleContent: String
-
-                    view.configureContent(
-                        title: "title",
-                        body: NSLocalizedString(message.content, comment: "Info message"),
-                        iconImage: nil,
-                        iconText: nil,
-                        buttonImage: nil,
-                        buttonTitle: nil,
-                        buttonTapHandler: nil
-                    )
-
-                    switch message.type {
-                    case .info:
-                        view.backgroundColor = .secondarySystemGroupedBackground
-                        config.duration = .automatic
-
-                        titleContent = NSLocalizedString("Info", comment: "Info title")
-                    case .warning:
-                        view.configureTheme(.warning, iconStyle: .subtle)
-                        config.duration = .forever
-                        view.button?.setImage(Icon.warningSubtle.image, for: .normal)
-                        titleContent = NSLocalizedString("Warning", comment: "Warning title")
-                        view.buttonTapHandler = { _ in
-                            SwiftMessages.hide()
-                        }
-                    case .errorPump:
-                        view.configureTheme(.error, iconStyle: .subtle)
-                        config.duration = .forever
-                        view.button?.setImage(Icon.errorSubtle.image, for: .normal)
-                        titleContent = NSLocalizedString("Error", comment: "Error title")
-                        view.buttonTapHandler = { _ in
-                            SwiftMessages.hide()
-                            // display the pump configuration immediatly
-                            if self.appCoordinator.pumpInfo.value != nil
-                            {
-                                let view = PumpConfig.PumpSettingsView(
-                                    deviceManager: self.deviceManager,
-                                    completionDelegate: self
-                                ).asAny()
-                                self.router.mainSecondaryModalView.send(view)
-                            }
-                        }
-                    }
-
-                    view.titleLabel?.text = titleContent
-                    config.dimMode = .gray(interactive: true)
-
-                    SwiftMessages.show(config: config, view: view)
-                }
-                .store(in: lifetime)
-
+            // cannot use `observe` for this one because AnyView is not sendable
             router.mainSecondaryModalView
                 .receive(on: DispatchQueue.main)
-                .sink { view in
-                    self.secondaryModalView = view
-                    self.isSecondaryModalPresented = view != nil
+                .sink { [weak self] view in
+                    self?.mainSecondaryModalViewUpdated(view)
                 }
                 .store(in: lifetime)
 
-            $isSecondaryModalPresented
-                .removeDuplicates()
-                .filter { !$0 }
-                .sink { _ in
-                    self.router.mainSecondaryModalView.send(nil)
-                }
-                .store(in: lifetime)
-
-            // TODO: AppUIState instead?
-            observe(appCoordinator.settings) { me, settings in
-                await me.settingsUpdated(settings)
+            observe($isSecondaryModalPresented.removeDuplicates().filter { !$0 }) { me, _ in
+                await me.secondaryModalDismissed()
             }
         }
 
-        private func settingsUpdated(_ settings: FreeAPSSettings) {
-            lightMode = settings.lightMode
+        private func mainModalScreenUpdated(_ screen: Screen?) {
+            let modal = screen?.modal(resolver: resolver)
+            self.modal = modal
+            isModalPresented = modal != nil
+        }
+
+        private func mainSecondaryModalViewUpdated(_ view: AnyView?) {
+            secondaryModalView = view
+            isSecondaryModalPresented = view != nil
+        }
+
+        private func alertMessageReceived(_ message: MessageContent) {
+            var config = SwiftMessages.defaultConfig
+            let view = MessageView.viewFromNib(layout: .cardView)
+
+            let titleContent: String
+
+            view.configureContent(
+                title: "title",
+                body: NSLocalizedString(message.content, comment: "Info message"),
+                iconImage: nil,
+                iconText: nil,
+                buttonImage: nil,
+                buttonTitle: nil,
+                buttonTapHandler: nil
+            )
+
+            switch message.type {
+            case .info:
+                view.backgroundColor = .secondarySystemGroupedBackground
+                config.duration = .automatic
+
+                titleContent = NSLocalizedString("Info", comment: "Info title")
+            case .warning:
+                view.configureTheme(.warning, iconStyle: .subtle)
+                config.duration = .forever
+                view.button?.setImage(Icon.warningSubtle.image, for: .normal)
+                titleContent = NSLocalizedString("Warning", comment: "Warning title")
+                view.buttonTapHandler = { _ in
+                    SwiftMessages.hide()
+                }
+            case .errorPump:
+                view.configureTheme(.error, iconStyle: .subtle)
+                config.duration = .forever
+                view.button?.setImage(Icon.errorSubtle.image, for: .normal)
+                titleContent = NSLocalizedString("Error", comment: "Error title")
+                view.buttonTapHandler = { _ in
+                    SwiftMessages.hide()
+                    // display the pump configuration immediatly
+                    if self.appCoordinator.pumpInfo.value != nil
+                    {
+                        let view = PumpConfig.PumpSettingsView(
+                            deviceManager: self.deviceManager,
+                            completionDelegate: self
+                        ).asAny()
+                        self.router.mainSecondaryModalView.send(view)
+                    }
+                }
+            }
+
+            view.titleLabel?.text = titleContent
+            config.dimMode = .gray(interactive: true)
+
+            SwiftMessages.show(config: config, view: view)
+        }
+
+        private func modalDismissed() {
+            router.mainModalScreen.send(nil)
+        }
+
+        private func secondaryModalDismissed() {
+            router.mainSecondaryModalView.send(nil)
         }
     }
 }

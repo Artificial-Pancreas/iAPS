@@ -26,7 +26,7 @@ final class BaseGarminManager: NSObject, GarminManager {
 
     private let connectIQ = ConnectIQ.sharedInstance()
 
-    private let router = FreeAPSApp.resolver.resolve(Router.self)!
+    private let appCoordinator: AppCoordinator
 
     private let notificationCenter: NotificationCenter
 
@@ -74,8 +74,12 @@ final class BaseGarminManager: NSObject, GarminManager {
     private var selectContinuation: CheckedContinuation<[CodableDevice], Never>?
     private var selectTimeoutTask: Task<Void, Never>?
 
-    init(notificationCenter: NotificationCenter) {
+    init(
+        notificationCenter: NotificationCenter,
+        appCoordinator: AppCoordinator
+    ) {
         self.notificationCenter = notificationCenter
+        self.appCoordinator = appCoordinator
         super.init()
 
         connectIQ?.initialize(withUrlScheme: "freeaps-x", uiOverrideDelegate: self)
@@ -203,9 +207,7 @@ extension BaseGarminManager: IQUIOverrideDelegate {
                 ),
                 type: .warning
             )
-            await MainActor.run {
-                router.alertMessage.send(messageCont)
-            }
+            appCoordinator.sendAlertMessage(messageCont)
         }
     }
 }

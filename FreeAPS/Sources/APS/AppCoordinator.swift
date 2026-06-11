@@ -84,6 +84,8 @@ final class AppCoordinator: @unchecked Sendable {
 
     let liveActivitiesSystemEnabled = CurrentValueSubject<Bool, Never>(false)
 
+    let alertMessages = PassthroughSubject<MessageContent, Never>()
+
     // --------------
 
     func setSettings(_ value: FreeAPSSettings) {
@@ -204,5 +206,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setLiveActivitiesSystemEnabled(_ value: Bool) {
         liveActivitiesSystemEnabled.send(value)
+    }
+
+    func sendAlertMessage(_ value: MessageContent) {
+        alertMessages.send(value)
     }
 }
