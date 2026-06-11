@@ -120,7 +120,16 @@ public enum IAPSconfig {
     static let version = "iAPS.version"
     static let newVersion = "iAPS.newVersion"
     static let inBolusView = "iAPS.inBolusView"
-    static let statURL = URL(string: "https://submit.open-iaps.app")!
+    static let statURL = {
+        // can be overriden in ConfigOverride.xcconfig for testing
+        if let string = Bundle.main.object(forInfoDictionaryKey: "STAT_URL") as? String,
+           let url = URL(string: string)
+        {
+            return url
+        }
+        return URL(string: "https://submit.open-iaps.app")!
+    }()
+
     /// Colors
     static let headerBackgroundLight = Color.gray.opacity(IAPSconfig.backgroundOpacity)
     static let headerBackgroundDark = Color(.systemGray5) // Color.header2.opacity(1)

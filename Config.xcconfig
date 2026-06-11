@@ -15,6 +15,9 @@ AUTHENTICATE = true
 // iAPS URL in other apps
 APP_URL_SCHEME = freeaps-x
 
+// /$()/ is to prevent // acting as a comment start
+STAT_URL = https:/$()/submit.open-iaps.app
+
 // Include file for overriding configuration
 #include? "ConfigOverride.xcconfig"
 //#include? "../../ConfigOverride.xcconfig"
