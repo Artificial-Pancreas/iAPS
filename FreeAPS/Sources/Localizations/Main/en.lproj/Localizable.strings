@@ -4102,7 +4102,7 @@ Enact a temp Basal or a temp target */
 
 "You're now running version %@." = "You're now running version %@.";
 
-"Updates can occasionally reset settings. Before relying on the loop, please confirm Closed Loop is on and Max IOB is not 0." = "Updates can occasionally reset settings. Before relying on the loop, please confirm Closed Loop is on and Max IOB is not 0.";
+"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
 
 "Review Settings" = "Review Settings";
 

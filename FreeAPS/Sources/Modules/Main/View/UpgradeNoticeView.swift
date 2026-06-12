@@ -10,7 +10,6 @@ import SwiftUI
 /// functional flag (forces a post-upgrade run and is auto-cleared by the stats upload).
 struct UpgradeNoticeView: View {
     let version: String
-    let onReviewSettings: () -> Void
     let onDismiss: () -> Void
 
     var body: some View {
@@ -33,7 +32,7 @@ struct UpgradeNoticeView: View {
                 .multilineTextAlignment(.center)
             }
 
-            Text("Updates can occasionally reset settings. Before relying on the loop, please confirm Closed Loop is on and Max IOB is not 0.")
+            Text("Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.")
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
@@ -42,20 +41,17 @@ struct UpgradeNoticeView: View {
             Spacer()
 
             VStack(spacing: 14) {
-                Button(action: onReviewSettings) {
-                    Text("Review Settings")
+                // Single action: continue into the one-time Sharing setup step (then Home).
+                // No "Review Settings" button — the message already points users at Settings,
+                // and existing users reach Settings from the home screen; a button here would
+                // only let them skip the forced post-upgrade Sharing check.
+                Button(action: onDismiss) {
+                    Text("Continue")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 14).fill(Color.accentColor))
                         .foregroundStyle(Color.white)
-                }
-                .buttonStyle(.plain)
-
-                Button(action: onDismiss) {
-                    Text("Continue")
-                        .font(.headline)
-                        .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
             }

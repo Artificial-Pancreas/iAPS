@@ -64,15 +64,6 @@ extension Main {
             } else if showUpgradeNotice {
                 UpgradeNoticeView(
                     version: Bundle.main.releaseVersionNumber ?? "",
-                    onReviewSettings: {
-                        // The user is heading into Settings; don't stack the Sharing step on
-                        // top of the Settings modal — they can reach Sharing from the menu.
-                        showUpgradeNotice = false
-                        hasSeenSharingSetup = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                            state.showModal(for: .settings)
-                        }
-                    },
                     onDismiss: { showUpgradeNotice = false } // advances to the Sharing step
                 )
                 .environment(\.colorScheme, colorScheme)
