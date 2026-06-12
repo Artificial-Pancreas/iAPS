@@ -68,7 +68,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private var isLogUploadEnabled: Bool {
-        settingsManager.settings.uploadLogs
+        // Logs are uninterpretable without the settings/profile they ran under,
+        // so they only upload when full Backup is also enabled.
+        settingsManager.settings.uploadStats && settingsManager.settings.uploadLogs
     }
 
     private var isUploadGlucoseEnabled: Bool {
