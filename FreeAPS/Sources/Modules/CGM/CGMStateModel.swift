@@ -8,7 +8,6 @@ import UIKit
 extension CGM {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var deviceManager: DeviceDataManager!
-        @Injected() var appCoordinator: AppCoordinator!
 
         @Published var cgmSetupPresented: Bool = false
         @Published var cgmSettingsPresented: Bool = false

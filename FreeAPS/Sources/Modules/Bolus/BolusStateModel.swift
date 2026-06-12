@@ -13,7 +13,6 @@ extension Bolus {
 
         @Injected() private var announcementStorage: AnnouncementsStorage!
         @Injected() private var carbsStorage: CarbsStorage!
-        @Injected() private var appCoordinator: AppCoordinator!
         @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var storage: FileStorage!

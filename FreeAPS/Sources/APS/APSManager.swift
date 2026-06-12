@@ -174,7 +174,13 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     // Loop entry point
     private func loop() async {
-        let settings = await settingsManager.settings
+        let settings = appCoordinator.settings.value
+
+        guard !appCoordinator.isLooping.value else {
+            warning(.apsManager, "Loop already in progress. Skip recommendation.")
+            return
+        }
+
         // check the last start of looping is more the loopInterval but the previous loop was completed
         if lastLoopDate > lastStartLoopDate {
             let loopInterval = settings.allowOneMinuteLoop ? Config.loopIntervalOneMinute : Config.loopIntervalFiveMinutes
@@ -184,10 +190,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
         }
 
-        guard !appCoordinator.isLooping.value else {
-            warning(.apsManager, "Loop already in progress. Skip recommendation.")
-            return
-        }
+        appCoordinator.setIsLooping(true)
 
         // start background time extension
         let backgroundTaskIdBox = TaskIDBox()
@@ -197,17 +200,13 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
             return UIApplication.shared.backgroundTimeRemaining
         }
-//        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") { [self] in
-//            guard let backgroundTask = backGroundTaskID else { return }
-//            UIApplication.shared.endBackgroundTask(backgroundTask)
-//            self.backGroundTaskID = .invalid
-//        }
 
         debug(.apsManager, "Starting loop, background time remaining: \(backgroundTimeRemaining.rounded())")
 
         let lastStartLoopDate = Date()
         self.lastStartLoopDate = lastStartLoopDate
 
+        // TODO: is this second recency test needed?
         let interval: Double? = await coredataContext.perform {
             let requestStats = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
             let sortStats = NSSortDescriptor(key: "end", ascending: false)
@@ -227,8 +226,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             interval: interval
         )
 
-        appCoordinator.setIsLooping(true)
-
         do {
             guard let suggestion = await determineBasal(temporaryCarbs: nil) else {
                 throw APSError.apsError(message: "Determine basal failed")
@@ -240,7 +237,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
 
             await self.loopCompleted(loopStatRecord: loopStatRecord)
-            await self.nightscout.uploadStatus()
         } catch {
             await self.loopCompleted(loopStatRecord: loopStatRecord, error: error)
         }
@@ -249,7 +245,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         // TODO: is this a good idea?
         // give background tasks a chance to finish?
-        try? await Task.sleep(for: .seconds(10))
+        try? await Task.sleep(for: .seconds(1))
+
         // end of the BG tasks
         await MainActor.run {
             if backgroundTaskIdBox.id != .invalid {
@@ -269,12 +266,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         if let apsError = error {
             warning(.apsManager, "Loop failed with error: \(apsError.localizedDescription)")
-//            TODO: [loopkit] was this necessary here? the task is ended at the end of this method
-
-//            if let backgroundTask = backGroundTaskID {
-//                UIApplication.shared.endBackgroundTask(backgroundTask)
-//                backGroundTaskID = .invalid
-//            }
             await processError(apsError)
 
         } else {
@@ -291,10 +282,12 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         if settings.closedLoop {
             await reportEnacted(received: error == nil)
         }
+        // TODO: move this to nigthscout manager, listen to appCoordinator.loopCompleted
+        await nightscout.uploadStatus()
     }
 
     private func verifyStatus() async -> Error? {
-        guard let status = appCoordinator.pumpStatus.value else {
+        guard let status = deviceDataManager.currentPumpStatus() else {
             return APSError.invalidPumpState(message: "Pump not set")
         }
 
@@ -349,10 +342,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         let now = Date()
         let temp = await currentTemp(date: now)
-//        let temporary = temporaryData
-//        temporaryData.forBolusView.carbs = 0
 
-        guard let pumpStatus = appCoordinator.pumpStatus.value else {
+        guard let pumpStatus = deviceDataManager.currentPumpStatus() else {
             await processError(APSError.invalidPumpState(message: "Pump not set"))
             return nil
         }
@@ -393,13 +384,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         return coreDataStorage.saveInsulinData(iobEntries: iobEntries)
     }
 
-//    // TODO: this needs to be deleted
-//    func determineBasalSync() {
-//        Task {
-//            await determineBasal(temporaryCarbs: nil)
-//        }
-//    }
-
     func makeProfiles() async -> Bool {
         let settings = await settingsManager.settings
         let tunedProfile = await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
@@ -425,8 +409,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             appCoordinator.sendBolusFailure()
             return
         }
-
-//        guard let pump = pumpManager else { return }
 
         do {
             let roundedAmout = try deviceDataManager.roundToSupportedBolusVolume(units: amount / concentration.concentration)
@@ -454,7 +436,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     func cancelBolus() async {
         do {
-            guard let pumpStatus = appCoordinator.pumpStatus.value else {
+            guard let pumpStatus = deviceDataManager.currentPumpStatus() else {
                 throw APSError.invalidPumpState(message: "Pump not set")
             }
             guard pumpStatus.isBolusing else { return }
@@ -473,8 +455,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             await processError(error)
             return
         }
-
-//        guard let pump = pumpManager else { return }
 
         // unable to do temp basal during manual temp basal 😁
         if appCoordinator.manualTempBasal.value {
@@ -599,7 +579,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             case .resume:
                 do {
-                    guard let pumpStatus = appCoordinator.pumpStatus.value, pumpStatus.isSuspended else {
+                    guard let pumpStatus = deviceDataManager.currentPumpStatus(), pumpStatus.isSuspended else {
                         return
                     }
 
@@ -761,17 +741,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     }
 
     private func enactSuggested(suggested: Suggestion) async throws {
-//        guard let suggested = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) else {
-//            throw APSError.apsError(message: "Suggestion not found")
-//        }
-
         guard Date().timeIntervalSince(suggested.deliverAt ?? .distantPast) < Config.eхpirationInterval else {
             throw APSError.apsError(message: "Suggestion expired")
         }
-
-//        guard let pump = pumpManager else {
-//            throw APSError.apsError(message: "Pump not set")
-//        }
 
         // unable to do temp basal during manual temp basal 😁
         if appCoordinator.manualTempBasal.value {
@@ -779,10 +751,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
 
         let insulinSetting = concentration
-
-        if let error = await self.verifyStatus() {
-            throw error
-        }
 
         func doBasal() async throws {
             guard let rate = suggested.rate, let duration = suggested.duration else {
@@ -796,6 +764,10 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                     throw APSError.activeBolusViewBasalandBolus
                 }
                 throw APSError.activeBolusViewBasal
+            }
+
+            if let error = await self.verifyStatus() {
+                throw error
             }
 
             try await deviceDataManager.enactTempBasal(
@@ -815,6 +787,10 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             guard !self.activeBolusView() else {
                 throw APSError.activeBolusViewBolus
+            }
+
+            if let error = await self.verifyStatus() {
+                throw error
             }
 
             try await deviceDataManager.enactBolus(units: Double(units) / insulinSetting.concentration, automatic: true)
@@ -849,9 +825,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             appCoordinator.sendEnactedSuggestion(enacted)
-            // TODO: move this to nigthscout manager, listen to appCoordinator.loopCompleted
-            await nightscout.uploadStatus()
-
             appCoordinator.sendLoopCompleted()
         }
     }

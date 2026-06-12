@@ -8,7 +8,6 @@ import SwiftUI
 
 extension Home {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
-        @Injected() private var appCoordinator: AppCoordinator!
         @Injected() private var apsManager: APSManager!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var storage: TempTargetsStorage!

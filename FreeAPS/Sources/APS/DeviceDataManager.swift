@@ -16,9 +16,6 @@ protocol DeviceDataManager: Sendable {
     var availableCGMManagers: [CGMManagerDescriptor] { get }
     var availablePumpManagers: [PumpManagerDescriptor] { get }
 
-    // notify device manager when the app becomes active
-    func didBecomeActive()
-
     func cgmInfo() -> GlucoseSourceInfo?
 
     func createBolusProgressReporter() -> DoseProgressReporter?
@@ -51,6 +48,9 @@ protocol DeviceDataManager: Sendable {
     func suspendDelivery() async throws
 
     func resumeDelivery() async throws
+
+    // this information is available from app coordinator, but when verifying the pump status before executing pump commands it's better to ask the pump manager
+    func currentPumpStatus() -> PumpDisplayStatus?
 
     func roundBolus(amount: Decimal, maxBolus: Decimal) -> Decimal
 
@@ -91,7 +91,7 @@ extension WeakSynchronizedSet: @retroactive @unchecked Sendable {}
 
 private let lastEventDateKey = "BaseDeviceDataManager.lastEventDate"
 
-final class BaseDeviceDataManager: DeviceDataManager {
+final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
 
     private let pumpHistoryStorage: PumpHistoryStorage
@@ -168,26 +168,7 @@ final class BaseDeviceDataManager: DeviceDataManager {
 
         // TODO: does this belong here?
         UIDevice.current.isBatteryMonitoringEnabled = true
-
-        processQueue.sync {
-            if let pumpManagerRawValue = rawPumpManager ?? UserDefaults.standard.legacyPumpManagerRawValue {
-                pumpManagerLocked.mutate { $0 = pumpManagerFromRawValue(pumpManagerRawValue) }
-            }
-
-            if let cgmManagerRawValue = rawCGMManager ?? UserDefaults.standard.legacyCgmManagerRawValue {
-                cgmManagerLocked.mutate { $0 = cgmManagerFromRawValue(cgmManagerRawValue) }
-
-                // Handle case of PumpManager providing CGM
-                if cgmManager == nil, pumpManagerTypeFromRawValue(cgmManagerRawValue) != nil {
-                    cgmManagerLocked.mutate { $0 = pumpManager as? CGMManager }
-                }
-            }
-
-            setupPump()
-            setupCGM()
-        }
-
-        subscribe()
+        // initial managers restoration happens in start() which is called at the start of the app
     }
 
     private func setCgmManager(_ cgmManager: CGMManager?) {
@@ -225,10 +206,30 @@ final class BaseDeviceDataManager: DeviceDataManager {
         UserDefaults.standard.clearLegacyPumpManagerRawValue()
     }
 
-    private func subscribe() {
+    // this is called on app start
+    func start() {
+        processQueue.sync {
+            if let pumpManagerRawValue = rawPumpManager ?? UserDefaults.standard.legacyPumpManagerRawValue {
+                pumpManagerLocked.mutate { $0 = pumpManagerFromRawValue(pumpManagerRawValue) }
+            }
+
+            if let cgmManagerRawValue = rawCGMManager ?? UserDefaults.standard.legacyCgmManagerRawValue {
+                cgmManagerLocked.mutate { $0 = cgmManagerFromRawValue(cgmManagerRawValue) }
+
+                // Handle case of PumpManager providing CGM
+                if cgmManager == nil, pumpManagerTypeFromRawValue(cgmManagerRawValue) != nil {
+                    cgmManagerLocked.mutate { $0 = pumpManager as? CGMManager }
+                }
+            }
+
+            setupPump()
+            setupCGM()
+        }
+
         appCoordinator.alertsUpdates
             .receive(on: processQueue)
-            .sink { alerts in
+            .sink { [weak self] alerts in
+                guard let self else { return }
                 alerts.forEach { alert in
                     if alert.acknowledgedDate == nil {
                         self.ackAlert(alert: alert)
@@ -239,8 +240,15 @@ final class BaseDeviceDataManager: DeviceDataManager {
 
         appCoordinator.heartbeat
             .receive(on: processQueue)
-            .sink { _ in
-                self.heartbeat(forceRecommendLoop: true)
+            .sink { [weak self] _ in
+                self?.heartbeat(forceRecommendLoop: true)
+            }
+            .store(in: lifetime)
+
+        appCoordinator.appBecomeActiveEvents
+            .receive(on: processQueue)
+            .sink { [weak self] _ in
+                self?.updatePumpManagerBLEHeartbeatPreference()
             }
             .store(in: lifetime)
 
@@ -950,10 +958,6 @@ extension BaseDeviceDataManager {
 }
 
 extension BaseDeviceDataManager {
-    func didBecomeActive() {
-        updatePumpManagerBLEHeartbeatPreference()
-    }
-
     func updatePumpManagerBLEHeartbeatPreference() {
         pumpManager?.setMustProvideBLEHeartbeat(pumpManagerMustProvideBLEHeartbeat)
     }
@@ -1050,7 +1054,7 @@ private extension BaseDeviceDataManager {
     }
 
     private func dispatchPumpStatus() {
-        guard let pumpManager else {
+        guard let pumpManager = self.pumpManager else {
             appCoordinator.setPumpStatus(nil)
             appCoordinator.setPumpReservoir(nil)
             appCoordinator.setBolusInProgress(false)
@@ -1058,38 +1062,14 @@ private extension BaseDeviceDataManager {
             return
         }
 
-        let pumpManagerStatus = pumpManager.status
-        let batteryPercent = Int((pumpManagerStatus.pumpBatteryChargeRemaining ?? 1) * 100)
-        let battery = Battery(
-            percent: batteryPercent,
-            voltage: nil,
-            string: batteryPercent >= 10 ? .normal : .low,
-            display: pumpManager.status.pumpBatteryChargeRemaining != nil
-        )
-
-        let isBolusing = pumpManagerStatus.bolusState != .noBolus
-        let isSuspended = pumpManagerStatus.basalDeliveryState?.isSuspended ?? true
-        let statusType: PumpDisplayStatus.StatusType = isSuspended ? .suspended : (isBolusing ? .bolusing : .normal)
-
-        let status = PumpDisplayStatus(
-            status: statusType,
-            statusHighlight: pumpManager.pumpStatusHighlight?.localizedMessage,
-            timeZone: pumpManagerStatus.timeZone,
-            battery: battery,
-            deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
-            isSuspended: isSuspended,
-            isBolusing: isBolusing,
-            supportedBasalRates: pumpManager.supportedBasalRates,
-            supportedBolusVolumes: pumpManager.supportedBolusVolumes,
-            timestamp: Date.now
-        )
-
+        let status = pumpStatus(for: pumpManager)
         appCoordinator.setPumpStatus(status)
+
         if let reservoir = KnownPlugins.pumpReservoir(pumpManager) {
             appCoordinator.setPumpReservoir(reservoir)
         }
-        if case .inProgress = pumpManagerStatus.bolusState {
-            appCoordinator.setBolusInProgress(true)
+        if case .inProgress = pumpManager.status.bolusState {
+            self.appCoordinator.setBolusInProgress(true)
         } else {
             appCoordinator.setBolusInProgress(false)
         }
@@ -1097,8 +1077,9 @@ private extension BaseDeviceDataManager {
     }
 
     private func dispatchCgmInfo() {
-        guard let cgmManager else {
+        guard let cgmManager = self.cgmManager else {
             appCoordinator.setCgmInfo(nil)
+            appCoordinator.setCgmStatus(nil)
             return
         }
 
@@ -1345,6 +1326,39 @@ extension BaseDeviceDataManager {
                 }
             }
         }
+    }
+
+    func pumpStatus(for pumpManager: PumpManagerUI) -> PumpDisplayStatus? {
+        let pumpManagerStatus = pumpManager.status
+        let batteryPercent = Int((pumpManagerStatus.pumpBatteryChargeRemaining ?? 1) * 100)
+        let battery = Battery(
+            percent: batteryPercent,
+            voltage: nil,
+            string: batteryPercent >= 10 ? .normal : .low,
+            display: pumpManager.status.pumpBatteryChargeRemaining != nil
+        )
+
+        let isBolusing = pumpManagerStatus.bolusState != .noBolus
+        let isSuspended = pumpManagerStatus.basalDeliveryState?.isSuspended ?? true
+        let statusType: PumpDisplayStatus.StatusType = isSuspended ? .suspended : (isBolusing ? .bolusing : .normal)
+
+        return PumpDisplayStatus(
+            status: statusType,
+            statusHighlight: pumpManager.pumpStatusHighlight?.localizedMessage,
+            timeZone: pumpManagerStatus.timeZone,
+            battery: battery,
+            deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
+            isSuspended: isSuspended,
+            isBolusing: isBolusing,
+            supportedBasalRates: pumpManager.supportedBasalRates,
+            supportedBolusVolumes: pumpManager.supportedBolusVolumes,
+            timestamp: Date.now
+        )
+    }
+
+    func currentPumpStatus() -> PumpDisplayStatus? {
+        guard let pumpManager else { return nil }
+        return pumpStatus(for: pumpManager)
     }
 }
 

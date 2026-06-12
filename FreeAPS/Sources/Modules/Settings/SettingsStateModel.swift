@@ -7,7 +7,6 @@ extension Settings {
         @Injected() private var profileAndSettingsUploadManager: ProfileAndSettingsUploadManager!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var databaseManager: DatabaseManager!
-        @Injected() private var appCoordinator: AppCoordinator!
 
         @Published var closedLoop = false
         @Published var debugOptions = false

@@ -6,7 +6,6 @@ import Swinject
 extension Main {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var deviceManager: DeviceDataManager!
-        @Injected() private var appCoordinator: AppCoordinator!
 
         private(set) var modal: Modal?
         @Published var isModalPresented = false

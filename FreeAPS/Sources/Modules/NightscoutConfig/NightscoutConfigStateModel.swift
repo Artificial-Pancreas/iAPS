@@ -14,7 +14,6 @@ extension NightscoutConfig {
         @Injected() private var coreDataStorageGlucoseSaver: CoreDataStorageGlucoseSaver!
         @Injected() private var apsManager: APSManager!
         @Injected() private var deviceManager: DeviceDataManager!
-        @Injected() private var appCoordinator: AppCoordinator!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()

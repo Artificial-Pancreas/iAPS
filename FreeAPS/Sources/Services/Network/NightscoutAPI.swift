@@ -36,7 +36,11 @@ extension NightscoutAPI {
             var notes = "iAPS connected"
         }
 
-        return try await sendPostRequest(Config.treatmentsPath, payload: Check())
+        if secret != nil {
+            try await sendPostRequest(Config.treatmentsPath, payload: Check())
+        } else {
+            _ = try await sendGetRequest(Config.treatmentsPath)
+        }
     }
 
     func fetchGlucose(dateInterval: DateInterval) async -> [GlucoseEntry] {
@@ -112,14 +116,14 @@ extension NightscoutAPI {
 
     func deleteManualGlucose(at date: Date) async throws {
         let queryItems = [
-            URLQueryItem(name: "find[glucose][$exists]", value: "true"),
+            URLQueryItem(name: "find[type][$eq]", value: "mbg"),
             URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: date.formatted(.iso8601WithFractionalSeconds)
+                name: "find[dateString][$eq]",
+                value: date.formatted(.iso8601)
             )
         ]
 
-        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
+        try await sendDeleteRequest(Config.uploadEntriesPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
     func deleteInsulin(at date: Date) async throws {
@@ -330,6 +334,16 @@ extension NightscoutAPI {
         let request = makeRequest(path, query: query, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
         let data = try await service.runAsync(request, retries: Config.retryCount)
         return try JSONCoding.decoder.decode(type, from: data)
+    }
+
+    private func sendGetRequest(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        allowsConstrainedNetworkAccess: Bool = false
+    ) async throws -> Data {
+        let request = makeRequest(path, query: query, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
+        let data = try await service.runAsync(request, retries: Config.retryCount)
+        return data
     }
 
     private func sendDeleteRequest(

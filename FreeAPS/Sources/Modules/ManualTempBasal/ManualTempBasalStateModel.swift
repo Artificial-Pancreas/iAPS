@@ -3,7 +3,6 @@ import SwiftUI
 extension ManualTempBasal {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var apsManager: APSManager!
-        @Injected() private var appCoordinator: AppCoordinator!
 
         @Published var rate: Decimal = 0
         @Published var durationIndex = 0

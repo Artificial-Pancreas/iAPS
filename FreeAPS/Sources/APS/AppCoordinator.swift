@@ -86,6 +86,8 @@ final class AppCoordinator: @unchecked Sendable {
 
     let alertMessages = PassthroughSubject<MessageContent, Never>()
 
+    let appBecomeActiveEvents = PassthroughSubject<Void, Never>()
+
     // --------------
 
     func setSettings(_ value: FreeAPSSettings) {
@@ -210,5 +212,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendAlertMessage(_ value: MessageContent) {
         alertMessages.send(value)
+    }
+
+    func sendAppBecomeActiveEvent() {
+        appBecomeActiveEvents.send(())
     }
 }

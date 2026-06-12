@@ -15,7 +15,7 @@ protocol PumpHistoryStorage: Sendable {
     func deleteInsulin(at date: Date) async
 }
 
-actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner {
+actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
 
@@ -29,13 +29,10 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner {
     ) {
         self.storage = storage
         self.appCoordinator = appCoordinator
-
-        Task {
-            await subscribe()
-        }
     }
 
-    private func subscribe() async {
+    // this is called on app start
+    func start() async {
         observe(appCoordinator.pumpEvents) { me, events in
             await me.storePumpEvents(events)
         }

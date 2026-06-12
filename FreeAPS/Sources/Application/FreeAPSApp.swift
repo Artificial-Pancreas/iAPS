@@ -54,7 +54,8 @@ import Swinject
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")
             if scenePhase == .active {
-                appServices.deviceManager?.didBecomeActive()
+                // device data manager subscribes to this subject and updates pump manager's BLE heartbeat preference
+                appServices.appCoordinator?.sendAppBecomeActiveEvent()
             }
         }
     }

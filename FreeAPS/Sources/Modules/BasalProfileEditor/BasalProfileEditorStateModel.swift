@@ -5,7 +5,6 @@ extension BasalProfileEditor {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var storage: FileStorage!
         @Injected() private var deviceManager: DeviceDataManager!
-        @Injected() private var appCoordinator: AppCoordinator!
 
         private let coreDataStorage = CoreDataStorage()
 

@@ -337,10 +337,8 @@ actor OpenAPS: Sendable {
 
     private func notDisabled(override: OverrideSnapshot?, settings: FreeAPSSettings) -> Bool {
         guard let current = override, current.enabled else { return true }
-        guard current.overrideAutoISF,
-              !settings.autoisf,
-              overrideStorage.fetchAutoISFsetting(id: current.id ?? "") != nil
-        else { return true }
+        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
+              !settings.autoisf else { return true }
         return false
     }
 
@@ -372,16 +370,11 @@ actor OpenAPS: Sendable {
         case nil: reservoir = 100.0
         }
         return "\(reservoir)"
-//        await loadFileFromStorageAsync(name: Monitor.reservoir)
     }
 
     private func profileHistory() async -> RawJSON {
         await loadFileFromStorage(name: Settings.profile)
     }
-
-//    private func pumpSettingsHistory() async -> RawJSON {
-//        await loadFileFromStorageAsync(name: Settings.settings)
-//    }
 
     private func bgTargetsHistory() async -> RawJSON {
         await loadFileFromStorage(name: Settings.bgTargets)
@@ -410,10 +403,6 @@ actor OpenAPS: Sendable {
     private func autotuneHistory(useAutotune: Bool) async -> RawJSON {
         await useAutotune ? loadFileFromStorage(name: Settings.autotune) : .empty
     }
-
-//    private func settingsHistory() async -> RawJSON {
-//        await loadFileFromStorageAsync(name: FreeAPS.settings)
-//    }
 
     private func reasons(
         reason: String,

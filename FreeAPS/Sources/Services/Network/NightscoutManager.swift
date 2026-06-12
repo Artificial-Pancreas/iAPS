@@ -144,6 +144,9 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                         continuation.yield(.progress(100.0))
                         break
                     }
+
+                    acc += chunk.filter { $0.date > sinceDate }.compactMap { BloodGlucose.from(nightscout: $0) }
+
                     if oldest.date <= sinceDate {
                         continuation.yield(.progress(100.0))
                         break
@@ -153,8 +156,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                     if secondsToFetch > 0 {
                         continuation.yield(.progress((secondsFetched / secondsToFetch).clamped(0.0 ... 100.0)))
                     }
-
-                    acc += chunk.compactMap { BloodGlucose.from(nightscout: $0) }
 
                     until = oldest.date
                         .addingTimeInterval(-0.001) // the fetch is inclusive, so we set until to the oldest entrie's date minus 1 millisecond
@@ -469,21 +470,21 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         do {
             try await nightscout.deleteOverride(at: date)
             debug(.nightscout, "Old Override deleted in NS, date: \(date)")
+
+            do {
+                try await nightscout.uploadEcercises(exercise)
+                debug(.nightscout, "Override Uploaded to NS, date: \(date)")
+            } catch {
+                // TODO: why is this "counter" needed?
+                overrideStorage.addToNotUploaded(1)
+                await notUploaded(overrides: exercise)
+                debug(.nightscout, "Upload of Override failed: " + error.localizedDescription)
+            }
         } catch {
             debug(.nightscout, "Deletion of Old Override failed: " + error.localizedDescription)
             // TODO: why is this "counter" needed?
             overrideStorage.addToNotUploaded(1)
             await notUploaded(overrides: exercise)
-        }
-
-        do {
-            try await nightscout.uploadEcercises(exercise)
-            debug(.nightscout, "Override Uploaded to NS, date: \(date)")
-        } catch {
-            // TODO: why is this "counter" needed?
-            overrideStorage.addToNotUploaded(1)
-            await notUploaded(overrides: exercise)
-            debug(.nightscout, "Upload of Override failed: " + error.localizedDescription)
         }
     }
 

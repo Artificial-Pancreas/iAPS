@@ -2,7 +2,7 @@ import Foundation
 import Swinject
 
 @MainActor final class AppServices {
-    private(set) var deviceManager: DeviceDataManager?
+    private(set) var appCoordinator: AppCoordinator?
 
     private var startup: Task<Void, Error>?
 
@@ -23,6 +23,11 @@ import Swinject
         _ = resolver.resolve(BluetoothStateManager.self)!
 
         let appCoordinator = resolver.resolve(AppCoordinator.self)!
+
+        Logger.WarningLogHandler.handler = { messageCont in
+            appCoordinator.sendAlertMessage(messageCont)
+        }
+
         try await startService(resolver.resolve(FetchTreatmentsManager.self))
         try await startService(resolver.resolve(FetchAnnouncementsManager.self))
         try await startService(resolver.resolve(UserNotificationsManager.self))
@@ -35,21 +40,22 @@ import Swinject
         try await startService(resolver.resolve(ContactTrickManager.self))
         try await startService(resolver.resolve(NightscoutManager.self))
         try await startService(resolver.resolve(ProfileAndSettingsUploadManager.self))
-
-        deviceManager = resolver.resolve(DeviceDataManager.self)!
-
+        try await startService(resolver.resolve(PumpHistoryStorage.self))
         try await startService(resolver.resolve(APSManager.self)!)
+
+        try await startService(resolver.resolve(DeviceDataManager.self))
 
         try await startService(resolver.resolve(AppUIState.self))
 
-        Logger.WarningLogHandler.handler = { messageCont in
-            appCoordinator.sendAlertMessage(messageCont)
-        }
+        self.appCoordinator = appCoordinator
     }
 
     @discardableResult private func startService<Service>(_ service: Service?) async throws -> Service {
         if let service, let startable = service as? AppService {
             await startable.start()
+            return service
+        } else if let service, let startable = service as? AppServiceSync {
+            startable.start()
             return service
         } else {
             throw NSError(
@@ -63,4 +69,8 @@ import Swinject
 
 protocol AppService: Sendable {
     func start() async
+}
+
+protocol AppServiceSync: Sendable {
+    func start()
 }

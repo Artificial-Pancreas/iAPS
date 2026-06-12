@@ -12,8 +12,7 @@ import Swinject
 class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.Provider {
     let router: Router
     let settingsManager: SettingsManager!
-
-    //    var isInitial: Bool = true
+    let appCoordinator: AppCoordinator!
 
     let provider: Provider
 
@@ -25,9 +24,9 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
         self.resolver = resolver
         router = resolver.resolve(Router.self)!
         settingsManager = resolver.resolve(SettingsManager.self)!
+        appCoordinator = resolver.resolve(AppCoordinator.self)!
         provider = Provider(resolver: resolver)
         injectServices(resolver)
-//        self.isInitial = false
         Task {
             await subscribe()
         }.store(in: lifetime)
@@ -48,16 +47,13 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
     }
 
     func subscribeSetting<T: Equatable>(
-        _ keyPath: WritableKeyPath<FreeAPSSettings, T>,
+        _ keyPath: WritableKeyPath<FreeAPSSettings, T> & Sendable,
         on settingPublisher: some Publisher<T, Never>,
         initial: @escaping @MainActor(T) -> Void,
         map: ((T) -> T)? = nil,
         didSet: (@MainActor(T) -> Void)? = nil
-    ) {
-        Task { [weak self] in
-            guard let self else { return }
-            initial(await self.settingsManager.settings[keyPath: keyPath])
-        }
+    ) where T: Sendable {
+        initial(appCoordinator.settings.value[keyPath: keyPath])
         settingPublisher
             .removeDuplicates()
             .dropFirst()
@@ -65,9 +61,11 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
             .sink { [weak self] value in
                 Task { @MainActor [weak self] in
                     guard let self else { return }
-                    var settings = await self.settingsManager.settings
-                    settings[keyPath: keyPath] = value
-                    await self.settingsManager.updateSettings(settings)
+                    await self.settingsManager.updateSettings { currentSettings in
+                        var updatedSettings = currentSettings
+                        updatedSettings[keyPath: keyPath] = value
+                        return updatedSettings
+                    }
                     didSet?(value)
                 }
             }

@@ -84,11 +84,15 @@ final class BaseGarminManager: NSObject, GarminManager {
 
         connectIQ?.initialize(withUrlScheme: "freeaps-x", uiOverrideDelegate: self)
 
-        devicesRaw = persistedDevices.map(\.iqDevice)
+        restoreDevices()
 
         subscribeToOpenFromGarminConnect()
         setupApplications()
         subscribeState()
+    }
+
+    private func restoreDevices() {
+        devicesRaw = persistedDevices.map(\.iqDevice)
     }
 
     private func subscribeToOpenFromGarminConnect() {
@@ -182,18 +186,6 @@ final class BaseGarminManager: NSObject, GarminManager {
         }
         stateSubject.send(object)
     }
-
-//    private func sendMessage(_ msg: NSDictionary, to app: IQApp) {
-//        connectIQ?.sendMessage(msg, to: app, progress: { _, _ in
-//            // debug(.service, "Garmin: sending progress: \(Int(Double(sent) / Double(all) * 100)) %")
-//        }, completion: { result in
-//            if result == .success {
-//                debug(.service, "Garmin: message sent")
-//            } else {
-//                debug(.service, "Garmin: message failed")
-//            }
-//        })
-//    }
 }
 
 extension BaseGarminManager: IQUIOverrideDelegate {
