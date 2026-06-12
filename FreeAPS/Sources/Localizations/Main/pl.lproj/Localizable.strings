@@ -1483,6 +1483,10 @@ Połączono z Nightscout!";
 
 "Photo Analysis" = "Photo Analysis";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Barcode Scanner";
 
 "Text Search" = "Text Search";
