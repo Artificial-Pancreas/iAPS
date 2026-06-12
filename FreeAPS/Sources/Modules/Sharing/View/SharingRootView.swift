@@ -195,7 +195,7 @@ extension Sharing {
             } footer: {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(
-                        "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful. As with everything here, this data is anonymous."
+                        "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous."
                     )
                     Button("Why are these required for log upload?") {
                         UIApplication.shared.open(demographicsInfoURL)
