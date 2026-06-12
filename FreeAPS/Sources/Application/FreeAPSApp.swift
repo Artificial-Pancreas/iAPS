@@ -81,6 +81,10 @@ import Swinject
             // installs go through WelcomeView instead, so don't flag them here.
             if hadPriorVersion {
                 userDefaults.set(true, forKey: IAPSconfig.showUpgradeNotice)
+                // An upgrade is definitively an existing user, so skip the New-vs-Existing
+                // WelcomeView (its flag is new this version and would otherwise read false
+                // and pre-empt the upgrade notice). Fresh installs leave this false → Welcome.
+                userDefaults.set(true, forKey: IAPSconfig.hasSeenWelcome)
             }
             debug(.default, "Running new version: \(version)")
             return
