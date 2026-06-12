@@ -12,7 +12,6 @@ extension DataTable {
         @Injected() private var carbsStorage: CarbsStorage!
         @Injected() private var tempTargetsStorage: TempTargetsStorage!
         @Injected() private var glucoseStorage: GlucoseStorage!
-        @Injected() private var appCoordinator: AppCoordinator!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var healthkitManager: HealthKitManager!
 

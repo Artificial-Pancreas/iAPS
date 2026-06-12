@@ -4,7 +4,6 @@ import Swinject
 extension ISFEditor {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
         @Injected() private var storage: FileStorage!
-        @Injected() private var appCoordinator: AppCoordinator!
         private let coreDataStorage = CoreDataStorage()
 
         @Published var items: [Item] = []

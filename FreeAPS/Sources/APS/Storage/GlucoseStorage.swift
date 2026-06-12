@@ -152,7 +152,7 @@ actor BaseGlucoseStorage: GlucoseStorage {
             return filteredBG
         }
         if didModify {
-            appCoordinator.glucoseHistoryUpdates.send(bgInStorage.reversed()) // TODO: why reversed here?
+            appCoordinator.glucoseHistoryUpdates.send(bgInStorage)
         }
     }
 

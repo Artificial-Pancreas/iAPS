@@ -5,7 +5,6 @@ import SwiftUI
 extension PumpSettingsEditor {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() private var deviceManager: DeviceDataManager!
-        @Injected() private var appCoordinator: AppCoordinator!
 
         @Published var isDanaPump = false
         @Published var maxBasal: Decimal = 0.0
