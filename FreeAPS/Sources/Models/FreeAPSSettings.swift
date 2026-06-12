@@ -564,6 +564,22 @@ extension FreeAPSSettings: Decodable {
             settings.sexSetting = sexSetting
         }
 
+        if let weight = try? container.decode(Decimal.self, forKey: .weight) {
+            settings.weight = weight
+        }
+
+        if let height = try? container.decode(Decimal.self, forKey: .height) {
+            settings.height = height
+        }
+
+        if let weightInLb = try? container.decode(Bool.self, forKey: .weightInLb) {
+            settings.weightInLb = weightInLb
+        }
+
+        if let heightInFtIn = try? container.decode(Bool.self, forKey: .heightInFtIn) {
+            settings.heightInFtIn = heightInFtIn
+        }
+
         if let displayDelta = try? container.decode(Bool.self, forKey: .displayDelta) {
             settings.displayDelta = displayDelta
         }
