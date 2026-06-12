@@ -124,6 +124,9 @@ public enum IAPSconfig {
     static let showUpgradeNotice = "iAPS.showUpgradeNotice"
     /// Set once the first-launch WelcomeView has been answered (New vs Existing user).
     static let hasSeenWelcome = "iAPS.hasSeenWelcome"
+    /// Set once the one-time Sharing setup step (welcome step 2 / first-upgrade prompt) is done.
+    /// Defaults false so every existing user is walked through sharing once after upgrading.
+    static let hasSeenSharingSetup = "iAPS.hasSeenSharingSetup"
     static let inBolusView = "iAPS.inBolusView"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
     /// Colors

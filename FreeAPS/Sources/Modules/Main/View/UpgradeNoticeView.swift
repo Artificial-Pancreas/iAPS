@@ -4,7 +4,7 @@ import SwiftUI
 /// `Main.RootView`, set in `FreeAPSApp.isNewVersion()` only for real upgrades — fresh
 /// installs get `WelcomeView` instead). Upgrades have occasionally reset settings
 /// (Closed Loop turned off, Max IOB set to 0); this nudges the user to verify before
-/// relying on the loop, then dismisses straight to Home.
+/// relying on the loop, then continues onboarding (the one-time Sharing step, or Home).
 ///
 /// NOTE: deliberately uses its own flag, NOT `IAPSconfig.newVersion`, which is a
 /// functional flag (forces a post-upgrade run and is auto-cleared by the stats upload).
@@ -53,7 +53,7 @@ struct UpgradeNoticeView: View {
                 .buttonStyle(.plain)
 
                 Button(action: onDismiss) {
-                    Text("Continue to Home")
+                    Text("Continue")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
