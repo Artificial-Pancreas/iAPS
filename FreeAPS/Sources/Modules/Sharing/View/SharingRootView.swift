@@ -154,7 +154,7 @@ extension Sharing {
                 Button("Got it", role: .cancel) {}
             } message: {
                 Text(
-                    "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis is used only for dosing-relevant statistics and stays anonymous."
+                    "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous."
                 )
             }
             .alert("Daily Log upload turned off", isPresented: $logsRevoked) {
@@ -195,7 +195,7 @@ extension Sharing {
             } footer: {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(
-                        "These values are used purely for statistics — mainly to understand how the community is distributed. It is an honor system: we have no way to verify what you enter, and no wish to. To keep the statistics meaningful we simply ask you to be honest. As with everything here, this data is anonymous."
+                        "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful. As with everything here, this data is anonymous."
                     )
                     Button("Why are these required for log upload?") {
                         UIApplication.shared.open(demographicsInfoURL)
