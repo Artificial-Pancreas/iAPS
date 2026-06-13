@@ -196,6 +196,11 @@ final class AppCoordinator: @unchecked Sendable {
         tempTargetsUpdates.send(value)
     }
 
+    /// MUST BE newest -> oldest
+    func sendGlucoseHistoryUpdate(_ value: [BloodGlucose]) {
+        glucoseHistoryUpdates.send(value)
+    }
+
     func sendBasalProfile(_ value: [BasalProfileEntry]) {
         basalProfileUpdates.send(value)
     }

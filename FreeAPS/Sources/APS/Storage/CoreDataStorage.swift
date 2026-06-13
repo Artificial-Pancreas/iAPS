@@ -552,6 +552,28 @@ final class CoreDataStorage: Sendable {
             return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
         }
     }
+
+    func deleteBatch(identifier: String?, entity: String) async {
+        guard let id = identifier else { return }
+        await coredataContext.perform {
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult>
+            fetchRequest = NSFetchRequest(entityName: entity)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            let deleteRequest = NSBatchDeleteRequest(
+                fetchRequest: fetchRequest
+            )
+            deleteRequest.resultType = .resultTypeObjectIDs
+            do {
+                let deleteResult = try self.coredataContext.execute(deleteRequest) as? NSBatchDeleteResult
+                if let objectIDs = deleteResult?.result as? [NSManagedObjectID] {
+                    NSManagedObjectContext.mergeChanges(
+                        fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
+                        into: [self.coredataContext]
+                    )
+                }
+            } catch { debug(.apsManager, entity + "records failed to delete in batch.") }
+        }
+    }
 }
 
 // public typealias PresetsCoreDataClassSet = NSSet
