@@ -98,7 +98,7 @@ extension Bolus {
                                     liveEditing: true
                                 )
                             }.onChange(of: state.manualGlucose) {
-                                state.insulinCalculated = state.calculateInsulin()
+                                state.calculateInsulin()
                             }
                         } header: { Text("New Glucose Missing") }
                     }
@@ -133,7 +133,7 @@ extension Bolus {
                                 .toggleStyle(CheckboxToggleStyle())
                                 .font(.footnote)
                                 .onChange(of: state.useFattyMealCorrectionFactor) {
-                                    state.insulinCalculated = state.calculateInsulin()
+                                    state.calculateInsulin()
                                 }
                             }
                         }
@@ -275,7 +275,7 @@ extension Bolus {
                 state.waitForCarbs = fetch
                 state.waitForSuggestionInitial = waitForSuggestion
                 state.waitForSuggestion = waitForSuggestion
-                state.insulinCalculated = state.calculateInsulin()
+                state.calculateInsulin()
                 state.start()
             }
             .popup(isPresented: showInfo, alignment: .bottom, direction: .center, type: .default) {

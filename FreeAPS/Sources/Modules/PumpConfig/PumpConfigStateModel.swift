@@ -18,7 +18,7 @@ extension PumpConfig {
 
         override func subscribe() async {
             let basalProfile = await fetchBasalProfile()
-            let concentration = readConcentration()
+            let concentration = await readConcentration()
             let basalSchedule = BasalRateSchedule(
                 dailyItems: basalProfile.map {
                     $0.toLoopKit(concentration: concentration)
@@ -34,8 +34,8 @@ extension PumpConfig {
             )
         }
 
-        private func readConcentration() -> Double {
-            coreDataStorage.insulinConcentration().concentration
+        private func readConcentration() async -> Double {
+            await coreDataStorage.insulinConcentration().concentration
         }
 
         func showCurrentPumpSettings() {

@@ -142,7 +142,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     }
 
     private func configureState() async {
-        let reasons = coreDataStorage.fetchReason()
+        let reasons = await coreDataStorage.fetchReason()
 
         if let reason = reasons {
             self.state.isf = (reason.isf ?? 15) as Decimal
@@ -153,7 +153,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
 
         self.state.eventualGlucose = Decimal(suggestion?.eventualBG ?? 0)
 
-        let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
+        let readings = await self.coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
         let glucoseValues = self.glucoseText(readings)
         self.state.glucose = glucoseValues.glucose
         self.state.trend = glucoseValues.trend
@@ -266,7 +266,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         await self.sendState()
     }
 
-    private func getDeltaBG(_ glucose: [Readings]) -> Decimal? {
+    private func getDeltaBG(_ glucose: [ReadingsSnapshot]) -> Decimal? {
         guard let lastGlucose = glucose.first, glucose.count >= 4 else { return nil }
         return Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
             (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
@@ -290,7 +290,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         }
     }
 
-    private func glucoseText(_ glucose: [Readings]) -> (glucose: String, trend: String, delta: String) {
+    private func glucoseText(_ glucose: [ReadingsSnapshot]) -> (glucose: String, trend: String, delta: String) {
         guard !glucose.isEmpty else { return ("--", "--", "--") }
 
         let glucoseValue = glucose.first?.glucose ?? 0
@@ -367,7 +367,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         }
     }
 
-    private func newBolusCalc(delta: [Readings]) -> Decimal {
+    private func newBolusCalc(delta: [ReadingsSnapshot]) -> Decimal {
         var conversion: Decimal = 1
         // Settings etc
         if settings.units == .mmolL {

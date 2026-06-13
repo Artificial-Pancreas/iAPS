@@ -78,7 +78,7 @@ actor BaseFetchTreatmentsManager: FetchTreatmentsManager, LifetimeOwner, AppServ
 
         let filteredCarbs = await carbs.filter { !($0.enteredBy?.contains(CarbsEntry.manual) ?? false) }
         if filteredCarbs.isNotEmpty {
-            coreDataStorage.saveMeals(filteredCarbs)
+            await coreDataStorage.saveMeals(filteredCarbs)
             await self.carbsStorage.storeCarbs(filteredCarbs)
         }
         let filteredTargets = await targets.filter { !($0.enteredBy?.contains(TempTarget.manual) ?? false) }

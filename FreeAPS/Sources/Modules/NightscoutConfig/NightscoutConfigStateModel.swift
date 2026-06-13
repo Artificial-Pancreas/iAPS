@@ -119,8 +119,8 @@ extension NightscoutConfig {
             }
         }
 
-        private func readConcentration() -> Double {
-            coreDataStorage.insulinConcentration().concentration
+        private func readConcentration() async -> Double {
+            await coreDataStorage.insulinConcentration().concentration
         }
 
         func importSettings() {
@@ -258,7 +258,7 @@ extension NightscoutConfig {
                 }
 
                 // SAVE TO STORAGE. SAVE TO PUMP (LoopKit)
-                let concentration = readConcentration()
+                let concentration = await readConcentration()
                 do {
                     if let adjustedBasals = try await deviceManager.syncBasalRateSchedule(
                         items: basals,
@@ -347,7 +347,7 @@ extension NightscoutConfig {
             uploadingProgress = 0.0
 
             Task {
-                let readings = CoreDataStorage()
+                let readings = await coreDataStorage
                     .fetchGlucose(interval: Date.now.removingTimeInterval(.days(self.uploadInterval)) as NSDate)
                 let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
                     guard let date = reading.date,

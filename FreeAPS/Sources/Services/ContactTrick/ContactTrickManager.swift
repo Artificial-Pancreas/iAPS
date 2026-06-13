@@ -79,7 +79,7 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
         let preferences = appCoordinator.preferences.value
 
         if contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            let readings = coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
+            let readings = await coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
             let glucoseValues = glucoseText(readings, settings: settings)
 
             let suggestion: Suggestion? = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -262,7 +262,7 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
     }
 
     private func glucoseText(
-        _ glucose: [Readings],
+        _ glucose: [ReadingsSnapshot],
         settings: FreeAPSSettings
     ) -> (glucose: String, trend: String, delta: String) {
         guard !glucose.isEmpty else { return ("--", "--", "--") }

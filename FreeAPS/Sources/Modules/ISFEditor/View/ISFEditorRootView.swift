@@ -62,7 +62,7 @@ extension ISFEditor {
                             Text("Calculated Sensitivity")
                             Spacer()
                             Text(
-                                rateFormatter.string(from: isf ?? 0) ?? ""
+                                rateFormatter.string(from: isf as? NSNumber ?? 0) ?? ""
                             )
                             Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }

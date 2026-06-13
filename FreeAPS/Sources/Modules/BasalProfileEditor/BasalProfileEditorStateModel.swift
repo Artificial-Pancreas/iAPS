@@ -115,12 +115,12 @@ extension BasalProfileEditor {
             }
         }
 
-        private func readConcentration() -> Double {
-            coreDataStorage.insulinConcentration().concentration
+        private func readConcentration() async -> Double {
+            await coreDataStorage.insulinConcentration().concentration
         }
 
         private func saveProfile(_ profile: [BasalProfileEntry]) async throws {
-            let concentration = readConcentration()
+            let concentration = await readConcentration()
 
             if let adjustedProfile = try await deviceManager.syncBasalRateSchedule(items: profile, concentration: concentration) {
                 await storage.save(adjustedProfile, as: OpenAPS.Settings.basalProfile)

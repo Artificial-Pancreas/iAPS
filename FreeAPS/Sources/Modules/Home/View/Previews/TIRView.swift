@@ -2,7 +2,7 @@ import Charts
 import SwiftUI
 
 struct PreviewChart: View {
-    @Binding var readings: [Readings]
+    @Binding var readings: [ReadingsSnapshot]
     @Binding var lowLimit: Decimal
     @Binding var highLimit: Decimal
 

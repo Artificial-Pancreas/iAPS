@@ -17,9 +17,9 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
 
     private let coreDataStorage = CoreDataStorage()
 
-    private var lastVersionCheck: VNr?
+    private var lastVersionCheck: VNrSnapshot?
 
-    private var latestUploadedStats: StatsData?
+    private var latestUploadedStats: StatsDataSnapshot?
 
     init(
         storage: FileStorage,
@@ -39,8 +39,8 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
 
     // this is called at the start of the app
     func start() async {
-        lastVersionCheck = coreDataStorage.fetchVersion()
-        latestUploadedStats = coreDataStorage.fetchStats()
+        lastVersionCheck = await coreDataStorage.fetchVersion()
+        latestUploadedStats = await coreDataStorage.fetchStats()
         observe(appCoordinator.loopCompleted) { me, _ in
             await me.versionCheck()
             await me.uploadStatistics()
@@ -70,7 +70,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
             let version = await statisticsFactory.buildVersion()
             await databaseManager.uploadVersion(version: version)
         }
-        latestUploadedStats = coreDataStorage.fetchStats()
+        latestUploadedStats = await coreDataStorage.fetchStats()
     }
 
     func uploadProfileAndSettings(force: Bool) async {
@@ -87,6 +87,6 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
            lastCheckDate > Date.now.addingTimeInterval(-10.hours.timeInterval) { return }
 
         await databaseManager.fetchVersion()
-        lastVersionCheck = coreDataStorage.fetchVersion()
+        lastVersionCheck = await coreDataStorage.fetchVersion()
     }
 }

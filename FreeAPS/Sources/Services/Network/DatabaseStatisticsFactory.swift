@@ -29,7 +29,9 @@ actor DatabaseStatisticsFactory {
 
 extension DatabaseStatisticsFactory {
     private var profileName: String {
-        coreDataStorage.fetchSettingProfileName()
+        get async {
+            await coreDataStorage.fetchSettingProfileName()
+        }
     }
 
     func buildVersion() -> DatabaseStatisticsVersion {
@@ -44,16 +46,16 @@ extension DatabaseStatisticsFactory {
         let preferences = await settingsManager.preferences
 
         // Carbs
-        let carbs = coreDataStorage.fetchMealData(interval: DateFilter.day.startDate)
-        let carbTotal: Decimal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+        let carbs = await coreDataStorage.fetchMealData(interval: DateFilter.day.startDate)
+        let carbTotal: Decimal = carbs.map({ carbs in carbs.carbs ?? 0 }).reduce(0, +)
 
         // TDD
-        let tdds = coreDataStorage.fetchTDD(interval: DateFilter.fourteenDays.startDate)
+        let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.fourteenDays.startDate)
         var currentTDD: Decimal = 0
         var tddTotalAverage: Decimal = 0
         if !tdds.isEmpty {
-            currentTDD = tdds[0].tdd?.decimalValue ?? 0
-            let tddArray = tdds.compactMap({ insulin in insulin.tdd as? Decimal ?? 0 })
+            currentTDD = tdds[0].tdd ?? 0
+            let tddArray = tdds.compactMap({ insulin in insulin.tdd ?? 0 })
             tddTotalAverage = tddArray.reduce(0, +) / Decimal(tddArray.count)
         }
 
@@ -91,10 +93,10 @@ extension DatabaseStatisticsFactory {
             iPa = 50
         }
         // CGM Readings
-        let glucose_24 = coreDataStorage.fetchGlucose(interval: DateFilter.day.startDate) // Day
-        let glucose_7 = coreDataStorage.fetchGlucose(interval: DateFilter.week.startDate) // Week
-        let glucose_30 = coreDataStorage.fetchGlucose(interval: DateFilter.month.startDate) // Month
-        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.total.startDate) // Total
+        let glucose_24 = await coreDataStorage.fetchGlucose(interval: DateFilter.day.startDate) // Day
+        let glucose_7 = await coreDataStorage.fetchGlucose(interval: DateFilter.week.startDate) // Week
+        let glucose_30 = await coreDataStorage.fetchGlucose(interval: DateFilter.month.startDate) // Month
+        let glucose = await coreDataStorage.fetchGlucose(interval: DateFilter.total.startDate) // Total
 
         // First date
         let previous = glucose.last?.date ?? Date()
@@ -110,23 +112,23 @@ extension DatabaseStatisticsFactory {
         let totalDaysGlucose = glucoseStats(glucose, settings: settings)
 
         let median = Durations(
-            day: roundDecimal(Decimal(oneDayGlucose.median), 1),
-            week: roundDecimal(Decimal(sevenDaysGlucose.median), 1),
-            month: roundDecimal(Decimal(thirtyDaysGlucose.median), 1),
-            total: roundDecimal(Decimal(totalDaysGlucose.median), 1)
+            day: Self.roundDecimal(Decimal(oneDayGlucose.median), 1),
+            week: Self.roundDecimal(Decimal(sevenDaysGlucose.median), 1),
+            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.median), 1),
+            total: Self.roundDecimal(Decimal(totalDaysGlucose.median), 1)
         )
 
         let overrideHbA1cUnit = settings.overrideHbA1cUnit
 
         let hbs = Durations(
             day: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                roundDecimal(Decimal(oneDayGlucose.ifcc), 1) : roundDecimal(Decimal(oneDayGlucose.ngsp), 1),
+                Self.roundDecimal(Decimal(oneDayGlucose.ifcc), 1) : Self.roundDecimal(Decimal(oneDayGlucose.ngsp), 1),
             week: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                roundDecimal(Decimal(sevenDaysGlucose.ifcc), 1) : roundDecimal(Decimal(sevenDaysGlucose.ngsp), 1),
+                Self.roundDecimal(Decimal(sevenDaysGlucose.ifcc), 1) : Self.roundDecimal(Decimal(sevenDaysGlucose.ngsp), 1),
             month: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                roundDecimal(Decimal(thirtyDaysGlucose.ifcc), 1) : roundDecimal(Decimal(thirtyDaysGlucose.ngsp), 1),
+                Self.roundDecimal(Decimal(thirtyDaysGlucose.ifcc), 1) : Self.roundDecimal(Decimal(thirtyDaysGlucose.ngsp), 1),
             total: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                roundDecimal(Decimal(totalDaysGlucose.ifcc), 1) : roundDecimal(Decimal(totalDaysGlucose.ngsp), 1)
+                Self.roundDecimal(Decimal(totalDaysGlucose.ifcc), 1) : Self.roundDecimal(Decimal(totalDaysGlucose.ngsp), 1)
         )
 
         // Get TIR computations for every case
@@ -136,10 +138,10 @@ extension DatabaseStatisticsFactory {
         let totalDays_: (TIR: Double, hypos: Double, hypers: Double, normal_: Double) = tir(glucose, settings: settings)
 
         let tir = Durations(
-            day: roundDecimal(Decimal(oneDay_.TIR), 1),
-            week: roundDecimal(Decimal(sevenDays_.TIR), 1),
-            month: roundDecimal(Decimal(thirtyDays_.TIR), 1),
-            total: roundDecimal(Decimal(totalDays_.TIR), 1)
+            day: Self.roundDecimal(Decimal(oneDay_.TIR), 1),
+            week: Self.roundDecimal(Decimal(sevenDays_.TIR), 1),
+            month: Self.roundDecimal(Decimal(thirtyDays_.TIR), 1),
+            total: Self.roundDecimal(Decimal(totalDays_.TIR), 1)
         )
         let hypo = Durations(
             day: Decimal(oneDay_.hypos),
@@ -160,10 +162,10 @@ extension DatabaseStatisticsFactory {
             total: Decimal(totalDays_.normal_)
         )
         let range = Threshold(
-            low: units == .mmolL ? roundDecimal(settings.low.asMmolL, 1) :
-                roundDecimal(settings.low, 0),
-            high: units == .mmolL ? roundDecimal(settings.high.asMmolL, 1) :
-                roundDecimal(settings.high, 0)
+            low: units == .mmolL ? Self.roundDecimal(settings.low.asMmolL, 1) :
+                Self.roundDecimal(settings.low, 0),
+            high: units == .mmolL ? Self.roundDecimal(settings.high.asMmolL, 1) :
+                Self.roundDecimal(settings.high, 0)
         )
         let TimeInRange = TIRs(
             TIR: tir,
@@ -173,39 +175,43 @@ extension DatabaseStatisticsFactory {
             Euglycemic: normal
         )
         let avgs = Durations(
-            day: roundDecimal(Decimal(oneDayGlucose.average), 1),
-            week: roundDecimal(Decimal(sevenDaysGlucose.average), 1),
-            month: roundDecimal(Decimal(thirtyDaysGlucose.average), 1),
-            total: roundDecimal(Decimal(totalDaysGlucose.average), 1)
+            day: Self.roundDecimal(Decimal(oneDayGlucose.average), 1),
+            week: Self.roundDecimal(Decimal(sevenDaysGlucose.average), 1),
+            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.average), 1),
+            total: Self.roundDecimal(Decimal(totalDaysGlucose.average), 1)
         )
         let avg = Averages(Average: avgs, Median: median)
         // Standard Deviations
         let standardDeviations = Durations(
-            day: roundDecimal(Decimal(oneDayGlucose.sd), 1),
-            week: roundDecimal(Decimal(sevenDaysGlucose.sd), 1),
-            month: roundDecimal(Decimal(thirtyDaysGlucose.sd), 1),
-            total: roundDecimal(Decimal(totalDaysGlucose.sd), 1)
+            day: Self.roundDecimal(Decimal(oneDayGlucose.sd), 1),
+            week: Self.roundDecimal(Decimal(sevenDaysGlucose.sd), 1),
+            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.sd), 1),
+            total: Self.roundDecimal(Decimal(totalDaysGlucose.sd), 1)
         )
         // CV = standard deviation / sample mean x 100
         let cvs = Durations(
-            day: roundDecimal(Decimal(oneDayGlucose.cv), 1),
-            week: roundDecimal(Decimal(sevenDaysGlucose.cv), 1),
-            month: roundDecimal(Decimal(thirtyDaysGlucose.cv), 1),
-            total: roundDecimal(Decimal(totalDaysGlucose.cv), 1)
+            day: Self.roundDecimal(Decimal(oneDayGlucose.cv), 1),
+            week: Self.roundDecimal(Decimal(sevenDaysGlucose.cv), 1),
+            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.cv), 1),
+            total: Self.roundDecimal(Decimal(totalDaysGlucose.cv), 1)
         )
         let variance = Variance(SD: standardDeviations, CV: cvs)
 
         // Loops
-        let request = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
-        request.predicate = NSPredicate(
-            format: "interval > 0 AND start > %@",
-            Date().removingTimeInterval(.hours(24)) as NSDate
-        )
-        request.sortDescriptors = [NSSortDescriptor(key: "start", ascending: false)]
-        let lsr = (try? coredataContext.fetch(request)) ?? []
+        let oneDayLoops = await coredataContext.perform {
+            let request = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+            request.predicate = NSPredicate(
+                format: "interval > 0 AND start > %@",
+                Date().removingTimeInterval(.hours(24)) as NSDate
+            )
+            request.sortDescriptors = [NSSortDescriptor(key: "start", ascending: false)]
+
+            let lsr = (try? self.coredataContext.fetch(request)) ?? []
+            return Self.loops(lsr)
+        }
 
         // Compute LoopStats for 24 hours
-        let oneDayLoops = loops(lsr)
+
         let loopstat = LoopCycles(
             loops: oneDayLoops.loops,
             errors: oneDayLoops.errors,
@@ -224,14 +230,13 @@ extension DatabaseStatisticsFactory {
         )
 
         // Insulin
-        let insulinDistribution = coreDataStorage.fetchInsulinDistribution()
+        let insulinDistribution = await coreDataStorage.fetchInsulinDistribution()
         let insulin = Ins(
-            TDD: roundDecimal(currentTDD, 2),
-            bolus: insulinDistribution.first != nil ? ((insulinDistribution.first?.bolus ?? 0) as Decimal) : 0,
-            temp_basal: insulinDistribution.first != nil ? ((insulinDistribution.first?.tempBasal ?? 0) as Decimal) : 0,
-            scheduled_basal: insulinDistribution
-                .first != nil ? ((insulinDistribution.first?.scheduledBasal ?? 0) as Decimal) : 0,
-            total_average: roundDecimal(tddTotalAverage, 1)
+            TDD: Self.roundDecimal(currentTDD, 2),
+            bolus: insulinDistribution != nil ? ((insulinDistribution?.bolus ?? 0) as Decimal) : 0,
+            temp_basal: insulinDistribution != nil ? ((insulinDistribution?.tempBasal ?? 0) as Decimal) : 0,
+            scheduled_basal: insulinDistribution != nil ? ((insulinDistribution?.scheduledBasal ?? 0) as Decimal) : 0,
+            total_average: Self.roundDecimal(tddTotalAverage, 1)
         )
 
         let hbA1cUnit = !overrideHbA1cUnit ? (units == .mmolL ? "mmol/mol" : "%") : (units == .mmolL ? "%" : "mmol/mol")
@@ -358,6 +363,7 @@ extension DatabaseStatisticsFactory {
 
         let now = Date.now
 
+        let profileName = await self.profileName
         let profile = NightscoutProfileStore(
             defaultProfile: "default",
             startDate: now,
@@ -393,7 +399,7 @@ extension DatabaseStatisticsFactory {
         return branch
     }
 
-    private func glucoseStats(_ fetchedGlucose: [Readings], settings: FreeAPSSettings)
+    private func glucoseStats(_ fetchedGlucose: [ReadingsSnapshot], settings: FreeAPSSettings)
         -> (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
     {
         // First date
@@ -438,7 +444,7 @@ extension DatabaseStatisticsFactory {
     }
 
     private func tir(
-        _ glucose: [Readings],
+        _ glucose: [ReadingsSnapshot],
         settings: FreeAPSSettings
     ) -> (TIR: Double, hypos: Double, hypers: Double, normal_: Double) {
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
@@ -465,7 +471,7 @@ extension DatabaseStatisticsFactory {
         )
     }
 
-    private func loops(_ loops: [LoopStatRecord]) -> Loops {
+    private static func loops(_ loops: [LoopStatRecord]) -> Loops {
         // First date
         let previous = loops.last?.end ?? Date()
         // Last date (recent)
@@ -512,7 +518,7 @@ extension DatabaseStatisticsFactory {
         )
     }
 
-    private func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
+    private static func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
         let rounded = round(Double(decimal) * pow(10, digits)) / pow(10, digits)
         return Decimal(rounded)
     }
@@ -522,7 +528,7 @@ extension DatabaseStatisticsFactory {
         return rounded
     }
 
-    private func medianCalculationDouble(array: [Double]) -> Double {
+    private static func medianCalculationDouble(array: [Double]) -> Double {
         guard !array.isEmpty else {
             return 0
         }

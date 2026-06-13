@@ -10,7 +10,7 @@ extension Restore {
             Task {
                 let s = BaseFileStorage()
                 await s.save(file, as: filename)
-                coreData.saveOnbarding()
+                await coreData.saveOnbarding()
             }
         }
     }
