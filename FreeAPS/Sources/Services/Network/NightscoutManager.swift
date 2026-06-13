@@ -87,14 +87,14 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         observe(appCoordinator.carbHistoryUpdates) { me, carbHistory in
             await me.carbHistoryUpdated(carbHistory)
         }
-        observe(appCoordinator.tempTargetsUpdates) { me, _ in
-            await me.uploadTempTargets()
+        observe(appCoordinator.tempTargetsUpdates) { me, tempTargets in
+            await me.tempTargetsUpdated(tempTargets)
         }
         observe(appCoordinator.glucoseHistoryUpdates) { me, bloodGlucose in
-            await me.glucoseHistoryUpdated(bloodGlucose: bloodGlucose)
+            await me.glucoseHistoryUpdated(bloodGlucose)
         }
         observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
-            await me.pumpHistoryUpdated(pumpHistory: pumpHistory)
+            await me.pumpHistoryUpdated(pumpHistory)
         }
     }
 
@@ -390,7 +390,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         )
     }
 
-    private func pumpHistoryUpdated(pumpHistory: [PumpHistoryEvent]) async {
+    private func pumpHistoryUpdated(_ pumpHistory: [PumpHistoryEvent]) async {
         let settings = appCoordinator.settings.value
         guard nightscoutAPI != nil, settings.isUploadEnabled, isNetworkReachable else {
             return
@@ -423,7 +423,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         )
     }
 
-    private func glucoseHistoryUpdated(bloodGlucose: [BloodGlucose]) async {
+    private func glucoseHistoryUpdated(_ bloodGlucose: [BloodGlucose]) async {
         let settings = appCoordinator.settings.value
         guard settings.isUploadEnabled, bloodGlucose.isNotEmpty, nightscoutAPI != nil else {
             return
@@ -652,10 +652,37 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         )
     }
 
-    private func uploadTempTargets() async {
+    private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
         let settings = appCoordinator.settings.value
-        let notUploaded = await tempTargetsStorage.nightscoutTretmentsNotUploaded()
-        await uploadTreatments(notUploaded, deleted: [], fileToSave: OpenAPS.Nightscout.uploadedTempTargets, settings: settings)
+        guard nightscoutAPI != nil, settings.isUploadEnabled, isNetworkReachable else {
+            return
+        }
+
+        // newest -> oldest
+        let storedEvents = convertTempTargetsToNightscout(events: tempTargets)
+
+        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedTempTargets, as: [NigtscoutTreatment].self) ?? []
+
+        // newest -> oldest
+        let notUploaded = Array(Set(storedEvents).subtracting(Set(uploaded))).sorted { $0.createdAt! > $1.createdAt! }
+
+        let deletedFromStorage: [NigtscoutTreatment]
+        if let oldestStoredEventDate = storedEvents.reversed().compactMap(\.createdAt).first {
+            deletedFromStorage =
+                Set(uploaded).subtracting(storedEvents)
+                    .filter {
+                        ($0.createdAt ?? .distantPast) > oldestStoredEventDate
+                    }
+        } else {
+            deletedFromStorage = []
+        }
+
+        await uploadTreatments(
+            notUploaded,
+            deleted: deletedFromStorage,
+            fileToSave: OpenAPS.Nightscout.uploadedTempTargets,
+            settings: settings
+        )
     }
 
     /// upload `glucose` to nightscout, upon success - if provided, save `allGlucose` to storage so we don't upload any of it next time
@@ -1018,7 +1045,7 @@ extension BaseNightscoutManager {
 }
 
 extension BaseNightscoutManager {
-    /// returns events converted to nightscout format, oldest -> newest
+    /// returns events converted to nightscout format, newest -> oldest
     private func convertCarbHistoryToNightscout(events: [CarbsEntry]) -> [NigtscoutTreatment] {
         let eventsManual = events
             .filter {
@@ -1045,6 +1072,32 @@ extension BaseNightscoutManager {
                 id: $0.id,
                 fpuID: nil,
                 creation_date: $0.createdAt
+            )
+        }
+        return treatments.sorted { $0.createdAt! > $1.createdAt! }
+    }
+}
+
+extension BaseNightscoutManager {
+    /// returns temp targets converted to nightscout format, newest -> oldest
+    private func convertTempTargetsToNightscout(events: [TempTarget]) -> [NigtscoutTreatment] {
+        let eventsManual = events.filter { $0.enteredBy == TempTarget.manual }
+        let treatments = eventsManual.map {
+            NigtscoutTreatment(
+                duration: Int($0.duration),
+                rawDuration: nil,
+                rawRate: nil,
+                absolute: nil,
+                rate: nil,
+                eventType: .nsTempTarget,
+                createdAt: $0.createdAt,
+                enteredBy: TempTarget.manual,
+                bolus: nil,
+                insulin: nil,
+                notes: nil,
+                carbs: nil,
+                targetTop: $0.targetTop,
+                targetBottom: $0.targetBottom
             )
         }
         return treatments.sorted { $0.createdAt! > $1.createdAt! }

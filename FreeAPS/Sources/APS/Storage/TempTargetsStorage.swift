@@ -2,15 +2,10 @@ import Foundation
 import SwiftDate
 import Swinject
 
-// protocol TempTargetsObserver: Sendable {
-//    func tempTargetsDidUpdate(_ targets: [TempTarget])
-// }
-
 protocol TempTargetsStorage: Sendable {
     func storeTempTargets(_ targets: [TempTarget]) async
     func syncDate() async -> Date
     func recent() async -> [TempTarget]
-    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment]
     func storePresets(_ targets: [TempTarget]) async
     func presets() async -> [TempTarget]
     func current() async -> TempTarget?
@@ -53,7 +48,8 @@ actor BaseTempTargetsStorage: TempTargetsStorage {
                 }
                 .sorted { $0.createdAt > $1.createdAt }
         }
-        appCoordinator.tempTargetsUpdates.send(uniqEvents)
+        // newest->oldest
+        appCoordinator.sendTempTargetsUpdate(uniqEvents)
     }
 
     func syncDate() -> Date {
@@ -76,31 +72,6 @@ actor BaseTempTargetsStorage: TempTargetsStorage {
         }
 
         return last
-    }
-
-    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment] {
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedTempTargets, as: [NigtscoutTreatment].self) ?? []
-
-        let eventsManual = await recent().filter { $0.enteredBy == TempTarget.manual }
-        let treatments = eventsManual.map {
-            NigtscoutTreatment(
-                duration: Int($0.duration),
-                rawDuration: nil,
-                rawRate: nil,
-                absolute: nil,
-                rate: nil,
-                eventType: .nsTempTarget,
-                createdAt: $0.createdAt,
-                enteredBy: TempTarget.manual,
-                bolus: nil,
-                insulin: nil,
-                notes: nil,
-                carbs: nil,
-                targetTop: $0.targetTop,
-                targetBottom: $0.targetBottom
-            )
-        }
-        return Array(Set(treatments).subtracting(Set(uploaded)))
     }
 
     func storePresets(_ targets: [TempTarget]) async {

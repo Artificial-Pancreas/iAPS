@@ -64,6 +64,7 @@ final class AppCoordinator: @unchecked Sendable {
     // carb events history updates, newest -> oldest
     let carbHistoryUpdates = PassthroughSubject<[CarbsEntry], Never>()
 
+    // temp targets updates, newest -> oldest
     let tempTargetsUpdates = PassthroughSubject<[TempTarget], Never>()
 
     let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
@@ -180,14 +181,19 @@ final class AppCoordinator: @unchecked Sendable {
         enactedSuggestions.send(value)
     }
 
-    /// MUST BE ascending - oldest -> newest
+    /// MUST BE oldest -> newest
     func sendPumpHistoryUpdate(_ value: [PumpHistoryEvent]) {
         pumpHistoryUpdates.send(value)
     }
 
-    /// MUST BE descending - newest -> oldest
+    /// MUST BE newest -> oldest
     func sendCarbHistoryUpdate(_ value: [CarbsEntry]) {
         carbHistoryUpdates.send(value)
+    }
+
+    /// MUST BE newest -> oldest
+    func sendTempTargetsUpdate(_ value: [TempTarget]) {
+        tempTargetsUpdates.send(value)
     }
 
     func sendBasalProfile(_ value: [BasalProfileEntry]) {
