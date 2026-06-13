@@ -9,8 +9,6 @@ protocol NightscoutManager: Sendable {
     func fetchCarbs() async -> [CarbsEntry]
     func fetchTempTargets() async -> [TempTarget]
     func fetchAnnouncements() async -> [Announcement]
-    func deleteCarbs(_ date: Date) async
-    func deleteInsulin(at date: Date) async
     func deleteManualGlucose(at: Date) async
     func uploadOldGlucose(bloodGlucose: [BloodGlucose]) async -> AsyncStream<Double>
     func uploadStatus() async
@@ -34,7 +32,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private let glucoseStorage: GlucoseStorage
     private let tempTargetsStorage: TempTargetsStorage
     private let carbsStorage: CarbsStorage
-    private let pumpHistoryStorage: PumpHistoryStorage
     private let storage: FileStorage
     private let announcementsStorage: AnnouncementsStorage
     private let settingsManager: SettingsManager
@@ -67,7 +64,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         glucoseStorage: GlucoseStorage,
         tempTargetsStorage: TempTargetsStorage,
         carbsStorage: CarbsStorage,
-        pumpHistoryStorage: PumpHistoryStorage,
         storage: FileStorage,
         announcementsStorage: AnnouncementsStorage,
         settingsManager: SettingsManager,
@@ -79,7 +75,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         self.glucoseStorage = glucoseStorage
         self.tempTargetsStorage = tempTargetsStorage
         self.carbsStorage = carbsStorage
-        self.pumpHistoryStorage = pumpHistoryStorage
         self.storage = storage
         self.announcementsStorage = announcementsStorage
         self.settingsManager = settingsManager
@@ -89,18 +84,17 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     // this is called at the start of the app
     func start() async {
-        // TODO: use values from the stream instead of re-reading the files?..
-        observe(appCoordinator.pumpHistoryUpdates) { me, _ in
-            await me.uploadPumpHistory()
-        }
-        observe(appCoordinator.carbHistoryUpdates) { me, _ in
-            await me.uploadCarbs()
+        observe(appCoordinator.carbHistoryUpdates) { me, carbHistory in
+            await me.carbHistoryUpdated(carbHistory)
         }
         observe(appCoordinator.tempTargetsUpdates) { me, _ in
             await me.uploadTempTargets()
         }
         observe(appCoordinator.glucoseHistoryUpdates) { me, bloodGlucose in
-            await me.uploadGlucose(bloodGlucose: bloodGlucose)
+            await me.glucoseHistoryUpdated(bloodGlucose: bloodGlucose)
+        }
+        observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
+            await me.pumpHistoryUpdated(pumpHistory: pumpHistory)
         }
     }
 
@@ -197,30 +191,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         return await nightscout.fetchAnnouncement(sinceDate: since)
     }
 
-    func deleteCarbs(_ date: Date) async {
-        let settings = appCoordinator.settings.value
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            // TODO: what is this?
-            await carbsStorage.deleteCarbsAndFPUs(at: date)
-            await healthkitManager.deleteCarbs(date: date)
-            return
-        }
-
-        await healthkitManager.deleteCarbs(date: date)
-        await carbsStorage.deleteCarbsAndFPUs(at: date)
-
-        do {
-            try await nightscout.deleteCarbs(date)
-            debug(.nightscout, "Carbs with date \(date) deleted from NS.")
-        } catch {
-            info(
-                .nightscout,
-                "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
-                type: MessageType.warning
-            )
-        }
-    }
-
     func deleteAnnouncements() async {
         let settings = appCoordinator.settings.value
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
@@ -235,23 +205,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 "Deletion of Announcements not possible \(error.localizedDescription)",
                 type: MessageType.warning
             )
-        }
-    }
-
-    func deleteInsulin(at date: Date) async {
-        let settings = appCoordinator.settings.value
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            // TODO: what is this?
-            await pumpHistoryStorage.deleteInsulin(at: date)
-            return
-        }
-
-        do {
-            try await nightscout.deleteInsulin(at: date)
-            await pumpHistoryStorage.deleteInsulin(at: date)
-            debug(.nightscout, "Insulin deleted from NS")
-        } catch {
-            debug(.nightscout, error.localizedDescription)
         }
     }
 
@@ -383,7 +336,12 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 targetTop: nil,
                 targetBottom: nil
             )
-            await uploadTreatments([siteTreatment], fileToSave: OpenAPS.Nightscout.uploadedPodAge, settings: settings)
+            await uploadTreatments(
+                [siteTreatment],
+                deleted: [],
+                fileToSave: OpenAPS.Nightscout.uploadedPodAge,
+                settings: settings
+            )
         }
     }
 
@@ -432,7 +390,40 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         )
     }
 
-    private func uploadGlucose(bloodGlucose: [BloodGlucose]) async {
+    private func pumpHistoryUpdated(pumpHistory: [PumpHistoryEvent]) async {
+        let settings = appCoordinator.settings.value
+        guard nightscoutAPI != nil, settings.isUploadEnabled, isNetworkReachable else {
+            return
+        }
+
+        // newest -> oldest
+        let storedEvents = convertPumpHistoryToNightscout(events: pumpHistory)
+
+        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
+
+        // newest -> oldest
+        let notUploaded = Array(Set(storedEvents).subtracting(Set(uploaded))).sorted { $0.createdAt! > $1.createdAt! }
+
+        let deletedFromStorage: [NigtscoutTreatment]
+        if let oldestStoredEventDate = storedEvents.reversed().compactMap(\.createdAt).first {
+            deletedFromStorage =
+                Set(uploaded).subtracting(storedEvents)
+                    .filter {
+                        ($0.createdAt ?? .distantPast) > oldestStoredEventDate
+                    }
+        } else {
+            deletedFromStorage = []
+        }
+
+        await uploadTreatments(
+            notUploaded,
+            deleted: deletedFromStorage,
+            fileToSave: OpenAPS.Nightscout.uploadedPumphistory,
+            settings: settings
+        )
+    }
+
+    private func glucoseHistoryUpdated(bloodGlucose: [BloodGlucose]) async {
         let settings = appCoordinator.settings.value
         guard settings.isUploadEnabled, bloodGlucose.isNotEmpty, nightscoutAPI != nil else {
             return
@@ -447,8 +438,72 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             settings: settings
         ).drain()
 
+        await recordSensorStartIfNeeded(bloodGlucose: bloodGlucose)
+
         let cgmStateNotUploaded = await nightscoutCGMStateNotUploaded()
-        await uploadTreatments(cgmStateNotUploaded, fileToSave: OpenAPS.Nightscout.uploadedCGMState, settings: settings)
+        await uploadTreatments(
+            cgmStateNotUploaded,
+            deleted: [],
+            fileToSave: OpenAPS.Nightscout.uploadedCGMState,
+            settings: settings
+        )
+    }
+
+    private func recordSensorStartIfNeeded(bloodGlucose glucose: [BloodGlucose]) async {
+        // Do we have a sensor session start?
+        if let sensorSessionStart = glucose.first(where: { $0.sessionStartDate != nil }) {
+            guard let sessionStartDate = sensorSessionStart.sessionStartDate else { return }
+
+            await self.storage.maybeModify(file: OpenAPS.Monitor.cgmState, as: NigtscoutTreatment.self) { inStorage in
+                // For Dexcom, each glucose event contains the sessionStartDate (which contains the correct timestamp of the latest sensor start)
+                // We only need to send the "Sensor Start" event once per change.
+                // This guard ensures we send a new "Sensor Start" event to NS only if the previously sent event happened more than 60 seconds before this one.
+                //
+                // As a side effect, if there is jitter in the sessionStartDate (+/- few milliseconds each time), we will flood NS with the duplicated Session Start events over time.
+                // See: https://github.com/Artificial-Pancreas/iAPS/issues/1806
+                if let lastTreatment = inStorage.last,
+                   let lastCreatedAt = lastTreatment.createdAt,
+                   abs(lastCreatedAt.timeIntervalSince(sessionStartDate)) < 60
+                {
+                    return nil // do not modify
+                }
+
+                var notes = ""
+                if let t = sensorSessionStart.transmitterID {
+                    notes = t
+                }
+                if let a = sensorSessionStart.activationDate {
+                    notes = "\(notes) activated on \(a)"
+                }
+
+                let treatment = NigtscoutTreatment(
+                    duration: nil,
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: .nsSensorChange,
+                    createdAt: sessionStartDate,
+                    enteredBy: NigtscoutTreatment.local,
+                    bolus: nil,
+                    insulin: nil,
+                    notes: notes,
+                    carbs: nil,
+                    fat: nil,
+                    protein: nil,
+                    targetTop: nil,
+                    targetBottom: nil
+                )
+
+                var treatments = inStorage
+                treatments.append(treatment)
+                debug(.deviceManager, "CGM sensor change \(String(describing: sensorSessionStart.sessionStartDate))")
+
+                // We have to keep quite a bit of history as sensors start only every 10 days.
+                return treatments
+                    .filter { $0.createdAt != nil && $0.createdAt!.addingTimeInterval(30.days.timeInterval) > Date() }
+            }
+        }
     }
 
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date) async {
@@ -564,22 +619,43 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         debug(.nightscout, "Override(s) deleted from list of not uploaded Overrides.")
     }
 
-    private func uploadPumpHistory() async {
+    private func carbHistoryUpdated(_ carbHistory: [CarbsEntry]) async {
         let settings = appCoordinator.settings.value
-        let notUploaded = await pumpHistoryStorage.nightscoutTretmentsNotUploaded()
-        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedPumphistory, settings: settings)
-    }
+        guard nightscoutAPI != nil, settings.isUploadEnabled, isNetworkReachable else {
+            return
+        }
 
-    private func uploadCarbs() async {
-        let settings = appCoordinator.settings.value
-        let notUploaded = await carbsStorage.nightscoutTretmentsNotUploaded()
-        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedCarbs, settings: settings)
+        // newest -> oldest
+        let storedEvents = convertCarbHistoryToNightscout(events: carbHistory)
+
+        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedCarbs, as: [NigtscoutTreatment].self) ?? []
+
+        // newest -> oldest
+        let notUploaded = Array(Set(storedEvents).subtracting(Set(uploaded))).sorted { $0.createdAt! > $1.createdAt! }
+
+        let deletedFromStorage: [NigtscoutTreatment]
+        if let oldestStoredEventDate = storedEvents.reversed().compactMap(\.createdAt).first {
+            deletedFromStorage =
+                Set(uploaded).subtracting(storedEvents)
+                    .filter {
+                        ($0.createdAt ?? .distantPast) > oldestStoredEventDate
+                    }
+        } else {
+            deletedFromStorage = []
+        }
+
+        await uploadTreatments(
+            notUploaded,
+            deleted: deletedFromStorage,
+            fileToSave: OpenAPS.Nightscout.uploadedCarbs,
+            settings: settings
+        )
     }
 
     private func uploadTempTargets() async {
         let settings = appCoordinator.settings.value
         let notUploaded = await tempTargetsStorage.nightscoutTretmentsNotUploaded()
-        await uploadTreatments(notUploaded, fileToSave: OpenAPS.Nightscout.uploadedTempTargets, settings: settings)
+        await uploadTreatments(notUploaded, deleted: [], fileToSave: OpenAPS.Nightscout.uploadedTempTargets, settings: settings)
     }
 
     /// upload `glucose` to nightscout, upon success - if provided, save `allGlucose` to storage so we don't upload any of it next time
@@ -656,25 +732,51 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String, settings: FreeAPSSettings) async {
+    private func uploadTreatments(
+        _ treatments: [NigtscoutTreatment],
+        deleted: [NigtscoutTreatment],
+        fileToSave: String,
+        settings: FreeAPSSettings
+    ) async {
         guard let nightscout = nightscoutAPI, settings.isUploadEnabled else { return }
 
+        // TODO: move this?
         await checkForNotUploadedOverides(settings: settings)
 
-        guard !treatments.isEmpty else { return }
+        guard !treatments.isEmpty || !deleted.isEmpty,
+              let eventType = treatments.first?.eventType ?? deleted.first?.eventType else { return }
 
         do {
+            var deletedFromNS: [NigtscoutTreatment] = []
+            for treatment in deleted {
+                do {
+                    try await nightscout.deleteTreatment(treatment)
+                    deletedFromNS.append(treatment)
+                } catch {
+                    debug(
+                        .nightscout,
+                        "failed to delete \(eventType) treatment from NS: \(treatment.eventType) \(String(describing: treatment.createdAt))"
+                    )
+                }
+            }
+
             for chunk in treatments.chunks(ofCount: 100) {
                 try await nightscout.uploadTreatments(Array(chunk))
             }
+
             let oldUploaded = await storage.retrieve(fileToSave, as: [NigtscoutTreatment].self) ?? []
             let cutoff = Date().addingTimeInterval(-TimeInterval(hours: 30))
-            let oldAndNewUploaded = (oldUploaded + treatments).filter { treatment in
+            let oldAndNewUploadedSet = Set(oldUploaded + treatments).subtracting(deletedFromNS)
+            let oldAndNewUploaded = Array(oldAndNewUploadedSet).filter { treatment in
                 guard let createdAt = treatment.createdAt else { return false }
                 return createdAt >= cutoff
             }
-            await storage.save(oldAndNewUploaded, as: fileToSave)
-            debug(.nightscout, "Treatments uploaded")
+            // newest -> oldest
+            await storage.save(
+                oldAndNewUploaded.sorted { $0.createdAt! > $1.createdAt! },
+                as: fileToSave
+            )
+            debug(.nightscout, "\(eventType) treatments uploaded: \(treatments.count), deleted: \(deletedFromNS.count)")
         } catch {
             debug(.nightscout, error.localizedDescription)
         }
@@ -751,6 +853,201 @@ private extension BloodGlucose {
             }
         }
         return nil
+    }
+}
+
+extension BaseNightscoutManager {
+    /// returns events converted to nightscout format, oldest -> newest
+    private func convertPumpHistoryToNightscout(events: [PumpHistoryEvent]) -> [NigtscoutTreatment] {
+        guard !events.isEmpty else { return [] }
+
+        let temps: [NigtscoutTreatment] = events.reduce([]) { result, event in
+            var result = result
+            switch event.type {
+            case .tempBasal:
+                result.append(NigtscoutTreatment(
+                    duration: nil,
+                    rawDuration: nil,
+                    rawRate: event,
+                    absolute: event.rate,
+                    rate: event.rate,
+                    eventType: .nsTempBasal,
+                    createdAt: event.timestamp,
+                    enteredBy: NigtscoutTreatment.local,
+                    bolus: nil,
+                    insulin: nil,
+                    notes: nil,
+                    carbs: nil,
+                    fat: nil,
+                    protein: nil,
+                    targetTop: nil,
+                    targetBottom: nil
+                ))
+            case .tempBasalDuration:
+                if var last = result.popLast(), last.eventType == .nsTempBasal, last.createdAt == event.timestamp {
+                    last.duration = event.durationMin
+                    last.rawDuration = event
+                    result.append(last)
+                }
+            default: break
+            }
+            return result
+        }
+
+        let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
+            switch event.type {
+            case .bolus:
+                let eventType = determineBolusEventType(for: event)
+                return NigtscoutTreatment(
+                    duration: event.duration,
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: eventType,
+                    createdAt: event.timestamp,
+                    enteredBy: NigtscoutTreatment.local,
+                    bolus: event,
+                    insulin: event.amount,
+                    notes: nil,
+                    carbs: nil,
+                    fat: nil,
+                    protein: nil,
+                    targetTop: nil,
+                    targetBottom: nil
+                )
+            case .journalCarbs:
+                return NigtscoutTreatment(
+                    duration: nil,
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: .nsCarbCorrection,
+                    createdAt: event.timestamp,
+                    enteredBy: NigtscoutTreatment.local,
+                    bolus: nil,
+                    insulin: nil,
+                    notes: nil,
+                    carbs: Decimal(event.carbInput ?? 0),
+                    fat: nil,
+                    protein: nil,
+                    targetTop: nil,
+                    targetBottom: nil,
+                    creation_date: event.timestamp
+                )
+            default: return nil
+            }
+        }
+
+        let misc = events.compactMap { event -> NigtscoutTreatment? in
+            switch event.type {
+            case .prime:
+                return NigtscoutTreatment(
+                    duration: event.duration,
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: .nsSiteChange,
+                    createdAt: event.timestamp,
+                    enteredBy: NigtscoutTreatment.local,
+                    bolus: event,
+                    insulin: nil,
+                    notes: nil,
+                    carbs: nil,
+                    fat: nil,
+                    protein: nil,
+                    targetTop: nil,
+                    targetBottom: nil
+                )
+            case .rewind:
+                return NigtscoutTreatment(
+                    duration: nil,
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: .nsInsulinChange,
+                    createdAt: event.timestamp,
+                    enteredBy: NigtscoutTreatment.local,
+                    bolus: nil,
+                    insulin: nil,
+                    notes: nil,
+                    carbs: nil,
+                    fat: nil,
+                    protein: nil,
+                    targetTop: nil,
+                    targetBottom: nil
+                )
+            case .pumpAlarm:
+                return NigtscoutTreatment(
+                    duration: 30, // minutes
+                    rawDuration: nil,
+                    rawRate: nil,
+                    absolute: nil,
+                    rate: nil,
+                    eventType: .nsAnnouncement,
+                    createdAt: event.timestamp,
+                    enteredBy: NigtscoutTreatment.local,
+                    bolus: nil,
+                    insulin: nil,
+                    notes: "Alarm \(String(describing: event.note)) \(event.type)",
+                    carbs: nil,
+                    fat: nil,
+                    protein: nil,
+                    targetTop: nil,
+                    targetBottom: nil
+                )
+            default: return nil
+            }
+        }
+
+        return (bolusesAndCarbs + temps + misc).sorted { $0.createdAt! > $1.createdAt! }
+    }
+
+    private func determineBolusEventType(for event: PumpHistoryEvent) -> EventType {
+        if event.isSMB ?? false {
+            return .smb
+        }
+        if event.isExternal ?? false {
+            return .isExternal
+        }
+        return event.type
+    }
+}
+
+extension BaseNightscoutManager {
+    /// returns events converted to nightscout format, oldest -> newest
+    private func convertCarbHistoryToNightscout(events: [CarbsEntry]) -> [NigtscoutTreatment] {
+        let eventsManual = events
+            .filter {
+                ($0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote || $0.enteredBy == CarbsEntry.shortcut) &&
+                    $0.carbs > 0 }
+        let treatments = eventsManual.map {
+            NigtscoutTreatment(
+                duration: nil,
+                rawDuration: nil,
+                rawRate: nil,
+                absolute: nil,
+                rate: nil,
+                eventType: .nsCarbCorrection,
+                createdAt: $0.actualDate ?? .distantPast,
+                enteredBy: $0.enteredBy ?? CarbsEntry.manual,
+                bolus: nil,
+                insulin: nil,
+                carbs: $0.carbs,
+                fat: nil,
+                protein: nil,
+                foodType: $0.note,
+                targetTop: nil,
+                targetBottom: nil,
+                id: $0.id,
+                fpuID: nil,
+                creation_date: $0.createdAt
+            )
+        }
+        return treatments.sorted { $0.createdAt! > $1.createdAt! }
     }
 }
 

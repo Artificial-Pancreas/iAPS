@@ -181,7 +181,7 @@ extension DataTable {
 
         func deleteCarbs(_ treatment: Treatment, storage: Meals?) {
             Task {
-                await deleteCarbsFromNightscout(treatment.creationDate)
+                await doDeleteCarbs(treatment.creationDate)
 
                 // In need of CoreData deletion?
                 if let data = storage {
@@ -303,8 +303,8 @@ extension DataTable {
                     )
                 }
 
-                // Remove old Nightscout carb entry
-                await deleteCarbsFromNightscout(old.creationDate)
+                // Remove old carb entry
+                await doDeleteCarbs(old.creationDate)
 
                 // Save updated CoreData meal + micros
                 coreDataStorage.saveMeal(
@@ -343,13 +343,15 @@ extension DataTable {
             meal.micronutrient = complex?.micronutrientValues ?? []
         }
 
-        private func deleteCarbsFromNightscout(_ date: Date) async {
-            await nightscoutManager.deleteCarbs(date)
+        private func doDeleteCarbs(_ date: Date) async {
+            await carbStorage.deleteCarbsAndFPUs(at: date)
+            await healthkitManager.deleteCarbs(date: date)
         }
 
         private func doDeleteInsulin(_ treatment: Treatment) async {
-            await nightscoutManager.deleteInsulin(at: treatment.date)
+            await pumpHistoryStorage.deleteInsulin(at: treatment.date)
             if let id = treatment.idPumpEvent {
+                // TODO: this should be separated from here
                 await healthkitManager.deleteInsulin(syncID: id)
             }
         }

@@ -14,7 +14,6 @@ final class NetworkAssembly: Assembly {
                 glucoseStorage: r.resolve(GlucoseStorage.self)!,
                 tempTargetsStorage: r.resolve(TempTargetsStorage.self)!,
                 carbsStorage: r.resolve(CarbsStorage.self)!,
-                pumpHistoryStorage: r.resolve(PumpHistoryStorage.self)!,
                 storage: r.resolve(FileStorage.self)!,
                 announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,

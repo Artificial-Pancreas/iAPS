@@ -6,11 +6,8 @@ import Swinject
 extension NewPumpEvent: @retroactive @unchecked Sendable {}
 
 protocol PumpHistoryStorage: Sendable {
-    func storePumpEvents(_ events: [NewPumpEvent]) async
     func storeEvents(_ events: [PumpHistoryEvent]) async
-    func storeJournalCarbs(_ carbs: Int) async
     func recent() async -> [PumpHistoryEvent]
-    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment]
     func saveCancelTempEvents() async
     func deleteInsulin(at date: Date) async
 }
@@ -207,23 +204,6 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
         await self.storeEvents(eventsToStore)
     }
 
-    func storeJournalCarbs(_ carbs: Int) async {
-        let eventsToStore = [
-            PumpHistoryEvent(
-                id: UUID().uuidString,
-                type: .journalCarbs,
-                timestamp: Date(),
-                amount: nil,
-                duration: nil,
-                durationMin: nil,
-                rate: nil,
-                temp: nil,
-                carbInput: carbs
-            )
-        ]
-        await self.storeEvents(eventsToStore)
-    }
-
     func storeEvents(_ events: [PumpHistoryEvent]) async {
         let file = OpenAPS.Monitor.pumpHistory
         let uniqEvents: [PumpHistoryEvent] = await self.storage.appendAndModify(events, to: file, uniqBy: \.id) {
@@ -231,10 +211,11 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                 .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp }
         }
-        // Broadcast in the same (ascending / oldest-first) order as `recent()`
-        self.appCoordinator.pumpHistoryUpdates.send(uniqEvents.reversed())
+        // oldest -> newest
+        self.appCoordinator.sendPumpHistoryUpdate(uniqEvents.reversed())
     }
 
+    /// oldest -> newest
     func recent() async -> [PumpHistoryEvent] {
         await storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)?.reversed() ?? []
     }
@@ -250,172 +231,9 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                 return allValues
             }
         if didModify {
-            // Broadcast in the same (ascending / oldest-first) order as `recent()`
-            self.appCoordinator.pumpHistoryUpdates.send(updatedValues.reversed())
+            // oldest -> newest
+            self.appCoordinator.sendPumpHistoryUpdate(updatedValues.reversed())
         }
-    }
-
-    func determineBolusEventType(for event: PumpHistoryEvent) -> EventType {
-        if event.isSMB ?? false {
-            return .smb
-        }
-        if event.isExternal ?? false {
-            return .isExternal
-        }
-        return event.type
-    }
-
-    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment] {
-        let events = await recent()
-        guard !events.isEmpty else { return [] }
-
-        let temps: [NigtscoutTreatment] = events.reduce([]) { result, event in
-            var result = result
-            switch event.type {
-            case .tempBasal:
-                result.append(NigtscoutTreatment(
-                    duration: nil,
-                    rawDuration: nil,
-                    rawRate: event,
-                    absolute: event.rate,
-                    rate: event.rate,
-                    eventType: .nsTempBasal,
-                    createdAt: event.timestamp,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: nil,
-                    insulin: nil,
-                    notes: nil,
-                    carbs: nil,
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil
-                ))
-            case .tempBasalDuration:
-                if var last = result.popLast(), last.eventType == .nsTempBasal, last.createdAt == event.timestamp {
-                    last.duration = event.durationMin
-                    last.rawDuration = event
-                    result.append(last)
-                }
-            default: break
-            }
-            return result
-        }
-
-        let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
-            switch event.type {
-            case .bolus:
-                let eventType = determineBolusEventType(for: event)
-                return NigtscoutTreatment(
-                    duration: event.duration,
-                    rawDuration: nil,
-                    rawRate: nil,
-                    absolute: nil,
-                    rate: nil,
-                    eventType: eventType,
-                    createdAt: event.timestamp,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: event,
-                    insulin: event.amount,
-                    notes: nil,
-                    carbs: nil,
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil
-                )
-            case .journalCarbs:
-                return NigtscoutTreatment(
-                    duration: nil,
-                    rawDuration: nil,
-                    rawRate: nil,
-                    absolute: nil,
-                    rate: nil,
-                    eventType: .nsCarbCorrection,
-                    createdAt: event.timestamp,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: nil,
-                    insulin: nil,
-                    notes: nil,
-                    carbs: Decimal(event.carbInput ?? 0),
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil,
-                    creation_date: event.timestamp
-                )
-            default: return nil
-            }
-        }
-
-        let misc = events.compactMap { event -> NigtscoutTreatment? in
-            switch event.type {
-            case .prime:
-                return NigtscoutTreatment(
-                    duration: event.duration,
-                    rawDuration: nil,
-                    rawRate: nil,
-                    absolute: nil,
-                    rate: nil,
-                    eventType: .nsSiteChange,
-                    createdAt: event.timestamp,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: event,
-                    insulin: nil,
-                    notes: nil,
-                    carbs: nil,
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil
-                )
-            case .rewind:
-                return NigtscoutTreatment(
-                    duration: nil,
-                    rawDuration: nil,
-                    rawRate: nil,
-                    absolute: nil,
-                    rate: nil,
-                    eventType: .nsInsulinChange,
-                    createdAt: event.timestamp,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: nil,
-                    insulin: nil,
-                    notes: nil,
-                    carbs: nil,
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil
-                )
-            case .pumpAlarm:
-                return NigtscoutTreatment(
-                    duration: 30, // minutes
-                    rawDuration: nil,
-                    rawRate: nil,
-                    absolute: nil,
-                    rate: nil,
-                    eventType: .nsAnnouncement,
-                    createdAt: event.timestamp,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: nil,
-                    insulin: nil,
-                    notes: "Alarm \(String(describing: event.note)) \(event.type)",
-                    carbs: nil,
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil
-                )
-            default: return nil
-            }
-        }
-
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
-
-        let treatments = Array(Set([bolusesAndCarbs, temps, misc].flatMap { $0 }).subtracting(Set(uploaded)))
-
-        return treatments.sorted { $0.createdAt! > $1.createdAt! }
     }
 
     func saveCancelTempEvents() async {

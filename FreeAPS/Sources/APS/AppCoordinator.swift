@@ -50,6 +50,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let loopCompleted = PassthroughSubject<Void, Never>()
 
+    // pump events history updates, oldest -> newest
     let pumpHistoryUpdates = PassthroughSubject<[PumpHistoryEvent], Never>()
 
     let glucoseHistoryUpdates = PassthroughSubject<[BloodGlucose], Never>()
@@ -60,6 +61,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let newGlucoseRecords = PassthroughSubject<[BloodGlucose], Never>()
 
+    // carb events history updates, newest -> oldest
     let carbHistoryUpdates = PassthroughSubject<[CarbsEntry], Never>()
 
     let tempTargetsUpdates = PassthroughSubject<[TempTarget], Never>()
@@ -176,6 +178,16 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendEnactedSuggestion(_ value: Suggestion) {
         enactedSuggestions.send(value)
+    }
+
+    /// MUST BE ascending - oldest -> newest
+    func sendPumpHistoryUpdate(_ value: [PumpHistoryEvent]) {
+        pumpHistoryUpdates.send(value)
+    }
+
+    /// MUST BE descending - newest -> oldest
+    func sendCarbHistoryUpdate(_ value: [CarbsEntry]) {
+        carbHistoryUpdates.send(value)
     }
 
     func sendBasalProfile(_ value: [BasalProfileEntry]) {
