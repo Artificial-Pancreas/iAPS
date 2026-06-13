@@ -4,84 +4,84 @@ import SwiftDate
 import Swinject
 
 final class CoreDataStorage: Sendable {
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
-    func fetchGlucose(interval: NSDate) -> [Readings] {
-        var fetchGlucose = [Readings]()
-        coredataContext.performAndWait {
+    func fetchGlucose(interval: NSDate) async -> [ReadingsSnapshot] {
+        await coredataContext.perform {
             let requestReadings = Readings.fetchRequest() as NSFetchRequest<Readings>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestReadings.sortDescriptors = [sort]
             requestReadings.predicate = NSPredicate(
                 format: "glucose > 0 AND date > %@", interval
             )
-            try? fetchGlucose = self.coredataContext.fetch(requestReadings)
+            let fetchGlucose = (try? self.coredataContext.fetch(requestReadings)) ?? []
+            return fetchGlucose.map { ReadingsSnapshot.create(from: $0) }
         }
-        return fetchGlucose
     }
 
-    func fetchRecentGlucose() -> Readings? {
-        var fetchGlucose = [Readings]()
-        coredataContext.performAndWait {
+    func fetchRecentGlucose() async -> ReadingsSnapshot? {
+        await coredataContext.perform {
             let requestReadings = Readings.fetchRequest() as NSFetchRequest<Readings>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestReadings.sortDescriptors = [sort]
             requestReadings.fetchLimit = 1
-            try? fetchGlucose = self.coredataContext.fetch(requestReadings)
+            if let fetchGlucose = (try? self.coredataContext.fetch(requestReadings))?.first {
+                return ReadingsSnapshot.create(from: fetchGlucose)
+            } else {
+                return nil
+            }
         }
-        return fetchGlucose.first
     }
 
-    func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
-        var fetchTicks = [InsulinActivity]()
-        coredataContext.performAndWait {
+    func fetchInsulinData(interval: NSDate) async -> [IOBTick0] {
+        await coredataContext.perform {
             let requestTicks = InsulinActivity.fetchRequest()
             let sort = NSSortDescriptor(key: "date", ascending: true)
             requestTicks.sortDescriptors = [sort]
             requestTicks.predicate = NSPredicate(
                 format: "date > %@", interval
             )
-            try? fetchTicks = self.coredataContext.fetch(requestTicks)
-        }
-        let result = fetchTicks.compactMap { tick -> IOBTick0? in
-            guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
-                return nil
+            let fetchTicks = (try? self.coredataContext.fetch(requestTicks)) ?? []
+            let result = fetchTicks.compactMap { tick -> IOBTick0? in
+                guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
+                    return nil
+                }
+                return IOBTick0(
+                    time: date,
+                    iob: iob as Decimal,
+                    activity: activity as Decimal
+                )
             }
-            return IOBTick0(
-                time: date,
-                iob: iob as Decimal,
-                activity: activity as Decimal
-            )
+            return result
         }
-        return result
     }
 
-    func fetchLatestInsulinData() -> IOBTick0? {
-        var fetchTicks = [InsulinActivity]()
-        coredataContext.performAndWait {
+    func fetchLatestInsulinData() async -> IOBTick0? {
+        await coredataContext.perform {
             let requestTicks = InsulinActivity.fetchRequest()
             let sort = NSSortDescriptor(key: "date", ascending: true)
             requestTicks.sortDescriptors = [sort]
             requestTicks.fetchLimit = 1
-            try? fetchTicks = self.coredataContext.fetch(requestTicks)
-        }
-        return fetchTicks.firstNonNil { tick -> IOBTick0? in
-            guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
-                return nil
+            let fetchTicks = (try? self.coredataContext.fetch(requestTicks)) ?? []
+
+            return fetchTicks.firstNonNil { tick -> IOBTick0? in
+                guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
+                    return nil
+                }
+                return IOBTick0(
+                    time: date,
+                    iob: iob as Decimal,
+                    activity: activity as Decimal
+                )
             }
-            return IOBTick0(
-                time: date,
-                iob: iob as Decimal,
-                activity: activity as Decimal
-            )
         }
     }
 
-    func saveInsulinData(iobEntries: [IOBTick0]) -> Decimal? {
+    func saveInsulinData(iobEntries: [IOBTick0]) async -> Decimal? {
         guard let firstDate = iobEntries.compactMap(\.time).min() else { return nil }
         let iob = iobEntries[0].iob
 
-        coredataContext.perform {
+        await coredataContext.perform {
             let deleteRequest = InsulinActivity.fetchRequest()
             deleteRequest.predicate = NSPredicate(
                 format: "date >= %@ OR date < %@",
@@ -106,34 +106,32 @@ final class CoreDataStorage: Sendable {
         return iob
     }
 
-    func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
-        var fetchLoopStats = [LoopStatRecord]()
-        coredataContext.performAndWait {
+    func fetchLoopStats(interval: NSDate) async -> [LoopStatRecordSnapshot] {
+        await coredataContext.perform {
             let requestLoopStats = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
             let sort = NSSortDescriptor(key: "start", ascending: false)
             requestLoopStats.sortDescriptors = [sort]
             requestLoopStats.predicate = NSPredicate(
                 format: "interval > 0 AND start > %@", interval
             )
-            try? fetchLoopStats = self.coredataContext.fetch(requestLoopStats)
+            let fetchLoopStats = (try? self.coredataContext.fetch(requestLoopStats)) ?? []
+            return fetchLoopStats.map { LoopStatRecordSnapshot.create(from: $0) }
         }
-        return fetchLoopStats
     }
 
-    func fetchTDD(interval: NSDate) -> [TDD] {
-        var uniqueEvents = [TDD]()
-        coredataContext.performAndWait {
+    func fetchTDD(interval: NSDate) async -> [TDDSnapshot] {
+        await coredataContext.perform {
             let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
             requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", interval)
             let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
             requestTDD.sortDescriptors = [sortTDD]
-            try? uniqueEvents = coredataContext.fetch(requestTDD)
+            let uniqueEvents = (try? self.coredataContext.fetch(requestTDD)) ?? []
+            return uniqueEvents.map { TDDSnapshot.create(from: $0) }
         }
-        return uniqueEvents
     }
 
-    func saveTDD(_ insulin: (bolus: Decimal, basal: Decimal, hours: Double)) {
-        coredataContext.perform {
+    func saveTDD(_ insulin: (bolus: Decimal, basal: Decimal, hours: Double)) async {
+        await coredataContext.perform {
             let saveToTDD = TDD(context: self.coredataContext)
             saveToTDD.timestamp = Date.now
             saveToTDD.tdd = (insulin.basal + insulin.bolus) as NSDecimalNumber?
@@ -146,35 +144,32 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func fetchTempTargetsSlider() -> [TempTargetsSlider] {
-        var sliderArray = [TempTargetsSlider]()
-        coredataContext.performAndWait {
+    func fetchTempTargetsSlider() async -> [TempTargetsSliderSnapshot] {
+        await coredataContext.perform {
             let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
             let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
             requestIsEnbled.sortDescriptors = [sortIsEnabled]
             // requestIsEnbled.fetchLimit = 1
-            try? sliderArray = coredataContext.fetch(requestIsEnbled)
+            let sliderArray = (try? self.coredataContext.fetch(requestIsEnbled)) ?? []
+            return sliderArray.map { TempTargetsSliderSnapshot.create(from: $0) }
         }
-        return sliderArray
     }
 
-    func fetchTempTargets() -> [TempTargets] {
-        var tempTargetsArray = [TempTargets]()
-        coredataContext.performAndWait {
+    func fetchTempTargets() async -> [TempTargetsSnapshot] {
+        await coredataContext.perform {
             let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
             let sortTT = NSSortDescriptor(key: "date", ascending: false)
             requestTempTargets.sortDescriptors = [sortTT]
             requestTempTargets.fetchLimit = 1
-            try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
+            let tempTargetsArray = (try? self.coredataContext.fetch(requestTempTargets)) ?? []
+            return tempTargetsArray.map { TempTargetsSnapshot.create(from: $0) }
         }
-        return tempTargetsArray
     }
 
     /// Fetch saved meals within interval, future entries excluded
-    func fetchMealData(interval: NSDate) -> [Meals] {
-        var data = [Meals]()
-        let now = NSDate()
-        coredataContext.performAndWait {
+    func fetchMealData(interval: NSDate) async -> [MealsSnapshot] {
+        await coredataContext.perform {
+            let now = NSDate()
             let requestData = Meals.fetchRequest()
             let sortData = NSSortDescriptor(key: "actualDate", ascending: false)
             requestData.sortDescriptors = [sortData]
@@ -183,15 +178,14 @@ final class CoreDataStorage: Sendable {
                 interval,
                 now
             )
-            try? data = self.coredataContext.fetch(requestData)
+            let data = (try? self.coredataContext.fetch(requestData)) ?? []
+            print("Meal Flow: \(data.count) entries retrieved")
+            return data.map { MealsSnapshot.create(from: $0) }
         }
-        print("Meal Flow: \(data.count) entries retrieved")
-
-        return data
     }
 
-    func updateLatestMeal(to saved: Bool) {
-        coredataContext.perform {
+    func updateLatestMeal(to saved: Bool) async {
+        await coredataContext.perform {
             let request: NSFetchRequest<Meals> = Meals.fetchRequest()
 
             request.sortDescriptors = [
@@ -216,70 +210,66 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func fetchStats() -> StatsData? {
-        var stats = [StatsData]()
-        coredataContext.performAndWait {
+    func fetchStats() async -> StatsDataSnapshot? {
+        await coredataContext.perform {
             let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>
             let sortStats = NSSortDescriptor(key: "lastrun", ascending: false)
             requestStats.sortDescriptors = [sortStats]
             requestStats.fetchLimit = 1
-            try? stats = coredataContext.fetch(requestStats)
+            let stats = (try? self.coredataContext.fetch(requestStats)) ?? []
+            return stats.map { StatsDataSnapshot.create(from: $0) }.first
         }
-        return stats.first
     }
 
-    func fetchInsulinDistribution() -> [InsulinDistribution] {
-        var insulinDistribution = [InsulinDistribution]()
-        coredataContext.performAndWait {
+    func fetchInsulinDistribution() async -> InsulinDistributionSnapshot? {
+        await coredataContext.perform {
             let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
             let sortInsulin = NSSortDescriptor(key: "date", ascending: false)
             requestInsulinDistribution.sortDescriptors = [sortInsulin]
             requestInsulinDistribution.fetchLimit = 1
-            try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
+            let insulinDistribution = (try? self.coredataContext.fetch(requestInsulinDistribution)) ?? []
+            return insulinDistribution.map { InsulinDistributionSnapshot.create(from: $0) }.first
         }
-        return insulinDistribution
     }
 
-    func fetchReason() -> Reasons? {
-        var suggestion = [Reasons]()
-        coredataContext.performAndWait {
+    func fetchReason() async -> ReasonsSnapshot? {
+        await coredataContext.perform {
             let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestReasons.sortDescriptors = [sort]
             requestReasons.fetchLimit = 1
-            try? suggestion = coredataContext.fetch(requestReasons)
+            let suggestions = (try? self.coredataContext.fetch(requestReasons)) ?? []
+            return suggestions.map { ReasonsSnapshot.create(from: $0) }.first
         }
-        return suggestion.first
     }
 
-    func fetchReasons(interval: NSDate) -> [Reasons] {
-        var reasonArray = [Reasons]()
-        coredataContext.performAndWait {
+    func fetchReasons(interval: NSDate) async -> [ReasonsSnapshot] {
+        await coredataContext.perform {
             let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestReasons.sortDescriptors = [sort]
             requestReasons.predicate = NSPredicate(
                 format: "date > %@", interval
             )
-            try? reasonArray = self.coredataContext.fetch(requestReasons)
+            let reasonArray = (try? self.coredataContext.fetch(requestReasons)) ?? []
+            return reasonArray.map { ReasonsSnapshot.create(from: $0) }
         }
-        return reasonArray
     }
 
-    func recentReason() -> Reasons? {
-        var reasonArray = [Reasons]()
-        coredataContext.performAndWait {
+    // TODO: duplicate of fetchReason() ?
+    func recentReason() async -> ReasonsSnapshot? {
+        await coredataContext.perform {
             let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestReasons.sortDescriptors = [sort]
             requestReasons.fetchLimit = 1
-            try? reasonArray = self.coredataContext.fetch(requestReasons)
+            let reasonArray = (try? self.coredataContext.fetch(requestReasons)) ?? []
+            return reasonArray.map { ReasonsSnapshot.create(from: $0) }.first
         }
-        return reasonArray.first
     }
 
-    func saveStatUploadCount() {
-        coredataContext.performAndWait { [self] in
+    func saveStatUploadCount() async {
+        await coredataContext.perform {
             let saveStatsCoreData = StatsData(context: self.coredataContext)
             saveStatsCoreData.lastrun = Date()
             try? self.coredataContext.save()
@@ -287,49 +277,47 @@ final class CoreDataStorage: Sendable {
         UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
     }
 
-    func saveVersion(_ versions: Version?) {
+    func saveVersion(_ versions: Version?) async {
         guard let version = versions else { return }
         guard version.main != "" else { return }
-        coredataContext.perform { [self] in
+        await coredataContext.perform {
             let saveNr = VNr(context: self.coredataContext)
             saveNr.nr = version.main
             saveNr.dev = version.dev
 
-            if coredataContext.hasChanges {
+            if self.coredataContext.hasChanges {
                 saveNr.date = Date.now
                 try? self.coredataContext.save()
             }
         }
     }
 
-    func fetchVersion() -> VNr? {
-        var nr = [VNr]()
-        coredataContext.performAndWait {
+    func fetchVersion() async -> VNrSnapshot? {
+        await coredataContext.perform {
             let requestNr = VNr.fetchRequest() as NSFetchRequest<VNr>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestNr.sortDescriptors = [sort]
             requestNr.fetchLimit = 1
-            try? nr = coredataContext.fetch(requestNr)
+            let nr = (try? self.coredataContext.fetch(requestNr)) ?? []
+            return nr.map { VNrSnapshot.create(from: $0) }.first
         }
-        return nr.first
     }
 
-    func recentMeal() -> Meals? {
-        var meals = [Meals]()
-        coredataContext.performAndWait {
+    func recentMeal() async -> MealsSnapshot? {
+        await coredataContext.perform {
             let requestmeals = Meals.fetchRequest() as NSFetchRequest<Meals>
             let sort = NSSortDescriptor(key: "createdAt", ascending: false)
             requestmeals.sortDescriptors = [sort]
             requestmeals.fetchLimit = 1
-            try? meals = coredataContext.fetch(requestmeals)
+            let meals = (try? self.coredataContext.fetch(requestmeals)) ?? []
+            return meals.map { MealsSnapshot.create(from: $0) }.first
         }
-        return meals.first
     }
 
     /// Save one Meal entry
-    func saveMeal(_ stored: [CarbsEntry], now: Date, savedToFile: Bool = false) {
-        coredataContext.perform { [self] in
-            let save = Meals(context: coredataContext)
+    func saveMeal(_ stored: [CarbsEntry], now: Date, savedToFile: Bool = false) async {
+        await coredataContext.perform {
+            let save = Meals(context: self.coredataContext)
             if let entry = stored.first {
                 save.createdAt = now
                 save.actualDate = entry.actualDate ?? entry.createdAt
@@ -361,16 +349,14 @@ final class CoreDataStorage: Sendable {
                     }
                 }
 
-                try? coredataContext.save()
+                try? self.coredataContext.save()
             }
         }
     }
 
     /// Save array of meals
-    func saveMeals(_ stored: [CarbsEntry]) {
-        coredataContext.perform { [weak self] in
-            guard let self else { return }
-
+    func saveMeals(_ stored: [CarbsEntry]) async {
+        await coredataContext.perform {
             stored.forEach { entry in
                 let save = Meals(context: self.coredataContext)
 
@@ -386,57 +372,50 @@ final class CoreDataStorage: Sendable {
             }
 
             do {
-                try coredataContext.save()
+                try self.coredataContext.save()
             } catch {
                 print("Failed saving meals:", error)
             }
         }
     }
 
-    func fetchMealPreset(_ name: String) -> Presets? {
-        var presetsArray = [Presets]()
-        var preset: Presets?
-        coredataContext.performAndWait {
+    func fetchMealPreset(_ name: String) async -> PresetsSnapshot? {
+        await coredataContext.perform {
             let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
             requestPresets.predicate = NSPredicate(
                 format: "dish == %@", name
             )
-            try? presetsArray = self.coredataContext.fetch(requestPresets)
+            requestPresets.fetchLimit = 1
 
-            guard let mealPreset = presetsArray.first else {
-                return
-            }
-            preset = mealPreset
+            let presetsArray = (try? self.coredataContext.fetch(requestPresets)) ?? []
+
+            return presetsArray.map { PresetsSnapshot.create(from: $0) }.first
         }
-        return preset
     }
 
-    func fetchMealPresets() -> [Presets] {
-        var presetsArray = [Presets]()
-        coredataContext.performAndWait {
+    func fetchMealPresets() async -> [PresetsSnapshot] {
+        await coredataContext.perform {
             let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
             requestPresets.predicate = NSPredicate(
                 format: "dish != %@", "" as String
             )
-            try? presetsArray = self.coredataContext.fetch(requestPresets)
+            let presetsArray = (try? self.coredataContext.fetch(requestPresets)) ?? []
+            return presetsArray.map { PresetsSnapshot.create(from: $0) }
         }
-        return presetsArray
     }
 
-    func fetchOnbarding() -> Bool {
-        var firstRun = true
-        coredataContext.performAndWait {
+    func fetchOnbarding() async -> Bool {
+        await coredataContext.perform {
             let requestBool = Onboarding.fetchRequest() as NSFetchRequest<Onboarding>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestBool.sortDescriptors = [sort]
             requestBool.fetchLimit = 1
-            try? firstRun = self.coredataContext.fetch(requestBool).first?.firstRun ?? true
+            return ((try? self.coredataContext.fetch(requestBool)) ?? []).first?.firstRun ?? true
         }
-        return firstRun
     }
 
-    func saveOnbarding() {
-        coredataContext.performAndWait { [self] in
+    func saveOnbarding() async {
+        await coredataContext.perform {
             let save = Onboarding(context: self.coredataContext)
             save.firstRun = false
             save.date = Date.now
@@ -444,8 +423,8 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func startOnbarding() {
-        coredataContext.performAndWait { [self] in
+    func startOnbarding() async {
+        await coredataContext.perform {
             let save = Onboarding(context: self.coredataContext)
             save.firstRun = true
             save.date = Date.now
@@ -453,37 +432,35 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func fetchSettingProfileName() -> String {
-        fetchActiveProfile()
+    func fetchSettingProfileName() async -> String {
+        await fetchActiveProfile()
     }
 
-    func fetchSettingProfileNames() -> [Profiles]? {
-        var presetsArray: [Profiles]?
-        coredataContext.performAndWait {
+    func fetchSettingProfileNames() async -> [ProfilesSnapshot]? {
+        await coredataContext.perform {
             let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
-            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+            let profilesArray = (try? self.coredataContext.fetch(requestProfiles)) ?? []
+            return profilesArray.map { ProfilesSnapshot.create(from: $0) }
         }
-        return presetsArray
     }
 
-    func fetchUniqueSettingProfileName(_ name: String) -> Bool {
-        var presetsArray: Profiles?
-        coredataContext.performAndWait {
+    func fetchUniqueSettingProfileName(_ name: String) async -> Bool {
+        await coredataContext.perform {
             let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
             requestProfiles.predicate = NSPredicate(
                 format: "uploaded == true && name == %@", name as String
             )
-            try? presetsArray = self.coredataContext.fetch(requestProfiles).first
+            requestProfiles.fetchLimit = 1
+            return ((try? self.coredataContext.fetch(requestProfiles)) ?? []).isNotEmpty
         }
-        return (presetsArray != nil)
     }
 
-    func saveProfileSettingName(name: String) {
-        coredataContext.perform { [self] in
+    func saveProfileSettingName(name: String) async {
+        await coredataContext.perform {
             let save = Profiles(context: self.coredataContext)
             save.name = name
             save.date = Date.now
@@ -491,8 +468,8 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func migrateProfileSettingName(name: String) {
-        coredataContext.perform { [self] in
+    func migrateProfileSettingName(name: String) async {
+        await coredataContext.perform {
             let save = Profiles(context: self.coredataContext)
             save.name = name
             save.date = Date.now
@@ -501,15 +478,15 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func profileSettingUploaded(name: String) {
-        var profile: String = name
-        if profile.isEmpty {
-            profile = "default"
-        }
-
+    func profileSettingUploaded(name: String) async {
         // Avoid duplicates
-        if !fetchUniqueSettingProfileName(name) {
-            coredataContext.perform { [self] in
+        if await !fetchUniqueSettingProfileName(name) {
+            await coredataContext.perform { [self] in
+                var profile: String = name
+                if profile.isEmpty {
+                    profile = "default"
+                }
+
                 let save = Profiles(context: self.coredataContext)
                 save.name = profile
                 save.date = Date.now
@@ -519,8 +496,8 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func activeProfile(name: String) {
-        coredataContext.perform { [self] in
+    func activeProfile(name: String) async {
+        await coredataContext.perform {
             let save = ActiveProfile(context: self.coredataContext)
             save.name = name
             save.date = Date.now
@@ -529,51 +506,51 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func checkIfActiveProfile() -> Bool {
-        var presetsArray = [ActiveProfile]()
-        coredataContext.performAndWait {
+    func checkIfActiveProfile() async -> Bool {
+        await coredataContext.perform {
             let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
-            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+            requestProfiles.fetchLimit = 1
+
+            let presetsArray = (try? self.coredataContext.fetch(requestProfiles)) ?? []
+            return (presetsArray.first?.active ?? false)
         }
-        return (presetsArray.first?.active ?? false)
     }
 
-    func fetchActiveProfile() -> String {
-        var presetsArray = [ActiveProfile]()
-        coredataContext.performAndWait {
+    func fetchActiveProfile() async -> String {
+        await coredataContext.perform {
             let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
-            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+            requestProfiles.fetchLimit = 1
+
+            let presetsArray = (try? self.coredataContext.fetch(requestProfiles)) ?? []
+            return presetsArray.first?.name ?? "default"
         }
-        return presetsArray.first?.name ?? "default"
     }
 
-    func fetchLastLoop() -> LastLoop? {
-        var lastLoop = [LastLoop]()
-        coredataContext.performAndWait {
+    func fetchLastLoop() async -> LastLoopSnapshot? {
+        await coredataContext.perform {
             let requestLastLoop = LastLoop.fetchRequest() as NSFetchRequest<LastLoop>
             let sortLoops = NSSortDescriptor(key: "timestamp", ascending: false)
             requestLastLoop.sortDescriptors = [sortLoops]
             requestLastLoop.fetchLimit = 1
-            try? lastLoop = coredataContext.fetch(requestLastLoop)
+            let lastLoop = (try? self.coredataContext.fetch(requestLastLoop)) ?? []
+            return lastLoop.map { LastLoopSnapshot.create(from: $0) }.first
         }
-        return lastLoop.first
     }
 
-    func insulinConcentration() -> (concentration: Double, increment: Double) {
-        var conc = [InsulinConcentration]()
-        coredataContext.performAndWait {
+    func insulinConcentration() async -> (concentration: Double, increment: Double) {
+        await coredataContext.perform {
             let requestConc = InsulinConcentration.fetchRequest() as NSFetchRequest<InsulinConcentration>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestConc.sortDescriptors = [sort]
             requestConc.fetchLimit = 1
-            try? conc = coredataContext.fetch(requestConc)
+            let conc = (try? self.coredataContext.fetch(requestConc)) ?? []
+            let recent = conc.first
+            return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
         }
-        let recent = conc.first
-        return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
     }
 }
 

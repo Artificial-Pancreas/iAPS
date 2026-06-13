@@ -12,7 +12,7 @@ extension ISFEditor {
 
         @Published var suggestion: Suggestion?
         @Published var autotune: Autotune?
-        @Published var sensitivity: NSDecimalNumber?
+        @Published var sensitivity: Decimal?
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -39,7 +39,7 @@ extension ISFEditor {
         override func subscribe() async {
             suggestion = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
 
-            fetchSensitivity()
+            await fetchSensitivity()
 
             let isfSchedule = await provider.isfSchedule
             units = isfSchedule.units
@@ -67,13 +67,13 @@ extension ISFEditor {
             }
         }
 
-        private func suggestionUpdated(_ suggestion: Suggestion?) {
+        private func suggestionUpdated(_ suggestion: Suggestion?) async {
             self.suggestion = suggestion
-            fetchSensitivity()
+            await fetchSensitivity()
         }
 
-        private func fetchSensitivity() {
-            if let suggestion = coreDataStorage.fetchReason() {
+        private func fetchSensitivity() async {
+            if let suggestion = await coreDataStorage.fetchReason() {
                 sensitivity = suggestion.isf ?? 15
             } else {
                 sensitivity = nil

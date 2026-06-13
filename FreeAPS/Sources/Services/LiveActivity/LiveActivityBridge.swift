@@ -36,13 +36,13 @@ extension LiveActivityAttributes.ContentState {
     }
 
     init?(
-        new bg: Readings?,
-        prev: Readings?,
+        new bg: ReadingsSnapshot?,
+        prev: ReadingsSnapshot?,
         mmol: Bool,
         suggestion: Suggestion,
         iob: Decimal?,
         loopDate: Date,
-        readings: [Readings]?,
+        readings: [ReadingsSnapshot]?,
         predictions: Predictions?,
         showChart: Bool,
         watchChart: Bool,
@@ -187,7 +187,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
 
         suggestion = await storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
         enactedSuggestion = await storage.retrieveFile(OpenAPS.Enact.enacted, as: Suggestion.self)
-        iob = coreDataStorage.fetchLatestInsulinData()
+        iob = await coreDataStorage.fetchLatestInsulinData()
 
         observe(appCoordinator.enactedSuggestions) { me, enactedSuggestion in
             await me.newEnactedSuggestion(enactedSuggestion)
@@ -235,7 +235,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
     }
 
     private func pumpHistoryUpdated(_: [PumpHistoryEvent]) async {
-        iob = coreDataStorage.fetchLatestInsulinData()
+        iob = await coreDataStorage.fetchLatestInsulinData()
         await updateActivityContent()
     }
 
@@ -293,13 +293,13 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
             if enactedSuggestion.recieved ?? false {
                 loopDate = enactedSuggestion.timestamp ?? .distantPast
             } else {
-                loopDate = coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
+                loopDate = await coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
             }
         } else if let suggestion {
             theSuggestion = suggestion
             iobValue = suggestion.iob
             if settings.closedLoop {
-                loopDate = coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
+                loopDate = await coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
             } else {
                 loopDate = suggestion.timestamp ?? .distantPast
             }
@@ -311,12 +311,13 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
             iobValue = iob.iob
         }
 
+        let glucose = await coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         guard let content = Self.buildContentState(
             settings: settings,
             suggestion: theSuggestion,
             iob: iobValue,
             loopDate: loopDate,
-            glucose: coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
+            glucose: glucose
         ) else {
             return
         }
@@ -431,7 +432,7 @@ extension LiveActivityBridge {
         suggestion: Suggestion,
         iob: Decimal?,
         loopDate: Date,
-        glucose: [Readings]
+        glucose: [ReadingsSnapshot]
     ) -> LiveActivityAttributes.ContentState? {
         let previousGlucose = glucose.count > 1 ? glucose[1] : glucose.first
 

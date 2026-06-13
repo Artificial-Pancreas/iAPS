@@ -51,7 +51,7 @@ extension Home {
         @Published var maxValue: Decimal = 1.2
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
-        @Published var readings: [Readings] = []
+        @Published var readings: [ReadingsSnapshot] = []
         @Published var loopStatistics: (Int, Int, Double, String) = (0, 0, 0, "")
         @Published var standing: Bool = false
         @Published var preview: Bool = true
@@ -391,7 +391,7 @@ extension Home {
         private func setupGlucose() async {
             data.isManual = await provider.manualGlucose(hours: filteredHours)
             data.glucose = await provider.filteredGlucose(hours: filteredHours)
-            readings = coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate)
+            readings = await coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate)
             recentGlucose = data.glucose.last
             if data.glucose.count >= 2 {
                 glucoseDelta =
@@ -448,7 +448,7 @@ extension Home {
         }
 
         private func setupActivity() async {
-            data.activity = coreDataStorage.fetchInsulinData(interval: DateFilter.day.startDate)
+            data.activity = await coreDataStorage.fetchInsulinData(interval: DateFilter.day.startDate)
         }
 
         private func setupCob() {
@@ -479,8 +479,9 @@ extension Home {
 
         private func setupLoopStatsBackground() {
             Task {
-                let loopStats = self.coreDataStorage.fetchLoopStats(interval: DateFilter.today.startDate)
-                let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate).compactMap(\.glucose).count
+                let loopStats = await self.coreDataStorage.fetchLoopStats(interval: DateFilter.today.startDate)
+                let readings = await self.coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate).compactMap(\.glucose)
+                    .count
 
                 let result = await Task.detached {
                     let loops = loopStats.compactMap({ each in each.loopStatus }).count
@@ -555,11 +556,11 @@ extension Home {
                 carbData = data.map(\.cob).reduce(0, +)
                 iobs = data.map(\.iob).reduce(0, +)
                 neg = data.filter({ $0.iob < 0 }).count * 5
-                let tdds = coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
+                let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
                 let yesterday = (tdds.first(where: {
                     ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
                 })?.tdd ?? 0) as Decimal
-                let oneDaysAgo = coreDataStorage.fetchTDD(interval: DateFilter.today.startDate).last
+                let oneDaysAgo = tdds.last
                 tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
                 tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
                 tdd2DaysAgo = (tdds.first(where: {
@@ -579,38 +580,40 @@ extension Home {
         }
 
         func setupMeals() {
-            print("Meal Flow: update mealData")
+            Task {
+                print("Meal Flow: update mealData")
 
-            let meals = provider.fetchedMeals(selectedMealInterval.startDate)
+                let meals = await provider.fetchedMeals(selectedMealInterval.startDate)
 
-            mealData = MealData(
-                carbs: sum(\.carbs, in: meals),
-                fat: sum(\.fat, in: meals),
-                protein: sum(\.protein, in: meals),
-                fiber: sum(\.fiber, in: meals),
-                kcal: 0,
-                servings: meals.count,
-                micronutrients: microCount(meals),
-                intervalDays: DateFilter.interval(meals)
-            )
+                mealData = MealData(
+                    carbs: sum(\.carbs, in: meals),
+                    fat: sum(\.fat, in: meals),
+                    protein: sum(\.protein, in: meals),
+                    fiber: sum(\.fiber, in: meals),
+                    kcal: 0,
+                    servings: meals.count,
+                    micronutrients: microCount(meals),
+                    intervalDays: DateFilter.interval(meals)
+                )
 
-            mealData.kcal =
-                4 * (mealData.carbs + mealData.protein) +
-                9 * mealData.fat
+                mealData.kcal =
+                    4 * (mealData.carbs + mealData.protein) +
+                    9 * mealData.fat
 
-            debugPrintMealData()
+                debugPrintMealData()
+            }
         }
 
         private func sum(
-            _ keyPath: KeyPath<Meals, NSDecimalNumber?>,
-            in meals: [Meals]
+            _ keyPath: KeyPath<MealsSnapshot, Decimal?>,
+            in meals: [MealsSnapshot]
         ) -> Decimal {
             meals
                 .compactMap { $0[keyPath: keyPath] as Decimal? }
                 .reduce(0, +)
         }
 
-        private func microCount(_ meals: [Meals]) -> [MicroNutrient: Decimal] {
+        private func microCount(_ meals: [MealsSnapshot]) -> [MicroNutrient: Decimal] {
             meals.reduce(into: [:]) { result, meal in
                 for (nutrient, amount) in meal.micronutrientTotals {
                     result[nutrient, default: 0] += amount

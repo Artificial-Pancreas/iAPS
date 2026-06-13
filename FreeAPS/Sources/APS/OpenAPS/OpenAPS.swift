@@ -61,7 +61,7 @@ actor OpenAPS: Sendable {
         print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
         now = Date.now
-        let tdd = coreDataStorage.fetchInsulinDistribution().first
+        let tdd = await coreDataStorage.fetchInsulinDistribution()
         print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
         now = Date.now
@@ -85,7 +85,7 @@ actor OpenAPS: Sendable {
         await storage.save(iob, as: Monitor.iob)
 
         if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
-            _ = coreDataStorage.saveInsulinData(iobEntries: iobEntries)
+            _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
         }
 
         print(
@@ -274,7 +274,7 @@ actor OpenAPS: Sendable {
         )
 
         if let insulin = tdd, insulin.hours > 0 {
-            coreDataStorage.saveTDD(insulin)
+            await coreDataStorage.saveTDD(insulin)
         }
 
         now = Date.now
@@ -409,7 +409,7 @@ actor OpenAPS: Sendable {
         suggestion: Suggestion,
         preferences: Preferences?,
         profile: RawJSON,
-        tdd: InsulinDistribution?,
+        tdd: InsulinDistributionSnapshot?,
         settings: FreeAPSSettings?,
         override: OverrideSnapshot?
     ) async -> String {
@@ -808,14 +808,14 @@ actor OpenAPS: Sendable {
 
         var now = Date.now
         // TDD
-        let uniqueEvents = coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
+        let uniqueEvents = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
         print(
             "dynamicVariables: Time to fetch TDD \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
 
         // Temp Targets using slider
         now = Date.now
-        let sliderArray = coreDataStorage.fetchTempTargetsSlider()
+        let sliderArray = await coreDataStorage.fetchTempTargetsSlider()
         print(
             "dynamicVariables: Time for fetchTempTargetsSlider \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
@@ -829,7 +829,7 @@ actor OpenAPS: Sendable {
 
         // Temp Target
         now = Date.now
-        let tempTargetsArray = coreDataStorage.fetchTempTargets()
+        let tempTargetsArray = await coreDataStorage.fetchTempTargets()
         print(
             "dynamicVariables: Time for fetchTempTargets \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
@@ -855,7 +855,7 @@ actor OpenAPS: Sendable {
         let twoHoursArray = uniqueEvents
             .filter({ ($0.timestamp ?? Date()) >= Date.now.addingTimeInterval(-2.hours.timeInterval) })
         var nrOfIndeces = twoHoursArray.count
-        let totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+        let totalAmount = twoHoursArray.compactMap({ each in each.tdd ?? 0 }).reduce(0, +)
 
         var temptargetActive = tempTargetsArray.first?.active ?? false
         let isPercentageEnabled = sliderArray.first?.enabled ?? false
@@ -898,7 +898,7 @@ actor OpenAPS: Sendable {
             }
             // End with new Meal, when applicable
             if useOverride, overrideArray.first?.advancedSettings ?? false, overrideArray.first?.endWIthNewCarbs ?? false,
-               let recent = coreDataStorage.recentMeal(), !self.unchanged(meal: recent),
+               let recent = await coreDataStorage.recentMeal(), !self.unchanged(meal: recent),
                (recent.actualDate ?? .distantPast) > (overrideArray.first?.date ?? .distantFuture)
             {
                 useOverride = false
@@ -913,7 +913,7 @@ actor OpenAPS: Sendable {
             // End with new glucose trending up, when applicable
             if useOverride,
                overrideArray.first?.glucoseOverrideThresholdActive ?? false,
-               let g = coreDataStorage.fetchRecentGlucose(),
+               let g = await coreDataStorage.fetchRecentGlucose(),
                Decimal(g.glucose) > ((overrideArray.first?.glucoseOverrideThreshold ?? 100) as NSDecimalNumber) as Decimal,
                g.direction ?? BloodGlucose.Direction.fortyFiveDown.symbol == BloodGlucose.Direction.fortyFiveUp.symbol || g
                .direction ?? BloodGlucose
@@ -937,7 +937,7 @@ actor OpenAPS: Sendable {
             // End with new glucose when lower than setting, when applicable
             if useOverride,
                overrideArray.first?.glucoseOverrideThresholdActiveDown ?? false,
-               let g = coreDataStorage.fetchRecentGlucose(),
+               let g = await coreDataStorage.fetchRecentGlucose(),
                Decimal(g.glucose) <
                ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
             {
@@ -970,7 +970,7 @@ actor OpenAPS: Sendable {
             var dd = 0.0
 
             if temptargetActive {
-                duration_ = Int(truncating: tempTargetsArray.first?.duration ?? 0)
+                duration_ = Int(truncating: tempTargetsArray.first?.duration as? NSNumber ?? 0)
                 hbt = tempTargetsArray.first?.hbt ?? Double(hbt_)
                 let startDate = tempTargetsArray.first?.startDate ?? Date()
                 let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
@@ -1059,12 +1059,12 @@ actor OpenAPS: Sendable {
         return averages
     }
 
-    private func unchanged(meal: Meals) -> Bool {
-        let hasMicros = (meal.micronutrient as? Set<Micronutrient>)?.contains { ($0.amount?.decimalValue ?? 0) > 0 } ?? false
+    private func unchanged(meal: MealsSnapshot) -> Bool {
+        let hasMicros = meal.micronutrient.contains { ($0.amount ?? 0) > 0 }
 
-        return (meal.carbs?.decimalValue ?? 0) <= 0 &&
-            (meal.fat?.decimalValue ?? 0) <= 0 &&
-            (meal.protein?.decimalValue ?? 0) <= 0 &&
+        return (meal.carbs ?? 0) <= 0 &&
+            (meal.fat ?? 0) <= 0 &&
+            (meal.protein ?? 0) <= 0 &&
             !hasMicros
     }
 

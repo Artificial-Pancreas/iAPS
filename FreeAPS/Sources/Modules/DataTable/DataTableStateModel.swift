@@ -307,7 +307,7 @@ extension DataTable {
                 await doDeleteCarbs(old.creationDate)
 
                 // Save updated CoreData meal + micros
-                coreDataStorage.saveMeal(
+                await coreDataStorage.saveMeal(
                     [newCarbs],
                     now: old.creationDate,
                     savedToFile: true

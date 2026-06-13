@@ -9,6 +9,8 @@ extension AddCarbs {
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
 
+        private let coreDataStorage = CoreDataStorage()
+
         @Published var carbs: Decimal = 0
         @Published var date = Date()
         @Published var protein: Decimal = 0
@@ -259,7 +261,9 @@ extension AddCarbs {
                 }
             }
 
-            CoreDataStorage().saveMeal(stored, now: now, savedToFile: savedToFile)
+            Task {
+                await coreDataStorage.saveMeal(stored, now: now, savedToFile: savedToFile)
+            }
         }
 
         private func hypo() async {

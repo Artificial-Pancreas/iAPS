@@ -7,7 +7,6 @@ protocol CalendarManager: Sendable {
     func calendarIDs() async -> [String]
     var currentCalendarID: String? { get async }
     func setCurrentCalendarID(_ id: String?) async
-    func createEvent(for glucose: BloodGlucose?, delta: Int?) async
 }
 
 actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppService {
@@ -17,6 +16,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
     @Persisted(key: "CalendarManager.currentCalendarID") var persistedCurrentCalendarID: String? = nil
 
     private let eventStore = EKEventStore()
+    private let coreDataStorage = CoreDataStorage()
 
     let lifetime = Lifetime()
 
@@ -94,7 +94,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
         eventStore.calendars(for: .event).map(\.title)
     }
 
-    func createEvent(for glucose: BloodGlucose?, delta: Int?) {
+    private func createEvent(for glucose: BloodGlucose?, delta: Int?) async {
         let settings = appCoordinator.settings.value
         guard settings.useCalendar else { return }
 
@@ -113,8 +113,8 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
 
         // Latest Loop data (from CoreData)
         var freshLoop: Double = 20
-        var lastLoop: Reasons?
-        if displeyCOBandIOB || displayEmojis, let recentLoop = CoreDataStorage().fetchReason() {
+        var lastLoop: ReasonsSnapshot?
+        if displeyCOBandIOB || displayEmojis, let recentLoop = await coreDataStorage.fetchReason() {
             lastLoop = recentLoop
             freshLoop = -1 * (recentLoop.date ?? .distantPast).timeIntervalSinceNow.minutes
         }
@@ -251,7 +251,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
         } else {
             glucoseDelta = nil
         }
-        createEvent(for: recentGlucose, delta: glucoseDelta)
+        await createEvent(for: recentGlucose, delta: glucoseDelta)
     }
 }
 

@@ -35,14 +35,16 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
         }
     }
 
-    var concentration: (concentration: Double, increment: Double) {
-        coreDataStorage.insulinConcentration()
+    private var concentration: (concentration: Double, increment: Double) {
+        get async {
+            await coreDataStorage.insulinConcentration()
+        }
     }
 
     func storePumpEvents(_ events: [NewPumpEvent]) async {
         guard !events.isEmpty else { return }
 
-        let insulinConcentration = concentration
+        let insulinConcentration = await concentration
         let storedEvents = await self.recent()
         let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
             let id = event.raw.md5String

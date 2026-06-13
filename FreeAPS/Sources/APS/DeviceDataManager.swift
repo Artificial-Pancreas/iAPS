@@ -1088,7 +1088,7 @@ private extension BaseDeviceDataManager {
             name: cgmManager.localizedTitle,
             isOnboarded: cgmManager.isOnboarded,
             image: (cgmManager as? CGMManagerUI)?.smallImage,
-            pumpIsCgm: pumpIsCgm, // !(cgmManager is CGMManagerUI) && (cgmManager is PumpManagerUI),
+            pumpIsCgm: pumpIsCgm,
             providesHeartbeat: cgmManager.providesBLEHeartbeat,
             sensorDays: KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager),
             allowCalibrations: KnownPlugins.allowCalibrations(for: cgmManager),

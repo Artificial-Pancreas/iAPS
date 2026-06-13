@@ -41,8 +41,8 @@ extension Home {
             }
         }
 
-        func fetchedMeals(_ interval: NSDate) -> [Meals] {
-            coreDateStorage.fetchMealData(
+        func fetchedMeals(_ interval: NSDate) async -> [MealsSnapshot] {
+            await coreDateStorage.fetchMealData(
                 interval: interval
             )
         }
@@ -71,7 +71,7 @@ extension Home {
         }
 
         func reasons() async -> [IOBData]? {
-            let reasons = coreDateStorage.fetchReasons(interval: DateFilter.day.startDate)
+            let reasons = await coreDateStorage.fetchReasons(interval: DateFilter.day.startDate)
 
             guard reasons.count > 3 else {
                 return nil

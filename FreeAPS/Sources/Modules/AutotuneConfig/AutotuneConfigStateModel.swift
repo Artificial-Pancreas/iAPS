@@ -100,8 +100,8 @@ extension AutotuneConfig {
             }
         }
 
-        private func readConcentration() -> Double {
-            coreDataStorage.insulinConcentration().concentration
+        private func readConcentration() async -> Double {
+            await coreDataStorage.insulinConcentration().concentration
         }
 
         func replace() {
@@ -115,7 +115,7 @@ extension AutotuneConfig {
                                 rate: basal.rate.roundBolusIncrements(increment: increment)
                             )
                         }
-                    let concentration = readConcentration()
+                    let concentration = await readConcentration()
                     do {
                         if let adjustedBasals = try await deviceManager.syncBasalRateSchedule(
                             items: basals,

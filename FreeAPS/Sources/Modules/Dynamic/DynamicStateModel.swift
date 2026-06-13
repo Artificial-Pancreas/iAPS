@@ -23,7 +23,7 @@ extension Dynamic {
             sigmoid = preferences.sigmoid
             adjustmentFactor = preferences.adjustmentFactor
             weightPercentage = preferences.weightPercentage
-            averages = thirtyDaysAverages()
+            averages = await thirtyDaysAverages()
             aisf = settings.autoisf
         }
 
@@ -48,8 +48,8 @@ extension Dynamic {
             }
         }
 
-        private func thirtyDaysAverages() -> (isf: Double, cr: Double, days: Double)? {
-            let reasons = coreDataStorage.fetchReasons(interval: DateFilter.month.startDate)
+        private func thirtyDaysAverages() async -> (isf: Double, cr: Double, days: Double)? {
+            let reasons = await coreDataStorage.fetchReasons(interval: DateFilter.month.startDate)
             let currentUnitIsMmol = unit == .mmolL
             let history = reasons.filter({ $0.mmol == currentUnitIsMmol }).sorted(by: { $0.date ?? Date() > $1.date ?? Date() })
             let days = -1 * (history.last?.date ?? .now).timeIntervalSince(history.first?.date ?? .now) / 8.64E4

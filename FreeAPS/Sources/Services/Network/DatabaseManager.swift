@@ -73,7 +73,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         do {
             let version = try await database.fetchVersion()
             debug(.nightscout, "Version fetched from " + IAPSconfig.statURL.absoluteString)
-            coreDataStorage.saveVersion(version)
+            await coreDataStorage.saveVersion(version)
         } catch {
             debug(.nightscout, error.localizedDescription)
         }
@@ -83,7 +83,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         do {
             try await database.uploadStats(stats: nil, version: version)
             debug(.nightscout, "Version uploaded")
-            coreDataStorage.saveStatUploadCount()
+            await coreDataStorage.saveStatUploadCount()
             UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
         } catch {
             debug(.nightscout, "Version upload failed: \(error.localizedDescription)")
@@ -94,7 +94,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         do {
             try await database.uploadStats(stats: dailystat, version: nil)
             debug(.nightscout, "Statistics uploaded")
-            coreDataStorage.saveStatUploadCount()
+            await coreDataStorage.saveStatUploadCount()
             UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
             await uploadProfileAndSettings(profile: profile, force: true)
         } catch {
@@ -103,7 +103,9 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
     }
 
     private var profileName: String {
-        coreDataStorage.fetchSettingProfileName()
+        get async {
+            await coreDataStorage.fetchSettingProfileName()
+        }
     }
 
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async {
@@ -112,6 +114,8 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
 
         let preferences = appCoordinator.preferences.value
         let pumpSettings = appCoordinator.pumpSettings.value
+
+        let profileName = await self.profileName
 
         if let profile, let ps = profile.store[profile.defaultProfile] {
             let uploadedProfile = await storage.retrieveFile(
@@ -167,7 +171,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             }
         }
 
-        let mealPresets = mealPresetDatabaseUpload(profile: profileName)
+        let mealPresets = await mealPresetDatabaseUpload(profile: profileName)
         if !mealPresets.presets.isEmpty {
             let uploadedMealPresets = await storage.retrieveFile(OpenAPS.Nightscout.uploadedMealPresets, as: DatabaseMeal.self)
             // Upload Meal Presets when needed
@@ -198,7 +202,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             try await database.uploadMealPresets(presets)
             debug(.nightscout, "Meal presets uploaded to database. Profile: \(presets.profile)")
             await storage.save(presets, as: OpenAPS.Nightscout.uploadedMealPresets)
-            saveToCoreData(presets.profile)
+            await saveToCoreData(presets.profile)
         } catch {
             debug(.nightscout, "Meal presets failed to upload to database: \(error.localizedDescription)")
         }
@@ -209,7 +213,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             try await database.uploadOverridePresets(presets)
             debug(.nightscout, "Override presets uploaded to database. Profile: \(presets.profile)")
             await storage.save(presets, as: OpenAPS.Nightscout.uploadedOverridePresets)
-            saveToCoreData(presets.profile)
+            await saveToCoreData(presets.profile)
         } catch {
             debug(.nightscout, "Override presets failed to upload to database: \(error.localizedDescription)")
         }
@@ -220,7 +224,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             try await database.uploadPrefs(preferences)
             debug(.nightscout, "Preferences uploaded to database. Profile: \(preferences.profile ?? "")")
             await storage.save(preferences, as: OpenAPS.Nightscout.uploadedPreferences)
-            saveToCoreData(preferences.profile ?? "default")
+            await saveToCoreData(preferences.profile ?? "default")
         } catch {
             debug(.nightscout, "Preferences failed to upload to database: \(error.localizedDescription)")
         }
@@ -241,14 +245,14 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             try await database.uploadSettings(settings)
             debug(.nightscout, "Settings uploaded to database. Profile: \(settings.profile ?? "")")
             await storage.save(settings, as: OpenAPS.Nightscout.uploadedSettings)
-            saveToCoreData(settings.profile ?? "default")
+            await saveToCoreData(settings.profile ?? "default")
         } catch {
             debug(.nightscout, "Settings failed to upload to database: \(error.localizedDescription)")
         }
     }
 
     private func uploadPumpSettings(_ settings: PumpSettings, name: String?) async {
-        let concentration = coreDataStorage.insulinConcentration().concentration
+        let concentration = await coreDataStorage.insulinConcentration().concentration
         let upload = DatabasePumpSettings(
             settings: settings,
             profile: name,
@@ -258,7 +262,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             try await database.uploadPumpSettings(upload)
             debug(.nightscout, "Pump settings uploaded to database. Profile: \(upload.profile ?? "")")
             await storage.save(settings, as: OpenAPS.Nightscout.uploadedPumpSettings)
-            saveToCoreData(name ?? "default")
+            await saveToCoreData(name ?? "default")
         } catch {
             debug(.nightscout, "Pump settings failed to upload to database: \(error.localizedDescription)")
         }
@@ -270,7 +274,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             try await database.uploadTempTargets(upload)
             debug(.nightscout, "Temp targets uploaded to database. Profile: \(upload.profile ?? "")")
             await storage.save(targets, as: OpenAPS.Nightscout.uploadedTempTargetsDatabase)
-            saveToCoreData(name ?? "default")
+            await saveToCoreData(name ?? "default")
         } catch {
             debug(.nightscout, "Temp targets failed to upload to database: \(error.localizedDescription)")
         }
@@ -370,12 +374,13 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         DatabaseOverride(profile: profile, presets: convertOverridePresets())
     }
 
-    private func mealPresetDatabaseUpload(profile: String) -> DatabaseMeal {
-        DatabaseMeal(profile: profile, presets: convertMealPresets())
+    private func mealPresetDatabaseUpload(profile: String) async -> DatabaseMeal {
+        let presets = await convertMealPresets()
+        return DatabaseMeal(profile: profile, presets: presets)
     }
 
-    private func convertMealPresets() -> [MigratedMeals] {
-        let meals = coreDataStorage.fetchMealPresets()
+    private func convertMealPresets() async -> [MigratedMeals] {
+        let meals = await coreDataStorage.fetchMealPresets()
         return meals.map { item -> MigratedMeals in
             MigratedMeals(
                 carbs: (item.carbs ?? 0) as Decimal,
@@ -414,7 +419,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         }
     }
 
-    private func saveToCoreData(_ name: String) {
-        coreDataStorage.profileSettingUploaded(name: name)
+    private func saveToCoreData(_ name: String) async {
+        await coreDataStorage.profileSettingUploaded(name: name)
     }
 }

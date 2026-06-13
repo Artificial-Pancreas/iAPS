@@ -63,7 +63,7 @@ struct ApplyMealPresetIntent: AppIntent {
             )
         }
 
-        let preset = try intentRequest.findPreset(displayName)
+        let preset = try await intentRequest.findPreset(displayName)
         let finalOverrideApply = try await intentRequest.enactPreset(preset)
         let isDone = finalOverrideApply != nil
 
@@ -79,34 +79,34 @@ struct ApplyMealPresetIntent: AppIntent {
 struct MealPresetQuery: EntityQuery {
     func entities(for identifiers: [MealPresetEntity.ID]) async throws -> [MealPresetEntity] {
         let intentRequest = MealPresetIntentRequest()
-        let presets = intentRequest.fetchIDs(identifiers)
+        let presets = await intentRequest.fetchIDs(identifiers)
         return presets
     }
 
     func suggestedEntities() async throws -> [MealPresetEntity] {
         let intentRequest = MealPresetIntentRequest()
-        let presets = intentRequest.fetchPresets()
+        let presets = await intentRequest.fetchPresets()
         return presets
     }
 }
 
 final class MealPresetIntentRequest: BaseIntentsRequest {
-    func fetchPresets() -> ([MealPresetEntity]) {
-        let presets = coreDataStorage.fetchMealPresets()
+    func fetchPresets() async -> ([MealPresetEntity]) {
+        let presets = await coreDataStorage.fetchMealPresets()
             .compactMap { preset -> MealPresetEntity in
                 MealPresetEntity(id: preset.dish ?? "Empty")
             }
         return presets.filter({ $0.id != "Empty" && $0.id != " " }).removeDublicates()
     }
 
-    func findPreset(_ name: String) throws -> Presets {
-        let presetFound = coreDataStorage.fetchMealPresets().filter({ $0.dish == name })
+    func findPreset(_ name: String) async throws -> PresetsSnapshot {
+        let presetFound = await coreDataStorage.fetchMealPresets().filter({ $0.dish == name })
         guard let preset = presetFound.first else { throw MealPresetIntentError.NoPresets }
         return preset
     }
 
-    func fetchIDs(_: [MealPresetEntity.ID]) -> [MealPresetEntity] {
-        let presets = coreDataStorage.fetchMealPresets()
+    func fetchIDs(_: [MealPresetEntity.ID]) async -> [MealPresetEntity] {
+        let presets = await coreDataStorage.fetchMealPresets()
             .map { preset -> MealPresetEntity in
                 let dish = preset.dish ?? "Empty"
                 return MealPresetEntity(id: dish)
@@ -114,8 +114,8 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
         return presets.filter({ $0.id != "Empty" && $0.id != " " })
     }
 
-    func enactPreset(_ preset: Presets) async throws -> String? {
-        guard let mealPreset = coreDataStorage.fetchMealPreset(preset.dish ?? "") else {
+    func enactPreset(_ preset: PresetsSnapshot) async throws -> String? {
+        guard let mealPreset = await coreDataStorage.fetchMealPreset(preset.dish ?? "") else {
             return nil
         }
 

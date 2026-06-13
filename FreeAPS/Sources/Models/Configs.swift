@@ -100,7 +100,7 @@ enum DateFilter: String, CaseIterable, Identifiable, Codable {
     }
 
     /// The actual interval
-    static func interval(_ data: [Meals]) -> Double? {
+    static func interval(_ data: [MealsSnapshot]) -> Double? {
         guard let first = data.first, let last = data.last, let new = first.actualDate,
               let old = last.actualDate else { return nil }
         return new.timeIntervalSince(old).hours / 24

@@ -98,7 +98,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private var wasManualTempBasal = false
 
     private var concentration: (concentration: Double, increment: Double) {
-        coreDataStorage.insulinConcentration()
+        get async {
+            await coreDataStorage.insulinConcentration()
+        }
     }
 
     private var override: OverrideSnapshot? {
@@ -381,7 +383,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         let sync = await openAPS.iobSync()
         guard let iobEntries = IOBTick0.parseArrayFromJSON(from: sync) else { return nil }
 
-        return coreDataStorage.saveInsulinData(iobEntries: iobEntries)
+        return await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
     }
 
     func makeProfiles() async -> Bool {
@@ -410,6 +412,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             return
         }
 
+        let concentration = await self.concentration
         do {
             let roundedAmout = try deviceDataManager.roundToSupportedBolusVolume(units: amount / concentration.concentration)
             let standardInsulinAmount = try deviceDataManager.roundToSupportedBolusVolume(units: amount)
@@ -469,6 +472,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
+        let concentration = await self.concentration
+
         do {
             let roundedAmout = try deviceDataManager.roundToSupportedBasalRate(unitsPerHour: rate)
             let adjusted = try deviceDataManager.roundToSupportedBasalRate(unitsPerHour: rate * concentration.concentration)
@@ -520,7 +525,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         debug(.apsManager, "Start enact announcement: \(action)")
 
-        let insulinConcentration = concentration
+        let insulinConcentration = await concentration
         let settings = await settingsManager.settings
 
         switch action {
@@ -652,7 +657,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 isFPU: false
             )]
 
-            CoreDataStorage().saveMeal(item, now: date, savedToFile: true)
+            await coreDataStorage.saveMeal(item, now: date, savedToFile: true)
             await carbsStorage.storeCarbs(item)
 
             await announcementsStorage.storeAnnouncements([announcement], enacted: true)
@@ -704,9 +709,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
     }
 
-    private func adjustForConcentration(_ rate: Decimal) -> Decimal {
+    private func adjustForConcentration(_ rate: Decimal) async -> Decimal {
         guard rate > 0 else { return rate }
-        let setting = concentration
+        let setting = await self.concentration
         guard setting.concentration != 1 else { return rate }
 
         return (rate * Decimal(setting.concentration)).roundBolusIncrements(increment: setting.increment)
@@ -729,7 +734,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             case .active:
                 return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: date)
             case let .tempBasal(dose):
-                let rate = adjustForConcentration(Decimal(dose.unitsPerHour))
+                let rate = await adjustForConcentration(Decimal(dose.unitsPerHour))
                 let durationMin = max(0, Int((dose.endDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60))
                 return TempBasal(duration: durationMin, rate: rate, temp: .absolute, timestamp: date)
             default:
@@ -750,7 +755,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             throw APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp")
         }
 
-        let insulinSetting = concentration
+        let insulinSetting = await concentration
 
         func doBasal() async throws {
             guard let rate = suggested.rate, let duration = suggested.duration else {
@@ -814,7 +819,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
             let lastLoopIob = (enacted.iob ?? 0) as NSDecimalNumber
             let lastLoopCob = (enacted.cob ?? 0) as NSDecimalNumber
-            let lastLoopTimestamp = received ? enacted.timestamp : coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
+            let lastLoopTimestamp = received ? enacted.timestamp : await coreDataStorage.fetchLastLoop()?
+                .timestamp ?? .distantPast
             await coredataContext.perform {
                 let saveLastLoop = LastLoop(context: coredataContext)
                 saveLastLoop.iob = lastLoopIob
