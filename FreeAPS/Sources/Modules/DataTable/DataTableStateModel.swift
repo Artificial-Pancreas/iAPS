@@ -185,7 +185,7 @@ extension DataTable {
 
                 // In need of CoreData deletion?
                 if let data = storage {
-                    overrideStorage.DeleteBatch(identifier: data.id, entity: "Meals")
+                    await coreDataStorage.deleteBatch(identifier: data.id, entity: "Meals")
                 }
 
                 // In need of a loop update?
@@ -206,15 +206,11 @@ extension DataTable {
 
         func deleteGlucose(_ glucose: Glucose) {
             Task {
-                let id = glucose.id
-                await deleteGlucose(id: id)
+                await glucoseStorage.removeGlucose(ids: [glucose.id])
+                // TODO: this should be moved out of here - like nightscout
+                await healthkitManager.deleteGlucose(syncID: glucose.id)
 
-                overrideStorage.DeleteBatch(identifier: id, entity: "Readings")
-
-                // Deletes Manual Glucose
-                if (glucose.glucose.type ?? "") == GlucoseType.manual.rawValue {
-                    await deleteManualGlucose(date: glucose.glucose.dateString)
-                }
+                await coreDataStorage.deleteBatch(identifier: glucose.id, entity: "Readings")
             }
         }
 
@@ -297,7 +293,7 @@ extension DataTable {
 
                 // Remove old CoreData meal
                 if let deleteOld = computed {
-                    overrideStorage.DeleteBatch(
+                    await coreDataStorage.deleteBatch(
                         identifier: deleteOld.id,
                         entity: "Meals"
                     )
@@ -354,15 +350,6 @@ extension DataTable {
                 // TODO: this should be separated from here
                 await healthkitManager.deleteInsulin(syncID: id)
             }
-        }
-
-        private func deleteGlucose(id: String) async {
-            await glucoseStorage.removeGlucose(ids: [id])
-            await healthkitManager.deleteGlucose(syncID: id)
-        }
-
-        private func deleteManualGlucose(date: Date?) async {
-            await nightscoutManager.deleteManualGlucose(at: date ?? .distantPast)
         }
     }
 }

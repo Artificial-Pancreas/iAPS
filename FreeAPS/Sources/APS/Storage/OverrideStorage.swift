@@ -428,27 +428,4 @@ final class OverrideStorage: Sendable {
         }
         return nil
     }
-
-    // Currently not used.
-    func DeleteBatch(identifier: String?, entity: String) {
-        guard let id = identifier else { return }
-        coredataContext.performAndWait {
-            let fetchRequest: NSFetchRequest<NSFetchRequestResult>
-            fetchRequest = NSFetchRequest(entityName: entity)
-            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-            let deleteRequest = NSBatchDeleteRequest(
-                fetchRequest: fetchRequest
-            )
-            deleteRequest.resultType = .resultTypeObjectIDs
-            do {
-                let deleteResult = try coredataContext.execute(deleteRequest) as? NSBatchDeleteResult
-                if let objectIDs = deleteResult?.result as? [NSManagedObjectID] {
-                    NSManagedObjectContext.mergeChanges(
-                        fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
-                        into: [coredataContext]
-                    )
-                }
-            } catch { debug(.apsManager, entity + "records failed to delete in batch.") }
-        }
-    }
 }

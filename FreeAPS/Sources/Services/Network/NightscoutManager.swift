@@ -9,7 +9,6 @@ protocol NightscoutManager: Sendable {
     func fetchCarbs() async -> [CarbsEntry]
     func fetchTempTargets() async -> [TempTarget]
     func fetchAnnouncements() async -> [Announcement]
-    func deleteManualGlucose(at: Date) async
     func uploadOldGlucose(bloodGlucose: [BloodGlucose]) async -> AsyncStream<Double>
     func uploadStatus() async
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async
@@ -208,19 +207,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    func deleteManualGlucose(at date: Date) async {
-        let settings = appCoordinator.settings.value
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            return
-        }
-        do {
-            try await nightscout.deleteManualGlucose(at: date)
-            debug(.nightscout, "Manual Glucose entry deleted")
-        } catch {
-            debug(.nightscout, error.localizedDescription)
-        }
-    }
-
     func uploadStatus() async {
         let settings = appCoordinator.settings.value
         let iob = await storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
@@ -368,12 +354,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    private func nightscoutGlucoseNotUploaded(bloodGlucose: [BloodGlucose]) async -> [BloodGlucose] {
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
-        let glucoseToUpload = Array(Set(bloodGlucose).subtracting(Set(uploaded)))
-        return glucoseToUpload
-    }
-
     private func nightscoutCGMStateNotUploaded() async -> [NigtscoutTreatment] {
         let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedCGMState, as: [NigtscoutTreatment].self) ?? []
         let recent = await storage.retrieve(OpenAPS.Monitor.cgmState, as: [NigtscoutTreatment].self) ?? []
@@ -384,8 +364,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         let settings = appCoordinator.settings.value
         return uploadGlucose(
             upload: bloodGlucose,
-            allGlucose: nil, // do not update the "already uploaded glucose" file
-            fileToSave: OpenAPS.Nightscout.uploadedGlucose,
+            deleted: [],
+            saveToUploaded: false, // do not update the "already uploaded glucose" file
             settings: settings
         )
     }
@@ -409,7 +389,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             deletedFromStorage =
                 Set(uploaded).subtracting(storedEvents)
                     .filter {
-                        ($0.createdAt ?? .distantPast) > oldestStoredEventDate
+                        ($0.createdAt ?? .distantPast) >= oldestStoredEventDate
                     }
         } else {
             deletedFromStorage = []
@@ -429,12 +409,29 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             return
         }
 
-        let glucoseNotYetUploaded = await nightscoutGlucoseNotUploaded(bloodGlucose: bloodGlucose)
+        let storedEvents = bloodGlucose.sorted { $0.dateString > $1.dateString }
+
+        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
+
+        let notUploaded = Array(Set(bloodGlucose).subtracting(Set(uploaded)))
+
+        let deletedFromStorage: [BloodGlucose]
+        if let oldestStoredEventDate = storedEvents.reversed().first?.dateString {
+            deletedFromStorage =
+                Set(uploaded).subtracting(storedEvents)
+                    .filter {
+                        $0.dateString >= oldestStoredEventDate
+                    }
+        } else {
+            deletedFromStorage = []
+        }
+
+        let deletedManualGlucose = deletedFromStorage.filter { $0.type == GlucoseType.manual.rawValue }
 
         await uploadGlucose(
-            upload: glucoseNotYetUploaded,
-            allGlucose: bloodGlucose,
-            fileToSave: OpenAPS.Nightscout.uploadedGlucose,
+            upload: notUploaded,
+            deleted: deletedManualGlucose,
+            saveToUploaded: true,
             settings: settings
         ).drain()
 
@@ -638,7 +635,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             deletedFromStorage =
                 Set(uploaded).subtracting(storedEvents)
                     .filter {
-                        ($0.createdAt ?? .distantPast) > oldestStoredEventDate
+                        ($0.createdAt ?? .distantPast) >= oldestStoredEventDate
                     }
         } else {
             deletedFromStorage = []
@@ -671,7 +668,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             deletedFromStorage =
                 Set(uploaded).subtracting(storedEvents)
                     .filter {
-                        ($0.createdAt ?? .distantPast) > oldestStoredEventDate
+                        ($0.createdAt ?? .distantPast) >= oldestStoredEventDate
                     }
         } else {
             deletedFromStorage = []
@@ -685,21 +682,36 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         )
     }
 
-    /// upload `glucose` to nightscout, upon success - if provided, save `allGlucose` to storage so we don't upload any of it next time
+    /// upload `glucose` to nightscout, upon success - if provided, append uploaded glucose to storage so we don't upload any of it next time
     private func uploadGlucose(
         upload glucose: [BloodGlucose],
-        allGlucose: [BloodGlucose]?,
-        fileToSave: String,
+        deleted: [BloodGlucose],
+        saveToUploaded: Bool,
         settings: FreeAPSSettings
     ) -> AsyncStream<Double> {
         AsyncStream { continuation in
             Task {
-                guard settings.isUploadEnabled, !glucose.isEmpty, let nightscout = nightscoutAPI,
+                guard settings.isUploadEnabled, !glucose.isEmpty || !deleted.isEmpty, let nightscout = nightscoutAPI,
                       appCoordinator.cgmStatus.value?.shouldUploadGlucose == true
                 else {
                     continuation.finish()
                     return
                 }
+
+                var deletedFromNightscout: [BloodGlucose] = []
+                for deletedGlucose in deleted {
+                    do {
+                        try await nightscout.deleteManualGlucose(at: deletedGlucose.dateString)
+                        deletedFromNightscout.append(deletedGlucose)
+                        debug(.nightscout, "Manual Glucose entry deleted: \(deletedGlucose.dateString)")
+                    } catch {
+                        debug(
+                            .nightscout,
+                            "failed to delete manual glucose from nightscout: \(deletedGlucose.dateString) - \(error.localizedDescription)"
+                        )
+                    }
+                }
+
                 // check if unique code
                 // var uuid = UUID(uuidString: yourString) This will return nil if yourString is not a valid UUID
                 let glucoseWithCorrectID = glucose.filter { UUID(uuidString: $0._id) != nil }
@@ -718,8 +730,18 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                             continuation.yield(1.0)
                         }
                     }
-                    if let allGlucose {
-                        await storage.save(allGlucose, as: fileToSave)
+                    if saveToUploaded {
+                        let deletedFromNightscoutDates = Set(deletedFromNightscout.map(\.dateString))
+                        _ = await storage
+                            .modify(file: OpenAPS.Nightscout.uploadedGlucose, as: BloodGlucose.self) { previousUploaded in
+                                let dayAgo = Date.now.removingTimeInterval(.hours(25))
+                                return (previousUploaded + glucose)
+                                    .uniqued(on: \.dateString)
+                                    .filter { entry in
+                                        entry.dateString > dayAgo &&
+                                            !deletedFromNightscoutDates.contains(entry.dateString)
+                                    }
+                            }
                     }
                     debug(.nightscout, "Glucose uploaded")
 

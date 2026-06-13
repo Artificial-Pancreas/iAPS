@@ -80,7 +80,9 @@ actor BaseGlucoseStorage: GlucoseStorage {
 
         stored = newGlucoseData
 
-        appCoordinator.glucoseHistoryUpdates.send(newGlucoseData)
+        // newest -> oldest
+        appCoordinator.sendGlucoseHistoryUpdate(newGlucoseData)
+
         appCoordinator.newGlucoseRecords.send(newRecords)
 
         return stored
@@ -96,7 +98,8 @@ actor BaseGlucoseStorage: GlucoseStorage {
             return filteredBG
         }
         if didModify {
-            appCoordinator.glucoseHistoryUpdates.send(bgInStorage)
+            // newest -> oldest
+            appCoordinator.sendGlucoseHistoryUpdate(bgInStorage)
         }
     }
 
