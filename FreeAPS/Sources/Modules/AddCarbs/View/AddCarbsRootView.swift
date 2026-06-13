@@ -320,7 +320,7 @@ extension AddCarbs {
 
             switch (hasFiber, microCount > 0) {
             case (false, false):
-                return "Optional"
+                return state.note
 
             case (true, false):
                 return "Fiber"
@@ -666,7 +666,7 @@ extension AddCarbs {
         ) -> String {
             switch (hasFiber, microCount > 0) {
             case (false, false):
-                return "Optional"
+                return state.note
 
             case (true, false):
                 return "Fiber"
