@@ -1843,6 +1843,8 @@ Enact a temp Basal or a temp target */
 
 "Reset to Default" = "Скинути до Заводських Налаштувань";
 
+"Take Photo" = "Take Photo";
+
 "Retake Photo" = "Перезняти фото";
 
 "Retry Analysis" = "Аналіз Повторних спроб";
