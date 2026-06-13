@@ -6,7 +6,6 @@ protocol CarbsStorage: Sendable {
     func storeCarbs(_ carbs: [CarbsEntry]) async
     func syncDate() async -> Date
     func recent() async -> [CarbsEntry]
-    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment]
     func deleteCarbsAndFPUs(at date: Date) async
 }
 
@@ -128,13 +127,15 @@ actor BaseCarbsStorage: CarbsStorage {
             }
         }
 
-        appCoordinator.carbHistoryUpdates.send(uniqEvents)
+        // newest -> oldest
+        appCoordinator.sendCarbHistoryUpdate(uniqEvents)
     }
 
     func syncDate() -> Date {
         Date().addingTimeInterval(-1.days.timeInterval)
     }
 
+    /// oldest -> newest
     func recent() async -> [CarbsEntry] {
         await storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
@@ -142,41 +143,8 @@ actor BaseCarbsStorage: CarbsStorage {
     func deleteCarbsAndFPUs(at date: Date) async {
         let allValues = await storage.modify(file: OpenAPS.Monitor.carbHistory, as: CarbsEntry.self) {
             $0.filter { $0.createdAt != date }
-//            $0.removeAll(where: { $0.createdAt == date })
         }
-        appCoordinator.carbHistoryUpdates.send(allValues)
-    }
-
-    func nightscoutTretmentsNotUploaded() async -> [NigtscoutTreatment] {
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedCarbs, as: [NigtscoutTreatment].self) ?? []
-
-        let eventsManual = await recent()
-            .filter {
-                ($0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote || $0.enteredBy == CarbsEntry.shortcut) &&
-                    $0.carbs > 0 }
-        let treatments = eventsManual.map {
-            NigtscoutTreatment(
-                duration: nil,
-                rawDuration: nil,
-                rawRate: nil,
-                absolute: nil,
-                rate: nil,
-                eventType: .nsCarbCorrection,
-                createdAt: $0.actualDate ?? .distantPast,
-                enteredBy: $0.enteredBy ?? CarbsEntry.manual,
-                bolus: nil,
-                insulin: nil,
-                carbs: $0.carbs,
-                fat: nil,
-                protein: nil,
-                foodType: $0.note,
-                targetTop: nil,
-                targetBottom: nil,
-                id: $0.id,
-                fpuID: nil,
-                creation_date: $0.createdAt
-            )
-        }
-        return Array(Set(treatments).subtracting(Set(uploaded)))
+        // newest -> oldest
+        appCoordinator.sendCarbHistoryUpdate(allValues)
     }
 }

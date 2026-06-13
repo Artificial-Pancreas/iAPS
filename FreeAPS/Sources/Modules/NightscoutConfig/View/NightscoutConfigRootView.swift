@@ -150,7 +150,7 @@ extension NightscoutConfig {
                 header: { Text("Backfill glucose") }
                 footer: { Text("Fetches old glucose readings from Nightscout") }
 
-                if state.isUploadEnabled, state.cgmSupportsGlucoseUpload, state.cgmEnablesGlucoseUpload {
+                if state.isUploadEnabled, state.cgmEnablesGlucoseUpload {
                     Section {
                         HStack {
                             Text("Days").foregroundStyle(.secondary)

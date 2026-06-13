@@ -83,62 +83,6 @@ actor BaseGlucoseStorage: GlucoseStorage {
         appCoordinator.glucoseHistoryUpdates.send(newGlucoseData)
         appCoordinator.newGlucoseRecords.send(newRecords)
 
-        // Do we have a sensor session start?
-        if let sensorSessionStart = glucose.first(where: { $0.sessionStartDate != nil }) {
-            debug(.deviceManager, "start storage cgmState")
-            let file = OpenAPS.Monitor.cgmState
-            await self.storage.maybeModify(file: file, as: NigtscoutTreatment.self) { inStorage in
-                var treatments = inStorage
-//                var treatments = storage.retrieve(file, as: [NigtscoutTreatment].self) ?? []
-                var notes = ""
-                if let t = sensorSessionStart.transmitterID {
-                    notes = t
-                }
-                if let a = sensorSessionStart.activationDate {
-                    notes = "\(notes) activated on \(a)"
-                }
-
-                let sessionStartDate = sensorSessionStart.sessionStartDate
-                // For Dexcom, each glucose event contains the sessionStartDate (which contains the correct timestamp of the latest sensor start)
-                // We only need to send the "Sensor Start" event once per change.
-                // This guard ensures we send a new "Sensor Start" event to NS only if the previously sent event happened more than 60 seconds before this one.
-                //
-                // As a side effect, if there is jitter in the sessionStartDate (+/- few milliseconds each time), we will flood NS with the duplicated Session Start events over time.
-                // See: https://github.com/Artificial-Pancreas/iAPS/issues/1806
-                if let lastTreatment = treatments.last,
-                   let lastCreatedAt = lastTreatment.createdAt,
-                   let sessionStart = sessionStartDate,
-                   abs(lastCreatedAt.timeIntervalSince(sessionStart)) < 60
-                {
-                    return nil // do not modify
-                }
-
-                let treatment = NigtscoutTreatment(
-                    duration: nil,
-                    rawDuration: nil,
-                    rawRate: nil,
-                    absolute: nil,
-                    rate: nil,
-                    eventType: .nsSensorChange,
-                    createdAt: sessionStartDate,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: nil,
-                    insulin: nil,
-                    notes: notes,
-                    carbs: nil,
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil
-                )
-                treatments.append(treatment)
-                debug(.deviceManager, "CGM sensor change \(String(describing: sensorSessionStart.sessionStartDate))")
-
-                // We have to keep quite a bit of history as sensors start only every 10 days.
-                return treatments
-                    .filter { $0.createdAt != nil && $0.createdAt!.addingTimeInterval(30.days.timeInterval) > Date() }
-            }
-        }
         return stored
     }
 

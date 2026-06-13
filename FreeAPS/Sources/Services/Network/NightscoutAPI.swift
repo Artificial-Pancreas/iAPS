@@ -138,6 +138,18 @@ extension NightscoutAPI {
         try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
+    func deleteTreatment(_ treatment: NigtscoutTreatment) async throws {
+        guard let createdAt = treatment.createdAt else { return }
+        let queryItems = [
+            URLQueryItem(name: "find[eventType][$eq]", value: treatment.eventType.rawValue),
+            URLQueryItem(
+                name: "find[created_at][$eq]",
+                value: createdAt.formatted(.iso8601WithFractionalSeconds)
+            )
+        ]
+        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
+    }
+
     func fetchTempTargets(sinceDate: Date? = nil) async -> [TempTarget] {
         var queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Temporary+Target"),
