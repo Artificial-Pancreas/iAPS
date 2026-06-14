@@ -296,10 +296,10 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             debug(.nightscout, error.localizedDescription)
         }
 
-        await uploadPodAge(settings: settings)
+        await uploadPodAge()
     }
 
-    private func uploadPodAge(settings: FreeAPSSettings) async {
+    private func uploadPodAge() async {
         let uploadedPodAge = await storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
         if let podAge = appCoordinator.pumpInfo.value?.podActivatedAt,
            uploadedPodAge.last?.createdAt != podAge
@@ -322,11 +322,11 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 targetTop: nil,
                 targetBottom: nil
             )
-            await uploadTreatments(
-                [siteTreatment],
-                deleted: [],
+            await syncTreatments(
+                storedEvents: [siteTreatment],
                 fileToSave: OpenAPS.Nightscout.uploadedPodAge,
-                settings: settings
+                deletionPolicy: .appendOnly,
+                uploadedRetention: .days(15) // keep 15 days in the .uploadedPodAge file to avoid unnecessary re-uploads of the same pod age
             )
         }
     }
@@ -354,12 +354,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    private func nightscoutCGMStateNotUploaded() async -> [NigtscoutTreatment] {
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedCGMState, as: [NigtscoutTreatment].self) ?? []
-        let recent = await storage.retrieve(OpenAPS.Monitor.cgmState, as: [NigtscoutTreatment].self) ?? []
-        return Array(Set(recent).subtracting(Set(uploaded)))
-    }
-
     func uploadOldGlucose(bloodGlucose: [BloodGlucose]) async -> AsyncStream<Double> {
         let settings = appCoordinator.settings.value
         return uploadGlucose(
@@ -376,36 +370,17 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             return
         }
 
-        // newest -> oldest
-        let storedEvents = convertPumpHistoryToNightscout(events: pumpHistory)
-
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
-
-        // newest -> oldest
-        let notUploaded = Array(Set(storedEvents).subtracting(Set(uploaded))).sorted { $0.createdAt! > $1.createdAt! }
-
-        let deletedFromStorage: [NigtscoutTreatment]
-        if let oldestStoredEventDate = storedEvents.reversed().compactMap(\.createdAt).first {
-            deletedFromStorage =
-                Set(uploaded).subtracting(storedEvents)
-                    .filter {
-                        ($0.createdAt ?? .distantPast) >= oldestStoredEventDate
-                    }
-        } else {
-            deletedFromStorage = []
-        }
-
-        await uploadTreatments(
-            notUploaded,
-            deleted: deletedFromStorage,
+        await syncTreatments(
+            storedEvents: convertPumpHistoryToNightscout(events: pumpHistory),
             fileToSave: OpenAPS.Nightscout.uploadedPumphistory,
-            settings: settings
+            deletionPolicy: .deleteMissing(within: .hours(23)),
+            uploadedRetention: .hours(30)
         )
     }
 
     private func glucoseHistoryUpdated(_ bloodGlucose: [BloodGlucose]) async {
         let settings = appCoordinator.settings.value
-        guard settings.isUploadEnabled, bloodGlucose.isNotEmpty, nightscoutAPI != nil else {
+        guard nightscoutAPI != nil, settings.isUploadEnabled, bloodGlucose.isNotEmpty, isNetworkReachable else {
             return
         }
 
@@ -437,12 +412,12 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
         await recordSensorStartIfNeeded(bloodGlucose: bloodGlucose)
 
-        let cgmStateNotUploaded = await nightscoutCGMStateNotUploaded()
-        await uploadTreatments(
-            cgmStateNotUploaded,
-            deleted: [],
+        let cgmStateNotUploaded = await storage.retrieve(OpenAPS.Monitor.cgmState, as: [NigtscoutTreatment].self) ?? []
+        await syncTreatments(
+            storedEvents: cgmStateNotUploaded,
             fileToSave: OpenAPS.Nightscout.uploadedCGMState,
-            settings: settings
+            deletionPolicy: .appendOnly,
+            uploadedRetention: .days(30) // we keep 30 days in .cgmState file, so we should keep 30 days in .uploadedCGMState file as well
         )
     }
 
@@ -497,8 +472,10 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 debug(.deviceManager, "CGM sensor change \(String(describing: sensorSessionStart.sessionStartDate))")
 
                 // We have to keep quite a bit of history as sensors start only every 10 days.
+                let daysAgo30 = Date.now.removingTimeInterval(.days(30))
                 return treatments
-                    .filter { $0.createdAt != nil && $0.createdAt!.addingTimeInterval(30.days.timeInterval) > Date() }
+                    .filter { $0.createdAt != nil && $0.createdAt! >= daysAgo30 }
+                    .sorted { $0.createdAt! > $1.createdAt! }
             }
         }
     }
@@ -622,30 +599,11 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             return
         }
 
-        // newest -> oldest
-        let storedEvents = convertCarbHistoryToNightscout(events: carbHistory)
-
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedCarbs, as: [NigtscoutTreatment].self) ?? []
-
-        // newest -> oldest
-        let notUploaded = Array(Set(storedEvents).subtracting(Set(uploaded))).sorted { $0.createdAt! > $1.createdAt! }
-
-        let deletedFromStorage: [NigtscoutTreatment]
-        if let oldestStoredEventDate = storedEvents.reversed().compactMap(\.createdAt).first {
-            deletedFromStorage =
-                Set(uploaded).subtracting(storedEvents)
-                    .filter {
-                        ($0.createdAt ?? .distantPast) >= oldestStoredEventDate
-                    }
-        } else {
-            deletedFromStorage = []
-        }
-
-        await uploadTreatments(
-            notUploaded,
-            deleted: deletedFromStorage,
+        await syncTreatments(
+            storedEvents: convertCarbHistoryToNightscout(events: carbHistory),
             fileToSave: OpenAPS.Nightscout.uploadedCarbs,
-            settings: settings
+            deletionPolicy: .deleteMissing(within: .hours(23)),
+            uploadedRetention: .hours(30)
         )
     }
 
@@ -655,30 +613,11 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             return
         }
 
-        // newest -> oldest
-        let storedEvents = convertTempTargetsToNightscout(events: tempTargets)
-
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedTempTargets, as: [NigtscoutTreatment].self) ?? []
-
-        // newest -> oldest
-        let notUploaded = Array(Set(storedEvents).subtracting(Set(uploaded))).sorted { $0.createdAt! > $1.createdAt! }
-
-        let deletedFromStorage: [NigtscoutTreatment]
-        if let oldestStoredEventDate = storedEvents.reversed().compactMap(\.createdAt).first {
-            deletedFromStorage =
-                Set(uploaded).subtracting(storedEvents)
-                    .filter {
-                        ($0.createdAt ?? .distantPast) >= oldestStoredEventDate
-                    }
-        } else {
-            deletedFromStorage = []
-        }
-
-        await uploadTreatments(
-            notUploaded,
-            deleted: deletedFromStorage,
+        await syncTreatments(
+            storedEvents: convertTempTargetsToNightscout(events: tempTargets),
             fileToSave: OpenAPS.Nightscout.uploadedTempTargets,
-            settings: settings
+            deletionPolicy: .appendOnly,
+            uploadedRetention: .hours(30)
         )
     }
 
@@ -754,8 +693,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    private func checkForNotUploadedOverides(settings: FreeAPSSettings) async {
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else { return }
+    private func checkForNotUploadedOverides() async {
+        guard let nightscout = nightscoutAPI else { return }
         // TODO: why is this "counter" needed?
 //        guard let count = overrideStorage.countNotUploaded () else { return }
 
@@ -781,23 +720,62 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    private func uploadTreatments(
-        _ treatments: [NigtscoutTreatment],
-        deleted: [NigtscoutTreatment],
+    enum DeletionPolicy {
+        case appendOnly
+        case deleteMissing(within: TimeInterval) // retention window
+    }
+
+    /// * read the snapshot of previously uploaded treatments from the file
+    /// * detect new treatments in the current local data and upload them
+    /// * detect previously uploaded treatments that are no longer present in the current local data (within retention window) and delete them
+    /// * update the 'previously uploaded' file, removing entries older than `now-uploadedRetention`
+    ///
+    /// The invariant for the .deleteMissing(within) deletion policy:
+    ///   within ≤ actual source retention ≤ uploadedRetention
+    ///
+    /// For example, if deletionPolicy = .deleteMissing(.hours(23)):
+    /// * the assumption is the current storage holds at least 23 hours of data
+    /// * if there is a previously uploaded event, if this event is less than 23 hours old, and it is missing from the local data - it is assumed
+    ///   to have been deleted locally after it's been uploaded, and it will be deleted from Nightscout.
+    /// * events older than 23 hours, will not be deleted from nightscout even if deleted locally
+    private func syncTreatments(
+        storedEvents treatments: [NigtscoutTreatment],
         fileToSave: String,
-        settings: FreeAPSSettings
+        deletionPolicy: DeletionPolicy,
+        uploadedRetention: TimeInterval
     ) async {
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else { return }
+        guard let nightscout = nightscoutAPI else { return }
 
         // TODO: move this?
-        await checkForNotUploadedOverides(settings: settings)
+        await checkForNotUploadedOverides()
 
-        guard !treatments.isEmpty || !deleted.isEmpty,
-              let eventType = treatments.first?.eventType ?? deleted.first?.eventType else { return }
+        let previouslyUploaded = await storage.retrieve(fileToSave, as: [NigtscoutTreatment].self) ?? []
+
+        // newest -> oldest
+        let notUploaded = Array(Set(treatments).subtracting(Set(previouslyUploaded))).sorted { $0.createdAt! > $1.createdAt! }
+
+        let deletedFromStorage: [NigtscoutTreatment] = {
+            switch deletionPolicy {
+            case .appendOnly:
+                return []
+            case let .deleteMissing(retentionPeriod):
+                let retentionCutoff = Date().removingTimeInterval(retentionPeriod)
+                return Set(previouslyUploaded).subtracting(treatments)
+                    .filter {
+                        ($0.createdAt ?? .distantPast) >= retentionCutoff
+                    }
+            }
+        }()
+
+        guard treatments.isNotEmpty || deletedFromStorage.isNotEmpty,
+              let eventType = treatments.first?.eventType ?? deletedFromStorage.first?.eventType
+        else {
+            return
+        }
 
         do {
             var deletedFromNS: [NigtscoutTreatment] = []
-            for treatment in deleted {
+            for treatment in deletedFromStorage {
                 do {
                     try await nightscout.deleteTreatment(treatment)
                     deletedFromNS.append(treatment)
@@ -809,22 +787,21 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 }
             }
 
-            for chunk in treatments.chunks(ofCount: 100) {
+            for chunk in notUploaded.chunks(ofCount: 100) {
                 try await nightscout.uploadTreatments(Array(chunk))
             }
 
-            let oldUploaded = await storage.retrieve(fileToSave, as: [NigtscoutTreatment].self) ?? []
-            let cutoff = Date().addingTimeInterval(-TimeInterval(hours: 30))
-            let oldAndNewUploadedSet = Set(oldUploaded + treatments).subtracting(deletedFromNS)
-            let oldAndNewUploaded = Array(oldAndNewUploadedSet).filter { treatment in
-                guard let createdAt = treatment.createdAt else { return false }
-                return createdAt >= cutoff
+            let cutoff = Date().removingTimeInterval(uploadedRetention)
+            let deletedSnapshot = deletedFromNS
+            await storage.modify(file: fileToSave, as: NigtscoutTreatment.self) { previouslyUploaded in
+                let oldAndNewUploadedSet = Set(previouslyUploaded + treatments).subtracting(deletedSnapshot)
+                let oldAndNewUploaded = Array(oldAndNewUploadedSet).filter { treatment in
+                    guard let createdAt = treatment.createdAt else { return false }
+                    return createdAt >= cutoff
+                }
+                // newest -> oldest
+                return oldAndNewUploaded.sorted { $0.createdAt! > $1.createdAt! }
             }
-            // newest -> oldest
-            await storage.save(
-                oldAndNewUploaded.sorted { $0.createdAt! > $1.createdAt! },
-                as: fileToSave
-            )
             debug(.nightscout, "\(eventType) treatments uploaded: \(treatments.count), deleted: \(deletedFromNS.count)")
         } catch {
             debug(.nightscout, error.localizedDescription)
