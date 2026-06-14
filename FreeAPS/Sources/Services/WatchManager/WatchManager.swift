@@ -592,7 +592,7 @@ private extension BaseWatchManager {
 
                     if let duration = overrideStorage.cancelProfile() {
                         let nsString = name ?? activeOveride.percentage.formatted()
-                        await nightscout.editOverride(nsString, duration, activeOveride.date ?? Date())
+                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date())
                     }
                 }
                 // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
@@ -610,7 +610,7 @@ private extension BaseWatchManager {
                     let nsString = presetName ?? activeOveride.percentage.formatted()
 
                     if let duration = overrideStorage.cancelProfile() {
-                        await nightscout.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                         await configureState()
                         return .confirmed
                     }

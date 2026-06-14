@@ -677,7 +677,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                     let nsString = presetName ?? activeOveride.percentage.formatted()
 
                     if let duration = overrideStorage.cancelProfile() {
-                        await nightscout.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                     }
                     await announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     debug(.apsManager, "Override Canceled by Announcement succeeded.")
@@ -690,7 +690,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 if let duration = overrideStorage.cancelProfile(), let last = lastActiveOveride {
                     let presetName = overrideStorage.isPresetName()
                     let nsString = presetName ?? last.percentage.formatted()
-                    await nightscout.editOverride(nsString, duration, last.date ?? Date())
+                    await nightscout.uploadOverride(nsString, duration, last.date ?? Date())
                 }
             }
 

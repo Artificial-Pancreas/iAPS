@@ -70,7 +70,7 @@ extension OverrideProfilesConfig {
 
                 percentage.round()
 
-                // for the ns.editOverride at the end:
+                // for the ns.uploadOverride at the end:
                 var editInNightscout: (name: String, duration: Double, date: Date)?
                 // Is other already active?
                 if let active = last, active.enabled {
@@ -143,7 +143,7 @@ extension OverrideProfilesConfig {
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
                 if let editInNightscout {
-                    await ns.editOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
+                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
                 await ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
             }
         }
@@ -219,7 +219,7 @@ extension OverrideProfilesConfig {
                 let last = overrideStorage.fetchLatestOverride().last
                 let lastPreset = overrideStorage.isPresetName()
 
-                // for the ns.editOverride at the end:
+                // for the ns.uploadOverride at the end:
                 var editInNightscout: (name: String, duration: Double, date: Date)?
                 if let alreadyActive = last, alreadyActive.enabled, let duration = overrideStorage.cancelProfile() {
                     editInNightscout = (
@@ -281,7 +281,7 @@ extension OverrideProfilesConfig {
                 try? self.coredataContext.save()
 
                 if let editInNightscout {
-                    await ns.editOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
+                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
                 // Uploads new Override to NS
                 await ns.uploadOverride(
                     profile.name ?? "",
@@ -402,7 +402,7 @@ extension OverrideProfilesConfig {
                 let last_ = overrideStorage.fetchLatestOverride().last
                 let name = overrideStorage.isPresetName()
                 if let last = last_, let duration = duration_ {
-                    await ns.editOverride(name ?? "", duration, last.date ?? Date.now)
+                    await ns.uploadOverride(name ?? "", duration, last.date ?? Date.now)
                 }
             }
         }

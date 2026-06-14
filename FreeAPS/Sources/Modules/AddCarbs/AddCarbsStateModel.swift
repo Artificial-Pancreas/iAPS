@@ -276,17 +276,17 @@ extension AddCarbs {
                 if let preset = presetName {
                     if let duration = os.cancelProfile() {
                         // Update in Nightscout
-                        await nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                        await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
                     }
                 } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
                     if let duration = os.cancelProfile() {
-                        await nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                        await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
                     }
                 } else {
                     let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                         .formatted() + " %" : "Custom"
                     if let duration = os.cancelProfile() {
-                        await nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                        await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                     }
                 }
             }

@@ -195,7 +195,7 @@ final class OverrideIntentRequest: BaseIntentsRequest {
             let presetName = overrideStorage.isPresetName()
             if let duration = overrideStorage.cancelProfile(), let last = lastActiveOveride {
                 let nsString = presetName ?? last.percentage.formatted()
-                await nightscoutManager.editOverride(nsString, duration, last.date ?? Date())
+                await nightscoutManager.uploadOverride(nsString, duration, last.date ?? Date())
             }
         }
         overrideStorage.overrideFromPreset(overridePreset)
@@ -216,17 +216,17 @@ final class OverrideIntentRequest: BaseIntentsRequest {
             if let preset = presetName {
                 if let duration = overrideStorage.cancelProfile() {
                     // Update in Nightscout
-                    await nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                    await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
                 }
             } else if activeOveride.isPreset {
                 if let duration = overrideStorage.cancelProfile() {
-                    await nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                    await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
                 }
             } else {
                 let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                     .formatted() + " %" : "Custom"
                 if let duration = overrideStorage.cancelProfile() {
-                    await nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                    await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                 }
             }
         }
