@@ -1482,6 +1482,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Photo Analysis" = "Analýza fotografií";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Skener čiarových kódov";
 
 "Text Search" = "Vyhľadávanie textu";
@@ -1837,6 +1841,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Vášmu AI poskytovateľovi došli kredity. Skontrolujte prosím fakturáciu svojho účtu alebo vyskúšajte iného poskytovateľa.";
 
 "Reset to Default" = "Obnoviť predvolené nastavenia";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Znovu odfotiť";
 

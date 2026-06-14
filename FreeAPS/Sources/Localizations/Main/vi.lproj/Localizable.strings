@@ -1481,6 +1481,10 @@ Enact a temp Basal or a temp target */
 
 "Photo Analysis" = "Phân tích ảnh";
 
+"Photo (+ comment)" = "Ảnh (+ ghi chú)";
+
+"Library (+ comment)" = "Thư viện (+ ghi chú)";
+
 "Barcode Scanner" = "Quét mã vạch";
 
 "Text Search" = "Tìm kiếm theo từ";
@@ -1836,6 +1840,8 @@ Enact a temp Basal or a temp target */
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Bạn đã vượt quá hạn mức của nhà cung cấp AI. Vui lòng kiểm tra giới hạn sử dụng hoặc thử một nhà cung cấp khác.";
 
 "Reset to Default" = "Đặt lại về mặc định";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Chụp lại ảnh";
 

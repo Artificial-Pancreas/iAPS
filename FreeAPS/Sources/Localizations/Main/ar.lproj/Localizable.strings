@@ -1486,6 +1486,10 @@ Enact a temp Basal or a temp target */
 
 "Photo Analysis" = "Photo Analysis";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Barcode Scanner";
 
 "Text Search" = "Text Search";
@@ -1841,6 +1845,8 @@ Enact a temp Basal or a temp target */
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
 
 "Reset to Default" = "Reset to Default";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Retake Photo";
 

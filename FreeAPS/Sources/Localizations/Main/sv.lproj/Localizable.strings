@@ -1481,6 +1481,10 @@ Enact a temp Basal or a temp target */
 
 "Photo Analysis" = "Fotoanalys";
 
+"Photo (+ comment)" = "Foto (+ kommentar)";
+
+"Library (+ comment)" = "Bibliotek (+ kommentar)";
+
 "Barcode Scanner" = "Streckkodsläsare";
 
 "Text Search" = "Textsökning";
@@ -1836,6 +1840,8 @@ Enact a temp Basal or a temp target */
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Din AI-leverantör har slut på krediter. Vänligen kontrollera ditt kontos fakturering eller prova en annan leverantör.";
 
 "Reset to Default" = "Återställ standardvärden";
+
+"Take Photo" = "Ta bild";
 
 "Retake Photo" = "Ta om foto";
 

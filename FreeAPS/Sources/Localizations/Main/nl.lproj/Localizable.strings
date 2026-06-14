@@ -1482,6 +1482,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Photo Analysis" = "Foto analyse";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Barcodescanner";
 
 "Text Search" = "Zoeken op tekst";
@@ -1837,6 +1841,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "De credits voor je AI-provider zijn op. Controleer de facturering van je account of probeer een andere provider.";
 
 "Reset to Default" = "Standaardwaarden terugzetten";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Foto opnieuw maken";
 

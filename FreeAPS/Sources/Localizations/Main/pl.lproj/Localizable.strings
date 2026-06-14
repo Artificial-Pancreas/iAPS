@@ -1483,6 +1483,10 @@ Połączono z Nightscout!";
 
 "Photo Analysis" = "Photo Analysis";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Barcode Scanner";
 
 "Text Search" = "Text Search";
@@ -1838,6 +1842,8 @@ Połączono z Nightscout!";
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
 
 "Reset to Default" = "Reset to Default";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Retake Photo";
 
