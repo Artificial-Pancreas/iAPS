@@ -191,10 +191,12 @@ private struct LiveActivityBannerWrapper: View {
     let context: ActivityViewContext<LiveActivityAttributes>
 
     var body: some View {
-        if context.state.showChart {
-            LiveActivityChart(context: context, isWatch: activityFamily == .small)
+        let isWatch = activityFamily == .small
+        let showChart = context.state.showChart && (!isWatch || context.state.watchChart)
+        if showChart {
+            LiveActivityChart(context: context, isWatch: isWatch)
         } else {
-            LiveActivityBanner(context: context, isWatch: activityFamily == .small)
+            LiveActivityBanner(context: context, isWatch: isWatch)
         }
     }
 }
@@ -251,13 +253,21 @@ struct BannerTimestampLabel: View {
 
 struct WatchLoopCircleAndTimestamp: View {
     let context: ActivityViewContext<LiveActivityAttributes>
+    var reversed: Bool = false
 
     var body: some View {
         HStack(spacing: 3) {
-            BannerLoopCircle(context: context, size: 9)
-                .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
-                .padding(.trailing, 2)
-            BannerTimestampLabel(context: context)
+            if reversed {
+                BannerTimestampLabel(context: context)
+                BannerLoopCircle(context: context, size: 9)
+                    .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
+                    .padding(.leading, 2)
+            } else {
+                BannerLoopCircle(context: context, size: 9)
+                    .opacity(abs(context.state.loopDate.timeIntervalSinceNow) / 60 <= 8 ? 0.7 : 0.9)
+                    .padding(.trailing, 2)
+                BannerTimestampLabel(context: context)
+            }
         }
     }
 }
@@ -362,6 +372,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
+            watchChart: false,
+            watchPredictions: false,
+            watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -379,6 +393,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
+            watchChart: false,
+            watchPredictions: false,
+            watchDelta: false,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -396,6 +414,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
+            watchChart: false,
+            watchPredictions: false,
+            watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -414,6 +436,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
+            watchChart: false,
+            watchPredictions: false,
+            watchDelta: false,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -431,6 +457,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
+            watchChart: false,
+            watchPredictions: false,
+            watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -449,6 +479,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
             showChart: true,
+            watchChart: false,
+            watchPredictions: false,
+            watchDelta: false,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -467,6 +501,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: nil,
             showChart: true,
+            watchChart: true,
+            watchPredictions: true,
+            watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -485,6 +523,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: nil,
             showChart: true,
+            watchChart: true,
+            watchPredictions: true,
+            watchDelta: false,
+            watchEventual: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -503,6 +545,10 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
             showChart: true,
+            watchChart: true,
+            watchPredictions: true,
+            watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
@@ -515,12 +561,38 @@ private extension LiveActivityAttributes.ContentState {
             direction: "↘︎",
             change: "+0.1",
             date: Date(),
-            iob: "11.2",
+            iob: "-0.5",
             cob: "120",
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
             showChart: true,
+            watchChart: true,
+            watchPredictions: false,
+            watchDelta: false,
+            watchEventual: false,
+            chartLowThreshold: 75,
+            chartHighThreshold: 200
+        )
+    }
+
+    static var chart6: LiveActivityAttributes.ContentState {
+        let sampleData = SampleData()
+        return LiveActivityAttributes.ContentState(
+            bg: "9.2",
+            direction: "↑",
+            change: "+0.6",
+            date: Date(),
+            iob: "2.1",
+            cob: "45",
+            loopDate: Date.now, eventual: "11.4", mmol: true,
+            readings: sampleData.sampleReadings,
+            predictions: sampleData.samplePredictions,
+            showChart: true,
+            watchChart: true,
+            watchPredictions: false,
+            watchDelta: true,
+            watchEventual: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
         )
