@@ -31,12 +31,13 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     static let empty = NigtscoutTreatment(from: "{}")!
 
     static func == (lhs: NigtscoutTreatment, rhs: NigtscoutTreatment) -> Bool {
-        (lhs.createdAt ?? Date()) == (rhs.createdAt ?? Date()) &&
-            (lhs.carbs ?? 0) == (rhs.carbs ?? 0)
+        lhs.createdAt != nil && rhs.createdAt != nil &&
+            lhs.createdAt == rhs.createdAt &&
+            lhs.carbs == rhs.carbs
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(createdAt ?? Date())
+        hasher.combine(createdAt ?? .distantPast)
     }
 }
 

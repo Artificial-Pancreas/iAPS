@@ -925,7 +925,7 @@ actor OpenAPS: Sendable {
                     let last_ = overrideStorage.fetchLatestOverride().last
                     let name = overrideStorage.isPresetName()
                     if let last = last_ {
-                        await nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        await nightscout.uploadOverride(name ?? "", duration, last.date ?? Date.now)
                     }
                     debug(
                         .nightscout,
@@ -946,7 +946,7 @@ actor OpenAPS: Sendable {
                     let last_ = overrideStorage.fetchLatestOverride().last
                     let name = overrideStorage.isPresetName()
                     if let last = last_ {
-                        await nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        await nightscout.uploadOverride(name ?? "", duration, last.date ?? Date.now)
                     }
                     debug(
                         .nightscout,
