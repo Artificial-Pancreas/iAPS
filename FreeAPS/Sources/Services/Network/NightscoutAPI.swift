@@ -139,7 +139,7 @@ extension NightscoutAPI {
     }
 
     func deleteTreatment(_ treatment: NigtscoutTreatment) async throws {
-        guard let createdAt = treatment.createdAt else { return }
+        let createdAt = treatment.createdAt
         let queryItems = [
             URLQueryItem(name: "find[eventType][$eq]", value: treatment.eventType.rawValue),
             URLQueryItem(

@@ -860,7 +860,6 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
 
     func cgmManager(_: CGMManager, hasNew readingResult: CGMReadingResult) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        // TODO: [loopkit] remove this debug log?
         debug(.deviceManager, "hasNew readingResult: \(readingResult)")
         processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: false)
     }
@@ -1107,6 +1106,7 @@ private extension BaseDeviceDataManager {
 
         let status = CgmDisplayStatus(
             statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
+            sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
             shouldUploadGlucose: cgmManager.shouldSyncToRemoteService
         )
 

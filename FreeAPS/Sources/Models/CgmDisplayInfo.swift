@@ -16,5 +16,6 @@ struct CgmDisplayInfo: Equatable, Sendable {
 
 struct CgmDisplayStatus: Equatable, Sendable {
     let statusHighlight: String?
+    let sessionStartDate: Date?
     let shouldUploadGlucose: Bool
 }

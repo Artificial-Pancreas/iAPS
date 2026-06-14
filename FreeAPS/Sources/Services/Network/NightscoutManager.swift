@@ -41,6 +41,9 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     private var notUploadedOverrides: [NigtscoutExercise] = []
 
+    private var lastSeenCgmStart: Date?
+    private var cgmStartUploadPending: Bool = true
+
     let lifetime = Lifetime()
 
     private var isNetworkReachable: Bool {
@@ -97,6 +100,11 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
         observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
             await me.pumpHistoryUpdated(pumpHistory)
+        }
+        observe(appCoordinator.cgmStatus) { me, cgmStatus in
+            if let cgmStatus {
+                await me.cgmStatusUpdated(cgmStatus)
+            }
         }
         observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
             // we are using glucoseHistoryUpdates only as a timer/trigger here, to retry uploading of overrides if needed
@@ -416,44 +424,64 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             saveToUploaded: true,
             settings: settings
         ).drain()
-
-        await recordSensorStartIfNeeded(bloodGlucose: bloodGlucose)
-
-        let cgmStateNotUploaded = await storage.retrieve(OpenAPS.Monitor.cgmState, as: [NigtscoutTreatment].self) ?? []
-        await syncTreatments(
-            storedEvents: cgmStateNotUploaded,
-            fileToSave: OpenAPS.Nightscout.uploadedCGMState,
-            deletionPolicy: .appendOnly,
-            uploadedRetention: .days(30) // we keep 30 days in .cgmState file, so we should keep 30 days in .uploadedCGMState file as well
-        )
     }
 
-    private func recordSensorStartIfNeeded(bloodGlucose glucose: [BloodGlucose]) async {
-        // Do we have a sensor session start?
-        if let sensorSessionStart = glucose.first(where: { $0.sessionStartDate != nil }) {
-            guard let sessionStartDate = sensorSessionStart.sessionStartDate else { return }
+    private func cgmStatusUpdated(_ cgmStatus: CgmDisplayStatus) async {
+        // some optimizations here, to prevent reading the cgmState files every time
+        let canUpload =
+            nightscoutAPI != nil && appCoordinator.settings.value.isUploadEnabled && cgmStatus
+                .shouldUploadGlucose && isNetworkReachable
 
-            await self.storage.maybeModify(file: OpenAPS.Monitor.cgmState, as: NigtscoutTreatment.self) { inStorage in
+        var cgmStateToUpload: [NigtscoutTreatment]?
+        if let sessionStartDate = cgmStatus.sessionStartDate,
+           abs(sessionStartDate.timeIntervalSince(lastSeenCgmStart ?? .distantPast)) > 60
+        {
+            self.lastSeenCgmStart = sessionStartDate
+
+            if let cgmState = await recordSensorStartIfNeeded(sessionStartDate) {
+                self.cgmStartUploadPending = true
+                if canUpload {
+                    cgmStateToUpload = cgmState
+                }
+            }
+        }
+
+        if canUpload, cgmStateToUpload == nil, self.cgmStartUploadPending {
+            cgmStateToUpload = await readCgmState()
+        }
+
+        guard let cgmStateToUpload else {
+            return
+        }
+        if cgmStateToUpload.isEmpty {
+            cgmStartUploadPending = false
+            return
+        }
+        if await syncTreatments(
+            storedEvents: cgmStateToUpload,
+            fileToSave: OpenAPS.Nightscout.uploadedCGMState,
+            deletionPolicy: .appendOnly,
+            uploadedRetention: .days(40) // we keep 30 days in .cgmState file, so we should keep >30 days in .uploadedCGMState
+        ) != nil {
+            // all uploaded
+            self.cgmStartUploadPending = false
+        }
+    }
+
+    private func recordSensorStartIfNeeded(_ sessionStartDate: Date) async -> [NigtscoutTreatment]? {
+        let (didModify, modifiedCgmState) = await self.storage
+            .maybeModify(file: OpenAPS.Monitor.cgmState, as: NigtscoutTreatment.self) { inStorage in
                 // For Dexcom, each glucose event contains the sessionStartDate (which contains the correct timestamp of the latest sensor start)
                 // We only need to send the "Sensor Start" event once per change.
                 // This guard ensures we send a new "Sensor Start" event to NS only if the previously sent event happened more than 60 seconds before this one.
                 //
                 // As a side effect, if there is jitter in the sessionStartDate (+/- few milliseconds each time), we will flood NS with the duplicated Session Start events over time.
                 // See: https://github.com/Artificial-Pancreas/iAPS/issues/1806
-                if let lastTreatment = inStorage.last,
-                   let lastCreatedAt = lastTreatment.createdAt,
-                   abs(lastCreatedAt.timeIntervalSince(sessionStartDate)) < 60
-                {
+                if inStorage.contains(where: { abs($0.createdAt.timeIntervalSince(sessionStartDate)) < 60 }) {
                     return nil // do not modify
                 }
 
-                var notes = ""
-                if let t = sensorSessionStart.transmitterID {
-                    notes = t
-                }
-                if let a = sensorSessionStart.activationDate {
-                    notes = "\(notes) activated on \(a)"
-                }
+                debug(.deviceManager, "CGM sensor change \(sessionStartDate)")
 
                 let treatment = NigtscoutTreatment(
                     duration: nil,
@@ -466,7 +494,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                     enteredBy: NigtscoutTreatment.local,
                     bolus: nil,
                     insulin: nil,
-                    notes: notes,
+                    notes: nil,
                     carbs: nil,
                     fat: nil,
                     protein: nil,
@@ -476,15 +504,17 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
                 var treatments = inStorage
                 treatments.append(treatment)
-                debug(.deviceManager, "CGM sensor change \(String(describing: sensorSessionStart.sessionStartDate))")
 
                 // We have to keep quite a bit of history as sensors start only every 10 days.
                 let daysAgo30 = Date.now.removingTimeInterval(.days(30))
                 return treatments
-                    .filter { $0.createdAt != nil && $0.createdAt! >= daysAgo30 }
-                    .sorted { $0.createdAt! > $1.createdAt! }
+                    .filter { $0.createdAt >= daysAgo30 }
+                    .sorted { $0.createdAt > $1.createdAt }
             }
+        if didModify {
+            return modifiedCgmState
         }
+        return nil
     }
 
     func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date) async {
@@ -677,41 +707,43 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     /// * update the 'previously uploaded' file, removing entries older than `now-uploadedRetention`
     ///
     /// The invariant for the .deleteMissing(within) deletion policy:
-    ///   within ≤ actual source retention ≤ uploadedRetention
+    ///   within <= actual source retention < uploadedRetention
     ///
     /// For example, if deletionPolicy = .deleteMissing(.hours(23)):
     /// * the assumption is the current storage holds at least 23 hours of data
     /// * if there is a previously uploaded event, if this event is less than 23 hours old, and it is missing from the local data - it is assumed
     ///   to have been deleted locally after it's been uploaded, and it will be deleted from Nightscout.
     /// * events older than 23 hours, will not be deleted from nightscout even if deleted locally
-    private func syncTreatments(
+    @discardableResult private func syncTreatments(
         storedEvents treatments: [NigtscoutTreatment],
         fileToSave: String,
         deletionPolicy: DeletionPolicy,
         uploadedRetention: TimeInterval
-    ) async {
-        guard let nightscout = nightscoutAPI else { return }
+    ) async -> [NigtscoutTreatment]? {
+        guard let nightscout = nightscoutAPI else { return nil }
 
         let previouslyUploaded = await storage.retrieve(fileToSave, as: [NigtscoutTreatment].self) ?? []
+        let previouslyUploadedKeys = Set(previouslyUploaded.map(\.identity))
 
-        // newest -> oldest
-        let notUploaded = Array(Set(treatments).subtracting(Set(previouslyUploaded))).sorted { $0.createdAt! > $1.createdAt! }
+        let treatmentsToUpload = treatments.filter { !previouslyUploadedKeys.contains($0.identity) }
+            .sorted { $0.createdAt > $1.createdAt }
 
+        let storedKeys = Set(treatments.map(\.identity))
         let deletedFromStorage: [NigtscoutTreatment] = {
             switch deletionPolicy {
             case .appendOnly:
                 return []
             case let .deleteMissing(retentionPeriod):
                 let retentionCutoff = Date().removingTimeInterval(retentionPeriod)
-                return Set(previouslyUploaded).subtracting(treatments)
+                return previouslyUploaded.filter { !storedKeys.contains($0.identity) }
                     .filter {
-                        ($0.createdAt ?? .distantPast) >= retentionCutoff
+                        $0.createdAt >= retentionCutoff
                     }
             }
         }()
 
         guard treatments.isNotEmpty || deletedFromStorage.isNotEmpty else {
-            return
+            return nil
         }
 
         let eventTypes = (treatments.map(\.eventType) + deletedFromStorage.map(\.eventType)).uniqued().map(\.rawValue)
@@ -731,25 +763,46 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 }
             }
 
-            for chunk in notUploaded.chunks(ofCount: 100) {
+            for chunk in treatmentsToUpload.chunks(ofCount: 100) {
                 try await nightscout.uploadTreatments(Array(chunk))
             }
 
+            debug(
+                .nightscout,
+                "treatments uploaded - \(eventTypes): \(treatmentsToUpload.count), deleted: \(deletedFromNS.count)"
+            )
+
             let cutoff = Date().removingTimeInterval(uploadedRetention)
-            let deletedSnapshot = deletedFromNS
-            await storage.modify(file: fileToSave, as: NigtscoutTreatment.self) { previouslyUploaded in
-                let oldAndNewUploadedSet = Set(previouslyUploaded + treatments).subtracting(deletedSnapshot)
-                let oldAndNewUploaded = Array(oldAndNewUploadedSet).filter { treatment in
-                    guard let createdAt = treatment.createdAt else { return false }
-                    return createdAt >= cutoff
-                }
+            let deletedFromNSKeys = Set(deletedFromNS.map(\.identity))
+            return await storage.modify(file: fileToSave, as: NigtscoutTreatment.self) { previouslyUploaded in
+                let oldAndNewUploaded = (previouslyUploaded + treatmentsToUpload)
+                    .filter { !deletedFromNSKeys.contains($0.identity) }
+
                 // newest -> oldest
-                return oldAndNewUploaded.sorted { $0.createdAt! > $1.createdAt! }
+                return oldAndNewUploaded
+                    // only store events not older than uploadedRetention, but keep everything that is present in storage to avoid re-uploads
+                    .filter { $0.createdAt >= cutoff || storedKeys.contains($0.identity) }
+                    .sorted { $0.createdAt > $1.createdAt }
             }
-            debug(.nightscout, "treatments uploaded - \(eventTypes): \(notUploaded.count), deleted: \(deletedFromNS.count)")
         } catch {
             debug(.nightscout, error.localizedDescription)
         }
+        return nil
+    }
+
+    private func readCgmState() async -> [NigtscoutTreatment] {
+        let (_, cgmState) = await storage
+            .maybeModify(file: OpenAPS.Monitor.cgmState, as: NigtscoutTreatment.self) { cgmState in
+                // filter older cgm entries on read
+                let daysAgo30 = Date.now.removingTimeInterval(.days(30))
+                let last30days = cgmState.filter { $0.createdAt >= daysAgo30 }
+                if last30days.count == cgmState.count {
+                    return nil // do not modify
+                }
+                return last30days // save with older-than-30-days entries removed
+            }
+
+        return cgmState
     }
 }
 
@@ -973,7 +1026,7 @@ extension BaseNightscoutManager {
             }
         }
 
-        return (bolusesAndCarbs + temps + misc).sorted { $0.createdAt! > $1.createdAt! }
+        return (bolusesAndCarbs + temps + misc).sorted { $0.createdAt > $1.createdAt }
     }
 
     private func determineBolusEventType(for event: PumpHistoryEvent) -> EventType {
@@ -1017,7 +1070,7 @@ extension BaseNightscoutManager {
                 creation_date: $0.createdAt
             )
         }
-        return treatments.sorted { $0.createdAt! > $1.createdAt! }
+        return treatments.sorted { $0.createdAt > $1.createdAt }
     }
 }
 
@@ -1043,12 +1096,26 @@ extension BaseNightscoutManager {
                 targetBottom: $0.targetBottom
             )
         }
-        return treatments.sorted { $0.createdAt! > $1.createdAt! }
+        return treatments.sorted { $0.createdAt > $1.createdAt }
     }
 }
 
 private extension AsyncSequence {
     func drain() async rethrows {
         for try await _ in self {}
+    }
+}
+
+private struct NigtscoutTreatmentIdentity: Equatable, Hashable {
+    let eventType: EventType
+    let createdAt: Date
+}
+
+private extension NigtscoutTreatment {
+    var identity: NigtscoutTreatmentIdentity {
+        NigtscoutTreatmentIdentity(
+            eventType: eventType,
+            createdAt: createdAt
+        )
     }
 }
