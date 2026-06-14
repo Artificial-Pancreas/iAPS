@@ -111,8 +111,10 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
     let noise: Int?
     var glucose: Int?
     let type: String?
+    // TODO: unused, always nil?
     var activationDate: Date? = nil
     var sessionStartDate: Date? = nil
+    // TODO: unused, always nil?
     var transmitterID: String? = nil
     var device: String? = nil
 
