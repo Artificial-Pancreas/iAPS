@@ -281,6 +281,7 @@ extension Bolus {
 
         func save() {
             guard !empty else { return }
+            CoreDataStorage().updateLatestMeal(to: true)
             carbsStorage.storeCarbs(carbToStore)
         }
 
@@ -290,18 +291,20 @@ extension Bolus {
                     id: recent.id,
                     createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(5.seconds.timeInterval),
                     actualDate: recent.actualDate,
-                    carbs: Decimal(recent.carbs),
-                    fat: Decimal(recent.fat),
-                    protein: Decimal(recent.protein),
+                    carbs: (recent.carbs ?? 0) as Decimal,
+                    fat: (recent.fat ?? 0) as Decimal,
+                    protein: (recent.protein ?? 0) as Decimal,
+                    fiber: (recent.protein ?? 0) as Decimal,
                     note: recent.note,
                     enteredBy: CarbsEntry.manual,
-                    isFPU: false
+                    isFPU: false,
+                    micronutrient: recent.micronutrientValues
                 )]
             }
 
             guard !empty else { return }
-
             carbsStorage.storeCarbs(carbToStore)
+            CoreDataStorage().saveMeal(carbToStore, now: Date.now, savedToFile: true)
         }
 
         func setupInsulinRequired() {
@@ -458,13 +461,24 @@ extension Bolus {
                     id: recent.id,
                     createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(5.seconds.timeInterval),
                     actualDate: recent.actualDate,
-                    carbs: Decimal(recent.carbs),
-                    fat: Decimal(recent.fat),
-                    protein: Decimal(recent.protein),
+                    carbs: (recent.carbs ?? 0) as Decimal,
+                    fat: (recent.fat ?? 0) as Decimal,
+                    protein: (recent.protein ?? 0) as Decimal,
+                    fiber: (recent.fiber ?? 0) as Decimal,
                     note: recent.note,
                     enteredBy: CarbsEntry.manual,
-                    isFPU: false
+                    isFPU: false,
+                    micronutrient: recent.micronutrientValues
                 )]
+
+                // To Do: remove debug
+                print("Meal Flow 2: retrieving from CoreData")
+                for a in carbToStore {
+                    guard let b = a.micronutrient else { continue }
+                    for c in b {
+                        print("Meal Flow 2: Micros: " + c.name + " " + c.formattedAmount)
+                    }
+                }
 
                 if let passForward = carbToStore.first {
                     apsManager.temporaryData = TemporaryData(forBolusView: passForward)
@@ -492,7 +506,9 @@ extension Bolus {
         }
 
         private var empty: Bool {
-            (carbToStore.first?.carbs ?? 0) == 0 && (carbToStore.first?.fat ?? 0) == 0 && (carbToStore.first?.protein ?? 0) == 0
+            (carbToStore.first?.carbs ?? 0) == 0 && (carbToStore.first?.fat ?? 0) == 0 && (carbToStore.first?.protein ?? 0) ==
+                0 && (carbToStore.first?.fiber ?? 0) == 0 &&
+                ((carbToStore.first?.micronutrient?.first(where: { $0.amount != 0 })) != nil)
         }
     }
 }

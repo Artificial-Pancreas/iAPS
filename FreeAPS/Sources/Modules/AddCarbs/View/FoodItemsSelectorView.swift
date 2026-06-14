@@ -24,7 +24,7 @@ struct FoodItemsSelectorView: View {
 
     private var displayTitle: String {
         if searchResult.source == .database {
-            return "Saved Foods"
+            return searchResult.title
         } else if let query = searchResult.textQuery {
             return query
         } else {
@@ -198,6 +198,24 @@ private struct FoodItemsSelectorItemRow: View {
 
     private let displayNutrients: [NutrientType] = [.carbs, .protein, .fat]
 
+    private var topMicronutrients: [MicronutrientValue] {
+        foodItem.micronutrient
+            .filter { (foodItem.micronutrientInThisPortion($0.substance) ?? 0) > 0 }
+            .sorted { $0.name < $1.name }
+            .prefix(3)
+            .map { $0 }
+    }
+
+    private func formatted(_ value: Decimal) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 0
+
+        let number = NSDecimalNumber(decimal: value)
+        return formatter.string(from: number) ?? "\(number)"
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // Main Row Content
@@ -295,6 +313,7 @@ private struct FoodItemsSelectorItemRow: View {
                                 Spacer().frame(maxWidth: .infinity)
                             }
                         }
+
                         if foodItem.caloriesInThisPortion > 0 {
                             NutritionBadgePlainStacked(
                                 value: foodItem.caloriesInThisPortion,
@@ -307,6 +326,19 @@ private struct FoodItemsSelectorItemRow: View {
                         }
                     }
                     .padding(.trailing, 40)
+
+                    if !topMicronutrients.isEmpty {
+                        HStack(spacing: 6) {
+                            ForEach(topMicronutrients) { micronutrient in
+                                MicronutrientBadge(
+                                    micronutrient: micronutrient,
+                                    amount: foodItem.micronutrientInThisPortion(micronutrient.substance)
+                                )
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 12)
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -413,5 +445,19 @@ private struct FoodItemsSelectorItemRow: View {
 
         let updatedItem = foodItem.copy(imageURL: .some(nil))
         onPersist(updatedItem)
+    }
+
+    private func micronutrientAmountInThisPortion(_ micronutrient: MicronutrientValue) -> Decimal {
+        switch foodItem.nutrition {
+        case .per100:
+            let amountPer100 = micronutrient.amountPer100 > 0
+                ? micronutrient.amountPer100
+                : micronutrient.amount
+
+            return amountPer100 * foodItem.portionSizeOrMultiplier / 100
+
+        case .perServing:
+            return micronutrient.amount * foodItem.portionSizeOrMultiplier
+        }
     }
 }
