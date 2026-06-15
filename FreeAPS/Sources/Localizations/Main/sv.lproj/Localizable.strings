@@ -3865,10 +3865,10 @@ Enact a temp Basal or a temp target */
 "Watch: Show Delta" = "Klocla: visa förändring";
 
 /* Watch Smart Stack: Show eventual glucose on chart widget */
-"Watch: Show Eventual" = "Klocla: visa förväntat blodsocker";
+"Watch: Show Eventual" = "Klocka: visa blodsockerprognos";
 
 /* Watch Smart Stack: Show predictions on chart widget */
-"Watch: Show Predictions" = "Klocla: visa prognos";
+"Watch: Show Predictions" = "Klocka: visa prognos";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Liveaktivitet visar senaste blodsockeravläsning på låsskärmen och på Dynamic Island, om sådan finns på din iPhone-modell";
