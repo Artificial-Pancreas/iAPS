@@ -3862,7 +3862,7 @@ Enact a temp Basal or a temp target */
 "Watch: Show Chart" = "Klocka: visa diagram";
 
 /* Watch Smart Stack: Show delta */
-"Watch: Show Delta" = "Klocla: visa förändring";
+"Watch: Show Delta" = "Klocka: visa förändring";
 
 /* Watch Smart Stack: Show eventual glucose on chart widget */
 "Watch: Show Eventual" = "Klocka: visa blodsockerprognos";
