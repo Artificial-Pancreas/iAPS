@@ -107,10 +107,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             await me.enactedSuggestionUpdated(enactedSuggestion)
             await me.configureState()
         }
-//        observe(appCoordinator.pumpBattery) { me, battery in
-//            // TODO:
-//        }
-//        observe(appCoordinator.pumpReservoir) { me, reservoir in
+//        observe(appCoordinator.pumpStatus) { me, pumpStatus in
 //            // TODO:
 //        }
 

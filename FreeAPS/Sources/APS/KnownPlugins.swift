@@ -1,4 +1,5 @@
 import CGMBLEKit
+import DanaKit
 import Foundation
 import G7SensorKit
 import LibreTransmitter
@@ -127,6 +128,9 @@ enum KnownPlugins {
             }
         case MedtrumPumpManager.pluginIdentifier:
             guard let reservoir = (pumpManager as? MedtrumPumpManager)?.state.reservoir else { return nil }
+            return .units(Decimal(reservoir))
+        case DanaKitPumpManager.pluginIdentifier:
+            guard let reservoir = (pumpManager as? DanaKitPumpManager)?.state.reservoirLevel else { return nil }
             return .units(Decimal(reservoir))
         case MockPumpManager.pluginIdentifier:
             guard let reservoir = (pumpManager as? MockPumpManager)?.state.reservoirUnitsRemaining else { return nil }

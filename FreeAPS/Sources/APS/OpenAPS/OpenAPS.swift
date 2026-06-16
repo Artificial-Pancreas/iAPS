@@ -364,7 +364,7 @@ actor OpenAPS: Sendable {
 
     private func reservoirHistory() async -> RawJSON {
         let reservoir: Decimal
-        switch appCoordinator.pumpReservoir.value {
+        switch appCoordinator.pumpStatus.value?.reservoir {
         case let .units(units): reservoir = units
         case .aboveThreshold: reservoir = 100.0
         case nil: reservoir = 100.0

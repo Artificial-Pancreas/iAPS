@@ -89,6 +89,15 @@ extension WeakSynchronizedSet: @retroactive @unchecked Sendable {}
 
 private let lastEventDateKey = "BaseDeviceDataManager.lastEventDate"
 
+private enum ConfigOverrides {
+    static let allowUploadsFromNightscoutCGM = {
+        // can be overriden in ConfigOverride.xcconfig
+        // while testing, it is important to be able to have nightscout as the cgm, AND to be able to upload glucose to another nightscout
+        // nightscout cgm UI does not have a toggle for this and always disables uploads (as it should)
+        (Bundle.main.object(forInfoDictionaryKey: "ALLOW_UPLOADS_FROM_NIGHTSCOUT_CGM") as? String)?.lowercased() == "yes"
+    }()
+}
+
 final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
 
@@ -132,10 +141,23 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     private let rawPumpManagerStore = PersistedProperty<PumpManager.RawValue>(key: "PumpManagerState")
     private var rawPumpManager: PumpManager.RawValue? {
         get { rawPumpManagerStore.wrappedValue }
-        set { rawPumpManagerStore.wrappedValue = newValue }
+        set {
+            rawPumpManagerStore.wrappedValue = newValue
+            if newValue == nil {
+                lastKnownReservoir = nil
+            }
+        }
     }
 
     private let pumpManagerLocked: ManagerBox<PumpManagerUI?> = ManagerBox(nil)
+
+    // not using @PersistedProperty as an annotation directly because using a var breaks Sendable for DeviceDataManager
+    /// persist the latest known reservoir value
+    private let lastKnownReservoirStore = PersistedProperty<ReservoirReading.RawValue>(key: "lastKnownReservoir")
+    private var lastKnownReservoir: ReservoirReading? {
+        get { .init(from: lastKnownReservoirStore.wrappedValue) }
+        set { lastKnownReservoirStore.wrappedValue = newValue?.rawValue }
+    }
 
     private var pumpManager: PumpManagerUI? {
         pumpManagerLocked.value
@@ -672,6 +694,12 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         } else {
             rawPumpManager = pumpManager.rawValue
         }
+
+        // try reading reservoir, if nil is returned - keep the previous value (hopefully received in pumpManager(didReadReservoirValue))
+        if let reservoir = KnownPlugins.pumpReservoir(pumpManager) {
+            lastKnownReservoir = reservoir
+        }
+
         dispatchPumpInfo()
         dispatchPumpStatus()
     }
@@ -763,8 +791,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "Reservoir Value \(units), at: \(date)")
-//        await storage.save(Decimal(units), as: OpenAPS.Monitor.reservoir)
-        appCoordinator.setPumpReservoir(.units(Decimal(units)))
+
+        lastKnownReservoir = .units(Decimal(units))
+
+        dispatchPumpStatus()
 
         completion(.success((
             newValue: Reservoir(startDate: Date(), unitVolume: units),
@@ -1047,7 +1077,6 @@ private extension BaseDeviceDataManager {
     private func dispatchPumpStatus() {
         guard let pumpManager = self.pumpManager else {
             appCoordinator.setPumpStatus(nil)
-            appCoordinator.setPumpReservoir(nil)
             appCoordinator.setBolusInProgress(false)
             appCoordinator.setManualTempBasal(false)
             return
@@ -1055,10 +1084,6 @@ private extension BaseDeviceDataManager {
 
         let status = pumpStatus(for: pumpManager)
         appCoordinator.setPumpStatus(status)
-
-        if let reservoir = KnownPlugins.pumpReservoir(pumpManager) {
-            appCoordinator.setPumpReservoir(reservoir)
-        }
         if case .inProgress = pumpManager.status.bolusState {
             self.appCoordinator.setBolusInProgress(true)
         } else {
@@ -1107,7 +1132,7 @@ private extension BaseDeviceDataManager {
         let status = CgmDisplayStatus(
             statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
             sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
-            shouldUploadGlucose: cgmManager.shouldSyncToRemoteService
+            shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM
         )
 
         appCoordinator.setCgmStatus(status)
@@ -1320,7 +1345,7 @@ extension BaseDeviceDataManager {
         }
     }
 
-    func pumpStatus(for pumpManager: PumpManagerUI) -> PumpDisplayStatus? {
+    private func pumpStatus(for pumpManager: PumpManagerUI) -> PumpDisplayStatus? {
         let pumpManagerStatus = pumpManager.status
         let batteryPercent = Int((pumpManagerStatus.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(
@@ -1336,6 +1361,7 @@ extension BaseDeviceDataManager {
 
         return PumpDisplayStatus(
             status: statusType,
+            reservoir: lastKnownReservoir,
             statusHighlight: pumpManager.pumpStatusHighlight?.localizedMessage,
             timeZone: pumpManagerStatus.timeZone,
             battery: battery,
