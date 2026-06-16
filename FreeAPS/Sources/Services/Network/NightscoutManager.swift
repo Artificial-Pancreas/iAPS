@@ -44,6 +44,12 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private var lastSeenCgmStart: Date?
     private var cgmStartUploadPending: Bool = true
 
+    private var lastUploadedPodAge: Date?
+
+    private var lastUploadedPumpStatus: PumpDisplayStatus?
+
+    private let iapsVersion = Bundle.main.releaseVersionNumber ?? "Unknown"
+
     let lifetime = Lifetime()
 
     private var isNetworkReachable: Bool {
@@ -104,6 +110,16 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         observe(appCoordinator.cgmStatus) { me, cgmStatus in
             if let cgmStatus {
                 await me.cgmStatusUpdated(cgmStatus)
+            }
+        }
+        observe(appCoordinator.pumpStatus) { me, pumpStatus in
+            if let pumpStatus {
+                await me.pumpStatusUpdated(pumpStatus)
+            }
+        }
+        observe(appCoordinator.pumpInfo.map(\.?.podActivatedAt)) { me, podActivatedAt in
+            if let podActivatedAt {
+                await me.uploadPodAge(podActivatedAt: podActivatedAt)
             }
         }
         observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
@@ -222,8 +238,74 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
+    private func shouldUploadPumpStatusNow(_ pumpStatus: PumpDisplayStatus) -> Bool {
+        guard let lastUploadedPumpStatus else { return true }
+        if Date.now.timeIntervalSince(lastUploadedPumpStatus.timestamp) >= .minutes(5) {
+            return true
+        }
+        return lastUploadedPumpStatus.isSuspended != pumpStatus.isSuspended ||
+            lastUploadedPumpStatus.isBolusing != pumpStatus.isBolusing ||
+            lastUploadedPumpStatus.status != pumpStatus.status ||
+            lastUploadedPumpStatus.statusHighlight != pumpStatus.statusHighlight
+    }
+
+    private func pumpStatusUpdated(_ pumpStatus: PumpDisplayStatus) async {
+        // do not flood nightscout
+        guard shouldUploadPumpStatusNow(pumpStatus) else { return }
+
+        let settings = appCoordinator.settings.value
+
+        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
+            return
+        }
+
+        let battery = pumpStatus.battery
+
+        let reservoir = pumpStatus.reservoir?.knownValue
+
+        let nsPumpStatus =
+            NSPumpStatusDetails(
+                status: NSStatusType(rawValue: pumpStatus.status.rawValue) ?? .normal,
+                bolusing: pumpStatus.isBolusing,
+                suspended: pumpStatus.isSuspended,
+                timestamp: pumpStatus.timestamp,
+            )
+
+        let pump = NSPumpStatus(
+            clock: pumpStatus.timestamp,
+            battery: battery,
+            reservoir: reservoir,
+            status: nsPumpStatus
+        )
+
+        let device = await UIDevice.current
+        let batteryLevel = await device.batteryLevel
+        let uploader = Uploader(batteryVoltage: nil, battery: Int(batteryLevel * 100))
+
+        let status = NightscoutStatus(
+            device: NigtscoutTreatment.local,
+            openaps: nil,
+            pump: pump,
+            uploader: uploader,
+            createdAt: pumpStatus.timestamp
+        )
+
+        do {
+            try await nightscout.uploadStatus(status)
+            lastUploadedPumpStatus = pumpStatus
+            debug(.nightscout, "pump status uploaded")
+        } catch {
+            debug(.nightscout, "failed to upload pump status: \(error.localizedDescription)")
+        }
+    }
+
     func uploadStatus() async {
         let settings = appCoordinator.settings.value
+
+        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
+            return
+        }
+
         let iob = await storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
         var suggested = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         var enacted = await storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
@@ -245,79 +327,41 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 iob: iob?.first,
                 suggested: enacted,
                 enacted: enacted,
-                version: "0.7.1"
+                version: iapsVersion
             )
         } else {
             openapsStatus = OpenAPSStatus(
                 iob: iob?.first,
                 suggested: suggested,
                 enacted: nil,
-                version: "0.7.1"
+                version: iapsVersion
             )
         }
-
-        let battery = appCoordinator.pumpStatus.value?.battery
-        let pumpReservoir = appCoordinator.pumpReservoir.value
-        let reservoir: Decimal?
-
-        if case let .units(units) = pumpReservoir {
-            reservoir = units
-        } else {
-            reservoir = nil
-        }
-
-        //  await storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
-        let pumpStatus = appCoordinator.pumpStatus.value.map { pumpStatus in
-            NSPumpStatusDetails(
-                status: NSStatusType(rawValue: pumpStatus.status.rawValue) ?? .normal,
-                bolusing: pumpStatus.isBolusing,
-                suspended: pumpStatus.isSuspended,
-                timestamp: pumpStatus.timestamp,
-            )
-        }
-
-        let pump = NSPumpStatus(
-            clock: Date(),
-            battery: battery,
-            reservoir: reservoir,
-            status: pumpStatus
-        )
-
-        let device = await UIDevice.current
-        let batteryLevel = await device.batteryLevel
-        let uploader = Uploader(batteryVoltage: nil, battery: Int(batteryLevel * 100))
-
-        // Use latest SGV timestamp to match devicestatus with SGV entries
-        let latestGlucoseDate = await glucoseStorage.latestDate() ?? Date()
 
         let status = NightscoutStatus(
             device: NigtscoutTreatment.local,
             openaps: openapsStatus,
-            pump: pump,
-            uploader: uploader,
-            createdAt: latestGlucoseDate
+            pump: nil,
+            uploader: nil,
+            createdAt: Date.now
         )
 
         await storage.save(status, as: OpenAPS.Upload.nsStatus)
 
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            return
-        }
-
         do {
             try await nightscout.uploadStatus(status)
-            debug(.nightscout, "Status uploaded")
+            debug(.nightscout, "suggestion uploaded")
         } catch {
             debug(.nightscout, error.localizedDescription)
         }
-
-        await uploadPodAge()
     }
 
-    private func uploadPodAge() async {
+    private func uploadPodAge(podActivatedAt: Date) async {
+        guard podActivatedAt != self.lastUploadedPodAge else {
+            return
+        }
         let uploadedPodAge = await storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
-        if let podAge = appCoordinator.pumpInfo.value?.podActivatedAt,
-           uploadedPodAge.last?.createdAt != podAge
+        if uploadedPodAge.last?.createdAt != podActivatedAt
         {
             let siteTreatment = NigtscoutTreatment(
                 duration: nil,
@@ -326,7 +370,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 absolute: nil,
                 rate: nil,
                 eventType: .nsSiteChange,
-                createdAt: podAge,
+                createdAt: podActivatedAt,
                 enteredBy: NigtscoutTreatment.local,
                 bolus: nil,
                 insulin: nil,
@@ -337,12 +381,14 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 targetTop: nil,
                 targetBottom: nil
             )
-            await syncTreatments(
+            if await syncTreatments(
                 storedEvents: [siteTreatment],
                 fileToSave: OpenAPS.Nightscout.uploadedPodAge,
                 deletionPolicy: .appendOnly,
                 uploadedRetention: .days(15) // keep 15 days in the .uploadedPodAge file to avoid unnecessary re-uploads of the same pod age
-            )
+            ) != nil {
+                self.lastUploadedPodAge = podActivatedAt
+            }
         }
     }
 

@@ -53,7 +53,7 @@ import Observation
         bind(appCoordinator.cgmStatus, to: \.cgmStatus)
         bind(appCoordinator.isLooping, to: \.isLooping)
         bind(appCoordinator.manualTempBasal, to: \.manualTempBasal)
-        bind(appCoordinator.pumpReservoir, to: \.pumpReservoir)
+        bind(appCoordinator.pumpStatus.map(\.?.reservoir), to: \.pumpReservoir)
         bind(appCoordinator.lastLoopDate, to: \.lastLoopDate)
         bind(appCoordinator.bolusProgress, to: \.bolusProgress)
         bind(appCoordinator.bolusAmount, to: \.bolusAmount)

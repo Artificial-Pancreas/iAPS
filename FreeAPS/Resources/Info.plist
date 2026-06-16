@@ -96,6 +96,8 @@
 	<true/>
 	<key>STAT_URL</key>
 	<string>$(STAT_URL)</string>
+	<key>ALLOW_UPLOADS_FROM_NIGHTSCOUT_CGM</key>
+	<string>$(ALLOW_UPLOADS_FROM_NIGHTSCOUT_CGM)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

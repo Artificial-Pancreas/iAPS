@@ -249,7 +249,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         // give background tasks a chance to finish?
         try? await Task.sleep(for: .seconds(1))
 
-        // end of the BG tasks
+        // end of the background tasks
         await MainActor.run {
             if backgroundTaskIdBox.id != .invalid {
                 UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
@@ -425,9 +425,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 _ = await self.determineBasal(temporaryCarbs: nil)
             }
             appCoordinator.setBolusProgress(0) // TODO: should it be nil?
-//            self.bolusProgress.send(0)
             appCoordinator.setBolusAmount(Decimal(standardInsulinAmount))
-//            self.bolusAmount.send(Decimal(standardInsulinAmount))
         } catch {
             warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
             await processError(APSError.pumpError(error))

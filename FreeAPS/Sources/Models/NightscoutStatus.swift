@@ -2,9 +2,9 @@ import Foundation
 
 struct NightscoutStatus: JSON {
     let device: String
-    let openaps: OpenAPSStatus
-    let pump: NSPumpStatus
-    let uploader: Uploader
+    let openaps: OpenAPSStatus?
+    let pump: NSPumpStatus?
+    let uploader: Uploader?
     let createdAt: Date
 }
 

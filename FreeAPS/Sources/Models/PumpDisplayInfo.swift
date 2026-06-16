@@ -19,6 +19,7 @@ struct PumpDisplayStatus: Equatable, Sendable {
 
     let status: StatusType
 
+    let reservoir: ReservoirReading?
     let statusHighlight: String?
     let timeZone: TimeZone
     let battery: Battery?
@@ -28,10 +29,45 @@ struct PumpDisplayStatus: Equatable, Sendable {
     let supportedBasalRates: [Double]
     let supportedBolusVolumes: [Double]
 
-    let timestamp: Date?
+    let timestamp: Date
 }
 
 enum ReservoirReading: Sendable, Equatable {
     case units(Decimal)
     case aboveThreshold
+}
+
+extension ReservoirReading {
+    typealias RawValue = [String: Any]
+
+    var rawValue: RawValue {
+        switch self {
+        case .aboveThreshold: return ["aboveThreshold": true]
+        case let .units(units): return ["units": units.description]
+        }
+    }
+
+    var knownValue: Decimal? {
+        switch self {
+        case .aboveThreshold: return nil
+        case let .units(units): return units
+        }
+    }
+
+    private static let parsingLocale = Locale(identifier: "en_US_POSIX")
+
+    init?(from: RawValue?) {
+        guard let from else { return nil }
+        if from["aboveThreshold"] as? Bool == true {
+            self = .aboveThreshold
+        } else if let unitsString = from["units"] as? String {
+            if let units = Decimal(string: unitsString, locale: Self.parsingLocale) {
+                self = .units(units)
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
 }

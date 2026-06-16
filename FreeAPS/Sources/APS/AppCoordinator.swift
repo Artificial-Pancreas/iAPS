@@ -33,8 +33,6 @@ final class AppCoordinator: @unchecked Sendable {
 
     let manualTempBasal = CurrentValueSubject<Bool, Never>(false)
 
-    let pumpReservoir = CurrentValueSubject<ReservoirReading?, Never>(nil)
-
     let pumpNotifications = PassthroughSubject<AlertEntry, Never>()
 
     // TODO: this is never triggered?
@@ -115,10 +113,6 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setPumpStatus(_ value: PumpDisplayStatus?) {
         pumpStatus.send(value)
-    }
-
-    func setPumpReservoir(_ value: ReservoirReading?) {
-        pumpReservoir.send(value)
     }
 
     func setBolusInProgress(_ value: Bool) {
