@@ -3858,6 +3858,18 @@ Enact a temp Basal or a temp target */
 /* Show Predictions */
 "Show Predictions" = "Show Predictions";
 
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Watch: Show Chart";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Watch: Show Delta";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Watch: Show Eventual";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Watch: Show Predictions";
+
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'activité en direct affiche la glycémie sur l'écran de verrouillage et sur l'île dynamique (si disponible)";
 
