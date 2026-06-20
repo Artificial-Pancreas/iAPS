@@ -3871,7 +3871,7 @@ Enact a temp Basal or a temp target */
 "Watch: Show Eventual" = "Дивитися: Показати «Зрештою»";
 
 /* Watch Smart Stack: Show predictions on chart widget */
-"Watch: Show Predictions" = "Watch: Show Predictions";
+"Watch: Show Predictions" = "Дивитися: Показати Прогнози";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
