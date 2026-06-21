@@ -128,7 +128,7 @@ extension Bolus {
             observe(appCoordinator.lastLoopDate) { me, lastLoopDate in
                 await me.lastLoopDateUpdated(lastLoopDate)
             }
-            observe(appCoordinator.suggestions) { me, suggestion in
+            observe(appCoordinator.suggested) { me, suggestion in
                 await me.suggestionDidUpdate(suggestion)
             }
             observe(appCoordinator.pumpStatus) { me, pumpStatus in
@@ -142,8 +142,8 @@ extension Bolus {
                 Decimal(concentration.concentration)
         }
 
-        private func suggestionDidUpdate(_ suggestion: Suggestion) async {
-            guard !waitForSuggestion else {
+        private func suggestionDidUpdate(_ suggestion: Suggestion?) async {
+            guard !waitForSuggestion, let suggestion else {
                 // we requested the suggestion
                 return
             }
@@ -188,7 +188,7 @@ extension Bolus {
                         await setupBolusData()
                     }
 
-                    self.suggestion = await apsManager.determineBasal(temporaryCarbs: carbToStore)
+                    self.suggestion = try? await apsManager.determineBasal(temporaryCarbs: carbToStore)
                     self.predictions = self.suggestion?.predictions
                     if self.suggestion == nil {
                         self.insulinRequired = 0
@@ -541,7 +541,7 @@ extension Bolus {
 
         func determineBasal() {
             Task {
-                _ = await apsManager.determineBasal(temporaryCarbs: nil)
+                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
             }
         }
 

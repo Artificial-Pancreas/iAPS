@@ -11,7 +11,7 @@ extension NightscoutConfig {
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var storage: FileStorage!
-        @Injected() private var coreDataStorageGlucoseSaver: CoreDataStorageGlucoseSaver!
+        @Injected() private var coreDataManager: CoreDataManager!
         @Injected() private var apsManager: APSManager!
         @Injected() private var deviceManager: DeviceDataManager!
 
@@ -339,7 +339,7 @@ extension NightscoutConfig {
             _ = await glucoseStorage.storeGlucose(recent)
 
             // core data - store everything
-            await coreDataStorageGlucoseSaver.storeGlucose(glucose)
+            await coreDataManager.storeGlucose(glucose)
         }
 
         func uploadOldGlucose() {

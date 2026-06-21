@@ -27,9 +27,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     let heartbeat = PassthroughSubject<Void, Never>()
 
-    let isLooping = CurrentValueSubject<Bool, Never>(false)
-
     let recommendsLoop = PassthroughSubject<Void, Never>()
+
+    let isLooping = CurrentValueSubject<Bool, Never>(false)
 
     let manualTempBasal = CurrentValueSubject<Bool, Never>(false)
 
@@ -46,24 +46,32 @@ final class AppCoordinator: @unchecked Sendable {
 
     let alertNotAckUpdates = CurrentValueSubject<Bool, Never>(false)
 
-    let loopCompleted = PassthroughSubject<Void, Never>()
+    let latestLoopOutcome = CurrentValueSubject<LoopOutcome?, Never>(nil)
 
-    // pump events history updates, oldest -> newest
-    let pumpHistoryUpdates = PassthroughSubject<[PumpHistoryEvent], Never>()
+    let loopCompleted = PassthroughSubject<LoopOutcome, Never>()
 
-    let glucoseHistoryUpdates = PassthroughSubject<[BloodGlucose], Never>()
+    // current pump history, oldest -> newest
+    let pumpHistory = CurrentValueSubject<[PumpHistoryEvent], Never>([])
 
-    let suggestions = PassthroughSubject<Suggestion, Never>()
+    let pumpHistoryDeletions = PassthroughSubject<[PumpHistoryEvent], Never>()
 
-    let enactedSuggestions = PassthroughSubject<Suggestion, Never>()
+    let glucoseHistory = CurrentValueSubject<[BloodGlucose], Never>([])
+
+    let glucoseDeletions = PassthroughSubject<[BloodGlucose], Never>()
+
+    let iobTicks = CurrentValueSubject<[IOBEntry]?, Never>(nil)
+
+    let suggested = CurrentValueSubject<Suggestion?, Never>(nil)
 
     let newGlucoseRecords = PassthroughSubject<[BloodGlucose], Never>()
 
-    // carb events history updates, newest -> oldest
-    let carbHistoryUpdates = PassthroughSubject<[CarbsEntry], Never>()
+    // current carb history, newest -> oldest
+    let carbHistory = CurrentValueSubject<[CarbsEntry], Never>([])
 
-    // temp targets updates, newest -> oldest
-    let tempTargetsUpdates = PassthroughSubject<[TempTarget], Never>()
+    let carbDeletions = PassthroughSubject<[CarbsEntry], Never>()
+
+    // current temp targets, newest -> oldest
+    let tempTargets = CurrentValueSubject<[TempTarget], Never>([])
 
     let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
 
@@ -71,15 +79,13 @@ final class AppCoordinator: @unchecked Sendable {
 
     let lastLoopDate = CurrentValueSubject<Date?, Never>(nil)
 
-    let lastLoopError = CurrentValueSubject<(error: Error, date: Date)?, Never>(nil)
+    let lastLoopError = CurrentValueSubject<(error: String, date: Date)?, Never>(nil)
 
     let bolusFailures = PassthroughSubject<Void, Never>()
 
     let bolusProgress = CurrentValueSubject<Decimal?, Never>(nil)
 
     let bolusAmount = CurrentValueSubject<Decimal?, Never>(nil)
-
-    let pumpEvents = PassthroughSubject<[LoopKit.NewPumpEvent], Never>()
 
     let newSensorDetectedEvents = PassthroughSubject<Void, Never>()
 
@@ -139,9 +145,9 @@ final class AppCoordinator: @unchecked Sendable {
         lastLoopDate.send(value)
     }
 
-    func setLastLoopError(_ value: Error?) {
+    func setLastLoopError(_ value: (String, date: Date)?) {
         if let value {
-            lastLoopError.send((error: value, date: .now))
+            lastLoopError.send((error: value.0, date: value.date))
         } else {
             lastLoopError.send(nil)
         }
@@ -159,40 +165,48 @@ final class AppCoordinator: @unchecked Sendable {
         recommendsLoop.send(())
     }
 
-    func sendPumpEvents(_ value: [LoopKit.NewPumpEvent]) {
-        pumpEvents.send(value)
-    }
-
     func setManualTempBasal(_ value: Bool) {
         manualTempBasal.send(value)
     }
 
-    func sendSuggestion(_ value: Suggestion) {
-        suggestions.send(value)
+    func setIobTicks(_ value: [IOBEntry]?) {
+        iobTicks.send(value)
     }
 
-    func sendEnactedSuggestion(_ value: Suggestion) {
-        enactedSuggestions.send(value)
+    func setLatestSuggestion(_ value: Suggestion?) {
+        suggested.send(value)
     }
 
     /// MUST BE oldest -> newest
-    func sendPumpHistoryUpdate(_ value: [PumpHistoryEvent]) {
-        pumpHistoryUpdates.send(value)
+    func setPumpHistory(_ value: [PumpHistoryEvent]) {
+        pumpHistory.send(value)
+    }
+
+    func sendPumpHistoryDeleted(_ value: [PumpHistoryEvent]) {
+        pumpHistoryDeletions.send(value)
     }
 
     /// MUST BE newest -> oldest
-    func sendCarbHistoryUpdate(_ value: [CarbsEntry]) {
-        carbHistoryUpdates.send(value)
+    func setCarbHistory(_ value: [CarbsEntry]) {
+        carbHistory.send(value)
+    }
+
+    func sendCarbDeleted(_ value: [CarbsEntry]) {
+        carbDeletions.send(value)
     }
 
     /// MUST BE newest -> oldest
-    func sendTempTargetsUpdate(_ value: [TempTarget]) {
-        tempTargetsUpdates.send(value)
+    func setTempTargets(_ value: [TempTarget]) {
+        tempTargets.send(value)
     }
 
     /// MUST BE newest -> oldest
-    func sendGlucoseHistoryUpdate(_ value: [BloodGlucose]) {
-        glucoseHistoryUpdates.send(value)
+    func setGlucoseHistory(_ value: [BloodGlucose]) {
+        glucoseHistory.send(value)
+    }
+
+    func sendGlucoseDeleted(_ value: [BloodGlucose]) {
+        glucoseDeletions.send(value)
     }
 
     func sendBasalProfile(_ value: [BasalProfileEntry]) {
@@ -211,8 +225,14 @@ final class AppCoordinator: @unchecked Sendable {
         bolusAmount.send(value)
     }
 
-    func sendLoopCompleted() {
-        loopCompleted.send(())
+    func restorePersistedLoopOutcome(_ value: LoopOutcome) {
+        // set the current value subject, but don't publish the event
+        latestLoopOutcome.send(value)
+    }
+
+    func sendLoopCompleted(_ value: LoopOutcome) {
+        latestLoopOutcome.send(value)
+        loopCompleted.send(value)
     }
 
     func sendDeliveryUncertain() {

@@ -43,7 +43,7 @@ public extension Disk {
         in directory: Directory,
         decoder: JSONDecoder = JSONDecoder(),
         encoder: JSONEncoder = JSONEncoder()
-    ) throws {
+    ) throws -> [T] {
         if path.hasSuffix("/") {
             throw createInvalidFileNameForStructsError()
         }
@@ -52,6 +52,7 @@ public extension Disk {
                 let oldData = try Data(contentsOf: url)
                 if !(!oldData.isEmpty) {
                     try save([value], to: directory, as: path, encoder: encoder)
+                    return [value]
                 } else {
                     let new: [T]
                     if let old = try? decoder.decode(T.self, from: oldData) {
@@ -64,9 +65,11 @@ public extension Disk {
                     }
                     let newData = try encoder.encode(new)
                     try newData.write(to: url, options: .atomic)
+                    return new
                 }
             } else {
                 try save([value], to: directory, as: path, encoder: encoder)
+                return [value]
             }
         } catch {
             throw error
@@ -88,15 +91,16 @@ public extension Disk {
         in directory: Directory,
         decoder: JSONDecoder = JSONDecoder(),
         encoder: JSONEncoder = JSONEncoder()
-    ) throws {
+    ) throws -> [T] {
         if path.hasSuffix("/") {
             throw createInvalidFileNameForStructsError()
         }
         do {
             if let url = try? getExistingFileURL(for: path, in: directory) {
                 let oldData = try Data(contentsOf: url)
-                if !(!oldData.isEmpty) {
+                if oldData.isEmpty {
                     try save(value, to: directory, as: path, encoder: encoder)
+                    return value
                 } else {
                     let new: [T]
                     if let old = try? decoder.decode(T.self, from: oldData) {
@@ -109,9 +113,11 @@ public extension Disk {
                     }
                     let newData = try encoder.encode(new)
                     try newData.write(to: url, options: .atomic)
+                    return new
                 }
             } else {
                 try save(value, to: directory, as: path, encoder: encoder)
+                return value
             }
         } catch {
             throw error

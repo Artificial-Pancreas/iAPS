@@ -177,9 +177,9 @@ extension Home {
             setupCob()
             setupMeals()
 
-            data.suggestion = await provider.suggestion
+            data.suggestion = appCoordinator.suggested.value
+            enactedSuggestion = appCoordinator.latestLoopOutcome.value?.enactedSuggestion
             dynamicVariables = await provider.dynamicVariables
-            enactedSuggestion = await provider.enactedSuggestion
 
             carbsRequired = data.suggestion?.carbsReq
 
@@ -196,28 +196,32 @@ extension Home {
                 await me.cgmCensorDaysUpdated(sensorDays)
             }
 
-            observe(appCoordinator.glucoseHistoryUpdates) { me, glucose in
-                // TODO: use the provided value? currently it re-reads from the storage
+            observe(appCoordinator.glucoseHistory.dropFirst()) { me, glucose in
+                // TODO: use the provided value inside the function, currently it re-reads from the storage
                 await me.glucoseDidUpdate(glucose)
             }
 
-            observe(appCoordinator.suggestions) { me, suggestion in
+            observe(appCoordinator.suggested) { me, suggestion in
                 await me.suggestionDidUpdate(suggestion)
             }
 
-            observe(appCoordinator.settings) { me, settings in
+            observe(appCoordinator.iobTicks.dropFirst().map(\.?.first)) { me, iob in
+                await me.currentIobUpdated(iob)
+            }
+
+            observe(appCoordinator.settings.dropFirst()) { me, settings in
                 await me.settingsUpdated(settings)
             }
 
-            observe(appCoordinator.preferences) { me, preferences in
+            observe(appCoordinator.preferences.dropFirst()) { me, preferences in
                 await me.preferencesUpdated(preferences)
             }
 
-            observe(appCoordinator.pumpSettings) { me, pumpSettings in
+            observe(appCoordinator.pumpSettings.dropFirst()) { me, pumpSettings in
                 await me.pumpSettingsUpdated(pumpSettings)
             }
 
-            observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
+            observe(appCoordinator.pumpHistory.dropFirst()) { me, pumpHistory in
                 await me.pumpHistoryDidUpdate(pumpHistory)
             }
 
@@ -225,16 +229,16 @@ extension Home {
                 await me.basalProfileUpdated(basalProfile)
             }
 
-            observe(appCoordinator.tempTargetsUpdates) { me, tempTargets in
+            observe(appCoordinator.tempTargets.dropFirst()) { me, tempTargets in
                 await me.tempTargetsUpdated(tempTargets)
             }
 
-            observe(appCoordinator.carbHistoryUpdates) { me, carbHistory in
+            observe(appCoordinator.carbHistory.dropFirst()) { me, carbHistory in
                 await me.carbsUpdated(carbHistory)
             }
 
-            observe(appCoordinator.enactedSuggestions) { me, enactedSuggstion in
-                await me.enactedSuggestionUpdated(enactedSuggstion)
+            observe(appCoordinator.loopCompleted) { me, loopOutcome in
+                await me.loopCompleted(loopOutcome)
             }
 
             subscribeSetting(\.hours, on: $hours) {
@@ -540,14 +544,8 @@ extension Home {
             tempTarget = await provider.tempTarget()
         }
 
-        private func setupIOB() async {
-            do {
-                if let sync = try await provider.iob() {
-                    data.iob = sync
-                }
-            } catch {
-                debug(.apsManager, "Error - Couldn't update foreground IOB value.")
-            }
+        private func currentIobUpdated(_ iob: IOBEntry?) async {
+            data.iob = iob?.iob
         }
 
         private func setupData() async {
@@ -665,10 +663,10 @@ extension Home.StateModel {
         setupLoopStatsBackground()
     }
 
-    private func suggestionDidUpdate(_ suggestion: Suggestion) async {
+    private func suggestionDidUpdate(_ suggestion: Suggestion?) async {
         data.suggestion = suggestion
-        data.iob = data.suggestion?.iob
-        carbsRequired = suggestion.carbsReq
+        data.iob = suggestion?.iob
+        carbsRequired = suggestion?.carbsReq
         setStatusTitle()
         await setupOverrideHistory()
         setupLoopStatsBackground()
@@ -744,7 +742,6 @@ extension Home.StateModel {
         await setupBoluses()
         await setupSuspensions()
         await setupAnnouncements()
-        await setupIOB()
         await setupActivity()
     }
 
@@ -766,8 +763,8 @@ extension Home.StateModel {
         setupMeals()
     }
 
-    private func enactedSuggestionUpdated(_ suggestion: Suggestion) async {
-        enactedSuggestion = suggestion
+    private func loopCompleted(_ loopOutcome: LoopOutcome) async {
+        enactedSuggestion = loopOutcome.enactedSuggestion
         setStatusTitle()
         await setupOverrideHistory()
         setupLoopStatsBackground()

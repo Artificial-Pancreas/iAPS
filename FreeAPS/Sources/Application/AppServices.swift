@@ -18,34 +18,39 @@ import Swinject
     func started() async throws { try await startup?.value }
 
     private func performStartup(resolver: Resolver) async throws {
-        try await startService(resolver.resolve(SettingsManager.self))
-
-        _ = resolver.resolve(BluetoothStateManager.self)!
-
         let appCoordinator = resolver.resolve(AppCoordinator.self)!
-
         Logger.WarningLogHandler.handler = { messageCont in
             appCoordinator.sendAlertMessage(messageCont)
         }
 
-        try await startService(resolver.resolve(FetchTreatmentsManager.self))
-        try await startService(resolver.resolve(FetchAnnouncementsManager.self))
-        try await startService(resolver.resolve(UserNotificationsManager.self))
-        try await startService(resolver.resolve(WatchManager.self))
-        try await startService(resolver.resolve(HealthKitManager.self))
-        try await startService(resolver.resolve(LiveActivityBridge.self))
-        try await startService(resolver.resolve(CoreDataStorageGlucoseSaver.self))
-        try await startService(resolver.resolve(CalendarManager.self))
+        try await startService(resolver.resolve(SettingsManager.self))
+
+        _ = resolver.resolve(BluetoothStateManager.self)!
+
+        try await startService(resolver.resolve(CoreDataManager.self))
         try await startService(resolver.resolve(DatabaseManager.self))
-        try await startService(resolver.resolve(ContactTrickManager.self))
+
         try await startService(resolver.resolve(NightscoutManager.self))
-        try await startService(resolver.resolve(ProfileAndSettingsUploadManager.self))
         try await startService(resolver.resolve(PumpHistoryStorage.self))
+        try await startService(resolver.resolve(GlucoseStorage.self))
+        try await startService(resolver.resolve(CarbsStorage.self))
+        try await startService(resolver.resolve(TempTargetsStorage.self))
+
         try await startService(resolver.resolve(APSManager.self)!)
 
         try await startService(resolver.resolve(DeviceDataManager.self))
 
         try await startService(resolver.resolve(AppUIState.self))
+
+        try await startService(resolver.resolve(FetchTreatmentsManager.self))
+        try await startService(resolver.resolve(FetchAnnouncementsManager.self))
+        try await startService(resolver.resolve(UserNotificationsManager.self))
+        try await startService(resolver.resolve(CalendarManager.self))
+        try await startService(resolver.resolve(WatchManager.self))
+        try await startService(resolver.resolve(HealthKitManager.self))
+        try await startService(resolver.resolve(LiveActivityBridge.self))
+        try await startService(resolver.resolve(ContactTrickManager.self))
+        try await startService(resolver.resolve(ProfileAndSettingsUploadManager.self))
 
         self.appCoordinator = appCoordinator
     }

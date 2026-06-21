@@ -4,23 +4,23 @@ protocol FileStorage: Sendable {
     func save<Value: JSON>(_ value: Value, as name: String) async
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) async -> Value?
     func retrieveRaw(_ name: String) async -> RawJSON?
-    func append<Value: JSON>(_ newValue: Value, to name: String) async
-    func append<Value: JSON>(_ newValues: [Value], to name: String) async
-    func append<Value: JSON, T: Equatable & Sendable>(
+    @discardableResult func append<Value: JSON>(_ newValue: Value, to name: String) async -> [Value]?
+    @discardableResult func append<Value: JSON>(_ newValues: [Value], to name: String) async -> [Value]?
+    @discardableResult func append<Value: JSON, T: Equatable & Sendable>(
         _ newValue: Value,
         to name: String,
         uniqBy keyPath: KeyPath<Value, T> & Sendable
-    ) async
-    func append<Value: JSON, T: Equatable & Sendable>(
+    ) async -> [Value]?
+    @discardableResult func append<Value: JSON, T: Equatable & Sendable>(
         _ newValues: [Value],
         to name: String,
         uniqBy keyPath: KeyPath<Value, T> & Sendable
-    ) async
-    func append<Value: JSON, T: Equatable & Sendable>(
+    ) async -> [Value]?
+    @discardableResult func append<Value: JSON, T: Equatable & Sendable>(
         _ newValues: [Value],
         to name: String,
         uniqByProj proj: @Sendable(Value) -> T
-    ) async
+    ) async -> [Value]?
 
     @discardableResult func appendAndModify<Value: JSON, T: Equatable & Sendable>(
         _ newValues: [Value],
@@ -34,6 +34,12 @@ protocol FileStorage: Sendable {
         as type: Value.Type,
         _ modify: @Sendable([Value]) -> [Value]
     ) async -> [Value]
+
+    @discardableResult func delete<Value: JSON>(
+        file: String,
+        as type: Value.Type,
+        where shouldDelete: @Sendable(Value) -> Bool
+    ) async -> (kept: [Value], deleted: [Value]?)
 
     @discardableResult func maybeModify<Value: JSON>(
         file: String,
@@ -81,40 +87,60 @@ actor BaseFileStorage: FileStorage, Injectable {
         return retrieve(name, as: type)
     }
 
-    func append<Value: JSON>(_ newValue: Value, to name: String) {
+    @discardableResult func append<Value: JSON>(_ newValue: Value, to name: String) async -> [Value]? {
         try? Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
     }
 
-    func append<Value: JSON>(_ newValues: [Value], to name: String) {
+    @discardableResult func append<Value: JSON>(_ newValues: [Value], to name: String) async -> [Value]? {
         try? Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
     }
 
-    func append<Value: JSON, T: Equatable & Sendable>(
+    @discardableResult func append<Value: JSON, T: Equatable & Sendable>(
         _ newValue: Value,
         to name: String,
         uniqBy keyPath: KeyPath<Value, T> & Sendable
-    ) {
-        append([newValue], to: name, uniqBy: keyPath)
+    ) async -> [Value]? {
+        await append([newValue], to: name, uniqBy: keyPath)
     }
 
-    func append<Value: JSON, T: Equatable & Sendable>(
+    @discardableResult func append<Value: JSON, T: Equatable & Sendable>(
         _ newValues: [Value],
         to name: String,
         uniqBy keyPath: KeyPath<Value, T> & Sendable
-    ) {
+    ) async -> [Value]? {
         let values: [Value] = doRetrieve(from: name)
         let appended = Self.doAppend(newValues, existingValues: values, uniqBy: keyPath)
         save(appended, as: name)
+        return appended
     }
 
-    func append<Value: JSON, T: Equatable & Sendable>(
+    @discardableResult func append<Value: JSON, T: Equatable & Sendable>(
         _ newValues: [Value],
         to name: String,
         uniqByProj proj: @Sendable(Value) -> T
-    ) {
+    ) async -> [Value]? {
         let values: [Value] = doRetrieve(from: name)
         let appended = Self.doAppend(newValues, existingValues: values, uniqByProj: proj)
         save(appended, as: name)
+        return appended
+    }
+
+    @discardableResult func delete<Value: JSON>(
+        file: String,
+        as _: Value.Type,
+        where shouldDelete: @Sendable(Value) -> Bool
+    ) async -> (kept: [Value], deleted: [Value]?) {
+        let values: [Value] = doRetrieve(from: file)
+        var kept: [Value] = []
+        var deleted: [Value] = []
+        for value in values {
+            if shouldDelete(value) { deleted.append(value) } else { kept.append(value) }
+        }
+        if !deleted.isEmpty {
+            save(kept, as: file)
+            return (kept, deleted)
+        }
+        return (kept, nil)
     }
 
     @discardableResult func maybeModify<Value: JSON>(

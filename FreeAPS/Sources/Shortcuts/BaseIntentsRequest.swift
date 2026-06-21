@@ -2,6 +2,7 @@ import Foundation
 import Swinject
 
 class BaseIntentsRequest: Injectable {
+    @Injected() var appCoordinator: AppCoordinator!
     @Injected() var tempTargetsStorage: TempTargetsStorage!
     @Injected() var settingsManager: SettingsManager!
     @Injected() var fileStorage: FileStorage!

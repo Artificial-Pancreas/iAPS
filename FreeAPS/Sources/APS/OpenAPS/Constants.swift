@@ -75,9 +75,6 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
 
-        // TODO: read from app coordinator
-//        static let podAge = "monitor/pod-age.json"
-
         static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
@@ -85,13 +82,16 @@ extension OpenAPS {
 
     enum Enact {
         static let suggested = "enact/suggested.json"
-        static let enacted = "enact/enacted.json"
+//        static let enacted = "enact/enacted.json"
+        static let outcome = "enact/outcome.json"
     }
 
     enum Upload {
-        static let nsStatus = "upload/ns-status.json"
+//        static let nsStatus = "upload/ns-status.json"
         static let latestTreatments = "upload/latest-treatments.json"
         static let recentPumphistory = "upload/recent-pumphistory.json"
+        static let recentSuggested = "monitor/recent-suggested.json"
+        static let recentEnacted = "monitor/recent-enacted.json"
     }
 
     enum Function {
@@ -103,9 +103,12 @@ extension OpenAPS {
 
     enum Nightscout {
         static let uploadedPumphistory = "upload/uploaded-pumphistory.json"
+        static let pumpHistoryToDelete = "upload/pumphistory-to-delete.json"
         static let uploadedCarbs = "upload/uploaded-carbs.json"
+        static let carbsToDelete = "upload/carbs-to-delete.json"
         static let uploadedTempTargets = "upload/uploaded-temptargets.json"
         static let uploadedGlucose = "upload/uploaded-glucose.json"
+        static let glucoseToDelete = "upload/glucose-to-delete.json"
         static let uploadedCGMState = "upload/uploaded-cgm-state.json"
         static let uploadedPodAge = "upload/uploaded-pod-age.json"
         static let uploadedProfile = "upload/uploaded-profile.json"

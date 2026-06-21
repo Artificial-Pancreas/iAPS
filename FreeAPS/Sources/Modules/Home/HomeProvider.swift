@@ -28,13 +28,6 @@ extension Home {
             announcementStorage = resolver.resolve(AnnouncementsStorage.self)!
         }
 
-        // TODO: should not be reading from the file here, app coordinator needs to always contain the current value (including on boot)
-        var suggestion: Suggestion? {
-            get async {
-                await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-            }
-        }
-
         var dynamicVariables: DynamicVariables? {
             get async {
                 await storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
@@ -57,17 +50,6 @@ extension Home {
 
         func overrideHistory() async -> [OverrideHistory] {
             overrideStorage.fetchOverrideHistory(interval: DateFilter.day.startDate)
-        }
-
-        // TODO: should not be reading from the file here, app coordinator needs to always contain the current value (including on boot)
-        var enactedSuggestion: Suggestion? {
-            get async {
-                await storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
-            }
-        }
-
-        func iob() async throws -> Decimal? {
-            await apsManager.iobSync()
         }
 
         func reasons() async -> [IOBData]? {
@@ -109,7 +91,7 @@ extension Home {
 
         func pumpHistory(hours: Int) async -> [PumpHistoryEvent] {
             let now = Date()
-            return await pumpHistoryStorage.recent().filter {
+            return appCoordinator.pumpHistory.value.filter {
                 $0.timestamp.addingTimeInterval(hours.hours.timeInterval) > now
             }
         }

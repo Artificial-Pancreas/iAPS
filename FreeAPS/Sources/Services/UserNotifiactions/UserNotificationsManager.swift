@@ -84,11 +84,12 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         observe(appCoordinator.settings) { me, settings in
             await me.settingsUpdated(settings)
         }
-        observe(appCoordinator.glucoseHistoryUpdates) { me, glucose in
-            await me.glucoseUpdated(glucose)
+        observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
+            // TODO: use the provided glucose history instead of re-reading from storage
+            await me.sendGlucoseNotification()
         }
-        observe(appCoordinator.suggestions) { me, suggestion in
-            await me.suggestionUpdated(suggestion)
+        observe(appCoordinator.loopCompleted) { me, loopOutcome in
+            await me.loopCompleted(loopOutcome)
         }
         observe(appCoordinator.bolusFailures) { me, _ in
             await me.notifyBolusFailure()
@@ -112,12 +113,8 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         self.settings = settings
     }
 
-    private func glucoseUpdated(_: [BloodGlucose]) async {
-        await sendGlucoseNotification()
-    }
-
-    private func suggestionUpdated(_ suggestion: Suggestion) async {
-        guard let carndRequired = suggestion.carbsReq else { return }
+    private func loopCompleted(_ loopOutcome: LoopOutcome) async {
+        guard let carndRequired = loopOutcome.suggestion?.carbsReq else { return }
         await notifyCarbsRequired(Int(carndRequired))
     }
 

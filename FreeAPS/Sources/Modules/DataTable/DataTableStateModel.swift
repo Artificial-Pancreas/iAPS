@@ -46,25 +46,25 @@ extension DataTable {
             await setupTreatments()
             await setupGlucose()
 
-            observe(appCoordinator.settings) { me, _ in
+            observe(appCoordinator.settings.dropFirst()) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.preferences) { me, _ in
+            observe(appCoordinator.preferences.dropFirst()) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.pumpSettings) { me, _ in
+            observe(appCoordinator.pumpSettings.dropFirst()) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.pumpHistoryUpdates) { me, _ in
+            observe(appCoordinator.pumpHistory.dropFirst()) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.tempTargetsUpdates) { me, _ in
+            observe(appCoordinator.tempTargets.dropFirst()) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.carbHistoryUpdates) { me, _ in
+            observe(appCoordinator.carbHistory.dropFirst()) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
+            observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
                 await me.setupGlucose()
             }
         }
@@ -190,7 +190,7 @@ extension DataTable {
 
                 // In need of a loop update?
                 if treatment.creationDate.timeIntervalSinceNow > -2.hours.timeInterval {
-                    _ = await aps.determineBasal(temporaryCarbs: nil)
+                    _ = try? await aps.determineBasal(temporaryCarbs: nil)
                 }
             }
         }
@@ -321,7 +321,7 @@ extension DataTable {
                    (newCarbs.actualDate ?? .distantPast)
                    .timeIntervalSinceNow > -3.hours.timeInterval
                 {
-                    _ = await aps.determineBasal(temporaryCarbs: nil)
+                    _ = try? await aps.determineBasal(temporaryCarbs: nil)
                 }
             }
         }

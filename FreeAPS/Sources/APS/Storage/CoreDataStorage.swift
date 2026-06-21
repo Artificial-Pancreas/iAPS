@@ -33,7 +33,7 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func fetchInsulinData(interval: NSDate) async -> [IOBTick0] {
+    func fetchInsulinData(interval: NSDate) async -> [IOBEntryShort] {
         await coredataContext.perform {
             let requestTicks = InsulinActivity.fetchRequest()
             let sort = NSSortDescriptor(key: "date", ascending: true)
@@ -42,11 +42,11 @@ final class CoreDataStorage: Sendable {
                 format: "date > %@", interval
             )
             let fetchTicks = (try? self.coredataContext.fetch(requestTicks)) ?? []
-            let result = fetchTicks.compactMap { tick -> IOBTick0? in
+            let result = fetchTicks.compactMap { tick -> IOBEntryShort? in
                 guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
                     return nil
                 }
-                return IOBTick0(
+                return IOBEntryShort(
                     time: date,
                     iob: iob as Decimal,
                     activity: activity as Decimal
@@ -56,7 +56,7 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func fetchLatestInsulinData() async -> IOBTick0? {
+    func fetchLatestInsulinData() async -> IOBEntryShort? {
         await coredataContext.perform {
             let requestTicks = InsulinActivity.fetchRequest()
             let sort = NSSortDescriptor(key: "date", ascending: true)
@@ -64,11 +64,11 @@ final class CoreDataStorage: Sendable {
             requestTicks.fetchLimit = 1
             let fetchTicks = (try? self.coredataContext.fetch(requestTicks)) ?? []
 
-            return fetchTicks.firstNonNil { tick -> IOBTick0? in
+            return fetchTicks.firstNonNil { tick -> IOBEntryShort? in
                 guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
                     return nil
                 }
-                return IOBTick0(
+                return IOBEntryShort(
                     time: date,
                     iob: iob as Decimal,
                     activity: activity as Decimal
@@ -77,7 +77,7 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func saveInsulinData(iobEntries: [IOBTick0]) async -> Decimal? {
+    func saveInsulinData(iobEntries: [IOBEntry]) async -> Decimal? {
         guard let firstDate = iobEntries.compactMap(\.time).min() else { return nil }
         let iob = iobEntries[0].iob
 

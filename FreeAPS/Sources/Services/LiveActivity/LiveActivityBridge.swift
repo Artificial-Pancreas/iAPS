@@ -163,9 +163,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
     private var knownSettings: FreeAPSSettings?
 
     private var currentActivity: ActiveActivity?
-    private var suggestion: Suggestion?
-    private var enactedSuggestion: Suggestion?
-    private var iob: IOBTick0?
+    private var latestLoopOutcome: LoopOutcome?
 
     init(
         settingsManager: SettingsManager,
@@ -185,18 +183,15 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         let settings = appCoordinator.settings.value
         knownSettings = settings
 
-        suggestion = await storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
-        enactedSuggestion = await storage.retrieveFile(OpenAPS.Enact.enacted, as: Suggestion.self)
-        iob = await coreDataStorage.fetchLatestInsulinData()
+        latestLoopOutcome = appCoordinator.latestLoopOutcome.value
 
-        observe(appCoordinator.enactedSuggestions) { me, enactedSuggestion in
-            await me.newEnactedSuggestion(enactedSuggestion)
+        observe(appCoordinator.iobTicks) { me, iobTicks in
+            if let iobTicks {
+                await me.iobUpdated(iobTicks)
+            }
         }
-        observe(appCoordinator.suggestions) { me, suggestion in
-            await me.newSuggestion(suggestion)
-        }
-        observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
-            await me.pumpHistoryUpdated(pumpHistory)
+        observe(appCoordinator.loopCompleted) { me, loopOutcome in
+            await me.loopCompleted(loopOutcome)
         }
         observe(appCoordinator.settings) { me, newSettings in
             await me.settingsUpdated(newSettings)
@@ -224,18 +219,12 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         }.store(in: lifetime)
     }
 
-    private func newEnactedSuggestion(_ enactedSuggestion: Suggestion) async {
-        self.enactedSuggestion = enactedSuggestion
+    private func loopCompleted(_ outcome: LoopOutcome) async {
+        latestLoopOutcome = outcome
         await updateActivityContent()
     }
 
-    private func newSuggestion(_ suggestion: Suggestion) async {
-        self.suggestion = suggestion
-        await updateActivityContent()
-    }
-
-    private func pumpHistoryUpdated(_: [PumpHistoryEvent]) async {
-        iob = await coreDataStorage.fetchLatestInsulinData()
+    private func iobUpdated(_: [IOBEntry]) async {
         await updateActivityContent()
     }
 
@@ -287,29 +276,11 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
 
         // TODO: this check should be like this instead:
         // IF enactedSuggestion AND ((NOT suggestion) OR (suggestion is older than enactedSuggestion))
-        if let enactedSuggestion {
-            theSuggestion = enactedSuggestion
-            iobValue = enactedSuggestion.iob
-            if enactedSuggestion.recieved ?? false {
-                loopDate = enactedSuggestion.timestamp ?? .distantPast
-            } else {
-                loopDate = await coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
-            }
-        } else if let suggestion {
-            theSuggestion = suggestion
-            iobValue = suggestion.iob
-            if settings.closedLoop {
-                loopDate = await coreDataStorage.fetchLastLoop()?.timestamp ?? .distantPast
-            } else {
-                loopDate = suggestion.timestamp ?? .distantPast
-            }
-        } else {
-            return
-        }
 
-        if let iob, iobValue == nil || iob.time > loopDate {
-            iobValue = iob.iob
-        }
+        guard let suggestion = latestLoopOutcome?.suggestion, let timestamp = latestLoopOutcome?.timestamp else { return }
+        theSuggestion = suggestion
+        iobValue = appCoordinator.iobTicks.value?.first?.iob ?? suggestion.iob
+        loopDate = timestamp
 
         let glucose = await coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         guard let content = Self.buildContentState(
