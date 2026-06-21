@@ -57,19 +57,9 @@ extension OpenAPS {
     enum Monitor {
         static let pumpHistory = "monitor/pumphistory-24h-zoned.json"
 
-        // TODO: read from app coordinator
-//        static let reservoir = "monitor/reservoir.json"
-
-        // TODO: read from app coordinator
-//        static let battery = "monitor/battery.json"
-
         static let carbHistory = "monitor/carbhistory.json"
         static let clock = "monitor/clock-zoned.json"
 
-        // TODO: read from app coordinator (pump status)
-//        static let status = "monitor/status.json"
-
-        static let tempBasal = "monitor/temp_basal.json"
         static let meal = "monitor/meal.json"
         static let glucose = "monitor/glucose.json"
         static let iob = "monitor/iob.json"
@@ -82,12 +72,10 @@ extension OpenAPS {
 
     enum Enact {
         static let suggested = "enact/suggested.json"
-//        static let enacted = "enact/enacted.json"
         static let outcome = "enact/outcome.json"
     }
 
     enum Upload {
-//        static let nsStatus = "upload/ns-status.json"
         static let latestTreatments = "upload/latest-treatments.json"
         static let recentPumphistory = "upload/recent-pumphistory.json"
         static let recentSuggested = "monitor/recent-suggested.json"

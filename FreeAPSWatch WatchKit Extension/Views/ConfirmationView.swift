@@ -48,7 +48,7 @@ struct BlinkingView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ForEach(0 ..< Int(count)) { index in
+            ForEach(0 ..< Int(count), id: \.self) { index in
                 item(forIndex: index, in: geometry.size)
                     .frame(width: geometry.size.width, height: geometry.size.height)
             }

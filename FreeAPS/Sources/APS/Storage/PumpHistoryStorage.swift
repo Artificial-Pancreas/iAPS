@@ -46,6 +46,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
         }
     }
 
+    /// store events received from the pump manager
     func storePumpEvents(_ events: [NewPumpEvent]) async throws {
         // ensure no race conditions
         try await serializer.run { [self] in
@@ -58,18 +59,14 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                 switch event.type {
                 case .bolus:
                     guard let dose = event.dose else { return [] }
-                    var amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
-
-                    if insulinConcentration.concentration != 1, var needingAdjustment = amount {
-                        needingAdjustment *= Decimal(insulinConcentration.concentration)
-                        amount = needingAdjustment
-                            .roundBolusIncrements(increment: insulinConcentration.concentration * 0.05)
-                    }
+                    let amount = dose.unitsInDeliverableIncrementsAdjustedForConcentration(insulinConcentration.concentration)
 
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
                     if let duplicatedEvent = storedEvents
-                        .first(where: { x in
-                            Int(x.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970) && x.type == .bolus })
+                        .first(where: {
+                            $0.type == .bolus &&
+                                Int($0.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970)
+                        })
                     {
                         return [PumpHistoryEvent(
                             id: duplicatedEvent.id,
@@ -101,16 +98,10 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
-                    var rate = Decimal(dose.unitsPerHour)
+                    let rate = dose.unitsPerHourAdjustedForConcentration(insulinConcentration.concentration)
 
-                    // Eventual adjustment for concentration
-                    if insulinConcentration.concentration != 1, rate >= 0.05 {
-                        rate *= Decimal(insulinConcentration.concentration)
-                        rate = rate.roundBolusIncrements(increment: insulinConcentration.concentration * 0.05)
-                    }
-
-                    let minutes = (dose.endDate - dose.startDate).timeInterval / 60
-                    let delivered = dose.deliveredUnits
+                    let minutes = dose.endDate.timeIntervalSince(dose.startDate) / 60
+                    let delivered = dose.deliveredUnitsAdjustedForConcentration(insulinConcentration.concentration)
                     let date = event.date
 
                     let isCancel = delivered != nil //! event.isMutable && delivered != nil
