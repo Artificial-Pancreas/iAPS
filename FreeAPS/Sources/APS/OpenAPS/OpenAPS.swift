@@ -84,9 +84,9 @@ actor OpenAPS: Sendable {
         await storage.save(meal, as: Monitor.meal)
         await storage.save(iob, as: Monitor.iob)
 
-        if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
-            _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
-        }
+//        if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
+//            _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
+//        }
 
         print(
             "Time for Meal and IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
@@ -173,8 +173,6 @@ actor OpenAPS: Sendable {
             )
             // Update time
             suggestion.timestamp = suggestion.deliverAt ?? clock
-            // Save
-            await storage.save(suggestion, as: Enact.suggested)
 
             return suggestion
         } else {

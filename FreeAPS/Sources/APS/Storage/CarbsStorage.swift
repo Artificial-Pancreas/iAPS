@@ -9,7 +9,7 @@ protocol CarbsStorage: Sendable {
     func deleteCarbsAndFPUs(at date: Date) async
 }
 
-actor BaseCarbsStorage: CarbsStorage {
+actor BaseCarbsStorage: CarbsStorage, AppService {
     private let storage: FileStorage
     private let settingsManager: SettingsManager
     private let appCoordinator: AppCoordinator
@@ -22,6 +22,11 @@ actor BaseCarbsStorage: CarbsStorage {
         self.storage = storage
         self.settingsManager = settingsManager
         self.appCoordinator = appCoordinator
+    }
+
+    // this is called on app start
+    func start() async {
+        appCoordinator.setCarbHistory(await recent().reversed())
     }
 
     func storeCarbs(_ entries: [CarbsEntry]) async {
@@ -128,7 +133,7 @@ actor BaseCarbsStorage: CarbsStorage {
         }
 
         // newest -> oldest
-        appCoordinator.sendCarbHistoryUpdate(uniqEvents)
+        appCoordinator.setCarbHistory(uniqEvents)
     }
 
     func syncDate() -> Date {
@@ -141,10 +146,13 @@ actor BaseCarbsStorage: CarbsStorage {
     }
 
     func deleteCarbsAndFPUs(at date: Date) async {
-        let allValues = await storage.modify(file: OpenAPS.Monitor.carbHistory, as: CarbsEntry.self) {
-            $0.filter { $0.createdAt != date }
+        let (allValues, deleted) = await storage.delete(file: OpenAPS.Monitor.carbHistory, as: CarbsEntry.self) {
+            $0.createdAt == date
         }
         // newest -> oldest
-        appCoordinator.sendCarbHistoryUpdate(allValues)
+        if let deleted {
+            appCoordinator.setCarbHistory(allValues)
+            appCoordinator.sendCarbDeleted(deleted)
+        }
     }
 }

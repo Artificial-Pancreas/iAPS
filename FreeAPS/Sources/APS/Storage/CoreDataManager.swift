@@ -2,7 +2,8 @@ import CoreData
 import Foundation
 import Swinject
 
-final class CoreDataStorageGlucoseSaver: LifetimeOwner, AppService {
+final class CoreDataManager: LifetimeOwner, AppService {
+    private let coreDataStorage = CoreDataStorage()
     private let appCoordinator: AppCoordinator
 
     let lifetime = Lifetime()
@@ -15,6 +16,28 @@ final class CoreDataStorageGlucoseSaver: LifetimeOwner, AppService {
     func start() async {
         observe(appCoordinator.newGlucoseRecords) { me, bloodGlucose in
             await me.storeGlucose(bloodGlucose)
+        }
+        observe(appCoordinator.loopCompleted) { me, loopOutcome in
+            await me.loopCompleted(loopOutcome)
+        }
+    }
+
+    private func loopCompleted(_ loopOutcome: LoopOutcome) async {
+        if case .failed = loopOutcome { return }
+        guard let suggestion = loopOutcome.suggestion else {
+            return
+        }
+
+        // Save to CoreData also. TO DO: Remove the JSON saving after some testing.
+        let lastLoopIob = (suggestion.iob ?? 0) as NSDecimalNumber
+        let lastLoopCob = (suggestion.cob ?? 0) as NSDecimalNumber
+        let lastLoopTimestamp = suggestion.timestamp
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { coredataContext in
+            let saveLastLoop = LastLoop(context: coredataContext)
+            saveLastLoop.iob = lastLoopIob
+            saveLastLoop.cob = lastLoopCob
+            saveLastLoop.timestamp = lastLoopTimestamp
+            try? coredataContext.save()
         }
     }
 

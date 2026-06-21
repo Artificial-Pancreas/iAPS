@@ -30,8 +30,6 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     private var settings: FreeAPSSettings!
     private var preferences: Preferences!
     private var pumpSettings: PumpSettings!
-    private var suggestion: Suggestion!
-    private var enactedSuggestion: Suggestion!
 
     let lifetime = Lifetime()
 
@@ -64,47 +62,44 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.settings = await settingsManager.settings
         self.preferences = await settingsManager.preferences
         self.pumpSettings = await settingsManager.pumpSettings
-        self.suggestion = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-        self.enactedSuggestion = await storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+
         if WCSession.isSupported() {
             delegate.manager = self
             session.delegate = delegate
             session.activate()
         }
 
-        observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
+        observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
             await me.configureState()
         }
-        observe(appCoordinator.suggestions) { me, suggestion in
-            await me.suggestionUpdated(suggestion)
-            await me.configureState()
-        }
-        observe(appCoordinator.preferences) { me, preferences in
+        observe(appCoordinator.preferences.dropFirst()) { me, preferences in
             await me.preferencesUpdated(preferences)
             await me.configureState()
         }
-        observe(appCoordinator.settings) { me, settings in
+        observe(appCoordinator.settings.dropFirst()) { me, settings in
             await me.settingsUpdated(settings)
             await me.configureState()
         }
-//        observe(appCoordinator.pumpHistoryUpdates) { me, pumpHistory in
+//        observe(appCoordinator.pumpHistory) { me, pumpHistory in
 //            // TODO:
 //        }
-        observe(appCoordinator.pumpSettings) { me, pumpSettings in
+        observe(appCoordinator.pumpSettings.dropFirst()) { me, pumpSettings in
             await me.pumpSettingsUpdated(pumpSettings)
             await me.configureState()
         }
 //        observe(appCoordinator.basalProfileUpdates) { me, basalProfile in
 //            // TODO:
 //        }
-        observe(appCoordinator.tempTargetsUpdates) { me, _ in
+        observe(appCoordinator.tempTargets.dropFirst()) { me, _ in
             await me.configureState()
         }
 //        observe(appCoordinator.carbHistoryUpdates) { me, carbs in
 //            // TODO:
 //        }
-        observe(appCoordinator.enactedSuggestions) { me, enactedSuggestion in
-            await me.enactedSuggestionUpdated(enactedSuggestion)
+        observe(appCoordinator.iobTicks.dropFirst()) { me, _ in
+            await me.configureState()
+        }
+        observe(appCoordinator.loopCompleted) { me, _ in
             await me.configureState()
         }
 //        observe(appCoordinator.pumpStatus) { me, pumpStatus in
@@ -130,15 +125,9 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.pumpSettings = pumpSettings
     }
 
-    private func suggestionUpdated(_ suggestion: Suggestion) {
-        self.suggestion = suggestion
-    }
-
-    private func enactedSuggestionUpdated(_ enactedSuggestion: Suggestion) {
-        self.enactedSuggestion = enactedSuggestion
-    }
-
     private func configureState() async {
+        let suggestion = appCoordinator.latestLoopOutcome.value?.suggestion
+
         let reasons = await coreDataStorage.fetchReason()
 
         if let reason = reasons {
@@ -161,8 +150,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             guard $0.timeIntervalSince1970 > 0 else { return 0 }
             return UInt64($0.timeIntervalSince1970)
         }
-        self.state.lastLoopDate = enactedSuggestion?.recieved == true ? enactedSuggestion?.deliverAt : self
-            .appCoordinator.lastLoopDate.value
+        self.state.lastLoopDate = self.appCoordinator.lastLoopDate.value
         self.state.lastLoopDateInterval = self.state.lastLoopDate.map {
             guard $0.timeIntervalSince1970 > 0 else { return 0 }
             return UInt64($0.timeIntervalSince1970)
@@ -175,7 +163,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         let useNewCalc = settings.useCalc
         self.state.useNewCalc = useNewCalc
 
-        self.state.iob = suggestion?.iob
+        self.state.iob = appCoordinator.iobTicks.value?.first?.iob ?? suggestion?.iob
         self.state.cob = suggestion?.cob
         let currentTarget = await self.tempTargetsStorage.current()
         self.state.tempTargets = await self.tempTargetsStorage.presets()
@@ -550,11 +538,11 @@ private extension BaseWatchManager {
 
             if settings.skipBolusScreenAfterCarbs {
                 Task {
-                    _ = await apsManager.determineBasal(temporaryCarbs: nil)
+                    _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
                 }
                 return .confirmed
             } else {
-                _ = await apsManager.determineBasal(temporaryCarbs: nil)
+                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
                 return .confirmed
             }
         }

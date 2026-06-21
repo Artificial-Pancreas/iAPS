@@ -30,15 +30,19 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
 
     // this is called at the start of the app
     func start() async {
-        observe(appCoordinator.glucoseHistoryUpdates) { me, _ in
+        observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
             await me.setupGlucose()
         }
 
-        observe(appCoordinator.suggestions) { me, _ in
+        observe(appCoordinator.pumpHistory.dropFirst()) { me, _ in
             await me.setupGlucose()
         }
 
-        observe(appCoordinator.pumpHistoryUpdates) { me, _ in
+        observe(appCoordinator.iobTicks.dropFirst()) { me, _ in
+            await me.setupGlucose()
+        }
+
+        observe(appCoordinator.loopCompleted) { me, _ in
             await me.setupGlucose()
         }
 
@@ -137,7 +141,8 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
                     .string(from: (settings.units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
             } ?? "--"
 
-        let iobText = lastLoop != nil ? (Self.iobFormatter.string(from: (lastLoop?.iob ?? 0) as NSNumber) ?? "") : ""
+        let latestIOB = appCoordinator.iobTicks.value?.first?.iob
+        let iobText = lastLoop != nil ? (Self.iobFormatter.string(from: (latestIOB ?? lastLoop?.iob ?? 0) as NSNumber) ?? "") : ""
         let cobText = lastLoop != nil ? (Self.cobFormatter.string(from: (lastLoop?.cob ?? 0) as NSNumber) ?? "") : ""
 
         var glucoseDisplayText = displayEmojis ? glucoseIcon + " " : ""

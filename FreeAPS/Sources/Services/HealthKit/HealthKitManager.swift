@@ -76,10 +76,10 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
         guard isAvailableOnCurrentDevice,
               Config.healthBGObject != nil else { return }
 
-        observe(appCoordinator.carbHistoryUpdates) { me, carbs in
+        observe(appCoordinator.carbHistory.dropFirst()) { me, carbs in
             await me.saveIfNeeded(carbs: carbs)
         }
-        observe(appCoordinator.pumpHistoryUpdates) { me, events in
+        observe(appCoordinator.pumpHistory.dropFirst()) { me, events in
             await me.saveIfNeeded(pumpEvents: events)
         }
         observe(appCoordinator.newGlucoseRecords) { me, bloodGlucose in

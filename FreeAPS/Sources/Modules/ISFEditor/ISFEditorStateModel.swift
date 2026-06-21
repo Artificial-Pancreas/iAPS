@@ -37,7 +37,7 @@ extension ISFEditor {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() async {
-            suggestion = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+            suggestion = appCoordinator.suggested.value
 
             await fetchSensitivity()
 
@@ -62,7 +62,7 @@ extension ISFEditor {
 
             autosensRatio = autosens.ratio
 
-            observe(appCoordinator.suggestions) { me, suggestion in
+            observe(appCoordinator.suggested) { me, suggestion in
                 await me.suggestionUpdated(suggestion)
             }
         }

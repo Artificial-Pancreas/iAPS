@@ -21,7 +21,7 @@ protocol GlucoseStorage: Sendable {
     func getAlarm() async -> GlucoseAlarm?
 }
 
-actor BaseGlucoseStorage: GlucoseStorage {
+actor BaseGlucoseStorage: GlucoseStorage, AppService {
     private let storage: FileStorage
     private let settingsManager: SettingsManager
     private let appCoordinator: AppCoordinator
@@ -39,6 +39,12 @@ actor BaseGlucoseStorage: GlucoseStorage {
         self.storage = storage
         self.settingsManager = settingsManager
         self.appCoordinator = appCoordinator
+    }
+
+    // this is called at the start of the app
+    func start() async {
+        // TODO: file is stored newest -> oldest, retrieveRaw reverses it, we reverse again to get back to newest -> oldest
+        appCoordinator.setGlucoseHistory(await retrieveRaw().reversed())
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose] {
@@ -61,7 +67,6 @@ actor BaseGlucoseStorage: GlucoseStorage {
 
         // TODO: temporary until further storage refactoring
         let appended = BaseFileStorage.doAppend(newRecords, existingValues: existing, uniqBy: \.dateString)
-//        storage.append(newRecords, to: file, uniqBy: \.dateString)
 
         let now = Date()
         let uniqEvents = appended
@@ -81,7 +86,7 @@ actor BaseGlucoseStorage: GlucoseStorage {
         stored = newGlucoseData
 
         // newest -> oldest
-        appCoordinator.sendGlucoseHistoryUpdate(newGlucoseData)
+        appCoordinator.setGlucoseHistory(newGlucoseData)
 
         appCoordinator.newGlucoseRecords.send(newRecords)
 
@@ -90,16 +95,13 @@ actor BaseGlucoseStorage: GlucoseStorage {
 
     func removeGlucose(ids: [String]) async {
         let file = OpenAPS.Monitor.glucose
-        let (didModify, bgInStorage) = await self.storage.maybeModify(file: file, as: BloodGlucose.self) { bgInStorage in
-            let filteredBG = bgInStorage.filter { !ids.contains($0.id) }
-            guard bgInStorage != filteredBG else {
-                return nil // do not modify
-            }
-            return filteredBG
+        let (bgInStorage, deleted) = await self.storage.delete(file: file, as: BloodGlucose.self) {
+            ids.contains($0.id)
         }
-        if didModify {
+        if let deleted {
             // newest -> oldest
-            appCoordinator.sendGlucoseHistoryUpdate(bgInStorage)
+            appCoordinator.setGlucoseHistory(bgInStorage)
+            appCoordinator.sendGlucoseDeleted(deleted)
         }
     }
 

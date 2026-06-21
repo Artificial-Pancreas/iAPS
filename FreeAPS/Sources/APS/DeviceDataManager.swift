@@ -754,6 +754,19 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         appCoordinator.sendDeviceError(error)
     }
 
+    private struct PumpEventCompletion: @unchecked Sendable {
+        private let completion: ((any Error)?) -> Void
+        private let processQueue: DispatchQueue
+        init(_ completion: @escaping ((any Error)?) -> Void, processQueue: DispatchQueue) {
+            self.completion = completion
+            self.processQueue = processQueue
+        }
+
+        func callAsFunction(_ error: (any Error)?) {
+            processQueue.async { completion(error) }
+        }
+    }
+
     func pumpManager(
         _: any LoopKit.PumpManager,
         hasNewPumpEvents events: [LoopKit.NewPumpEvent],
@@ -773,11 +786,15 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             UserDefaults.standard.removeObject(forKey: lastEventDateKey)
         }
 
-        appCoordinator.sendPumpEvents(events)
-        // PumpHistoryStorage subscribes to appCoordinator.pumpEvents
-//        await pumpHistoryStorage.storePumpEvents(events)
-
-        completion(nil)
+        let safeCompletion = PumpEventCompletion(completion, processQueue: processQueue)
+        Task { [pumpHistoryStorage] in
+            do {
+                try await pumpHistoryStorage.storePumpEvents(events)
+                safeCompletion(nil)
+            } catch {
+                safeCompletion(error)
+            }
+        }
     }
 
     func pumpManager(

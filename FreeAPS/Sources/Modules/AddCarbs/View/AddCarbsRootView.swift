@@ -190,7 +190,7 @@ extension AddCarbs {
                 state.hideModal()
                 if editMode {
                     Task {
-                        _ = await state.apsManager.determineBasal(temporaryCarbs: nil)
+                        _ = try? await state.apsManager.determineBasal(temporaryCarbs: nil)
                     }
                 }
             }
@@ -1097,7 +1097,7 @@ extension AddCarbs {
             state.hideModal()
             if editMode {
                 Task {
-                    _ = await state.apsManager.determineBasal(temporaryCarbs: nil)
+                    _ = try? await state.apsManager.determineBasal(temporaryCarbs: nil)
                 }
             }
         }

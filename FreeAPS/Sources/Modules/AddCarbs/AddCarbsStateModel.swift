@@ -41,8 +41,8 @@ extension AddCarbs {
         let coredataContextBackground = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
         override func subscribe() async {
-            carbsRequired = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)?.carbsReq
-            let settings = await settingsManager.settings
+            carbsRequired = appCoordinator.suggested.value?.carbsReq
+            let settings = appCoordinator.settings.value
             id = settings.profileID
             maxCarbs = settings.maxCarbs
             skipBolus = settings.skipBolusScreenAfterCarbs
@@ -147,7 +147,7 @@ extension AddCarbs {
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
                 saveToCoreData(carbsToStore, savedToFile: true)
                 await carbsStorage.storeCarbs(carbsToStore)
-                _ = await apsManager.determineBasal(temporaryCarbs: nil)
+                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
                 showModal(for: nil)
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore, savedToFile: false)
@@ -155,7 +155,7 @@ extension AddCarbs {
             } else if !empty {
                 saveToCoreData(carbsToStore, savedToFile: true)
                 await carbsStorage.storeCarbs(carbsToStore)
-                _ = await apsManager.determineBasal(temporaryCarbs: nil)
+                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
                 showModal(for: nil)
             } else {
                 hideModal()

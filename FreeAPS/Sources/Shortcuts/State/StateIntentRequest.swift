@@ -83,7 +83,7 @@ final class StateIntentRequest: BaseIntentsRequest {
     }
 
     func getIOB_COB() async throws -> (iob: Double, cob: Double) {
-        let suggestion = await fileStorage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+        let suggestion = appCoordinator.suggested.value
         let iob = suggestion?.iob ?? 0.0
         let cob = suggestion?.cob ?? 0.0
         let iob_double = Double(truncating: iob as NSNumber)

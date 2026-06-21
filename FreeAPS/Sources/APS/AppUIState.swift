@@ -23,7 +23,8 @@ import Observation
     private(set) var bolusAmount: Decimal?
     private(set) var bolusInProgress: Bool = false
     private(set) var alertNotAck: Bool = false
-    private(set) var lastLoopError: (error: Error, date: Date)?
+    private(set) var lastLoopError: (error: String, date: Date)?
+    private(set) var latestIOB: Decimal?
 
     private(set) var lightMode = LightMode.auto
     private(set) var liveActivitiesSystemEnabled: Bool = false
@@ -62,6 +63,7 @@ import Observation
         bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAck)
         bind(appCoordinator.liveActivitiesSystemEnabled, to: \.liveActivitiesSystemEnabled)
         bind(appCoordinator.settings.map(\.lightMode).removeDuplicates(), to: \.lightMode)
+        bind(appCoordinator.iobTicks.map(\.?.first?.iob).removeDuplicates(), to: \.latestIOB)
     }
 
     private func bind<V>(

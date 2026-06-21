@@ -11,7 +11,7 @@ protocol TempTargetsStorage: Sendable {
     func current() async -> TempTarget?
 }
 
-actor BaseTempTargetsStorage: TempTargetsStorage {
+actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
 
@@ -21,6 +21,12 @@ actor BaseTempTargetsStorage: TempTargetsStorage {
     ) {
         self.storage = storage
         self.appCoordinator = appCoordinator
+    }
+
+    // this is called on app start
+    func start() async {
+        // newest->oldest
+        appCoordinator.setTempTargets(await recent().reversed())
     }
 
     func storeTempTargets(_ targets: [TempTarget]) async {
@@ -49,14 +55,16 @@ actor BaseTempTargetsStorage: TempTargetsStorage {
                 .sorted { $0.createdAt > $1.createdAt }
         }
         // newest->oldest
-        appCoordinator.sendTempTargetsUpdate(uniqEvents)
+        appCoordinator.setTempTargets(uniqEvents)
     }
 
     func syncDate() -> Date {
         Date().addingTimeInterval(-1.days.timeInterval)
     }
 
+    /// oldest->newest
     func recent() async -> [TempTarget] {
+        // TODO: why reversed here?
         await storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self)?.reversed() ?? []
     }
 

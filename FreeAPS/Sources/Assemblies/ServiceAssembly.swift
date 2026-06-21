@@ -99,6 +99,6 @@ final class ServiceAssembly: Assembly {
                 appCoordinator: appCoordinator
             )
         }
-        container.register(CoreDataStorageGlucoseSaver.self) { r in CoreDataStorageGlucoseSaver(resolver: r) }
+        container.register(CoreDataManager.self) { r in CoreDataManager(resolver: r) }
     }
 }

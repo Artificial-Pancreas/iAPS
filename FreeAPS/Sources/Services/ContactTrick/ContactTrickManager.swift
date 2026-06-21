@@ -41,13 +41,16 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
 
         knownIds = contacts.compactMap(\.contactId)
 
-        observe(appCoordinator.settings) { me, _ in
+        observe(appCoordinator.settings.dropFirst()) { me, _ in
             await me.renderContacts(forceSave: false)
         }
-        observe(appCoordinator.preferences) { me, _ in
+        observe(appCoordinator.preferences.dropFirst()) { me, _ in
             await me.renderContacts(forceSave: false)
         }
-        observe(appCoordinator.suggestions) { me, _ in
+        observe(appCoordinator.loopCompleted) { me, _ in
+            await me.renderContacts(forceSave: false)
+        }
+        observe(appCoordinator.iobTicks.dropFirst()) { me, _ in
             await me.renderContacts(forceSave: false)
         }
 
@@ -78,38 +81,41 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
         let settings = appCoordinator.settings.value
         let preferences = appCoordinator.preferences.value
 
-        if contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            let readings = await coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
-            let glucoseValues = glucoseText(readings, settings: settings)
-
-            let suggestion: Suggestion? = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-
-            let state = ContactTrickState(
-                glucose: glucoseValues.glucose,
-                trend: glucoseValues.trend,
-                delta: glucoseValues.delta,
-                lastLoopDate: suggestion?.timestamp,
-                iob: suggestion?.iob,
-                iobText: suggestion?.iob.map { iob in
-                    Self.iobFormatter.string(from: iob as NSNumber)!
-                },
-                cob: suggestion?.cob,
-                cobText: suggestion?.cob.map { cob in
-                    Self.cobFormatter.string(from: cob as NSNumber)!
-                },
-                eventualBG: eventualBGString(suggestion, settings: settings),
-                maxIOB: preferences.maxIOB,
-                maxCOB: preferences.maxCOB
-            )
-
-            let newContacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
-
-            if forceSave || newContacts != contacts {
-                // when we create new contacts we store the IDs, in that case we need to write into the settings storage
-                await storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
-            }
-            contacts = newContacts
+        guard contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized else {
+            return
         }
+
+        let suggestion = appCoordinator.latestLoopOutcome.value?.suggestion
+
+        let readings = await coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
+        let glucoseValues = glucoseText(readings, settings: settings)
+
+        let iob = appCoordinator.iobTicks.value?.first?.iob ?? suggestion?.iob
+        let state = ContactTrickState(
+            glucose: glucoseValues.glucose,
+            trend: glucoseValues.trend,
+            delta: glucoseValues.delta,
+            lastLoopDate: appCoordinator.lastLoopDate.value,
+            iob: iob,
+            iobText: iob.map { iob in
+                Self.iobFormatter.string(from: iob as NSNumber)!
+            },
+            cob: suggestion?.cob,
+            cobText: suggestion?.cob.map { cob in
+                Self.cobFormatter.string(from: cob as NSNumber)!
+            },
+            eventualBG: eventualBGString(suggestion, settings: settings),
+            maxIOB: preferences.maxIOB,
+            maxCOB: preferences.maxCOB
+        )
+
+        let newContacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
+
+        if forceSave || newContacts != contacts {
+            // when we create new contacts we store the IDs, in that case we need to write into the settings storage
+            await storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
+        }
+        contacts = newContacts
 
         staleRenderTask = Task {
             try? await Task.sleep(for: .seconds(5 * 60 + 15))

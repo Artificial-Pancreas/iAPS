@@ -60,14 +60,6 @@ extension Predictions {
     }
 }
 
-// protocol SuggestionObserver {
-//    func suggestionDidUpdate(_ suggestion: Suggestion)
-// }
-
-// protocol EnactedSuggestionObserver {
-//    func enactedSuggestionDidUpdate(_ suggestion: Suggestion)
-// }
-
 extension Suggestion {
     var reasonParts: [String] {
         reason.components(separatedBy: "; ").first?.components(separatedBy: ", ") ?? []
