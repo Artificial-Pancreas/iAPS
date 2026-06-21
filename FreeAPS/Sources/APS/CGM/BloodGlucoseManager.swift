@@ -36,27 +36,43 @@ final class BloodGlucoseManager: Sendable {
         }
 
         let previousLatestBG = await glucoseStorage.latestDate()
-        let storedGlucose = await glucoseStorage.storeGlucose(glucose)
-        let updatedLatestBG = storedGlucose.first?.dateString
 
-        var newGlucoseStored = false
-        if let previousLatestBG, let updatedLatestBG {
-            newGlucoseStored = updatedLatestBG > previousLatestBG
-        } else {
-            newGlucoseStored = previousLatestBG == nil && updatedLatestBG != nil
-        }
+        // glucoseStorage.storeGlucose returns nil when no new records were recorded (empty or duplicates)
+        // TODO: this call can also return previousLatestBG, so we update and get all data "atomically"
+        if let storedGlucose = await glucoseStorage.storeGlucose(glucose) {
+            let updatedLatestBG = storedGlucose.first?.dateString
 
-        if newGlucoseStored {
-            debug(.deviceManager, "New glucose found")
-        }
-
-        // end of the BG tasks
-        await MainActor.run {
-            if backgroundTaskIdBox.id != .invalid {
-                UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
+            var newGlucoseStored = false
+            if let previousLatestBG, let updatedLatestBG {
+                newGlucoseStored = updatedLatestBG > previousLatestBG
+            } else {
+                newGlucoseStored = previousLatestBG == nil && updatedLatestBG != nil
             }
-        }
 
-        return newGlucoseStored
+            if newGlucoseStored {
+                debug(.deviceManager, "New glucose found")
+            }
+
+            // TODO: extract background tasks into a helper
+            // end of the BG tasks
+            await MainActor.run {
+                if backgroundTaskIdBox.id != .invalid {
+                    UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
+                }
+            }
+
+            return newGlucoseStored
+
+        } else {
+            // TODO: extract background tasks into a helper
+            // end of the BG tasks
+            await MainActor.run {
+                if backgroundTaskIdBox.id != .invalid {
+                    UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
+                }
+            }
+
+            return false
+        }
     }
 }
