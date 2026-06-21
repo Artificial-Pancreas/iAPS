@@ -35,6 +35,7 @@ protocol APSManager: Sendable {
 enum APSError: LocalizedError {
     case pumpError(Error)
     case invalidPumpState(message: String)
+    case pumpNotConfigured
     case bolusInProgress(message: String)
     case glucoseError(message: String)
     case apsError(message: String)
@@ -50,6 +51,8 @@ enum APSError: LocalizedError {
             return "Pump error: \(error.localizedDescription)"
         case let .invalidPumpState(message):
             return "Error: Invalid Pump State: \(message)"
+        case .pumpNotConfigured:
+            return "Pump not configured"
         case let .bolusInProgress(message):
             return "\(NSLocalizedString("Pump is Busy.", comment: "Pump Error")) \(NSLocalizedString(message, comment: "Pump Error Message"))"
         case let .glucoseError(message):
@@ -391,7 +394,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             let preferences = appCoordinator.preferences.value
 
             let now = Date()
-            let temp = await currentTemp(date: now)
+            let temp = try await currentTemp()
 
             if temp.duration == 0,
                settings.closedLoop,
@@ -465,18 +468,19 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         let concentration = await self.concentration
         do {
-            let roundedAmout = try deviceDataManager.roundToSupportedBolusVolume(units: amount / concentration.concentration)
-            let standardInsulinAmount = try deviceDataManager.roundToSupportedBolusVolume(units: amount)
+            debug(.apsManager, "Enact bolus \(amount), manual \(!isSMB)")
 
-            debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
-
-            try await deviceDataManager.enactBolus(units: roundedAmout, automatic: isSMB)
+            let enactedAmount = try await deviceDataManager.enactBolus(
+                units: Decimal(amount),
+                automatic: isSMB,
+                concentration: concentration.concentration
+            )
             debug(.apsManager, "Bolus succeeded")
             if !isSMB {
                 _ = try? await self.determineBasal(temporaryCarbs: nil)
             }
-            appCoordinator.setBolusProgress(0) // TODO: should it be nil?
-            appCoordinator.setBolusAmount(Decimal(standardInsulinAmount))
+            appCoordinator.setBolusProgress(0)
+            appCoordinator.setBolusAmount(enactedAmount)
         } catch {
             warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
             processError(APSError.pumpError(error))
@@ -493,7 +497,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
             guard pumpStatus.isBolusing else { return }
             debug(.apsManager, "Cancel bolus")
-            _ = try await deviceDataManager.cancelBolus()
+            try await deviceDataManager.cancelBolus()
             debug(.apsManager, "Bolus cancelled")
         } catch {
             debug(.apsManager, "Bolus cancellation failed with error: \(error.localizedDescription)")
@@ -524,20 +528,14 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         let concentration = await self.concentration
 
         do {
-            let roundedAmout = try deviceDataManager.roundToSupportedBasalRate(unitsPerHour: rate)
-            let adjusted = try deviceDataManager.roundToSupportedBasalRate(unitsPerHour: rate * concentration.concentration)
-
-            try await deviceDataManager.enactTempBasal(unitsPerHour: roundedAmout, for: duration)
-            debug(.apsManager, "Temp Basal succeeded")
-            let temp = TempBasal(
-                duration: Int(duration / 60),
-                rate: Decimal(adjusted),
-                temp: .absolute,
-                timestamp: Date()
+            try await deviceDataManager.enactTempBasal(
+                unitsPerHour: Decimal(rate),
+                for: duration,
+                concentration: concentration.concentration
             )
-            await self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
+
             if rate == 0, duration == 0 {
-                // TODO: should this be here?
+                // TODO: should this be here/is this needed?
                 await self.pumpHistoryStorage.saveCancelTempEvents()
             }
         } catch {
@@ -591,16 +589,18 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
 
             do {
-                let roundedAmount = try deviceDataManager
-                    .roundToSupportedBolusVolume(units: Double(amount) / insulinConcentration.concentration)
-                try await deviceDataManager.enactBolus(units: roundedAmount, automatic: false)
+                let enactedAmount = try await deviceDataManager.enactBolus(
+                    units: amount,
+                    automatic: false,
+                    concentration: insulinConcentration.concentration
+                )
                 debug(
                     .apsManager,
                     "Announcement Bolus succeeded."
                 )
                 await self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 appCoordinator.setBolusProgress(0)
-                appCoordinator.setBolusAmount(amount.roundBolusIncrements(increment: insulinConcentration.concentration / 0.05))
+                appCoordinator.setBolusAmount(enactedAmount)
             } catch {
                 // warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                 switch error {
@@ -674,9 +674,11 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
 
             do {
-                let roundedRate = try deviceDataManager
-                    .roundToSupportedBasalRate(unitsPerHour: Double(rate) / insulinConcentration.concentration)
-                try await deviceDataManager.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration) * 60)
+                try await deviceDataManager.enactTempBasal(
+                    unitsPerHour: rate,
+                    for: TimeInterval(duration) * 60,
+                    concentration: insulinConcentration.concentration
+                )
                 debug(.apsManager, "Announcement TempBasal succeeded.")
                 await self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
             } catch {
@@ -756,40 +758,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
     }
 
-    private func adjustForConcentration(_ rate: Decimal) async -> Decimal {
-        guard rate > 0 else { return rate }
-        let setting = await self.concentration
-        guard setting.concentration != 1 else { return rate }
-
-        return (rate * Decimal(setting.concentration)).roundBolusIncrements(increment: setting.increment)
-    }
-
-    private func currentTemp(date: Date) async -> TempBasal {
-        func defaultTemp() async -> TempBasal {
-            guard let temp = await storage.retrieve(OpenAPS.Monitor.tempBasal, as: TempBasal.self) else {
-                return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: Date())
-            }
-            let delta = Int((date.timeIntervalSince1970 - temp.timestamp.timeIntervalSince1970) / 60)
-            let duration = max(0, temp.duration - delta)
-            return TempBasal(duration: duration, rate: temp.rate, temp: .absolute, timestamp: date)
-        }
-
-        do {
-            // pumpManager?.status.basalDeliveryState
-            let state = try deviceDataManager.pumpManagerStatus().basalDeliveryState
-            switch state {
-            case .active:
-                return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: date)
-            case let .tempBasal(dose):
-                let rate = await adjustForConcentration(Decimal(dose.unitsPerHour))
-                let durationMin = max(0, Int((dose.endDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60))
-                return TempBasal(duration: durationMin, rate: rate, temp: .absolute, timestamp: date)
-            default:
-                return await defaultTemp()
-            }
-        } catch {
-            return await defaultTemp()
-        }
+    private func currentTemp() async throws -> TempBasal {
+        let concentration = await self.concentration
+        return try deviceDataManager.currentTempBasal(concentration: concentration.concentration)
     }
 
     private func enactSuggested(suggested: Suggestion) async throws {
@@ -824,11 +795,10 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 }
 
                 try await deviceDataManager.enactTempBasal(
-                    unitsPerHour: Double(rate) / insulinSetting.concentration,
-                    for: TimeInterval(duration * 60)
+                    unitsPerHour: rate,
+                    for: TimeInterval(duration * 60),
+                    concentration: insulinSetting.concentration
                 )
-                let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
-                await self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
             }
 
             func doBolus() async throws {
@@ -846,9 +816,13 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                     throw error
                 }
 
-                try await deviceDataManager.enactBolus(units: Double(units) / insulinSetting.concentration, automatic: true)
+                let enactedAmount = try await deviceDataManager.enactBolus(
+                    units: units,
+                    automatic: true,
+                    concentration: insulinSetting.concentration
+                )
                 appCoordinator.setBolusProgress(0)
-                appCoordinator.setBolusAmount(units)
+                appCoordinator.setBolusAmount(enactedAmount)
             }
 
             try await doBasal()

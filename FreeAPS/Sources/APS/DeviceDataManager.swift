@@ -37,11 +37,11 @@ protocol DeviceDataManager: Sendable {
     @MainActor func cgmManagerSettingsView() -> CGMManagerViewController?
     @MainActor func pumpManagerSettingsView() -> PumpManagerViewController?
 
-    func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval) async throws
+    func enactTempBasal(unitsPerHour: Decimal, for duration: TimeInterval, concentration: Double) async throws
 
-    func enactBolus(units: Double, automatic: Bool) async throws
+    func enactBolus(units: Decimal, automatic: Bool, concentration: Double) async throws -> Decimal
 
-    func cancelBolus() async throws -> DoseEntry?
+    func cancelBolus() async throws
 
     func suspendDelivery() async throws
 
@@ -52,11 +52,9 @@ protocol DeviceDataManager: Sendable {
 
     func roundBolus(amount: Decimal, maxBolus: Decimal) -> Decimal
 
-    func roundToSupportedBolusVolume(units: Double) throws -> Double
-
     func roundToSupportedBasalRate(unitsPerHour: Double) throws -> Double
 
-    func pumpManagerStatus() throws -> PumpManagerStatus
+    func currentTempBasal(concentration: Double) throws -> TempBasal
 
     func createBolusProgressReporter(reportingOn dispatchQueue: DispatchQueue) throws -> DoseProgressReporter?
 
@@ -1188,53 +1186,72 @@ private extension BaseDeviceDataManager {
 }
 
 extension BaseDeviceDataManager {
-    func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval) async throws {
+    func enactTempBasal(unitsPerHour: Decimal, for duration: TimeInterval, concentration: Double) async throws {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
         return try await withCheckedThrowingContinuation { continuation in
-            pump.enactTempBasal(unitsPerHour: unitsPerHour, for: duration) { error in
+            let unitsPerHourAdjustedForConcentration = DoseEntry.toDeviceUnits(unitsPerHour, concentration: concentration)
+            let unitsPerHourAdjustedForConcentrationAndRounded = pump
+                .roundToSupportedBasalRate(unitsPerHour: unitsPerHourAdjustedForConcentration)
+
+            pump.enactTempBasal(unitsPerHour: unitsPerHourAdjustedForConcentrationAndRounded, for: duration) { error in
                 if let error = error {
-                    debug(.apsManager, "Temp basal failed: \(unitsPerHour) for: \(duration)")
+                    debug(
+                        .apsManager,
+                        "Temp basal failed: \(unitsPerHour) (adjusted: \(unitsPerHourAdjustedForConcentrationAndRounded)) for: \(duration) - \(error.localizedDescription)"
+                    )
                     continuation.resume(throwing: APSError.pumpError(error))
                 } else {
-                    debug(.apsManager, "Temp basal succeeded: \(unitsPerHour) for: \(duration)")
+                    debug(
+                        .apsManager,
+                        "Temp basal succeeded: \(unitsPerHour) (adjusted: \(unitsPerHourAdjustedForConcentrationAndRounded)) for: \(duration)"
+                    )
                     continuation.resume()
                 }
             }
         }
     }
 
-    func enactBolus(units: Double, automatic: Bool) async throws {
+    func enactBolus(units: Decimal, automatic: Bool, concentration: Double) async throws -> Decimal {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
         return try await withCheckedThrowingContinuation { continuation in
             // convert automatic
             let automaticValue = automatic ? BolusActivationType.automatic : BolusActivationType.manualRecommendationAccepted
 
-            pump.enactBolus(units: units, activationType: automaticValue) { error in
+            let unitsAdjustedForConcentration = DoseEntry.toDeviceUnits(units, concentration: concentration)
+            let unitsAdjustedForConcentrationAndRounded = pump.roundToSupportedBolusVolume(units: unitsAdjustedForConcentration)
+            pump.enactBolus(units: unitsAdjustedForConcentrationAndRounded, activationType: automaticValue) { error in
                 if let error = error {
-                    debug(.apsManager, "Bolus failed: \(units)")
+                    debug(
+                        .apsManager,
+                        "Bolus failed: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded)) - \(error.localizedDescription)"
+                    )
                     continuation.resume(throwing: APSError.pumpError(error))
                 } else {
-                    debug(.apsManager, "Bolus succeeded: \(units)")
-                    continuation.resume()
+                    debug(.apsManager, "Bolus succeeded: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded))")
+                    continuation
+                        .resume(
+                            returning: DoseEntry
+                                .fromDeviceUnits(unitsAdjustedForConcentrationAndRounded, concentration: concentration)
+                        )
                 }
             }
         }
     }
 
-    func cancelBolus() async throws -> DoseEntry? {
+    func cancelBolus() async throws {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
         return try await withCheckedThrowingContinuation { continuation in
             pump.cancelBolus { result in
                 switch result {
-                case let .success(dose):
+                case .success:
                     debug(.apsManager, "Cancel Bolus succeeded")
-                    continuation.resume(returning: dose)
+                    continuation.resume()
                 case let .failure(error):
                     debug(.apsManager, "Cancel Bolus failed")
                     continuation.resume(throwing: APSError.pumpError(error))
@@ -1245,7 +1262,7 @@ extension BaseDeviceDataManager {
 
     func suspendDelivery() async throws {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
         return try await withCheckedThrowingContinuation { continuation in
             pump.suspendDelivery { error in
@@ -1260,7 +1277,7 @@ extension BaseDeviceDataManager {
 
     func resumeDelivery() async throws {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
         return try await withCheckedThrowingContinuation { continuation in
             pump.resumeDelivery { error in
@@ -1273,13 +1290,6 @@ extension BaseDeviceDataManager {
         }
     }
 
-//    func pumpStatus() throws -> PumpStatus {
-//        guard let pump = pumpManager else {
-//            throw APSError.invalidPumpState(message: "Pump not configured")
-//        }
-//        return pump.status.pumpStatus
-//    }
-
     func roundBolus(amount: Decimal, maxBolus: Decimal) -> Decimal {
         guard let pump = pumpManager else { return amount }
         let rounded = Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
@@ -1287,31 +1297,40 @@ extension BaseDeviceDataManager {
         return min(rounded, maxBolus)
     }
 
-    func roundToSupportedBolusVolume(units: Double) throws -> Double {
-        guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
-        }
-
-        return pump.roundToSupportedBolusVolume(units: units)
-    }
-
     func roundToSupportedBasalRate(unitsPerHour: Double) throws -> Double {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
         return pump.roundToSupportedBasalRate(unitsPerHour: unitsPerHour)
     }
 
-    func pumpManagerStatus() throws -> PumpManagerStatus {
+    func currentTempBasal(concentration: Double) throws -> TempBasal {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
-        return pump.status
+        guard let basalDeliveryState = pump.status.basalDeliveryState else {
+            throw APSError.invalidPumpState(message: "Basal delivery state is unavailable")
+        }
+
+        let now = Date.now
+
+        switch basalDeliveryState {
+        case .active:
+            return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: now)
+        case .suspended:
+            return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: now)
+        case let .tempBasal(dose):
+            let rate = dose.unitsPerHourAdjustedForConcentration(concentration)
+            let durationMin = max(0, Int(dose.endDate.timeIntervalSince(now) / 60))
+            return TempBasal(duration: durationMin, rate: rate, temp: .absolute, timestamp: now)
+        default:
+            throw APSError.invalidPumpState(message: "Invalid basal delivery state: \(String(describing: basalDeliveryState))")
+        }
     }
 
     func createBolusProgressReporter(reportingOn dispatchQueue: DispatchQueue) throws -> DoseProgressReporter? {
         guard let pump = pumpManager else {
-            throw APSError.invalidPumpState(message: "Pump not configured")
+            throw APSError.pumpNotConfigured
         }
         return pump.createBolusProgressReporter(reportingOn: dispatchQueue)
     }

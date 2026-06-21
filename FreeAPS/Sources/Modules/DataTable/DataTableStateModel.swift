@@ -232,6 +232,7 @@ extension DataTable {
                 )
                 _ = await glucoseStorage.storeGlucose([saveToJSON])
                 debug(.default, "Manual Glucose saved to glucose.json")
+                // TODO: this does nothing
                 // Save to Health
                 var saveToHealth = [BloodGlucose]()
                 saveToHealth.append(saveToJSON)

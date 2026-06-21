@@ -150,13 +150,6 @@ extension Decimal {
     var asMgdL: Decimal {
         self / GlucoseUnits.exchangeRate
     }
-
-    func rounded(to scale: Int, roundingMode: NSDecimalNumber.RoundingMode = .bankers) -> Decimal {
-        var result = Decimal()
-        var localCopy = self
-        NSDecimalRound(&result, &localCopy, scale, roundingMode)
-        return result
-    }
 }
 
 extension Double {

@@ -147,8 +147,6 @@ extension Settings {
                                     .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                                 Text("Pump History")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
-                                Text("Temp Basals")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
                                 Text("Basal profile")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
                                 Text("Targets ranges")

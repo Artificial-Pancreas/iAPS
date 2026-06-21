@@ -45,7 +45,6 @@ actor OpenAPS: Sendable {
         debug(.openAPS, "Start determineBasal")
         await storage.save(clock, as: Monitor.clock)
         let tempBasal = currentTemp.rawJSON
-        await storage.save(tempBasal, as: Monitor.tempBasal)
 
         let pumpHistory = await self.pumpHistory()
         let carbs = await carbHistory()
