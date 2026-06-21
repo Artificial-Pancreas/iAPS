@@ -6,7 +6,8 @@ import SwiftUI
 import Swinject
 
 protocol GlucoseStorage: Sendable {
-    func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]
+    /// returns nil when no new records were recorded
+    func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]?
     func removeGlucose(ids: [String]) async
     /// retrieves raw glucose from storage - no smoothing
     func retrieveRaw() async -> [BloodGlucose]
@@ -47,35 +48,41 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
         appCoordinator.setGlucoseHistory(await retrieveRaw().reversed())
     }
 
-    func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose] {
+    func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]? {
+        guard glucose.isNotEmpty else { return nil }
         debug(.deviceManager, "start storage glucose")
-        let file = OpenAPS.Monitor.glucose
-        var stored: [BloodGlucose] = []
 
-        let existing = await storage.retrieve(file, as: [BloodGlucose].self)?.reversed() ?? []
-        var existingDates = existing.map(\.dateString)
-        var newRecords: [BloodGlucose] = []
-        newRecords.reserveCapacity(glucose.count)
-        for bg in glucose {
-            if existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 }) {
-                // skip if we already have a record within +/- 45 seconds
-                continue
+        let (didModify, stored, data: newRecords) = await storage
+            .maybeModifyWithData(
+                file: OpenAPS.Monitor.glucose,
+                as: BloodGlucose.self
+            ) { existing -> ([BloodGlucose], data: [BloodGlucose])? in
+                var existingDates = existing.map(\.dateString)
+                var newRecords: [BloodGlucose] = []
+                newRecords.reserveCapacity(glucose.count)
+                for bg in glucose {
+                    if existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 }) {
+                        // skip if we already have a record within +/- 45 seconds
+                        continue
+                    }
+                    newRecords.append(bg)
+                    existingDates.append(bg.dateString)
+                }
+                guard newRecords.isNotEmpty else {
+                    return nil // do not modify
+                }
+
+                // TODO: temporary until further storage refactoring
+                let appended = BaseFileStorage.doAppend(newRecords, existingValues: existing, uniqBy: \.dateString)
+
+                let now = Date()
+                let filtered = appended
+                    .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > now }
+                    .sorted { $0.dateString > $1.dateString }
+                return (filtered, data: newRecords)
             }
-            newRecords.append(bg)
-            existingDates.append(bg.dateString)
-        }
 
-        // TODO: temporary until further storage refactoring
-        let appended = BaseFileStorage.doAppend(newRecords, existingValues: existing, uniqBy: \.dateString)
-
-        let now = Date()
-        let uniqEvents = appended
-            .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > now }
-            .sorted { $0.dateString > $1.dateString }
-        let newGlucoseData = Array(uniqEvents)
-
-        // FileStorage
-        await storage.save(newGlucoseData, as: file)
+        guard didModify, let newRecords else { return nil }
 
         // Only log once
         debug(
@@ -83,13 +90,10 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
             "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(String(describing: glucose.last?.glucose)) mg/Dl, date: \(String(describing: glucose.last?.dateString))."
         )
 
-        stored = newGlucoseData
-
         // newest -> oldest
-        appCoordinator.setGlucoseHistory(newGlucoseData)
+        appCoordinator.setGlucoseHistory(stored)
 
         appCoordinator.newGlucoseRecords.send(newRecords)
-
         return stored
     }
 

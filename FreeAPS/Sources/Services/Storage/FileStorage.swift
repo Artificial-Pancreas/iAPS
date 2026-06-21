@@ -47,6 +47,14 @@ protocol FileStorage: Sendable {
         _ modify: @Sendable([Value]) -> [Value]?
     ) async -> (Bool, [Value])
 
+    // the callback function receives the currently stored data, and returns an updated list, with an additional Data value which is also returned from this function
+    // for example, this can be used to append things to the dataset with a non-standard filter, and return the actually appended values
+    @discardableResult func maybeModifyWithData<Value: JSON, Data: Sendable>(
+        file: String,
+        as _: Value.Type,
+        _ modify: @Sendable([Value]) -> ([Value], data: Data)?
+    ) async -> (Bool, [Value], data: Data?)
+
     func remove(_ name: String) async
     func rename(_ name: String, to newName: String) async
     func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) async -> Value?
@@ -145,15 +153,30 @@ actor BaseFileStorage: FileStorage, Injectable {
 
     @discardableResult func maybeModify<Value: JSON>(
         file: String,
-        as _: Value.Type,
+        as type: Value.Type,
         _ modify: @Sendable([Value]) -> [Value]?
     ) async -> (Bool, [Value]) {
+        let (didModify, currentData, _) = await maybeModifyWithData(file: file, as: type) {
+            if let modified = modify($0) {
+                return (modified, ())
+            } else {
+                return nil
+            }
+        }
+        return (didModify, currentData)
+    }
+
+    @discardableResult func maybeModifyWithData<Value: JSON, Data: Sendable>(
+        file: String,
+        as _: Value.Type,
+        _ modify: @Sendable([Value]) -> ([Value], data: Data)?
+    ) async -> (Bool, [Value], data: Data?) {
         let values: [Value] = doRetrieve(from: file)
-        if let modified = modify(values) {
+        if let (modified, data) = modify(values) {
             save(modified, as: file)
-            return (true, modified)
+            return (true, modified, data: data)
         } else {
-            return (false, values)
+            return (false, values, data: nil)
         }
     }
 
