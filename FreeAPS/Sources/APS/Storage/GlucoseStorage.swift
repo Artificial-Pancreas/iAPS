@@ -57,16 +57,21 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
                 file: OpenAPS.Monitor.glucose,
                 as: BloodGlucose.self
             ) { existing -> ([BloodGlucose], data: [BloodGlucose])? in
-                var existingDates = existing.map(\.dateString)
+                var existingDates = existing.filter { $0.type == GlucoseType.sgv.rawValue }.map(\.dateString)
                 var newRecords: [BloodGlucose] = []
                 newRecords.reserveCapacity(glucose.count)
                 for bg in glucose {
-                    if existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 }) {
-                        // skip if we already have a record within +/- 45 seconds
-                        continue
+                    if bg.type == GlucoseType.sgv.rawValue {
+                        if existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 })
+                        {
+                            // skip if we already have a record within +/- 45 seconds
+                            continue
+                        }
+                        newRecords.append(bg)
+                        existingDates.append(bg.dateString)
+                    } else {
+                        newRecords.append(bg)
                     }
-                    newRecords.append(bg)
-                    existingDates.append(bg.dateString)
                 }
                 guard newRecords.isNotEmpty else {
                     return nil // do not modify
