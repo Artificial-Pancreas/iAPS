@@ -605,11 +605,14 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             do {
                 try await nightscout.deleteManualGlucose(at: deletedGlucose.dateString)
                 deletedFromNightscout.append(deletedGlucose)
-                debug(.nightscout, "Manual Glucose entry deleted: \(deletedGlucose.dateString)")
+                debug(
+                    .nightscout,
+                    "Manual Glucose entry deleted: \(deletedGlucose.dateString.formatted(.iso8601WithFractionalSeconds))"
+                )
             } catch {
                 debug(
                     .nightscout,
-                    "failed to delete manual glucose from nightscout: \(deletedGlucose.dateString) - \(error.localizedDescription)"
+                    "failed to delete manual glucose from nightscout: \(deletedGlucose.dateString.formatted(.iso8601WithFractionalSeconds)) - \(error.localizedDescription)"
                 )
                 break
             }
@@ -720,7 +723,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             [NigtscoutExercise(
                 duration: duration,
                 eventType: EventType.nsExercise,
-                createdAt: date,
+                createdAt: date.truncatedToSecond,
                 enteredBy: NigtscoutTreatment.local,
                 notes: profile
             )]
@@ -874,7 +877,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     /// * read the snapshot of previously uploaded treatments from the file
     /// * detect new treatments in the current local data and upload them
-    /// * update the 'previously uploaded' file, removing entries older than `now-uploadedRetention`
+    /// * update the 'previously uploaded' file, removing entries older than `now - uploadedRetention`
     @discardableResult private func uploadTreatments(
         storedEvents treatments: [NigtscoutTreatment],
         fileToSave: String,
@@ -900,7 +903,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             }
 
             let eventTypes = treatments.map(\.eventType).uniqued().map(\.rawValue).joined(separator: ", ")
-            debug(.nightscout, "treatments uploaded - \(eventTypes): \(treatmentsToUpload.count)")
+            debug(.nightscout, "treatments uploaded (\(eventTypes)): \(treatmentsToUpload.count)")
 
             let storedKeys = Set(treatments.map(\.identity))
             let cutoff = Date().removingTimeInterval(uploadedRetention)
@@ -942,10 +945,14 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             do {
                 try await nightscout.deleteTreatment(treatment)
                 deletedFromNS.append(treatment)
+                debug(
+                    .nightscout,
+                    "deleted \(treatment.eventType) treatment from NS: \(treatment.createdAt.formatted(.iso8601WithFractionalSeconds))"
+                )
             } catch {
                 debug(
                     .nightscout,
-                    "failed to delete \(treatment.eventType) treatment from NS: \(treatment.eventType) \(String(describing: treatment.createdAt))"
+                    "failed to delete \(treatment.eventType) treatment from NS: \(treatment.createdAt.formatted(.iso8601WithFractionalSeconds))"
                 )
                 break
             }
@@ -1065,7 +1072,7 @@ extension BaseNightscoutManager {
                     absolute: event.rate,
                     rate: event.rate,
                     eventType: .nsTempBasal,
-                    createdAt: event.timestamp,
+                    createdAt: event.timestamp.truncatedToSecond,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: nil,
                     insulin: nil,
@@ -1077,11 +1084,14 @@ extension BaseNightscoutManager {
                     targetBottom: nil
                 ))
             case .tempBasalDuration:
-                if var last = result.popLast(), last.eventType == .nsTempBasal, last.createdAt == event.timestamp {
+                guard var last = result.popLast() else { break }
+                if last.eventType == .nsTempBasal,
+                   last.createdAt == event.timestamp.truncatedToSecond
+                {
                     last.duration = event.durationMin
                     last.rawDuration = event
-                    result.append(last)
                 }
+                result.append(last)
             default: break
             }
             return result
@@ -1098,7 +1108,7 @@ extension BaseNightscoutManager {
                     absolute: nil,
                     rate: nil,
                     eventType: eventType,
-                    createdAt: event.timestamp,
+                    createdAt: event.timestamp.truncatedToSecond,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,
                     insulin: event.amount,
@@ -1117,7 +1127,7 @@ extension BaseNightscoutManager {
                     absolute: nil,
                     rate: nil,
                     eventType: .nsCarbCorrection,
-                    createdAt: event.timestamp,
+                    createdAt: event.timestamp.truncatedToSecond,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: nil,
                     insulin: nil,
@@ -1143,7 +1153,7 @@ extension BaseNightscoutManager {
                     absolute: nil,
                     rate: nil,
                     eventType: .nsSiteChange,
-                    createdAt: event.timestamp,
+                    createdAt: event.timestamp.truncatedToSecond,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,
                     insulin: nil,
@@ -1162,7 +1172,7 @@ extension BaseNightscoutManager {
                     absolute: nil,
                     rate: nil,
                     eventType: .nsInsulinChange,
-                    createdAt: event.timestamp,
+                    createdAt: event.timestamp.truncatedToSecond,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: nil,
                     insulin: nil,
@@ -1181,7 +1191,7 @@ extension BaseNightscoutManager {
                     absolute: nil,
                     rate: nil,
                     eventType: .nsAnnouncement,
-                    createdAt: event.timestamp,
+                    createdAt: event.timestamp.truncatedToSecond,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: nil,
                     insulin: nil,
@@ -1196,7 +1206,11 @@ extension BaseNightscoutManager {
             }
         }
 
-        return (bolusesAndCarbs + temps + misc).sorted { $0.createdAt > $1.createdAt }
+        return (
+            bolusesAndCarbs +
+            temps.filter { $0.duration != nil } +
+            misc
+        ).sorted { $0.createdAt > $1.createdAt }
     }
 
     private func determineBolusEventType(for event: PumpHistoryEvent) -> EventType {
@@ -1225,7 +1239,7 @@ extension BaseNightscoutManager {
                 absolute: nil,
                 rate: nil,
                 eventType: .nsCarbCorrection,
-                createdAt: $0.actualDate ?? .distantPast,
+                createdAt: $0.actualDate?.truncatedToSecond ?? .distantPast,
                 enteredBy: $0.enteredBy ?? CarbsEntry.manual,
                 bolus: nil,
                 insulin: nil,
@@ -1256,7 +1270,7 @@ extension BaseNightscoutManager {
                 absolute: nil,
                 rate: nil,
                 eventType: .nsTempTarget,
-                createdAt: $0.createdAt,
+                createdAt: $0.createdAt.truncatedToSecond,
                 enteredBy: TempTarget.manual,
                 bolus: nil,
                 insulin: nil,

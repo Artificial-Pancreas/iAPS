@@ -430,7 +430,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
                     Int(calibrationService.calibrate(value: mgdl)) :
                     Int(mgdl)
 
-                let dateRoundedTo1Second = newGlucoseSample.date.roundedTo1Second
+                let dateRoundedTo1Second = newGlucoseSample.date.truncatedToSecond
                 return BloodGlucose(
                     _id: UUID().uuidString,
                     sgv: value,

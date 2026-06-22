@@ -1,8 +1,7 @@
 import Foundation
 
 extension Date {
-    var roundedTo1Second: Date {
-        let interval = timeIntervalSinceReferenceDate
-        return Date(timeIntervalSinceReferenceDate: interval.rounded())
+    var truncatedToSecond: Date {
+        Date(timeIntervalSinceReferenceDate: timeIntervalSinceReferenceDate.rounded(.down))
     }
 }
