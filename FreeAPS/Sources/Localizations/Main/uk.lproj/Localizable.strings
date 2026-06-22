@@ -1843,7 +1843,7 @@ Enact a temp Basal or a temp target */
 
 "Reset to Default" = "Скинути до Заводських Налаштувань";
 
-"Take Photo" = "Take Photo";
+"Take Photo" = "Зробити Фото";
 
 "Retake Photo" = "Перезняти фото";
 
@@ -3862,16 +3862,16 @@ Enact a temp Basal or a temp target */
 "Show Predictions" = "Відображати Прогнози";
 
 /* Watch Smart Stack: Show Chart widget */
-"Watch: Show Chart" = "Watch: Show Chart";
+"Watch: Show Chart" = "Дивитися: Показати Діаграму";
 
 /* Watch Smart Stack: Show delta */
-"Watch: Show Delta" = "Watch: Show Delta";
+"Watch: Show Delta" = "Дивитися: Показати Дельту ";
 
 /* Watch Smart Stack: Show eventual glucose on chart widget */
-"Watch: Show Eventual" = "Watch: Show Eventual";
+"Watch: Show Eventual" = "Дивитися: Показати «Зрештою»";
 
 /* Watch Smart Stack: Show predictions on chart widget */
-"Watch: Show Predictions" = "Watch: Show Predictions";
+"Watch: Show Predictions" = "Дивитися: Показати Прогнози";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
