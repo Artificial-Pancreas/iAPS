@@ -102,24 +102,12 @@ extension NightscoutAPI {
         }
     }
 
-    func deleteCarbs(_ date: Date) async throws {
-        let queryItems = [
-            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
-            URLQueryItem(
-                name: "find[creation_date][$eq]",
-                value: date.formatted(.iso8601WithFractionalSeconds)
-            )
-        ]
-
-        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
-    }
-
     func deleteManualGlucose(at date: Date) async throws {
         let queryItems = [
             URLQueryItem(name: "find[type][$eq]", value: "mbg"),
             URLQueryItem(
                 name: "find[dateString][$eq]",
-                value: date.formatted(.iso8601)
+                value: date.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
             )
         ]
 
@@ -131,7 +119,7 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[bolus][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: date.formatted(.iso8601WithFractionalSeconds)
+                value: date.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
             )
         ]
 
@@ -144,7 +132,7 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[eventType][$eq]", value: treatment.eventType.rawValue),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: createdAt.formatted(.iso8601WithFractionalSeconds)
+                value: createdAt.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
             )
         ]
         try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
@@ -240,7 +228,7 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[Exercise][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: date.formatted(.iso8601WithFractionalSeconds)
+                value: date.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
             )
         ]
         try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
