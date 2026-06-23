@@ -25,8 +25,8 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
 
     // this is called on app start
     func start() async {
-        // newest->oldest
-        appCoordinator.setTempTargets(await recent().reversed())
+        // oldest->newest
+        appCoordinator.setTempTargets(await recent())
     }
 
     func storeTempTargets(_ targets: [TempTarget]) async {
@@ -54,8 +54,8 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
                 }
                 .sorted { $0.createdAt > $1.createdAt }
         }
-        // newest->oldest
-        appCoordinator.setTempTargets(uniqEvents)
+        // oldest->newest, same as recent()
+        appCoordinator.setTempTargets(uniqEvents.reversed())
     }
 
     func syncDate() -> Date {
@@ -64,7 +64,6 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
 
     /// oldest->newest
     func recent() async -> [TempTarget] {
-        // TODO: why reversed here?
         await storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self)?.reversed() ?? []
     }
 
