@@ -514,6 +514,7 @@
 		F2B259DF2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B259DE2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift */; };
 		F2B259E82FBF1F97008F1F22 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = F2B259E72FBF1F97008F1F22 /* AsyncAlgorithms */; };
 		F2C29E242FE6E7DC00E8630A /* TaskSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */; };
+		F2C29E292FEAB38B00E8630A /* BackgroundTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C29E282FEAB38300E8630A /* BackgroundTasks.swift */; };
 		F2C2EEA92F5CCD7E00A0AA7C /* USDAFoodDataSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */; };
 		F2C2EEAB2F5CCEFE00A0AA7C /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */; };
 		F2C2EEAD2F5CD2E400A0AA7C /* OpenFoodFactsProduct+Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEAC2F5CD2E100A0AA7C /* OpenFoodFactsProduct+Convert.swift */; };
@@ -1244,6 +1245,7 @@
 		F2B1AFD72FB236400088219A /* ProfileAndSettingsUploadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndSettingsUploadManager.swift; sourceTree = "<group>"; };
 		F2B259DE2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseStatisticsFactory.swift; sourceTree = "<group>"; };
 		F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSerializer.swift; sourceTree = "<group>"; };
+		F2C29E282FEAB38300E8630A /* BackgroundTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTasks.swift; sourceTree = "<group>"; };
 		F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USDAFoodDataSearchResponse.swift; sourceTree = "<group>"; };
 		F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
 		F2C2EEAC2F5CD2E100A0AA7C /* OpenFoodFactsProduct+Convert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenFoodFactsProduct+Convert.swift"; sourceTree = "<group>"; };
@@ -2260,6 +2262,7 @@
 			children = (
 				FEB27EA52E07D90F0047CB66 /* NSUserDefaults.swift */,
 				190141352CDB9D4600ABD925 /* Token.swift */,
+				F2C29E282FEAB38300E8630A /* BackgroundTasks.swift */,
 				FEFA5C10299F814A00765C17 /* CoreDataStack.swift */,
 				38F37827261260DC009DB701 /* Color+Extensions.swift */,
 				38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */,
@@ -3585,6 +3588,7 @@
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				F25D828E2F61AA7A007AE22C /* SectionInfoPopup.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
+				F2C29E292FEAB38B00E8630A /* BackgroundTasks.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
 				388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */,
 				F292C69D2FDDC8BA00D09D88 /* TempTargetsSliderSnapshot.swift in Sources */,

@@ -27,19 +27,14 @@ final class BloodGlucoseManager: Sendable {
     private func glucoseStoreAndHeartDecision(glucose: [BloodGlucose]) async -> Bool {
         guard glucose.isNotEmpty else { return false }
 
-        // start background time extension
-        let backgroundTaskIdBox = TaskIDBox()
-        await MainActor.run {
-            backgroundTaskIdBox.id = UIApplication.shared.beginBackgroundTask(withName: "save BG starting") {
-                UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
+        return await withBackgroundTask("save blood glucose") {
+            let previousLatestBG = await glucoseStorage.latestDate()
+
+            // glucoseStorage.storeGlucose returns nil when no new records were recorded (empty or duplicates)
+            // TODO: this call can also return previousLatestBG, so we update and get all data "atomically"
+            guard let storedGlucose = await glucoseStorage.storeGlucose(glucose) else {
+                return false
             }
-        }
-
-        let previousLatestBG = await glucoseStorage.latestDate()
-
-        // glucoseStorage.storeGlucose returns nil when no new records were recorded (empty or duplicates)
-        // TODO: this call can also return previousLatestBG, so we update and get all data "atomically"
-        if let storedGlucose = await glucoseStorage.storeGlucose(glucose) {
             let updatedLatestBG = storedGlucose.first?.dateString
 
             var newGlucoseStored = false
@@ -50,29 +45,10 @@ final class BloodGlucoseManager: Sendable {
             }
 
             if newGlucoseStored {
-                debug(.deviceManager, "New glucose found")
-            }
-
-            // TODO: extract background tasks into a helper
-            // end of the BG tasks
-            await MainActor.run {
-                if backgroundTaskIdBox.id != .invalid {
-                    UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
-                }
+                debug(.deviceManager, "new glucose records stored")
             }
 
             return newGlucoseStored
-
-        } else {
-            // TODO: extract background tasks into a helper
-            // end of the BG tasks
-            await MainActor.run {
-                if backgroundTaskIdBox.id != .invalid {
-                    UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
-                }
-            }
-
-            return false
         }
     }
 }
