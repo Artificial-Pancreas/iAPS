@@ -135,6 +135,21 @@ struct PumpView: View {
                                     }
                                 }
                         }
+                    } else if pumpInfo != nil {
+                        ZStack {}
+                            .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                            .overlay {
+                                if let timeZone = pumpStatus?.timeZone,
+                                   timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                                {
+                                    ClockOffset(mdtPump: false)
+                                }
+                                if (concentration.last?.concentration ?? 1) != 1,
+                                   !hideInsulinBadge
+                                {
+                                    NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pump: .pod)
+                                }
+                            }
                     }
 
                     remainingTime(time: date.timeIntervalSince(timerDate))
