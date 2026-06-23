@@ -13,7 +13,6 @@ protocol PumpHistoryStorage: Sendable {
     func storeEvents(_ events: [PumpHistoryEvent]) async
 
     func recent() async -> [PumpHistoryEvent]
-    func saveCancelTempEvents() async
     func deleteInsulin(at date: Date) async
 }
 
@@ -53,42 +52,21 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
             guard !events.isEmpty else { return }
 
             let insulinConcentration = await concentration
-            let storedEvents = await self.recent()
             let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
                 let id = event.raw.md5String
                 switch event.type {
                 case .bolus:
                     guard let dose = event.dose else { return [] }
                     let amount = dose.unitsInDeliverableIncrementsAdjustedForConcentration(insulinConcentration.concentration)
+                    let minutes = dose.endDate.timeIntervalSince(dose.startDate) / 60
 
-                    let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
-                    if let duplicatedEvent = storedEvents
-                        .first(where: {
-                            $0.type == .bolus &&
-                                Int($0.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970)
-                        })
-                    {
-                        return [PumpHistoryEvent(
-                            id: duplicatedEvent.id,
-                            type: .bolus,
-                            timestamp: duplicatedEvent.timestamp,
-                            amount: amount,
-                            duration: minutes,
-                            durationMin: nil,
-                            rate: nil,
-                            temp: nil,
-                            carbInput: nil,
-                            isSMB: dose.automatic,
-                            isExternal: dose.manuallyEntered
-                        )]
-                    }
-
+                    // mutable/updated bolus records will get updated (not re-appended) by the `uniqBy: \.identity` in the doStoreEvents
                     return [PumpHistoryEvent(
                         id: id,
                         type: .bolus,
                         timestamp: event.date,
                         amount: amount,
-                        duration: minutes,
+                        duration: Decimal(minutes).rounded(to: 1),
                         durationMin: nil,
                         rate: nil,
                         temp: nil,
@@ -101,11 +79,11 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                     let rate = dose.unitsPerHourAdjustedForConcentration(insulinConcentration.concentration)
 
                     let minutes = dose.endDate.timeIntervalSince(dose.startDate) / 60
-                    let delivered = dose.deliveredUnitsAdjustedForConcentration(insulinConcentration.concentration)
+                    let deliveredUnits = dose.deliveredUnitsAdjustedForConcentration(insulinConcentration.concentration)
                     let date = event.date
 
-                    let isCancel = delivered != nil //! event.isMutable && delivered != nil
-                    guard !isCancel else { return [] }
+                    // deliveredUnits != nil -> TBR finished, we'll update it in the storage
+                    // in that case, durationMin will be the actual duration the TBR was running for and the existing TBR will be updated in the pump history
 
                     return [
                         PumpHistoryEvent(
@@ -114,7 +92,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                             timestamp: date,
                             amount: nil,
                             duration: nil,
-                            durationMin: Int(round(minutes)),
+                            // adding 0.2 minutes to avoid tiny gaps due to rounding
+                            durationMin: Decimal(minutes + 0.2).rounded(to: 1),
                             rate: nil,
                             temp: nil,
                             carbInput: nil
@@ -127,6 +106,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                             duration: nil,
                             durationMin: nil,
                             rate: rate,
+                            deliveredUnits: deliveredUnits,
                             temp: .absolute,
                             carbInput: nil
                         )
@@ -215,7 +195,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
 
     private func doStoreEvents(_ events: [PumpHistoryEvent]) async {
         let file = OpenAPS.Monitor.pumpHistory
-        let uniqEvents: [PumpHistoryEvent] = await self.storage.appendAndModify(events, to: file, uniqBy: \.id) {
+        let uniqEvents: [PumpHistoryEvent] = await self.storage.appendAndModify(events, to: file, uniqBy: \.identity) {
             $0
                 .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp }
@@ -240,40 +220,6 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                 self.appCoordinator.setPumpHistory(updatedValues.reversed())
                 self.appCoordinator.sendPumpHistoryDeleted(deleted)
             }
-        }
-    }
-
-    func saveCancelTempEvents() async {
-        try? await serializer.run { [self] in
-            let basalID = UUID().uuidString
-            let date = Date()
-
-            let events = [
-                PumpHistoryEvent(
-                    id: basalID,
-                    type: .tempBasalDuration,
-                    timestamp: date,
-                    amount: nil,
-                    duration: nil,
-                    durationMin: 0,
-                    rate: nil,
-                    temp: nil,
-                    carbInput: nil
-                ),
-                PumpHistoryEvent(
-                    id: "_" + basalID,
-                    type: .tempBasal,
-                    timestamp: date,
-                    amount: nil,
-                    duration: nil,
-                    durationMin: nil,
-                    rate: 0,
-                    temp: .absolute,
-                    carbInput: nil
-                )
-            ]
-
-            await doStoreEvents(events)
         }
     }
 }

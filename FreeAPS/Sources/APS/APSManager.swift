@@ -533,11 +533,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 for: duration,
                 concentration: concentration.concentration
             )
-
-            if rate == 0, duration == 0 {
-                // TODO: should this be here/is this needed?
-                await self.pumpHistoryStorage.saveCancelTempEvents()
-            }
         } catch {
             debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
             processError(APSError.pumpError(error))

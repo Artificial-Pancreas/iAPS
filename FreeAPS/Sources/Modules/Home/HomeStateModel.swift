@@ -425,7 +425,7 @@ extension Home {
                 return
             }
             let lastDate = lastTempBasal[0].timestamp
-            guard Date().timeIntervalSince(lastDate.addingTimeInterval(lastDuration.minutes.timeInterval)) < 0 else {
+            guard Date().timeIntervalSince(lastDate.addingTimeInterval(.minutes(lastDuration))) < 0 else {
                 tempRate = nil
                 return
             }

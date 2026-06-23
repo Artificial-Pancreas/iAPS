@@ -1,7 +1,7 @@
 import Foundation
 
 struct NigtscoutTreatment: JSON {
-    var duration: Int?
+    var duration: Decimal?
     var rawDuration: PumpHistoryEvent?
     var rawRate: PumpHistoryEvent?
     var absolute: Decimal?
@@ -56,5 +56,62 @@ extension NigtscoutTreatment {
         case id
         case fpuID
         case creation_date
+    }
+}
+
+// used by NightscoutManager to check if two treatments are the same event (different versions of the same event)
+struct NigtscoutTreatmentIdentity: Equatable, Hashable {
+    let eventType: EventType
+    let createdAt: Date
+}
+
+// used by NightscoutManager to check if two treatments hold the same data - if not, they need to be updated in nightscout
+// any field that can be edited in iAPS needs to be part of this structure, otherwise local edits to that field will not be re-uploaded to nightscout
+struct NigtscoutTreatmentData: Equatable, Hashable {
+    let duration: Decimal?
+    let absolute: Decimal?
+    let rate: Decimal?
+    let eventType: EventType
+    let createdAt: Date
+    let insulin: Decimal?
+    let notes: String?
+    let carbs: Decimal?
+    let fat: Decimal?
+    let protein: Decimal?
+    let foodType: String?
+    let targetTop: Decimal?
+    let targetBottom: Decimal?
+    let glucoseType: String?
+    let glucose: String?
+    let units: String?
+}
+
+extension NigtscoutTreatment {
+    var identity: NigtscoutTreatmentIdentity {
+        NigtscoutTreatmentIdentity(
+            eventType: eventType,
+            createdAt: createdAt.truncatedToSecond
+        )
+    }
+
+    var data: NigtscoutTreatmentData {
+        NigtscoutTreatmentData(
+            duration: duration,
+            absolute: absolute,
+            rate: rate,
+            eventType: eventType,
+            createdAt: createdAt,
+            insulin: insulin,
+            notes: notes,
+            carbs: carbs,
+            fat: fat,
+            protein: protein,
+            foodType: foodType,
+            targetTop: targetTop,
+            targetBottom: targetBottom,
+            glucoseType: glucoseType,
+            glucose: glucose,
+            units: units
+        )
     }
 }
