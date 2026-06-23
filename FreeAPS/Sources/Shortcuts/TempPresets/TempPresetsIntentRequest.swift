@@ -40,31 +40,29 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
 
         let tempTargetID = tempTarget.id
 
-        let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-
-        await coredataContext.perform {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             var tempTargetsArray = [TempTargetsSlider]()
             let requestTempTargets = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
             let sortTT = NSSortDescriptor(key: "date", ascending: false)
             requestTempTargets.sortDescriptors = [sortTT]
-            try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
+            try? tempTargetsArray = context.fetch(requestTempTargets)
 
             let whichID = tempTargetsArray.first(where: { $0.id == tempTargetID })
 
             if whichID != nil {
-                let saveToCoreData = TempTargets(context: coredataContext)
+                let saveToCoreData = TempTargets(context: context)
                 saveToCoreData.active = true
                 saveToCoreData.date = Date()
                 saveToCoreData.hbt = whichID?.hbt ?? 160
                 saveToCoreData.startDate = Date()
                 saveToCoreData.duration = whichID?.duration ?? 0
 
-                try? coredataContext.save()
+                try? context.save()
             } else {
-                let saveToCoreData = TempTargets(context: coredataContext)
+                let saveToCoreData = TempTargets(context: context)
                 saveToCoreData.active = false
                 saveToCoreData.date = Date()
-                try? coredataContext.save()
+                try? context.save()
             }
         }
 
@@ -74,18 +72,17 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
     func cancelTempTarget() async throws {
         await tempTargetsStorage.storeTempTargets([TempTarget.cancel(at: Date())])
 
-        let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-        await coredataContext.perform {
-            let saveToCoreData = TempTargets(context: coredataContext)
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let saveToCoreData = TempTargets(context: context)
             saveToCoreData.active = false
 
-            let setHBT = TempTargetsSlider(context: coredataContext)
+            let setHBT = TempTargetsSlider(context: context)
             setHBT.enabled = false
 
-            if coredataContext.hasChanges {
+            if context.hasChanges {
                 saveToCoreData.date = Date()
                 setHBT.date = Date()
-                try? coredataContext.save()
+                try? context.save()
             }
         }
     }

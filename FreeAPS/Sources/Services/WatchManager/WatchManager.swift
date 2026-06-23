@@ -181,29 +181,32 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
                 )
             }
 
-        self.state.overrides = overrideStorage.fetchProfiles()
-            .map { preset -> OverridePresets_ in
-                let untilDate = overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
-                    guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
+        var overrides: [OverridePresets_] = []
+        for preset in await overrideStorage.fetchProfiles() {
+            let untilDate = await overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
+                guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
 
-                    let duration = Double(truncating: currentOverride.duration ?? 0)
-                    let overrideDate: Date = currentOverride.date ?? Date.now
+                let duration = Double(currentOverride.duration ?? 0)
+                let overrideDate: Date = currentOverride.date ?? Date.now
 
-                    let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
-                    return date > Date.now ? date : nil
-                }
+                let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                return date > Date.now ? date : nil
+            }
 
-                return OverridePresets_(
+            overrides.append(
+                OverridePresets_(
                     name: preset.name ?? "",
                     id: preset.id ?? "",
                     until: untilDate,
                     description: self.description(preset)
                 )
-            }
+            )
+        }
+        self.state.overrides = overrides
         // Is there an active override but no preset?
         let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
-        if let last = overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
-            let duration = Double(truncating: last.duration ?? 0)
+        if let last = await overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
+            let duration = Double(last.duration ?? 0)
             let overrideDate: Date = last.date ?? Date.now
             let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
             let date = date_ > Date.now ? date_ : nil
@@ -222,7 +225,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.state.eventualBG = eBG.map { "⇢ " + $0 }
         self.state.eventualBGRaw = eBG
 
-        let overrideArray = overrideStorage.fetchLatestOverride()
+        let overrideArray = await overrideStorage.fetchLatestOverride()
 
         if overrideArray.first?.enabled ?? false {
             let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
@@ -431,27 +434,27 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         return insulinCalculated
     }
 
-    private func description(_ preset: OverridePresets) -> String {
-        let rawtarget = (preset.target ?? 0) as Decimal
+    private func description(_ preset: OverridePresetsSnapshot) -> String {
+        let rawtarget = (preset.target ?? 0)
 
         let targetValue = settings.units == .mmolL ? rawtarget.asMmolL : rawtarget
         let target: String = rawtarget > 6 ? glucoseFormatter.string(from: targetValue as NSNumber) ?? "" : ""
 
         let percentage = preset.percentage != 100 ? preset.percentage.formatted() + "%" : ""
-        let string = (preset.target ?? 0) as Decimal > 6 && !percentage.isEmpty ? target + " " + settings.units
+        let string = (preset.target ?? 0) > 6 && !percentage.isEmpty ? target + " " + settings.units
             .rawValue + ", " + percentage : target + percentage
         return string
     }
 
-    private func description(_ override: Override) -> String {
-        let rawtarget = (override.target ?? 0) as Decimal
+    private func description(_ override: OverrideSnapshot) -> String {
+        let rawtarget = (override.target ?? 0)
 
         let targetValue = settings.units == .mmolL ? rawtarget.asMmolL : rawtarget
         let target: String = rawtarget > 6 ? glucoseFormatter.string(from: targetValue as NSNumber) ?? "" : ""
 
         let percentage = override
             .percentage != 100 ? (Self.formatter.string(from: override.percentage as NSNumber) ?? "") + "%" : ""
-        let string = (override.target ?? 0) as Decimal > 6 && !percentage.isEmpty ? target + " " + settings.units
+        let string = (override.target ?? 0) > 6 && !percentage.isEmpty ? target + " " + settings.units
             .rawValue + ", " + percentage : target + percentage
         return string
     }
@@ -568,33 +571,33 @@ private extension BaseWatchManager {
         }
 
         if let overrideID = message.override {
-            if let preset = overrideStorage.fetchProfiles().first(where: { $0.id == overrideID }) {
+            if var preset = await overrideStorage.fetchProfiles().first(where: { $0.id == overrideID }) {
                 preset.date = Date.now
 
                 // Cancel eventual current active override first
-                if let activeOveride = overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
-                    let name = overrideStorage.isPresetName()
+                if let activeOveride = await overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
+                    let name = await overrideStorage.isPresetName()
 
-                    if let duration = overrideStorage.cancelProfile() {
+                    if let duration = await overrideStorage.cancelProfile() {
                         let nsString = name ?? activeOveride.percentage.formatted()
                         await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date())
                     }
                 }
                 // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
-                overrideStorage.overrideFromPreset(preset)
+                await overrideStorage.overrideFromPreset(preset)
                 await nightscout.uploadOverride(
                     preset.name ?? "",
-                    Double(truncating: preset.duration ?? 0),
+                    Double(preset.duration ?? 0),
                     overrideStorage.fetchLatestOverride().first?.date ?? Date.now
                 )
                 await configureState()
                 return .confirmed
             } else if overrideID == "cancel" {
-                if let activeOveride = overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
-                    let presetName = overrideStorage.isPresetName()
+                if let activeOveride = await overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
+                    let presetName = await overrideStorage.isPresetName()
                     let nsString = presetName ?? activeOveride.percentage.formatted()
 
-                    if let duration = overrideStorage.cancelProfile() {
+                    if let duration = await overrideStorage.cancelProfile() {
                         await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                         await configureState()
                         return .confirmed

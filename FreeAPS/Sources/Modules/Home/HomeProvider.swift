@@ -40,16 +40,16 @@ extension Home {
             )
         }
 
-        func overrides() async -> [Override] {
-            overrideStorage.fetchOverrides(interval: DateFilter.day.startDate)
+        func overrides() async -> [OverrideSnapshot] {
+            await overrideStorage.fetchOverrides(interval: DateFilter.day.startDate)
         }
 
-        func latestOverride() async -> Override? {
-            overrideStorage.fetchLatestOverride().first
+        func latestOverride() async -> OverrideSnapshot? {
+            await overrideStorage.fetchLatestOverride().first
         }
 
-        func overrideHistory() async -> [OverrideHistory] {
-            overrideStorage.fetchOverrideHistory(interval: DateFilter.day.startDate)
+        func overrideHistory() async -> [OverrideHistorySnapshot] {
+            await overrideStorage.fetchOverrideHistory(interval: DateFilter.day.startDate)
         }
 
         func reasons() async -> [IOBData]? {

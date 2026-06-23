@@ -12,8 +12,6 @@ actor DatabaseStatisticsFactory {
 
     private let coreDataStorage = CoreDataStorage()
 
-    private let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-
     init(
         storage: FileStorage,
         settingsManager: SettingsManager,
@@ -198,7 +196,7 @@ extension DatabaseStatisticsFactory {
         let variance = Variance(SD: standardDeviations, CV: cvs)
 
         // Loops
-        let oneDayLoops = await coredataContext.perform {
+        let oneDayLoops = await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let request = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
             request.predicate = NSPredicate(
                 format: "interval > 0 AND start > %@",
@@ -206,7 +204,7 @@ extension DatabaseStatisticsFactory {
             )
             request.sortDescriptors = [NSSortDescriptor(key: "start", ascending: false)]
 
-            let lsr = (try? self.coredataContext.fetch(request)) ?? []
+            let lsr = (try? context.fetch(request)) ?? []
             return Self.loops(lsr)
         }
 

@@ -15,5 +15,5 @@ protocol HomeProvider: Provider {
     func carbs(hours: Int) async -> [CarbsEntry]
     func tempTarget() async -> TempTarget?
     func announcement(_ hours: Int) async -> [Announcement]
-    func overrides() async -> [Override]
+    func overrides() async -> [OverrideSnapshot]
 }
