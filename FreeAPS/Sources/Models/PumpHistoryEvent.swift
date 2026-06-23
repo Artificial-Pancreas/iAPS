@@ -5,9 +5,10 @@ struct PumpHistoryEvent: JSON, Equatable {
     let type: EventType
     let timestamp: Date
     let amount: Decimal?
-    let duration: Int?
-    let durationMin: Int?
+    let duration: Decimal? // used for bolus duratin, in minutes, rounded to 1 decimal
+    let durationMin: Decimal? // rounded to 1 decimal
     let rate: Decimal?
+    let deliveredUnits: Decimal?
     let temp: TempType?
     let carbInput: Int?
     let note: String?
@@ -19,9 +20,10 @@ struct PumpHistoryEvent: JSON, Equatable {
         type: EventType,
         timestamp: Date,
         amount: Decimal? = nil,
-        duration: Int? = nil,
-        durationMin: Int? = nil,
+        duration: Decimal? = nil,
+        durationMin: Decimal? = nil,
         rate: Decimal? = nil,
+        deliveredUnits: Decimal? = nil, // delivered units for a finalized TBR
         temp: TempType? = nil,
         carbInput: Int? = nil,
         note: String? = nil,
@@ -35,6 +37,7 @@ struct PumpHistoryEvent: JSON, Equatable {
         self.duration = duration
         self.durationMin = durationMin
         self.rate = rate
+        self.deliveredUnits = deliveredUnits
         self.temp = temp
         self.carbInput = carbInput
         self.note = note
@@ -87,10 +90,26 @@ extension PumpHistoryEvent {
         case duration
         case durationMin = "duration (min)"
         case rate
+        case deliveredUnits
         case temp
         case carbInput = "carb_input"
         case note
         case isSMB
         case isExternal
+    }
+}
+
+struct PumpHistoryEventIdentity: Equatable, Hashable {
+    let type: EventType
+    let timestamp: Date
+}
+
+extension PumpHistoryEvent {
+    // this is used by the pump history storage to update the existing entries
+    var identity: PumpHistoryEventIdentity {
+        PumpHistoryEventIdentity(
+            type: type,
+            timestamp: timestamp.truncatedToSecond
+        )
     }
 }

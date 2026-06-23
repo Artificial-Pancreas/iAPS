@@ -673,7 +673,7 @@ private final class GeometriesBuilder {
             let chunk = Array(chunk)
             guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
             let timeBegin = chunk[0].timestamp.timeIntervalSince1970
-            let timeEnd = timeBegin + (chunk[1].durationMin ?? 0).minutes.timeInterval
+            let timeEnd = timeBegin + .minutes(chunk[1].durationMin ?? 0)
             let rateCost = ChartConfig.basalHeight / CGFloat(maxBasalRate())
             let x0 = timeToXCoordinate(timeBegin)
             let y0 = ChartConfig.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
@@ -942,7 +942,7 @@ private final class GeometriesBuilder {
                 y: ChartConfig.basalHeight
             )
         }
-        let endBasalTime = lastBasal[0].timestamp.timeIntervalSince1970 + (lastBasal[1].durationMin?.minutes.timeInterval ?? 0)
+        let endBasalTime = lastBasal[0].timestamp.timeIntervalSince1970 + .minutes(lastBasal[1].durationMin ?? 0)
         let rateCost = ChartConfig.basalHeight / CGFloat(maxBasalRate())
         let x = timeToXCoordinate(endBasalTime)
         let y = ChartConfig.basalHeight - CGFloat(lastBasal[0].rate ?? 0) * rateCost
@@ -1241,7 +1241,7 @@ private final class GeometriesBuilder {
     }
 
     private static func calculateFirstHourDate() -> Date {
-        let firstDate = Date().addingTimeInterval(-1.days.timeInterval)
+        let firstDate = Date().removingTimeInterval(.days(1))
         return DateInRegion(firstDate, region: .current).dateTruncated(from: .minute)!.date
     }
 

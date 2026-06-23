@@ -86,6 +86,7 @@ private let availableStaticPumpManagers: [PumpManagerDescriptor] = [
 extension WeakSynchronizedSet: @retroactive @unchecked Sendable {}
 
 private let lastEventDateKey = "BaseDeviceDataManager.lastEventDate"
+private let lastKnownReservoirKey = "BaseDeviceDataManager.lastKnownReservoir"
 
 private enum ConfigOverrides {
     static let allowUploadsFromNightscoutCGM = {
@@ -118,7 +119,23 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 
     @MainActor private let displayGlucosePreference = DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter)
 
-    private let lastEventDate = Locked<Date?>(UserDefaults.standard.object(forKey: lastEventDateKey) as? Date)
+    private let lastEventDateStore = Locked<Date?>(UserDefaults.standard.object(forKey: lastEventDateKey) as? Date)
+
+    private var lastEventDate: Date? {
+        get {
+            lastEventDateStore.value
+        }
+        set {
+            let date = lastEventDateStore.mutate {
+                $0 = newValue
+            }
+            if let date {
+                UserDefaults.standard.set(date, forKey: lastEventDateKey)
+            } else {
+                UserDefaults.standard.removeObject(forKey: lastEventDateKey)
+            }
+        }
+    }
 
     private let latestCgmReadingDate: Locked<Date?> = Locked(nil)
 
@@ -143,18 +160,32 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
             rawPumpManagerStore.wrappedValue = newValue
             if newValue == nil {
                 lastKnownReservoir = nil
+                lastEventDate = nil
             }
         }
     }
 
     private let pumpManagerLocked: ManagerBox<PumpManagerUI?> = ManagerBox(nil)
 
-    // not using @PersistedProperty as an annotation directly because using a var breaks Sendable for DeviceDataManager
-    /// persist the latest known reservoir value
-    private let lastKnownReservoirStore = PersistedProperty<ReservoirReading.RawValue>(key: "lastKnownReservoir")
+    private let lastKnownReservoirStore = Locked<ReservoirReading?>(
+        ReservoirReading(
+            from: UserDefaults.standard.object(forKey: lastKnownReservoirKey) as? ReservoirReading.RawValue
+        )
+    )
     private var lastKnownReservoir: ReservoirReading? {
-        get { .init(from: lastKnownReservoirStore.wrappedValue) }
-        set { lastKnownReservoirStore.wrappedValue = newValue?.rawValue }
+        get {
+            lastKnownReservoirStore.value
+        }
+        set {
+            let updated = lastKnownReservoirStore.mutate {
+                $0 = newValue
+            }
+            if let updated {
+                UserDefaults.standard.set(updated.rawValue, forKey: lastKnownReservoirKey)
+            } else {
+                UserDefaults.standard.removeObject(forKey: lastKnownReservoirKey)
+            }
+        }
     }
 
     private var pumpManager: PumpManagerUI? {
@@ -775,14 +806,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
 
-        let date = lastEventDate.mutate {
-            $0 = events.last?.date
-        }
-        if let date {
-            UserDefaults.standard.set(date, forKey: lastEventDateKey)
-        } else {
-            UserDefaults.standard.removeObject(forKey: lastEventDateKey)
-        }
+        lastEventDate = events.last?.date
 
         let safeCompletion = PumpEventCompletion(completion, processQueue: processQueue)
         Task { [pumpHistoryStorage] in
@@ -838,7 +862,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
-        lastEventDate.value?.addingTimeInterval(-15.minutes.timeInterval) ?? Date().addingTimeInterval(-2.hours.timeInterval)
+        lastEventDate?.removingTimeInterval(.minutes(35)) ?? Date().removingTimeInterval(.hours(2))
     }
 
     var automaticDosingEnabled: Bool {

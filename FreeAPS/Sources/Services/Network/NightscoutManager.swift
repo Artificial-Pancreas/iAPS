@@ -877,6 +877,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     /// * read the snapshot of previously uploaded treatments from the file
     /// * detect new treatments in the current local data and upload them
+    /// * detect previously uploaded treatments that have changed and delete-reupload them
     /// * update the 'previously uploaded' file, removing entries older than `now - uploadedRetention`
     @discardableResult private func uploadTreatments(
         storedEvents treatments: [NigtscoutTreatment],
@@ -892,10 +893,19 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
 
         let previouslyUploaded = await storage.retrieve(fileToSave, as: [NigtscoutTreatment].self) ?? []
-        let previouslyUploadedKeys = Set(previouslyUploaded.map(\.identity))
 
-        let treatmentsToUpload = treatments.filter { !previouslyUploadedKeys.contains($0.identity) }
-            .sorted { $0.createdAt > $1.createdAt }
+        var treatmentsToUpload: [NigtscoutTreatment] = []
+        var treatmentsToUpdate: [NigtscoutTreatment] = []
+
+        for current in treatments {
+            if let uploaded = previouslyUploaded.first(where: { $0.identity == current.identity }) {
+                if uploaded.data != current.data {
+                    treatmentsToUpdate.append(current)
+                }
+            } else {
+                treatmentsToUpload.append(current)
+            }
+        }
 
         do {
             for chunk in treatmentsToUpload.chunks(ofCount: 100) {
@@ -905,10 +915,53 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             let eventTypes = treatments.map(\.eventType).uniqued().map(\.rawValue).joined(separator: ", ")
             debug(.nightscout, "treatments uploaded (\(eventTypes)): \(treatmentsToUpload.count)")
 
+            var deletedKeys: [NigtscoutTreatmentIdentity] = []
+            var updated: [NigtscoutTreatment] = []
+            for toUpdate in treatmentsToUpdate {
+                do {
+                    try await nightscout.deleteTreatment(toUpdate)
+                    deletedKeys.append(toUpdate.identity)
+                    debug(
+                        .nightscout,
+                        "\(toUpdate.eventType) treatment deleted (for update): \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds))"
+                    )
+                } catch {
+                    debug(
+                        .nightscout,
+                        "failed to delete a \(toUpdate.eventType) treatment (for update): \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds)) - \(error.localizedDescription)"
+                    )
+                    break
+                }
+            }
+
+            for toUpdate in treatmentsToUpdate {
+                guard deletedKeys.contains(toUpdate.identity) else { continue }
+                do {
+                    try await nightscout.uploadTreatments([toUpdate])
+                    updated.append(toUpdate)
+                    debug(
+                        .nightscout,
+                        "\(toUpdate.eventType) treatment updated: \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds))"
+                    )
+                } catch {
+                    debug(
+                        .nightscout,
+                        "failed to update a \(toUpdate.eventType) treatment: \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds)) - \(error.localizedDescription)"
+                    )
+                    break
+                }
+            }
+
             let storedKeys = Set(treatments.map(\.identity))
             let cutoff = Date().removingTimeInterval(uploadedRetention)
+
+            let treatmentsToUploadSnapshot = treatmentsToUpload
+            let deletedKeysSnapshot = deletedKeys
+            let updatedSnapshot = updated
+
             await storage.modify(file: fileToSave, as: NigtscoutTreatment.self) { previouslyUploaded in
-                (previouslyUploaded + treatmentsToUpload)
+                let previousWithoutUpdated = previouslyUploaded.filter { !deletedKeysSnapshot.contains($0.identity) }
+                return (previousWithoutUpdated + updatedSnapshot + treatmentsToUploadSnapshot)
                     // only store events not older than uploadedRetention, but keep everything that is present in storage to avoid re-uploads
                     .filter { $0.createdAt >= cutoff || storedKeys.contains($0.identity) }
                     // newest -> oldest
@@ -1208,8 +1261,8 @@ extension BaseNightscoutManager {
 
         return (
             bolusesAndCarbs +
-            temps.filter { $0.duration != nil } +
-            misc
+                temps.filter { $0.duration != nil } +
+                misc
         ).sorted { $0.createdAt > $1.createdAt }
     }
 
@@ -1264,7 +1317,7 @@ extension BaseNightscoutManager {
         let eventsManual = events.filter { $0.enteredBy == TempTarget.manual }
         let treatments = eventsManual.map {
             NigtscoutTreatment(
-                duration: Int($0.duration),
+                duration: $0.duration,
                 rawDuration: nil,
                 rawRate: nil,
                 absolute: nil,
@@ -1287,19 +1340,5 @@ extension BaseNightscoutManager {
 private extension AsyncSequence {
     func drain() async rethrows {
         for try await _ in self {}
-    }
-}
-
-private struct NigtscoutTreatmentIdentity: Equatable, Hashable {
-    let eventType: EventType
-    let createdAt: Date
-}
-
-private extension NigtscoutTreatment {
-    var identity: NigtscoutTreatmentIdentity {
-        NigtscoutTreatmentIdentity(
-            eventType: eventType,
-            createdAt: createdAt
-        )
     }
 }

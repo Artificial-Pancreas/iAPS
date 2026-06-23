@@ -137,7 +137,7 @@ extension DataTable {
                         creationDate: chunk[0].timestamp,
                         amount: chunk[0].rate ?? 0,
                         secondAmount: nil,
-                        duration: Decimal(chunk[1].durationMin ?? 0)
+                        duration: chunk[1].durationMin ?? 0
                     )
                 }
 
