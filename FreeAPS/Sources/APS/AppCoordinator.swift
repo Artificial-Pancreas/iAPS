@@ -70,7 +70,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let carbDeletions = PassthroughSubject<[CarbsEntry], Never>()
 
-    // current temp targets, newest -> oldest
+    // current temp targets, oldest -> newest
     let tempTargets = CurrentValueSubject<[TempTarget], Never>([])
 
     let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
@@ -195,7 +195,7 @@ final class AppCoordinator: @unchecked Sendable {
         carbDeletions.send(value)
     }
 
-    /// MUST BE newest -> oldest
+    /// MUST BE oldest -> newest
     func setTempTargets(_ value: [TempTarget]) {
         tempTargets.send(value)
     }
