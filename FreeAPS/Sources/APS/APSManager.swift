@@ -195,6 +195,13 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     // Loop entry point
     private func loop() async {
+        // start background time extension
+        await withBackgroundTask("loop", extend: .seconds(5)) {
+            await self.loopInsideBackgroundTask()
+        }
+    }
+
+    private func loopInsideBackgroundTask() async {
         let settings = appCoordinator.settings.value
 
         guard !appCoordinator.isLooping.value else {
@@ -213,16 +220,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         appCoordinator.setIsLooping(true)
 
-        // start background time extension
-        let backgroundTaskIdBox = TaskIDBox()
-        let backgroundTimeRemaining = await MainActor.run { () -> TimeInterval in
-            backgroundTaskIdBox.id = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
-                UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
-            }
-            return UIApplication.shared.backgroundTimeRemaining
-        }
-
-        debug(.apsManager, "Starting loop, background time remaining: \(backgroundTimeRemaining.rounded())")
+        debug(.apsManager, "starting loop")
 
         let lastStartLoopDate = Date()
         self.lastStartLoopDate = lastStartLoopDate
@@ -283,17 +281,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         appCoordinator.setIsLooping(false)
 
         appCoordinator.sendLoopCompleted(loopOutcome)
-
-        // TODO: is this a good idea?
-        // give background tasks a chance to finish?
-        try? await Task.sleep(for: .seconds(1))
-
-        // end of the background tasks
-        await MainActor.run {
-            if backgroundTaskIdBox.id != .invalid {
-                UIApplication.shared.endBackgroundTask(backgroundTaskIdBox.id)
-            }
-        }
     }
 
     private func fetchIntervalSinceLastLoop(thisLoopDate: Date) async -> Double? {
