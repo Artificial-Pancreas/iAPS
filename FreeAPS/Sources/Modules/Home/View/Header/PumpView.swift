@@ -185,8 +185,13 @@ struct PumpView: View {
                             }
                         }.offset(y: pumpInfo?.expiresAt == nil ? -4 : 0)
                 } else {
-                    Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
-                        .offset(y: -4)
+                    if pumpInfo != nil {
+                        Text("---").font(.statusFont).foregroundStyle(.secondary)
+                            .offset(y: -4)
+                    } else {
+                        Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
+                            .offset(y: -4)
+                    }
                 }
 
                 // MDT and Dana
@@ -199,7 +204,8 @@ struct PumpView: View {
                         .rotationEffect(.degrees(-90))
                         .frame(maxWidth: 32, maxHeight: 12)
                         .foregroundColor(batteryColor)
-                        .offset(x: -5, y: -0.7)
+                        .offset(x: -5, y: -0.9)
+                        .padding(.bottom, 2)
                 }
             }
         }
