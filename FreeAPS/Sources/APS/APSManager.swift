@@ -106,8 +106,10 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     }
 
     private var override: OverrideSnapshot? {
-        guard let last = overrideStorage.fetchLatestOverrideSnapshot(), last.enabled else { return nil }
-        return last
+        get async {
+            guard let last = await overrideStorage.fetchLatestOverrideSnapshot(), last.enabled else { return nil }
+            return last
+        }
     }
 
     init(
@@ -399,7 +401,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             _ = await makeProfiles()
             _ = await autosens()
             _ = await dailyAutotune()
-            let override = self.override
+            let override = await self.override
             let suggestion = await openAPS.determineBasal(
                 currentTemp: temp,
                 clock: now,
@@ -698,16 +700,16 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             )
         case let .override(name):
             guard !name.isEmpty else { return }
-            let lastActiveOveride = overrideStorage.fetchLatestOverride().first
+            let lastActiveOveride = await overrideStorage.fetchLatestOverride().first
             let isActive = lastActiveOveride?.enabled ?? false
 
             // Command to Cancel Active Override
             if name.lowercased() == "cancel", isActive {
                 if let activeOveride = lastActiveOveride {
-                    let presetName = overrideStorage.isPresetName()
+                    let presetName = await overrideStorage.isPresetName()
                     let nsString = presetName ?? activeOveride.percentage.formatted()
 
-                    if let duration = overrideStorage.cancelProfile() {
+                    if let duration = await overrideStorage.cancelProfile() {
                         await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                     }
                     await announcementsStorage.storeAnnouncements([announcement], enacted: true)
@@ -718,21 +720,21 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             // Cancel eventual current active override first
             if isActive {
-                if let duration = overrideStorage.cancelProfile(), let last = lastActiveOveride {
-                    let presetName = overrideStorage.isPresetName()
+                if let duration = await overrideStorage.cancelProfile(), let last = lastActiveOveride {
+                    let presetName = await overrideStorage.isPresetName()
                     let nsString = presetName ?? last.percentage.formatted()
                     await nightscout.uploadOverride(nsString, duration, last.date ?? Date())
                 }
             }
 
             // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
-            let preset = overrideStorage.fetchPreset(name)
-            guard let id = preset.id, let preset_ = preset.preset else { return }
-            overrideStorage.overrideFromPreset(preset_, id)
-            let currentActiveOveride = overrideStorage.fetchLatestOverride().first
+            let preset = await overrideStorage.fetchPreset(name)
+            guard let id = preset.id, let preset = preset.preset else { return }
+            await overrideStorage.overrideFromPreset(preset, id)
+            let currentActiveOveride = await overrideStorage.fetchLatestOverride().first
             await nightscout.uploadOverride(
                 name,
-                Double(truncating: preset.preset?.duration ?? 0),
+                Double(preset.duration ?? 0),
                 currentActiveOveride?.date ?? Date.now
             )
             await announcementsStorage.storeAnnouncements([announcement], enacted: true)

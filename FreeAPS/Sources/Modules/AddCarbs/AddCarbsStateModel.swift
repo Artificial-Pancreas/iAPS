@@ -10,6 +10,7 @@ extension AddCarbs {
         @Injected() var nightscoutManager: NightscoutManager!
 
         private let coreDataStorage = CoreDataStorage()
+        private let overrideStorage = OverrideStorage()
 
         @Published var carbs: Decimal = 0
         @Published var date = Date()
@@ -38,7 +39,6 @@ extension AddCarbs {
         let now = Date.now
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-        let coredataContextBackground = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
         override func subscribe() async {
             carbsRequired = appCoordinator.suggested.value?.carbsReq
@@ -267,25 +267,23 @@ extension AddCarbs {
         }
 
         private func hypo() async {
-            let os = OverrideStorage()
-
             // Cancel any eventual Other Override already active
-            if let activeOveride = os.fetchLatestOverride().first {
-                let presetName = os.isPresetName()
+            if let activeOveride = await overrideStorage.fetchLatestOverride().first {
+                let presetName = await overrideStorage.isPresetName()
                 // Is the Override a Preset?
                 if let preset = presetName {
-                    if let duration = os.cancelProfile() {
+                    if let duration = await overrideStorage.cancelProfile() {
                         // Update in Nightscout
                         await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
                     }
                 } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                    if let duration = os.cancelProfile() {
+                    if let duration = await overrideStorage.cancelProfile() {
                         await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
                     }
                 } else {
                     let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                         .formatted() + " %" : "Custom"
-                    if let duration = os.cancelProfile() {
+                    if let duration = await overrideStorage.cancelProfile() {
                         await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                     }
                 }
@@ -296,16 +294,19 @@ extension AddCarbs {
             }
             // Enable New Override
             if profileID == "Hypo Treatment" {
-                let override = OverridePresets(context: coredataContextBackground)
-                override.percentage = 90
-                override.smbIsOff = true
-                override.duration = 45
-                override.name = "📉"
-                override.advancedSettings = true
-                override.target = 117
-                override.date = Date.now
-                override.indefinite = false
-                os.overrideFromPreset(override, profileID)
+                // transient, non-persisted override preset
+                let override = OverridePresetsSnapshot(
+                    date: Date.now,
+                    name: "📉",
+                    advancedSettings: true,
+                    duration: 45,
+                    indefinite: false,
+                    percentage: 90,
+                    smbIsOff: true,
+                    target: 117,
+                )
+
+                await overrideStorage.overrideFromPreset(override, profileID)
                 // Upload to Nightscout
                 await nightscoutManager.uploadOverride(
                     "📉",
@@ -313,7 +314,7 @@ extension AddCarbs {
                     override.date ?? Date.now
                 )
             } else {
-                os.activatePreset(profileID)
+                await overrideStorage.activatePreset(profileID)
             }
         }
 

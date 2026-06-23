@@ -56,7 +56,7 @@ extension Home {
         @Published var standing: Bool = false
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
-        @Published var overrideHistory: [OverrideHistory] = []
+        @Published var overrideHistory: [OverrideHistorySnapshot] = []
         @Published var alwaysUseColors: Bool = false
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
@@ -341,22 +341,22 @@ extension Home {
         func cancelProfile() {
             Task {
                 // Is there a saved Override?
-                if let activeOveride = overrideStorage.fetchLatestOverride().first {
-                    let presetName = overrideStorage.isPresetName()
+                if let activeOveride = await overrideStorage.fetchLatestOverride().first {
+                    let presetName = await overrideStorage.isPresetName()
                     // Is the Override a Preset?
                     if let preset = presetName {
-                        if let duration = overrideStorage.cancelProfile() {
+                        if let duration = await overrideStorage.cancelProfile() {
                             // Update in Nightscout
                             await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
                         }
                     } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                        if let duration = overrideStorage.cancelProfile() {
+                        if let duration = await overrideStorage.cancelProfile() {
                             await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
                         }
                     } else {
                         let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                             .formatted() + " %" : "Custom"
-                        if let duration = overrideStorage.cancelProfile() {
+                        if let duration = await overrideStorage.cancelProfile() {
                             await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                         }
                     }

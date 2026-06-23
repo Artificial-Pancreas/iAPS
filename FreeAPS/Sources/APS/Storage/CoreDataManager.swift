@@ -41,13 +41,11 @@ final class CoreDataManager: LifetimeOwner, AppService {
         }
     }
 
-    // nightscout backfill calls this version and waits for the `completion` callback
+    // nightscout backfill calls this version
     func storeGlucose(_ bloodGlucose: [BloodGlucose]) async {
-        let backgroundContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        backgroundContext.undoManager = nil
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { backgroundContext in
+            backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
-        await backgroundContext.perform {
             guard let earliestDate = bloodGlucose.min(by: { $0.dateString < $1.dateString }).map(\.dateString) else {
                 return
             }

@@ -3,7 +3,7 @@ import Foundation
 
 // a snapshot (DTO) of a CoreData Override entity
 // entities are not safe to send across actor/thread boundaries (not Sendable), this snapshot is
-struct OverrideSnapshot: Sendable {
+struct OverrideSnapshot: Sendable, Equatable {
     let advancedSettings: Bool
     let basal: Bool
     let cr: Bool

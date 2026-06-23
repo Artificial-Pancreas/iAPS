@@ -106,8 +106,10 @@ actor OpenAPS: Sendable {
 
         now = Date.now
         // Auto ISF Layer
-        if (settings.autoisfEffective && notDisabled(override: override, settings: settings)) ||
-            (aisfEnabled(override: override) && !settings.isNighttime)
+        let notDisabled = await notDisabled(override: override, settings: settings)
+        let aisfEnabled = await aisfEnabled(override: override)
+        if (settings.autoisfEffective && notDisabled) ||
+            (aisfEnabled && !settings.isNighttime)
         {
             now = Date.now
             profile = await autosisf(
@@ -325,16 +327,16 @@ actor OpenAPS: Sendable {
 
     // MARK: - Private
 
-    private func aisfEnabled(override: OverrideSnapshot?) -> Bool {
+    private func aisfEnabled(override: OverrideSnapshot?) async -> Bool {
         guard let current = override, current.enabled else { return false }
-        guard current.overrideAutoISF, let settings = overrideStorage.fetchAutoISFsetting(id: current.id ?? ""),
+        guard current.overrideAutoISF, let settings = await overrideStorage.fetchAutoISFsetting(id: current.id ?? ""),
               settings.autoisf else { return false }
         return true
     }
 
-    private func notDisabled(override: OverrideSnapshot?, settings: FreeAPSSettings) -> Bool {
+    private func notDisabled(override: OverrideSnapshot?, settings: FreeAPSSettings) async -> Bool {
         guard let current = override, current.enabled else { return true }
-        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
+        guard current.overrideAutoISF, let settings = await overrideStorage.fetchAutoISFsetting(id: current.id ?? ""),
               !settings.autoisf else { return true }
         return false
     }
@@ -407,7 +409,7 @@ actor OpenAPS: Sendable {
         preferences: Preferences?,
         profile: RawJSON,
         tdd: InsulinDistributionSnapshot?,
-        settings: FreeAPSSettings?,
+        settings: FreeAPSSettings,
         override: OverrideSnapshot?
     ) async -> String {
         var reasonString = reason
@@ -427,9 +429,10 @@ actor OpenAPS: Sendable {
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
             // Auto ISF
-            if let freeAPSSettings = settings,
-               (freeAPSSettings.autoisfEffective && notDisabled(override: override, settings: freeAPSSettings)) ||
-               (aisfEnabled(override: override) && !freeAPSSettings.isNighttime)
+            let notDisabled = await notDisabled(override: override, settings: settings)
+            let aisfEnabled = await aisfEnabled(override: override)
+            if (settings.autoisfEffective && notDisabled) ||
+                (aisfEnabled && !settings.isNighttime)
             {
                 let reasons = profile.autoISFreasons ?? ""
                 // If disabled in middleware or Auto ISF layer
@@ -463,7 +466,7 @@ actor OpenAPS: Sendable {
 
                     insertedResons += tddString + ", "
 
-                    if let settings = settings, autoisfDisabledByNighttime(settings: settings) {
+                    if autoisfDisabledByNighttime(settings: settings) {
                         debugAutoISF(settings: settings)
                         insertedResons += "Auto ISF disabled during nighttime" + ", "
                     }
@@ -472,7 +475,7 @@ actor OpenAPS: Sendable {
                 } else {
                     // Autosens
                     var comment = ""
-                    if let settings = settings, autoisfDisabledByNighttime(settings: settings) {
+                    if autoisfDisabledByNighttime(settings: settings) {
                         debugAutoISF(settings: settings)
                         comment = "Auto ISF disabled during nighttime" + ", "
                     }
@@ -566,11 +569,9 @@ actor OpenAPS: Sendable {
 
             let overrideToSave = override?.enabled ?? false
 
-            let context = CoreDataStack.shared.persistentContainer.newBackgroundContext()
-
             let tddToSave = totalDailyDose
 
-            await context.perform {
+            await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
                 let saveSuggestion = Reasons(context: context)
                 saveSuggestion.isf = isf as NSDecimalNumber
                 saveSuggestion.cr = cr as NSDecimalNumber
@@ -800,8 +801,8 @@ actor OpenAPS: Sendable {
         let start = Date.now
         var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
         let wp = preferences?.weightPercentage ?? 1
-        let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
-        let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30) as NSDecimalNumber
+        let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30)
+        let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30)
 
         var now = Date.now
         // TDD
@@ -819,7 +820,7 @@ actor OpenAPS: Sendable {
 
         // Overrides
         now = Date.now
-        let overrideArray = overrideStorage.fetchNumberOfOverrides(numbers: 2)
+        let overrideArray = await overrideStorage.fetchNumberOfOverrides(numbers: 2)
         print(
             "dynamicVariables: Time for fetchNumberOfOverrides \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
@@ -862,11 +863,11 @@ actor OpenAPS: Sendable {
         var unlimited = overrideArray.first?.indefinite ?? true
         var disableSMBs = overrideArray.first?.smbIsOff ?? false
         let overrideMaxIOB = overrideArray.first?.overrideMaxIOB ?? false
-        let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0) as NSDecimalNumber
+        let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0)
 
         var name = ""
         if useOverride, overrideArray.first?.isPreset ?? false,
-           let overridePreset = overrideStorage.isPresetName()
+           let overridePreset = await overrideStorage.isPresetName()
         {
             name = overridePreset
         }
@@ -889,7 +890,7 @@ actor OpenAPS: Sendable {
             let date = overrideArray.first?.date ?? Date()
             if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !unlimited {
                 useOverride = false
-                if overrideStorage.cancelProfile() != nil {
+                if await overrideStorage.cancelProfile() != nil {
                     debug(.nightscout, "Override ended, duration: \(duration) minutes")
                 }
             }
@@ -899,7 +900,7 @@ actor OpenAPS: Sendable {
                (recent.actualDate ?? .distantPast) > (overrideArray.first?.date ?? .distantFuture)
             {
                 useOverride = false
-                if overrideStorage.cancelProfile() != nil {
+                if await overrideStorage.cancelProfile() != nil {
                     debug(
                         .nightscout,
                         "Override ended, because of new carbs: \(String(describing: recent.carbs)) g, duration: \(duration) minutes"
@@ -918,9 +919,9 @@ actor OpenAPS: Sendable {
                .Direction.doubleDown.symbol == BloodGlucose.Direction.doubleUp.symbol
             {
                 useOverride = false
-                if let duration = overrideStorage.cancelProfile() {
-                    let last_ = overrideStorage.fetchLatestOverride().last
-                    let name = overrideStorage.isPresetName()
+                if let duration = await overrideStorage.cancelProfile() {
+                    let last_ = await overrideStorage.fetchLatestOverride().last
+                    let name = await overrideStorage.isPresetName()
                     if let last = last_ {
                         await nightscout.uploadOverride(name ?? "", duration, last.date ?? Date.now)
                     }
@@ -939,9 +940,9 @@ actor OpenAPS: Sendable {
                ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
             {
                 useOverride = false
-                if let duration = overrideStorage.cancelProfile() {
-                    let last_ = overrideStorage.fetchLatestOverride().last
-                    let name = overrideStorage.isPresetName()
+                if let duration = await overrideStorage.cancelProfile() {
+                    let last_ = await overrideStorage.fetchLatestOverride().last
+                    let name = await overrideStorage.isPresetName()
                     if let last = last_ {
                         await nightscout.uploadOverride(name ?? "", duration, last.date ?? Date.now)
                     }
@@ -985,7 +986,7 @@ actor OpenAPS: Sendable {
         // Auto ISF
         var autoISFsettings = AutoISFsettings()
         if useOverride, overrideArray.first?.overrideAutoISF ?? false,
-           let fetched = overrideStorage.fetchAutoISFsetting(id: overrideArray.first?.id ?? "Not This One")
+           let fetched = await overrideStorage.fetchAutoISFsetting(id: overrideArray.first?.id ?? "Not This One")
         {
             autoISFsettings = AutoISFsettings(
                 autoisf: fetched.autoisf,
@@ -1043,8 +1044,8 @@ actor OpenAPS: Sendable {
             smbIsAlwaysOff: overrideArray.first?.smbIsAlwaysOff ?? false,
             start: (overrideArray.first?.start ?? 0) as Decimal,
             end: (overrideArray.first?.end ?? 0) as Decimal,
-            smbMinutes: (overrideArray.first?.smbMinutes ?? smbMinutes) as Decimal,
-            uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal,
+            smbMinutes: overrideArray.first?.smbMinutes ?? smbMinutes,
+            uamMinutes: overrideArray.first?.uamMinutes ?? uamMinutes,
             maxIOB: maxIOB as Decimal,
             overrideMaxIOB: overrideMaxIOB,
             preset: name,

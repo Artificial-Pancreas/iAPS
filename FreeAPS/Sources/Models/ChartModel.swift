@@ -24,8 +24,8 @@ class ChartModel: ObservableObject {
     @Published var displayXgridLines: Bool
     @Published var displayYgridLines: Bool
     @Published var thresholdLines: Bool
-    @Published var latestOverride: Override?
-    @Published var overrideHistory: [OverrideHistory]
+    @Published var latestOverride: OverrideSnapshot?
+    @Published var overrideHistory: [OverrideHistorySnapshot]
     @Published var minimumSMB: Decimal
     @Published var insulinDIA: Decimal
     @Published var insulinPeak: Decimal
@@ -75,8 +75,8 @@ class ChartModel: ObservableObject {
         displayXgridLines: Bool,
         displayYgridLines: Bool,
         thresholdLines: Bool,
-        latestOverride: Override?,
-        overrideHistory: [OverrideHistory],
+        latestOverride: OverrideSnapshot?,
+        overrideHistory: [OverrideHistorySnapshot],
         minimumSMB: Decimal,
         insulinDIA: Decimal,
         insulinPeak: Decimal,

@@ -182,7 +182,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             }
         }
 
-        let overridePresets = overridePresetDatabaseUpload(profile: profileName)
+        let overridePresets = await overridePresetDatabaseUpload(profile: profileName)
         if !overridePresets.presets.isEmpty {
             let uploadedOverridePresets = await storage.retrieveFile(
                 OpenAPS.Nightscout.uploadedOverridePresets,
@@ -370,8 +370,8 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         pendingLogDate = nil
     }
 
-    private func overridePresetDatabaseUpload(profile: String) -> DatabaseOverride {
-        DatabaseOverride(profile: profile, presets: convertOverridePresets())
+    private func overridePresetDatabaseUpload(profile: String) async -> DatabaseOverride {
+        DatabaseOverride(profile: profile, presets: await convertOverridePresets())
     }
 
     private func mealPresetDatabaseUpload(profile: String) async -> DatabaseMeal {
@@ -391,8 +391,8 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         }
     }
 
-    private func convertOverridePresets() -> [MigratedOverridePresets] {
-        let presets = overrideStorage.fetchProfiles()
+    private func convertOverridePresets() async -> [MigratedOverridePresets] {
+        let presets = await overrideStorage.fetchProfiles()
         return presets.map { item -> MigratedOverridePresets in
             MigratedOverridePresets(
                 advancedSettings: item.advancedSettings,

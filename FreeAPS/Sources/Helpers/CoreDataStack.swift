@@ -31,35 +31,8 @@ final class CoreDataStack: ObservableObject {
         )
     }
 
-    var context: NSManagedObjectContext {
-        persistentContainer.viewContext
-    }
-
-    func saveContext() {
-        let context = persistentContainer.viewContext
-
-        guard context.hasChanges else { return }
-
-        context.perform {
-            do {
-                try context.save()
-            } catch {
-                let nsError = error as NSError
-
-                debug(
-                    .apsManager,
-                    "Failed saving CoreData context: \(nsError), \(nsError.userInfo)"
-                )
-            }
-        }
-    }
-
     func newBackgroundContext() -> NSManagedObjectContext {
         persistentContainer.newBackgroundContext()
-    }
-
-    func delete(_ object: NSManagedObject) {
-        context.delete(object)
     }
 
     func deleteBatch(entity: String) {
@@ -68,16 +41,22 @@ final class CoreDataStack: ObservableObject {
                 entityName: entity
             )
         )
+        request.resultType = .resultTypeObjectIDs
 
-        context.perform {
+        persistentContainer.performBackgroundTask { context in
             do {
                 debug(
                     .apsManager,
                     "Clearing \(entity) entries from CoreData."
                 )
 
-                try self.context.execute(request)
-
+                let result = try context.execute(request) as? NSBatchDeleteResult
+                if let objectIDs = result?.result as? [NSManagedObjectID] {
+                    NSManagedObjectContext.mergeChanges(
+                        fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
+                        into: [self.persistentContainer.viewContext] // update the view context after a batch delete
+                    )
+                }
             } catch {
                 debug(
                     .apsManager,
