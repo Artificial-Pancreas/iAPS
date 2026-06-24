@@ -60,11 +60,6 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
 
-        @FetchRequest(
-            entity: Onboarding.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var onboarded: FetchedResults<Onboarding>
-
         private static let numberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -1101,90 +1096,82 @@ extension Home {
 
         var body: some View {
             GeometryReader { geo in
-                if onboarded.first?.firstRun ?? true, let openAPSSettings = state.openAPSSettings {
-                    /// If old iAPS user pre v5.7.1 OpenAPS settings will be reset, but can be restored in View below
-                    importResetSettingsView(settings: openAPSSettings)
-                } else {
-                    VStack(spacing: 0) {
-                        // Header View
-                        headerView(geo)
-                        ScrollView {
-                            VStack {
-                                // Main Chart
-                                chart
-                                // Adjust hours visible (X-Axis) and ratio display
-                                timeSetting
-                                    .overlay { isfView }
-                                // TIR Chart
-                                if !state.data.glucose.isEmpty {
-                                    preview.padding(.top, 15)
-                                }
-                                // Loops Chart
-                                loopPreview.padding(.vertical, 15)
-
-                                // COB Chart
-                                if state.carbData > 0 {
-                                    activeCOBView.padding(.bottom, 15)
-                                }
-
-                                // IOB Chart
-                                if !state.iobData.isEmpty {
-                                    activeIOBView.padding(.bottom, 15)
-                                }
-
-                                // Summary Views
-                                insulinView.padding(.bottom, 15)
-                                mealsView.padding(.bottom, 15)
+                VStack(spacing: 0) {
+                    // Header View
+                    headerView(geo)
+                    ScrollView {
+                        VStack {
+                            // Main Chart
+                            chart
+                            // Adjust hours visible (X-Axis) and ratio display
+                            timeSetting
+                                .overlay { isfView }
+                            // TIR Chart
+                            if !state.data.glucose.isEmpty {
+                                preview.padding(.top, 15)
                             }
-                            .background {
-                                // Track vertical scroll
-                                GeometryReader { proxy in
-                                    let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
-                                    let yThreshold: CGFloat = -550
-                                    Color.clear
-                                        .onChange(of: scrollPosition) {
-                                            if scrollPosition < yThreshold, state.iobs > 0 || state.carbData > 0,
-                                               !state.skipGlucoseChart
-                                            {
-                                                withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
-                                            } else {
-                                                withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
-                                            }
-                                        }
-                                }
+                            // Loops Chart
+                            loopPreview.padding(.vertical, 15)
+
+                            // COB Chart
+                            if state.carbData > 0 {
+                                activeCOBView.padding(.bottom, 15)
                             }
-                        }.coordinateSpace(name: "HomeScrollView")
-                        // Buttons
-                        buttonPanel(geo)
-                    }
-                    .background(
-                        colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
-                    )
-                    .ignoresSafeArea(edges: .vertical)
-                    .overlay {
-                        BolusProgressOverlay(
-                            cancel: state.cancelBolus
-                        )
-                    }
-                    .onChange(of: scenePhase) {
-                        switch scenePhase {
-                        case .active:
-                            state.startTimer()
-                            checkBuildExpiration()
-                        case .background,
-                             .inactive:
-                            state.stopTimer()
-                        default:
-                            break
+
+                            // IOB Chart
+                            if !state.iobData.isEmpty {
+                                activeIOBView.padding(.bottom, 15)
+                            }
+
+                            // Summary Views
+                            insulinView.padding(.bottom, 15)
+                            mealsView.padding(.bottom, 15)
                         }
+                        .background {
+                            // Track vertical scroll
+                            GeometryReader { proxy in
+                                let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
+                                let yThreshold: CGFloat = -550
+                                Color.clear
+                                    .onChange(of: scrollPosition) {
+                                        if scrollPosition < yThreshold, state.iobs > 0 || state.carbData > 0,
+                                           !state.skipGlucoseChart
+                                        {
+                                            withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
+                                        } else {
+                                            withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
+                                        }
+                                    }
+                            }
+                        }
+                    }.coordinateSpace(name: "HomeScrollView")
+                    // Buttons
+                    buttonPanel(geo)
+                }
+                .background(
+                    colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
+                )
+                .ignoresSafeArea(edges: .vertical)
+                .overlay {
+                    BolusProgressOverlay(
+                        cancel: state.cancelBolus
+                    )
+                }
+                .onChange(of: scenePhase) {
+                    switch scenePhase {
+                    case .active:
+                        state.startTimer()
+                        checkBuildExpiration()
+                    case .background,
+                         .inactive:
+                        state.stopTimer()
+                    default:
+                        break
                     }
                 }
             }
             .onAppear {
                 state.startTimer()
-                if onboarded.first?.firstRun ?? true {
-                    state.fetchPreferences()
-                }
                 checkBuildExpiration()
             }
             .alert(
@@ -1253,13 +1240,6 @@ extension Home {
                 }
                 LastLoopErrorView(suggestion: state.data.suggestion)
             }
-        }
-
-        private func importResetSettingsView(settings: Preferences) -> some View {
-            Restore.RootView(
-                resolver: resolver,
-                openAPS: settings
-            )
         }
     }
 }
