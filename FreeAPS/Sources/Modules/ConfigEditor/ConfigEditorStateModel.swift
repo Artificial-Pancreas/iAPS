@@ -24,6 +24,9 @@ extension ConfigEditor {
             Task {
                 // TODO: display an error in the UI in case of invalid JSON?
                 await persist(configText, as: file)
+                if file == OpenAPS.FreeAPS.settings || file == OpenAPS.Settings.preferences || file == OpenAPS.Settings.settings {
+                    await settingsManager.resetCachedSettings()
+                }
             }
         }
 
