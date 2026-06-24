@@ -9,9 +9,6 @@ extension AppleHealthKit {
         @Published var needShowInformationTextForSetPermissions = false
 
         override func subscribe() async {
-            let settings = await settingsManager.settings
-            useAppleHealth = settings.useAppleHealth
-
             needShowInformationTextForSetPermissions = await healthKitManager.areAllowAllPermissions
 
             subscribeSetting(\.useAppleHealth, on: $useAppleHealth) {
@@ -24,19 +21,17 @@ extension AppleHealthKit {
                     return
                 }
 
-                Task {
-                    do {
-                        let granted = try await self.healthKitManager.requestPermission()
-                        if granted {
-                            debug(.service, "Permission granted for HealthKitManager")
-                        } else {
-                            debug(.service, "Permission not granted for HealthKitManager")
-                        }
-                    } catch {
-                        warning(.service, "Permission not granted for HealthKitManager", error: error)
+                do {
+                    let granted = try await self.healthKitManager.requestPermission()
+                    if granted {
+                        debug(.service, "Permission granted for HealthKitManager")
+                    } else {
+                        debug(.service, "Permission not granted for HealthKitManager")
                     }
-                    self.needShowInformationTextForSetPermissions = await !self.healthKitManager.checkAvailabilitySaveBG()
+                } catch {
+                    warning(.service, "Permission not granted for HealthKitManager", error: error)
                 }
+                self.needShowInformationTextForSetPermissions = await !self.healthKitManager.checkAvailabilitySaveBG()
             }
         }
     }

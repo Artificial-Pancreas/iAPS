@@ -51,7 +51,7 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
         on settingPublisher: some Publisher<T, Never>,
         initial: @escaping @MainActor(T) -> Void,
         map: ((T) -> T)? = nil,
-        didSet: (@MainActor(T) -> Void)? = nil
+        didSet: (@MainActor(T) async -> Void)? = nil
     ) where T: Sendable {
         initial(appCoordinator.settings.value[keyPath: keyPath])
         settingPublisher
@@ -66,7 +66,7 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
                         updatedSettings[keyPath: keyPath] = value
                         return updatedSettings
                     }
-                    didSet?(value)
+                    await didSet?(value)
                 }
             }
             .store(in: lifetime)
