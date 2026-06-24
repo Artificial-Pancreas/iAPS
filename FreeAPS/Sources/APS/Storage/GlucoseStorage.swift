@@ -9,12 +9,12 @@ protocol GlucoseStorage: Sendable {
     /// returns nil when no new records were recorded
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]?
     func removeGlucose(ids: [String]) async
-    /// retrieves raw glucose from storage - no smoothing
+    /// retrieves raw glucose from storage - no smoothing (oldest->newest)
     func retrieveRaw() async -> [BloodGlucose]
-    /// retrieves glucose from storage
+    /// retrieves glucose from storage (oldest->newest)
     /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
     func retrieve() async -> [BloodGlucose]
-    /// retrieves glucose from storage
+    /// retrieves glucose from storage in newest->oldest order (opposite of retrieve/retrieveRaw!) (oref0 wants this order)
     /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
     /// filters records by frequency - at most "1 per minute" or "1 per 5 minutes" (according to settings.allowOneMinuteGlucose)
     func retrieveFiltered() async -> [BloodGlucose]
@@ -124,11 +124,12 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
     }
 
     func retrieveRaw() async -> [BloodGlucose] {
+        // file is stored newest->oldest, so we reverse it
         await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
     }
 
     func retrieve() async -> [BloodGlucose] {
-        // oldest-to-newest (file is stored newest-to-oldest, reversed here)
+        // file is stored newest->oldest, so we reverse it
         var retrieved = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
         guard !retrieved.isEmpty else {
             return []
@@ -143,12 +144,16 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
         return retrieved
     }
 
+    /// this function returns blood glucose in newest->oldest order (opposite of retrieve())
+    /// it is used by oref0 which wants this order
     func retrieveFiltered() async -> [BloodGlucose] {
         let retrieved = await retrieve() // smoothed already
         let settings = await settingsManager.settings
 
         let minInterval = settings.allowOneMinuteGlucose ? Config.filterTimeOneMinute : Config
             .filterTimeFiveMinutes
+        
+        // sorting newest->oldest happens inside filterFrequentGlucose
         return FrequentGlucoseFiltering.filterFrequentGlucose(retrieved, interval: minInterval)
     }
 

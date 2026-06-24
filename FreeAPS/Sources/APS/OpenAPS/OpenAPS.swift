@@ -1104,7 +1104,6 @@ actor OpenAPS: Sendable {
         glucose: JSON,
         temporaryCarbs: JSON
     ) async -> RawJSON {
-        // TODO: in prepare-meal - account for temporaryCarbs==null case
         await scriptExecutor.call(name: OpenAPS.Prepare.meal, with: [
             pumphistory,
             profile,
