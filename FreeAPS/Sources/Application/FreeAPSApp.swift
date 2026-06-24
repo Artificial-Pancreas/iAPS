@@ -116,9 +116,26 @@ private struct StartupGate<Content: View>: View {
 }
 
 private struct LaunchPlaceholder: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private let logoSize: CGFloat = 116
+
+    private var selectedIconPreview: String {
+        let icon = UIApplication.shared.alternateIconName.flatMap(Icon_.init(rawValue:)) ?? .primary
+        return icon.preview
+    }
+
     var body: some View {
         ZStack {
-            Text("Loading...")
+            (colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark)
+                .ignoresSafeArea()
+
+            Image(selectedIconPreview)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: logoSize, height: logoSize)
+                .clipShape(RoundedRectangle(cornerRadius: logoSize * 0.225, style: .continuous))
+                .shadow(color: .black.opacity(0.20), radius: 18, x: 0, y: 10)
         }
     }
 }
