@@ -241,6 +241,10 @@ final class AppCoordinator: @unchecked Sendable {
         glucoseHistory.send(value)
     }
 
+    func sendNewGlucoseRecords(_ value: [BloodGlucose]) {
+        newGlucoseRecords.send(value)
+    }
+
     func sendGlucoseDeleted(_ value: [BloodGlucose]) {
         glucoseDeletions.send(value)
     }
@@ -289,5 +293,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendAppBecomeActiveEvent() {
         appBecomeActiveEvents.send(())
+    }
+
+    func sendAlertUpdates(_ value: [AlertEntry]) {
+        alertsUpdates.send(value)
     }
 }

@@ -98,7 +98,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
         // newest -> oldest
         appCoordinator.setGlucoseHistory(stored)
 
-        appCoordinator.newGlucoseRecords.send(newRecords)
+        appCoordinator.sendNewGlucoseRecords(newRecords)
         return stored
     }
 
@@ -152,7 +152,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
         let minInterval = settings.allowOneMinuteGlucose ? Config.filterTimeOneMinute : Config
             .filterTimeFiveMinutes
-        
+
         // sorting newest->oldest happens inside filterFrequentGlucose
         return FrequentGlucoseFiltering.filterFrequentGlucose(retrieved, interval: minInterval)
     }
