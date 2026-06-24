@@ -39,7 +39,7 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage {
         }
         let hasAlert = uniqEvents.contains { $0.acknowledgedDate == nil }
         appCoordinator.setAlertNotAck(hasAlert)
-        appCoordinator.alertsUpdates.send(uniqEvents)
+        appCoordinator.sendAlertUpdates(uniqEvents)
     }
 
     func syncDate() -> Date {
@@ -90,7 +90,7 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage {
         if modified {
             let hasAlert = updatedValues.contains { $0.acknowledgedDate == nil }
             appCoordinator.setAlertNotAck(hasAlert)
-            appCoordinator.alertsUpdates.send(updatedValues)
+            appCoordinator.sendAlertUpdates(updatedValues)
         }
     }
 
@@ -100,7 +100,7 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage {
             let uniqEvents = Self.filterOldAndSort(alerts)
             let hasAlert = uniqEvents.contains { $0.acknowledgedDate == nil }
             appCoordinator.setAlertNotAck(hasAlert)
-            appCoordinator.alertsUpdates.send(uniqEvents)
+            appCoordinator.sendAlertUpdates(uniqEvents)
         }
     }
 }
