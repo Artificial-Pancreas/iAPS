@@ -35,6 +35,7 @@ import Swinject
         try await startService(resolver.resolve(GlucoseStorage.self))
         try await startService(resolver.resolve(CarbsStorage.self))
         try await startService(resolver.resolve(TempTargetsStorage.self))
+        try await startService(resolver.resolve(CalibrationService.self))
 
         try await startService(resolver.resolve(APSManager.self)!)
 
