@@ -36,13 +36,13 @@ extension LiveActivityAttributes.ContentState {
     }
 
     init?(
-        new bg: ReadingsSnapshot?,
-        prev: ReadingsSnapshot?,
+        new bg: BloodGlucose?,
+        prev: BloodGlucose?,
         mmol: Bool,
         suggestion: Suggestion,
         iob: Decimal?,
         loopDate: Date,
-        readings: [ReadingsSnapshot]?,
+        readings: [BloodGlucose]?,
         predictions: Predictions?,
         showChart: Bool,
         watchChart: Bool,
@@ -57,14 +57,14 @@ extension LiveActivityAttributes.ContentState {
         }
 
         let formattedBG = Self.formatGlucose(Int(glucose), mmol: mmol, forceSign: false)
-        let trendString = bg?.direction
+        let trendString = bg?.direction?.symbol ?? "↔︎"
         let change = Self.formatGlucose(Int((bg?.glucose ?? 0) - (prev?.glucose ?? 0)), mmol: mmol, forceSign: true)
         let cobString = Self.carbFormatter((suggestion.cob ?? 0) as NSNumber)
         let iobString = Self.formatter((iob ?? 0) as NSNumber)
         let eventual = Self.formatGlucose(suggestion.eventualBG ?? 100, mmol: mmol, forceSign: false)
 
         let activityPredictions: LiveActivityAttributes.ActivityPredictions?
-        if let predictions = predictions, let bgDate = bg?.date {
+        if let predictions = predictions, let bgDate = bg?.dateString {
             func createPoints(from values: [Int]?) -> LiveActivityAttributes.ValueSeries? {
                 let prefixToTake = 24
                 if let values = values {
@@ -92,8 +92,8 @@ extension LiveActivityAttributes.ContentState {
         let preparedReadings: LiveActivityAttributes.ValueSeries? = {
             guard let readings else { return nil }
             let validReadings = readings.compactMap { reading -> (Date, Int16)? in
-                guard let date = reading.date else { return nil }
-                return (date, reading.glucose)
+                guard let glucose = reading.sgv else { return nil }
+                return (reading.dateString, Int16(glucose))
             }
 
             let dates = validReadings.map(\.0)
@@ -106,7 +106,7 @@ extension LiveActivityAttributes.ContentState {
             bg: formattedBG,
             direction: trendString,
             change: change,
-            date: bg?.date ?? Date.now,
+            date: bg?.dateString ?? Date.now,
             iob: iobString,
             cob: cobString,
             loopDate: loopDate,
@@ -282,7 +282,8 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         iobValue = appCoordinator.iobTicks.value?.first?.iob ?? suggestion.iob
         loopDate = timestamp
 
-        let glucose = await coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
+        let hoursAgo3 = Date.now.removingTimeInterval(.hours(3))
+        let glucose = appCoordinator.glucoseHistory.value.filter { $0.dateString >= hoursAgo3 }
         guard let content = Self.buildContentState(
             settings: settings,
             suggestion: theSuggestion,
@@ -403,7 +404,7 @@ extension LiveActivityBridge {
         suggestion: Suggestion,
         iob: Decimal?,
         loopDate: Date,
-        glucose: [ReadingsSnapshot]
+        glucose: [BloodGlucose]
     ) -> LiveActivityAttributes.ContentState? {
         let previousGlucose = glucose.count > 1 ? glucose[1] : glucose.first
 
