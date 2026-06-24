@@ -26,7 +26,7 @@ protocol CalibrationService: Sendable {
     func calibrate(value: Double) -> Double
 }
 
-final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwner, Sendable {
+final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwner, Sendable, AppService {
     private enum Config {
         static let minSlope = 0.8
         static let maxSlope = 1.25
@@ -48,14 +48,10 @@ final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwne
         storage = resolver.resolve(FileStorage.self)!
         appCoordinator = resolver.resolve(AppCoordinator.self)!
         injectServices(resolver)
-        Task {
-            await subscribe()
-        }
     }
 
-    private func subscribe() async {
-        // TODO: this happens asynchronously, there's an (unlikely) possibility of cgm reading arriving before it's read (milliseconds after the app starts?)
-        // need to figure this out
+    // this is called at the start of the app
+    func start() async {
         let loaded = await storage.retrieve(OpenAPS.FreeAPS.calibrations, as: [Calibration].self) ?? []
         calibrationsLocked.mutate { $0 = loaded }
 
