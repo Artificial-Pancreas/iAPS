@@ -12,7 +12,6 @@ extension Home {
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var storage: TempTargetsStorage!
         @Injected() private var deviceManager: DeviceDataManager!
-        @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var appUIState: AppUIState!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -45,7 +44,6 @@ extension Home {
         @Published var eventualBG: Int?
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
-        @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
         @Published var maxValue: Decimal = 1.2
         @Published var totalBolus: Decimal = 0
@@ -180,9 +178,6 @@ extension Home {
             dynamicVariables = await provider.dynamicVariables
 
             carbsRequired = data.suggestion?.carbsReq
-
-            // this should be propagated via app coordinator
-            alarm = await glucoseStorage.getAlarm()
 
             setStatusTitle()
             await setupCurrentTempTarget()
@@ -393,7 +388,6 @@ extension Home {
             } else {
                 glucoseDelta = nil
             }
-            alarm = await glucoseStorage.getAlarm()
         }
 
         private func setupBasals() async {

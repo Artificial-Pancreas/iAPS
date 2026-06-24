@@ -19,7 +19,6 @@ protocol GlucoseStorage: Sendable {
     /// filters records by frequency - at most "1 per minute" or "1 per 5 minutes" (according to settings.allowOneMinuteGlucose)
     func retrieveFiltered() async -> [BloodGlucose]
     func latestDate() async -> Date?
-    func getAlarm() async -> GlucoseAlarm?
 }
 
 actor BaseGlucoseStorage: GlucoseStorage, AppService {
@@ -44,7 +43,8 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
     // this is called at the start of the app
     func start() async {
-        // TODO: file is stored newest -> oldest, retrieveRaw reverses it, we reverse again to get back to newest -> oldest
+        // file is stored newest -> oldest, retrieveRaw reverses it, we reverse again to get back to newest -> oldest
+        await pushAlarm()
         appCoordinator.setGlucoseHistory(await retrieveRaw().reversed())
     }
 
@@ -95,10 +95,13 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
             "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(String(describing: glucose.last?.glucose)) mg/Dl, date: \(String(describing: glucose.last?.dateString))."
         )
 
+        // push alarm must happen before setGlucoseHistory
+        await pushAlarm()
+
         // newest -> oldest
         appCoordinator.setGlucoseHistory(stored)
-
         appCoordinator.sendNewGlucoseRecords(newRecords)
+
         return stored
     }
 
@@ -108,6 +111,8 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
             ids.contains($0.id)
         }
         if let deleted {
+            // push alarm must happen before setGlucoseHistory
+            await pushAlarm()
             // newest -> oldest
             appCoordinator.setGlucoseHistory(bgInStorage)
             appCoordinator.sendGlucoseDeleted(deleted)
@@ -157,7 +162,11 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
         return FrequentGlucoseFiltering.filterFrequentGlucose(retrieved, interval: minInterval)
     }
 
-    func getAlarm() async -> GlucoseAlarm? {
+    private func pushAlarm() async {
+        appCoordinator.setGlucoseAlarm(await getAlarm())
+    }
+
+    private func getAlarm() async -> GlucoseAlarm? {
         guard let glucose = await retrieveRaw().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 

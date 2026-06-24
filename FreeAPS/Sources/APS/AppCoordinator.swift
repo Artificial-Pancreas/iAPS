@@ -56,9 +56,12 @@ final class AppCoordinator: @unchecked Sendable {
 
     let pumpHistoryDeletions = PassthroughSubject<[PumpHistoryEvent], Never>()
 
+    // newest -> oldest
     let glucoseHistory = CurrentValueSubject<[BloodGlucose], Never>([])
 
     let glucoseDeletions = PassthroughSubject<[BloodGlucose], Never>()
+
+    let glucoseAlarm = CurrentValueSubject<GlucoseAlarm?, Never>(nil)
 
     let iobTicks = CurrentValueSubject<[IOBEntry]?, Never>(nil)
 
@@ -247,6 +250,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendGlucoseDeleted(_ value: [BloodGlucose]) {
         glucoseDeletions.send(value)
+    }
+
+    func setGlucoseAlarm(_ value: GlucoseAlarm?) {
+        glucoseAlarm.send(value)
     }
 
     func sendBasalProfile(_ value: [BasalProfileEntry]) {

@@ -4,7 +4,6 @@ struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
-    @Binding var alarm: GlucoseAlarm?
     @Binding var lowGlucose: Decimal
     @Binding var highGlucose: Decimal
     @Binding var alwaysUseColors: Bool
@@ -17,6 +16,7 @@ struct CurrentGlucoseView: View {
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
+    @Environment(AppUIState.self) private var appUIState
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -230,11 +230,11 @@ struct CurrentGlucoseView: View {
                 }
                 .tracking(-1)
                 .offset(x: -2, y: 14)
-                .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
+                .foregroundColor(alwaysUseColors ? colorOfGlucose : appUIState.glucoseAlarm == nil ? .primary : .loopRed)
             } else {
                 Text(string)
                     .font(scrolling ? .glucoseSmallFont : .glucoseFontMdDl.width(.condensed)) // .tracking(-2)
-                    .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
+                    .foregroundColor(alwaysUseColors ? colorOfGlucose : appUIState.glucoseAlarm == nil ? .primary : .loopRed)
                     .offset(x: string.count > 2 ? -1 : -1, y: 16)
             }
         }

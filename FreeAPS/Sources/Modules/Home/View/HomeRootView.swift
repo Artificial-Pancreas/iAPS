@@ -123,7 +123,6 @@ extension Home {
                 recentGlucose: $state.recentGlucose,
                 delta: $state.glucoseDelta,
                 units: $state.data.units,
-                alarm: $state.alarm,
                 lowGlucose: $state.data.lowGlucose,
                 highGlucose: $state.data.highGlucose,
                 alwaysUseColors: $state.alwaysUseColors,
@@ -134,7 +133,7 @@ extension Home {
                 timerDate: $state.data.timerDate
             )
             .onTapGesture {
-                if state.alarm == nil {
+                if appUIState.glucoseAlarm == nil {
                     state.openCGM()
                 } else {
                     state.showModal(for: .snooze)
@@ -143,7 +142,7 @@ extension Home {
             .onLongPressGesture {
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                 impactHeavy.impactOccurred()
-                if state.alarm == nil {
+                if appUIState.glucoseAlarm == nil {
                     state.showModal(for: .snooze)
                 } else {
                     state.openCGM()
