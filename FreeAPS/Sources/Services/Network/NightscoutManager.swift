@@ -98,66 +98,92 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             .retrieve(OpenAPS.Nightscout.notUploadedOverrides, as: [NigtscoutExercise].self) ?? []
 
         observe(appCoordinator.carbHistory) { me, carbHistory in
-            await me.carbHistoryUpdated(carbHistory)
-            // retry previous deletions if needed
-            await me.carbsDeleted([])
+            await withBackgroundTask("nightscout upload - carb history") {
+                await me.carbHistoryUpdated(carbHistory)
+                // retry previous deletions if needed
+                await me.carbsDeleted([])
+            }
         }
         observe(appCoordinator.carbDeletions) { me, deleted in
-            await me.carbsDeleted(deleted)
+            await withBackgroundTask("nightscout upload - carbs deletions") {
+                await me.carbsDeleted(deleted)
+            }
         }
 
         observe(appCoordinator.tempTargets) { me, tempTargets in
-            await me.tempTargetsUpdated(tempTargets)
+            await withBackgroundTask("nightscout upload - temp targets") {
+                await me.tempTargetsUpdated(tempTargets)
+            }
         }
 
         observe(appCoordinator.glucoseHistory) { me, bloodGlucose in
-            await me.glucoseHistoryUpdated(bloodGlucose)
-            // retry previous deletions if needed
-            await me.glucoseDeleted([])
+            await withBackgroundTask("nightscout upload - blood glucose") {
+                await me.glucoseHistoryUpdated(bloodGlucose)
+                // retry previous deletions if needed
+                await me.glucoseDeleted([])
+            }
         }
         observe(appCoordinator.glucoseDeletions) { me, deleted in
-            await me.glucoseDeleted(deleted)
+            await withBackgroundTask("nightscout upload - glucose deletions") {
+                await me.glucoseDeleted(deleted)
+            }
         }
 
         observe(appCoordinator.pumpHistory) { me, pumpHistory in
-            await me.pumpHistoryUpdated(pumpHistory)
-            // retry previous deletions if needed
-            await me.pumpHistoryDeleted([])
+            await withBackgroundTask("nightscout upload - pump history") {
+                await me.pumpHistoryUpdated(pumpHistory)
+                // retry previous deletions if needed
+                await me.pumpHistoryDeleted([])
+            }
         }
         observe(appCoordinator.pumpHistoryDeletions) { me, deleted in
-            await me.pumpHistoryDeleted(deleted)
+            await withBackgroundTask("nightscout upload - pump history deletions") {
+                await me.pumpHistoryDeleted(deleted)
+            }
         }
 
         observe(appCoordinator.cgmStatus) { me, cgmStatus in
             if let cgmStatus {
-                await me.cgmStatusUpdated(cgmStatus)
+                await withBackgroundTask("nightscout upload - cgm status") {
+                    await me.cgmStatusUpdated(cgmStatus)
+                }
             }
         }
 
         observe(appCoordinator.pumpStatus) { me, pumpStatus in
             if let pumpStatus {
-                await me.pumpStatusUpdated(pumpStatus)
+                await withBackgroundTask("nightscout upload - pump status") {
+                    await me.pumpStatusUpdated(pumpStatus)
+                }
             }
         }
         observe(appCoordinator.pumpInfo.map(\.?.podActivatedAt)) { me, podActivatedAt in
             if let podActivatedAt {
-                await me.uploadPodAge(podActivatedAt: podActivatedAt)
+                await withBackgroundTask("nightscout upload - pod activation") {
+                    await me.uploadPodAge(podActivatedAt: podActivatedAt)
+                }
             }
         }
 
         observe(appCoordinator.loopCompleted) { me, outcome in
-            await me.loopCompleted(outcome)
+            await withBackgroundTask("nightscout upload - suggestions") {
+                await me.loopCompleted(outcome)
+            }
         }
 
         observe(appCoordinator.iobTicks.dropFirst()) { me, iobTicks in
             if let iobTicks {
-                await me.uploadIOB(iobTicks)
+                await withBackgroundTask("nightscout upload - iob") {
+                    await me.uploadIOB(iobTicks)
+                }
             }
         }
 
         observe(appCoordinator.loopCompleted) { me, _ in
             // we are using loopCompleted only as a timer/trigger here, to retry uploading of overrides if needed
-            await me.uploadOverridesIfNeeded()
+            await withBackgroundTask("nightscout upload - overrides") {
+                await me.uploadOverridesIfNeeded()
+            }
         }
     }
 

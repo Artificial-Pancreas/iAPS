@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import LoopKit
+import UIKit
 
 // @unchecked Sendable - this class only contains immutable `let`s holding Combine subjects,
 // which are internally thread-safe for concurrent send/value/subscribe.
@@ -97,6 +98,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     // --------------
 
+    private let loopPendingBackgroundTask = TaskIDBox()
+
+    // --------------
+
     func setSettings(_ value: FreeAPSSettings) {
         settings.send(value)
     }
@@ -159,6 +164,37 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendPumpNotification(_ value: AlertEntry) {
         pumpNotifications.send(value)
+    }
+
+    // make sure we have a running background task after the device data manager recommends the loop and before the actual loop starts
+    func startLoopPendingBackgroundTask() async {
+        let box = loopPendingBackgroundTask
+        await MainActor.run {
+            // multiple backfill readings can trigger this more than once before the loop is started (as intended)
+            // we don't start another background tasks if one is already running
+            guard box.id == .invalid else { return }
+            box.id = UIApplication.shared.beginBackgroundTask(withName: "loop pending") {
+                if box.id != .invalid {
+                    warning(
+                        .deviceManager,
+                        "loop has not started in time after loop was recommended, the 'pending' background task timed out"
+                    )
+                    UIApplication.shared.endBackgroundTask(box.id)
+                    box.id = .invalid
+                }
+            }
+        }
+    }
+
+    // this is called right after a loop background task starts
+    func endLoopPendingBackgroundTask() async {
+        let box = loopPendingBackgroundTask
+        await MainActor.run {
+            if box.id != .invalid {
+                UIApplication.shared.endBackgroundTask(box.id)
+                box.id = .invalid
+            }
+        }
     }
 
     func sendRecommendsLoop() {

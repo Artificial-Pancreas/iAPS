@@ -18,7 +18,9 @@ final class CoreDataManager: LifetimeOwner, AppService {
             await me.storeGlucose(bloodGlucose)
         }
         observe(appCoordinator.loopCompleted) { me, loopOutcome in
-            await me.loopCompleted(loopOutcome)
+            await withBackgroundTask("core data - save loop outcome") {
+                await me.loopCompleted(loopOutcome)
+            }
         }
     }
 

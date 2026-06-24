@@ -5,29 +5,19 @@ import UIKit
 final class BloodGlucoseManager: Sendable {
     private let glucoseStorage: GlucoseStorage
 
+    private let serializer = TaskSerializer()
+
     init(resolver: Resolver) {
         glucoseStorage = resolver.resolve(GlucoseStorage.self)!
     }
 
     /// return true if a newer blood glucose record was detected and stored
     func storeNewBloodGlucose(
-        bloodGlucose: [BloodGlucose],
-        completion: @escaping @Sendable(Bool) -> Void
-    ) {
-        Task {
-            // TODO: this used to be serialized in the process queue, but now the storage calls are async
-            // investigate if this can be a problem
-            let newBloodGlucoseStored = await self.glucoseStoreAndHeartDecision(
-                glucose: bloodGlucose
-            )
-            completion(newBloodGlucoseStored)
-        }
-    }
+        bloodGlucose glucose: [BloodGlucose],
+    ) async -> Bool {
+        await serializer.run {
+            guard glucose.isNotEmpty else { return false }
 
-    private func glucoseStoreAndHeartDecision(glucose: [BloodGlucose]) async -> Bool {
-        guard glucose.isNotEmpty else { return false }
-
-        return await withBackgroundTask("save blood glucose") {
             let previousLatestBG = await glucoseStorage.latestDate()
 
             // glucoseStorage.storeGlucose returns nil when no new records were recorded (empty or duplicates)

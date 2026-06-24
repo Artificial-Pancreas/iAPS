@@ -3,7 +3,8 @@ import UIKit
 @discardableResult func withBackgroundTask<T>(
     _ name: String,
     extend: Duration? = nil,
-    _ work: @Sendable() async throws -> T
+    isolation _: isolated(any Actor)? = #isolation,
+    _ work: () async throws -> T
 ) async rethrows -> T {
     let box = TaskIDBox()
     await MainActor.run {

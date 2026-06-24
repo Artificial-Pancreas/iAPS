@@ -46,9 +46,9 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
     }
 
     /// store events received from the pump manager
-    func storePumpEvents(_ events: [NewPumpEvent]) async throws {
+    func storePumpEvents(_ events: [NewPumpEvent]) async {
         // ensure no race conditions
-        try await serializer.run { [self] in
+        await serializer.run {
             guard !events.isEmpty else { return }
 
             let insulinConcentration = await concentration
@@ -188,7 +188,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
 
     func storeEvents(_ events: [PumpHistoryEvent]) async {
         // ensure no race conditions
-        try? await serializer.run { [self] in
+        await serializer.run {
             await doStoreEvents(events)
         }
     }
@@ -210,7 +210,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
     }
 
     func deleteInsulin(at date: Date) async {
-        try? await serializer.run { [self] in
+        await serializer.run {
             let (updatedValues, deleted: deleted) = await storage
                 .delete(file: OpenAPS.Monitor.pumpHistory, as: PumpHistoryEvent.self) {
                     $0.timestamp == date

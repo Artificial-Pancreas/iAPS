@@ -71,19 +71,21 @@ actor BaseFetchTreatmentsManager: FetchTreatmentsManager, LifetimeOwner, AppServ
     }
 
     private func poll() async {
-        debug(.nightscout, "FetchTreatmentsManager heartbeat")
-        debug(.nightscout, "Start fetching carbs and temptargets")
-        async let carbs = nightscoutManager.fetchCarbs()
-        async let targets = nightscoutManager.fetchTempTargets()
+        await withBackgroundTask("fetch treatments") {
+            debug(.nightscout, "FetchTreatmentsManager heartbeat")
+            debug(.nightscout, "Start fetching carbs and temptargets")
+            async let carbs = nightscoutManager.fetchCarbs()
+            async let targets = nightscoutManager.fetchTempTargets()
 
-        let filteredCarbs = await carbs.filter { !($0.enteredBy?.contains(CarbsEntry.manual) ?? false) }
-        if filteredCarbs.isNotEmpty {
-            await coreDataStorage.saveMeals(filteredCarbs)
-            await self.carbsStorage.storeCarbs(filteredCarbs)
-        }
-        let filteredTargets = await targets.filter { !($0.enteredBy?.contains(TempTarget.manual) ?? false) }
-        if filteredTargets.isNotEmpty {
-            await self.tempTargetsStorage.storeTempTargets(filteredTargets)
+            let filteredCarbs = await carbs.filter { !($0.enteredBy?.contains(CarbsEntry.manual) ?? false) }
+            if filteredCarbs.isNotEmpty {
+                await coreDataStorage.saveMeals(filteredCarbs)
+                await self.carbsStorage.storeCarbs(filteredCarbs)
+            }
+            let filteredTargets = await targets.filter { !($0.enteredBy?.contains(TempTarget.manual) ?? false) }
+            if filteredTargets.isNotEmpty {
+                await self.tempTargetsStorage.storeTempTargets(filteredTargets)
+            }
         }
     }
 }

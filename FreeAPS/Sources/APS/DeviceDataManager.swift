@@ -638,9 +638,10 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     }
 
     private func processReceivedBloodGlucose(bloodGlucose: [BloodGlucose], forceRecommendLoop: Bool) {
-        // storeNewBloodGlucose runs in a Task with callback so that we don't block the CGM manager
-        bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose) { newGlucoseStored in
-            if newGlucoseStored || forceRecommendLoop {
+        Task {
+            await withBackgroundTask("process received blood glucose") {
+                let newGlucoseStored = await bloodGlucoseManager.storeNewBloodGlucose(bloodGlucose: bloodGlucose)
+                guard newGlucoseStored || forceRecommendLoop else { return }
                 guard !self.appCoordinator.isLooping.value else {
                     debug(
                         .deviceManager,
@@ -648,9 +649,9 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
                     )
                     return
                 }
+                await appCoordinator.startLoopPendingBackgroundTask()
                 self.processQueue.safeSync {
                     self.updatePumpData {
-//                        self._recommendsLoop.send(())
                         self.appCoordinator.sendRecommendsLoop()
                     }
                 }
@@ -810,11 +811,13 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
         let safeCompletion = PumpEventCompletion(completion, processQueue: processQueue)
         Task { [pumpHistoryStorage] in
-            do {
-                try await pumpHistoryStorage.storePumpEvents(events)
-                safeCompletion(nil)
-            } catch {
-                safeCompletion(error)
+            await withBackgroundTask("store pump events") {
+                do {
+                    try await pumpHistoryStorage.storePumpEvents(events)
+                    safeCompletion(nil)
+                } catch {
+                    safeCompletion(error)
+                }
             }
         }
     }

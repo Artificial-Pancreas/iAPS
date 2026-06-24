@@ -74,36 +74,38 @@ actor BaseFetchAnnouncementsManager: FetchAnnouncementsManager, LifetimeOwner, A
         guard settings.allowAnnouncements else {
             return
         }
-        debug(.nightscout, "FetchAnnouncementsManager heartbeat")
-        debug(
-            .nightscout,
-            "Start fetching announcements, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
-        ) // Add timestamp for debugging of the remote command delay
-
-        let announcements = await self.nightscoutManager.fetchAnnouncements()
-
-        let futureEntries = announcements.filter({ $0.createdAt > Date.now })
-        // Delete future entries
-        if !futureEntries.isEmpty {
-            debug(.nightscout, "Future Announcements found")
-            await self.nightscoutManager.deleteAnnouncements()
-        }
-
-        guard let last = announcements
-            .filter({ $0.createdAt < Date.now })
-            .sorted(by: { $0.createdAt < $1.createdAt })
-            .last
-        else { return }
-
-        await self.announcementsStorage.storeAnnouncements([last], enacted: false)
-
-        if let recent = await self.announcementsStorage.recent(), recent.action != nil
-        {
+        await withBackgroundTask("fetch announcements") {
+            debug(.nightscout, "FetchAnnouncementsManager heartbeat")
             debug(
                 .nightscout,
-                "New announcements found, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
-            ) // Add timestamp for debugging of remote commnand delay
-            await self.apsManager.enactAnnouncement(recent)
+                "Start fetching announcements, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
+            ) // Add timestamp for debugging of the remote command delay
+
+            let announcements = await nightscoutManager.fetchAnnouncements()
+
+            let futureEntries = announcements.filter({ $0.createdAt > Date.now })
+            // Delete future entries
+            if !futureEntries.isEmpty {
+                debug(.nightscout, "Future Announcements found")
+                await nightscoutManager.deleteAnnouncements()
+            }
+
+            guard let last = announcements
+                .filter({ $0.createdAt < Date.now })
+                .sorted(by: { $0.createdAt < $1.createdAt })
+                .last
+            else { return }
+
+            await announcementsStorage.storeAnnouncements([last], enacted: false)
+
+            if let recent = await announcementsStorage.recent(), recent.action != nil
+            {
+                debug(
+                    .nightscout,
+                    "New announcements found, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
+                ) // Add timestamp for debugging of remote commnand delay
+                await apsManager.enactAnnouncement(recent)
+            }
         }
     }
 }
