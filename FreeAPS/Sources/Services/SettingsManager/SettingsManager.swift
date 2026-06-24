@@ -12,6 +12,9 @@ protocol SettingsManager: AnyObject, Sendable {
     @discardableResult func updateSettings(_ update: @Sendable(FreeAPSSettings) -> FreeAPSSettings) async -> FreeAPSSettings
     func updatePumpSettings(_ settings: PumpSettings) async
     func updatePreferences(_ settings: Preferences) async
+
+    /// forces a re-read from files
+    func resetCachedSettings() async
 }
 
 // protocol SettingsObserver {
@@ -77,6 +80,17 @@ actor BaseSettingsManager: SettingsManager, AppService {
 
     // this is called on app start, before anything is rendered
     func start() async {
+        await updateAppCoordinator()
+    }
+
+    func resetCachedSettings() async {
+        cachedSettings = nil
+        cachedPreferences = nil
+        cachedPumpSettings = nil
+        await updateAppCoordinator()
+    }
+
+    private func updateAppCoordinator() async {
         let settings = await self.settings
         self.appCoordinator.setSettings(settings)
         let pumpSettings = await self.pumpSettings
