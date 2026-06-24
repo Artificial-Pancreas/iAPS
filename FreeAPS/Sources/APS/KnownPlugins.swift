@@ -91,19 +91,8 @@ enum KnownPlugins {
     }
 
     static func isManualTempBasalActive(_ pumpManager: PumpManager) -> Bool? {
-        switch pumpManager.pluginIdentifier {
-        case OmniPumpManager.pluginIdentifier:
-            if let omnipod = pumpManager as? OmniPumpManager,
-               let tempBasal = omnipod.state.podState?.unfinalizedTempBasal,
-               !tempBasal.isFinished(),
-               !tempBasal.automatic
-            {
-                return true
-            } else {
-                return false
-            }
-        default: return nil
-        }
+        guard case let .tempBasal(dose) = pumpManager.status.basalDeliveryState else { return false }
+        return !(dose.automatic ?? true)
     }
 
     static func pumpActivationDate(_ pumpManager: PumpManager) -> Date? {
