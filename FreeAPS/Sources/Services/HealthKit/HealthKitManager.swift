@@ -10,18 +10,6 @@ protocol HealthKitManager: Sendable {
     func checkAvailabilitySaveBG() async -> Bool
     /// Requests user to give permissions on using HealthKit
     func requestPermission() async throws -> Bool
-    /// Save blood glucose to Health store (dublicate of bg will ignore)
-    func saveIfNeeded(bloodGlucose: [BloodGlucose]) async
-    /// Save carbs to Health store (dublicate of bg will ignore)
-    func saveIfNeeded(carbs: [CarbsEntry]) async
-    /// Save Insulin to Health store
-    func saveIfNeeded(pumpEvents events: [PumpHistoryEvent]) async
-    /// Delete glucose with syncID
-    func deleteGlucose(syncID: String) async
-    /// delete carbs with syncID
-    func deleteCarbs(date: Date) async
-    /// delete insulin with syncID
-    func deleteInsulin(syncID: String) async
 }
 
 actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppService {
@@ -79,11 +67,20 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
         observe(appCoordinator.carbHistory.dropFirst()) { me, carbs in
             await me.saveIfNeeded(carbs: carbs)
         }
+        observe(appCoordinator.carbDeletions) { me, deleted in
+            for c in deleted { await me.deleteCarbs(date: c.createdAt) }
+        }
         observe(appCoordinator.pumpHistory.dropFirst()) { me, events in
             await me.saveIfNeeded(pumpEvents: events)
         }
+        observe(appCoordinator.pumpHistoryDeletions) { me, deleted in
+            for e in deleted { await me.deleteInsulin(syncID: e.id) }
+        }
         observe(appCoordinator.newGlucoseRecords) { me, bloodGlucose in
             await me.saveIfNeeded(bloodGlucose: bloodGlucose)
+        }
+        observe(appCoordinator.glucoseDeletions) { me, deleted in
+            for g in deleted { await me.deleteGlucose(syncID: g.id) }
         }
     }
 
@@ -114,7 +111,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
         }
     }
 
-    func saveIfNeeded(bloodGlucose: [BloodGlucose]) async {
+    private func saveIfNeeded(bloodGlucose: [BloodGlucose]) async {
         let settings = await settingsManager.settings
         guard settings.useAppleHealth,
               let sampleType = Config.healthBGObject,
@@ -152,7 +149,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
         await save(samples: samples)
     }
 
-    func saveIfNeeded(carbs: [CarbsEntry]) async {
+    private func saveIfNeeded(carbs: [CarbsEntry]) async {
         let settings = await settingsManager.settings
         guard settings.useAppleHealth,
               let sampleType = Config.healthCarbObject,
@@ -160,7 +157,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
               carbs.isNotEmpty
         else { return }
 
-        let carbsWithId = carbs.filter { $0.id != nil }
+        let carbsWithId = carbs.filter { $0.id != nil && $0.isFPU != true }
 
         func save(samples: [HKSample]) async {
             let sampleIDs = samples.compactMap(\.syncIdentifier)
@@ -194,7 +191,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
         await save(samples: samples)
     }
 
-    func saveIfNeeded(pumpEvents events: [PumpHistoryEvent]) async {
+    private func saveIfNeeded(pumpEvents events: [PumpHistoryEvent]) async {
         let settings = await settingsManager.settings
         let preferences = await settingsManager.preferences
 
@@ -363,7 +360,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
         }
     }
 
-    func deleteGlucose(syncID: String) async {
+    private func deleteGlucose(syncID: String) async {
         let settings = await settingsManager.settings
         guard settings.useAppleHealth,
               let sampleType = Config.healthBGObject,
@@ -386,7 +383,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
 
     // MARK: Carbs function
 
-    func deleteCarbs(date: Date) async {
+    private func deleteCarbs(date: Date) async {
         let settings = await settingsManager.settings
         guard settings.useAppleHealth,
               let sampleType = Config.healthCarbObject,
@@ -409,7 +406,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
 
     // - MARK Insulin function
 
-    func deleteInsulin(syncID: String) async {
+    private func deleteInsulin(syncID: String) async {
         let settings = await settingsManager.settings
         guard settings.useAppleHealth,
               let sampleType = Config.healthInsulinObject,

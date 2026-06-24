@@ -7,13 +7,10 @@ extension DataTable {
         @Injected() private var storage: FileStorage!
         @Injected() var carbStorage: CarbsStorage!
         @Injected() var aps: APSManager!
-        @Injected() private var nightscout: NightscoutManager!
         @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
         @Injected() private var carbsStorage: CarbsStorage!
         @Injected() private var tempTargetsStorage: TempTargetsStorage!
         @Injected() private var glucoseStorage: GlucoseStorage!
-        @Injected() private var nightscoutManager: NightscoutManager!
-        @Injected() private var healthkitManager: HealthKitManager!
 
         private let overrideStorage = OverrideStorage()
         private let coreDataStorage = CoreDataStorage()
@@ -207,10 +204,6 @@ extension DataTable {
         func deleteGlucose(_ glucose: Glucose) {
             Task {
                 await glucoseStorage.removeGlucose(ids: [glucose.id])
-                // TODO: this should be moved out of here - like nightscout
-                await healthkitManager.deleteGlucose(syncID: glucose.id)
-
-                await coreDataStorage.deleteBatch(identifier: glucose.id, entity: "Readings")
             }
         }
 
@@ -231,11 +224,6 @@ extension DataTable {
                     type: GlucoseType.manual.rawValue
                 )
                 _ = await glucoseStorage.storeGlucose([saveToJSON])
-                debug(.default, "Manual Glucose saved to glucose.json")
-                // TODO: this does nothing
-                // Save to Health
-                var saveToHealth = [BloodGlucose]()
-                saveToHealth.append(saveToJSON)
             }
         }
 
@@ -273,7 +261,7 @@ extension DataTable {
             }
         }
 
-        /// Update Carbs or Carb equivalents in storage, data table and Nightscout and Healthkit (where applicable)
+        /// Update Carbs or Carb equivalents in storage, data table
         func updateCarbs(treatment: Treatment?, computed: Meals?) {
             guard let old = treatment else { return }
 
@@ -342,15 +330,10 @@ extension DataTable {
 
         private func doDeleteCarbs(_ date: Date) async {
             await carbStorage.deleteCarbsAndFPUs(at: date)
-            await healthkitManager.deleteCarbs(date: date)
         }
 
         private func doDeleteInsulin(_ treatment: Treatment) async {
             await pumpHistoryStorage.deleteInsulin(at: treatment.date)
-            if let id = treatment.idPumpEvent {
-                // TODO: this should be separated from here
-                await healthkitManager.deleteInsulin(syncID: id)
-            }
         }
     }
 }

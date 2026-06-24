@@ -32,7 +32,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private let announcementsStorage: AnnouncementsStorage
     private let settingsManager: SettingsManager
     private let reachabilityManager: ReachabilityManager
-    private let healthkitManager: HealthKitManager
 
     private let overrideStorage = OverrideStorage()
 
@@ -77,8 +76,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         storage: FileStorage,
         announcementsStorage: AnnouncementsStorage,
         settingsManager: SettingsManager,
-        reachabilityManager: ReachabilityManager,
-        healthkitManager: HealthKitManager
+        reachabilityManager: ReachabilityManager
     ) {
         self.keychain = keychain
         self.appCoordinator = appCoordinator
@@ -89,7 +87,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         self.announcementsStorage = announcementsStorage
         self.settingsManager = settingsManager
         self.reachabilityManager = reachabilityManager
-        self.healthkitManager = healthkitManager
     }
 
     // this is called at the start of the app
