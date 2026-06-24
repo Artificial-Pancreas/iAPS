@@ -17,6 +17,12 @@ final class CoreDataManager: LifetimeOwner, AppService {
         observe(appCoordinator.newGlucoseRecords) { me, bloodGlucose in
             await me.storeGlucose(bloodGlucose)
         }
+        observe(appCoordinator.glucoseDeletions) { me, deleted in
+            for g in deleted {
+                await me.coreDataStorage.deleteBatch(identifier: g.id, entity: "Readings")
+            }
+        }
+
         observe(appCoordinator.loopCompleted) { me, loopOutcome in
             await withBackgroundTask("core data - save loop outcome") {
                 await me.loopCompleted(loopOutcome)

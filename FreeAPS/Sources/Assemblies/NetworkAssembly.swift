@@ -17,8 +17,7 @@ final class NetworkAssembly: Assembly {
                 storage: r.resolve(FileStorage.self)!,
                 announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
-                reachabilityManager: r.resolve(ReachabilityManager.self)!,
-                healthkitManager: r.resolve(HealthKitManager.self)!
+                reachabilityManager: r.resolve(ReachabilityManager.self)!
             )
         }
         container.register(Database.self) { r in Database(resolver: r) }
