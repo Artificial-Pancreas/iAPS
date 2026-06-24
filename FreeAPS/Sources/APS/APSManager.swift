@@ -181,7 +181,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 // loop will update IOB at the end
                 return
             }
-            await me.updateIOB()
+            await withBackgroundTask("update iob") {
+                await me.updateIOB()
+            }
         }
     }
 
@@ -199,90 +201,88 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private func loop() async {
         // start background time extension
         await withBackgroundTask("loop", extend: .seconds(5)) {
-            await self.loopInsideBackgroundTask()
-        }
-    }
+            await appCoordinator.endLoopPendingBackgroundTask()
 
-    private func loopInsideBackgroundTask() async {
-        let settings = appCoordinator.settings.value
+            let settings = appCoordinator.settings.value
 
-        guard !appCoordinator.isLooping.value else {
-            warning(.apsManager, "Loop already in progress. Skip recommendation.")
-            return
-        }
-
-        // check the last start of looping is more the loopInterval but the previous loop was completed
-        if lastLoopDate > lastStartLoopDate {
-            let loopInterval = settings.allowOneMinuteLoop ? Config.loopIntervalOneMinute : Config.loopIntervalFiveMinutes
-            guard Date().timeIntervalSince(lastStartLoopDate) >= loopInterval else {
-                debug(.apsManager, "too close to do a loop : \(lastStartLoopDate)")
+            guard !appCoordinator.isLooping.value else {
+                warning(.apsManager, "Loop already in progress. Skip recommendation.")
                 return
             }
+
+            // check the last start of looping is more the loopInterval but the previous loop was completed
+            if lastLoopDate > lastStartLoopDate {
+                let loopInterval = settings.allowOneMinuteLoop ? Config.loopIntervalOneMinute : Config.loopIntervalFiveMinutes
+                guard Date().timeIntervalSince(lastStartLoopDate) >= loopInterval else {
+                    debug(.apsManager, "too close to do a loop : \(lastStartLoopDate)")
+                    return
+                }
+            }
+
+            appCoordinator.setIsLooping(true)
+
+            debug(.apsManager, "starting loop")
+
+            let lastStartLoopDate = Date()
+            self.lastStartLoopDate = lastStartLoopDate
+
+            let interval = await fetchIntervalSinceLastLoop(thisLoopDate: lastStartLoopDate)
+
+            var loopStatRecord = LoopStats(
+                start: lastStartLoopDate,
+                loopStatus: "Starting",
+                interval: interval
+            )
+
+            let loopOutcome: LoopOutcome
+            do {
+                let suggestion = try await determineBasal(temporaryCarbs: nil)
+                loopOutcome = await enactSuggestion(suggestion, closedLoop: settings.closedLoop)
+            } catch {
+                loopOutcome = .failed(error: error.localizedDescription, timestamp: Date.now)
+            }
+
+            loopStatRecord.end = Date()
+            loopStatRecord.duration = Self.roundDouble(
+                (loopStatRecord.end! - loopStatRecord.start).timeInterval / 60, 2
+            )
+
+            await storage.save(loopOutcome, as: OpenAPS.Enact.outcome)
+
+            switch loopOutcome {
+            case let .enacted(_, timestamp):
+                lastLoopDate = timestamp
+                appCoordinator.setLastLoopDate(timestamp)
+                appCoordinator.setLastLoopError(nil)
+
+                loopStatRecord.loopStatus = "Success"
+
+            case let .enactFailed(_, error, timestamp):
+                appCoordinator.setLastLoopError((error, date: timestamp))
+
+                loopStatRecord.loopStatus = error
+
+            case let .suggested(_, timestamp):
+                lastLoopDate = timestamp
+                appCoordinator.setLastLoopDate(timestamp)
+                appCoordinator.setLastLoopError(nil)
+
+                loopStatRecord.loopStatus = "Success"
+
+            case let .failed(error, timestamp):
+                appCoordinator.setLastLoopError((error, date: timestamp))
+
+                loopStatRecord.loopStatus = error
+            }
+
+            await self.persistLoopStats(loopStatRecord: loopStatRecord, error: loopOutcome.error)
+
+            await self.updateIOB()
+
+            appCoordinator.setIsLooping(false)
+
+            appCoordinator.sendLoopCompleted(loopOutcome)
         }
-
-        appCoordinator.setIsLooping(true)
-
-        debug(.apsManager, "starting loop")
-
-        let lastStartLoopDate = Date()
-        self.lastStartLoopDate = lastStartLoopDate
-
-        let interval = await fetchIntervalSinceLastLoop(thisLoopDate: lastStartLoopDate)
-
-        var loopStatRecord = LoopStats(
-            start: lastStartLoopDate,
-            loopStatus: "Starting",
-            interval: interval
-        )
-
-        let loopOutcome: LoopOutcome
-        do {
-            let suggestion = try await determineBasal(temporaryCarbs: nil)
-            loopOutcome = await enactSuggestion(suggestion, closedLoop: settings.closedLoop)
-        } catch {
-            loopOutcome = .failed(error: error.localizedDescription, timestamp: Date.now)
-        }
-
-        loopStatRecord.end = Date()
-        loopStatRecord.duration = Self.roundDouble(
-            (loopStatRecord.end! - loopStatRecord.start).timeInterval / 60, 2
-        )
-
-        await storage.save(loopOutcome, as: OpenAPS.Enact.outcome)
-
-        switch loopOutcome {
-        case let .enacted(_, timestamp):
-            lastLoopDate = timestamp
-            appCoordinator.setLastLoopDate(timestamp)
-            appCoordinator.setLastLoopError(nil)
-
-            loopStatRecord.loopStatus = "Success"
-
-        case let .enactFailed(_, error, timestamp):
-            appCoordinator.setLastLoopError((error, date: timestamp))
-
-            loopStatRecord.loopStatus = error
-
-        case let .suggested(_, timestamp):
-            lastLoopDate = timestamp
-            appCoordinator.setLastLoopDate(timestamp)
-            appCoordinator.setLastLoopError(nil)
-
-            loopStatRecord.loopStatus = "Success"
-
-        case let .failed(error, timestamp):
-            appCoordinator.setLastLoopError((error, date: timestamp))
-
-            loopStatRecord.loopStatus = error
-        }
-
-        await self.persistLoopStats(loopStatRecord: loopStatRecord, error: loopOutcome.error)
-
-        await self.updateIOB()
-
-        appCoordinator.setIsLooping(false)
-
-        appCoordinator.sendLoopCompleted(loopOutcome)
     }
 
     private func fetchIntervalSinceLastLoop(thisLoopDate: Date) async -> Double? {
@@ -449,82 +449,88 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private var bolusObserver: BolusObserver?
 
     func enactBolus(amount: Double, isSMB: Bool) async {
-        if let error = await verifyStatus() {
-            processError(error)
-            appCoordinator.sendBolusFailure()
-            return
-        }
-
-        let concentration = await self.concentration
-        do {
-            debug(.apsManager, "Enact bolus \(amount), manual \(!isSMB)")
-
-            let enactedAmount = try await deviceDataManager.enactBolus(
-                units: Decimal(amount),
-                automatic: isSMB,
-                concentration: concentration.concentration
-            )
-            debug(.apsManager, "Bolus succeeded")
-            if !isSMB {
-                _ = try? await self.determineBasal(temporaryCarbs: nil)
-            }
-            appCoordinator.setBolusProgress(0)
-            appCoordinator.setBolusAmount(enactedAmount)
-        } catch {
-            warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
-            processError(APSError.pumpError(error))
-            if !isSMB {
+        await withBackgroundTask("enact bolus") {
+            if let error = await verifyStatus() {
+                processError(error)
                 appCoordinator.sendBolusFailure()
+                return
+            }
+
+            let concentration = await self.concentration
+            do {
+                debug(.apsManager, "Enact bolus \(amount), manual \(!isSMB)")
+
+                let enactedAmount = try await deviceDataManager.enactBolus(
+                    units: Decimal(amount),
+                    automatic: isSMB,
+                    concentration: concentration.concentration
+                )
+                debug(.apsManager, "Bolus succeeded")
+                if !isSMB {
+                    _ = try? await self.determineBasal(temporaryCarbs: nil)
+                }
+                appCoordinator.setBolusProgress(0)
+                appCoordinator.setBolusAmount(enactedAmount)
+            } catch {
+                warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
+                processError(APSError.pumpError(error))
+                if !isSMB {
+                    appCoordinator.sendBolusFailure()
+                }
             }
         }
     }
 
     func cancelBolus() async {
-        do {
-            guard let pumpStatus = deviceDataManager.currentPumpStatus() else {
-                throw APSError.invalidPumpState(message: "Pump not set")
+        await withBackgroundTask("cancel bolus") {
+            do {
+                guard let pumpStatus = deviceDataManager.currentPumpStatus() else {
+                    throw APSError.invalidPumpState(message: "Pump not set")
+                }
+                guard pumpStatus.isBolusing else { return }
+                debug(.apsManager, "Cancel bolus")
+                try await deviceDataManager.cancelBolus()
+                debug(.apsManager, "Bolus cancelled")
+            } catch {
+                debug(.apsManager, "Bolus cancellation failed with error: \(error.localizedDescription)")
+                processError(APSError.pumpError(error))
             }
-            guard pumpStatus.isBolusing else { return }
-            debug(.apsManager, "Cancel bolus")
-            try await deviceDataManager.cancelBolus()
-            debug(.apsManager, "Bolus cancelled")
-        } catch {
-            debug(.apsManager, "Bolus cancellation failed with error: \(error.localizedDescription)")
-            processError(APSError.pumpError(error))
+            await clearBolusReporter()
         }
-        await clearBolusReporter()
     }
 
     func enactTempBasal(rate: Double, duration: TimeInterval) async {
-        if let error = await verifyStatus() {
-            processError(error)
-            return
-        }
+        await withBackgroundTask("enact temp basal") {
+            if let error = await verifyStatus() {
+                processError(error)
+                return
+            }
 
-        // unable to do temp basal during manual temp basal 😁
-        if appCoordinator.manualTempBasal.value {
-            processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
-            return
-        }
+            // unable to do temp basal during manual temp basal 😁
+            if appCoordinator.manualTempBasal.value {
+                processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
+                return
+            }
 
-        let pumpSettings = await settingsManager.pumpSettings
+            let pumpSettings = await settingsManager.pumpSettings
 
-        let maxBasal = Double(pumpSettings.maxBasal)
-        let rate = duration > 0 ? min(rate, maxBasal) : rate
+            let maxBasal = Double(pumpSettings.maxBasal)
+            let rate = duration > 0 ? min(rate, maxBasal) : rate
 
-        debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
+            debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
-        let concentration = await self.concentration
+            let concentration = await self.concentration
 
-        do {
-            try await deviceDataManager.enactTempBasal(
-                unitsPerHour: Decimal(rate),
-                for: duration,
-                concentration: concentration.concentration
-            )
-        } catch {
-            debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
-            processError(APSError.pumpError(error))
+            do {
+                try await deviceDataManager.enactTempBasal(
+                    unitsPerHour: Decimal(rate),
+                    for: duration,
+                    concentration: concentration.concentration
+                )
+            } catch {
+                debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
+                processError(APSError.pumpError(error))
+            }
         }
     }
 
