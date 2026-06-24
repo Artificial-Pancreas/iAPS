@@ -143,7 +143,8 @@ extension OverrideProfilesConfig {
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
                 if let editInNightscout {
-                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
+                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date)
+                }
                 await ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
             }
         }
@@ -281,7 +282,8 @@ extension OverrideProfilesConfig {
                 try? self.coredataContext.save()
 
                 if let editInNightscout {
-                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date) }
+                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date)
+                }
                 // Uploads new Override to NS
                 await ns.uploadOverride(
                     profile.name ?? "",

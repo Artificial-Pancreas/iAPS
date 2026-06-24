@@ -22,15 +22,6 @@ enum NotificationAction: String {
     case snooze
 }
 
-// protocol BolusFailureObserver {
-//    func bolusDidFail()
-// }
-
-// protocol PumpNotificationObserver {
-//    func pumpNotification(alert: AlertEntry)
-//    func pumpRemoveNotification()
-// }
-
 actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, LifetimeOwner, AppService {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
@@ -85,7 +76,6 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
             await me.settingsUpdated(settings)
         }
         observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
-            // TODO: use the provided glucose history instead of re-reading from storage
             await me.sendGlucoseNotification()
         }
         observe(appCoordinator.loopCompleted) { me, loopOutcome in
@@ -264,12 +254,12 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
     private func sendGlucoseNotification() async {
         await addAppBadge(glucose: nil)
 
-        let glucose = await glucoseStorage.retrieveRaw()
+        let glucose = Array(appCoordinator.glucoseHistory.value.reversed())
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
 
         await addAppBadge(glucose: lastGlucose.glucose)
 
-        let alarm = await glucoseStorage.getAlarm()
+        let alarm = appCoordinator.glucoseAlarm.value
         guard alarm != nil || settings.glucoseNotificationsAlways else {
             return
         }
@@ -438,13 +428,6 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
 
         playSound(sound: sound)
     }
-
-//    private func playSoundWithoutSnooze(_ sound: String) {
-//        guard settings.useAlarmSound else { return }
-//        guard sound != "Silent" else { return }
-//
-//        playSound(sound: sound)
-//    }
 
     private var soundTask: Task<Void, Never>?
 

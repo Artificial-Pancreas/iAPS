@@ -25,6 +25,7 @@ import Observation
     private(set) var alertNotAck: Bool = false
     private(set) var lastLoopError: (error: String, date: Date)?
     private(set) var latestIOB: Decimal?
+    private(set) var glucoseAlarm: GlucoseAlarm?
 
     private(set) var lightMode = LightMode.auto
     private(set) var liveActivitiesSystemEnabled: Bool = false
@@ -61,6 +62,7 @@ import Observation
         bind(appCoordinator.bolusInProgress, to: \.bolusInProgress)
         bind(appCoordinator.lastLoopError, to: \.lastLoopError)
         bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAck)
+        bind(appCoordinator.glucoseAlarm, to: \.glucoseAlarm)
         bind(appCoordinator.liveActivitiesSystemEnabled, to: \.liveActivitiesSystemEnabled)
         bind(appCoordinator.settings.map(\.lightMode).removeDuplicates(), to: \.lightMode)
         bind(appCoordinator.iobTicks.map(\.?.first?.iob).removeDuplicates(), to: \.latestIOB)

@@ -12,6 +12,8 @@ extension Snooze {
         @State private var selectedInterval = 0
         @State private var snoozeDescription = "nothing to see here"
 
+        @Environment(AppUIState.self) private var appUIState
+
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -64,7 +66,7 @@ extension Snooze {
             var snoozeDescription = ""
             var celltext = ""
 
-            switch state.alarm {
+            switch appUIState.glucoseAlarm {
             case .high:
                 celltext = NSLocalizedString("High Glucose Alarm active", comment: "High Glucose Alarm active")
             case .low:
