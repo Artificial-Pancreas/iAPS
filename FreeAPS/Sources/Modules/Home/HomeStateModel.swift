@@ -11,7 +11,6 @@ extension Home {
         @Injected() private var apsManager: APSManager!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var storage: TempTargetsStorage!
-        @Injected() private var database: Database!
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var appUIState: AppUIState!
@@ -72,7 +71,6 @@ extension Home {
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
-        @Published var openAPSSettings: Preferences?
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
         @Published var autoisf = false
@@ -377,18 +375,6 @@ extension Home {
                 setHBT.enabled = false
                 setHBT.date = Date()
                 try? self.coredataContext.save()
-            }
-        }
-
-        func fetchPreferences() {
-            Task {
-                do {
-                    let fetched = try await database.fetchPreferences("default")
-                    debug(.service, "Preferences fetched from database. Profile: default")
-                    self.openAPSSettings = fetched
-                } catch {
-                    debug(.service, "Preferences fetched from database failed. Error: " + error.localizedDescription)
-                }
             }
         }
 

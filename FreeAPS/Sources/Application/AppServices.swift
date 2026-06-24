@@ -18,6 +18,8 @@ import Swinject
     func started() async throws { try await startup?.value }
 
     private func performStartup(resolver: Resolver) async throws {
+        try await startService(resolver.resolve(DataMigrations.self))
+
         let appCoordinator = resolver.resolve(AppCoordinator.self)!
         Logger.WarningLogHandler.handler = { messageCont in
             appCoordinator.sendAlertMessage(messageCont)
@@ -58,7 +60,7 @@ import Swinject
 
     @discardableResult private func startService<Service>(_ service: Service?) async throws -> Service {
         if let service, let startable = service as? AppService {
-            await startable.start()
+            try await startable.start()
             return service
         } else if let service, let startable = service as? AppServiceSync {
             startable.start()
@@ -74,7 +76,7 @@ import Swinject
 }
 
 protocol AppService: Sendable {
-    func start() async
+    func start() async throws
 }
 
 protocol AppServiceSync: Sendable {
