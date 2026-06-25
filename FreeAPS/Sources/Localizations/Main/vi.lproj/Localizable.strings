@@ -1841,7 +1841,7 @@ Enact a temp Basal or a temp target */
 
 "Reset to Default" = "Đặt lại về mặc định";
 
-"Take Photo" = "Take Photo";
+"Take Photo" = "Chụp ảnh";
 
 "Retake Photo" = "Chụp lại ảnh";
 
@@ -3857,6 +3857,18 @@ Enact a temp Basal or a temp target */
 
 /* Show Predictions */
 "Show Predictions" = "Hiển thị dự đoán";
+
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Đồng hồ: Hiển thị biểu đồ";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Đồng hồ: Hiển thị Delta";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Đồng hồ: Hiển thị dự kiến";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Đồng hồ: Hiển thị dự đoán";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa và động (nếu có)";
