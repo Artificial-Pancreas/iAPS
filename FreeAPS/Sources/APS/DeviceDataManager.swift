@@ -98,7 +98,9 @@ private enum ConfigOverrides {
 }
 
 final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
-    private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
+    // .userInitiated to match the QoS of the pump managers' session threads and avoid priority inversions.
+    // (pump managers can block on the delegate, for example OmnipodKit's store(doses:) semaphore)
+    private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue", qos: .userInitiated)
 
     private let pumpHistoryStorage: PumpHistoryStorage
     private let alertHistoryStorage: AlertHistoryStorage
@@ -911,7 +913,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         lastEventDate = events.map(\.date).max() ?? lastEventDate
 
         let safeCompletion = PumpEventCompletion(completion, processQueue: processQueue)
-        Task { [pumpHistoryStorage] in
+        // userInitiated: the pump manager's session thread may block waiting on this storage to complete
+        Task(priority: .userInitiated) { [pumpHistoryStorage] in
             await withBackgroundTask("store pump events") {
                 do {
                     try await pumpHistoryStorage.storePumpEvents(events, replacePendingEvents: replacePendingEvents)
