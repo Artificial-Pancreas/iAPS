@@ -4280,6 +4280,7 @@
 				);
 				MARKETING_VERSION = "$(APP_VERSION)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-weak_framework",
 					CoreNFC,
 					"-ObjC",
@@ -4331,6 +4332,7 @@
 				);
 				MARKETING_VERSION = "$(APP_VERSION)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-weak_framework",
 					CoreNFC,
 					"-ObjC",
