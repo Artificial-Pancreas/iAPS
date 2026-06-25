@@ -144,14 +144,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             await me.processError(APSError.pumpError(error))
         }
 
-        observe(appCoordinator.bolusInProgress.dropFirst()) { me, bolusing in
-            if bolusing {
-                await me.createBolusReporter()
-            } else {
-                await me.finishActiveBolusReporterSession()
-            }
-        }
-
         // manage a manual Temp Basal from OmniPod - Force loop() after stop a temp basal or finished
         observe(appCoordinator.manualTempBasal) { me, manualBasal in
             await me.manualTempBasalUpdated(manualBasal)
@@ -434,19 +426,13 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             let concentration = await self.concentration
             do {
-                debug(.apsManager, "Enact bolus \(amount), manual \(!isSMB)")
-
-                let enactedAmount = try await deviceDataManager.enactBolus(
+                _ = try await deviceDataManager.enactBolus(
                     units: Decimal(amount),
                     automatic: isSMB,
                     concentration: concentration.concentration
                 )
-                debug(.apsManager, "Bolus succeeded")
                 if !isSMB {
                     _ = try? await self.determineBasal(temporaryCarbs: nil)
-                }
-                if enactedAmount > 0 {
-                    appCoordinator.setBolusAmount(enactedAmount)
                 }
             } catch {
                 warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
@@ -555,19 +541,12 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
 
             do {
-                let enactedAmount = try await deviceDataManager.enactBolus(
+                _ = try await deviceDataManager.enactBolus(
                     units: amount,
                     automatic: false,
                     concentration: insulinConcentration.concentration
                 )
-                debug(
-                    .apsManager,
-                    "Announcement Bolus succeeded."
-                )
                 await self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
-                if enactedAmount > 0 {
-                    appCoordinator.setBolusAmount(enactedAmount)
-                }
             } catch {
                 // warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                 switch error {
@@ -783,14 +762,11 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                     throw error
                 }
 
-                let enactedAmount = try await deviceDataManager.enactBolus(
+                _ = try await deviceDataManager.enactBolus(
                     units: units,
                     automatic: true,
                     concentration: insulinSetting.concentration
                 )
-                if enactedAmount > 0 {
-                    appCoordinator.setBolusAmount(enactedAmount)
-                }
             }
 
             try await doBasal()
@@ -828,91 +804,5 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private func processError(_ error: Error) {
         warning(.apsManager, "\(error.localizedDescription)")
-    }
-
-    private var activeBolusReporterSession: BolusProgressStream?
-
-    private func finishBolusReporterSession(id: UUID) {
-        guard let activeBolusReporterSession else {
-            // no active bolus reporter, reset the progress just in case
-            appCoordinator.setBolusProgress(nil)
-            return
-        }
-        guard activeBolusReporterSession.id == id else {
-            return
-        }
-        appCoordinator.setBolusProgress(nil)
-        self.activeBolusReporterSession = nil
-    }
-
-    // when a bolus is cancelled, the pump managers don't kill the reporters
-    // so when pump switches to noBolus state - we end the reporter explicitly
-    private func finishActiveBolusReporterSession() {
-        activeBolusReporterSession?.finish()
-    }
-
-    private func createBolusReporter() {
-        activeBolusReporterSession?.finish()
-        activeBolusReporterSession = nil
-
-        let reporter: DoseProgressReporter?
-        do {
-            reporter = try deviceDataManager.createBolusProgressReporter(reportingOn: processQueue)
-        } catch {
-            warning(.apsManager, "failed to create bolus reporter: \(error.localizedDescription)")
-            return
-        }
-
-        guard let reporter else { return }
-
-        let session = BolusProgressStream(reporter: reporter)
-        activeBolusReporterSession = session
-
-        let values = session.values
-        let id = session.id
-        Task { [weak self] in
-            for await percent in values {
-                self?.appCoordinator.setBolusProgress(Decimal(percent))
-            }
-            try? await Task.sleep(for: .seconds(0.5))
-            await self?.finishBolusReporterSession(id: id)
-        }
-    }
-}
-
-private final class BolusProgressStream {
-    let id = UUID()
-    let values: AsyncStream<Double>
-    private let reporter: DoseProgressReporter
-    private let observer: Observer
-
-    init(reporter: DoseProgressReporter) {
-        let (stream, continuation) = AsyncStream<Double>.makeStream(bufferingPolicy: .bufferingNewest(1))
-        self.reporter = reporter
-        values = stream
-        observer = Observer(continuation: continuation)
-
-        continuation.onTermination = { [reporter, observer] _ in
-            reporter.removeObserver(observer)
-        }
-
-        continuation.yield(reporter.progress.percentComplete)
-        if reporter.progress.isComplete {
-            observer.continuation.finish()
-        } else {
-            reporter.addObserver(observer)
-        }
-    }
-
-    func finish() { observer.continuation.finish() }
-    deinit { observer.continuation.finish() }
-
-    private final class Observer: DoseProgressObserver {
-        let continuation: AsyncStream<Double>.Continuation
-        init(continuation: AsyncStream<Double>.Continuation) { self.continuation = continuation }
-        func doseProgressReporterDidUpdate(_ reporter: DoseProgressReporter) {
-            continuation.yield(reporter.progress.percentComplete)
-            if reporter.progress.isComplete { continuation.finish() }
-        }
     }
 }
