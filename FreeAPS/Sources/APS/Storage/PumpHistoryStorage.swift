@@ -7,7 +7,7 @@ extension NewPumpEvent: @retroactive @unchecked Sendable {}
 
 protocol PumpHistoryStorage: Sendable {
     // from pump manager
-    func storePumpEvents(_ events: [NewPumpEvent]) async throws
+    func storePumpEvents(_ events: [NewPumpEvent], replacePendingEvents: Bool) async throws
 
     // from UI
     func storeEvents(_ events: [PumpHistoryEvent]) async
@@ -46,7 +46,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
     }
 
     /// store events received from the pump manager
-    func storePumpEvents(_ events: [NewPumpEvent]) async {
+    func storePumpEvents(_ events: [NewPumpEvent], replacePendingEvents: Bool) async {
         // ensure no race conditions
         await serializer.run {
             guard !events.isEmpty else { return }
@@ -65,6 +65,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                         id: id,
                         type: .bolus,
                         timestamp: event.date,
+                        isMutable: dose.isMutable,
                         amount: amount,
                         duration: Decimal(minutes).rounded(to: 1),
                         durationMin: nil,
@@ -72,7 +73,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                         temp: nil,
                         carbInput: nil,
                         isSMB: dose.automatic,
-                        isExternal: dose.manuallyEntered
+                        isExternal: dose.manuallyEntered || dose.wasProgrammedByPumpUI
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
@@ -90,6 +91,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                             id: id,
                             type: .tempBasalDuration,
                             timestamp: date,
+                            isMutable: dose.isMutable,
                             amount: nil,
                             duration: nil,
                             // adding 0.2 minutes to avoid tiny gaps due to rounding
@@ -102,6 +104,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                             id: "_" + id,
                             type: .tempBasal,
                             timestamp: date,
+                            isMutable: dose.isMutable,
                             amount: nil,
                             duration: nil,
                             durationMin: nil,
@@ -182,21 +185,23 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
             }
 
             // do NOT call storeEvents from here - it will deadlock
-            await self.doStoreEvents(eventsToStore)
+            await self.doStoreEvents(eventsToStore, replacePendingEvents: replacePendingEvents)
         }
     }
 
     func storeEvents(_ events: [PumpHistoryEvent]) async {
         // ensure no race conditions
         await serializer.run {
-            await doStoreEvents(events)
+            await doStoreEvents(events, replacePendingEvents: false)
         }
     }
 
-    private func doStoreEvents(_ events: [PumpHistoryEvent]) async {
+    private func doStoreEvents(_ events: [PumpHistoryEvent], replacePendingEvents: Bool) async {
         let file = OpenAPS.Monitor.pumpHistory
-        let uniqEvents: [PumpHistoryEvent] = await self.storage.appendAndModify(events, to: file, uniqBy: \.identity) {
-            $0
+        let uniqEvents = await self.storage.modify(file: file, as: PumpHistoryEvent.self) { values in
+            let base = replacePendingEvents ? values.filter { $0.isMutable != true } : values
+            let appended = BaseFileStorage.doAppend(events, existingValues: base, uniqBy: \.identity)
+            return appended
                 .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp }
         }

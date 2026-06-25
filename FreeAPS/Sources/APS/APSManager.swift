@@ -445,8 +445,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 if !isSMB {
                     _ = try? await self.determineBasal(temporaryCarbs: nil)
                 }
-                appCoordinator.setBolusProgress(0)
-                appCoordinator.setBolusAmount(enactedAmount)
+                if enactedAmount > 0 {
+                    appCoordinator.setBolusAmount(enactedAmount)
+                }
             } catch {
                 warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
                 processError(APSError.pumpError(error))
@@ -564,8 +565,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                     "Announcement Bolus succeeded."
                 )
                 await self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
-                appCoordinator.setBolusProgress(0)
-                appCoordinator.setBolusAmount(enactedAmount)
+                if enactedAmount > 0 {
+                    appCoordinator.setBolusAmount(enactedAmount)
+                }
             } catch {
                 // warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                 switch error {
@@ -786,8 +788,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                     automatic: true,
                     concentration: insulinSetting.concentration
                 )
-                appCoordinator.setBolusProgress(0)
-                appCoordinator.setBolusAmount(enactedAmount)
+                if enactedAmount > 0 {
+                    appCoordinator.setBolusAmount(enactedAmount)
+                }
             }
 
             try await doBasal()
@@ -830,9 +833,16 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private var activeBolusReporterSession: BolusProgressStream?
 
     private func finishBolusReporterSession(id: UUID) {
-        guard activeBolusReporterSession?.id == id else { return }
+        guard let activeBolusReporterSession else {
+            // no active bolus reporter, reset the progress just in case
+            appCoordinator.setBolusProgress(nil)
+            return
+        }
+        guard activeBolusReporterSession.id == id else {
+            return
+        }
         appCoordinator.setBolusProgress(nil)
-        activeBolusReporterSession = nil
+        self.activeBolusReporterSession = nil
     }
 
     // when a bolus is cancelled, the pump managers don't kill the reporters
@@ -885,8 +895,13 @@ private final class BolusProgressStream {
         continuation.onTermination = { [reporter, observer] _ in
             reporter.removeObserver(observer)
         }
+
         continuation.yield(reporter.progress.percentComplete)
-        reporter.addObserver(observer)
+        if reporter.progress.isComplete {
+            observer.continuation.finish()
+        } else {
+            reporter.addObserver(observer)
+        }
     }
 
     func finish() { observer.continuation.finish() }
