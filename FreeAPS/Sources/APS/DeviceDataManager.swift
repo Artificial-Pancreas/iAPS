@@ -418,7 +418,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
             return nil
         }
 
-        return Manager.init(rawState: rawState) as? PumpManagerUI
+        return Manager.init(rawState: rawState)
     }
 
     private func updatePumpData(completion: @escaping @Sendable() -> Void) {
