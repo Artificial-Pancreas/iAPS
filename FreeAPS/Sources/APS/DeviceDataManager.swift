@@ -167,6 +167,10 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 
     private let pumpManagerLocked: ManagerBox<PumpManagerUI?> = ManagerBox(nil)
 
+    private var pumpManager: PumpManagerUI? {
+        pumpManagerLocked.value
+    }
+
     private let lastKnownReservoirStore = Locked<ReservoirReading?>(
         ReservoirReading(
             from: UserDefaults.standard.object(forKey: lastKnownReservoirKey) as? ReservoirReading.RawValue
@@ -188,9 +192,17 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         }
     }
 
-    private var pumpManager: PumpManagerUI? {
-        pumpManagerLocked.value
-    }
+    private let bolusReporter: SendableVar<DoseProgressReporter?> = SendableVar(nil)
+    private let bolusObserver: SendableVar<DoseProgressObserver?> = SendableVar(nil)
+    private let bolusProgressClear: SendableVar<DispatchWorkItem?> = SendableVar(nil) // 0.5s delayed progress reset
+
+    // This value is updated before each bolus is started.
+    // It's only used to set appCoordinator.setBolusAmount in standard units instead of pump (adjusted) units (UI-only)
+    // if there is ever a pump manager that provides live reporting for device-initiated boluses (which doesn't seem to be the case currently):
+    // * if the user has a non-100 concentration;
+    // * the user issues a bolus from the pump (device) BEFORE iAPS issues a bolus/SMB with current concentration setting
+    // * the bolus progress bar will show the amount in adjusted units not in standard units
+    private let lastBolusConcentration = Locked<Double>(1.0)
 
     init(
         pumpHistoryStorage: PumpHistoryStorage,
@@ -699,6 +711,90 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     }
 }
 
+// MARK: bolus reporters
+
+extension BaseDeviceDataManager {
+    private func updateBolusReporter(isBolusing: Bool, pumpManager: PumpManager?) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        if isBolusing {
+            guard bolusReporter.value == nil, let pumpManager else {
+                // already tracking
+                return
+            }
+            startBolusReporter(pumpManager)
+        } else if bolusReporter.value != nil {
+            // bolus ended / pump gone
+            finishBolusReporter()
+        }
+    }
+
+    private func startBolusReporter(_ pumpManager: PumpManager) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        bolusProgressClear.value?.cancel()
+        bolusProgressClear.value = nil
+
+        guard let reporter = pumpManager.createBolusProgressReporter(reportingOn: processQueue) else { return }
+        let observer = BolusObserver { [weak self] percent, isComplete in
+            // invoked on processQueue (reportingOn: processQueue)
+            self?.handleBolusProgress(percent: percent, isComplete: isComplete)
+        }
+        bolusReporter.value = reporter
+        bolusObserver.value = observer
+
+        if case let .inProgress(dose) = pumpManager.status.bolusState {
+            let enactedAmount = DoseEntry.fromDeviceUnits(dose.programmedUnits, concentration: lastBolusConcentration.value)
+            self.appCoordinator.setBolusAmount(enactedAmount)
+        }
+
+        appCoordinator.setBolusProgress(Decimal(reporter.progress.percentComplete))
+        if reporter.progress.isComplete {
+            // bolus reporter won't call us back if we add an observer after the bolus is already done
+            finishBolusReporter()
+        } else {
+            reporter.addObserver(observer)
+        }
+    }
+
+    private func handleBolusProgress(percent: Double, isComplete: Bool) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        appCoordinator.setBolusProgress(Decimal(percent))
+        if isComplete { finishBolusReporter() }
+    }
+
+    // detach the reporter and schedule the lingered clear; idempotent
+    private func finishBolusReporter() {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        if let bolusReporter = bolusReporter.value, let bolusObserver = bolusObserver.value {
+            bolusReporter.removeObserver(bolusObserver)
+        }
+        bolusReporter.value = nil
+        bolusObserver.value = nil
+
+        bolusProgressClear.value?.cancel()
+        let work = DispatchWorkItem { [weak self] in
+            guard let self, self.bolusReporter.value == nil else {
+                // a new bolus reported was started, don't clear
+                return
+            }
+            self.appCoordinator.setBolusProgress(nil)
+            self.appCoordinator.setBolusAmount(nil)
+            self.bolusProgressClear.value = nil
+        }
+        bolusProgressClear.value = work
+        processQueue.asyncAfter(deadline: .now() + 0.5, execute: work)
+    }
+}
+
+private final class BolusObserver: DoseProgressObserver {
+    let onUpdate: (Double, Bool) -> Void
+
+    init(onUpdate: @escaping (Double, Bool) -> Void) { self.onUpdate = onUpdate }
+
+    func doseProgressReporterDidUpdate(_ reporter: DoseProgressReporter) {
+        onUpdate(reporter.progress.percentComplete, reporter.progress.isComplete)
+    }
+}
+
 // MARK: - PumpManagerDelegate
 
 extension BaseDeviceDataManager: PumpManagerDelegate {
@@ -718,6 +814,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManagerDidUpdateState(_ pumpManager: PumpManager) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+
         // TODO: what is this scenario?
         if self.pumpManager == nil, let newPumpManager = pumpManager as? PumpManagerUI {
             setPumpManager(newPumpManager)
@@ -1122,18 +1220,20 @@ private extension BaseDeviceDataManager {
     private func dispatchPumpStatus() {
         guard let pumpManager = self.pumpManager else {
             appCoordinator.setPumpStatus(nil)
-            appCoordinator.setBolusInProgress(false)
+            updateBolusReporter(isBolusing: false, pumpManager: nil)
             appCoordinator.setManualTempBasal(false)
             return
         }
 
         let status = pumpStatus(for: pumpManager)
         appCoordinator.setPumpStatus(status)
+
         if case .inProgress = pumpManager.status.bolusState {
-            self.appCoordinator.setBolusInProgress(true)
+            updateBolusReporter(isBolusing: true, pumpManager: pumpManager)
         } else {
-            appCoordinator.setBolusInProgress(false)
+            updateBolusReporter(isBolusing: false, pumpManager: pumpManager)
         }
+
         appCoordinator.setManualTempBasal(KnownPlugins.isManualTempBasalActive(pumpManager) ?? false)
     }
 
@@ -1248,6 +1348,7 @@ extension BaseDeviceDataManager {
             throw APSError.pumpNotConfigured
         }
 
+        lastBolusConcentration.value = concentration
         let unitsAdjustedForConcentration = DoseEntry.toDeviceUnits(units, concentration: concentration)
         let unitsAdjustedForConcentrationAndRounded = pump.roundToSupportedBolusVolume(units: unitsAdjustedForConcentration)
         guard unitsAdjustedForConcentrationAndRounded > 0 else {
@@ -1263,16 +1364,16 @@ extension BaseDeviceDataManager {
                 if let error = error {
                     debug(
                         .apsManager,
-                        "Bolus failed: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded)) - \(error.localizedDescription)"
+                        "bolus failed: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded)) - \(error.localizedDescription)"
                     )
                     continuation.resume(throwing: APSError.pumpError(error))
                 } else {
-                    debug(.apsManager, "Bolus succeeded: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded))")
-                    continuation
-                        .resume(
-                            returning: DoseEntry
-                                .fromDeviceUnits(unitsAdjustedForConcentrationAndRounded, concentration: concentration)
-                        )
+                    debug(.apsManager, "bolus started: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded))")
+                    let enactedAmount = DoseEntry.fromDeviceUnits(
+                        unitsAdjustedForConcentrationAndRounded,
+                        concentration: concentration
+                    )
+                    continuation.resume(returning: enactedAmount)
                 }
             }
         }
@@ -1461,4 +1562,12 @@ private final class ManagerBox<T>: @unchecked Sendable {
     init(_ value: T) { locked = Locked(value) }
     var value: T { get { locked.value } set { locked.value = newValue } }
     @discardableResult func mutate(_ body: (inout T) -> Void) -> T { locked.mutate(body) }
+}
+
+// A Sendable wrapper around an unsendable LoopKit's type.
+// Values inside this wrapper MUST be accessed/modified EXCLUSIVELY on the DeviceDataManager's process queue
+private final class SendableVar<T>: @unchecked Sendable {
+    private var value_: T
+    init(_ value: T) { value_ = value }
+    var value: T { get { value_ } set { value_ = newValue } }
 }

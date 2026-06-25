@@ -39,8 +39,6 @@ final class AppCoordinator: @unchecked Sendable {
     // TODO: this is never triggered?
     let pumpNotificationsRemove = PassthroughSubject<Void, Never>()
 
-    let bolusInProgress = CurrentValueSubject<Bool, Never>(false)
-
     let deliveryUncertain = PassthroughSubject<Void, Never>()
 
     let deviceErrors = PassthroughSubject<Error, Never>()
@@ -127,10 +125,6 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setPumpStatus(_ value: PumpDisplayStatus?) {
         pumpStatus.send(value)
-    }
-
-    func setBolusInProgress(_ value: Bool) {
-        bolusInProgress.send(value)
     }
 
     func setCgmInfo(_ value: CgmDisplayInfo?) {

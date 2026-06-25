@@ -21,7 +21,6 @@ import Observation
     private(set) var lastLoopDate: Date?
     private(set) var bolusProgress: Decimal?
     private(set) var bolusAmount: Decimal?
-    private(set) var bolusInProgress: Bool = false
     private(set) var alertNotAck: Bool = false
     private(set) var lastLoopError: (error: String, date: Date)?
     private(set) var latestIOB: Decimal?
@@ -59,7 +58,6 @@ import Observation
         bind(appCoordinator.lastLoopDate, to: \.lastLoopDate)
         bind(appCoordinator.bolusProgress, to: \.bolusProgress)
         bind(appCoordinator.bolusAmount, to: \.bolusAmount)
-        bind(appCoordinator.bolusInProgress, to: \.bolusInProgress)
         bind(appCoordinator.lastLoopError, to: \.lastLoopError)
         bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAck)
         bind(appCoordinator.glucoseAlarm, to: \.glucoseAlarm)
