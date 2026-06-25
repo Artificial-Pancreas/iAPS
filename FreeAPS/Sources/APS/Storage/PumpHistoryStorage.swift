@@ -94,8 +94,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                             isMutable: dose.isMutable,
                             amount: nil,
                             duration: nil,
-                            // adding 0.2 minutes to avoid tiny gaps due to rounding
-                            durationMin: Decimal(minutes + 0.2).rounded(to: 1),
+                            // adding 0.1 minutes to avoid tiny gaps between TBRs due to rounding
+                            durationMin: Decimal(minutes + 0.1).rounded(to: 1),
                             rate: nil,
                             temp: nil,
                             carbInput: nil
