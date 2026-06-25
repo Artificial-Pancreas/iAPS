@@ -801,19 +801,22 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         _: any LoopKit.PumpManager,
         hasNewPumpEvents events: [LoopKit.NewPumpEvent],
         lastReconciliation _: Date?,
-        replacePendingEvents _: Bool,
+        replacePendingEvents: Bool,
         completion: @escaping ((any Error)?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
+        debug(
+            .deviceManager,
+            "pumpManager hasNewPumpEvents, replacePendingEvents: \(replacePendingEvents):\n\(events.map(\.rawValue.description).joined(separator: "\n"))"
+        )
 
-        lastEventDate = events.last?.date
+        lastEventDate = events.map(\.date).max() ?? lastEventDate
 
         let safeCompletion = PumpEventCompletion(completion, processQueue: processQueue)
         Task { [pumpHistoryStorage] in
             await withBackgroundTask("store pump events") {
                 do {
-                    try await pumpHistoryStorage.storePumpEvents(events)
+                    try await pumpHistoryStorage.storePumpEvents(events, replacePendingEvents: replacePendingEvents)
                     safeCompletion(nil)
                 } catch {
                     safeCompletion(error)
@@ -1244,12 +1247,18 @@ extension BaseDeviceDataManager {
         guard let pump = pumpManager else {
             throw APSError.pumpNotConfigured
         }
-        return try await withCheckedThrowingContinuation { continuation in
-            // convert automatic
-            let automaticValue = automatic ? BolusActivationType.automatic : BolusActivationType.manualRecommendationAccepted
 
-            let unitsAdjustedForConcentration = DoseEntry.toDeviceUnits(units, concentration: concentration)
-            let unitsAdjustedForConcentrationAndRounded = pump.roundToSupportedBolusVolume(units: unitsAdjustedForConcentration)
+        let unitsAdjustedForConcentration = DoseEntry.toDeviceUnits(units, concentration: concentration)
+        let unitsAdjustedForConcentrationAndRounded = pump.roundToSupportedBolusVolume(units: unitsAdjustedForConcentration)
+        guard unitsAdjustedForConcentrationAndRounded > 0 else {
+            debug(.apsManager, "bolus \(units)U rounds to 0U device units at concentration \(concentration) - skipping")
+            return 0
+        }
+
+        // convert automatic
+        let automaticValue = automatic ? BolusActivationType.automatic : BolusActivationType.manualRecommendationAccepted
+
+        return try await withCheckedThrowingContinuation { continuation in
             pump.enactBolus(units: unitsAdjustedForConcentrationAndRounded, activationType: automaticValue) { error in
                 if let error = error {
                     debug(

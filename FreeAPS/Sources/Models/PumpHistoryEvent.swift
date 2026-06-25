@@ -4,6 +4,7 @@ struct PumpHistoryEvent: JSON, Equatable {
     let id: String
     let type: EventType
     let timestamp: Date
+    let isMutable: Bool?
     let amount: Decimal?
     let duration: Decimal? // used for bolus duratin, in minutes, rounded to 1 decimal
     let durationMin: Decimal? // rounded to 1 decimal
@@ -19,6 +20,7 @@ struct PumpHistoryEvent: JSON, Equatable {
         id: String,
         type: EventType,
         timestamp: Date,
+        isMutable: Bool? = nil,
         amount: Decimal? = nil,
         duration: Decimal? = nil,
         durationMin: Decimal? = nil,
@@ -43,6 +45,7 @@ struct PumpHistoryEvent: JSON, Equatable {
         self.note = note
         self.isSMB = isSMB
         self.isExternal = isExternal
+        self.isMutable = isMutable
     }
 }
 
@@ -86,6 +89,7 @@ extension PumpHistoryEvent {
         case id
         case type = "_type"
         case timestamp
+        case isMutable
         case amount
         case duration
         case durationMin = "duration (min)"
