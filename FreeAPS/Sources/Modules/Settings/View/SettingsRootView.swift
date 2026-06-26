@@ -215,6 +215,37 @@ extension Settings {
                             Group {
                                 NavigationLink("Delete CoreData database records", destination: clearView)
                             }
+
+                            Group {
+                                // Re-arm the first-launch onboarding so it replays on the next app
+                                // start (the version check compares the version STRING, so re-signing
+                                // the same build won't re-trigger it on its own).
+                                HStack {
+                                    Text("Replay onboarding (new install)")
+                                    Button("Reset") {
+                                        let d = UserDefaults.standard
+                                        d.removeObject(forKey: IAPSconfig.version)
+                                        d.set(false, forKey: IAPSconfig.hasSeenWelcome)
+                                        d.set(false, forKey: IAPSconfig.hasSeenSharingSetup)
+                                        d.set(false, forKey: IAPSconfig.showUpgradeNotice)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .buttonStyle(.borderedProminent)
+                                }
+                                HStack {
+                                    Text("Replay onboarding (as upgrade)")
+                                    Button("Reset") {
+                                        // Stale version → isNewVersion() fires the upgrade branch on
+                                        // next launch (UpgradeNotice; New/Existing skipped). Then the
+                                        // Sharing step replays.
+                                        let d = UserDefaults.standard
+                                        d.set("reset", forKey: IAPSconfig.version)
+                                        d.set(false, forKey: IAPSconfig.hasSeenSharingSetup)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .buttonStyle(.borderedProminent)
+                                }
+                            }
                         }
                     } header: { Text("Developer") }
 
