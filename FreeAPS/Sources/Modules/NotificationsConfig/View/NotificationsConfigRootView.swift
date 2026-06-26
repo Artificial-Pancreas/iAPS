@@ -198,9 +198,17 @@ extension NotificationsConfig {
                         } else {
                             Toggle("Show Live Activity", isOn: $state.useLiveActivity)
                             if state.useLiveActivity {
+                                Toggle("Watch: Show Delta", isOn: $state.liveActivityWatchDelta)
                                 Toggle("Display Chart", isOn: $state.liveActivityChart)
                                 if state.liveActivityChart {
                                     Toggle("Show Predictions", isOn: $state.liveActivityChartShowPredictions)
+                                    Toggle("Watch: Show Chart", isOn: $state.liveActivityWatchChart)
+                                    if state.liveActivityWatchChart {
+                                        Toggle("Watch: Show Eventual", isOn: $state.liveActivityWatchEventual)
+                                        if state.liveActivityChartShowPredictions {
+                                            Toggle("Watch: Show Predictions", isOn: $state.liveActivityWatchPredictions)
+                                        }
+                                    }
                                 }
                             }
                         }
