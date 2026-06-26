@@ -1393,30 +1393,30 @@ Enact a temp Basal or a temp target */
 
 "Micronutrients" = "Мікронутрієнти";
 
-"Vitamin A" = "Vitamin A";
-"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
-"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
-"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
-"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
-"Vitamin B6" = "Vitamin B6";
-"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
-"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
-"Vitamin B12" = "Vitamin B12";
-"Vitamin C" = "Vitamin C";
-"Vitamin D" = "Vitamin D";
-"Vitamin E" = "Vitamin E";
-"Vitamin K" = "Vitamin K";
-"Calcium" = "Calcium";
-"Iron" = "Iron";
-"Magnesium" = "Magnesium";
-"Potassium" = "Potassium";
-"Zinc" = "Zinc";
-"Phosphorus" = "Phosphorus";
-"Copper" = "Copper";
-"Manganese" = "Manganese";
-"Selenium" = "Selenium";
-"Iodine" = "Iodine";
-"Salt" = "Salt";
+"Vitamin A" = "Вітамін А";
+"Vitamin B1 (Thiamine)" = "Вітамін B1 (Tіамін)";
+"Vitamin B2 (Riboflavin)" = "Вітамін B2 (Рибофлавін)";
+"Vitamin B3 (Niacin)" = "Вітамін B3 (Ніацин)";
+"Vitamin B5 (Pantothenic Acid)" = "Вітамін B5 (Пантотенова Кислота)";
+"Vitamin B6" = "Вітамін B6";
+"Vitamin B7 (Biotin)" = "Вітамін B7 (Біотин)";
+"Vitamin B9 (Folate)" = "Вітамін B9 (Фолат)";
+"Vitamin B12" = "Вітамін В12";
+"Vitamin C" = "Вітамін C";
+"Vitamin D" = "Вітамін D";
+"Vitamin E" = "Вітамін E";
+"Vitamin K" = "Вітамін K";
+"Calcium" = "Кальцій";
+"Iron" = "Залізо";
+"Magnesium" = "Магній";
+"Potassium" = "Калій";
+"Zinc" = "Цинк";
+"Phosphorus" = "Фосфор";
+"Copper" = "Мідь";
+"Manganese" = "Марганець";
+"Selenium" = "Селен";
+"Iodine" = "Йод";
+"Salt" = "Сіль";
 
 "Allow Meal View Micronutrients and Dietary Fibers entries" = "Дозволити записи про Мікронутрієнти та Харчові Волокна в режимі перегляду страв";
 
@@ -1481,6 +1481,10 @@ Enact a temp Basal or a temp target */
 "Manual Entry" = "Ручне Введення";
 
 "Photo Analysis" = "Аналіз Фотографій";
+
+"Photo (+ comment)" = "Фото (+ коментар)";
+
+"Library (+ comment)" = "Бібліотека (+ коментар)";
 
 "Barcode Scanner" = "Сканер Штрих-Кодів";
 
@@ -1838,6 +1842,8 @@ Enact a temp Basal or a temp target */
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Ваш постачальник послуг штучного інтелекту вичерпав свої кредити. Перевірте рахунки свого облікового запису або спробуйте скористатися послугами іншого постачальника.";
 
 "Reset to Default" = "Скинути до Заводських Налаштувань";
+
+"Take Photo" = "Зробити Фото";
 
 "Retake Photo" = "Перезняти фото";
 
@@ -3855,6 +3861,18 @@ Enact a temp Basal or a temp target */
 /* Show Predictions */
 "Show Predictions" = "Відображати Прогнози";
 
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Дивитися: Показати Діаграму";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Дивитися: Показати Дельту ";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Дивитися: Показати «Зрештою»";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Дивитися: Показати Прогнози";
+
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
 
@@ -4033,16 +4051,16 @@ Enact a temp Basal or a temp target */
 
 "More Info" = "Більше інформації";
 
-"Build Expires Soon!" = "Build Expires Soon!";
+"Build Expires Soon!" = "Скоро закінчується збірка!";
 
-"Build Expiring in %d Day" = "Build Expiring in %d Day";
+"Build Expiring in %d Day" = "Термін дії збірки закінчується через %d день";
 
-"Build Expiring in %d Days" = "Build Expiring in %d Days";
+"Build Expiring in %d Days" = "Термін дії збірки закінчується через %d днів";
 
-"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Термін дії вашої збірки iAPS закінчується через %d годину. Після закінчення терміну дії програма не запускатиметься, доки ви не перебудуєте її.";
 
-"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Термін дії вашої збірки iAPS закінчується через %d годин. Після закінчення терміну дії програма не запускатиметься, доки ви не перебудуєте її.";
 
-"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Термін дії вашої збірки iAPS закінчується %1$@ (залишився %2$d день). Збірки TestFlight потрібно оновлювати кожні 90 днів.";
 
-"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Термін дії вашої збірки iAPS закінчується %1$@ (залишилося %2$d днів). Збірки TestFlight потрібно оновлювати кожні 90 днів.";

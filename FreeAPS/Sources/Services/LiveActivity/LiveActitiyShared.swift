@@ -15,6 +15,10 @@ struct LiveActivityAttributes: ActivityAttributes {
         let readings: ValueSeries?
         let predictions: ActivityPredictions?
         let showChart: Bool
+        let watchChart: Bool
+        let watchPredictions: Bool
+        let watchDelta: Bool
+        let watchEventual: Bool
         let chartLowThreshold: Int16
         let chartHighThreshold: Int16
 
@@ -32,6 +36,10 @@ struct LiveActivityAttributes: ActivityAttributes {
                 readings: readings,
                 predictions: nil,
                 showChart: showChart,
+                watchChart: watchChart,
+                watchPredictions: watchPredictions,
+                watchDelta: watchDelta,
+                watchEventual: watchEventual,
                 chartLowThreshold: chartLowThreshold,
                 chartHighThreshold: chartHighThreshold
             )

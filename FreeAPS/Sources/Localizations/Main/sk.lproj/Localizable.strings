@@ -1482,6 +1482,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Photo Analysis" = "Analýza fotografií";
 
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
+
 "Barcode Scanner" = "Skener čiarových kódov";
 
 "Text Search" = "Vyhľadávanie textu";
@@ -1837,6 +1841,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Vášmu AI poskytovateľovi došli kredity. Skontrolujte prosím fakturáciu svojho účtu alebo vyskúšajte iného poskytovateľa.";
 
 "Reset to Default" = "Obnoviť predvolené nastavenia";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Znovu odfotiť";
 
@@ -3855,6 +3861,18 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Show Predictions */
 "Show Predictions" = "Zobraziť predikcie";
+
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Watch: Show Chart";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Watch: Show Delta";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Watch: Show Eventual";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Watch: Show Predictions";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";

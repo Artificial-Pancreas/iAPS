@@ -1394,30 +1394,30 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Micronutrients" = "Micronutriënten";
 
-"Vitamin A" = "Vitamin A";
-"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
-"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
-"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
-"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
-"Vitamin B6" = "Vitamin B6";
-"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
-"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
-"Vitamin B12" = "Vitamin B12";
-"Vitamin C" = "Vitamin C";
-"Vitamin D" = "Vitamin D";
-"Vitamin E" = "Vitamin E";
-"Vitamin K" = "Vitamin K";
+"Vitamin A" = "Vitamine A";
+"Vitamin B1 (Thiamine)" = "Vitamine B1 (Thiamine)";
+"Vitamin B2 (Riboflavin)" = "Vitamine B2 (Riboflavine)";
+"Vitamin B3 (Niacin)" = "Vitamine B3 (Niacine)";
+"Vitamin B5 (Pantothenic Acid)" = "Vitamine B5 (Pantotheenzuur)";
+"Vitamin B6" = "Vitamine B6";
+"Vitamin B7 (Biotin)" = "Vitamine B7 (Biotine)";
+"Vitamin B9 (Folate)" = "Vitamine B9 (Foliumzuur)";
+"Vitamin B12" = "Vitamine B12";
+"Vitamin C" = "Vitamine C";
+"Vitamin D" = "Vitamine D";
+"Vitamin E" = "Vitamine E";
+"Vitamin K" = "Vitamine K";
 "Calcium" = "Calcium";
-"Iron" = "Iron";
+"Iron" = "IJzer";
 "Magnesium" = "Magnesium";
-"Potassium" = "Potassium";
-"Zinc" = "Zinc";
-"Phosphorus" = "Phosphorus";
-"Copper" = "Copper";
-"Manganese" = "Manganese";
+"Potassium" = "Kalium";
+"Zinc" = "Zink";
+"Phosphorus" = "Fosfor";
+"Copper" = "Koper";
+"Manganese" = "Mangaan";
 "Selenium" = "Selenium";
-"Iodine" = "Iodine";
-"Salt" = "Salt";
+"Iodine" = "Jodium";
+"Salt" = "Zout";
 
 "Allow Meal View Micronutrients and Dietary Fibers entries" = "Sta maaltijdweergave micronutrients en vezels toe";
 
@@ -1481,6 +1481,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Manual Entry" = "Handmatige invoer";
 
 "Photo Analysis" = "Foto analyse";
+
+"Photo (+ comment)" = "Foto (+ opmerking)";
+
+"Library (+ comment)" = "Bibliotheek (+ opmerking)";
 
 "Barcode Scanner" = "Barcodescanner";
 
@@ -1837,6 +1841,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "De credits voor je AI-provider zijn op. Controleer de facturering van je account of probeer een andere provider.";
 
 "Reset to Default" = "Standaardwaarden terugzetten";
+
+"Take Photo" = "Maak een foto";
 
 "Retake Photo" = "Foto opnieuw maken";
 
@@ -3862,6 +3868,18 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 /* Show Predictions */
 "Show Predictions" = "Voorspellingen tonen";
 
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Watch: Grafiek weergeven";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Watch: Delta weergeven";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Watch: Eventuals weergeven";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Watch: Voorspellingen weergeven";
+
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
 
@@ -4040,16 +4058,16 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 
 "More Info" = "Meer Informatie";
 
-"Build Expires Soon!" = "Build Expires Soon!";
+"Build Expires Soon!" = "Je build verloopt binnenkort!";
 
-"Build Expiring in %d Day" = "Build Expiring in %d Day";
+"Build Expiring in %d Day" = "Je build verloopt in %d Dag";
 
-"Build Expiring in %d Days" = "Build Expiring in %d Days";
+"Build Expiring in %d Days" = "Je build verloopt in %d Dagen";
 
-"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Je iAPS build loopt af in %d uur. Na de vervaltijd zal de app pas weer opstarten nadat je de app opnieuw hebt gebouwd.";
 
-"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Je iAPS build verloopt in %d uur. Na de vervaltijd zal de app pas weer opstarten wanneer je opnieuw bouwt.";
 
-"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Je iAPS build verloopt op %1$@ (%2$d dagen resterend). TestFlight builds moeten elke 90 dagen worden vernieuwd.";
 
-"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Je iAPS build verloopt op %1$@ (%2$d dagen resterend). TestFlight builds moeten elke 90 dagen worden vernieuwd.";
