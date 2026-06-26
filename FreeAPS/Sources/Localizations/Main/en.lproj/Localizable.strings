@@ -4098,6 +4098,11 @@ Enact a temp Basal or a temp target */
 
 "Let's get you set up." = "Let's get you set up.";
 
+/* Welcome screen disclaimer (phase 1) */
+"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm.";
+
+"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is not approved by any health authority. You run this system at your own risk.";
+
 "New User" = "New User";
 
 "Set up iAPS for the first time" = "Set up iAPS for the first time";

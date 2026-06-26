@@ -20,30 +20,59 @@ struct WelcomeView: View {
             VStack(spacing: 10) {
                 Text("Welcome to iAPS")
                     .font(.largeTitle).bold()
-                Text("Let's get you set up.")
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
             }
 
             Spacer()
 
-            VStack(spacing: 16) {
-                choiceCard(
-                    title: "New User",
-                    subtitle: "Set up iAPS for the first time",
-                    systemImage: "sparkles",
-                    prominent: true,
-                    action: onNewUser
-                )
-                choiceCard(
-                    title: "Existing User",
-                    subtitle: "Migrate my settings from a previous install",
-                    systemImage: "arrow.down.circle",
-                    prominent: false,
-                    action: onExistingUser
-                )
+            // PHASE 1: a temporary disclaimer + single Continue button stands in for the
+            // New-/Existing-User fork. Both callbacks are identical today (they flip
+            // `hasSeenWelcome` and advance to the Sharing step), so Continue uses `onNewUser`.
+            // PHASE 2 (existing-user restore) re-enables the `choiceCard` fork below and
+            // removes this block. The disclaimer text is intended to stay either way.
+            VStack(spacing: 20) {
+                VStack(spacing: 14) {
+                    Text("iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm.")
+                    Text("iAPS is not approved by any health authority. You run this system at your own risk.")
+                }
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+
+                Button(action: onNewUser) {
+                    Text("Continue")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 14)
+                                .fill(Color.accentColor)
+                        )
+                        .foregroundStyle(Color.white)
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
+
+            /* PHASE 2 — restore the New-/Existing-User fork (delete the disclaimer block above):
+             VStack(spacing: 16) {
+                 choiceCard(
+                     title: "New User",
+                     subtitle: "Set up iAPS for the first time",
+                     systemImage: "sparkles",
+                     prominent: true,
+                     action: onNewUser
+                 )
+                 choiceCard(
+                     title: "Existing User",
+                     subtitle: "Migrate my settings from a previous install",
+                     systemImage: "arrow.down.circle",
+                     prominent: false,
+                     action: onExistingUser
+                 )
+             }
+             .padding(.horizontal)
+             */
 
             Spacer()
 
