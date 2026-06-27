@@ -20,4 +20,10 @@ class BaseIntentsRequest: Injectable {
         resolver = FreeAPSApp.resolver
         injectServices(resolver)
     }
+
+    // iAPS can be started from an iOS shortcut, so the main app startup will not have happened/waited for the `appServices` to start all the services/managers.
+    // we await this at each shortcut entry point to make sure AppCoordinator is initialized.
+    @MainActor static func awaitStartup() async throws {
+        try await FreeAPSApp.resolver.resolve(AppServices.self)!.started()
+    }
 }

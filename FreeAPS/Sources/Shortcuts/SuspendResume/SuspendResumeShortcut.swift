@@ -45,7 +45,10 @@ struct SuspendResumeIntent: AppIntent {
             )
         }
 
-        let confirmation = try SuspendResumeIntentRequest().setMode(modeToApply)
+        let intentRequest = SuspendResumeIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
+
+        let confirmation = try intentRequest.setMode(modeToApply)
         return .result(
             dialog: IntentDialog(stringLiteral: confirmation)
         )

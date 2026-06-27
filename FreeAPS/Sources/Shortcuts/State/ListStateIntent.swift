@@ -16,6 +16,8 @@ struct ListStateIntent: AppIntent {
 
     @MainActor func perform() async throws -> some ReturnsValue<StateiAPSResults> & ShowsSnippetView {
         let stateIntent = StateIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
+
         let glucoseValues = try? await stateIntent.getLastBG()
         let iob_cob_value = try? await stateIntent.getIOB_COB()
 
