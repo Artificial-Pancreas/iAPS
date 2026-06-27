@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "fastlane", git: "https://github.com/Artificial-Pancreas/fastlane.git", branch: "dev"
+gem "fastlane", git: "https://github.com/Artificial-Pancreas/fastlane.git", branch: "master"
 gem "abbrev", git: "https://github.com/ruby/abbrev.git", branch: "master"
 # Ruby 3.4 dropped kconv from the default gems, but CFPropertyList (a fastlane
 # dependency) still `require`s it. kconv ships inside the nkf gem, so adding nkf
