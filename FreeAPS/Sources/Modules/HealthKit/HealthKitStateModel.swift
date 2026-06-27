@@ -9,7 +9,7 @@ extension AppleHealthKit {
         @Published var needShowInformationTextForSetPermissions = false
 
         override func subscribe() async {
-            needShowInformationTextForSetPermissions = await healthKitManager.areAllowAllPermissions
+            needShowInformationTextForSetPermissions = await !healthKitManager.areAllowAllPermissions
 
             subscribeSetting(\.useAppleHealth, on: $useAppleHealth) {
                 self.useAppleHealth = $0
