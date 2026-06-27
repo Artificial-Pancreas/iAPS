@@ -4,7 +4,7 @@ import Foundation
 // a snapshot (DTO) of a CoreData Micronutrient entity
 // entities are not safe to send across actor/thread boundaries (not Sendable), this snapshot is
 struct MicronutrientSnapshot: Sendable, Hashable {
-    let id: UUID
+    let id: UUID?
     let name: String?
     let type: String
     let amount: Decimal?

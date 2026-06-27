@@ -335,6 +335,7 @@ final class CoreDataStorage: Sendable {
                         guard value.amount != 0 else { continue }
                         let micro = Micronutrient(context: context)
 
+                        micro.id = UUID()
                         micro.name = value.name
                         micro.type = value.substance.rawValue
                         micro.unit = value.unit
@@ -599,7 +600,7 @@ final class CoreDataStorage: Sendable {
 }
 
 @objc(Micronutrient) class Micronutrient: NSManagedObject {
-    @NSManaged public var id: UUID
+    @NSManaged public var id: UUID?
     @NSManaged public var name: String?
     @NSManaged public var type: String
     @NSManaged public var amount: NSDecimalNumber?
