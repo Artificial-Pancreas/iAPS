@@ -10,6 +10,10 @@ extension Main {
         @AppStorage(IAPSconfig.showUpgradeNotice) private var showUpgradeNotice = false
         @AppStorage(IAPSconfig.hasSeenSharingSetup) private var hasSeenSharingSetup = false
 
+        // Local onboarding sub-step: the user picked "Existing User" and is in the
+        // cloud-backup restore flow (not persisted — it lives only while Welcome is up).
+        @State private var existingUserRestore = false
+
         var colorScheme: ColorScheme {
             state.lightMode != LightMode.auto ? (state.lightMode == .light ? .light : .dark) : lightMode
         }
@@ -46,21 +50,33 @@ extension Main {
         /// view flips its flag: Welcome (or post-upgrade notice) → Sharing setup → Home.
         @ViewBuilder private var onboardingCover: some View {
             if !hasSeenWelcome {
-                WelcomeView(
-                    onExistingUser: {
-                        // Advance to the Sharing step; the firstRun-gated migration screen
-                        // runs on Home once onboarding finishes.
-                        showUpgradeNotice = false
-                        hasSeenWelcome = true
-                    },
-                    onNewUser: {
-                        // Advance to the Sharing step. The New-User Setup Wizard (CGM/pump/etc.)
-                        // will slot in after sharing once built; for now sharing is step 2.
-                        showUpgradeNotice = false
-                        hasSeenWelcome = true
-                    }
-                )
-                .environment(\.colorScheme, colorScheme)
+                if existingUserRestore {
+                    ExistingUserRestoreView(
+                        resolver: resolver,
+                        onDone: {
+                            // Restored (or skipped) — advance to the Sharing step so the
+                            // user re-enables online backup for this device.
+                            showUpgradeNotice = false
+                            hasSeenWelcome = true
+                        },
+                        onBack: { existingUserRestore = false }
+                    )
+                    .environment(\.colorScheme, colorScheme)
+                } else {
+                    WelcomeView(
+                        onExistingUser: {
+                            // Enter the cloud-backup restore flow.
+                            existingUserRestore = true
+                        },
+                        onNewUser: {
+                            // Advance to the Sharing step. The New-User Setup Wizard (CGM/pump/etc.)
+                            // will slot in after sharing once built; for now sharing is step 2.
+                            showUpgradeNotice = false
+                            hasSeenWelcome = true
+                        }
+                    )
+                    .environment(\.colorScheme, colorScheme)
+                }
             } else if showUpgradeNotice {
                 UpgradeNoticeView(
                     version: Bundle.main.releaseVersionNumber ?? "",

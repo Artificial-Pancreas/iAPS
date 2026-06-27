@@ -25,7 +25,6 @@ class Database {
         static let downloadMealPresetsPath = "/api/v1/download/meal-presets"
         static let downloadOverridePresetsPath = "/api/v1/download/override-presets"
         static let downloadDeletePath = "/api/v1/download/delete"
-        static let downloadRestorePath = "/api/v1/download/restore"
 
         static let retryCount = 2
         static let timeout: TimeInterval = 60
@@ -54,25 +53,6 @@ extension Database {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: Preferences.self, decoder: JSONCoding.decoder)
-            .eraseToAnyPublisher()
-    }
-
-    func moveProfiles(token: String, restoreToken: String) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.downloadRestorePath
-
-        var request = URLRequest(url: components.url!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "restore_token": restoreToken])
-        request.timeoutInterval = Config.timeout
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
             .eraseToAnyPublisher()
     }
 
