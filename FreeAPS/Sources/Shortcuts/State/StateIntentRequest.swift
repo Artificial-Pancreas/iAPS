@@ -44,11 +44,11 @@ struct StateiAPSResults: AppEntity {
 }
 
 struct StateBGQuery: EntityQuery {
-    func entities(for _: [StateiAPSResults.ID]) async throws -> [StateiAPSResults] {
+    @MainActor func entities(for _: [StateiAPSResults.ID]) async throws -> [StateiAPSResults] {
         []
     }
 
-    func suggestedEntities() async throws -> [StateiAPSResults] {
+    @MainActor func suggestedEntities() async throws -> [StateiAPSResults] {
         []
     }
 }

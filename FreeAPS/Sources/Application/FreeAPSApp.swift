@@ -28,7 +28,7 @@ import Swinject
     // TODO: Remove var after update "Use Dependencies" logic in Logger
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
-    private let appServices = AppServices(resolver: Self.resolver)
+    private let appServices = Self.resolver.resolve(AppServices.self)!
 
     private let appUIState = Self.resolver.resolve(AppUIState.self)!
 

@@ -102,5 +102,10 @@ final class ServiceAssembly: Assembly {
             )
         }
         container.register(CoreDataManager.self) { r in CoreDataManager(resolver: r) }
+
+        container.register(AppServices.self) { r in
+            nonisolated(unsafe) let resolver = r
+            return MainActor.assumeIsolated { AppServices(resolver: resolver) }
+        }
     }
 }

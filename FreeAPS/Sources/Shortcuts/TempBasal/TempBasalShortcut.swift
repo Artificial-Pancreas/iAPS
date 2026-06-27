@@ -43,6 +43,7 @@ struct BasalIntent: AppIntent {
 
         let bolusIntentRequest = BolusIntentRequest()
         let basalIntentRequest = BasalIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
 
         if confirmBeforeApplying {
             let glucoseString = await bolusIntentRequest.currentGlucose() // Fetch current glucose
