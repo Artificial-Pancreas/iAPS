@@ -1076,19 +1076,19 @@ actor OpenAPS: Sendable {
         ])
     }
 
-    func iobSync() async -> RawJSON {
+    func iobSync(
+        pumpHistory: [PumpHistoryEvent]
+    ) async -> RawJSON {
         let (
             autosens,
             profile,
-            pumpHistory
         ) = await (
             autosensHistory(),
             profileHistory(),
-            pumpHistory()
         )
 
         return await scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
-            pumpHistory,
+            pumpHistory.sorted { $0.timestamp > $1.timestamp }, // newest -> oldest
             profile,
             Date(),
             autosens

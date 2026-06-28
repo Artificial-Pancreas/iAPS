@@ -150,15 +150,10 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
 
         appCoordinator.setLastLoopDate(lastLoopDate)
-        await updateIOB()
 
-        observe(appCoordinator.pumpHistory.dropFirst()) { me, _ in
-            guard !me.appCoordinator.isLooping.value else {
-                // loop will update IOB at the end
-                return
-            }
+        observe(appCoordinator.pumpHistory) { me, pumpHistory in
             await withBackgroundTask("update iob") {
-                await me.updateIOB()
+                await me.updateIOB(pumpHistory: pumpHistory)
             }
         }
     }
@@ -253,7 +248,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             await self.persistLoopStats(loopStatRecord: loopStatRecord, error: loopOutcome.error)
 
-            await self.updateIOB()
+            await self.updateIOB(pumpHistory: appCoordinator.pumpHistory.value)
 
             appCoordinator.setIsLooping(false)
 
@@ -396,13 +391,17 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
     }
 
-    private func updateIOB() async {
-        let sync = await openAPS.iobSync()
-        guard let iobEntries = IOBEntry.parseArrayFromJSON(from: sync) else { return }
+    private let updateIobTaskSerializer = TaskSerializer()
 
-        _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
+    private func updateIOB(pumpHistory: [PumpHistoryEvent]) async {
+        await updateIobTaskSerializer.run {
+            let sync = await openAPS.iobSync(pumpHistory: pumpHistory)
+            guard let iobEntries = IOBEntry.parseArrayFromJSON(from: sync) else { return }
 
-        appCoordinator.setIobTicks(iobEntries)
+            _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
+
+            appCoordinator.setIobTicks(iobEntries)
+        }
     }
 
     func makeProfiles() async -> Bool {
