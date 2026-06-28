@@ -197,8 +197,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
     }
 
     private func doStoreEvents(_ events: [PumpHistoryEvent], replacePendingEvents: Bool) async {
-        let file = OpenAPS.Monitor.pumpHistory
-        let uniqEvents = await self.storage.modify(file: file, as: PumpHistoryEvent.self) { values in
+        let uniqEvents = await self.storage.modify(file: OpenAPS.Monitor.pumpHistory, as: PumpHistoryEvent.self) { values in
             let base = replacePendingEvents ? values.filter { $0.isMutable != true } : values
             let appended = BaseFileStorage.doAppend(events, existingValues: base, uniqBy: \.identity)
             return appended
