@@ -725,6 +725,12 @@ extension Home.StateModel {
         await setupActivity()
     }
 
+    func reloadOverrideHistory() {
+        Task {
+            await setupOverrideHistory()
+        }
+    }
+
     private func basalProfileUpdated(_ basalProfile: [BasalProfileEntry]) async {
         await setupBasalProfile(basalProfile)
     }
