@@ -33,10 +33,14 @@ extension Home {
         @Environment(\.sizeCategory) private var fontSize
         @Environment(\.colorScheme) var colorScheme
 
-        @FetchRequest(
-            entity: Override.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var fetchedPercent: FetchedResults<Override>
+        private static var latestOverrideFetchRequest: NSFetchRequest<Override> {
+            let request = Override.fetchRequest() as NSFetchRequest<Override>
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            request.fetchLimit = 1
+            return request
+        }
+
+        @FetchRequest(fetchRequest: latestOverrideFetchRequest) var fetchedPercent: FetchedResults<Override>
 
         @FetchRequest(
             entity: OverridePresets.entity(),
@@ -1173,6 +1177,9 @@ extension Home {
                 state.startTimer()
                 checkBuildExpiration()
             }
+            .onChange(of: fetchedPercent.first?.changeKey) { _, _ in
+                state.reloadOverrideHistory()
+            }
             .alert(
                 BuildExpirationManager.shared.alertTitle,
                 isPresented: $showExpirationAlert
@@ -1367,5 +1374,17 @@ private struct TempBasalView: View {
             )
         }
         return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
+    }
+}
+
+// only used in .onChange(of:) to detect active override changes - to reflect them on the chart immediately
+private struct ActiveOverrideKey: Equatable {
+    let id: NSManagedObjectID?
+    let enabled: Bool?
+}
+
+private extension Override {
+    var changeKey: ActiveOverrideKey {
+        .init(id: objectID, enabled: enabled)
     }
 }
