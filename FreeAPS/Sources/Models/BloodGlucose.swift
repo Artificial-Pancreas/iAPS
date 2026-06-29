@@ -173,3 +173,76 @@ extension BloodGlucose: SavitzkyGolaySmoothable {
         }
     }
 }
+
+extension BloodGlucose {
+    static func from(nightscout entry: GlucoseEntry) -> BloodGlucose? {
+        guard let id = entry.id else { return nil }
+        let direction = (entry.trend?.direction).flatMap { BloodGlucose.Direction(rawValue: $0) }
+        let glucose = Int(entry.glucose.rounded())
+        let glucoseDecimal = Decimal(entry.glucose.rounded())
+        let type: String?
+        switch entry.glucoseType {
+        case .sensor: type = "sgv"
+        case .meter: type = "mbg"
+        }
+        return BloodGlucose(
+            _id: id,
+            sgv: glucose,
+            direction: direction,
+            date: Decimal(entry.date.timeIntervalSince1970 * 1000),
+            dateString: entry.date,
+            unfiltered: glucoseDecimal,
+            uncalibrated: glucoseDecimal,
+            filtered: nil,
+            noise: nil,
+            glucose: glucose,
+            type: type,
+            activationDate: nil,
+            sessionStartDate: nil,
+            transmitterID: nil,
+            device: entry.device,
+        )
+    }
+
+    var toNightscoutEntry: GlucoseEntry? {
+        guard let glucose = (unfiltered.map { Double($0) } ?? sgv.map { Double($0) }) else { return nil }
+
+        let glucoseType: GlucoseEntry.GlucoseType
+        let isCalibration: Bool
+        if type == GlucoseType.manual.rawValue {
+            glucoseType = .meter
+            isCalibration = false
+        } else if type == GlucoseType.sgv.rawValue {
+            glucoseType = .sensor
+            isCalibration = false
+        } else if type == GlucoseType.cal.rawValue {
+            glucoseType = .meter
+            isCalibration = true
+        } else {
+            return nil
+        }
+
+        let trend: GlucoseEntry.GlucoseTrend? = direction.flatMap { Self.trendFromDirection($0.rawValue) }
+
+        return GlucoseEntry(
+            glucose: glucose,
+            date: dateString,
+            device: device,
+            glucoseType: glucoseType,
+            trend: trend,
+            changeRate: nil,
+            isCalibration: isCalibration,
+            condition: nil,
+            id: id
+        )
+    }
+
+    private static func trendFromDirection(_ direction: String?) -> GlucoseEntry.GlucoseTrend? {
+        for trend in GlucoseEntry.GlucoseTrend.allCases {
+            if direction == trend.direction {
+                return trend
+            }
+        }
+        return nil
+    }
+}

@@ -95,7 +95,6 @@ extension OpenAPS {
         static let carbsToDelete = "upload/carbs-to-delete.json"
         static let uploadedTempTargets = "upload/uploaded-temptargets.json"
         static let uploadedGlucose = "upload/uploaded-glucose.json"
-        static let glucoseToDelete = "upload/glucose-to-delete.json"
         static let uploadedCGMState = "upload/uploaded-cgm-state.json"
         static let uploadedPodAge = "upload/uploaded-pod-age.json"
         static let uploadedProfile = "upload/uploaded-profile.json"

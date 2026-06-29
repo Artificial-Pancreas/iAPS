@@ -34,6 +34,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private let reachabilityManager: ReachabilityManager
 
     private var pumpHistorySync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
+    private var glucoseSync: DataSynchronizer<BloodGlucose, NightscoutGlucoseSink>!
 
     private let overrideStorage = OverrideStorage()
 
@@ -43,7 +44,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     private var lastSeenCgmStart: Date?
     private var cgmStartUploadPending: Bool = true
-    private var deletedGlucosePending: Bool = true
     private var deletedCarbsPending: Bool = true
 
     private var lastUploadedPodAge: Date?
@@ -96,6 +96,16 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             category: .nightscout
         )
 
+        glucoseSync = DataSynchronizer(
+            name: "ns.glucose",
+            sink: NightscoutGlucoseSink(apiProvider: { [self] in await nightscoutAPI }),
+            storage: storage,
+            snapshotFile: OpenAPS.Nightscout.uploadedGlucose,
+            retention: .hours(24),
+            deletionWindow: .hours(8),
+            category: .nightscout
+        )
+
         self.notUploadedOverrides = await storage
             .retrieve(OpenAPS.Nightscout.notUploadedOverrides, as: [NigtscoutExercise].self) ?? []
 
@@ -124,13 +134,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         observe(appCoordinator.glucoseHistory) { me, bloodGlucose in
             await withBackgroundTask("nightscout upload - blood glucose") {
                 await me.glucoseHistoryUpdated(bloodGlucose)
-                // retry previous deletions if needed
-                await me.glucoseDeleted([])
-            }
-        }
-        observe(appCoordinator.glucoseDeletions) { me, deleted in
-            await withBackgroundTask("nightscout upload - glucose deletions") {
-                await me.glucoseDeleted(deleted)
             }
         }
 
@@ -583,71 +586,12 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     }
 
     private func glucoseHistoryUpdated(_ bloodGlucose: [BloodGlucose]) async {
-        let settings = appCoordinator.settings.value
-        guard nightscoutAPI != nil, settings.isUploadEnabled, bloodGlucose.isNotEmpty, isNetworkReachable,
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable,
               appCoordinator.cgmStatus.value?.shouldUploadGlucose == true
         else {
             return
         }
-
-        let uploaded = await storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? []
-
-        let notUploaded = Array(Set(bloodGlucose).subtracting(Set(uploaded)))
-
-        await uploadGlucose(
-            upload: notUploaded,
-            saveToUploaded: true,
-            settings: settings
-        ).drain()
-    }
-
-    private func glucoseDeleted(_ deleted: [BloodGlucose]) async {
-        let deletedManualGlucose = deleted.filter { $0.type == GlucoseType.manual.rawValue }
-
-        guard deletedManualGlucose.isNotEmpty || deletedGlucosePending else { return }
-
-        let hoursAgo30 = Date.now.removingTimeInterval(.hours(30))
-        let glucoseToDelete = await storage.appendAndModify(
-            deletedManualGlucose,
-            to: OpenAPS.Nightscout.glucoseToDelete,
-            uniqBy: \.dateString
-        ) {
-            $0.filter { $0.dateString >= hoursAgo30 }
-        }
-
-        let allDeleted = await deleteManualGlucose(glucoseToDelete)
-        deletedGlucosePending = !allDeleted
-    }
-
-    private func deleteManualGlucose(_ glucoseToDelete: [BloodGlucose]) async -> Bool {
-        let settings = appCoordinator.settings.value
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled, glucoseToDelete.isNotEmpty, isNetworkReachable else {
-            return glucoseToDelete.isEmpty
-        }
-        var deletedFromNightscout: [BloodGlucose] = []
-        for deletedGlucose in glucoseToDelete {
-            do {
-                try await nightscout.deleteManualGlucose(at: deletedGlucose.dateString)
-                deletedFromNightscout.append(deletedGlucose)
-                debug(
-                    .nightscout,
-                    "Manual Glucose entry deleted: \(deletedGlucose.dateString.formatted(.iso8601WithFractionalSeconds))"
-                )
-            } catch {
-                debug(
-                    .nightscout,
-                    "failed to delete manual glucose from nightscout: \(deletedGlucose.dateString.formatted(.iso8601WithFractionalSeconds)) - \(error.localizedDescription)"
-                )
-                break
-            }
-        }
-
-        let deletedFromNightscoutDates = Set(deletedFromNightscout.map(\.dateString))
-        let (remainingToDelete, _) = await storage.delete(file: OpenAPS.Nightscout.glucoseToDelete, as: BloodGlucose.self) {
-            deletedFromNightscoutDates.contains($0.dateString)
-        }
-        debug(.nightscout, "manual glucose deleted from nightscout: \(deletedFromNightscout.count)/\(glucoseToDelete.count)")
-        return remainingToDelete.isEmpty
+        await glucoseSync.reconcile(current: bloodGlucose)
     }
 
     private func cgmStatusUpdated(_ cgmStatus: CgmDisplayStatus) async {
@@ -1057,79 +1001,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             }
 
         return cgmState
-    }
-}
-
-private extension BloodGlucose {
-    static func from(nightscout entry: GlucoseEntry) -> BloodGlucose? {
-        guard let id = entry.id else { return nil }
-        let direction = (entry.trend?.direction).flatMap { BloodGlucose.Direction(rawValue: $0) }
-        let glucose = Int(entry.glucose.rounded())
-        let glucoseDecimal = Decimal(entry.glucose.rounded())
-        let type: String?
-        switch entry.glucoseType {
-        case .sensor: type = "sgv"
-        case .meter: type = "mbg"
-        }
-        return BloodGlucose(
-            _id: id,
-            sgv: glucose,
-            direction: direction,
-            date: Decimal(entry.date.timeIntervalSince1970 * 1000),
-            dateString: entry.date,
-            unfiltered: glucoseDecimal,
-            uncalibrated: glucoseDecimal,
-            filtered: nil,
-            noise: nil,
-            glucose: glucose,
-            type: type,
-            activationDate: nil,
-            sessionStartDate: nil,
-            transmitterID: nil,
-            device: entry.device,
-        )
-    }
-
-    var toNightscoutEntry: GlucoseEntry? {
-        guard let glucose = (unfiltered.map { Double($0) } ?? sgv.map { Double($0) }) else { return nil }
-
-        let glucoseType: GlucoseEntry.GlucoseType
-        let isCalibration: Bool
-        if type == GlucoseType.manual.rawValue {
-            glucoseType = .meter
-            isCalibration = false
-        } else if type == GlucoseType.sgv.rawValue {
-            glucoseType = .sensor
-            isCalibration = false
-        } else if type == GlucoseType.cal.rawValue {
-            glucoseType = .meter
-            isCalibration = true
-        } else {
-            return nil
-        }
-
-        let trend: GlucoseEntry.GlucoseTrend? = direction.flatMap { Self.trendFromDirection($0.rawValue) }
-
-        return GlucoseEntry(
-            glucose: glucose,
-            date: dateString,
-            device: device,
-            glucoseType: glucoseType,
-            trend: trend,
-            changeRate: nil,
-            isCalibration: isCalibration,
-            condition: nil,
-            id: id
-        )
-    }
-
-    private static func trendFromDirection(_ direction: String?) -> GlucoseEntry.GlucoseTrend? {
-        for trend in GlucoseEntry.GlucoseTrend.allCases {
-            if direction == trend.direction {
-                return trend
-            }
-        }
-        return nil
     }
 }
 

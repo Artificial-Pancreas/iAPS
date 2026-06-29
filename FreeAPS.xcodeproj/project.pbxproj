@@ -446,6 +446,7 @@
 		F227E1FD2E76515C0076BADA /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */; };
 		F22A7A802FF167410019BDC5 /* DataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */; };
 		F22A7A822FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */; };
+		F22A7A842FF287B20019BDC5 /* NightscoutGlucoseSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
@@ -1180,6 +1181,7 @@
 		F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSync.swift; sourceTree = "<group>"; };
 		F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutTreatmentSync.swift; sourceTree = "<group>"; };
+		F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutGlucoseSync.swift; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
@@ -2935,6 +2937,7 @@
 			isa = PBXGroup;
 			children = (
 				F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */,
+				F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */,
 				F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */,
 			);
 			path = DataSync;
@@ -3845,6 +3848,7 @@
 				BD2FF1A02AE29D43005D1C5D /* CheckboxToggleStyle.swift in Sources */,
 				19F4B6212F86601C00894A92 /* MicroNutrientValue.swift in Sources */,
 				E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */,
+				F22A7A842FF287B20019BDC5 /* NightscoutGlucoseSync.swift in Sources */,
 				190E311E2EE8313E00C4D70A /* MealMode.swift in Sources */,
 				919DBD08F13BAFB180DF6F47 /* AddTempTargetStateModel.swift in Sources */,
 				F2159A4A2BA60A6000A0B716 /* ContactTrickDataFlow.swift in Sources */,
