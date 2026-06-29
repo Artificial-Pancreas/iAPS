@@ -1,6 +1,13 @@
 import Combine
 import Foundation
 
+/// Extra fields the web side merges into the stored pump-settings blob beyond the core
+/// `PumpSettings` (insulin action curve / max bolus / max basal) — currently just the
+/// insulin concentration factor applied at the pump-command boundary (U100 = 1.0, U200 = 2.0).
+private struct RestoredPumpExtras: Decodable {
+    let concentration: Double?
+}
+
 class Database {
     init(token: String) {
         self.token = token
@@ -155,6 +162,31 @@ extension Database {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: PumpSettings.self, decoder: decoder)
+            .eraseToAnyPublisher()
+    }
+
+    /// Best-effort fetch of the saved insulin concentration (U100 = 1.0, U200 = 2.0, …).
+    /// It rides the same pump-settings backup row, where the web side merges `concentration`
+    /// into the stored blob — so there's no separate endpoint. Returns nil when the backup
+    /// carries no concentration (e.g. an install that never uploaded pump settings).
+    func fetchInsulinConcentration(_ name: String) -> AnyPublisher<Double?, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.downloadPumpSettingsPath
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: RestoredPumpExtras.self, decoder: JSONDecoder())
+            .map(\.concentration)
             .eraseToAnyPublisher()
     }
 

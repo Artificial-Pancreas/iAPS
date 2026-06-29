@@ -1,12 +1,15 @@
 import Combine
+import CoreData
 import SwiftUI
 import Swinject
 
 /// Existing-User onboarding step: restore a cloud backup (open-iaps.app) onto a fresh
 /// install using the recovery token from the previous install. Phase A restores the two
 /// clean, file-backed sections — OpenAPS Preferences and the iAPS app settings — which
-/// together carry the bulk of a user's tuning. Profile schedules (basal/ISF/CR) and the
-/// CoreData-backed presets are deliberately out of scope here and handled separately.
+/// together carry the bulk of a user's tuning, plus the insulin concentration (a safety
+/// detail: a U200 user left at the U100 default would be mis-dosed). Profile schedules
+/// (basal/ISF/CR) and the remaining CoreData-backed presets are out of scope here and
+/// handled separately.
 struct ExistingUserRestoreView: View {
     let resolver: Resolver
     /// Advance the onboarding cover to the next step (Sharing setup).
@@ -186,11 +189,19 @@ extension ExistingUserRestoreView {
             state = .working
             let database = Database(token: token)
 
-            // All-or-nothing: only persist once BOTH sections have downloaded, so a fresh
-            // install never ends up with half-restored state.
-            Publishers.Zip(
+            // Preferences + settings gate the restore (all-or-nothing — a fresh install must
+            // never end up half-restored). Insulin concentration is best-effort: it rides an
+            // optional pump-settings row that older installs may never have uploaded, so its
+            // failure resolves to nil rather than failing the whole restore.
+            let concentration = database.fetchInsulinConcentration("default")
+                .replaceError(with: nil)
+                .setFailureType(to: Swift.Error.self)
+                .eraseToAnyPublisher()
+
+            Publishers.Zip3(
                 database.fetchPreferences("default"),
-                database.fetchSettings("default")
+                database.fetchSettings("default"),
+                concentration
             )
             .receive(on: DispatchQueue.main)
             .sink(
@@ -201,7 +212,7 @@ extension ExistingUserRestoreView {
                         )
                     }
                 },
-                receiveValue: { [weak self] preferences, settings in
+                receiveValue: { [weak self] preferences, settings, concentration in
                     guard let self else { return }
 
                     // Preferences: oref re-reads preferences.json from disk each run, so a
@@ -217,10 +228,35 @@ extension ExistingUserRestoreView {
                         self.storage.save(settings, as: OpenAPS.FreeAPS.settings)
                     }
 
+                    // Insulin concentration lives in CoreData, not in either settings file, so
+                    // it's restored here when the backup carries it. Skipping a nil leaves the
+                    // U100 default — correct for the common case.
+                    if let concentration, concentration > 0 {
+                        self.saveConcentration(concentration, increment: preferences.bolusIncrement)
+                    }
+
                     self.state = .done
                 }
             )
             .store(in: &lifetime)
+        }
+
+        /// Persist the restored insulin concentration as a new `InsulinConcentration` row,
+        /// mirroring how the Basal Profile editor records it (most-recent row wins). The
+        /// increment comes from the just-restored preferences' bolus increment.
+        private func saveConcentration(_ concentration: Double, increment: Decimal) {
+            let context = CoreDataStack.shared.persistentContainer.viewContext
+            context.perform {
+                let row = InsulinConcentration(context: context)
+                row.concentration = concentration
+                row.incrementSetting = Double(increment)
+                row.date = Date.now
+                do {
+                    try context.save()
+                } catch {
+                    debug(.apsManager, "Restore: insulin concentration couldn't be saved to CoreData. Error: \(error)")
+                }
+            }
         }
     }
 }
