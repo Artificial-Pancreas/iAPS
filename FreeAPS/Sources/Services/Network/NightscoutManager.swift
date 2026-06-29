@@ -36,6 +36,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private var pumpHistorySync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
     private var glucoseSync: DataSynchronizer<BloodGlucose, NightscoutGlucoseSink>!
     private var carbsSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
+    private var tempTargetsSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
 
     private let overrideStorage = OverrideStorage()
 
@@ -113,6 +114,16 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             snapshotFile: OpenAPS.Nightscout.uploadedCarbs,
             retention: .hours(24),
             deletionWindow: .hours(8),
+            category: .nightscout
+        )
+
+        tempTargetsSync = DataSynchronizer(
+            name: "ns.tempTargets",
+            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
+            storage: storage,
+            snapshotFile: OpenAPS.Nightscout.uploadedTempTargets,
+            retention: .hours(24),
+            deletionWindow: 0, // temp targets are append-only
             category: .nightscout
         )
 
@@ -747,11 +758,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     }
 
     private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
-        await uploadTreatments(
-            storedEvents: convertTempTargetsToNightscout(events: tempTargets),
-            fileToSave: OpenAPS.Nightscout.uploadedTempTargets,
-            uploadedRetention: .hours(30)
-        )
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
+        await tempTargetsSync.reconcile(current: convertTempTargetsToNightscout(events: tempTargets))
     }
 
     /// upload `glucose` to nightscout, upon success - if saveToUploaded=true, append uploaded glucose to storage so we don't upload any of it next time
