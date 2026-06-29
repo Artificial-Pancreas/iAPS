@@ -47,6 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "38E8751B27554D5500975559"
             BuildableName = "FreeAPSWatch.app"
+            BlueprintName = "FreeAPSWatch"
             ReferencedContainer = "container:FreeAPS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -63,6 +64,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "38E8751B27554D5500975559"
             BuildableName = "FreeAPSWatch.app"
+            BlueprintName = "FreeAPSWatch"
             ReferencedContainer = "container:FreeAPS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
