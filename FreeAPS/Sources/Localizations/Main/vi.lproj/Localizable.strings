@@ -2043,6 +2043,8 @@ Enact a temp Basal or a temp target */
 
 "Do you want to discard this meal?" = "Bạn có muốn hủy bữa ăn này không?";
 
+"Set Time" = "Đặt thời gian";
+
 // --------- End of AI ---------
 
 /* */

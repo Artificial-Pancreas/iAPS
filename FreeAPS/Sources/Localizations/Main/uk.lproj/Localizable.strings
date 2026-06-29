@@ -2045,6 +2045,8 @@ Enact a temp Basal or a temp target */
 
 "Do you want to discard this meal?" = "Ви хочете відмовитися від цієї страви?";
 
+"Set Time" = "Встановити час";
+
 // --------- End of AI ---------
 
 /* */
