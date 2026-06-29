@@ -64,13 +64,17 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
         self.category = category
     }
 
-    func reconcile(current: [Record]) async {
+    /// Returns `true` if everything reconciled without a sink error
+    /// (nothing left pending).
+    /// A `false` means some upsert/delete failed and will be retried next reconcile.
+    @discardableResult
+    func reconcile(current: [Record]) async -> Bool {
         await serializer.run {
             await self.performReconcile(current: current)
         }
     }
 
-    private func performReconcile(current: [Record]) async {
+    private func performReconcile(current: [Record]) async -> Bool {
         let now = Date()
         let retentionCutoff = now.removingTimeInterval(retention)
         let deletionCutoff = now.removingTimeInterval(deletionWindow)
@@ -100,6 +104,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
         }
 
         var changed = false
+        var failed = false
 
         if toDelete.isNotEmpty {
             do {
@@ -107,6 +112,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
                 for record in toDelete { working[record.syncID] = nil }
                 changed = true
             } catch {
+                failed = true
                 debug(category, "data sync [\(name)]: delete failed: \(error.localizedDescription)")
             }
         }
@@ -117,6 +123,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
                 for upsert in upserts { working[upsert.record.syncID] = upsert.record }
                 changed = true
             } catch {
+                failed = true
                 debug(category, "data sync [\(name)]: upsert failed: \(error.localizedDescription)")
             }
         }
@@ -126,6 +133,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
             await saveSnapshot(working)
             debug(category, "data sync [\(name)]: +\(upserts.count) -\(toDelete.count)")
         }
+        return !failed
     }
 
     private func loadSnapshot() async -> [Record.SyncID: Record] {

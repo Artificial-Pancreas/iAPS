@@ -38,6 +38,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private var carbsSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
     private var tempTargetsSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
     private var podAgeSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
+    private var cgmStateSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
 
     private let overrideStorage = OverrideStorage()
 
@@ -133,6 +134,16 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             snapshotFile: OpenAPS.Nightscout.uploadedPodAge,
             retention: .days(15), // a mid-life pod may have activated days ago; keep long enough to (re)upload + dedup
             deletionWindow: 0, // site changes are append-only; a 1-element reconcile must not delete prior pods
+            category: .nightscout
+        )
+
+        cgmStateSync = DataSynchronizer(
+            name: "ns.cgmState",
+            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
+            storage: storage,
+            snapshotFile: OpenAPS.Nightscout.uploadedCGMState,
+            retention: .days(40), // local cgmState keeps 30 days; keep >30 here to dedup sensor changes
+            deletionWindow: 0, // sensor changes are append-only
             category: .nightscout
         )
 
@@ -606,42 +617,29 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     }
 
     private func cgmStatusUpdated(_ cgmStatus: CgmDisplayStatus) async {
-        // some optimizations here, to prevent reading the cgmState files every time
         let canUpload =
             nightscoutAPI != nil && appCoordinator.settings.value.isUploadEnabled && cgmStatus
                 .shouldUploadGlucose && isNetworkReachable
 
-        var cgmStateToUpload: [NigtscoutTreatment]?
+        var cgmState: [NigtscoutTreatment]?
         if let sessionStartDate = cgmStatus.sessionStartDate,
            abs(sessionStartDate.timeIntervalSince(lastSeenCgmStart ?? .distantPast)) > 60
         {
             self.lastSeenCgmStart = sessionStartDate
 
-            if let cgmState = await recordSensorStartIfNeeded(sessionStartDate) {
+            if let recorded = await recordSensorStartIfNeeded(sessionStartDate) {
                 self.cgmStartUploadPending = true
-                if canUpload {
-                    cgmStateToUpload = cgmState
-                }
+                cgmState = recorded
             }
         }
 
-        if canUpload, cgmStateToUpload == nil, self.cgmStartUploadPending {
-            cgmStateToUpload = await readCgmState()
+        if canUpload, cgmState == nil, self.cgmStartUploadPending {
+            cgmState = await readCgmState()
         }
 
-        guard let cgmStateToUpload else {
-            return
-        }
-        if cgmStateToUpload.isEmpty {
-            cgmStartUploadPending = false
-            return
-        }
-        if await uploadTreatments(
-            storedEvents: cgmStateToUpload,
-            fileToSave: OpenAPS.Nightscout.uploadedCGMState,
-            uploadedRetention: .days(40) // we keep 30 days in .cgmState file, so we should keep >30 days in .uploadedCGMState
-        ) {
-            // all uploaded
+        guard canUpload, let cgmState else { return }
+
+        if await cgmStateSync.reconcile(current: cgmState) {
             self.cgmStartUploadPending = false
         }
     }
@@ -835,105 +833,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 )
             }
         }
-    }
-
-    /// * read the snapshot of previously uploaded treatments from the file
-    /// * detect new treatments in the current local data and upload them
-    /// * detect previously uploaded treatments that have changed and delete-reupload them
-    /// * update the 'previously uploaded' file, removing entries older than `now - uploadedRetention`
-    @discardableResult private func uploadTreatments(
-        storedEvents treatments: [NigtscoutTreatment],
-        fileToSave: String,
-        uploadedRetention: TimeInterval
-    ) async -> Bool {
-        guard let nightscout = nightscoutAPI, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else {
-            return false
-        }
-
-        guard treatments.isNotEmpty else {
-            return true
-        }
-
-        let previouslyUploaded = await storage.retrieve(fileToSave, as: [NigtscoutTreatment].self) ?? []
-
-        var treatmentsToUpload: [NigtscoutTreatment] = []
-        var treatmentsToUpdate: [NigtscoutTreatment] = []
-
-        for current in treatments {
-            if let uploaded = previouslyUploaded.first(where: { $0.identity == current.identity }) {
-                if uploaded.data != current.data {
-                    treatmentsToUpdate.append(current)
-                }
-            } else {
-                treatmentsToUpload.append(current)
-            }
-        }
-
-        do {
-            for chunk in treatmentsToUpload.chunks(ofCount: 100) {
-                try await nightscout.uploadTreatments(Array(chunk))
-            }
-
-            let eventTypes = treatments.map(\.eventType).uniqued().map(\.rawValue).joined(separator: ", ")
-            debug(.nightscout, "treatments uploaded (\(eventTypes)): \(treatmentsToUpload.count)")
-
-            var deletedKeys: [NigtscoutTreatmentIdentity] = []
-            var updated: [NigtscoutTreatment] = []
-            for toUpdate in treatmentsToUpdate {
-                do {
-                    try await nightscout.deleteTreatment(toUpdate)
-                    deletedKeys.append(toUpdate.identity)
-                    debug(
-                        .nightscout,
-                        "\(toUpdate.eventType) treatment deleted (for update): \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds))"
-                    )
-                } catch {
-                    debug(
-                        .nightscout,
-                        "failed to delete a \(toUpdate.eventType) treatment (for update): \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds)) - \(error.localizedDescription)"
-                    )
-                    break
-                }
-            }
-
-            for toUpdate in treatmentsToUpdate {
-                guard deletedKeys.contains(toUpdate.identity) else { continue }
-                do {
-                    try await nightscout.uploadTreatments([toUpdate])
-                    updated.append(toUpdate)
-                    debug(
-                        .nightscout,
-                        "\(toUpdate.eventType) treatment updated: \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds))"
-                    )
-                } catch {
-                    debug(
-                        .nightscout,
-                        "failed to update a \(toUpdate.eventType) treatment: \(toUpdate.createdAt.formatted(.iso8601WithFractionalSeconds)) - \(error.localizedDescription)"
-                    )
-                    break
-                }
-            }
-
-            let storedKeys = Set(treatments.map(\.identity))
-            let cutoff = Date().removingTimeInterval(uploadedRetention)
-
-            let treatmentsToUploadSnapshot = treatmentsToUpload
-            let deletedKeysSnapshot = deletedKeys
-            let updatedSnapshot = updated
-
-            await storage.modify(file: fileToSave, as: NigtscoutTreatment.self) { previouslyUploaded in
-                let previousWithoutUpdated = previouslyUploaded.filter { !deletedKeysSnapshot.contains($0.identity) }
-                return (previousWithoutUpdated + updatedSnapshot + treatmentsToUploadSnapshot)
-                    // only store events not older than uploadedRetention, but keep everything that is present in storage to avoid re-uploads
-                    .filter { $0.createdAt >= cutoff || storedKeys.contains($0.identity) }
-                    // newest -> oldest
-                    .sorted { $0.createdAt > $1.createdAt }
-            }
-            return true
-        } catch {
-            debug(.nightscout, error.localizedDescription)
-        }
-        return false
     }
 
     private func readCgmState() async -> [NigtscoutTreatment] {
