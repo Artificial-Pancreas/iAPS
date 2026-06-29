@@ -37,6 +37,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private var glucoseSync: DataSynchronizer<BloodGlucose, NightscoutGlucoseSink>!
     private var carbsSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
     private var tempTargetsSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
+    private var podAgeSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
 
     private let overrideStorage = OverrideStorage()
 
@@ -46,8 +47,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     private var lastSeenCgmStart: Date?
     private var cgmStartUploadPending: Bool = true
-
-    private var lastUploadedPodAge: Date?
 
     private var lastUploadedPumpStatus: PumpDisplayStatus?
 
@@ -124,6 +123,16 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             snapshotFile: OpenAPS.Nightscout.uploadedTempTargets,
             retention: .hours(24),
             deletionWindow: 0, // temp targets are append-only
+            category: .nightscout
+        )
+
+        podAgeSync = DataSynchronizer(
+            name: "ns.podAge",
+            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
+            storage: storage,
+            snapshotFile: OpenAPS.Nightscout.uploadedPodAge,
+            retention: .days(15), // a mid-life pod may have activated days ago; keep long enough to (re)upload + dedup
+            deletionWindow: 0, // site changes are append-only; a 1-element reconcile must not delete prior pods
             category: .nightscout
         )
 
@@ -527,14 +536,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     }
 
     private func uploadPodAge(podActivatedAt: Date) async {
-        guard podActivatedAt != self.lastUploadedPodAge else {
-            return
-        }
-        let uploadedPodAge = await storage.retrieve(OpenAPS.Nightscout.uploadedPodAge, as: [NigtscoutTreatment].self) ?? []
-        guard uploadedPodAge.last?.createdAt != podActivatedAt else {
-            self.lastUploadedPodAge = podActivatedAt
-            return
-        }
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
+
         let siteTreatment = NigtscoutTreatment(
             duration: nil,
             rawDuration: nil,
@@ -553,13 +556,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             targetTop: nil,
             targetBottom: nil
         )
-        if await uploadTreatments(
-            storedEvents: [siteTreatment],
-            fileToSave: OpenAPS.Nightscout.uploadedPodAge,
-            uploadedRetention: .days(15) // keep 15 days in the .uploadedPodAge file to avoid unnecessary re-uploads of the same pod age
-        ) {
-            self.lastUploadedPodAge = podActivatedAt
-        }
+        await podAgeSync.reconcile(current: [siteTreatment])
     }
 
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async {
