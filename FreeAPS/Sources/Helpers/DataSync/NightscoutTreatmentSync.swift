@@ -28,7 +28,7 @@ extension NigtscoutTreatment: SyncRecord {
         TreatmentSyncID(eventType: eventType, createdAt: createdAt.truncatedToSecond)
     }
 
-    var syncDate: Date { createdAt }
+    var syncDate: Date { creation_date ?? createdAt }
 
     var syncSignature: TreatmentSyncSignature {
         TreatmentSyncSignature(

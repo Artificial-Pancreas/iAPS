@@ -35,6 +35,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     private var pumpHistorySync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
     private var glucoseSync: DataSynchronizer<BloodGlucose, NightscoutGlucoseSink>!
+    private var carbsSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
 
     private let overrideStorage = OverrideStorage()
 
@@ -44,7 +45,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     private var lastSeenCgmStart: Date?
     private var cgmStartUploadPending: Bool = true
-    private var deletedCarbsPending: Bool = true
 
     private var lastUploadedPodAge: Date?
 
@@ -106,6 +106,16 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             category: .nightscout
         )
 
+        carbsSync = DataSynchronizer(
+            name: "ns.carbs",
+            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
+            storage: storage,
+            snapshotFile: OpenAPS.Nightscout.uploadedCarbs,
+            retention: .hours(24),
+            deletionWindow: .hours(8),
+            category: .nightscout
+        )
+
         self.notUploadedOverrides = await storage
             .retrieve(OpenAPS.Nightscout.notUploadedOverrides, as: [NigtscoutExercise].self) ?? []
 
@@ -115,13 +125,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         observe(appCoordinator.carbHistory) { me, carbHistory in
             await withBackgroundTask("nightscout upload - carb history") {
                 await me.carbHistoryUpdated(carbHistory)
-                // retry previous deletions if needed
-                await me.carbsDeleted([])
-            }
-        }
-        observe(appCoordinator.carbDeletions) { me, deleted in
-            await withBackgroundTask("nightscout upload - carbs deletions") {
-                await me.carbsDeleted(deleted)
             }
         }
 
@@ -739,22 +742,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     }
 
     private func carbHistoryUpdated(_ carbHistory: [CarbsEntry]) async {
-        await uploadTreatments(
-            storedEvents: convertCarbHistoryToNightscout(events: carbHistory),
-            fileToSave: OpenAPS.Nightscout.uploadedCarbs,
-            uploadedRetention: .hours(30)
-        )
-    }
-
-    private func carbsDeleted(_ deleted: [CarbsEntry]) async {
-        guard deleted.isNotEmpty || deletedCarbsPending else { return }
-
-        let allDeleted = await deleteTreatments(
-            deletedTreatments: convertCarbHistoryToNightscout(events: deleted),
-            fileToSave: OpenAPS.Nightscout.carbsToDelete,
-            retention: .hours(30)
-        )
-        deletedCarbsPending = !allDeleted
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
+        await carbsSync.reconcile(current: convertCarbHistoryToNightscout(events: carbHistory))
     }
 
     private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
@@ -940,52 +929,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             debug(.nightscout, error.localizedDescription)
         }
         return false
-    }
-
-    private func deleteTreatments(
-        deletedTreatments deleted: [NigtscoutTreatment],
-        fileToSave: String,
-        retention: TimeInterval
-    ) async -> Bool {
-        let cutoff = Date.now.removingTimeInterval(retention)
-
-        let treatmentsToDelete = await storage.appendAndModify(deleted, to: fileToSave, uniqBy: \.identity) {
-            $0.filter { $0.createdAt >= cutoff }.sorted { $0.createdAt > $1.createdAt }
-        }
-
-        let settings = appCoordinator.settings.value
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled, treatmentsToDelete.isNotEmpty, isNetworkReachable else {
-            return treatmentsToDelete.isEmpty
-        }
-
-        let eventTypes = treatmentsToDelete.map(\.eventType).uniqued().map(\.rawValue)
-            .joined(separator: ", ")
-
-        var deletedFromNS: [NigtscoutTreatment] = []
-        for treatment in treatmentsToDelete {
-            do {
-                try await nightscout.deleteTreatment(treatment)
-                deletedFromNS.append(treatment)
-                debug(
-                    .nightscout,
-                    "deleted \(treatment.eventType) treatment from NS: \(treatment.createdAt.formatted(.iso8601WithFractionalSeconds))"
-                )
-            } catch {
-                debug(
-                    .nightscout,
-                    "failed to delete \(treatment.eventType) treatment from NS: \(treatment.createdAt.formatted(.iso8601WithFractionalSeconds))"
-                )
-                break
-            }
-        }
-
-        debug(.nightscout, "treatments delete - \(eventTypes): deleted: \(deletedFromNS.count)")
-
-        let deletedFromNSKeys = Set(deletedFromNS.map(\.identity))
-        let notDeleted = await storage.modify(file: fileToSave, as: NigtscoutTreatment.self) {
-            $0.filter { !deletedFromNSKeys.contains($0.identity) }
-        }
-        return notDeleted.isEmpty
     }
 
     private func readCgmState() async -> [NigtscoutTreatment] {
@@ -1178,7 +1121,7 @@ extension BaseNightscoutManager {
         let eventsManual = events
             .filter {
                 ($0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote || $0.enteredBy == CarbsEntry.shortcut) &&
-                    $0.carbs > 0 }
+                    $0.carbs > 0 && $0.isFPU != true }
         let treatments = eventsManual.map {
             NigtscoutTreatment(
                 duration: nil,
@@ -1192,8 +1135,8 @@ extension BaseNightscoutManager {
                 bolus: nil,
                 insulin: nil,
                 carbs: $0.carbs,
-                fat: nil,
-                protein: nil,
+                fat: $0.fat,
+                protein: $0.protein,
                 foodType: $0.note,
                 targetTop: nil,
                 targetBottom: nil,

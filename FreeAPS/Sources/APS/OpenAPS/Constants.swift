@@ -92,7 +92,6 @@ extension OpenAPS {
     enum Nightscout {
         static let uploadedPumphistory = "upload/uploaded-pumphistory.json"
         static let uploadedCarbs = "upload/uploaded-carbs.json"
-        static let carbsToDelete = "upload/carbs-to-delete.json"
         static let uploadedTempTargets = "upload/uploaded-temptargets.json"
         static let uploadedGlucose = "upload/uploaded-glucose.json"
         static let uploadedCGMState = "upload/uploaded-cgm-state.json"
