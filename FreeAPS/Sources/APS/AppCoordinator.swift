@@ -97,6 +97,8 @@ final class AppCoordinator: @unchecked Sendable {
 
     let appBecomeActiveEvents = PassthroughSubject<Void, Never>()
 
+    let nightscoutConfigChanged = PassthroughSubject<Void, Never>()
+
     // --------------
 
     private let loopPendingBackgroundTask = TaskIDBox()
@@ -298,5 +300,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendAlertUpdates(_ value: [AlertEntry]) {
         alertsUpdates.send(value)
+    }
+
+    func sendNightscoutConfigChanged() {
+        nightscoutConfigChanged.send()
     }
 }

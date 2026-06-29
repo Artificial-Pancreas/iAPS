@@ -127,9 +127,12 @@ extension NightscoutAPI {
     }
 
     func deleteTreatment(_ treatment: NigtscoutTreatment) async throws {
-        let createdAt = treatment.createdAt
+        try await deleteTreatment(eventType: treatment.eventType, at: treatment.createdAt)
+    }
+
+    func deleteTreatment(eventType: EventType, at createdAt: Date) async throws {
         let queryItems = [
-            URLQueryItem(name: "find[eventType][$eq]", value: treatment.eventType.rawValue),
+            URLQueryItem(name: "find[eventType][$eq]", value: eventType.rawValue),
             URLQueryItem(
                 name: "find[created_at][$eq]",
                 value: createdAt.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)

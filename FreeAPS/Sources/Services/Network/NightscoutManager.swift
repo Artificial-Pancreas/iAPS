@@ -33,6 +33,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private let settingsManager: SettingsManager
     private let reachabilityManager: ReachabilityManager
 
+    private var pumpHistorySync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
+
     private let overrideStorage = OverrideStorage()
 
     private var ping: TimeInterval?
@@ -43,7 +45,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private var cgmStartUploadPending: Bool = true
     private var deletedGlucosePending: Bool = true
     private var deletedCarbsPending: Bool = true
-    private var deletedPumpHistoryPending: Bool = true
 
     private var lastUploadedPodAge: Date?
 
@@ -57,15 +58,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         reachabilityManager.isReachable
     }
 
-    private var nightscoutAPI: NightscoutAPI? {
-        guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
-              let url = URL(string: urlString),
-              let secret = keychain.getValue(String.self, forKey: NightscoutConfig.Config.secretKey)
-        else {
-            return nil
-        }
-        return NightscoutAPI(url: url, secret: secret)
-    }
+    private var nightscoutAPI: NightscoutAPI?
 
     init(
         keychain: Keychain,
@@ -91,9 +84,24 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     // this is called at the start of the app
     func start() async {
+        reloadNightscoutConfiguration()
+
+        pumpHistorySync = DataSynchronizer(
+            name: "ns.treatments",
+            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
+            storage: storage,
+            snapshotFile: OpenAPS.Nightscout.uploadedPumphistory,
+            retention: .hours(24),
+            deletionWindow: .hours(8),
+            category: .nightscout
+        )
+
         self.notUploadedOverrides = await storage
             .retrieve(OpenAPS.Nightscout.notUploadedOverrides, as: [NigtscoutExercise].self) ?? []
 
+        observe(appCoordinator.nightscoutConfigChanged) { me, _ in
+            await me.reloadNightscoutConfiguration()
+        }
         observe(appCoordinator.carbHistory) { me, carbHistory in
             await withBackgroundTask("nightscout upload - carb history") {
                 await me.carbHistoryUpdated(carbHistory)
@@ -129,13 +137,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         observe(appCoordinator.pumpHistory) { me, pumpHistory in
             await withBackgroundTask("nightscout upload - pump history") {
                 await me.pumpHistoryUpdated(pumpHistory)
-                // retry previous deletions if needed
-                await me.pumpHistoryDeleted([])
-            }
-        }
-        observe(appCoordinator.pumpHistoryDeletions) { me, deleted in
-            await withBackgroundTask("nightscout upload - pump history deletions") {
-                await me.pumpHistoryDeleted(deleted)
             }
         }
 
@@ -182,6 +183,20 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 await me.uploadOverridesIfNeeded()
             }
         }
+    }
+
+    private func makeNightscoutAPI() -> NightscoutAPI? {
+        guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
+              let url = URL(string: urlString),
+              let secret = keychain.getValue(String.self, forKey: NightscoutConfig.Config.secretKey)
+        else {
+            return nil
+        }
+        return NightscoutAPI(url: url, secret: secret)
+    }
+
+    private func reloadNightscoutConfiguration() {
+        nightscoutAPI = makeNightscoutAPI()
     }
 
     func isConfigured() async -> Bool {
@@ -429,8 +444,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 device: NigtscoutTreatment.local,
                 openaps: OpenAPSStatus(
                     iob: nil,
-                    suggested: enacted,
                     // Nightscout requires both enacted and suggested fields to be specified in order to show predictions on graph.
+                    suggested: enacted,
                     enacted: enacted,
                     version: iapsVersion
                 ),
@@ -563,22 +578,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     }
 
     private func pumpHistoryUpdated(_ pumpHistory: [PumpHistoryEvent]) async {
-        await uploadTreatments(
-            storedEvents: convertPumpHistoryToNightscout(events: pumpHistory),
-            fileToSave: OpenAPS.Nightscout.uploadedPumphistory,
-            uploadedRetention: .hours(30)
-        )
-    }
-
-    private func pumpHistoryDeleted(_ deleted: [PumpHistoryEvent]) async {
-        guard deleted.isNotEmpty || deletedPumpHistoryPending else { return }
-
-        let allDeleted = await deleteTreatments(
-            deletedTreatments: convertPumpHistoryToNightscout(events: deleted),
-            fileToSave: OpenAPS.Nightscout.pumpHistoryToDelete,
-            retention: .hours(30)
-        )
-        deletedPumpHistoryPending = !allDeleted
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
+        await pumpHistorySync.reconcile(current: convertPumpHistoryToNightscout(events: pumpHistory))
     }
 
     private func glucoseHistoryUpdated(_ bloodGlucose: [BloodGlucose]) async {

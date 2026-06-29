@@ -444,6 +444,8 @@
 		F226D4F32E5E0B1400F8F43C /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; };
 		F226D4F42E5E0B1400F8F43C /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F227E1FD2E76515C0076BADA /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */; };
+		F22A7A802FF167410019BDC5 /* DataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */; };
+		F22A7A822FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
@@ -1176,6 +1178,8 @@
 		F226D4FE2E5E111300F8F43C /* LibreTransmitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F226D4FF2E5E111300F8F43C /* LibreTransmitterUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LibreTransmitterUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F227E1FC2E76515C0076BADA /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
+		F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSync.swift; sourceTree = "<group>"; };
+		F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutTreatmentSync.swift; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
@@ -2276,6 +2280,7 @@
 				F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */,
 				F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */,
 				F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */,
+				F22A7A7E2FF167080019BDC5 /* DataSync */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2924,6 +2929,15 @@
 				F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */,
 			);
 			path = ContactTrick;
+			sourceTree = "<group>";
+		};
+		F22A7A7E2FF167080019BDC5 /* DataSync */ = {
+			isa = PBXGroup;
+			children = (
+				F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */,
+				F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */,
+			);
+			path = DataSync;
 			sourceTree = "<group>";
 		};
 		F25D82882F61A867007AE22C /* Settings */ = {
@@ -3676,6 +3690,7 @@
 				1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */,
 				F2159A522BA60F7A00A0B716 /* FontWeight.swift in Sources */,
 				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,
+				F22A7A802FF167410019BDC5 /* DataSync.swift in Sources */,
 				38E4453A274E411700EC9A94 /* Disk+[UIImage].swift in Sources */,
 				F2B06FCB2EEF49EC000EADA9 /* AIUsageStatistics.swift in Sources */,
 				F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */,
@@ -3758,6 +3773,7 @@
 				19C3C7492E97AE7B0000BE4D /* FoodSearchView.swift in Sources */,
 				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
+				F22A7A822FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift in Sources */,
 				198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */,

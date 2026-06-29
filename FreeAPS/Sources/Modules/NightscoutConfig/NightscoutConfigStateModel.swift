@@ -112,6 +112,8 @@ extension NightscoutConfig {
                     self.message = "Connected!"
                     self.keychain.setValue(self.url, forKey: Config.urlKey)
                     self.keychain.setValue(self.secret, forKey: Config.secretKey)
+
+                    appCoordinator.sendNightscoutConfigChanged()
                 } catch {
                     self.message = "Error: \(error.localizedDescription)"
                 }
@@ -385,6 +387,7 @@ extension NightscoutConfig {
             keychain.removeObject(forKey: Config.secretKey)
             url = ""
             secret = ""
+            appCoordinator.sendNightscoutConfigChanged()
         }
     }
 }

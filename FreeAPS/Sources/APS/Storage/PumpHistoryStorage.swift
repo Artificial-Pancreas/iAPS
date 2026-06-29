@@ -199,9 +199,12 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
     private func doStoreEvents(_ events: [PumpHistoryEvent], replacePendingEvents: Bool) async {
         let uniqEvents = await self.storage.modify(file: OpenAPS.Monitor.pumpHistory, as: PumpHistoryEvent.self) { values in
             let base = replacePendingEvents ? values.filter { $0.isMutable != true } : values
-            let appended = BaseFileStorage.doAppend(events, existingValues: base, uniqBy: \.identity)
+            let alreadyFinalized = Set(base.filter({ $0.isMutable != true }).map(\.identity))
+            let newEvents = events.filter { !alreadyFinalized.contains($0.identity) }
+            let appended = BaseFileStorage.doAppend(newEvents, existingValues: base, uniqBy: \.identity)
+            let now = Date.now
             return appended
-                .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
+                .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) >= now }
                 .sorted { $0.timestamp > $1.timestamp }
         }
         // oldest -> newest
