@@ -12,6 +12,7 @@ extension AddCarbs {
         @Published var carbs: Decimal = 0
         @Published var date = Date()
         @Published var protein: Decimal = 0
+        @Published var fiber: Decimal = 0
         @Published var fat: Decimal = 0
         @Published var carbsRequired: Decimal?
         @Published var useFPUconversion: Bool = false
@@ -26,6 +27,9 @@ extension AddCarbs {
         @Published var presetToEdit: Presets?
         @Published var edit = false
         @Published var ai = false
+        @Published var mealViewMicronutrients = false
+
+        @Published var micronutrient: [MicronutrientValue] = []
 
         @Published var combinedPresets: [(preset: Presets?, portions: Double)] = []
 
@@ -41,13 +45,10 @@ extension AddCarbs {
             skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
             useFPUconversion = settingsManager.settings.useFPUconversion
             ai = settingsManager.settings.ai
+            mealViewMicronutrients = settingsManager.settings.mealViewMicronutrients
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
-            guard carbs > 0 || fat > 0 || protein > 0 else {
-                showModal(for: nil)
-                return
-            }
             carbs = min(carbs, maxCarbs)
             id_ = UUID().uuidString
 
@@ -58,9 +59,11 @@ extension AddCarbs {
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
+                fiber: fiber,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false
+                isFPU: false,
+                micronutrient: micronutrient
             )]
             add(continue_, fetch: fetch, carbsToStore: carbsToStore)
         }
@@ -69,10 +72,28 @@ extension AddCarbs {
             var carbs = food.nutrientInThisPortion(.carbs) ?? 0
             let fat = food.nutrientInThisPortion(.fat) ?? 0
             let protein = food.nutrientInThisPortion(.protein) ?? 0
-            guard carbs > 0 || fat > 0 || protein > 0 else {
+            let fibers = food.nutrientInThisPortion(.fiber) ?? 0
+            let note = food.name
+
+            let micronutrients = food.micronutrient.compactMap { value -> MicronutrientValue? in
+                guard let amount = food.micronutrientInThisPortion(value.substance),
+                      amount > 0
+                else {
+                    return nil
+                }
+
+                return MicronutrientValue(
+                    substance: value.substance,
+                    amount: amount,
+                    amountPer100: value.amountPer100
+                )
+            }
+
+            guard carbs > 0 || fat > 0 || protein > 0 || fibers > 0 || !micronutrients.isEmpty else {
                 showModal(for: nil)
                 return
             }
+
             carbs = min(carbs, maxCarbs)
             id_ = UUID().uuidString
 
@@ -83,10 +104,13 @@ extension AddCarbs {
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
-                note: nil,
+                fiber: fibers,
+                note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false
+                isFPU: false,
+                micronutrient: micronutrients
             )]
+
             add(continue_, fetch: fetch, carbsToStore: carbsToStore)
         }
 
@@ -95,16 +119,32 @@ extension AddCarbs {
             let carbs = carbsToStore.map(\.carbs).reduce(0, +)
             let fat = carbsToStore.compactMap(\.fat).reduce(0, +)
             let protein = carbsToStore.compactMap(\.protein).reduce(0, +)
-            let empty = carbs <= 0 && fat <= 0 && protein <= 0
+            let fiber = carbsToStore.compactMap(\.fiber).reduce(0, +)
+            var hasMicronutrients = false
+
+            // To Do: Remove
+            print("Micros: true")
+            if let last = carbsToStore.last {
+                if let items = last.micronutrient {
+                    hasMicronutrients = true
+                    for item in items {
+                        print("Micros:  \(item.substance) " + item.formattedAmount)
+                    }
+                }
+            }
+
+            let empty = carbs <= 0 && fat <= 0 && protein <= 0 && fiber <= 0 && !hasMicronutrients
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
+                saveToCoreData(carbsToStore, savedToFile: true)
                 carbsStorage.storeCarbs(carbsToStore)
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {
-                saveToCoreData(carbsToStore)
+                saveToCoreData(carbsToStore, savedToFile: false)
                 showModal(for: .bolus(waitForSuggestion: true, fetch: true))
             } else if !empty {
+                saveToCoreData(carbsToStore, savedToFile: true)
                 carbsStorage.storeCarbs(carbsToStore)
                 apsManager.determineBasalSync()
                 showModal(for: nil)
@@ -113,11 +153,35 @@ extension AddCarbs {
             }
         }
 
+        private func saveMicro(
+            from foodItem: FoodItemDetailed,
+            to carbDataForStats: Meals
+        ) {
+            for value in foodItem.micronutrient {
+                guard let amount = foodItem.micronutrientInThisPortion(value.substance),
+                      amount > 0
+                else { continue }
+
+                let micro = Micronutrient(context: coredataContext)
+                micro.id = UUID()
+                micro.name = value.name
+                micro.type = value.substance.coreDataType
+                micro.unit = value.unit
+                micro.amount = NSDecimalNumber(decimal: amount)
+                micro.meal = carbDataForStats
+            }
+        }
+
         func deletePreset() {
             if selection != nil {
                 carbs -= ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
                 fat -= ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
                 protein -= ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+
+                if let presetMicros = selection?.micronutrientValuesTyped() {
+                    mergeMicronutrients(presetMicros, multiplier: -1)
+                }
+
                 try? coredataContext.delete(selection!)
                 try? coredataContext.save()
             }
@@ -142,49 +206,6 @@ extension AddCarbs {
             }
         }
 
-        func waitersNotepad() -> [String] {
-            guard combinedPresets.isNotEmpty else { return [] }
-
-            if carbs == 0, protein == 0, fat == 0 {
-                return []
-            }
-
-            var presetsString: [String] = combinedPresets.map { item in
-                "\(item.portions) \(item.preset?.dish ?? "")"
-            }
-
-            if presetsString.isNotEmpty {
-                let totCarbs = combinedPresets
-                    .compactMap({ each in (each.preset?.carbs ?? 0) as Decimal * Decimal(each.portions) })
-                    .reduce(0, +)
-                let totFat = combinedPresets.compactMap({ each in (each.preset?.fat ?? 0) as Decimal * Decimal(each.portions) })
-                    .reduce(0, +)
-                let totProtein = combinedPresets
-                    .compactMap({ each in (each.preset?.protein ?? 0) as Decimal * Decimal(each.portions) }).reduce(0, +)
-                let margins: Decimal = 1.8
-
-                if carbs > totCarbs + margins {
-                    presetsString.append("+ \(carbs - totCarbs) carbs")
-                } else if carbs + margins < totCarbs {
-                    presetsString.append("- \(totCarbs - carbs) carbs")
-                }
-
-                if fat > totFat + margins {
-                    presetsString.append("+ \(fat - totFat) fat")
-                } else if fat + margins < totFat {
-                    presetsString.append("- \(totFat - fat) fat")
-                }
-
-                if protein > totProtein + margins {
-                    presetsString.append("+ \(protein - totProtein) protein")
-                } else if protein + margins < totProtein {
-                    presetsString.append("- \(totProtein - protein) protein")
-                }
-            }
-
-            return presetsString.removeDublicates()
-        }
-
         func loadEntries(_ editMode: Bool) {
             if editMode {
                 coredataContext.performAndWait {
@@ -195,54 +216,40 @@ extension AddCarbs {
                     requestMeal.fetchLimit = 1
                     try? mealToEdit = self.coredataContext.fetch(requestMeal)
 
-                    self.carbs = Decimal(mealToEdit.first?.carbs ?? 0)
-                    self.fat = Decimal(mealToEdit.first?.fat ?? 0)
-                    self.protein = Decimal(mealToEdit.first?.protein ?? 0)
+                    self.carbs = (mealToEdit.first?.carbs ?? 0) as Decimal
+                    self.fat = (mealToEdit.first?.fat ?? 0) as Decimal
+                    self.protein = (mealToEdit.first?.protein ?? 0) as Decimal
+                    self.fiber = (mealToEdit.first?.fiber ?? 0) as Decimal
                     self.note = mealToEdit.first?.note ?? ""
                     self.id_ = mealToEdit.first?.id ?? ""
                 }
             }
         }
 
-        func subtract() {
-            let presetCarbs = ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
-            if carbs != 0, carbs - presetCarbs >= 0 {
-                carbs -= presetCarbs * 0.5
-            } else { carbs = 0 }
-
-            let presetFat = ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
-            if fat != 0, presetFat >= 0 {
-                fat -= presetFat * 0.5
-            } else { fat = 0 }
-
-            let presetProtein = ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
-            if protein != 0, presetProtein >= 0 {
-                protein -= presetProtein * 0.5
-            } else { protein = 0 }
-
-            removePresetFromNewMeal()
-        }
-
-        func plus() {
-            carbs += (((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal * 0.5)
-            fat += (((selection?.fat ?? 0) as NSDecimalNumber) as Decimal * 0.5)
-            protein += (((selection?.protein ?? 0) as NSDecimalNumber) as Decimal * 0.5)
-            addPresetToNewMeal(half: true)
-        }
-
         func addU(_ selection: Presets?) {
             carbs += ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
             fat += ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
             protein += ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+            fiber += ((selection?.fiber ?? 0) as NSDecimalNumber) as Decimal
+
+            if let presetMicros = selection?.micronutrientValuesTyped() {
+                mergeMicronutrients(presetMicros, multiplier: 1)
+            }
+
             addPresetToNewMeal()
         }
 
-        func saveToCoreData(_ stored: [CarbsEntry]) {
-            CoreDataStorage().saveMeal(stored, now: now)
-        }
+        func saveToCoreData(_ stored: [CarbsEntry], savedToFile: Bool) {
+            print("Meal Flow 1: saving to CoreData")
 
-        private var empty: Bool {
-            carbs <= 0 && fat <= 0 && protein <= 0
+            for a in stored {
+                guard let b = a.micronutrient else { continue }
+                for c in b {
+                    print("Meal Flow 1: Micros: " + c.name + " " + c.formattedAmount)
+                }
+            }
+
+            CoreDataStorage().saveMeal(stored, now: now, savedToFile: savedToFile)
         }
 
         private func hypo() {
@@ -294,6 +301,51 @@ extension AddCarbs {
             } else {
                 os.activatePreset(profileID)
             }
+        }
+
+        private func mergeMicronutrients(
+            _ values: [MicronutrientValue],
+            multiplier: Decimal
+        ) {
+            var dict: [MicroNutrient: MicronutrientValue] = Dictionary(
+                uniqueKeysWithValues: micronutrient.map { ($0.substance, $0) }
+            )
+
+            for value in values {
+                let adjustedAmount = value.amount * multiplier
+                let adjustedPer100 = value.amountPer100 * multiplier
+
+                if let existing = dict[value.substance] {
+                    let newAmount = max(0, existing.amount + adjustedAmount)
+                    let newPer100 = max(0, existing.amountPer100 + adjustedPer100)
+
+                    dict[value.substance] = MicronutrientValue(
+                        substance: value.substance,
+                        amount: newAmount,
+                        amountPer100: newPer100
+                    )
+                } else if adjustedAmount > 0 || adjustedPer100 > 0 {
+                    dict[value.substance] = MicronutrientValue(
+                        substance: value.substance,
+                        amount: adjustedAmount,
+                        amountPer100: adjustedPer100
+                    )
+                }
+            }
+
+            micronutrient = dict.values
+                .filter { $0.amount > 0 || $0.amountPer100 > 0 }
+                .sorted { $0.name < $1.name }
+        }
+
+        var aggregatedMicronutrients: [MicroNutrient: Decimal] {
+            var result: [MicroNutrient: Decimal] = [:]
+
+            for value in micronutrient {
+                result[value.substance, default: 0] += value.amount
+            }
+
+            return result
         }
     }
 }

@@ -26,18 +26,25 @@ struct AddCarbPresentIntent: AppIntent {
     ) var carbQuantity: Double?
 
     @Parameter(
-        title: "Quantity fat",
+        title: "Fat Quantity",
         description: "Quantity of fat in g",
         default: 0.0,
         inclusiveRange: (0, 200)
     ) var fatQuantity: Double
 
     @Parameter(
-        title: "Quantity Protein",
+        title: "Protein Quantity",
         description: "Quantity of Protein in g",
         default: 0.0,
         inclusiveRange: (0, 200)
     ) var proteinQuantity: Double
+
+    @Parameter(
+        title: "Fiber Quantity ",
+        description: "Quantity of Dietary Fiber in g",
+        default: 0.0,
+        inclusiveRange: (0, 200)
+    ) var fiberQuantity: Double
 
     @Parameter(
         title: "Date",
@@ -82,7 +89,13 @@ struct AddCarbPresentIntent: AppIntent {
                 )
             }
 
-            let finalQuantityCarbsDisplay = try carbRequest.addCarbs(quantityCarbs, fatQuantity, proteinQuantity, dateAdded)
+            let finalQuantityCarbsDisplay = try carbRequest.addCarbs(
+                quantityCarbs,
+                fatQuantity,
+                proteinQuantity,
+                fiberQuantity,
+                dateAdded
+            )
             return .result(
                 dialog: IntentDialog(stringLiteral: finalQuantityCarbsDisplay)
             )

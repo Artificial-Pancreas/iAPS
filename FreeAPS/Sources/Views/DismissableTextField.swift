@@ -68,6 +68,11 @@ public struct DismissableTextField: UIViewRepresentable {
         textField.setContentHuggingPriority(.required, for: .vertical)
         textField.setContentCompressionResistancePriority(.required, for: .vertical)
 
+        // Allow the field to be compressed/stretched horizontally to fit its
+        // container instead of growing to its full text width and overflowing.
+        textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
         return textField
     }
 

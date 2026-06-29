@@ -6,8 +6,8 @@ class SearchResultsState: ObservableObject {
     @Published var collapsedSections: Set<UUID> = []
 
     // Nutrition overrides (deltas applied to totals)
-    // Empty dict means no overrides; non-nil value for a key means user has entered an override
     @Published var nutritionOverrides: [NutrientType: Decimal] = [:]
+    @Published var micronutrientOverrides: [MicroNutrient: Decimal] = [:]
 
     static var empty: SearchResultsState {
         SearchResultsState()
@@ -17,10 +17,8 @@ class SearchResultsState: ObservableObject {
         if let section = searchResults.first(where: { $0.foodItems.contains(where: { $0.id == foodItem.id }) }),
            section.source == .database
         {
-            // if the food was added from saved foods - hard delete
             hardDeleteItem(foodItem)
         } else {
-            // otherwise, soft delete
             updateExistingItem(foodItem.copy(deleted: true))
         }
     }
@@ -29,7 +27,6 @@ class SearchResultsState: ObservableObject {
         updateExistingItem(foodItem.copy(deleted: false))
     }
 
-    // Hard delete an item (permanently removes it from search results) - used when removing a food that was added from Saved Foods, or when adding/deleting from a multiple-choice selector
     func hardDeleteItem(_ foodItem: FoodItemDetailed) {
         for (index, group) in searchResults.enumerated() {
             if group.foodItems.contains(where: { $0.id == foodItem.id }) {
@@ -45,11 +42,11 @@ class SearchResultsState: ObservableObject {
         }
     }
 
-    // Hard delete entire section
     func deleteSection(_ sectionId: UUID) {
         guard let sectionIndex = searchResults.firstIndex(where: { $0.id == sectionId }) else {
             return
         }
+
         searchResults.remove(at: sectionIndex)
         collapsedSections.remove(sectionId)
     }
@@ -60,12 +57,12 @@ class SearchResultsState: ObservableObject {
                 var updatedFoodItems = group.foodItems
                 updatedFoodItems[itemIndex] = updatedItem
                 searchResults[groupIndex] = group.copyWithItems(updatedFoodItems)
-                return // same item will not be in different groups
+                return
             }
         }
     }
 
-    // MARK: - Collapsed sections helpers
+    // MARK: - Collapsed Sections
 
     func isSectionCollapsed(_ sectionId: UUID) -> Bool {
         collapsedSections.contains(sectionId)
@@ -79,11 +76,14 @@ class SearchResultsState: ObservableObject {
         }
     }
 
+    // MARK: - Snapshot
+
     func copy() -> SearchResultsState {
         let snapshot = SearchResultsState()
         snapshot.searchResults = searchResults
         snapshot.collapsedSections = collapsedSections
         snapshot.nutritionOverrides = nutritionOverrides
+        snapshot.micronutrientOverrides = micronutrientOverrides
         return snapshot
     }
 
@@ -91,15 +91,17 @@ class SearchResultsState: ObservableObject {
         searchResults = snapshot.searchResults
         collapsedSections = snapshot.collapsedSections
         nutritionOverrides = snapshot.nutritionOverrides
+        micronutrientOverrides = snapshot.micronutrientOverrides
     }
 
     func clear() {
         searchResults = []
         collapsedSections.removeAll()
         nutritionOverrides.removeAll()
+        micronutrientOverrides.removeAll()
     }
 
-    // MARK: - Computed Properties
+    // MARK: - Items
 
     var nonDeletedItems: [FoodItemDetailed] {
         searchResults.flatMap(\.foodItems).filter { !$0.deleted }
@@ -113,7 +115,7 @@ class SearchResultsState: ObservableObject {
         !searchResults.isEmpty
     }
 
-    // MARK: - Computed Nutrition Totals
+    // MARK: - Macro Totals
 
     func baseTotal(_ nutrient: NutrientType) -> Decimal {
         nonDeletedItems.reduce(0) { sum, item in
@@ -126,52 +128,147 @@ class SearchResultsState: ObservableObject {
     }
 
     var totalCalories: Decimal {
-        max([NutrientType.carbs: total(.carbs), .protein: total(.protein), .fat: total(.fat)].calories, 0)
+        max(
+            [
+                .carbs: total(.carbs),
+                .protein: total(.protein),
+                .fat: total(.fat)
+            ].calories,
+            0
+        )
     }
 
     var hasNutritionOverrides: Bool {
         !nutritionOverrides.isEmpty
     }
 
-    // MARK: - Nutrition value builders (for saving food items)
+    // MARK: - Micronutrient Totals
 
-    /// Build nutrition values from meal-level totals (includes manual overrides)
+    func baseTotal(_ micro: MicroNutrient) -> Decimal {
+        nonDeletedItems.reduce(0) { sum, item in
+            guard let entry = item.micronutrient.first(where: { $0.substance == micro }) else {
+                return sum
+            }
+
+            let value: Decimal
+
+            switch item.nutrition {
+            case let .per100(_, portion):
+                value = entry.amountPer100 / 100 * portion
+
+            case let .perServing(_, multiplier):
+                value = entry.amount * multiplier
+            }
+
+            return sum + value
+        }
+    }
+
+    func total(_ micro: MicroNutrient) -> Decimal {
+        max(baseTotal(micro) + (micronutrientOverrides[micro] ?? 0), 0)
+    }
+
+    var hasMicronutrientOverrides: Bool {
+        !micronutrientOverrides.isEmpty
+    }
+
+    // MARK: - Nutrition Value Builders
+
+    /// Meal-level macro totals, including manual overrides.
     var mealNutritionValues: NutritionValues {
         var values: NutritionValues = [:]
+
         for nutrient in NutrientType.allCases {
             let value = total(nutrient)
+
             if value > 0 || nutrient.isPrimary {
                 values[nutrient] = value
             }
         }
+
         return values
     }
 
-    /// Build nutrition values from a specific subset of items (no overrides applied)
+    /// Meal-level micronutrient totals, including manual overrides.
+    var mealMicronutrientValues: [MicroNutrient: Decimal] {
+        var values: [MicroNutrient: Decimal] = [:]
+
+        for micro in MicroNutrient.allCases {
+            let value = total(micro)
+
+            if value > 0 {
+                values[micro] = value
+            }
+        }
+
+        return values
+    }
+
+    /// Combined macro + micro nutrition object.
+    var aggregatedNutrition: AggregatedNutrition {
+        AggregatedNutrition(
+            macros: mealNutritionValues,
+            micros: mealMicronutrientValues
+        )
+    }
+
+    /// Macro values from a specific subset of items, no overrides applied.
     func nutritionValues(for items: [FoodItemDetailed]) -> NutritionValues {
         var values: NutritionValues = [:]
+
         for nutrient in NutrientType.allCases {
-            let sum = items
-                .reduce(Decimal(0)) {
-                    $0 + ($1.nutrientInThisPortion(nutrient) ?? 0) }
+            let sum = items.reduce(Decimal(0)) {
+                $0 + ($1.nutrientInThisPortion(nutrient) ?? 0)
+            }
+
             if sum > 0 || nutrient.isPrimary {
                 values[nutrient] = sum
             }
         }
+
         return values
+    }
+
+    /// Micronutrient values from a specific subset of items, no overrides applied.
+    func micronutrientValues(for items: [FoodItemDetailed]) -> [MicroNutrient: Decimal] {
+        var result: [MicroNutrient: Decimal] = [:]
+
+        for item in items {
+            for micro in item.micronutrient {
+                let value: Decimal
+
+                switch item.nutrition {
+                case let .per100(_, portion):
+                    value = micro.amountPer100 / 100 * portion
+
+                case let .perServing(_, multiplier):
+                    value = micro.amount * multiplier
+                }
+
+                result[micro.substance, default: 0] += value
+            }
+        }
+
+        return result
     }
 
     func aggregateServingSize(for items: [FoodItemDetailed]) -> Decimal? {
         var total: Decimal = 0
+
         for item in items {
             switch item.nutrition {
             case let .per100(_, portionSize):
                 total += portionSize
+
             case let .perServing(_, multiplier):
-                guard let servingSize = item.standardServingSize else { return nil }
+                guard let servingSize = item.standardServingSize else {
+                    return nil
+                }
+
                 total += servingSize * multiplier
             }
         }
+
         return total
     }
 }
