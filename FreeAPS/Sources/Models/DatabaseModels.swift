@@ -16,6 +16,13 @@ struct DatabaseTempTargets: JSON {
     let profile: String?
 }
 
+struct DatabaseContactTrick: JSON {
+    var report = "contactTrick"
+    let contacts: [ContactTrickEntry]
+    let enteredBy: String
+    let profile: String?
+}
+
 struct DatabaseProfileStore: JSON {
     var report = "profiles"
     let units: String

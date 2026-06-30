@@ -1,11 +1,26 @@
 import Combine
 import Foundation
 
-/// Extra fields the web side merges into the stored pump-settings blob beyond the core
-/// `PumpSettings` (insulin action curve / max bolus / max basal) — currently just the
-/// insulin concentration factor applied at the pump-command boundary (U100 = 1.0, U200 = 2.0).
-private struct RestoredPumpExtras: Decodable {
+/// The pump settings a restore reads back: the core `PumpSettings` (DIA / max bolus / max
+/// basal) plus the insulin concentration the web side merges into the same stored blob.
+struct PumpRestoreConfig {
+    let settings: PumpSettings?
     let concentration: Double?
+}
+
+/// Raw decode of that blob — every field optional so a partial or older row still decodes.
+private struct RestoredPumpBlob: Decodable {
+    let insulinActionCurve: Decimal?
+    let maxBolus: Decimal?
+    let maxBasal: Decimal?
+    let concentration: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case insulinActionCurve = "insulin_action_curve"
+        case maxBolus
+        case maxBasal
+        case concentration
+    }
 }
 
 class Database {
@@ -22,6 +37,7 @@ class Database {
         static let uploadTempTargetsPath = "/api/v1/upload/temp-targets"
         static let uploadMealPresetsPath = "/api/v1/upload/meal-presets"
         static let uploadOverridePresetsPath = "/api/v1/upload/override-presets"
+        static let uploadContactTrickPath = "/api/v1/upload/contact-trick"
         static let versionPath = "/api/v1/version_check"
         static let downloadListPath = "/api/v1/download/list"
         static let downloadPreferencesPath = "/api/v1/download/preferences"
@@ -31,6 +47,7 @@ class Database {
         static let downloadTempTargetsPath = "/api/v1/download/temp-targets"
         static let downloadMealPresetsPath = "/api/v1/download/meal-presets"
         static let downloadOverridePresetsPath = "/api/v1/download/override-presets"
+        static let downloadContactTrickPath = "/api/v1/download/contact-trick"
         static let downloadDeletePath = "/api/v1/download/delete"
 
         static let retryCount = 2
@@ -165,11 +182,11 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
-    /// Best-effort fetch of the saved insulin concentration (U100 = 1.0, U200 = 2.0, …).
-    /// It rides the same pump-settings backup row, where the web side merges `concentration`
-    /// into the stored blob — so there's no separate endpoint. Returns nil when the backup
-    /// carries no concentration (e.g. an install that never uploaded pump settings).
-    func fetchInsulinConcentration(_ name: String) -> AnyPublisher<Double?, Swift.Error> {
+    /// Best-effort fetch of the saved pump settings to restore — DIA / max bolus / max basal
+    /// plus the insulin concentration (U100 = 1.0, U200 = 2.0, …), which the web side merges
+    /// into the same pump-settings row. `settings` is nil unless the core three are all present;
+    /// `concentration` is nil when the backup never recorded one. No separate endpoint.
+    func fetchPumpConfig(_ name: String) -> AnyPublisher<PumpRestoreConfig, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
@@ -185,8 +202,16 @@ extension Database {
 
         return service.run(request)
             .retry(Config.retryCount)
-            .decode(type: RestoredPumpExtras.self, decoder: JSONDecoder())
-            .map(\.concentration)
+            .decode(type: RestoredPumpBlob.self, decoder: JSONDecoder())
+            .map { blob in
+                let settings: PumpSettings?
+                if let dia = blob.insulinActionCurve, let maxBolus = blob.maxBolus, let maxBasal = blob.maxBasal {
+                    settings = PumpSettings(insulinActionCurve: dia, maxBolus: maxBolus, maxBasal: maxBasal)
+                } else {
+                    settings = nil
+                }
+                return PumpRestoreConfig(settings: settings, concentration: blob.concentration)
+            }
             .eraseToAnyPublisher()
     }
 
@@ -246,6 +271,26 @@ extension Database {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: OverrideDatabase.self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
+    func fetchContactTrick(_ name: String) -> AnyPublisher<DatabaseContactTrick, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.downloadContactTrickPath
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: DatabaseContactTrick.self, decoder: JSONCoding.decoder)
             .eraseToAnyPublisher()
     }
 
@@ -400,6 +445,25 @@ extension Database {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         request.httpBody = try! JSONCoding.encoder.encode(presets)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadContactTrick(_ payload: DatabaseContactTrick) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.uploadContactTrickPath
+
+        var request = URLRequest(url: components.url!)
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONCoding.encoder.encode(payload)
         request.httpMethod = "POST"
 
         return service.run(request)

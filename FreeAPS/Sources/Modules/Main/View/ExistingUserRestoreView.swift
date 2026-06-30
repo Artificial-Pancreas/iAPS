@@ -6,7 +6,8 @@ import Swinject
 /// Existing-User onboarding step: restore a cloud backup (open-iaps.app) onto a fresh
 /// install using the recovery token from the previous install.
 /// - Phase A (silent, all-or-nothing): OpenAPS Preferences + the iAPS app settings, plus the
-///   insulin concentration (a U200 user left at the U100 default would be mis-dosed).
+///   pump settings (DIA, max bolus/basal and the insulin concentration — a U200 user left at
+///   the U100 default would be mis-dosed) and the Contact Trick display config.
 /// - Phase B (reviewed): the profile schedules — basal, ISF, carb ratios and glucose targets —
 ///   are fetched, decomposed and shown for confirmation before being written; basal syncs to
 ///   the pump later, at pump setup. A backup with no profile skips straight to done.
@@ -218,18 +219,19 @@ extension ExistingUserRestoreView {
             let database = Database(token: token)
 
             // Preferences + settings gate the restore (all-or-nothing — a fresh install must
-            // never end up half-restored). Insulin concentration is best-effort: it rides an
-            // optional pump-settings row that older installs may never have uploaded, so its
-            // failure resolves to nil rather than failing the whole restore.
-            let concentration = database.fetchInsulinConcentration("default")
-                .replaceError(with: nil)
+            // never end up half-restored). The pump config (DIA / max bolus / max basal + the
+            // insulin concentration) is best-effort: it rides an optional pump-settings row that
+            // older installs may never have uploaded, so its failure resolves to an empty config
+            // rather than failing the whole restore.
+            let pumpConfig = database.fetchPumpConfig("default")
+                .replaceError(with: PumpRestoreConfig(settings: nil, concentration: nil))
                 .setFailureType(to: Swift.Error.self)
                 .eraseToAnyPublisher()
 
             Publishers.Zip3(
                 database.fetchPreferences("default"),
                 database.fetchSettings("default"),
-                concentration
+                pumpConfig
             )
             .receive(on: DispatchQueue.main)
             .sink(
@@ -240,7 +242,7 @@ extension ExistingUserRestoreView {
                         )
                     }
                 },
-                receiveValue: { [weak self] preferences, settings, concentration in
+                receiveValue: { [weak self] preferences, settings, pumpConfig in
                     guard let self else { return }
 
                     // Preferences: oref re-reads preferences.json from disk each run, so a
@@ -256,12 +258,18 @@ extension ExistingUserRestoreView {
                         self.storage.save(settings, as: OpenAPS.FreeAPS.settings)
                     }
 
-                    // Insulin concentration lives in CoreData, not in either settings file, so
-                    // it's restored here when the backup carries it. Skipping a nil leaves the
-                    // U100 default — correct for the common case.
-                    if let concentration, concentration > 0 {
+                    // Pump settings (DIA / max bolus / max basal) → settings.json. The insulin
+                    // concentration lives in CoreData, not in any settings file, so it's written
+                    // there separately. Both best-effort: a missing value leaves the default.
+                    if let pumpSettings = pumpConfig.settings {
+                        self.storage.save(pumpSettings, as: OpenAPS.Settings.settings)
+                    }
+                    if let concentration = pumpConfig.concentration, concentration > 0 {
                         self.saveConcentration(concentration, increment: preferences.bolusIncrement)
                     }
+
+                    // Contact Trick (display config) — best-effort, silent (not dosing).
+                    self.restoreContactTrick(using: database)
 
                     // Phase A is applied. Phase B: best-effort fetch + decompose of the profile
                     // schedules for the review step (a missing profile just finishes).
@@ -287,6 +295,22 @@ extension ExistingUserRestoreView {
                     debug(.apsManager, "Restore: insulin concentration couldn't be saved to CoreData. Error: \(error)")
                 }
             }
+        }
+
+        /// Best-effort, silent restore of the Contact Trick display config (not dosing): fetch
+        /// the backup's contacts and write them to the contact-trick file. A missing backup or
+        /// an empty list is a no-op.
+        private func restoreContactTrick(using database: Database) {
+            database.fetchContactTrick("default")
+                .receive(on: DispatchQueue.main)
+                .sink(
+                    receiveCompletion: { _ in },
+                    receiveValue: { [weak self] payload in
+                        guard let self, !payload.contacts.isEmpty else { return }
+                        self.storage.save(payload.contacts, as: OpenAPS.Settings.contactTrick)
+                    }
+                )
+                .store(in: &lifetime)
         }
 
         /// Best-effort: fetch the backup profile, decompose it into native schedules, and (if it
