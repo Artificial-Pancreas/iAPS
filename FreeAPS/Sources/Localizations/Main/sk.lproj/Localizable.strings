@@ -4,10 +4,8 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Zaznamenať inzulín bez podania bolusu";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Pridať %@ bez podania bolusu";
 
 "Bolus" = "Bolus";
 
@@ -44,10 +42,8 @@
 "Insulin recommended" = "Odporúčaný inzulín";
 
 /*  */
-"Insulin required" = "Požadovaný inzulín";
 
 /* Bolus screen */
-"Recommendation" = "Odporúčanie";
 
 /* Button */
 "Clear" = "Vymazať";
@@ -56,7 +52,6 @@
 "Done" = "Hotovo";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Posledná slučka pred %@ minútami. Dokončite alebo zrušte túto transakciu jedla/bolusu, aby mohol prebehnúť ďalší cyklus slučky";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Zobraziť emotikony ako štítky";
@@ -74,7 +69,6 @@
 "Wait please" = "Počkajte, prosím";
 
 /*  */
-"Agree and continue" = "Súhlasím a pokračovať";
 
 /* */
 "Log external insulin" = "Zaznamenať externý inzulín";
@@ -107,13 +101,11 @@
 "Meal Summary" = "Sumár jedla";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Upraviť jedlo";
 
 /* Bolus View Meal Add Meal Button */
 "Add Meal" = "Pridať jedlo";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Prehľad bolusov";
 
 /* For the  Bolus View pop-up */
 "Calculations" = "Výpočty";
@@ -125,22 +117,17 @@
 "Hypo Treatment" = "Liečba hypoglykémie";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Celková dávka";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Zlomok";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Tukoproteínový faktor";
 
 /* Footer */
 "Carbs and previous insulin are included in the eventual glucose prediction." = "Sacharidy a predchádzajúci inzulín sú zahrnuté v predpovedi glykémie.";
 
 /* For the  Bolus View pop-up */
-"Result" = "Výsledok";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Vaša zadaná hodnota bola obmedzená Vaším maximálnym nastavením bolusu na %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Pokračovať";
@@ -152,16 +139,13 @@
 "looping" = "aktualizácia";
 
 /* min ago since last loop */
-"min ago" = "minútami";
 
 /* Status Title */
 "No suggestion" = "Žiadny návrh";
 
 /* Replace pod text in Header */
-"Replace pod" = "Vymeňte Pod";
 
 /* Add carbs screen */
-"Add Carbs" = "Pridať sacharidy";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Pridať sacharidy ";
@@ -176,7 +160,6 @@
 "Open" = "Otvorený";
 
 /*  */
-"Amount Carbs" = "Množstvo sacharidov";
 
 /* Grams unit */
 "grams" = "gramov";
@@ -191,13 +174,11 @@
 "Are you sure?" = "Ste si istý?";
 
 /* */
-"Clear Records" = "Vymazať záznamy";
 
 /* */
 "Delete CoreData database records" = "Vymazať záznamy databázy CoreData";
 
 /* */
-"Delete NS records" = "Vymazať záznamy NS";
 
 /* */
 "All records in " = "Všetky záznamy v ";
@@ -206,7 +187,6 @@
 " will be deleted!" = " budú vymazané!";
 
 /* Bottom target temp */
-"Bottom target" = "Spodný cieľ";
 
 /* Cancel preset name */
 "Cancel" = "Zrušiť";
@@ -239,16 +219,13 @@
 "Target" = "Cieľ";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Pomer bazálneho inzulínu a citlivosti";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Nižšie nastavenie \"Polovičný základný cieľ\" zníži bazálnu dávku a zvýši ISF skôr, pri nižšej cieľovej glykémii.";
 
 /* */
 " Your setting: " = " Vaše nastavenie: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dL. Autosens max obmedzuje maximálnu koncovú hodnotu";
 
 /*  */
 "Enter preset name" = "Zadajte názov predvoľby";
@@ -269,10 +246,8 @@
 "Save as Preset" = "Uložiť ako predvoľbu";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Odstrániť predvoľbu";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Odstrániť predvoľbu '%@'?";
 
 /* Button */
 "No" = "Nie";
@@ -281,13 +256,10 @@
 "Yes" = "Áno";
 
 /* + Button */
-"[ +1 ]" = "[ +1 ]";
 
 /* - Button */
-"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Vysoký cieľ";
 
 /*  Temp target set for ... minutes */
 "for" = "počas";
@@ -371,7 +343,6 @@
 "Dismiss" = "Zamietnuť";
 
 /*  */
-"Important message" = "Dôležitá správa";
 
 /*  */
 "Amount" = "Množstvo";
@@ -390,7 +361,6 @@ Enact a temp Basal or a temp target */
 "Manual Temp Basal" = "Manuálny dočasný bazál";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Povoliť odosielanie";
 
 /* API secret in NS */
 "API secret" = "API kľúč";
@@ -408,22 +378,18 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "Neplatná URL adresa";
 
 /*  */
-"Local glucose source" = "Lokálny zdroj glykémie";
 
 /* Header */
 "Nightscout Config" = "Nightscout nastavenia";
 
 /*  */
-"Port" = "Port";
 
 /*  */
 "URL" = "Adresa URL";
 
 /**/
-"Use local glucose server" = "Použiť lokálny server glykémie";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Toto umožňuje odosielanie súboru statistics.json do Nightscoutu, ktorý môže byť použitý pre komunitné štatistiky a projekt demografie.\n\nÚčasť na štatistikách Spoločenstva je dobrovoľná a vyžaduje si samostatnú registráciu na adrese:\n";
 
 /*  */
 "Edit settings json" = "Upraviť settings json";
@@ -435,7 +401,6 @@ Enact a temp Basal or a temp target */
 "Preferences" = "Predvoľby";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Odporúčaný podiel inzulínu";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Preskočiť obrazovku bolusu po sacharidoch";
@@ -453,7 +418,6 @@ Enact a temp Basal or a temp target */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Týmto sa nahradia niektoré alebo všetky aktuálne nastavenia pumpy. Ste si istí, že chcete importovať nastavenia profilu z programu Nightscout?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nNeplatné základné nastavenia Nightcsout. \n\nImport bol prerušený. Skontrolujte základné nastavenia svojho profilu Nightscout!";
 
 /* Import Error */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nNastavenia boli importované, ale základné údaje nebolo možné uložiť do pumpy (žiadna pumpa). Skontrolujte bazálne nastavenia a klepnutím na ´Uložiť na pumpe´ synchronizujte nové bazálne nastavenia";
@@ -480,22 +444,16 @@ Enact a temp Basal or a temp target */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nNekompatibilné jednotky glykémie v Nightscoute a v nastaveniach pumpy. Import nastavení bol zrušený.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Nemôžem nájsť predvolený Nightscout profil.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Testovanie glykémie z krvi";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Pridať Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Pridať Omnipod";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Pridať Dana-i/RS";
 
 /* Add Simulator pump */
-"Add Simulator" = "Pridať simulátor";
 
 /* View/Header when pod expired */
 "Replace" = "Vymeňte";
@@ -592,7 +550,6 @@ Enact a temp Basal or a temp target */
 " U/hr" = " J/hod";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ J/hod";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ J";
@@ -607,7 +564,6 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 J/hod";
 
 /* abbreviation for days */
 "d" = "d";
@@ -682,16 +638,13 @@ Enact a temp Basal or a temp target */
 "Settings" = "Nastavenia";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Odporúčané percento bolusu";
 
 /* 2 log files to share */
 "Share logs" = "Zdieľať logy";
 
 /* Upper target */
-"High target" = "Vysoký cieľ";
 
 /* Lower target */
-"Low target" = "Nízky cieľ";
 
 /* When bolusing */
 "Bolusing" = "Dávkovanie";
@@ -763,13 +716,11 @@ Enact a temp Basal or a temp target */
 " min" = " min";
 
 /* */
-"Unable to change anything" = "Nemožnosť čokoľvek zmeniť";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Nastaviť vysielač Libre";
 
 /* */
 "Calibrations" = "Kalibrácie";
@@ -781,7 +732,6 @@ Enact a temp Basal or a temp target */
 "Calendar" = "Kalendár";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatický";
 
 /* External insulin treatments */
 "External" = "Externý";
@@ -799,7 +749,6 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Vysielače Bluetooth";
 
 /* */
-"Modes" = "Režimy";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
@@ -808,7 +757,6 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Vyberte vysielač tretej strany, ku ktorému sa chcete pripojiť";
 
 /* State was restored */
-"State was restored" = "Stav bol obnovený";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -844,40 +792,31 @@ Enact a temp Basal or a temp target */
 "Remove All" = "Odstrániť všetko";
 
 /* */
-"About the Process" = "O procese";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Uistite sa, že váš senzor Libre 2 je už aktivovaný a zahriaty. Ak máte iné aplikácie pripojené k senzoru cez bluetooth, tieto musia byť vypnuté alebo odinštalované.\n\nMôžete mať iba jednu aplikáciu komunikujúcu so senzorom cez bluetooth. Potom stlačte tlačidlo „spárovanie a pripojenie“ nižšie, aby ste začali proces. Upozorňujeme, že pripojenie cez bluetooth môže trvať až niekoľko minút, kým začne fungovať.";
 
 /* */
-"Pairinginfo" = "Informácie o párovaní";
 
 /* */
-"PatchInfo" = "Informácie o záplatách";
 
 /* */
-"Calibrationinfo" = "Informácie o kalibrácii";
 
 /* */
 "Unknown" = "Neznáme";
 
 /* */
-"Not paired yet" = "Zatiaľ nespárované";
 
 /* */
-"Pair Sensor & connect" = "Párovanie snímača a pripojenie";
 
 /* */
-"Phone NFC required!" = "Vyžaduje sa telefón s NFC!";
 
 /* */
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Váš telefón alebo aplikácia nemá povolenú komunikáciu NFC, ktorá je potrebná na spárovanie so snímačmi libre2";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth je vypnutý";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Zapnite Bluetooth";
 
 /* No Libre Transmitter Selected */
 "No Libre Transmitter Selected" = "Nie je vybraný žiadny vysielač Libre";
@@ -904,7 +843,6 @@ Enact a temp Basal or a temp target */
 "(Snoozed)" = "(Stíšené)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glykémia: %@";
 
 /* Transmitter: %@%% */
 "Transmitter: %@%%" = "Vysielač: %@%%";
@@ -934,7 +872,6 @@ Enact a temp Basal or a temp target */
 "Detected sensor seems not to be a libre 1 sensor!" = "Detegovaný senzor nie je libre 1!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detegovaný senzor nie je platný: %@";
 
 /* Low Battery */
 "Low battery" = "Slabá batéria";
@@ -949,7 +886,6 @@ Enact a temp Basal or a temp target */
 "Sensor expires soon" = "Senzor čoskoro exspiruje";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batéria sa vybíja %@, zvážte čo najskoršie nabitie zariadenia %@";
 
 /* Extracting calibrationdata from sensor */
 "Extracting calibrationdata from sensor" = "Získanie kalibračných údajov zo snímača";
@@ -958,10 +894,8 @@ Enact a temp Basal or a temp target */
 "Sensor Ending Soon" = "Senzor čoskoro skončí";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Aktuálny senzor čoskoro skončí! Do konca životnosti senzora zostáva %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
 "Snooze Alerts" = "Odložiť výstrahy";
@@ -979,19 +913,15 @@ Enact a temp Basal or a temp target */
 "CurrentBG" = "AktuálneBG";
 
 /* */
-"Sensor Info" = "Informácie o senzore";
 
 /* */
 "Sensor Life-Span" = "Životnosť senzora";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Ak používate %@ iAPS nepozná typ senzora ani jeho životnosť.";
 
 /* */
-"Sensor Age Left" = "Zostávajúci platnosť senzora";
 
 /* */
-"Sensor Endtime" = "Koniec senzora";
 
 /* */
 "Sensor State" = "Stav senzora";
@@ -1000,7 +930,6 @@ Enact a temp Basal or a temp target */
 "Sensor Serial" = "Serióve číslo senzora";
 
 /* */
-"Transmitter Info" = "Informácie o vysielači";
 
 /* */
 "Hardware" = "Hardvér";
@@ -1018,10 +947,8 @@ Enact a temp Basal or a temp target */
 "Sensor Type" = "Typ senzoru";
 
 /* */
-"Factory Calibration Parameters" = "Továrenské kalibračné parametre";
 
 /* */
-"Valid for footer" = "Platí pre pätičku";
 
 /* */
 "Edit calibrations" = "Upraviť kalibrácie";
@@ -1033,13 +960,10 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Odstrániť senzor";
 
 /* */
-"Are you sure you want to remove this cgm from iAPS?" = "Si si istý, že chceš odstrániť tento CGM zo systému iAPS?";
 
 /* */
-"There is no undo" = "Nie je možné vrátiť späť";
 
 /* */
-"Advanced" = "Pokročilé";
 
 /* */
 "Alarms" = "Alarmy";
@@ -1051,22 +975,17 @@ Enact a temp Basal or a temp target */
 "Notifications" = "Oznámenia";
 
 /* */
-"Export logs" = "Exportovať záznamy";
 
 /* */
-"Export not available" = "Exportovanie nedostupné";
 
 /* */
-"Log export requires ios 15" = "Exportovanie záznamov vyžaduje ios 15";
 
 /* */
 "Got it!" = "Mám!";
 
 /* */
-"Saved to %@" = "Uložené do %@";
 
 /* */
-"No logs available" = "Nie sú k dispozícii žiadne protokoly";
 
 /* */
 "Glucose Notification visibility" = "Viditeľnosť upozornenia na glykémiu";
@@ -1081,13 +1000,11 @@ Enact a temp Basal or a temp target */
 "Value" = "Hodnota";
 
 /* */
-"Adds Phone Battery" = "Pridáva batériu telefónu";
 
 /* */
 "Adds Transmitter Battery" = "Pridáva batériu vysielača";
 
 /* */
-"Also vibrate" = "Tiež vibrovať";
 
 /* */
 "Additional notification types" = "Ďalšie typy oznámení";
@@ -1117,7 +1034,6 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Zadajte veľkosť bolusu";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Vaša aktuálna glykémia je %@. Ste si istí, že chcete podať bolus %@ J inzulínu?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Príkaz bolus ";
@@ -1148,7 +1064,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Max allowed bolus amount using shortcuts " = "Maximálná veľkosť bolusu pomocou Skratiek ";
 
 /* Bolus shortcut. Error */
-"not available" = "nie je k dispozícii";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Aktivácia predvoľby Override";
@@ -1160,7 +1075,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Which override preset would you like to activate?" = "Ktorý upravený profil chcete aktivovať?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Ste si istí, že chcete aktivovať upravený profil %@?";
 
 /* Override Shortcut */
 "The Profile Override" = "Upravenie profilu";
@@ -1175,13 +1089,11 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override canceled" = "Upravenie zrušené";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Aktivuје upravený režim %@";
 
 /* Suspend/Resume Shortcut */
 "Choose what to do with your pump" = "Vyberte si, čo chcete s pumpou urobiť";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Ste si istí, že chcete %@ svoju pumpu?";
 
 /* Suspend/Resume Shortcut */
 "Pump command" = "Príkaz pre pumpu";
@@ -1242,7 +1154,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "snooze from testview clicked" = "kliknutie na tlačidlo snooze z testovacieho zobrazenia";
 
 /* */
-"will snooze for %@ until %@" = "odloží na %@ až do %@";
 
 /* */
 "Click to Snooze Alerts" = "Kliknutím odložíte upozornenia";
@@ -1263,19 +1174,16 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Notification Settings" = "Nastavenia oznámení";
 
 /* */
-"Found devices: %d" = "Nájdené zariadenia: %d";
 
 /* */
 "Backfill options" = "Možnosti doplnenia";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Spätné dopĺňanie z trendových údajov nie je momentálne v iAPS dobre podporované";
 
 /* */
 "Backfill from history" = "Doplniť z histórie";
 
 /* */
-"Backfill from trend" = "Zásyp z trendu";
 
 /* */
 "Debug options" = "Možnosti ladenia";
@@ -1365,7 +1273,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Backfill glucose" = "Doplniť glykémiu";
 
 /* About this source */
-"About this source" = "Informácie o tomto zdroji";
 
 /* */
 "Bolus failed" = "Chyba pri aplikácii bolusu";
@@ -1388,7 +1295,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Meals" = "Jedlá";
 
-"Today's Meals" = "Dnešné jedlá";
 
 "Micronutrient" = "Micronutrient";
 
@@ -1442,7 +1348,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "This portion" = "Táto porcia";
 
-"Serving Size" = "Veľkosť porcie";
 
 "Standard Serving" = "Štandardná porcia";
 
@@ -1510,25 +1415,16 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "Odhady nutričných hodnôt pomocou AI sú len približné. Pri zdravotných rozhodnutiach sa vždy poraďte so svojím lekárom. Kedykoľvek je to možné, overte si nutričné informácie. Používanie je na vlastné riziko.";
 
-"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI analýza obrázka:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Skenovanie čiarového kódu:**";
 
-"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
 
-"Search Type Recommendations" = "Odporúčania typu vyhľadávania";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Bezplatná, oficiálna databáza nutričných hodnôt. Poskytuje kvalitné nutričné údaje pre nebalené potraviny ako ovocie, zelenina a mäso.";
 
-"**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**:: Bezplatná, otvorená databáza so širokým pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny.";
 
 "AI Progress Animation" = "Animácia postupu umelej inteligencie";
 
@@ -1584,7 +1480,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Get an API key at platform.openai.com." = "Získajte API kľúč na platform.openai.com.";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
 
 "Enter your Google Gemini API key" = "Zadajte svoj Google Gemini API kľúč";
 
@@ -1592,7 +1487,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Get a free API key at ai.google.dev." = "Získajte API kľúč na ai.google.dev.";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
 
 "Get a free API key at ai.google.dev." = "Získajte API kľúč na ai.google.dev.";
 
@@ -1602,7 +1496,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Get an API key at console.anthropic.com." = "Získajte API kľúč na console.anthropic.com.";
 
-"Anthropic (Claude API) Configuration" = "Konfigurácia Anthropic (Claude API)";
 
 "USDA Food Database" = "USDA Food Database";
 
@@ -1658,7 +1551,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Food Name" = "Názov jedla";
 
-"Serving Size" = "Veľkosť porcie";
 
 "This portion" = "Táto porcia";
 
@@ -1705,7 +1597,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "fat" = "tuky";
 
 /* Display more macro nutrients */
-"More" = "More";
 
 /* Additional nutrient */
 "more nutrient" = "more nutrient";
@@ -1713,67 +1604,46 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Additional nutrients */
 "more nutrients" = "more nutrients";
 
-"📝 Notes" = "📝 Poznámky";
 
 /* */
-"💉 Diabetes recommendations" = "💉 Odporúčania pre diabetes";
 
 /* */
-"🍽️ Separate Foods" = "🍽️ Oddeliť jedlá";
 
 /* */
-"Add all" = "Pridať všetko";
 
 /* */
-"🧠 AI Food analysis" = "🧠 AI analýza jedla";
 
 /* */
-"📊 Total nutritional values of the meal" = "📊 Celkové nutričné hodnoty jedla";
 
 /* */
-"Confidence level:" = "Úroveň spoľahlivosti:";
 
 /* */
-"Notes: %@" = "Poznámky: %@";
 
 /* */
-"Visual Cues: %@" = "Vizuálne podnety: %@";
 
 /* */
-"Preparation: %@" = "Príprava: %@";
 
 /* */
 "Preparation" = "Príprava";
 
 /* */
-"Multiplicator" = "Násobiteľ";
 
 /* */
-"Accept quantity" = "Prijať množstvo";
 
 /* */
-"Enter desired quantity" = "Zadajte požadované množstvo";
 
 /* */
 "AI Food Search" = "AI vyhľadávanie jedla";
 
 /* Title */
-"Food Search" = "Vyhľadávanie jedla";
 
 /* Food Search input */
-"Food Search..." = "Vyhľadávanie jedla...";
 
 /* */
-"Search Food Database" = "Vyhľadať v databáze jedál";
 
-"Models Used:" = "Použité modely:";
 
-"Current Mode: %@" = "Aktuálny režim: %@";
 
-"Analysis Mode" = "Režim analýzy";
 
-"This AI provider requires an API key. Please enter your API key in the settings below." = "Tento poskytovateľ AI vyžaduje API kľúč. Zadajte prosím svoj API kľúč v nastaveniach nižšie.";
-"API Key Required" = "Vyžadovaný API kľúč";
 
 "Food Search Settings" = "Nastavenia vyhľadávania jedla";
 
@@ -1781,38 +1651,21 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Medical Disclaimer" = "Lekárske upozornenie";
 
-"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI analýza obrázka:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Skenovanie čiarového kódu:**";
 
-"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Textové/Hlasové vyhľadávanie:**";
-"Search Type Recommendations" = "Odporúčania typu vyhľadávania";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Bezplatná, oficiálna databáza nutričných hodnôt. Poskytuje kvalitné nutričné údaje pre nebalené potraviny ako ovocie, zelenina a mäso.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**:: Bezplatná, otvorená databáza so širokým pokrytím čiarových kódov a textovým vyhľadávaním pre balené potraviny.";
-"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Ak vyberiete „OpenFoodFacts“ alebo „USDA“, analýza kamerou použije základný odhad namiesto AI";
 
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Vyberte „Anthropic (Claude API)“, „Google (Gemini API)“ alebo „OpenAI (ChatGPT API)“, aby AI analýza obrázkov využívala vaše platené kľúče";
 
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Keď odfotíte jedlo, aplikácia použije poskytovateľa zvoleného vyššie v „AI analýze obrázkov“.";
-"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Rozdeľ toto jedlo na jednotlivé komponenty s úplnými makronutričnými profilmi (sacharidy, bielkoviny, tuky, kalórie) pre každú položku a so súhrnnými celkovými hodnotami.";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifikuj všetky potraviny na tomto obrázku so zameraním na obsah sacharidov pre manažment diabetu. PoskytnI detailné množstvá sacharidov pre každú položku a celkový počet sacharidov v jedle.";
 
-"Diabetes Focus" = "Zameranie na diabetes";
 
-"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "PoskytnI mimoriadne detailnú vizuálnu analýzu tohto obrázka jedla. Opíš každý prvok, ktorý vidíš: farby jedla, textúry, spôsoby prípravy (stopy po grilovaní, hnednutie, naparovanie), typ a veľkosť taniera, prítomné príborové súpravy, ozdoby, omáčky, viditeľné oleje použité pri varení, rozloženie jedla a prvky v pozadí. Tieto vizuálne detaily použi na odhad presných veľkostí porcií a výpočet presných nutričných hodnôt pre manažment diabetu.";
 
-"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyzuj tento obrázok jedla pre manažment diabetu. Podrobne opíš presne to, čo vidíš: farby, textúry, spôsoby prípravy, typ taniera, príbor a rozloženie jedla. Identifikuj každú potravinu s detailmi o príprave, odhadni presné veľkosti porcií pomocou vizuálnych referencií a poskytnI sacharidy, bielkoviny, tuky a kalórie pre každú položku. Zameraj sa na presný odhad sacharidov pre dávkovanie inzulínu.";
 
-"AI Prompt for Enhanced Results" = "AI zadanie pre lepšie výsledky";
 
 "Enter your OpenAI API key" = "Zadajte svoj OpenAI API kľúč";
 
@@ -1820,13 +1673,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Get an API key at platform.openai.com." = "Získajte API kľúč na platform.openai.com.";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) nastavenie";
 
-"Macro Tracking" = "Sledovanie makier";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identifikuj všetky potraviny na tomto obrázku so zameraním na obsah sacharidov pre manažment diabetu. PoskytnI detailné množstvá sacharidov pre každú položku a celkový počet sacharidov v jedle.";
 
-"Detailed Visual Analysis" = "Detailná vizuálna analýza";
 
 "Enter your Google Gemini API key" = "Zadajte svoj Google Gemini API kľúč";
 
@@ -1834,201 +1683,109 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Get a free API key at ai.google.dev." = "Získajte API kľúč na ai.google.dev.";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) nastavenie";
 
-"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Kvóta vášho AI poskytovateľa bola prekročená. Skontrolujte prosím svoje limity používania alebo vyskúšajte iného poskytovateľa.";
 
-"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Vášmu AI poskytovateľovi došli kredity. Skontrolujte prosím fakturáciu svojho účtu alebo vyskúšajte iného poskytovateľa.";
 
-"Reset to Default" = "Obnoviť predvolené nastavenia";
 
 "Take Photo" = "Take Photo";
 
-"Retake Photo" = "Znovu odfotiť";
 
-"Retry Analysis" = "Znovu analyzovať";
 
-"Try Different Provider" = "Vyskúšať iného poskytovateľa";
 
-"Check Account" = "Skontrolovať účet";
 
-"Analysis Error" = "Chyba analýzy";
 
-"AI Food Analysis" = "AI analýza jedla";
 
-"Use Cancel to retake photo" = "Použite Zrušiť na znovu odfotenie fotografie";
 
-"Analyzing food with AI..." = "Analyzujem jedlo s AI...";
 
 "Choose from Library" = "Vybrať z knižnice";
 
-"Take a Photo" = "Odfotiť";
 
-"Keep the camera level to reduce distortion and keep portions proportional." = "Držte kameru vodorovne, aby ste znížili skreslenie a zachovali proporcie porcií.";
 
-"Shoot from slightly above" = "Fotografujte mierne zhora";
 
-"Forks, cups, or hands help AI calculate realistic portions." = "Vidličky, poháre alebo ruky pomáhajú AI vypočítať realistické porcie.";
 
-"Add a size reference" = "Pridať referenciu veľkosti";
 
-"Make sure every food item is in the frame." = "Uistite sa, že všetky potraviny sú v zábere.";
 
-"Frame the full meal" = "Umiestnite celé jedlo";
 
-"Remove napkins, lids, or packaging that may be misidentified as food." = "Odstráňte servítky, viečka alebo obaly, ktoré môžu byť nesprávne identifikované ako jedlo.";
 
-"Clear the area" = "Vyčistite priestor";
 
-"Harsh shadows confuse the AI and dim light can hide textures." = "Ostré tiene mätú AI a slabé osvetlenie môže zakryť textúry.";
 
-"Use bright, even light" = "Používajte jasné, rovnomerné osvetlenie";
 
-"Better photos = better estimates" = "Lepšie fotografie = lepšie odhady";
 
-"Scan failed" = "Skenovanie sa nepodarilo";
 
-"Looking up product..." = "Vyhľadávanie produktu...";
 
-"Code detected!" = "Kód detegovaný!";
 
-"Position camera over barcode or QR code" = "Natočte kameru na čiarový alebo QR kód";
 
-"Validating format..." = "Validujem formát...";
 
-"Scanning for barcode or QR code..." = "Skenujem čiarový alebo QR kód...";
 
-"Initializing camera..." = "Incializácia kamery...";
 
-"Scan failed" = "Skenovanie sa nepodarilo";
 
-"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS potrebuje prístup ku kamere na skenovanie čiarových kódov. Povoľte prosím prístup ku kamere v Nastaveniach.";
 
 "Camera Access Required" = "Vyžadovaný prístup ku kamere";
 
-"Check Permissions" = "Skontrolovať oprávnenia";
 
-"Supports traditional barcodes and QR codes" = "Podporuje tradičné čiarové kódy a QR kódy";
 
-"Hold steady for best results" = "Držte stabilne pre najlepšie výsledky";
 
 "Retry" = "Skúsiť znova";
 
-"Scan Barcode" = "Skenovať čiarový kód";
 
-"📦 Database Results" = "📦 Výsledky z databázy";
 
-"🤖 AI Search Results" = "🤖 Výsledky AI vyhľadávania";
 
-"• Use the barcode scanner for packaged foods" = "• Použiť skener čiarových kódov pre balené potraviny";
 
-"• Check spelling carefully" = "• Starostlivo skontrolovať pravopis";
 
-"• Use simple, common food names" = "• Použiť jednoduché, bežné názvy potravín";
 
 "• Try brand names (e.g., \"Cheerios\")" = "• Skúste názvy značiek (napr. „Chocapic“)";
 
-"💡 Search Tips:" = "💡 Tipy na vyhľadávanie:";
 
 "Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Skúste jednoduchšie výrazy ako „chlieb“ alebo „jablko“, alebo naskenujte čiarový kód";
 
-"Check your spelling and try again" = "Skontrolujte svoj pravopis a skúste to znova";
 
-"No Foods Found" = "Nenašli sa žiadne potraviny";
 
-"Search Error" = "Chyba vyhľadávania";
 
-"Finding the best matches for you" = "Hľadám pre vás najlepšie zhody";
 
-"Searching foods" = "Vyhľadávam potraviny";
 
-"AI Analysis" = "AI analýza";
 
-"Analysis Status" = "Stav analýzy";
 
-"❌ Analysis failed" = "❌ Analýza zlyhala";
 
-"⚠️ Connection interrupted..." = "⚠️ Pripojenie bolo prerušené…";
 
-"✅ Analysis complete!" = "✅ Analýza dokončená!";
 
-"🍽️ Generating nutrition summary..." = "🍽️ Generujem súhrn výživových údajov...";
 
-"📊 Processing analysis results..." = "📊 Spracovávam výsledky analýzy...";
 
-"🤖 Running AI vision analysis..." = "🤖 Spúšťam analýzu pomocou AI videnia...";
 
-"⚖️ Comparing to USDA standards..." = "⚖️ Porovnávam so štandardmi USDA...";
 
-"📏 Calculating serving sizes..." = "📏 Vypočítavam porcie...";
 
-"🔬 Identifying food portions..." = "🔬 Identifikujem porcie jedla...";
 
-"📊 Analyzing nutritional content..." = "📊 Analyzujem výživový obsah...";
 
-"📡 Uploading image for analysis..." = "📡 Nahrávam obrázok na analýzu...";
 
-"🧠 Connecting to AI provider..." = "🧠 Pripájam sa k poskytovateľovi AI...";
 
-"💼 Optimizing image quality..." = "💼 Optimalizujem kvalitu obrázka...";
 
-"📱 Processing image data..." = "📱 Spracovávam obrazové dáta...";
 
-"🔍 Initializing AI food analysis..." = "🔍 Inicializujem AI analýzu jedla...";
 
-"⚡ Processing AI analysis results..." = "⚡ Spracovanie výsledkov AI analýzy...";
 
-"📥 Received response from Claude..." = "📥 Prijatá odpoveď od Claude...";
 
-"⏳ AI is cooking up results..." = "⏳ AI pripravuje výsledky...";
 
-"🌐 Sending request to Claude..." = "🌐 Odosielanie požiadavky do Claude...";
 
-"📡 Preparing API request..." = "📡 Príprava API požiadavky...";
 
-"🔄 Encoding image data..." = "🔄 Kódovanie údajov obrázka...";
 
-"🖼️ Optimizing your image..." = "🖼️ Optimalizácia vášho obrázka...";
 
-"⚙️ Configuring Claude parameters..." = "⚙️ Konfigurácia parametrov Claude...";
 
-"⚙️ Processing analysis results..." = "⚙️ Spracovanie výsledkov analýzy...";
 
-"📊 Calculating nutrition estimates..." = "📊 Výpočet odhadov nutričných hodnôt...";
 
-"🍽️ Identifying food characteristics..." = "🍽️ Identifikácia charakteristík jedla...";
 
-"📱 Analyzing image properties..." = "📱 Analýza vlastností obrázka...";
 
-"📊 Initializing basic analysis..." = "📊 Inicializujem základnú analýzu...";
 
-"🤖 Connecting to Google Gemini..." = "🤖 Pripájam sa ku Google Gemini...";
 
-"📥 Received response from Gemini..." = "📥 Prijatá odpoveď od Gemini...";
 
-"🌐 Sending request to Google Gemini..." = "🌐 Odosielanie požiadavky do Google Gemini...";
 
-"🔄 Encoding image data..." = "🔄 Kódovanie údajov obrázka...";
 
-"⚙️ Configuring Gemini parameters..." = "⚙️ Konfigurácia parametrov Gemini...";
 
-"📥 Received response from OpenAI..." = "📥 Prijatá odpoveď od OpenAI...";
 
-"💾 Caching analysis result..." = "💾 Ukladám výsledok analýzy do vyrovnávacej pamäte...";
 
-"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Robím hĺbkovú analýzu (môže to chvíľu trvať)...";
 
-"🎯 Selecting optimal AI provider..." = "🎯 Vyberám optimálneho poskytovateľa AI...";
 
-"⚡ Starting parallel provider analysis..." = "⚡ Začínam analýzu paralelných poskytovateľov...";
 
-"Amount:" = "Množstvo:";
 
-"Take Over" = "Prevziať";
 
-"kcal" = "kcal";
 
-"Cal" = "Cal";
 
 "servings" = "porcie";
 
@@ -2061,13 +1818,11 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Suspend" = "Pozastavenie";
 
 /* */
-"Animated Background" = "Animované pozadie";
 
 /* Sensor day(s) */
 " day(s)" = " deň(y)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Zobraziť na hodinkách";
 
 
 /* Headers for settings ----------------------- */
@@ -2083,7 +1838,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Glucose Simulator" = "Simulátor glykémie";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Stav Bluetooth obnovený (APS reštartovaný?). Nájdené %d periférnych zariadení a pripojené k %@ s identifikátorom %@";
 
 /* Shared app group xDrip4iOS */
 "Using shared app group with external CGM app xDrip4iOS" = "Používanie zdieľanej skupiny aplikácií s externou aplikáciou CGM xDrip4iOS";
@@ -2130,7 +1884,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Delete All NS Overrides" = "Odstrániť všetky prepísania NS";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS Nahraný profil";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
@@ -2187,10 +1940,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Target presets" = "Cieľové predvoľby";
 
 /* Debug option view */
-"Loop Cycles" = "Cykly slučky";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Údaje o glykémii použité pre štatistiku";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -2266,10 +2017,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Fat and Protein" = "Tuk a bielkoviny";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Tuk a bielkoviny";
 
 /* */
-"Hide Fat & Protein" = "Skryť tuk a bielkoviny";
 
 /* Add Fat */
 "Fat" = "Tuky";
@@ -2281,33 +2030,26 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Fat And Protein Conversion" = "Tukoproteínové jednotky";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Ignorovať stabilné hodnoty CGM";
 
 /* Service Section */
-"Profile Override" = "Upravenie profilu";
 
 /* Extend max override percentage */
 "Max Override 400%" = "Maximálne upravenie o 400%";
 
 /* */
-"Override Profiles" = "Upravenie profilu";
 
 /* */
 "Normal " = "Normálny ";
 
-"Currently no Override active" = "Momentálne nie je aktívne žiadne upravenie";
 
 /* */
-"Total Insulin Adjustment" = "Celková úprava inzulínu";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Dočasne upraví profily pre bazál, ISF, CR a cieľ";
 
 /* */
 "Enable indefinitely" = "Povoliť na neurčito";
 
 /* */
-"Override Profile target" = "Upraviť cieľ profilu";
 
 /* */
 "Disable SMBs" = "Zakázať SMB";
@@ -2328,10 +2070,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "... than" = "... ako";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normálny profil";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Vlastný profil";
 
 /* */
 "Profiles" = "Profily";
@@ -2367,7 +2107,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override Max IOB" = "Upraviť Max IOB";
 
 /* */
-"Start new Profile" = "Spustenie nového profilu";
 
 /* */
 "Save as Profile" = "Uložiť ako profil";
@@ -2382,10 +2121,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
 
 /* Alert */
-"Return to Normal?" = "Návrat do normálu?";
 
 /* */
-"This will change settings back to your normal profile." = "Tým sa nastavenia vrátia do normálneho profilu.";
 
 /* Start Profile Alert */
 "Start Profile" = "Spustiť profil";
@@ -2412,13 +2149,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "iAPS Icon" = "ikona iAPS";
 
 /* Service Section */
-"Statistics and Home View" = "Štatistiky a domovské zobrazenie";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Odstrániť ekvivalenty sacharidov?";
 
 /* */
-"All FPUs of the meal will be deleted." = "Všetky FPU jedla sa vymažú.";
 
 /* */
 "Delete Glucose?" = "Odstrániť glykémiu?";
@@ -2439,13 +2173,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Empty" = "Prázdny";
 
 /* */
-"Delete Selected Preset" = "Odstrániť vybrané predvoľby";
 
 /* */
-"Enter Meal Preset Name" = "Zadajte názov predvoľby jedla";
 
 /* */
-"Name Of Dish" = "Názov jedla";
 
 /* Save Carbs and continue to bolus recommendation */
 "Save and continue" = "Uložiť a pokračovať";
@@ -2463,18 +2194,14 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Now" = "Teraz";
 
 /* Display future data table entries */
-"Show Future" = "Zobraziť budúce";
 
 /* Hide future data table entries */
-"Hide Future" = "Skryť budúce";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 
 /* Warning about bolus recommendation. Title */
-"Warning!" = "Upozornenie!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nKlepnutím na \"Pridať\" pokračujte s vybranou sumou.";
 
 /* */
 "Eventual Glucose" = "Predpokladaná glykémia";
@@ -2492,7 +2219,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Target Glucose" = "Cieľová glykémia";
 
 /* */
-"Percentage setting" = "Nastavenie percenta";
 
 /* */
 "Insulin Sensitivity" = "Inzulínová Citlivosť";
@@ -2504,7 +2230,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Formula:" = "Vzorec:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Sacharidy a predchádzajúci inzulín sú zahrnuté do predpovede glykémie, ale ak je prípadná glykémia nižšia ako cieľová glykémia, bolus sa neodporúča.";
 
 /* Hide pop-up */
 "Hide" = "Skryť";
@@ -2513,7 +2238,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Konečná glykémia > cieľová glykémia, ale predpokladá sa, že glykémia najprv klesne na ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "ktorá je nižšia ako vaša prahová hodnota (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Konečná glykémia > cieľová glykémia, ale glykémia stúpa pomalšie, ako sa očakávalo. Očakávané: ";
@@ -2555,7 +2279,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Pair Pod" = "Párovanie Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Predchádzajúce informácie o Pod";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Zvukové upozornenia Podu";
@@ -2569,13 +2292,11 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Save" = "Uložiť";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Nepodarilo sa aktualizovať predvoľbu pripomenutia dôveryhodnosti.";
 
 /* */
 "No Error" = "Žiadna chyba";
 
 /* description label for active time pod details row */
-"Active Time" = "Aktívny Čas";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Vypnuté";
@@ -2590,10 +2311,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "No confidence reminders are used." = "Nepoužívajú sa žiadne oznámenia.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Upozornenia budú znieť pri príkazoch, ktoré iniciujete, ako napríklad bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie pripomienok upozornení atď. Keď aplikácia automaticky upravuje podávanie, nepoužívajú sa žiadne pripomenutia dôvery.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Upozornenia zaznejú, keď aplikácia automaticky upraví doručenie a na príkazy, ktoré sami zadáte.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Predvolené pripomenutie o exspirácii";
@@ -2611,7 +2330,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Scheduled Reminder" = "Naplánovaná pripomienka";
 
 /* */
-"Low Reservoir Reminder" = "Pripomienka nízkej hladiny zásobníka";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Uistite sa, že iPhone a Pod sú blízko seba. Ak problémy s komunikáciou pretrvávajú, presuňte sa do inej oblasti.";
@@ -2625,7 +2343,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "%1$@ for %2$@" = "%1$@ pre %2$@";
 
 /* Description text on manual temp basal action sheet */
-"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS automaticky neupraví podávanie inzulínu, kým sa dočasná bazálna dávka neskončí alebo nie je zrušená.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Nastaviť dočasný bazál";
 
@@ -2645,16 +2362,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Missing Config" = "Chýbajúce nastavenia";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Tento PumpManager nemá nastavenú maximálnu bazálnu dávku, pretože bol pridaný pred zavedením funkcie manuálneho dočasného bazálu. Prejdite do Nastavenia -> Limity dávkovania a nastavte novú maximálnu bazálnu dávku.";
 
 /* description label for active time pod details row */
-"Active Time" = "Aktívny Čas";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Spolu dodaných";
 
 /* */
-"Add Omnipod Dash" = "Pridať Omnipod Dash";
 
 /* */
 "Insert Cannula" = "Zaviesť Kanylu";
@@ -2703,7 +2417,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Statistics" = "Štatistiky";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Povoliť odosielanie štatistík do NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Nízka";
@@ -2715,7 +2428,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "In Range" = "V rozsahu";
 
 /* Display % */
-"Change HbA1c Unit" = "Zmena jednotky HbA1c";
 
 /* */
 "Vertical grid lines" = "Vertikálne mriežkové čiary";
@@ -2730,34 +2442,26 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Standing / Laying TIR Chart" = "Graf TIR na výšku / šírku";
 
 /* */
-"Hours X-Axis (6 default)" = "Hodiny na osi X (6 predvolených)";
 
 /* */
 "2 hours" = "2 hodiny";
 
 /* */
-"3 hours" = "3 hodiny";
 
 /* */
-"4 hours" = "4 hodiny";
 
 /* */
-"6 hours" = "6 hodín";
 
 /* */
-"9 hours" = "9 hodín";
 
 /* */
-"12 hours" = "12 hodín";
 
 /* */
-"24 hours" = "24 hodín";
 
 /* Average BG = */
 "Average" = "Priemer";
 
 /* TIR Preview Headline */
-"Time In Range" = "Čas v rozmedzí";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Priemerný interval";
@@ -2775,13 +2479,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Days" = "Dni";
 
 /* Normal BG (within TIR) */
-"Normal" = "Normálny";
 
 /* Title High BG in statPanel */
-"High (>" = "Vysoká (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Nízka (<";
 
 /* SD */
 "SD" = "SD";
@@ -2790,7 +2491,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "CV" = "CV";
 
 /* Estimated HbA1c */
-"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "Všetko";
@@ -2802,7 +2502,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Loops" = "Slučky";
 
 /* Loop Errors in statPanel */
-"Errors" = "Chyba";
 
 /* Loop Statistics pop-up description */
 "Success = Started / Completed (loops)" = "Úspešnosť = Spustené / Dokončené (slučky)";
@@ -2811,7 +2510,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Most Frequent Error" = "Najčastejšia chyba";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Nedokončené slučky";
 
 /* Average loop interval */
 "Interval" = "Interval";
@@ -2820,16 +2518,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Duration" = "Trvanie";
 
 /* "Display SD */
-"Display SD instead of CV" = "Zobraziť SD namiesto CV";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Zobrazenie štandardnej odchýlky (SD) namiesto variačného koeficientu (CV) v paneli statPanel";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Aktualizujte každý počet minút:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Predvolená hodnota je 20 minút. Ako často aktualizovať a uložiť súbor statistics.json a nahrať posledné hodnoty, ak je povolené odosielanie do Nightscoutu.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Posledných 24 Hodín ";
@@ -2847,13 +2541,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "All Past Days of Data " = "Všetky údaje za uplynulé dni ";
 
 /* "Display Loop statistics in statPanel */
-"Display Loop Cycle statistics" = "Zobraziť štatistiky cyklov slučky";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Zobrazí štatistiky slučky v paneli statPanel v zobrazení Domov";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Zmena predvolenej jednotky HbA1c v statPanlel. Jednotka v statPanel bude aktualizovaná pri ďalšej aktualizácii statistics.json";
 
 /* HbA1c for all glucose storage days */
 "all" = "všetko";
@@ -2943,10 +2634,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nAk povolíte „Zdieľanie a zálohovanie“, denne sa budú vytvárať zálohy vašich nastavení a štatistík do online databázy.";
 
 /* Section title if sharing off */
-"Share Bare Minimum" = "Zdieľať základné údaje";
 
 /* Minimum share toggle */
-"Just iAPS version number" = "Len číslo verzie iAPS";
 
 /* Share info text */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Každá informácia, ktorú sa rozhodnete zdieľať, sa nahráva anonymne. Aby sa zabránilo duplicitným nahrávaniam, údaje sú identifikované jedinečným náhodným reťazcom uloženým vo vašom telefóne – obnovovacím tokenom.";
@@ -2964,10 +2653,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "View Personal Statistics" = "Zobraziť osobné štatistiky";
 
 /* */
-"Your identifier" = "Váš identifkátor";
 
 /* */
-"Share your data anonymously" = "Anonymné zdieľanie vašich dát";
 
 /* */
 "Upload Daily Log" = "Nahrať denný log";
@@ -3267,10 +2954,8 @@ Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Predvolená hodnota: 0. Táto váha je aplikovaná pri vzostupe glykémie, ktorá posilňuje ISF. S hodnotou 0 je táto vlastnosť efektívne deaktivovaná. 0.02 je bezpečný východiskový bod, od ktorého sa dá postupne zvyšovať. Typické nastavenia sú okolo 0.15!";
 
 /* */
-"Duration ISF postprandial adaption" = "Duration ISF - postprandiálna adaptácia";
 
 /* */
-"Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Predvolená hodnota: 3. Toto je trvanie v hodinách, počas ktorého bude efekt aktívny po jedle. Oref vymaže časovanie sacharidov najneskôr po 10 hodinách, bez ohľadu na zadanú hodnotu.";
 
 /* */
 "ISF weight for postprandial BG rise" = "Váha ISF pre postprandiálny nárast glykémie";
@@ -3279,10 +2964,8 @@ Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Toto je váha aplikovaná na lineárny náraste glykémie, ktorá prispôsobuje ISF. S hodnotou 0 je táto vlastnosť efektívne deaktivovaná. Začnite s hodnotou 0.01 – zvyčajne nepresahuje 0.05!";
 
 /* */
-"ISF weight for higher BG deltas" = "Váha ISF pre vyššie BG delty";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Predvolená hodnota: 0.0. Toto je váha aplikovaná na polygón, ktorý prispôsobuje ISF pre vyššie delty glykémie. S hodnotou 0.0 je tento efekt deaktivovaný.";
 
 /* */
 "ISF weight for lower BG" = "Váha ISF pre nižšiu glykémiu";
@@ -3306,8 +2989,6 @@ Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 "SMB Delivery Ratio BG Range" = "Pomer dávky SMB v rozsahu glykémie";
 
 /* SMB Delivery Ratio BG Range description */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Predvolená hodnota: 0. Rozumný rozsah je medzi 40 mg/dL (2,0 mmol/L) a 120 mg/dL (7,1 mmol/L). Lineárne rastúci pomer SMB dávkovania je mapovaný na rozsah glykémie [cieľová_glykémia, cieľová_glykémia + rozsah_glykémie].
-Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľovej_glykémii + rozsah_glykémie je rovný smb_delivery_ratio_max. Ak je hodnota nastavená na 0, lineárne dávkovanie SMB je deaktivované a používa sa pevne daný smb_delivery_ratio.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "Maximálny pomer dávky SMB";
@@ -3325,16 +3006,12 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Toggles" = "Prepínače";
 
 /* */
-"Enable postprandial ISF adaption always" = "Vždy povoliť postprandiálnu adaptáciu ISF";
 
 /* */
-"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Nepretržite povoliť postprandiálnu adaptáciu ISF, bez ohľadu na čas posledného jedla.";
 
 /* */
-"Enable DuraISF effect even with COB" = "Povoliť efekt DuraISF aj pri prítomnosti COB";
 
 /* */
-"Enable DuraISF even if COB is present not just for UAM." = "Povoliť DuraISF aj pri prítomnosti COB, nielen pre UAM.";
 
 /* */
 "Enable BG acceleration" = "Povoliť akceleráciu glykémie";
@@ -3423,22 +3100,16 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "Predvolené nastavenie je vypnuté. Ak je povolené, po tom ako \"autosens\" zistí rezistenciu zníži cieľovú glykémiu";
 
 /* Headline ”Advanced Target Adjustments" */
-"Advanced Target Adjustments" = "Pokročilé úpravy cieľa";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Táto funkcia bola predtým predvolene povolená, ale teraz bude v oref0 0.6.0 a novších verziách predvolená hodnota false (nebude automaticky povolená). (Vo verzii 0.6.0 to nie je potrebné). Táto funkcia automaticky znižuje cieľovú hodnotu krvného cukru oref0, keď sú aktuálna hodnota krvného cukru a prípadná hodnota krvného cukru vysoké. Pomáha to predchádzať a zmierňovať vysoký bloodsugar, ale automaticky sa prepína na nízke tempovanie, aby sa zabezpečilo, že bloodsugar bude plynule klesať smerom k vášmu aktuálnemu cieľu. Ak sa vám toto správanie zdá príliš agresívne, môžete túto funkciu vypnúť. Ak tak urobíte, dajte nám o tom vedieť, aby sme mohli lepšie pochopiť, aké nastavenia fungujú pre každého najlepšie.";
 
 /* Headline "Exercise Mode" */
-"Exercise Mode" = "Režim cvičenia";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Predvolené nastavenie je vypnuté. Ak je povolené, > 105 mg/dl vyššia dočasná cieľová hodnota upraví pomer citlivosti pre režim exercise_mode. Synonymum pre high_temptarget_raises_sensitivity";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Široký cieľový rozsah cukru v krvi";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Predvolene nastavenie je vypnuté, čo znamená, že sa ako cieľ OpenAPS používa iba dolná hranica cieľového rozsahu glykémie. Ide o bezpečnostnú funkciu, ktorá zabraňuje príliš širokým cieľom a menej optimálnym výsledkom. Horná hranica cieľového rozsahu sa preto používa iba na zabránenie nadmerným korekciám bolusovým kalkulátorom. Použite wide_bg_target_range: true, aby ste vynútili neutrálne dočasné dávky v širšom rozsahu očakávaných hodnôt glykémie.";
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Preskočiť dočasný neutrálny bazál";
@@ -3537,7 +3208,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Half Basal Exercise Target" = "Polovičný bazál počas cvičenia";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Nastavte číslo, napr. 160, čo znamená, že ak je dočasný cieľ 160 mg/dl a exercise_mode=true, spustite 50 % bazálnej dávky pri tejto úrovni (120 = 75 %; 140 = 60 %). Túto hodnotu môžete upraviť, aby ste mali väčšiu kontrolu nad režimami cvičenia.";
 
 /* Headline "Max COB" */
 "Max COB" = "Max COB";
@@ -3546,10 +3216,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Predvolená hodnota maxCOB je 120. (Ak niekto zadá viac sacharidov v jednom alebo viacerých záznamoch, iAPS obmedzí COB na maxCOB a udrží ho na maxCOB, kým sa nepreukáže, že sacharidy zadané nad maxCOB sa vstrebávajú. V podstate to len obmedzuje UAM ako bezpečnostný limit proti podivným výpočtom COB v dôsledku fluktuačných údajov)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Deliteľ";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Funkcia Bolus snooze sa aktivuje po podaní jedla, takže slučka nebude pôsobiť proti nízkym teplotám, keď ste práve jedli. Príklad tu a predvolená hodnota je 2; takže 3 hodiny DIA znamenajú, že bolus snooze sa postupne ukončí v priebehu 1,5 hodiny (3DIA/2).";
 
 /* Headline "Min 5m Carbimpact" */
 "Min 5m Carbimpact" = "Absorbcia sacharidov za 5min";
@@ -3606,10 +3274,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Čas maximálneho účinku inzulínu na zníženie hladiny glykémie v minútach. Pozor: Oref predpokladá pre ultra-rýchle (Lyumjev) a rýchlo pôsobiace (Fiasp) krivky minimálny (35 a 50 min) a maximálny (100 a 120 min) použiteľný inzulínPeakTimes. Použitie vlastného insulinPeakTime mimo týchto hraníc bude mať za následok problémy s iAPS, dlhšie výpočty slučiek a možné červené slučky.";
 
 /* Headline "Carbs Req Threshold" */
-"Carbs Req Threshold" = "Prahová hodnotu požadovaných sacharidov";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Gramy sacharidovPotrebné na spustenie pushoveru. Predvolená hodnota je 1 (pre 1 gram sacharidov). Môže sa zvýšiť, ak chcete, aby sa Pushover zobrazil len pre carbsReq na hranici X.";
 
 /* Headline "Noisy CGM Target Multiplier" */
 "Noisy CGM Target Multiplier" = "Násobok cieľu pri šumení CGM";
@@ -3626,25 +3292,19 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 // Dynamic ISF + CR Settings:
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Povoliť Dynamic ISF";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Povoliť Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Vypočítajte nové nastavenie citlivosti na inzulín (ISF) pri každom cykle slučky. Nové nastavenie ISF bude založené na vašej aktuálnej glykémii, celkovej dennej dávke inzulínu (TDD, posledných 24 hodín všetkého podaného inzulínu) a vašom individuálnom korekčnom faktore (odporúčanie na začiatok je 0,5, ak používate sigmoidnú funkciu, a 0,8, ak nie).\n\\Všetky dynamické úpravy ISF a CR budú obmedzené vašimi limitmi min/max automatického snímania.";
 
 /* Headline Enable Dynamic CR */
-"Enable Dynamic CR" = "Povoliť Dynamic CR";
 
 /* Enable Dynamic CR */
-"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Používajte dynamický CR. Dynamický pomer sa použije pre CR takto:\n\n Keď pomer > 1: dynCR = (newRatio - 1) / 2 + 1.\nKeď pomer < 1: dynCR = CR/dynCR.\n\nNepoužívajte spolu s vysokou inzulínovou frakciou (> 2)";
 
 /* Enable Dyn ISF */
 "Activate Dynamic Sensitivity (ISF)" = "Aktivácia funkcie Dynamic Sensitivity (ISF)";
@@ -3653,7 +3313,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Activate Dynamic Carb Ratio (CR)" = "Aktivácia funkcie Dynamic Carb Ratio (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuálne nastavenie vypočítaných dynamických pomerov. Predvolená hodnota je 0.5. Čím vyššia je hodnota, tým väčšia bude korekcia vášho ISF/CR pri vysokej alebo nízkej hladiny glykémie. Maximálna a minimálna korekcia je určená nastaveniami Autosens min/max.\n\nPre sigmoidálnu funkciu sa odporúča začať s hodnotou 0.4 – 0.5.\n\nPre logaritmický vzorec neexistuje jednoznačný konsenzus, ale pre väčšinu dospelých používateľov je vhodné začať približne s hodnotou 0.8. Pre mladších používateľov sa odporúča začať ešte nižšie pri použití logaritmického vzorca, aby sa predišlo príliš agresívnej liečbe.";
@@ -3665,7 +3324,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Formula" = "Vzorec";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Bezpečnosť";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Použitie sigmoidnej funkcie pre ISF (a pre CR, ak je povolená) namiesto predvoleného logaritmického vzorca. Vyžaduje, aby bolo v nastaveniach povolené nastavenie Dynamická ISF.\n\nNastavenie Adjustment (Úprava) upravuje sklon krivky (Y: dynamický pomer, X: glykémia). Nižšia hodnota ==> menej strmá == menej agresívna.\n\nNastavenie autosens.min/max určuje limity max/min pre dynamický pomer A tiež to, ako veľmi sa dynamický pomer upravuje. Ak AF je sklon krivky, autosens.min/max je výška grafu, interval Y, kde Y: dynamický pomer. Krivka bude mať vždy sigmoidný tvar bez ohľadu na to, aké nastavenia autosens.min/max sa použijú, čo znamená, že tieto nastavenia majú veľké dôsledky na výsledok vypočítaného dynamického ISF. Buďte opatrní pri nastavení príliš vysokej hodnoty autosens.max. Pri správnom nastavení profilu ISF ju pravdepodobne nikdy nebudete potrebovať vyššiu ako 1.5\n\nLimit autosens.max > 1.5 sa pri použití sigmoidnej funkcie neodporúča.";
@@ -3674,7 +3332,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Threshold Setting" = "Nastavenie prahovej hodnoty";
 
 /* Dynamic ISF Setting Title */
-"Minimum Threshold Setting" = "Nastavenie minimálneho prahu";
 
 /* Minimum Threshold Setting */
 "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "Toto nastavenie vám umožňuje zvoliť limit cieľovej glykémie, pod ktorým sa nikdy nepodá žiadny SMB inzulín ani dodatočný dočasný bazál. Dodatočný dočasný bazál je inzulín presahujúci množstvo inzulínu potrebné pre bazálny metabolizmus.\n\nSkutočný prah glykémie použitý v algoritme OpenAPS bude vždy väčšia hodnota z tohto nastavenia a vypočítanej hodnoty:\n\nCieľová glykémia - (Cieľová glykémia - 40) / 2.";
@@ -3704,7 +3361,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Calculator settings" = "Nastavenia výpočtu";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Použite alternatívnu kalkulačku Bolus";
 
 /* Bolus Calculator Setting */
 "Use Bolus Calculator" = "Použiť bolusovú kalkulačku";
@@ -3725,7 +3381,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Apply factor for fatty meals" = "Použiť tukoproteínový faktor";
 
 /* Bolus Calculator Footer */
-"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Nová alternatívna bolusová kalkulačka je ďalším prístupom k predvolenej bolusovej kalkulačke v systéme iAPS. Ak je prepínač zapnutý, používate túto kalkulačku bolusu a nie pôvodnú kalkulačku iAPS. Na konci výpočtu sa použije vlastný faktor, ako to má byť pri používaní smbs (predvolene 0,8).\n\nV kalkulačke bolusu môžete tiež pridať možnosť použiť na konci výpočtu ďalší (!) prispôsobiteľný faktor, ktorý by mohol byť užitočný pre tučné jedlá, napr. pizzu (predvolene 0,7).";
 
 /* Bolus Calculator Setting */
 "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Použiť predikciu konečnej hodnoty glykémie z OpenAPS na výpočet odporúčaného množstva inzulínu. Toto nastavenie umožní použitie \"starej\" kalkulačky. Predvolene zapnuté.\n\n2. Použiť predikciu minPredBG z OpenAPS ako doplnkovú bezpečnostnú ochranu, ktorá neumožní, aby predikovaná hladina glykémie klesla pod Váš nastavený prah. Toto nastavenie je možné použiť spolu s predikciou výslednej hodnoty glykémie alebo samostatne. Predvolene zapnuté";
@@ -3770,7 +3425,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Override HbA1c Unit" = "Prepísať jednotky HbA1c";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "V prípade, že používate profily aj dočasný cieľ";
 
 /* UI/UX option */
 "Always Color Glucose Value (green, yellow etc)" = "Vždy zafarbiť hodnoty glykémie (zelená, žltá atď.)";
@@ -3778,19 +3432,16 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* UI/UX option */
 "Header settings" = "Nastavenia záhlavia";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normálne sa glykémia sfarbí na červeno len vtedy, keď je nad alebo pod vašimi limitmi pre vysoké/nízke hodnoty";
 
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Vodorovné posúvanie - viditeľné hodiny";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Tlačidlo nastavenia časového intervalu zobrazenia";
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Nikdy nezobrazovať malý graf glykémie pri posúvaní";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Zakázať liečbu hypoglykémie";
 
 /* UI/UX option */
 "Display Glucose Delta" = "Zobraziť zmenu glykémie";
@@ -3820,10 +3471,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Display carb equivalent amount" = "Zobraziť ekvivalentné množstvo sacharidov";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Zobraziť tlačidlo s výsledným pomerom a históriou";
 
 /* UI/UX option */
-"Home View Ratio Button" = "Tlačidlo pomeru na domovskej obrazovke";
 
 /* UI/UX option */
 "Light" = "Tenké";
@@ -3880,7 +3529,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";
 
 /* Notification option */
-"Show Live activity" = "Zobraziť živú aktivitu";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";
@@ -3895,10 +3543,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Musí byť > 0 a <= 1.\nPredvolená hodnota je 0,65 (65 %) * TDD. Zvyšok bude z priemeru celkových údajov (do 14 dní) všetkých výpočtov TDD (35 %). Ak chcete použiť len posledných 24 hodín, nastavte túto hodnotu na 1.\n\nAby sa predišlo náhlym výkyvom, napríklad po veľkom jedle, použije sa priemer posledných 2 hodín výpočtov TDD namiesto len aktuálneho TDD (posledných 24 hodín v tomto okamihu).";
 
 /* Headline "Adjust basal" */
-"Adjust basal" = "Úprava bazálnej";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Umožniť úpravu základnej dávky na základe pomeru aktuálnej TDD / 7-dňovej priemernej TDD";
 
 /* Headline "Max Delta-BG Threshold SMB" */
 "Max Delta-BG Threshold SMB" = "Maximálna prahová hodnota Delta-BG SMB";
@@ -3919,10 +3565,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Povoliť SMB, keď je zistená vysoká glykémia, na základe cieľovej hodnoty pre vysokú BG (upravená alebo profilová)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamické nastavenia";
 
 /* Insulin curve */
-"Insulin curve" = "Inzulínová krivka";
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Faktor úpravy";
@@ -3940,23 +3584,19 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Active CGM" = "Aktívne CGM";
 
 /* pump name label, when pump is a cgm "Pump/CGM" */
-"Pump/CGM" = "Pumpa/CGM";
 
 /* Button "Stop using the pump as CGM" */
 "Stop using the pump as CGM" = "Prestať používať pumpu ako CGM";
 
 /* Section header in CGM view */
-"Shared App Group Source" = "Zdroj zdieľanej skupiny aplikácie";
 
 /* prefix for the shared app group application */
-"Reading from" = "Čítanie z";
 
 /* button to disconnect from the shared app group "Disconnect" */
 "Disconnect" = "Odpojiť";
 
 
 /* description for Shared App Group Source section */
-"Read BG from an external CGM app using a shared app group." = "Čítať glykémiu z externej CGM aplikácie pomocou zdieľanej skupiny aplikácie.";
 
 
 /* prefix before the app name on the button to start reading from shared app group */
@@ -4041,7 +3681,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Results for" = "Výsledky pre";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Celé jedlo";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
 "Max Basal Exceeded" = "Max Basal Exceeded";

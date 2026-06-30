@@ -4,10 +4,8 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Insuline toevoegen zonder daadwerkelijke bolus";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Voeg %@ toe zonder bolus";
 
 "Bolus" = "Bolus";
 
@@ -44,10 +42,8 @@
 "Insulin recommended" = "Aanbevolen insuline";
 
 /*  */
-"Insulin required" = "Benodigde insuline";
 
 /* Bolus screen */
-"Recommendation" = "Aanbeveling";
 
 /* Button */
 "Clear" = "Wis";
@@ -56,7 +52,6 @@
 "Done" = "OK";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Laatste update is %@ minuten geleden. Voltooi of annuleer deze maaltijd/bolus opdracht om de volgende loopupdate te laten draaien";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Emoji’s als labels weergeven";
@@ -74,7 +69,6 @@
 "Wait please" = "Wachten";
 
 /*  */
-"Agree and continue" = "Akkoord en doorgaan";
 
 /* */
 "Log external insulin" = "Externe insuline registreren";
@@ -107,13 +101,11 @@
 "Meal Summary" = "Maaltijd overzicht";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Wijzig maaltijd";
 
 /* Bolus View Meal Add Meal Button */
 "Add Meal" = "Maaltijd toevoegen";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolus overzicht";
 
 /* For the  Bolus View pop-up */
 "Calculations" = "Berekeningen";
@@ -125,22 +117,17 @@
 "Hypo Treatment" = "Hypobehandeling";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Volledige bolus";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fractie";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Vette maaltijd factor";
 
 /* Footer */
 "Carbs and previous insulin are included in the eventual glucose prediction." = "Koolhydraten en vorige insuline zijn opgenomen in de uiteindelijke glucosevoorspelling.";
 
 /* For the  Bolus View pop-up */
-"Result" = "Resultaat";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Je ingevoerde hoeveelheid is beperkt door je maximale bolusinstelling van %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Vervolg";
@@ -152,16 +139,13 @@
 "looping" = "Updaten";
 
 /* min ago since last loop */
-"min ago" = "Min. terug";
 
 /* Status Title */
 "No suggestion" = "Geen suggestie";
 
 /* Replace pod text in Header */
-"Replace pod" = "Vervang pod";
 
 /* Add carbs screen */
-"Add Carbs" = "Koolhydraten toevoegen";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Koolhydraten toevoegen ";
@@ -176,7 +160,6 @@
 "Open" = "Open";
 
 /*  */
-"Amount Carbs" = "Hoeveelheid koolhydraten";
 
 /* Grams unit */
 "grams" = "gram";
@@ -191,13 +174,11 @@
 "Are you sure?" = "Weet je het zeker?";
 
 /* */
-"Clear Records" = "Records wissen";
 
 /* */
 "Delete CoreData database records" = "Verwijder CoreData database records";
 
 /* */
-"Delete NS records" = "NS records verwijderen";
 
 /* */
 "All records in " = "Alle gegevens in ";
@@ -206,7 +187,6 @@
 " will be deleted!" = " wordt verwijderd!";
 
 /* Bottom target temp */
-"Bottom target" = "Ondergrens doel";
 
 /* Cancel preset name */
 "Cancel" = "Annuleer";
@@ -239,16 +219,13 @@
 "Target" = "Doelbereik";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Verhouding basale insuline en gevoeligheid";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefwaarde bloedglucose.";
 
 /* */
 " Your setting: " = "Jouw instelling: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max beperkt het maximum eindpunt";
 
 /*  */
 "Enter preset name" = "Voer naam voorinstelling in";
@@ -269,10 +246,8 @@
 "Save as Preset" = "Bewaar als voorinstelling";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Verwijder voorinstelling";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Verwijder voorinstelling '%@'?";
 
 /* Button */
 "No" = "Nee";
@@ -281,13 +256,10 @@
 "Yes" = "Ja";
 
 /* + Button */
-"[ +1 ]" = "[ +1 ]";
 
 /* - Button */
-"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Bovengrens doel";
 
 /*  Temp target set for ... minutes */
 "for" = "voor";
@@ -371,7 +343,6 @@
 "Dismiss" = "Negeren";
 
 /*  */
-"Important message" = "Belangrijk bericht";
 
 /*  */
 "Amount" = "Hoeveelheid";
@@ -390,7 +361,6 @@ Enact a temp Basal or a temp target */
 "Manual Temp Basal" = "Handmatige tijdelijke basaal";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Uploaden toestaan";
 
 /* API secret in NS */
 "API secret" = "API code";
@@ -408,22 +378,18 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "Ongeldige URL";
 
 /*  */
-"Local glucose source" = "Lokale glucosebron";
 
 /* Header */
 "Nightscout Config" = "Nightscout instellingen";
 
 /*  */
-"Port" = "Poort";
 
 /*  */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Lokale glucose server gebruiken";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Dit maakt het uploaden van statistics.json naar Nightscout mogelijk, wat gebruikt kan worden door het Community Statistics and Demographics Project.\n\nDeelname aan Community Statistics is opt-in en vereist aparte registratie op:\n";
 
 /*  */
 "Edit settings json" = "Bewerk instellingen json";
@@ -435,7 +401,6 @@ Enact a temp Basal or a temp target */
 "Preferences" = "Voorkeuren";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Aanbevolen insuline fractie";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Sla bolusscherm over na koolhydraten";
@@ -453,7 +418,6 @@ Enact a temp Basal or a temp target */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Dit zal enkele of al je huidige pomp instellingen vervangen. Weet je zeker dat je de profielinstellingen uit Nightscout wilt importeren?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nOngeldige Nightscout basaal instellingen. \n\nImport afgebroken. Check je Nightscout Profiel basaal instellingen!";
 
 /* Import Error */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\ninstellingen zijn geïmporteerd maar de basaalstanden konden niet worden opgeslagen in de pomp (geen pomp). Controleer je basaalstanden en tik op' Opslaan op pomp' om de nieuwe basaalstanden te synchroniseren";
@@ -480,22 +444,16 @@ Enact a temp Basal or a temp target */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatch van glucoseeenheden in Nightscout en pomp instellingen. Importeer instellingen is afgebroken.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Kan Nightscout profiel niet vinden.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Bloedglucose test";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Medtronic toevoegen";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Omnipod Eros toevoegen";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Voeg Dana-i/RS toe";
 
 /* Add Simulator pump */
-"Add Simulator" = "Simulator toevoegen";
 
 /* View/Header when pod expired */
 "Replace" = "Vervang";
@@ -592,7 +550,6 @@ Enact a temp Basal or a temp target */
 " U/hr" = " E/uur";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ E/uur";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ E";
@@ -607,7 +564,6 @@ Enact a temp Basal or a temp target */
 "g" = "gr";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 E/uur";
 
 /* abbreviation for days */
 "d" = "d";
@@ -682,16 +638,13 @@ Enact a temp Basal or a temp target */
 "Settings" = "Instellingen";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Aanbevolen boluspercentage";
 
 /* 2 log files to share */
 "Share logs" = "Deel logbestanden";
 
 /* Upper target */
-"High target" = "Bovengrens doel";
 
 /* Lower target */
-"Low target" = "Ondergrens doel";
 
 /* When bolusing */
 "Bolusing" = "Bolussen";
@@ -763,13 +716,11 @@ Enact a temp Basal or a temp target */
 " min" = "min";
 
 /* */
-"Unable to change anything" = "Kan de status niet wijzigen";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configureer Libre zender";
 
 /* */
 "Calibrations" = "Kalibraties";
@@ -781,7 +732,6 @@ Enact a temp Basal or a temp target */
 "Calendar" = "Agenda";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatisch";
 
 /* External insulin treatments */
 "External" = "Extern";
@@ -799,7 +749,6 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth zenders";
 
 /* */
-"Modes" = "Modussen";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
@@ -808,7 +757,6 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Selecteer de zender van de derde partij waarmee u wilt verbinden";
 
 /* State was restored */
-"State was restored" = "Staat is teruggezet";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/l";
@@ -844,41 +792,32 @@ Enact a temp Basal or a temp target */
 "Remove All" = "Alles verwijderen";
 
 /* */
-"About the Process" = "Over de werkwijze";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Andere apps die via bluetooth met de sensor verbinden, moeten uitgeschakeld of verwijderd worden.\n
 Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor communiceert. Druk op \"Koppelen en verbinden\" om te starten. Het kan een paar minuten duren voordat de bluetooth-verbinding werkt.";
 
 /* */
-"Pairinginfo" = "Koppeling informatie";
 
 /* */
-"PatchInfo" = "Patch info";
 
 /* */
-"Calibrationinfo" = "Kalibratie info";
 
 /* */
 "Unknown" = "Onbekend";
 
 /* */
-"Not paired yet" = "Nog niet gekoppeld";
 
 /* */
-"Pair Sensor & connect" = "Sensor koppelen en verbinden";
 
 /* */
-"Phone NFC required!" = "iPhone NFC vereist!";
 
 /* */
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Je iPhone of iAPS is niet ingeschakeld voor NFC communicatie, wat nodig is om te koppelen met Libre2 sensoren";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth uitschakelen";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Activeer Bluetooth a.u.b.";
 
 /* No Libre Transmitter Selected */
 "No Libre Transmitter Selected" = "Geen Libre zender geselecteerd";
@@ -905,7 +844,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "(Snoozed)" = "(Gesluimerd)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucosewaarde: %@";
 
 /* Transmitter: %@%% */
 "Transmitter: %@%%" = "Zender: %@%%";
@@ -935,7 +873,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Detected sensor seems not to be a libre 1 sensor!" = "Gevonden sensor lijkt geen Libre 1 sensor te zijn!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Gevonden sensor is ongeldig: %@";
 
 /* Low Battery */
 "Low battery" = "Batterij bijna leeg";
@@ -950,7 +887,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Sensor expires soon" = "Sensor verloopt binnenkort";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batterijniveau is laag %@, laad je %@ apparaat zo snel mogelijk op";
 
 /* Extracting calibrationdata from sensor */
 "Extracting calibrationdata from sensor" = "Kalibratiegegevens uit de sensor halen";
@@ -959,10 +895,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Sensor Ending Soon" = "Sensor verloopt binnenkort";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Huidige sensor verloopt in %@";
 
 /* */
-"Libre Bluetooth" = "Libre bluetooth";
 
 /* */
 "Snooze Alerts" = "Alarmen tijdelijk uitschakelen";
@@ -980,19 +914,15 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "CurrentBG" = "Huidige BG";
 
 /* */
-"Sensor Info" = "Sensor info";
 
 /* */
 "Sensor Life-Span" = "Sensor levensduur";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Bij gebruik van %@ weet iAPS niet welk type sensor wordt gebruikt of hoe lang de sensor meegaat.";
 
 /* */
-"Sensor Age Left" = "Sensor nog te gebruiken";
 
 /* */
-"Sensor Endtime" = "Sensor verloopt";
 
 /* */
 "Sensor State" = "Sensor status";
@@ -1001,7 +931,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Sensor Serial" = "Sensor serienummer";
 
 /* */
-"Transmitter Info" = "Zender informatie";
 
 /* */
 "Hardware" = "Hardware";
@@ -1019,10 +948,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Sensor Type" = "Type sensor";
 
 /* */
-"Factory Calibration Parameters" = "Fabriekskalibratie voor parameters";
 
 /* */
-"Valid for footer" = "Geldig voor voettekst";
 
 /* */
 "Edit calibrations" = "Kalibraties bewerken";
@@ -1034,13 +961,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Delete CGM" = "Verwijder CGM";
 
 /* */
-"Are you sure you want to remove this cgm from iAPS?" = "Weet je zeker dat je deze CGM uit de lijst wilt verwijderen?";
 
 /* */
-"There is no undo" = "Ongedaan maken is niet mogelijk";
 
 /* */
-"Advanced" = "Geavanceerd";
 
 /* */
 "Alarms" = "Alarmen";
@@ -1052,22 +976,17 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Notifications" = "Meldingen";
 
 /* */
-"Export logs" = "Logboek exporteren";
 
 /* */
-"Export not available" = "Exporteren niet beschikbaar";
 
 /* */
-"Log export requires ios 15" = "Log export vereist iOS 15 of hoger";
 
 /* */
 "Got it!" = "Begrepen!";
 
 /* */
-"Saved to %@" = "Opgeslagen in %@";
 
 /* */
-"No logs available" = "Geen logboeken beschikbaar";
 
 /* */
 "Glucose Notification visibility" = "Zichtbaarheid glucose melding";
@@ -1082,13 +1001,11 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Value" = "Waarde";
 
 /* */
-"Adds Phone Battery" = "Batterij iPhone toevoegen";
 
 /* */
 "Adds Transmitter Battery" = "Zender batterij toevoegen";
 
 /* */
-"Also vibrate" = "Ook trillen";
 
 /* */
 "Additional notification types" = "Andere meldingsinstellingen";
@@ -1118,7 +1035,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Enter a Bolus Amount" = "Voer een bolus hoeveelheid in";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Je huidige glucose is %@. Weet je zeker dat je een %@ E insuline wilt bolussen?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Een bolus commando van ";
@@ -1148,7 +1064,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Max allowed bolus amount using shortcuts " = "Max toegestane bolus hoeveelheid met snelkoppelingen ";
 
 /* Bolus shortcut. Error */
-"not available" = "niet beschikbaar";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Activeer een overschrijvingsvoorinstelling";
@@ -1160,7 +1075,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Which override preset would you like to activate?" = "Welke vooraf ingestelde overschrijving wil je activeren?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Weet je zeker dat je een overschrijvingsvoorinstelling %@ wilt activeren?";
 
 /* Override Shortcut */
 "The Profile Override" = "De profieloverschrijving";
@@ -1175,13 +1089,11 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Override canceled" = "Overschrijven geannuleerd";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activeer een %@ overschrijvingsvoorinstelling";
 
 /* Suspend/Resume Shortcut */
 "Choose what to do with your pump" = "Kies wat je moet doen met je pomp";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Weet u zeker dat je pomp wilt %@?";
 
 /* Suspend/Resume Shortcut */
 "Pump command" = "Pomp opdracht";
@@ -1242,7 +1154,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "snooze from testview clicked" = "sluimeren geklikt in de testweergave";
 
 /* */
-"will snooze for %@ until %@" = "zal sluimeren voor %@ tot %@";
 
 /* */
 "Click to Snooze Alerts" = "Klik om waarschuwingen tijdelijk uit te schakelen";
@@ -1263,19 +1174,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Notification Settings" = "Instellingen voor meldingen";
 
 /* */
-"Found devices: %d" = "Gevonden apparaten: %d";
 
 /* */
 "Backfill options" = "Terugzet opties";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Achteraf aanvullen op basis van trendgegevens wordt momenteel niet goed ondersteund door iAPS";
 
 /* */
 "Backfill from history" = "Terugzetten van geschiedenis";
 
 /* */
-"Backfill from trend" = "Terugzetten van trend";
 
 /* */
 "Debug options" = "Foutopsporing opties";
@@ -1365,7 +1273,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Backfill glucose" = "Terugzetten glucose";
 
 /* About this source */
-"About this source" = "Over deze bron";
 
 /* */
 "Bolus failed" = "Bolus is mislukt";
@@ -1388,7 +1295,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Meals" = "Maaltijden";
 
-"Today's Meals" = "Maaltijden van vandaag";
 
 "Micronutrient" = "Micronutriënten";
 
@@ -1442,7 +1348,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "This portion" = "Deze portie";
 
-"Serving Size" = "Portiegrootte";
 
 "Standard Serving" = "Standaard portie";
 
@@ -1510,25 +1415,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI voedingsschattingen zijn slechts schattingen. Raadpleeg altijd je zorgverlener voor medische beslissingen. Controleer waar mogelijk voedingsinformatie. Gebruik op eigen risico.";
 
-"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI afbeeldingsanalyse:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Barcode scannen:**";
 
-"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Tekst/Spraak zoeken:**";
 
-"Search Type Recommendations" = "Zoeken type aanbevelingen";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis officiële voedingsdatabase. Superieure voedingsgegevens voor niet-verpakte voedingsmiddelen zoals fruit, groenten en vlees.";
 
-"**Text/Voice Search:**" = "**Tekst/Spraak zoeken:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
 
 "AI Progress Animation" = "AI Voortgangsanimatie";
 
@@ -1584,7 +1480,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Get an API key at platform.openai.com." = "Ontvang een API-sleutel op platform.openai.com.";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) configuratie";
 
 "Enter your Google Gemini API key" = "Voer uw Google Gemini API-sleutel in";
 
@@ -1592,7 +1487,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Get a free API key at ai.google.dev." = "Ontvang een API-sleutel op ai.google.dev.";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) configuratie";
 
 "Get a free API key at ai.google.dev." = "Ontvang een API-sleutel op ai.google.dev.";
 
@@ -1602,7 +1496,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Get an API key at console.anthropic.com." = "Ontvang een API-sleutel op console.anthropic.com.";
 
-"Anthropic (Claude API) Configuration" = "Anthropische (Claude API) configuratie";
 
 "USDA Food Database" = "USDA voedseldatabase";
 
@@ -1658,7 +1551,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Food Name" = "Naam maaltijd";
 
-"Serving Size" = "Portiegrootte";
 
 "This portion" = "Deze portie";
 
@@ -1705,7 +1597,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "fat" = "vet";
 
 /* Display more macro nutrients */
-"More" = "Meer";
 
 /* Additional nutrient */
 "more nutrient" = "meer nutriënten";
@@ -1713,67 +1604,46 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Additional nutrients */
 "more nutrients" = "meer nutriënten";
 
-"📝 Notes" = "📝 Opmerking";
 
 /* */
-"💉 Diabetes recommendations" = "💉 Aanbevelingen voor diabetes";
 
 /* */
-"🍽️ Separate Foods" = "🍽️ Gescheiden maaltijd";
 
 /* */
-"Add all" = "Alles toevoegen";
 
 /* */
-"🧠 AI Food analysis" = "🧠 AI Voedsel analyse";
 
 /* */
-"📊 Total nutritional values of the meal" = "📊 Totale voedingswaarde van de maaltijd";
 
 /* */
-"Confidence level:" = "Zekerheidsniveau:";
 
 /* */
-"Notes: %@" = "Notities: %@";
 
 /* */
-"Visual Cues: %@" = "Visuele aanwijzing: %@";
 
 /* */
-"Preparation: %@" = "Voorbereiding: %@";
 
 /* */
 "Preparation" = "Voorbereiding";
 
 /* */
-"Multiplicator" = "Vermenigvuldiger";
 
 /* */
-"Accept quantity" = "Hoeveelheid accepteren";
 
 /* */
-"Enter desired quantity" = "Geef gewenste hoeveelheid op";
 
 /* */
 "AI Food Search" = "AI voedsel zoeken";
 
 /* Title */
-"Food Search" = "Voedsel zoeken";
 
 /* Food Search input */
-"Food Search..." = "Voedsel zoeken...";
 
 /* */
-"Search Food Database" = "Voedseldatabase doorzoeken";
 
-"Models Used:" = "Gebruikte modellen:";
 
-"Current Mode: %@" = "Huidige modus: %@";
 
-"Analysis Mode" = "Analysemodus";
 
-"This AI provider requires an API key. Please enter your API key in the settings below." = "Deze AI-aanbieder vereist een API-sleutel. Voer uw API-sleutel in in de instellingen hieronder.";
-"API Key Required" = "API-sleutel vereist";
 
 "Food Search Settings" = "Voedsel zoekinstellingen";
 
@@ -1781,38 +1651,21 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Medical Disclaimer" = "Medische disclaimer";
 
-"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI afbeeldingsanalyse:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Barcode scannen:**";
 
-"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Tekst/Spraak zoeken:**";
-"Search Type Recommendations" = "Zoeken type aanbevelingen";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Gratis officiële voedingsdatabase. Superieure voedingsgegevens voor niet-verpakte voedingsmiddelen zoals fruit, groenten en vlees.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Open de database met uitgebreide barcode dekking en tekst zoeken naar verpakte voedingsmiddelen. Standaard voor het zoeken naar tekst en streepjescode.";
-"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ Als u 'OpenFoodFacts' of 'USDA' selecteert, zal de camera analyse gebruik maken van basisschattingen in plaats van AI";
 
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Selecteer 'Anthropic (Claude API)', 'Google (Gemini API)', of 'OpenAI (ChatGPT API)' voor AI Image Analyse om je betaalde sleutels te gebruiken";
 
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "Wanneer je een voedselfoto neemt, gebruikt de app de geselecteerde provider in 'AI Image Analysis' hierboven.";
-"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Verdeel deze maaltijd in individuele onderdelen met volledige macronutriënte profielen (koolhydraten, eiwit, vetten, calorieën) per artikel en gecombineerde totaal.";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identificeer alle levensmiddelen in dit beeld met de focus op het koolhydratengehalte voor diabetesbeheer. Geef gedetailleerde koolhydraten op voor elk onderdeel en voor alle koolhydraten.";
 
-"Diabetes Focus" = "Diabetes focus";
 
-"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Geef een uiterst gedetailleerde visuele analyse van dit voedselbeeld. Beschrijf elk element dat je kunt zien: voedselkleuren, texturen, kookmethodes (gegrilde markers, browsen, stoom), bordtype en grootte, utensieven tegenwoordig, knoeien, saussen, zichtbare, kookoliën, voedselregeling, en achtergrond elementen. Gebruik deze visuele gegevens om precieze portiegrootten te schatten en nauwkeurige voedingswaarden voor diabetesbeheer te berekenen.";
 
-"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyseer dit voedselplaatje voor diabetesbeheer. Beschrijf precies wat je ziet in detail: kleuren, texturen, kookmethoden, meeltype, utensils en voedselregeling. Identificeer elk levensmiddel met specifieke voorbereidingsgegevens, schatting exacte portiegrootten met visuele verwijzingen, en geef koolhydraten, eiwit, vet en calorieën voor elk onderdeel. Focus op nauwkeurige inschatting van koolhydraten bij insuline dosing.";
 
-"AI Prompt for Enhanced Results" = "AI Prompt naar verbeterde resultaten";
 
 "Enter your OpenAI API key" = "Voer je OpenAI API-sleutel in";
 
@@ -1820,13 +1673,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Get an API key at platform.openai.com." = "Ontvang een API-sleutel op platform.openai.com.";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) configuratie";
 
-"Macro Tracking" = "Macronutriënten bijhouden";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identificeer alle levensmiddelen in dit beeld met de focus op het koolhydratengehalte voor diabetesbeheer. Geef gedetailleerde koolhydraten op voor elk onderdeel en voor alle koolhydraten.";
 
-"Detailed Visual Analysis" = "Gedetailleerde visuele analyse";
 
 "Enter your Google Gemini API key" = "Voer uw Google Gemini API-sleutel in";
 
@@ -1834,201 +1683,110 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Get a free API key at ai.google.dev." = "Ontvang een API-sleutel op ai.google.dev.";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) configuratie";
 
-"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Je AI provider quotum is overschreden. Controleer je gebruiksbeperkingen of probeer een andere provider.";
 
-"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "De credits voor je AI-provider zijn op. Controleer de facturering van je account of probeer een andere provider.";
 
-"Reset to Default" = "Standaardwaarden terugzetten";
 
 "Take Photo" = "Maak een foto";
 
-"Retake Photo" = "Foto opnieuw maken";
 
-"Retry Analysis" = "Analyse opnieuw proberen";
 
-"Try Different Provider" = "Probeer een andere provider";
 
-"Check Account" = "Controleer account";
 
-"Analysis Error" = "Analysefout";
 
-"AI Food Analysis" = "AI voedsel analyse";
 
-"Use Cancel to retake photo" = "Gebruik 'Annuleren' om foto opnieuw te nemen";
 
-"Analyzing food with AI..." = "Voedsel analyseren met AI...";
 
 "Choose from Library" = "Kies uit bibliotheek";
 
-"Take a Photo" = "Neem een foto";
 
-"Keep the camera level to reduce distortion and keep portions proportional." = "Houd het cameraleniveau om vervorming te verminderen en porties proportioneel te houden.";
 
-"Shoot from slightly above" = "Maak de foto van iets boven";
 
-"Forks, cups, or hands help AI calculate realistic portions." = "Vorken, kopjes of handen helpen AI realistische gedeeltes te berekenen.";
 
-"Add a size reference" = "Voeg een maatreferentie toe";
 
-"Make sure every food item is in the frame." = "Zorg ervoor dat al het voedsel zich binnen het kader bevindt.";
 
-"Frame the full meal" = "Kader de volledige maaltijd";
 
-"Remove napkins, lids, or packaging that may be misidentified as food." = "Verwijder servetten, deksels of verpakkingen die per ongeluk als voedsel kunnen worden aangezien.";
 
-"Clear the area" = "Het gebied leegmaken";
 
-"Harsh shadows confuse the AI and dim light can hide textures." = "Harde schaduwen verwarren de AI en zwak licht kan structuren verbergen.";
 
-"Use bright, even light" = "Gebruik helder en evenwichtig licht";
 
-"Better photos = better estimates" = "Betere foto's = betere schattingen";
 
-"Scan failed" = "Scannen mislukt";
 
-"Looking up product..." = "Product zoeken...";
 
-"Code detected!" = "Code gedetecteerd!";
 
-"Position camera over barcode or QR code" = "Positioneer de camera over de streepjescode of QR-code";
 
-"Validating format..." = "Formaat valideren...";
 
-"Scanning for barcode or QR code..." = "Zoeken naar barcode of QR-code...";
 
-"Initializing camera..." = "Camera initialiseren...";
 
-"Scan failed" = "Scannen mislukt";
 
-"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS heeft toegang tot de camera nodig om barcodes te scannen. Schakel toegang tot de camera in via Instellingen.";
 
 "Camera Access Required" = "Cameratoegang vereist";
 
-"Check Permissions" = "Machtigingen controleren";
 
-"Supports traditional barcodes and QR codes" = "Ondersteunt traditionele barcodes en QR-codes";
 
-"Hold steady for best results" = "Stabiel blijven voor beste resultaten";
 
 "Retry" = "Opnieuw proberen";
 
-"Scan Barcode" = "Barcode scannen";
 
-"📦 Database Results" = "📦 Database resultaten";
 
-"🤖 AI Search Results" = "🤖 AI zoekresultaten";
 
-"• Use the barcode scanner for packaged foods" = "• Gebruik de barcodescanner voor verpakt voedsel";
 
-"• Check spelling carefully" = "• Controleer spelling zorgvuldig";
 
-"• Use simple, common food names" = "• Gebruik eenvoudige en gangbare voedingsnamen";
 
 "• Try brand names (e.g., \"Cheerios\")" = "• Probeer merknamen (bijv. \"Heinz\" of \"Chiquita 🍌)";
 
-"💡 Search Tips:" = "💡 Zoek tips:";
 
 "Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Probeer eenvoudigere termen zoals \"brood\" of \"appel\", of scan een barcode";
 
-"Check your spelling and try again" = "Controleer je spelling en probeer het opnieuw";
 
-"No Foods Found" = "Geen voedingsmiddelen gevonden";
 
-"Search Error" = "Zoekopdracht fout";
 
-"Finding the best matches for you" = "De beste matches voor jou aan het zoeken";
 
-"Searching foods" = "Voedingsmiddelen zoeken";
 
-"AI Analysis" = "AI-analyse";
 
-"Analysis Status" = "Status analyse";
 
-"❌ Analysis failed" = "❌ Analyse mislukt";
 
-"⚠️ Connection interrupted..." = "⚠️ Verbinding verbroken...";
 
-"✅ Analysis complete!" = "✅ Analyse voltooid!";
 
-"🍽️ Generating nutrition summary..." = "🍽️ Voedingssamenvatting genereren...";
 
-"📊 Processing analysis results..." = "📊 Verwerken van analyse resultaten...";
 
-"🤖 Running AI vision analysis..." = "🤖 Bezig met AI zichtanalyse...";
 
-"⚖️ Comparing to USDA standards..." = "⚖️ Vergelijken naar USDA normen...";
 
-"📏 Calculating serving sizes..." = "📏 Berekenen portiegroottes...";
 
-"🔬 Identifying food portions..." = "🔬 Voedselporties identificeren...";
 
-"📊 Analyzing nutritional content..." = "📊 Analyseren van voedingswaarde...";
 
-"📡 Uploading image for analysis..." = "📡 Afbeelding uploaden voor analyse...";
 
-"🧠 Connecting to AI provider..." = "🧠 Verbinding maken met AI provider...";
 
-"💼 Optimizing image quality..." = "💼 Afbeeldingskwaliteit optimaliseren...";
 
-"📱 Processing image data..." = "📱 Afbeeldingsgegevens verwerken...";
 
-"🔍 Initializing AI food analysis..." = "🔍 Initialiseren AI voedsel analyse...";
 
-"⚡ Processing AI analysis results..." = "⚡ Verwerken AI analyse resultaten...";
 
-"📥 Received response from Claude..." = "📥 Reactie ontvangen van Claude...";
 
-"⏳ AI is cooking up results..." = "⏳ AI bereidt resultaten voor...";
 
-"🌐 Sending request to Claude..." = "🌐 Verzoek verzenden naar Claude...";
 
-"📡 Preparing API request..." = "📡 Voorbereiden van API-aanvraag...";
 
-"🔄 Encoding image data..." = "🔄 Afbeeldingsgegevens verwerken...";
 
-"🖼️ Optimizing your image..." = "🖼️ Je afbeelding wordt geoptimaliseerd...";
 
-"⚙️ Configuring Claude parameters..." = "⚙️ Claude parameters configureren...";
 
 "⚙️ Processing analysis results..." = "⚙️ Verwerken van analyse resultaten...";
 
-"📊 Calculating nutrition estimates..." = "📊 Berekenen van voedingswaarde voorspelling...";
 
-"🍽️ Identifying food characteristics..." = "🍽️ Kenmerken van voedsel identificeren...";
 
-"📱 Analyzing image properties..." = "📱 Afbeeldingen analyseren...";
 
-"📊 Initializing basic analysis..." = "📊 Basisanalyse initialiseren...";
 
-"🤖 Connecting to Google Gemini..." = "🤖 Verbinding maken met Google Gemini...";
 
-"📥 Received response from Gemini..." = "📥 Reactie ontvangen van Gemini...";
 
-"🌐 Sending request to Google Gemini..." = "🌐 Verzoek verzenden naar Google Gemini...";
 
-"🔄 Encoding image data..." = "🔄 Afbeeldingsgegevens verwerken...";
 
-"⚙️ Configuring Gemini parameters..." = "⚙️ Gemini-parameters configureren...";
 
-"📥 Received response from OpenAI..." = "📥 Reactie ontvangen van OpenAI...";
 
-"💾 Caching analysis result..." = "💾 Verwerken van analyse resultaten...";
 
-"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Maak een diepteanalyse (kan even duren)...";
 
-"🎯 Selecting optimal AI provider..." = "🎯 Selecteer optimale AI provider...";
 
-"⚡ Starting parallel provider analysis..." = "⚡ Beginnen met parallelle provider analyse...";
 
-"Amount:" = "Hoeveelheid:";
 
-"Take Over" = "Overnemen";
 
-"kcal" = "kCal";
 
-"Cal" = "Cal";
 
 "servings" = "Porties";
 
@@ -2061,13 +1819,11 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Suspend" = "Onderbreek";
 
 /* */
-"Animated Background" = "Bewegende achtergrond";
 
 /* Sensor day(s) */
 " day(s)" = " dag(en)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Toon hartritme op horloge";
 
 
 /* Headers for settings ----------------------- */
@@ -2083,7 +1839,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Glucose Simulator" = "Glucose simulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Herstelde Bluetooth-status (iAPS opnieuw opgestart?). %d randapparatuur gevonden en verbonden met %@ met de identificatie %@";
 
 /* Shared app group xDrip4iOS */
 "Using shared app group with external CGM app xDrip4iOS" = "Gedeelde app-groep wordt gebruikt met externe CGM app xDrip4iOS";
@@ -2130,7 +1885,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Delete All NS Overrides" = "Verwijder alle NS overschrijvingen";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS geüpload profiel";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
@@ -2187,10 +1941,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Target presets" = "Doelvoorinstellingen";
 
 /* Debug option view */
-"Loop Cycles" = "Loop cyclussen";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Glucose data gebruikt voor statistieken";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -2266,10 +2018,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Fat and Protein" = "Vetten & eiwitten";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Vetten & eiwitten";
 
 /* */
-"Hide Fat & Protein" = "Verberg vetten & eiwitten";
 
 /* Add Fat */
 "Fat" = "Vet";
@@ -2281,33 +2031,26 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Fat And Protein Conversion" = "Omrekening vet en eiwit";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Vlakke CGM-metingen negeren";
 
 /* Service Section */
-"Profile Override" = "Overschrijf profiel";
 
 /* Extend max override percentage */
 "Max Override 400%" = "Max overschrijving 400%";
 
 /* */
-"Override Profiles" = "Overschrijvings profielen";
 
 /* */
 "Normal " = "Normaal ";
 
-"Currently no Override active" = "Op dit moment geen 'Overschrijving' actief";
 
 /* */
-"Total Insulin Adjustment" = "Totale insuline aanpassing";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Overschrijven van je Basaal, ISF, CR en Doel profielen";
 
 /* */
 "Enable indefinitely" = "Onbeperkt inschakelen";
 
 /* */
-"Override Profile target" = "Profieldoel overschrijven";
 
 /* */
 "Disable SMBs" = "SMBs uitschakelen";
@@ -2328,10 +2071,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "... than" = "... dan";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normaal profiel";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Aangepast profiel";
 
 /* */
 "Profiles" = "Profielen";
@@ -2367,7 +2108,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Override Max IOB" = "Max IOB overschrijven";
 
 /* */
-"Start new Profile" = "Start nieuw profiel";
 
 /* */
 "Save as Profile" = "Bewaar als profiel";
@@ -2382,10 +2122,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Cancel Temp Target" = "Annuleer tijdelijk doel";
 
 /* Alert */
-"Return to Normal?" = "Terug naar normaal?";
 
 /* */
-"This will change settings back to your normal profile." = "Dit verandert de instellingen terug naar je normale profiel.";
 
 /* Start Profile Alert */
 "Start Profile" = "Start profiel";
@@ -2412,13 +2150,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "iAPS Icon" = "iAPS icon";
 
 /* Service Section */
-"Statistics and Home View" = "Statistieken en Home View";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Koolhydraat equivalenten verwijderen?";
 
 /* */
-"All FPUs of the meal will be deleted." = "Alle FPU's van de maaltijd worden verwijderd.";
 
 /* */
 "Delete Glucose?" = "Glucosewaarde verwijderen?";
@@ -2439,13 +2174,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Empty" = "Leeg";
 
 /* */
-"Delete Selected Preset" = "Geselecteerde voorinstelling verwijderen";
 
 /* */
-"Enter Meal Preset Name" = "Voer de naam van de maaltijdvoorkeur in";
 
 /* */
-"Name Of Dish" = "Naam van het gerecht";
 
 /* Save Carbs and continue to bolus recommendation */
 "Save and continue" = "Bewaar en ga verder";
@@ -2463,18 +2195,14 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Now" = "Nu";
 
 /* Display future data table entries */
-"Show Future" = "Toon toekomstig";
 
 /* Hide future data table entries */
-"Hide Future" = "Verberg toekomstig";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 
 /* Warning about bolus recommendation. Title */
-"Warning!" = "Waarschuwing!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTik op 'Toevoegen' om door te gaan met het geselecteerde aantal.";
 
 /* */
 "Eventual Glucose" = "Voorspelde glucose";
@@ -2492,7 +2220,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Target Glucose" = "Doel glucose";
 
 /* */
-"Percentage setting" = "Percentage instelling";
 
 /* */
 "Insulin Sensitivity" = "Insuline gevoeligheid";
@@ -2504,7 +2231,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Formula:" = "Formule:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Koolhydraten en vorige insuline zijn opgenomen in de glucosevoorspelling, maar als de uiteindelijke glucose lager is dan het doelglucose, wordt een bolus niet aangeraden.";
 
 /* Hide pop-up */
 "Hide" = "Verbergen";
@@ -2513,7 +2239,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Voospelde glucose > doelglucose, maar de glucose wordt voorspeld dat de glucose eerst omlaag zal gaan tot ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "die onder je drempelwaarde ligt (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Voorspelde glucose > doelglucose maar de glucose daalt sneller dan verwacht.. Verwacht: ";
@@ -2555,7 +2280,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Pair Pod" = "Koppel Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Informatie vorige Pod";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bevestigingsmeldingen";
@@ -2569,13 +2293,11 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Save" = "Opslaan";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Kon de voorkeur voor meldingen niet bijwerken.";
 
 /* */
 "No Error" = "Geen error";
 
 /* description label for active time pod details row */
-"Active Time" = "Activatie tijd";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Uitgeschakeld";
@@ -2590,10 +2312,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "No confidence reminders are used." = "Er worden geen meldingen met piepjes gebruikt.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die je hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die je initieert.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Herinnering vervaldatum ingeschakeld";
@@ -2611,7 +2331,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Scheduled Reminder" = "Geplande melding";
 
 /* */
-"Low Reservoir Reminder" = "Laag reservoir herinnering";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Zorg ervoor dat je iPhone en Pod dicht bij elkaar liggen. Als communicatieproblemen aanhouden, ga dan naar een nieuw gebied.";
@@ -2625,7 +2344,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "%1$@ for %2$@" = "%1$@ voor %2$@";
 
 /* Description text on manual temp basal action sheet */
-"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS past je insulineafgifte niet automatisch aan zolang de tijdelijke basaalstand nog actief is of niet is geannuleerd.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Tijdelijke basaal instellen";
 
@@ -2645,16 +2363,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Missing Config" = "Configuratie ontbreekt";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Deze Pompmanager is niet geconfigureerd met een maximale basaalstand omdat het is toegevoegd voordat handmatig tijdelijke basaal een functie was. Ga naar therapie instellingen -> afleverlimieten en stel een nieuwe maximale basaalstand in.";
 
 /* description label for active time pod details row */
-"Active Time" = "Activatie tijd";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Totaal afgegeven";
 
 /* */
-"Add Omnipod Dash" = "Omnipod Dash toevoegen";
 
 /* */
 "Insert Cannula" = "Plaats canule";
@@ -2703,7 +2418,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Statistics" = "Statistieken";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Uploaden van statistieken naar NS toestaan";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Laag";
@@ -2715,7 +2429,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "In Range" = "Binnen bereik";
 
 /* Display % */
-"Change HbA1c Unit" = "Wijzig HbA1c eenheid";
 
 /* */
 "Vertical grid lines" = "Verticale rasterlijnen";
@@ -2730,34 +2443,26 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Standing / Laying TIR Chart" = "Staande/liggende TIR grafiek";
 
 /* */
-"Hours X-Axis (6 default)" = "Uren X-as (standaard 6)";
 
 /* */
 "2 hours" = "2 uur";
 
 /* */
-"3 hours" = "3 uur";
 
 /* */
-"4 hours" = "4 uur";
 
 /* */
-"6 hours" = "6 uur";
 
 /* */
-"9 hours" = "9 uur";
 
 /* */
-"12 hours" = "12 uur";
 
 /* */
-"24 hours" = "24 uur";
 
 /* Average BG = */
 "Average" = "Gemiddeld";
 
 /* TIR Preview Headline */
-"Time In Range" = "Tijd binnen bereik (TIR)";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Gemiddelde interval";
@@ -2775,13 +2480,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Days" = "Dagen";
 
 /* Normal BG (within TIR) */
-"Normal" = "TIR ";
 
 /* Title High BG in statPanel */
-"High (>" = "Hoog (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Laag (<";
 
 /* SD */
 "SD" = "SD";
@@ -2790,7 +2492,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "CV" = "CV";
 
 /* Estimated HbA1c */
-"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "Alle ";
@@ -2802,7 +2503,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Loops" = "Loops";
 
 /* Loop Errors in statPanel */
-"Errors" = "Foutmeldingen";
 
 /* Loop Statistics pop-up description */
 "Success = Started / Completed (loops)" = "Succes = gestarte / voltooide (loops)";
@@ -2811,7 +2511,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Most Frequent Error" = "Meest voorkomende fout";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Niet voltooide Loops";
 
 /* Average loop interval */
 "Interval" = "Interval";
@@ -2820,16 +2519,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Duration" = "Duur";
 
 /* "Display SD */
-"Display SD instead of CV" = "Toon SD in plaats van CV";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Toon standaard afwijkingen (SD) in plaats van coëfficiënt van variatie (CV) in het hoofdscherm bij de statistieken";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Werk elk aantal minuten bij:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Standaard 20 minuten. Hoe vaak de statistics.json bijwerken en opslaan en de laatste array, indien ingeschakeld, uploaden naar Nightscout.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Afgelopen 24 uur ";
@@ -2847,13 +2542,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "All Past Days of Data " = "Alle dagen in het verleden met gegevens ";
 
 /* "Display Loop statistics in statPanel */
-"Display Loop Cycle statistics" = "Loop cyclusstatistieken tonen";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Laat statistieken zien in het statPanel in de Home weergave";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Standaard HbA1c-eenheid in statPanel wijzigen. De eenheid in statPanel zal worden bijgewerkt met de volgende statistics.json update";
 
 /* HbA1c for all glucose storage days */
 "all" = "alle ";
@@ -2943,10 +2635,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nAls u de dagelijkse back-ups van uw instellingen en statistieken inschakelt, worden er back-ups van uw online database gemaakt.";
 
 /* Section title if sharing off */
-"Share Bare Minimum" = "Deel alleen het minimale";
 
 /* Minimum share toggle */
-"Just iAPS version number" = "Alleen iAPS versienummer";
 
 /* Share info text */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
@@ -2964,10 +2654,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "View Personal Statistics" = "Persoonlijke statistieken bekijken";
 
 /* */
-"Your identifier" = "Jouw identificatie";
 
 /* */
-"Share your data anonymously" = "Deel je gegevens anoniem";
 
 /* */
 "Upload Daily Log" = "Upload dagelijkse log";
@@ -3265,10 +2953,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Deze waarde wordt gebruikt bij het versnellen van glucose en versterkt het effect van de ISF. Bij 0 is dit effect uitgeschakeld. Een veilige startwaarde is 0,02 — van daaruit kun je rustig aanpassen. Veel gebruikte waarden liggen rond de 0,15!";
 
 /* */
-"Duration ISF postprandial adaption" = "Duur van de ISF-aanpassing na de maaltijd (postprandiale aanpassing). Dit bepaalt hoe lang de insulinegevoeligheidsfactor (ISF) wordt aangepast na een maaltijd";
 
 /* */
-"Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Standaardwaarde: 3. Dit is de duur in uren hoe lang na een maaltijd het effect actief zal zijn. Oref zal koolhydraten timing verwijderen na de laatste 10 uur, ongeacht wat je invoert.";
 
 /* */
 "ISF weight for postprandial BG rise" = "ISF-waarde voor stijging van de bloedsuikerspiegel na een maaltijd";
@@ -3277,10 +2963,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Deze waarde bepaalt hoe sterk de insulinegevoeligheidsfactor (ISF) wordt aangepast op basis van de snelheid waarmee de bloedsuikerspiegel stijgt. Bij een waarde van 0 is deze aanpassing uitgeschakeld. Het wordt aanbevolen om te beginnen met 0,01, omdat de waarde zelden hoger komt dan 0,05!";
 
 /* */
-"ISF weight for higher BG deltas" = "ISF-waarde voor hogere BG deltas";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Dit gewicht wordt toegepast op de curve die de insulinegevoeligheidsfactor (ISF) aanpast bij grotere schommelingen in de bloedsuikerspiegel. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
 "ISF weight for lower BG" = "ISF-waarde voor lagere BG's";
@@ -3304,7 +2988,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
 
 /* SMB Delivery Ratio BG Range description */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "De standaardwaarde is 0, maar een logisch bereik ligt tussen 2,2 mmol/L en 6,7 mmol/L (40-120 mg/dL). De afgifte van SMB's (Smart Micro Boluses) neemt geleidelijk toe naarmate de bloedsuikerspiegel stijgt. Bij de doelwaarde is de SMB-verhouding minimaal, en bij doelwaarde + bg_range is deze maximaal. Als de waarde 0 is, blijft de SMB-verhouding vast en wordt de geleidelijke stijging uitgeschakeld.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "Maximale SMB-afgifteverhouding";
@@ -3322,16 +3005,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Toggles" = "Schakelaars";
 
 /* */
-"Enable postprandial ISF adaption always" = "Schakel de ISF-aanpassing na een maaltijd altijd in";
 
 /* */
-"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Schakel de ISF-aanpassing na een maaltijd altijd in, ongeacht wanneer de laatste maaltijd is gegeten.";
 
 /* */
-"Enable DuraISF effect even with COB" = "DuraISF inschakelen, zelfs met COB";
 
 /* */
-"Enable DuraISF even if COB is present not just for UAM." = "Inschakelen van DuraISF zelfs als COB niet alleen aanwezig is voor UAM.";
 
 /* */
 "Enable BG acceleration" = "Activeer BG versnelling";
@@ -3420,22 +3099,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "Is standaard uitgeschakeld. Wanneer ingeschakeld, zal het BG doel verlagen als autosens minder gevoeligheid detecteert";
 
 /* Headline ”Advanced Target Adjustments" */
-"Advanced Target Adjustments" = "Geavanceerde doelaanpassingen";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "In het verleden stond deze functie altijd aan, maar nu staat deze standaard op \"Uit\". Met oref 0.6.0 is dit niet langer nodig. Deze functie past automatisch het glucose-doel van oref0 aan als de huidige glucosewaarde of de verwachte glucosewaarde hoog is. Hierdoor worden hoge glucosewaardes voorkomen en beperkt, maar schakelt het automatisch naar een lage gevoeligheid om ervoor te zorgen dat de glucosewaarde soepel naar je eigenlijke doel beweegt. Als je dit te snel vindt gaan, kun je deze functie uitschakelen.";
 
 /* Headline "Exercise Mode" */
-"Exercise Mode" = "Beweging modus";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Standaard uit. Indien aan, > 5,8 mmol/l hoge tijdelijke doelstelling past gevoeligheid voor Trainingsmodus aan. Gelijk aan 'hoge tijdelijk doel verhoogt gevoeligheid'";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Brede BG doelbereik";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Standaard uit betekent dat standaard alleen de laagste BG van de pomp wordt gebruikt als OpenAPS doel. Dit is een veiligheidsvoorziening om al te brede doelen en minder optimale resultaten te voorkomen. Daarom wordt het hoogste eind van het streefbereik alleen gebruikt om teveel compenseren van de bolus assistent te voorkomen. Gebruik wide_bg_target_range: Waar om neutrale temps af te dwingen over een breder bereik van de uiteindelijke BG.";
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Sla neutrale temps over";
@@ -3534,7 +3207,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Half Basal Exercise Target" = "Halve basaal bewegingsdoel";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Stel in op nummer, b.v. 160, wat betekent dat wanneer een tijdelijk streefdoel 160 mg/dL (9 mmol/l) en bewegingen_mode=true is, 50% basaal op dit niveau (120 (6,7) = 75%; 140 (7,8) = 60%). Dit kan worden aangepast, om u meer controle te geven over uw oefeningsmodi.";
 
 /* Headline "Max COB" */
 "Max COB" = "Max COB";
@@ -3543,10 +3215,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "De standaardwaarde van maxCOB is 120. (Als iemand meer koolhydraten invoert in één of meerdere items, zal iAPS de COB begrenzen tot maxCOB en deze op maxCOB houden totdat is aangetoond dat de koolhydraten die boven maxCOB zijn ingevoerd, worden geabsorbeerd. In wezen beperkt dit alleen UAM als een veiligheidslimiet tegen rare COB-berekeningen als gevolg van onnauwkeurige gegevens)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Bolus snooze DIA deler";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus sluimeren is geactiveerd nadat je een maaltijdbolus hebt gedaan, zodat de Loop geen lage streefwaardes zal instellen wanneer je net hebt gegeten. Het voorbeeld hier en de standaard waarde is 2; dus een DIA van 3 uur betekent dat de bolus sluimer geleidelijk aan zal verdwijnen binnen 1,5 uur (3DIA/2).";
 
 /* Headline "Min 5m Carbimpact" */
 "Min 5m Carbimpact" = "Min 5m koolhydraat effect";
@@ -3603,10 +3273,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tijd van maximale bloedglucose verlagend effect van insuline in hele minuten (insuline piek tijd). Let op: Oref gaat er van uit dat ultra-snelle (Lyumjev) & snelle werking (Fiasp) curves minimaal (35 & 50 min) en maximaal (100 en 120 min) hebben als insulinPeakTimes. Het gebruik van een aangepaste insulinPeakTime buiten deze grenzen leidt tot problemen met iAPS, langere loopberekeningen en mogelijke een rode Loop.";
 
 /* Headline "Carbs Req Threshold" */
-"Carbs Req Threshold" = "Koolhydraten vereist drempelwaarde";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Aantal gram koolhydraten benodigd om een push bericht te versturen. Standaard ingesteld op 1 (voor 1 gram aan koolhydraten). Kan worden verhoogd als u alleen push berichten wilt krijgen boven de ingestelde drempelwaarde.";
 
 /* Headline "Noisy CGM Target Multiplier" */
 "Noisy CGM Target Multiplier" = "CGM doelvermenigvuldiger met ruis";
@@ -3623,29 +3291,19 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 // Dynamic ISF + CR Settings:
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Dynamische ISF-constante aanpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Dynamische ISF-constante aanpassen";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Dynamische ISF inschakelen";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Dynamische ISF inschakelen";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Bereken een nieuwe instelling voor de insulinegevoeligheid (ISF) bij elke cyclus van de loop. De nieuwe ISF wordt gebaseerd op je huidige glucose, totale dagelijkse dosis insuline (TDD, afgelopen 24 uur van alle toegediende insuline) en een individuele aanpassingsfactor (aanbevolen wordt om te beginnen met 0,5 als je de Sigmoid-functie gebruikt en 0,8 als dat niet het geval is).\n\nAlle dynamische ISF- en CR-aanpassingen worden beperkt door je autosens.min/max-limieten.";
 
 /* Headline Enable Dynamic CR */
-"Enable Dynamic CR" = "Dynamische CR inschakelen";
 
 /* Enable Dynamic CR */
-"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Gebruik de Dynamische Carb Ratio (CR). De dynamische verhouding wordt als volgt toegepast:\n\n
-Als de verhouding > 1 is: dynCR = (nieuwe verhouding - 1) / 2 + 1.
-Als de verhouding < 1 is: dynCR = CR/dynCR.
-Gebruik dit niet samen met een hoge insuline fractie (> 2).\n\n
-Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op basis van je recente verhoudingen. Het zorgt ervoor dat de aanpassingen niet te groot zijn en werkt niet goed als je een hoge insuline fractie hebt.";
 
 /* Enable Dyn ISF */
 "Activate Dynamic Sensitivity (ISF)" = "Dynamische gevoeligheid (ISF) activeren";
@@ -3654,7 +3312,6 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Activate Dynamic Carb Ratio (CR)" = "Dynamische koolhydraat verhouding activeren (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Dynamische ISF-constante aanpassen";
 
 /* Adjust Dynamic ISF constant */
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuele aanpassing van de berekende dynamische verhoudingen. De standaardwaarde is 0,5. Hoe hoger de waarde, hoe groter de correctie van uw ISF/CR zal zijn voor een hoge of lage bloedglucosewaarde. De maximale/minimale correctie wordt bepaald door de Autosens min/max instellingen.\n\nVoor de Sigmoid functie wordt een aanpassingsfactor van 0.4 - 0.5 aanbevolen om mee te beginnen.\n\nVoor de logaritmische formule is er minder consensus, maar beginnen rond 0.8 is waarschijnlijk goed voor de meeste volwassen gebruikers. Voor jongere gebruikers wordt aanbevolen om nog lager te beginnen met de logaritmische formule, om een te agressieve behandeling te voorkomen.";
@@ -3666,7 +3323,6 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Formula" = "Formule";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Veiligheid";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Gebruikt een Sigmoid functie voor ISF (en voor CR, indien ingeschakeld), in plaats van de standaard logaritmische formule. Vereist een geactiveerde dynamische ISF instelling.\n\nDe instelling aanpassing past de helling van de curve aan (Y: Dynamische verhouding, X: Bloedglucose). Een lagere waarde ==> minder steil = minder agressief.\n\nDe autosens.min/max instellingen bepalen zowel de max/min grenzen voor de dynamische ratio als hoeveel de dynamische ratio wordt aangepast. Als AF de helling van de curve is, is autosens.min/max de hoogte van de grafiek, het Y-interval, waarbij Y: dynamische verhouding. De curve zal altijd een sigmoïde vorm hebben, ongeacht de autosens.min/max instellingen, wat betekent dat deze instellingen grote gevolgen hebben voor het resultaat van de berekende dynamische ISF. Wees voorzichtig met het instellen van een te hoge autosens.max waarde. Met een goede profiel-ISF instelling zal het waarschijnlijk nooit nodig zijn deze hoger in te stellen dan 1,5.\n\nEen Autosens max grens > 1,5 is niet aan te raden bij gebruik van de Sigmoid functie.";
@@ -3675,7 +3331,6 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Threshold Setting" = "Grenswaarde instellingen";
 
 /* Dynamic ISF Setting Title */
-"Minimum Threshold Setting" = "Instelling minimale grenswaarde";
 
 /* Minimum Threshold Setting */
 "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "Deze instelling laat je een glucosegrens kiezen waaronder nooit SMB-insuline of extra tijdelijke basale insuline wordt toegediend. Extra tijdelijke basale insuline is de hoeveelheid insuline bovenop wat nodig is voor het basaal metabolisme.
@@ -3710,7 +3365,6 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Calculator settings" = "Calculator instellingen";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Gebruik alternatieve boluscalculator";
 
 /* Bolus Calculator Setting */
 "Use Bolus Calculator" = "Gebruik boluscalculator";
@@ -3731,7 +3385,6 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Apply factor for fatty meals" = "Pas factor toe voor vette maaltijden";
 
 /* Bolus Calculator Footer */
-"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "De nieuwe alternatieve boluscalculator is een andere benadering van de standaard boluscalculator in iAPS. Als de knop aan staat, gebruik je deze boluscalculator en niet de originele iAPS-calculator. Aan het einde van de berekening wordt een aangepaste factor toegepast, zoals het hoort bij het gebruik van smbs (standaard 0,8).\n\nJe kunt ook de optie toevoegen in je boluscalculator om een andere (!) aanpasbare factor toe te passen aan het einde van de berekening, wat handig kan zijn voor vette maaltijden, zoals pizza (standaard 0,7).";
 
 /* Bolus Calculator Setting */
 "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Gebruik de OpenAPS voorspelling van de uiteindelijke bloedsuikerwaarde om de aanbevolen insulinedosis te berekenen. Deze instelling activeert de \"oude\" rekenmethode en staat standaard aan.\n\n2. Gebruik de OpenAPS minPredBG-voorspelling als extra veiligheidsmaatregel, zodat de bloedsuikerwaarde niet onder je ingestelde grens zakt. Deze instelling kan samen met of zonder de uiteindelijke bloedsuikerwaarde worden gebruikt en staat standaard aan";
@@ -3776,7 +3429,6 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Override HbA1c Unit" = "HbA1c eenheid overschrijven";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In het geval dat je zowel profielen als tijdelijke doelen gebruikt";
 
 /* UI/UX option */
 "Always Color Glucose Value (green, yellow etc)" = "Glucose waarde altijd in kleur (rood, groen, geel enz.) weergeven";
@@ -3784,19 +3436,16 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 /* UI/UX option */
 "Header settings" = "Instellingen voor kopteksten";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normaal gesproken wordt glucose alleen rood gekleurd als je de notificatiegrens hebt overschreden voor hoog/laag";
 
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Horizontale scrolweergave zichtbare uren";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Knop voor tijdinterval weergeven";
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Laat de kleine glucosegrafiek nooit zien tijdens het scrollen";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Hypobehandelingen uitschakelen";
 
 /* UI/UX option */
 "Display Glucose Delta" = "Glucose delta weergeven";
@@ -3826,10 +3475,8 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Display carb equivalent amount" = "Toon hoeveelheid koolhydraten in gram";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Weergave ratio en een weergave knop geschiedenis";
 
 /* UI/UX option */
-"Home View Ratio Button" = "Home-weergave ratio knop";
 
 /* UI/UX option */
 "Light" = "Licht";
@@ -3886,7 +3533,6 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
 
 /* Notification option */
-"Show Live activity" = "Toon live activiteit";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
@@ -3901,10 +3547,8 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Moet > 0 en <= 1 zijn.\nStandaard is 0,65 (65 %) * TDD. De rest is het gemiddelde van de totale gegevens (tot 14 dagen) van alle TDD-berekeningen (35 %).\n\nOm plotselinge schommelingen te voorkomen, bijvoorbeeld na een grote maaltijd, wordt een gemiddelde van de afgelopen 2 uur aan TDD-berekeningen gebruikt in plaats van alleen de huidige TDD (de afgelopen 24 uur op dit moment).";
 
 /* Headline "Adjust basal" */
-"Adjust basal" = "Pas basaal aan";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Aanpassing van basaal inschakelen op basis van de verhouding van huidige TDD / 7 dag gemiddelde TDD";
 
 /* Headline "Max Delta-BG Threshold SMB" */
 "Max Delta-BG Threshold SMB" = "Max Delta-BG drempelwaarde SMB";
@@ -3925,10 +3569,8 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "SMB's inschakelen wanneer een hoge BG wordt gedetecteerd, op basis van het hoge BG-doel (aangepast of profiel)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamische instellingen";
 
 /* Insulin curve */
-"Insulin curve" = "Insuline curve";
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Aanpassingsfactor";
@@ -3946,23 +3588,19 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Active CGM" = "Actieve CGM";
 
 /* pump name label, when pump is a cgm "Pump/CGM" */
-"Pump/CGM" = "Pomp/CGM";
 
 /* Button "Stop using the pump as CGM" */
 "Stop using the pump as CGM" = "De pomp niet langer als CGM gebruiken";
 
 /* Section header in CGM view */
-"Shared App Group Source" = "Gedeelde App groep bron";
 
 /* prefix for the shared app group application */
-"Reading from" = "Lezen van";
 
 /* button to disconnect from the shared app group "Disconnect" */
 "Disconnect" = "Verbinding verbreken";
 
 
 /* description for Shared App Group Source section */
-"Read BG from an external CGM app using a shared app group." = "Lees BG van een externe CGM app met behulp van een gedeelde app groep.";
 
 
 /* prefix before the app name on the button to start reading from shared app group */
@@ -4047,7 +3685,6 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Results for" = "Resultaten voor";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Volledige maaltijd";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
 "Max Basal Exceeded" = "Maximale bolus overschreden";
