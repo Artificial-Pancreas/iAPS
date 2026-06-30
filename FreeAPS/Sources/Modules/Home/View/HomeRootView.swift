@@ -1158,10 +1158,7 @@ extension Home {
 
         var body: some View {
             GeometryReader { geo in
-                if onboarded.first?.firstRun ?? true, let openAPSSettings = state.openAPSSettings {
-                    /// If old iAPS user pre v5.7.1 OpenAPS settings will be reset, but can be restored in View below
-                    importResetSettingsView(settings: openAPSSettings)
-                } else {
+                Group {
                     VStack(spacing: 0) {
                         // Header View
                         headerView(geo)
@@ -1249,9 +1246,6 @@ extension Home {
                 }
             }
             .onAppear {
-                if onboarded.first?.firstRun ?? true {
-                    state.fetchPreferences()
-                }
                 checkBuildExpiration()
             }
             .alert(
@@ -1332,11 +1326,5 @@ extension Home {
             }
         }
 
-        private func importResetSettingsView(settings: Preferences) -> some View {
-            Restore.RootView(
-                resolver: resolver,
-                openAPS: settings
-            )
-        }
     }
 }
