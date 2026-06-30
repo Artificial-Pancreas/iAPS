@@ -11,14 +11,12 @@ enum DataTable {
         var id: String { rawValue }
 
         var name: String {
-            var name: String = ""
             switch self {
             case .treatments:
-                name = "Treatments"
+                return NSLocalizedString("Treatments", comment: "History Mode")
             case .glucose:
-                name = "Glucose"
+                return NSLocalizedString("Glucose", comment: "History Mode")
             }
-            return NSLocalizedString(name, comment: "History Mode")
         }
     }
 
@@ -31,23 +29,20 @@ enum DataTable {
         case resume
 
         var name: String {
-            var name: String = ""
             switch self {
             case .carbs:
-                name = "Carbs"
+                return NSLocalizedString("Carbs", comment: "Treatment type")
             case .bolus:
-                name = "Bolus"
+                return NSLocalizedString("Bolus", comment: "Treatment type")
             case .tempBasal:
-                name = "Temp Basal"
+                return NSLocalizedString("Temp Basal", comment: "Treatment type")
             case .tempTarget:
-                name = "Temp Target"
+                return NSLocalizedString("Temp Target", comment: "Treatment type")
             case .suspend:
-                name = "Suspend"
+                return NSLocalizedString("Suspend", comment: "Treatment type")
             case .resume:
-                name = "Resume"
+                return NSLocalizedString("Resume", comment: "Treatment type")
             }
-
-            return NSLocalizedString(name, comment: "Treatment type")
         }
     }
 
@@ -134,7 +129,7 @@ enum DataTable {
             }
 
             if amount == 0, duration == 0 {
-                return "Cancel temp"
+                return NSLocalizedString("Cancel temp", comment: "Cancel temp basal")
             }
 
             switch type {
@@ -162,14 +157,15 @@ enum DataTable {
                 }
 
                 guard var secondAmount = secondAmount else {
-                    return numberFormatter.string(from: converted as NSNumber)! + " \(units.rawValue)"
+                    return numberFormatter
+                        .string(from: converted as NSNumber)! + " " + NSLocalizedString(units.rawValue, comment: "Glucose unit")
                 }
                 if units == .mmolL {
                     secondAmount = secondAmount.asMmolL
                 }
 
                 return tempTargetFormater.string(from: converted as NSNumber)! + " - " + tempTargetFormater
-                    .string(from: secondAmount as NSNumber)! + " \(units.rawValue)"
+                    .string(from: secondAmount as NSNumber)! + " " + NSLocalizedString(units.rawValue, comment: "Glucose unit")
             case .resume,
                  .suspend:
                 return type.name
@@ -195,7 +191,8 @@ enum DataTable {
             guard let duration = duration, duration > 0 else {
                 return nil
             }
-            return numberFormatter.string(from: duration as NSNumber)! + " min"
+            return numberFormatter
+                .string(from: duration as NSNumber)! + NSLocalizedString(" min", comment: "Minutes abbreviation")
         }
     }
 
