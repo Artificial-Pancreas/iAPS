@@ -271,6 +271,9 @@ extension ExistingUserRestoreView {
                     // Contact Trick (display config) — best-effort, silent (not dosing).
                     self.restoreContactTrick(using: database)
 
+                    // Phase C presets (meal / temp-target / override) — best-effort, silent.
+                    self.restorePresets(using: database)
+
                     // Phase A is applied. Phase B: best-effort fetch + decompose of the profile
                     // schedules for the review step (a missing profile just finishes).
                     self.loadProfileReview(using: database, units: settings.units)
@@ -311,6 +314,87 @@ extension ExistingUserRestoreView {
                     }
                 )
                 .store(in: &lifetime)
+        }
+
+        /// Best-effort, silent restore of the saved presets (display/convenience data, not
+        /// dosing): temp-target presets to their file, and meal + override presets into CoreData.
+        /// A fresh install has nothing to collide with, so each set is simply recreated.
+        private func restorePresets(using database: Database) {
+            // Temp-target presets — a plain file, like the schedules.
+            database.fetchTempTargets("default")
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] payload in
+                    guard let self, !payload.tempTargets.isEmpty else { return }
+                    self.storage.save(payload.tempTargets, as: OpenAPS.FreeAPS.tempTargetsPresets)
+                })
+                .store(in: &lifetime)
+
+            // Meal presets — CoreData.
+            database.fetchMealPressets("default")
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] payload in
+                    self?.saveMealPresets(payload.presets)
+                })
+                .store(in: &lifetime)
+
+            // Override presets — CoreData.
+            database.fetchOverridePressets("default")
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] payload in
+                    self?.saveOverridePresets(payload.presets)
+                })
+                .store(in: &lifetime)
+        }
+
+        /// Recreate meal presets from the backup (carbs / dish / fat / protein — the fields the
+        /// backup captures), mirroring `Presets(context:)` creation in the carb-entry screen.
+        private func saveMealPresets(_ presets: [MigratedMeals]) {
+            guard !presets.isEmpty else { return }
+            let context = CoreDataStack.shared.persistentContainer.viewContext
+            context.perform {
+                for meal in presets {
+                    let row = Presets(context: context)
+                    row.dish = meal.dish
+                    row.carbs = meal.carbs as NSDecimalNumber
+                    row.fat = meal.fat as NSDecimalNumber
+                    row.protein = meal.protein as NSDecimalNumber
+                }
+                try? context.save()
+            }
+        }
+
+        /// Recreate override presets from the backup — the reverse of
+        /// `Database.migrateOverridePresets` (note the backup's spelling of a few keys).
+        private func saveOverridePresets(_ presets: [MigratedOverridePresets]) {
+            guard !presets.isEmpty else { return }
+            let context = CoreDataStack.shared.persistentContainer.viewContext
+            context.perform {
+                for p in presets {
+                    let o = OverridePresets(context: context)
+                    o.advancedSettings = p.advancedSettings
+                    o.cr = p.cr
+                    o.date = p.date
+                    o.duration = p.duration as NSDecimalNumber
+                    o.emoji = p.emoji
+                    o.end = p.end as NSDecimalNumber
+                    o.id = p.id
+                    o.indefinite = p.indefininite
+                    o.isf = p.isf
+                    o.isfAndCr = p.isndAndCr
+                    o.basal = p.basal
+                    o.maxIOB = p.maxIOB as NSDecimalNumber
+                    o.name = p.name
+                    o.overrideMaxIOB = p.overrideMaxIOB
+                    o.percentage = p.percentage
+                    o.smbIsAlwaysOff = p.smbAlwaysOff
+                    o.smbIsOff = p.smbIsOff
+                    o.smbMinutes = p.smbMinutes as NSDecimalNumber
+                    o.start = p.start as NSDecimalNumber
+                    o.target = p.target as NSDecimalNumber
+                    o.uamMinutes = p.uamMinutes as NSDecimalNumber
+                }
+                try? context.save()
+            }
         }
 
         /// Best-effort: fetch the backup profile, decompose it into native schedules, and (if it
