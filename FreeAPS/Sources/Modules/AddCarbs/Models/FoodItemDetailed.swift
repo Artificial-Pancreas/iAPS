@@ -12,6 +12,56 @@ enum NutrientType: String, Equatable, Identifiable, CaseIterable {
 
 typealias NutritionValues = [NutrientType: Decimal]
 
+struct AggregatedNutrition {
+    let macros: NutritionValues
+    let micros: [MicroNutrient: Decimal]
+
+    func value(for macro: NutrientType) -> Decimal {
+        macros[macro] ?? 0
+    }
+
+    func value(for micro: MicroNutrient) -> Decimal {
+        micros[micro] ?? 0
+    }
+}
+
+extension AggregatedNutrition {
+    var macroDisplay: [DisplayNutrient] {
+        NutrientType.allCases.compactMap { type in
+            guard let value = macros[type], value > 0 || type.isPrimary else { return nil }
+
+            return DisplayNutrient(
+                name: type.localizedLabel,
+                value: value,
+                unit: "g",
+                isPrimary: type.isPrimary
+            )
+        }
+    }
+
+    var microDisplay: [DisplayNutrient] {
+        micros
+            .filter { $0.value > 0 }
+            .sorted { $0.key.displayName < $1.key.displayName }
+            .map { key, value in
+                DisplayNutrient(
+                    name: key.displayName,
+                    value: value,
+                    unit: key.unit,
+                    isPrimary: false
+                )
+            }
+    }
+}
+
+struct DisplayNutrient: Identifiable {
+    let id = UUID()
+    let name: String
+    let value: Decimal
+    let unit: String
+    let isPrimary: Bool
+}
+
 enum MealUnits: String, Codable {
     case grams
     case milliliters
@@ -159,6 +209,8 @@ struct FoodItemDetailed: Identifiable, Equatable {
 
     let nutrition: FoodNutrition
 
+    let micronutrient: [MicronutrientValue]
+
     let assessmentNotes: String?
 
     let imageURL: String?
@@ -182,6 +234,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
             lhs.glycemicIndex == rhs.glycemicIndex &&
             lhs.standardName == rhs.standardName &&
             lhs.nutrition == rhs.nutrition &&
+            lhs.micronutrient == rhs.micronutrient &&
             lhs.assessmentNotes == rhs.assessmentNotes &&
             lhs.imageURL == rhs.imageURL &&
             lhs.tags == rhs.tags &&
@@ -193,6 +246,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
         id: UUID? = nil,
         name: String,
         nutrition: FoodNutrition,
+        micronutrient: [MicronutrientValue] = [],
         confidence: ConfidenceLevel? = nil,
         brand: String? = nil,
         standardServing: String? = nil,
@@ -220,6 +274,7 @@ struct FoodItemDetailed: Identifiable, Equatable {
         self.visualCues = visualCues
         self.glycemicIndex = glycemicIndex
         self.nutrition = nutrition
+        self.micronutrient = micronutrient
         self.assessmentNotes = assessmentNotes
         self.imageURL = imageURL
         self.tags = tags
@@ -230,22 +285,26 @@ struct FoodItemDetailed: Identifiable, Equatable {
 
 extension FoodItemDetailed {
     func nutrientInThisPortion(_ nutrient: NutrientType) -> Decimal? {
-        switch nutrition {
-        case let .per100(per100, portion):
-            guard let nutrientPer100 = per100[nutrient] else { return nil }
-            return nutrientPer100 / 100 * portion
-        case let .perServing(perServing, multiplier):
-            guard let nutrientPerServing = perServing[nutrient] else { return nil }
-            return nutrientPerServing * multiplier
-        }
+        guard let value = nutrition.values[nutrient] else { return nil }
+        return value * servingMultiplier
     }
 
     var caloriesInThisPortion: Decimal {
+        nutrition.values.calories * servingMultiplier
+    }
+
+    func micronutrientInThisPortion(_ nutrient: MicroNutrient) -> Decimal? {
+        guard let value = micronutrient.first(where: { $0.substance == nutrient }) else {
+            return nil
+        }
+
         switch nutrition {
-        case let .per100(per100, portionSize):
-            return per100.calories / 100 * portionSize
-        case let .perServing(perServing, multiplier):
-            return perServing.calories * multiplier
+        case .per100:
+            let baseAmount = value.amountPer100 > 0 ? value.amountPer100 : value.amount
+            return baseAmount * servingMultiplier
+
+        case .perServing:
+            return value.amount * servingMultiplier
         }
     }
 
@@ -253,6 +312,7 @@ extension FoodItemDetailed {
         id: UUID? = nil,
         name: String? = nil,
         nutrition: FoodNutrition? = nil,
+        micronutrient: [MicronutrientValue]? = nil,
         confidence: ConfidenceLevel?? = nil,
         brand: String?? = nil,
         standardServing: String?? = nil,
@@ -272,6 +332,7 @@ extension FoodItemDetailed {
             id: id ?? self.id,
             name: name ?? self.name,
             nutrition: nutrition ?? self.nutrition,
+            micronutrient: micronutrient ?? self.micronutrient,
             confidence: confidence ?? self.confidence,
             brand: brand ?? self.brand,
             standardServing: standardServing ?? self.standardServing,
@@ -298,25 +359,43 @@ extension FoodItemDetailed {
         nutrition.isNotEmpty
     }
 
-    // used to display nutrition previews while changing the portion size with the slider, before saving the changes in the food-editing views
     func nutrientInPortionOrServings(_ nutrient: NutrientType, portionOrMultiplier: Decimal) -> Decimal? {
+        guard let value = nutrition.values[nutrient] else { return nil }
+
         switch nutrition {
-        case let .per100(per100, _):
-            guard let nutrientPer100 = per100[nutrient] else { return nil }
-            return nutrientPer100 / 100 * portionOrMultiplier
-        case let .perServing(perServing, _):
-            guard let nutrientPerServing = perServing[nutrient] else { return nil }
-            return nutrientPerServing * portionOrMultiplier
+        case .per100:
+            return value * portionOrMultiplier / 100
+
+        case .perServing:
+            return value * portionOrMultiplier
         }
     }
 
-    // used to display nutrition previews while changing the portion size with the slider, before saving the changes in the food-editing views
     func caloriesInPortionOrServings(portionOrMultiplier: Decimal) -> Decimal? {
         switch nutrition {
-        case let .per100(per100, _):
-            return per100.calories / 100 * portionOrMultiplier
-        case let .perServing(perServing, _):
-            return perServing.calories * portionOrMultiplier
+        case .per100:
+            return nutrition.values.calories * portionOrMultiplier / 100
+
+        case .perServing:
+            return nutrition.values.calories * portionOrMultiplier
+        }
+    }
+
+    func micronutrientInPortionOrServings(
+        _ nutrient: MicroNutrient,
+        portionOrMultiplier: Decimal
+    ) -> Decimal? {
+        guard let value = micronutrient.first(where: { $0.substance == nutrient }) else {
+            return nil
+        }
+
+        switch nutrition {
+        case .per100:
+            let baseAmount = value.amountPer100 > 0 ? value.amountPer100 : value.amount
+            return baseAmount * portionOrMultiplier / 100
+
+        case .perServing:
+            return value.amount * portionOrMultiplier
         }
     }
 
@@ -341,4 +420,134 @@ extension FoodItemDetailed {
             nutrition: newNutrition
         )
     }
+
+    func micronutrientPer100(_ nutrient: MicroNutrient) -> Decimal? {
+        micronutrient.first(where: { $0.substance == nutrient })?.amountPer100
+    }
+
+    var micronutrientTotals: [MicroNutrient: Decimal] {
+        Dictionary(
+            uniqueKeysWithValues: micronutrient.map {
+                ($0.substance, micronutrientInThisPortion($0.substance) ?? 0)
+            }
+        )
+    }
 }
+
+extension FoodItemDetailed {
+    static func fromPreset(preset: Presets) -> FoodItemDetailed? {
+        guard let foodName = preset.dish,
+              !foodName.isEmpty,
+              foodName != "Empty"
+        else {
+            return nil
+        }
+
+        let foodID = preset.foodID ?? UUID()
+
+        let units = preset.mealUnits
+            .flatMap { MealUnits(rawValue: $0) } ?? .grams
+
+        let nutritionValues: NutritionValues = [
+            .carbs: preset.carbs?.decimalValue ?? 0,
+            .fat: preset.fat?.decimalValue ?? 0,
+            .fiber: preset.fiber?.decimalValue ?? 0,
+            .protein: preset.protein?.decimalValue ?? 0,
+            .sugars: preset.sugars?.decimalValue ?? 0
+        ]
+
+        let nutrition: FoodNutrition = preset.per100
+            ? .per100(
+                values: nutritionValues,
+                portionSize: preset.portionSize?.decimalValue ?? 100
+            )
+            : .perServing(
+                values: nutritionValues,
+                servingsMultiplier: 1
+            )
+
+        return FoodItemDetailed(
+            id: foodID,
+            name: foodName,
+            nutrition: nutrition,
+            micronutrient: preset.micronutrientValuesTyped(),
+            standardServing: preset.standardServing,
+            standardServingSize: preset.standardServingSize?.decimalValue,
+            units: units,
+            glycemicIndex: preset.glycemicIndex?.decimalValue,
+            imageURL: preset.imageURL,
+            standardName: preset.standardName,
+            tags: preset.tags?
+                .split(separator: ",")
+                .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty },
+            source: .database
+        )
+    }
+
+    func updatePreset(preset: Presets) {
+        preset.foodID = id
+        preset.dish = name
+        preset.standardServing = standardServing
+        preset.standardServingSize = standardServingSize.map { NSDecimalNumber(decimal: $0) }
+        preset.mealUnits = units?.rawValue
+        preset.glycemicIndex = glycemicIndex.map { NSDecimalNumber(decimal: $0) }
+        preset.imageURL = imageURL
+        preset.standardName = standardName
+        preset.tags = tags?.joined(separator: ",")
+
+        switch nutrition {
+        case let .per100(values, portionSize):
+            preset.per100 = true
+            preset.portionSize = NSDecimalNumber(decimal: portionSize)
+            preset.carbs = values[.carbs].map { NSDecimalNumber(decimal: $0) }
+            preset.fat = values[.fat].map { NSDecimalNumber(decimal: $0) }
+            preset.fiber = values[.fiber].map { NSDecimalNumber(decimal: $0) }
+            preset.protein = values[.protein].map { NSDecimalNumber(decimal: $0) }
+            preset.sugars = values[.sugars].map { NSDecimalNumber(decimal: $0) }
+
+        case let .perServing(values, _):
+            preset.per100 = false
+            preset.portionSize = standardServingSize.map { NSDecimalNumber(decimal: $0) }
+            preset.carbs = values[.carbs].map { NSDecimalNumber(decimal: $0) }
+            preset.fat = values[.fat].map { NSDecimalNumber(decimal: $0) }
+            preset.fiber = values[.fiber].map { NSDecimalNumber(decimal: $0) }
+            preset.protein = values[.protein].map { NSDecimalNumber(decimal: $0) }
+            preset.sugars = values[.sugars].map { NSDecimalNumber(decimal: $0) }
+        }
+
+        if let context = preset.managedObjectContext {
+            try? preset.replaceMicronutrients(from: micronutrient, context: context)
+        }
+    }
+}
+
+extension FoodItemDetailed {
+    var servingMultiplier: Decimal {
+        switch nutrition {
+        case let .per100(_, portionSize):
+            return portionSize / 100
+
+        case let .perServing(_, servingsMultiplier):
+            return servingsMultiplier
+        }
+    }
+
+    var basePortionSize: Decimal {
+        switch nutrition {
+        case .per100:
+            return 100
+
+        case .perServing:
+            return 1
+        }
+    }
+}
+
+// To Do: add something like this for convenience?
+/*
+ struct FullNutrition {
+     let macros: FoodNutrition
+     let micros: [MicroNutrient: Decimal]
+ }
+ */

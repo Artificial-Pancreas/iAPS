@@ -315,10 +315,38 @@ struct SearchResultsView: View {
         let allItems = state.searchResultsState.nonDeletedItems
         guard !allItems.isEmpty else { return }
 
+        let totalServingSize = state.searchResultsState.aggregateServingSize(for: allItems) ?? 0
+        let mealMicros = state.searchResultsState.mealMicronutrientValues
+
+        let micronutrient: [MicronutrientValue] = mealMicros.map { nutrient, amount in
+            let amountPer100: Decimal
+            if totalServingSize > 0 {
+                amountPer100 = amount / totalServingSize * 100
+            } else {
+                amountPer100 = amount
+            }
+
+            return MicronutrientValue(
+                substance: nutrient,
+                amount: amount,
+                amountPer100: amountPer100
+            )
+        }
+        .sorted { $0.name < $1.name }
+
+        var name = state.searchResultsState.searchResults.prefix(2).map(\.title).joined(separator: ", ")
+        if state.searchResultsState.searchResults.count > 2 {
+            name = "\(name) +\(state.searchResultsState.searchResults.count - 2)"
+        }
+
         let savedItem = FoodItemDetailed(
-            name: "Complete Meal",
-            nutrition: .perServing(values: state.searchResultsState.mealNutritionValues, servingsMultiplier: 1),
-            standardServingSize: state.searchResultsState.aggregateServingSize(for: allItems),
+            name: name,
+            nutrition: .perServing(
+                values: state.searchResultsState.mealNutritionValues,
+                servingsMultiplier: 1
+            ),
+            micronutrient: micronutrient,
+            standardServingSize: totalServingSize > 0 ? totalServingSize : nil,
             units: .grams,
             source: .manual
         )
@@ -422,12 +450,36 @@ struct SearchResultsView: View {
         .background(Color(.systemGroupedBackground))
     }
 
-    // utils
-
     private func createCombinedFoodItem() -> FoodItemDetailed {
-        FoodItemDetailed(
-            name: NSLocalizedString("Complete Meal", comment: ""),
-            nutrition: .perServing(values: state.searchResultsState.mealNutritionValues, servingsMultiplier: 1),
+        let items = state.searchResultsState.nonDeletedItems
+        let totalServingSize = state.searchResultsState.aggregateServingSize(for: items) ?? 0
+        let mealMicros = state.searchResultsState.mealMicronutrientValues
+
+        let micronutrient: [MicronutrientValue] = mealMicros.map { nutrient, amount in
+            let amountPer100: Decimal =
+                totalServingSize > 0
+                    ? amount / totalServingSize * 100
+                    : amount
+
+            return MicronutrientValue(
+                substance: nutrient,
+                amount: amount,
+                amountPer100: amountPer100
+            )
+        }
+        .sorted { $0.name < $1.name }
+
+        let shortenedDescription = (state.searchResultsState.searchResults.first?.title ?? "Meal.").components(separatedBy: ".")
+            .first ?? "Meal"
+
+        return FoodItemDetailed(
+            name: NSLocalizedString(shortenedDescription, comment: ""),
+            nutrition: .perServing(
+                values: state.searchResultsState.mealNutritionValues,
+                servingsMultiplier: 1
+            ),
+            micronutrient: micronutrient,
+            standardServingSize: totalServingSize > 0 ? totalServingSize : nil,
             units: .grams,
             source: .manual
         )
@@ -503,11 +555,31 @@ private struct FoodItemGroupListSection: View {
         guard !items.isEmpty else { return }
 
         let sectionName = foodItemGroup.briefDescription ?? foodItemGroup.textQuery ?? foodItemGroup.title
+        let totalServingSize = state.searchResultsState.aggregateServingSize(for: items) ?? 0
+        let sectionMicros = state.searchResultsState.micronutrientValues(for: items)
+
+        let micronutrient: [MicronutrientValue] = sectionMicros.map { nutrient, amount in
+            let amountPer100: Decimal =
+                totalServingSize > 0
+                    ? amount / totalServingSize * 100
+                    : amount
+
+            return MicronutrientValue(
+                substance: nutrient,
+                amount: amount,
+                amountPer100: amountPer100
+            )
+        }
+        .sorted { $0.name < $1.name }
 
         let savedItem = FoodItemDetailed(
             name: sectionName,
-            nutrition: .perServing(values: state.searchResultsState.nutritionValues(for: items), servingsMultiplier: 1),
-            standardServingSize: state.searchResultsState.aggregateServingSize(for: items),
+            nutrition: .perServing(
+                values: state.searchResultsState.nutritionValues(for: items),
+                servingsMultiplier: 1
+            ),
+            micronutrient: micronutrient,
+            standardServingSize: totalServingSize > 0 ? totalServingSize : nil,
             units: .grams,
             source: .manual
         )
@@ -703,5 +775,28 @@ private struct DeletedFoodItemRow: View {
         .padding(.top, isFirst ? 8 : 0)
         .padding(.bottom, isLast ? 8 : 0)
         .background(Color(.systemGray6))
+    }
+}
+
+enum NutritionAggregator {
+    static func micronutrient(from items: [FoodItemDetailed]) -> [MicroNutrient: Decimal] {
+        var result: [MicroNutrient: Decimal] = [:]
+
+        for item in items {
+            for micro in item.micronutrient {
+                let value: Decimal
+
+                switch item.nutrition {
+                case let .per100(_, portion):
+                    value = micro.amountPer100 / 100 * portion
+                case let .perServing(_, multiplier):
+                    value = micro.amount * multiplier
+                }
+
+                result[micro.substance, default: 0] += value
+            }
+        }
+
+        return result
     }
 }

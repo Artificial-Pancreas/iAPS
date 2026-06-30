@@ -8,8 +8,10 @@ struct TemporaryData: JSON, Equatable {
         carbs: 0,
         fat: 0,
         protein: 0,
+        fiber: nil,
         note: "",
         enteredBy: "",
-        isFPU: false
+        isFPU: false,
+        micronutrient: nil
     )
 }

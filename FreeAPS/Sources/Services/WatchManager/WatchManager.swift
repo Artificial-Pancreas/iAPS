@@ -77,7 +77,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.eventualGlucose = Decimal(self.suggestion?.eventualBG ?? 0)
 
-            let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+            let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
             let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
             self.state.trend = glucoseValues.trend
@@ -464,7 +464,9 @@ extension BaseWatchManager: WCSessionDelegate {
                     actualDate: nil,
                     carbs: Decimal(carbs),
                     fat: Decimal(fat),
-                    protein: Decimal(protein), note: nil,
+                    protein: Decimal(protein),
+                    fiber: nil,
+                    note: nil,
                     enteredBy: CarbsEntry.watch,
                     isFPU: false
                 )]
