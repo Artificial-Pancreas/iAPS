@@ -2766,7 +2766,7 @@ Połączono z Nightscout!";
 "TightFontTracking" = "Tight";
 
 /* Contact Image, settings, normal font tracking */
-"NormalFontTracking" = "Normal";
+"NormalFontTracking" = "Normalny";
 
 /* Contact Image, settings, wide font tracking */
 "WideFontTracking" = "Wide";
