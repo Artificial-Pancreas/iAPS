@@ -32,6 +32,11 @@ enum DataSyncError: Error {
     case sinkUnavailable
 }
 
+enum SyncTrigger {
+    case dataChanged
+    case retry
+}
+
 actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == Record {
     private let name: String
     private let sink: Sink
@@ -45,6 +50,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
 
     private let serializer = TaskSerializer()
     private var snapshot: [Record.SyncID: Record]?
+    private var hasPendingWork = true
 
     init(
         name: String,
@@ -64,17 +70,25 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
         self.category = category
     }
 
-    /// Returns `true` if everything reconciled without a sink error
-    /// (nothing left pending).
-    /// A `false` means some upsert/delete failed and will be retried next reconcile.
-    @discardableResult
-    func reconcile(current: [Record]) async -> Bool {
+    /// indicate that there may be data to upload
+    /// next `.retry` picks it up
+    func markPending() {
+        hasPendingWork = true
+    }
+
+    /// `.retry` can skip the source read entirely when there is nothing to retry.
+    func reconcile(trigger: SyncTrigger = .dataChanged, current: @Sendable @escaping () async -> [Record]) async {
         await serializer.run {
-            await self.performReconcile(current: current)
+            await self.performReconcile(trigger: trigger, current: current)
         }
     }
 
-    private func performReconcile(current: [Record]) async -> Bool {
+    private func performReconcile(trigger: SyncTrigger, current: @Sendable () async -> [Record]) async {
+        // A retry tick does nothing unless a prior run failed or `markPending` was called.
+        if trigger == .retry, !hasPendingWork { return }
+
+        let resolved = await current()
+
         let now = Date()
         let retentionCutoff = now.removingTimeInterval(retention)
         let deletionCutoff = now.removingTimeInterval(deletionWindow)
@@ -85,7 +99,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
 
         var working = snapshot!.filter { $0.value.syncDate >= retentionCutoff }
 
-        let windowed = current.filter { $0.syncDate >= retentionCutoff }
+        let windowed = resolved.filter { $0.syncDate >= retentionCutoff }
         let currentIDs = Set(windowed.map(\.syncID))
 
         var upserts: [SyncUpsert<Record>] = []
@@ -133,7 +147,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
             await saveSnapshot(working)
             debug(category, "data sync [\(name)]: +\(upserts.count) -\(toDelete.count)")
         }
-        return !failed
+        hasPendingWork = failed
     }
 
     private func loadSnapshot() async -> [Record.SyncID: Record] {

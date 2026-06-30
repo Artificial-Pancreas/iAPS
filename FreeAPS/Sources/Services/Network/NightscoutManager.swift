@@ -47,7 +47,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private var notUploadedOverrides: [NigtscoutExercise] = []
 
     private var lastSeenCgmStart: Date?
-    private var cgmStartUploadPending: Bool = true
 
     private var lastUploadedPumpStatus: PumpDisplayStatus?
 
@@ -215,9 +214,10 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
 
         observe(appCoordinator.loopCompleted) { me, _ in
-            // we are using loopCompleted only as a timer/trigger here, to retry uploading of overrides if needed
-            await withBackgroundTask("nightscout upload - overrides") {
+            // loopCompleted used only as a periodic timer here: retry overrides + pod age if pending
+            await withBackgroundTask("nightscout upload - retries") {
                 await me.uploadOverridesIfNeeded()
+                await me.retryPodAgeIfNeeded()
             }
         }
     }
@@ -546,10 +546,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    private func uploadPodAge(podActivatedAt: Date) async {
-        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
-
-        let siteTreatment = NigtscoutTreatment(
+    private func podSiteTreatment(podActivatedAt: Date) -> NigtscoutTreatment {
+        NigtscoutTreatment(
             duration: nil,
             rawDuration: nil,
             rawRate: nil,
@@ -567,7 +565,25 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             targetTop: nil,
             targetBottom: nil
         )
-        await podAgeSync.reconcile(current: [siteTreatment])
+    }
+
+    private func uploadPodAge(podActivatedAt: Date) async {
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else {
+            await podAgeSync.markPending()
+            return
+        }
+        let siteTreatment = podSiteTreatment(podActivatedAt: podActivatedAt)
+        await podAgeSync.reconcile { [siteTreatment] }
+    }
+
+    private func retryPodAgeIfNeeded() async {
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable,
+              let podActivatedAt = appCoordinator.pumpInfo.value?.podActivatedAt
+        else {
+            return
+        }
+        let siteTreatment = podSiteTreatment(podActivatedAt: podActivatedAt)
+        await podAgeSync.reconcile(trigger: .retry) { [siteTreatment] }
     }
 
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async {
@@ -604,7 +620,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     private func pumpHistoryUpdated(_ pumpHistory: [PumpHistoryEvent]) async {
         guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
-        await pumpHistorySync.reconcile(current: convertPumpHistoryToNightscout(events: pumpHistory))
+        let treatments = convertPumpHistoryToNightscout(events: pumpHistory)
+        await pumpHistorySync.reconcile { treatments }
     }
 
     private func glucoseHistoryUpdated(_ bloodGlucose: [BloodGlucose]) async {
@@ -613,34 +630,33 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         else {
             return
         }
-        await glucoseSync.reconcile(current: bloodGlucose)
+        await glucoseSync.reconcile { bloodGlucose }
     }
 
     private func cgmStatusUpdated(_ cgmStatus: CgmDisplayStatus) async {
-        let canUpload =
-            nightscoutAPI != nil && appCoordinator.settings.value.isUploadEnabled && cgmStatus
-                .shouldUploadGlucose && isNetworkReachable
-
-        var cgmState: [NigtscoutTreatment]?
+        // sensor-change log
+        var recorded: [NigtscoutTreatment]?
         if let sessionStartDate = cgmStatus.sessionStartDate,
            abs(sessionStartDate.timeIntervalSince(lastSeenCgmStart ?? .distantPast)) > 60
         {
             self.lastSeenCgmStart = sessionStartDate
+            recorded = await recordSensorStartIfNeeded(sessionStartDate)
+        }
 
-            if let recorded = await recordSensorStartIfNeeded(sessionStartDate) {
-                self.cgmStartUploadPending = true
-                cgmState = recorded
+        guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled,
+              cgmStatus.shouldUploadGlucose, isNetworkReachable
+        else {
+            if recorded != nil {
+                await cgmStateSync.markPending()
             }
+            return
         }
 
-        if canUpload, cgmState == nil, self.cgmStartUploadPending {
-            cgmState = await readCgmState()
-        }
-
-        guard canUpload, let cgmState else { return }
-
-        if await cgmStateSync.reconcile(current: cgmState) {
-            self.cgmStartUploadPending = false
+        if let recorded {
+            await cgmStateSync.reconcile { recorded }
+        } else {
+            // retry previous uploads if needed
+            await cgmStateSync.reconcile(trigger: .retry) { [self] in await readCgmState() }
         }
     }
 
@@ -749,12 +765,14 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
 
     private func carbHistoryUpdated(_ carbHistory: [CarbsEntry]) async {
         guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
-        await carbsSync.reconcile(current: convertCarbHistoryToNightscout(events: carbHistory))
+        let treatments = convertCarbHistoryToNightscout(events: carbHistory)
+        await carbsSync.reconcile { treatments }
     }
 
     private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
         guard nightscoutAPI != nil, appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return }
-        await tempTargetsSync.reconcile(current: convertTempTargetsToNightscout(events: tempTargets))
+        let treatments = convertTempTargetsToNightscout(events: tempTargets)
+        await tempTargetsSync.reconcile { treatments }
     }
 
     /// upload `glucose` to nightscout, upon success - if saveToUploaded=true, append uploaded glucose to storage so we don't upload any of it next time
