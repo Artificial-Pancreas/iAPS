@@ -1390,6 +1390,37 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "Today's Meals" = "Today's Meals";
 
+"Micronutrient" = "Micronutrient";
+
+"Micronutrients" = "Micronutrients";
+
+"Vitamin A" = "Vitamin A";
+"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
+"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
+"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
+"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
+"Vitamin B6" = "Vitamin B6";
+"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
+"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
+"Vitamin B12" = "Vitamin B12";
+"Vitamin C" = "Vitamin C";
+"Vitamin D" = "Vitamin D";
+"Vitamin E" = "Vitamin E";
+"Vitamin K" = "Vitamin K";
+"Calcium" = "Calcium";
+"Iron" = "Iron";
+"Magnesium" = "Magnesium";
+"Potassium" = "Potassium";
+"Zinc" = "Zinc";
+"Phosphorus" = "Phosphorus";
+"Copper" = "Copper";
+"Manganese" = "Manganese";
+"Selenium" = "Selenium";
+"Iodine" = "Iodine";
+"Salt" = "Salt";
+
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+
 // --------- AI ---------
 /* */
 
@@ -1450,6 +1481,10 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Manual Entry" = "Manual Entry";
 
 "Photo Analysis" = "Photo Analysis";
+
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
 
 "Barcode Scanner" = "Barcode Scanner";
 
@@ -1569,6 +1604,16 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "Anthropic (Claude API) Configuration" = "Anthropic (Claude API) Configuration";
 
+"USDA Food Database" = "USDA Food Database";
+
+"USDA FoodData API Key" = "USDA FoodData API Key";
+
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+
+"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+
 "Provider for Barcode Scanning" = "Provider for Barcode Scanning";
 
 "Provider for Text/Voice Search" = "Provider for Text/Voice Search";
@@ -1578,7 +1623,6 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Fast" = "Rápido";
 
 "Provider for AI Image Analysis" = "Provider for AI Image Analysis";
-
 
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
 
@@ -1659,6 +1703,15 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "carbs" = "carbs";
 
 "fat" = "fat";
+
+/* Display more macro nutrients */
+"More" = "More";
+
+/* Additional nutrient */
+"more nutrient" = "more nutrient";
+
+/* Additional nutrients */
+"more nutrients" = "more nutrients";
 
 "📝 Notes" = "📝 Notes";
 
@@ -1788,6 +1841,8 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
 
 "Reset to Default" = "Reset to Default";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Retake Photo";
 
@@ -1985,9 +2040,15 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 "Carbs" = "Carbohidratos";
 
-// --------- End of AI ---------
-/* */
+"Discard" = "Discard";
 
+"Do you want to discard this meal?" = "Do you want to discard this meal?";
+
+"Set Time" = "Set Time";
+
+// --------- End of AI ---------
+
+/* */
 "Temp Basal" = "Insulina basal temporal";
 
 /* */
@@ -2058,8 +2119,8 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Bolus already in Progress!" = "Bolus already in Progress!";
 
 /* -------------- Developer settings ---------------------- */
-/* Debug options */
 
+/* Debug options */
 "Developer" = "Desarrollador";
 
 /* Debug option view NS Upload Profile */
@@ -2176,8 +2237,8 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Total" = "Total";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Enable FPU */
 
+/* Enable FPU */
 "Enable" = "Habilitar";
 
 /* Header */
@@ -2418,8 +2479,8 @@ Ajustes predeterminados:\n
 "Hide Future" = "Ocultar entradas futuras";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-/* Warning about bolus recommendation. Title */
 
+/* Warning about bolus recommendation. Title */
 "Warning!" = "¡Advertencia!";
 
 /* Alert to confirm bolus amount to add */
@@ -2630,10 +2691,10 @@ Ajustes predeterminados:\n
 "Failed to Suspend Insulin Delivery" = "No se pudo suspender la administración de insulina";
 
 //* -----------------------------------------------------------------------*/
+
 /* ----------------------Statistics strings -------------------------------*/
+
 /* */
-
-
 "Today" = "Hoy";
 
 /* */
@@ -2857,8 +2918,8 @@ Ajustes predeterminados:\n
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Suavizar valores de glucosa";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* Setting Title */
 
+/* Setting Title */
 "Sharing" = "Compartir";
 
 /* Share and Backup page header */
@@ -2925,8 +2986,8 @@ Ajustes predeterminados:\n
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default.";
 
 /* ——————————Contact Image ————————*/
-/* Contact Image, contacts list - prefix before the contact given name */
 
+/* Contact Image, contacts list - prefix before the contact given name */
 "Contact" = "Contacto";
 
 /* Contact Image, settings, header of the contacts list */
@@ -3077,17 +3138,20 @@ Ajustes predeterminados:\n
 "LoopStatusContactValue" = "Estado del lazo";
 
 /* --------------------------  Dana Pump  ---------------------- */
-/* Dana footer */
 
+/* Dana footer */
 "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
 
 /* --------- Auto ISF --------- */
-/* */
 
+/* */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
 
 /* */
 "Nighttime" = "Nighttime";
+
+/* */
+"Disable during nighttime" = "Disable during nighttime";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
@@ -3334,8 +3398,8 @@ Ajustes predeterminados:\n
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
-/* Headline Rewind Resets Autosens */
 
+/* Headline Rewind Resets Autosens */
 "Rewind Resets Autosens" = "Rebobinar reinicia Autosens";
 
 /* ”Rewind Resets Autosens” */
@@ -3641,8 +3705,8 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Valor predeterminado: 0.5\n\nEsta es otra clave de seguridad de OpenAPS, y especifica qué porcentaje del cálculo de la insulina total requerida puede ser entregado como SMB.\n\nAumenta este valor experimental lentamente y con precaución.";
 
 // Dynamic ISF + CR Settings:
-/* Headline "Adjust Dynamic ISF constant" */
 
+/* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Ajustar constante de FSI dinámico";
 
 /* Adjust Dynamic ISF constant */
@@ -3890,7 +3954,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Light / Dark Mode" = "Light / Dark Mode";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Neglect Carbohydrates in oref0";
+"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Hide Predictions";
@@ -3912,6 +3976,18 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* Show Predictions */
 "Show Predictions" = "Show Predictions";
+
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Watch: Show Chart";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Watch: Show Delta";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Watch: Show Eventual";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Watch: Show Predictions";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
@@ -4096,3 +4172,28 @@ Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o 
 
 /* name of complete meals when saving */
 "Complete Meal" = "Complete Meal";
+
+/* Alert title when manual temp basal rate exceeds Max Basal setting */
+"Max Basal Exceeded" = "Max Basal Exceeded";
+
+/* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+
+/* --- Build expiration alert (TestFlight 90-day lifetime) --- */
+"OK" = "OK";
+
+"More Info" = "Más Info";
+
+"Build Expires Soon!" = "Build Expires Soon!";
+
+"Build Expiring in %d Day" = "Build Expiring in %d Day";
+
+"Build Expiring in %d Days" = "Build Expiring in %d Days";
+
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild.";
+
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild.";
+
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
+
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";

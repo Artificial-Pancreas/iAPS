@@ -8,12 +8,6 @@
       location = "group:RileyLinkKit/RileyLinkKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:OmniKit/OmniKit.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:OmniBLE/OmniBLE.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:MinimedKit/MinimedKit.xcodeproj">
    </FileRef>
    <FileRef
@@ -45,5 +39,8 @@
    </FileRef>
    <FileRef
       location = "container:MedtrumKit/MedtrumKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:OmnipodKit/OmnipodKit.xcodeproj">
    </FileRef>
 </Workspace>

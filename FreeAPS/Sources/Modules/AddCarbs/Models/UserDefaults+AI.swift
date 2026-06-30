@@ -6,6 +6,7 @@ extension UserDefaults {
         case claudeAPIKey = "com.loopkit.Loop.claudeAPIKey"
         case openAIAPIKey = "com.loopkit.Loop.openAIAPIKey"
         case googleGeminiAPIKey = "com.loopkit.Loop.googleGeminiAPIKey"
+        case usdaAPIKey = "com.loopkit.Loop.usdaAPIKey"
         case textSearchProvider = "com.loopkit.Loop.textSearchProvider"
         case barcodeSearchProvider = "com.loopkit.Loop.barcodeSearchProvider"
         case aiImageProvider = "com.loopkit.Loop.aiImageProvider"
@@ -44,6 +45,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: AIKey.googleGeminiAPIKey.rawValue)
+        }
+    }
+
+    var usdaAPIKey: String {
+        get {
+            string(forKey: AIKey.usdaAPIKey.rawValue) ?? ""
+        }
+        set {
+            set(newValue, forKey: AIKey.usdaAPIKey.rawValue)
         }
     }
 
