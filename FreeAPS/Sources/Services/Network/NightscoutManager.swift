@@ -86,14 +86,11 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     func start() async {
         reloadNightscoutConfiguration()
 
-        pumpHistorySync = DataSynchronizer(
+        pumpHistorySync = treatmentSync(
             name: "ns.treatments",
-            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
-            storage: storage,
             snapshotFile: OpenAPS.Nightscout.uploadedPumphistory,
             retention: .hours(24),
-            deletionWindow: .hours(8),
-            category: .nightscout
+            deletionWindow: .hours(8)
         )
 
         glucoseSync = DataSynchronizer(
@@ -106,44 +103,32 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             category: .nightscout
         )
 
-        carbsSync = DataSynchronizer(
+        carbsSync = treatmentSync(
             name: "ns.carbs",
-            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
-            storage: storage,
             snapshotFile: OpenAPS.Nightscout.uploadedCarbs,
             retention: .hours(24),
-            deletionWindow: .hours(8),
-            category: .nightscout
+            deletionWindow: .hours(8)
         )
 
-        tempTargetsSync = DataSynchronizer(
+        tempTargetsSync = treatmentSync(
             name: "ns.tempTargets",
-            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
-            storage: storage,
             snapshotFile: OpenAPS.Nightscout.uploadedTempTargets,
             retention: .hours(24),
-            deletionWindow: 0, // temp targets are append-only
-            category: .nightscout
+            deletionWindow: 0 // append-only
         )
 
-        podAgeSync = DataSynchronizer(
+        podAgeSync = treatmentSync(
             name: "ns.podAge",
-            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
-            storage: storage,
             snapshotFile: OpenAPS.Nightscout.uploadedPodAge,
-            retention: .days(15), // a mid-life pod may have activated days ago; keep long enough to (re)upload + dedup
-            deletionWindow: 0, // site changes are append-only; a 1-element reconcile must not delete prior pods
-            category: .nightscout
+            retention: .days(15),
+            deletionWindow: 0 // append-only
         )
 
-        cgmStateSync = DataSynchronizer(
+        cgmStateSync = treatmentSync(
             name: "ns.cgmState",
-            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
-            storage: storage,
             snapshotFile: OpenAPS.Nightscout.uploadedCGMState,
-            retention: .days(40), // local cgmState keeps 30 days; keep >30 here to dedup sensor changes
-            deletionWindow: 0, // sensor changes are append-only
-            category: .nightscout
+            retention: .days(40),
+            deletionWindow: 0 // append-only
         )
 
         self.notUploadedOverrides = await storage
@@ -220,6 +205,23 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 await me.retryPodAgeIfNeeded()
             }
         }
+    }
+
+    private func treatmentSync(
+        name: String,
+        snapshotFile: String,
+        retention: TimeInterval,
+        deletionWindow: TimeInterval
+    ) -> DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink> {
+        DataSynchronizer(
+            name: name,
+            sink: NightscoutTreatmentSink(apiProvider: { [self] in await nightscoutAPI }),
+            storage: storage,
+            snapshotFile: snapshotFile,
+            retention: retention,
+            deletionWindow: deletionWindow,
+            category: .nightscout
+        )
     }
 
     private func makeNightscoutAPI() -> NightscoutAPI? {
