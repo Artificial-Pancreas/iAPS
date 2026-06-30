@@ -2048,6 +2048,8 @@ Enact a temp Basal or a temp target */
 
 "Do you want to discard this meal?" = "Do you want to discard this meal?";
 
+"Set Time" = "Set Time";
+
 // --------- End of AI ---------
 
 /* */
@@ -4126,4 +4128,91 @@ Enact a temp Basal or a temp target */
 "Review Settings" = "Review Settings";
 
 "Continue to Home" = "Continue to Home";
+
+/* Existing-user restore (onboarding) */
+"Restore my settings from a previous install" = "Restore my settings from a previous install";
+
+"Restore your settings" = "Restore your settings";
+
+"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup.";
+
+"Recovery token" = "Recovery token";
+
+"Find this on your old phone under iAPS → Settings → Sharing." = "Find this on your old phone under iAPS → Settings → Sharing.";
+
+"Restore my settings" = "Restore my settings";
+
+"Restoring…" = "Restoring…";
+
+"Settings restored" = "Settings restored";
+
+"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.";
+
+"Restore didn't complete" = "Restore didn't complete";
+
+"Try again" = "Try again";
+
+"Skip and set up fresh" = "Skip and set up fresh";
+
+"Enter your recovery token." = "Enter your recovery token.";
+
+"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.";
+
+/* Profile-schedule review (restore) */
+"Review your therapy settings" = "Review your therapy settings";
+
+"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump.";
+
+"Check these before applying" = "Check these before applying";
+
+"Basal rates" = "Basal rates";
+
+"Insulin sensitivity (ISF)" = "Insulin sensitivity (ISF)";
+
+"Carb ratios" = "Carb ratios";
+
+"Glucose targets" = "Glucose targets";
+
+"Apply these settings" = "Apply these settings";
+
+"Applying…" = "Applying…";
+
+"Continue without restoring schedules" = "Continue without restoring schedules";
+
+"1 segment" = "1 segment";
+
+"%d segments" = "%d segments";
+
+"Carb ratio schedule contains a non-positive value." = "Carb ratio schedule contains a non-positive value.";
+
+"Total basal across the day is zero or negative." = "Total basal across the day is zero or negative.";
+
+"Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
+
+/* Restore by account login */
+"Account login" = "Account login";
+
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
+
+"Email" = "Email";
+
+"Password" = "Password";
+
+"Authentication code" = "Authentication code";
+
+"Logging in…" = "Logging in…";
+
+"Log in & restore" = "Log in & restore";
+
+"Enter your email and password." = "Enter your email and password.";
+
+"Enter the code from your authenticator app." = "Enter the code from your authenticator app.";
+
+"That code didn't match. Please try again." = "That code didn't match. Please try again.";
+
+"Email or password is incorrect." = "Email or password is incorrect.";
+
+"No backup is linked to this account yet." = "No backup is linked to this account yet.";
+
+"Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
 

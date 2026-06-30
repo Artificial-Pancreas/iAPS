@@ -609,6 +609,23 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
+    private func uploadContactTrickToDatabase(_ contacts: [ContactTrickEntry], token: String, name: String?) {
+        let upload = DatabaseContactTrick(contacts: contacts, enteredBy: token, profile: name ?? "default")
+        processQueue.async {
+            Database(token: token).uploadContactTrick(upload)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Contact Trick uploaded to database.")
+                        self.storage.save(upload, as: OpenAPS.Nightscout.uploadedContactTrick)
+                    case let .failure(error):
+                        debug(.nightscout, "Contact Trick failed to upload to database " + error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
     func uploadStatus() {
         let iob = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
         var suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -1011,6 +1028,25 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     NSLog("Override Presets unchanged")
                 } else {
                     uploadOverridePresetsToDatabase(overridePresets, token: token)
+                }
+            }
+        }
+
+        // Upload Contact Trick (display config) when needed
+        if isStatsUploadEnabled || force {
+            if let contacts = storage.retrieveFile(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self),
+               !contacts.isEmpty
+            {
+                let payload = DatabaseContactTrick(contacts: contacts, enteredBy: token, profile: name)
+                if let uploaded = storage.retrieveFile(
+                    OpenAPS.Nightscout.uploadedContactTrick,
+                    as: DatabaseContactTrick.self
+                ),
+                    payload.rawJSON.sorted() == uploaded.rawJSON.sorted(), !force
+                {
+                    NSLog("Contact Trick unchanged")
+                } else {
+                    uploadContactTrickToDatabase(contacts, token: token, name: name)
                 }
             }
         }

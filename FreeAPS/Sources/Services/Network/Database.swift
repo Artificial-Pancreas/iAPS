@@ -1,6 +1,42 @@
 import Combine
 import Foundation
 
+/// The pump settings a restore reads back: the core `PumpSettings` (DIA / max bolus / max
+/// basal) plus the insulin concentration the web side merges into the same stored blob.
+struct PumpRestoreConfig {
+    let settings: PumpSettings?
+    let concentration: Double?
+}
+
+/// Raw decode of that blob — every field optional so a partial or older row still decodes.
+private struct RestoredPumpBlob: Decodable {
+    let insulinActionCurve: Decimal?
+    let maxBolus: Decimal?
+    let maxBasal: Decimal?
+    let concentration: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case insulinActionCurve = "insulin_action_curve"
+        case maxBolus
+        case maxBasal
+        case concentration
+    }
+}
+
+/// Outcome of a restore-by-login attempt against the account-token endpoint. The UI maps
+/// these to prompts (ask for a 2FA code, flag bad credentials, etc.).
+enum AccountLoginError: Error {
+    case invalidCredentials
+    case twoFactorRequired
+    case invalidTwoFactor
+    case noDevice
+    case unreachable
+}
+
+private struct AccountTokenResponse: Decodable {
+    let token: String
+}
+
 class Database {
     init(token: String) {
         self.token = token
@@ -15,7 +51,9 @@ class Database {
         static let uploadTempTargetsPath = "/api/v1/upload/temp-targets"
         static let uploadMealPresetsPath = "/api/v1/upload/meal-presets"
         static let uploadOverridePresetsPath = "/api/v1/upload/override-presets"
+        static let uploadContactTrickPath = "/api/v1/upload/contact-trick"
         static let versionPath = "/api/v1/version_check"
+        static let accountTokenPath = "/api/v1/account/token"
         static let downloadListPath = "/api/v1/download/list"
         static let downloadPreferencesPath = "/api/v1/download/preferences"
         static let downloadSettingsPath = "/api/v1/download/settings"
@@ -24,8 +62,8 @@ class Database {
         static let downloadTempTargetsPath = "/api/v1/download/temp-targets"
         static let downloadMealPresetsPath = "/api/v1/download/meal-presets"
         static let downloadOverridePresetsPath = "/api/v1/download/override-presets"
+        static let downloadContactTrickPath = "/api/v1/download/contact-trick"
         static let downloadDeletePath = "/api/v1/download/delete"
-        static let downloadRestorePath = "/api/v1/download/restore"
 
         static let retryCount = 2
         static let timeout: TimeInterval = 60
@@ -38,6 +76,52 @@ class Database {
 }
 
 extension Database {
+    /// Restore-by-login: exchange account credentials (+ a 2FA code when the account has it
+    /// enabled) for the newest recovery token. No retry — login attempts shouldn't be replayed.
+    func fetchAccountToken(email: String, password: String, code: String?) -> AnyPublisher<String, AccountLoginError> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.accountTokenPath
+
+        var payload: [String: String] = ["email": email, "password": password]
+        if let code, !code.isEmpty { payload["code"] = code }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: payload)
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .decode(type: AccountTokenResponse.self, decoder: JSONDecoder())
+            .map(\.token)
+            .mapError { Self.mapAccountError($0) }
+            .eraseToAnyPublisher()
+    }
+
+    /// Translate the server's `{ "error": … }` body (carried on the thrown NetworkError) into a
+    /// typed case; anything unrecognized is treated as unreachable.
+    private static func mapAccountError(_ error: Error) -> AccountLoginError {
+        guard let netError = error as? NetworkError,
+              case let .badStatusCode(_, body) = netError,
+              let body, let data = body.data(using: .utf8),
+              let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let code = object["error"] as? String
+        else {
+            return .unreachable
+        }
+        switch code {
+        case "two_factor_required": return .twoFactorRequired
+        case "invalid_two_factor": return .invalidTwoFactor
+        case "invalid_credentials": return .invalidCredentials
+        case "no_device": return .noDevice
+        default: return .unreachable
+        }
+    }
+
     func fetchPreferences(_ name: String) -> AnyPublisher<Preferences, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
@@ -54,25 +138,6 @@ extension Database {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: Preferences.self, decoder: JSONCoding.decoder)
-            .eraseToAnyPublisher()
-    }
-
-    func moveProfiles(token: String, restoreToken: String) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.downloadRestorePath
-
-        var request = URLRequest(url: components.url!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "restore_token": restoreToken])
-        request.timeoutInterval = Config.timeout
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
             .eraseToAnyPublisher()
     }
 
@@ -178,6 +243,39 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
+    /// Best-effort fetch of the saved pump settings to restore — DIA / max bolus / max basal
+    /// plus the insulin concentration (U100 = 1.0, U200 = 2.0, …), which the web side merges
+    /// into the same pump-settings row. `settings` is nil unless the core three are all present;
+    /// `concentration` is nil when the backup never recorded one. No separate endpoint.
+    func fetchPumpConfig(_ name: String) -> AnyPublisher<PumpRestoreConfig, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.downloadPumpSettingsPath
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: RestoredPumpBlob.self, decoder: JSONDecoder())
+            .map { blob in
+                let settings: PumpSettings?
+                if let dia = blob.insulinActionCurve, let maxBolus = blob.maxBolus, let maxBasal = blob.maxBasal {
+                    settings = PumpSettings(insulinActionCurve: dia, maxBolus: maxBolus, maxBasal: maxBasal)
+                } else {
+                    settings = nil
+                }
+                return PumpRestoreConfig(settings: settings, concentration: blob.concentration)
+            }
+            .eraseToAnyPublisher()
+    }
+
     func fetchTempTargets(_ name: String) -> AnyPublisher<DatabaseTempTargets, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
@@ -234,6 +332,26 @@ extension Database {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: OverrideDatabase.self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
+    func fetchContactTrick(_ name: String) -> AnyPublisher<DatabaseContactTrick, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.downloadContactTrickPath
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: DatabaseContactTrick.self, decoder: JSONCoding.decoder)
             .eraseToAnyPublisher()
     }
 
@@ -388,6 +506,25 @@ extension Database {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         request.httpBody = try! JSONCoding.encoder.encode(presets)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadContactTrick(_ payload: DatabaseContactTrick) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.uploadContactTrickPath
+
+        var request = URLRequest(url: components.url!)
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONCoding.encoder.encode(payload)
         request.httpMethod = "POST"
 
         return service.run(request)
