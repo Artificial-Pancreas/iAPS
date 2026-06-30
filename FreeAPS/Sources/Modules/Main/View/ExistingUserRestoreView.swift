@@ -4,12 +4,13 @@ import SwiftUI
 import Swinject
 
 /// Existing-User onboarding step: restore a cloud backup (open-iaps.app) onto a fresh
-/// install using the recovery token from the previous install. Phase A restores the two
-/// clean, file-backed sections — OpenAPS Preferences and the iAPS app settings — which
-/// together carry the bulk of a user's tuning, plus the insulin concentration (a safety
-/// detail: a U200 user left at the U100 default would be mis-dosed). Profile schedules
-/// (basal/ISF/CR) and the remaining CoreData-backed presets are out of scope here and
-/// handled separately.
+/// install using the recovery token from the previous install.
+/// - Phase A (silent, all-or-nothing): OpenAPS Preferences + the iAPS app settings, plus the
+///   insulin concentration (a U200 user left at the U100 default would be mis-dosed).
+/// - Phase B (reviewed): the profile schedules — basal, ISF, carb ratios and glucose targets —
+///   are fetched, decomposed and shown for confirmation before being written; basal syncs to
+///   the pump later, at pump setup. A backup with no profile skips straight to done.
+/// The remaining CoreData-backed presets are out of scope here and handled separately.
 struct ExistingUserRestoreView: View {
     let resolver: Resolver
     /// Advance the onboarding cover to the next step (Sharing setup).
@@ -28,23 +29,44 @@ struct ExistingUserRestoreView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-
+        Group {
             switch model.state {
-            case .entry,
-                 .working:
-                entry
-            case .done:
-                done
-            case let .failed(message):
-                failure(message)
+            case .reviewing, .applying:
+                // Phase B: the profile-schedule review is its own full-screen layout.
+                if let review = model.review {
+                    ExistingUserProfileReviewView(
+                        review: review,
+                        isApplying: model.state == .applying,
+                        onApply: model.applySchedules,
+                        onContinueWithout: model.finish
+                    )
+                } else {
+                    Color.clear.onAppear(perform: model.finish)
+                }
+            default:
+                VStack(spacing: 0) {
+                    Spacer()
+                    centeredContent
+                    Spacer()
+                }
+                .padding()
             }
-
-            Spacer()
         }
-        .padding()
         .interactiveDismissDisabled()
+    }
+
+    @ViewBuilder private var centeredContent: some View {
+        switch model.state {
+        case .entry,
+             .working:
+            entry
+        case .done:
+            done
+        case let .failed(message):
+            failure(message)
+        default:
+            EmptyView()
+        }
     }
 
     // MARK: - Token entry
@@ -159,10 +181,14 @@ extension ExistingUserRestoreView {
     final class Model: ObservableObject {
         @Published var token: String = ""
         @Published var state: Phase = .entry
+        /// The decomposed schedules awaiting the user's review (Phase B), formatted for display.
+        @Published var review: ProfileScheduleReview?
 
         enum Phase: Equatable {
             case entry
             case working
+            case reviewing
+            case applying
             case done
             case failed(String)
         }
@@ -170,6 +196,8 @@ extension ExistingUserRestoreView {
         private let resolver: Resolver
         private let storage = BaseFileStorage()
         private var lifetime = Set<AnyCancellable>()
+        /// Held between review and apply so the confirmed schedules are written verbatim.
+        private var decomposed: ProfileScheduleDecomposition.Result?
 
         init(resolver: Resolver) {
             self.resolver = resolver
@@ -235,7 +263,9 @@ extension ExistingUserRestoreView {
                         self.saveConcentration(concentration, increment: preferences.bolusIncrement)
                     }
 
-                    self.state = .done
+                    // Phase A is applied. Phase B: best-effort fetch + decompose of the profile
+                    // schedules for the review step (a missing profile just finishes).
+                    self.loadProfileReview(using: database, units: settings.units)
                 }
             )
             .store(in: &lifetime)
@@ -257,6 +287,106 @@ extension ExistingUserRestoreView {
                     debug(.apsManager, "Restore: insulin concentration couldn't be saved to CoreData. Error: \(error)")
                 }
             }
+        }
+
+        /// Best-effort: fetch the backup profile, decompose it into native schedules, and (if it
+        /// carries any) present the review. A missing or empty profile just finishes — older
+        /// backups may predate profile upload, so this never blocks the restore.
+        private func loadProfileReview(using database: Database, units: GlucoseUnits) {
+            database.fetchProfile("default")
+                .receive(on: DispatchQueue.main)
+                .sink(
+                    receiveCompletion: { [weak self] completion in
+                        if case .failure = completion { self?.finish() }
+                    },
+                    receiveValue: { [weak self] profileStore in
+                        guard let self else { return }
+                        guard let profile = profileStore.store["default"] else { self.finish(); return }
+                        let decomposed = ProfileScheduleDecomposition.decompose(profile, units: units)
+                        let review = Self.buildReview(decomposed, units: units)
+                        guard !review.sections.isEmpty else { self.finish(); return }
+                        self.decomposed = decomposed
+                        self.review = review
+                        self.state = .reviewing
+                    }
+                )
+                .store(in: &lifetime)
+        }
+
+        /// Write the reviewed schedules to their native files and regenerate the composed profile
+        /// so the restored values take effect. Basal isn't pushed to a pump here — there's none
+        /// yet at restore; it syncs when the pump is set up.
+        func applySchedules() {
+            guard let decomposed else { finish(); return }
+            state = .applying
+
+            storage.save(decomposed.basal, as: OpenAPS.Settings.basalProfile)
+            storage.save(decomposed.carbRatios, as: OpenAPS.Settings.carbRatios)
+            storage.save(decomposed.sensitivities, as: OpenAPS.Settings.insulinSensitivities)
+            storage.save(decomposed.targets, as: OpenAPS.Settings.bgTargets)
+
+            // Regenerate settings/profile.json from the new schedules (the same call the editors
+            // and Autotune config use). Best-effort: finish regardless of the result.
+            if let apsManager = resolver.resolve(APSManager.self) {
+                apsManager.makeProfiles()
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] _ in self?.finish() }
+                    .store(in: &lifetime)
+            } else {
+                finish()
+            }
+        }
+
+        /// Advance to the success screen (whose Continue button calls onDone to leave the flow).
+        func finish() {
+            review = nil
+            state = .done
+        }
+
+        /// Build the display model from the decomposed schedules — pure formatting, no I/O.
+        private static func buildReview(
+            _ d: ProfileScheduleDecomposition.Result,
+            units: GlucoseUnits
+        ) -> ProfileScheduleReview {
+            let bg = units == .mmolL ? "mmol/L" : "mg/dL"
+
+            let basalRows = d.basal.map {
+                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.rate)) U/hr")
+            }
+            let isfRows = d.sensitivities.sensitivities.map {
+                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.sensitivity)) \(bg)")
+            }
+            let crRows = d.carbRatios.schedule.map {
+                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.ratio)) g/U")
+            }
+            let targetRows = d.targets.targets.map {
+                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.low)) \(bg)")
+            }
+
+            var sections: [ProfileScheduleReview.ScheduleSection] = []
+            if !basalRows.isEmpty {
+                sections.append(.init(title: "Basal rates", summary: segmentSummary(basalRows.count), rows: basalRows))
+            }
+            if !isfRows.isEmpty {
+                sections.append(.init(title: "Insulin sensitivity (ISF)", summary: segmentSummary(isfRows.count), rows: isfRows))
+            }
+            if !crRows.isEmpty {
+                sections.append(.init(title: "Carb ratios", summary: segmentSummary(crRows.count), rows: crRows))
+            }
+            if !targetRows.isEmpty {
+                sections.append(.init(title: "Glucose targets", summary: segmentSummary(targetRows.count), rows: targetRows))
+            }
+
+            return ProfileScheduleReview(sections: sections, problems: d.problems)
+        }
+
+        private static func segmentSummary(_ count: Int) -> String {
+            count == 1 ? "1 segment" : "\(count) segments"
+        }
+
+        /// Trim a Decimal to a clean display string ("0.55", "5.5", "10").
+        private static func format(_ value: Decimal) -> String {
+            NSDecimalNumber(decimal: value).stringValue
         }
     }
 }
