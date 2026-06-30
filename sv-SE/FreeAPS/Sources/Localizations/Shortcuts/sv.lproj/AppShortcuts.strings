@@ -23,7 +23,7 @@
 "Activates an ${applicationName} Override Preset" = "Aktiverar en profil i ${applicationName}";
 
 /* iAPS Cancel Override shortcut */
-"Cancel ${applicationName} Override" = "Cancel ${applicationName} Override";
+"Cancel ${applicationName} Override" = "Avbryter en aktiv profil i ${applicationName}";
 
 /* iAPS Cancel Override shortcut description */
 "Cancels an active ${applicationName} override" = "Avbryter en aktiv profil i ${applicationName}";
@@ -35,10 +35,10 @@
 "${applicationName} Enacts a bolus" = "Ger en bolus med ${applicationName}";
 
 /* iAPS Meal Preset shortcut */
-"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+"${applicationName} Meal Presets" = "${applicationName} temporär basal";
 
 /* iAPS Meal Preset shortcut description */
-"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";
+"Uses an ${applicationName} Meal Preset" = "Använder ett ${applicationName} - måltidsförval";
 
 /* iAPS Loop Mode shortcut */
 "${applicationName} Loop Mode" = "${applicationName}-loop-läge";
@@ -56,4 +56,4 @@
 "${applicationName} Pump" = "${applicationName} Pump";
 
 /* iAPS Suspend/Resume  shortcut description */
-"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Suspends/Resumes your ${applicationName} pump or cancels a temp basal";
+"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Pausar/Återupptar din ${applicationName} - pump eller avbryter en temporär basal";
