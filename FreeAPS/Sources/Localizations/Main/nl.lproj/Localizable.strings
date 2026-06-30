@@ -2765,7 +2765,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "TightFontTracking" = "Strak";
 
 /* Contact Image, settings, normal font tracking */
-"NormalFontTracking" = "TIR ";
+"NormalFontTracking" = "Normaal";
 
 /* Contact Image, settings, wide font tracking */
 "WideFontTracking" = "Breed";
