@@ -4065,3 +4065,17 @@ Połączono z Nightscout!";
 "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
 
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";
+
+"Cancel temp" = "Cancel temp";
+
+"No " = "No ";
+"%.1f× serving" = "%.1f× serving";
+"Edit Portion" = "Edit Portion";
+"Remove from meal" = "Remove from meal";
+"Discard Meal?" = "Discard Meal?";
+"Discard Meal" = "Discard Meal";
+"Nutrient" = "Nutrient";
+"Add Micronutrient" = "Add Micronutrient";
+"Added" = "Added";
+"%d micros" = "%d micros";
+"Fiber • %d" = "Fiber • %d";

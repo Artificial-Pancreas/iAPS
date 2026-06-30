@@ -4063,3 +4063,17 @@ Enact a temp Basal or a temp target */
 "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Ditt iAPS-app löper ut %1$@ (%2$d dag kvar). Testappar måste förnyas var 90:e dag.";
 
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Ditt iAPS-app löper ut %1$@ (%2$d dagar kvar). Testbyggen måste förnyas var 90:e dag.";
+
+"Cancel temp" = "Avbryt temporär basal";
+
+"No " = "Nej ";
+"%.1f× serving" = "%.1f× portion";
+"Edit Portion" = "Ändra portion";
+"Remove from meal" = "Ta bort från måltid";
+"Discard Meal?" = "Ignorera måltid?";
+"Discard Meal" = "Ignorera Måltid";
+"Nutrient" = "Näringsämne";
+"Add Micronutrient" = "Lägg till näringsämne";
+"Added" = "Tillagd";
+"%d micros" = "%d näringsämnen";
+"Fiber • %d" = "Fiber • %d";
