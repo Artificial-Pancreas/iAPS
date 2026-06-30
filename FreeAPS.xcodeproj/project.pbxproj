@@ -18,10 +18,6 @@
 		0F7A65FBD2CD8D6477ED4539 /* NotificationsConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E625985B47742D498CB1681A /* NotificationsConfigProvider.swift */; };
 		17A9D0899046B45E87834820 /* CREditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8D5F457B5AFF763F8CF3DF /* CREditorProvider.swift */; };
 		19012CDC291D2CB900FB8210 /* LoopStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19012CDB291D2CB900FB8210 /* LoopStats.swift */; };
-		1901412D2CDB92D600ABD925 /* RestoreDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901412C2CDB92CB00ABD925 /* RestoreDataFlow.swift */; };
-		1901412F2CDB92F200ABD925 /* RestoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901412E2CDB92E600ABD925 /* RestoreProvider.swift */; };
-		190141312CDB930400ABD925 /* RestoreStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190141302CDB92FB00ABD925 /* RestoreStateModel.swift */; };
-		190141342CDB931A00ABD925 /* RestoreRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190141332CDB931000ABD925 /* RestoreRootView.swift */; };
 		190141362CDB9D4B00ABD925 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190141352CDB9D4600ABD925 /* Token.swift */; };
 		190E311E2EE8313E00C4D70A /* MealMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190E311D2EE8312300C4D70A /* MealMode.swift */; };
 		190EBCC429FF136900BA767D /* UIUXDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC329FF136900BA767D /* UIUXDataFlow.swift */; };
@@ -625,10 +621,6 @@
 		10A0C32B0DAB52726EF9B6D9 /* BolusRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusRootView.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
 		19012CDB291D2CB900FB8210 /* LoopStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStats.swift; sourceTree = "<group>"; };
-		1901412C2CDB92CB00ABD925 /* RestoreDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreDataFlow.swift; sourceTree = "<group>"; };
-		1901412E2CDB92E600ABD925 /* RestoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreProvider.swift; sourceTree = "<group>"; };
-		190141302CDB92FB00ABD925 /* RestoreStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreStateModel.swift; sourceTree = "<group>"; };
-		190141332CDB931000ABD925 /* RestoreRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreRootView.swift; sourceTree = "<group>"; };
 		190141352CDB9D4600ABD925 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		190E311D2EE8312300C4D70A /* MealMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealMode.swift; sourceTree = "<group>"; };
 		190EBCC329FF136900BA767D /* UIUXDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUXDataFlow.swift; sourceTree = "<group>"; };
@@ -1359,25 +1351,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		1901412B2CDB92B500ABD925 /* Restore */ = {
-			isa = PBXGroup;
-			children = (
-				1901412C2CDB92CB00ABD925 /* RestoreDataFlow.swift */,
-				1901412E2CDB92E600ABD925 /* RestoreProvider.swift */,
-				190141302CDB92FB00ABD925 /* RestoreStateModel.swift */,
-				190141322CDB930800ABD925 /* View */,
-			);
-			path = Restore;
-			sourceTree = "<group>";
-		};
-		190141322CDB930800ABD925 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				190141332CDB931000ABD925 /* RestoreRootView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		190EBCC229FF134900BA767D /* UIUX */ = {
 			isa = PBXGroup;
 			children = (
@@ -1733,7 +1706,6 @@
 				3E1C41D9301B7058AA7BF5EA /* PreferencesEditor */,
 				99C01B871ACAB3F32CE755C7 /* PumpConfig */,
 				E493126EA71765130F64CCE5 /* PumpSettingsEditor */,
-				1901412B2CDB92B500ABD925 /* Restore */,
 				3811DE3825C9D4A100A708ED /* Settings */,
 				19F191D92BE4F93400F6297E /* Sharing */,
 				29B478DF61BF8D270F7D8954 /* Snooze */,
@@ -3491,7 +3463,6 @@
 				F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */,
 				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
-				1901412D2CDB92D600ABD925 /* RestoreDataFlow.swift in Sources */,
 				F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */,
 				19CE0E592DD9F30D0050FC89 /* Configuration.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
@@ -3522,7 +3493,6 @@
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				F29E5E392EE4726A00D2CBC0 /* ClaudeProtocol.swift in Sources */,
 				E00EEC0627368630002FF094 /* UIAssembly.swift in Sources */,
-				1901412F2CDB92F200ABD925 /* RestoreProvider.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */,
 				F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */,
@@ -3608,7 +3578,6 @@
 				F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */,
 				CE7CA3582A064E2F004BE681 /* ListStateView.swift in Sources */,
 				193F6CDD2A512C8F001240FD /* Loops.swift in Sources */,
-				190141342CDB931A00ABD925 /* RestoreRootView.swift in Sources */,
 				38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */,
 				1910D4552F7FFA28005778C5 /* MicroNutrient.swift in Sources */,
 				38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */,
@@ -3651,7 +3620,6 @@
 				19AEF4322B1F5A98006FFE8B /* TIRView.swift in Sources */,
 				38A43598262E0E4900E80935 /* FetchAnnouncementsManager.swift in Sources */,
 				642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */,
-				190141312CDB930400ABD925 /* RestoreStateModel.swift in Sources */,
 				190F8CF72BC6F70800EDB473 /* IllustrationView.swift in Sources */,
 				19DB70A72BF8F01E00C05381 /* ActiveCOBView.swift in Sources */,
 				BD7DA9AC2AE06EB900601B20 /* BolusCalculatorConfigRootView.swift in Sources */,
