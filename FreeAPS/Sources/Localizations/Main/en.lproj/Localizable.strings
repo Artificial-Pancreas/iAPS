@@ -4189,3 +4189,30 @@ Enact a temp Basal or a temp target */
 
 "Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
 
+/* Restore by account login */
+"Account login" = "Account login";
+
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
+
+"Email" = "Email";
+
+"Password" = "Password";
+
+"Authentication code" = "Authentication code";
+
+"Logging in…" = "Logging in…";
+
+"Log in & restore" = "Log in & restore";
+
+"Enter your email and password." = "Enter your email and password.";
+
+"Enter the code from your authenticator app." = "Enter the code from your authenticator app.";
+
+"That code didn't match. Please try again." = "That code didn't match. Please try again.";
+
+"Email or password is incorrect." = "Email or password is incorrect.";
+
+"No backup is linked to this account yet." = "No backup is linked to this account yet.";
+
+"Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
+

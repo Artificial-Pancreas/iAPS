@@ -23,6 +23,20 @@ private struct RestoredPumpBlob: Decodable {
     }
 }
 
+/// Outcome of a restore-by-login attempt against the account-token endpoint. The UI maps
+/// these to prompts (ask for a 2FA code, flag bad credentials, etc.).
+enum AccountLoginError: Error {
+    case invalidCredentials
+    case twoFactorRequired
+    case invalidTwoFactor
+    case noDevice
+    case unreachable
+}
+
+private struct AccountTokenResponse: Decodable {
+    let token: String
+}
+
 class Database {
     init(token: String) {
         self.token = token
@@ -39,6 +53,7 @@ class Database {
         static let uploadOverridePresetsPath = "/api/v1/upload/override-presets"
         static let uploadContactTrickPath = "/api/v1/upload/contact-trick"
         static let versionPath = "/api/v1/version_check"
+        static let accountTokenPath = "/api/v1/account/token"
         static let downloadListPath = "/api/v1/download/list"
         static let downloadPreferencesPath = "/api/v1/download/preferences"
         static let downloadSettingsPath = "/api/v1/download/settings"
@@ -61,6 +76,52 @@ class Database {
 }
 
 extension Database {
+    /// Restore-by-login: exchange account credentials (+ a 2FA code when the account has it
+    /// enabled) for the newest recovery token. No retry — login attempts shouldn't be replayed.
+    func fetchAccountToken(email: String, password: String, code: String?) -> AnyPublisher<String, AccountLoginError> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.accountTokenPath
+
+        var payload: [String: String] = ["email": email, "password": password]
+        if let code, !code.isEmpty { payload["code"] = code }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: payload)
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .decode(type: AccountTokenResponse.self, decoder: JSONDecoder())
+            .map(\.token)
+            .mapError { Self.mapAccountError($0) }
+            .eraseToAnyPublisher()
+    }
+
+    /// Translate the server's `{ "error": … }` body (carried on the thrown NetworkError) into a
+    /// typed case; anything unrecognized is treated as unreachable.
+    private static func mapAccountError(_ error: Error) -> AccountLoginError {
+        guard let netError = error as? NetworkError,
+              case let .badStatusCode(_, body) = netError,
+              let body, let data = body.data(using: .utf8),
+              let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let code = object["error"] as? String
+        else {
+            return .unreachable
+        }
+        switch code {
+        case "two_factor_required": return .twoFactorRequired
+        case "invalid_two_factor": return .invalidTwoFactor
+        case "invalid_credentials": return .invalidCredentials
+        case "no_device": return .noDevice
+        default: return .unreachable
+        }
+    }
+
     func fetchPreferences(_ name: String) -> AnyPublisher<Preferences, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
