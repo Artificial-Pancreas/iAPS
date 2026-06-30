@@ -69,10 +69,15 @@ struct FoodItemRow: View {
 
                         if case .per100 = foodItem.nutrition {
                             if let servingSize = foodItem.standardServingSize {
-                                Text("\(Double(foodItem.portionSizeOrMultiplier / servingSize), specifier: "%.1f")× serving")
-                                    .font(.caption)
-                                    .foregroundColor(.primary)
-                                    .opacity(0.7)
+                                Text(
+                                    String(
+                                        format: NSLocalizedString("%.1f× serving", comment: "Portion size multiplier"),
+                                        Double(foodItem.portionSizeOrMultiplier / servingSize)
+                                    )
+                                )
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                                .opacity(0.7)
                             }
                         }
                     }
@@ -93,19 +98,22 @@ struct FoodItemRow: View {
                     Button {
                         showPortionAdjuster = true
                     } label: {
-                        Label("Edit Portion", systemImage: "slider.horizontal.3")
+                        Label(
+                            NSLocalizedString("Edit Portion", comment: "Label for editing food portion"),
+                            systemImage: "slider.horizontal.3"
+                        )
                     }
                 }
 
                 if foodItem.source != .database {
                     if isSaved {
-                        Label("Saved", systemImage: "checkmark.circle.fill")
+                        Label(NSLocalizedString("Saved", comment: "Label for saved food"), systemImage: "checkmark.circle.fill")
                             .foregroundColor(.secondary)
                     } else if let onPersist = onPersist {
                         Button {
                             onPersist(foodItem)
                         } label: {
-                            Label("Save", systemImage: "square.and.arrow.down")
+                            Label(NSLocalizedString("Save", comment: "Button to save food"), systemImage: "square.and.arrow.down")
                         }
                     }
                 }
@@ -114,7 +122,10 @@ struct FoodItemRow: View {
                     Button(role: .destructive) {
                         onDelete()
                     } label: {
-                        Label("Remove from meal", systemImage: "trash")
+                        Label(
+                            NSLocalizedString("Remove from meal", comment: "Button to remove food from current meal"),
+                            systemImage: "trash"
+                        )
                     }
                 }
             }
@@ -157,7 +168,7 @@ struct FoodItemRow: View {
                 Button {
                     onDelete?()
                 } label: {
-                    Label("Delete", systemImage: "trash")
+                    Label(NSLocalizedString("Delete", comment: "Button to delete food from database"), systemImage: "trash")
                 }
                 .tint(.red)
             }
@@ -167,7 +178,10 @@ struct FoodItemRow: View {
                 Button {
                     showPortionAdjuster = true
                 } label: {
-                    Label("Edit Portion", systemImage: "slider.horizontal.3")
+                    Label(
+                        NSLocalizedString("Edit Portion", comment: "Label for editing food portion"),
+                        systemImage: "slider.horizontal.3"
+                    )
                 }
                 .tint(.orange)
             }
