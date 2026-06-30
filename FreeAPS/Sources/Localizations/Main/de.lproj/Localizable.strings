@@ -4,10 +4,8 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Insulin erfassen ohne tatsächliche Bolusabgabe";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Hinzufügen von %@ ohne tatsächliche Bolusabgabe";
 
 "Bolus" = "Bolus";
 
@@ -44,10 +42,8 @@
 "Insulin recommended" = "Empfohlene Insulinmenge";
 
 /*  */
-"Insulin required" = "Benötigte Insulinmenge";
 
 /* Bolus screen */
-"Recommendation" = "Empfehlung";
 
 /* Button */
 "Clear" = "Eingabe löschen";
@@ -56,7 +52,6 @@
 "Done" = "Fertig";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Letzte Loop-Schleife vor %@ Minuten. Transaktion des Mahlzeit / Bolus abschließen oder abbrechen, um den nächsten Schleifendurchlauf zu ermöglichen";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Emojis als Etiketten benutzen";
@@ -74,7 +69,6 @@
 "Wait please" = "Bitte warten";
 
 /*  */
-"Agree and continue" = "Zustimmen und fortfahren";
 
 /* */
 "Log external insulin" = "Externes Insulin aufzeichnen";
@@ -107,13 +101,11 @@
 "Meal Summary" = "Mahlzeitenübersicht";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Mahlzeit bearbeiten";
 
 /* Bolus View Meal Add Meal Button */
 "Add Meal" = "Mahlzeit hinzufügen";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolus-Zusammenfassung";
 
 /* For the  Bolus View pop-up */
 "Calculations" = "Berechnungen";
@@ -125,22 +117,17 @@
 "Hypo Treatment" = "Hypo Behandlung";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Voller Bolus";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fraktion";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Faktor für fettige Mahlzeit";
 
 /* Footer */
 "Carbs and previous insulin are included in the eventual glucose prediction." = "Kohlenhydrate und früheres Insulin werden in die Glukosevorhersage einbezogen.";
 
 /* For the  Bolus View pop-up */
-"Result" = "Ergebnis";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Dein eingegebener Wert wurde durch deine maximale Bolus-Einstellung von %d%@ begrenzt";
 
 /* Bolus View Continue Button */
 "Continue" = "Fortsetzen";
@@ -152,16 +139,13 @@
 "looping" = "Loop aktiv";
 
 /* min ago since last loop */
-"min ago" = "Min. her";
 
 /* Status Title */
 "No suggestion" = "Kein Vorschlag";
 
 /* Replace pod text in Header */
-"Replace pod" = "Pod ersetzen";
 
 /* Add carbs screen */
-"Add Carbs" = "Kohlenhydrate hinzufügen";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Kohlenhydrate hinzufügen ";
@@ -176,7 +160,6 @@
 "Open" = "Offen";
 
 /*  */
-"Amount Carbs" = "Kohlenhydratmenge";
 
 /* Grams unit */
 "grams" = "Gramm";
@@ -191,13 +174,11 @@
 "Are you sure?" = "Sind Sie sicher?";
 
 /* */
-"Clear Records" = "Clear Records";
 
 /* */
 "Delete CoreData database records" = "Delete CoreData database records";
 
 /* */
-"Delete NS records" = "Delete NS records";
 
 /* */
 "All records in " = "All records in ";
@@ -206,7 +187,6 @@
 " will be deleted!" = " will be deleted!";
 
 /* Bottom target temp */
-"Bottom target" = "Untergrenze";
 
 /* Cancel preset name */
 "Cancel" = "Abbrechen";
@@ -239,16 +219,13 @@
 "Target" = "Ziel";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basalrate und Empfindlichkeitsgrad";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Ein niedrigeres eingestelltes 'Halb Basal Ziel' wird die Basalrate früher reduzieren und den ISF schneller erhöhen, wenn ein niedriger Ziel-Blutzuckerwert eingegeben wird.";
 
 /* */
 " Your setting: " = " Deine Einstellungen: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max schränkt den max. Endpunkt ein";
 
 /*  */
 "Enter preset name" = "Geben Sie einen Namen für die Vorlage ein";
@@ -269,10 +246,8 @@
 "Save as Preset" = "Speichern als Voreinstellung";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Voreinstellung löschen";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Voreinstellung löschen '%@'?";
 
 /* Button */
 "No" = "Nein";
@@ -281,13 +256,10 @@
 "Yes" = "Ja";
 
 /* + Button */
-"[ +1 ]" = "[ +1 ]";
 
 /* - Button */
-"[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Obergrenze";
 
 /*  Temp target set for ... minutes */
 "for" = "für";
@@ -371,7 +343,6 @@
 "Dismiss" = "Verwerfen";
 
 /*  */
-"Important message" = "Wichtige Nachricht";
 
 /*  */
 "Amount" = "Menge";
@@ -390,7 +361,6 @@ Enact a temp Basal or a temp target */
 "Manual Temp Basal" = "Manuelle Temporäre Basalrate";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Erlaube Uploads der Daten";
 
 /* API secret in NS */
 "API secret" = "API secret";
@@ -408,22 +378,18 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "Ungültige URL";
 
 /*  */
-"Local glucose source" = "Lokale BZ-Quelle";
 
 /* Header */
 "Nightscout Config" = "Nightscout Konfiguration";
 
 /*  */
-"Port" = "Port";
 
 /*  */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Lokalen BZ-Server verwenden";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Dies ermöglicht das Hochladen der statistics.json zu Nightscout, die vom Community Statistics and Demographics Project genutzt werden kann.\n\nDie Teilnahme an der Gemeinschaftsstatistik erfolgt auf freiwilliger Basis und erfordert eine gesonderte Registrierung unter:\n";
 
 /*  */
 "Edit settings json" = "Einstellungen bearbeiten json";
@@ -435,7 +401,6 @@ Enact a temp Basal or a temp target */
 "Preferences" = "Einstellungen";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Empfohlener Insulin Anteil";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Überspringe Bolus-Vorschlag nach Kohlenhydrateingabe";
@@ -453,7 +418,6 @@ Enact a temp Basal or a temp target */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Dies wird einige oder alle deine aktuellen Pumpeneinstellungen ersetzen. Bist du sicher, dass du die Profileinstellungen von Nightscout importieren möchtest?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nUngültige Nightcsout Basal-Einstellungen. \n\nImport abgebrochen. Bitte überprüfen Sie Ihre Nightscout Profil Basal-Einstellungen!";
 
 /* Import Error */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nEinstellungen wurden importiert, aber die Basalen konnten nicht in Pumpe gespeichert werden (keine Pump). Überprüfen Sie Ihre Basiseinstellungen und tippen Sie auf <unk> Speichern auf Pump, um die neuen Basiseinstellungen zu synchronisieren";
@@ -480,22 +444,16 @@ Enact a temp Basal or a temp target */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nFalsch übereinstimmende Glukoseeinheiten in Nightscout und Pump-Einstellungen. Import abgebrochen.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Kann das Standard-Nightscout-Profil nicht finden.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Blutzucker Einheit";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Medtronic-Pumpe hinzufügen";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Omnipod hinzufügen";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Dana-i/RS hinzufügen";
 
 /* Add Simulator pump */
-"Add Simulator" = "Simulator hinzufügen";
 
 /* View/Header when pod expired */
 "Replace" = "Pod ersetzen!";
@@ -592,7 +550,6 @@ Enact a temp Basal or a temp target */
 " U/hr" = "IE/h";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ IE/h";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ IE";
@@ -607,7 +564,6 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 IE/h";
 
 /* abbreviation for days */
 "d" = "Tag";
@@ -682,16 +638,13 @@ Enact a temp Basal or a temp target */
 "Settings" = "Einstellungen";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Empfohlener Bolus %";
 
 /* 2 log files to share */
 "Share logs" = "Ereignisprotokolldatei teilen";
 
 /* Upper target */
-"High target" = "Obere Grenze";
 
 /* Lower target */
-"Low target" = "Untere Grenze";
 
 /* When bolusing */
 "Bolusing" = "Bolusabgabe";
@@ -763,13 +716,11 @@ Enact a temp Basal or a temp target */
 " min" = " Min";
 
 /* */
-"Unable to change anything" = "Keine Änderungen möglich";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Libre Sender konfigurieren";
 
 /* */
 "Calibrations" = "Kalibrierungen";
@@ -781,7 +732,6 @@ Enact a temp Basal or a temp target */
 "Calendar" = "Kalender";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatisch";
 
 /* External insulin treatments */
 "External" = "Externe";
@@ -799,7 +749,6 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Sender";
 
 /* */
-"Modes" = "Modus";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 direkt";
@@ -808,7 +757,6 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Wählen Sie den externen Sender, den Sie verbinden möchten";
 
 /* State was restored */
-"State was restored" = "Status wurde wieder hergestellt";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -844,40 +792,31 @@ Enact a temp Basal or a temp target */
 "Remove All" = "Alle entfernen";
 
 /* */
-"About the Process" = "Über diesen Prozess";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Bitte stellen Sie sicher, dass Ihr Libre 2 Sensor bereits aktiviert ist und die Aufwärmphase beendet ist. Wenn andere Apps über Bluetooth mit dem Sensor verbunden sind, müssen diese heruntergefahren oder deinstalliert werden. \n\n Man kann nur eine App haben, die über Bluetooth mit dem Sensor kommuniziert. Dann drücken Sie die Schaltfläche \"Koppeln und Verbinden\" unten, um den Prozess zu starten. Bitte beachten Sie, dass es einige Minuten dauern kann, bevor die Bluetooth-Verbindung funktioniert.";
 
 /* */
-"Pairinginfo" = "Kopplungsinfo";
 
 /* */
-"PatchInfo" = "Patch-Info";
 
 /* */
-"Calibrationinfo" = "Kalibrierungsinfo";
 
 /* */
 "Unknown" = "Unbekannt";
 
 /* */
-"Not paired yet" = "Noch nicht gekoppelt";
 
 /* */
-"Pair Sensor & connect" = "Sensor koppeln & verbinden";
 
 /* */
-"Phone NFC required!" = "NFC ist erforderlich!";
 
 /* */
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "In Ihrem Smartphone oder Ihrer App ist die NFC-Kommunikation nicht aktiviert, welche benötigt wird, um eine Verbindung mit Libre 2 Sensoren herzustellen";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth ausschalten";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Bitte Bluetooth einschalten";
 
 /* No Libre Transmitter Selected */
 "No Libre Transmitter Selected" = "Kein Libre Sender ausgewählt";
@@ -904,7 +843,6 @@ Enact a temp Basal or a temp target */
 "(Snoozed)" = "(Schlummern)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Blutzucker: %@";
 
 /* Transmitter: %@%% */
 "Transmitter: %@%%" = "Sender: %@%%";
@@ -934,7 +872,6 @@ Enact a temp Basal or a temp target */
 "Detected sensor seems not to be a libre 1 sensor!" = "Der erkannte Sensor scheint kein Libre 1 Sensor zu sein!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Erkannter Sensor ist ungültig: %@";
 
 /* Low Battery */
 "Low battery" = "Batterie schwach";
@@ -949,7 +886,6 @@ Enact a temp Basal or a temp target */
 "Sensor expires soon" = "Sensor läuft bald ab";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Batteriestand ist niedrig %@, lade dein %@ Gerät so schnell wie möglich auf";
 
 /* Extracting calibrationdata from sensor */
 "Extracting calibrationdata from sensor" = "Kalibrationsdaten aus Sensor extrahieren";
@@ -958,10 +894,8 @@ Enact a temp Basal or a temp target */
 "Sensor Ending Soon" = "Sensorlaufzeit endet bald";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Der aktuelle Sensor endet bald! Sensorlaufzeit verbleibend %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
 "Snooze Alerts" = "Alarme vorübergehend ausschalten";
@@ -979,19 +913,15 @@ Enact a temp Basal or a temp target */
 "CurrentBG" = "Aktueller BZ";
 
 /* */
-"Sensor Info" = "Sensor Info";
 
 /* */
 "Sensor Life-Span" = "Sensor Lebensdauer";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Bei der Verwendung von %@ kennt iAPS weder den verwendeten Sensor, noch die Lebensdauer des Sensors.";
 
 /* */
-"Sensor Age Left" = "Sensorlaufzeit übrig";
 
 /* */
-"Sensor Endtime" = "Sensorlaufzeit Ende";
 
 /* */
 "Sensor State" = "Sensor Status";
@@ -1000,7 +930,6 @@ Enact a temp Basal or a temp target */
 "Sensor Serial" = "Sensor Seriennummer";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
 
 /* */
 "Hardware" = "Hardware";
@@ -1018,10 +947,8 @@ Enact a temp Basal or a temp target */
 "Sensor Type" = "Sensor-Typ";
 
 /* */
-"Factory Calibration Parameters" = "Werkskalibrierungsparameter";
 
 /* */
-"Valid for footer" = "Gültig für Fußzeile";
 
 /* */
 "Edit calibrations" = "Kalibrierung bearbeiten";
@@ -1033,13 +960,10 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "CGM löschen";
 
 /* */
-"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
-"There is no undo" = "Rücknahme nicht möglich";
 
 /* */
-"Advanced" = "Weitere Einstellungen";
 
 /* */
 "Alarms" = "Alarme";
@@ -1051,22 +975,17 @@ Enact a temp Basal or a temp target */
 "Notifications" = "Mitteilungen";
 
 /* */
-"Export logs" = "Ereignisprotokolldatei exportieren";
 
 /* */
-"Export not available" = "Export nicht möglich";
 
 /* */
-"Log export requires ios 15" = "Ereignisprotokolldatei Export erfordert ios 15";
 
 /* */
 "Got it!" = "Okay, verstanden! ";
 
 /* */
-"Saved to %@" = "In %@ gespeichert";
 
 /* */
-"No logs available" = "Keine Ereignisprotokolldatei verfügbar";
 
 /* */
 "Glucose Notification visibility" = "Einstellungen Glukosebenachrichtigungen";
@@ -1081,13 +1000,11 @@ Enact a temp Basal or a temp target */
 "Value" = "Wert";
 
 /* */
-"Adds Phone Battery" = "Telefon-Akkustand anzeigen";
 
 /* */
 "Adds Transmitter Battery" = "Transmitter-Batteriestand hinzufügen";
 
 /* */
-"Also vibrate" = "Auch vibrieren";
 
 /* */
 "Additional notification types" = "Weitere Benachrichtigungseinstellungen";
@@ -1117,7 +1034,6 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Gib einen Bolus ein";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Deine aktuelle Glukose ist %@. Bist du sicher, dass du einen Bolus von %@ U Insulin geben willst?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Ein Bolus Befehl von ";
@@ -1147,7 +1063,6 @@ Enact a temp Basal or a temp target */
 "Max allowed bolus amount using shortcuts " = "Maximal erlaubter Bolus durch Kurzbefehle ";
 
 /* Bolus shortcut. Error */
-"not available" = "nicht verfügbar";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Eine Überschreibungsvorgabe aktivieren";
@@ -1159,7 +1074,6 @@ Enact a temp Basal or a temp target */
 "Which override preset would you like to activate?" = "Welche Voreinstellung möchten Sie aktivieren?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Sind Sie sicher, dass Sie die Überschreibungsvoreinstellung %@ aktivieren wollen?";
 
 /* Override Shortcut */
 "The Profile Override" = "Die Profilüberschreibung";
@@ -1174,13 +1088,11 @@ Enact a temp Basal or a temp target */
 "Override canceled" = "Überschreibung abgebrochen";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Aktiviert eine %@ Überschreibung der Voreinstellung";
 
 /* Suspend/Resume Shortcut */
 "Choose what to do with your pump" = "Choose what to do with your pump";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
 
 /* Suspend/Resume Shortcut */
 "Pump command" = "Pump command";
@@ -1241,7 +1153,6 @@ Enact a temp Basal or a temp target */
 "snooze from testview clicked" = "snooze in der Testansicht angeklickt";
 
 /* */
-"will snooze for %@ until %@" = "wird für %@ schlummern bis %@";
 
 /* */
 "Click to Snooze Alerts" = "Klicken, um Warnungen temporär abzuschalten";
@@ -1262,19 +1173,16 @@ Enact a temp Basal or a temp target */
 "Notification Settings" = "Benachrichtigungseinstellungen";
 
 /* */
-"Found devices: %d" = "Geräte gefunden: %d";
 
 /* */
 "Backfill options" = "Auffüllen-Optionen";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Auffüllen aus dem Verlauf";
 
 /* */
-"Backfill from trend" = "Auffüllen aus dem Trend";
 
 /* */
 "Debug options" = "Debug-Optionen";
@@ -1364,7 +1272,6 @@ Enact a temp Basal or a temp target */
 "Backfill glucose" = "Glucose Werte auffüllen";
 
 /* About this source */
-"About this source" = "Über diesen Quellcode";
 
 /* */
 "Bolus failed" = "Bolus fehlgeschlagen";
@@ -1387,7 +1294,6 @@ Enact a temp Basal or a temp target */
 
 "Meals" = "Meals";
 
-"Today's Meals" = "Today's Meals";
 
 "Micronutrient" = "Micronutrient";
 
@@ -1441,7 +1347,6 @@ Enact a temp Basal or a temp target */
 
 "This portion" = "This portion";
 
-"Serving Size" = "Serving Size";
 
 "Standard Serving" = "Standard Serving";
 
@@ -1509,25 +1414,16 @@ Enact a temp Basal or a temp target */
 
 "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
 
-"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI Image Analysis:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Barcode Scanning:**";
 
-"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Text/Voice Search:**";
 
-"Search Type Recommendations" = "Search Type Recommendations";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.";
 
-"**Text/Voice Search:**" = "**Text/Voice Search:**";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
 
 "AI Progress Animation" = "AI Progress Animation";
 
@@ -1583,7 +1479,6 @@ Enact a temp Basal or a temp target */
 
 "Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) Configuration";
 
 "Enter your Google Gemini API key" = "Enter your Google Gemini API key";
 
@@ -1591,7 +1486,6 @@ Enact a temp Basal or a temp target */
 
 "Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) Configuration";
 
 "Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
@@ -1601,7 +1495,6 @@ Enact a temp Basal or a temp target */
 
 "Get an API key at console.anthropic.com." = "Get an API key at console.anthropic.com.";
 
-"Anthropic (Claude API) Configuration" = "Anthropic (Claude API) Configuration";
 
 "USDA Food Database" = "USDA Food Database";
 
@@ -1657,7 +1550,6 @@ Enact a temp Basal or a temp target */
 
 "Food Name" = "Food Name";
 
-"Serving Size" = "Serving Size";
 
 "This portion" = "This portion";
 
@@ -1704,7 +1596,6 @@ Enact a temp Basal or a temp target */
 "fat" = "fat";
 
 /* Display more macro nutrients */
-"More" = "More";
 
 /* Additional nutrient */
 "more nutrient" = "more nutrient";
@@ -1712,67 +1603,46 @@ Enact a temp Basal or a temp target */
 /* Additional nutrients */
 "more nutrients" = "more nutrients";
 
-"📝 Notes" = "📝 Notes";
 
 /* */
-"💉 Diabetes recommendations" = "💉 Diabetes recommendations";
 
 /* */
-"🍽️ Separate Foods" = "🍽️ Separate Foods";
 
 /* */
-"Add all" = "Add all";
 
 /* */
-"🧠 AI Food analysis" = "🧠 AI Food analysis";
 
 /* */
-"📊 Total nutritional values of the meal" = "📊 Total nutritional values of the meal";
 
 /* */
-"Confidence level:" = "Confidence level:";
 
 /* */
-"Notes: %@" = "Notes: %@";
 
 /* */
-"Visual Cues: %@" = "Visual Cues: %@";
 
 /* */
-"Preparation: %@" = "Preparation: %@";
 
 /* */
 "Preparation" = "Preparation";
 
 /* */
-"Multiplicator" = "Multiplicator";
 
 /* */
-"Accept quantity" = "Accept quantity";
 
 /* */
-"Enter desired quantity" = "Enter desired quantity";
 
 /* */
 "AI Food Search" = "AI Food Search";
 
 /* Title */
-"Food Search" = "Food Search";
 
 /* Food Search input */
-"Food Search..." = "Food Search...";
 
 /* */
-"Search Food Database" = "Search Food Database";
 
-"Models Used:" = "Models Used:";
 
-"Current Mode: %@" = "Current Mode: %@";
 
-"Analysis Mode" = "Analysis Mode";
 
-"This AI provider requires an API key. Please enter your API key in the settings below." = "This AI provider requires an API key. Please enter your API key in the settings below.";
-"API Key Required" = "API Key Required";
 
 "Food Search Settings" = "Food Search Settings";
 
@@ -1780,38 +1650,21 @@ Enact a temp Basal or a temp target */
 
 "Medical Disclaimer" = "Medical Disclaimer";
 
-"Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)" = "Google (Gemini API) → OpenAI (ChatGPT API) → Anthropic (Claude API)";
 
-"**AI Image Analysis:**" = "**AI Image Analysis:**";
 
 "OpenFoodFacts" = "OpenFoodFacts";
 
-"**Barcode Scanning:**" = "**Barcode Scanning:**";
 
-"USDA FoodData Central → OpenFoodFacts" = "USDA FoodData Central → OpenFoodFacts";
 
-"**Text/Voice Search:**" = "**Text/Voice Search:**";
-"Search Type Recommendations" = "Search Type Recommendations";
 
-"• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat." = "• **USDA FoodData Central**: Free, official nutrition database. Superior nutrition data for non-packaged foods like fruits, vegetables, and meat.";
 
-"• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods." = "• **OpenFoodFacts**: Free, open database with extensive barcode coverage and text search for packaged foods.";
-"❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI" = "❌ If you select 'OpenFoodFacts' or 'USDA', camera analysis will use basic estimation instead of AI";
 
-"✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys" = "✅ Select 'Anthropic (Claude API)', 'Google (Gemini API)', or 'OpenAI (ChatGPT API)' for AI Image Analysis to use your paid keys";
 
-"When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above." = "When you take a photo of food, the app uses the provider selected in 'AI Image Analysis' above.";
-"Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals." = "Break down this meal into individual components with complete macronutrient profiles (carbs, protein, fat, calories) per item and combined totals.";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
 
-"Diabetes Focus" = "Diabetes Focus";
 
-"Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management." = "Provide extremely detailed visual analysis of this food image. Describe every element you can see: food colors, textures, cooking methods (grilled marks, browning, steaming), plate type and size, utensils present, garnishes, sauces, cooking oils visible, food arrangement, and background elements. Use these visual details to estimate precise portion sizes and calculate accurate nutrition values for diabetes management.";
 
-"Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing." = "Analyze this food image for diabetes management. Describe exactly what you see in detail: colors, textures, cooking methods, plate type, utensils, and food arrangement. Identify each food item with specific preparation details, estimate precise portion sizes using visual references, and provide carbohydrates, protein, fat, and calories for each component. Focus on accurate carbohydrate estimation for insulin dosing.";
 
-"AI Prompt for Enhanced Results" = "AI Prompt for Enhanced Results";
 
 "Enter your OpenAI API key" = "Enter your OpenAI API key";
 
@@ -1819,13 +1672,9 @@ Enact a temp Basal or a temp target */
 
 "Get an API key at platform.openai.com." = "Get an API key at platform.openai.com.";
 
-"OpenAI (ChatGPT API) Configuration" = "OpenAI (ChatGPT API) Configuration";
 
-"Macro Tracking" = "Macro Tracking";
 
-"Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates." = "Identify all food items in this image with focus on carbohydrate content for diabetes management. Provide detailed carb counts for each component and total meal carbohydrates.";
 
-"Detailed Visual Analysis" = "Detailed Visual Analysis";
 
 "Enter your Google Gemini API key" = "Enter your Google Gemini API key";
 
@@ -1833,201 +1682,110 @@ Enact a temp Basal or a temp target */
 
 "Get a free API key at ai.google.dev." = "Get a free API key at ai.google.dev.";
 
-"Google (Gemini API) Configuration" = "Google (Gemini API) Configuration";
 
-"Your AI provider quota has been exceeded. Please check your usage limits or try a different provider." = "Your AI provider quota has been exceeded. Please check your usage limits or try a different provider.";
 
-"Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Your AI provider has run out of credits. Please check your account billing or try a different provider.";
 
-"Reset to Default" = "Reset to Default";
 
 "Take Photo" = "Take Photo";
 
-"Retake Photo" = "Retake Photo";
 
-"Retry Analysis" = "Retry Analysis";
 
-"Try Different Provider" = "Try Different Provider";
 
-"Check Account" = "Check Account";
 
-"Analysis Error" = "Analysis Error";
 
-"AI Food Analysis" = "AI Food Analysis";
 
-"Use Cancel to retake photo" = "Use Cancel to retake photo";
 
-"Analyzing food with AI..." = "Analyzing food with AI...";
 
 "Choose from Library" = "Choose from Library";
 
-"Take a Photo" = "Take a Photo";
 
-"Keep the camera level to reduce distortion and keep portions proportional." = "Keep the camera level to reduce distortion and keep portions proportional.";
 
-"Shoot from slightly above" = "Shoot from slightly above";
 
-"Forks, cups, or hands help AI calculate realistic portions." = "Forks, cups, or hands help AI calculate realistic portions.";
 
-"Add a size reference" = "Add a size reference";
 
-"Make sure every food item is in the frame." = "Make sure every food item is in the frame.";
 
-"Frame the full meal" = "Frame the full meal";
 
-"Remove napkins, lids, or packaging that may be misidentified as food." = "Remove napkins, lids, or packaging that may be misidentified as food.";
 
-"Clear the area" = "Clear the area";
 
-"Harsh shadows confuse the AI and dim light can hide textures." = "Harsh shadows confuse the AI and dim light can hide textures.";
 
-"Use bright, even light" = "Use bright, even light";
 
-"Better photos = better estimates" = "Better photos = better estimates";
 
-"Scan failed" = "Scan failed";
 
-"Looking up product..." = "Looking up product...";
 
-"Code detected!" = "Code detected!";
 
-"Position camera over barcode or QR code" = "Position camera over barcode or QR code";
 
-"Validating format..." = "Validating format...";
 
-"Scanning for barcode or QR code..." = "Scanning for barcode or QR code...";
 
-"Initializing camera..." = "Initializing camera...";
 
-"Scan failed" = "Scan failed";
 
-"iAPS needs camera access to scan barcodes. Please enable camera access in Settings." = "iAPS needs camera access to scan barcodes. Please enable camera access in Settings.";
 
 "Camera Access Required" = "Camera Access Required";
 
-"Check Permissions" = "Check Permissions";
 
-"Supports traditional barcodes and QR codes" = "Supports traditional barcodes and QR codes";
 
-"Hold steady for best results" = "Hold steady for best results";
 
 "Retry" = "Wiederholen";
 
-"Scan Barcode" = "Scan Barcode";
 
-"📦 Database Results" = "📦 Database Results";
 
-"🤖 AI Search Results" = "🤖 AI Search Results";
 
-"• Use the barcode scanner for packaged foods" = "• Use the barcode scanner for packaged foods";
 
-"• Check spelling carefully" = "• Check spelling carefully";
 
-"• Use simple, common food names" = "• Use simple, common food names";
 
 "• Try brand names (e.g., \"Cheerios\")" = "• Try brand names (e.g., \"Cheerios\")";
 
-"💡 Search Tips:" = "💡 Search Tips:";
 
 "Try simpler terms like \"bread\" or \"apple\", or scan a barcode" = "Try simpler terms like \"bread\" or \"apple\", or scan a barcode";
 
-"Check your spelling and try again" = "Check your spelling and try again";
 
-"No Foods Found" = "No Foods Found";
 
-"Search Error" = "Search Error";
 
-"Finding the best matches for you" = "Finding the best matches for you";
 
-"Searching foods" = "Searching foods";
 
-"AI Analysis" = "AI Analysis";
 
-"Analysis Status" = "Analysis Status";
 
-"❌ Analysis failed" = "❌ Analysis failed";
 
-"⚠️ Connection interrupted..." = "⚠️ Connection interrupted...";
 
-"✅ Analysis complete!" = "✅ Analysis complete!";
 
-"🍽️ Generating nutrition summary..." = "🍽️ Generating nutrition summary...";
 
-"📊 Processing analysis results..." = "📊 Processing analysis results...";
 
-"🤖 Running AI vision analysis..." = "🤖 Running AI vision analysis...";
 
-"⚖️ Comparing to USDA standards..." = "⚖️ Comparing to USDA standards...";
 
-"📏 Calculating serving sizes..." = "📏 Calculating serving sizes...";
 
-"🔬 Identifying food portions..." = "🔬 Identifying food portions...";
 
-"📊 Analyzing nutritional content..." = "📊 Analyzing nutritional content...";
 
-"📡 Uploading image for analysis..." = "📡 Uploading image for analysis...";
 
-"🧠 Connecting to AI provider..." = "🧠 Connecting to AI provider...";
 
-"💼 Optimizing image quality..." = "💼 Optimizing image quality...";
 
-"📱 Processing image data..." = "📱 Processing image data...";
 
-"🔍 Initializing AI food analysis..." = "🔍 Initializing AI food analysis...";
 
-"⚡ Processing AI analysis results..." = "⚡ Processing AI analysis results...";
 
-"📥 Received response from Claude..." = "📥 Received response from Claude...";
 
-"⏳ AI is cooking up results..." = "⏳ AI is cooking up results...";
 
-"🌐 Sending request to Claude..." = "🌐 Sending request to Claude...";
 
-"📡 Preparing API request..." = "📡 Preparing API request...";
 
-"🔄 Encoding image data..." = "🔄 Encoding image data...";
 
-"🖼️ Optimizing your image..." = "🖼️ Optimizing your image...";
 
-"⚙️ Configuring Claude parameters..." = "⚙️ Configuring Claude parameters...";
 
 "⚙️ Processing analysis results..." = "⚙️ Processing analysis results...";
 
-"📊 Calculating nutrition estimates..." = "📊 Calculating nutrition estimates...";
 
-"🍽️ Identifying food characteristics..." = "🍽️ Identifying food characteristics...";
 
-"📱 Analyzing image properties..." = "📱 Analyzing image properties...";
 
-"📊 Initializing basic analysis..." = "📊 Initializing basic analysis...";
 
-"🤖 Connecting to Google Gemini..." = "🤖 Connecting to Google Gemini...";
 
-"📥 Received response from Gemini..." = "📥 Received response from Gemini...";
 
-"🌐 Sending request to Google Gemini..." = "🌐 Sending request to Google Gemini...";
 
-"🔄 Encoding image data..." = "🔄 Encoding image data...";
 
-"⚙️ Configuring Gemini parameters..." = "⚙️ Configuring Gemini parameters...";
 
-"📥 Received response from OpenAI..." = "📥 Received response from OpenAI...";
 
-"💾 Caching analysis result..." = "💾 Caching analysis result...";
 
-"⏳ Doing a deep analysis (may take a bit)..." = "⏳ Doing a deep analysis (may take a bit)...";
 
-"🎯 Selecting optimal AI provider..." = "🎯 Selecting optimal AI provider...";
 
-"⚡ Starting parallel provider analysis..." = "⚡ Starting parallel provider analysis...";
 
-"Amount:" = "Amount:";
 
-"Take Over" = "Take Over";
 
-"kcal" = "kcal";
 
-"Cal" = "Cal";
 
 "servings" = "servings";
 
@@ -2060,13 +1818,11 @@ Enact a temp Basal or a temp target */
 "Suspend" = "Unterbrechen";
 
 /* */
-"Animated Background" = "Animierter Hintergrund";
 
 /* Sensor day(s) */
 " day(s)" = " Tag(e)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Herzfrequenz statt BZ auf Watch anzeigen";
 
 
 /* Headers for settings ----------------------- */
@@ -2082,7 +1838,6 @@ Enact a temp Basal or a temp target */
 "Glucose Simulator" = "Glukose-Simulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-Status wiederhergestellt (APS neu gestartet?). %d Peripheriegeräte gefunden und mit %@ mit der Kennung %@ verbunden";
 
 /* Shared app group xDrip4iOS */
 "Using shared app group with external CGM app xDrip4iOS" = "Benutze gemeinsame App-Groups (Xcode) mit externer CGM App xDrip4iOS";
@@ -2129,7 +1884,6 @@ Enact a temp Basal or a temp target */
 "Delete All NS Overrides" = "Delete All NS Overrides";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS Hochgeladenes Profil";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
@@ -2186,10 +1940,8 @@ Enact a temp Basal or a temp target */
 "Target presets" = "Temporäre Ziele";
 
 /* Debug option view */
-"Loop Cycles" = "Loop-Zyklen";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Benutzte CGM-Daten für die Statistik";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -2265,10 +2017,8 @@ Enact a temp Basal or a temp target */
 "Fat and Protein" = "Fett und Eiweiß";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Fett und Eiweiß";
 
 /* */
-"Hide Fat & Protein" = "Fett & Eiweiß ausblenden";
 
 /* Add Fat */
 "Fat" = "Fett";
@@ -2280,33 +2030,26 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Fett und Eiweiß Berechnung";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Ignore flat CGM readings";
 
 /* Service Section */
-"Profile Override" = "Profil überschreibung";
 
 /* Extend max override percentage */
 "Max Override 400%" = "Maximaler Override 400 %";
 
 /* */
-"Override Profiles" = "Überschreibungsprofile";
 
 /* */
 "Normal " = "im Zielbereich ";
 
-"Currently no Override active" = "Derzeit keine Überschreibung aktiv";
 
 /* */
-"Total Insulin Adjustment" = "Gesamte Insulinanpassung";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Überschreiben Sie Ihre Basal-, ISF-, CR- und Zielprofile";
 
 /* */
 "Enable indefinitely" = "Unbefristet aktivieren";
 
 /* */
-"Override Profile target" = "Profilziel überschreiben";
 
 /* */
 "Disable SMBs" = "SMBs deaktivieren";
@@ -2327,10 +2070,8 @@ Enact a temp Basal or a temp target */
 "... than" = "... than";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normales Profil";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Benutzerdefiniertes Profil";
 
 /* */
 "Profiles" = "Profile";
@@ -2366,7 +2107,6 @@ Enact a temp Basal or a temp target */
 "Override Max IOB" = "Override Max IOB";
 
 /* */
-"Start new Profile" = "Neues Profil starten";
 
 /* */
 "Save as Profile" = "Als Profil speichern";
@@ -2381,10 +2121,8 @@ Enact a temp Basal or a temp target */
 "Cancel Temp Target" = "Temporäres Ziel abbrechen";
 
 /* Alert */
-"Return to Normal?" = "Rückkehr zum Normalzustand?";
 
 /* */
-"This will change settings back to your normal profile." = "Dadurch werden die Einstellungen auf Ihr normales Profil zurückgesetzt.";
 
 /* Start Profile Alert */
 "Start Profile" = "Profil starten";
@@ -2411,13 +2149,10 @@ Enact a temp Basal or a temp target */
 "iAPS Icon" = "iAPS Symbol";
 
 /* Service Section */
-"Statistics and Home View" = "Statistiken und Home-Ansicht";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Kohlenhydratäquivalente löschen?";
 
 /* */
-"All FPUs of the meal will be deleted." = "Alle FPUs der Mahlzeit werden gelöscht.";
 
 /* */
 "Delete Glucose?" = "Glukose löschen?";
@@ -2438,13 +2173,10 @@ Enact a temp Basal or a temp target */
 "Empty" = "Leer";
 
 /* */
-"Delete Selected Preset" = "Gewählte Voreinstellung löschen";
 
 /* */
-"Enter Meal Preset Name" = "Name der Mahlzeitenvorwahl eingeben";
 
 /* */
-"Name Of Dish" = "Name der Speise";
 
 /* Save Carbs and continue to bolus recommendation */
 "Save and continue" = "Speichern und weiter";
@@ -2462,18 +2194,14 @@ Enact a temp Basal or a temp target */
 "Now" = "Jetzt";
 
 /* Display future data table entries */
-"Show Future" = "Zeige Eintragungen in der Zukunft";
 
 /* Hide future data table entries */
-"Hide Future" = "Zukünftige Dateneinträge ausblenden";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 
 /* Warning about bolus recommendation. Title */
-"Warning!" = "Warnung!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTippen Sie auf 'Hinzufügen', um mit dem ausgewählten Betrag fortzufahren.";
 
 /* */
 "Eventual Glucose" = "Prognostizierte Glukose";
@@ -2491,7 +2219,6 @@ Enact a temp Basal or a temp target */
 "Target Glucose" = "Ziel Glukose";
 
 /* */
-"Percentage setting" = "Prozentuale Einstellung";
 
 /* */
 "Insulin Sensitivity" = "Insulin Empfindlichkeit";
@@ -2503,7 +2230,6 @@ Enact a temp Basal or a temp target */
 "Formula:" = "Formel:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kohlenhydrate und vorheriges Insulin sind in der Glukose-Vorhersage enthalten aber wenn das Endergebnis niedriger als das Target-Glukose ist, wird ein Bolus nicht empfohlen.";
 
 /* Hide pop-up */
 "Hide" = "Ausblenden";
@@ -2512,7 +2238,6 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Prognostizierte Glukose > Glukose des Ziels, aber Glukose wird voraussichtlich zum ersten Mal herunterfallen auf ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "die unter Ihrem Grenzwert liegen (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognostizierte Glukose > Glukose des Ziels Glukose, aber die Glukose fällt schneller als erwartet. Erwartet: ";
@@ -2554,7 +2279,6 @@ Enact a temp Basal or a temp target */
 "Pair Pod" = "POD verbinden";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Informationen zum vorherigen Pod";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Pumpe Bestätigungstöne";
@@ -2568,13 +2292,11 @@ Enact a temp Basal or a temp target */
 "Save" = "Speichern";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Die Aktualisierung der Erinnerungseinstellungen ist fehlgeschlagen.";
 
 /* */
 "No Error" = "Kein Fehler";
 
 /* description label for active time pod details row */
-"Active Time" = "Laufzeit";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Deaktiviert";
@@ -2589,10 +2311,8 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Vertrauenserinnerungen ertönen für von Ihnen initiierte Befehle, wie Bolus, Bolus abbrechen, Unterbrechen, Fortsetzen, Benachrichtigungserinnerungen speichern usw. Wenn Loop die Abgabe automatisch anpasst, werden keine Vertrauenserinnerungen verwendet.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Vertrauenserinnerungen ertönen, wenn Loop die Lieferung automatisch anpasst, sowie für von Ihnen initiierte Befehle.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standard Ablauf-Erinnerung";
@@ -2610,7 +2330,6 @@ Enact a temp Basal or a temp target */
 "Scheduled Reminder" = "Erinnerungen festlegen";
 
 /* */
-"Low Reservoir Reminder" = "Erinnerung bei niedrigem Füllstand";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Vergewissere dich, dass sich dein iPhone und Pod in unmittelbarer Nähe zueinander befinden. Wenn die Kommunikationsprobleme fortbestehen, dann wechsle den Standort.";
@@ -2624,7 +2343,6 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ für %2$@";
 
 /* Description text on manual temp basal action sheet */
-"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Temporäre Basalrate festlegen";
 
@@ -2644,16 +2362,13 @@ Enact a temp Basal or a temp target */
 "Missing Config" = "Fehlende Konfiguration";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Dieser PumpManager wurde nicht mit einer maximalen Basalrate konfiguriert, da er hinzugefügt wurde, bevor es die Funktion \"manuelle temporäre Basalrate\" gab. Bitte gehe zum Menü Therapieeinstellungen -> Verabreichungsgrenzen und lege eine neue maximale Basalrate fest.";
 
 /* description label for active time pod details row */
-"Active Time" = "Laufzeit";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "gesamte Abgabe";
 
 /* */
-"Add Omnipod Dash" = "Omnipod Dash hinzufügen";
 
 /* */
 "Insert Cannula" = "Kanüle einsetzen";
@@ -2702,7 +2417,6 @@ Enact a temp Basal or a temp target */
 "Statistics" = "Statistiken";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Hochladen von Statistiken in NS zulassen";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Tief";
@@ -2714,7 +2428,6 @@ Enact a temp Basal or a temp target */
 "In Range" = "Im Zielbereich";
 
 /* Display % */
-"Change HbA1c Unit" = "HbA1c Einheit wechseln";
 
 /* */
 "Vertical grid lines" = "Vertical grid lines";
@@ -2729,34 +2442,26 @@ Enact a temp Basal or a temp target */
 "Standing / Laying TIR Chart" = "TIR-Tabelle stehend/liegend";
 
 /* */
-"Hours X-Axis (6 default)" = "Stunden X-Achse (6 Standard)";
 
 /* */
 "2 hours" = "2 Stunden";
 
 /* */
-"3 hours" = "3 hours";
 
 /* */
-"4 hours" = "4 Stunden";
 
 /* */
-"6 hours" = "6 Stunden";
 
 /* */
-"9 hours" = "9 hours";
 
 /* */
-"12 hours" = "12 Stunden";
 
 /* */
-"24 hours" = "24 Stunden";
 
 /* Average BG = */
 "Average" = "Mittelwert";
 
 /* TIR Preview Headline */
-"Time In Range" = "Zeit im Zielbereich";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Durchschnittliches Zeitintervall";
@@ -2774,13 +2479,10 @@ Enact a temp Basal or a temp target */
 "Days" = "Tage";
 
 /* Normal BG (within TIR) */
-"Normal" = "im Zielbereich";
 
 /* Title High BG in statPanel */
-"High (>" = "Hoch (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Niedrig (<";
 
 /* SD */
 "SD" = "SD";
@@ -2789,7 +2491,6 @@ Enact a temp Basal or a temp target */
 "CV" = "CV";
 
 /* Estimated HbA1c */
-"HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
 "All" = "Ø";
@@ -2801,7 +2502,6 @@ Enact a temp Basal or a temp target */
 "Loops" = "Loops";
 
 /* Loop Errors in statPanel */
-"Errors" = "Fehler";
 
 /* Loop Statistics pop-up description */
 "Success = Started / Completed (loops)" = "Erfolgreich berechnete Loops";
@@ -2810,7 +2510,6 @@ Enact a temp Basal or a temp target */
 "Most Frequent Error" = "Häufigste Fehler";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Nicht abgeschlossene Loops";
 
 /* Average loop interval */
 "Interval" = "Intervall";
@@ -2819,16 +2518,12 @@ Enact a temp Basal or a temp target */
 "Duration" = "Dauer";
 
 /* "Display SD */
-"Display SD instead of CV" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV)";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV) in den Statistiken";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update der Statistik (in Minuten)";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Standard ist 20 Minuten. Wie oft die statistics.json aktualisiert und gespeichert werden soll und wie oft das letzte Datenfeld zu Nightscout hochgeladen werden soll, wenn aktiviert.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Letzten 24 Stunden";
@@ -2846,13 +2541,10 @@ Enact a temp Basal or a temp target */
 "All Past Days of Data " = "Alle Tage (mit Daten)";
 
 /* "Display Loop statistics in statPanel */
-"Display Loop Cycle statistics" = "Zeige Schleifenzyklus-Statistik";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Zeigt Loop Statistiken im Statistikbereich auf der Startseite an";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändern Sie den HbA1c in der Statistik (% <—> mmol/mol). Die Anzeige in der Statistik wird mit dem nächsten statistics.json Update aktualisiert.";
 
 /* HbA1c for all glucose storage days */
 "all" = "alle";
@@ -2943,10 +2635,8 @@ Enact a temp Basal or a temp target */
 "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.";
 
 /* Section title if sharing off */
-"Share Bare Minimum" = "Nur das absolute Minimum teilen";
 
 /* Minimum share toggle */
-"Just iAPS version number" = "Nur iAPS Versionsnummer";
 
 /* Share info text */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone - the recovery token.";
@@ -2964,10 +2654,8 @@ Enact a temp Basal or a temp target */
 "View Personal Statistics" = "Persönliche Statistiken anzeigen";
 
 /* */
-"Your identifier" = "Ihr Identifikator";
 
 /* */
-"Share your data anonymously" = "Daten anonym teilen";
 
 /* */
 "Upload Daily Log" = "Upload Daily Log";
@@ -3265,10 +2953,8 @@ Enact a temp Basal or a temp target */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!";
 
 /* */
-"Duration ISF postprandial adaption" = "Duration ISF postprandial adaption";
 
 /* */
-"Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter.";
 
 /* */
 "ISF weight for postprandial BG rise" = "ISF weight for postprandial BG rise";
@@ -3277,10 +2963,8 @@ Enact a temp Basal or a temp target */
 "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!";
 
 /* */
-"ISF weight for higher BG deltas" = "ISF Wert für höhere BG-Deltas";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled.";
 
 /* */
 "ISF weight for lower BG" = "ISF weight for lower BG";
@@ -3304,7 +2988,6 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
 /* SMB Delivery Ratio BG Range description */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "SMB Lieferverhältnis Maximum";
@@ -3322,16 +3005,12 @@ Enact a temp Basal or a temp target */
 "Toggles" = "Schalter";
 
 /* */
-"Enable postprandial ISF adaption always" = "ISF-Anpassung immer nachträglich aktivieren";
 
 /* */
-"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Aktivieren Sie jederzeit die Verschiebung der ISF-Anpassung, unabhängig davon, wann das letzte Essen genommen wurde.";
 
 /* */
-"Enable DuraISF effect even with COB" = "DuraISF-Effekt auch mit COB aktivieren";
 
 /* */
-"Enable DuraISF even if COB is present not just for UAM." = "Aktiviere DuraISF, auch wenn COB nicht nur für UAM vorhanden ist.";
 
 /* */
 "Enable BG acceleration" = "Aktiviere BG-Beschleunigung";
@@ -3420,22 +3099,16 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "Standard Einstellung ist \"Aus\". Wenn aktiviert, wird das BG-Ziel herabgesetzt, sobald Autosens eine niedrige Empfindlichkeit erkennt";
 
 /* Headline ”Advanced Target Adjustments" */
-"Advanced Target Adjustments" = "Erweiterte Zielanpassung";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Diese Funktion wurde früher immer aktiviert, steht aber nun standardmäßig auf \"Aus\". Dies ist mit oref 0.6.0 nicht mehr nötig. Diese Funktion senkt das Blutzucker Ziel von oref0 automatisch, wenn der aktuelle BG oder der zu erwartende BG hoch sind. Dies hilft hohe BG zu verhindern und zu mildern, aber schaltet automatisch auf Niedrigempfindlichkeit um, um sicherzustellen, dass die BG reibungslos auf Ihr eigentliches Ziel zugeht. Wenn Sie dieses Verhalten zu aggressiv finden, können Sie diese Funktion deaktivieren. Wenn Sie dies tun, teilen Sie uns dies bitte mit, damit wir besser verstehen können, welche Einstellungen für alle am besten funktionieren.";
 
 /* Headline "Exercise Mode" */
-"Exercise Mode" = "Sportmodus";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Standard aus. Wenn an, > 105 mg/dL hohes temporäres Ziel passt Empfindlichkeit für den Exercise_Mode an. Synonym für hoch_tempziel_eröht_sensitivität";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Größere BG-Zielreichweite";
 
 /* "Wide BG Target Range" */
-"Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Standardmäßig aus, bedeutet standardmäßig nur das niedrige Ende des BG-Zielbereichs der Pumpe wird als OpenAPS-Ziel verwendet. Dies ist ein Sicherheitsmerkmal, um zu weit gefasste Ziele und weniger optimale Ergebnisse zu verhindern. Daher wird das höhere Ende des Zielbereichs nur verwendet, um Überkorrekturen des bolus Wizards zu vermeiden. Benutzen Sie die wide_bg_target_range: true, um neutrale temps über einen größeren Bereich von eventualBG zu erzwingen.";
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Neutrale Temps überspringen";
@@ -3534,7 +3207,6 @@ Enact a temp Basal or a temp target */
 "Half Basal Exercise Target" = "Halbes Basal Sportziel";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Auf eine Wert setzen, z. B. 160, was bedeutet, wenn das Temp Ziel 160 mg/dL und der exercise_mode=an ist, laufen 50% basal auf diesem Level (120 = 75%; 140 = 60%). Dies kann angepasst werden, um Ihnen mehr Kontrolle über Ihre Übungsmodi zu geben.";
 
 /* Headline "Max COB" */
 "Max COB" = "Max COB";
@@ -3543,10 +3215,8 @@ Enact a temp Basal or a temp target */
 "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Der Standardwert für maxCOB ist 120. (Wenn jemand in einem oder mehreren Einträgen mehr Kohlenhydrate eingibt, begrenzt iAPS den COB-Wert auf maxCOB und hält ihn bei maxCOB, bis die über maxCOB eingegebenen Kohlenhydrate nachweislich absorbiert wurden. Im Wesentlichen dient dies nur der Begrenzung von UAM als Sicherheitskappe gegen merkwürdige COB-Berechnungen aufgrund von fehlerhaften Daten)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Bolus DIA Schlummerdivisor";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Bolus snooze wird nach einem Mahlzeitenbolus gestartet, so dass der Loop nicht konterkariert wird, wenn der BZ einen niedrigen Werten hat und Sie gerade gegessen haben. Beispiel: Standard ist 2; also bedeutet ein 3 Stunden DIA, dass Bolus snooze nach und nach über 1,5 Stunden abgegeben wird (3DIA/2).";
 
 /* Headline "Min 5m Carbimpact" */
 "Min 5m Carbimpact" = "Mind. 5 min Kohlenhydratwirkung";
@@ -3603,10 +3273,8 @@ Enact a temp Basal or a temp target */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Benutzerspezifische Zeit des maximalen Wirkungshochs des Insulins. Achtung: Oref wendet für die ultra-rapid (Lyumjev) & rapid-acting (Fiasp) Insulinwirkungs-Kurven Unter- (35 & 50 min) und Obergrenzen (100 & 120 min) an. Falls das benutzerdefinierte Wirkungshoch außerhalb dieser Grenzen liegt, kann es zu Komplikationen mit iAPS kommen, langen Loop-Berechnungszeiten und \"red loops\".";
 
 /* Headline "Carbs Req Threshold" */
-"Carbs Req Threshold" = "Grenzwert für benötigte Kohlenhydrate";
 
 /* "Carbs Req Threshold" */
-"Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Benötigte Menge von Kohlenhydraten in Gramm, um einen Pushover auszulösen. Standardmäßig ist 1 Gramm Kohlenhydrate. Dieser Wert kann erhöht werden, wenn Sie nur Pushover bei Überschreiten einer bestimmten Menge benötigter Kohlenhydrate erhalten möchten.";
 
 /* Headline "Noisy CGM Target Multiplier" */
 "Noisy CGM Target Multiplier" = "Ungenauer CGM Zielfaktor";
@@ -3623,25 +3291,19 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Dynamischen Insulinempfindlichkeitsfaktor (ISF) aktivieren";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Dynamischen Insulinempfindlichkeitsfaktor (ISF) aktivieren";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Berechnen Sie bei jedem Loop-Zyklus eine neue Insulinempfindlichkeitseinstellung (ISF). Die neue ISF basiert auf Ihrem aktuellen Blutzucker, der täglichen Gesamtinsulindosis (TDD, alle in den letzten 24 Stunden abgegebenen Insuline) und einem individuellen Anpassungsfaktor (die Empfehlung für den Anfang ist 0,5, wenn Sie die Sigmoid-Funktion verwenden, und 0,8, wenn nicht).\n\nAlle dynamischen ISF- und CR-Anpassungen werden durch Ihre autosens.min/max-Grenzwerte begrenzt.";
 
 /* Headline Enable Dynamic CR */
-"Enable Dynamic CR" = "Aktiviere dynamischen CR";
 
 /* Enable Dynamic CR */
-"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Nutze Dynamic CR. Das dynamische Verhältnis wird für CR wie folgt verwendet:\n\n Bei Verhältnis > 1: dynCR = (newRatio - 1) / 2 + 1.\nWenn Verhältnis < 1: dynCR = CR/dynCR.\n\nNicht verwenden mit hohem Insulinanteil (> 2)";
 
 /* Enable Dyn ISF */
 "Activate Dynamic Sensitivity (ISF)" = "Dynamische Sensibilität (ISF) aktivieren";
@@ -3650,7 +3312,6 @@ Enact a temp Basal or a temp target */
 "Activate Dynamic Carb Ratio (CR)" = "Dynamisches Carb Ratio (CR) aktivieren";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuelle Anpassung der berechneten dynamischen Verhältnisse. Die Voreinstellung ist 0,5. Je höher der Wert, desto größer ist die Korrektur Ihres ISF/CR für einen hohen oder niedrigen Blutzuckerwert. Die maximale/minimale Korrektur wird durch die Min/Max-Einstellungen von Autosens bestimmt.\n\nFür die Sigmoid-Funktion wird für den Anfang ein Anpassungsfaktor von 0,4 - 0,5 empfohlen.\n\nFür die logarithmische Formel gibt es weniger Konsens, aber ein Wert von 0,8 ist wahrscheinlich für die meisten erwachsenen Benutzer angemessen. Für jüngere Anwender wird empfohlen, bei der logaritmischen Formel noch niedriger anzusetzen, um eine zu aggressive Behandlung zu vermeiden.";
@@ -3662,7 +3323,6 @@ Enact a temp Basal or a temp target */
 "Formula" = "Formel";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Sicherheit";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Verwenden Sie eine sigmoid Funktion für ISF (und für CR, wenn aktiviert), anstelle der Standard-logarithmischen Formel. Erfordert die Aktivierung der dynamischen ISF-Einstellung in den Einstellungen\n\nDie Veränderungsanpassung passt die Neigung der Kurve an (Y: Dynamisches Verhältnis, X: Blutzucker). Ein niedrigerer Wert ==> weniger steil == weniger aggressiv.\n\nDie autosens.min/max Einstellungen bestimmen sowohl die max/min Grenzen für das dynamische Verhältnis UND wie sehr das dynamische Verhältnis angepasst wird. Wenn AF ist der Hang der Kurve, die Autosen. in/max ist die Höhe des Diagramms, das Y-Intervall, wo Y: dynamisches Verhältnis. Die Kurve hat immer eine S-Form, egal welche autosense.min/max Einstellungen verwendet werden, was bedeutet, dass diese Einstellungen große Folgen für das Ergebnis des berechneten dynamischen ISF haben. Bitte sei vorsichtig, einen zu hohen autosens.max Wert zu setzen. Mit einer korrekten Profil-ISF-Einstellung werden Sie wahrscheinlich nie mehr als 1 benötigen.\n\nEin Autosens.max Limit > 1.5 ist nicht ratsam, wenn Sie die sigmoid Funktion benutzen.";
@@ -3671,7 +3331,6 @@ Enact a temp Basal or a temp target */
 "Threshold Setting" = "Grenzwert-Einstellungen";
 
 /* Dynamic ISF Setting Title */
-"Minimum Threshold Setting" = "Minimale Grenzwerteinstellung";
 
 /* Minimum Threshold Setting */
 "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2." = "This setting lets you choose a glucose target limit below which no SMB insulin or extra temporary basal insulin will ever be given. Extra temporary basal insulin is the insulin exceeding the insulin required for the basal metabolism.\n\nThe actual glucose threshold used in OpenAPS algoritm will always be the bigger amount of this setting and the computed value:\n\nTarget Glucose - (Target Glucose - 40) / 2.";
@@ -3701,7 +3360,6 @@ Enact a temp Basal or a temp target */
 "Calculator settings" = "Berechnungseinstellungen";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Alternativer Bolusrechner verwenden";
 
 /* Bolus Calculator Setting */
 "Use Bolus Calculator" = "Use Bolus Calculator";
@@ -3722,7 +3380,6 @@ Enact a temp Basal or a temp target */
 "Apply factor for fatty meals" = "Faktor für fette Mahlzeiten anwenden";
 
 /* Bolus Calculator Footer */
-"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Der neue alternative Bolusrechner ist ein anderer Ansatz als der Standard-Bolusrechner in iAPS. Wenn die Umschaltfunktion aktiviert ist, wird dieser Bolusrechner und nicht der ursprüngliche iAPS-Rechner verwendet. Am Ende der Berechnung wird ein benutzerdefinierter Faktor angewandt, wie es bei der Verwendung von smbs der Fall sein sollte (Standardwert 0,8).\n\nSie können in Ihrem Bolusrechner auch die Option hinzufügen, am Ende der Berechnung einen weiteren (!) benutzerdefinierten Faktor anzuwenden, der für fetthaltige Mahlzeiten, z. B. Pizza, nützlich sein könnte (Standardwert 0,7).";
 
 /* Bolus Calculator Setting */
 "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
@@ -3767,7 +3424,6 @@ Enact a temp Basal or a temp target */
 "Override HbA1c Unit" = "HbA1c-Einheit überschreiben";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "Falls Sie sowohl Profile als auch temporäre Ziele verwenden";
 
 /* UI/UX option */
 "Always Color Glucose Value (green, yellow etc)" = "Farbe Glukosewert immer (grün, gelb etc.)";
@@ -3775,19 +3431,16 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Header settings" = "Header-Einstellungen";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normalerweise ist die Glukose nur rot wenn sie über oder unter Ihren Benachrichtigungsgrenzen für hoch/niedrig ist";
 
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Horizontale Scroll-Ansicht sichtbare Stunden";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Anzeigeintervall Einstellungs-Button";
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Beim Scrollen nie das kleine Glukosediagramm anzeigen";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Hypo Behandlung deaktivieren";
 
 /* UI/UX option */
 "Display Glucose Delta" = "Glukose-Delta anzeigen";
@@ -3817,10 +3470,8 @@ Enact a temp Basal or a temp target */
 "Display carb equivalent amount" = "Display carb equivalent amount";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Display Ratio and a History View button";
 
 /* UI/UX option */
-"Home View Ratio Button" = "Home View Ratio Button";
 
 /* UI/UX option */
 "Light" = "Leicht";
@@ -3877,7 +3528,6 @@ Enact a temp Basal or a temp target */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live-Aktivität zeigt den Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel an (falls verfügbar)";
 
 /* Notification option */
-"Show Live activity" = "Live Aktivitäten anzeigen";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live-Aktivität zeigt den Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel an (falls verfügbar)";
@@ -3892,10 +3542,8 @@ Enact a temp Basal or a temp target */
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Muss > 0 und <= 1 sein.\nStandard ist 0.65 (65 %) * TDD. Der Rest wird von den durchschnittlichen Gesamtdaten (bis zu 14 Tage) aller TDD-Berechnungen (35 %). Um nur die letzten 24 Stunden zu verwenden, setzen Sie dies auf 1.\n\nUm plötzliche Schwankungen zu vermeiden, zum Beispiel nach einer großen Mahlzeit, wird ein Durchschnittswert der letzten 2 Stunden TDD-Berechnungen anstelle der aktuellen TDD verwendet (derzeit 24 Stunden) verwendet.";
 
 /* Headline "Adjust basal" */
-"Adjust basal" = "Basal anpassen";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Anpassung der Basisdaten nach dem Verhältnis der aktuellen TDD / 7 Tage Durchschnitts-TDD aktivieren";
 
 /* Headline "Max Delta-BG Threshold SMB" */
 "Max Delta-BG Threshold SMB" = "Max. Delta-BG-Grenzwert SMB";
@@ -3916,10 +3564,8 @@ Enact a temp Basal or a temp target */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "SMBs aktivieren, wenn ein hoher BG erkannt wird, basierend auf dem hohen BG Ziel (angepasst oder Profil)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamische Einstellungen";
 
 /* Insulin curve */
-"Insulin curve" = "Insulinkurve";
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Korrekturfaktor";
@@ -3937,23 +3583,19 @@ Enact a temp Basal or a temp target */
 "Active CGM" = "Active CGM";
 
 /* pump name label, when pump is a cgm "Pump/CGM" */
-"Pump/CGM" = "Pump/CGM";
 
 /* Button "Stop using the pump as CGM" */
 "Stop using the pump as CGM" = "Stop using the pump as CGM";
 
 /* Section header in CGM view */
-"Shared App Group Source" = "Shared App Group Source";
 
 /* prefix for the shared app group application */
-"Reading from" = "Reading from";
 
 /* button to disconnect from the shared app group "Disconnect" */
 "Disconnect" = "Verbindung trennen";
 
 
 /* description for Shared App Group Source section */
-"Read BG from an external CGM app using a shared app group." = "Read BG from an external CGM app using a shared app group.";
 
 
 /* prefix before the app name on the button to start reading from shared app group */
@@ -4038,7 +3680,6 @@ Enact a temp Basal or a temp target */
 "Results for" = "Results for";
 
 /* name of complete meals when saving */
-"Complete Meal" = "Complete Meal";
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
 "Max Basal Exceeded" = "Max Basal Exceeded";
