@@ -29,7 +29,7 @@ enum ProfileScheduleDecomposition {
             CarbRatioEntry(start: entry.time, offset: offsetMinutes(entry.time), ratio: entry.value)
         }
         if carbSchedule.contains(where: { $0.ratio <= 0 }) {
-            problems.append("Carb ratio schedule contains a non-positive value.")
+            problems.append(NSLocalizedString("Carb ratio schedule contains a non-positive value.", comment: ""))
         }
         let carbRatios = CarbRatios(units: .grams, schedule: carbSchedule)
 
@@ -41,14 +41,14 @@ enum ProfileScheduleDecomposition {
         // 24h total is unambiguously invalid; individual zero segments are left for the user to
         // see in the review diff and for the pump sync to validate at pump-setup time.
         if basal.map(\.rate).reduce(0, +) <= 0 {
-            problems.append("Total basal across the day is zero or negative.")
+            problems.append(NSLocalizedString("Total basal across the day is zero or negative.", comment: ""))
         }
 
         let sensSchedule = profile.sens.map { entry in
             InsulinSensitivityEntry(sensitivity: entry.value, offset: offsetMinutes(entry.time), start: entry.time)
         }
         if sensSchedule.contains(where: { $0.sensitivity <= 0 }) {
-            problems.append("Insulin sensitivity schedule contains a non-positive value.")
+            problems.append(NSLocalizedString("Insulin sensitivity schedule contains a non-positive value.", comment: ""))
         }
         let sensitivities = InsulinSensitivities(
             units: units,

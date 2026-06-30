@@ -110,9 +110,12 @@ struct ExistingUserProfileReviewView: View {
         VStack(spacing: 12) {
             Button(action: onApply) {
                 HStack {
-                    if isApplying { ProgressView().tint(.white) }
-                    Text(isApplying ? "Applying…" : "Apply these settings")
-                        .font(.headline)
+                    if isApplying {
+                        ProgressView().tint(.white)
+                        Text("Applying…").font(.headline)
+                    } else {
+                        Text("Apply these settings").font(.headline)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .padding()

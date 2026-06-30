@@ -106,9 +106,10 @@ struct ExistingUserRestoreView: View {
                 HStack {
                     if model.state == .working {
                         ProgressView().tint(.white)
+                        Text("Restoring…").font(.headline)
+                    } else {
+                        Text("Restore my settings").font(.headline)
                     }
-                    Text(model.state == .working ? "Restoring…" : "Restore my settings")
-                        .font(.headline)
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -211,7 +212,7 @@ extension ExistingUserRestoreView {
         func restore() {
             let token = token.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
             guard !token.isEmpty else {
-                state = .failed("Enter your recovery token.")
+                state = .failed(NSLocalizedString("Enter your recovery token.", comment: ""))
                 return
             }
 
@@ -237,9 +238,10 @@ extension ExistingUserRestoreView {
             .sink(
                 receiveCompletion: { [weak self] completion in
                     if case .failure = completion {
-                        self?.state = .failed(
-                            "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again."
-                        )
+                        self?.state = .failed(NSLocalizedString(
+                            "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.",
+                            comment: ""
+                        ))
                     }
                 },
                 receiveValue: { [weak self] preferences, settings, pumpConfig in
@@ -473,23 +475,37 @@ extension ExistingUserRestoreView {
 
             var sections: [ProfileScheduleReview.ScheduleSection] = []
             if !basalRows.isEmpty {
-                sections.append(.init(title: "Basal rates", summary: segmentSummary(basalRows.count), rows: basalRows))
+                sections.append(.init(
+                    title: NSLocalizedString("Basal rates", comment: ""),
+                    summary: segmentSummary(basalRows.count), rows: basalRows
+                ))
             }
             if !isfRows.isEmpty {
-                sections.append(.init(title: "Insulin sensitivity (ISF)", summary: segmentSummary(isfRows.count), rows: isfRows))
+                sections.append(.init(
+                    title: NSLocalizedString("Insulin sensitivity (ISF)", comment: ""),
+                    summary: segmentSummary(isfRows.count), rows: isfRows
+                ))
             }
             if !crRows.isEmpty {
-                sections.append(.init(title: "Carb ratios", summary: segmentSummary(crRows.count), rows: crRows))
+                sections.append(.init(
+                    title: NSLocalizedString("Carb ratios", comment: ""),
+                    summary: segmentSummary(crRows.count), rows: crRows
+                ))
             }
             if !targetRows.isEmpty {
-                sections.append(.init(title: "Glucose targets", summary: segmentSummary(targetRows.count), rows: targetRows))
+                sections.append(.init(
+                    title: NSLocalizedString("Glucose targets", comment: ""),
+                    summary: segmentSummary(targetRows.count), rows: targetRows
+                ))
             }
 
             return ProfileScheduleReview(sections: sections, problems: d.problems)
         }
 
         private static func segmentSummary(_ count: Int) -> String {
-            count == 1 ? "1 segment" : "\(count) segments"
+            count == 1
+                ? NSLocalizedString("1 segment", comment: "")
+                : String(format: NSLocalizedString("%d segments", comment: ""), count)
         }
 
         /// Trim a Decimal to a clean display string ("0.55", "5.5", "10").
