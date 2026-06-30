@@ -236,7 +236,9 @@ extension AddCarbs {
                         color: .green
                     )
 
-                    otherNutritionButton
+                    if state.mealViewMicronutrients {
+                        otherNutritionButton
+                    }
 
                     timeRow
                 }

@@ -85,19 +85,15 @@ jobs:
         run: |
           echo "Available Xcode versions:"
           ls -d /Applications/Xcode*.app
-          # Newest STABLE Xcode 26.x. Exclude betas / release candidates: the RC's
-          # altool breaks fastlane's upload_to_testflight (the IPA builds fine, but the
-          # upload step is handed an empty --file). The runner image surfaced 26.6 RC2
-          # as the highest version, which `sort -V | tail -1` would otherwise select.
-          XCODE=$(ls -d /Applications/Xcode_26*.app | grep -viE 'beta|release_candidate' | sort -V | tail -1)
+          XCODE=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
           if [ -z "$XCODE" ]; then
-            echo "::error::Stable Xcode 26.x NOT found on this runner"
+            echo "::error::Xcode 26.x NOT found on this runner"
             exit 1
           fi
           echo "Selecting $XCODE"
           sudo xcode-select --switch "$XCODE/Contents/Developer"
           xcodebuild -version
-
+      
       - name: Checkout Repo for syncing
         if: |
           vars.SCHEDULED_SYNC == 'true'
