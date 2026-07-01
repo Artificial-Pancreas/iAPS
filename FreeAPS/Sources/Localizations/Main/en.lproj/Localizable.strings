@@ -4240,3 +4240,14 @@ Enact a temp Basal or a temp target */
 
 "Saved %d of %d" = "Saved %d of %d";
 
+/* Setup complete */
+"Setup complete" = "Setup complete";
+
+"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.";
+
+"Closed Loop" = "Closed Loop";
+
+"Let iAPS automate insulin dosing" = "Let iAPS automate insulin dosing";
+
+"Finish setup" = "Finish setup";
+
