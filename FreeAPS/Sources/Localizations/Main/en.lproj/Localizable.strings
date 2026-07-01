@@ -4216,3 +4216,10 @@ Enact a temp Basal or a temp target */
 
 "Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
 
+/* Restore setup summary */
+"Review your settings" = "Review your settings";
+
+"Review" = "Review";
+
+"Next Step" = "Next Step";
+
