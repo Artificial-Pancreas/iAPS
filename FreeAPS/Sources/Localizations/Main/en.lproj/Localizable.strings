@@ -4223,3 +4223,20 @@ Enact a temp Basal or a temp target */
 
 "Next Step" = "Next Step";
 
+/* Restore CoreData status */
+"Restoring your data" = "Restoring your data";
+
+"Restored data" = "Restored data";
+
+"Meal, override and temp-target presets from your backup." = "Meal, override and temp-target presets from your backup.";
+
+"Override Presets" = "Override Presets";
+
+"Temp Target Presets" = "Temp Target Presets";
+
+"No Data" = "No Data";
+
+"%d restored" = "%d restored";
+
+"Saved %d of %d" = "Saved %d of %d";
+
