@@ -119,7 +119,11 @@ extension Main {
                     onNext: { step = .softwareSetup }
                 )
             case .softwareSetup:
-                RestoreSummaryView(resolver: resolver, onNext: { step = .setupComplete })
+                RestoreSummaryView(
+                    resolver: resolver,
+                    isNewUser: restoreToken.isEmpty,
+                    onNext: { step = .setupComplete }
+                )
             case .setupComplete:
                 SetupCompleteView(resolver: resolver, onFinish: {
                     // End of onboarding — flip the persisted anchors together to dismiss the cover.

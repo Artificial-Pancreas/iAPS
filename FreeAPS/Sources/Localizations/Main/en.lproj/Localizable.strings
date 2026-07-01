@@ -4219,7 +4219,11 @@ Enact a temp Basal or a temp target */
 /* Restore setup summary */
 "Review your settings" = "Review your settings";
 
+"Set up your settings" = "Set up your settings";
+
 "Review" = "Review";
+
+"Setup" = "Setup";
 
 "Next Step" = "Next Step";
 

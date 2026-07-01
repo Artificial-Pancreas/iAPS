@@ -11,7 +11,14 @@ import Swinject
 /// Sharing (its own earlier step) and all debug options.
 struct RestoreSummaryView: View {
     let resolver: Resolver
+    /// New user (defaults, nothing restored): rows start as "Setup" and flip to "Review" once
+    /// opened, so the list doubles as a setup checklist. Existing users (restored data) always
+    /// read "Review".
+    let isNewUser: Bool
     let onNext: () -> Void
+
+    /// Row ids the user has opened this session (drives the Setup → Review flip for new users).
+    @State private var visited: Set<String> = []
 
     private var router: Router { resolver.resolve(Router.self)! }
 
@@ -19,29 +26,29 @@ struct RestoreSummaryView: View {
         NavigationView {
             List {
                 Section {
-                    reviewRow("Pump Settings", .pumpSettingsEditor)
-                    reviewRow("Basal Profile", .basalProfileEditor(saveNewConcentration: false))
-                    reviewRow("Insulin Sensitivities", .isfEditor)
-                    reviewRow("Carb Ratios", .crEditor)
-                    reviewRow("Target Glucose", .targetsEditor)
+                    reviewRow("pump", "Pump Settings", .pumpSettingsEditor)
+                    reviewRow("basal", "Basal Profile", .basalProfileEditor(saveNewConcentration: false))
+                    reviewRow("isf", "Insulin Sensitivities", .isfEditor)
+                    reviewRow("cr", "Carb Ratios", .crEditor)
+                    reviewRow("target", "Target Glucose", .targetsEditor)
                 } header: { Text("Configuration") }
 
                 Section {
-                    reviewRow("OpenAPS", .preferencesEditor)
+                    reviewRow("openaps", "OpenAPS", .preferencesEditor)
                 } header: { Text("OpenAPS") }
 
                 Section {
-                    reviewRow("Auto ISF", .autoISF)
-                    reviewRow("Dynamic ISF", .dynamicISF)
-                    reviewRow("Bolus Calculator", .bolusCalculatorConfig)
-                    reviewRow("Fat And Protein Conversion", .fpuConfig)
-                    reviewRow("Calendar", .calendar)
-                    reviewRow("Contact Image", .contactTrick)
-                    reviewRow("UI/UX", .uiConfig)
+                    reviewRow("autoisf", "Auto ISF", .autoISF)
+                    reviewRow("dynisf", "Dynamic ISF", .dynamicISF)
+                    reviewRow("bolus", "Bolus Calculator", .bolusCalculatorConfig)
+                    reviewRow("fpu", "Fat And Protein Conversion", .fpuConfig)
+                    reviewRow("calendar", "Calendar", .calendar)
+                    reviewRow("contact", "Contact Image", .contactTrick)
+                    reviewRow("uiux", "UI/UX", .uiConfig)
                 } header: { Text("Extra Features") }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Review your settings")
+            .navigationTitle(isNewUser ? "Set up your settings" : "Review your settings")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 Button(action: onNext) {
@@ -61,17 +68,28 @@ struct RestoreSummaryView: View {
         .interactiveDismissDisabled()
     }
 
-    private func reviewRow(_ title: LocalizedStringKey, _ screen: Screen) -> some View {
-        NavigationLink {
+    private func reviewRow(_ id: String, _ title: LocalizedStringKey, _ screen: Screen) -> some View {
+        // New user: "Setup" (accent, a to-do) until opened, then "Review" + check (done). Existing
+        // user: always "Review". Marked done when the editor appears — i.e. the user opened it.
+        let done = !isNewUser || visited.contains(id)
+        let action: LocalizedStringKey = done ? "Review" : "Setup"
+
+        return NavigationLink {
             router.view(for: screen)
                 .navigationBarTitleDisplayMode(.inline)
+                .onAppear { visited.insert(id) }
         } label: {
             HStack {
                 Text(title)
                 Spacer()
-                Text("Review")
+                if isNewUser, visited.contains(id) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                        .font(.subheadline)
+                }
+                Text(action)
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(done ? Color.secondary : Color.accentColor)
             }
         }
     }
