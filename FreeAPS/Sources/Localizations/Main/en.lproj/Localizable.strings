@@ -4216,6 +4216,11 @@ Enact a temp Basal or a temp target */
 
 "Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
 
+/* Device setup */
+"Set up your devices" = "Set up your devices";
+
+"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.";
+
 /* Restore setup summary */
 "Review your settings" = "Review your settings";
 

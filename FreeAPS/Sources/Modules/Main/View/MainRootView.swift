@@ -24,6 +24,7 @@ extension Main {
             case existingRestore
             case sharing
             case coreData
+            case deviceSetup
             case softwareSetup
             case setupComplete
         }
@@ -109,15 +110,19 @@ extension Main {
             case .sharing:
                 // Turn Online Backup on under the NEW device id before restoring CoreData.
                 SharingSetupView(resolver: resolver, onContinue: {
-                    // Existing users (non-empty token) get the CoreData preset restore; new users
-                    // and skipped restores go straight to the software-setup summary.
-                    step = restoreToken.isEmpty ? .softwareSetup : .coreData
+                    // Existing users (non-empty token) get the CoreData preset restore first; new
+                    // users and skipped restores go straight to device setup.
+                    step = restoreToken.isEmpty ? .deviceSetup : .coreData
                 })
             case .coreData:
                 RestoreCoreDataStatusView(
                     token: restoreToken,
-                    onNext: { step = .softwareSetup }
+                    onNext: { step = .deviceSetup }
                 )
+            case .deviceSetup:
+                // Pair pump + CGM before the software summary — shown to new and existing users
+                // alike (pairing is per-device, never restored).
+                DeviceSetupView(resolver: resolver, onNext: { step = .softwareSetup })
             case .softwareSetup:
                 RestoreSummaryView(
                     resolver: resolver,

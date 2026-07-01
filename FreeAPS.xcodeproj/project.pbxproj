@@ -149,6 +149,7 @@
 		CC10A00C00000000000A708E /* RestoreSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00B00000000000A708E /* RestoreSummaryView.swift */; };
 		CC10A00E00000000000A708E /* RestoreCoreDataStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */; };
 		CC10A01000000000000A708E /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00F00000000000A708E /* SetupCompleteView.swift */; };
+		CC10A01200000000000A708E /* DeviceSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A01100000000000A708E /* DeviceSetupView.swift */; };
 		3811DE3025C9D49500A708ED /* HomeStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2825C9D49500A708ED /* HomeStateModel.swift */; };
 		3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2925C9D49500A708ED /* HomeProvider.swift */; };
 		3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */; };
@@ -836,6 +837,7 @@
 		CC10A00B00000000000A708E /* RestoreSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSummaryView.swift; sourceTree = "<group>"; };
 		CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCoreDataStatusView.swift; sourceTree = "<group>"; };
 		CC10A00F00000000000A708E /* SetupCompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteView.swift; sourceTree = "<group>"; };
+		CC10A01100000000000A708E /* DeviceSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSetupView.swift; sourceTree = "<group>"; };
 		3811DE2825C9D49500A708ED /* HomeStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStateModel.swift; sourceTree = "<group>"; };
 		3811DE2925C9D49500A708ED /* HomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeProvider.swift; sourceTree = "<group>"; };
 		3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDataFlow.swift; sourceTree = "<group>"; };
@@ -1783,6 +1785,7 @@
 				CC10A00B00000000000A708E /* RestoreSummaryView.swift */,
 				CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */,
 				CC10A00F00000000000A708E /* SetupCompleteView.swift */,
+				CC10A01100000000000A708E /* DeviceSetupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3478,6 +3481,7 @@
 				CC10A00C00000000000A708E /* RestoreSummaryView.swift in Sources */,
 				CC10A00E00000000000A708E /* RestoreCoreDataStatusView.swift in Sources */,
 				CC10A01000000000000A708E /* SetupCompleteView.swift in Sources */,
+				CC10A01200000000000A708E /* DeviceSetupView.swift in Sources */,
 				CE94598229E9E3D30047C9C6 /* WatchConfigProvider.swift in Sources */,
 				191A9D162BED00A500028D48 /* Version.swift in Sources */,
 				38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */,
