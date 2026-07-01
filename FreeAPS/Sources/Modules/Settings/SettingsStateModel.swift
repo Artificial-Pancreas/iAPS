@@ -64,6 +64,10 @@ extension Settings {
             copyrightNotice = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
 
             subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
+
+            // Always fetch the latest version when Settings opens; HomeStateModel's 5 s timer
+            // will fire the outdated-version alert once the new VNr is stored
+            nightscoutManager.fetchVersion()
         }
 
         func logItems() -> [URL] {
