@@ -16,6 +16,13 @@ struct DatabaseTempTargets: JSON {
     let profile: String?
 }
 
+struct DatabaseContactTrick: JSON {
+    var report = "contactTrick"
+    let contacts: [ContactTrickEntry]
+    let enteredBy: String
+    let profile: String?
+}
+
 struct DatabaseProfileStore: JSON {
     var report = "profiles"
     let units: String
@@ -69,7 +76,9 @@ struct MigratedOverridePresets: Codable {
     var cr: Bool
     var date: Date
     var duration: Decimal
-    var emoji: String
+    // Optional: presets are commonly saved with no emoji (null in the backup), and CoreData's
+    // OverridePresets.emoji is itself optional — a non-optional here fails the whole array decode.
+    var emoji: String?
     var end: Decimal
     var id: String
     var indefininite: Bool
