@@ -146,7 +146,6 @@
 		CC10A00200000000000A708E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00100000000000A708E /* WelcomeView.swift */; };
 		CC10A00400000000000A708E /* UpgradeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00300000000000A708E /* UpgradeNoticeView.swift */; };
 		CC10A00600000000000A708E /* ExistingUserRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00500000000000A708E /* ExistingUserRestoreView.swift */; };
-		CC10A00A00000000000A708E /* ExistingUserProfileReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00900000000000A708E /* ExistingUserProfileReviewView.swift */; };
 		CC10A00C00000000000A708E /* RestoreSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00B00000000000A708E /* RestoreSummaryView.swift */; };
 		CC10A00E00000000000A708E /* RestoreCoreDataStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */; };
 		CC10A01000000000000A708E /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00F00000000000A708E /* SetupCompleteView.swift */; };
@@ -834,7 +833,6 @@
 		CC10A00100000000000A708E /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		CC10A00300000000000A708E /* UpgradeNoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeNoticeView.swift; sourceTree = "<group>"; };
 		CC10A00500000000000A708E /* ExistingUserRestoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingUserRestoreView.swift; sourceTree = "<group>"; };
-		CC10A00900000000000A708E /* ExistingUserProfileReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingUserProfileReviewView.swift; sourceTree = "<group>"; };
 		CC10A00B00000000000A708E /* RestoreSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSummaryView.swift; sourceTree = "<group>"; };
 		CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCoreDataStatusView.swift; sourceTree = "<group>"; };
 		CC10A00F00000000000A708E /* SetupCompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteView.swift; sourceTree = "<group>"; };
@@ -1782,7 +1780,6 @@
 				CC10A00100000000000A708E /* WelcomeView.swift */,
 				CC10A00300000000000A708E /* UpgradeNoticeView.swift */,
 				CC10A00500000000000A708E /* ExistingUserRestoreView.swift */,
-				CC10A00900000000000A708E /* ExistingUserProfileReviewView.swift */,
 				CC10A00B00000000000A708E /* RestoreSummaryView.swift */,
 				CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */,
 				CC10A00F00000000000A708E /* SetupCompleteView.swift */,
@@ -3478,7 +3475,6 @@
 				CC10A00200000000000A708E /* WelcomeView.swift in Sources */,
 				CC10A00400000000000A708E /* UpgradeNoticeView.swift in Sources */,
 				CC10A00600000000000A708E /* ExistingUserRestoreView.swift in Sources */,
-				CC10A00A00000000000A708E /* ExistingUserProfileReviewView.swift in Sources */,
 				CC10A00C00000000000A708E /* RestoreSummaryView.swift in Sources */,
 				CC10A00E00000000000A708E /* RestoreCoreDataStatusView.swift in Sources */,
 				CC10A01000000000000A708E /* SetupCompleteView.swift in Sources */,

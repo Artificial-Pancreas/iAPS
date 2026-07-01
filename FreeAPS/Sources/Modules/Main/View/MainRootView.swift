@@ -10,9 +10,23 @@ extension Main {
         @AppStorage(IAPSconfig.showUpgradeNotice) private var showUpgradeNotice = false
         @AppStorage(IAPSconfig.hasSeenSharingSetup) private var hasSeenSharingSetup = false
 
-        // Local onboarding sub-step: the user picked "Existing User" and is in the
-        // cloud-backup restore flow (not persisted — it lives only while Welcome is up).
-        @State private var existingUserRestore = false
+        // Fresh-install setup position (not persisted — it lives only while the cover is up).
+        // hasSeenWelcome stays false for the whole fresh-install flow, so an interrupted setup
+        // restarts cleanly at Welcome rather than resuming mid-flow; the flags flip together at
+        // the end (SetupComplete).
+        @State private var step: SetupStep = .welcome
+        /// Recovery token from a successful existing-user restore, threaded to the CoreData preset
+        /// step. Empty = new user (or a skipped restore) → no CoreData restore.
+        @State private var restoreToken = ""
+
+        private enum SetupStep {
+            case welcome
+            case existingRestore
+            case sharing
+            case coreData
+            case softwareSetup
+            case setupComplete
+        }
 
         var colorScheme: ColorScheme {
             state.lightMode != LightMode.auto ? (state.lightMode == .light ? .light : .dark) : lightMode
@@ -46,37 +60,14 @@ extension Main {
                 }
         }
 
-        /// The onboarding sequence, run as a single flag-driven cover. Steps advance as each
-        /// view flips its flag: Welcome (or post-upgrade notice) → Sharing setup → Home.
+        /// The onboarding cover. A fresh install runs the full unified setup flow (`freshInstallFlow`,
+        /// driven by `step`); an upgrade gets only the one-time notice then the shared Sharing step.
         @ViewBuilder private var onboardingCover: some View {
             if !hasSeenWelcome {
-                if existingUserRestore {
-                    ExistingUserRestoreView(
-                        resolver: resolver,
-                        onDone: {
-                            // Restored (or skipped) — advance to the Sharing step so the
-                            // user re-enables online backup for this device.
-                            showUpgradeNotice = false
-                            hasSeenWelcome = true
-                        },
-                        onBack: { existingUserRestore = false }
-                    )
+                // Fresh install: Welcome → [Existing: restore] → Sharing → [Existing: CoreData] →
+                // Software Setup summary → Setup Complete. (Upgrades have hasSeenWelcome = true.)
+                freshInstallFlow
                     .environment(\.colorScheme, colorScheme)
-                } else {
-                    WelcomeView(
-                        onExistingUser: {
-                            // Enter the cloud-backup restore flow.
-                            existingUserRestore = true
-                        },
-                        onNewUser: {
-                            // Advance to the Sharing step. The New-User Setup Wizard (CGM/pump/etc.)
-                            // will slot in after sharing once built; for now sharing is step 2.
-                            showUpgradeNotice = false
-                            hasSeenWelcome = true
-                        }
-                    )
-                    .environment(\.colorScheme, colorScheme)
-                }
             } else if showUpgradeNotice {
                 UpgradeNoticeView(
                     version: Bundle.main.releaseVersionNumber ?? "",
@@ -84,11 +75,59 @@ extension Main {
                 )
                 .environment(\.colorScheme, colorScheme)
             } else if !hasSeenSharingSetup {
+                // Post-upgrade (or a resumed install predating the sharing flag): Sharing only.
                 SharingSetupView(
                     resolver: resolver,
                     onContinue: { hasSeenSharingSetup = true }
                 )
                 .environment(\.colorScheme, colorScheme)
+            }
+        }
+
+        /// The fresh-install setup step machine. New vs Existing differ only in whether the
+        /// screens start from restored data (Existing: token entry + CoreData presets) or defaults
+        /// — same Sharing / summary / completion screens, same Home destination.
+        @ViewBuilder private var freshInstallFlow: some View {
+            switch step {
+            case .welcome:
+                WelcomeView(
+                    onExistingUser: { step = .existingRestore },
+                    onNewUser: {
+                        restoreToken = ""
+                        step = .sharing
+                    }
+                )
+            case .existingRestore:
+                ExistingUserRestoreView(
+                    resolver: resolver,
+                    onDone: { token in
+                        restoreToken = token
+                        step = .sharing
+                    },
+                    onBack: { step = .welcome }
+                )
+            case .sharing:
+                // Turn Online Backup on under the NEW device id before restoring CoreData.
+                SharingSetupView(resolver: resolver, onContinue: {
+                    // Existing users (non-empty token) get the CoreData preset restore; new users
+                    // and skipped restores go straight to the software-setup summary.
+                    step = restoreToken.isEmpty ? .softwareSetup : .coreData
+                })
+            case .coreData:
+                RestoreCoreDataStatusView(
+                    token: restoreToken,
+                    resolver: resolver,
+                    onNext: { step = .softwareSetup }
+                )
+            case .softwareSetup:
+                RestoreSummaryView(resolver: resolver, onNext: { step = .setupComplete })
+            case .setupComplete:
+                SetupCompleteView(resolver: resolver, onFinish: {
+                    // End of onboarding — flip the persisted anchors together to dismiss the cover.
+                    showUpgradeNotice = false
+                    hasSeenWelcome = true
+                    hasSeenSharingSetup = true
+                })
             }
         }
     }

@@ -3,26 +3,29 @@ import CoreData
 import SwiftUI
 import Swinject
 
-/// Existing-User onboarding step: restore a cloud backup (open-iaps.app) onto a fresh
-/// install using the recovery token from the previous install.
-/// - Phase A (silent, all-or-nothing): OpenAPS Preferences + the iAPS app settings, plus the
-///   pump settings (DIA, max bolus/basal and the insulin concentration — a U200 user left at
-///   the U100 default would be mis-dosed) and the Contact Trick display config.
-/// - Phase B (reviewed): the profile schedules — basal, ISF, carb ratios and glucose targets —
-///   are fetched, decomposed and shown for confirmation before being written; basal syncs to
-///   the pump later, at pump setup. A backup with no profile skips straight to done.
-/// The remaining CoreData-backed presets are out of scope here and handled separately.
+/// Existing-User onboarding step: restore a cloud backup (open-iaps.app) onto a fresh install
+/// using the recovery token from the previous install (or an account login that returns one).
+///
+/// The restore is SILENT and all-or-nothing on its dosing-critical core — OpenAPS Preferences,
+/// the iAPS app settings, the pump config (DIA / max bolus / max basal + insulin concentration —
+/// a U200 user left at the U100 default would be mis-dosed) and the profile SCHEDULES (basal,
+/// ISF, carb ratios, glucose targets). Best-effort extras (Contact Trick display config) ride
+/// along but never fail the restore. On success the token is handed back to the flow, which
+/// re-enables backup (Sharing) and then restores the CoreData-backed presets in their own step
+/// (`RestoreCoreDataStatusView`) — that step is where the user first sees restored data confirmed.
+/// Nothing is reviewed here; the real editors are reachable later from the software-setup summary.
 struct ExistingUserRestoreView: View {
     let resolver: Resolver
-    /// Advance the onboarding cover to the next step (Sharing setup).
-    let onDone: () -> Void
+    /// Restore finished — hand the token forward (empty string = the user skipped, so downstream
+    /// treats them as a fresh setup with no CoreData preset restore).
+    let onDone: (String) -> Void
     /// Return to the Welcome New-/Existing-User choice.
     let onBack: () -> Void
 
     @StateObject private var model: Model
     @FocusState private var tokenFieldFocused: Bool
 
-    init(resolver: Resolver, onDone: @escaping () -> Void, onBack: @escaping () -> Void) {
+    init(resolver: Resolver, onDone: @escaping (String) -> Void, onBack: @escaping () -> Void) {
         self.resolver = resolver
         self.onDone = onDone
         self.onBack = onBack
@@ -30,30 +33,14 @@ struct ExistingUserRestoreView: View {
     }
 
     var body: some View {
-        Group {
-            switch model.state {
-            case .reviewing, .applying:
-                // Phase B: the profile-schedule review is its own full-screen layout.
-                if let review = model.review {
-                    ExistingUserProfileReviewView(
-                        review: review,
-                        isApplying: model.state == .applying,
-                        onApply: model.applySchedules,
-                        onContinueWithout: model.finish
-                    )
-                } else {
-                    Color.clear.onAppear(perform: model.finish)
-                }
-            default:
-                VStack(spacing: 0) {
-                    Spacer()
-                    centeredContent
-                    Spacer()
-                }
-                .padding()
-            }
+        VStack(spacing: 0) {
+            Spacer()
+            centeredContent
+            Spacer()
         }
+        .padding()
         .interactiveDismissDisabled()
+        .onAppear { model.onComplete = onDone }
     }
 
     @ViewBuilder private var centeredContent: some View {
@@ -61,12 +48,8 @@ struct ExistingUserRestoreView: View {
         case .entry,
              .working:
             entry
-        case .done:
-            done
         case let .failed(message):
             failure(message)
-        default:
-            EmptyView()
         }
     }
 
@@ -196,34 +179,6 @@ struct ExistingUserRestoreView: View {
         }
     }
 
-    // MARK: - Success
-
-    private var done: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 52))
-                .foregroundStyle(.green)
-            Text("Settings restored")
-                .font(.title).bold()
-            Text("Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-
-            Button(action: onDone) {
-                Text("Continue")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 14).fill(Color.accentColor))
-                    .foregroundStyle(Color.white)
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal)
-        }
-    }
-
     // MARK: - Failure
 
     private func failure(_ message: String) -> some View {
@@ -243,7 +198,8 @@ struct ExistingUserRestoreView: View {
                 .font(.headline)
                 .padding(.horizontal)
 
-            Button("Skip and set up fresh", action: onDone)
+            // No token to carry forward — proceed as a fresh setup (no CoreData preset restore).
+            Button("Skip and set up fresh") { onDone("") }
                 .foregroundStyle(.secondary)
         }
     }
@@ -253,8 +209,6 @@ extension ExistingUserRestoreView {
     final class Model: ObservableObject {
         @Published var token: String = ""
         @Published var state: Phase = .entry
-        /// The decomposed schedules awaiting the user's review (Phase B), formatted for display.
-        @Published var review: ProfileScheduleReview?
 
         // Account-login entry path (alternative to typing the recovery token).
         @Published var usesLogin = false
@@ -268,20 +222,20 @@ extension ExistingUserRestoreView {
         /// Whether `loginMessage` is an error (red) vs an informational prompt (secondary).
         @Published var loginMessageIsError = false
 
+        /// Invoked once the restore is written, with the token used — the flow advances on this.
+        var onComplete: ((String) -> Void)?
+
         enum Phase: Equatable {
             case entry
             case working
-            case reviewing
-            case applying
-            case done
             case failed(String)
         }
 
         private let resolver: Resolver
         private let storage = BaseFileStorage()
         private var lifetime = Set<AnyCancellable>()
-        /// Held between review and apply so the confirmed schedules are written verbatim.
-        private var decomposed: ProfileScheduleDecomposition.Result?
+        /// The token the current restore is running with, handed to `onComplete` on success.
+        private var activeToken = ""
 
         init(resolver: Resolver) {
             self.resolver = resolver
@@ -347,17 +301,20 @@ extension ExistingUserRestoreView {
             .store(in: &lifetime)
         }
 
-        /// Shared restore pipeline (Phase A gate → best-effort extras → Phase B review), entered
-        /// with a token from either the token field or a successful account login.
+        /// Shared restore pipeline, entered with a token from either the token field or a
+        /// successful account login. Preferences + settings gate the restore (all-or-nothing —
+        /// a fresh install must never end up half-restored); the pump config, Contact Trick and
+        /// profile schedules ride along best-effort. The flow only advances (via `complete()`)
+        /// once every write has landed — advancing is what deallocates this Model, so it stays
+        /// alive to finish its in-flight fetches (the dealloc-cancel bug the old flow hit).
         private func runRestore(token: String) {
             state = .working
+            activeToken = token
             let database = Database(token: token)
 
-            // Preferences + settings gate the restore (all-or-nothing — a fresh install must
-            // never end up half-restored). The pump config (DIA / max bolus / max basal + the
-            // insulin concentration) is best-effort: it rides an optional pump-settings row that
-            // older installs may never have uploaded, so its failure resolves to an empty config
-            // rather than failing the whole restore.
+            // The pump config (DIA / max bolus / max basal + insulin concentration) is best-effort:
+            // it rides an optional pump-settings row older installs may never have uploaded, so its
+            // failure resolves to an empty config rather than failing the whole restore.
             let pumpConfig = database.fetchPumpConfig("default")
                 .replaceError(with: PumpRestoreConfig(settings: nil, concentration: nil))
                 .setFailureType(to: Swift.Error.self)
@@ -381,13 +338,13 @@ extension ExistingUserRestoreView {
                 receiveValue: { [weak self] preferences, settings, pumpConfig in
                     guard let self else { return }
 
-                    // Preferences: oref re-reads preferences.json from disk each run, so a
-                    // file write applies on the next loop.
+                    // Preferences: oref re-reads preferences.json from disk each run, so a file
+                    // write applies on the next loop.
                     self.storage.save(preferences, as: OpenAPS.Settings.preferences)
 
-                    // App settings: route through SettingsManager so the change applies live
-                    // (its didSet persists + publishes) rather than being shadowed by the
-                    // already-loaded in-memory settings. Fall back to a raw file write.
+                    // App settings: route through SettingsManager so the change applies live (its
+                    // didSet persists + publishes) rather than being shadowed by the already-loaded
+                    // in-memory settings. Fall back to a raw file write.
                     if let manager = self.resolver.resolve(SettingsManager.self) {
                         manager.settings = settings
                     } else {
@@ -404,15 +361,14 @@ extension ExistingUserRestoreView {
                         self.saveConcentration(concentration, increment: preferences.bolusIncrement)
                     }
 
-                    // Contact Trick (display config) — best-effort, silent (not dosing).
-                    self.restoreContactTrick(using: database)
-
-                    // Phase C presets (meal / temp-target / override) — best-effort, silent.
-                    self.restorePresets(using: database)
-
-                    // Phase A is applied. Phase B: best-effort fetch + decompose of the profile
-                    // schedules for the review step (a missing profile just finishes).
-                    self.loadProfileReview(using: database, units: settings.units)
+                    // Sequenced best-effort tail — Contact Trick, then the profile schedules —
+                    // finishing with complete(). Each `then` weakly captures self so the chain
+                    // never retains it past the flow advancing.
+                    self.restoreContactTrick(using: database) { [weak self] in
+                        self?.restoreProfileSchedules(using: database, units: settings.units) { [weak self] in
+                            self?.complete()
+                        }
+                    }
                 }
             )
             .store(in: &lifetime)
@@ -436,14 +392,14 @@ extension ExistingUserRestoreView {
             }
         }
 
-        /// Best-effort, silent restore of the Contact Trick display config (not dosing): fetch
-        /// the backup's contacts and write them to the contact-trick file. A missing backup or
-        /// an empty list is a no-op.
-        private func restoreContactTrick(using database: Database) {
+        /// Best-effort, silent restore of the Contact Trick display config (not dosing): fetch the
+        /// backup's contacts and write them to the contact-trick file, then continue. A missing
+        /// backup or an empty list is a no-op; `then` runs once the stream completes either way.
+        private func restoreContactTrick(using database: Database, then: @escaping () -> Void) {
             database.fetchContactTrick("default")
                 .receive(on: DispatchQueue.main)
                 .sink(
-                    receiveCompletion: { _ in },
+                    receiveCompletion: { _ in then() },
                     receiveValue: { [weak self] payload in
                         guard let self, !payload.contacts.isEmpty else { return }
                         self.storage.save(payload.contacts, as: OpenAPS.Settings.contactTrick)
@@ -452,199 +408,50 @@ extension ExistingUserRestoreView {
                 .store(in: &lifetime)
         }
 
-        /// Best-effort, silent restore of the saved presets (display/convenience data, not
-        /// dosing): temp-target presets to their file, and meal + override presets into CoreData.
-        /// A fresh install has nothing to collide with, so each set is simply recreated.
-        private func restorePresets(using database: Database) {
-            // Temp-target presets — a plain file, like the schedules.
-            database.fetchTempTargets("default")
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] payload in
-                    guard let self, !payload.tempTargets.isEmpty else { return }
-                    self.storage.save(payload.tempTargets, as: OpenAPS.FreeAPS.tempTargetsPresets)
-                })
-                .store(in: &lifetime)
-
-            // Meal presets — CoreData.
-            database.fetchMealPressets("default")
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] payload in
-                    self?.saveMealPresets(payload.presets)
-                })
-                .store(in: &lifetime)
-
-            // Override presets — CoreData.
-            database.fetchOverridePressets("default")
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] payload in
-                    self?.saveOverridePresets(payload.presets)
-                })
-                .store(in: &lifetime)
-        }
-
-        /// Recreate meal presets from the backup (carbs / dish / fat / protein — the fields the
-        /// backup captures), mirroring `Presets(context:)` creation in the carb-entry screen.
-        private func saveMealPresets(_ presets: [MigratedMeals]) {
-            guard !presets.isEmpty else { return }
-            let context = CoreDataStack.shared.persistentContainer.viewContext
-            context.perform {
-                for meal in presets {
-                    let row = Presets(context: context)
-                    row.dish = meal.dish
-                    row.carbs = meal.carbs as NSDecimalNumber
-                    row.fat = meal.fat as NSDecimalNumber
-                    row.protein = meal.protein as NSDecimalNumber
-                }
-                try? context.save()
-            }
-        }
-
-        /// Recreate override presets from the backup — the reverse of
-        /// `Database.migrateOverridePresets` (note the backup's spelling of a few keys).
-        private func saveOverridePresets(_ presets: [MigratedOverridePresets]) {
-            guard !presets.isEmpty else { return }
-            let context = CoreDataStack.shared.persistentContainer.viewContext
-            context.perform {
-                for p in presets {
-                    let o = OverridePresets(context: context)
-                    o.advancedSettings = p.advancedSettings
-                    o.cr = p.cr
-                    o.date = p.date
-                    o.duration = p.duration as NSDecimalNumber
-                    o.emoji = p.emoji
-                    o.end = p.end as NSDecimalNumber
-                    o.id = p.id
-                    o.indefinite = p.indefininite
-                    o.isf = p.isf
-                    o.isfAndCr = p.isndAndCr
-                    o.basal = p.basal
-                    o.maxIOB = p.maxIOB as NSDecimalNumber
-                    o.name = p.name
-                    o.overrideMaxIOB = p.overrideMaxIOB
-                    o.percentage = p.percentage
-                    o.smbIsAlwaysOff = p.smbAlwaysOff
-                    o.smbIsOff = p.smbIsOff
-                    o.smbMinutes = p.smbMinutes as NSDecimalNumber
-                    o.start = p.start as NSDecimalNumber
-                    o.target = p.target as NSDecimalNumber
-                    o.uamMinutes = p.uamMinutes as NSDecimalNumber
-                }
-                try? context.save()
-            }
-        }
-
-        /// Best-effort: fetch the backup profile, decompose it into native schedules, and (if it
-        /// carries any) present the review. A missing or empty profile just finishes — older
-        /// backups may predate profile upload, so this never blocks the restore.
-        private func loadProfileReview(using database: Database, units: GlucoseUnits) {
+        /// Fetch the backup profile, decompose it into native schedules and write them silently,
+        /// then regenerate the composed profile so the restored values take effect. A missing or
+        /// empty profile — or one with validation problems (non-positive ratio/sensitivity, zero
+        /// total basal) — is left alone rather than written, so a bad backup can't push unsafe
+        /// dosing schedules. Basal isn't pushed to a pump here (there's none yet at restore); it
+        /// syncs when the pump is set up. `then` always runs when done.
+        private func restoreProfileSchedules(using database: Database, units: GlucoseUnits, then: @escaping () -> Void) {
             database.fetchProfile("default")
                 .receive(on: DispatchQueue.main)
                 .sink(
-                    receiveCompletion: { [weak self] completion in
-                        if case .failure = completion { self?.finish() }
+                    receiveCompletion: { completion in
+                        // No profile on the server (fetch failed) → nothing to restore, still done.
+                        if case .failure = completion { then() }
                     },
                     receiveValue: { [weak self] profileStore in
                         guard let self else { return }
-                        guard let profile = profileStore.store["default"] else { self.finish(); return }
-                        let decomposed = ProfileScheduleDecomposition.decompose(profile, units: units)
-                        let review = Self.buildReview(decomposed, units: units)
-                        guard !review.sections.isEmpty else { self.finish(); return }
-                        self.decomposed = decomposed
-                        self.review = review
-                        self.state = .reviewing
+                        guard let profile = profileStore.store["default"] else { then(); return }
+
+                        let d = ProfileScheduleDecomposition.decompose(profile, units: units)
+                        guard d.problems.isEmpty else { then(); return }
+
+                        self.storage.save(d.basal, as: OpenAPS.Settings.basalProfile)
+                        self.storage.save(d.carbRatios, as: OpenAPS.Settings.carbRatios)
+                        self.storage.save(d.sensitivities, as: OpenAPS.Settings.insulinSensitivities)
+                        self.storage.save(d.targets, as: OpenAPS.Settings.bgTargets)
+
+                        // Regenerate settings/profile.json from the new schedules (the same call the
+                        // editors and Autotune config use). Best-effort: continue regardless.
+                        if let apsManager = self.resolver.resolve(APSManager.self) {
+                            apsManager.makeProfiles()
+                                .receive(on: DispatchQueue.main)
+                                .sink { _ in then() }
+                                .store(in: &self.lifetime)
+                        } else {
+                            then()
+                        }
                     }
                 )
                 .store(in: &lifetime)
         }
 
-        /// Write the reviewed schedules to their native files and regenerate the composed profile
-        /// so the restored values take effect. Basal isn't pushed to a pump here — there's none
-        /// yet at restore; it syncs when the pump is set up.
-        func applySchedules() {
-            guard let decomposed else { finish(); return }
-            state = .applying
-
-            storage.save(decomposed.basal, as: OpenAPS.Settings.basalProfile)
-            storage.save(decomposed.carbRatios, as: OpenAPS.Settings.carbRatios)
-            storage.save(decomposed.sensitivities, as: OpenAPS.Settings.insulinSensitivities)
-            storage.save(decomposed.targets, as: OpenAPS.Settings.bgTargets)
-
-            // Regenerate settings/profile.json from the new schedules (the same call the editors
-            // and Autotune config use). Best-effort: finish regardless of the result.
-            if let apsManager = resolver.resolve(APSManager.self) {
-                apsManager.makeProfiles()
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] _ in self?.finish() }
-                    .store(in: &lifetime)
-            } else {
-                finish()
-            }
-        }
-
-        /// Advance to the success screen (whose Continue button calls onDone to leave the flow).
-        func finish() {
-            review = nil
-            state = .done
-        }
-
-        /// Build the display model from the decomposed schedules — pure formatting, no I/O.
-        private static func buildReview(
-            _ d: ProfileScheduleDecomposition.Result,
-            units: GlucoseUnits
-        ) -> ProfileScheduleReview {
-            let bg = units == .mmolL ? "mmol/L" : "mg/dL"
-
-            let basalRows = d.basal.map {
-                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.rate)) U/hr")
-            }
-            let isfRows = d.sensitivities.sensitivities.map {
-                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.sensitivity)) \(bg)")
-            }
-            let crRows = d.carbRatios.schedule.map {
-                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.ratio)) g/U")
-            }
-            let targetRows = d.targets.targets.map {
-                ProfileScheduleReview.Row(time: $0.start, value: "\(format($0.low)) \(bg)")
-            }
-
-            var sections: [ProfileScheduleReview.ScheduleSection] = []
-            if !basalRows.isEmpty {
-                sections.append(.init(
-                    title: NSLocalizedString("Basal rates", comment: ""),
-                    summary: segmentSummary(basalRows.count), rows: basalRows
-                ))
-            }
-            if !isfRows.isEmpty {
-                sections.append(.init(
-                    title: NSLocalizedString("Insulin sensitivity (ISF)", comment: ""),
-                    summary: segmentSummary(isfRows.count), rows: isfRows
-                ))
-            }
-            if !crRows.isEmpty {
-                sections.append(.init(
-                    title: NSLocalizedString("Carb ratios", comment: ""),
-                    summary: segmentSummary(crRows.count), rows: crRows
-                ))
-            }
-            if !targetRows.isEmpty {
-                sections.append(.init(
-                    title: NSLocalizedString("Glucose targets", comment: ""),
-                    summary: segmentSummary(targetRows.count), rows: targetRows
-                ))
-            }
-
-            return ProfileScheduleReview(sections: sections, problems: d.problems)
-        }
-
-        private static func segmentSummary(_ count: Int) -> String {
-            count == 1
-                ? NSLocalizedString("1 segment", comment: "")
-                : String(format: NSLocalizedString("%d segments", comment: ""), count)
-        }
-
-        /// Trim a Decimal to a clean display string ("0.55", "5.5", "10").
-        private static func format(_ value: Decimal) -> String {
-            NSDecimalNumber(decimal: value).stringValue
+        /// Hand the token to the flow, which advances to the Sharing step.
+        private func complete() {
+            onComplete?(activeToken)
         }
     }
 }
