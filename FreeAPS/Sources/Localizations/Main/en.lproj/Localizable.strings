@@ -4216,6 +4216,53 @@ Enact a temp Basal or a temp target */
 
 "Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
 
+/* Recovery token & account (final onboarding step) */
+"Save your recovery token" = "Save your recovery token";
+
+"Copy" = "Copy";
+
+"Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
+
+"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices.";
+
+"Optional: attach this device to an account" = "Optional: attach this device to an account";
+
+"Link to an existing account" = "Link to an existing account";
+
+"Create an account" = "Create an account";
+
+"Confirm password" = "Confirm password";
+
+"Verify & link" = "Verify & link";
+
+"Link this device" = "Link this device";
+
+"Linking…" = "Linking…";
+
+"Create account" = "Create account";
+
+"Creating…" = "Creating…";
+
+"Device linked" = "Device linked";
+
+"This device is now attached to %@. You can restore it by logging in." = "This device is now attached to %@. You can restore it by logging in.";
+
+"Finish without an account" = "Finish without an account";
+
+"This device is already linked to another account." = "This device is already linked to another account.";
+
+"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.";
+
+"This device's recovery token looks invalid." = "This device's recovery token looks invalid.";
+
+"An account with that email already exists. Try linking instead." = "An account with that email already exists. Try linking instead.";
+
+"That email doesn't look right." = "That email doesn't look right.";
+
+"Please choose a stronger password (at least 8 characters)." = "Please choose a stronger password (at least 8 characters).";
+
+"Passwords don't match." = "Passwords don't match.";
+
 /* Device setup */
 "Set up your devices" = "Set up your devices";
 

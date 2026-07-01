@@ -33,6 +33,29 @@ enum AccountLoginError: Error {
     case unreachable
 }
 
+/// Linking this device's token to an existing account: the credential/2FA failures of a login,
+/// plus the token-specific outcomes.
+enum AccountLinkError: Error {
+    case invalidCredentials
+    case twoFactorRequired
+    case invalidTwoFactor
+    case tokenNotFound
+    case tokenTaken // linked to a different account
+    case invalidToken
+    case unreachable
+}
+
+/// Creating an account from the app. `message` carries the server's already-friendly text for
+/// anything without a dedicated case.
+enum AccountRegisterError: Error {
+    case emailTaken
+    case invalidEmail
+    case weakPassword
+    case tokenInvalid
+    case message(String)
+    case unreachable
+}
+
 private struct AccountTokenResponse: Decodable {
     let token: String
 }
@@ -54,6 +77,8 @@ class Database {
         static let uploadContactTrickPath = "/api/v1/upload/contact-trick"
         static let versionPath = "/api/v1/version_check"
         static let accountTokenPath = "/api/v1/account/token"
+        static let accountLinkPath = "/api/v1/account/link"
+        static let accountRegisterPath = "/api/v1/account/register"
         static let downloadListPath = "/api/v1/download/list"
         static let downloadPreferencesPath = "/api/v1/download/preferences"
         static let downloadSettingsPath = "/api/v1/download/settings"
@@ -102,23 +127,115 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
-    /// Translate the server's `{ "error": … }` body (carried on the thrown NetworkError) into a
-    /// typed case; anything unrecognized is treated as unreachable.
-    private static func mapAccountError(_ error: Error) -> AccountLoginError {
+    /// Link this device's recovery token to an existing account (credentials + 2FA when enabled).
+    /// Multi-token: the token is added, nothing is disabled — but it becomes the account's newest
+    /// device, so restore-by-login will hand it back. No retry.
+    func linkAccount(email: String, password: String, code: String?, token: String) -> AnyPublisher<Void, AccountLinkError> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.accountLinkPath
+
+        var payload: [String: String] = ["email": email, "password": password, "token": token]
+        if let code, !code.isEmpty { payload["code"] = code }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: payload)
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .map { _ in () }
+            .mapError { Self.mapLinkError($0) }
+            .eraseToAnyPublisher()
+    }
+
+    /// Create an account and link this device's token to it. `passwordConfirmation` is required —
+    /// the server reuses the web registration's rules, which confirm the password (it's needed
+    /// later to restore, so a typo check is worth it). No retry.
+    func registerAccount(
+        email: String,
+        password: String,
+        passwordConfirmation: String,
+        token: String
+    ) -> AnyPublisher<Void, AccountRegisterError> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.accountRegisterPath
+
+        let payload: [String: String] = [
+            "email": email,
+            "password": password,
+            "password_confirmation": passwordConfirmation,
+            "token": token
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: payload)
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .map { _ in () }
+            .mapError { Self.mapRegisterError($0) }
+            .eraseToAnyPublisher()
+    }
+
+    /// The server's `{ "error": …, "message": … }` body, carried on the thrown NetworkError.
+    private static func serverErrorBody(_ error: Error) -> [String: Any]? {
         guard let netError = error as? NetworkError,
               case let .badStatusCode(_, body) = netError,
               let body, let data = body.data(using: .utf8),
-              let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let code = object["error"] as? String
+              let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
         else {
-            return .unreachable
+            return nil
         }
-        switch code {
+        return object
+    }
+
+    /// Translate the server's `error` code into a typed login case; anything unrecognized (or an
+    /// unreachable server) is treated as unreachable.
+    private static func mapAccountError(_ error: Error) -> AccountLoginError {
+        switch serverErrorBody(error)?["error"] as? String {
         case "two_factor_required": return .twoFactorRequired
         case "invalid_two_factor": return .invalidTwoFactor
         case "invalid_credentials": return .invalidCredentials
         case "no_device": return .noDevice
         default: return .unreachable
+        }
+    }
+
+    private static func mapLinkError(_ error: Error) -> AccountLinkError {
+        switch serverErrorBody(error)?["error"] as? String {
+        case "two_factor_required": return .twoFactorRequired
+        case "invalid_two_factor": return .invalidTwoFactor
+        case "invalid_credentials": return .invalidCredentials
+        case "token_not_found": return .tokenNotFound
+        case "token_taken": return .tokenTaken
+        case "invalid_token": return .invalidToken
+        default: return .unreachable
+        }
+    }
+
+    private static func mapRegisterError(_ error: Error) -> AccountRegisterError {
+        guard let body = serverErrorBody(error), let code = body["error"] as? String else {
+            return .unreachable
+        }
+        switch code {
+        case "email_taken": return .emailTaken
+        case "invalid_email": return .invalidEmail
+        case "weak_password": return .weakPassword
+        case "token_invalid": return .tokenInvalid
+        default:
+            if let message = body["message"] as? String { return .message(message) }
+            return .unreachable
         }
     }
 

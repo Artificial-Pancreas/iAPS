@@ -27,6 +27,7 @@ extension Main {
             case deviceSetup
             case softwareSetup
             case setupComplete
+            case recoveryToken
         }
 
         var colorScheme: ColorScheme {
@@ -130,7 +131,10 @@ extension Main {
                     onNext: { step = .setupComplete }
                 )
             case .setupComplete:
-                SetupCompleteView(resolver: resolver, onFinish: {
+                SetupCompleteView(resolver: resolver, onFinish: { step = .recoveryToken })
+            case .recoveryToken:
+                // Final step: show the recovery token to record + optional account link/create.
+                RecoveryTokenAccountView(resolver: resolver, onDone: {
                     // End of onboarding — flip the persisted anchors together to dismiss the cover.
                     showUpgradeNotice = false
                     hasSeenWelcome = true
