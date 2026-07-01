@@ -116,7 +116,6 @@ extension Main {
             case .coreData:
                 RestoreCoreDataStatusView(
                     token: restoreToken,
-                    resolver: resolver,
                     onNext: { step = .softwareSetup }
                 )
             case .softwareSetup:

@@ -1,7 +1,6 @@
 import Combine
 import CoreData
 import SwiftUI
-import Swinject
 
 enum PresetRestoreStatus {
     case success // pulled N from the server and confirmed N saved
@@ -34,15 +33,11 @@ struct PresetRestoreResults {
 /// restore while the synchronous concentration did). Always shown for existing users, even when
 /// everything is "No Data", so a missing backup is visible rather than mistaken for success.
 struct RestoreCoreDataStatusView: View {
-    let resolver: Resolver
     let onNext: () -> Void
 
     @StateObject private var model: Model
 
-    private var router: Router { resolver.resolve(Router.self)! }
-
-    init(token: String, resolver: Resolver, onNext: @escaping () -> Void) {
-        self.resolver = resolver
+    init(token: String, onNext: @escaping () -> Void) {
         self.onNext = onNext
         _model = StateObject(wrappedValue: Model(token: token))
     }
@@ -52,9 +47,9 @@ struct RestoreCoreDataStatusView: View {
             List {
                 Section {
                     if let results = model.results {
-                        row("Meal Presets", results.meal, screen: nil)
-                        row("Override Presets", results.overrides, screen: .overrideProfilesConfig)
-                        row("Temp Target Presets", results.tempTargets, screen: nil)
+                        row("Meal Presets", results.meal)
+                        row("Override Presets", results.overrides)
+                        row("Temp Target Presets", results.tempTargets)
                     } else {
                         HStack {
                             ProgressView()
@@ -93,21 +88,16 @@ struct RestoreCoreDataStatusView: View {
         .onAppear(perform: model.run)
     }
 
-    /// A status row. `screen` non-nil adds a Review link into a real list screen (override presets
-    /// have `.overrideProfilesConfig`; meal / temp-target have no onboarding-safe viewer, so the
-    /// count is the confirmation there).
-    @ViewBuilder
-    private func row(_ title: LocalizedStringKey, _ outcome: PresetOutcome, screen: Screen?) -> some View {
-        let content = HStack {
+    /// A status row: name + restored count. Deliberately not tappable — the restored count is the
+    /// confirmation. There's no onboarding-safe viewer for these: the real Override screen
+    /// (`.overrideProfilesConfig`) is an activation UI (tapping a preset STARTS that override, and
+    /// its Close only dismisses a modal — a no-op when pushed), so we don't route into it here.
+    /// Presets remain reviewable in Settings after setup.
+    private func row(_ title: LocalizedStringKey, _ outcome: PresetOutcome) -> some View {
+        HStack {
             Text(title)
             Spacer()
             statusLabel(outcome)
-        }
-
-        if let screen, outcome.status == .success {
-            NavigationLink { router.view(for: screen) } label: { content }
-        } else {
-            content
         }
     }
 
