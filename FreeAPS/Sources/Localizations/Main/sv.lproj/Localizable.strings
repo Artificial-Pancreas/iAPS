@@ -3723,7 +3723,7 @@ Enact a temp Basal or a temp target */
 "AI is still thinking…" = "AI tänker fortfarande…";
 "AI service error (code: %d)" = "AI-servicefel (kod: %d)";
 "APS" = "APS";
-"Absolute Safety TBR" = "Absolute Safety TBR";
+"Absolute Safety TBR" = "Absolut säkerhetsgräns för temporär basaldos";
 "Additional details for AI..." = "Ytterligare information till AI...";
 "An image is available in your clipboard" = "En bild finns i ditt urklipp";
 "Analysis Failed" = "Analys misslyckades";
@@ -3789,8 +3789,8 @@ Enact a temp Basal or a temp target */
 "Searching..." = "Söker...";
 "Select and edit a photo from your library" = "Välj och redigera ett foto från ditt bildbibliotek";
 "Server error (%d)" = "Serverfel (%d)";
-"Shared App Group CGM" = "Shared App Group CGM";
-"The Loop Mode" = "The Loop Mode";
+"Shared App Group CGM" = "CGM som använder delad appgrupp";
+"The Loop Mode" = "Loopinställning";
 "The Meal" = "Måltiden";
 "The scanned barcode is not valid" = "Den skannade streckkoden är inte giltig";
 "Toggles" = "Spakar";
