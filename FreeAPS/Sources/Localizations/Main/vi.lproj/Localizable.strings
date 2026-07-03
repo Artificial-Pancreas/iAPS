@@ -3706,23 +3706,23 @@ Enact a temp Basal or a temp target */
 
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Bản dựng iAPS của bạn sẽ hết hạn vào %1$@ (còn %2$d ngày). Các bản dựng TestFlight phải được gia hạn sau 90 ngày.";
 
-"Cancel temp" = "Cancel temp";
+"Cancel temp" = "Hủy liều nền tạm";
 
-"No " = "No ";
-"%.1f× serving" = "%.1f× serving";
-"Edit Portion" = "Edit Portion";
+"No " = "Không ";
+"%.1f× serving" = "%.1f × khẩu phần";
+"Edit Portion" = "Chỉnh sửa phần";
 "Remove from meal" = "Remove from meal";
-"Discard Meal?" = "Discard Meal?";
-"Discard Meal" = "Discard Meal";
-"Nutrient" = "Nutrient";
-"Add Micronutrient" = "Add Micronutrient";
-"Added" = "Added";
+"Discard Meal?" = "Hủy bữa ăn?";
+"Discard Meal" = "Hủy bữa ăn";
+"Nutrient" = "Chất dinh dưỡng";
+"Add Micronutrient" = "Thêm vi chất dinh dưỡng";
+"Added" = "Đã thêm";
 "%d micros" = "%d micros";
-"Fiber • %d" = "Fiber • %d";
+"Fiber • %d" = "Chất xơ • %d";
 
 "Target Glucose" = "Đường huyết mục tiêu";
-"AI is still thinking…" = "AI is still thinking…";
-"AI service error (code: %d)" = "AI service error (code: %d)";
+"AI is still thinking…" = "AI vẫn đang xử lý…";
+"AI service error (code: %d)" = "Lỗi dịch vụ AI (mã lỗi: %d)";
 "APS" = "APS";
 "Absolute Safety TBR" = "Absolute Safety TBR";
 "Additional details for AI..." = "Additional details for AI...";
