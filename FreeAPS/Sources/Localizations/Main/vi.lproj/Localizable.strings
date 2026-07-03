@@ -3787,7 +3787,7 @@ Enact a temp Basal or a temp target */
 "SMBs and High Temps Disabled." = "SMBs and High Temps Disabled.";
 "Saving image..." = "Saving image...";
 "Searching for images..." = "Searching for images...";
-"Searching..." = "Searching...";
+"Searching..." = "Đang tìm kiếm...";
 "Select and edit a photo from your library" = "Select and edit a photo from your library";
 "Server error (%d)" = "Server error (%d)";
 "Shared App Group CGM" = "Shared App Group CGM";
@@ -3801,8 +3801,8 @@ Enact a temp Basal or a temp target */
 "Undo" = "Undo";
 "Upload Previous Day's Log" = "Upload Previous Day's Log";
 "Use Clipboard Image" = "Use Clipboard Image";
-"Use Image" = "Use Image";
-"Use Now" = "Use Now";
+"Use Image" = "Sử dụng hình ảnh";
+"Use Now" = "Sử dụng ngay";
 "\(Int(progress.percent.rounded())) %" = "\\(Int(progress.percent.rounded())) %";
 "\(imageURLs.count) images" = "\\(imageURLs.count) images";
 "\(lastLoopMinutesAgo) " = "\\(lastLoopMinutesAgo) ";
@@ -3815,4 +3815,4 @@ Enact a temp Basal or a temp target */
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS needs camera access to scan barcodes. Please enable it in Settings.";
 "too small temp basal amount" = "too small temp basal amount";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!";
-" Target Glucose" = " Target Glucose";
+" Target Glucose" = " Đường huyết mục tiêu";
