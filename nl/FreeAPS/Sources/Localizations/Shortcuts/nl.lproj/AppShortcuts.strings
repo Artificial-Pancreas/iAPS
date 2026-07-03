@@ -23,7 +23,7 @@
 "Activates an ${applicationName} Override Preset" = "Activeert een ${applicationName} overschrijvingsvoorinstelling";
 
 /* iAPS Cancel Override shortcut */
-"Cancel ${applicationName} Override" = "Cancel ${applicationName} Override";
+"Cancel ${applicationName} Override" = "Annuleer ${applicationName} overschrijving";
 
 /* iAPS Cancel Override shortcut description */
 "Cancels an active ${applicationName} override" = "Annuleert een actieve ${applicationName} overschrijving";
@@ -35,10 +35,10 @@
 "${applicationName} Enacts a bolus" = "${applicationName} probeert een bolus in te voeren";
 
 /* iAPS Meal Preset shortcut */
-"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+"${applicationName} Meal Presets" = "${applicationName} Voorinstellingen maaltijd";
 
 /* iAPS Meal Preset shortcut description */
-"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";
+"Uses an ${applicationName} Meal Preset" = "Gebruikt een ${applicationName} maaltijdvoorkeursinstelling";
 
 /* iAPS Loop Mode shortcut */
 "${applicationName} Loop Mode" = "${applicationName} Loop modus";
@@ -53,7 +53,7 @@
 "Enacts an ${applicationName} Temp Basal" = "Voert een ${applicationName} tijdelijke basaal in";
 
 /* iAPS Suspend/Resume shortcut */
-"${applicationName} Pump" = "${applicationName} Pump";
+"${applicationName} Pump" = "${applicationName} pomp";
 
 /* iAPS Suspend/Resume  shortcut description */
 "Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Suspends/Resumes your ${applicationName} pump or cancels a temp basal";
