@@ -56,4 +56,4 @@
 "${applicationName} Pump" = "${applicationName} pomp";
 
 /* iAPS Suspend/Resume  shortcut description */
-"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Suspends/Resumes your ${applicationName} pump or cancels a temp basal";
+"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Schors/hervat je ${applicationName} pomp of annuleert een tijdelijk basaal";
