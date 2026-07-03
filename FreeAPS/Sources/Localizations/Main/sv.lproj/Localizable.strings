@@ -3749,7 +3749,7 @@ Enact a temp Basal or a temp target */
 "Finished in" = "Klar om";
 "First Hour SMBs are Off (24 hours)" = "Första timmen som SMB: er är avstängda (24 timmar)";
 "HbA1C" = "HbA1c";
-"Header" = "Header";
+"Header" = "Sidhuvud";
 "IOB" = "IOB";
 "Invalid API URL" = "Ogiltig API-URL";
 "Invalid API response" = "Ogiltigt API-svar";
@@ -3783,7 +3783,7 @@ Enact a temp Basal or a temp target */
 "Reading from \(appName)" = "Läser från \\(appName)";
 "Reading from:" = "Läser från:";
 "Removed from meal" = "Borttagen från måltid";
-"SMBs and High Temps Disabled." = "SMBs and High Temps Disabled.";
+"SMBs and High Temps Disabled." = "SMB: er och höga temporära basaldoser inaktiverade.";
 "Saving image..." = "Sparar bild...";
 "Searching for images..." = "Söker efter bilder...";
 "Searching..." = "Söker...";
