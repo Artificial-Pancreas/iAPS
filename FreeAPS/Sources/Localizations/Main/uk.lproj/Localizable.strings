@@ -3708,9 +3708,9 @@ Enact a temp Basal or a temp target */
 
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Термін дії вашої збірки iAPS закінчується %1$@ (залишилося %2$d днів). Збірки TestFlight потрібно оновлювати кожні 90 днів.";
 
-"Cancel temp" = "Cancel temp";
+"Cancel temp" = "Скасувати тимчасову";
 
-"No " = "No ";
+"No " = "Ні ";
 "%.1f× serving" = "%.1f× serving";
 "Edit Portion" = "Edit Portion";
 "Remove from meal" = "Remove from meal";
