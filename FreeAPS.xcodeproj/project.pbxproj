@@ -449,6 +449,7 @@
 		F22A7A842FF287B20019BDC5 /* NightscoutGlucoseSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */; };
 		F22A7A862FF91EA10019BDC5 /* UploadOutbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A852FF91EA10019BDC5 /* UploadOutbox.swift */; };
 		F22A7A882FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */; };
+		F22A7A8A2FF946FA0019BDC5 /* NightscoutDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A892FF946FA0019BDC5 /* NightscoutDataSync.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
@@ -1186,6 +1187,7 @@
 		F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutGlucoseSync.swift; sourceTree = "<group>"; };
 		F22A7A852FF91EA10019BDC5 /* UploadOutbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadOutbox.swift; sourceTree = "<group>"; };
 		F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDeviceStatusUploader.swift; sourceTree = "<group>"; };
+		F22A7A892FF946FA0019BDC5 /* NightscoutDataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSync.swift; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
@@ -1912,6 +1914,7 @@
 				3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */,
 				3811DE9725C9D88300A708ED /* NightscoutManager.swift */,
 				F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */,
+				F22A7A892FF946FA0019BDC5 /* NightscoutDataSync.swift */,
 				F2B1AFD32FB0DB3E0088219A /* DatabaseManager.swift */,
 				F2B259DE2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift */,
 				F2B1AFD72FB236400088219A /* ProfileAndSettingsUploadManager.swift */,
@@ -3527,6 +3530,7 @@
 				3811DF1025CAAAE200A708ED /* APSManager.swift in Sources */,
 				3870FF4725EC187A0088248F /* BloodGlucose.swift in Sources */,
 				F2E8D1492F0960820097F482 /* FoodItemBadges.swift in Sources */,
+				F22A7A8A2FF946FA0019BDC5 /* NightscoutDataSync.swift in Sources */,
 				38A0364225ED069400FCBB52 /* TempBasal.swift in Sources */,
 				F25D828C2F61A9D1007AE22C /* PortionAdjusterView.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,

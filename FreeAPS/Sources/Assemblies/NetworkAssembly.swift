@@ -11,12 +11,10 @@ final class NetworkAssembly: Assembly {
             BaseNightscoutManager(
                 keychain: r.resolve(Keychain.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
-                glucoseStorage: r.resolve(GlucoseStorage.self)!,
                 tempTargetsStorage: r.resolve(TempTargetsStorage.self)!,
                 carbsStorage: r.resolve(CarbsStorage.self)!,
                 storage: r.resolve(FileStorage.self)!,
                 announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
-                settingsManager: r.resolve(SettingsManager.self)!,
                 reachabilityManager: r.resolve(ReachabilityManager.self)!
             )
         }
