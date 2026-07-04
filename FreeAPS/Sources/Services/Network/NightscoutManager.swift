@@ -21,143 +21,46 @@ enum FetchGlucoseProgress {
     case done([BloodGlucose])
 }
 
-actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
-    private let keychain: Keychain
+actor BaseNightscoutManager: NightscoutManager {
+    private let apiProvider: NightscoutAPIProvider
     private let appCoordinator: AppCoordinator
     private let tempTargetsStorage: TempTargetsStorage
     private let carbsStorage: CarbsStorage
     private let storage: FileStorage
     private let announcementsStorage: AnnouncementsStorage
     private let reachabilityManager: ReachabilityManager
-
-    private var dataSync: NightscoutDataSync!
-    private var deviceStatusUploader: NightscoutDeviceStatusUploader!
+    private let deviceStatusUploader: NightscoutDeviceStatusUploader
 
     private let overrideStorage = OverrideStorage()
 
     private var ping: TimeInterval?
 
-    let lifetime = Lifetime()
-
     private var isNetworkReachable: Bool {
         reachabilityManager.isReachable
     }
 
-    private var nightscoutAPI: NightscoutAPI?
+    private var nightscoutAPI: NightscoutAPI? {
+        apiProvider.api
+    }
 
     init(
-        keychain: Keychain,
+        apiProvider: NightscoutAPIProvider,
         appCoordinator: AppCoordinator,
         tempTargetsStorage: TempTargetsStorage,
         carbsStorage: CarbsStorage,
         storage: FileStorage,
         announcementsStorage: AnnouncementsStorage,
-        reachabilityManager: ReachabilityManager
+        reachabilityManager: ReachabilityManager,
+        deviceStatusUploader: NightscoutDeviceStatusUploader
     ) {
-        self.keychain = keychain
+        self.apiProvider = apiProvider
         self.appCoordinator = appCoordinator
         self.tempTargetsStorage = tempTargetsStorage
         self.carbsStorage = carbsStorage
         self.storage = storage
         self.announcementsStorage = announcementsStorage
         self.reachabilityManager = reachabilityManager
-    }
-
-    // this is called at the start of the app
-    func start() async {
-        reloadNightscoutConfiguration()
-
-        dataSync = NightscoutDataSync(
-            apiProvider: { [self] in await nightscoutAPI },
-            appCoordinator: appCoordinator,
-            reachabilityManager: reachabilityManager,
-            storage: storage
-        )
-
-        deviceStatusUploader = NightscoutDeviceStatusUploader(
-            apiProvider: { [self] in await nightscoutAPI },
-            isUploadEnabled: { [appCoordinator] in appCoordinator.settings.value.isUploadEnabled },
-            storage: storage
-        )
-
-        observe(appCoordinator.nightscoutConfigChanged) { me, _ in
-            await me.reloadNightscoutConfiguration()
-        }
-        observe(appCoordinator.carbHistory) { me, carbHistory in
-            await withBackgroundTask("nightscout upload - carb history") {
-                await me.dataSync.carbHistoryUpdated(carbHistory)
-            }
-        }
-
-        observe(appCoordinator.tempTargets) { me, tempTargets in
-            await withBackgroundTask("nightscout upload - temp targets") {
-                await me.dataSync.tempTargetsUpdated(tempTargets)
-            }
-        }
-
-        observe(appCoordinator.glucoseHistory) { me, bloodGlucose in
-            await withBackgroundTask("nightscout upload - blood glucose") {
-                await me.dataSync.glucoseHistoryUpdated(bloodGlucose)
-            }
-        }
-
-        observe(appCoordinator.pumpHistory) { me, pumpHistory in
-            await withBackgroundTask("nightscout upload - pump history") {
-                await me.dataSync.pumpHistoryUpdated(pumpHistory)
-            }
-        }
-
-        observe(appCoordinator.cgmStatus) { me, cgmStatus in
-            if let cgmStatus {
-                await withBackgroundTask("nightscout upload - cgm status") {
-                    await me.dataSync.cgmStatusUpdated(cgmStatus)
-                }
-            }
-        }
-
-        observe(appCoordinator.pumpStatus) { me, pumpStatus in
-            if let pumpStatus {
-                await withBackgroundTask("nightscout upload - pump status") {
-                    await me.deviceStatusUploader.pumpStatusUpdated(pumpStatus)
-                }
-            }
-        }
-        observe(appCoordinator.pumpInfo.map(\.?.podActivatedAt)) { me, podActivatedAt in
-            if let podActivatedAt {
-                await withBackgroundTask("nightscout upload - pod activation") {
-                    await me.dataSync.uploadPodAge(podActivatedAt: podActivatedAt)
-                }
-            }
-        }
-
-        observe(appCoordinator.loopCompleted) { me, outcome in
-            await withBackgroundTask("nightscout upload - device status") {
-                await me.deviceStatusUploader.loopCompleted(outcome)
-                await me.dataSync.retryPodAgeIfNeeded()
-            }
-        }
-
-        observe(appCoordinator.iobTicks.dropFirst()) { me, iobTicks in
-            if let iobTicks {
-                await withBackgroundTask("nightscout upload - iob") {
-                    await me.deviceStatusUploader.uploadIOB(iobTicks)
-                }
-            }
-        }
-    }
-
-    private func makeNightscoutAPI() -> NightscoutAPI? {
-        guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
-              let url = URL(string: urlString),
-              let secret = keychain.getValue(String.self, forKey: NightscoutConfig.Config.secretKey)
-        else {
-            return nil
-        }
-        return NightscoutAPI(url: url, secret: secret)
-    }
-
-    private func reloadNightscoutConfiguration() {
-        nightscoutAPI = makeNightscoutAPI()
+        self.deviceStatusUploader = deviceStatusUploader
     }
 
     func isConfigured() async -> Bool {
@@ -293,47 +196,10 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
     }
 
-    func uploadOldGlucose(bloodGlucose: [BloodGlucose]) async -> AsyncStream<Double> {
-        let settings = appCoordinator.settings.value
-        return uploadGlucose(
-            upload: bloodGlucose,
-            saveToUploaded: false, // do not update the "already uploaded glucose" file
-            settings: settings
-        )
-    }
-
-    func uploadOverride(_ profile: String, _ duration: Double, _ date: Date) async {
-        await deviceStatusUploader.uploadOverride(profile, duration, date)
-    }
-
-    func deleteAllNSoverrrides() async {
-        let settings = appCoordinator.settings.value
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            return
-        }
-        do {
-            try await nightscout.deleteAllNSoverrrides()
-            debug(.nightscout, "All Overrides deleted in NS")
-        } catch {
-            debug(.nightscout, "Deletion of all overrides in NS failed: " + error.localizedDescription)
-        }
-    }
-
-    func fetchProfile() async throws -> [FetchedNightscoutProfileStore] {
-        guard let nightscout = nightscoutAPI else {
-            return []
-        }
-        return try await nightscout.fetchProfile()
-    }
-
-    /// upload `glucose` to nightscout, upon success - if saveToUploaded=true, append uploaded glucose to storage so we don't upload any of it next time
-    private func uploadGlucose(
-        upload glucose: [BloodGlucose],
-        saveToUploaded: Bool,
-        settings: FreeAPSSettings
-    ) -> AsyncStream<Double> {
+    func uploadOldGlucose(bloodGlucose glucose: [BloodGlucose]) async -> AsyncStream<Double> {
         AsyncStream { continuation in
             Task {
+                let settings = appCoordinator.settings.value
                 guard settings.isUploadEnabled, !glucose.isEmpty, let nightscout = nightscoutAPI,
                       appCoordinator.cgmStatus.value?.shouldUploadGlucose == true
                 else {
@@ -359,15 +225,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                             continuation.yield(1.0)
                         }
                     }
-                    if saveToUploaded {
-                        _ = await storage
-                            .modify(file: OpenAPS.Nightscout.uploadedGlucose, as: BloodGlucose.self) { previousUploaded in
-                                let hoursAgo25 = Date.now.removingTimeInterval(.hours(25))
-                                return (previousUploaded + glucose)
-                                    .uniqued(on: \.dateString)
-                                    .filter { $0.dateString > hoursAgo25 }
-                            }
-                    }
                     debug(.nightscout, "Glucose uploaded")
 
                 } catch {
@@ -377,6 +234,30 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 continuation.finish()
             }
         }
+    }
+
+    func uploadOverride(_ profile: String, _ duration: Double, _ date: Date) async {
+        await deviceStatusUploader.uploadOverride(profile, duration, date)
+    }
+
+    func deleteAllNSoverrrides() async {
+        let settings = appCoordinator.settings.value
+        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
+            return
+        }
+        do {
+            try await nightscout.deleteAllNSoverrrides()
+            debug(.nightscout, "All Overrides deleted in NS")
+        } catch {
+            debug(.nightscout, "Deletion of all overrides in NS failed: " + error.localizedDescription)
+        }
+    }
+
+    func fetchProfile() async throws -> [FetchedNightscoutProfileStore] {
+        guard let nightscout = nightscoutAPI else {
+            return []
+        }
+        return try await nightscout.fetchProfile()
     }
 }
 

@@ -1,10 +1,12 @@
 import Foundation
 
-actor NightscoutDataSync {
-    private let apiProvider: @Sendable() async -> NightscoutAPI?
+actor NightscoutDataSync: LifetimeOwner, AppService {
+    private let apiProvider: NightscoutAPIProvider
     private let appCoordinator: AppCoordinator
     private let reachabilityManager: ReachabilityManager
     private let storage: FileStorage
+
+    let lifetime = Lifetime()
 
     private let pumpHistorySync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>
     private let glucoseSync: DataSynchronizer<BloodGlucose, NightscoutGlucoseSink>
@@ -16,7 +18,7 @@ actor NightscoutDataSync {
     private var lastSeenCgmStart: Date?
 
     init(
-        apiProvider: @escaping @Sendable() async -> NightscoutAPI?,
+        apiProvider: NightscoutAPIProvider,
         appCoordinator: AppCoordinator,
         reachabilityManager: ReachabilityManager,
         storage: FileStorage
@@ -34,7 +36,7 @@ actor NightscoutDataSync {
         ) -> DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink> {
             DataSynchronizer(
                 name: name,
-                sink: NightscoutTreatmentSink(apiProvider: apiProvider),
+                sink: NightscoutTreatmentSink(apiProvider: { apiProvider.api }),
                 storage: storage,
                 snapshotFile: snapshotFile,
                 retention: retention,
@@ -52,7 +54,7 @@ actor NightscoutDataSync {
 
         glucoseSync = DataSynchronizer(
             name: "ns.glucose",
-            sink: NightscoutGlucoseSink(apiProvider: apiProvider),
+            sink: NightscoutGlucoseSink(apiProvider: { apiProvider.api }),
             storage: storage,
             snapshotFile: OpenAPS.Nightscout.uploadedGlucose,
             retention: .hours(24),
@@ -89,40 +91,88 @@ actor NightscoutDataSync {
         )
     }
 
+    func start() async {
+        observe(appCoordinator.pumpHistory) { me, pumpHistory in
+            await withBackgroundTask("nightscout upload - pump history") {
+                await me.pumpHistoryUpdated(pumpHistory)
+            }
+        }
+
+        observe(appCoordinator.glucoseHistory) { me, bloodGlucose in
+            await withBackgroundTask("nightscout upload - blood glucose") {
+                await me.glucoseHistoryUpdated(bloodGlucose)
+            }
+        }
+
+        observe(appCoordinator.carbHistory) { me, carbHistory in
+            await withBackgroundTask("nightscout upload - carb history") {
+                await me.carbHistoryUpdated(carbHistory)
+            }
+        }
+
+        observe(appCoordinator.tempTargets) { me, tempTargets in
+            await withBackgroundTask("nightscout upload - temp targets") {
+                await me.tempTargetsUpdated(tempTargets)
+            }
+        }
+
+        observe(appCoordinator.cgmStatus) { me, cgmStatus in
+            if let cgmStatus {
+                await withBackgroundTask("nightscout upload - cgm status") {
+                    await me.cgmStatusUpdated(cgmStatus)
+                }
+            }
+        }
+
+        observe(appCoordinator.pumpInfo.map(\.?.podActivatedAt)) { me, podActivatedAt in
+            if let podActivatedAt {
+                await withBackgroundTask("nightscout upload - pod activation") {
+                    await me.uploadPodAge(podActivatedAt: podActivatedAt)
+                }
+            }
+        }
+
+        observe(appCoordinator.loopCompleted) { me, _ in
+            await withBackgroundTask("nightscout upload - pod age retry") {
+                await me.retryPodAgeIfNeeded()
+            }
+        }
+    }
+
     private var isNetworkReachable: Bool {
         reachabilityManager.isReachable
     }
 
-    private func canUpload() async -> Bool {
+    private func canUpload() -> Bool {
         guard appCoordinator.settings.value.isUploadEnabled, isNetworkReachable else { return false }
-        return (await apiProvider()) != nil
+        return apiProvider.api != nil
     }
 
     func pumpHistoryUpdated(_ pumpHistory: [PumpHistoryEvent]) async {
-        guard await canUpload() else { return }
+        guard canUpload() else { return }
         let treatments = convertPumpHistoryToNightscout(events: pumpHistory)
         await pumpHistorySync.reconcile { treatments }
     }
 
     func glucoseHistoryUpdated(_ bloodGlucose: [BloodGlucose]) async {
-        guard await canUpload(), appCoordinator.cgmStatus.value?.shouldUploadGlucose == true else { return }
+        guard canUpload(), appCoordinator.cgmStatus.value?.shouldUploadGlucose == true else { return }
         await glucoseSync.reconcile { bloodGlucose }
     }
 
     func carbHistoryUpdated(_ carbHistory: [CarbsEntry]) async {
-        guard await canUpload() else { return }
+        guard canUpload() else { return }
         let treatments = convertCarbHistoryToNightscout(events: carbHistory)
         await carbsSync.reconcile { treatments }
     }
 
     func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
-        guard await canUpload() else { return }
+        guard canUpload() else { return }
         let treatments = convertTempTargetsToNightscout(events: tempTargets)
         await tempTargetsSync.reconcile { treatments }
     }
 
     func uploadPodAge(podActivatedAt: Date) async {
-        guard await canUpload() else {
+        guard canUpload() else {
             await podAgeSync.markPending()
             return
         }
@@ -131,7 +181,7 @@ actor NightscoutDataSync {
     }
 
     func retryPodAgeIfNeeded() async {
-        guard await canUpload(),
+        guard canUpload(),
               let podActivatedAt = appCoordinator.pumpInfo.value?.podActivatedAt
         else {
             return
@@ -150,7 +200,7 @@ actor NightscoutDataSync {
             recorded = await recordSensorStartIfNeeded(sessionStartDate)
         }
 
-        guard await canUpload(), cgmStatus.shouldUploadGlucose else {
+        guard canUpload(), cgmStatus.shouldUploadGlucose else {
             if recorded != nil {
                 await cgmStateSync.markPending()
             }

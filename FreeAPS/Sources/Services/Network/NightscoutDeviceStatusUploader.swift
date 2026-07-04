@@ -1,9 +1,11 @@
 import Foundation
 import UIKit
 
-actor NightscoutDeviceStatusUploader {
-    private let apiProvider: @Sendable() async -> NightscoutAPI?
-    private let isUploadEnabled: @Sendable() -> Bool
+actor NightscoutDeviceStatusUploader: LifetimeOwner, AppService {
+    private let apiProvider: NightscoutAPIProvider
+    private let appCoordinator: AppCoordinator
+
+    let lifetime = Lifetime()
 
     private let suggestedOutbox: UploadOutbox<Suggestion, Date?>
     private let enactedOutbox: UploadOutbox<Suggestion, Date?>
@@ -15,12 +17,12 @@ actor NightscoutDeviceStatusUploader {
     private var lastUploadedPumpStatus: PumpDisplayStatus?
 
     init(
-        apiProvider: @escaping @Sendable() async -> NightscoutAPI?,
-        isUploadEnabled: @escaping @Sendable() -> Bool,
+        apiProvider: NightscoutAPIProvider,
+        appCoordinator: AppCoordinator,
         storage: FileStorage
     ) {
         self.apiProvider = apiProvider
-        self.isUploadEnabled = isUploadEnabled
+        self.appCoordinator = appCoordinator
 
         let version = Bundle.main.releaseVersionNumber ?? "Unknown"
         iapsVersion = version
@@ -34,7 +36,7 @@ actor NightscoutDeviceStatusUploader {
             category: .nightscout,
             send: { suggested in
                 guard let timestamp = suggested.timestamp else { return }
-                guard let nightscout = await apiProvider() else { throw DataSyncError.sinkUnavailable }
+                guard let nightscout = apiProvider.api else { throw DataSyncError.sinkUnavailable }
                 try await nightscout.uploadStatus(NightscoutStatus(
                     device: NigtscoutTreatment.local,
                     openaps: OpenAPSStatus(iob: nil, suggested: suggested, enacted: nil, version: version),
@@ -53,7 +55,7 @@ actor NightscoutDeviceStatusUploader {
             category: .nightscout,
             send: { enacted in
                 guard let timestamp = enacted.timestamp else { return }
-                guard let nightscout = await apiProvider() else { throw DataSyncError.sinkUnavailable }
+                guard let nightscout = apiProvider.api else { throw DataSyncError.sinkUnavailable }
                 // NS needs both suggested + enacted set to show predictions on the graph.
                 try await nightscout.uploadStatus(NightscoutStatus(
                     device: NigtscoutTreatment.local,
@@ -72,16 +74,44 @@ actor NightscoutDeviceStatusUploader {
             storage: storage,
             category: .nightscout,
             send: { override in
-                guard let nightscout = await apiProvider() else { throw DataSyncError.sinkUnavailable }
+                guard let nightscout = apiProvider.api else { throw DataSyncError.sinkUnavailable }
                 try await nightscout.deleteOverride(at: override.createdAt)
                 try await nightscout.uploadEcercises([override])
             }
         )
     }
 
-    private func canUpload() async -> Bool {
-        guard isUploadEnabled() else { return false }
-        return (await apiProvider()) != nil
+    func start() async {
+        observe(appCoordinator.loopCompleted) { me, outcome in
+            await withBackgroundTask("nightscout upload - device status") {
+                await me.loopCompleted(outcome)
+            }
+        }
+
+        observe(appCoordinator.pumpStatus) { me, pumpStatus in
+            if let pumpStatus {
+                await withBackgroundTask("nightscout upload - pump status") {
+                    await me.pumpStatusUpdated(pumpStatus)
+                }
+            }
+        }
+
+        observe(appCoordinator.iobTicks.dropFirst()) { me, iobTicks in
+            if let iobTicks {
+                await withBackgroundTask("nightscout upload - iob") {
+                    await me.uploadIOB(iobTicks)
+                }
+            }
+        }
+    }
+
+    private var isUploadEnabled: Bool {
+        appCoordinator.settings.value.isUploadEnabled
+    }
+
+    private func canUpload() -> Bool {
+        guard isUploadEnabled else { return false }
+        return apiProvider.api != nil
     }
 
     func loopCompleted(_ outcome: LoopOutcome) async {
@@ -101,7 +131,7 @@ actor NightscoutDeviceStatusUploader {
     }
 
     func sendAllPending() async {
-        guard await canUpload() else { return }
+        guard canUpload() else { return }
         await suggestedOutbox.sendPending()
         await enactedOutbox.sendPending()
         await overridesOutbox.sendPending()
@@ -120,13 +150,13 @@ actor NightscoutDeviceStatusUploader {
 
         await overridesOutbox.enqueue([exercise])
 
-        guard await canUpload() else { return }
+        guard canUpload() else { return }
         await overridesOutbox.sendPending()
     }
 
     func uploadIOB(_ iob: [IOBEntry]) async {
         guard let iob = iob.first else { return }
-        guard isUploadEnabled(), let nightscout = await apiProvider() else { return }
+        guard isUploadEnabled, let nightscout = apiProvider.api else { return }
 
         let status = NightscoutStatus(
             device: NigtscoutTreatment.local,
@@ -163,7 +193,7 @@ actor NightscoutDeviceStatusUploader {
     func pumpStatusUpdated(_ pumpStatus: PumpDisplayStatus) async {
         // do not flood nightscout
         guard shouldUploadPumpStatusNow(pumpStatus) else { return }
-        guard isUploadEnabled(), let nightscout = await apiProvider() else { return }
+        guard isUploadEnabled, let nightscout = apiProvider.api else { return }
 
         let nsPumpStatus = NSPumpStatusDetails(
             status: NSStatusType(rawValue: pumpStatus.status.rawValue) ?? .normal,

@@ -7,15 +7,37 @@ final class NetworkAssembly: Assembly {
             NetworkReachabilityManager()!
         }
 
+        container.register(NightscoutAPIProvider.self) { r in
+            NightscoutAPIProvider(
+                keychain: r.resolve(Keychain.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!
+            )
+        }
+        container.register(NightscoutDataSync.self) { r in
+            NightscoutDataSync(
+                apiProvider: r.resolve(NightscoutAPIProvider.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                reachabilityManager: r.resolve(ReachabilityManager.self)!,
+                storage: r.resolve(FileStorage.self)!
+            )
+        }
+        container.register(NightscoutDeviceStatusUploader.self) { r in
+            NightscoutDeviceStatusUploader(
+                apiProvider: r.resolve(NightscoutAPIProvider.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                storage: r.resolve(FileStorage.self)!
+            )
+        }
         container.register(NightscoutManager.self) { r in
             BaseNightscoutManager(
-                keychain: r.resolve(Keychain.self)!,
+                apiProvider: r.resolve(NightscoutAPIProvider.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
                 tempTargetsStorage: r.resolve(TempTargetsStorage.self)!,
                 carbsStorage: r.resolve(CarbsStorage.self)!,
                 storage: r.resolve(FileStorage.self)!,
                 announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
-                reachabilityManager: r.resolve(ReachabilityManager.self)!
+                reachabilityManager: r.resolve(ReachabilityManager.self)!,
+                deviceStatusUploader: r.resolve(NightscoutDeviceStatusUploader.self)!
             )
         }
         container.register(Database.self) { r in Database(resolver: r) }
