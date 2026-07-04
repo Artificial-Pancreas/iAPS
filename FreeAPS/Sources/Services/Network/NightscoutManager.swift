@@ -1,7 +1,6 @@
 import Foundation
 import NightscoutKit
 import Swinject
-import UIKit
 
 protocol NightscoutManager: Sendable {
     func isConfigured() async -> Bool
@@ -40,17 +39,13 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
     private var podAgeSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
     private var cgmStateSync: DataSynchronizer<NigtscoutTreatment, NightscoutTreatmentSink>!
 
+    private var deviceStatusUploader: NightscoutDeviceStatusUploader!
+
     private let overrideStorage = OverrideStorage()
 
     private var ping: TimeInterval?
 
-    private var notUploadedOverrides: [NigtscoutExercise] = []
-
     private var lastSeenCgmStart: Date?
-
-    private var lastUploadedPumpStatus: PumpDisplayStatus?
-
-    private let iapsVersion = Bundle.main.releaseVersionNumber ?? "Unknown"
 
     let lifetime = Lifetime()
 
@@ -131,8 +126,11 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             deletionWindow: 0 // append-only
         )
 
-        self.notUploadedOverrides = await storage
-            .retrieve(OpenAPS.Nightscout.notUploadedOverrides, as: [NigtscoutExercise].self) ?? []
+        deviceStatusUploader = NightscoutDeviceStatusUploader(
+            apiProvider: { [self] in await nightscoutAPI },
+            isUploadEnabled: { [appCoordinator] in appCoordinator.settings.value.isUploadEnabled },
+            storage: storage
+        )
 
         observe(appCoordinator.nightscoutConfigChanged) { me, _ in
             await me.reloadNightscoutConfiguration()
@@ -172,7 +170,7 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         observe(appCoordinator.pumpStatus) { me, pumpStatus in
             if let pumpStatus {
                 await withBackgroundTask("nightscout upload - pump status") {
-                    await me.pumpStatusUpdated(pumpStatus)
+                    await me.deviceStatusUploader.pumpStatusUpdated(pumpStatus)
                 }
             }
         }
@@ -185,24 +183,17 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         }
 
         observe(appCoordinator.loopCompleted) { me, outcome in
-            await withBackgroundTask("nightscout upload - suggestions") {
-                await me.loopCompleted(outcome)
+            await withBackgroundTask("nightscout upload - device status") {
+                await me.deviceStatusUploader.loopCompleted(outcome)
+                await me.retryPodAgeIfNeeded()
             }
         }
 
         observe(appCoordinator.iobTicks.dropFirst()) { me, iobTicks in
             if let iobTicks {
                 await withBackgroundTask("nightscout upload - iob") {
-                    await me.uploadIOB(iobTicks)
+                    await me.deviceStatusUploader.uploadIOB(iobTicks)
                 }
-            }
-        }
-
-        observe(appCoordinator.loopCompleted) { me, _ in
-            // loopCompleted used only as a periodic timer here: retry overrides + pod age if pending
-            await withBackgroundTask("nightscout upload - retries") {
-                await me.uploadOverridesIfNeeded()
-                await me.retryPodAgeIfNeeded()
             }
         }
     }
@@ -345,206 +336,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 "Deletion of Announcements not possible \(error.localizedDescription)",
                 type: MessageType.warning
             )
-        }
-    }
-
-    private func shouldUploadPumpStatusNow(_ pumpStatus: PumpDisplayStatus) -> Bool {
-        guard let lastUploadedPumpStatus else { return true }
-        if Date.now.timeIntervalSince(lastUploadedPumpStatus.timestamp) >= .minutes(5) {
-            return true
-        }
-        return lastUploadedPumpStatus.isSuspended != pumpStatus.isSuspended ||
-            lastUploadedPumpStatus.isBolusing != pumpStatus.isBolusing ||
-            lastUploadedPumpStatus.status != pumpStatus.status ||
-            lastUploadedPumpStatus.statusHighlight != pumpStatus.statusHighlight
-    }
-
-    private func pumpStatusUpdated(_ pumpStatus: PumpDisplayStatus) async {
-        // do not flood nightscout
-        guard shouldUploadPumpStatusNow(pumpStatus) else { return }
-
-        let settings = appCoordinator.settings.value
-
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            return
-        }
-
-        let battery = pumpStatus.battery
-
-        let reservoir = pumpStatus.reservoir?.knownValue
-
-        let nsPumpStatus =
-            NSPumpStatusDetails(
-                status: NSStatusType(rawValue: pumpStatus.status.rawValue) ?? .normal,
-                bolusing: pumpStatus.isBolusing,
-                suspended: pumpStatus.isSuspended,
-                timestamp: pumpStatus.timestamp,
-            )
-
-        let pump = NSPumpStatus(
-            clock: pumpStatus.timestamp,
-            battery: battery,
-            reservoir: reservoir,
-            status: nsPumpStatus
-        )
-
-        let device = await UIDevice.current
-        let batteryLevel = await device.batteryLevel
-        let uploader = Uploader(batteryVoltage: nil, battery: Int(batteryLevel * 100))
-
-        let status = NightscoutStatus(
-            device: NigtscoutTreatment.local,
-            openaps: nil,
-            pump: pump,
-            uploader: uploader,
-            createdAt: pumpStatus.timestamp
-        )
-
-        do {
-            try await nightscout.uploadStatus(status)
-            lastUploadedPumpStatus = pumpStatus
-            debug(.nightscout, "pump status uploaded")
-        } catch {
-            debug(.nightscout, "failed to upload pump status: \(error.localizedDescription)")
-        }
-    }
-
-    private func loopCompleted(_ outcome: LoopOutcome) async {
-        let recentSuggested: [Suggestion]
-        let recentEnacted: [Suggestion]
-
-        let hoursAgo30 = Date.now.removingTimeInterval(.hours(30))
-
-        switch outcome {
-        case let .enacted(suggestion, _):
-            recentEnacted = await storage.appendAndModify([suggestion], to: OpenAPS.Upload.recentEnacted, uniqBy: \.timestamp) {
-                $0.filter { ($0.timestamp ?? .distantPast) >= hoursAgo30 }
-            }
-
-            recentSuggested = await storage.retrieve(OpenAPS.Upload.recentSuggested, as: [Suggestion].self) ?? []
-        case .enactFailed(var suggestion, let error, _):
-            suggestion.reason = suggestion.reason + "\n\(error)"
-            recentEnacted = await storage.appendAndModify([suggestion], to: OpenAPS.Upload.recentEnacted, uniqBy: \.timestamp) {
-                $0.filter { ($0.timestamp ?? .distantPast) >= hoursAgo30 }
-            }
-
-            recentSuggested = await storage.retrieve(OpenAPS.Upload.recentSuggested, as: [Suggestion].self) ?? []
-        case let .suggested(suggestion, _):
-            recentSuggested = await storage.appendAndModify(
-                [suggestion],
-                to: OpenAPS.Upload.recentSuggested,
-                uniqBy: \.timestamp
-            ) {
-                $0.filter { ($0.timestamp ?? .distantPast) >= hoursAgo30 }
-            }
-
-            recentEnacted = await storage.retrieve(OpenAPS.Upload.recentEnacted, as: [Suggestion].self) ?? []
-        case .failed:
-            recentEnacted = await storage.retrieve(OpenAPS.Upload.recentEnacted, as: [Suggestion].self) ?? []
-            recentSuggested = await storage.retrieve(OpenAPS.Upload.recentSuggested, as: [Suggestion].self) ?? []
-        }
-
-        let settings = appCoordinator.settings.value
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            return
-        }
-
-        var uploadedSuggested: Set<Date> = Set([])
-
-        for suggested in recentSuggested {
-            guard let timestamp = suggested.timestamp else { continue }
-            let status = NightscoutStatus(
-                device: NigtscoutTreatment.local,
-                openaps: OpenAPSStatus(
-                    iob: nil,
-                    suggested: suggested,
-                    enacted: nil,
-                    version: iapsVersion
-                ),
-                pump: nil,
-                uploader: nil,
-                createdAt: timestamp
-            )
-            do {
-                try await nightscout.uploadStatus(status)
-                debug(.nightscout, "suggestion uploaded")
-                uploadedSuggested.insert(timestamp)
-            } catch {
-                debug(.nightscout, error.localizedDescription)
-            }
-        }
-
-        var uploadedEnacted: Set<Date> = Set([])
-
-        for enacted in recentEnacted {
-            guard let timestamp = enacted.timestamp else { continue }
-
-            let status = NightscoutStatus(
-                device: NigtscoutTreatment.local,
-                openaps: OpenAPSStatus(
-                    iob: nil,
-                    // Nightscout requires both enacted and suggested fields to be specified in order to show predictions on graph.
-                    suggested: enacted,
-                    enacted: enacted,
-                    version: iapsVersion
-                ),
-                pump: nil,
-                uploader: nil,
-                createdAt: timestamp
-            )
-            do {
-                try await nightscout.uploadStatus(status)
-                debug(.nightscout, "enacted suggestion uploaded")
-                uploadedEnacted.insert(timestamp)
-            } catch {
-                debug(.nightscout, error.localizedDescription)
-            }
-        }
-
-        if uploadedSuggested.isNotEmpty {
-            let uploadedSuggestedSnapshot = uploadedSuggested
-            await storage.modify(file: OpenAPS.Upload.recentSuggested, as: Suggestion.self) {
-                $0.filter { !uploadedSuggestedSnapshot.contains($0.timestamp ?? .distantPast) }
-            }
-        }
-
-        if uploadedEnacted.isNotEmpty {
-            let uploadedEnactedSnapshot = uploadedEnacted
-            await storage.modify(file: OpenAPS.Upload.recentEnacted, as: Suggestion.self) {
-                $0.filter { !uploadedEnactedSnapshot.contains($0.timestamp ?? .distantPast) }
-            }
-        }
-    }
-
-    private func uploadIOB(_ iob: [IOBEntry]) async {
-        guard let iob = iob.first else {
-            return
-        }
-
-        let settings = appCoordinator.settings.value
-
-        guard let nightscout = nightscoutAPI, settings.isUploadEnabled else {
-            return
-        }
-
-        let status = NightscoutStatus(
-            device: NigtscoutTreatment.local,
-            openaps: OpenAPSStatus(
-                iob: iob,
-                suggested: nil,
-                enacted: nil,
-                version: iapsVersion
-            ),
-            pump: nil,
-            uploader: nil,
-            createdAt: iob.time ?? Date.now
-        )
-
-        do {
-            try await nightscout.uploadStatus(status)
-            debug(.nightscout, "iob uploaded")
-        } catch {
-            debug(.nightscout, error.localizedDescription)
         }
     }
 
@@ -711,20 +502,8 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
         return nil
     }
 
-    func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date) async {
-        let duration = Int(duration_ == 0 ? 2880 : duration_)
-
-        let exercise =
-            [NigtscoutExercise(
-                duration: duration,
-                eventType: EventType.nsExercise,
-                createdAt: date.truncatedToSecond,
-                enteredBy: NigtscoutTreatment.local,
-                notes: profile
-            )]
-
-        await storeNotUploadedOverrides(exercise)
-        await uploadOverridesIfNeeded()
+    func uploadOverride(_ profile: String, _ duration: Double, _ date: Date) async {
+        await deviceStatusUploader.uploadOverride(profile, duration, date)
     }
 
     func deleteAllNSoverrrides() async {
@@ -745,24 +524,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
             return []
         }
         return try await nightscout.fetchProfile()
-    }
-
-    private func storeNotUploadedOverrides(_ overrides: [NigtscoutExercise]) async {
-        self.notUploadedOverrides = await storage.appendAndModify(
-            overrides,
-            to: OpenAPS.Nightscout.notUploadedOverrides,
-            uniqBy: \.createdAt
-        ) {
-            $0
-                .filter { $0.createdAt.addingTimeInterval(2.days.timeInterval) > Date() }
-                .sorted { $0.createdAt > $1.createdAt }
-        }
-        debug(.nightscout, "\(self.notUploadedOverrides.count) overrides saved for upload retry")
-    }
-
-    private func removeOverrideFromNotUploaded(at date: Date) async {
-        self.notUploadedOverrides = self.notUploadedOverrides.filter { $0.createdAt != date }
-        await storage.save(self.notUploadedOverrides, as: OpenAPS.Nightscout.notUploadedOverrides)
     }
 
     private func carbHistoryUpdated(_ carbHistory: [CarbsEntry]) async {
@@ -826,31 +587,6 @@ actor BaseNightscoutManager: NightscoutManager, LifetimeOwner, AppService {
                 }
 
                 continuation.finish()
-            }
-        }
-    }
-
-    private var isUploadingOverrides = false
-
-    private func uploadOverridesIfNeeded() async {
-        guard notUploadedOverrides.isNotEmpty, let nightscout = nightscoutAPI,
-              appCoordinator.settings.value.isUploadEnabled else { return }
-        guard !isUploadingOverrides else { return }
-        isUploadingOverrides = true
-        defer { isUploadingOverrides = false }
-
-        for override in notUploadedOverrides {
-            do {
-                try await nightscout.deleteOverride(at: override.createdAt)
-                debug(.nightscout, "override deleted from NS before uploading: \(String(describing: override.notes))")
-                try await nightscout.uploadEcercises([override])
-                debug(.nightscout, "override uploaded to NS: \(String(describing: override.notes))")
-                await removeOverrideFromNotUploaded(at: override.createdAt)
-            } catch {
-                debug(
-                    .nightscout,
-                    "failed to update override in NS: \(String(describing: override.notes)) - \(error.localizedDescription)"
-                )
             }
         }
     }

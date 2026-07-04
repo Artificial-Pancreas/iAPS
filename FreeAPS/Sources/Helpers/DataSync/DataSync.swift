@@ -83,7 +83,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
         }
     }
 
-    private func performReconcile(trigger: SyncTrigger, current: @Sendable () async -> [Record]) async {
+    private func performReconcile(trigger: SyncTrigger, current: @Sendable() async -> [Record]) async {
         // A retry tick does nothing unless a prior run failed or `markPending` was called.
         if trigger == .retry, !hasPendingWork { return }
 

@@ -447,6 +447,8 @@
 		F22A7A802FF167410019BDC5 /* DataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */; };
 		F22A7A822FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */; };
 		F22A7A842FF287B20019BDC5 /* NightscoutGlucoseSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */; };
+		F22A7A862FF91EA10019BDC5 /* UploadOutbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A852FF91EA10019BDC5 /* UploadOutbox.swift */; };
+		F22A7A882FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
@@ -1182,6 +1184,8 @@
 		F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSync.swift; sourceTree = "<group>"; };
 		F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutTreatmentSync.swift; sourceTree = "<group>"; };
 		F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutGlucoseSync.swift; sourceTree = "<group>"; };
+		F22A7A852FF91EA10019BDC5 /* UploadOutbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadOutbox.swift; sourceTree = "<group>"; };
+		F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDeviceStatusUploader.swift; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
@@ -1907,6 +1911,7 @@
 				38192E03261B82FA0094D973 /* ReachabilityManager.swift */,
 				3811DE9625C9D88300A708ED /* HTTPResponseStatus.swift */,
 				3811DE9725C9D88300A708ED /* NightscoutManager.swift */,
+				F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */,
 				F2B1AFD32FB0DB3E0088219A /* DatabaseManager.swift */,
 				F2B259DE2FB39C8E008F1F22 /* DatabaseStatisticsFactory.swift */,
 				F2B1AFD72FB236400088219A /* ProfileAndSettingsUploadManager.swift */,
@@ -2937,6 +2942,7 @@
 			isa = PBXGroup;
 			children = (
 				F22A7A7F2FF1673D0019BDC5 /* DataSync.swift */,
+				F22A7A852FF91EA10019BDC5 /* UploadOutbox.swift */,
 				F22A7A832FF287B20019BDC5 /* NightscoutGlucoseSync.swift */,
 				F22A7A812FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift */,
 			);
@@ -3546,6 +3552,7 @@
 				F2DCBC522F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift in Sources */,
 				191A9D182BED24B000028D48 /* ActiveIOBView.swift in Sources */,
 				38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */,
+				F22A7A882FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift in Sources */,
 				F2159A542BA6207F00A0B716 /* ContactTrickEntry.swift in Sources */,
 				F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */,
 				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
@@ -3764,6 +3771,7 @@
 				198F67B72CFCBD5D00E538CB /* AutoISFProvider.swift in Sources */,
 				63E890B4D951EAA91C071D5C /* BasalProfileEditorStateModel.swift in Sources */,
 				38FEF3FA2737E42000574A46 /* BaseStateModel.swift in Sources */,
+				F22A7A862FF91EA10019BDC5 /* UploadOutbox.swift in Sources */,
 				CC6C406E2ACDD69E009B8058 /* RawFetchedProfile.swift in Sources */,
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
 				F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */,

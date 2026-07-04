@@ -58,4 +58,3 @@ extension NigtscoutTreatment {
         case creation_date
     }
 }
-
