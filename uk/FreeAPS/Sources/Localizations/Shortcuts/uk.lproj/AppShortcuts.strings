@@ -23,7 +23,7 @@
 "Activates an ${applicationName} Override Preset" = "Активує ${applicationName} перевизначення профілю";
 
 /* iAPS Cancel Override shortcut */
-"Cancel ${applicationName} Override" = "Cancel ${applicationName} Override";
+"Cancel ${applicationName} Override" = "Скасувати Перевизначення ${applicationName}";
 
 /* iAPS Cancel Override shortcut description */
 "Cancels an active ${applicationName} override" = "Скасовує поточний ${applicationName} перевизначення профілю";
@@ -35,10 +35,10 @@
 "${applicationName} Enacts a bolus" = "${applicationName} Вводить болюс";
 
 /* iAPS Meal Preset shortcut */
-"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+"${applicationName} Meal Presets" = "${applicationName} Попередні налаштування Страв";
 
 /* iAPS Meal Preset shortcut description */
-"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";
+"Uses an ${applicationName} Meal Preset" = "Використовує пресет Страв ${applicationName}";
 
 /* iAPS Loop Mode shortcut */
 "${applicationName} Loop Mode" = "Режим Петлі ${applicationName}";
@@ -53,7 +53,7 @@
 "Enacts an ${applicationName} Temp Basal" = "Запускає Тимчасову Базальну Швидкість (ТБШ) ${applicationName}";
 
 /* iAPS Suspend/Resume shortcut */
-"${applicationName} Pump" = "${applicationName} Pump";
+"${applicationName} Pump" = "Помпа ${applicationName}";
 
 /* iAPS Suspend/Resume  shortcut description */
-"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Suspends/Resumes your ${applicationName} pump or cancels a temp basal";
+"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Призупиняє/відновлює помпу ${applicationName} або скасовує Тимчасовий Базальний Швидкість (ТБШ)";
