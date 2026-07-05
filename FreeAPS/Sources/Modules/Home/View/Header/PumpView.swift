@@ -314,8 +314,7 @@ struct PumpView: View {
     private func podInsulinAmount(portion: Double) -> some View {
         ZStack {
             let pump = colorScheme == .dark ? "pod_dark" : "pod_light"
-            UIImage(imageLiteralResourceName: pump)
-                .fillImageUpToPortion(color: insulinColour(portion).opacity(0.8), portion: portion)
+            filledPumpImage(named: pump, color: insulinColour(portion).opacity(0.8), portion: portion)
                 .resizable()
                 .aspectRatio(0.72, contentMode: .fit)
                 .frame(width: IAPSconfig.iconSize, height: IAPSconfig.iconSize)
@@ -337,8 +336,7 @@ struct PumpView: View {
     private func pumpInsulinAmount(portion: Double) -> some View {
         ZStack {
             let pump = colorScheme == .dark ? "pump_dark" : "pump_light"
-            UIImage(imageLiteralResourceName: pump)
-                .fillImageUpToPortion(color: insulinColour(portion).opacity(0.8), portion: max(portion, 0.3))
+            filledPumpImage(named: pump, color: insulinColour(portion).opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
                 .frame(maxWidth: 17, maxHeight: 36)
                 .symbolRenderingMode(.palette)
@@ -350,8 +348,7 @@ struct PumpView: View {
 
     private func medtrumInsulinAmount(portion: Double) -> some View {
         ZStack {
-            UIImage(imageLiteralResourceName: "nano")
-                .fillImageUpToPortion(color: insulinColour(portion).opacity(0.8), portion: max(portion, 0.3))
+            filledPumpImage(named: "nano", color: insulinColour(portion).opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
                 .aspectRatio(0.7, contentMode: .fit)
                 .frame(height: IAPSconfig.iconSize)

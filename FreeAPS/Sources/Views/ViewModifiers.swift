@@ -441,6 +441,28 @@ extension UIImage {
     }
 }
 
+private struct FilledImageKey: Hashable {
+    let name: String
+    let color: String
+    let portionPercent: Int
+}
+
+@MainActor private var filledImageCache: [FilledImageKey: Image] = [:]
+
+@MainActor func filledPumpImage(named name: String, color: Color, portion: Double) -> Image {
+    let key = FilledImageKey(name: name, color: color.description, portionPercent: Int((portion * 100).rounded()))
+    if let cached = filledImageCache[key] {
+        return cached
+    }
+    if filledImageCache.count > 200 {
+        filledImageCache.removeAll()
+    }
+    let image = UIImage(imageLiteralResourceName: name)
+        .fillImageUpToPortion(color: color, portion: Double(key.portionPercent) / 100)
+    filledImageCache[key] = image
+    return image
+}
+
 enum HeaderPump {
     case medtrum
     case pod
