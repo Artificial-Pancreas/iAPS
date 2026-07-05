@@ -193,6 +193,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             appCoordinator.setIsLooping(true)
 
             debug(.apsManager, "starting loop")
+            let loopSpan = Signpost.begin("loop", poi: true)
 
             let lastStartLoopDate = Date()
             self.lastStartLoopDate = lastStartLoopDate
@@ -253,6 +254,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             appCoordinator.setIsLooping(false)
 
             appCoordinator.sendLoopCompleted(loopOutcome)
+            loopSpan.end(loopStatRecord.loopStatus)
         }
     }
 

@@ -90,7 +90,9 @@ final class WebViewScriptExecutor: Sendable {
 
     func call(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
         if let script = script(for: name) {
-            return await callFunctionAsync(function: script, with: arguments, withBody: body)
+            return await Signpost.measure("js", poi: true, name) {
+                await callFunctionAsync(function: script, with: arguments, withBody: body)
+            }
         } else {
             print("No script found for \"\(name)\"")
             return ""

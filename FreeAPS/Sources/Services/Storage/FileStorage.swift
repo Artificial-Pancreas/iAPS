@@ -68,22 +68,28 @@ actor BaseFileStorage: FileStorage, Injectable {
 //            .asUnownedSerialExecutor()
 
     func save<Value: JSON>(_ value: Value, as name: String) {
-        if let value = value as? RawJSON, let data = value.data(using: .utf8) {
-            try? Disk.save(data, to: .documents, as: name)
-        } else {
-            try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
+        Signpost.measure("file.save", name) {
+            if let value = value as? RawJSON, let data = value.data(using: .utf8) {
+                try? Disk.save(data, to: .documents, as: name)
+            } else {
+                try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
+            }
         }
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
-        try? Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
+        Signpost.measure("file.read", name) {
+            try? Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
+        }
     }
 
     func retrieveRaw(_ name: String) -> RawJSON? {
-        guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
-            return nil
+        Signpost.measure("file.read", name) {
+            guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
+                return nil
+            }
+            return String(data: data, encoding: .utf8)
         }
-        return String(data: data, encoding: .utf8)
     }
 
     func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
@@ -96,11 +102,15 @@ actor BaseFileStorage: FileStorage, Injectable {
     }
 
     @discardableResult func append<Value: JSON>(_ newValue: Value, to name: String) async -> [Value]? {
-        try? Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
+        Signpost.measure("file.append", name) {
+            try? Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
+        }
     }
 
     @discardableResult func append<Value: JSON>(_ newValues: [Value], to name: String) async -> [Value]? {
-        try? Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
+        Signpost.measure("file.append", name) {
+            try? Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
+        }
     }
 
     @discardableResult func append<Value: JSON, T: Equatable & Sendable>(

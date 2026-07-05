@@ -75,7 +75,6 @@ actor BaseFetchAnnouncementsManager: FetchAnnouncementsManager, LifetimeOwner, A
             return
         }
         await withBackgroundTask("fetch announcements") {
-            debug(.nightscout, "FetchAnnouncementsManager heartbeat")
             debug(
                 .nightscout,
                 "Start fetching announcements, time: \(Date.now.formatted(date: .omitted, time: .shortened))"

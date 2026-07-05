@@ -55,6 +55,8 @@ struct NetworkService {
     }
 
     func runAsync(_ request: URLRequest, retries: Int = 1) async throws -> Data {
+        let span = Signpost.begin("network", "\(request.httpMethod ?? "?") \(request.url?.path ?? "?")")
+        defer { span.end() }
         let (data, response) = try await withRetry(count: retries) {
             try await URLSession.shared.data(for: request)
         }

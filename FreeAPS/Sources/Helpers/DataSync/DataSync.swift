@@ -87,6 +87,9 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
         // A retry tick does nothing unless a prior run failed or `markPending` was called.
         if trigger == .retry, !hasPendingWork { return }
 
+        let span = Signpost.begin("dataSync", name)
+        defer { span.end() }
+
         let resolved = await current()
 
         let now = Date()
