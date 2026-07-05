@@ -14,6 +14,8 @@ extension Home {
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
         @State var showExpirationAlert = false
+        @State var expirationAlertTitle = ""
+        @State var expirationAlertMessage = ""
         @State var triggerUpdate = false
         @State var display = false
         @State var displayGlucose = false
@@ -1182,7 +1184,7 @@ extension Home {
                 state.reloadOverrideHistory()
             }
             .alert(
-                BuildExpirationManager.shared.alertTitle,
+                expirationAlertTitle,
                 isPresented: $showExpirationAlert
             ) {
                 Button("OK", role: .cancel) {}
@@ -1192,7 +1194,7 @@ extension Home {
                     }
                 }
             } message: {
-                Text(BuildExpirationManager.shared.alertMessage)
+                Text(expirationAlertMessage)
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)
@@ -1230,6 +1232,8 @@ extension Home {
             let manager = BuildExpirationManager.shared
             guard manager.shouldShowAlert else { return }
             manager.markAlertShown()
+            expirationAlertTitle = manager.alertTitle
+            expirationAlertMessage = manager.alertMessage
             showExpirationAlert = true
         }
 
