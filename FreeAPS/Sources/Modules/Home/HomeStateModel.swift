@@ -5,6 +5,7 @@ import LoopKit
 import LoopKitUI
 import SwiftDate
 import SwiftUI
+import UIKit
 
 extension Home {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
@@ -136,6 +137,7 @@ extension Home {
         )
 
         func startTimer() {
+            guard UIApplication.shared.applicationState != .background else { return }
             timer.fire()
             timer.resume()
         }
@@ -245,6 +247,13 @@ extension Home {
                     self?.data.timerDate = Date()
                     await self?.setupCurrentTempTarget()
                 }
+            }
+
+            observe(notification: UIApplication.didEnterBackgroundNotification) { me in
+                await me.stopTimer()
+            }
+            observe(notification: UIApplication.didBecomeActiveNotification) { me in
+                await me.startTimer()
             }
 
             observe(appCoordinator.pumpStatus) { me, pumpStatus in
