@@ -23,7 +23,7 @@
 "Activates an ${applicationName} Override Preset" = "Kích hoạt một thiết lập ghi đè trong ${applicationName}";
 
 /* iAPS Cancel Override shortcut */
-"Cancel ${applicationName} Override" = "Cancel ${applicationName} Override";
+"Cancel ${applicationName} Override" = "Hủy ghi đè ${applicationName}";
 
 /* iAPS Cancel Override shortcut description */
 "Cancels an active ${applicationName} override" = "Hủy bỏ thiết lập ghi đè đang hoạt động trong ${applicationName}";
@@ -35,10 +35,10 @@
 "${applicationName} Enacts a bolus" = "${applicationName} thực hiện một liều bolus";
 
 /* iAPS Meal Preset shortcut */
-"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+"${applicationName} Meal Presets" = "Mẫu bữa ăn ${applicationName}";
 
 /* iAPS Meal Preset shortcut description */
-"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";
+"Uses an ${applicationName} Meal Preset" = "Sử dụng mẫu bữa ăn của ${applicationName}";
 
 /* iAPS Loop Mode shortcut */
 "${applicationName} Loop Mode" = "Chế độ vòng lặp trong ${applicationName}";
@@ -53,7 +53,7 @@
 "Enacts an ${applicationName} Temp Basal" = "Kích hoạt liều nền tạm thời ${applicationName}";
 
 /* iAPS Suspend/Resume shortcut */
-"${applicationName} Pump" = "${applicationName} Pump";
+"${applicationName} Pump" = "${applicationName} Bơm";
 
 /* iAPS Suspend/Resume  shortcut description */
-"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Suspends/Resumes your ${applicationName} pump or cancels a temp basal";
+"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Tạm dừng/tiếp tục bơm ${applicationName} hoặc hủy liều nền tạm thời";
