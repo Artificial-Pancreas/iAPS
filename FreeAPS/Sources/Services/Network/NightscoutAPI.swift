@@ -261,7 +261,7 @@ extension NightscoutAPI {
                 case let .success(res):
                     continuation.resume(returning: res)
                 case let .failure(error):
-                    warning(.nightscout, "Glucose fetching error: \(error.localizedDescription)")
+                    warning(.nightscout, "Glucose upload error: \(error.localizedDescription)")
                     continuation.resume(throwing: error)
                 }
             }
