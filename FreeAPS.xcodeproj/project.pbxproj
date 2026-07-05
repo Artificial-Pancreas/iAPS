@@ -451,6 +451,7 @@
 		F22A7A882FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */; };
 		F22A7A8A2FF946FA0019BDC5 /* NightscoutDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A892FF946FA0019BDC5 /* NightscoutDataSync.swift */; };
 		F22A7A8C2FF948FB0019BDC5 /* NightscoutAPIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */; };
+		F22A7A932FF94FC70019BDC5 /* MetricKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
@@ -1190,6 +1191,7 @@
 		F22A7A872FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDeviceStatusUploader.swift; sourceTree = "<group>"; };
 		F22A7A892FF946FA0019BDC5 /* NightscoutDataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSync.swift; sourceTree = "<group>"; };
 		F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPIProvider.swift; sourceTree = "<group>"; };
+		F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitService.swift; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
@@ -1896,6 +1898,7 @@
 				3811DE9825C9D88300A708ED /* Storage */,
 				F2C2EEA12F5C96A200A0AA7C /* FoodSearch */,
 				3811DEA525C9D88300A708ED /* UnlockManager */,
+				F22A7A922FF94FC70019BDC5 /* Diagnostics */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2955,6 +2958,14 @@
 			path = DataSync;
 			sourceTree = "<group>";
 		};
+		F22A7A922FF94FC70019BDC5 /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */,
+			);
+			path = Diagnostics;
+			sourceTree = "<group>";
+		};
 		F25D82882F61A867007AE22C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -3561,6 +3572,7 @@
 				191A9D182BED24B000028D48 /* ActiveIOBView.swift in Sources */,
 				38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */,
 				F22A7A882FF93BD00019BDC5 /* NightscoutDeviceStatusUploader.swift in Sources */,
+				F22A7A932FF94FC70019BDC5 /* MetricKitService.swift in Sources */,
 				F2159A542BA6207F00A0B716 /* ContactTrickEntry.swift in Sources */,
 				F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */,
 				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
