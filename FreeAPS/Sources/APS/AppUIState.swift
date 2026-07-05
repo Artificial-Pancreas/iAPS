@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import Observation
+import UIKit
 
 @MainActor
 @Observable final class AppUIState: AppService {
@@ -31,6 +32,12 @@ import Observation
 
     @ObservationIgnored private var cancellables = Set<AnyCancellable>()
 
+    // While the app is in the background there is no UI to keep current, so observable
+    // writes are deferred (latest value per property wins) and flushed on foregrounding.
+    // Otherwise every bus emission would keep re-evaluating the invisible view tree.
+    @ObservationIgnored private var isInBackground = false
+    @ObservationIgnored private var pendingWrites: [AnyKeyPath: () -> Void] = [:]
+
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
     }
@@ -39,6 +46,19 @@ import Observation
     func start() async {
         guard !started else { return }
         started = true
+
+        isInBackground = UIApplication.shared.applicationState == .background
+        Foundation.NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+            .sink { [weak self] _ in
+                MainActor.assumeIsolated { self?.isInBackground = true }
+            }
+            .store(in: &cancellables)
+        Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+            .sink { [weak self] _ in
+                MainActor.assumeIsolated { self?.flushPendingWrites() }
+            }
+            .store(in: &cancellables)
+
         settings = appCoordinator.settings.value
         preferences = appCoordinator.preferences.value
         pumpSettings = appCoordinator.pumpSettings.value
@@ -70,11 +90,40 @@ import Observation
         _ subject: some Publisher<V, Never>,
         to keyPath: ReferenceWritableKeyPath<AppUIState, V>
     ) {
+        subscribe(subject, to: keyPath)
+    }
+
+    private func bind<V: Equatable>(
+        _ subject: some Publisher<V, Never>,
+        to keyPath: ReferenceWritableKeyPath<AppUIState, V>
+    ) {
+        subscribe(subject.removeDuplicates(), to: keyPath)
+    }
+
+    private func subscribe<V>(
+        _ subject: some Publisher<V, Never>,
+        to keyPath: ReferenceWritableKeyPath<AppUIState, V>
+    ) {
         subject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
-                MainActor.assumeIsolated { self?[keyPath: keyPath] = value }
+                MainActor.assumeIsolated { self?.write(value, to: keyPath) }
             }
             .store(in: &cancellables)
+    }
+
+    private func write<V>(_ value: V, to keyPath: ReferenceWritableKeyPath<AppUIState, V>) {
+        if isInBackground {
+            pendingWrites[keyPath] = { [weak self] in self?[keyPath: keyPath] = value }
+        } else {
+            self[keyPath: keyPath] = value
+        }
+    }
+
+    private func flushPendingWrites() {
+        isInBackground = false
+        let writes = pendingWrites
+        pendingWrites = [:]
+        writes.values.forEach { $0() }
     }
 }
