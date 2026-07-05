@@ -7,6 +7,10 @@ final class ServiceAssembly: Assembly {
     func assemble(container: Container) {
         container.register(DataMigrations.self) { _ in DataMigrations() }
 
+        container.register(MetricKitService.self) { r in
+            MetricKitService(storage: r.resolve(FileStorage.self)!)
+        }
+
         container.register(AppCoordinator.self) { _ in AppCoordinator() }
 
         // Foundation.NotificationCenter.default is provided to GarminManager below without resolving it;

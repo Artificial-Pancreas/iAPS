@@ -26,6 +26,7 @@ import Swinject
         }
 
         try await startService(resolver.resolve(SettingsManager.self))
+        try await startService(resolver.resolve(MetricKitService.self))
 
         _ = resolver.resolve(BluetoothStateManager.self)!
 
