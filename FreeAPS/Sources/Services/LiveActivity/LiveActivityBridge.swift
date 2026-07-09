@@ -45,6 +45,10 @@ extension LiveActivityAttributes.ContentState {
         readings: [Readings]?,
         predictions: Predictions?,
         showChart: Bool,
+        watchChart: Bool,
+        watchPredictions: Bool,
+        watchDelta: Bool,
+        watchEventual: Bool,
         chartLowThreshold: Int,
         chartHighThreshold: Int
     ) {
@@ -112,6 +116,10 @@ extension LiveActivityAttributes.ContentState {
             readings: preparedReadings,
             predictions: activityPredictions,
             showChart: showChart,
+            watchChart: watchChart,
+            watchPredictions: watchPredictions,
+            watchDelta: watchDelta,
+            watchEventual: watchEventual,
             chartLowThreshold: Int16(clamping: chartLowThreshold),
             chartHighThreshold: Int16(clamping: chartHighThreshold)
         )
@@ -194,7 +202,10 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
         if let knownSettings = self.knownSettings {
             if newSettings.useLiveActivity != knownSettings.useLiveActivity ||
                 newSettings.liveActivityChart != knownSettings.liveActivityChart ||
-                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions
+                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions ||
+                newSettings.liveActivityWatchChart != knownSettings.liveActivityWatchChart ||
+                newSettings.liveActivityWatchPredictions != knownSettings.liveActivityWatchPredictions ||
+                newSettings.liveActivityWatchDelta != knownSettings.liveActivityWatchDelta
             {
                 print("live activity settings changed")
                 forceActivityUpdate(force: true)
@@ -294,6 +305,10 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
                         readings: nil,
                         predictions: nil,
                         showChart: settings.liveActivityChart,
+                        watchChart: settings.liveActivityWatchChart,
+                        watchPredictions: settings.liveActivityWatchPredictions,
+                        watchDelta: settings.liveActivityWatchDelta,
+                        watchEventual: settings.liveActivityWatchEventual,
                         chartLowThreshold: Int16(clamping: (settings.low as NSDecimalNumber).intValue),
                         chartHighThreshold: Int16(clamping: (settings.high as NSDecimalNumber).intValue)
                     ),
@@ -332,7 +347,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
 
 extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, PumpHistoryObserver {
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
-        iob = coreDataStorage.fetchInsulinData(interval: DateFilter().oneHour).first?.iob
+        iob = coreDataStorage.fetchInsulinData(interval: DateFilter.oneHour.startDate).first?.iob
     }
 
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
@@ -348,7 +363,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
         }
         defer { self.suggestion = suggestion }
 
-        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter().threeHours)
+        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
@@ -362,6 +377,10 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
+            watchChart: settings.liveActivityWatchChart,
+            watchPredictions: settings.liveActivityWatchPredictions,
+            watchDelta: settings.liveActivityWatchDelta,
+            watchEventual: settings.liveActivityWatchEventual,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
         ) else {
@@ -386,7 +405,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
         }
         defer { self.suggestion = suggestion }
 
-        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter().threeHours)
+        let glucose = coreDataStorage.fetchGlucose(interval: DateFilter.threeHours.startDate)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
@@ -400,6 +419,10 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
+            watchChart: settings.liveActivityWatchChart,
+            watchPredictions: settings.liveActivityWatchPredictions,
+            watchDelta: settings.liveActivityWatchDelta,
+            watchEventual: settings.liveActivityWatchEventual,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
         ) else {

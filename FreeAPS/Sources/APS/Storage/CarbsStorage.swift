@@ -1,4 +1,3 @@
-import CoreData
 import Foundation
 import SwiftDate
 import Swinject
@@ -21,8 +20,6 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settings: SettingsManager!
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-
     init(resolver: Resolver) {
         injectServices(resolver)
     }
@@ -35,7 +32,6 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             let cbs = entries.last?.carbs ?? 0
             let fat = entries.last?.fat ?? 0
             let protein = entries.last?.protein ?? 0
-            let note = entries.last?.note
             let creationDate = entries.last?.createdAt ?? Date.now
 
             if fat > 0 || protein > 0 {
@@ -84,7 +80,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
 
                     let eachCarbEntry = CarbsEntry(
                         id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
-                        carbs: equivalent, fat: 0, protein: 0, note: nil,
+                        carbs: equivalent, fat: 0, protein: 0, fiber: nil, note: nil,
                         enteredBy: CarbsEntry.manual, isFPU: true
                     )
                     futureCarbArray.append(eachCarbEntry)
@@ -110,10 +106,11 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     actualDate: entry.actualDate ?? entry.createdAt,
                     carbs: entry.carbs,
                     fat: fat,
-                    protein: protein,
-                    note: entry.note ?? "",
+                    protein: protein, fiber: entry.fiber,
+                    note: entry.note,
                     enteredBy: entry.enteredBy ?? "",
-                    isFPU: false
+                    isFPU: false,
+                    micronutrient: entry.micronutrient
                 )
 
                 // If fetched en masse from NS
@@ -136,20 +133,6 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 }
             }
 
-            // MARK: Save to CoreData.
-
-            self.coredataContext.perform {
-                let carbDataForStats = Carbohydrates(context: self.coredataContext)
-
-                carbDataForStats.carbs = cbs as NSDecimalNumber
-                carbDataForStats.fat = fat as NSDecimalNumber
-                carbDataForStats.protein = protein as NSDecimalNumber
-                carbDataForStats.note = note
-                carbDataForStats.id = UUID().uuidString
-                carbDataForStats.date = creationDate
-
-                try? self.coredataContext.save()
-            }
             broadcaster.notify(CarbsObserver.self, on: processQueue) {
                 $0.carbsDidUpdate(uniqEvents)
             }

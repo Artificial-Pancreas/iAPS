@@ -74,6 +74,13 @@ enum DataTable {
             return formatter
         }
 
+        private var mealFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         private var tempTargetFormater: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -132,8 +139,8 @@ enum DataTable {
 
             switch type {
             case .carbs:
-                return numberFormatter
-                    .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carbs")
+                return mealFormatter
+                    .string(from: amount as NSNumber) ?? "" + NSLocalizedString(" g", comment: "gram of carbs")
             case .bolus:
                 var bolusText = " "
                 if isSMB ?? false {}
@@ -144,10 +151,10 @@ enum DataTable {
                 }
 
                 return numberFormatter
-                    .string(from: amount as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit") + bolusText
+                    .string(from: amount as NSNumber) ?? "" + NSLocalizedString(" U", comment: "Insulin unit") + bolusText
             case .tempBasal:
                 return numberFormatter
-                    .string(from: amount as NSNumber)! + NSLocalizedString(" U/hr", comment: "Unit insulin per hour")
+                    .string(from: amount as NSNumber) ?? "" + NSLocalizedString(" U/hr", comment: "Unit insulin per hour")
             case .tempTarget:
                 var converted = amount
                 if units == .mmolL {

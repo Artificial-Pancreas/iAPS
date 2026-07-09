@@ -1389,6 +1389,37 @@ Enact a temp Basal or a temp target */
 
 "Today's Meals" = "Сьогоднішні Страви";
 
+"Micronutrient" = "Мікронутрієнт";
+
+"Micronutrients" = "Мікронутрієнти";
+
+"Vitamin A" = "Вітамін А";
+"Vitamin B1 (Thiamine)" = "Вітамін B1 (Tіамін)";
+"Vitamin B2 (Riboflavin)" = "Вітамін B2 (Рибофлавін)";
+"Vitamin B3 (Niacin)" = "Вітамін B3 (Ніацин)";
+"Vitamin B5 (Pantothenic Acid)" = "Вітамін B5 (Пантотенова Кислота)";
+"Vitamin B6" = "Вітамін B6";
+"Vitamin B7 (Biotin)" = "Вітамін B7 (Біотин)";
+"Vitamin B9 (Folate)" = "Вітамін B9 (Фолат)";
+"Vitamin B12" = "Вітамін В12";
+"Vitamin C" = "Вітамін C";
+"Vitamin D" = "Вітамін D";
+"Vitamin E" = "Вітамін E";
+"Vitamin K" = "Вітамін K";
+"Calcium" = "Кальцій";
+"Iron" = "Залізо";
+"Magnesium" = "Магній";
+"Potassium" = "Калій";
+"Zinc" = "Цинк";
+"Phosphorus" = "Фосфор";
+"Copper" = "Мідь";
+"Manganese" = "Марганець";
+"Selenium" = "Селен";
+"Iodine" = "Йод";
+"Salt" = "Сіль";
+
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Дозволити записи про Мікронутрієнти та Харчові Волокна в режимі перегляду страв";
+
 // --------- AI ---------
 /* */
 
@@ -1450,6 +1481,10 @@ Enact a temp Basal or a temp target */
 "Manual Entry" = "Ручне Введення";
 
 "Photo Analysis" = "Аналіз Фотографій";
+
+"Photo (+ comment)" = "Фото (+ коментар)";
+
+"Library (+ comment)" = "Бібліотека (+ коментар)";
 
 "Barcode Scanner" = "Сканер Штрих-Кодів";
 
@@ -1569,6 +1604,16 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Anthropic Конфігурація (Claude API))";
 
+"USDA Food Database" = "База даних харчових продуктів Міністерства сільського господарства США (USDA)";
+
+"USDA FoodData API Key" = "Ключ API даних про харчові продукти USDA";
+
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Отримайте безкоштовний ключ на fdc.nal.usda.gov/api-key-signup.";
+
+"Optional — uses DEMO_KEY if empty" = "Необов'язково — використовується DEMO_KEY, якщо порожнє";
+
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Залиште поле порожнім, щоб використовувати DEMO_KEY за замовчуванням, який обмежений за кількістю запитів. Безкоштовний персональний ключ API дозволяє виконувати більше запитів.";
+
 "Provider for Barcode Scanning" = "Постачальник Послуг Сканування Штрих-Кодів";
 
 "Provider for Text/Voice Search" = "Постачальник Текстового/Голосового Пошуку";
@@ -1578,7 +1623,6 @@ Enact a temp Basal or a temp target */
 "Fast" = "Швидкий";
 
 "Provider for AI Image Analysis" = "Постачальник Послуг Аналізу Зображень зі ШІ";
-
 
 "Food Search Provider Configuration" = "Конфігурація Постачальника Послуг Пошуку їжі";
 
@@ -1660,6 +1704,15 @@ Enact a temp Basal or a temp target */
 "carbs" = "вуглеводи";
 
 "fat" = "жир";
+
+/* Display more macro nutrients */
+"More" = "Більше";
+
+/* Additional nutrient */
+"more nutrient" = "більше поживних речовин";
+
+/* Additional nutrients */
+"more nutrients" = "більше поживних речовин";
 
 "📝 Notes" = "📝 Примітка";
 
@@ -1789,6 +1842,8 @@ Enact a temp Basal or a temp target */
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Ваш постачальник послуг штучного інтелекту вичерпав свої кредити. Перевірте рахунки свого облікового запису або спробуйте скористатися послугами іншого постачальника.";
 
 "Reset to Default" = "Скинути до Заводських Налаштувань";
+
+"Take Photo" = "Зробити Фото";
 
 "Retake Photo" = "Перезняти фото";
 
@@ -1986,9 +2041,15 @@ Enact a temp Basal or a temp target */
 
 "Carbs" = "Вуглеводи";
 
-// --------- End of AI ---------
-/* */
+"Discard" = "Відкинути";
 
+"Do you want to discard this meal?" = "Ви хочете відмовитися від цієї страви?";
+
+"Set Time" = "Встановити час";
+
+// --------- End of AI ---------
+
+/* */
 "Temp Basal" = "Тимчасовий  Базал";
 
 /* */
@@ -2059,8 +2120,8 @@ Enact a temp Basal or a temp target */
 "Bolus already in Progress!" = "Болюс вже подається!";
 
 /* -------------- Developer settings ---------------------- */
-/* Debug options */
 
+/* Debug options */
 "Developer" = "РОЗРОБНИК";
 
 /* Debug option view NS Upload Profile */
@@ -2177,8 +2238,8 @@ Enact a temp Basal or a temp target */
 "Total" = "Всього";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Enable FPU */
 
+/* Enable FPU */
 "Enable" = "Увімкнути";
 
 /* Header */
@@ -2409,8 +2470,8 @@ Enact a temp Basal or a temp target */
 "Hide Future" = "Приховати майбутнє";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-/* Warning about bolus recommendation. Title */
 
+/* Warning about bolus recommendation. Title */
 "Warning!" = "Увага!";
 
 /* Alert to confirm bolus amount to add */
@@ -2621,10 +2682,10 @@ Enact a temp Basal or a temp target */
 "Failed to Suspend Insulin Delivery" = "Не вдалося Призупинити Введення Інсуліну";
 
 //* -----------------------------------------------------------------------*/
+
 /* ----------------------Statistics strings -------------------------------*/
+
 /* */
-
-
 "Today" = "Сьогодні";
 
 /* */
@@ -2848,8 +2909,8 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Гладке Значення Глюкози";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* Setting Title */
 
+/* Setting Title */
 "Sharing" = "Поширити";
 
 /* Share and Backup page header */
@@ -2916,8 +2977,8 @@ Enact a temp Basal or a temp target */
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Якщо цю функцію ввімкнено, файл журналу за попередній день автоматично завантажується після півночі. Журнали використовуються лише для забезпечення функції багатоденного аналізу на open-iaps.app. За замовчуванням вимкнено.";
 
 /* ——————————Contact Image ————————*/
-/* Contact Image, contacts list - prefix before the contact given name */
 
+/* Contact Image, contacts list - prefix before the contact given name */
 "Contact" = "Контакт";
 
 /* Contact Image, settings, header of the contacts list */
@@ -3068,17 +3129,20 @@ Enact a temp Basal or a temp target */
 "LoopStatusContactValue" = "Статус петлі";
 
 /* --------------------------  Dana Pump  ---------------------- */
-/* Dana footer */
 
+/* Dana footer */
 "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Помпа Dana  не дозволяє редагувати максимальний Базал і максимальний Болюс. Налаштуйте їх у налаштуваннях \"лікаря\" помпи. Збереження налаштувань дозволить отримати останні значення з помпи";
 
 /* --------- Auto ISF --------- */
-/* */
 
+/* */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Динамічний ISF вимкнено, а Auto ISF увімкнено";
 
 /* */
 "Nighttime" = "Ніч";
+
+/* */
+"Disable during nighttime" = "Вимкнути вночі";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Вимикає Автоматичну функцію ISF вночі або в будь-який інший вибраний період.";
@@ -3326,8 +3390,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
-/* Headline Rewind Resets Autosens */
 
+/* Headline Rewind Resets Autosens */
 "Rewind Resets Autosens" = "Скинути Автосенс при перезапуску помпи";
 
 /* ”Rewind Resets Autosens” */
@@ -3559,8 +3623,8 @@ Enact a temp Basal or a temp target */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "За замовчуванням: 0.5(50%). Опція дозволяє регулювати яка частина від необхідної дози інсуліну може бути доставлена як супер мікро болюс. Збільшуйте це експериментальне значення дуже повільно та з обережністю.";
 
 // Dynamic ISF + CR Settings:
-/* Headline "Adjust Dynamic ISF constant" */
 
+/* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Налаштувати константу Динамічного ISF";
 
 /* Adjust Dynamic ISF constant */
@@ -3776,7 +3840,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Світло/Темний Режим";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Не враховуйте вуглеводи в oref0";
+"Neglect Carbs in oref0" = "Не враховуйте вуглеводи в oref0";
 
 /* Debug option */
 "Hide Predictions" = "Приховати передбачення";
@@ -3798,6 +3862,18 @@ Enact a temp Basal or a temp target */
 
 /* Show Predictions */
 "Show Predictions" = "Відображати Прогнози";
+
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Дивитися: Показати Діаграму";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Дивитися: Показати Дельту ";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Дивитися: Показати «Зрештою»";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Дивитися: Показати Прогнози";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
@@ -3965,3 +4041,28 @@ Enact a temp Basal or a temp target */
 
 /* name of complete meals when saving */
 "Complete Meal" = "Повний обід";
+
+/* Alert title when manual temp basal rate exceeds Max Basal setting */
+"Max Basal Exceeded" = "Перевищено Максимальну Базальну Дозу";
+
+/* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Швидкість %.2f од/год перевищує ваше налаштування Максимальної Базальної Дози %.2f од/год.";
+
+/* --- Build expiration alert (TestFlight 90-day lifetime) --- */
+"OK" = "ОК";
+
+"More Info" = "Більше інформації";
+
+"Build Expires Soon!" = "Скоро закінчується збірка!";
+
+"Build Expiring in %d Day" = "Термін дії збірки закінчується через %d день";
+
+"Build Expiring in %d Days" = "Термін дії збірки закінчується через %d днів";
+
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Термін дії вашої збірки iAPS закінчується через %d годину. Після закінчення терміну дії програма не запускатиметься, доки ви не перебудуєте її.";
+
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Термін дії вашої збірки iAPS закінчується через %d годин. Після закінчення терміну дії програма не запускатиметься, доки ви не перебудуєте її.";
+
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Термін дії вашої збірки iAPS закінчується %1$@ (залишився %2$d день). Збірки TestFlight потрібно оновлювати кожні 90 днів.";
+
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Термін дії вашої збірки iAPS закінчується %1$@ (залишилося %2$d днів). Збірки TestFlight потрібно оновлювати кожні 90 днів.";

@@ -24,7 +24,7 @@ extension DataTable {
         @Published var insulinToday: (Decimal, Decimal, Double) = (0, 0, 0)
         @Published var basalInsulin: Decimal = 0
 
-        @Published var meal: (carbs: Decimal, fat: Decimal, protein: Decimal) = (0, 0, 0)
+        @Published var meal = EditableMeal()
         @Published var oldCarbs: Decimal = 0
         @Published var carbEquivalents: Decimal = 0
         @Published var treatment: Treatment?
@@ -152,12 +152,12 @@ extension DataTable {
             }
         }
 
-        func deleteCarbs(_ treatment: Treatment, storage: Carbohydrates?) {
+        func deleteCarbs(_ treatment: Treatment, storage: Meals?) {
             provider.deleteCarbs(treatment.creationDate)
 
             // In need of CoreData deletion?
             if let data = storage {
-                OverrideStorage().DeleteBatch(identifier: data.id, entity: "Carbohydrates")
+                OverrideStorage().DeleteBatch(identifier: data.id, entity: "Meals")
             }
 
             // In need of a loop update?
@@ -244,35 +244,58 @@ extension DataTable {
         }
 
         /// Update Carbs or Carb equivalents in storage, data table and Nightscout and Healthkit (where applicable)
-        func updateCarbs(treatment: Treatment?, computed: Carbohydrates?) {
+        func updateCarbs(treatment: Treatment?, computed: Meals?) {
             guard let old = treatment else { return }
 
-            let now = Date.now
             let newCarbs = CarbsEntry(
-                id: UUID().uuidString,
-                createdAt: now,
+                id: old.id,
+                createdAt: old.creationDate,
                 actualDate: old.date,
                 carbs: meal.carbs,
                 fat: meal.fat,
                 protein: meal.protein,
-                note: old.note,
+                fiber: meal.fiber,
+                note: meal.note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false
+                isFPU: false,
+                micronutrient: meal.micronutrient
             )
 
+            // Remove old CoreData meal
             if let deleteOld = computed {
-                OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
+                OverrideStorage().DeleteBatch(
+                    identifier: deleteOld.id,
+                    entity: "Meals"
+                )
             }
 
+            // Remove old Nightscout carb entry
             nightscout.deleteCarbs(old.creationDate)
+
+            // Save updated CoreData meal + micros
+            CoreDataStorage().saveMeal(
+                [newCarbs],
+                now: old.creationDate,
+                savedToFile: true
+            )
+
+            // Store updated meal to file. To Do: remove
             carbStorage.storeCarbs([newCarbs])
-            debug(.apsManager, "Carbs updated: \(old.amountText) -> \(meal.carbs) g")
-            if newCarbs.carbs != oldCarbs, (newCarbs.actualDate ?? .distantPast).timeIntervalSinceNow > -3.hours.timeInterval {
+
+            debug(
+                .apsManager,
+                "Carbs updated: \(old.amountText) -> \(meal.carbs) g"
+            )
+
+            if newCarbs.carbs != oldCarbs,
+               (newCarbs.actualDate ?? .distantPast)
+               .timeIntervalSinceNow > -3.hours.timeInterval
+            {
                 aps.determineBasalSync()
             }
         }
 
-        func updateVariables(mealItem: Treatment, complex: Carbohydrates?) {
+        func updateVariables(mealItem: Treatment, complex: Meals?) {
             treatment = mealItem
             let string = (mealItem.amountText.components(separatedBy: " ").first ?? "0")
                 .replacingOccurrences(of: ",", with: ".")
@@ -280,6 +303,9 @@ extension DataTable {
             oldCarbs = meal.carbs
             meal.fat = (complex?.fat ?? 0) as Decimal
             meal.protein = (complex?.protein ?? 0) as Decimal
+            meal.fiber = (complex?.fiber ?? 0) as Decimal
+            meal.note = complex?.note ?? "Meal"
+            meal.micronutrient = complex?.micronutrientValues ?? []
         }
     }
 }

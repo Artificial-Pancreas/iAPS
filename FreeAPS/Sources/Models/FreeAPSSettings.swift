@@ -59,6 +59,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var useLiveActivity: Bool = false
     var liveActivityChart = false
     var liveActivityChartShowPredictions = true
+    var liveActivityWatchChart: Bool = false
+    var liveActivityWatchPredictions: Bool = true
+    var liveActivityWatchDelta: Bool = true
+    var liveActivityWatchEventual: Bool = true
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
@@ -82,8 +86,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var profilesOrTempTargets: Bool = false
     var allowBolusShortcut: Bool = false
     var allowedRemoteBolusAmount: Decimal = 0.0
-    var eventualBG: Bool = true
-    var minumimPrediction: Bool = true
+    var eventualBG: Bool = false
+    var minumimPrediction: Bool = false
     var minimumSMB: Decimal = 0.3
     var useInsulinBars: Bool = false
     var skipGlucoseChart: Bool = false
@@ -146,6 +150,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
     var allowOneMinuteGlucose: Bool = false // allow sending 1-minute readings to oref, even if loops are with 5-minute intervals
     var ai: Bool = true
+    var mealViewMicronutrients: Bool = false
     var nightTime = NightTimeConfiguration.default
     var autoisfEffective: Bool {
         autoisf && !isNighttime
@@ -475,6 +480,22 @@ extension FreeAPSSettings: Decodable {
             settings.liveActivityChartShowPredictions = liveActivityChartShowPredictions
         }
 
+        if let liveActivityWatchChart = try? container.decode(Bool.self, forKey: .liveActivityWatchChart) {
+            settings.liveActivityWatchChart = liveActivityWatchChart
+        }
+
+        if let liveActivityWatchPredictions = try? container.decode(Bool.self, forKey: .liveActivityWatchPredictions) {
+            settings.liveActivityWatchPredictions = liveActivityWatchPredictions
+        }
+
+        if let liveActivityWatchDelta = try? container.decode(Bool.self, forKey: .liveActivityWatchDelta) {
+            settings.liveActivityWatchDelta = liveActivityWatchDelta
+        }
+
+        if let liveActivityWatchEventual = try? container.decode(Bool.self, forKey: .liveActivityWatchEventual) {
+            settings.liveActivityWatchEventual = liveActivityWatchEventual
+        }
+
         // ----
 
         if let useTargetButton = try? container.decode(Bool.self, forKey: .useTargetButton) {
@@ -726,6 +747,10 @@ extension FreeAPSSettings: Decodable {
 
         if let ai = try? container.decode(Bool.self, forKey: .ai) {
             settings.ai = ai
+        }
+
+        if let mealViewMicronutrients = try? container.decode(Bool.self, forKey: .mealViewMicronutrients) {
+            settings.mealViewMicronutrients = mealViewMicronutrients
         }
 
         if let uploadLogs = try? container.decode(Bool.self, forKey: .uploadLogs) {

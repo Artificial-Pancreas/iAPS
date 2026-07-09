@@ -1389,6 +1389,37 @@ Enact a temp Basal or a temp target */
 
 "Today's Meals" = "Bữa ăn hôm nay";
 
+"Micronutrient" = "Vi chất dinh dưỡng";
+
+"Micronutrients" = "Vi chất dinh dưỡng";
+
+"Vitamin A" = "Vitamin A";
+"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
+"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
+"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
+"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
+"Vitamin B6" = "Vitamin B6";
+"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
+"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
+"Vitamin B12" = "Vitamin B12";
+"Vitamin C" = "Vitamin C";
+"Vitamin D" = "Vitamin D";
+"Vitamin E" = "Vitamin E";
+"Vitamin K" = "Vitamin K";
+"Calcium" = "Canxi";
+"Iron" = "Sắt";
+"Magnesium" = "Magiê";
+"Potassium" = "Kali";
+"Zinc" = "Kẽm";
+"Phosphorus" = "Phốt pho";
+"Copper" = "Đồng";
+"Manganese" = "Mangan";
+"Selenium" = "Selen";
+"Iodine" = "I-ốt";
+"Salt" = "Muối";
+
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Cho phép nhập vi chất dinh dưỡng và chất xơ trong màn hình Bữa ăn";
+
 // --------- AI ---------
 /* */
 
@@ -1449,6 +1480,10 @@ Enact a temp Basal or a temp target */
 "Manual Entry" = "Nhập thủ công";
 
 "Photo Analysis" = "Phân tích ảnh";
+
+"Photo (+ comment)" = "Ảnh (+ ghi chú)";
+
+"Library (+ comment)" = "Thư viện (+ ghi chú)";
 
 "Barcode Scanner" = "Quét mã vạch";
 
@@ -1568,6 +1603,16 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Cấu hình Anthropic (Claude API)";
 
+"USDA Food Database" = "Cơ sở dữ liệu thực phẩm USDA";
+
+"USDA FoodData API Key" = "Khóa API FoodData của USDA";
+
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Tạo khóa Api miễn phí tại fdc.nal.usda.gov/api-key-signup.";
+
+"Optional — uses DEMO_KEY if empty" = "Tùy chọn — sẽ sử dụng DEMO_KEY nếu để trống";
+
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Để trống để sử dụng DEMO_KEY mặc định, khóa này có giới hạn số lượng yêu cầu. Sử dụng khóa API cá nhân miễn phí sẽ cho phép thực hiện nhiều yêu cầu hơn.";
+
 "Provider for Barcode Scanning" = "Nhà cung cấp quét mã vạch";
 
 "Provider for Text/Voice Search" = "Nhà cung cấp cho tìm kiếm văn bản/giọng nói";
@@ -1577,7 +1622,6 @@ Enact a temp Basal or a temp target */
 "Fast" = "Nhanh";
 
 "Provider for AI Image Analysis" = "Nhà cung cấp phân tích hình ảnh AI";
-
 
 "Food Search Provider Configuration" = "Cấu hình tìm kiếm thực phẩm";
 
@@ -1658,6 +1702,15 @@ Enact a temp Basal or a temp target */
 "carbs" = "carbs";
 
 "fat" = "chất béo";
+
+/* Display more macro nutrients */
+"More" = "Nhiều hơn";
+
+/* Additional nutrient */
+"more nutrient" = "thêm dinh dưỡng khác";
+
+/* Additional nutrients */
+"more nutrients" = "thêm dinh dưỡng khác";
 
 "📝 Notes" = "📝 Ghi chú";
 
@@ -1787,6 +1840,8 @@ Enact a temp Basal or a temp target */
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Bạn đã vượt quá hạn mức của nhà cung cấp AI. Vui lòng kiểm tra giới hạn sử dụng hoặc thử một nhà cung cấp khác.";
 
 "Reset to Default" = "Đặt lại về mặc định";
+
+"Take Photo" = "Chụp ảnh";
 
 "Retake Photo" = "Chụp lại ảnh";
 
@@ -1984,9 +2039,15 @@ Enact a temp Basal or a temp target */
 
 "Carbs" = "Carbs";
 
-// --------- End of AI ---------
-/* */
+"Discard" = "Bỏ qua";
 
+"Do you want to discard this meal?" = "Bạn có muốn hủy bữa ăn này không?";
+
+"Set Time" = "Đặt thời gian";
+
+// --------- End of AI ---------
+
+/* */
 "Temp Basal" = "Temp Basal";
 
 /* */
@@ -2057,8 +2118,8 @@ Enact a temp Basal or a temp target */
 "Bolus already in Progress!" = "Đang tiêm liều bolus!";
 
 /* -------------- Developer settings ---------------------- */
-/* Debug options */
 
+/* Debug options */
 "Developer" = "Nhà phát triển";
 
 /* Debug option view NS Upload Profile */
@@ -2175,8 +2236,8 @@ Enact a temp Basal or a temp target */
 "Total" = "Tổng";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Enable FPU */
 
+/* Enable FPU */
 "Enable" = "Cho phép";
 
 /* Header */
@@ -2407,8 +2468,8 @@ Enact a temp Basal or a temp target */
 "Hide Future" = "Ẩn dự đoán";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-/* Warning about bolus recommendation. Title */
 
+/* Warning about bolus recommendation. Title */
 "Warning!" = "Cảnh báo!";
 
 /* Alert to confirm bolus amount to add */
@@ -2619,10 +2680,10 @@ Enact a temp Basal or a temp target */
 "Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 //* -----------------------------------------------------------------------*/
+
 /* ----------------------Statistics strings -------------------------------*/
+
 /* */
-
-
 "Today" = "Today";
 
 /* */
@@ -2846,8 +2907,8 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Làm mịn đường huyết";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* Setting Title */
 
+/* Setting Title */
 "Sharing" = "Chia sẻ";
 
 /* Share and Backup page header */
@@ -2914,8 +2975,8 @@ Enact a temp Basal or a temp target */
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Khi bật, tệp log của ngày hôm trước sẽ được tự động tải lên sau nửa đêm. Các log chỉ được dùng để cung cấp tính năng phân tích nhiều ngày trên open-iaps.app. Mặc định là tắt.";
 
 /* ——————————Contact Image ————————*/
-/* Contact Image, contacts list - prefix before the contact given name */
 
+/* Contact Image, contacts list - prefix before the contact given name */
 "Contact" = "Contact";
 
 /* Contact Image, settings, header of the contacts list */
@@ -3066,17 +3127,20 @@ Enact a temp Basal or a temp target */
 "LoopStatusContactValue" = "Trạng thái vòng lặp";
 
 /* --------------------------  Dana Pump  ---------------------- */
-/* Dana footer */
 
+/* Dana footer */
 "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Máy bơm Dana không cho phép chỉnh sửa mức liều nền tối đa và mức liều bolus tối đa. Cấu hình những điều này trong cài đặt của bác sĩ về máy bơm. Lưu cài đặt sẽ lấy các giá trị mới nhất từ ​​máy bơm";
 
 /* --------- Auto ISF --------- */
-/* */
 
+/* */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF bị vô hiệu hóa trong khi Auto ISF được bật";
 
 /* */
 "Nighttime" = "Ban đêm";
+
+/* */
+"Disable during nighttime" = "Tắt vào ban đêm";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Tắt Auto ISF trong ban đêm hoặc trong bất kỳ khoảng thời gian nào được chọn.";
@@ -3323,8 +3387,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
-/* Headline Rewind Resets Autosens */
 
+/* Headline Rewind Resets Autosens */
 "Rewind Resets Autosens" = "Rewind sẽ thiết lập lại Autosens";
 
 /* ”Rewind Resets Autosens” */
@@ -3556,8 +3620,8 @@ Enact a temp Basal or a temp target */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Giá trị mặc định: 0,5 Đây là một giới hạn an toàn quan trọng khác của OpenAPS và chỉ định tỷ lệ trong tổng lượng insulin cần thiết có thể được phân phối dưới dạng SMB. Tăng giá trị thử nghiệm này một cách chậm rãi và thận trọng.";
 
 // Dynamic ISF + CR Settings:
-/* Headline "Adjust Dynamic ISF constant" */
 
+/* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
@@ -3773,7 +3837,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Chế độ Sáng/Tối";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Bỏ qua carbohydrate trong oref0";
+"Neglect Carbs in oref0" = "Không tính carb trong oref0";
 
 /* Debug option */
 "Hide Predictions" = "Ẩn dự đoán";
@@ -3795,6 +3859,18 @@ Enact a temp Basal or a temp target */
 
 /* Show Predictions */
 "Show Predictions" = "Hiển thị dự đoán";
+
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Đồng hồ: Hiển thị biểu đồ";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Đồng hồ: Hiển thị Delta";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Đồng hồ: Hiển thị dự kiến";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Đồng hồ: Hiển thị dự đoán";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa và động (nếu có)";
@@ -3963,3 +4039,28 @@ Enact a temp Basal or a temp target */
 
 /* name of complete meals when saving */
 "Complete Meal" = "Bữa ăn đầy đủ";
+
+/* Alert title when manual temp basal rate exceeds Max Basal setting */
+"Max Basal Exceeded" = "Đã vượt quá mức liều nền tối đa";
+
+/* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Tỷ lệ liều nền %.2f U/giờ vượt quá giới hạn liều nềm tối đa đã cài đặt là %.2f U/giờ.";
+
+/* --- Build expiration alert (TestFlight 90-day lifetime) --- */
+"OK" = "OK";
+
+"More Info" = "Thêm thông tin";
+
+"Build Expires Soon!" = "Bản dựng sắp hết hạn!";
+
+"Build Expiring in %d Day" = "Bản dựng sẽ hết hạn sau %d ngày";
+
+"Build Expiring in %d Days" = "Bản dựng sẽ hết hạn sau %d ngày";
+
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Bản dựng iAPS của bạn sẽ hết hạn sau %d giờ. Sau khi hết hạn, ứng dụng sẽ không thể khởi chạy cho đến khi bạn xây dựng lại.";
+
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Bản dựng iAPS của bạn sẽ hết hạn sau %d giờ. Sau khi hết hạn, ứng dụng sẽ không thể khởi chạy cho đến khi bạn xây dựng lại.";
+
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Bản dựng iAPS của bạn sẽ hết hạn vào %1$@ (còn %2$d ngày). Các bản dựng TestFlight phải được gia hạn sau 90 ngày.";
+
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Bản dựng iAPS của bạn sẽ hết hạn vào %1$@ (còn %2$d ngày). Các bản dựng TestFlight phải được gia hạn sau 90 ngày.";

@@ -6,16 +6,19 @@ struct ManualNutritionOverrideEditor: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var editedValues: [NutrientType: Decimal] = [:]
+    @State private var editedMicros: [MicroNutrient: Decimal] = [:]
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 ScrollView {
                     VStack(spacing: 16) {
+                        // MACROS
                         VStack(spacing: 0) {
                             ForEach(Array(NutrientType.allCases.enumerated()), id: \.element) { index, nutrient in
                                 if nutrient.isMacro {
                                     if index > 0 { Divider() }
+
                                     NutritionOverrideRow(
                                         localizedLabel: nutrient.localizedLabel,
                                         value: Binding(
@@ -36,23 +39,31 @@ struct ManualNutritionOverrideEditor: View {
                         }
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(12)
+                        // MICROS
+                        VStack(spacing: 0) {
+                            ForEach(Array(MicroNutrient.allCases.enumerated()), id: \.element) { index, micro in
+                                if index > 0 { Divider() }
 
-                        Button(role: .destructive) {
-                            state.searchResultsState.nutritionOverrides.removeAll()
-                            dismiss()
-                        } label: {
-                            HStack {
-                                Image(systemName: "arrow.counterclockwise")
-                                Text("Reset")
+                                NutritionOverrideRow(
+                                    localizedLabel: micro.displayName,
+                                    value: Binding(
+                                        get: { editedMicros[micro] },
+                                        set: { updated in
+                                            if let updated {
+                                                editedMicros[micro] = updated
+                                            } else {
+                                                editedMicros.removeValue(forKey: micro)
+                                            }
+                                        }
+                                    ),
+                                    unit: micro.dimension,
+                                    placeholder: formatDecimal(state.searchResultsState.baseTotal(micro))
+                                )
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(Color.red.opacity(0.1))
-                            .cornerRadius(10)
                         }
-                        .buttonStyle(.plain)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(12)
                     }
-                    .padding()
                 }
 
                 // Action buttons at bottom
@@ -94,6 +105,13 @@ struct ManualNutritionOverrideEditor: View {
                 editedValues[nutrient] = total
             }
         }
+
+        for micro in MicroNutrient.allCases {
+            if let override = state.searchResultsState.micronutrientOverrides[micro] {
+                let total = state.searchResultsState.baseTotal(micro) + override
+                editedMicros[micro] = total
+            }
+        }
     }
 
     fileprivate static let decimalFormatter: NumberFormatter = {
@@ -110,6 +128,7 @@ struct ManualNutritionOverrideEditor: View {
     }
 
     private func saveChanges() {
+        // Macros
         for nutrient in NutrientType.allCases {
             if let newValue = editedValues[nutrient] {
                 state.searchResultsState.nutritionOverrides[nutrient] =
@@ -118,6 +137,17 @@ struct ManualNutritionOverrideEditor: View {
                 state.searchResultsState.nutritionOverrides.removeValue(forKey: nutrient)
             }
         }
+
+        // Micros
+        for micro in MicroNutrient.allCases {
+            if let newValue = editedMicros[micro] {
+                state.searchResultsState.micronutrientOverrides[micro] =
+                    newValue - state.searchResultsState.baseTotal(micro)
+            } else {
+                state.searchResultsState.micronutrientOverrides.removeValue(forKey: micro)
+            }
+        }
+
         dismiss()
     }
 }

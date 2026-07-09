@@ -1389,6 +1389,37 @@ Enact a temp Basal or a temp target */
 
 "Today's Meals" = "Dagens måltider";
 
+"Micronutrient" = "Näringsämne";
+
+"Micronutrients" = "Näringsämnen";
+
+"Vitamin A" = "Vitamin A";
+"Vitamin B1 (Thiamine)" = "Vitamin B1 (Tiamin)";
+"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
+"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
+"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantotensyra)";
+"Vitamin B6" = "Vitamin B6";
+"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
+"Vitamin B9 (Folate)" = "Vitamin B9 (Folsyra)";
+"Vitamin B12" = "Vitamin B12";
+"Vitamin C" = "Vitamin C";
+"Vitamin D" = "Vitamin D";
+"Vitamin E" = "Vitamin E";
+"Vitamin K" = "Vitamin K";
+"Calcium" = "Kalcium";
+"Iron" = "Järn";
+"Magnesium" = "Magnesium";
+"Potassium" = "Kalium";
+"Zinc" = "Zink";
+"Phosphorus" = "Fosfat";
+"Copper" = "Koppar";
+"Manganese" = "Mangan";
+"Selenium" = "Selen";
+"Iodine" = "Jod";
+"Salt" = "Salt";
+
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Tillåt inmatning av kostfibrer och andra näringsämnen";
+
 // --------- AI ---------
 /* */
 
@@ -1449,6 +1480,10 @@ Enact a temp Basal or a temp target */
 "Manual Entry" = "Manuell inmatning";
 
 "Photo Analysis" = "Fotoanalys";
+
+"Photo (+ comment)" = "Foto (+ kommentar)";
+
+"Library (+ comment)" = "Bibliotek (+ kommentar)";
 
 "Barcode Scanner" = "Streckkodsläsare";
 
@@ -1568,6 +1603,16 @@ Enact a temp Basal or a temp target */
 
 "Anthropic (Claude API) Configuration" = "Antropisk (Claude API) konfiguration";
 
+"USDA Food Database" = "USDA Livsmedelsdatabas";
+
+"USDA FoodData API Key" = "USDA FoodData API-nyckel";
+
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Skaffa en API-nyckel på fdc.nal.usda.gov/api-key-signup.";
+
+"Optional — uses DEMO_KEY if empty" = "Valfritt — använder DEMO_KEY om tomt";
+
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Lämna tomt för att använda standard DEMO_KEY, som är hastighetsbegränsad. En gratis personlig API-nyckel tillåter fler förfrågningar.";
+
 "Provider for Barcode Scanning" = "Leverantör av streckkodssökning";
 
 "Provider for Text/Voice Search" = "Leverantör av text/ljud-sökning";
@@ -1577,7 +1622,6 @@ Enact a temp Basal or a temp target */
 "Fast" = "Snabb";
 
 "Provider for AI Image Analysis" = "Leverantör av AI-bildanalys";
-
 
 "Food Search Provider Configuration" = "Konfiguration av matsökleverantör";
 
@@ -1658,6 +1702,15 @@ Enact a temp Basal or a temp target */
 "carbs" = "kolh.";
 
 "fat" = "fett";
+
+/* Display more macro nutrients */
+"More" = "Mer";
+
+/* Additional nutrient */
+"more nutrient" = "till näringsämne";
+
+/* Additional nutrients */
+"more nutrients" = "fler näringsämnen";
 
 "📝 Notes" = "📝 Anteckningar";
 
@@ -1787,6 +1840,8 @@ Enact a temp Basal or a temp target */
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Din AI-leverantör har slut på krediter. Vänligen kontrollera ditt kontos fakturering eller prova en annan leverantör.";
 
 "Reset to Default" = "Återställ standardvärden";
+
+"Take Photo" = "Ta bild";
 
 "Retake Photo" = "Ta om foto";
 
@@ -1984,9 +2039,15 @@ Enact a temp Basal or a temp target */
 
 "Carbs" = "Kolhydrater";
 
-// --------- End of AI ---------
-/* */
+"Discard" = "Avfärda";
 
+"Do you want to discard this meal?" = "Vill du kassera denna måltid?";
+
+"Set Time" = "Ställ tid";
+
+// --------- End of AI ---------
+
+/* */
 "Temp Basal" = "Temporär basal";
 
 /* */
@@ -2057,8 +2118,8 @@ Enact a temp Basal or a temp target */
 "Bolus already in Progress!" = "En bolusdos pågår redan!";
 
 /* -------------- Developer settings ---------------------- */
-/* Debug options */
 
+/* Debug options */
 "Developer" = "Utvecklare";
 
 /* Debug option view NS Upload Profile */
@@ -2175,8 +2236,8 @@ Enact a temp Basal or a temp target */
 "Total" = "Totalt";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Enable FPU */
 
+/* Enable FPU */
 "Enable" = "Aktivera";
 
 /* Header */
@@ -2407,8 +2468,8 @@ Enact a temp Basal or a temp target */
 "Hide Future" = "Dölj";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-/* Warning about bolus recommendation. Title */
 
+/* Warning about bolus recommendation. Title */
 "Warning!" = "Varning!";
 
 /* Alert to confirm bolus amount to add */
@@ -2619,10 +2680,10 @@ Enact a temp Basal or a temp target */
 "Failed to Suspend Insulin Delivery" = "Kunde inte pausa pump";
 
 //* -----------------------------------------------------------------------*/
+
 /* ----------------------Statistics strings -------------------------------*/
+
 /* */
-
-
 "Today" = "Idag";
 
 /* */
@@ -2846,8 +2907,8 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Utjämna blodsocker från sensor";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* Setting Title */
 
+/* Setting Title */
 "Sharing" = "Delning";
 
 /* Share and Backup page header */
@@ -2914,8 +2975,8 @@ Enact a temp Basal or a temp target */
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "När den är aktiverad laddas föregående dags loggfil upp automatiskt efter midnatt. Loggar används bla. för att ge en flerdagarsanalys på open-iaps.app. Av som standard.";
 
 /* ——————————Contact Image ————————*/
-/* Contact Image, contacts list - prefix before the contact given name */
 
+/* Contact Image, contacts list - prefix before the contact given name */
 "Contact" = "Kontakt";
 
 /* Contact Image, settings, header of the contacts list */
@@ -3066,17 +3127,20 @@ Enact a temp Basal or a temp target */
 "LoopStatusContactValue" = "Loopstatus";
 
 /* --------------------------  Dana Pump  ---------------------- */
-/* Dana footer */
 
+/* Dana footer */
 "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana-pumpen tillåter inte ändring av max basal och max bolus i iAPS. Ändra istället dessa inställningar på pumpen. När du klickar på spara kommer de senaste inställningarna att hämtas från pumpen";
 
 /* --------- Auto ISF --------- */
-/* */
 
+/* */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamisk insulinkänslighet är inaktiverad medan Auto ISF är aktiverad";
 
 /* */
 "Nighttime" = "På natten";
+
+/* */
+"Disable during nighttime" = "Inaktivera nattetid";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Inaktiverar automatisk ISF under nattetid, eller någon annan vald period.";
@@ -3323,8 +3387,8 @@ Enact a temp Basal or a temp target */
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
-/* Headline Rewind Resets Autosens */
 
+/* Headline Rewind Resets Autosens */
 "Rewind Resets Autosens" = "Återställ autosens vid reservoarbyte";
 
 /* ”Rewind Resets Autosens” */
@@ -3556,8 +3620,8 @@ Enact a temp Basal or a temp target */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Standardvärde: 0.5 Den andel av det totala insulin som (beräknas) krävas som kan ges som en autobolus (SMB). Bör som regel iinte ändras. Ändras endast långsamt och med stor försiktighet.";
 
 // Dynamic ISF + CR Settings:
-/* Headline "Adjust Dynamic ISF constant" */
 
+/* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Ändra AF-konstant";
 
 /* Adjust Dynamic ISF constant */
@@ -3773,7 +3837,7 @@ Enact a temp Basal or a temp target */
 "Light / Dark Mode" = "Ljust / Mörkt";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Negligera kolhydrater i oref0";
+"Neglect Carbs in oref0" = "Negligera kolhydrater i oref0";
 
 /* Debug option */
 "Hide Predictions" = "Dölj prognoser";
@@ -3795,6 +3859,18 @@ Enact a temp Basal or a temp target */
 
 /* Show Predictions */
 "Show Predictions" = "Visa prognoser";
+
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Klocka: visa diagram";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Klocka: visa förändring";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Klocka: visa blodsockerprognos";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Klocka: visa prognos";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Liveaktivitet visar senaste blodsockeravläsning på låsskärmen och på Dynamic Island, om sådan finns på din iPhone-modell";
@@ -3962,3 +4038,28 @@ Enact a temp Basal or a temp target */
 
 /* name of complete meals when saving */
 "Complete Meal" = "Fullständig måltid";
+
+/* Alert title when manual temp basal rate exceeds Max Basal setting */
+"Max Basal Exceeded" = "Maximal basaldos överskriden";
+
+/* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Hastigheten %.2f U/hr överskrider din maximala basaldosinställning på %.2f U/hr.";
+
+/* --- Build expiration alert (TestFlight 90-day lifetime) --- */
+"OK" = "OK";
+
+"More Info" = "Mer info";
+
+"Build Expires Soon!" = "App förfaller snart!";
+
+"Build Expiring in %d Day" = "App löper ut om %d dag";
+
+"Build Expiring in %d Days" = "App löper ut om %d dagar";
+
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Din appversion löper ut om %d timme. Efter utgångsdatum kommer appen inte att starta förrän du bygger om.";
+
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Din appversion löper ut om %d timmar. Efter utgångsdatum kommer appen inte att starta förrän du bygger om.";
+
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Ditt iAPS-app löper ut %1$@ (%2$d dag kvar). Testappar måste förnyas var 90:e dag.";
+
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Ditt iAPS-app löper ut %1$@ (%2$d dagar kvar). Testbyggen måste förnyas var 90:e dag.";

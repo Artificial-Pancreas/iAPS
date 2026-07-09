@@ -1390,6 +1390,37 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Today's Meals" = "Dnešné jedlá";
 
+"Micronutrient" = "Micronutrient";
+
+"Micronutrients" = "Micronutrients";
+
+"Vitamin A" = "Vitamin A";
+"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
+"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
+"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
+"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
+"Vitamin B6" = "Vitamin B6";
+"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
+"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
+"Vitamin B12" = "Vitamin B12";
+"Vitamin C" = "Vitamin C";
+"Vitamin D" = "Vitamin D";
+"Vitamin E" = "Vitamin E";
+"Vitamin K" = "Vitamin K";
+"Calcium" = "Calcium";
+"Iron" = "Iron";
+"Magnesium" = "Magnesium";
+"Potassium" = "Potassium";
+"Zinc" = "Zinc";
+"Phosphorus" = "Phosphorus";
+"Copper" = "Copper";
+"Manganese" = "Manganese";
+"Selenium" = "Selenium";
+"Iodine" = "Iodine";
+"Salt" = "Salt";
+
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+
 // --------- AI ---------
 /* */
 
@@ -1450,6 +1481,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Manual Entry" = "Manuálne zadanie";
 
 "Photo Analysis" = "Analýza fotografií";
+
+"Photo (+ comment)" = "Photo (+ comment)";
+
+"Library (+ comment)" = "Library (+ comment)";
 
 "Barcode Scanner" = "Skener čiarových kódov";
 
@@ -1569,6 +1604,16 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Anthropic (Claude API) Configuration" = "Konfigurácia Anthropic (Claude API)";
 
+"USDA Food Database" = "USDA Food Database";
+
+"USDA FoodData API Key" = "USDA FoodData API Key";
+
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+
+"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+
 "Provider for Barcode Scanning" = "Poskytovateľ pre skenovanie čiarových kódov";
 
 "Provider for Text/Voice Search" = "Poskytovateľ pre textové/hlasové vyhľadávanie";
@@ -1578,7 +1623,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Fast" = "Rýchly";
 
 "Provider for AI Image Analysis" = "Poskytovateľ pre analýzu obrázkov pomocou AI";
-
 
 "Food Search Provider Configuration" = "Konfigurácia poskytovateľa vyhľadávania potravín";
 
@@ -1659,6 +1703,15 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "carbs" = "sacharidy";
 
 "fat" = "tuky";
+
+/* Display more macro nutrients */
+"More" = "More";
+
+/* Additional nutrient */
+"more nutrient" = "more nutrient";
+
+/* Additional nutrients */
+"more nutrients" = "more nutrients";
 
 "📝 Notes" = "📝 Poznámky";
 
@@ -1788,6 +1841,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Your AI provider has run out of credits. Please check your account billing or try a different provider." = "Vášmu AI poskytovateľovi došli kredity. Skontrolujte prosím fakturáciu svojho účtu alebo vyskúšajte iného poskytovateľa.";
 
 "Reset to Default" = "Obnoviť predvolené nastavenia";
+
+"Take Photo" = "Take Photo";
 
 "Retake Photo" = "Znovu odfotiť";
 
@@ -1985,9 +2040,15 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Carbs" = "Sacharidy";
 
-// --------- End of AI ---------
-/* */
+"Discard" = "Discard";
 
+"Do you want to discard this meal?" = "Do you want to discard this meal?";
+
+"Set Time" = "Set Time";
+
+// --------- End of AI ---------
+
+/* */
 "Temp Basal" = "Dočasný bazál";
 
 /* */
@@ -2058,8 +2119,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Bolus already in Progress!" = "Podanie bolusu už prebieha!";
 
 /* -------------- Developer settings ---------------------- */
-/* Debug options */
 
+/* Debug options */
 "Developer" = "Vývojár";
 
 /* Debug option view NS Upload Profile */
@@ -2176,8 +2237,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Total" = "Spolu";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-/* Enable FPU */
 
+/* Enable FPU */
 "Enable" = "Povoliť";
 
 /* Header */
@@ -2408,8 +2469,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Hide Future" = "Skryť budúce";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-/* Warning about bolus recommendation. Title */
 
+/* Warning about bolus recommendation. Title */
 "Warning!" = "Upozornenie!";
 
 /* Alert to confirm bolus amount to add */
@@ -2620,10 +2681,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Failed to Suspend Insulin Delivery" = "Pozastavenie podávania inzulínu zlyhalo";
 
 //* -----------------------------------------------------------------------*/
+
 /* ----------------------Statistics strings -------------------------------*/
+
 /* */
-
-
 "Today" = "Dnes";
 
 /* */
@@ -2847,8 +2908,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Vyhladzovať glykémie";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* Setting Title */
 
+/* Setting Title */
 "Sharing" = "Zdieľanie";
 
 /* Share and Backup page header */
@@ -2915,8 +2976,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Po zapnutí sa súbor záznamu z predchádzajúceho dňa automaticky nahrá po polnoci. Záznamy sa používajú iba na poskytovanie funkcie viacdňovej analýzy na open-iaps.app. V predvolenom nastavení vypnuté.";
 
 /* ——————————Contact Image ————————*/
-/* Contact Image, contacts list - prefix before the contact given name */
 
+/* Contact Image, contacts list - prefix before the contact given name */
 "Contact" = "Kontakt";
 
 /* Contact Image, settings, header of the contacts list */
@@ -3067,17 +3128,20 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "LoopStatusContactValue" = "Stav slučky";
 
 /* --------------------------  Dana Pump  ---------------------- */
-/* Dana footer */
 
+/* Dana footer */
 "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Pumpa Dana neumožňuje úpravu maximálneho bazálneho a maximálneho bolusu. Nastavte ich v lekárskych nastaveniach pumpy. Uložením nastavení sa načítajú posledné hodnoty z pumpy";
 
 /* --------- Auto ISF --------- */
-/* */
 
+/* */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamické ISF je vypnuté, ak je Auto ISF zapnuté";
 
 /* */
 "Nighttime" = "Nighttime";
+
+/* */
+"Disable during nighttime" = "Disable during nighttime";
 
 /* */
 "Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
@@ -3327,8 +3391,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
-/* Headline Rewind Resets Autosens */
 
+/* Headline Rewind Resets Autosens */
 "Rewind Resets Autosens" = "Návrat Autosens do pôvodného stavu";
 
 /* ”Rewind Resets Autosens” */
@@ -3560,8 +3624,8 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Predvolená hodnota: 0,5 Toto je ďalší kľúčový bezpečnostný limit OpenAPS a určuje, aký podiel z celkového požadovaného inzulínu sa môže dodať ako SMB. Túto experimentálnu hodnotu zvyšujte pomaly a opatrne.";
 
 // Dynamic ISF + CR Settings:
-/* Headline "Adjust Dynamic ISF constant" */
 
+/* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
@@ -3777,7 +3841,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Light / Dark Mode" = "Svetlý / tmavý režim";
 
 /* Debug option */
-"Neglect Carbohydrates in oref0" = "Ignorovať sacharidy v oref0";
+"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
 
 /* Debug option */
 "Hide Predictions" = "Skryť predpovede";
@@ -3799,6 +3863,18 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Show Predictions */
 "Show Predictions" = "Zobraziť predikcie";
+
+/* Watch Smart Stack: Show Chart widget */
+"Watch: Show Chart" = "Watch: Show Chart";
+
+/* Watch Smart Stack: Show delta */
+"Watch: Show Delta" = "Watch: Show Delta";
+
+/* Watch Smart Stack: Show eventual glucose on chart widget */
+"Watch: Show Eventual" = "Watch: Show Eventual";
+
+/* Watch Smart Stack: Show predictions on chart widget */
+"Watch: Show Predictions" = "Watch: Show Predictions";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";
@@ -3966,3 +4042,28 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* name of complete meals when saving */
 "Complete Meal" = "Celé jedlo";
+
+/* Alert title when manual temp basal rate exceeds Max Basal setting */
+"Max Basal Exceeded" = "Max Basal Exceeded";
+
+/* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+
+/* --- Build expiration alert (TestFlight 90-day lifetime) --- */
+"OK" = "OK";
+
+"More Info" = "Viac informácií";
+
+"Build Expires Soon!" = "Build Expires Soon!";
+
+"Build Expiring in %d Day" = "Build Expiring in %d Day";
+
+"Build Expiring in %d Days" = "Build Expiring in %d Days";
+
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild.";
+
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild.";
+
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
+
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";

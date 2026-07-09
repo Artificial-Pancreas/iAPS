@@ -199,7 +199,7 @@ extension Settings {
                             }
 
                             HStack {
-                                Toggle("Neglect Carbohydrates in oref0", isOn: $state.noCarbs)
+                                Toggle("Neglect Carbs in oref0", isOn: $state.noCarbs)
                             }
 
                             Group {

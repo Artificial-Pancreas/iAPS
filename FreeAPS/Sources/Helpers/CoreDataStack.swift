@@ -1,54 +1,89 @@
 import CoreData
 import Foundation
 
-class CoreDataStack: ObservableObject {
-    init() {}
-
+final class CoreDataStack: ObservableObject {
     static let shared = CoreDataStack()
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Core_Data")
 
-        container.loadPersistentStores(completionHandler: { _, error in
-            guard let error = error as NSError? else { return }
-            debug(.apsManager, "Unresolved error: \(error), \(error.userInfo)")
-        })
+        container.loadPersistentStores { _, error in
+            if let error = error as NSError? {
+                debug(
+                    .apsManager,
+                    "Unresolved CoreData error: \(error), \(error.userInfo)"
+                )
+            }
+        }
+
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
         return container
     }()
 
+    private init() {
+        ValueTransformer.setValueTransformer(
+            NightTimeConfigurationTransformer(),
+            forName: NSValueTransformerName(
+                "NightTimeConfigurationTransformer"
+            )
+        )
+    }
+
+    var context: NSManagedObjectContext {
+        persistentContainer.viewContext
+    }
+
     func saveContext() {
         let context = persistentContainer.viewContext
 
+        guard context.hasChanges else { return }
+
         context.perform {
-            if context.hasChanges {
-                do {
-                    try context.save()
-                } catch {
-                    let nserror = error as NSError
-                    debug(.apsManager, "Unresolved error \(nserror), \(nserror.userInfo)")
-                }
+            do {
+                try context.save()
+            } catch {
+                let nsError = error as NSError
+
+                debug(
+                    .apsManager,
+                    "Failed saving CoreData context: \(nsError), \(nsError.userInfo)"
+                )
             }
         }
     }
 
-    func delete(obj: NSManagedObject) {
-        persistentContainer.viewContext.delete(obj)
+    func newBackgroundContext() -> NSManagedObjectContext {
+        persistentContainer.newBackgroundContext()
+    }
+
+    func delete(_ object: NSManagedObject) {
+        context.delete(object)
     }
 
     func deleteBatch(entity: String) {
-        let context = persistentContainer.viewContext
-
-        context.performAndWait {
-            let fetchRequest: NSFetchRequest<NSFetchRequestResult>
-            fetchRequest = NSFetchRequest(entityName: entity)
-            let deleteRequest = NSBatchDeleteRequest(
-                fetchRequest: fetchRequest
+        let request = NSBatchDeleteRequest(
+            fetchRequest: NSFetchRequest<NSFetchRequestResult>(
+                entityName: entity
             )
+        )
+
+        context.perform {
             do {
-                debug(.apsManager, "Clear the \(entity) entries from CoreData.")
-                try context.execute(deleteRequest)
-            } catch { debug(.apsManager, "Couldn't delete the \(entity) entries from CoreData.") }
+                debug(
+                    .apsManager,
+                    "Clearing \(entity) entries from CoreData."
+                )
+
+                try self.context.execute(request)
+
+            } catch {
+                debug(
+                    .apsManager,
+                    "Failed deleting \(entity) entries from CoreData."
+                )
+            }
         }
     }
 }

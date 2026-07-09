@@ -13,12 +13,6 @@
 [submodule "MinimedKit"]
 	path = MinimedKit
 	url = https://github.com/Artificial-Pancreas/MinimedKit.git
-[submodule "OmniBLE"]
-	path = OmniBLE
-	url = https://github.com/Artificial-Pancreas/OmniBLE.git
-[submodule "OmniKit"]
-	path = OmniKit
-	url = https://github.com/Artificial-Pancreas/OmniKit.git
 [submodule "dexcom-share-client-swift"]
 	path = dexcom-share-client-swift
 	url = https://github.com/Artificial-Pancreas/dexcom-share-client-swift.git
@@ -40,3 +34,7 @@
 	path = MedtrumKit
 	url = https://github.com/Artificial-Pancreas/MedtrumKit.git
 	branch = dev
+[submodule "OmnipodKit"]
+	path = OmnipodKit
+	url = https://github.com/Artificial-Pancreas/OmnipodKit
+	branch = main

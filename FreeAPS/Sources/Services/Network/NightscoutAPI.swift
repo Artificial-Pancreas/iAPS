@@ -111,6 +111,7 @@ extension NightscoutAPI {
                     .map {
                         var reading = $0
                         reading.glucose = $0.sgv
+                        reading.unfiltered = $0.sgv.map { sgv in Decimal(sgv) }
                         return reading
                     }
             }
@@ -510,7 +511,13 @@ extension NightscoutAPI {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
         debug(.nightscout, "NS Client: uploading \(glucose.count) glucose entries")
-        request.httpBody = try! JSONCoding.encoder.encode(glucose)
+        request.httpBody = try! JSONCoding.encoder.encode(
+            glucose.map {
+                var entry = $0
+                entry.unfiltered = nil
+                return entry
+            }
+        )
         request.httpMethod = "POST"
 
         return service.run(request)
