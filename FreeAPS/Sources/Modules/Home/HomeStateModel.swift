@@ -8,7 +8,7 @@ import SwiftUI
 import UIKit
 
 extension Home {
-    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
+    final class StateModel: BaseStateModel<Provider>, LifetimeOwner, UIBindingOwner {
         @Injected() private var apsManager: APSManager!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var storage: TempTargetsStorage!
@@ -20,6 +20,7 @@ extension Home {
         private let overrideStorage = OverrideStorage()
 
         private let timer = DispatchTimer(timeInterval: 5)
+        let uiBindings = UIBindings()
         private(set) var filteredHours = 24
 
         @Published private(set) var settings: FreeAPSSettings?
@@ -187,36 +188,36 @@ extension Home {
             await setupOverrideHistory()
             await setupData()
 
-            observe(appCoordinator.cgmInfo.map(\.?.sensorDays).removeDuplicates()) { me, sensorDays in
+            observeUI(appCoordinator.cgmInfo, map: { $0?.sensorDays }) { me, sensorDays in
                 await me.cgmCensorDaysUpdated(sensorDays)
             }
 
-            observe(appCoordinator.glucoseHistory.dropFirst()) { me, glucose in
+            observeUI(appCoordinator.glucoseHistory) { me, glucose in
                 // TODO: use the provided value inside the function, currently it re-reads from the storage
                 await me.glucoseDidUpdate(glucose)
             }
 
-            observe(appCoordinator.suggested) { me, suggestion in
+            observeUI(appCoordinator.suggested) { me, suggestion in
                 await me.suggestionDidUpdate(suggestion)
             }
 
-            observe(appCoordinator.iobTicks.dropFirst().map(\.?.first)) { me, iob in
+            observeUI(appCoordinator.iobTicks, map: { $0?.first }) { me, iob in
                 await me.currentIobUpdated(iob)
             }
 
-            observe(appCoordinator.settings.dropFirst()) { me, settings in
+            observeUI(appCoordinator.settings) { me, settings in
                 await me.settingsUpdated(settings)
             }
 
-            observe(appCoordinator.preferences.dropFirst()) { me, preferences in
+            observeUI(appCoordinator.preferences) { me, preferences in
                 await me.preferencesUpdated(preferences)
             }
 
-            observe(appCoordinator.pumpSettings.dropFirst()) { me, pumpSettings in
+            observeUI(appCoordinator.pumpSettings) { me, pumpSettings in
                 await me.pumpSettingsUpdated(pumpSettings)
             }
 
-            observe(appCoordinator.pumpHistory.dropFirst()) { me, pumpHistory in
+            observeUI(appCoordinator.pumpHistory) { me, pumpHistory in
                 await me.pumpHistoryDidUpdate(pumpHistory)
             }
 
@@ -224,15 +225,16 @@ extension Home {
                 await me.basalProfileUpdated(basalProfile)
             }
 
-            observe(appCoordinator.tempTargets.dropFirst()) { me, tempTargets in
+            observeUI(appCoordinator.tempTargets) { me, tempTargets in
                 await me.tempTargetsUpdated(tempTargets)
             }
 
-            observe(appCoordinator.carbHistory.dropFirst()) { me, carbHistory in
+            observeUI(appCoordinator.carbHistory) { me, carbHistory in
                 await me.carbsUpdated(carbHistory)
             }
 
-            observe(appCoordinator.loopCompleted) { me, loopOutcome in
+            observeUI(appCoordinator.latestLoopOutcome) { me, loopOutcome in
+                guard let loopOutcome else { return }
                 await me.loopCompleted(loopOutcome)
             }
 
@@ -256,11 +258,11 @@ extension Home {
                 await me.startTimer()
             }
 
-            observe(appCoordinator.pumpStatus) { me, pumpStatus in
+            observeUI(appCoordinator.pumpStatus) { me, pumpStatus in
                 await me.pumpStatusUpdated(pumpStatus)
             }
 
-            observe(appCoordinator.pumpInfo) { me, pumpInfo in
+            observeUI(appCoordinator.pumpInfo) { me, pumpInfo in
                 await me.pumpInfoUpdated(pumpInfo)
             }
 

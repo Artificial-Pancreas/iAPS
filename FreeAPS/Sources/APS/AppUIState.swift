@@ -1,10 +1,9 @@
 import Combine
 import Foundation
 import Observation
-import UIKit
 
 @MainActor
-@Observable final class AppUIState: AppService {
+@Observable final class AppUIState: AppService, UIBindingOwner {
     private let appCoordinator: AppCoordinator
 
     // initial values will not be observed by tha app, SettingsManager sets the real values in its start(), and the app won't render before it's finished
@@ -30,13 +29,7 @@ import UIKit
     private(set) var lightMode = LightMode.auto
     private(set) var liveActivitiesSystemEnabled: Bool = false
 
-    @ObservationIgnored private var cancellables = Set<AnyCancellable>()
-
-    // While the app is in the background there is no UI to keep current, so observable
-    // writes are deferred (latest value per property wins) and flushed on foregrounding.
-    // Otherwise every bus emission would keep re-evaluating the invisible view tree.
-    @ObservationIgnored private var isInBackground = false
-    @ObservationIgnored private var pendingWrites: [AnyKeyPath: () -> Void] = [:]
+    @ObservationIgnored let uiBindings = UIBindings()
 
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
@@ -47,83 +40,30 @@ import UIKit
         guard !started else { return }
         started = true
 
-        isInBackground = UIApplication.shared.applicationState == .background
-        Foundation.NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
-            .sink { [weak self] _ in
-                MainActor.assumeIsolated { self?.isInBackground = true }
-            }
-            .store(in: &cancellables)
-        Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-            .sink { [weak self] _ in
-                MainActor.assumeIsolated { self?.flushPendingWrites() }
-            }
-            .store(in: &cancellables)
-
         settings = appCoordinator.settings.value
         preferences = appCoordinator.preferences.value
         pumpSettings = appCoordinator.pumpSettings.value
         lightMode = appCoordinator.settings.value.lightMode
 
-        bind(appCoordinator.settings, to: \.settings)
-        bind(appCoordinator.preferences, to: \.preferences)
-        bind(appCoordinator.pumpSettings, to: \.pumpSettings)
+        observeUI(appCoordinator.settings) { me, value in me.settings = value }
+        observeUI(appCoordinator.preferences) { me, value in me.preferences = value }
+        observeUI(appCoordinator.pumpSettings) { me, value in me.pumpSettings = value }
 
-        bind(appCoordinator.pumpInfo, to: \.pumpInfo)
-        bind(appCoordinator.pumpStatus, to: \.pumpStatus)
-        bind(appCoordinator.cgmInfo, to: \.cgmInfo)
-        bind(appCoordinator.cgmStatus, to: \.cgmStatus)
-        bind(appCoordinator.isLooping, to: \.isLooping)
-        bind(appCoordinator.manualTempBasal, to: \.manualTempBasal)
-        bind(appCoordinator.pumpStatus.map(\.?.reservoir), to: \.pumpReservoir)
-        bind(appCoordinator.lastLoopDate, to: \.lastLoopDate)
-        bind(appCoordinator.bolusProgress, to: \.bolusProgress)
-        bind(appCoordinator.bolusAmount, to: \.bolusAmount)
-        bind(appCoordinator.lastLoopError, to: \.lastLoopError)
-        bind(appCoordinator.alertNotAckUpdates, to: \.alertNotAck)
-        bind(appCoordinator.glucoseAlarm, to: \.glucoseAlarm)
-        bind(appCoordinator.liveActivitiesSystemEnabled, to: \.liveActivitiesSystemEnabled)
-        bind(appCoordinator.settings.map(\.lightMode).removeDuplicates(), to: \.lightMode)
-        bind(appCoordinator.iobTicks.map(\.?.first?.iob).removeDuplicates(), to: \.latestIOB)
-    }
-
-    private func bind<V>(
-        _ subject: some Publisher<V, Never>,
-        to keyPath: ReferenceWritableKeyPath<AppUIState, V>
-    ) {
-        subscribe(subject, to: keyPath)
-    }
-
-    private func bind<V: Equatable>(
-        _ subject: some Publisher<V, Never>,
-        to keyPath: ReferenceWritableKeyPath<AppUIState, V>
-    ) {
-        subscribe(subject.removeDuplicates(), to: keyPath)
-    }
-
-    private func subscribe<V>(
-        _ subject: some Publisher<V, Never>,
-        to keyPath: ReferenceWritableKeyPath<AppUIState, V>
-    ) {
-        subject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                MainActor.assumeIsolated { self?.write(value, to: keyPath) }
-            }
-            .store(in: &cancellables)
-    }
-
-    private func write<V>(_ value: V, to keyPath: ReferenceWritableKeyPath<AppUIState, V>) {
-        if isInBackground {
-            pendingWrites[keyPath] = { [weak self] in self?[keyPath: keyPath] = value }
-        } else {
-            self[keyPath: keyPath] = value
-        }
-    }
-
-    private func flushPendingWrites() {
-        isInBackground = false
-        let writes = pendingWrites
-        pendingWrites = [:]
-        writes.values.forEach { $0() }
+        observeUI(appCoordinator.pumpInfo) { me, value in me.pumpInfo = value }
+        observeUI(appCoordinator.pumpStatus) { me, value in me.pumpStatus = value }
+        observeUI(appCoordinator.cgmInfo) { me, value in me.cgmInfo = value }
+        observeUI(appCoordinator.cgmStatus) { me, value in me.cgmStatus = value }
+        observeUI(appCoordinator.isLooping) { me, value in me.isLooping = value }
+        observeUI(appCoordinator.manualTempBasal) { me, value in me.manualTempBasal = value }
+        observeUI(appCoordinator.pumpStatus, map: { $0?.reservoir }) { me, value in me.pumpReservoir = value }
+        observeUI(appCoordinator.lastLoopDate) { me, value in me.lastLoopDate = value }
+        observeUI(appCoordinator.bolusProgress) { me, value in me.bolusProgress = value }
+        observeUI(appCoordinator.bolusAmount) { me, value in me.bolusAmount = value }
+        observeUI(appCoordinator.lastLoopError) { me, value in me.lastLoopError = value }
+        observeUI(appCoordinator.alertNotAckUpdates) { me, value in me.alertNotAck = value }
+        observeUI(appCoordinator.glucoseAlarm) { me, value in me.glucoseAlarm = value }
+        observeUI(appCoordinator.liveActivitiesSystemEnabled) { me, value in me.liveActivitiesSystemEnabled = value }
+        observeUI(appCoordinator.settings, map: { $0.lightMode }) { me, value in me.lightMode = value }
+        observeUI(appCoordinator.iobTicks, map: { $0?.first?.iob }) { me, value in me.latestIOB = value }
     }
 }

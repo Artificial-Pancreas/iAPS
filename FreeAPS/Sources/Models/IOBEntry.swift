@@ -1,6 +1,6 @@
 import Foundation
 
-struct IOBEntry: JSON {
+struct IOBEntry: JSON, Equatable {
     let iob: Decimal
     let activity: Decimal
     let basaliob: Decimal
@@ -12,7 +12,7 @@ struct IOBEntry: JSON {
     let lastTemp: LastTemp?
     var time: Date?
 
-    struct WithZeroTemp: JSON {
+    struct WithZeroTemp: JSON, Equatable {
         let iob: Decimal
         let activity: Decimal
         let basaliob: Decimal
@@ -22,7 +22,7 @@ struct IOBEntry: JSON {
         let time: Date
     }
 
-    struct LastTemp: JSON {
+    struct LastTemp: JSON, Equatable {
         let rate: Decimal
         let timestamp: Date
         let started_at: Date

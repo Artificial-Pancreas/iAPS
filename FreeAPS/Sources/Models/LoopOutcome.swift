@@ -1,6 +1,6 @@
 import Foundation
 
-enum LoopOutcome: JSON {
+enum LoopOutcome: JSON, Equatable {
     case enacted(Suggestion, timestamp: Date) // closed loop, enacted
     case enactFailed(Suggestion, error: String, timestamp: Date) // closed loop, enact failed
     case suggested(Suggestion, timestamp: Date) // open loop

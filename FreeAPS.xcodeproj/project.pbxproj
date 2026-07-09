@@ -452,6 +452,7 @@
 		F22A7A8A2FF946FA0019BDC5 /* NightscoutDataSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A892FF946FA0019BDC5 /* NightscoutDataSync.swift */; };
 		F22A7A8C2FF948FB0019BDC5 /* NightscoutAPIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */; };
 		F22A7A932FF94FC70019BDC5 /* MetricKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */; };
+		F22A8859300058D60019BDC5 /* UIBindingOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A8858300058D30019BDC5 /* UIBindingOwner.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
@@ -1192,6 +1193,7 @@
 		F22A7A892FF946FA0019BDC5 /* NightscoutDataSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSync.swift; sourceTree = "<group>"; };
 		F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPIProvider.swift; sourceTree = "<group>"; };
 		F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitService.swift; sourceTree = "<group>"; };
+		F22A8858300058D30019BDC5 /* UIBindingOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBindingOwner.swift; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
@@ -2293,6 +2295,7 @@
 				F25EBEF82FC210F8009D275F /* Date+Extensions.swift */,
 				F25EBEFA2FC21228009D275F /* TimeInterval+Extensions.swift */,
 				F25EBEFE2FC2312A009D275F /* LifetimeOwner.swift */,
+				F22A8858300058D30019BDC5 /* UIBindingOwner.swift */,
 				F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */,
 				F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */,
 				F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */,
@@ -3632,6 +3635,7 @@
 				F2C2EEAF2F5CD35C00A0AA7C /* AIAnalysisResult+Convert.swift in Sources */,
 				F2FC8B2F2FDDD18400D389EC /* ProfilesSnapshot.swift in Sources */,
 				F2C29E2F2FEADD6600E8630A /* Auto_ISFSnapshot.swift in Sources */,
+				F22A8859300058D60019BDC5 /* UIBindingOwner.swift in Sources */,
 				38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */,
 				F25EBEFB2FC2122D009D275F /* TimeInterval+Extensions.swift in Sources */,
 				F2EE83C72E73A04200D7177E /* KnownPlugins.swift in Sources */,
