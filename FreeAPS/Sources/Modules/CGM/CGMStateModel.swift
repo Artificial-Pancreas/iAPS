@@ -22,7 +22,9 @@ extension CGM {
         }
 
         func removePumpAsCGM() {
-            deviceManager.removePumpAsCGM()
+            Task {
+                await deviceManager.removePumpAsCGM()
+            }
         }
 
         func setupNewCgm(_ identifier: String?) {

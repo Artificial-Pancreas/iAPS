@@ -20,9 +20,9 @@ protocol DeviceDataManager: Sendable {
 
     func createBolusProgressReporter() -> DoseProgressReporter?
 
-    func removePumpAsCGM()
+    func removePumpAsCGM() async
 
-    func removePump()
+    func removePump() async
 
     @MainActor func setupCGMManager(
         withIdentifier identifier: String,
@@ -568,15 +568,27 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         return vc
     }
 
-    func removePumpAsCGM() {
-        if cgmManager is PumpManagerUI, cgmManager?.pluginIdentifier == pumpManager?.pluginIdentifier {
-            setCgmManager(nil)
+    func removePumpAsCGM() async {
+        await withCheckedContinuation { continuation in
+            processQueue.async {
+                if let cgmManager = self.cgmManager, let pumpManager = self.pumpManager, cgmManager is PumpManagerUI,
+                   cgmManager.pluginIdentifier == pumpManager.pluginIdentifier
+                {
+                    self.setCgmManager(nil)
+                }
+                continuation.resume()
+            }
         }
     }
 
-    func removePump() {
-        DispatchQueue.main.async {
-            self.pumpManager = nil
+    func removePump() async {
+        await withCheckedContinuation { continuation in
+            processQueue.async {
+                if self.pumpManager != nil {
+                    self.setPumpManager(nil)
+                }
+                continuation.resume()
+            }
         }
     }
 
@@ -610,13 +622,15 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     }
 
     public func setupCGMManagerFromPumpManager(withIdentifier identifier: String) -> CGMManager? {
-        guard identifier == pumpManager?.pluginIdentifier, let cgmManager = pumpManager as? CGMManager else {
-            return nil
-        }
+        processQueue.sync {
+            guard identifier == pumpManager?.pluginIdentifier, let cgmManager = pumpManager as? CGMManager else {
+                return nil
+            }
 
-        // We have a pump that is a CGM!
-        setCgmManager(cgmManager)
-        return cgmManager
+            // We have a pump that is a CGM!
+            setCgmManager(cgmManager)
+            return cgmManager
+        }
     }
 
     private func cgmManagerTypeFromRawValue(_ rawValue: [String: Any]) -> CGMManager.Type? {

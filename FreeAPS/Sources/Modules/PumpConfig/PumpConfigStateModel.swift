@@ -51,7 +51,9 @@ extension PumpConfig {
         }
 
         func removePump() {
-            deviceManager.removePump()
+            Task {
+                await deviceManager.removePump()
+            }
         }
 
         func ack() {
