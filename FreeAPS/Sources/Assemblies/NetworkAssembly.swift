@@ -37,7 +37,8 @@ final class NetworkAssembly: Assembly {
                 storage: r.resolve(FileStorage.self)!,
                 announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
                 reachabilityManager: r.resolve(ReachabilityManager.self)!,
-                deviceStatusUploader: r.resolve(NightscoutDeviceStatusUploader.self)!
+                deviceStatusUploader: r.resolve(NightscoutDeviceStatusUploader.self)!,
+                overrideStorage: r.resolve(OverrideStorage.self)!
             )
         }
         container.register(Database.self) { r in Database(resolver: r) }
@@ -46,7 +47,8 @@ final class NetworkAssembly: Assembly {
                 storage: r.resolve(FileStorage.self)!,
                 database: r.resolve(Database.self)!,
                 reachabilityManager: r.resolve(ReachabilityManager.self)!,
-                appCoordinator: r.resolve(AppCoordinator.self)!
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                overrideStorage: r.resolve(OverrideStorage.self)!
             )
         }
         container.register(DatabaseStatisticsFactory.self) { r in

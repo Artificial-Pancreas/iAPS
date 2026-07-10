@@ -1,4 +1,3 @@
-import CoreData
 import SwiftUI
 
 extension OverrideProfilesConfig {
@@ -45,9 +44,7 @@ extension OverrideProfilesConfig {
 
         @Injected() private var ns: NightscoutManager!
 
-        private let overrideStorage = OverrideStorage()
-
-        private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        @Injected() private var overrideStorage: OverrideStorage!
 
         var units: GlucoseUnits = .mmolL
 
@@ -60,7 +57,6 @@ extension OverrideProfilesConfig {
             defaultmaxIOB = preferences.maxIOB
             extended_overrides = settings.extended_overrides
             currentSettings = makeAutoIsfSettings(from: settings)
-            // presets = [OverridePresets(context: coredataContext)]
         }
 
         func saveSettings() {
@@ -84,128 +80,64 @@ extension OverrideProfilesConfig {
                     }
                 }
                 // Save
-                let saveOverride = Override(context: self.coredataContext)
-                saveOverride.duration = self.duration as NSDecimalNumber
-                saveOverride.indefinite = self._indefinite
-                saveOverride.percentage = self.percentage
-                saveOverride.enabled = true
-                saveOverride.smbIsOff = self.smbIsOff
-                saveOverride.overrideAutoISF = self.overrideAutoISF
-                if self.isPreset {
-                    saveOverride.isPreset = true
-                    saveOverride.id = id
-                } else {
-                    saveOverride.isPreset = false
-                    saveOverride.id = UUID().uuidString
-                }
-                saveOverride.date = Date()
-                if override_target {
-                    saveOverride.target = (
-                        units == .mmolL
-                            ? target.asMgdL
-                            : target
-                    ) as NSDecimalNumber
-                } else { saveOverride.target = 6 }
-                if advancedSettings {
-                    saveOverride.advancedSettings = true
-                    saveOverride.isfAndCr = isfAndCr
-                    if !isfAndCr {
-                        saveOverride.isf = isf
-                        saveOverride.cr = cr
-                        saveOverride.basal = basal
-                    }
-                    if smbIsAlwaysOff {
-                        saveOverride.smbIsAlwaysOff = true
-                        saveOverride.start = start as NSDecimalNumber
-                        saveOverride.end = end as NSDecimalNumber
-                    } else { saveOverride.smbIsAlwaysOff = false }
-
-                    saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
-                    saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
-                    saveOverride.maxIOB = maxIOB as NSDecimalNumber
-                    saveOverride.overrideMaxIOB = overrideMaxIOB
-                    saveOverride.endWIthNewCarbs = endWIthNewCarbs
-                    saveOverride.glucoseOverrideThresholdActive = glucoseOverrideThresholdActive
-                    if glucoseOverrideThresholdActive {
-                        saveOverride.glucoseOverrideThreshold = glucoseOverrideThreshold as NSDecimalNumber
-                    }
-                    saveOverride.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
-                    if glucoseOverrideThresholdActiveDown {
-                        saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
-                    }
-                }
+                let overrideId = self.isPreset ? id : UUID().uuidString
+                let savedAt = await overrideStorage.storeOverride(currentDraft(id: overrideId))
 
                 if overrideAutoISF {
-                    updateAutoISF(saveOverride.id)
+                    updateAutoISF(overrideId)
                 }
-
-                try? self.coredataContext.save()
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
                 if let editInNightscout {
                     await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date)
                 }
-                await ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
+                await ns.uploadOverride(self.percentage.formatted(), Double(duration), savedAt)
             }
         }
 
+        private func currentDraft(id: String, name: String? = nil, emoji: String? = nil) -> OverrideDraft {
+            OverrideDraft(
+                id: id,
+                name: name,
+                emoji: emoji,
+                isPreset: isPreset,
+                duration: duration,
+                indefinite: _indefinite,
+                percentage: percentage,
+                smbIsOff: smbIsOff,
+                overrideAutoISF: overrideAutoISF,
+                target: override_target ? (units == .mmolL ? target.asMgdL : target) : 6,
+                advancedSettings: advancedSettings,
+                isfAndCr: isfAndCr,
+                isf: isf,
+                cr: cr,
+                basal: basal,
+                smbIsAlwaysOff: smbIsAlwaysOff,
+                start: start,
+                end: end,
+                smbMinutes: smbMinutes,
+                uamMinutes: uamMinutes,
+                maxIOB: maxIOB,
+                overrideMaxIOB: overrideMaxIOB,
+                endWIthNewCarbs: endWIthNewCarbs,
+                glucoseOverrideThresholdActive: glucoseOverrideThresholdActive,
+                glucoseOverrideThreshold: glucoseOverrideThreshold,
+                glucoseOverrideThresholdActiveDown: glucoseOverrideThresholdActiveDown,
+                glucoseOverrideThresholdDown: glucoseOverrideThresholdDown
+            )
+        }
+
         func savePreset() {
-            let saveOverride = OverridePresets(context: coredataContext)
-            saveOverride.duration = duration as NSDecimalNumber
-            saveOverride.indefinite = _indefinite
-            saveOverride.percentage = percentage.rounded()
-            saveOverride.smbIsOff = smbIsOff
-            saveOverride.name = profileName
-            saveOverride.emoji = emoji
-            saveOverride.overrideAutoISF = overrideAutoISF
             let useId = UUID().uuidString
-            saveOverride.id = useId
             isPreset = true
-            saveOverride.date = Date()
-            if override_target {
-                saveOverride.target = (
-                    units == .mmolL
-                        ? target.asMgdL
-                        : target
-                ) as NSDecimalNumber
-            } else { saveOverride.target = 6 }
+            let draft = currentDraft(id: useId, name: profileName, emoji: emoji)
+            Task {
+                await overrideStorage.storePreset(draft)
 
-            saveOverride.advancedSettings = advancedSettings
-            saveOverride.isfAndCr = isfAndCr
-            saveOverride.isf = isf
-            saveOverride.cr = cr
-            saveOverride.basal = basal
-            saveOverride.endWIthNewCarbs = endWIthNewCarbs
-
-            if glucoseOverrideThresholdActive {
-                saveOverride.glucoseOverrideThresholdActive = glucoseOverrideThresholdActive
-                saveOverride.glucoseOverrideThreshold = glucoseOverrideThreshold as NSDecimalNumber
+                if overrideAutoISF {
+                    updateAutoISF(useId)
+                }
             }
-
-            if glucoseOverrideThresholdActiveDown {
-                saveOverride.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
-                saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
-            }
-
-            if smbIsAlwaysOff {
-                saveOverride.smbIsAlwaysOff = true
-                saveOverride.start = start as NSDecimalNumber
-                saveOverride.end = end as NSDecimalNumber
-            } else {
-                saveOverride.smbIsAlwaysOff = false
-            }
-
-            saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
-            saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
-            saveOverride.maxIOB = maxIOB as NSDecimalNumber
-            saveOverride.overrideMaxIOB = overrideMaxIOB
-            saveOverride.date = Date.now
-
-            if overrideAutoISF {
-                updateAutoISF(useId)
-            }
-
-            try? coredataContext.save()
         }
 
         func selectProfile(id_: String) {
@@ -230,56 +162,7 @@ extension OverrideProfilesConfig {
                     )
                 }
                 // New Override properties
-                let saveOverride = Override(context: coredataContext)
-                saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
-                saveOverride.indefinite = profile.indefinite
-                saveOverride.percentage = profile.percentage
-                saveOverride.enabled = true
-                saveOverride.smbIsOff = profile.smbIsOff
-                saveOverride.isPreset = true
-                saveOverride.date = Date()
-                saveOverride.id = id_
-                saveOverride.advancedSettings = profile.advancedSettings
-                saveOverride.isfAndCr = profile.isfAndCr
-                saveOverride.overrideAutoISF = profile.overrideAutoISF
-
-                if let tar = profile.target, tar == 0 {
-                    saveOverride.target = 6
-                } else {
-                    saveOverride.target = profile.target as? NSDecimalNumber
-                }
-
-                if profile.advancedSettings {
-                    if !profile.isfAndCr {
-                        saveOverride.isf = profile.isf
-                        saveOverride.cr = profile.cr
-                        saveOverride.basal = profile.basal
-                    }
-                    if profile.smbIsAlwaysOff {
-                        saveOverride.smbIsAlwaysOff = true
-                        saveOverride.start = profile.start as? NSDecimalNumber
-                        saveOverride.end = profile.end as? NSDecimalNumber
-                    } else { saveOverride.smbIsAlwaysOff = false }
-
-                    saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
-                    saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
-                    saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB) as NSDecimalNumber
-                    saveOverride.overrideMaxIOB = profile.overrideMaxIOB
-                    saveOverride.endWIthNewCarbs = profile.endWIthNewCarbs
-                }
-
-                if profile.glucoseOverrideThresholdActive {
-                    saveOverride.glucoseOverrideThresholdActive = true
-                    saveOverride.glucoseOverrideThreshold = (profile.glucoseOverrideThreshold ?? 100) as NSDecimalNumber
-                }
-
-                if profile.glucoseOverrideThresholdActiveDown {
-                    saveOverride.glucoseOverrideThresholdActiveDown = true
-                    saveOverride.glucoseOverrideThresholdDown = (profile.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber
-                }
-
-                // Saves
-                try? self.coredataContext.save()
+                let savedAt = await overrideStorage.activateProfile(profile, id: id_, defaultMaxIOB: defaultmaxIOB)
 
                 if let editInNightscout {
                     await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date)
@@ -287,8 +170,8 @@ extension OverrideProfilesConfig {
                 // Uploads new Override to NS
                 await ns.uploadOverride(
                     profile.name ?? "",
-                    Double(truncating: saveOverride.duration ?? 0),
-                    saveOverride.date ?? Date()
+                    Double(truncating: (profile.duration ?? 0) as NSDecimalNumber),
+                    savedAt
                 )
             }
         }

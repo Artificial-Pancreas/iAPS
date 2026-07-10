@@ -99,6 +99,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     let nightscoutConfigChanged = PassthroughSubject<Void, Never>()
 
+    // bumped whenever override-related CoreData entities change
+    let overridesChanged = CurrentValueSubject<Date, Never>(.distantPast)
+
     // --------------
 
     private let loopPendingBackgroundTask = TaskIDBox()
@@ -147,6 +150,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setLastLoopDate(_ value: Date?) {
         lastLoopDate.send(value)
+    }
+
+    func overridesDidChange() {
+        overridesChanged.send(Date())
     }
 
     func setLastLoopError(_ value: (String, date: Date)?) {

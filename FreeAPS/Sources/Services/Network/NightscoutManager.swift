@@ -31,7 +31,7 @@ actor BaseNightscoutManager: NightscoutManager {
     private let reachabilityManager: ReachabilityManager
     private let deviceStatusUploader: NightscoutDeviceStatusUploader
 
-    private let overrideStorage = OverrideStorage()
+    private let overrideStorage: OverrideStorage
 
     private var ping: TimeInterval?
 
@@ -51,7 +51,8 @@ actor BaseNightscoutManager: NightscoutManager {
         storage: FileStorage,
         announcementsStorage: AnnouncementsStorage,
         reachabilityManager: ReachabilityManager,
-        deviceStatusUploader: NightscoutDeviceStatusUploader
+        deviceStatusUploader: NightscoutDeviceStatusUploader,
+        overrideStorage: OverrideStorage
     ) {
         self.apiProvider = apiProvider
         self.appCoordinator = appCoordinator
@@ -61,6 +62,7 @@ actor BaseNightscoutManager: NightscoutManager {
         self.announcementsStorage = announcementsStorage
         self.reachabilityManager = reachabilityManager
         self.deviceStatusUploader = deviceStatusUploader
+        self.overrideStorage = overrideStorage
     }
 
     func isConfigured() async -> Bool {

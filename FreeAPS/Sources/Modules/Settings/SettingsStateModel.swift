@@ -139,6 +139,16 @@ extension Settings {
                 await nightscoutManager.deleteAllNSoverrrides() // For testing
             }
         }
+
+        func deleteStoredData(entity: String) {
+            Task {
+                await CoreDataStack.shared.deleteBatch(entity: entity)
+
+                if ["Override", "OverridePresets", "Auto_ISF"].contains(entity) {
+                    appCoordinator.overridesDidChange()
+                }
+            }
+        }
     }
 }
 

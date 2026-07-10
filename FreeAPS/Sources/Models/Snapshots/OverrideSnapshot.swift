@@ -66,3 +66,35 @@ extension OverrideSnapshot {
         )
     }
 }
+
+// holds the data to be saved as an Override entity into core data (to be passed into the OverrideStorage)
+// (instead of creating entities ad-hoc outsite the OverrideStorage)
+struct OverrideDraft: Sendable {
+    let id: String
+    let name: String?
+    let emoji: String?
+    let isPreset: Bool
+    let duration: Decimal
+    let indefinite: Bool
+    let percentage: Double
+    let smbIsOff: Bool
+    let overrideAutoISF: Bool
+    let target: Decimal
+    let advancedSettings: Bool
+    let isfAndCr: Bool
+    let isf: Bool
+    let cr: Bool
+    let basal: Bool
+    let smbIsAlwaysOff: Bool
+    let start: Decimal
+    let end: Decimal
+    let smbMinutes: Decimal
+    let uamMinutes: Decimal
+    let maxIOB: Decimal
+    let overrideMaxIOB: Bool
+    let endWIthNewCarbs: Bool
+    let glucoseOverrideThresholdActive: Bool
+    let glucoseOverrideThreshold: Decimal
+    let glucoseOverrideThresholdActiveDown: Bool
+    let glucoseOverrideThresholdDown: Decimal
+}

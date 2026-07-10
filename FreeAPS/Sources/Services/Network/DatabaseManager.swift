@@ -17,7 +17,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
     private let appCoordinator: AppCoordinator
 
     private let coreDataStorage = CoreDataStorage()
-    private let overrideStorage = OverrideStorage()
+    private let overrideStorage: OverrideStorage
 
     let lifetime = Lifetime()
 
@@ -43,12 +43,14 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         storage: FileStorage,
         database: Database,
         reachabilityManager: ReachabilityManager,
-        appCoordinator: AppCoordinator
+        appCoordinator: AppCoordinator,
+        overrideStorage: OverrideStorage
     ) {
         self.storage = storage
         self.database = database
         self.reachabilityManager = reachabilityManager
         self.appCoordinator = appCoordinator
+        self.overrideStorage = overrideStorage
         pendingLogDate = UserDefaults.standard.string(forKey: pendingLogDateKey)
     }
 

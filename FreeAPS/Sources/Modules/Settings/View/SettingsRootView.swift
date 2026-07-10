@@ -238,7 +238,7 @@ extension Settings {
         }
 
         private func clearEntity(entity: String) {
-            CoreDataStack.shared.deleteBatch(entity: entity)
+            state.deleteStoredData(entity: entity)
             clear(entity)
         }
 

@@ -12,7 +12,7 @@ actor OpenAPS: Sendable {
     private let appCoordinator: AppCoordinator
 
     private let coreDataStorage = CoreDataStorage()
-    private let overrideStorage = OverrideStorage()
+    private let overrideStorage: OverrideStorage
 
     private let scriptExecutor = WebViewScriptExecutor()
 
@@ -22,7 +22,8 @@ actor OpenAPS: Sendable {
         nightscout: NightscoutManager,
         pumpStorage: PumpHistoryStorage,
         settingsManager: SettingsManager,
-        appCoordinator: AppCoordinator
+        appCoordinator: AppCoordinator,
+        overrideStorage: OverrideStorage
     ) {
         self.storage = storage
         self.glucoseStorage = glucoseStorage
@@ -30,6 +31,7 @@ actor OpenAPS: Sendable {
         self.pumpStorage = pumpStorage
         self.settingsManager = settingsManager
         self.appCoordinator = appCoordinator
+        self.overrideStorage = overrideStorage
     }
 
     func determineBasal(

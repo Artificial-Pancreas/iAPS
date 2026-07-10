@@ -53,6 +53,9 @@ final class StorageAssembly: Assembly {
                 storage: storage
             )
         }
+        container.register(OverrideStorage.self) { r in
+            OverrideStorage(appCoordinator: r.resolve(AppCoordinator.self)!)
+        }
         container.register(SettingsManager.self) { r in
             let storage = r.resolve(FileStorage.self)!
             let appCoordinator = r.resolve(AppCoordinator.self)!

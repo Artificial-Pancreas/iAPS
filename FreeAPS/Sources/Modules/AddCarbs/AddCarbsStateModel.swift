@@ -8,9 +8,9 @@ extension AddCarbs {
         @Injected() var carbsStorage: CarbsStorage!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
+        @Injected() private var overrideStorage: OverrideStorage!
 
         private let coreDataStorage = CoreDataStorage()
-        private let overrideStorage = OverrideStorage()
 
         @Published var carbs: Decimal = 0
         @Published var date = Date()

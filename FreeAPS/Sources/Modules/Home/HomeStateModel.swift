@@ -17,7 +17,7 @@ extension Home {
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
-        private let overrideStorage = OverrideStorage()
+        @Injected() private var overrideStorage: OverrideStorage!
 
         private let timer = DispatchTimer(timeInterval: 5)
         let uiBindings = UIBindings()
@@ -56,6 +56,10 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistorySnapshot] = []
+        // preset of the active override (nil when the override is not an existing named preset)
+        @Published private(set) var overridePreset: OverridePresetsSnapshot?
+        // autoisf flag of the active override's Auto_ISF record (nil when no active override / no record)
+        @Published private(set) var overrideAutoISF: Bool?
         @Published var alwaysUseColors: Bool = false
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
@@ -236,6 +240,10 @@ extension Home {
             observeUI(appCoordinator.latestLoopOutcome) { me, loopOutcome in
                 guard let loopOutcome else { return }
                 await me.loopCompleted(loopOutcome)
+            }
+
+            observeUI(appCoordinator.overridesChanged, dropInitial: true) { me, _ in
+                await me.setupOverrideHistory()
             }
 
             subscribeSetting(\.hours, on: $hours) {
@@ -468,8 +476,23 @@ extension Home {
 
         private func setupOverrideHistory() async {
             overrideHistory = await provider.overrideHistory()
-            data.latestOverride = await provider.latestOverride()
+            let latestOverride = await provider.latestOverride()
+            data.latestOverride = latestOverride
             data.overrideHistory = overrideHistory
+
+            if let latestOverride, latestOverride.enabled, let id = latestOverride.id {
+                if latestOverride.isPreset {
+                    // a nameless preset counts as not found (mimics the old `name != ""` fetch predicate)
+                    let preset = await overrideStorage.fetchPreset(id: id)
+                    overridePreset = (preset?.name?.isEmpty ?? true) ? nil : preset
+                } else {
+                    overridePreset = nil
+                }
+                overrideAutoISF = await overrideStorage.fetchAutoISFsetting(id: id)?.autoisf
+            } else {
+                overridePreset = nil
+                overrideAutoISF = nil
+            }
         }
 
         private func setupLoopStatsBackground() {
@@ -734,12 +757,6 @@ extension Home.StateModel {
         await setupSuspensions()
         await setupAnnouncements()
         await setupActivity()
-    }
-
-    func reloadOverrideHistory() {
-        Task {
-            await setupOverrideHistory()
-        }
     }
 
     private func basalProfileUpdated(_ basalProfile: [BasalProfileEntry]) async {

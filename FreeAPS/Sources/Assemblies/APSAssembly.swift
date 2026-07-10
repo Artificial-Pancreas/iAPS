@@ -27,6 +27,7 @@ final class APSAssembly: Assembly {
                 pumpStorage: r.resolve(PumpHistoryStorage.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
+                overrideStorage: r.resolve(OverrideStorage.self)!,
             )
         }
         container.register(APSManager.self) { r in
@@ -41,7 +42,8 @@ final class APSAssembly: Assembly {
                 deviceDataManager: r.resolve(DeviceDataManager.self)!,
                 nightscout: r.resolve(NightscoutManager.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
-                openAPS: r.resolve(OpenAPS.self)!
+                openAPS: r.resolve(OpenAPS.self)!,
+                overrideStorage: r.resolve(OverrideStorage.self)!
             )
         }
         container.register(FetchTreatmentsManager.self) { r in

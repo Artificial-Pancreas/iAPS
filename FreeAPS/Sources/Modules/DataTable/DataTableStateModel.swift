@@ -11,8 +11,8 @@ extension DataTable {
         @Injected() private var carbsStorage: CarbsStorage!
         @Injected() private var tempTargetsStorage: TempTargetsStorage!
         @Injected() private var glucoseStorage: GlucoseStorage!
+        @Injected() private var overrideStorage: OverrideStorage!
 
-        private let overrideStorage = OverrideStorage()
         private let coreDataStorage = CoreDataStorage()
         private let totalDailyDose = TotalDailyDose()
         let uiBindings = UIBindings()

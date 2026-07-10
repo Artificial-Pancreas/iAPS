@@ -71,7 +71,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private let settingsManager: SettingsManager
     private let openAPS: OpenAPS
 
-    private let overrideStorage = OverrideStorage()
+    private let overrideStorage: OverrideStorage
 
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
@@ -107,7 +107,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         deviceDataManager: DeviceDataManager,
         nightscout: NightscoutManager,
         settingsManager: SettingsManager,
-        openAPS: OpenAPS
+        openAPS: OpenAPS,
+        overrideStorage: OverrideStorage
     ) {
         self.appCoordinator = appCoordinator
         self.storage = storage
@@ -120,6 +121,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         self.nightscout = nightscout
         self.settingsManager = settingsManager
         self.openAPS = openAPS
+        self.overrideStorage = overrideStorage
     }
 
     // this is called at the app start

@@ -24,7 +24,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     private let nightscout: NightscoutManager
     private let appCoordinator: AppCoordinator
 
-    private let overrideStorage = OverrideStorage()
+    private let overrideStorage: OverrideStorage
     private let coreDataStorage = CoreDataStorage()
 
     private var settings: FreeAPSSettings!
@@ -42,6 +42,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         garmin: GarminManager,
         nightscout: NightscoutManager,
         appCoordinator: AppCoordinator,
+        overrideStorage: OverrideStorage,
         session: WCSession = .default
     ) {
         self.settingsManager = settingsManager
@@ -52,6 +53,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.garmin = garmin
         self.nightscout = nightscout
         self.appCoordinator = appCoordinator
+        self.overrideStorage = overrideStorage
 
         self.session = session
         self.delegate = WatchSessionDelegate()

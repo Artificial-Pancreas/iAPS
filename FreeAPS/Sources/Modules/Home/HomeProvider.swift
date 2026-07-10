@@ -14,7 +14,7 @@ extension Home {
         private let carbsStorage: CarbsStorage
         private let announcementStorage: AnnouncementsStorage
 
-        let overrideStorage = OverrideStorage()
+        let overrideStorage: OverrideStorage
         let coreDateStorage = CoreDataStorage()
 
         required init(resolver: Resolver) {
@@ -26,6 +26,7 @@ extension Home {
             tempTargetsStorage = resolver.resolve(TempTargetsStorage.self)!
             carbsStorage = resolver.resolve(CarbsStorage.self)!
             announcementStorage = resolver.resolve(AnnouncementsStorage.self)!
+            overrideStorage = resolver.resolve(OverrideStorage.self)!
         }
 
         var dynamicVariables: DynamicVariables? {

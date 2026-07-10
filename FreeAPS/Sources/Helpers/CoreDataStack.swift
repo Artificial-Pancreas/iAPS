@@ -35,7 +35,7 @@ final class CoreDataStack: ObservableObject {
         persistentContainer.newBackgroundContext()
     }
 
-    func deleteBatch(entity: String) {
+    func deleteBatch(entity: String) async {
         let request = NSBatchDeleteRequest(
             fetchRequest: NSFetchRequest<NSFetchRequestResult>(
                 entityName: entity
@@ -43,7 +43,7 @@ final class CoreDataStack: ObservableObject {
         )
         request.resultType = .resultTypeObjectIDs
 
-        persistentContainer.performBackgroundTask { context in
+        await persistentContainer.performBackgroundTask { context in
             do {
                 debug(
                     .apsManager,

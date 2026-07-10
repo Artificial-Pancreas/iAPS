@@ -10,8 +10,8 @@ class BaseIntentsRequest: Injectable {
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var apsManager: APSManager!
     @Injected() var nightscoutManager: NightscoutManager!
+    @Injected() var overrideStorage: OverrideStorage!
 
-    let overrideStorage = OverrideStorage()
     let coreDataStorage = CoreDataStorage()
 
     let resolver: Resolver

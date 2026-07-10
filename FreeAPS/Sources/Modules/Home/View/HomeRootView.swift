@@ -1,5 +1,4 @@
 import Charts
-import CoreData
 import SpriteKit
 import SwiftDate
 import SwiftUI
@@ -31,40 +30,8 @@ extension Home {
 
         @Environment(AppUIState.self) private var appUIState
 
-        @Environment(\.managedObjectContext) var moc
         @Environment(\.sizeCategory) private var fontSize
         @Environment(\.colorScheme) var colorScheme
-
-        private static var latestOverrideFetchRequest: NSFetchRequest<Override> {
-            let request = Override.fetchRequest() as NSFetchRequest<Override>
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            request.fetchLimit = 1
-            return request
-        }
-
-        @FetchRequest(fetchRequest: latestOverrideFetchRequest) var fetchedPercent: FetchedResults<Override>
-
-        @FetchRequest(
-            entity: OverridePresets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
-                format: "name != %@", "" as String
-            )
-        ) var fetchedProfiles: FetchedResults<OverridePresets>
-
-        @FetchRequest(
-            entity: Auto_ISF.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var fetchedAISF: FetchedResults<Auto_ISF>
-
-        @FetchRequest(
-            entity: TempTargets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var sliderTTpresets: FetchedResults<TempTargets>
-
-        @FetchRequest(
-            entity: TempTargetsSlider.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
 
         private static let numberFormatter = {
             let formatter = NumberFormatter()
@@ -200,7 +167,7 @@ extension Home {
                 .padding(.leading, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                if let tempTargetString = tempTargetString, !(state.data.latestOverride?.enabled ?? false) {
                     Text(tempTargetString)
                         .font(.buttonFont)
                         .foregroundColor(.secondary)
@@ -254,7 +221,7 @@ extension Home {
             ZStack {
                 addHeaderBackground()
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
-                let isOverride = fetchedPercent.first?.enabled ?? false
+                let isOverride = state.data.latestOverride?.enabled ?? false
                 let isTarget = (state.tempTarget != nil)
                 VStack {
                     Divider()
@@ -587,11 +554,10 @@ extension Home {
 
         var profileView: some View {
             HStack(spacing: 0) {
-                if let override = fetchedPercent.first {
+                if let override = state.data.latestOverride {
                     if override.enabled {
                         if override.isPreset {
-                            let profile = fetchedProfiles.first(where: { $0.id == override.id })
-                            if let currentProfile = profile {
+                            if let currentProfile = state.overridePreset {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
@@ -1067,15 +1033,11 @@ extension Home {
         }
 
         private func enabled() -> Bool {
-            guard let or = fetchedPercent.first, or.enabled else { return false }
-            guard let aisf = fetchedAISF.first(where: { $0.id == or.id }) else { return false }
-            return aisf.autoisf
+            state.overrideAutoISF == true
         }
 
         private func disabled() -> Bool {
-            guard let or = fetchedPercent.first, or.enabled else { return false }
-            guard let aisf = fetchedAISF.first(where: { $0.id == or.id }) else { return false }
-            return !aisf.autoisf
+            state.overrideAutoISF == false
         }
 
         private var animateLoopView: Bool {
@@ -1179,9 +1141,6 @@ extension Home {
             .onAppear {
                 state.startTimer()
                 checkBuildExpiration()
-            }
-            .onChange(of: fetchedPercent.first?.changeKey) { _, _ in
-                state.reloadOverrideHistory()
             }
             .alert(
                 expirationAlertTitle,
@@ -1379,17 +1338,5 @@ private struct TempBasalView: View {
             )
         }
         return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
-    }
-}
-
-// only used in .onChange(of:) to detect active override changes - to reflect them on the chart immediately
-private struct ActiveOverrideKey: Equatable {
-    let id: NSManagedObjectID?
-    let enabled: Bool?
-}
-
-private extension Override {
-    var changeKey: ActiveOverrideKey {
-        .init(id: objectID, enabled: enabled)
     }
 }
