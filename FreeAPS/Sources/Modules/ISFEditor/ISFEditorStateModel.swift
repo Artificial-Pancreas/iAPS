@@ -2,9 +2,10 @@ import SwiftUI
 import Swinject
 
 extension ISFEditor {
-    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
+    final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
         @Injected() private var storage: FileStorage!
         private let coreDataStorage = CoreDataStorage()
+        let uiBindings = UIBindings()
 
         @Published var items: [Item] = []
         private(set) var autosensISF: Decimal?
@@ -62,7 +63,7 @@ extension ISFEditor {
 
             autosensRatio = autosens.ratio
 
-            observe(appCoordinator.suggested) { me, suggestion in
+            observeUI(appCoordinator.suggested) { me, suggestion in
                 await me.suggestionUpdated(suggestion)
             }
         }

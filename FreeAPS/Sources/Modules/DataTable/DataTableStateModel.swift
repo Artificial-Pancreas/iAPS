@@ -2,7 +2,7 @@ import CoreData
 import SwiftUI
 
 extension DataTable {
-    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
+    final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
         @Injected() var carbStorage: CarbsStorage!
@@ -15,6 +15,7 @@ extension DataTable {
         private let overrideStorage = OverrideStorage()
         private let coreDataStorage = CoreDataStorage()
         private let totalDailyDose = TotalDailyDose()
+        let uiBindings = UIBindings()
 
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
@@ -43,25 +44,25 @@ extension DataTable {
             await setupTreatments()
             await setupGlucose()
 
-            observe(appCoordinator.settings.dropFirst()) { me, _ in
+            observeUI(appCoordinator.settings, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.preferences.dropFirst()) { me, _ in
+            observeUI(appCoordinator.preferences, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.pumpSettings.dropFirst()) { me, _ in
+            observeUI(appCoordinator.pumpSettings, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.pumpHistory.dropFirst()) { me, _ in
+            observeUI(appCoordinator.pumpHistory, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.tempTargets.dropFirst()) { me, _ in
+            observeUI(appCoordinator.tempTargets, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.carbHistory.dropFirst()) { me, _ in
+            observeUI(appCoordinator.carbHistory, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
+            observeUI(appCoordinator.glucoseHistory, dropInitial: true) { me, _ in
                 await me.setupGlucose()
             }
         }

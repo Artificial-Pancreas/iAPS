@@ -2,11 +2,12 @@ import LoopKit
 import SwiftUI
 
 extension BasalProfileEditor {
-    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
+    final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
         @Injected() private var storage: FileStorage!
         @Injected() private var deviceManager: DeviceDataManager!
 
         private let coreDataStorage = CoreDataStorage()
+        let uiBindings = UIBindings()
 
         @Published var syncInProgress = false
         @Published var items: [Item] = []
@@ -34,7 +35,7 @@ extension BasalProfileEditor {
             await updateSupportedBasalRates(appCoordinator.pumpStatus.value)
             calcTotal()
             allowDilution = await settingsManager.settings.allowDilution
-            observe(appCoordinator.pumpStatus) { me, pumpStatus in
+            observeUI(appCoordinator.pumpStatus) { me, pumpStatus in
                 await me.updateSupportedBasalRates(pumpStatus)
             }
         }

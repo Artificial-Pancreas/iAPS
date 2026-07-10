@@ -19,7 +19,7 @@ extension Bundle {
         return Date()
     }
 
-    var profileExpiration: String? {
+    private static let cachedProfileExpiration: String? = {
         guard
             let profilePath = Bundle.main.path(forResource: "embedded", ofType: "mobileprovision"),
             let profileData = try? Data(contentsOf: URL(fileURLWithPath: profilePath)),
@@ -57,5 +57,9 @@ extension Bundle {
             return nil
         }
         return String(dateWithTimeAsString[..<dateAsStringIndex])
+    }()
+
+    var profileExpiration: String? {
+        Self.cachedProfileExpiration
     }
 }

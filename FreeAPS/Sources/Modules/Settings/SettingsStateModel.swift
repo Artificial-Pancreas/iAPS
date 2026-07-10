@@ -2,76 +2,44 @@ import CoreData
 import SwiftUI
 
 extension Settings {
-    final class StateModel: BaseStateModel<Provider>, LifetimeOwner {
+    final class StateModel: BaseStateModel<Provider> {
         @Injected() private var fileManager: FileManager!
         @Injected() private var profileAndSettingsUploadManager: ProfileAndSettingsUploadManager!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var databaseManager: DatabaseManager!
 
-        @Published var closedLoop = false
-        @Published var debugOptions = false
-        @Published var profileID: String = "Hypo Treatment"
-        @Published var allowDilution = false
-        @Published var extended_overrides = false
-        @Published var noCarbs = false
-        @Published var allowOneMinuteLoop = false
-        @Published var allowOneMinuteGlucose = false
+        @Setting(\.closedLoop) var closedLoop = false
+        @Setting(\.debugOptions) var debugOptions = false
+        @Setting(\.profileID) var profileID: String = "Hypo Treatment"
+        @Setting(\.allowDilution) var allowDilution = false
+        @Setting(\.extended_overrides) var extended_overrides = false
+        @Setting(\.noCarbs) var noCarbs = false
+        @Setting(\.allowOneMinuteLoop) var allowOneMinuteLoop = false
+        @Setting(\.allowOneMinuteGlucose) var allowOneMinuteGlucose = false
+
         @Published var entities: [Cleared] = CoreDataStack.shared.persistentContainer.managedObjectModel.entities
             .compactMap(\.name).map {
                 Cleared(entity: $0, deleted: false)
             }
 
-        private(set) var buildNumber = ""
-        private(set) var versionNumber = ""
-        private(set) var branch = ""
-        private(set) var copyrightNotice = ""
+        private(set) var buildNumber = Bundle.main.buildVersionNumber ?? "Unknown"
+        private(set) var versionNumber = Bundle.main.releaseVersionNumber ?? "Unknown"
+        private(set) var branch = StateModel.readBranch()
+        private(set) var copyrightNotice = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
 
-        override func subscribe() async {
-            subscribeSetting(\.debugOptions, on: $debugOptions) { self.debugOptions = $0 }
-            subscribeSetting(\.closedLoop, on: $closedLoop) { self.closedLoop = $0 }
-            subscribeSetting(\.profileID, on: $profileID) { self.profileID = $0 }
-            subscribeSetting(\.allowDilution, on: $allowDilution) { self.allowDilution = $0 }
-            subscribeSetting(\.extended_overrides, on: $extended_overrides) { self.extended_overrides = $0 }
-            subscribeSetting(\.noCarbs, on: $noCarbs) { self.noCarbs = $0 }
-            subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { self.allowOneMinuteLoop = $0 }
-            subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { self.allowOneMinuteGlucose = $0 }
+        override func subscribe() async {}
 
-            // TODO: use AppUIState instead
-            observe(appCoordinator.settings) { me, settings in
-                await me.settingsUpdated(settings)
-            }
-
-            buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-            versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-
-            // Read branch information from the branch.txt instead of infoDictionary
-            if let branchFileURL = Bundle.main.url(forResource: "branch", withExtension: "txt"),
-               let branchFileContent = try? String(contentsOf: branchFileURL)
-            {
-                let lines = branchFileContent.components(separatedBy: .newlines)
-                for line in lines {
-                    let components = line.components(separatedBy: "=")
-                    if components.count == 2 {
-                        let key = components[0].trimmingCharacters(in: .whitespaces)
-                        let value = components[1].trimmingCharacters(in: .whitespaces)
-
-                        if key == "BRANCH" {
-                            branch = value
-                            break
-                        }
-                    }
+        private static func readBranch() -> String {
+            guard let url = Bundle.main.url(forResource: "branch", withExtension: "txt"),
+                  let content = try? String(contentsOf: url)
+            else { return "Unknown" }
+            for line in content.components(separatedBy: .newlines) {
+                let components = line.components(separatedBy: "=")
+                if components.count == 2, components[0].trimmingCharacters(in: .whitespaces) == "BRANCH" {
+                    return components[1].trimmingCharacters(in: .whitespaces)
                 }
-            } else {
-                branch = "Unknown"
             }
-
-            copyrightNotice = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
-        }
-
-        private func settingsUpdated(_ settings: FreeAPSSettings) {
-            closedLoop = settings.closedLoop
-            debugOptions = settings.debugOptions
-            allowDilution = settings.allowDilution
+            return "Unknown"
         }
 
         func logItems() -> [URL] {
