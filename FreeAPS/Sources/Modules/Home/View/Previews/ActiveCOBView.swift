@@ -2,7 +2,7 @@ import Charts
 import SwiftUI
 
 struct ActiveCOBView: View {
-    @Binding var data: [IOBData]
+    let data: [IOBData]
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()

@@ -56,6 +56,7 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistorySnapshot] = []
+        @Published private(set) var latestOverride: OverrideSnapshot?
         // preset of the active override (nil when the override is not an existing named preset)
         @Published private(set) var overridePreset: OverridePresetsSnapshot?
         // autoisf flag of the active override's Auto_ISF record (nil when no active override / no record)
@@ -105,7 +106,6 @@ extension Home {
             basalProfile: [],
             tempTargets: [],
             carbs: [],
-            timerDate: Date(),
             units: .mmolL,
             smooth: false,
             highGlucose: 200,
@@ -122,7 +122,6 @@ extension Home {
             maxBolusValue: 1,
             maxCarbsValue: 1,
             maxIOB: 0,
-            maxCOB: 1,
             useInsulinBars: true,
             screenHours: 6,
             fpus: true,
@@ -136,7 +135,6 @@ extension Home {
             insulinActivityLabels: true,
             yGridLabels: true,
             showPredictionsLegend: true,
-            iob: nil,
             hidePredictions: false,
             useCarbBars: false
         )
@@ -205,10 +203,6 @@ extension Home {
                 await me.suggestionDidUpdate(suggestion)
             }
 
-            observeUI(appCoordinator.iobTicks, map: { $0?.first }) { me, iob in
-                await me.currentIobUpdated(iob)
-            }
-
             observeUI(appCoordinator.settings) { me, settings in
                 await me.settingsUpdated(settings)
             }
@@ -254,7 +248,6 @@ extension Home {
 
             timer.eventHandler = {
                 Task { @MainActor [weak self] in
-                    self?.data.timerDate = Date()
                     await self?.setupCurrentTempTarget()
                 }
             }
@@ -477,6 +470,7 @@ extension Home {
         private func setupOverrideHistory() async {
             overrideHistory = await provider.overrideHistory()
             let latestOverride = await provider.latestOverride()
+            self.latestOverride = latestOverride
             data.latestOverride = latestOverride
             data.overrideHistory = overrideHistory
 
@@ -555,11 +549,10 @@ extension Home {
         }
 
         private func setupCurrentTempTarget() async {
-            tempTarget = await provider.tempTarget()
-        }
-
-        private func currentIobUpdated(_ iob: IOBEntry?) async {
-            data.iob = iob?.iob
+            let current = await provider.tempTarget()
+            if tempTarget != current {
+                tempTarget = current
+            }
         }
 
         private func setupData() async {
@@ -679,7 +672,6 @@ extension Home.StateModel {
 
     private func suggestionDidUpdate(_ suggestion: Suggestion?) async {
         data.suggestion = suggestion
-        data.iob = suggestion?.iob
         carbsRequired = suggestion?.carbsReq
         setStatusTitle()
         await setupOverrideHistory()
@@ -745,7 +737,6 @@ extension Home.StateModel {
         maxIOB = preferences.maxIOB
         maxCOB = preferences.maxCOB
         data.maxIOB = preferences.maxIOB
-        data.maxCOB = preferences.maxCOB
         data.insulinPeak = preferences.useCustomPeakTime ? preferences.insulinPeakTime :
             (preferences.curve == .ultraRapid ? 55 : 75)
     }

@@ -92,19 +92,22 @@ extension Home {
         }
 
         var glucoseView: some View {
-            CurrentGlucoseView(
-                recentGlucose: $state.recentGlucose,
-                delta: $state.glucoseDelta,
-                units: $state.data.units,
-                lowGlucose: $state.data.lowGlucose,
-                highGlucose: $state.data.highGlucose,
-                alwaysUseColors: $state.alwaysUseColors,
-                displayDelta: $state.displayDelta,
-                scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
-                displayExpiration: $state.displayExpiration,
-                sensordays: $state.sensorDays,
-                timerDate: $state.data.timerDate
-            )
+            // TimelineView scopes the periodic tick to this subview instead of re-rendering the whole RootView
+            TimelineView(.periodic(from: .now, by: 5)) { context in
+                CurrentGlucoseView(
+                    recentGlucose: state.recentGlucose,
+                    delta: state.glucoseDelta,
+                    units: state.data.units,
+                    lowGlucose: state.data.lowGlucose,
+                    highGlucose: state.data.highGlucose,
+                    alwaysUseColors: state.alwaysUseColors,
+                    displayDelta: state.displayDelta,
+                    scrolling: displayGlucose, displaySAGE: state.displaySAGE,
+                    displayExpiration: state.displayExpiration,
+                    sensordays: state.sensorDays,
+                    timerDate: context.date
+                )
+            }
             .onTapGesture {
                 if appUIState.glucoseAlarm == nil {
                     state.openCGM()
@@ -124,10 +127,12 @@ extension Home {
         }
 
         var pumpView: some View {
-            PumpView(
-                hideInsulinBadge: state.settings?.hideInsulinBadge == true,
-                timerDate: state.data.timerDate
-            )
+            TimelineView(.periodic(from: .now, by: 5)) { context in
+                PumpView(
+                    hideInsulinBadge: state.settings?.hideInsulinBadge == true,
+                    timerDate: context.date
+                )
+            }
             .onTapGesture {
                 if appUIState.pumpInfo != nil {
                     state.setupPump = true
@@ -137,12 +142,14 @@ extension Home {
         }
 
         var loopView: some View {
-            LoopView(
-                suggestion: state.data.suggestion,
-                enactedSuggestion: state.enactedSuggestion,
-                closedLoop: state.closedLoop,
-                timerDate: state.data.timerDate,
-            )
+            TimelineView(.periodic(from: .now, by: 5)) { context in
+                LoopView(
+                    suggestion: state.data.suggestion,
+                    enactedSuggestion: state.enactedSuggestion,
+                    closedLoop: state.closedLoop,
+                    timerDate: context.date,
+                )
+            }
             .onTapGesture {
                 state.isStatusPopupPresented.toggle()
             }.onLongPressGesture {
@@ -167,7 +174,7 @@ extension Home {
                 .padding(.leading, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                if let tempTargetString = tempTargetString, !(state.data.latestOverride?.enabled ?? false) {
+                if let tempTargetString = tempTargetString, !(state.latestOverride?.enabled ?? false) {
                     Text(tempTargetString)
                         .font(.buttonFont)
                         .foregroundColor(.secondary)
@@ -221,7 +228,7 @@ extension Home {
             ZStack {
                 addHeaderBackground()
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
-                let isOverride = state.data.latestOverride?.enabled ?? false
+                let isOverride = state.latestOverride?.enabled ?? false
                 let isTarget = (state.tempTarget != nil)
                 VStack {
                     Divider()
@@ -384,7 +391,7 @@ extension Home {
                 let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
                 // Carbs on Board
                 HStack {
-                    let substance = Double(state.data.suggestion?.cob ?? 0)
+                    let substance = Double(appUIState.latestCOB ?? 0)
                     let max = max(Double(state.maxCOB), 1)
                     let fraction: Double = 1 - (substance / max)
                     let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1))
@@ -397,7 +404,7 @@ extension Home {
                     .frame(width: 12, height: 38)
                     .offset(y: -5)
                     HStack(spacing: 0) {
-                        if let loop = state.data.suggestion, let cob = loop.cob {
+                        if let cob = appUIState.latestCOB {
                             Text(Self.numberFormatter.string(from: cob as NSNumber) ?? "0")
                                 .font(.statusFont).bold()
                             // Display last loop, unless very old
@@ -412,7 +419,7 @@ extension Home {
 
                 // Insulin on Board
                 HStack {
-                    let substance = Double(state.data.iob ?? 0)
+                    let substance = Double(appUIState.latestIOB ?? 0)
                     let max = max(Double(state.maxIOB), 1)
                     let fraction: Double = 1 - abs(substance) / max
                     let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
@@ -425,7 +432,7 @@ extension Home {
                     .frame(width: 12, height: 38)
                     .offset(y: -5)
                     HStack(spacing: 0) {
-                        if let iob = state.data.iob {
+                        if let iob = appUIState.latestIOB {
                             Text(
                                 Self.iobFormatter.string(from: iob as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
@@ -443,9 +450,9 @@ extension Home {
                 .frame(minHeight: 200)
                 .overlay {
                     PreviewChart(
-                        readings: $state.readings,
-                        lowLimit: $state.data.lowGlucose,
-                        highLimit: $state.data.highGlucose
+                        readings: state.readings,
+                        lowLimit: state.data.lowGlucose,
+                        highLimit: state.data.highGlucose
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -481,7 +488,7 @@ extension Home {
                 .frame(minHeight: 190)
                 .overlay {
                     ActiveIOBView(
-                        data: $state.iobData,
+                        data: state.iobData,
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -493,7 +500,7 @@ extension Home {
             addBackground()
                 .frame(minHeight: 190)
                 .overlay {
-                    ActiveCOBView(data: $state.iobData)
+                    ActiveCOBView(data: state.iobData)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -505,13 +512,13 @@ extension Home {
                 .frame(minHeight: 280)
                 .overlay {
                     InsulinSummaryView(
-                        neg: $state.neg,
-                        tddChange: $state.tddChange,
-                        tddAverage: $state.tddAverage,
-                        tddYesterday: $state.tddYesterday,
-                        tdd2DaysAgo: $state.tdd2DaysAgo,
-                        tdd3DaysAgo: $state.tdd3DaysAgo,
-                        tddActualAverage: $state.tddActualAverage
+                        neg: state.neg,
+                        tddChange: state.tddChange,
+                        tddAverage: state.tddAverage,
+                        tddYesterday: state.tddYesterday,
+                        tdd2DaysAgo: state.tdd2DaysAgo,
+                        tdd3DaysAgo: state.tdd3DaysAgo,
+                        tddActualAverage: state.tddActualAverage
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -535,7 +542,7 @@ extension Home {
             addBackground()
                 .frame(minHeight: 160)
                 .overlay {
-                    LoopsView(loopStatistics: $state.loopStatistics)
+                    LoopsView(loopStatistics: state.loopStatistics)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -554,7 +561,7 @@ extension Home {
 
         var profileView: some View {
             HStack(spacing: 0) {
-                if let override = state.data.latestOverride {
+                if let override = state.latestOverride {
                     if override.enabled {
                         if override.isPreset {
                             if let currentProfile = state.overridePreset {

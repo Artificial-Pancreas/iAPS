@@ -1,18 +1,18 @@
 import SwiftUI
 
 struct CurrentGlucoseView: View {
-    @Binding var recentGlucose: BloodGlucose?
-    @Binding var delta: Int?
-    @Binding var units: GlucoseUnits
-    @Binding var lowGlucose: Decimal
-    @Binding var highGlucose: Decimal
-    @Binding var alwaysUseColors: Bool
-    @Binding var displayDelta: Bool
-    @Binding var scrolling: Bool
-    @Binding var displaySAGE: Bool
-    @Binding var displayExpiration: Bool
-    @Binding var sensordays: Double
-    @Binding var timerDate: Date
+    let recentGlucose: BloodGlucose?
+    let delta: Int?
+    let units: GlucoseUnits
+    let lowGlucose: Decimal
+    let highGlucose: Decimal
+    let alwaysUseColors: Bool
+    let displayDelta: Bool
+    let scrolling: Bool
+    let displaySAGE: Bool
+    let displayExpiration: Bool
+    let sensordays: Double
+    let timerDate: Date
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize

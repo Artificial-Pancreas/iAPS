@@ -2,9 +2,9 @@ import Charts
 import SwiftUI
 
 struct PreviewChart: View {
-    @Binding var readings: [ReadingsSnapshot]
-    @Binding var lowLimit: Decimal
-    @Binding var highLimit: Decimal
+    let readings: [ReadingsSnapshot]
+    let lowLimit: Decimal
+    let highLimit: Decimal
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
