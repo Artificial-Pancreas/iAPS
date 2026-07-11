@@ -13,7 +13,6 @@ protocol HomeProvider: Provider {
     func basalProfile() async -> [BasalProfileEntry]
     func tempTargets(hours: Int) async -> [TempTarget]
     func carbs(hours: Int) async -> [CarbsEntry]
-    func tempTarget() async -> TempTarget?
     func announcement(_ hours: Int) async -> [Announcement]
     func overrides() async -> [OverrideSnapshot]
 }

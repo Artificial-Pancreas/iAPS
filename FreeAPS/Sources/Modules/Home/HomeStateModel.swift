@@ -19,7 +19,6 @@ extension Home {
         private let coreDataStorage = CoreDataStorage()
         @Injected() private var overrideStorage: OverrideStorage!
 
-        private let timer = DispatchTimer(timeInterval: 5)
         let uiBindings = UIBindings()
         private(set) var filteredHours = 24
 
@@ -139,16 +138,6 @@ extension Home {
             useCarbBars: false
         )
 
-        func startTimer() {
-            guard UIApplication.shared.applicationState != .background else { return }
-            timer.fire()
-            timer.resume()
-        }
-
-        func stopTimer() {
-            timer.suspend()
-        }
-
         override func subscribe() async {
             let fetchedSettings = await settingsManager.settings
             settings = fetchedSettings
@@ -185,7 +174,7 @@ extension Home {
             carbsRequired = data.suggestion?.carbsReq
 
             setStatusTitle()
-            await setupCurrentTempTarget()
+            refreshCurrentTempTarget()
 
             await setupOverrideHistory()
             await setupData()
@@ -246,17 +235,8 @@ extension Home {
                 self.data.screenHours = value
             }
 
-            timer.eventHandler = {
-                Task { @MainActor [weak self] in
-                    await self?.setupCurrentTempTarget()
-                }
-            }
-
-            observe(notification: UIApplication.didEnterBackgroundNotification) { me in
-                await me.stopTimer()
-            }
             observe(notification: UIApplication.didBecomeActiveNotification) { me in
-                await me.startTimer()
+                await me.refreshCurrentTempTarget()
             }
 
             observeUI(appCoordinator.pumpStatus) { me, pumpStatus in
@@ -548,10 +528,33 @@ extension Home {
             eventualBG = suggestion.eventualBG
         }
 
-        private func setupCurrentTempTarget() async {
-            let current = await provider.tempTarget()
+        private var tempTargetBoundaryTask: Task<Void, Never>?
+
+        func refreshCurrentTempTarget() {
+            updateCurrentTempTarget(appCoordinator.tempTargets.value)
+        }
+
+        /// update the active temp target
+        /// schedule an update on temp target activation/expiry
+        private func updateCurrentTempTarget(_ tempTargets: [TempTarget]) {
+            tempTargetBoundaryTask?.cancel()
+            tempTargetBoundaryTask = nil
+
+            let now = Date()
+            let last = tempTargets.last
+            let current = last.flatMap { $0.isActive(at: now) ? $0 : nil }
             if tempTarget != current {
                 tempTarget = current
+            }
+
+            guard let last, last.duration != 0 else { return }
+            let boundary = now < last.createdAt ? last.createdAt : last.endDate
+            guard boundary > now else { return }
+
+            tempTargetBoundaryTask = Task { [weak self] in
+                try? await Task.sleep(for: .seconds(boundary.timeIntervalSinceNow))
+                guard !Task.isCancelled else { return }
+                self?.refreshCurrentTempTarget()
             }
         }
 
@@ -756,9 +759,10 @@ extension Home.StateModel {
 
     private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
         let now = Date()
-        data.tempTargets = tempTargets.filter { // TODO: this filter is duplicated in the provider
+        data.tempTargets = tempTargets.filter {
             $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
         }
+        updateCurrentTempTarget(tempTargets)
     }
 
     private func carbsUpdated(_: [CarbsEntry]) async {

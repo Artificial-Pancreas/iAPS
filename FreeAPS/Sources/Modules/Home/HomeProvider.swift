@@ -104,10 +104,6 @@ extension Home {
             }
         }
 
-        func tempTarget() async -> TempTarget? {
-            await tempTargetsStorage.current()
-        }
-
         func carbs(hours: Int) async -> [CarbsEntry] {
             let now = Date()
             return await carbsStorage.recent().filter {

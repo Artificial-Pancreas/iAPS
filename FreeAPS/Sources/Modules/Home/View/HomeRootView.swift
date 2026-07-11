@@ -1133,20 +1133,12 @@ extension Home {
                     )
                 }
                 .onChange(of: scenePhase) {
-                    switch scenePhase {
-                    case .active:
-                        state.startTimer()
+                    if scenePhase == .active {
                         checkBuildExpiration()
-                    case .background,
-                         .inactive:
-                        state.stopTimer()
-                    default:
-                        break
                     }
                 }
             }
             .onAppear {
-                state.startTimer()
                 checkBuildExpiration()
             }
             .alert(

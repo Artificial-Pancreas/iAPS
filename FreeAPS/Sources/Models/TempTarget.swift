@@ -1,4 +1,5 @@
 import Foundation
+import SwiftDate
 
 struct TempTarget: JSON, Identifiable, Equatable, Hashable {
     var id = UUID().uuidString
@@ -36,6 +37,17 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
             enteredBy: TempTarget.manual,
             reason: TempTarget.cancel
         )
+    }
+}
+
+extension TempTarget {
+    var endDate: Date {
+        createdAt.addingTimeInterval(Int(duration).minutes.timeInterval)
+    }
+
+    /// a cancel record (duration == 0) is never active
+    func isActive(at date: Date) -> Bool {
+        duration != 0 && createdAt <= date && date < endDate
     }
 }
 

@@ -68,16 +68,9 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
     }
 
     func current() async -> TempTarget? {
-        guard let last = await recent().last else {
+        guard let last = await recent().last, last.isActive(at: Date()) else {
             return nil
         }
-
-        guard last.createdAt.addingTimeInterval(Int(last.duration).minutes.timeInterval) > Date(), last.createdAt <= Date(),
-              last.duration != 0
-        else {
-            return nil
-        }
-
         return last
     }
 
