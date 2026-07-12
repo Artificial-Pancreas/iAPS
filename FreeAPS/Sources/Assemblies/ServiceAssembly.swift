@@ -35,7 +35,8 @@ final class ServiceAssembly: Assembly {
             return BaseHealthKitManager(
                 healthKitStore: healthKitStore,
                 settingsManager: settingsManager,
-                appCoordinator: appCoordinator
+                appCoordinator: appCoordinator,
+                storage: r.resolve(FileStorage.self)!
             )
         }
         container.register(UserNotificationsManager.self) { r in

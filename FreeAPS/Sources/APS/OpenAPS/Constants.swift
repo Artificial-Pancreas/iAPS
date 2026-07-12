@@ -108,6 +108,12 @@ extension OpenAPS {
         static let uploadedOverridePresets = "upload/uploaded-override-presets.json"
     }
 
+    enum HealthKit {
+        static let syncedGlucose = "healthkit/synced-glucose.json"
+        static let syncedCarbs = "healthkit/synced-carbs.json"
+        static let syncedInsulin = "healthkit/synced-insulin.json"
+    }
+
     enum FreeAPS {
         static let settings = "freeaps/freeaps_settings.json"
         static let announcements = "freeaps/announcements.json"

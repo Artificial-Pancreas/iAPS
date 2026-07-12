@@ -27,6 +27,19 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(createdAt)
     }
+
+    private static let localSources: Set<String> = [manual, watch, remote, shortcut]
+
+    var isLocallyEntered: Bool {
+        guard let enteredBy else { return false }
+        return Self.localSources.contains(enteredBy)
+    }
+
+    var isSyncableMeal: Bool {
+        isFPU != true
+            && isLocallyEntered
+            && (carbs > 0 || (fat ?? 0) > 0 || (protein ?? 0) > 0)
+    }
 }
 
 extension CarbsEntry {

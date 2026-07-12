@@ -169,10 +169,7 @@ enum NightscoutConversions {
 
     /// returns events converted to nightscout format, newest -> oldest
     static func treatments(fromCarbHistory events: [CarbsEntry]) -> [NigtscoutTreatment] {
-        let eventsManual = events
-            .filter {
-                ($0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote || $0.enteredBy == CarbsEntry.shortcut) &&
-                    $0.carbs > 0 && $0.isFPU != true }
+        let eventsManual = events.filter(\.isSyncableMeal)
         let treatments = eventsManual.map {
             NigtscoutTreatment(
                 duration: nil,

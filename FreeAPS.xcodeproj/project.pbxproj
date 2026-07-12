@@ -415,7 +415,6 @@
 		E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00EEC0227368630002FF094 /* NetworkAssembly.swift */; };
 		E06B911A275B5EEA003C04B6 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B9119275B5EEA003C04B6 /* Array+Extension.swift */; };
 		E0CC2C5C275B9F0F00A7BC71 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CC2C5B275B9DAE00A7BC71 /* HealthKit.framework */; };
-		E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D4F80427513ECF00BDF1FE /* HealthKitSample.swift */; };
 		E13B7DAB2A435F57066AF02E /* TargetsEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F58DDD71F0E795464FA3F0 /* TargetsEditorStateModel.swift */; };
 		E25073BC86C11C3D6A42F5AC /* CalibrationsStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DFCE895C930F784EF11843 /* CalibrationsStateModel.swift */; };
 		E39E418C56A5A46B61D960EE /* ConfigEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B4F8B4194BB7E260EF251 /* ConfigEditorStateModel.swift */; };
@@ -539,6 +538,10 @@
 		F2DE0B923004142B00EF9230 /* NightscoutStatusUploaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B8C3004142B00EF9230 /* NightscoutStatusUploaders.swift */; };
 		F2DE0B933004142B00EF9230 /* NightscoutConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B8B3004142B00EF9230 /* NightscoutConversions.swift */; };
 		F2DE0B943004142B00EF9230 /* NightscoutUploads.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B8E3004142B00EF9230 /* NightscoutUploads.swift */; };
+		F2DE0B9630042E7D00EF9230 /* ProtectedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B9530042E7D00EF9230 /* ProtectedData.swift */; };
+		F2DE0B9A30044AF700EF9230 /* HealthKitRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B9830044AF700EF9230 /* HealthKitRecords.swift */; };
+		F2DE0B9B30044AF700EF9230 /* HealthKitSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B9930044AF700EF9230 /* HealthKitSink.swift */; };
+		F2DE0B9C30044AF700EF9230 /* HealthKitCollectionSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B9730044AF700EF9230 /* HealthKitCollectionSync.swift */; };
 		F2E8D1492F0960820097F482 /* FoodItemBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1482F0960820097F482 /* FoodItemBadges.swift */; };
 		F2E8D14D2F09616A0097F482 /* TimePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D14C2F09616A0097F482 /* TimePickerSheet.swift */; };
 		F2E8D1512F0961CC0097F482 /* FoodTagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E8D1502F0961CC0097F482 /* FoodTagCloudView.swift */; };
@@ -1162,7 +1165,6 @@
 		E00EEC0227368630002FF094 /* NetworkAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAssembly.swift; sourceTree = "<group>"; };
 		E06B9119275B5EEA003C04B6 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		E0CC2C5B275B9DAE00A7BC71 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		E0D4F80427513ECF00BDF1FE /* HealthKitSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitSample.swift; sourceTree = "<group>"; };
 		E26904AACA8D9C15D229D675 /* SnoozeStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnoozeStateModel.swift; sourceTree = "<group>"; };
 		E625985B47742D498CB1681A /* NotificationsConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationsConfigProvider.swift; sourceTree = "<group>"; };
 		E9AAB83FB6C3B41EFD1846A0 /* AddTempTargetRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetRootView.swift; sourceTree = "<group>"; };
@@ -1282,6 +1284,10 @@
 		F2DE0B8C3004142B00EF9230 /* NightscoutStatusUploaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutStatusUploaders.swift; sourceTree = "<group>"; };
 		F2DE0B8D3004142B00EF9230 /* NightscoutUploadContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutUploadContext.swift; sourceTree = "<group>"; };
 		F2DE0B8E3004142B00EF9230 /* NightscoutUploads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutUploads.swift; sourceTree = "<group>"; };
+		F2DE0B9530042E7D00EF9230 /* ProtectedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectedData.swift; sourceTree = "<group>"; };
+		F2DE0B9730044AF700EF9230 /* HealthKitCollectionSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitCollectionSync.swift; sourceTree = "<group>"; };
+		F2DE0B9830044AF700EF9230 /* HealthKitRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitRecords.swift; sourceTree = "<group>"; };
+		F2DE0B9930044AF700EF9230 /* HealthKitSink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitSink.swift; sourceTree = "<group>"; };
 		F2E8D1482F0960820097F482 /* FoodItemBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemBadges.swift; sourceTree = "<group>"; };
 		F2E8D14C2F09616A0097F482 /* TimePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerSheet.swift; sourceTree = "<group>"; };
 		F2E8D1502F0961CC0097F482 /* FoodTagCloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTagCloudView.swift; sourceTree = "<group>"; };
@@ -2231,7 +2237,6 @@
 				F2159A512BA60F7A00A0B716 /* FontWeight.swift */,
 				38AEE73C25F0200C0013F05B /* FreeAPSSettings.swift */,
 				383948D925CD64D500E91849 /* Glucose.swift */,
-				E0D4F80427513ECF00BDF1FE /* HealthKitSample.swift */,
 				1967DFBD29D052C200759F30 /* Icons.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
 				38887CCD25F5725200944304 /* IOBEntry.swift */,
@@ -2304,6 +2309,7 @@
 				F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */,
 				F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */,
 				F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */,
+				F2DE0B9530042E7D00EF9230 /* ProtectedData.swift */,
 				F22A7A7E2FF167080019BDC5 /* DataSync */,
 			);
 			path = Helpers;
@@ -3204,6 +3210,9 @@
 		F90692A8274B7A980037068D /* HealthKit */ = {
 			isa = PBXGroup;
 			children = (
+				F2DE0B9730044AF700EF9230 /* HealthKitCollectionSync.swift */,
+				F2DE0B9830044AF700EF9230 /* HealthKitRecords.swift */,
+				F2DE0B9930044AF700EF9230 /* HealthKitSink.swift */,
 				F90692A9274B7AAE0037068D /* HealthKitManager.swift */,
 			);
 			path = HealthKit;
@@ -3507,6 +3516,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */,
+				F2DE0B9A30044AF700EF9230 /* HealthKitRecords.swift in Sources */,
+				F2DE0B9B30044AF700EF9230 /* HealthKitSink.swift in Sources */,
+				F2DE0B9C30044AF700EF9230 /* HealthKitCollectionSync.swift in Sources */,
 				F2E8D14D2F09616A0097F482 /* TimePickerSheet.swift in Sources */,
 				3811DEEB25CA063400A708ED /* Persisted.swift in Sources */,
 				F21580A52E47B4FF003BC827 /* PeakPicker.swift in Sources */,
@@ -3522,6 +3534,7 @@
 				38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */,
 				F2C73D682EB8022C00B700AB /* CalculatedGeometries.swift in Sources */,
 				38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */,
+				F2DE0B9630042E7D00EF9230 /* ProtectedData.swift in Sources */,
 				F25D828A2F61A880007AE22C /* AIStatisticsView.swift in Sources */,
 				F25D82852F619748007AE22C /* Routes.swift in Sources */,
 				19F191E22BE4F9BA00F6297E /* SharingRootView.swift in Sources */,
@@ -3899,7 +3912,6 @@
 				5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */,
 				BD2FF1A02AE29D43005D1C5D /* CheckboxToggleStyle.swift in Sources */,
 				19F4B6212F86601C00894A92 /* MicroNutrientValue.swift in Sources */,
-				E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */,
 				F22A7A842FF287B20019BDC5 /* NightscoutGlucoseSync.swift in Sources */,
 				190E311E2EE8313E00C4D70A /* MealMode.swift in Sources */,
 				919DBD08F13BAFB180DF6F47 /* AddTempTargetStateModel.swift in Sources */,
