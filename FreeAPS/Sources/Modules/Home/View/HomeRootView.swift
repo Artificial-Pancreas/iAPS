@@ -92,8 +92,7 @@ extension Home {
         }
 
         var glucoseView: some View {
-            // TimelineView scopes the periodic tick to this subview instead of re-rendering the whole RootView
-            TimelineView(.periodic(from: .now, by: 5)) { context in
+            ForegroundTimelineView(interval: 5) { date in
                 CurrentGlucoseView(
                     recentGlucose: state.recentGlucose,
                     delta: state.glucoseDelta,
@@ -105,7 +104,7 @@ extension Home {
                     scrolling: displayGlucose, displaySAGE: state.displaySAGE,
                     displayExpiration: state.displayExpiration,
                     sensordays: state.sensorDays,
-                    timerDate: context.date
+                    timerDate: date
                 )
             }
             .onTapGesture {
@@ -127,10 +126,10 @@ extension Home {
         }
 
         var pumpView: some View {
-            TimelineView(.periodic(from: .now, by: 5)) { context in
+            ForegroundTimelineView(interval: 5) { date in
                 PumpView(
                     hideInsulinBadge: state.settings?.hideInsulinBadge == true,
-                    timerDate: context.date
+                    timerDate: date
                 )
             }
             .onTapGesture {
@@ -142,12 +141,12 @@ extension Home {
         }
 
         var loopView: some View {
-            TimelineView(.periodic(from: .now, by: 5)) { context in
+            ForegroundTimelineView(interval: 5) { date in
                 LoopView(
                     suggestion: state.data.suggestion,
                     enactedSuggestion: state.enactedSuggestion,
                     closedLoop: state.closedLoop,
-                    timerDate: context.date,
+                    timerDate: date,
                 )
             }
             .onTapGesture {

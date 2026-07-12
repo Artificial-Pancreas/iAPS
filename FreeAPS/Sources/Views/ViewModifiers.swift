@@ -470,3 +470,19 @@ enum HeaderPump {
     case medtronic
     case other
 }
+
+/// Similar to `TimelineView`, but it does not ticks while the app is in the background.
+struct ForegroundTimelineView<Content: View>: View {
+    let interval: TimeInterval
+    @ViewBuilder let content: (Date) -> Content
+
+    @Environment(\.scenePhase) private var scenePhase
+
+    var body: some View {
+        if scenePhase == .active {
+            TimelineView(.periodic(from: .now, by: interval)) { content($0.date) }
+        } else {
+            content(Date())
+        }
+    }
+}

@@ -18,73 +18,84 @@ struct CurrentGlucoseView: View {
     @Environment(\.sizeCategory) private var fontSize
     @Environment(AppUIState.self) private var appUIState
 
-    private var glucoseFormatter: NumberFormatter {
+    private static let mgdLFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        if units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-            formatter.roundingMode = .halfUp
-        }
         return formatter
-    }
+    }()
 
-    private var manualGlucoseFormatter: NumberFormatter {
+    private static let mmolLFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        if units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-            formatter.roundingMode = .ceiling
-        }
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.roundingMode = .halfUp
         return formatter
-    }
+    }()
 
-    private var decimalString: String {
-        let formatter = NumberFormatter()
-        return formatter.decimalSeparator
-    }
-
-    private var deltaFormatter: NumberFormatter {
+    private static let manualMmolLFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        if units == .mmolL {
-            formatter.decimalSeparator = "."
-        }
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.roundingMode = .ceiling
+        return formatter
+    }()
+
+    private static let mgdLDeltaFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+ "
         formatter.negativePrefix = "- "
         return formatter
-    }
+    }()
 
-    private var timaAgoFormatter: NumberFormatter {
+    private static let mmolLDeltaFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = "."
+        formatter.maximumFractionDigits = 1
+        formatter.positivePrefix = "+ "
+        formatter.negativePrefix = "- "
+        return formatter
+    }()
+
+    private static let timaAgoFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         formatter.negativePrefix = ""
         return formatter
-    }
+    }()
 
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter
-    }
-
-    private var remainingTimeFormatter: DateComponentsFormatter {
+    private static let remainingTimeFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day, .hour]
         formatter.unitsStyle = .abbreviated
         return formatter
-    }
+    }()
 
-    private var remainingTimeFormatterDays: DateComponentsFormatter {
+    private static let remainingTimeFormatterDays: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day]
         formatter.unitsStyle = .abbreviated
         return formatter
+    }()
+
+    private static let decimalString: String = NumberFormatter().decimalSeparator
+
+    private var glucoseFormatter: NumberFormatter {
+        units == .mmolL ? Self.mmolLFormatter : Self.mgdLFormatter
+    }
+
+    private var manualGlucoseFormatter: NumberFormatter {
+        units == .mmolL ? Self.manualMmolLFormatter : Self.mgdLFormatter
+    }
+
+    private var deltaFormatter: NumberFormatter {
+        units == .mmolL ? Self.mmolLDeltaFormatter : Self.mgdLDeltaFormatter
     }
 
     var body: some View {
@@ -112,7 +123,7 @@ struct CurrentGlucoseView: View {
                             .animation(.spring(response: 0.4, dampingFraction: 0.7), value: recent.glucose)
                         if !scrolling {
                             let minutesAgo = timerDate.timeIntervalSince(recent.dateString) / 60
-                            let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
+                            let text = Self.timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
                             Text(
                                 minutesAgo <= 1 ? NSLocalizedString("Now", comment: "") :
                                     (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
@@ -160,9 +171,15 @@ struct CurrentGlucoseView: View {
                         HStack {
                             Text(
                                 !minutesAndHours ?
-                                    (remainingTimeFormatterDays.string(from: displayExpiration ? expiration : sensorAge) ?? "")
+                                    (
+                                        Self.remainingTimeFormatterDays
+                                            .string(from: displayExpiration ? expiration : sensorAge) ?? ""
+                                    )
                                     .replacingOccurrences(of: ",", with: " ") :
-                                    (remainingTimeFormatter.string(from: displayExpiration ? expiration : sensorAge) ?? "")
+                                    (
+                                        Self.remainingTimeFormatter
+                                            .string(from: displayExpiration ? expiration : sensorAge) ?? ""
+                                    )
                                     .replacingOccurrences(of: ",", with: " ")
                             ).foregroundStyle(colour).fontWeight(colorScheme == .dark ? .semibold : .regular)
                         }
@@ -221,11 +238,11 @@ struct CurrentGlucoseView: View {
 
     private func glucoseText(_ string: String) -> any View {
         ZStack {
-            let decimal = string.components(separatedBy: decimalString)
+            let decimal = string.components(separatedBy: Self.decimalString)
             if decimal.count > 1 {
                 HStack(spacing: 0) {
                     Text(decimal[0]).font(scrolling ? .glucoseSmallFont : .glucoseFont)
-                    Text(decimalString).font(.system(size: !scrolling ? 28 : 14).weight(.semibold)).baselineOffset(-10)
+                    Text(Self.decimalString).font(.system(size: !scrolling ? 28 : 14).weight(.semibold)).baselineOffset(-10)
                     Text(decimal[1]).font(.system(size: !scrolling ? 28 : 18)).baselineOffset(!scrolling ? -10 : -4)
                 }
                 .tracking(-1)
