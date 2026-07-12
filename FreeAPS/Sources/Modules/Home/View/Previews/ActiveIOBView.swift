@@ -100,7 +100,7 @@ struct ActiveIOBView: View {
             domain: minimumRange ... max(minimumRange, maximum, minimumRange + 1)
         )
         .chartXScale(
-            domain: Date.now.removingTimeInterval(.hours(24)) ... Date.now
+            domain: Date.now.subtractingTimeInterval(.hours(24)) ... Date.now
         )
         .chartLegend(.hidden)
     }

@@ -62,37 +62,37 @@ enum DateFilter: String, CaseIterable, Identifiable, Codable {
 
         switch self {
         case .oneHour:
-            return now.removingTimeInterval(.hours(1)) as NSDate
+            return now.subtractingTimeInterval(.hours(1)) as NSDate
 
         case .twoHours:
-            return now.removingTimeInterval(.hours(2)) as NSDate
+            return now.subtractingTimeInterval(.hours(2)) as NSDate
 
         case .threeHours:
-            return now.removingTimeInterval(.hours(3)) as NSDate
+            return now.subtractingTimeInterval(.hours(3)) as NSDate
 
         case .today:
             return Calendar.current.startOfDay(for: now) as NSDate
 
         case .day:
-            return now.removingTimeInterval(.hours(24)) as NSDate
+            return now.subtractingTimeInterval(.hours(24)) as NSDate
 
         case .twoDays:
-            return now.removingTimeInterval(.days(2)) as NSDate
+            return now.subtractingTimeInterval(.days(2)) as NSDate
 
         case .week:
-            return now.removingTimeInterval(.days(7)) as NSDate
+            return now.subtractingTimeInterval(.days(7)) as NSDate
 
         case .tenDays:
-            return now.removingTimeInterval(.days(10)) as NSDate
+            return now.subtractingTimeInterval(.days(10)) as NSDate
 
         case .fourteenDays:
-            return now.removingTimeInterval(.days(14)) as NSDate
+            return now.subtractingTimeInterval(.days(14)) as NSDate
 
         case .month:
-            return now.removingTimeInterval(.days(30)) as NSDate
+            return now.subtractingTimeInterval(.days(30)) as NSDate
 
         case .total:
-            return now.removingTimeInterval(.days(90)) as NSDate
+            return now.subtractingTimeInterval(.days(90)) as NSDate
 
         case .all:
             return Date.distantPast as NSDate

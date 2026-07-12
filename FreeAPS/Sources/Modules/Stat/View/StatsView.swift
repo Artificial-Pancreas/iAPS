@@ -52,7 +52,7 @@ struct StatsView: View {
     var loops: some View {
         let loops = fetchRequest
         // First loop date
-        let previous = (loops.last?.start ?? Date.now).removingTimeInterval(.minutes(5))
+        let previous = (loops.last?.start ?? Date.now).subtractingTimeInterval(.minutes(5))
         // Time in days
         let days = -1 * previous.timeIntervalSinceNow / 8.64E4
         // Calculations

@@ -661,7 +661,7 @@ private final class GeometriesBuilder {
 
     private func calculateBasalPoints() -> (Path, Path) {
         cachedMaxBasalRate = nil
-        let dayAgoTime = Date().removingTimeInterval(.hours(24)).timeIntervalSince1970
+        let dayAgoTime = Date().subtractingTimeInterval(.hours(24)).timeIntervalSince1970
         let firstTempTime = (data.tempBasals.first?.timestamp ?? Date()).timeIntervalSince1970
         var lastTimeEnd = firstTempTime
         let firstRegularBasalPoints = findRegularBasalPoints(
@@ -737,7 +737,7 @@ private final class GeometriesBuilder {
             guard event.type == .pumpResume else { return nil }
             let tbrTime = self.data.tempBasals.last { $0.timestamp < event.timestamp }
                 .map { $0.timestamp.timeIntervalSince1970 + TimeInterval.minutes($0.durationMin ?? 0) } ??
-                Date().removingTimeInterval(.hours(24)).timeIntervalSince1970
+                Date().subtractingTimeInterval(.hours(24)).timeIntervalSince1970
 
             let x0 = self.timeToXCoordinate(tbrTime)
             let x1 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970)
@@ -1036,7 +1036,7 @@ private final class GeometriesBuilder {
     }
 
     private func timeToXCoordinate(_ time: TimeInterval) -> CGFloat {
-        let xOffset = -Date().removingTimeInterval(.hours(24)).timeIntervalSince1970
+        let xOffset = -Date().subtractingTimeInterval(.hours(24)).timeIntervalSince1970
         let stepXFraction = fullGlucoseWidth / CGFloat(TimeInterval.hours(data.hours))
         let x = CGFloat(time + xOffset) * stepXFraction
         return x
@@ -1241,12 +1241,12 @@ private final class GeometriesBuilder {
     }
 
     private static func calculateFirstHourDate() -> Date {
-        let firstDate = Date().removingTimeInterval(.hours(24))
+        let firstDate = Date().subtractingTimeInterval(.hours(24))
         return DateInRegion(firstDate, region: .current).dateTruncated(from: .minute)!.date
     }
 
     private func calculateFirstHourPosition() -> CGFloat {
-        let firstDate = Date().removingTimeInterval(.hours(24))
+        let firstDate = Date().subtractingTimeInterval(.hours(24))
         let firstHour = firstHourDate
 
         let lastDeltaTime = firstHour.timeIntervalSince(firstDate)

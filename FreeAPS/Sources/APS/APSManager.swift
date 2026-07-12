@@ -345,7 +345,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
 
             let lastGlucoseDate = await glucoseStorage.latestDate() ?? .distantPast
-            guard lastGlucoseDate > Date().removingTimeInterval(.minutes(12)) else {
+            guard lastGlucoseDate > Date().subtractingTimeInterval(.minutes(12)) else {
                 debug(.apsManager, "Glucose data is stale")
                 throw APSError.glucoseError(message: "Glucose data is stale")
             }

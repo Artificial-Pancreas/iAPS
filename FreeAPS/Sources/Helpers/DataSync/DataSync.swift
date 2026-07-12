@@ -93,8 +93,8 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
         let resolved = await current()
 
         let now = Date()
-        let retentionCutoff = now.removingTimeInterval(retention)
-        let deletionCutoff = now.removingTimeInterval(deletionWindow)
+        let retentionCutoff = now.subtractingTimeInterval(retention)
+        let deletionCutoff = now.subtractingTimeInterval(deletionWindow)
 
         if snapshot == nil {
             snapshot = await loadSnapshot()

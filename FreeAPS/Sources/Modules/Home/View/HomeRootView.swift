@@ -675,7 +675,7 @@ extension Home {
                     (state.data.units == .mmolL ? 0.0555 : 1.0)
             )
             .chartXScale(
-                domain: Date.now.removingTimeInterval(.hours(24)) ... Date.now
+                domain: Date.now.subtractingTimeInterval(.hours(24)) ... Date.now
             )
             .frame(height: 50)
             .padding(.leading, 30)

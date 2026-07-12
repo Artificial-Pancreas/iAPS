@@ -42,7 +42,7 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
                     && $0.createdAt <= now
             }) {
                 // cancel current
-                targets += [TempTarget.cancel(at: newActive.createdAt.removingTimeInterval(.seconds(1)))]
+                targets += [TempTarget.cancel(at: newActive.createdAt.subtractingTimeInterval(.seconds(1)))]
             }
         }
 
@@ -51,7 +51,7 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
             $0
                 .filter {
                     guard !isPresets else { return true }
-                    return $0.createdAt > now.removingTimeInterval(.hours(24))
+                    return $0.createdAt > now.subtractingTimeInterval(.hours(24))
                 }
                 .sorted { $0.createdAt > $1.createdAt }
         }
@@ -60,7 +60,7 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
     }
 
     func syncDate() -> Date {
-        Date().removingTimeInterval(.hours(24))
+        Date().subtractingTimeInterval(.hours(24))
     }
 
     /// oldest->newest

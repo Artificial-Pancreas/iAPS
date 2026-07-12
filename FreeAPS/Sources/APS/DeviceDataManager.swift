@@ -991,7 +991,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
-        lastEventDate?.removingTimeInterval(.minutes(35)) ?? Date().removingTimeInterval(.hours(2))
+        lastEventDate?.subtractingTimeInterval(.minutes(35)) ?? Date().subtractingTimeInterval(.hours(2))
     }
 
     var automaticDosingEnabled: Bool {

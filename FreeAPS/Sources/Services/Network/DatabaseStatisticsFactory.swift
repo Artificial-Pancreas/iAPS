@@ -200,7 +200,7 @@ extension DatabaseStatisticsFactory {
             let request = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
             request.predicate = NSPredicate(
                 format: "interval > 0 AND start > %@",
-                Date().removingTimeInterval(.hours(24)) as NSDate
+                Date().subtractingTimeInterval(.hours(24)) as NSDate
             )
             request.sortDescriptors = [NSSortDescriptor(key: "start", ascending: false)]
 

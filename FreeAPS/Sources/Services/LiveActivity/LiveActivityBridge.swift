@@ -282,7 +282,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         iobValue = appCoordinator.iobTicks.value?.first?.iob ?? suggestion.iob
         loopDate = timestamp
 
-        let hoursAgo3 = Date.now.removingTimeInterval(.hours(3))
+        let hoursAgo3 = Date.now.subtractingTimeInterval(.hours(3))
         let glucose = appCoordinator.glucoseHistory.value.filter { $0.dateString >= hoursAgo3 }
         guard let content = Self.buildContentState(
             settings: settings,

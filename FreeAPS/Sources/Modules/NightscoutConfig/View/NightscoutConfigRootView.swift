@@ -15,7 +15,7 @@ extension NightscoutConfig {
         @FetchRequest(
             entity: ImportError.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
-                format: "date > %@", Date().removingTimeInterval(.minutes(1)) as NSDate
+                format: "date > %@", Date().subtractingTimeInterval(.minutes(1)) as NSDate
             )
         ) var fetchedErrors: FetchedResults<ImportError>
 

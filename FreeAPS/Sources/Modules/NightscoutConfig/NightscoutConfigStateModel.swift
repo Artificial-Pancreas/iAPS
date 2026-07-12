@@ -318,7 +318,7 @@ extension NightscoutConfig {
             backfillingProgress = 0.0
             Task {
                 defer { backfilling = false }
-                let since = Date.now.removingTimeInterval(.days(backFillInterval))
+                let since = Date.now.subtractingTimeInterval(.days(backFillInterval))
                 for await progress in await nightscoutManager.fetchGlucose(since: since) {
                     switch progress {
                     case let .progress(progress):
@@ -337,7 +337,7 @@ extension NightscoutConfig {
             guard glucose.isNotEmpty else { return }
 
             // glucose storage - store only last 24 hours
-            let cutOffDate = Date.now.removingTimeInterval(.hours(24))
+            let cutOffDate = Date.now.subtractingTimeInterval(.hours(24))
             let recent = glucose.filter { $0.dateString >= cutOffDate }
             _ = await glucoseStorage.storeGlucose(recent)
 
@@ -351,7 +351,7 @@ extension NightscoutConfig {
 
             Task {
                 let readings = await coreDataStorage
-                    .fetchGlucose(interval: Date.now.removingTimeInterval(.days(self.uploadInterval)) as NSDate)
+                    .fetchGlucose(interval: Date.now.subtractingTimeInterval(.days(self.uploadInterval)) as NSDate)
                 let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
                     guard let date = reading.date,
                           let id = reading.id

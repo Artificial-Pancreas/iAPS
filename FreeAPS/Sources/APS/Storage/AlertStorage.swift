@@ -26,7 +26,7 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage {
     }
 
     private static func filterOldAndSort(_ entries: [AlertEntry]) -> [AlertEntry] {
-        let oneDayAgo = Date.now.removingTimeInterval(.hours(24))
+        let oneDayAgo = Date.now.subtractingTimeInterval(.hours(24))
         return entries
             .filter { $0.issuedDate > oneDayAgo }
             .sorted { $0.issuedDate > $1.issuedDate }
@@ -43,7 +43,7 @@ final class BaseAlertHistoryStorage: AlertHistoryStorage {
     }
 
     func syncDate() -> Date {
-        Date().removingTimeInterval(.hours(24))
+        Date().subtractingTimeInterval(.hours(24))
     }
 
     func recentNotAck() async -> [AlertEntry] {

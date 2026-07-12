@@ -139,7 +139,7 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
     }
 
     func syncDate() -> Date {
-        Date().removingTimeInterval(.hours(24))
+        Date().subtractingTimeInterval(.hours(24))
     }
 
     /// oldest -> newest

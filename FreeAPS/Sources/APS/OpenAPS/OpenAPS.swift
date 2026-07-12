@@ -839,7 +839,7 @@ actor OpenAPS: Sendable {
         var data_ = [tddData(date: time, tdd: (uniqueEvents.first?.tdd ?? 0) as Decimal)]
 
         for a in uniqueEvents {
-            if a.timestamp ?? .distantFuture <= time.removingTimeInterval(.hours(24)) {
+            if a.timestamp ?? .distantFuture <= time.subtractingTimeInterval(.hours(24)) {
                 let b = tddData(
                     date: a.timestamp ?? .distantFuture,
                     tdd: (a.tdd ?? 0) as Decimal
@@ -853,7 +853,7 @@ actor OpenAPS: Sendable {
 
         // Only fetch once. Use same (previous) fetch
         let twoHoursArray = uniqueEvents
-            .filter({ ($0.timestamp ?? Date()) >= Date.now.removingTimeInterval(.hours(2)) })
+            .filter({ ($0.timestamp ?? Date()) >= Date.now.subtractingTimeInterval(.hours(2)) })
         var nrOfIndeces = twoHoursArray.count
         let totalAmount = twoHoursArray.compactMap({ each in each.tdd ?? 0 }).reduce(0, +)
 

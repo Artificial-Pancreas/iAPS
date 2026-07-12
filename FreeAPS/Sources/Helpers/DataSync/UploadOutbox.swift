@@ -51,7 +51,7 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
 
     func enqueue(_ items: [Item]) async {
         guard items.isNotEmpty else { return }
-        let cutoff = Date.now.removingTimeInterval(retention)
+        let cutoff = Date.now.subtractingTimeInterval(retention)
         let date = self.date
         await storage.appendAndModify(items, to: file, uniqBy: uniqueBy) { queued in
             queued.filter { item in
@@ -69,7 +69,7 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
     }
 
     private func performSendPending() async {
-        let cutoff = Date.now.removingTimeInterval(retention)
+        let cutoff = Date.now.subtractingTimeInterval(retention)
         let date = self.date
         let queued = (await storage.retrieve(file, as: [Item].self) ?? [])
             .filter { item in

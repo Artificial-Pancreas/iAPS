@@ -479,7 +479,7 @@ extension Home {
                     let loops = loopStats.compactMap({ each in each.loopStatus }).count
                     let percentage = min(readings != 0 ? (Double(loops) / Double(readings) * 100) : 0, 100)
                     // First loop date
-                    let time = (loopStats.last?.start ?? Date.now).removingTimeInterval(.minutes(5))
+                    let time = (loopStats.last?.start ?? Date.now).subtractingTimeInterval(.minutes(5))
 
                     let average = -1 * (time.timeIntervalSinceNow / 60) / max(Double(loops), 1)
 
@@ -566,18 +566,18 @@ extension Home {
                 neg = data.filter({ $0.iob < 0 }).count * 5
                 let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
                 let yesterday = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= Date().removingTimeInterval(.hours(24))
+                    ($0.timestamp ?? .distantFuture) <= Date().subtractingTimeInterval(.hours(24))
                 })?.tdd ?? 0) as Decimal
                 let oneDaysAgo = tdds.last
                 tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
                 tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
                 tdd2DaysAgo = (tdds.first(where: {
                     ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .removingTimeInterval(.hours(24))
+                        .subtractingTimeInterval(.hours(24))
                 })?.tdd ?? 0) as Decimal
                 tdd3DaysAgo = (tdds.first(where: {
                     ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .removingTimeInterval(.days(2))
+                        .subtractingTimeInterval(.days(2))
                 })?.tdd ?? 0) as Decimal
 
                 if let tdds_ = await provider.dynamicVariables {

@@ -54,7 +54,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
         if !newVersion,
            let latestUploadedStats = self.latestUploadedStats,
            let latestStatsUploadDate = latestUploadedStats.lastrun,
-           latestStatsUploadDate > Date.now.removingTimeInterval(.hours(10))
+           latestStatsUploadDate > Date.now.subtractingTimeInterval(.hours(10))
         {
             return
         }
@@ -84,7 +84,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
     private func versionCheck() async {
         if let lastVersionCheck = self.lastVersionCheck,
            let lastCheckDate = lastVersionCheck.date,
-           lastCheckDate > Date.now.removingTimeInterval(.hours(10)) { return }
+           lastCheckDate > Date.now.subtractingTimeInterval(.hours(10)) { return }
 
         await databaseManager.fetchVersion()
         lastVersionCheck = await coreDataStorage.fetchVersion()

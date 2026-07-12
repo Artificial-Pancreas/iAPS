@@ -274,7 +274,7 @@ actor NightscoutDataSync: LifetimeOwner, AppService {
                 treatments.append(treatment)
 
                 // We have to keep quite a bit of history as sensors start only every 10 days.
-                let daysAgo30 = Date.now.removingTimeInterval(.days(30))
+                let daysAgo30 = Date.now.subtractingTimeInterval(.days(30))
                 return treatments
                     .filter { $0.createdAt >= daysAgo30 }
                     .sorted { $0.createdAt > $1.createdAt }
@@ -289,7 +289,7 @@ actor NightscoutDataSync: LifetimeOwner, AppService {
         let (_, cgmState) = await storage
             .maybeModify(file: OpenAPS.Monitor.cgmState, as: NigtscoutTreatment.self) { cgmState in
                 // filter older cgm entries on read
-                let daysAgo30 = Date.now.removingTimeInterval(.days(30))
+                let daysAgo30 = Date.now.subtractingTimeInterval(.days(30))
                 let last30days = cgmState.filter { $0.createdAt >= daysAgo30 }
                 if last30days.count == cgmState.count {
                     return nil // do not modify
