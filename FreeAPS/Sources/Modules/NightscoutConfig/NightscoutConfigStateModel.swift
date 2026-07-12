@@ -29,6 +29,9 @@ extension NightscoutConfig {
         @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
         @Published var nightscoutFetchEnabled = true // Allow fetch
+        @Setting(\.glucoseUploadSchedule) var glucoseUploadSchedule = UploadSchedule()
+        @Setting(\.treatmentsAndLoopsUploadSchedule) var treatmentsAndLoopsUploadSchedule = UploadSchedule()
+        @Setting(\.deviceStatusUploadSchedule) var deviceStatusUploadSchedule = UploadSchedule()
         @Published var units: GlucoseUnits = .mmolL
         @Published var dia: Decimal = 6
         @Published var maxBasal: Decimal = 4

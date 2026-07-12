@@ -62,13 +62,13 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
     }
 
     /// Send queued items; remove the ones that succeed, keep failures for the next attempt.
-    func sendPending() async {
+    @discardableResult func sendPending() async -> (sent: Int, failed: Int) {
         await serializer.run {
             await self.performSendPending()
         }
     }
 
-    private func performSendPending() async {
+    private func performSendPending() async -> (sent: Int, failed: Int) {
         let cutoff = Date.now.subtractingTimeInterval(retention)
         let date = self.date
         let queued = (await storage.retrieve(file, as: [Item].self) ?? [])
@@ -76,24 +76,27 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
                 guard let date = date(item) else { return false } // nil date -> ignored
                 return date >= cutoff
             }
-        guard queued.isNotEmpty else { return }
+        guard queued.isNotEmpty else { return (0, 0) }
 
         var sentKeys: Set<Key> = []
+        var failedCount = 0
         for item in queued {
             do {
                 try await send(item)
                 sentKeys.insert(item[keyPath: uniqueBy])
             } catch {
+                failedCount += 1
                 debug(category, "outbox [\(file)]: send failed: \(error.localizedDescription)")
             }
         }
 
-        guard sentKeys.isNotEmpty else { return }
+        guard sentKeys.isNotEmpty else { return (0, failedCount) }
         let uniqueBy = self.uniqueBy
         let sentKeysSnapshot = sentKeys
         await storage.modify(file: file, as: Item.self) { queued in
             queued.filter { !sentKeysSnapshot.contains($0[keyPath: uniqueBy]) }
         }
         debug(category, "outbox [\(file)]: sent \(sentKeys.count)")
+        return (sentKeys.count, failedCount)
     }
 }

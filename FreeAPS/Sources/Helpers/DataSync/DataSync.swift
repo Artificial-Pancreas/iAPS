@@ -37,6 +37,17 @@ enum SyncTrigger {
     case retry
 }
 
+enum SyncResult: Equatable, Sendable {
+    /// retry tick with no pending work
+    case skipped
+    /// ran, nothing to upload or delete
+    case noChanges
+    /// uploaded and/or deleted successfully
+    case synced
+    /// some operation failed, will retry
+    case failed
+}
+
 actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == Record {
     private let name: String
     private let sink: Sink
@@ -77,15 +88,18 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
     }
 
     /// `.retry` can skip the source read entirely when there is nothing to retry.
-    func reconcile(trigger: SyncTrigger = .dataChanged, current: @Sendable @escaping () async -> [Record]) async {
+    @discardableResult func reconcile(
+        trigger: SyncTrigger = .dataChanged,
+        current: @Sendable @escaping () async -> [Record]
+    ) async -> SyncResult {
         await serializer.run {
             await self.performReconcile(trigger: trigger, current: current)
         }
     }
 
-    private func performReconcile(trigger: SyncTrigger, current: @Sendable() async -> [Record]) async {
+    private func performReconcile(trigger: SyncTrigger, current: @Sendable() async -> [Record]) async -> SyncResult {
         // A retry tick does nothing unless a prior run failed or `markPending` was called.
-        if trigger == .retry, !hasPendingWork { return }
+        if trigger == .retry, !hasPendingWork { return .skipped }
 
         let span = Signpost.begin("dataSync", name)
         defer { span.end() }
@@ -151,6 +165,9 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
             debug(category, "data sync [\(name)]: +\(upserts.count) -\(toDelete.count)")
         }
         hasPendingWork = failed
+
+        if failed { return .failed }
+        return changed ? .synced : .noChanges
     }
 
     private func loadSnapshot() async -> [Record.SyncID: Record] {

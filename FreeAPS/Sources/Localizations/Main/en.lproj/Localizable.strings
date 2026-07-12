@@ -3835,3 +3835,44 @@ Enact a temp Basal or a temp target */
 "too small temp basal amount" = "too small temp basal amount";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!";
 " Target Glucose" = " Target Glucose";
+
+/* Nightscout upload schedule */
+"Always" = "Always";
+
+"Every hour" = "Every hour";
+
+"Every 12 hours" = "Every 12 hours";
+
+"Never" = "Never";
+
+"Treatments & Loops" = "Treatments & Loops";
+
+"Device Status" = "Device Status";
+
+"Wi-Fi: %@" = "Wi-Fi: %@";
+
+"Mobile data: %@" = "Mobile data: %@";
+
+"%@ (always while charging)" = "%@ (always while charging)";
+
+"On Wi-Fi" = "On Wi-Fi";
+
+"On mobile data" = "On mobile data";
+
+"Always upload while charging" = "Always upload while charging";
+
+"Last Uploads" = "Last Uploads";
+
+"Pump history" = "Pump history";
+
+"Loop status" = "Loop status";
+
+"Pod age" = "Pod age";
+
+"CGM state" = "CGM state";
+
+"Pump status" = "Pump status";
+
+"Upload schedules limit how often each data group is uploaded to Nightscout to reduce battery usage. Postponed data is uploaded later in one batch." = "Upload schedules limit how often each data group is uploaded to Nightscout to reduce battery usage. Postponed data is uploaded later in one batch.";
+
+"Data that is not uploaded right away is kept and uploaded when the schedule next allows it." = "Data that is not uploaded right away is kept and uploaded when the schedule next allows it.";

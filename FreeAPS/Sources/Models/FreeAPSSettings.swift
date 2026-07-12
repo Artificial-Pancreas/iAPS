@@ -6,6 +6,9 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var allowAnnouncements: Bool = false
     var useAutotune: Bool = false
     var isUploadEnabled: Bool = false
+    var glucoseUploadSchedule = UploadSchedule()
+    var treatmentsAndLoopsUploadSchedule = UploadSchedule()
+    var deviceStatusUploadSchedule = UploadSchedule()
     var nightscoutFetchEnabled: Bool = true
     var debugOptions: Bool = false
     var insulinReqPercentage: Decimal = 70
@@ -195,6 +198,21 @@ extension FreeAPSSettings: Decodable {
 
         if let isUploadEnabled = try? container.decode(Bool.self, forKey: .isUploadEnabled) {
             settings.isUploadEnabled = isUploadEnabled
+        }
+
+        if let glucoseUploadSchedule = try? container.decode(UploadSchedule.self, forKey: .glucoseUploadSchedule) {
+            settings.glucoseUploadSchedule = glucoseUploadSchedule
+        }
+
+        if let treatmentsAndLoopsUploadSchedule = try? container.decode(
+            UploadSchedule.self,
+            forKey: .treatmentsAndLoopsUploadSchedule
+        ) {
+            settings.treatmentsAndLoopsUploadSchedule = treatmentsAndLoopsUploadSchedule
+        }
+
+        if let deviceStatusUploadSchedule = try? container.decode(UploadSchedule.self, forKey: .deviceStatusUploadSchedule) {
+            settings.deviceStatusUploadSchedule = deviceStatusUploadSchedule
         }
 
         if let nightscoutFetchEnabled = try? container.decode(Bool.self, forKey: .nightscoutFetchEnabled) {
@@ -771,4 +789,69 @@ enum LightMode: String, JSON, Identifiable, CaseIterable {
     case auto = "Auto"
 
     var id: LightMode { self }
+}
+
+enum UploadScheduleInterval: String, JSON, Identifiable, CaseIterable {
+    case always
+    case everyHour
+    case every12Hours
+    case never
+
+    var id: String { rawValue }
+
+    /// "Never" is only offered for mobile data
+    static let wifiCases: [UploadScheduleInterval] = [.always, .everyHour, .every12Hours]
+
+    var displayName: String {
+        switch self {
+        case .always: return NSLocalizedString("Always", comment: "Upload schedule interval")
+        case .everyHour: return NSLocalizedString("Every hour", comment: "Upload schedule interval")
+        case .every12Hours: return NSLocalizedString("Every 12 hours", comment: "Upload schedule interval")
+        case .never: return NSLocalizedString("Never", comment: "Upload schedule interval")
+        }
+    }
+
+    /// minimum time between uploads; `nil` means uploads are not allowed
+    var timeInterval: TimeInterval? {
+        switch self {
+        case .always: return 0
+        case .everyHour: return .hours(1)
+        case .every12Hours: return .hours(12)
+        case .never: return nil
+        }
+    }
+}
+
+enum UploadScheduleGroup: String, Identifiable, CaseIterable, Sendable {
+    case glucose
+    case treatmentsAndLoops
+    case deviceStatus
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .glucose: return NSLocalizedString("Glucose", comment: "Upload schedule group")
+        case .treatmentsAndLoops: return NSLocalizedString("Treatments & Loops", comment: "Upload schedule group")
+        case .deviceStatus: return NSLocalizedString("Device Status", comment: "Upload schedule group")
+        }
+    }
+
+    var scheduleKeyPath: KeyPath<FreeAPSSettings, UploadSchedule> {
+        switch self {
+        case .glucose: return \.glucoseUploadSchedule
+        case .treatmentsAndLoops: return \.treatmentsAndLoopsUploadSchedule
+        case .deviceStatus: return \.deviceStatusUploadSchedule
+        }
+    }
+}
+
+struct UploadSchedule: JSON, Equatable {
+    var onWifi = UploadNetworkSchedule()
+    var onCellular = UploadNetworkSchedule()
+}
+
+struct UploadNetworkSchedule: JSON, Equatable {
+    var interval: UploadScheduleInterval = .always
+    var alwaysWhileCharging: Bool = false
 }

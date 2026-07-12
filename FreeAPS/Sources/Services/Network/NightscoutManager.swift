@@ -29,7 +29,7 @@ actor BaseNightscoutManager: NightscoutManager {
     private let storage: FileStorage
     private let announcementsStorage: AnnouncementsStorage
     private let reachabilityManager: ReachabilityManager
-    private let deviceStatusUploader: NightscoutDeviceStatusUploader
+    private let overridesUploader: NightscoutOverridesUploader
 
     private let overrideStorage: OverrideStorage
 
@@ -51,7 +51,7 @@ actor BaseNightscoutManager: NightscoutManager {
         storage: FileStorage,
         announcementsStorage: AnnouncementsStorage,
         reachabilityManager: ReachabilityManager,
-        deviceStatusUploader: NightscoutDeviceStatusUploader,
+        overridesUploader: NightscoutOverridesUploader,
         overrideStorage: OverrideStorage
     ) {
         self.apiProvider = apiProvider
@@ -61,7 +61,7 @@ actor BaseNightscoutManager: NightscoutManager {
         self.storage = storage
         self.announcementsStorage = announcementsStorage
         self.reachabilityManager = reachabilityManager
-        self.deviceStatusUploader = deviceStatusUploader
+        self.overridesUploader = overridesUploader
         self.overrideStorage = overrideStorage
     }
 
@@ -239,7 +239,7 @@ actor BaseNightscoutManager: NightscoutManager {
     }
 
     func uploadOverride(_ profile: String, _ duration: Double, _ date: Date) async {
-        await deviceStatusUploader.uploadOverride(profile, duration, date)
+        await overridesUploader.uploadOverride(profile, duration, date)
     }
 
     func deleteAllNSoverrrides() async {

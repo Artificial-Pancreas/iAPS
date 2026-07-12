@@ -34,8 +34,7 @@ import Swinject
         try await startService(resolver.resolve(DatabaseManager.self))
 
         try await startService(resolver.resolve(NightscoutAPIProvider.self))
-        try await startService(resolver.resolve(NightscoutDataSync.self))
-        try await startService(resolver.resolve(NightscoutDeviceStatusUploader.self))
+        try await startService(resolver.resolve(NightscoutUploads.self))
         try await startService(resolver.resolve(PumpHistoryStorage.self))
         try await startService(resolver.resolve(GlucoseStorage.self))
         try await startService(resolver.resolve(CarbsStorage.self))

@@ -13,18 +13,11 @@ final class NetworkAssembly: Assembly {
                 appCoordinator: r.resolve(AppCoordinator.self)!
             )
         }
-        container.register(NightscoutDataSync.self) { r in
-            NightscoutDataSync(
+        container.register(NightscoutUploads.self) { r in
+            NightscoutUploads(
                 apiProvider: r.resolve(NightscoutAPIProvider.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
                 reachabilityManager: r.resolve(ReachabilityManager.self)!,
-                storage: r.resolve(FileStorage.self)!
-            )
-        }
-        container.register(NightscoutDeviceStatusUploader.self) { r in
-            NightscoutDeviceStatusUploader(
-                apiProvider: r.resolve(NightscoutAPIProvider.self)!,
-                appCoordinator: r.resolve(AppCoordinator.self)!,
                 storage: r.resolve(FileStorage.self)!
             )
         }
@@ -37,7 +30,7 @@ final class NetworkAssembly: Assembly {
                 storage: r.resolve(FileStorage.self)!,
                 announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
                 reachabilityManager: r.resolve(ReachabilityManager.self)!,
-                deviceStatusUploader: r.resolve(NightscoutDeviceStatusUploader.self)!,
+                overridesUploader: r.resolve(NightscoutUploads.self)!.overridesUploader,
                 overrideStorage: r.resolve(OverrideStorage.self)!
             )
         }
