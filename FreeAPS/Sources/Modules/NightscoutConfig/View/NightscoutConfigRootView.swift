@@ -42,12 +42,16 @@ extension NightscoutConfig {
         private func uploadScheduleRow(_ group: UploadScheduleGroup, schedule: UploadSchedule) -> some View {
             Button { editedScheduleGroup = group } label: {
                 HStack {
-                    Text(group.displayName).foregroundStyle(Color.primary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(group.displayName).foregroundStyle(Color.primary)
+                        Text(scheduleDescription(schedule))
+                            .font(.caption)
+                            .foregroundStyle(Color.secondary)
+                    }
                     Spacer()
-                    Text(scheduleDescription(schedule))
-                        .font(.caption)
-                        .multilineTextAlignment(.trailing)
-                        .foregroundStyle(Color.secondary)
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.tertiary)
                 }
             }
         }
