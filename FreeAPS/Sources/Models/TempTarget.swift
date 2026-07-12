@@ -1,5 +1,4 @@
 import Foundation
-import SwiftDate
 
 struct TempTarget: JSON, Identifiable, Equatable, Hashable {
     var id = UUID().uuidString
@@ -42,7 +41,7 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
 
 extension TempTarget {
     var endDate: Date {
-        createdAt.addingTimeInterval(Int(duration).minutes.timeInterval)
+        createdAt.addingTimeInterval(.minutes(Int(duration)))
     }
 
     /// a cancel record (duration == 0) is never active

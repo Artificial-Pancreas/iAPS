@@ -479,7 +479,7 @@ extension Home {
                     let loops = loopStats.compactMap({ each in each.loopStatus }).count
                     let percentage = min(readings != 0 ? (Double(loops) / Double(readings) * 100) : 0, 100)
                     // First loop date
-                    let time = (loopStats.last?.start ?? Date.now).addingTimeInterval(-5.minutes.timeInterval)
+                    let time = (loopStats.last?.start ?? Date.now).removingTimeInterval(.minutes(5))
 
                     let average = -1 * (time.timeIntervalSinceNow / 60) / max(Double(loops), 1)
 
@@ -566,18 +566,18 @@ extension Home {
                 neg = data.filter({ $0.iob < 0 }).count * 5
                 let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
                 let yesterday = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
+                    ($0.timestamp ?? .distantFuture) <= Date().removingTimeInterval(.hours(24))
                 })?.tdd ?? 0) as Decimal
                 let oneDaysAgo = tdds.last
                 tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
                 tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
                 tdd2DaysAgo = (tdds.first(where: {
                     ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .addingTimeInterval(-1.days.timeInterval)
+                        .removingTimeInterval(.hours(24))
                 })?.tdd ?? 0) as Decimal
                 tdd3DaysAgo = (tdds.first(where: {
                     ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .addingTimeInterval(-2.days.timeInterval)
+                        .removingTimeInterval(.days(2))
                 })?.tdd ?? 0) as Decimal
 
                 if let tdds_ = await provider.dynamicVariables {
@@ -760,7 +760,7 @@ extension Home.StateModel {
     private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
         let now = Date()
         data.tempTargets = tempTargets.filter {
-            $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
+            $0.createdAt.addingTimeInterval(.hours(hours)) > now
         }
         updateCurrentTempTarget(tempTargets)
     }

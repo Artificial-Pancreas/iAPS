@@ -79,9 +79,9 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
             var futureCarbArray = [CarbsEntry]()
             while carbEquivalents > 0, numberOfEquivalents > 0 {
                 if firstIndex {
-                    useDate = useDate.addingTimeInterval(delay.minutes.timeInterval)
+                    useDate = useDate.addingTimeInterval(.minutes(delay))
                     firstIndex = false
-                } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
+                } else { useDate = useDate.addingTimeInterval(.minutes(interval)) }
 
                 let eachCarbEntry = CarbsEntry(
                     id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
@@ -91,11 +91,12 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
                 futureCarbArray.append(eachCarbEntry)
                 numberOfEquivalents -= 1
             }
+            let now = Date()
             // Save the array
             if carbEquivalents > 0 {
                 uniqEvents = await self.storage.appendAndModify(futureCarbArray, to: file, uniqBy: \.id) {
                     $0
-                        .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                        .filter { $0.createdAt.addingTimeInterval(.hours(24)) > now }
                         .sorted { $0.createdAt > $1.createdAt }
                 }
             }
@@ -116,17 +117,18 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
                 micronutrient: entry.micronutrient
             )
 
+            let now = Date()
             // If fetched en masse from NS
             if entries.filter({ $0.carbs > 0 }).count > 1 {
                 uniqEvents = await self.storage.appendAndModify(entries, to: file, uniqBy: \.createdAt) {
                     $0
-                        .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                        .filter { $0.createdAt.addingTimeInterval(.hours(24)) > now }
                         .sorted { $0.createdAt > $1.createdAt }
                 }
             } else {
                 uniqEvents = await self.storage.appendAndModify([onlyCarbs], to: file, uniqBy: \.id) {
                     $0
-                        .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                        .filter { $0.createdAt.addingTimeInterval(.hours(24)) > now }
                         .sorted { $0.createdAt > $1.createdAt }
                 }
             }
@@ -137,7 +139,7 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
     }
 
     func syncDate() -> Date {
-        Date().addingTimeInterval(-1.days.timeInterval)
+        Date().removingTimeInterval(.hours(24))
     }
 
     /// oldest -> newest

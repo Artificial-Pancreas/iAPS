@@ -251,7 +251,7 @@ final class OverrideStorage: Sendable {
                 return nil
             }
 
-            guard (last.date ?? Date.now).addingTimeInterval(Int(truncating: last.duration ?? 0).minutes.timeInterval) > Date(),
+            guard (last.date ?? Date.now).addingTimeInterval(.minutes(Int(truncating: last.duration ?? 0))) > Date(),
                   (last.date ?? Date.now) <= Date.now,
                   last.duration != 0
             else {

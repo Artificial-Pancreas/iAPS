@@ -166,7 +166,7 @@ extension Bolus {
             guard iob == 0 else { return 0 }
             guard let recent = await coreDataStorage.recentReason() else { return 0 }
             let timeDifference = (recent.date ?? .distantPast).timeIntervalSinceNow
-            if timeDifference <= 0, timeDifference > -30.minutes.timeInterval {
+            if timeDifference <= 0, timeDifference > TimeInterval.minutes(-30) {
                 let recent = ((recent.iob ?? 0) as Decimal)
                 let pumpHistory = history?
                     .filter({ $0.timestamp.timeIntervalSinceNow > timeDifference && $0.type == .bolus })
@@ -174,7 +174,7 @@ extension Bolus {
                 return recent + pumpHistory
             } else if let history = history {
                 let total = history
-                    .filter({ $0.timestamp.timeIntervalSinceNow > -360.minutes.timeInterval && $0.type == .bolus })
+                    .filter({ $0.timestamp.timeIntervalSinceNow > TimeInterval.minutes(-360) && $0.type == .bolus })
                     .compactMap(\.amount).reduce(0, +)
                 return max(total, 0)
             }
@@ -292,7 +292,7 @@ extension Bolus {
             var temporaryCarbs: Decimal = 0
             guard let temporary = carbToStore else { return 0 }
             let timeDifference = (temporary.actualDate ?? .distantPast).timeIntervalSinceNow
-            if timeDifference <= 0, timeDifference > -15.minutes.timeInterval {
+            if timeDifference <= 0, timeDifference > TimeInterval.minutes(-15) {
                 temporaryCarbs = temporary.carbs
             }
             return temporaryCarbs
@@ -342,7 +342,7 @@ extension Bolus {
                 if let recent = await coreDataStorage.recentMeal() {
                     carbToStore = CarbsEntry(
                         id: recent.id,
-                        createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(5.seconds.timeInterval),
+                        createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(.seconds(5)),
                         actualDate: recent.actualDate,
                         carbs: (recent.carbs ?? 0) as Decimal,
                         fat: (recent.fat ?? 0) as Decimal,
@@ -517,7 +517,7 @@ extension Bolus {
             if let recent = await coreDataStorage.recentMeal() {
                 carbToStore = CarbsEntry(
                     id: recent.id,
-                    createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(5.seconds.timeInterval),
+                    createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(.seconds(5)),
                     actualDate: recent.actualDate,
                     carbs: (recent.carbs ?? 0) as Decimal,
                     fat: (recent.fat ?? 0) as Decimal,

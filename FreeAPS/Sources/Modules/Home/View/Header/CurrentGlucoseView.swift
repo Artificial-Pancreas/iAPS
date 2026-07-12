@@ -145,7 +145,7 @@ struct CurrentGlucoseView: View {
     private var sageView: some View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
-                let sensorAge: TimeInterval = (-1 * date.timeIntervalSinceNow)
+                let sensorAge: TimeInterval = -date.timeIntervalSinceNow
                 let expiration = sensordays - sensorAge
                 let secondsOfDay = 8.64E4
                 let colour = colorScheme == .light ? Color.black : Color.white

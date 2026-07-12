@@ -359,9 +359,7 @@ extension AddCarbs {
 
                 } else {
                     Button {
-                        state.date = state.date.addingTimeInterval(
-                            -15.minutes.timeInterval
-                        )
+                        state.date = state.date.removingTimeInterval(.minutes(15))
                     } label: {
                         Image(systemName: "minus.circle")
                     }
@@ -377,9 +375,7 @@ extension AddCarbs {
                     .labelsHidden()
 
                     Button {
-                        state.date = state.date.addingTimeInterval(
-                            15.minutes.timeInterval
-                        )
+                        state.date = state.date.addingTimeInterval(.minutes(15))
                     } label: {
                         Image(systemName: "plus.circle")
                     }

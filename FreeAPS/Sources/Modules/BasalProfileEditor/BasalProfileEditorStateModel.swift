@@ -15,7 +15,7 @@ extension BasalProfileEditor {
         @Published var saved = false
         @Published var allowDilution = false
 
-        let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
+        let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
         private(set) var rateValues: [Decimal] = []
 

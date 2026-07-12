@@ -1,5 +1,4 @@
 import Foundation
-import SwiftDate
 import Swinject
 
 protocol AnnouncementsStorage: Sendable {
@@ -12,7 +11,7 @@ protocol AnnouncementsStorage: Sendable {
 
 actor BaseAnnouncementsStorage: AnnouncementsStorage {
     enum Config {
-        static let recentInterval = 10.minutes.timeInterval
+        static let recentInterval: TimeInterval = .minutes(10)
     }
 
     private let storage: FileStorage
@@ -25,9 +24,10 @@ actor BaseAnnouncementsStorage: AnnouncementsStorage {
 
     func storeAnnouncements(_ announcements: [Announcement], enacted: Bool) async {
         let file = enacted ? OpenAPS.FreeAPS.announcementsEnacted : OpenAPS.FreeAPS.announcements
+        let now = Date()
         await self.storage.appendAndModify(announcements, to: file, uniqBy: \.createdAt) {
             $0
-                .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                .filter { $0.createdAt.addingTimeInterval(.hours(24)) > now }
                 .sorted { $0.createdAt > $1.createdAt }
         }
     }

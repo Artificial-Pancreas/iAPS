@@ -35,13 +35,14 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
 
     private func storeTempTargets(_ targets: [TempTarget], isPresets: Bool) async {
         var targets = targets
+        let now = Date()
         if !isPresets {
             if await current() != nil, let newActive = targets.last(where: {
-                $0.createdAt.addingTimeInterval(Int($0.duration).minutes.timeInterval) > Date()
-                    && $0.createdAt <= Date()
+                $0.createdAt.addingTimeInterval(.minutes(Int($0.duration))) > now
+                    && $0.createdAt <= now
             }) {
                 // cancel current
-                targets += [TempTarget.cancel(at: newActive.createdAt.addingTimeInterval(-1))]
+                targets += [TempTarget.cancel(at: newActive.createdAt.removingTimeInterval(.seconds(1)))]
             }
         }
 
@@ -50,7 +51,7 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
             $0
                 .filter {
                     guard !isPresets else { return true }
-                    return $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date()
+                    return $0.createdAt > now.removingTimeInterval(.hours(24))
                 }
                 .sorted { $0.createdAt > $1.createdAt }
         }
@@ -59,7 +60,7 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
     }
 
     func syncDate() -> Date {
-        Date().addingTimeInterval(-1.days.timeInterval)
+        Date().removingTimeInterval(.hours(24))
     }
 
     /// oldest->newest

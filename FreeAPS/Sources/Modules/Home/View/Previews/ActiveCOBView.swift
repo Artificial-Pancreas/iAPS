@@ -43,7 +43,7 @@ struct ActiveCOBView: View {
                 domain: 0 ... maximum
             )
             .chartXScale(
-                domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
+                domain: Date.now.removingTimeInterval(.hours(24)) ... Date.now
             )
             .chartLegend(.hidden)
     }

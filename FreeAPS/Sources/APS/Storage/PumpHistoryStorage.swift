@@ -204,7 +204,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
             let appended = BaseFileStorage.doAppend(newEvents, existingValues: base, uniqBy: \.identity)
             let now = Date.now
             return appended
-                .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) >= now }
+                .filter { $0.timestamp.addingTimeInterval(.hours(24)) >= now }
                 .sorted { $0.timestamp > $1.timestamp }
         }
         // oldest -> newest

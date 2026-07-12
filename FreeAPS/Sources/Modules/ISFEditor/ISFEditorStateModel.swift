@@ -15,7 +15,7 @@ extension ISFEditor {
         @Published var autotune: Autotune?
         @Published var sensitivity: Decimal?
 
-        let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
+        let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
         override init(resolver: Resolver) {
             super.init(resolver: resolver)

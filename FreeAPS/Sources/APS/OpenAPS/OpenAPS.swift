@@ -839,7 +839,7 @@ actor OpenAPS: Sendable {
         var data_ = [tddData(date: time, tdd: (uniqueEvents.first?.tdd ?? 0) as Decimal)]
 
         for a in uniqueEvents {
-            if a.timestamp ?? .distantFuture <= time.addingTimeInterval(-24.hours.timeInterval) {
+            if a.timestamp ?? .distantFuture <= time.removingTimeInterval(.hours(24)) {
                 let b = tddData(
                     date: a.timestamp ?? .distantFuture,
                     tdd: (a.tdd ?? 0) as Decimal
@@ -853,7 +853,7 @@ actor OpenAPS: Sendable {
 
         // Only fetch once. Use same (previous) fetch
         let twoHoursArray = uniqueEvents
-            .filter({ ($0.timestamp ?? Date()) >= Date.now.addingTimeInterval(-2.hours.timeInterval) })
+            .filter({ ($0.timestamp ?? Date()) >= Date.now.removingTimeInterval(.hours(2)) })
         var nrOfIndeces = twoHoursArray.count
         let totalAmount = twoHoursArray.compactMap({ each in each.tdd ?? 0 }).reduce(0, +)
 
@@ -890,7 +890,7 @@ actor OpenAPS: Sendable {
             overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
             let addedMinutes = Int(duration)
             let date = overrideArray.first?.date ?? Date()
-            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !unlimited {
+            if date.addingTimeInterval(.minutes(addedMinutes)) < Date(), !unlimited {
                 useOverride = false
                 if await overrideStorage.cancelProfile() != nil {
                     debug(.nightscout, "Override ended, duration: \(duration) minutes")
@@ -973,7 +973,7 @@ actor OpenAPS: Sendable {
                 duration_ = Int(truncating: tempTargetsArray.first?.duration as? NSNumber ?? 0)
                 hbt = tempTargetsArray.first?.hbt ?? Double(hbt_)
                 let startDate = tempTargetsArray.first?.startDate ?? Date()
-                let durationPlusStart = startDate.addingTimeInterval(duration_.minutes.timeInterval)
+                let durationPlusStart = startDate.addingTimeInterval(.minutes(duration_))
                 dd = durationPlusStart.timeIntervalSinceNow.minutes
 
                 if dd > 0.1 {

@@ -6,7 +6,7 @@ extension TargetsEditor {
 
         @Published var items: [Item] = []
 
-        let timeValues = stride(from: 0.0, to: TimeInterval.days(1), by: TimeInterval.minutes(30)).map { $0 }
+        let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
         var rateValues: [Decimal] {
             switch units {

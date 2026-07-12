@@ -82,7 +82,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
                 let now = Date()
                 let filtered = appended
-                    .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > now }
+                    .filter { $0.dateString.addingTimeInterval(.hours(24)) > now }
                     .sorted { $0.dateString > $1.dateString }
                 return (filtered, data: newRecords)
             }
@@ -167,7 +167,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
     }
 
     private func getAlarm() async -> GlucoseAlarm? {
-        guard let glucose = await retrieveRaw().last, glucose.dateString.addingTimeInterval(20.minutes.timeInterval) > Date(),
+        guard let glucose = await retrieveRaw().last, glucose.dateString.addingTimeInterval(.minutes(20)) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 
         let settings = await settingsManager.settings

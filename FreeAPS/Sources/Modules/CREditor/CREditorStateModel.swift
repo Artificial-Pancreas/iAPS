@@ -8,7 +8,7 @@ extension CREditor {
         @Published var autotune: Autotune?
         @Published var onlyAutotuneBasals: Bool = false
 
-        let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
+        let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
         let rateValues = stride(from: 1.0, to: 501.0, by: 1.0).map { ($0.decimal ?? .zero) / 10 }
 

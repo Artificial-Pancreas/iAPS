@@ -177,7 +177,7 @@ private final class GeometriesBuilder {
                     if index < uamPredictions.count { candidates.append(uamPredictions[index]) }
 
                     if let minValue = candidates.min() {
-                        let time = deliveredAt.addingTimeInterval(TimeInterval(index) * 5.minutes.timeInterval)
+                        let time = deliveredAt.addingTimeInterval(TimeInterval.minutes(5) * Double(index))
                         tmpLookupGlucoseDots.append((date: time, glucose: minValue))
                     }
                 }
@@ -661,7 +661,7 @@ private final class GeometriesBuilder {
 
     private func calculateBasalPoints() -> (Path, Path) {
         cachedMaxBasalRate = nil
-        let dayAgoTime = Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
+        let dayAgoTime = Date().removingTimeInterval(.hours(24)).timeIntervalSince1970
         let firstTempTime = (data.tempBasals.first?.timestamp ?? Date()).timeIntervalSince1970
         var lastTimeEnd = firstTempTime
         let firstRegularBasalPoints = findRegularBasalPoints(
@@ -700,9 +700,9 @@ private final class GeometriesBuilder {
             path.addLine(to: CGPoint(x: 0, y: ChartConfig.basalHeight))
         }
         let adjustForOptionalExtraHours = data.screenHours > 12 ? data.screenHours - 12 : 0
-        let endDateTime = dayAgoTime + min(max(Int(data.screenHours - adjustForOptionalExtraHours), 12), 24).hours
-            .timeInterval + min(max(Int(data.screenHours - adjustForOptionalExtraHours), 12), 24).hours
-            .timeInterval
+        let endDateTime = dayAgoTime + TimeInterval
+            .hours(min(max(Int(data.screenHours - adjustForOptionalExtraHours), 12), 24)) + TimeInterval
+            .hours(min(max(Int(data.screenHours - adjustForOptionalExtraHours), 12), 24))
         let autotunedBasalPoints = findRegularBasalPoints(
             timeBegin: dayAgoTime,
             timeEnd: endDateTime,
@@ -736,8 +736,8 @@ private final class GeometriesBuilder {
         let firstRec = data.suspensions.first.flatMap { event -> CGRect? in
             guard event.type == .pumpResume else { return nil }
             let tbrTime = self.data.tempBasals.last { $0.timestamp < event.timestamp }
-                .map { $0.timestamp.timeIntervalSince1970 + TimeInterval($0.durationMin ?? 0) * 60 } ?? Date()
-                .addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
+                .map { $0.timestamp.timeIntervalSince1970 + TimeInterval.minutes($0.durationMin ?? 0) } ??
+                Date().removingTimeInterval(.hours(24)).timeIntervalSince1970
 
             let x0 = self.timeToXCoordinate(tbrTime)
             let x1 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970)
@@ -791,7 +791,7 @@ private final class GeometriesBuilder {
             let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970)
             let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop ?? 0))
             let x1 = timeToXCoordinate(
-                tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval
+                tempTarget.createdAt.timeIntervalSince1970 + .minutes(tempTarget.duration)
             )
             let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom ?? 0))
             return CGRect(
@@ -823,7 +823,7 @@ private final class GeometriesBuilder {
             let duration = each.duration
             let xStart = timeToXCoordinate(each.date!.timeIntervalSince1970)
             let xEnd = timeToXCoordinate(
-                each.date!.addingTimeInterval(Int(duration).minutes.timeInterval).timeIntervalSince1970
+                each.date!.addingTimeInterval(.minutes(Int(duration))).timeIntervalSince1970
             )
             let y = glucoseToYCoordinate(Int(each.target))
             return CGRect(
@@ -894,17 +894,17 @@ private final class GeometriesBuilder {
 
         let basalNormalized = profile.map {
             (
-                time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval).timeIntervalSince1970,
+                time: startOfDay.addingTimeInterval(.minutes($0.minutes)).timeIntervalSince1970,
                 rate: $0.rate
             )
         } + profile.map {
             (
-                time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 1.days.timeInterval).timeIntervalSince1970,
+                time: startOfDay.addingTimeInterval(.minutes($0.minutes) + .hours(24)).timeIntervalSince1970,
                 rate: $0.rate
             )
         } + profile.map {
             (
-                time: startOfDay.addingTimeInterval($0.minutes.minutes.timeInterval + 2.days.timeInterval).timeIntervalSince1970,
+                time: startOfDay.addingTimeInterval(.minutes($0.minutes) + .days(2)).timeIntervalSince1970,
                 rate: $0.rate
             )
         }
@@ -974,7 +974,7 @@ private final class GeometriesBuilder {
 
         let lastDeltaTime = last.dateString.timeIntervalSince(deliveredAt)
 
-        let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
+        let additionalTime = CGFloat(TimeInterval(max) * TimeInterval.minutes(5) - lastDeltaTime)
 
         return Swift.min(
             Swift
@@ -987,7 +987,7 @@ private final class GeometriesBuilder {
     }
 
     private static func calculateOneSecondStep(_ fullSize: CGSize, _ data: ChartModel) -> CGFloat {
-        fullSize.width / (CGFloat(min(max(data.screenHours, 2), 24)) * CGFloat(1.hours.timeInterval))
+        fullSize.width / (CGFloat(min(max(data.screenHours, 2), 24)) * CGFloat(TimeInterval.hours(1)))
     }
 
     private func activityToCoordinate(date: Date, activity: Decimal) -> CGPoint {
@@ -1028,7 +1028,7 @@ private final class GeometriesBuilder {
             return .zero
         }
 
-        let predTime = deliveredAt.timeIntervalSince1970 + TimeInterval(index) * 5.minutes.timeInterval
+        let predTime = deliveredAt.timeIntervalSince1970 + TimeInterval.minutes(5) * Double(index)
         let x = timeToXCoordinate(predTime)
         let y = glucoseToYCoordinate(pred)
 
@@ -1036,8 +1036,8 @@ private final class GeometriesBuilder {
     }
 
     private func timeToXCoordinate(_ time: TimeInterval) -> CGFloat {
-        let xOffset = -Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
-        let stepXFraction = fullGlucoseWidth / CGFloat(data.hours.hours.timeInterval)
+        let xOffset = -Date().removingTimeInterval(.hours(24)).timeIntervalSince1970
+        let stepXFraction = fullGlucoseWidth / CGFloat(TimeInterval.hours(data.hours))
         let x = CGFloat(time + xOffset) * stepXFraction
         return x
     }
@@ -1241,12 +1241,12 @@ private final class GeometriesBuilder {
     }
 
     private static func calculateFirstHourDate() -> Date {
-        let firstDate = Date().removingTimeInterval(.days(1))
+        let firstDate = Date().removingTimeInterval(.hours(24))
         return DateInRegion(firstDate, region: .current).dateTruncated(from: .minute)!.date
     }
 
     private func calculateFirstHourPosition() -> CGFloat {
-        let firstDate = Date().addingTimeInterval(-1.days.timeInterval)
+        let firstDate = Date().removingTimeInterval(.hours(24))
         let firstHour = firstHourDate
 
         let lastDeltaTime = firstHour.timeIntervalSince(firstDate)

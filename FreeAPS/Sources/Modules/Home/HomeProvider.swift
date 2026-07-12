@@ -78,7 +78,7 @@ extension Home {
             let now = Date()
             // .retrieve() will read glucose from storage and apply smoothing if needed
             return await glucoseStorage.retrieve().filter {
-                $0.dateString.addingTimeInterval(hours.hours.timeInterval) > now
+                $0.dateString.addingTimeInterval(.hours(hours)) > now
             }
         }
 
@@ -86,35 +86,35 @@ extension Home {
             let now = Date()
             return await glucoseStorage.retrieve().filter {
                 $0.type == GlucoseType.manual.rawValue &&
-                    $0.dateString.addingTimeInterval(hours.hours.timeInterval) > now
+                    $0.dateString.addingTimeInterval(.hours(hours)) > now
             }
         }
 
         func pumpHistory(hours: Int) async -> [PumpHistoryEvent] {
             let now = Date()
             return appCoordinator.pumpHistory.value.filter {
-                $0.timestamp.addingTimeInterval(hours.hours.timeInterval) > now
+                $0.timestamp.addingTimeInterval(.hours(hours)) > now
             }
         }
 
         func tempTargets(hours: Int) async -> [TempTarget] {
             let now = Date()
             return await tempTargetsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
+                $0.createdAt.addingTimeInterval(.hours(hours)) > now
             }
         }
 
         func carbs(hours: Int) async -> [CarbsEntry] {
             let now = Date()
             return await carbsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now && $0.carbs > 0
+                $0.createdAt.addingTimeInterval(.hours(hours)) > now && $0.carbs > 0
             }
         }
 
         func announcement(_ hours: Int) async -> [Announcement] {
             let now = Date()
             return await announcementStorage.validate().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > now
+                $0.createdAt.addingTimeInterval(.hours(hours)) > now
             }
         }
 

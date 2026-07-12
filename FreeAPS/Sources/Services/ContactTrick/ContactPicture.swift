@@ -735,7 +735,7 @@ struct ContactPicture_Previews: PreviewProvider {
                 ),
                 state: .constant(ContactTrickState(
                     glucose: "6.8",
-                    lastLoopDate: .now - 7.minutes,
+                    lastLoopDate: .now - .minutes(7),
                     eventualBG: "6.2"
                 ))
             ).previewDisplayName("bg + eventual + ring1")
@@ -754,7 +754,7 @@ struct ContactPicture_Previews: PreviewProvider {
                 state: .constant(ContactTrickState(
                     glucose: "6.8",
                     trend: "↗︎",
-                    lastLoopDate: .now - 2.minutes
+                    lastLoopDate: .now - .minutes(2)
                 ))
             ).previewDisplayName("lastLoopDate + ring1")
 

@@ -101,7 +101,7 @@ extension DatabaseStatisticsFactory {
         // Last date (recent)
         let current = glucose.first?.date ?? Date()
         // Total time in days
-        let numberOfDays = (current - previous).timeInterval / 8.64E4
+        let numberOfDays = current.timeIntervalSince(previous) / 8.64E4
 
         // Get glucose computations for every case
         let oneDayGlucose = glucoseStats(glucose_24, settings: settings)
@@ -405,7 +405,7 @@ extension DatabaseStatisticsFactory {
         // Last date (recent)
         let first = fetchedGlucose.first?.date ?? Date()
         // Total time in days
-        let numberOfDays = (first - last).timeInterval / 8.64E4
+        let numberOfDays = first.timeIntervalSince(last) / 8.64E4
         let denominator = numberOfDays < 1 ? 1 : numberOfDays
         let justGlucoseArray = fetchedGlucose.compactMap({ each in Int(each.glucose as Int16) })
         let sumReadings = justGlucoseArray.reduce(0, +)
@@ -475,7 +475,7 @@ extension DatabaseStatisticsFactory {
         // Last date (recent)
         let current = loops.first?.start ?? Date()
         // Total time in days
-        let totalTime = (current - previous).timeInterval / 8.64E4
+        let totalTime = current.timeIntervalSince(previous) / 8.64E4
 
         let durationArray = loops.compactMap({ each in each.duration })
         let durationArrayCount = durationArray.count

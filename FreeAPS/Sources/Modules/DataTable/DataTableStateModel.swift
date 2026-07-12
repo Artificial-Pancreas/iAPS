@@ -187,7 +187,7 @@ extension DataTable {
                 }
 
                 // In need of a loop update?
-                if treatment.creationDate.timeIntervalSinceNow > -2.hours.timeInterval {
+                if treatment.creationDate.timeIntervalSinceNow > .hours(-2) {
                     _ = try? await aps.determineBasal(temporaryCarbs: nil)
                 }
             }
@@ -308,8 +308,7 @@ extension DataTable {
                 )
 
                 if newCarbs.carbs != oldCarbs,
-                   (newCarbs.actualDate ?? .distantPast)
-                   .timeIntervalSinceNow > -3.hours.timeInterval
+                   (newCarbs.actualDate ?? .distantPast).timeIntervalSinceNow > TimeInterval.hours(-3)
                 {
                     _ = try? await aps.determineBasal(temporaryCarbs: nil)
                 }

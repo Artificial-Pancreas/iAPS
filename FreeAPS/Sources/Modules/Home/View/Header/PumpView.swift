@@ -230,9 +230,9 @@ struct PumpView: View {
     private func remainingTime(time: TimeInterval) -> some View {
         HStack {
             if time > 0 {
-                let days = Int(time / 1.days.timeInterval)
-                let hours = Int(time / 1.hours.timeInterval)
-                let minutes = Int(time / 1.minutes.timeInterval)
+                let days = Int(time / TimeInterval.days(1))
+                let hours = Int(time / TimeInterval.hours(1))
+                let minutes = Int(time / TimeInterval.minutes(1))
                 let adjustedHours = Int(hours - days * 24)
 
                 if days >= 1 {
@@ -302,9 +302,9 @@ struct PumpView: View {
         let time = expiresAt.timeIntervalSince(timerDate)
 
         switch time {
-        case ...8.hours.timeInterval:
+        case ...TimeInterval.hours(8):
             return .red
-        case ...1.days.timeInterval:
+        case ...TimeInterval.hours(24):
             return .yellow
         default:
             return .green

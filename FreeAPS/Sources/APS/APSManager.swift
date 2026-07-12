@@ -218,7 +218,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             loopStatRecord.end = Date()
             loopStatRecord.duration = Self.roundDouble(
-                (loopStatRecord.end! - loopStatRecord.start).timeInterval / 60, 2
+                loopStatRecord.end!.timeIntervalSince(loopStatRecord.start) / 60, 2
             )
 
             await storage.save(loopOutcome, as: OpenAPS.Enact.outcome)
@@ -269,7 +269,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             let previousLoop = (try? coredataContext.fetch(requestStats)) ?? []
 
             if (previousLoop.first?.end ?? .distantFuture) < thisLoopDate {
-                return Self.roundDouble((thisLoopDate - (previousLoop.first?.end ?? Date())).timeInterval / 60, 1)
+                return Self.roundDouble(thisLoopDate.timeIntervalSince(previousLoop.first?.end ?? Date()) / 60, 1)
             }
             return nil
         }
@@ -324,7 +324,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private func autosens() async -> Bool {
         guard let autosens = await storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
-              (autosens.timestamp ?? .distantPast).addingTimeInterval(30.minutes.timeInterval) > Date()
+              (autosens.timestamp ?? .distantPast).addingTimeInterval(.minutes(30)) > Date()
         else {
             return await openAPS.autosense() != nil
         }
@@ -345,7 +345,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
 
             let lastGlucoseDate = await glucoseStorage.latestDate() ?? .distantPast
-            guard lastGlucoseDate > Date().addingTimeInterval(-12.minutes.timeInterval) else {
+            guard lastGlucoseDate > Date().removingTimeInterval(.minutes(12)) else {
                 debug(.apsManager, "Glucose data is stale")
                 throw APSError.glucoseError(message: "Glucose data is stale")
             }
