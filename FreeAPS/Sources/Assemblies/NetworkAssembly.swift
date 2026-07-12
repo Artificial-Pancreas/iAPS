@@ -59,6 +59,7 @@ final class NetworkAssembly: Assembly {
                 nightscoutManager: r.resolve(NightscoutManager.self)!,
                 databaseManager: r.resolve(DatabaseManager.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
+                reachabilityManager: r.resolve(ReachabilityManager.self)!,
                 statisticsFactory: r.resolve(DatabaseStatisticsFactory.self)!
             )
         }

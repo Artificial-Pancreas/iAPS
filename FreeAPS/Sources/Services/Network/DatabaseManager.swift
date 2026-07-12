@@ -94,11 +94,12 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
 
     func uploadStatistics(dailystat: Statistics, profile: NightscoutProfileStore?) async {
         do {
+            let isNewVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
             try await database.uploadStats(stats: dailystat, version: nil)
             debug(.nightscout, "Statistics uploaded")
             await coreDataStorage.saveStatUploadCount()
             UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
-            await uploadProfileAndSettings(profile: profile, force: true)
+            await uploadProfileAndSettings(profile: profile, force: isNewVersion)
         } catch {
             debug(.nightscout, "Statistics upload failed: \(error.localizedDescription)")
         }

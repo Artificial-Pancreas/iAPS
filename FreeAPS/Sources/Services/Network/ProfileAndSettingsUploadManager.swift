@@ -11,6 +11,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
     private let nightscoutManager: NightscoutManager
     private let databaseManager: DatabaseManager
     private let appCoordinator: AppCoordinator
+    private let reachabilityManager: ReachabilityManager
     private let statisticsFactory: DatabaseStatisticsFactory
 
     let lifetime = Lifetime()
@@ -21,12 +22,22 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
 
     private var latestUploadedStats: StatsDataSnapshot?
 
+    /// throttling when uploads are failing
+    private static let statsRetryInterval: TimeInterval = .minutes(120)
+
+    private var lastStatsUploadAttempt: Date?
+
+    private var isNetworkReachable: Bool {
+        reachabilityManager.isReachable
+    }
+
     init(
         storage: FileStorage,
         settingsManager: SettingsManager,
         nightscoutManager: NightscoutManager,
         databaseManager: DatabaseManager,
         appCoordinator: AppCoordinator,
+        reachabilityManager: ReachabilityManager,
         statisticsFactory: DatabaseStatisticsFactory
     ) {
         self.storage = storage
@@ -34,6 +45,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
         self.nightscoutManager = nightscoutManager
         self.databaseManager = databaseManager
         self.appCoordinator = appCoordinator
+        self.reachabilityManager = reachabilityManager
         self.statisticsFactory = statisticsFactory
     }
 
@@ -58,6 +70,16 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
         {
             return
         }
+
+        guard isNetworkReachable else { return }
+
+        // throttle for failing uploads
+        if let lastStatsUploadAttempt,
+           lastStatsUploadAttempt > Date.now.subtractingTimeInterval(Self.statsRetryInterval)
+        {
+            return
+        }
+        lastStatsUploadAttempt = Date.now
 
         let settings = await settingsManager.settings
 
@@ -85,6 +107,8 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
         if let lastVersionCheck = self.lastVersionCheck,
            let lastCheckDate = lastVersionCheck.date,
            lastCheckDate > Date.now.subtractingTimeInterval(.hours(10)) { return }
+
+        guard isNetworkReachable else { return }
 
         await databaseManager.fetchVersion()
         lastVersionCheck = await coreDataStorage.fetchVersion()
