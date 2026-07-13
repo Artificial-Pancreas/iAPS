@@ -178,6 +178,7 @@ actor BaseNightscoutManager: NightscoutManager {
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async {
         let settings = appCoordinator.settings.value
         guard settings.isUploadEnabled,
+              !NightscoutUploadPause.isPaused,
               let profile,
               let ps = profile.store[profile.defaultProfile],
               let ns = nightscoutAPI

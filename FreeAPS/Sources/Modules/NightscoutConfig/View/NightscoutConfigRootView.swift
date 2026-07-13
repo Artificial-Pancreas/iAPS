@@ -13,6 +13,7 @@ extension NightscoutConfig {
         @State var displayPopUp = false
         @State var editedScheduleGroup: UploadScheduleGroup?
         @State var lastUploadsShown = false
+        @State var pauseOptionsShown = false
 
         @FetchRequest(
             entity: ImportError.entity(),
@@ -124,6 +125,18 @@ extension NightscoutConfig {
                         uploadScheduleRow(.glucose, schedule: state.glucoseUploadSchedule)
                         uploadScheduleRow(.treatmentsAndLoops, schedule: state.treatmentsAndLoopsUploadSchedule)
                         uploadScheduleRow(.deviceStatus, schedule: state.deviceStatusUploadSchedule)
+
+                        if state.uploadsPaused, let pausedUntil = state.uploadsPausedUntil {
+                            HStack {
+                                Text("Uploads paused until")
+                                Spacer()
+                                Text(pausedUntil.formatted(date: .abbreviated, time: .shortened))
+                                    .foregroundStyle(Color.secondary)
+                            }
+                            Button("Resume uploads") { state.resumeUploads() }
+                        } else {
+                            Button("Pause uploads") { pauseOptionsShown = true }
+                        }
                     }
                 } header: {
                     HStack {
@@ -252,6 +265,14 @@ extension NightscoutConfig {
             }
             .sheet(isPresented: $lastUploadsShown) {
                 LastUploadsView()
+            }
+            .confirmationDialog("Pause uploads", isPresented: $pauseOptionsShown, titleVisibility: .visible) {
+                ForEach(UploadPauseDuration.allCases) { duration in
+                    Button(duration.displayName) { state.pauseUploads(for: duration) }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Nightscout uploads are held back until the pause ends, then sent in one batch.")
             }
         }
     }

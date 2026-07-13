@@ -24,7 +24,10 @@ final class NightscoutUploadContext: Sendable {
     }
 
     func canUpload() -> Bool {
-        guard appCoordinator.settings.value.isUploadEnabled, reachabilityManager.isReachable else { return false }
+        guard appCoordinator.settings.value.isUploadEnabled,
+              !NightscoutUploadPause.isPaused,
+              reachabilityManager.isReachable
+        else { return false }
         return apiProvider.api != nil
     }
 
@@ -35,6 +38,26 @@ final class NightscoutUploadContext: Sendable {
             appCoordinator: appCoordinator,
             reachabilityManager: reachabilityManager
         )
+    }
+}
+
+enum NightscoutUploadPause {
+    private static let pausedUntilKey = "nightscoutUpload.pausedUntil"
+
+    static var pausedUntil: Date? {
+        get { UserDefaults.standard.object(forKey: pausedUntilKey) as? Date }
+        set {
+            guard let newValue else {
+                UserDefaults.standard.removeObject(forKey: pausedUntilKey)
+                return
+            }
+            UserDefaults.standard.set(newValue, forKey: pausedUntilKey)
+        }
+    }
+
+    static var isPaused: Bool {
+        guard let pausedUntil else { return false }
+        return pausedUntil > Date()
     }
 }
 

@@ -28,6 +28,7 @@ extension NightscoutConfig {
         @Published var uploading = false
         @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
+        @Published var uploadsPausedUntil: Date?
         @Published var nightscoutFetchEnabled = true // Allow fetch
         @Setting(\.glucoseUploadSchedule) var glucoseUploadSchedule = UploadSchedule()
         @Setting(\.treatmentsAndLoopsUploadSchedule) var treatmentsAndLoopsUploadSchedule = UploadSchedule()
@@ -77,12 +78,47 @@ extension NightscoutConfig {
             subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { self.isUploadEnabled = $0 }
             subscribeSetting(\.nightscoutFetchEnabled, on: $nightscoutFetchEnabled) { self.nightscoutFetchEnabled = $0 }
 
+            uploadsPausedUntil = NightscoutUploadPause.pausedUntil
+            watchForPauseExpiry()
+
             observeUI(appCoordinator.cgmInfo) { me, _ in
                 me.updatedShouldUploadGlucose()
             }
             observeUI(appCoordinator.cgmStatus) { me, _ in
                 me.updatedShouldUploadGlucose()
             }
+        }
+
+        var uploadsPaused: Bool {
+            guard let uploadsPausedUntil else { return false }
+            return uploadsPausedUntil > Date()
+        }
+
+        func pauseUploads(for duration: UploadPauseDuration) {
+            setPause(until: Date.now.addingTimeInterval(duration.timeInterval))
+        }
+
+        func resumeUploads() {
+            setPause(until: nil)
+        }
+
+        private func setPause(until: Date?) {
+            NightscoutUploadPause.pausedUntil = until
+            uploadsPausedUntil = until
+        }
+
+        /// Uploads resume on their own once the deadline passes, but the screen would keep claiming to be
+        /// paused. Clearing the elapsed date both refreshes the UI and tidies the stored value away.
+        private func watchForPauseExpiry() {
+            Task { [weak self] in
+                while !Task.isCancelled {
+                    try? await Task.sleep(for: .seconds(30))
+                    guard let self else { return }
+                    if let until = uploadsPausedUntil, until <= Date() {
+                        setPause(until: nil)
+                    }
+                }
+            }.store(in: lifetime)
         }
 
         private func updatedShouldUploadGlucose() {
@@ -392,6 +428,26 @@ extension NightscoutConfig {
             url = ""
             secret = ""
             appCoordinator.sendNightscoutConfigChanged()
+        }
+    }
+}
+
+enum UploadPauseDuration: Int, Identifiable, CaseIterable {
+    case threeHours = 3
+    case sixHours = 6
+    case twelveHours = 12
+    case twentyHours = 20
+
+    var id: Int { rawValue }
+
+    var timeInterval: TimeInterval { .hours(rawValue) }
+
+    var displayName: String {
+        switch self {
+        case .threeHours: return NSLocalizedString("For 3 hours", comment: "Pause uploads duration")
+        case .sixHours: return NSLocalizedString("For 6 hours", comment: "Pause uploads duration")
+        case .twelveHours: return NSLocalizedString("For 12 hours", comment: "Pause uploads duration")
+        case .twentyHours: return NSLocalizedString("For 20 hours", comment: "Pause uploads duration")
         }
     }
 }

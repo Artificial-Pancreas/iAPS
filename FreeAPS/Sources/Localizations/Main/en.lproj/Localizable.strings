@@ -3876,3 +3876,19 @@ Enact a temp Basal or a temp target */
 "Upload schedules limit how often each data group is uploaded to Nightscout to reduce battery usage. Postponed data is uploaded later in one batch." = "Upload schedules limit how often each data group is uploaded to Nightscout to reduce battery usage. Postponed data is uploaded later in one batch.";
 
 "Data that is not uploaded right away is kept and uploaded when the schedule next allows it." = "Data that is not uploaded right away is kept and uploaded when the schedule next allows it.";
+
+"Pause uploads" = "Pause uploads";
+
+"Resume uploads" = "Resume uploads";
+
+"Uploads paused until" = "Uploads paused until";
+
+"Nightscout uploads are held back until the pause ends, then sent in one batch." = "Nightscout uploads are held back until the pause ends, then sent in one batch.";
+
+"For 3 hours" = "For 3 hours";
+
+"For 6 hours" = "For 6 hours";
+
+"For 12 hours" = "For 12 hours";
+
+"For 20 hours" = "For 20 hours";
