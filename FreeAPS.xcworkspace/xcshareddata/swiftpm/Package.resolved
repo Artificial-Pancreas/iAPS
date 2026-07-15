@@ -1,5 +1,5 @@
 {
-  "originHash" : "de9f20fe99622e725531696cc4e1f37d4c40a70d32968e47af83f33ebb2e8737",
+  "originHash" : "3fb9b35a31f002aec8b33fc537ca047c6a0b59d991f6ada3ae189e9a47ea3607",
   "pins" : [
     {
       "identity" : "cryptoswift",
@@ -38,24 +38,6 @@
       }
     },
     {
-      "identity" : "swift-asn1",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-asn1.git",
-      "state" : {
-        "revision" : "810496cf121e525d660cd0ea89a758740476b85f",
-        "version" : "1.5.1"
-      }
-    },
-    {
-      "identity" : "swift-crypto",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-crypto.git",
-      "state" : {
-        "revision" : "95ba0316a9b733e92bb6b071255ff46263bbe7dc",
-        "version" : "3.15.1"
-      }
-    },
-    {
       "identity" : "swift-numerics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-numerics",
@@ -67,7 +49,7 @@
     {
       "identity" : "swiftcharts",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ivanschuetz/SwiftCharts",
+      "location" : "https://github.com/ivanschuetz/SwiftCharts.git",
       "state" : {
         "branch" : "master",
         "revision" : "c354c1945bb35a1f01b665b22474f6db28cba4a2"
