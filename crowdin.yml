@@ -24,11 +24,11 @@ export_languages:
 files:
   - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
-  - source: /FreeAPS/Resources/Base.lproj/InfoPlist.strings
-    translation: /FreeAPS/Resources/%osx_locale%.lproj/InfoPlist.strings
-  - source: FreeAPS/Sources/Localizations/Shortcuts/en.lproj/AppShortcuts.strings
-    translation: FreeAPS/Sources//Localizations/Shortcuts/%osx_locale%.lproj/AppShortcuts.strings
+  - source: /FreeAPS/Sources/Localizations/InfoPlists/Base.lproj/InfoPlist.strings
+    translation: /FreeAPS/Sources/Localizations/InfoPlists/%osx_locale%.lproj/InfoPlist.strings
+  - source: /FreeAPS/Sources/Localizations/Shortcuts/en.lproj/AppShortcuts.strings
+    translation: /FreeAPS/Sources/Localizations/Shortcuts/%osx_locale%.lproj/AppShortcuts.strings
   - source: /FreeAPS/Sources/Localizations/WatchExtensionPlist/en.lproj/InfoPlist.strings
     translation: /FreeAPS/Sources/Localizations/WatchExtensionPlist/%osx_locale%.lproj/InfoPlist.strings
-  - source: /Settings.bundle/en.lproj/Root.strings
-    translation: /Settings.bundle/%osx_locale%.lproj/Root.strings
+  - source: /FreeAPS/Sources/Localizations/Settings.bundle/en.lproj/Root.strings
+    translation: /FreeAPS/Sources/Localizations/Settings.bundle/%osx_locale%.lproj/Root.strings
