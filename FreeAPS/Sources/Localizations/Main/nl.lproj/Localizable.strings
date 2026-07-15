@@ -1802,7 +1802,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Do you want to discard this meal?" = "Wil je deze maaltijd verwijderen?";
 
-"Set Time" = "Set Time";
+"Set Time" = "Tijd instellen";
 
 // --------- End of AI ---------
 
@@ -2765,7 +2765,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "TightFontTracking" = "Strak";
 
 /* Contact Image, settings, normal font tracking */
-"NormalFontTracking" = "TIR ";
+"NormalFontTracking" = "Normaal";
 
 /* Contact Image, settings, wide font tracking */
 "WideFontTracking" = "Breed";
@@ -3710,3 +3710,114 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Je iAPS build verloopt op %1$@ (%2$d dagen resterend). TestFlight builds moeten elke 90 dagen worden vernieuwd.";
 
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Je iAPS build verloopt op %1$@ (%2$d dagen resterend). TestFlight builds moeten elke 90 dagen worden vernieuwd.";
+
+"Cancel temp" = "Annuleer tijdelijk doel";
+
+"No " = "Nee ";
+"%.1f× serving" = "%.1f× portie";
+"Edit Portion" = "Bewerk portie";
+"Remove from meal" = "Verwijder van maaltijd";
+"Discard Meal?" = "Verwijder maaltijd?";
+"Discard Meal" = "Maaltijd verwijderen";
+"Nutrient" = "Voedingswaarde";
+"Add Micronutrient" = "Micronutriënten toevoegen";
+"Added" = "Toegevoegd";
+"%d micros" = "%d micro's";
+"Fiber • %d" = "Vezels • %d";
+
+"Target Glucose" = "Doel glucose";
+"AI is still thinking…" = "AI denkt nog steeds na…";
+"AI service error (code: %d)" = "AI servicefout (code: %d)";
+"APS" = "APS";
+"Absolute Safety TBR" = "Absolute veiligheidsmaatregel TBR";
+"Additional details for AI..." = "Aanvullende gegevens voor AI...";
+"An image is available in your clipboard" = "Er is een afbeelding beschikbaar in je klembord";
+"Analysis Failed" = "Analyse mislukt";
+"Analyzing food with AI…" = "Voedsel analyseren met AI…";
+"Autosens Maximum" = "Autosens max";
+"Autosens Minimum" = "Autosens min";
+"Barcode scan" = "Barcode scan";
+"Barcode scanning failed: %@" = "Barcode scannen mislukt: %@";
+"Basal Shortcuts are disabled because iAPS is in cLosed loop mode" = "Basale snelkoppelingen zijn uitgeschakeld omdat iAPS in actieve modus is";
+"COB" = "COB";
+"Camera in use by another app" = "Camera in gebruik door een andere app";
+"Capture a new photo with your camera" = "Maak een nieuwe foto met je camera";
+"DIA" = "DIA";
+"Delete preset \"\(preset.displayName)\"" = "Preset \"\\(preset.displayName)\" verwijderen";
+"Dexcom G7 app" = "Dexcom G7 app";
+"Enter a tag name (e.g., breakfast, snack, low-carb)" = "Voer een tagnaam in (bijv. ontbijt, snack, lage carb)";
+"Factor" = "Factor";
+"Factors" = "Factoren";
+"Failed to create analysis request" = "Kan geen analyseverzoek maken";
+"Failed to decode response: %@" = "Fout bij het decoderen van antwoord: %@";
+"Failed to parse AI analysis results" = "Resultaten analyseren van AI mislukt";
+"Failed to process image for analysis" = "Kan afbeelding voor analyse niet verwerken";
+"Finished in" = "Afgerond in";
+"First Hour SMBs are Off (24 hours)" = "Eerste uur SMB's uitgeschakeld (24 uur)";
+"HbA1C" = "HbA1c";
+"Header" = "Koptekst";
+"IOB" = "IOB";
+"Invalid API URL" = "Ongeldige API URL";
+"Invalid API response" = "Ongeldige API reactie";
+"Invalid CGM reading (HIGH)." = "Ongeldige CGM-uitlezing (HOOG).";
+"Invalid barcode format" = "Ongeldig barcode formaat";
+"Invalid response from AI service" = "Ongeldige reactie van de AI service";
+"Last Hour SMBs are Off (24 hours)" = "Laatste uur SMB's uitgeschakeld (24 uur)";
+"Latest reading:" = "Laatste meting:";
+"Loop" = "Loop";
+"Manual Adjustments" = "Handmatige aanpassingen";
+"Manual entry" = "Handmatige invoer";
+"Max Basal exceeded!" = "Maximale bolus overschreden!";
+"Micronutrients" = "Micronutriënten";
+"Network error: %@" = "Netwerkfout: %@";
+"Nightscout" = "Nightscout";
+"No Patch" = "Geen patch";
+"No Pod" = "Geen Pod";
+"No data received" = "Geen gegevens ontvangen";
+"No foods found" = "Geen voedingsmiddelen gevonden";
+"No images found" = "Geen afbeeldingen gevonden";
+"No readings" = "Geen metingen";
+"No suggestion found" = "Geen aanbevelingen gevonden";
+"Old" = "Oud";
+"Online database search" = "Online database zoeken";
+"Open Settings" = "Open instellingen";
+"Open \(latestReadingFrom.displayName)" = "Open \\(latestReadingFrom.displayName)";
+"OpenAPS" = "OpenAPS";
+"Pinch to zoom • Drag to reposition" = "Knijp om te zoomen • Sleep om te verplaatsen";
+"Position the barcode within the frame" = "Plaats de barcode binnen het kader";
+"Profile Name" = "Profielnaam";
+"Reading from \(appName)" = "Lezen vanuit \\(appName)";
+"Reading from:" = "Lezen vanuit:";
+"Removed from meal" = "Verwijderd uit maaltijd";
+"SMBs and High Temps Disabled." = "SMB's en hoge temps uitgeschakeld.";
+"Saving image..." = "Afbeelding opslaan...";
+"Searching for images..." = "Zoeken naar afbeeldingen...";
+"Searching..." = "Bezig met zoeken...";
+"Select and edit a photo from your library" = "Selecteer en bewerk een foto uit je bibliotheek";
+"Server error (%d)" = "Serverfout (%d)";
+"Shared App Group CGM" = "Gedeelde app groep";
+"The Loop Mode" = "De Loop-modus";
+"The Meal" = "De maaltijd";
+"The scanned barcode is not valid" = "De gescande barcode is niet geldig";
+"Toggles" = "Schakelaars";
+"Too many requests. Please try again later." = "Te veel verzoeken. Probeer het later opnieuw.";
+"Trend" = "Trend";
+"UAM" = "UAM";
+"Undo" = "Ongedaan maken";
+"Upload Previous Day's Log" = "Vorige dag logboek uploaden";
+"Use Clipboard Image" = "Afbeelding klembord gebruiken";
+"Use Image" = "Afbeelding gebruiken";
+"Use Now" = "Gebruik nu";
+"\(Int(progress.percent.rounded())) %" = "\\(Int(progress.percent.rounded())) %";
+"\(imageURLs.count) images" = "\\(imageURLs.count) afbeeldingen";
+"\(lastLoopMinutesAgo) " = "\\(lastLoopMinutesAgo) ";
+"\(state.hours) hours" = "\\(state.hours) uren";
+"\(state.percentage.formatted(.number)) % Insulin" = "\\(state.percentage.formatted(.number)) % insuline";
+"\(value) hours" = "\\(value) uren";
+"has been added to iAPS" = "is toegevoegd aan iAPS";
+"hour" = "uur";
+"iAPS" = "iAPS";
+"iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS heeft toegang tot de camera nodig om barcodes te scannen. Activeer het in Instellingen.";
+"too small temp basal amount" = "te klein tijdelijk basaal";
+"⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Waarschuwing! De ingevoerde hoeveelheid insuline is groter dan je maximale bolus instelling!";
+" Target Glucose" = " Doel glucosewaarde";
