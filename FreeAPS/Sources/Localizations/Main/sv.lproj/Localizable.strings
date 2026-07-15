@@ -465,6 +465,15 @@ Enact a temp Basal or a temp target */
 "Pump config" = "Pumpkonfiguration";
 
 /*  */
+"Incomplete pump setup" = "Ofullständig pumpinställning";
+
+/*  */
+"The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list)." = "Den tidigare installationen för %@ slutfördes inte fullt/korrekt. Ta bort den och starta om iAPS innan du lägger till din pump igen (annars kanske din RileyLink-enhet inte visas i enhetslistan).";
+
+/*  */
+"Remove pump" = "Ta bort pump";
+
+/*  */
 "Delivery limits" = "Maxdoser";
 
 /*  */
