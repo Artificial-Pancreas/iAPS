@@ -88,7 +88,7 @@ extension AddCarbs {
                 }
                 .sheet(isPresented: $isPromptPresented) { editView }
                 .confirmationDialog(
-                    "Discard Meal?",
+                    NSLocalizedString("Discard Meal?", comment: "Discard Meal"),
                     isPresented: $showCancelConfirmation,
                     titleVisibility: .visible,
                     actions: cancelDialogActions,
@@ -236,7 +236,9 @@ extension AddCarbs {
                         color: .green
                     )
 
-                    otherNutritionButton
+                    if state.mealViewMicronutrients {
+                        otherNutritionButton
+                    }
 
                     timeRow
                 }
@@ -320,16 +322,16 @@ extension AddCarbs {
 
             switch (hasFiber, microCount > 0) {
             case (false, false):
-                return "Optional"
+                return state.note
 
             case (true, false):
                 return "Fiber"
 
             case (false, true):
-                return "\(microCount) micros"
+                return String(format: NSLocalizedString("%d micros", comment: "Micros count"), microCount)
 
             case (true, true):
-                return "Fiber • \(microCount)"
+                return String(format: NSLocalizedString("Fiber • %d", comment: "Fiber and micros count"), microCount)
             }
         }
 
@@ -666,7 +668,7 @@ extension AddCarbs {
         ) -> String {
             switch (hasFiber, microCount > 0) {
             case (false, false):
-                return "Optional"
+                return state.note
 
             case (true, false):
                 return "Fiber"

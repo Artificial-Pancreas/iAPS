@@ -1,0 +1,53 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Aktiver tillfälligt målvärde i ${applicationName}";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "Aktiverar ett målvärde i ${applicationName}";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "${applicationName} status";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "${applicationName} status";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Lägg till kolhydrater i ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "Tillåter att lägga till kolhydrater i ${applicationName}";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Aktiverar en profil i ${applicationName}";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Aktiverar en profil i ${applicationName}";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Avbryter en aktiv profil i ${applicationName}";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Avbryter en aktiv profil i ${applicationName}";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} bolus";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Enacts a bolus" = "Ger en bolus med ${applicationName}";
+
+/* iAPS Loop Mode shortcut */
+"${applicationName} Loop Mode" = "${applicationName}-loop-läge";
+
+/* iAPS Loop Mode shortcut description */
+"Activates an ${applicationName} Loop Mode" = "Aktiverar ett ${applicationName}-loop-läge";
+
+/* iAPS Basal shortcut */
+"${applicationName} Temp Basal" = "${applicationName} temporär basal";
+
+/* iAPS Basal shortcut description */
+"Enacts an ${applicationName} Temp Basal" = "Aktiverar en temporär basal i ${applicationName}";
+
+/* iAPS Suspend/Resume shortcut */
+"${applicationName} Suspend/Resume" = "${applicationName} pausa/återuppta";
+
+/* iAPS Suspend/Resume  shortcut description */
+"Suspends/Resumes your ${applicationName} pump" = "Pausar/Återupptar din pump i ${applicationName}";

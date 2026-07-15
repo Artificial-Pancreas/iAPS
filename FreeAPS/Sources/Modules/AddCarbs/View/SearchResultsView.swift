@@ -334,8 +334,13 @@ struct SearchResultsView: View {
         }
         .sorted { $0.name < $1.name }
 
+        var name = state.searchResultsState.searchResults.prefix(2).map(\.title).joined(separator: ", ")
+        if state.searchResultsState.searchResults.count > 2 {
+            name = "\(name) +\(state.searchResultsState.searchResults.count - 2)"
+        }
+
         let savedItem = FoodItemDetailed(
-            name: state.searchResultsState.searchResults.description,
+            name: name,
             nutrition: .perServing(
                 values: state.searchResultsState.mealNutritionValues,
                 servingsMultiplier: 1

@@ -59,6 +59,7 @@ Distributing and building TestFlight apps also requires a paid membership.
 
   * **Omnipod EROS**
   * **Omnipod DASH**
+  * **Omnipod 5**
   * **Medtrum TouchCare Nano**
   * **Dana:**
       * Dana-I

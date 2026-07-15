@@ -1,0 +1,53 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Activeer ${applicationName} tijdelijk doel";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} past een tijdelijk doel toe";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "Lijst ${applicationName} status";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "${applicationName} status";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Koolhydraten toevoegen in ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "${applicationName} staat koolhydraat invoer toe";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Activeer een ${applicationName} overschrijvingsvoorinstelling";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Activeert een ${applicationName} overschrijvingsvoorinstelling";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Annuleer ${applicationName} overschrijving";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Annuleert een actieve ${applicationName} overschrijving";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} bolus";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Enacts a bolus" = "${applicationName} probeert een bolus in te voeren";
+
+/* iAPS Loop Mode shortcut */
+"${applicationName} Loop Mode" = "${applicationName} Loop modus";
+
+/* iAPS Loop Mode shortcut description */
+"Activates an ${applicationName} Loop Mode" = "Activeert een ${applicationName} loop modus";
+
+/* iAPS Basal shortcut */
+"${applicationName} Temp Basal" = "${applicationName} Tijdelijke basaal";
+
+/* iAPS Basal shortcut description */
+"Enacts an ${applicationName} Temp Basal" = "Voert een ${applicationName} tijdelijke basaal in";
+
+/* iAPS Suspend/Resume shortcut */
+"${applicationName} Suspend/Resume" = "${applicationName} gepauzeerd/hervatten";
+
+/* iAPS Suspend/Resume  shortcut description */
+"Suspends/Resumes your ${applicationName} pump" = "Pauzeert of hervat je ${applicationName} pomp";
