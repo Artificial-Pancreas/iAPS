@@ -38,3 +38,6 @@
 	path = OmnipodKit
 	url = https://github.com/Artificial-Pancreas/OmnipodKit
 	branch = dev
+[submodule "EversenseKit"]
+	path = EversenseKit
+	url = https://github.com/Artificial-Pancreas/EversenseKit

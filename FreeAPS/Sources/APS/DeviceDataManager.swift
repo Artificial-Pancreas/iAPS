@@ -32,6 +32,8 @@ protocol DeviceDataManager {
 
     func removePumpAsCGM()
 
+    func removePump()
+
     var alertHistoryStorage: AlertHistoryStorage! { get }
 
     var cgmManager: CGMManager? { get }
@@ -433,6 +435,12 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     func removePumpAsCGM() {
         if cgmManager is PumpManagerUI, cgmManager?.pluginIdentifier == pumpManager?.pluginIdentifier {
             cgmManager = nil
+        }
+    }
+
+    func removePump() {
+        DispatchQueue.main.async {
+            self.pumpManager = nil
         }
     }
 
