@@ -3,67 +3,43 @@ import SwiftUI
 
 extension Settings {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
+        @Injected() private var profileAndSettingsUploadManager: ProfileAndSettingsUploadManager!
         @Injected() private var nightscoutManager: NightscoutManager!
+        @Injected() private var databaseManager: DatabaseManager!
 
-        @Published var closedLoop = false
-        @Published var debugOptions = false
-        @Published var animatedBackground = false
-        @Published var profileID: String = "Hypo Treatment"
-        @Published var allowDilution = false
-        @Published var extended_overrides = false
-        @Published var noCarbs = false
-        @Published var allowOneMinuteLoop = false
-        @Published var allowOneMinuteGlucose = false
+        @Setting(\.closedLoop) var closedLoop = false
+        @Setting(\.debugOptions) var debugOptions = false
+        @Setting(\.profileID) var profileID: String = "Hypo Treatment"
+        @Setting(\.allowDilution) var allowDilution = false
+        @Setting(\.extended_overrides) var extended_overrides = false
+        @Setting(\.noCarbs) var noCarbs = false
+        @Setting(\.allowOneMinuteLoop) var allowOneMinuteLoop = false
+        @Setting(\.allowOneMinuteGlucose) var allowOneMinuteGlucose = false
+
         @Published var entities: [Cleared] = CoreDataStack.shared.persistentContainer.managedObjectModel.entities
             .compactMap(\.name).map {
                 Cleared(entity: $0, deleted: false)
             }
 
-        private(set) var buildNumber = ""
-        private(set) var versionNumber = ""
-        private(set) var branch = ""
-        private(set) var copyrightNotice = ""
+        private(set) var buildNumber = Bundle.main.buildVersionNumber ?? "Unknown"
+        private(set) var versionNumber = Bundle.main.releaseVersionNumber ?? "Unknown"
+        private(set) var branch = StateModel.readBranch()
+        private(set) var copyrightNotice = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
 
-        override func subscribe() {
-            subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
-            subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
-            subscribeSetting(\.profileID, on: $profileID) { profileID = $0 }
-            subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
-            subscribeSetting(\.extended_overrides, on: $extended_overrides) { extended_overrides = $0 }
-            subscribeSetting(\.noCarbs, on: $noCarbs) { noCarbs = $0 }
-            subscribeSetting(\.allowOneMinuteLoop, on: $allowOneMinuteLoop) { allowOneMinuteLoop = $0 }
-            subscribeSetting(\.allowOneMinuteGlucose, on: $allowOneMinuteGlucose) { allowOneMinuteGlucose = $0 }
+        override func subscribe() async {}
 
-            broadcaster.register(SettingsObserver.self, observer: self)
-            buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-            versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-
-            // Read branch information from the branch.txt instead of infoDictionary
-            if let branchFileURL = Bundle.main.url(forResource: "branch", withExtension: "txt"),
-               let branchFileContent = try? String(contentsOf: branchFileURL)
-            {
-                let lines = branchFileContent.components(separatedBy: .newlines)
-                for line in lines {
-                    let components = line.components(separatedBy: "=")
-                    if components.count == 2 {
-                        let key = components[0].trimmingCharacters(in: .whitespaces)
-                        let value = components[1].trimmingCharacters(in: .whitespaces)
-
-                        if key == "BRANCH" {
-                            branch = value
-                            break
-                        }
-                    }
+        private static func readBranch() -> String {
+            guard let url = Bundle.main.url(forResource: "branch", withExtension: "txt"),
+                  let content = try? String(contentsOf: url)
+            else { return "Unknown" }
+            for line in content.components(separatedBy: .newlines) {
+                let components = line.components(separatedBy: "=")
+                if components.count == 2, components[0].trimmingCharacters(in: .whitespaces) == "BRANCH" {
+                    return components[1].trimmingCharacters(in: .whitespaces)
                 }
-            } else {
-                branch = "Unknown"
             }
-
-            copyrightNotice = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
-
-            subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
+            return "Unknown"
         }
 
         func logItems() -> [URL] {
@@ -141,13 +117,17 @@ extension Settings {
         }
 
         func uploadProfileAndSettings(_ force: Bool) {
-            NSLog("SettingsState Upload Profile and Settings")
-            nightscoutManager.uploadProfileAndSettings(force)
+            Task {
+                debug(.default, "SettingsState Upload Profile and Settings")
+                await profileAndSettingsUploadManager.uploadProfileAndSettings(force: force)
+            }
         }
 
         func uploadPreviousDayLog() {
-            NSLog("SettingsState Upload Previous Day Log")
-            nightscoutManager.uploadPreviousDayLog()
+            Task {
+                debug(.default, "SettingsState Upload Previous Day Log")
+                await databaseManager.uploadPreviousDayLog()
+            }
         }
 
         func hideSettingsModal() {
@@ -155,16 +135,20 @@ extension Settings {
         }
 
         func deleteOverrides() {
-            nightscoutManager.deleteAllNSoverrrides() // For testing
+            Task {
+                await nightscoutManager.deleteAllNSoverrrides() // For testing
+            }
         }
-    }
-}
 
-extension Settings.StateModel: SettingsObserver {
-    func settingsDidChange(_ settings: FreeAPSSettings) {
-        closedLoop = settings.closedLoop
-        debugOptions = settings.debugOptions
-        allowDilution = settings.allowDilution
+        func deleteStoredData(entity: String) {
+            Task {
+                await CoreDataStack.shared.deleteBatch(entity: entity)
+
+                if ["Override", "OverridePresets", "Auto_ISF"].contains(entity) {
+                    appCoordinator.overridesDidChange()
+                }
+            }
+        }
     }
 }
 

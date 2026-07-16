@@ -17,7 +17,7 @@ private let SecReturnPersistentRef = kSecReturnPersistentRef as String
 private let SecValueData = kSecValueData as String
 
 /// KeychainWrapper is a class to help make Keychain access in Swift more straightforward. It is designed to make accessing the Keychain services more like using NSUserDefaults, which is much more familiar to people.
-final class BaseKeychain: Keychain {
+final class BaseKeychain: Keychain, Sendable {
     enum Config {
         static let defaultAccessibilityLevel = KeychainItemAccessibility.afterFirstUnlock
         static let defaultSynchronizable = true
@@ -38,10 +38,10 @@ final class BaseKeychain: Keychain {
     }
 
     /// ServiceName is used for the kSecAttrService property to uniquely identify this keychain accessor. If no service name is specified, KeychainWrapper will default to using the bundleIdentifier.
-    private(set) var serviceName: String
+    private let serviceName: String
 
     /// AccessGroup is used for the kSecAttrAccessGroup property to identify which Keychain Access Group this entry belongs to. This allows you to use the KeychainWrapper with shared keychain access between different applications.
-    private(set) var accessGroup: String?
+    private let accessGroup: String?
 
     private let defaultSynchronizable: Bool
     private let defaultAccessibilityLevel: KeychainItemAccessibility

@@ -530,7 +530,7 @@ struct MainChartCanvas: View {
                         // only show every second line if screenHours is too big
                         let x = geom.firstHourPosition +
                             geom.oneSecondWidth *
-                            CGFloat(hour) * CGFloat(1.hours.timeInterval)
+                            CGFloat(hour) * CGFloat(TimeInterval.hours(1))
                         path.move(to: CGPoint(x: x, y: 0))
                         path.addLine(to: CGPoint(x: x, y: geom.fullSize.height - 20))
                     }
@@ -557,12 +557,12 @@ struct MainChartCanvas: View {
                     // only show every second time label if screenHours is too big
                     EmptyView()
                 } else {
-                    Text(format.string(from: geom.firstHourDate.addingTimeInterval(hour.hours.timeInterval)))
+                    Text(format.string(from: geom.firstHourDate.addingTimeInterval(.hours(hour))))
                         .font(.chartTimeFont)
                         .position(
                             x: geom.firstHourPosition +
                                 geom.oneSecondWidth *
-                                CGFloat(hour) * CGFloat(1.hours.timeInterval),
+                                CGFloat(hour) * CGFloat(TimeInterval.hours(1)),
                             y: 10.0
                         )
                         .foregroundColor(.secondary)

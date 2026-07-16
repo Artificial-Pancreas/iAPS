@@ -2,15 +2,19 @@ import AppIntents
 import Foundation
 
 struct tempPresetsQuery: EntityQuery {
-    func entities(for identifiers: [tempPreset.ID]) async throws -> [tempPreset] {
+    @MainActor func entities(for identifiers: [TempPreset.ID]) async throws -> [TempPreset] {
         let request = TempPresetsIntentRequest()
-        let tempTargets = request.fetchIDs(identifiers)
+        try await BaseIntentsRequest.awaitStartup()
+
+        let tempTargets = await request.fetchIDs(identifiers)
         return tempTargets
     }
 
-    func suggestedEntities() async throws -> [tempPreset] {
+    @MainActor func suggestedEntities() async throws -> [TempPreset] {
         let request = TempPresetsIntentRequest()
-        let tempTargets = request.fetchAll()
+        try await BaseIntentsRequest.awaitStartup()
+
+        let tempTargets = await request.fetchAll()
         return tempTargets
     }
 }

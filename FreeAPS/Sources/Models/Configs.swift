@@ -62,37 +62,37 @@ enum DateFilter: String, CaseIterable, Identifiable, Codable {
 
         switch self {
         case .oneHour:
-            return now.addingTimeInterval(-1.hours.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.hours(1)) as NSDate
 
         case .twoHours:
-            return now.addingTimeInterval(-2.hours.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.hours(2)) as NSDate
 
         case .threeHours:
-            return now.addingTimeInterval(-3.hours.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.hours(3)) as NSDate
 
         case .today:
             return Calendar.current.startOfDay(for: now) as NSDate
 
         case .day:
-            return now.addingTimeInterval(-24.hours.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.hours(24)) as NSDate
 
         case .twoDays:
-            return now.addingTimeInterval(-2.days.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.days(2)) as NSDate
 
         case .week:
-            return now.addingTimeInterval(-7.days.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.days(7)) as NSDate
 
         case .tenDays:
-            return now.addingTimeInterval(-10.days.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.days(10)) as NSDate
 
         case .fourteenDays:
-            return now.addingTimeInterval(-14.days.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.days(14)) as NSDate
 
         case .month:
-            return now.addingTimeInterval(-30.days.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.days(30)) as NSDate
 
         case .total:
-            return now.addingTimeInterval(-90.days.timeInterval) as NSDate
+            return now.subtractingTimeInterval(.days(90)) as NSDate
 
         case .all:
             return Date.distantPast as NSDate
@@ -100,7 +100,7 @@ enum DateFilter: String, CaseIterable, Identifiable, Codable {
     }
 
     /// The actual interval
-    static func interval(_ data: [Meals]) -> Double? {
+    static func interval(_ data: [MealsSnapshot]) -> Double? {
         guard let first = data.first, let last = data.last, let new = first.actualDate,
               let old = last.actualDate else { return nil }
         return new.timeIntervalSince(old).hours / 24
@@ -120,7 +120,16 @@ public enum IAPSconfig {
     static let version = "iAPS.version"
     static let newVersion = "iAPS.newVersion"
     static let inBolusView = "iAPS.inBolusView"
-    static let statURL = URL(string: "https://submit.open-iaps.app")!
+    static let statURL = {
+        // can be overriden in ConfigOverride.xcconfig for testing
+        if let string = Bundle.main.object(forInfoDictionaryKey: "STAT_URL") as? String,
+           let url = URL(string: string)
+        {
+            return url
+        }
+        return URL(string: "https://submit.open-iaps.app")!
+    }()
+
     /// Colors
     static let headerBackgroundLight = Color.gray.opacity(IAPSconfig.backgroundOpacity)
     static let headerBackgroundDark = Color(.systemGray5) // Color.header2.opacity(1)

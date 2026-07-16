@@ -9,7 +9,7 @@ extension DispatchQueue {
         Thread.isMainThread && OperationQueue.main === OperationQueue.current
     }
 
-    static func safeMainSync<T>(_ block: () throws -> T) rethrows -> T {
+    static func safeMainSync<T>(_ block: @Sendable() throws -> T) rethrows -> T {
         if isMain {
             return try block()
         } else {
@@ -67,7 +67,7 @@ extension DispatchQueue {
         return false
     }
 
-    func safeSync<T>(execute block: () throws -> T) rethrows -> T {
+    func safeSync<T>(execute block: @Sendable() throws -> T) rethrows -> T {
         try autoreleasepool {
             if self === DispatchQueue.main {
                 return try DispatchQueue.safeMainSync(block)

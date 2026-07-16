@@ -1,6 +1,6 @@
 import Foundation
 
-struct AutoISFsettings: JSON, Codable {
+struct AutoISFsettings: JSON, Codable, Sendable {
     var autoisf: Bool = false
     var autocr: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0

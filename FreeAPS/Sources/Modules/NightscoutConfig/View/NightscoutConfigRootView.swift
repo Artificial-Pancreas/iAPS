@@ -11,11 +11,14 @@ extension NightscoutConfig {
         @State var isImportAlertPresented = false
         @State var importedHasRun = false
         @State var displayPopUp = false
+        @State var editedScheduleGroup: UploadScheduleGroup?
+        @State var lastUploadsShown = false
+        @State var pauseOptionsShown = false
 
         @FetchRequest(
             entity: ImportError.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
-                format: "date > %@", Date().addingTimeInterval(-1.minutes.timeInterval) as NSDate
+                format: "date > %@", Date().subtractingTimeInterval(.minutes(1)) as NSDate
             )
         ) var fetchedErrors: FetchedResults<ImportError>
 
@@ -35,6 +38,54 @@ extension NightscoutConfig {
             let formatter = NumberFormatter()
             formatter.maximumFractionDigits = 0
             return formatter
+        }
+
+        private func uploadScheduleRow(_ group: UploadScheduleGroup, schedule: UploadSchedule) -> some View {
+            Button { editedScheduleGroup = group } label: {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(group.displayName).foregroundStyle(Color.primary)
+                        Text(scheduleDescription(schedule))
+                            .font(.caption)
+                            .foregroundStyle(Color.secondary)
+                    }
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.tertiary)
+                }
+            }
+        }
+
+        private func scheduleDescription(_ schedule: UploadSchedule) -> String {
+            [
+                String(
+                    format: NSLocalizedString("Wi-Fi: %@", comment: "Upload schedule summary"),
+                    networkDescription(schedule.onWifi)
+                ),
+                String(
+                    format: NSLocalizedString("Mobile data: %@", comment: "Upload schedule summary"),
+                    networkDescription(schedule.onCellular)
+                )
+            ].joined(separator: "\n")
+        }
+
+        private func networkDescription(_ network: UploadNetworkSchedule) -> String {
+            if network.interval != .always, network.alwaysWhileCharging {
+                return String(
+                    format: NSLocalizedString("%@ (always while charging)", comment: "Upload schedule summary"),
+                    network.interval.displayName
+                )
+            }
+            return network.interval.displayName
+        }
+
+        private func scheduleBinding(for group: UploadScheduleGroup) -> Binding<UploadSchedule> {
+            switch group {
+            case .glucose: return $state.glucoseUploadSchedule
+            case .treatmentsAndLoops: return $state.treatmentsAndLoopsUploadSchedule
+            case .deviceStatus: return $state.deviceStatusUploadSchedule
+            }
         }
 
         var body: some View {
@@ -70,15 +121,42 @@ extension NightscoutConfig {
 
                 Section {
                     Toggle("Upload", isOn: $state.isUploadEnabled)
+                    if state.isUploadEnabled {
+                        uploadScheduleRow(.glucose, schedule: state.glucoseUploadSchedule)
+                        uploadScheduleRow(.treatmentsAndLoops, schedule: state.treatmentsAndLoopsUploadSchedule)
+                        uploadScheduleRow(.deviceStatus, schedule: state.deviceStatusUploadSchedule)
+
+                        if state.uploadsPaused, let pausedUntil = state.uploadsPausedUntil {
+                            HStack {
+                                Text("Uploads paused until")
+                                Spacer()
+                                Text(pausedUntil.formatted(date: .abbreviated, time: .shortened))
+                                    .foregroundStyle(Color.secondary)
+                            }
+                            Button("Resume uploads") { state.resumeUploads() }
+                        } else {
+                            Button("Pause uploads") { pauseOptionsShown = true }
+                        }
+                    }
                 } header: {
-                    Text("Allow Uploads")
+                    HStack {
+                        Text("Allow Uploads")
+                        if state.isUploadEnabled {
+                            Spacer()
+                            Button { lastUploadsShown = true } label: {
+                                Image(systemName: "info.circle")
+                            }
+                        }
+                    }
+                } footer: {
+                    if state.isUploadEnabled {
+                        Text(
+                            "Upload schedules limit how often each data group is uploaded to Nightscout to reduce battery usage. Postponed data is uploaded later in one batch."
+                        )
+                    }
                 }
 
-                if let cgmManager = state.deviceManager.cgmManager,
-                   KnownPlugins.glucoseUploadingAvailable(for: cgmManager),
-                   !cgmManager.shouldSyncToRemoteService,
-                   state.isUploadEnabled
-                {
+                if state.cgmDisablesGlucoseUpload, state.isUploadEnabled {
                     Section {
                         HStack {
                             Text("Glucose upload disabled in CGM settings").foregroundStyle(.red)
@@ -154,7 +232,7 @@ extension NightscoutConfig {
                 header: { Text("Backfill glucose") }
                 footer: { Text("Fetches old glucose readings from Nightscout") }
 
-                if state.isUploadEnabled, appCoordinator.shouldUploadGlucose {
+                if state.isUploadEnabled, state.cgmEnablesGlucoseUpload {
                     Section {
                         HStack {
                             Text("Days").foregroundStyle(.secondary)
@@ -181,6 +259,115 @@ extension NightscoutConfig {
             .navigationBarTitleDisplayMode(.automatic)
             .alert(isPresented: $isImportAlertPresented) {
                 importAlert!
+            }
+            .sheet(item: $editedScheduleGroup) { group in
+                UploadScheduleEditor(title: group.displayName, schedule: scheduleBinding(for: group))
+            }
+            .sheet(isPresented: $lastUploadsShown) {
+                LastUploadsView()
+            }
+            .confirmationDialog("Pause uploads", isPresented: $pauseOptionsShown, titleVisibility: .visible) {
+                ForEach(UploadPauseDuration.allCases) { duration in
+                    Button(duration.displayName) { state.pauseUploads(for: duration) }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Nightscout uploads are held back until the pause ends, then sent in one batch.")
+            }
+        }
+    }
+}
+
+extension NightscoutConfig {
+    struct LastUploadsView: View {
+        @Environment(\.dismiss) private var dismiss
+
+        // names must match the gate names of the NightscoutUploads entities
+        private static let entities: [(name: String, label: String)] = [
+            ("glucose", NSLocalizedString("Glucose", comment: "Upload entity")),
+            ("pumpHistory", NSLocalizedString("Pump history", comment: "Upload entity")),
+            ("carbs", NSLocalizedString("Carbs", comment: "Upload entity")),
+            ("tempTargets", NSLocalizedString("Temp targets", comment: "Upload entity")),
+            ("loopStatus", NSLocalizedString("Loop status", comment: "Upload entity")),
+            ("overrides", NSLocalizedString("Overrides", comment: "Upload entity")),
+            ("podAge", NSLocalizedString("Pod age", comment: "Upload entity")),
+            ("cgmState", NSLocalizedString("CGM state", comment: "Upload entity")),
+            ("pumpStatus", NSLocalizedString("Pump status", comment: "Upload entity")),
+            ("iob", NSLocalizedString("IOB", comment: "Upload entity"))
+        ]
+
+        var body: some View {
+            NavigationStack {
+                Form {
+                    ForEach(Self.entities, id: \.name) { entity in
+                        HStack {
+                            Text(entity.label)
+                            Spacer()
+                            if let lastUpload = UploadScheduleGate.lastUpload(named: entity.name) {
+                                Text(lastUpload.formatted(date: .abbreviated, time: .shortened))
+                                    .foregroundStyle(Color.secondary)
+                            } else {
+                                Text("Never").foregroundStyle(Color.secondary)
+                            }
+                        }
+                    }
+                }
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .navigationTitle("Last Uploads")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") { dismiss() }
+                    }
+                }
+            }
+        }
+    }
+
+    struct UploadScheduleEditor: View {
+        let title: String
+        @Binding var schedule: UploadSchedule
+        @Environment(\.dismiss) private var dismiss
+
+        var body: some View {
+            NavigationStack {
+                Form {
+                    Section {
+                        Picker("Upload", selection: $schedule.onWifi.interval) {
+                            ForEach(UploadScheduleInterval.wifiCases) { interval in
+                                Text(interval.displayName).tag(interval)
+                            }
+                        }
+                        if schedule.onWifi.interval != .always {
+                            Toggle("Always upload while charging", isOn: $schedule.onWifi.alwaysWhileCharging)
+                        }
+                    } header: {
+                        Text("On Wi-Fi")
+                    }
+
+                    Section {
+                        Picker("Upload", selection: $schedule.onCellular.interval) {
+                            ForEach(UploadScheduleInterval.allCases) { interval in
+                                Text(interval.displayName).tag(interval)
+                            }
+                        }
+                        if schedule.onCellular.interval != .always {
+                            Toggle("Always upload while charging", isOn: $schedule.onCellular.alwaysWhileCharging)
+                        }
+                    } header: {
+                        Text("On mobile data")
+                    } footer: {
+                        Text("Data that is not uploaded right away is kept and uploaded when the schedule next allows it.")
+                    }
+                }
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") { dismiss() }
+                    }
+                }
             }
         }
     }

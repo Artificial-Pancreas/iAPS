@@ -3,7 +3,7 @@ import Foundation
 import Intents
 
 struct OverrideEntity: AppEntity, Identifiable {
-    static var defaultQuery = OverrideQuery()
+    static let defaultQuery = OverrideQuery()
 
     var id: UUID
     var name: String
@@ -13,7 +13,7 @@ struct OverrideEntity: AppEntity, Identifiable {
         DisplayRepresentation(title: "\(name)")
     }
 
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Presets"
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Presets"
 }
 
 enum OverrideIntentError: Error {
@@ -23,16 +23,10 @@ enum OverrideIntentError: Error {
 
 struct ApplyOverrideIntent: AppIntent {
     // Title of the action in the Shortcuts app
-    static var title: LocalizedStringResource = "Activate an Override Preset"
+    static let title: LocalizedStringResource = "Activate an Override Preset"
 
     // Description of the action in the Shortcuts app
-    static var description = IntentDescription("Allow to activate an overrride preset.")
-
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
+    static let description = IntentDescription("Allow to activate an overrride preset.")
 
     @Parameter(title: "Preset") var preset: OverrideEntity?
 
@@ -55,88 +49,84 @@ struct ApplyOverrideIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        do {
-            let presetToApply: OverrideEntity
-            if let preset = preset {
-                presetToApply = preset
-            } else {
-                presetToApply = try await $preset.requestDisambiguation(
-                    among: intentRequest.fetchPresets(),
-                    dialog: "Which override preset would you like to activate?"
-                )
-            }
+        let intentRequest = OverrideIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
 
-            let displayName: String = presetToApply.name
-            if confirmBeforeApplying {
-                try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to activate the Override Preset \(displayName)?")
-                )
-            }
-
-            let preset = try intentRequest.findPreset(displayName)
-            let finalOverrideApply = try intentRequest.enactPreset(preset)
-            let isDone = finalOverrideApply != nil ? finalOverrideApply?.isPreset ?? false : false
-
-            let displayDetail: String = isDone ?
-                NSLocalizedString("The Profile Override", comment: "") + " \(displayName) " +
-                NSLocalizedString("is now activated", comment: "") : "Override Activation Failed"
-            return .result(
-                dialog: IntentDialog(stringLiteral: displayDetail)
+        let presetToApply: OverrideEntity
+        if let preset = preset {
+            presetToApply = preset
+        } else {
+            presetToApply = try await $preset.requestDisambiguation(
+                among: intentRequest.fetchPresets(),
+                dialog: "Which override preset would you like to activate?"
             )
-        } catch {
-            throw error
         }
+
+        let displayName: String = presetToApply.name
+        if confirmBeforeApplying {
+            // deprecated, but the fix is iOS 18+ only
+            try await requestConfirmation(
+                result: .result(dialog: "Are you sure you want to activate the Override Preset \(displayName)?")
+            )
+        }
+
+        let preset = try await intentRequest.findPreset(displayName)
+        let finalOverrideApply = try await intentRequest.enactPreset(preset)
+        let isDone = finalOverrideApply?.isPreset ?? false
+
+        let displayDetail: String = isDone ?
+            NSLocalizedString("The Profile Override", comment: "") + " \(displayName) " +
+            NSLocalizedString("is now activated", comment: "") : "Override Activation Failed"
+        return .result(
+            dialog: IntentDialog(stringLiteral: displayDetail)
+        )
     }
 }
 
 struct CancelOverrideIntent: AppIntent {
-    static var title: LocalizedStringResource = "Cancel active override"
-    static var description = IntentDescription("Cancel active override.")
-
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
+    static let title: LocalizedStringResource = "Cancel active override"
+    static let description = IntentDescription("Cancel active override.")
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        do {
-            try intentRequest.cancelOverride()
-            return .result(
-                dialog: IntentDialog(stringLiteral: "Override canceled")
-            )
-        } catch {
-            throw error
-        }
+        let intentRequest = OverrideIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
+
+        await intentRequest.cancelOverride()
+        return .result(
+            dialog: IntentDialog(stringLiteral: "Override canceled")
+        )
     }
 }
 
 struct OverrideQuery: EntityQuery {
-    internal var intentRequest: OverrideIntentRequest
+    @MainActor func entities(for identifiers: [OverrideEntity.ID]) async throws -> [OverrideEntity] {
+        let intentRequest = OverrideIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
 
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
-
-    func entities(for identifiers: [OverrideEntity.ID]) async throws -> [OverrideEntity] {
-        let presets = intentRequest.fetchIDs(identifiers)
+        let presets = await intentRequest.fetchIDs(identifiers)
         return presets
     }
 
-    func suggestedEntities() async throws -> [OverrideEntity] {
-        let presets = try intentRequest.fetchPresets()
-        return presets
+    @MainActor func suggestedEntities() async throws -> [OverrideEntity] {
+        let intentRequest = OverrideIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
+
+        return try await intentRequest.fetchPresets()
     }
 }
 
 final class OverrideIntentRequest: BaseIntentsRequest {
-    func fetchPresets() throws -> ([OverrideEntity]) {
-        let presets = overrideStorage.fetchProfiles().flatMap { preset -> [OverrideEntity] in
+    func fetchPresets() async throws -> ([OverrideEntity]) {
+        let settings = await settingsManager.settings
+        let fetched = await overrideStorage.fetchProfiles()
+        let glucoseFormatter = self.glucoseFormatter(settings)
+        let presets = fetched.flatMap { preset -> [OverrideEntity] in
             let percentage = preset.percentage != 100 ? preset.percentage.formatted() : ""
-            let targetRaw = settingsManager.settings
-                .units == .mgdL ? Decimal(Double(truncating: preset.target ?? 0)) : Double(truncating: preset.target ?? 0)
+
+            let targetRaw = settings
+                .units == .mgdL ? (preset.target ?? 0) : (preset.target ?? 0)
                 .asMmolL
-            let target = (preset.target != 0 || preset.target != 6) ?
+            let target = (preset.target != 0 && preset.target != 6) ?
                 (glucoseFormatter.string(from: targetRaw as NSNumber) ?? "") : ""
             let string = percentage != "" ? percentage + ", " + target : target
 
@@ -149,32 +139,46 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         return presets
     }
 
-    private var glucoseFormatter: NumberFormatter {
+    private func glucoseFormatter(_ settings: FreeAPSSettings) -> NumberFormatter {
+        switch settings.units {
+        case .mmolL: return Self.glucoseFormatterMmol
+        case .mgdL: return Self.glucoseFormatterMgdl
+        }
+    }
+
+    private static let glucoseFormatterMmol = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.roundingMode = .halfUp
+        return formatter
+    }()
+
+    private static let glucoseFormatterMgdl = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        if settingsManager.settings.units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-        }
         formatter.roundingMode = .halfUp
         return formatter
-    }
+    }()
 
-    func findPreset(_ name: String) throws -> OverridePresets {
-        let presetFound = overrideStorage.fetchProfiles().filter({ $0.name == name })
+    func findPreset(_ name: String) async throws -> OverridePresetsSnapshot {
+        let presetFound = await overrideStorage.fetchProfiles().filter({ $0.name == name })
         guard let preset = presetFound.first else { throw OverrideIntentError.NoPresets }
         return preset
     }
 
-    func fetchIDs(_ id: [OverrideEntity.ID]) -> [OverrideEntity] {
-        let presets = overrideStorage.fetchProfiles().filter { id.contains(UUID(uuidString: $0.id ?? "") ?? UUID()) }
+    func fetchIDs(_ id: [OverrideEntity.ID]) async -> [OverrideEntity] {
+        let settings = await settingsManager.settings
+        let glucoseFormatter = self.glucoseFormatter(settings)
+        let presets = await overrideStorage.fetchProfiles().filter { id.contains(UUID(uuidString: $0.id ?? "") ?? UUID()) }
             .map { preset -> OverrideEntity in
                 let percentage = preset.percentage != 100 ? preset.percentage.formatted() : ""
-                let targetRaw = settingsManager.settings
-                    .units == .mgdL ? Decimal(Double(preset.target ?? 0)) : Double(preset.target ?? 0)
+                let targetRaw = settings
+                    .units == .mgdL ? (preset.target ?? 0) : (preset.target ?? 0)
                     .asMmolL
-                let target = (preset.target != 0 || preset.target != 6) ?
+                let target = (preset.target != 0 && preset.target != 6) ?
                     (glucoseFormatter.string(from: targetRaw as NSNumber) ?? "") : ""
                 let string = percentage != "" ? percentage + ", " + target : target
 
@@ -187,47 +191,50 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         return presets
     }
 
-    func enactPreset(_ preset: OverridePresets) throws -> Override? {
-        guard let overridePreset = overrideStorage.fetchProfilePreset(preset.name ?? "") else {
+    func enactPreset(_ preset: OverridePresetsSnapshot) async throws -> OverrideSnapshot? {
+        guard let overridePreset = await overrideStorage.fetchProfilePreset(preset.name ?? "") else {
             return nil
         }
-        let lastActiveOveride = overrideStorage.fetchLatestOverride().first
+        let lastActiveOveride = await overrideStorage.fetchLatestOverride().first
         let isActive = lastActiveOveride?.enabled ?? false
 
         // Cancel the eventual current active override first
         if isActive {
-            let presetName = overrideStorage.isPresetName()
-            if let duration = overrideStorage.cancelProfile(), let last = lastActiveOveride {
-                // let presetName = overrideStorage.isPresetName()
-                let nsString = presetName != nil ? presetName : last.percentage.formatted()
-                nightscoutManager.editOverride(nsString!, duration, last.date ?? Date())
+            let presetName = await overrideStorage.isPresetName()
+            if let duration = await overrideStorage.cancelProfile(), let last = lastActiveOveride {
+                let nsString = presetName ?? last.percentage.formatted()
+                await nightscoutManager.uploadOverride(nsString, duration, last.date ?? Date())
             }
         }
-        overrideStorage.overrideFromPreset(overridePreset)
-        let currentActiveOveride = overrideStorage.fetchLatestOverride().first
-        nightscoutManager.uploadOverride(preset.name ?? "", Double(preset.duration ?? 0), currentActiveOveride?.date ?? Date.now)
+        await overrideStorage.overrideFromPreset(overridePreset)
+        let currentActiveOveride = await overrideStorage.fetchLatestOverride().first
+        await nightscoutManager.uploadOverride(
+            preset.name ?? "",
+            Double(preset.duration ?? 0),
+            currentActiveOveride?.date ?? Date.now
+        )
         return currentActiveOveride
     }
 
-    func cancelOverride() throws {
+    func cancelOverride() async {
         // Is there even a saved Override?
-        if let activeOveride = overrideStorage.fetchLatestOverride().first {
-            let presetName = overrideStorage.isPresetName()
+        if let activeOveride = await overrideStorage.fetchLatestOverride().first {
+            let presetName = await overrideStorage.isPresetName()
             // Is the Override a Preset?
             if let preset = presetName {
-                if let duration = overrideStorage.cancelProfile() {
+                if let duration = await overrideStorage.cancelProfile() {
                     // Update in Nightscout
-                    nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                    await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
                 }
             } else if activeOveride.isPreset {
-                if let duration = overrideStorage.cancelProfile() {
-                    nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                if let duration = await overrideStorage.cancelProfile() {
+                    await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
                 }
             } else {
                 let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                     .formatted() + " %" : "Custom"
-                if let duration = overrideStorage.cancelProfile() {
-                    nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                if let duration = await overrideStorage.cancelProfile() {
+                    await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
                 }
             }
         }

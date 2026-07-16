@@ -98,7 +98,7 @@ extension Bolus {
                                     liveEditing: true
                                 )
                             }.onChange(of: state.manualGlucose) {
-                                state.insulinCalculated = state.calculateInsulin()
+                                state.calculateInsulin()
                             }
                         } header: { Text("New Glucose Missing") }
                     }
@@ -133,7 +133,7 @@ extension Bolus {
                                 .toggleStyle(CheckboxToggleStyle())
                                 .font(.footnote)
                                 .onChange(of: state.useFattyMealCorrectionFactor) {
-                                    state.insulinCalculated = state.calculateInsulin()
+                                    state.calculateInsulin()
                                 }
                             }
                         }
@@ -184,20 +184,22 @@ extension Bolus {
                 if state.amount > 0 {
                     Section {
                         Button {
-                            if let remoteBolus = state.remoteBolus() {
-                                remoteBolusAlert = Alert(
-                                    title: Text("A Remote Bolus Was Just Delivered!"),
-                                    message: Text(remoteBolus),
-                                    primaryButton: .destructive(Text("Bolus"), action: {
-                                        keepForNextWiew = true
-                                        state.add()
-                                    }),
-                                    secondaryButton: .cancel()
-                                )
-                                isRemoteBolusAlertPresented = true
-                            } else {
-                                keepForNextWiew = true
-                                state.add()
+                            Task {
+                                if let remoteBolus = await state.remoteBolus() {
+                                    remoteBolusAlert = Alert(
+                                        title: Text("A Remote Bolus Was Just Delivered!"),
+                                        message: Text(remoteBolus),
+                                        primaryButton: .destructive(Text("Bolus"), action: {
+                                            keepForNextWiew = true
+                                            state.add()
+                                        }),
+                                        secondaryButton: .cancel()
+                                    )
+                                    isRemoteBolusAlertPresented = true
+                                } else {
+                                    keepForNextWiew = true
+                                    state.add()
+                                }
                             }
                         }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
@@ -264,7 +266,7 @@ extension Bolus {
                 trailing: Button {
                     state.hideModal()
                     state.notActive()
-                    if fetch { state.apsManager.determineBasalSync() }
+                    if fetch { state.determineBasal() }
                 }
                 label: { Text("Cancel") }
             )
@@ -273,7 +275,7 @@ extension Bolus {
                 state.waitForCarbs = fetch
                 state.waitForSuggestionInitial = waitForSuggestion
                 state.waitForSuggestion = waitForSuggestion
-                state.insulinCalculated = state.calculateInsulin()
+                state.calculateInsulin()
                 state.start()
             }
             .popup(isPresented: showInfo, alignment: .bottom, direction: .center, type: .default) {

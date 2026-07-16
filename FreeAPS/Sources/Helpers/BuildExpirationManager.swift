@@ -15,10 +15,9 @@ final class BuildExpirationManager {
 
     // MARK: - Computed properties
 
-    var expirationDate: Date {
-        Calendar.current.date(byAdding: .day, value: Self.lifespanDays, to: Bundle.main.buildDate)
-            ?? .distantFuture
-    }
+    let expirationDate: Date = Calendar.current
+        .date(byAdding: .day, value: BuildExpirationManager.lifespanDays, to: Bundle.main.buildDate)
+        ?? .distantFuture
 
     var daysRemaining: Int {
         Calendar.current.dateComponents([.day], from: Date(), to: expirationDate).day ?? 0

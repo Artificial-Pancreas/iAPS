@@ -5,10 +5,14 @@ import Swinject
 extension Snooze {
     struct RootView: BaseView {
         let resolver: Resolver
+        @Injected() private var userNotificationsManager: UserNotificationsManager!
+
         @StateObject var state: StateModel
 
         @State private var selectedInterval = 0
         @State private var snoozeDescription = "nothing to see here"
+
+        @Environment(AppUIState.self) private var appUIState
 
         init(resolver: Resolver) {
             self.resolver = resolver
@@ -62,7 +66,7 @@ extension Snooze {
             var snoozeDescription = ""
             var celltext = ""
 
-            switch state.alarm {
+            switch appUIState.glucoseAlarm {
             case .high:
                 celltext = NSLocalizedString("High Glucose Alarm active", comment: "High Glucose Alarm active")
             case .low:
@@ -96,7 +100,9 @@ extension Snooze {
                     state.snoozeUntilDate = untilDate < Date() ? .distantPast : untilDate
                     debug(.default, "will snooze for \(snoozeFor) until \(dateFormatter.string(from: untilDate))")
                     snoozeDescription = getSnoozeDescription()
-                    BaseUserNotificationsManager.stopSound()
+                    Task {
+                        await userNotificationsManager.stopSound()
+                    }
                     state.hideModal()
                 } label: {
                     Text("Click to Snooze Alerts")
@@ -108,8 +114,8 @@ extension Snooze {
         private var snoozePicker: some View {
             VStack {
                 Picker(selection: $selectedInterval, label: Text("Strength")) {
-                    ForEach(0 ..< pickerTimes.count) {
-                        Text(formatInterval(self.pickerTimes[$0]))
+                    ForEach(Array(pickerTimes.enumerated()), id: \.offset) { index, interval in
+                        Text(formatInterval(interval)).tag(index)
                     }
                 }
                 .pickerStyle(.wheel)
@@ -132,37 +138,5 @@ extension Snooze {
                 snoozeDescription = getSnoozeDescription()
             }
         }
-    }
-}
-
-extension TimeInterval {
-    static func seconds(_ seconds: Double) -> TimeInterval {
-        seconds
-    }
-
-    static func minutes(_ minutes: Double) -> TimeInterval {
-        TimeInterval(minutes: minutes)
-    }
-
-    static func hours(_ hours: Double) -> TimeInterval {
-        TimeInterval(hours: hours)
-    }
-
-    init(minutes: Double) {
-        // self.init(minutes * 60)
-        let m = minutes * 60
-        self.init(m)
-    }
-
-    init(hours: Double) {
-        self.init(minutes: hours * 60)
-    }
-
-    var minutes: Double {
-        self / 60.0
-    }
-
-    var hours: Double {
-        minutes / 60.0
     }
 }

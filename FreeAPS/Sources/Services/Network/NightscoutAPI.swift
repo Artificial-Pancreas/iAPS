@@ -1,130 +1,64 @@
-import Combine
 import CommonCrypto
 import Foundation
-import JavaScriptCore
-import Swinject
+import NightscoutKit
 
-class NightscoutAPI {
+actor NightscoutAPI {
+    private let url: URL
+    private let secret: String?
+
+    private let service = NetworkService()
+
+    private let nightscoutClient: NightscoutClient
+
     init(url: URL, secret: String? = nil) {
         self.url = url
         self.secret = secret?.nonEmpty
+        nightscoutClient = NightscoutClient(siteURL: url, apiSecret: secret)
     }
 
     private enum Config {
-        static let entriesPath = "/api/v1/entries/sgv.json"
         static let uploadEntriesPath = "/api/v1/entries.json"
         static let treatmentsPath = "/api/v1/treatments.json"
         static let statusPath = "/api/v1/devicestatus.json"
         static let profilePath = "/api/v1/profile.json"
-        static let uploadStatisticsPath = "/api/v1/upload/statistics"
-        static let uploadPreferencesPath = "/api/v1/upload/preferences"
-        static let uploadSettingsPath = "/api/v1/upload/settings"
-        static let uploadProfilesPath = "/api/v1/upload/profiles"
-        static let versionPath = "/api/v1/version_check"
         static let retryCount = 2
         static let timeout: TimeInterval = 60
     }
-
-    enum Error: LocalizedError {
-        case badStatusCode
-        case missingURL
-    }
-
-    let url: URL
-    let secret: String?
-
-    private let service = NetworkService()
-
-    @Injected() private var settingsManager: SettingsManager!
 }
 
+extension GlucoseEntry: @retroactive @unchecked Sendable {}
+
 extension NightscoutAPI {
-    func checkConnection() -> AnyPublisher<Void, Swift.Error> {
+    func checkConnection() async throws {
         struct Check: Codable, Equatable {
             var eventType = "Note"
             var enteredBy = "iAPS"
             var notes = "iAPS connected"
         }
-        let check = Check()
-        var request = URLRequest(url: url.appendingPathComponent(Config.treatmentsPath))
 
-        if let secret = secret {
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpMethod = "POST"
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-            request.httpBody = try! JSONCoding.encoder.encode(check)
+        if secret != nil {
+            try await sendPostRequest(Config.treatmentsPath, payload: Check())
         } else {
-            request.httpMethod = "GET"
+            _ = try await sendGetRequest(Config.treatmentsPath)
         }
-
-        return service.run(request)
-            .map { _ in () }
-            .eraseToAnyPublisher()
     }
 
-    /// fetch glucose with [ date >= sinceDate AND date < untilDate ]
-    func fetchLastGlucose(sinceDate: Date? = nil, untilDate: Date? = nil) -> AnyPublisher<[BloodGlucose], Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.entriesPath
-        components.queryItems = [
-            URLQueryItem(name: "count", value: "\(500)"),
-            URLQueryItem(
-                name: "sort$desc",
-                value: "dateString"
-            ) // "date descending" should be the default sorting, but we're specifying it explicitly here, just in case
-        ]
-        if let date = sinceDate {
-            let dateItem = URLQueryItem(
-                name: "find[dateString][$gte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-            components.queryItems?.append(dateItem)
-        }
-        if let date = untilDate {
-            let dateItem = URLQueryItem(
-                name: "find[dateString][$lt]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-            components.queryItems?.append(dateItem)
-        }
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
-        request.timeoutInterval = Config.timeout
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .decode(type: [BloodGlucose].self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<[BloodGlucose], Swift.Error> in
-                warning(.nightscout, "Glucose fetching error: \(error.localizedDescription)")
-                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+    func fetchGlucose(dateInterval: DateInterval) async -> [GlucoseEntry] {
+        await withCheckedContinuation { continuation in
+            nightscoutClient.fetchGlucose(dateInterval: dateInterval, maxCount: 500) { result in
+                switch result {
+                case let .success(entries):
+                    continuation.resume(returning: entries)
+                case let .failure(error):
+                    warning(.nightscout, "Glucose fetching error: \(error.localizedDescription)")
+                    continuation.resume(returning: [])
+                }
             }
-            .compactMap { glucose in
-                glucose
-                    .map {
-                        var reading = $0
-                        reading.glucose = $0.sgv
-                        reading.unfiltered = $0.sgv.map { sgv in Decimal(sgv) }
-                        return reading
-                    }
-            }
-            .eraseToAnyPublisher()
+        }
     }
 
-    func fetchCarbs(sinceDate: Date? = nil) -> AnyPublisher<[CarbsEntry], Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func fetchCarbs(sinceDate: Date? = nil) async -> [CarbsEntry] {
+        var queryItems = [
             URLQueryItem(name: "find[carbs][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
@@ -150,127 +84,65 @@ extension NightscoutAPI {
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gt]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: date.formatted(.iso8601WithFractionalSeconds)
             )
-            components.queryItems?.append(dateItem)
+            queryItems.append(dateItem)
         }
 
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        do {
+            return try await sendGetRequest(
+                Config.treatmentsPath,
+                query: queryItems,
+                as: [CarbsEntry].self,
+                allowsConstrainedNetworkAccess: false
+            )
+        } catch {
+            warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
+            return []
         }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .decode(type: [CarbsEntry].self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<[CarbsEntry], Swift.Error> in
-                warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
-                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(_ date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-
-        let arguments = "find[creation_date][$eq]"
-        let value = Formatter.iso8601withFractionalSeconds.string(from: date)
-
-        components.queryItems = [
-            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
+    func deleteManualGlucose(at date: Date) async throws {
+        let queryItems = [
+            URLQueryItem(name: "find[type][$eq]", value: "mbg"),
             URLQueryItem(
-                name: arguments,
-                value: value
+                name: "find[dateString][$eq]",
+                value: date.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
             )
         ]
 
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        try await sendDeleteRequest(Config.uploadEntriesPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
-    func deleteManualGlucose(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
-            URLQueryItem(name: "find[glucose][$exists]", value: "true"),
-            URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-        ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
-    }
-
-    func deleteInsulin(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func deleteInsulin(at date: Date) async throws {
+        let queryItems = [
             URLQueryItem(name: "find[bolus][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: date.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
             )
         ]
 
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
-    func fetchTempTargets(sinceDate: Date? = nil) -> AnyPublisher<[TempTarget], Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func deleteTreatment(_ treatment: NigtscoutTreatment) async throws {
+        try await deleteTreatment(eventType: treatment.eventType, at: treatment.createdAt)
+    }
+
+    func deleteTreatment(eventType: EventType, at createdAt: Date) async throws {
+        let queryItems = [
+            URLQueryItem(name: "find[eventType][$eq]", value: eventType.rawValue),
+            URLQueryItem(
+                name: "find[created_at][$eq]",
+                value: createdAt.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
+            )
+        ]
+        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
+    }
+
+    func fetchTempTargets(sinceDate: Date? = nil) async -> [TempTarget] {
+        var queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Temporary+Target"),
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
@@ -285,36 +157,26 @@ extension NightscoutAPI {
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gt]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: date.formatted(.iso8601WithFractionalSeconds)
             )
-            components.queryItems?.append(dateItem)
+            queryItems.append(dateItem)
         }
 
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        do {
+            return try await sendGetRequest(
+                Config.treatmentsPath,
+                query: queryItems,
+                as: [TempTarget].self,
+                allowsConstrainedNetworkAccess: false
+            )
+        } catch {
+            warning(.nightscout, "TempTarget fetching error: \(error.localizedDescription)")
+            return []
         }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .decode(type: [TempTarget].self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<[TempTarget], Swift.Error> in
-                warning(.nightscout, "TempTarget fetching error: \(error.localizedDescription)")
-                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
     }
 
-    func fetchAnnouncement(sinceDate: Date? = nil) -> AnyPublisher<[Announcement], Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func fetchAnnouncement(sinceDate: Date? = nil) async -> [Announcement] {
+        var queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Announcement"),
             URLQueryItem(
                 name: "find[enteredBy]",
@@ -324,417 +186,203 @@ extension NightscoutAPI {
         if let date = sinceDate {
             let dateItem = URLQueryItem(
                 name: "find[created_at][$gte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: date.formatted(.iso8601WithFractionalSeconds)
             )
-            components.queryItems?.append(dateItem)
+            queryItems.append(dateItem)
         }
 
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        do {
+            return try await sendGetRequest(
+                Config.treatmentsPath,
+                query: queryItems,
+                as: [Announcement].self,
+                allowsConstrainedNetworkAccess: false
+            )
+        } catch {
+            warning(.nightscout, "Announcement fetching error: \(error.localizedDescription)")
+            return []
         }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .decode(type: [Announcement].self, decoder: JSONCoding.decoder)
-            .eraseToAnyPublisher()
     }
 
-    func deleteAnnouncements() -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func deleteAnnouncements() async throws {
+        let queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Announcement"),
             URLQueryItem(
                 name: "find[created_at][$gte]",
-                value: Formatter.iso8601withFractionalSeconds
-                    .string(from: Date.now)
+                value: Date.now.formatted(.iso8601WithFractionalSeconds)
             )
         ]
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
 
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
-    func deleteNSoverride() -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func deleteNSoverride() async throws {
+        let queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Exercise"),
             URLQueryItem(name: "count", value: "\(1)"), // Delete latest
             URLQueryItem(name: "find[enteredBy]", value: "iAPS") // Don't delete entries created in NS
         ]
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
 
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
-    func deleteOverride(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func deleteOverride(at date: Date) async throws {
+        let queryItems = [
             URLQueryItem(name: "find[Exercise][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                value: date.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)
             )
         ]
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
     // Dev work. Delete all exercise events
-    func deleteAllNSoverrrides() -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
+    func deleteAllNSoverrrides() async throws {
+        let queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Exercise")
         ]
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
-    func uploadTreatments(_ treatments: [NigtscoutTreatment]) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        request.httpBody = try? JSONCoding.encoder.encode(treatments)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    func uploadTreatments(_ treatments: [NigtscoutTreatment]) async throws {
+        try await sendPostRequest(Config.treatmentsPath, payload: treatments)
     }
 
-    func uploadEcercises(_ override: [NigtscoutExercise]) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        request.httpBody = try? JSONCoding.encoder.encode(override)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    func uploadEcercises(_ override: [NigtscoutExercise]) async throws {
+        try await sendPostRequest(Config.treatmentsPath, payload: override)
     }
 
-    func uploadGlucose(_ glucose: [BloodGlucose]) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.uploadEntriesPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
+    func uploadGlucose(_ glucose: [GlucoseEntry]) async throws -> Bool {
         debug(.nightscout, "NS Client: uploading \(glucose.count) glucose entries")
-        request.httpBody = try! JSONCoding.encoder.encode(
-            glucose.map {
-                var entry = $0
-                entry.unfiltered = nil
-                return entry
+        return try await withCheckedThrowingContinuation { continuation in
+            nightscoutClient.uploadEntries(glucose) { result in
+                switch result {
+                case let .success(res):
+                    continuation.resume(returning: res)
+                case let .failure(error):
+                    warning(.nightscout, "Glucose upload error: \(error.localizedDescription)")
+                    continuation.resume(throwing: error)
+                }
             }
+        }
+    }
+
+    func uploadStatus(_ status: NightscoutStatus) async throws {
+        try await sendPostRequest(Config.statusPath, payload: status)
+    }
+
+    func uploadProfile(_ profile: NightscoutProfileStore) async throws {
+        try await sendPostRequest(Config.profilePath, payload: profile)
+    }
+
+    func uploadPreferences(_ preferences: Preferences) async throws {
+        try await sendPostRequest(Config.profilePath, payload: preferences)
+    }
+
+    func fetchProfile() async throws -> [FetchedNightscoutProfileStore] {
+        try await sendGetRequest(
+            Config.profilePath,
+            query: [URLQueryItem(name: "count", value: "1")],
+            as: [FetchedNightscoutProfileStore].self,
+            allowsConstrainedNetworkAccess: false
         )
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
     }
+}
 
-    func uploadStats(_ stats: NightscoutStatistics) -> AnyPublisher<Void, Swift.Error> {
-        let statURL = IAPSconfig.statURL
-        var components = URLComponents()
-        components.scheme = statURL.scheme
-        components.host = statURL.host
-        components.port = statURL.port
-        components.path = Config.uploadStatisticsPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONCoding.encoder.encode(stats)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
-    }
-
-    func fetchVersion() -> AnyPublisher<Version, Swift.Error> {
-        let statURL = IAPSconfig.statURL
-        var components = URLComponents()
-        components.scheme = statURL.scheme
-        components.host = statURL.host
-        components.port = statURL.port
-        components.path = Config.versionPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
-        request.timeoutInterval = Config.timeout
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .decode(type: Version.self, decoder: JSONCoding.decoder)
-            .catch { error -> AnyPublisher<Version, Swift.Error> in
-                warning(.nightscout, "Version fetching error: \(error.localizedDescription) \(request)")
-                return Just(Version(main: "", dev: "")).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-
-    func uploadStatus(_ status: NightscoutStatus) -> AnyPublisher<Void, Swift.Error> {
+extension NightscoutAPI {
+    private func makeRequest(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        allowsConstrainedNetworkAccess: Bool = false
+    ) -> URLRequest {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = Config.statusPath
+        components.path = path
+        components.queryItems = query
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.allowsConstrainedNetworkAccess = allowsConstrainedNetworkAccess
 
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
-        request.httpBody = try! JSONCoding.encoder.encode(status)
-        request.httpMethod = "POST"
 
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        return request
     }
 
-    func uploadPrefs(_ prefs: NightscoutPreferences) -> AnyPublisher<Void, Swift.Error> {
-        let statURL = IAPSconfig.statURL
-        var components = URLComponents()
-        components.scheme = statURL.scheme
-        components.host = statURL.host
-        components.port = statURL.port
-        components.path = Config.uploadPreferencesPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
+    private func makeRequest<Req>(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        payload req: Req,
+        allowsConstrainedNetworkAccess: Bool = false
+    ) -> URLRequest where Req: Encodable {
+        var request = makeRequest(path, query: query, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
+        request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONCoding.encoder.encode(req)
 
-        request.httpBody = try! JSONCoding.encoder.encode(prefs)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        return request
     }
 
-    func uploadSettings(_ settings: NightscoutSettings) -> AnyPublisher<Void, Swift.Error> {
-        let statURL = IAPSconfig.statURL
-        var components = URLComponents()
-        components.scheme = statURL.scheme
-        components.host = statURL.host
-        components.port = statURL.port
-        components.path = Config.uploadSettingsPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        request.httpBody = try! JSONCoding.encoder.encode(settings)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    private func sendGetRequest<Resp: Decodable>(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        as type: Resp.Type,
+        allowsConstrainedNetworkAccess: Bool = false
+    ) async throws -> Resp {
+        let request = makeRequest(path, query: query, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
+        let data = try await service.runAsync(request, retries: Config.retryCount)
+        return try JSONCoding.decoder.decode(type, from: data)
     }
 
-    func uploadProfile(_ profile: NightscoutProfileStore) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.profilePath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        request.httpBody = try! JSONCoding.encoder.encode(profile)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    private func sendGetRequest(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        allowsConstrainedNetworkAccess: Bool = false
+    ) async throws -> Data {
+        let request = makeRequest(path, query: query, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
+        let data = try await service.runAsync(request, retries: Config.retryCount)
+        return data
     }
 
-    func uploadSettingsToDatabase(_ profile: NightscoutProfileStore) -> AnyPublisher<Void, Swift.Error> {
-        let statURL = IAPSconfig.statURL
-        var components = URLComponents()
-        components.scheme = statURL.scheme
-        components.host = statURL.host
-        components.port = statURL.port
-        components.path = Config.uploadProfilesPath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        request.httpBody = try! JSONCoding.encoder.encode(profile)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    private func sendDeleteRequest(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        allowsConstrainedNetworkAccess: Bool = false
+    ) async throws {
+        var request = makeRequest(path, query: query, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
+        request.httpMethod = "DELETE"
+        _ = try await service.runAsync(request, retries: Config.retryCount)
     }
 
-    func uploadPreferences(_ preferences: Preferences) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.profilePath
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        request.httpBody = try! JSONCoding.encoder.encode(preferences)
-        request.httpMethod = "POST"
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    private func sendPostRequest<Req: Encodable, Resp: Decodable>(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        payload req: Req,
+        as type: Resp.Type,
+        allowsConstrainedNetworkAccess: Bool = false
+    ) async throws -> Resp {
+        let request = makeRequest(
+            path,
+            query: query,
+            payload: req,
+            allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess
+        )
+        let data = try await service.runAsync(request, retries: Config.retryCount)
+        return try JSONCoding.decoder.decode(type, from: data)
     }
 
-    /// Upload the previous day's log file (zlib-compressed) to open-iaps.app.
-    func uploadLog(_ logData: Data, logDate: String, appId: String) -> AnyPublisher<Void, Swift.Error> {
-        let statURL = IAPSconfig.statURL
-        var components = URLComponents()
-        components.scheme = statURL.scheme
-        components.host = statURL.host
-        components.port = statURL.port
-        components.path = "/api/v1/upload/logs"
-
-        guard let url = components.url else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
-        }
-        guard let compressed = try? (logData as NSData).compressed(using: .zlib) as Data else {
-            return Fail(error: URLError(.cannotCreateFile)).eraseToAnyPublisher()
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.timeoutInterval = 120
-        request.addValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
-        request.addValue("deflate", forHTTPHeaderField: "Content-Encoding")
-        request.addValue(appId, forHTTPHeaderField: "X-App-Id")
-        request.addValue(logDate, forHTTPHeaderField: "X-Log-Date")
-        request.httpBody = compressed
-
-        return service.run(request)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    private func sendPostRequest<Req: Encodable>(
+        _ path: String,
+        query: [URLQueryItem]? = nil,
+        payload req: Req,
+    ) async throws {
+        let request = makeRequest(path, query: query, payload: req)
+        _ = try await service.runAsync(request, retries: Config.retryCount)
     }
 }
 

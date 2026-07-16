@@ -1,6 +1,7 @@
 import Foundation
+import NightscoutKit
 
-struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
+struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
     enum Direction: String, JSON {
         case tripleUp = "TripleUp"
         case doubleUp = "DoubleUp"
@@ -31,6 +32,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         case activationDate
         case sessionStartDate
         case transmitterID
+        case device
     }
 
     init(from decoder: Decoder) throws {
@@ -56,6 +58,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         activationDate = try container.decodeIfPresent(Date.self, forKey: .activationDate)
         sessionStartDate = try container.decodeIfPresent(Date.self, forKey: .sessionStartDate)
         transmitterID = try container.decodeIfPresent(String.self, forKey: .transmitterID)
+        device = try container.decodeIfPresent(String.self, forKey: .device)
     }
 
     init(
@@ -72,7 +75,8 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         type: String? = nil,
         activationDate: Date? = nil,
         sessionStartDate: Date? = nil,
-        transmitterID: String? = nil
+        transmitterID: String? = nil,
+        device: String? = nil,
     ) {
         self._id = _id
         self.sgv = sgv
@@ -88,6 +92,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
         self.activationDate = activationDate
         self.sessionStartDate = sessionStartDate
         self.transmitterID = transmitterID
+        self.device = device
     }
 
     var _id = UUID().uuidString
@@ -106,9 +111,12 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable {
     let noise: Int?
     var glucose: Int?
     let type: String?
+    // TODO: unused, always nil?
     var activationDate: Date? = nil
     var sessionStartDate: Date? = nil
+    // TODO: unused, always nil?
     var transmitterID: String? = nil
+    var device: String? = nil
 
     var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
 
@@ -142,13 +150,6 @@ extension Decimal {
     var asMgdL: Decimal {
         self / GlucoseUnits.exchangeRate
     }
-
-    func rounded(to scale: Int, roundingMode: NSDecimalNumber.RoundingMode = .bankers) -> Decimal {
-        var result = Decimal()
-        var localCopy = self
-        NSDecimalRound(&result, &localCopy, scale, roundingMode)
-        return result
-    }
 }
 
 extension Double {
@@ -170,5 +171,78 @@ extension BloodGlucose: SavitzkyGolaySmoothable {
             glucose = Int(newValue)
             sgv = Int(newValue)
         }
+    }
+}
+
+extension BloodGlucose {
+    static func from(nightscout entry: GlucoseEntry) -> BloodGlucose? {
+        guard let id = entry.id else { return nil }
+        let direction = (entry.trend?.direction).flatMap { BloodGlucose.Direction(rawValue: $0) }
+        let glucose = Int(entry.glucose.rounded())
+        let glucoseDecimal = Decimal(entry.glucose.rounded())
+        let type: String?
+        switch entry.glucoseType {
+        case .sensor: type = "sgv"
+        case .meter: type = "mbg"
+        }
+        return BloodGlucose(
+            _id: id,
+            sgv: glucose,
+            direction: direction,
+            date: Decimal(entry.date.timeIntervalSince1970 * 1000),
+            dateString: entry.date,
+            unfiltered: glucoseDecimal,
+            uncalibrated: glucoseDecimal,
+            filtered: nil,
+            noise: nil,
+            glucose: glucose,
+            type: type,
+            activationDate: nil,
+            sessionStartDate: nil,
+            transmitterID: nil,
+            device: entry.device,
+        )
+    }
+
+    var toNightscoutEntry: GlucoseEntry? {
+        guard let glucose = (unfiltered.map { Double($0) } ?? sgv.map { Double($0) }) else { return nil }
+
+        let glucoseType: GlucoseEntry.GlucoseType
+        let isCalibration: Bool
+        if type == GlucoseType.manual.rawValue {
+            glucoseType = .meter
+            isCalibration = false
+        } else if type == GlucoseType.sgv.rawValue {
+            glucoseType = .sensor
+            isCalibration = false
+        } else if type == GlucoseType.cal.rawValue {
+            glucoseType = .meter
+            isCalibration = true
+        } else {
+            return nil
+        }
+
+        let trend: GlucoseEntry.GlucoseTrend? = direction.flatMap { Self.trendFromDirection($0.rawValue) }
+
+        return GlucoseEntry(
+            glucose: glucose,
+            date: dateString,
+            device: device,
+            glucoseType: glucoseType,
+            trend: trend,
+            changeRate: nil,
+            isCalibration: isCalibration,
+            condition: nil,
+            id: id
+        )
+    }
+
+    private static func trendFromDirection(_ direction: String?) -> GlucoseEntry.GlucoseTrend? {
+        for trend in GlucoseEntry.GlucoseTrend.allCases {
+            if direction == trend.direction {
+                return trend
+            }
+        }
+        return nil
     }
 }

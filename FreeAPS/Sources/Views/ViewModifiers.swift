@@ -441,10 +441,48 @@ extension UIImage {
     }
 }
 
+private struct FilledImageKey: Hashable {
+    let name: String
+    let color: String
+    let portionPercent: Int
+}
+
+@MainActor private var filledImageCache: [FilledImageKey: Image] = [:]
+
+@MainActor func filledPumpImage(named name: String, color: Color, portion: Double) -> Image {
+    let key = FilledImageKey(name: name, color: color.description, portionPercent: Int((portion * 100).rounded()))
+    if let cached = filledImageCache[key] {
+        return cached
+    }
+    if filledImageCache.count > 200 {
+        filledImageCache.removeAll()
+    }
+    let image = UIImage(imageLiteralResourceName: name)
+        .fillImageUpToPortion(color: color, portion: Double(key.portionPercent) / 100)
+    filledImageCache[key] = image
+    return image
+}
+
 enum HeaderPump {
     case medtrum
     case pod
     case dana
     case medtronic
     case other
+}
+
+/// Similar to `TimelineView`, but it does not ticks while the app is in the background.
+struct ForegroundTimelineView<Content: View>: View {
+    let interval: TimeInterval
+    @ViewBuilder let content: (Date) -> Content
+
+    @Environment(\.scenePhase) private var scenePhase
+
+    var body: some View {
+        if scenePhase == .active {
+            TimelineView(.periodic(from: .now, by: interval)) { content($0.date) }
+        } else {
+            content(Date())
+        }
+    }
 }

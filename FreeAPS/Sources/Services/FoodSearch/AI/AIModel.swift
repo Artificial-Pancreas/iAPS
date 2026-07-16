@@ -111,7 +111,7 @@ extension AnalysiedFoodItem: Decodable {
 
         // To Do: refactor
         for nutrient in MicroNutrient.allCases {
-            if var key = DynamicCodingKey(stringValue: nutrient.codingKey) {
+            if let key = DynamicCodingKey(stringValue: nutrient.codingKey) {
                 if let per100 = try dynamicContainer.decodeNumberIfPresent(forKey: key) {
                     var amount: Decimal
 

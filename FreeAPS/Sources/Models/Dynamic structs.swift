@@ -1,6 +1,6 @@
 import Foundation
 
-struct DynamicVariables: JSON, Codable {
+struct DynamicVariables: JSON, Codable, Sendable {
     var average_total_data: Decimal
     var weightedAverage: Decimal
     var weigthPercentage: Decimal

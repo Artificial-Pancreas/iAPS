@@ -6,9 +6,10 @@ extension Main {
         let resolver: Resolver
         @StateObject var state: StateModel
         @Environment(\.colorScheme) var lightMode
+        @Environment(AppUIState.self) private var appUIState
 
         var colorScheme: ColorScheme {
-            state.lightMode != LightMode.auto ? (state.lightMode == .light ? .light : .dark) : lightMode
+            appUIState.lightMode != LightMode.auto ? (appUIState.lightMode == .light ? .light : .dark) : lightMode
         }
 
         init(resolver: Resolver) {

@@ -16,20 +16,34 @@ extension CGM {
         @Published var smoothGlucose = false
         @Published var sensorDays: Double = 10
 
-        override func subscribe() {
-            subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
-            subscribeSetting(\.sensorDays, on: $sensorDays) { sensorDays = $0 }
+        override func subscribe() async {
+            subscribeSetting(\.smoothGlucose, on: $smoothGlucose) { self.smoothGlucose = $0 }
+            subscribeSetting(\.sensorDays, on: $sensorDays) { self.sensorDays = $0 }
         }
 
         func removePumpAsCGM() {
-            deviceManager.removePumpAsCGM()
+            Task {
+                await deviceManager.removePumpAsCGM()
+            }
         }
 
-        func setupCGM(_ identifier: String?) {
+        func setupNewCgm(_ identifier: String?) {
             cgmIdentifierToSetUp = identifier
-            cgmSetupPresented = identifier != nil && deviceManager.cgmManager == nil
-            cgmSettingsPresented = identifier != nil && deviceManager.cgmManager?.pluginIdentifier == identifier && deviceManager
-                .cgmManager?.isOnboarded == true
+            cgmSetupPresented = true
+            cgmSettingsPresented = false
+        }
+
+        func showCurrentCgmSettings() {
+            guard let cgmInfo = appCoordinator.cgmInfo.value else { return }
+
+            if cgmInfo.isOnboarded {
+                cgmIdentifierToSetUp = nil
+                cgmSetupPresented = false
+                cgmSettingsPresented = true
+            } else {
+                // CGM is set up but not fully onboarded, start the setup for the same CGM manager from scratch
+                setupNewCgm(cgmInfo.identifier)
+            }
         }
     }
 }
@@ -37,7 +51,18 @@ extension CGM {
 extension CGM.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         Task { @MainActor in
-            setupCGM(nil)
+            if cgmSetupPresented {
+                cgmSetupPresented = false
+                cgmIdentifierToSetUp = nil
+
+                // present settings after setup
+                // TODO: will this have propagated already, after setup is complete?
+                cgmSettingsPresented = appCoordinator.cgmInfo.value?.isOnboarded == true
+            } else if cgmSettingsPresented {
+                cgmSetupPresented = false
+                cgmSettingsPresented = false
+                cgmIdentifierToSetUp = nil
+            }
         }
     }
 }

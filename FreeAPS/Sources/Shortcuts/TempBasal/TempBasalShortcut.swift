@@ -33,50 +33,55 @@ struct BasalIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        do {
-            let amount: Double
-            if let quantity = basalQuantity {
-                amount = quantity
-            } else {
-                amount = try await $basalQuantity.requestValue("Enter a Basal Amount")
-            }
-            let basalAmountString = amount.formatted()
-
-            if confirmBeforeApplying {
-                let glucoseString = BolusIntentRequest().currentGlucose() // Fetch current glucose
-                try await requestConfirmation(
-                    result: .result(
-                        dialog: "Your current glucose is \(glucoseString != nil ? glucoseString! : "not available"). Are you sure you want to enact a temp basal \(basalAmountString) U/h for 60 minutes?"
-                    )
-                )
-            }
-            let finalQuantityBasalDisplay = try BasalIntentRequest().basal(amount)
-            return .result(
-                dialog: IntentDialog(stringLiteral: finalQuantityBasalDisplay)
-            )
-
-        } catch {
-            throw error
+        let amount: Double
+        if let quantity = basalQuantity {
+            amount = quantity
+        } else {
+            amount = try await $basalQuantity.requestValue("Enter a Basal Amount")
         }
+        let basalAmountString = amount.formatted()
+
+        let bolusIntentRequest = BolusIntentRequest()
+        let basalIntentRequest = BasalIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
+
+        if confirmBeforeApplying {
+            let glucoseString = await bolusIntentRequest.currentGlucose() // Fetch current glucose
+
+            // deprecated, but the fix is iOS 18+ only
+            try await requestConfirmation(
+                result: .result(
+                    dialog: "Your current glucose is \(glucoseString ?? "not available"). Are you sure you want to enact a temp basal \(basalAmountString) U/h for 60 minutes?"
+                )
+            )
+        }
+        let finalQuantityBasalDisplay = try await basalIntentRequest.basal(amount)
+        return .result(
+            dialog: IntentDialog(stringLiteral: finalQuantityBasalDisplay)
+        )
     }
 }
 
 final class BasalIntentRequest: BaseIntentsRequest {
-    func basal(_ basalAmount: Double) throws -> String {
-        guard !settingsManager.settings.closedLoop else {
+    func basal(_ basalAmount: Double) async throws -> String {
+        let settings = await settingsManager.settings
+        let preferences = await settingsManager.preferences
+        let pumpSettings = await settingsManager.pumpSettings
+
+        guard !settings.closedLoop else {
             return NSLocalizedString("Basal Shortcuts are disabled because iAPS is in cLosed loop mode", comment: "")
         }
-        guard basalAmount >= Double(settingsManager.preferences.bolusIncrement) else {
+        guard basalAmount >= Double(preferences.bolusIncrement) else {
             return NSLocalizedString("too small temp basal amount", comment: "")
         }
 
-        guard basalAmount <= Double(settingsManager.pumpSettings.maxBasal) else {
+        guard basalAmount <= Double(pumpSettings.maxBasal) else {
             return NSLocalizedString("Max Basal exceeded!", comment: "")
         }
 
         let basal = min(
-            max(Decimal(basalAmount), settingsManager.preferences.bolusIncrement),
-            settingsManager.pumpSettings.maxBasal
+            max(Decimal(basalAmount), preferences.bolusIncrement),
+            pumpSettings.maxBasal
         )
 
         let resultDisplay: String =
@@ -85,18 +90,22 @@ final class BasalIntentRequest: BaseIntentsRequest {
                 comment: ""
             )
 
-        apsManager.enactTempBasal(rate: Double(basal), duration: 1.8E3)
+        Task { [apsManager] in
+            _ = await apsManager?.enactTempBasal(rate: Double(basal), duration: 1.8E3)
+        }
         return resultDisplay
     }
 
-    func currentGlucose() -> String? {
-        if let fetchedReading = coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate).first {
+    func currentGlucose() async -> String? {
+        let settings = await settingsManager.settings
+
+        if let fetchedReading = await coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate).first {
             let fetchedGlucose = Decimal(fetchedReading.glucose)
-            let convertedString = settingsManager.settings.units == .mmolL ? fetchedGlucose.asMmolL
+            let convertedString = settings.units == .mmolL ? fetchedGlucose.asMmolL
                 .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) : fetchedGlucose
                 .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))
 
-            return convertedString + " " + NSLocalizedString(settingsManager.settings.units.rawValue, comment: "Glucose Unit")
+            return convertedString + " " + NSLocalizedString(settings.units.rawValue, comment: "Glucose Unit")
         }
         return nil
     }

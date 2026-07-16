@@ -1,14 +1,19 @@
 import Foundation
+import Swinject
 
-final class Token {
+final class Token: Sendable {
+    private let keychain: Keychain
+
+    init(resolver: Resolver) {
+        keychain = resolver.resolve(Keychain.self)!
+    }
+
     func getIdentifier() -> String {
-        let keychain = BaseKeychain()
-        var identfier = keychain.getValue(String.self, forKey: IAPSconfig.id) ?? ""
-        guard identfier.count > 1 else {
-            identfier = UUID().uuidString
-            keychain.setValue(identfier, forKey: IAPSconfig.id)
-            return identfier
+        guard let identifier = keychain.getValue(String.self, forKey: IAPSconfig.id), identifier.count > 1 else {
+            let newIdentifier = UUID().uuidString
+            keychain.setValue(newIdentifier, forKey: IAPSconfig.id)
+            return newIdentifier
         }
-        return identfier
+        return identifier
     }
 }

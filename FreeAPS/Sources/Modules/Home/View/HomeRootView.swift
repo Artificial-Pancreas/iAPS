@@ -1,5 +1,4 @@
 import Charts
-import CoreData
 import SpriteKit
 import SwiftDate
 import SwiftUI
@@ -14,6 +13,8 @@ extension Home {
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
         @State var showExpirationAlert = false
+        @State var expirationAlertTitle = ""
+        @State var expirationAlertMessage = ""
         @State var triggerUpdate = false
         @State var display = false
         @State var displayGlucose = false
@@ -24,60 +25,29 @@ extension Home {
         @State var displayDynamicHistory = false
         @State var displayAllNutrients = false
 
-        let buttonFont = Font.custom("TimeButtonFont", size: 14)
-        let viewPadding: CGFloat = 5
+        private let buttonFont = Font.custom("TimeButtonFont", size: 14)
+        private let viewPadding: CGFloat = 5
 
-        @Environment(\.managedObjectContext) var moc
+        @Environment(AppUIState.self) private var appUIState
+
         @Environment(\.sizeCategory) private var fontSize
         @Environment(\.colorScheme) var colorScheme
 
-        @FetchRequest(
-            entity: Override.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var fetchedPercent: FetchedResults<Override>
-
-        @FetchRequest(
-            entity: OverridePresets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
-                format: "name != %@", "" as String
-            )
-        ) var fetchedProfiles: FetchedResults<OverridePresets>
-
-        @FetchRequest(
-            entity: Auto_ISF.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var fetchedAISF: FetchedResults<Auto_ISF>
-
-        @FetchRequest(
-            entity: TempTargets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var sliderTTpresets: FetchedResults<TempTargets>
-
-        @FetchRequest(
-            entity: TempTargetsSlider.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
-
-        @FetchRequest(
-            entity: Onboarding.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var onboarded: FetchedResults<Onboarding>
-
-        private let numberFormatter: NumberFormatter = {
+        private static let numberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             return formatter
         }()
 
-        private let fetchedTargetFormatterMmol: NumberFormatter = {
+        private static let fetchedTargetFormatterMmol = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
             return formatter
         }()
 
-        private let fetchedTargetFormatterMgdl: NumberFormatter = {
+        private static let fetchedTargetFormatterMgdl = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
@@ -85,27 +55,28 @@ extension Home {
         }()
 
         private var fetchedTargetFormatter: NumberFormatter {
-            state.data.units == .mmolL ? fetchedTargetFormatterMmol : fetchedTargetFormatterMgdl
+            state.data.units == .mmolL ? Self.fetchedTargetFormatterMmol : Self.fetchedTargetFormatterMgdl
         }
 
-        private let targetFormatter: NumberFormatter = {
+        private static let targetFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 1
             return formatter
         }()
 
-        private let tirFormatter: NumberFormatter = {
+        private static let iobFormatter = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }()
+
+        private static let tirFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             return formatter
-        }()
-
-        private let dateFormatter: DateFormatter = {
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = .short
-            return dateFormatter
         }()
 
         private var spriteScene: SKScene {
@@ -121,22 +92,23 @@ extension Home {
         }
 
         var glucoseView: some View {
-            CurrentGlucoseView(
-                recentGlucose: $state.recentGlucose,
-                delta: $state.glucoseDelta,
-                units: $state.data.units,
-                alarm: $state.alarm,
-                lowGlucose: $state.data.lowGlucose,
-                highGlucose: $state.data.highGlucose,
-                alwaysUseColors: $state.alwaysUseColors,
-                displayDelta: $state.displayDelta,
-                scrolling: $displayGlucose, displaySAGE: $state.displaySAGE,
-                displayExpiration: $state.displayExpiration,
-                sensordays: $state.sensorDays,
-                timerDate: $state.data.timerDate
-            )
+            ForegroundTimelineView(interval: 5) { date in
+                CurrentGlucoseView(
+                    recentGlucose: state.recentGlucose,
+                    delta: state.glucoseDelta,
+                    units: state.data.units,
+                    lowGlucose: state.data.lowGlucose,
+                    highGlucose: state.data.highGlucose,
+                    alwaysUseColors: state.alwaysUseColors,
+                    displayDelta: state.displayDelta,
+                    scrolling: displayGlucose, displaySAGE: state.displaySAGE,
+                    displayExpiration: state.displayExpiration,
+                    sensordays: state.sensorDays,
+                    timerDate: date
+                )
+            }
             .onTapGesture {
-                if state.alarm == nil {
+                if appUIState.glucoseAlarm == nil {
                     state.openCGM()
                 } else {
                     state.showModal(for: .snooze)
@@ -145,7 +117,7 @@ extension Home {
             .onLongPressGesture {
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                 impactHeavy.impactOccurred()
-                if state.alarm == nil {
+                if appUIState.glucoseAlarm == nil {
                     state.showModal(for: .snooze)
                 } else {
                     state.openCGM()
@@ -154,16 +126,14 @@ extension Home {
         }
 
         var pumpView: some View {
-            PumpView(
-                reservoir: $state.reservoir,
-                battery: $state.battery,
-                name: $state.pumpName,
-                expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.data.timerDate, timeZone: $state.timeZone,
-                state: state
-            )
+            ForegroundTimelineView(interval: 5) { date in
+                PumpView(
+                    hideInsulinBadge: state.settings?.hideInsulinBadge == true,
+                    timerDate: date
+                )
+            }
             .onTapGesture {
-                if state.pumpDisplayState != nil {
+                if appUIState.pumpInfo != nil {
                     state.setupPump = true
                 }
             }
@@ -171,15 +141,14 @@ extension Home {
         }
 
         var loopView: some View {
-            LoopView(
-                suggestion: $state.data.suggestion,
-                enactedSuggestion: $state.enactedSuggestion,
-                closedLoop: $state.closedLoop,
-                timerDate: $state.data.timerDate,
-                isLooping: $state.isLooping,
-                lastLoopDate: $state.lastLoopDate,
-                manualTempBasal: $state.manualTempBasal
-            )
+            ForegroundTimelineView(interval: 5) { date in
+                LoopView(
+                    suggestion: state.data.suggestion,
+                    enactedSuggestion: state.enactedSuggestion,
+                    closedLoop: state.closedLoop,
+                    timerDate: date,
+                )
+            }
             .onTapGesture {
                 state.isStatusPopupPresented.toggle()
             }.onLongPressGesture {
@@ -187,22 +156,6 @@ extension Home {
                 impactHeavy.impactOccurred()
                 state.runLoop()
             }
-        }
-
-        var tempBasalString: String {
-            guard let tempRate = state.tempRate else {
-                return "?" + NSLocalizedString(" U/hr", comment: "Unit per hour with space")
-            }
-            let rateString = numberFormatter.string(from: tempRate as NSNumber) ?? "0"
-            var manualBasalString = ""
-
-            if state.apsManager.isManualTempBasal {
-                manualBasalString = NSLocalizedString(
-                    " Manual",
-                    comment: "Manual Temp basal"
-                )
-            }
-            return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
         }
 
         var tempTargetString: String? {
@@ -215,21 +168,12 @@ extension Home {
         var info: some View {
             HStack(spacing: 10) {
                 ZStack {
-                    HStack {
-                        if state.pumpSuspended {
-                            Text("Pump suspended")
-                                .font(.extraSmall).bold().foregroundColor(.loopGray)
-                        } else {
-                            Text(tempBasalString)
-                                .font(.statusFont).bold()
-                                .foregroundColor(.insulin)
-                        }
-                    }
+                    TempBasalView(pumpSuspended: state.pumpSuspended, tempRate: state.tempRate)
                 }
                 .padding(.leading, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                if let tempTargetString = tempTargetString, !(state.latestOverride?.enabled ?? false) {
                     Text(tempTargetString)
                         .font(.buttonFont)
                         .foregroundColor(.secondary)
@@ -283,7 +227,7 @@ extension Home {
             ZStack {
                 addHeaderBackground()
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
-                let isOverride = fetchedPercent.first?.enabled ?? false
+                let isOverride = state.latestOverride?.enabled ?? false
                 let isTarget = (state.tempTarget != nil)
                 VStack {
                     Divider()
@@ -298,7 +242,7 @@ extension Home {
                                         .foregroundStyle(colorScheme == .dark ? .loopYellow : .orange)
                                         .padding(8)
                                     if let carbsReq = state.carbsRequired {
-                                        Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                        Text(Self.numberFormatter.string(from: carbsReq as NSNumber)!)
                                             .font(.caption)
                                             .foregroundStyle(.white)
                                             .padding(4)
@@ -329,7 +273,7 @@ extension Home {
                             Spacer()
                         }
                         Button {
-                            (state.bolusProgress != nil) ? showBolusActiveAlert = true :
+                            (appUIState.bolusProgress != nil) ? showBolusActiveAlert = true :
                                 state.showModal(for: .bolus(
                                     waitForSuggestion: state.useCalc ? true : false,
                                     fetch: false
@@ -446,7 +390,7 @@ extension Home {
                 let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
                 // Carbs on Board
                 HStack {
-                    let substance = Double(state.data.suggestion?.cob ?? 0)
+                    let substance = Double(appUIState.latestCOB ?? 0)
                     let max = max(Double(state.maxCOB), 1)
                     let fraction: Double = 1 - (substance / max)
                     let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1))
@@ -459,8 +403,8 @@ extension Home {
                     .frame(width: 12, height: 38)
                     .offset(y: -5)
                     HStack(spacing: 0) {
-                        if let loop = state.data.suggestion, let cob = loop.cob {
-                            Text(numberFormatter.string(from: cob as NSNumber) ?? "0")
+                        if let cob = appUIState.latestCOB {
+                            Text(Self.numberFormatter.string(from: cob as NSNumber) ?? "0")
                                 .font(.statusFont).bold()
                             // Display last loop, unless very old
                         } else {
@@ -474,7 +418,7 @@ extension Home {
 
                 // Insulin on Board
                 HStack {
-                    let substance = Double(state.data.iob ?? 0)
+                    let substance = Double(appUIState.latestIOB ?? 0)
                     let max = max(Double(state.maxIOB), 1)
                     let fraction: Double = 1 - abs(substance) / max
                     let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
@@ -487,9 +431,9 @@ extension Home {
                     .frame(width: 12, height: 38)
                     .offset(y: -5)
                     HStack(spacing: 0) {
-                        if let iob = state.data.iob {
+                        if let iob = appUIState.latestIOB {
                             Text(
-                                targetFormatter.string(from: iob as NSNumber) ?? "0"
+                                Self.iobFormatter.string(from: iob as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
                         } else {
                             Text("?").font(.statusFont).bold()
@@ -505,9 +449,9 @@ extension Home {
                 .frame(minHeight: 200)
                 .overlay {
                     PreviewChart(
-                        readings: $state.readings,
-                        lowLimit: $state.data.lowGlucose,
-                        highLimit: $state.data.highGlucose
+                        readings: state.readings,
+                        lowLimit: state.data.lowGlucose,
+                        highLimit: state.data.highGlucose
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -543,7 +487,7 @@ extension Home {
                 .frame(minHeight: 190)
                 .overlay {
                     ActiveIOBView(
-                        data: $state.iobData,
+                        data: state.iobData,
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -555,7 +499,7 @@ extension Home {
             addBackground()
                 .frame(minHeight: 190)
                 .overlay {
-                    ActiveCOBView(data: $state.iobData)
+                    ActiveCOBView(data: state.iobData)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -567,13 +511,13 @@ extension Home {
                 .frame(minHeight: 280)
                 .overlay {
                     InsulinSummaryView(
-                        neg: $state.neg,
-                        tddChange: $state.tddChange,
-                        tddAverage: $state.tddAverage,
-                        tddYesterday: $state.tddYesterday,
-                        tdd2DaysAgo: $state.tdd2DaysAgo,
-                        tdd3DaysAgo: $state.tdd3DaysAgo,
-                        tddActualAverage: $state.tddActualAverage
+                        neg: state.neg,
+                        tddChange: state.tddChange,
+                        tddAverage: state.tddAverage,
+                        tddYesterday: state.tddYesterday,
+                        tdd2DaysAgo: state.tdd2DaysAgo,
+                        tdd3DaysAgo: state.tdd3DaysAgo,
+                        tddActualAverage: state.tddActualAverage
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -597,7 +541,7 @@ extension Home {
             addBackground()
                 .frame(minHeight: 160)
                 .overlay {
-                    LoopsView(loopStatistics: $state.loopStatistics)
+                    LoopsView(loopStatistics: state.loopStatistics)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -616,11 +560,10 @@ extension Home {
 
         var profileView: some View {
             HStack(spacing: 0) {
-                if let override = fetchedPercent.first {
+                if let override = state.latestOverride {
                     if override.enabled {
                         if override.isPreset {
-                            let profile = fetchedProfiles.first(where: { $0.id == override.id })
-                            if let currentProfile = profile {
+                            if let currentProfile = state.overridePreset {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
@@ -633,7 +576,7 @@ extension Home {
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
                         } else if override.percentage != 100 {
-                            Text((tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
+                            Text((Self.tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
                                 .foregroundStyle(.secondary)
                         } else if override.smbIsOff, !override.smbIsAlwaysOff {
                             Text(NSLocalizedString("No ", comment: "No as in no SMBs")).font(.statusFont)
@@ -649,33 +592,6 @@ extension Home {
                         }
                     }
                 }
-            }
-        }
-
-        func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
-            ZStack {
-                VStack {
-                    HStack {
-                        let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
-                        Text("Bolusing")
-                        Text(
-                            bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
-                                .formatted() + NSLocalizedString(" U", comment: "")
-                        )
-                    }.frame(width: 250, height: 25).font(.bolusProgressBarFont)
-                    HStack(alignment: .bottom, spacing: 5) {
-                        ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
-                            .overlay {
-                                Image(systemName: "pause.fill")
-                                    .symbolRenderingMode(.palette)
-                                    .foregroundStyle(.white, .blue)
-                                    .font(.bolusProgressStopFont)
-                            }
-                    }
-                    .onTapGesture { state.cancelBolus() }
-                }
-                .dynamicTypeSize(...DynamicTypeSize.large)
-                .padding(.bottom, 8)
             }
         }
 
@@ -758,7 +674,7 @@ extension Home {
                     (state.data.units == .mmolL ? 0.0555 : 1.0)
             )
             .chartXScale(
-                domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
+                domain: Date.now.subtractingTimeInterval(.hours(24)) ... Date.now
             )
             .frame(height: 50)
             .padding(.leading, 30)
@@ -897,7 +813,7 @@ extension Home {
                 Text("Kilo Calories")
                 Spacer()
                 Text(
-                    tirFormatter.string(
+                    Self.tirFormatter.string(
                         from: displayedCalories as NSNumber
                     ) ?? ""
                 )
@@ -910,7 +826,7 @@ extension Home {
                 Text("Servings")
                 Spacer()
                 Text(
-                    tirFormatter.string(
+                    Self.tirFormatter.string(
                         from: displayedServings as NSNumber
                     ) ?? ""
                 )
@@ -923,7 +839,7 @@ extension Home {
                 Text("Carbs")
                 Spacer()
                 Text(
-                    tirFormatter.string(
+                    Self.tirFormatter.string(
                         from: displayedCarbs as NSNumber
                     ) ?? ""
                 )
@@ -938,7 +854,7 @@ extension Home {
                         "Fat",
                         value: displayedFat,
                         unit: "g",
-                        formatter: tirFormatter
+                        formatter: Self.tirFormatter
                     )
                 }
 
@@ -953,7 +869,7 @@ extension Home {
                             age: state.individual.age,
                             sex: state.individual.sex
                         ),
-                        formatter: tirFormatter
+                        formatter: Self.tirFormatter
                     )
                 }
 
@@ -968,7 +884,7 @@ extension Home {
                             age: state.individual.age,
                             sex: state.individual.sex
                         ),
-                        formatter: tirFormatter
+                        formatter: Self.tirFormatter
                     )
                 }
             }
@@ -994,7 +910,7 @@ extension Home {
                             age: state.individual.age,
                             sex: state.individual.sex
                         ),
-                        formatter: targetFormatter
+                        formatter: Self.targetFormatter
                     )
                 }
             }
@@ -1123,15 +1039,11 @@ extension Home {
         }
 
         private func enabled() -> Bool {
-            guard let or = fetchedPercent.first, or.enabled else { return false }
-            guard let aisf = fetchedAISF.first(where: { $0.id == or.id }) else { return false }
-            return aisf.autoisf
+            state.overrideAutoISF == true
         }
 
         private func disabled() -> Bool {
-            guard let or = fetchedPercent.first, or.enabled else { return false }
-            guard let aisf = fetchedAISF.first(where: { $0.id == or.id }) else { return false }
-            return !aisf.autoisf
+            state.overrideAutoISF == false
         }
 
         private var animateLoopView: Bool {
@@ -1158,104 +1070,78 @@ extension Home {
 
         var body: some View {
             GeometryReader { geo in
-                if onboarded.first?.firstRun ?? true, let openAPSSettings = state.openAPSSettings {
-                    /// If old iAPS user pre v5.7.1 OpenAPS settings will be reset, but can be restored in View below
-                    importResetSettingsView(settings: openAPSSettings)
-                } else {
-                    VStack(spacing: 0) {
-                        // Header View
-                        headerView(geo)
-                        ScrollView {
-                            VStack {
-                                // Main Chart
-                                chart
-                                // Adjust hours visible (X-Axis) and ratio display
-                                timeSetting
-                                    .overlay { isfView }
-                                // TIR Chart
-                                if !state.data.glucose.isEmpty {
-                                    preview.padding(.top, 15)
-                                }
-                                // Loops Chart
-                                loopPreview.padding(.vertical, 15)
-
-                                // COB Chart
-                                if state.carbData > 0 {
-                                    activeCOBView.padding(.bottom, 15)
-                                }
-
-                                // IOB Chart
-                                if !state.iobData.isEmpty {
-                                    activeIOBView.padding(.bottom, 15)
-                                }
-
-                                // Summary Views
-                                insulinView.padding(.bottom, 15)
-                                mealsView.padding(.bottom, 15)
+                VStack(spacing: 0) {
+                    // Header View
+                    headerView(geo)
+                    ScrollView {
+                        VStack {
+                            // Main Chart
+                            chart
+                            // Adjust hours visible (X-Axis) and ratio display
+                            timeSetting
+                                .overlay { isfView }
+                            // TIR Chart
+                            if !state.data.glucose.isEmpty {
+                                preview.padding(.top, 15)
                             }
-                            .background {
-                                // Track vertical scroll
-                                GeometryReader { proxy in
-                                    let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
-                                    let yThreshold: CGFloat = -550
-                                    Color.clear
-                                        .onChange(of: scrollPosition) {
-                                            if scrollPosition < yThreshold, state.iobs > 0 || state.carbData > 0,
-                                               !state.skipGlucoseChart
-                                            {
-                                                withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
-                                            } else {
-                                                withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
-                                            }
+                            // Loops Chart
+                            loopPreview.padding(.vertical, 15)
+
+                            // COB Chart
+                            if state.carbData > 0 {
+                                activeCOBView.padding(.bottom, 15)
+                            }
+
+                            // IOB Chart
+                            if !state.iobData.isEmpty {
+                                activeIOBView.padding(.bottom, 15)
+                            }
+
+                            // Summary Views
+                            insulinView.padding(.bottom, 15)
+                            mealsView.padding(.bottom, 15)
+                        }
+                        .background {
+                            // Track vertical scroll
+                            GeometryReader { proxy in
+                                let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
+                                let yThreshold: CGFloat = -550
+                                Color.clear
+                                    .onChange(of: scrollPosition) {
+                                        if scrollPosition < yThreshold, state.iobs > 0 || state.carbData > 0,
+                                           !state.skipGlucoseChart
+                                        {
+                                            withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
+                                        } else {
+                                            withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
                                         }
-                                }
+                                    }
                             }
-                        }.coordinateSpace(name: "HomeScrollView")
-                        // Buttons
-                        buttonPanel(geo)
-                    }
-                    .background(
-                        colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
+                        }
+                    }.coordinateSpace(name: "HomeScrollView")
+                    // Buttons
+                    buttonPanel(geo)
+                }
+                .background(
+                    colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
+                )
+                .ignoresSafeArea(edges: .vertical)
+                .overlay {
+                    BolusProgressOverlay(
+                        cancel: state.cancelBolus
                     )
-                    .ignoresSafeArea(edges: .vertical)
-                    .overlay {
-                        if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(
-                                        colorScheme == .light ? IAPSconfig
-                                            .homeViewBackgroundLight : IAPSconfig
-                                            .homeViewBackgrundDark
-                                    )
-                                    .frame(maxWidth: 320, maxHeight: 90)
-                                bolusProgressView(progress: progress, amount: amount)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .offset(y: -100)
-                        }
-                    }
-                    .onChange(of: scenePhase) {
-                        switch scenePhase {
-                        case .active:
-                            state.startTimer()
-                            checkBuildExpiration()
-                        case .background,
-                             .inactive:
-                            state.stopTimer()
-                        default:
-                            break
-                        }
+                }
+                .onChange(of: scenePhase) {
+                    if scenePhase == .active {
+                        checkBuildExpiration()
                     }
                 }
             }
             .onAppear {
-                if onboarded.first?.firstRun ?? true {
-                    state.fetchPreferences()
-                }
                 checkBuildExpiration()
             }
             .alert(
-                BuildExpirationManager.shared.alertTitle,
+                expirationAlertTitle,
                 isPresented: $showExpirationAlert
             ) {
                 Button("OK", role: .cancel) {}
@@ -1265,7 +1151,7 @@ extension Home {
                     }
                 }
             } message: {
-                Text(BuildExpirationManager.shared.alertMessage)
+                Text(expirationAlertMessage)
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)
@@ -1303,6 +1189,8 @@ extension Home {
             let manager = BuildExpirationManager.shared
             guard manager.shouldShowAlert else { return }
             manager.markAlertShown()
+            expirationAlertTitle = manager.alertTitle
+            expirationAlertMessage = manager.alertMessage
             showExpirationAlert = true
         }
 
@@ -1318,25 +1206,135 @@ extension Home {
                 } else {
                     Text("No suggestion found").font(.suggestionHeadline).foregroundColor(.white)
                 }
-                if let errorMessage = state.errorMessage, let date = state.errorDate {
-                    Text(NSLocalizedString("Status at", comment: "") + " " + dateFormatter.string(from: date))
-                        .foregroundColor(.white)
-                        .font(.suggestionError)
-                        .padding(.bottom, 4)
-                        .padding(.top, 8)
-                    Text(errorMessage).font(.suggestionError).fontWeight(.semibold).foregroundColor(.orange)
-                } else if let suggestion = state.data.suggestion, (suggestion.bg ?? 100) == 400 {
-                    Text("Invalid CGM reading (HIGH).").font(.suggestionError).bold().foregroundColor(.loopRed).padding(.top, 8)
-                    Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
-                }
+                LastLoopErrorView(suggestion: state.data.suggestion)
             }
         }
+    }
+}
 
-        private func importResetSettingsView(settings: Preferences) -> some View {
-            Restore.RootView(
-                resolver: resolver,
-                openAPS: settings
+private struct BolusProgressOverlay: View {
+    let cancel: () -> Void
+
+    @Environment(AppUIState.self) private var appUIState
+    @Environment(\.colorScheme) private var colorScheme
+
+    private static let formatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }()
+
+    var body: some View {
+        if let progress = appUIState.bolusProgress, let amount = appUIState.bolusAmount {
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(
+                        colorScheme == .light ? IAPSconfig
+                            .homeViewBackgroundLight : IAPSconfig
+                            .homeViewBackgrundDark
+                    )
+                    .frame(maxWidth: 320, maxHeight: 90)
+                bolusProgressView(progress: progress, amount: amount)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .offset(y: -100)
+        }
+    }
+
+    private func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
+        ZStack {
+            VStack {
+                HStack {
+                    let bolused = Self.formatter.string(from: (amount * progress) as NSNumber) ?? ""
+                    Text("Bolusing")
+                    Text(
+                        bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
+                            .formatted() + NSLocalizedString(" U", comment: "")
+                    )
+                }.frame(width: 250, height: 25).font(.bolusProgressBarFont)
+                HStack(alignment: .bottom, spacing: 5) {
+                    ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
+                        .overlay {
+                            Image(systemName: "pause.fill")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.white, .blue)
+                                .font(.bolusProgressStopFont)
+                        }
+                }
+                .onTapGesture { cancel() }
+            }
+            .dynamicTypeSize(...DynamicTypeSize.large)
+            .padding(.bottom, 8)
+        }
+    }
+}
+
+private struct LastLoopErrorView: View {
+    @Environment(AppUIState.self) private var appUIState
+    let suggestion: Suggestion?
+
+    private static let dateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        return dateFormatter
+    }()
+
+    var body: some View {
+        if let lastLoopError = appUIState.lastLoopError {
+            Text(NSLocalizedString("Status at", comment: "") + " " + Self.dateFormatter.string(from: lastLoopError.date))
+                .foregroundColor(.white)
+                .font(.suggestionError)
+                .padding(.bottom, 4)
+                .padding(.top, 8)
+            Text(
+                lastLoopError.error
+            ).font(.suggestionError).fontWeight(.semibold).foregroundColor(.orange)
+        } else if let suggestion, (suggestion.bg ?? 100) == 400 {
+            Text("Invalid CGM reading (HIGH).").font(.suggestionError).bold().foregroundColor(.loopRed).padding(.top, 8)
+            Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
+        }
+    }
+}
+
+private struct TempBasalView: View {
+    @Environment(AppUIState.self) private var appUIState
+    let pumpSuspended: Bool
+    let tempRate: Decimal?
+
+    private static let numberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
+    var body: some View {
+        HStack {
+            if pumpSuspended {
+                Text("Pump suspended")
+                    .font(.extraSmall).bold().foregroundColor(.loopGray)
+            } else {
+                Text(tempBasalString)
+                    .font(.statusFont).bold()
+                    .foregroundColor(.insulin)
+            }
+        }
+    }
+
+    var tempBasalString: String {
+        guard let tempRate = tempRate else {
+            return "?" + NSLocalizedString(" U/hr", comment: "Unit per hour with space")
+        }
+        let rateString = Self.numberFormatter.string(from: tempRate as NSNumber) ?? "0"
+        var manualBasalString = ""
+
+        if appUIState.manualTempBasal {
+            manualBasalString = NSLocalizedString(
+                " Manual",
+                comment: "Manual Temp basal"
             )
         }
+        return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
     }
 }

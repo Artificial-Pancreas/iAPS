@@ -7,6 +7,8 @@ extension ISFEditor {
         @StateObject var state: StateModel
         @State private var editMode = EditMode.inactive
 
+        @Environment(AppUIState.self) private var appUIState
+
         private var dateFormatter: DateFormatter {
             let formatter = DateFormatter()
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
@@ -28,7 +30,7 @@ extension ISFEditor {
 
         var body: some View {
             Form {
-                if let autotune = state.autotune, !state.settingsManager.settings.onlyAutotuneBasals {
+                if let autotune = state.autotune, !appUIState.settings.onlyAutotuneBasals {
                     Section(header: Text("Autotune")) {
                         HStack {
                             Text("Calculated Sensitivity")
@@ -42,31 +44,25 @@ extension ISFEditor {
                         }
                     }
                 }
-                if let newISF = state.autosensISF {
+                // TODO: was newISF meant to be used/displayed here?
+                if let /* newISF */ _ = state.autosensISF {
                     Section(
-                        header: !state.settingsManager.preferences
-                            .useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
+                        header: !appUIState.preferences.useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
                     ) {
-                        let ratio = state.provider.suggestion?.sensitivityRatio ?? 0
-                        let isf = state.provider.sensitivity
+                        let ratio = state.suggestion?.sensitivityRatio ?? 0
+                        let isf = state.sensitivity
                         HStack {
                             Text("Sensitivity Ratio")
                             Spacer()
                             Text(
-                                rateFormatter
-                                    .string(
-                                        from:
-                                        ratio
-                                            as NSNumber
-                                    ) ?? "1"
+                                rateFormatter.string(from: ratio as NSNumber) ?? "1"
                             )
                         }
                         HStack {
                             Text("Calculated Sensitivity")
                             Spacer()
                             Text(
-                                rateFormatter
-                                    .string(from: isf ?? 0) ?? ""
+                                rateFormatter.string(from: isf as? NSNumber ?? 0) ?? ""
                             )
                             Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }

@@ -40,6 +40,17 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
 }
 
 extension TempTarget {
+    var endDate: Date {
+        createdAt.addingTimeInterval(.minutes(Int(duration)))
+    }
+
+    /// a cancel record (duration == 0) is never active
+    func isActive(at date: Date) -> Bool {
+        duration != 0 && createdAt <= date && date < endDate
+    }
+}
+
+extension TempTarget {
     private enum CodingKeys: String, CodingKey {
         case id = "_id"
         case name

@@ -3,7 +3,7 @@ import Foundation
 import LoopKit
 import UserNotifications
 
-struct AlertEntry: JSON, Codable, Hashable {
+struct AlertEntry: JSON, Codable, Hashable, Sendable {
     let alertIdentifier: String
     var acknowledgedDate: Date?
     var primitiveInterruptionLevel: Decimal?

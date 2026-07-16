@@ -26,31 +26,32 @@ struct ModeIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        do {
-            let modeToApply: Mode
-            if let selection = mode {
-                modeToApply = selection
-            } else {
-                modeToApply = try await $mode.requestDisambiguation(
-                    among: whichMode(),
-                    dialog: "Select Loop Mode"
-                )
-            }
-
-            let displayName: String = modeToApply.rawValue
-            if confirmBeforeApplying {
-                try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to activate the Loop Mode \(displayName)?")
-                )
-            }
-
-            let confirmation = try ModeIntentRequest().setMode(modeToApply)
-            return .result(
-                dialog: IntentDialog(stringLiteral: confirmation)
+        let modeToApply: Mode
+        if let selection = mode {
+            modeToApply = selection
+        } else {
+            modeToApply = try await $mode.requestDisambiguation(
+                among: whichMode(),
+                dialog: "Select Loop Mode"
             )
-        } catch {
-            throw error
         }
+
+        let displayName: String = modeToApply.rawValue
+        if confirmBeforeApplying {
+            // deprecated, but the fix is iOS 18+ only
+            try await requestConfirmation(
+                result: .result(dialog: "Are you sure you want to activate the Loop Mode \(displayName)?")
+            )
+        }
+
+        let intentRequest = ModeIntentRequest()
+        try await BaseIntentsRequest.awaitStartup()
+
+        let confirmation = try intentRequest.setMode(modeToApply)
+
+        return .result(
+            dialog: IntentDialog(stringLiteral: confirmation)
+        )
     }
 
     func whichMode() -> [Mode] {
@@ -64,10 +65,14 @@ final class ModeIntentRequest: BaseIntentsRequest {
             NSLocalizedString("The Loop Mode", comment: "") + " \(mode.rawValue) " +
             NSLocalizedString("is now activated", comment: "")
 
-        if mode == Mode.closed {
-            apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "looping:true"))
-        } else if mode == Mode.open {
-            apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "looping:false"))
+        Task { [apsManager] in
+            if mode == Mode.closed {
+                _ = await apsManager?
+                    .enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "looping:true"))
+            } else if mode == Mode.open {
+                _ = await apsManager?
+                    .enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "looping:false"))
+            }
         }
         return resultDisplay
     }

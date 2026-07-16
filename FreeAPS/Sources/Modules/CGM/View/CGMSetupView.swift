@@ -11,8 +11,6 @@ extension CGM {
     struct CGMSetupView: UIViewControllerRepresentable, CompletionNotifying {
         let cgmIdentifier: String
         let deviceManager: DeviceDataManager
-//        let bluetoothManager: BluetoothStateManager
-//        let unit: GlucoseUnits
         weak var completionDelegate: CompletionDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<CGMSetupView>) -> UIViewController {

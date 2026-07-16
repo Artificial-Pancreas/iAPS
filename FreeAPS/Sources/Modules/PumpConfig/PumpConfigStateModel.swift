@@ -1,57 +1,68 @@
 import LoopKit
 import LoopKitUI
-import SwiftDate
 import SwiftUI
 
 extension PumpConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var deviceManager: DeviceDataManager!
+        @Injected() private var alertHistoryStorage: AlertHistoryStorage!
+        @Injected() private var storage: FileStorage!
+
+        private let coreDataStorage = CoreDataStorage()
 
         @Published var pumpSetupPresented: Bool = false
+        @Published var pumpSettingsPresented: Bool = false
         @Published private(set) var pumpIdentifierToSetUp: String? = nil
-        @Published private(set) var pumpManagerStatus: PumpManagerStatus? = nil
 
         private(set) var initialSettings: PumpInitialSettings = .default
-        @Published var alertNotAck: Bool = false
 
-        override func subscribe() {
-            alertNotAck = provider.initialAlertNotAck()
-            provider.alertNotAck
-                .receive(on: DispatchQueue.main)
-                .assign(to: \.alertNotAck, on: self)
-                .store(in: &lifetime)
-
-            deviceManager.pumpManagerStatus
-                .receive(on: DispatchQueue.main)
-                .assign(to: \.pumpManagerStatus, on: self)
-                .store(in: &lifetime)
-
+        override func subscribe() async {
+            let basalProfile = await fetchBasalProfile()
+            let concentration = await readConcentration()
             let basalSchedule = BasalRateSchedule(
-                dailyItems: provider.basalProfile().map {
-                    RepeatingScheduleValue(startTime: $0.minutes.minutes.timeInterval, value: Double($0.rate))
+                dailyItems: basalProfile.map {
+                    $0.toLoopKit(concentration: concentration)
                 }
             )
 
-            let pumpSettings = provider.pumpSettings()
+            let pumpSettings = await settingsManager.pumpSettings
 
             initialSettings = PumpInitialSettings(
                 maxBolusUnits: Double(pumpSettings.maxBolus),
                 maxBasalRateUnitsPerHour: Double(pumpSettings.maxBasal),
-                basalSchedule: basalSchedule!
+                basalSchedule: basalSchedule ?? PumpInitialSettings.default.basalSchedule
             )
         }
 
-        func setupPump(_ identifier: String?) {
+        private func readConcentration() async -> Double {
+            await coreDataStorage.insulinConcentration().concentration
+        }
+
+        func showCurrentPumpSettings() {
+            pumpIdentifierToSetUp = nil
+            pumpSettingsPresented = true
+            pumpSetupPresented = false
+        }
+
+        func setupNewPump(_ identifier: String) {
             pumpIdentifierToSetUp = identifier
-            pumpSetupPresented = identifier != nil
+            pumpSettingsPresented = false
+            pumpSetupPresented = true
         }
 
         func removePump() {
-            deviceManager.removePump()
+            Task {
+                await deviceManager.removePump()
+            }
         }
 
         func ack() {
-            provider.deviceManager.alertHistoryStorage.forceNotification()
+            alertHistoryStorage.forceNotification()
+        }
+
+        private func fetchBasalProfile() async -> [BasalProfileEntry] {
+            await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
+                ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
         }
     }
 }
@@ -59,7 +70,9 @@ extension PumpConfig {
 extension PumpConfig.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         Task { @MainActor in
-            setupPump(nil)
+            pumpSetupPresented = false
+            pumpSettingsPresented = false
+            pumpIdentifierToSetUp = nil
         }
     }
 }

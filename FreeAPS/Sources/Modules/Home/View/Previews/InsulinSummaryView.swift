@@ -2,13 +2,13 @@ import CoreData
 import SwiftUI
 
 struct InsulinSummaryView: View {
-    @Binding var neg: Int
-    @Binding var tddChange: Decimal
-    @Binding var tddAverage: Decimal
-    @Binding var tddYesterday: Decimal
-    @Binding var tdd2DaysAgo: Decimal
-    @Binding var tdd3DaysAgo: Decimal
-    @Binding var tddActualAverage: Decimal
+    let neg: Int
+    let tddChange: Decimal
+    let tddAverage: Decimal
+    let tddYesterday: Decimal
+    let tdd2DaysAgo: Decimal
+    let tdd3DaysAgo: Decimal
+    let tddActualAverage: Decimal
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()

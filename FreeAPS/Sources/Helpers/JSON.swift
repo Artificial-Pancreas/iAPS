@@ -76,9 +76,8 @@ extension Decimal: JSON {}
 
 extension Date: JSON {
     init?(from: String) {
-        let dateFormatter = Formatter.iso8601withFractionalSeconds
         let string = from.replacingOccurrences(of: "\"", with: "")
-        if let date = dateFormatter.date(from: string) {
+        if let date = try? Date(string, strategy: .iso8601WithFractionalSeconds) {
             self = date
         } else {
             return nil

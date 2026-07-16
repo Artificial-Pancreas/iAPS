@@ -147,8 +147,6 @@ extension Settings {
                                     .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                                 Text("Pump History")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
-                                Text("Temp Basals")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
                                 Text("Basal profile")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
                                 Text("Targets ranges")
@@ -166,8 +164,8 @@ extension Settings {
                                     .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
                                 Text("Carbs")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
-                                Text("Enacted")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Enact.enacted), from: self)
+                                Text("Loop")
+                                    .navigationLink(to: .configEditor(file: OpenAPS.Enact.outcome), from: self)
                                 Text("Announcements")
                                     .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
                                 Text("Enacted announcements")
@@ -240,7 +238,7 @@ extension Settings {
         }
 
         private func clearEntity(entity: String) {
-            CoreDataStack.shared.deleteBatch(entity: entity)
+            state.deleteStoredData(entity: entity)
             clear(entity)
         }
 

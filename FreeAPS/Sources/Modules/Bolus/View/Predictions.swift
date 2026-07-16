@@ -50,7 +50,7 @@ struct PredictionView: View {
         // Organize the data needed for prediction chart.
         var data = [ChartData]()
         repeat {
-            now = now.addingTimeInterval(5.minutes.timeInterval)
+            now = now.addingTimeInterval(.minutes(5))
             if startIndex < count {
                 let addedData = ChartData(
                     date: now,

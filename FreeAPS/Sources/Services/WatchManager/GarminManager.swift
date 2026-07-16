@@ -1,21 +1,24 @@
 import Combine
-import ConnectIQ
+@preconcurrency import ConnectIQ
 import Foundation
 import Swinject
 
-protocol GarminManager {
-    func selectDevices() -> AnyPublisher<[IQDevice], Never>
-    func updateListDevices(devices: [IQDevice])
-    var devices: [IQDevice] { get }
+@MainActor protocol GarminManager: Sendable {
+    func selectDevices() async -> [CodableDevice]
+    func updateListDevices(devices: [CodableDevice])
+    var devices: [CodableDevice] { get }
     func sendState(_ data: Data)
-    var stateRequet: (() -> (Data))? { get set }
+
+    var stateRequest: (@Sendable() async -> Data)? { get }
+    func setStateRequest(_ req: (@Sendable() async -> Data)?)
 }
 
 extension Notification.Name {
     static let openFromGarminConnect = Notification.Name("Notification.Name.openFromGarminConnect")
 }
 
-final class BaseGarminManager: NSObject, GarminManager, Injectable {
+@MainActor
+final class BaseGarminManager: NSObject, GarminManager {
     private enum Config {
         static let watchfaceUUID = UUID(uuidString: "EC3420F6-027D-49B3-B45F-D81D6D3ED90A")
         static let watchdataUUID = UUID(uuidString: "71CF0982-CA41-42A5-8441-EA81D36056C3")
@@ -23,23 +26,27 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
 
     private let connectIQ = ConnectIQ.sharedInstance()
 
-    private let router = FreeAPSApp.resolver.resolve(Router.self)!
+    private let appCoordinator: AppCoordinator
 
-    @Injected() private var notificationCenter: NotificationCenter!
+    private let notificationCenter: NotificationCenter
 
     @Persisted(key: "BaseGarminManager.persistedDevices") private var persistedDevices: [CodableDevice] = []
 
     private var watchfaces: [IQApp] = []
 
-    var stateRequet: (() -> (Data))?
+    private(set) var stateRequest: (@Sendable() async -> Data)?
+
+    func setStateRequest(_ req: (@Sendable() async -> Data)?) {
+        stateRequest = req
+    }
 
     private let stateSubject = PassthroughSubject<NSDictionary, Never>()
 
-    private(set) var devices: [IQDevice] = [] {
+    private var devicesRaw: [IQDevice] = [] {
         didSet {
-            persistedDevices = devices.map(CodableDevice.init)
+            persistedDevices = devicesRaw.map(CodableDevice.init)
             watchfaces = []
-            devices.forEach { device in
+            devicesRaw.forEach { device in
                 connectIQ?.register(forDeviceEvents: device, delegate: self)
                 let watchfaceApp = IQApp(
                     uuid: Config.watchfaceUUID,
@@ -58,17 +65,34 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
         }
     }
 
-    private var lifetime = Lifetime()
-    private var selectPromise: Future<[IQDevice], Never>.Promise?
+    var devices: [CodableDevice] {
+        persistedDevices
+    }
 
-    init(resolver: Resolver) {
+    private let lifetime = Lifetime()
+
+    private var selectContinuation: CheckedContinuation<[CodableDevice], Never>?
+    private var selectTimeoutTask: Task<Void, Never>?
+
+    init(
+        notificationCenter: NotificationCenter,
+        appCoordinator: AppCoordinator
+    ) {
+        self.notificationCenter = notificationCenter
+        self.appCoordinator = appCoordinator
         super.init()
+
         connectIQ?.initialize(withUrlScheme: "freeaps-x", uiOverrideDelegate: self)
-        injectServices(resolver)
+
         restoreDevices()
+
         subscribeToOpenFromGarminConnect()
         setupApplications()
         subscribeState()
+    }
+
+    private func restoreDevices() {
+        devicesRaw = persistedDevices.map(\.iqDevice)
     }
 
     private func subscribeToOpenFromGarminConnect() {
@@ -78,11 +102,15 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
                 guard let url = notification.object as? URL else { return }
                 self.parseDevicesFor(url: url)
             }
-            .store(in: &lifetime)
+            .store(in: lifetime)
     }
 
     private func subscribeState() {
         func sendToWatchface(state: NSDictionary) {
+            let connectIQ = self.connectIQ
+            // NSDictionary is non-Sendable Foundation type;
+            // if ConnectIQ delivers these callbacks on main and doesn't share `state` concurrently, capturing it into the @Sendable callback is safe.
+            nonisolated(unsafe) let state = state
             watchfaces.forEach { app in
                 connectIQ?.getAppStatus(app) { status in
                     guard status?.isInstalled ?? false else {
@@ -90,7 +118,16 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
                         return
                     }
                     debug(.service, "Garmin: sending message to watchface")
-                    self.sendMessage(state, to: app)
+
+                    connectIQ?.sendMessage(state, to: app, progress: { _, _ in
+                        // debug(.service, "Garmin: sending progress: \(Int(Double(sent) / Double(all) * 100)) %")
+                    }, completion: { result in
+                        if result == .success {
+                            debug(.service, "Garmin: message sent")
+                        } else {
+                            debug(.service, "Garmin: message failed")
+                        }
+                    })
                 }
             }
         }
@@ -100,17 +137,13 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
             .sink { state in
                 sendToWatchface(state: state)
             }
-            .store(in: &lifetime)
-    }
-
-    private func restoreDevices() {
-        devices = persistedDevices.map(\.iqDevice)
+            .store(in: lifetime)
     }
 
     private func parseDevicesFor(url: URL) {
-        devices = connectIQ?.parseDeviceSelectionResponse(from: url) as? [IQDevice] ?? []
-        selectPromise?(.success(devices))
-        selectPromise = nil
+        let parsed = connectIQ?.parseDeviceSelectionResponse(from: url) as? [IQDevice] ?? []
+        devicesRaw = parsed
+        finishSelection(with: parsed.map(CodableDevice.init))
     }
 
     private func setupApplications() {
@@ -118,18 +151,33 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
         }
     }
 
-    func selectDevices() -> AnyPublisher<[IQDevice], Never> {
-        Future { promise in
-            self.selectPromise = promise
-            self.connectIQ?.showDeviceSelection()
+    func selectDevices() async -> [CodableDevice] {
+        let selected: [CodableDevice] = await withCheckedContinuation { continuation in
+            // abandon any in-flight selection
+            finishSelection(with: [])
+
+            selectContinuation = continuation
+            connectIQ?.showDeviceSelection()
+
+            // replaces .timeout(120).replaceEmpty(with: [])
+            selectTimeoutTask = Task { @MainActor in
+                try? await Task.sleep(for: .seconds(120))
+                guard !Task.isCancelled else { return }
+                finishSelection(with: [])
+            }
         }
-        .timeout(120, scheduler: DispatchQueue.main)
-        .replaceEmpty(with: [])
-        .eraseToAnyPublisher()
+        return selected // .map(\.iqDevice)
     }
 
-    func updateListDevices(devices: [IQDevice]) {
-        self.devices = devices
+    private func finishSelection(with result: [CodableDevice]) {
+        selectTimeoutTask?.cancel()
+        selectTimeoutTask = nil
+        selectContinuation?.resume(returning: result)
+        selectContinuation = nil
+    }
+
+    func updateListDevices(devices: [CodableDevice]) {
+        devicesRaw = devices.map(\.iqDevice)
     }
 
     func sendState(_ data: Data) {
@@ -138,58 +186,55 @@ final class BaseGarminManager: NSObject, GarminManager, Injectable {
         }
         stateSubject.send(object)
     }
-
-    private func sendMessage(_ msg: NSDictionary, to app: IQApp) {
-        connectIQ?.sendMessage(msg, to: app, progress: { _, _ in
-            // debug(.service, "Garmin: sending progress: \(Int(Double(sent) / Double(all) * 100)) %")
-        }, completion: { result in
-            if result == .success {
-                debug(.service, "Garmin: message sent")
-            } else {
-                debug(.service, "Garmin: message failed")
-            }
-        })
-    }
 }
 
 extension BaseGarminManager: IQUIOverrideDelegate {
-    func needsToInstallConnectMobile() {
+    nonisolated func needsToInstallConnectMobile() {
         debug(.apsManager, NSLocalizedString("Garmin is not available", comment: ""))
-        let messageCont = MessageContent(
-            content: NSLocalizedString(
-                "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it",
-                comment: ""
-            ),
-            type: .warning
-        )
-        router.alertMessage.send(messageCont)
+        Task { @MainActor in
+            let messageCont = MessageContent(
+                content: NSLocalizedString(
+                    "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it",
+                    comment: ""
+                ),
+                type: .warning
+            )
+            appCoordinator.sendAlertMessage(messageCont)
+        }
     }
 }
 
 extension BaseGarminManager: IQDeviceEventDelegate {
-    func deviceStatusChanged(_ device: IQDevice, status: IQDeviceStatus) {
-        switch status {
-        case .invalidDevice:
-            debug(.service, "Garmin: invalidDevice, Device: \(device.uuid!)")
-        case .bluetoothNotReady:
-            debug(.service, "Garmin: bluetoothNotReady, Device: \(device.uuid!)")
-        case .notFound:
-            debug(.service, "Garmin: notFound, Device: \(device.uuid!)")
-        case .notConnected:
-            debug(.service, "Garmin: notConnected, Device: \(device.uuid!)")
-        case .connected:
-            debug(.service, "Garmin: connected, Device: \(device.uuid!)")
-        @unknown default:
-            debug(.service, "Garmin: unknown state, Device: \(device.uuid!)")
+    nonisolated func deviceStatusChanged(_ device: IQDevice, status: IQDeviceStatus) {
+        let uuidForLog = String(describing: device.uuid)
+        Task { @MainActor in
+            switch status {
+            case .invalidDevice:
+                debug(.service, "Garmin: invalidDevice, Device: \(uuidForLog)")
+            case .bluetoothNotReady:
+                debug(.service, "Garmin: bluetoothNotReady, Device: \(uuidForLog)")
+            case .notFound:
+                debug(.service, "Garmin: notFound, Device: \(uuidForLog)")
+            case .notConnected:
+                debug(.service, "Garmin: notConnected, Device: \(uuidForLog)")
+            case .connected:
+                debug(.service, "Garmin: connected, Device: \(uuidForLog)")
+            @unknown default:
+                debug(.service, "Garmin: unknown state, Device: \(uuidForLog)")
+            }
         }
     }
 }
 
 extension BaseGarminManager: IQAppMessageDelegate {
-    func receivedMessage(_ message: Any, from app: IQApp) {
-        print("ASDF: got message: \(message) from app: \(app.uuid!)")
-        if let status = message as? String, status == "status", let watchState = stateRequet?() {
-            sendState(watchState)
+    nonisolated func receivedMessage(_ message: Any, from app: IQApp) {
+        debug(.service, "got message: \(message) from app: \(app.uuid!)")
+        if message as? String == "status" {
+            Task { @MainActor in
+                if let watchState = await stateRequest?() {
+                    sendState(watchState)
+                }
+            }
         }
     }
 }

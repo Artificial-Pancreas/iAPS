@@ -40,7 +40,7 @@ extension Publisher where Failure == Never {
     }
 }
 
-typealias Lifetime = Set<AnyCancellable>
+typealias Lifetime = CancelBag // Set<AnyCancellable>
 
 extension Publisher where Failure == Never {
     func weakAssign<T: AnyObject>(

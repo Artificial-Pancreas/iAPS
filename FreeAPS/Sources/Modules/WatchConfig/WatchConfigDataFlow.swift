@@ -2,4 +2,4 @@ enum WatchConfig {
     enum Config {}
 }
 
-protocol WatchConfigProvider {}
+protocol WatchConfigProvider: Provider {}

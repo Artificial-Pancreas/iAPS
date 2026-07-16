@@ -8,14 +8,16 @@ final class CarbPresetIntentRequest: BaseIntentsRequest {
         _ quantityProtein: Double,
         _ quantityFiber: Double,
         _ dateAdded: Date
-    ) throws -> String {
-        guard quantityCarbs >= 0.0 || quantityFat >= 0.0 || quantityProtein >= 0.0 || quantityFiber >= 0.0 else {
+    ) async throws -> String {
+        guard quantityCarbs > 0.0 || quantityFat > 0.0 || quantityProtein > 0.0 || quantityFiber > 0.0 else {
             return "no carbs or carb equivalents to add"
         }
 
-        let carbs = min(Decimal(quantityCarbs), settingsManager.settings.maxCarbs)
+        let settings = await settingsManager.settings
 
-        carbsStorage.storeCarbs(
+        let carbs = min(Decimal(quantityCarbs), settings.maxCarbs)
+
+        await carbsStorage.storeCarbs(
             [CarbsEntry(
                 id: UUID().uuidString,
                 createdAt: dateAdded,

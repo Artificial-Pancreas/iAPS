@@ -72,22 +72,12 @@ class HeartBeatManager {
                     servicesCBUUID: cgmTransmitter_CBUUID_Service,
                     CBUUID_Receive: cgmTransmitter_CBUUID_Receive,
                     heartbeat: {
-                        if let heartbeatAvailable = heartbeat {
-                            var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
-                            backGroundFetchBGTaskID = UIApplication.shared
-                                .beginBackgroundTask(withName: "heartbeat-manager-delay") {
-                                    guard let bg = backGroundFetchBGTaskID else { return }
-                                    UIApplication.shared.endBackgroundTask(bg)
-                                    backGroundFetchBGTaskID = nil
-                                }
-
-                            // give xdrip a few seconds to read from sensor and put into shared data
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                heartbeatAvailable.heartbeat()
-                                if let backgroundTask = backGroundFetchBGTaskID {
-                                    UIApplication.shared.endBackgroundTask(backgroundTask)
-                                    backGroundFetchBGTaskID = .invalid
-                                }
+                        guard let heartbeat else { return }
+                        Task {
+                            await withBackgroundTask("heartbeat manager delay") {
+                                // give xdrip a few seconds to read from the sensor and write into shared data
+                                try? await Task.sleep(for: .seconds(5))
+                                heartbeat.heartbeat()
                             }
                         }
                     }

@@ -3,7 +3,7 @@ import Foundation
 class ChartModel: ObservableObject {
     @Published var suggestion: Suggestion?
     @Published var glucose: [BloodGlucose]
-    @Published var activity: [IOBTick0]
+    @Published var activity: [IOBEntryShort]
     @Published var cob: [IOBData] // we already have IOBData in storage and it contains COB values
     @Published var isManual: [BloodGlucose]
     @Published var tempBasals: [PumpHistoryEvent]
@@ -16,7 +16,6 @@ class ChartModel: ObservableObject {
     @Published var basalProfile: [BasalProfileEntry]
     @Published var tempTargets: [TempTarget]
     @Published var carbs: [CarbsEntry]
-    @Published var timerDate: Date
     @Published var units: GlucoseUnits
     @Published var smooth: Bool
     @Published var highGlucose: Decimal
@@ -24,8 +23,8 @@ class ChartModel: ObservableObject {
     @Published var displayXgridLines: Bool
     @Published var displayYgridLines: Bool
     @Published var thresholdLines: Bool
-    @Published var latestOverride: Override?
-    @Published var overrideHistory: [OverrideHistory]
+    @Published var latestOverride: OverrideSnapshot?
+    @Published var overrideHistory: [OverrideHistorySnapshot]
     @Published var minimumSMB: Decimal
     @Published var insulinDIA: Decimal
     @Published var insulinPeak: Decimal
@@ -33,7 +32,6 @@ class ChartModel: ObservableObject {
     @Published var maxBolusValue: Decimal
     @Published var maxCarbsValue: Decimal
     @Published var maxIOB: Decimal
-    @Published var maxCOB: Decimal
     @Published var useInsulinBars: Bool
     @Published var screenHours: Int
     @Published var fpus: Bool
@@ -47,14 +45,13 @@ class ChartModel: ObservableObject {
     @Published var insulinActivityLabels: Bool
     @Published var yGridLabels: Bool
     @Published var showPredictionsLegend: Bool
-    @Published var iob: Decimal?
     @Published var hidePredictions: Bool
     @Published var useCarbBars: Bool
 
     init(
         suggestion: Suggestion?,
         glucose: [BloodGlucose],
-        activity: [IOBTick0],
+        activity: [IOBEntryShort],
         cob: [IOBData],
         isManual: [BloodGlucose],
         tempBasals: [PumpHistoryEvent],
@@ -67,7 +64,6 @@ class ChartModel: ObservableObject {
         basalProfile: [BasalProfileEntry],
         tempTargets: [TempTarget],
         carbs: [CarbsEntry],
-        timerDate: Date,
         units: GlucoseUnits,
         smooth: Bool,
         highGlucose: Decimal,
@@ -75,8 +71,8 @@ class ChartModel: ObservableObject {
         displayXgridLines: Bool,
         displayYgridLines: Bool,
         thresholdLines: Bool,
-        latestOverride: Override?,
-        overrideHistory: [OverrideHistory],
+        latestOverride: OverrideSnapshot?,
+        overrideHistory: [OverrideHistorySnapshot],
         minimumSMB: Decimal,
         insulinDIA: Decimal,
         insulinPeak: Decimal,
@@ -84,7 +80,6 @@ class ChartModel: ObservableObject {
         maxBolusValue: Decimal,
         maxCarbsValue: Decimal,
         maxIOB: Decimal,
-        maxCOB: Decimal,
         useInsulinBars: Bool,
         screenHours: Int,
         fpus: Bool,
@@ -98,7 +93,6 @@ class ChartModel: ObservableObject {
         insulinActivityLabels: Bool,
         yGridLabels: Bool,
         showPredictionsLegend: Bool,
-        iob: Decimal?,
         hidePredictions: Bool,
         useCarbBars: Bool
     ) {
@@ -117,7 +111,6 @@ class ChartModel: ObservableObject {
         self.basalProfile = basalProfile
         self.tempTargets = tempTargets
         self.carbs = carbs
-        self.timerDate = timerDate
         self.units = units
         self.smooth = smooth
         self.highGlucose = highGlucose
@@ -134,7 +127,6 @@ class ChartModel: ObservableObject {
         self.maxBolusValue = maxBolusValue
         self.maxCarbsValue = maxCarbsValue
         self.maxIOB = maxIOB
-        self.maxCOB = maxCOB
         self.useInsulinBars = useInsulinBars
         self.screenHours = screenHours
         self.fpus = fpus
@@ -148,7 +140,6 @@ class ChartModel: ObservableObject {
         self.insulinActivityLabels = insulinActivityLabels
         self.yGridLabels = yGridLabels
         self.showPredictionsLegend = showPredictionsLegend
-        self.iob = iob
         self.hidePredictions = hidePredictions
         self.useCarbBars = useCarbBars
     }

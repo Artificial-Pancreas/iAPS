@@ -13,21 +13,19 @@ struct MessageContent {
     var type: MessageType = .info
 }
 
-protocol Router {
+@MainActor protocol Router: Sendable {
     var mainModalScreen: CurrentValueSubject<Screen?, Never> { get }
     var mainSecondaryModalView: CurrentValueSubject<AnyView?, Never> { get }
-    var alertMessage: PassthroughSubject<MessageContent, Never> { get }
     func view(for screen: Screen) -> AnyView
 }
 
-final class BaseRouter: Router {
+@MainActor final class BaseRouter: Router {
     let mainModalScreen = CurrentValueSubject<Screen?, Never>(nil)
     let mainSecondaryModalView = CurrentValueSubject<AnyView?, Never>(nil)
-    let alertMessage = PassthroughSubject<MessageContent, Never>()
 
-    private let resolver: Resolver
+    nonisolated(unsafe) private let resolver: Resolver
 
-    init(resolver: Resolver) {
+    nonisolated init(resolver: Resolver) {
         self.resolver = resolver
     }
 

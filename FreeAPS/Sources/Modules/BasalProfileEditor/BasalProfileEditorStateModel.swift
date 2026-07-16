@@ -1,14 +1,21 @@
+import LoopKit
 import SwiftUI
 
 extension BasalProfileEditor {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
+        @Injected() private var storage: FileStorage!
+        @Injected() private var deviceManager: DeviceDataManager!
+
+        private let coreDataStorage = CoreDataStorage()
+        let uiBindings = UIBindings()
+
         @Published var syncInProgress = false
         @Published var items: [Item] = []
         @Published var total: Decimal = 0.0
         @Published var saved = false
         @Published var allowDilution = false
 
-        let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
+        let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
         private(set) var rateValues: [Decimal] = []
 
@@ -17,29 +24,35 @@ extension BasalProfileEditor {
             return lastItem.timeIndex < timeValues.count - 1
         }
 
-        override func subscribe() {
-            rateValues = provider.supportedBasalRates ?? stride(from: 5.0, to: 1001.0, by: 5.0)
-                .map { ($0.decimal ?? .zero) / 100 }
-            items = provider.profile.map { value in
-                let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
-                let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
-                return Item(rateIndex: rateIndex, timeIndex: timeIndex)
-            }
+        private static let profileFormatter = {
+            let formatter = DateFormatter()
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "HH:mm:ss"
+            return formatter
+        }()
+
+        override func subscribe() async {
+            await updateSupportedBasalRates(appCoordinator.pumpStatus.value)
             calcTotal()
-            allowDilution = settingsManager.settings.allowDilution
+            allowDilution = await settingsManager.settings.allowDilution
+            observeUI(appCoordinator.pumpStatus) { me, pumpStatus in
+                await me.updateSupportedBasalRates(pumpStatus)
+            }
+        }
+
+        private func currentProfile() -> [BasalProfileEntry] {
+            items.map { item in
+                let date = Date(timeIntervalSince1970: timeValues[item.timeIndex])
+                return BasalProfileEntry(
+                    start: Self.profileFormatter.string(from: date),
+                    minutes: Int(date.timeIntervalSince1970 / 60),
+                    rate: rateValues[item.rateIndex]
+                )
+            }
         }
 
         func calcTotal() {
-            let profile = items.map { item -> BasalProfileEntry in
-                let fotmatter = DateFormatter()
-                fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
-                fotmatter.dateFormat = "HH:mm:ss"
-                let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
-                let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = self.rateValues[item.rateIndex]
-                return BasalProfileEntry(start: fotmatter.string(from: date), minutes: minutes, rate: rate)
-            }
-
+            let profile = currentProfile()
             var profileWith24hours = profile.map(\.minutes)
             profileWith24hours.append(24 * 60)
             let pr2 = zip(profile, profileWith24hours.dropFirst())
@@ -61,33 +74,60 @@ extension BasalProfileEditor {
         }
 
         func save() {
-            saved = false
-            syncInProgress = true
-            let profile = items.map { item -> BasalProfileEntry in
-                let fotmatter = DateFormatter()
-                fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
-                fotmatter.dateFormat = "HH:mm:ss"
-                let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
-                let minutes = Int(date.timeIntervalSince1970 / 60)
-                let rate = self.rateValues[item.rateIndex]
-                return BasalProfileEntry(start: fotmatter.string(from: date), minutes: minutes, rate: rate)
-            }
-            provider.saveProfile(profile)
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    self.syncInProgress = false
-                } receiveValue: {
-                    self.saved = true
+            Task {
+                saved = false
+                syncInProgress = true
+                let profile = currentProfile()
+
+                do {
+                    try await saveProfile(profile)
+                } catch {
+                    // TODO: show the error in the UI?
+                    debug(.default, "failed to save profile: \(error.localizedDescription)")
                 }
-                .store(in: &lifetime)
+                self.syncInProgress = false
+                self.saved = true
+            }
         }
 
         func validate() {
-            DispatchQueue.main.async {
-                let uniq = Array(Set(self.items))
-                let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
-                sorted.first?.timeIndex = 0
-                self.items = sorted
+            let uniq = Array(Set(items))
+            let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
+            sorted.first?.timeIndex = 0
+            items = sorted
+        }
+
+        private func retrieveProfile() async -> [BasalProfileEntry] {
+            await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
+                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
+                ?? []
+        }
+
+        private func updateSupportedBasalRates(_ pumpStatus: PumpDisplayStatus?) async {
+            let newRateValues = pumpStatus?.supportedBasalRates.map { Decimal($0) } ??
+                stride(from: 5.0, to: 1001.0, by: 5.0).map { ($0.decimal ?? .zero) / 100 }
+            if newRateValues != rateValues {
+                rateValues = newRateValues
+                items = await retrieveProfile().map { value in
+                    let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
+                    let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
+                    return Item(rateIndex: rateIndex, timeIndex: timeIndex)
+                }
+            }
+        }
+
+        private func readConcentration() async -> Double {
+            await coreDataStorage.insulinConcentration().concentration
+        }
+
+        private func saveProfile(_ profile: [BasalProfileEntry]) async throws {
+            let concentration = await readConcentration()
+
+            if let adjustedProfile = try await deviceManager.syncBasalRateSchedule(items: profile, concentration: concentration) {
+                await storage.save(adjustedProfile, as: OpenAPS.Settings.basalProfile)
+            } else {
+                // no pump configured
+                await storage.save(profile, as: OpenAPS.Settings.basalProfile)
             }
         }
     }

@@ -38,7 +38,6 @@ redundantBackticks,\
 redundantBreak,\
 redundantExtensionACL,\
 redundantFileprivate,\
-redundantGet,\
 redundantLet,\
 redundantLetError,\
 redundantNilInit,\
@@ -79,6 +78,7 @@ wrapEnumCases,\
 wrapMultilineStatementBraces,\
 wrapSwitchCases \
 --disable braces,\
+redundantGet,\
 redundantInit,\
 trailingClosures \
 --commas inline \

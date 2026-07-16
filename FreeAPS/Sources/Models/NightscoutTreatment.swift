@@ -1,13 +1,13 @@
 import Foundation
 
-struct NigtscoutTreatment: JSON, Hashable, Equatable {
-    var duration: Int?
+struct NigtscoutTreatment: JSON {
+    var duration: Decimal?
     var rawDuration: PumpHistoryEvent?
     var rawRate: PumpHistoryEvent?
     var absolute: Decimal?
     var rate: Decimal?
     var eventType: EventType
-    var createdAt: Date?
+    var createdAt: Date
     var enteredBy: String?
     var bolus: PumpHistoryEvent?
     var insulin: Decimal?
@@ -29,15 +29,6 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     static let trio = "Trio"
 
     static let empty = NigtscoutTreatment(from: "{}")!
-
-    static func == (lhs: NigtscoutTreatment, rhs: NigtscoutTreatment) -> Bool {
-        (lhs.createdAt ?? Date()) == (rhs.createdAt ?? Date()) &&
-            (lhs.carbs ?? 0) == (rhs.carbs ?? 0)
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(createdAt ?? Date())
-    }
 }
 
 extension NigtscoutTreatment {

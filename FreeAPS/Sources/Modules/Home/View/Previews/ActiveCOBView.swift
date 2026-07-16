@@ -2,7 +2,7 @@ import Charts
 import SwiftUI
 
 struct ActiveCOBView: View {
-    @Binding var data: [IOBData]
+    let data: [IOBData]
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -43,7 +43,7 @@ struct ActiveCOBView: View {
                 domain: 0 ... maximum
             )
             .chartXScale(
-                domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
+                domain: Date.now.subtractingTimeInterval(.hours(24)) ... Date.now
             )
             .chartLegend(.hidden)
     }

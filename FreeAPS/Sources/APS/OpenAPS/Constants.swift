@@ -56,17 +56,15 @@ extension OpenAPS {
 
     enum Monitor {
         static let pumpHistory = "monitor/pumphistory-24h-zoned.json"
-        static let reservoir = "monitor/reservoir.json"
-        static let battery = "monitor/battery.json"
+
         static let carbHistory = "monitor/carbhistory.json"
         static let clock = "monitor/clock-zoned.json"
-        static let status = "monitor/status.json"
-        static let tempBasal = "monitor/temp_basal.json"
+
         static let meal = "monitor/meal.json"
         static let glucose = "monitor/glucose.json"
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
-        static let podAge = "monitor/pod-age.json"
+
         static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
@@ -74,13 +72,14 @@ extension OpenAPS {
 
     enum Enact {
         static let suggested = "enact/suggested.json"
-        static let enacted = "enact/enacted.json"
+        static let outcome = "enact/outcome.json"
     }
 
     enum Upload {
-        static let nsStatus = "upload/ns-status.json"
         static let latestTreatments = "upload/latest-treatments.json"
         static let recentPumphistory = "upload/recent-pumphistory.json"
+        static let recentSuggested = "monitor/recent-suggested.json"
+        static let recentEnacted = "monitor/recent-enacted.json"
     }
 
     enum Function {
@@ -107,6 +106,12 @@ extension OpenAPS {
         static let uploadedTempTargetsDatabase = "upload/uploaded-temptargets_database.json"
         static let uploadedMealPresets = "upload/uploaded-meal-presets.json"
         static let uploadedOverridePresets = "upload/uploaded-override-presets.json"
+    }
+
+    enum HealthKit {
+        static let syncedGlucose = "healthkit/synced-glucose.json"
+        static let syncedCarbs = "healthkit/synced-carbs.json"
+        static let syncedInsulin = "healthkit/synced-insulin.json"
     }
 
     enum FreeAPS {

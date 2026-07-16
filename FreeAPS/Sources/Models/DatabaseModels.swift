@@ -1,18 +1,14 @@
 import Foundation
 
 struct DatabasePumpSettings: JSON {
-    var report = "pumpSettings"
     let settings: PumpSettings?
-    let enteredBy: String
     let profile: String?
     /// Insulin concentration factor: 1.0 = U100 (standard), 2.0 = U200, etc.
     let insulinConcentration: Double?
 }
 
 struct DatabaseTempTargets: JSON {
-    var report = "tempTargets"
     let tempTargets: [TempTarget]
-    let enteredBy: String
     let profile: String?
 }
 
@@ -24,47 +20,35 @@ struct DatabaseProfileStore: JSON {
     var profile: String
 }
 
-struct NightscoutStatistics: JSON {
-    var report = "statistics"
-    let dailystats: Statistics?
-    let justVersion: BareMinimum?
+struct DatabaseStatisticsVersion: JSON, Equatable {
+    var created_at: Date
+    var Build_Version: String
+    var Branch: String
+    var id: String?
 }
 
-struct NightscoutPreferences: JSON {
-    var report = "preferences"
+struct DatabasePreferences: JSON {
     let preferences: Preferences?
-    let enteredBy: String
     let profile: String?
 }
 
-struct NightscoutSettings: JSON {
-    var report = "settings"
+struct DatabaseSettings: JSON {
     let settings: FreeAPSSettings?
-    let enteredBy: String
     let profile: String?
-}
-
-struct Loaded {
-    var sens = false
-    var settings = false
-    var preferences = false
-    var targets = false
-    var carbratios = false
-    var basalProfiles = false
 }
 
 struct ProfileList: JSON {
     var profiles: String
 }
 
-struct MigratedMeals: Codable {
+struct MigratedMeals: Codable, Equatable {
     var carbs: Decimal
     var dish: String
     var fat: Decimal
     var protein: Decimal
 }
 
-struct MigratedOverridePresets: Codable {
+struct MigratedOverridePresets: Codable, Equatable {
     var advancedSettings: Bool
     var cr: Bool
     var date: Date
@@ -88,16 +72,12 @@ struct MigratedOverridePresets: Codable {
     var uamMinutes: Decimal
 }
 
-struct MealDatabase: JSON {
-    var report = "mealPresets"
+struct DatabaseMeal: JSON, Equatable {
     var profile: String
     var presets: [MigratedMeals]
-    let enteredBy: String
 }
 
-struct OverrideDatabase: JSON {
-    var report = "overridePresets"
+struct DatabaseOverride: JSON, Equatable {
     var profile: String
     var presets: [MigratedOverridePresets]
-    let enteredBy: String
 }

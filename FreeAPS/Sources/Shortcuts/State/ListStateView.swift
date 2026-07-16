@@ -5,47 +5,29 @@ import SwiftUI
 struct ListStateView: View {
     var state: StateiAPSResults
 
-    private var numberFormatter: NumberFormatter {
+    private static let numberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 2
         return formatter
-    }
+    }()
 
-    private var glucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        if state.unit == "mmolL" {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-        }
-        formatter.roundingMode = .halfUp
-        return formatter
-    }
-
-    private var deltaFormatter: NumberFormatter {
+    private static let deltaFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "  +"
         formatter.negativePrefix = "  -"
         return formatter
-    }
+    }()
 
-    private var timaAgoFormatter: NumberFormatter {
+    private static let timaAgoFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         formatter.negativePrefix = ""
         return formatter
-    }
-
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter
-    }
+    }()
 
     var body: some View {
         HStack(alignment: .center) {
@@ -54,7 +36,7 @@ struct ListStateView: View {
             HStack {
                 Text("IOB").font(.caption).foregroundColor(.secondary)
                 Text(
-                    (numberFormatter.string(from: (state.iob ?? 0) as NSNumber) ?? "0") +
+                    (Self.numberFormatter.string(from: (state.iob ?? 0) as NSNumber) ?? "0") +
                         NSLocalizedString(" U", comment: "Insulin unit")
                 )
                 .font(.body).fontWeight(.bold)
@@ -62,7 +44,7 @@ struct ListStateView: View {
             HStack {
                 Text("COB").font(.caption).foregroundColor(.secondary)
                 Text(
-                    (numberFormatter.string(from: (state.cob ?? 0) as NSNumber) ?? "0") +
+                    (Self.numberFormatter.string(from: (state.cob ?? 0) as NSNumber) ?? "0") +
                         NSLocalizedString(" g", comment: "gram of carbs")
                 )
                 .font(.body).fontWeight(.bold)
@@ -75,7 +57,7 @@ struct ListStateView: View {
             }
             HStack {
                 let minutes = -1 * state.date.timeIntervalSinceNow / 60
-                let text = timaAgoFormatter.string(for: Double(minutes)) ?? ""
+                let text = Self.timaAgoFormatter.string(for: Double(minutes)) ?? ""
                 Text(
                     minutes <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
                         text + " " +

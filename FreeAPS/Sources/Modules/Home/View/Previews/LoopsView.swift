@@ -3,7 +3,7 @@ import Foundation
 import SwiftUI
 
 struct LoopsView: View {
-    @Binding var loopStatistics: (Int, Int, Double, String)
+    let loopStatistics: (Int, Int, Double, String)
 
     var body: some View {
         VStack {

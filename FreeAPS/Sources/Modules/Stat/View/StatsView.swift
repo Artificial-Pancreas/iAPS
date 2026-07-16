@@ -52,7 +52,7 @@ struct StatsView: View {
     var loops: some View {
         let loops = fetchRequest
         // First loop date
-        let previous = (loops.last?.start ?? Date.now).addingTimeInterval(-5.minutes.timeInterval)
+        let previous = (loops.last?.start ?? Date.now).subtractingTimeInterval(.minutes(5))
         // Time in days
         let days = -1 * previous.timeIntervalSinceNow / 8.64E4
         // Calculations
@@ -267,7 +267,7 @@ struct StatsView: View {
         // Last date (recent)
         let current = glucose.first?.date ?? Date()
         // Total time in days
-        let numberOfDays = (current - previous).timeInterval / 8.64E4
+        let numberOfDays = current.timeIntervalSince(previous) / 8.64E4
 
         let denominator = numberOfDays < 1 ? 1 : numberOfDays
 

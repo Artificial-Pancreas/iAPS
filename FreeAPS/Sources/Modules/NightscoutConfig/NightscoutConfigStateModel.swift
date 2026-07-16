@@ -3,21 +3,21 @@ import Combine
 import CoreData
 import G7SensorKit
 import LoopKit
-import SwiftDate
 import SwiftUI
 
 extension NightscoutConfig {
-    final class StateModel: BaseStateModel<Provider> {
+    final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
+        let uiBindings = UIBindings()
         @Injected() private var keychain: Keychain!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var storage: FileStorage!
-        @Injected() private var coreDataStorageGlucoseSaver: CoreDataStorageGlucoseSaver!
-        @Injected() var apsManager: APSManager!
-        @Injected() var deviceManager: DeviceDataManager!
-        private let processQueue = DispatchQueue(label: "NightscoutConfig.StateModel.processQueue")
+        @Injected() private var coreDataManager: CoreDataManager!
+        @Injected() private var apsManager: APSManager!
+        @Injected() private var deviceManager: DeviceDataManager!
 
-        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        private let coreDataStorage = CoreDataStorage()
 
         @Published var url = ""
         @Published var secret = ""
@@ -28,7 +28,11 @@ extension NightscoutConfig {
         @Published var uploading = false
         @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
+        @Published var uploadsPausedUntil: Date?
         @Published var nightscoutFetchEnabled = true // Allow fetch
+        @Setting(\.glucoseUploadSchedule) var glucoseUploadSchedule = UploadSchedule()
+        @Setting(\.treatmentsAndLoopsUploadSchedule) var treatmentsAndLoopsUploadSchedule = UploadSchedule()
+        @Setting(\.deviceStatusUploadSchedule) var deviceStatusUploadSchedule = UploadSchedule()
         @Published var units: GlucoseUnits = .mmolL
         @Published var dia: Decimal = 6
         @Published var maxBasal: Decimal = 4
@@ -52,17 +56,83 @@ extension NightscoutConfig {
             }
         }
 
-        override func subscribe() {
+        @Published var cgmSupportsGlucoseUpload: Bool = false
+        @Published var cgmEnablesGlucoseUpload: Bool = false
+        @Published var cgmDisablesGlucoseUpload: Bool = false
+
+        override func subscribe() async {
             url = keychain.getValue(String.self, forKey: Config.urlKey) ?? ""
             secret = keychain.getValue(String.self, forKey: Config.secretKey) ?? ""
-            units = settingsManager.settings.units
-            dia = settingsManager.pumpSettings.insulinActionCurve
-            maxBasal = settingsManager.pumpSettings.maxBasal
-            maxBolus = settingsManager.pumpSettings.maxBolus
 
-            subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
-            subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { isUploadEnabled = $0 }
-            subscribeSetting(\.nightscoutFetchEnabled, on: $nightscoutFetchEnabled) { nightscoutFetchEnabled = $0 }
+            let settings = await settingsManager.settings
+            let pumpSettings = await settingsManager.pumpSettings
+
+            units = settings.units
+            dia = pumpSettings.insulinActionCurve
+            maxBasal = pumpSettings.maxBasal
+            maxBolus = pumpSettings.maxBolus
+
+            updatedShouldUploadGlucose()
+
+            subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { self.allowAnnouncements = $0 }
+            subscribeSetting(\.isUploadEnabled, on: $isUploadEnabled) { self.isUploadEnabled = $0 }
+            subscribeSetting(\.nightscoutFetchEnabled, on: $nightscoutFetchEnabled) { self.nightscoutFetchEnabled = $0 }
+
+            uploadsPausedUntil = NightscoutUploadPause.pausedUntil
+            watchForPauseExpiry()
+
+            observeUI(appCoordinator.cgmInfo) { me, _ in
+                me.updatedShouldUploadGlucose()
+            }
+            observeUI(appCoordinator.cgmStatus) { me, _ in
+                me.updatedShouldUploadGlucose()
+            }
+        }
+
+        var uploadsPaused: Bool {
+            guard let uploadsPausedUntil else { return false }
+            return uploadsPausedUntil > Date()
+        }
+
+        func pauseUploads(for duration: UploadPauseDuration) {
+            setPause(until: Date.now.addingTimeInterval(duration.timeInterval))
+        }
+
+        func resumeUploads() {
+            setPause(until: nil)
+        }
+
+        private func setPause(until: Date?) {
+            NightscoutUploadPause.pausedUntil = until
+            uploadsPausedUntil = until
+        }
+
+        /// Uploads resume on their own once the deadline passes, but the screen would keep claiming to be
+        /// paused. Clearing the elapsed date both refreshes the UI and tidies the stored value away.
+        private func watchForPauseExpiry() {
+            Task { [weak self] in
+                while !Task.isCancelled {
+                    try? await Task.sleep(for: .seconds(30))
+                    guard let self else { return }
+                    if let until = uploadsPausedUntil, until <= Date() {
+                        setPause(until: nil)
+                    }
+                }
+            }.store(in: lifetime)
+        }
+
+        private func updatedShouldUploadGlucose() {
+            guard let cgmInfo = appCoordinator.cgmInfo.value,
+                  let cgmStatus = appCoordinator.cgmStatus.value
+            else {
+                cgmSupportsGlucoseUpload = false
+                cgmEnablesGlucoseUpload = false
+                cgmDisablesGlucoseUpload = false
+                return
+            }
+            cgmSupportsGlucoseUpload = cgmInfo.glucoseUploadSupported
+            cgmEnablesGlucoseUpload = cgmStatus.shouldUploadGlucose
+            cgmDisablesGlucoseUpload = cgmInfo.glucoseUploadSupported && !cgmStatus.shouldUploadGlucose
         }
 
         func connect() {
@@ -76,247 +146,202 @@ extension NightscoutConfig {
             }
             connecting = true
             message = ""
-            provider.checkConnection(url: url, secret: secret.isEmpty ? nil : secret)
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    switch completion {
-                    case .finished: break
-                    case let .failure(error):
-                        self.message = "Error: \(error.localizedDescription)"
-                    }
-                    self.connecting = false
-                } receiveValue: {
+            Task {
+                do {
+                    try await NightscoutAPI(url: url, secret: secret.isEmpty ? nil : secret).checkConnection()
                     self.message = "Connected!"
                     self.keychain.setValue(self.url, forKey: Config.urlKey)
                     self.keychain.setValue(self.secret, forKey: Config.secretKey)
+
+                    appCoordinator.sendNightscoutConfigChanged()
+                } catch {
+                    self.message = "Error: \(error.localizedDescription)"
                 }
-                .store(in: &lifetime)
+                connecting = false
+            }
         }
 
-        private var nightscoutAPI: NightscoutAPI? {
-            guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
-                  let url = URL(string: urlString),
-                  let secret = keychain.getValue(String.self, forKey: NightscoutConfig.Config.secretKey)
-            else {
-                return nil
-            }
-            return NightscoutAPI(url: url, secret: secret)
+        private func readConcentration() async -> Double {
+            await coreDataStorage.insulinConcentration().concentration
         }
 
         func importSettings() {
-            guard let nightscout = nightscoutAPI else {
-                saveError("Can't access nightscoutAPI")
-                return
-            }
-            let group = DispatchGroup()
-            group.enter()
-            var error = ""
-            let path = "/api/v1/profile.json"
-            let timeout: TimeInterval = 60
-
-            var components = URLComponents()
-            components.scheme = nightscout.url.scheme
-            components.host = nightscout.url.host
-            components.port = nightscout.url.port
-            components.path = path
-            components.queryItems = [
-                URLQueryItem(name: "count", value: "1")
-            ]
-            var url = URLRequest(url: components.url!)
-            url.allowsConstrainedNetworkAccess = false
-            url.timeoutInterval = timeout
-
-            if let secret = nightscout.secret {
-                url.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-            }
-            let task = URLSession.shared.dataTask(with: url) { data, response, error_ in
-                if let error_ = error_ {
-                    print("Error occured: " + error_.localizedDescription)
-                    // handle error
-                    self.saveError("Error occured: " + error_.localizedDescription)
-                    error = error_.localizedDescription
+            Task {
+                guard await nightscoutManager.isConfigured() else {
+                    saveError("Can't access nightscoutAPI")
                     return
                 }
-                guard let httpResponse = response as? HTTPURLResponse,
-                      (200 ... 299).contains(httpResponse.statusCode)
+                let pumpInfo = self.appCoordinator.pumpInfo.value
+
+                let fetchedProfileStore: [FetchedNightscoutProfileStore]
+                do {
+                    fetchedProfileStore = try await self.nightscoutManager.fetchProfile()
+                } catch let importError {
+                    debug(.nightscout, "Error occured: " + importError.localizedDescription)
+                    saveError("Error occurred: " + importError.localizedDescription)
+                    return
+                }
+
+                guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
                 else {
-                    print("Error occured! " + error_.debugDescription)
-                    // handle error
-                    self.saveError(error_.debugDescription)
+                    saveError("\nCan't find the default Nightscout Profile.")
                     return
                 }
-                let jsonDecoder = JSONCoding.decoder
 
-                if let mimeType = httpResponse.mimeType, mimeType == "application/json",
-                   let data = data
-                {
-                    do {
-                        let fetchedProfileStore = try jsonDecoder.decode([FetchedNightscoutProfileStore].self, from: data)
-                        guard let fetchedProfile: ScheduledNightscoutProfile = fetchedProfileStore.first?.store["default"]
-                        else {
-                            error = "\nCan't find the default Nightscout Profile."
-                            group.leave()
-                            return
+                guard fetchedProfile.units.contains(self.units.rawValue.prefix(4)) else {
+                    debug(
+                        .nightscout,
+                        "Mismatching glucose units in Nightscout and Pump Settings. Import settings aborted."
+                    )
+                    saveError("\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted.")
+                    return
+                }
+
+                var areCRsOK = true
+                let carbratios = fetchedProfile.carbratio
+                    .map { carbratio -> CarbRatioEntry in
+                        if carbratio.value <= 0 {
+                            areCRsOK = false
                         }
+                        return CarbRatioEntry(
+                            start: carbratio.time,
+                            offset: self.offset(carbratio.time) / 60,
+                            ratio: carbratio.value
+                        )
+                    }
+                let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
+                guard areCRsOK else {
+                    saveError(
+                        "\nInvalid Carb Ratio settings in Nightscout.\n\nImport aborted. Please check your Nightscout Profile Carb Ratios Settings!"
+                    )
+                    return
+                }
 
-                        guard fetchedProfile.units.contains(self.units.rawValue.prefix(4)) else {
-                            debug(
-                                .nightscout,
-                                "Mismatching glucose units in Nightscout and Pump Settings. Import settings aborted."
-                            )
-                            error = "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted."
-                            group.leave()
-                            return
-                        }
-
-                        var areCRsOK = true
-                        let carbratios = fetchedProfile.carbratio
-                            .map { carbratio -> CarbRatioEntry in
-                                if carbratio.value <= 0 {
-                                    error =
-                                        "\nInvalid Carb Ratio settings in Nightscout.\n\nImport aborted. Please check your Nightscout Profile Carb Ratios Settings!"
-                                    areCRsOK = false
-                                }
-                                return CarbRatioEntry(
-                                    start: carbratio.time,
-                                    offset: self.offset(carbratio.time) / 60,
-                                    ratio: carbratio.value
-                                ) }
-                        let carbratiosProfile = CarbRatios(units: CarbUnit.grams, schedule: carbratios)
-                        guard areCRsOK else {
-                            group.leave()
-                            return
-                        }
-
-                        var areBasalsOK = true
-                        let pumpName = self.apsManager.pumpName.value
-                        let basals = fetchedProfile.basal
-                            .map { basal -> BasalProfileEntry in
-                                if pumpName != "Omnipod DASH", basal.value <= 0
-                                {
-                                    error =
-                                        "\nInvalid Nightcsout Basal Settings. Some or all of your basal settings are 0 U/h.\n\nImport aborted. Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
-                                    areBasalsOK = false
-                                }
-                                return BasalProfileEntry(
-                                    start: basal.time,
-                                    minutes: self.offset(basal.time) / 60,
-                                    rate: basal.value
-                                ) }
-                        // DASH pumps can have 0U/h basal rates but don't import if total basals (24 hours) amount to 0 U.
-                        if pumpName == "Omnipod DASH", basals.map({ each in each.rate }).reduce(0, +) <= 0
+                var areBasalsOK = true
+                let pumpName = pumpInfo?.name
+                let basals = fetchedProfile.basal
+                    .map { basal -> BasalProfileEntry in
+                        if pumpName != "Omnipod DASH", basal.value <= 0
                         {
-                            error =
-                                "\nYour total Basal insulin amount to 0 U or lower in Nightscout Profile settings.\n\n Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
                             areBasalsOK = false
                         }
-                        guard areBasalsOK else {
-                            group.leave()
-                            return
-                        }
-
-                        let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
-                            InsulinSensitivityEntry(
-                                sensitivity: sensitivity.value,
-                                offset: self.offset(sensitivity.time) / 60,
-                                start: sensitivity.time
-                            )
-                        }
-                        if sensitivities.filter({ $0.sensitivity <= 0 }).isNotEmpty {
-                            error =
-                                "\nInvalid Nightcsout Sensitivities Settings. \n\nImport aborted. Please check your Nightscout Profile Sensitivities Settings!"
-                            group.leave()
-                            return
-                        }
-
-                        let sensitivitiesProfile = InsulinSensitivities(
-                            units: self.units,
-                            userPrefferedUnits: self.units,
-                            sensitivities: sensitivities
+                        return BasalProfileEntry(
+                            start: basal.time,
+                            minutes: self.offset(basal.time) / 60,
+                            rate: basal.value
                         )
-
-                        let targets = fetchedProfile.target_low
-                            .map { target -> BGTargetEntry in
-                                BGTargetEntry(
-                                    low: target.value,
-                                    high: target.value,
-                                    start: target.time,
-                                    offset: self.offset(target.time) / 60
-                                ) }
-                        let targetsProfile = BGTargets(
-                            units: self.units,
-                            userPrefferedUnits: self.units,
-                            targets: targets
-                        )
-                        // IS THERE A PUMP?
-                        guard let pump = self.deviceManager.pumpManager else {
-                            self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                            self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                            self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
-                            self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
-                            debug(
-                                .service,
-                                "Settings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
-                            )
-                            error =
-                                "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
-                            group.leave()
-                            return
-                        }
-                        let syncValues = basals.map {
-                            RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
-                        }
-                        // SSAVE TO STORAGE. SAVE TO PUMP (LoopKit)
-                        pump.syncBasalRateSchedule(items: syncValues) { result in
-                            switch result {
-                            case .success:
-                                self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                                self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                                self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
-                                self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
-                                debug(.service, "Settings have been imported and the Basals saved to pump!")
-                                // DIA. Save if changed.
-                                let dia = fetchedProfile.dia
-                                print("dia: " + dia.description)
-                                print("pump dia: " + self.dia.description)
-                                if dia != self.dia, dia >= 0 {
-                                    let file = PumpSettings(
-                                        insulinActionCurve: dia,
-                                        maxBolus: self.maxBolus,
-                                        maxBasal: self.maxBasal
-                                    )
-                                    self.storage.save(file, as: OpenAPS.Settings.settings)
-                                    debug(.nightscout, "DIA setting updated to " + dia.description + " after a NS import.")
-                                }
-                                group.leave()
-                            case .failure:
-                                error =
-                                    "\nSettings were imported but the Basals couldn't be saved to pump (communication error). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
-                                debug(.service, "Basals couldn't be save to pump")
-                                group.leave()
-                            }
-                        }
-                    } catch let parsingError {
-                        print(parsingError)
-                        error = parsingError.localizedDescription
-                        group.leave()
                     }
+
+                guard areBasalsOK else {
+                    saveError(
+                        "\nInvalid Nightcsout Basal Settings. Some or all of your basal settings are 0 U/h.\n\nImport aborted. Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
+                    )
+                    return
                 }
-            }
-            task.resume()
-            group.wait(wallTimeout: .now() + 5)
-            group.notify(queue: .global(qos: .background)) {
-                self.saveError(error)
+
+                // DASH pumps can have 0U/h basal rates but don't import if total basals (24 hours) amount to 0 U.
+                if pumpName == "Omnipod DASH", basals.map({ each in each.rate }).reduce(0, +) <= 0 {
+                    areBasalsOK = false
+                }
+                guard areBasalsOK else {
+                    saveError(
+                        "\nYour total Basal insulin amount to 0 U or lower in Nightscout Profile settings.\n\n Please check your Nightscout Profile Basal Settings before trying to import again. Import has been aborted.)"
+                    )
+                    return
+                }
+
+                let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
+                    InsulinSensitivityEntry(
+                        sensitivity: sensitivity.value,
+                        offset: self.offset(sensitivity.time) / 60,
+                        start: sensitivity.time
+                    )
+                }
+                if sensitivities.filter({ $0.sensitivity <= 0 }).isNotEmpty {
+                    saveError(
+                        "\nInvalid Nightcsout Sensitivities Settings. \n\nImport aborted. Please check your Nightscout Profile Sensitivities Settings!"
+                    )
+                    return
+                }
+
+                let sensitivitiesProfile = InsulinSensitivities(
+                    units: self.units,
+                    userPrefferedUnits: self.units,
+                    sensitivities: sensitivities
+                )
+
+                let targets = fetchedProfile.target_low
+                    .map { target -> BGTargetEntry in
+                        BGTargetEntry(
+                            low: target.value,
+                            high: target.value,
+                            start: target.time,
+                            offset: self.offset(target.time) / 60
+                        )
+                    }
+
+                let targetsProfile = BGTargets(
+                    units: self.units,
+                    userPrefferedUnits: self.units,
+                    targets: targets
+                )
+
+                // IS THERE A PUMP?
+                guard pumpInfo != nil else {
+                    await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                    await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                    await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                    await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                    let error =
+                        "Settings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
+                    debug(.service, error)
+                    saveError(error)
+                    return
+                }
+
+                // SAVE TO STORAGE. SAVE TO PUMP (LoopKit)
+                let concentration = await readConcentration()
+                do {
+                    if let adjustedBasals = try await deviceManager.syncBasalRateSchedule(
+                        items: basals,
+                        concentration: concentration
+                    ) {
+                        await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
+                    } else {
+                        await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                    }
+                    await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                    await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                    await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                    debug(.service, "Settings have been imported and the Basals saved to pump!")
+                    // DIA. Save if changed.
+                    let dia = fetchedProfile.dia
+                    if dia != self.dia, dia >= 0 {
+                        let pumpSettings = PumpSettings(
+                            insulinActionCurve: dia,
+                            maxBolus: self.maxBolus,
+                            maxBasal: self.maxBasal
+                        )
+                        await self.settingsManager.updatePumpSettings(pumpSettings)
+                        debug(.nightscout, "DIA setting updated to " + dia.description + " after a NS import.")
+                    }
+
+                } catch {
+                    let error =
+                        "\nSettings were imported but the Basals couldn't be saved to pump (communication error). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
+                    saveError(error)
+                    debug(.service, "Basals couldn't be save to pump: \(error)")
+                }
             }
         }
 
-        func offset(_ string: String) -> Int {
+        private func offset(_ string: String) -> Int {
             let hours = Int(string.prefix(2)) ?? 0
             let minutes = Int(string.suffix(2)) ?? 0
             return ((hours * 60) + minutes) * 60
         }
 
-        func saveError(_ string: String) {
+        private func saveError(_ string: String) {
             coredataContext.performAndWait {
                 let saveToCoreData = ImportError(context: self.coredataContext)
                 saveToCoreData.date = Date()
@@ -330,53 +355,42 @@ extension NightscoutConfig {
         func backfillGlucose() {
             backfilling = true
             backfillingProgress = 0.0
-            nightscoutManager.fetchGlucose(
-                since: Date().addingTimeInterval(-Int(backFillInterval).days.timeInterval),
-                progress: { progress in
-                    DispatchQueue.main.async {
+            Task {
+                defer { backfilling = false }
+                let since = Date.now.subtractingTimeInterval(.days(backFillInterval))
+                for await progress in await nightscoutManager.fetchGlucose(since: since) {
+                    switch progress {
+                    case let .progress(progress):
                         self.backfillingProgress = progress
-                    }
-                }
-            )
-            .receive(on: processQueue)
-            .map { glucose in
-                let onePer5Min = self.glucoseStorage.filterFrequentGlucose(glucose, interval: TimeInterval(minutes: 4.5))
-                debug(.nightscout, "fetched \(glucose.count) (filtered: \(onePer5Min.count)) glucose records from nightscout")
-                return onePer5Min
-            }
-            .sink { [weak self] glucose in
-                guard let self = self else {
-                    return
-                }
-
-                guard glucose.isNotEmpty else {
-                    DispatchQueue.main.async {
-                        self.backfilling = false
-                    }
-                    return
-                }
-                // glucose storage - store only last 24 hours
-                let cutOffDate = Date().addingTimeInterval(-1.days.timeInterval)
-                let recent = glucose.filter { $0.dateString >= cutOffDate }
-                _ = self.glucoseStorage.storeGlucose(recent)
-
-                // core date - store everything
-                coreDataStorageGlucoseSaver.storeGlucose(glucose) {
-                    DispatchQueue.main.async {
-                        self.backfilling = false
+                    case let .done(glucose):
+                        await storeBackfilledGlucose(glucose)
                     }
                 }
             }
-            .store(in: &lifetime)
+        }
+
+        private func storeBackfilledGlucose(_ glucose: [BloodGlucose]) async {
+            let onePer5Min = FrequentGlucoseFiltering.filterFrequentGlucose(glucose, interval: .minutes(4.5))
+            debug(.nightscout, "fetched \(glucose.count) (filtered: \(onePer5Min.count)) glucose records from nightscout")
+
+            guard glucose.isNotEmpty else { return }
+
+            // glucose storage - store only last 24 hours
+            let cutOffDate = Date.now.subtractingTimeInterval(.hours(24))
+            let recent = glucose.filter { $0.dateString >= cutOffDate }
+            _ = await glucoseStorage.storeGlucose(recent)
+
+            // core data - store everything
+            await coreDataManager.storeGlucose(glucose)
         }
 
         func uploadOldGlucose() {
             uploading = true
             uploadingProgress = 0.0
 
-            processQueue.async {
-                let readings = CoreDataStorage()
-                    .fetchGlucose(interval: Date().addingTimeInterval(-Int(self.uploadInterval).days.timeInterval) as NSDate)
+            Task {
+                let readings = await coreDataStorage
+                    .fetchGlucose(interval: Date.now.subtractingTimeInterval(.days(self.uploadInterval)) as NSDate)
                 let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
                     guard let date = reading.date,
                           let id = reading.id
@@ -401,19 +415,10 @@ extension NightscoutConfig {
                     )
                 }
 
-                self.nightscoutManager.uploadOldGlucose(
-                    bloodGlucose: bloodGlucose,
-                    completion: {
-                        DispatchQueue.main.async {
-                            self.uploading = false
-                        }
-                    },
-                    progress: { progress in
-                        DispatchQueue.main.async {
-                            self.uploadingProgress = progress
-                        }
-                    }
-                )
+                for await progress in await self.nightscoutManager.uploadOldGlucose(bloodGlucose: bloodGlucose) {
+                    self.uploadingProgress = progress
+                }
+                self.uploading = false
             }
         }
 
@@ -422,6 +427,27 @@ extension NightscoutConfig {
             keychain.removeObject(forKey: Config.secretKey)
             url = ""
             secret = ""
+            appCoordinator.sendNightscoutConfigChanged()
+        }
+    }
+}
+
+enum UploadPauseDuration: Int, Identifiable, CaseIterable {
+    case threeHours = 3
+    case sixHours = 6
+    case twelveHours = 12
+    case twentyHours = 20
+
+    var id: Int { rawValue }
+
+    var timeInterval: TimeInterval { .hours(rawValue) }
+
+    var displayName: String {
+        switch self {
+        case .threeHours: return NSLocalizedString("For 3 hours", comment: "Pause uploads duration")
+        case .sixHours: return NSLocalizedString("For 6 hours", comment: "Pause uploads duration")
+        case .twelveHours: return NSLocalizedString("For 12 hours", comment: "Pause uploads duration")
+        case .twentyHours: return NSLocalizedString("For 20 hours", comment: "Pause uploads duration")
         }
     }
 }

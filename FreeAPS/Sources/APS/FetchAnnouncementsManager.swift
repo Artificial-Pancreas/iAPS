@@ -5,85 +5,106 @@ import Swinject
 
 protocol FetchAnnouncementsManager {}
 
-final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable {
-    private let processQueue = DispatchQueue(label: "BaseFetchAnnouncementsManager.processQueue")
-    @Injected() var announcementsStorage: AnnouncementsStorage!
-    @Injected() var nightscoutManager: NightscoutManager!
-    @Injected() var apsManager: APSManager!
-    @Injected() var settingsManager: SettingsManager!
-    @Injected() var broadcaster: Broadcaster!
+actor BaseFetchAnnouncementsManager: FetchAnnouncementsManager, LifetimeOwner, AppService {
+    private let announcementsStorage: AnnouncementsStorage
+    private let nightscoutManager: NightscoutManager
+    private let apsManager: APSManager
+    private let settingsManager: SettingsManager
+    private let appCoordinator: AppCoordinator
 
-    private var lifetime = Lifetime()
-    private let timer = DispatchTimer(timeInterval: 4.minutes.timeInterval)
-    private let shouldFetch = PassthroughSubject<Bool, Never>()
+    let lifetime = Lifetime()
 
-    init(resolver: Resolver) {
-        injectServices(resolver)
-        subscribe()
+    private let interval: TimeInterval = .minutes(4)
+    private var pollingTask: Task<Void, Never>?
+    private var fetchEnabled = false
+
+    init(
+        announcementsStorage: AnnouncementsStorage,
+        nightscoutManager: NightscoutManager,
+        apsManager: APSManager,
+        settingsManager: SettingsManager,
+        appCoordinator: AppCoordinator
+    ) {
+        self.announcementsStorage = announcementsStorage
+        self.nightscoutManager = nightscoutManager
+        self.apsManager = apsManager
+        self.settingsManager = settingsManager
+        self.appCoordinator = appCoordinator
     }
 
-    private func subscribe() {
-        timer.publisher
-            .receive(on: processQueue)
-            .flatMap { _ -> AnyPublisher<[Announcement], Never> in
-                guard self.settingsManager.settings.allowAnnouncements else {
-                    return Just([]).eraseToAnyPublisher()
-                }
-                debug(.nightscout, "FetchAnnouncementsManager heartbeat")
+    // this is called at the start of the app
+    func start() async {
+        let settings = await settingsManager.settings
+        settingsUpdated(settings)
+
+        observe(appCoordinator.settings) { me, settings in
+            await me.settingsUpdated(settings)
+        }
+    }
+
+    func settingsUpdated(_ settings: FreeAPSSettings) {
+        let newEnabled = settings.nightscoutFetchEnabled
+        guard newEnabled != fetchEnabled else { return }
+        fetchEnabled = newEnabled
+        if fetchEnabled {
+            startPolling()
+        } else {
+            stopPolling()
+        }
+    }
+
+    private func startPolling() {
+        pollingTask?.cancel()
+        pollingTask = Task { [weak self] in
+            guard let interval = self?.interval else { return }
+            while !Task.isCancelled {
+                await self?.poll()
+                try? await Task.sleep(for: .seconds(interval))
+            }
+        }
+    }
+
+    private func stopPolling() {
+        pollingTask?.cancel()
+        pollingTask = nil
+    }
+
+    private func poll() async {
+        let settings = await self.settingsManager.settings
+        guard settings.allowAnnouncements else {
+            return
+        }
+        await withBackgroundTask("fetch announcements") {
+            debug(
+                .nightscout,
+                "Start fetching announcements, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
+            ) // Add timestamp for debugging of the remote command delay
+
+            let announcements = await nightscoutManager.fetchAnnouncements()
+
+            let futureEntries = announcements.filter({ $0.createdAt > Date.now })
+            // Delete future entries
+            if !futureEntries.isEmpty {
+                debug(.nightscout, "Future Announcements found")
+                await nightscoutManager.deleteAnnouncements()
+            }
+
+            guard let last = announcements
+                .filter({ $0.createdAt < Date.now })
+                .sorted(by: { $0.createdAt < $1.createdAt })
+                .last
+            else { return }
+
+            await announcementsStorage.storeAnnouncements([last], enacted: false)
+
+            if let recent = await announcementsStorage.recent(), recent.action != nil
+            {
                 debug(
                     .nightscout,
-                    "Start fetching announcements, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
-                ) // Add timestamp for debugging of the remote command delay
-                return self.nightscoutManager.fetchAnnouncements()
+                    "New announcements found, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
+                ) // Add timestamp for debugging of remote commnand delay
+                await apsManager.enactAnnouncement(recent)
             }
-            .sink { announcements in
-                let futureEntries = announcements.filter({ $0.createdAt > Date.now })
-                // Delete future entries
-                if !futureEntries.isEmpty {
-                    debug(.nightscout, "Future Announcements found")
-                    self.nightscoutManager.deleteAnnouncements()
-                }
-
-                guard let last = announcements
-                    .filter({ $0.createdAt < Date.now })
-                    .sorted(by: { $0.createdAt < $1.createdAt })
-                    .last
-                else { return }
-
-                self.announcementsStorage.storeAnnouncements([last], enacted: false)
-
-                if self.settingsManager.settings.allowAnnouncements, let recent = self.announcementsStorage.recent(),
-                   recent.action != nil
-                {
-                    debug(
-                        .nightscout,
-                        "New announcements found, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
-                    ) // Add timestamp for debugging of remote commnand delay
-                    self.apsManager.enactAnnouncement(recent)
-                }
-            }
-            .store(in: &lifetime)
-
-        shouldFetch
-            .removeDuplicates()
-            .receive(on: processQueue)
-            .sink { shouldFetch in
-                if shouldFetch {
-                    self.timer.fire()
-                    self.timer.resume()
-                } else {
-                    self.timer.suspend()
-                }
-            }
-            .store(in: &lifetime)
-
-        broadcaster.register(SettingsObserver.self, observer: self)
-        settingsDidChange(settingsManager.settings)
-    }
-}
-
-extension BaseFetchAnnouncementsManager: SettingsObserver {
-    func settingsDidChange(_ settings: FreeAPSSettings) {
-        shouldFetch.send(settings.nightscoutFetchEnabled)
+        }
     }
 }

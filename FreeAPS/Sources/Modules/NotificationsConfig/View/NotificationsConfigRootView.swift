@@ -7,6 +7,10 @@ import Swinject
 extension NotificationsConfig {
     struct RootView: BaseView {
         let resolver: Resolver
+        private let liveActivityBridge: LiveActivityBridge
+
+        @Environment(AppUIState.self) private var appUIState
+
         @StateObject var state: StateModel
         @State private var currentSoundID: SystemSoundID = 1336
         @State private var isPlay = false
@@ -15,8 +19,6 @@ extension NotificationsConfig {
         let soundManager = SystemSoundsManager()
         let silent = "Silent"
         let defaultSound = "Default"
-
-        @State private var systemLiveActivitySetting: Bool = { ActivityAuthorizationInfo().areActivitiesEnabled }()
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -38,13 +40,14 @@ extension NotificationsConfig {
 
         init(resolver: Resolver) {
             self.resolver = resolver
+            liveActivityBridge = resolver.resolve(LiveActivityBridge.self)!
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
         private func liveActivityFooterText() -> String {
             let footer = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)"
 
-            guard systemLiveActivitySetting else {
+            guard appUIState.liveActivitiesSystemEnabled else {
                 return NSLocalizedString(
                     "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n",
                     comment: "footer"
@@ -53,14 +56,14 @@ extension NotificationsConfig {
             return NSLocalizedString(footer, comment: "Footer")
         }
 
-        private func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
-            guard state.alarmSound != "Silent" else { return }
+        private func playSound(_ sound: String, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
+            guard sound != "Silent" else { return }
 
             if sStop != nil {
                 AudioServicesDisposeSystemSoundID(sStop!)
                 return
             }
-            let path = "/System/Library/Audio/UISounds/" + (s ?? state.alarmSound)
+            let path = "/System/Library/Audio/UISounds/" + sound
             var theSoundID = SystemSoundID(1336)
             let soundURL = URL(string: path)
             AudioServicesCreateSystemSoundID(soundURL! as CFURL, &theSoundID)
@@ -191,7 +194,7 @@ extension NotificationsConfig {
                     header: Text("Live Activity"),
                     footer: Text(liveActivityFooterText()),
                     content: {
-                        if !systemLiveActivitySetting {
+                        if !appUIState.liveActivitiesSystemEnabled {
                             Button("Open Settings App") {
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }
@@ -213,9 +216,7 @@ extension NotificationsConfig {
                             }
                         }
                     }
-                ).onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
-                    self.systemLiveActivitySetting = $0
-                })
+                )
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationBarTitle("Notifications")

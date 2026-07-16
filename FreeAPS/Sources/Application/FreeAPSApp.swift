@@ -28,9 +28,9 @@ import Swinject
     // TODO: Remove var after update "Use Dependencies" logic in Logger
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
-    // TODO: do we want this? will this work with the Router?
-    // can be shared with the rest of the views with @EnvironmentObject
-    @StateObject private var appServices = AppServices(assembler: assembler)
+    private let appServices = Self.resolver.resolve(AppServices.self)!
+
+    private let appUIState = Self.resolver.resolve(AppUIState.self)!
 
     init() {
         debug(
@@ -43,16 +43,19 @@ import Swinject
 
     var body: some Scene {
         WindowGroup {
-            Main.RootView(resolver: FreeAPSApp.resolver)
-                .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
-                .environmentObject(Icons())
-                .onOpenURL(perform: handleURL)
-                .environmentObject(appServices)
+            StartupGate(start: appServices.started) {
+                Main.RootView(resolver: FreeAPSApp.resolver)
+                    .environment(\.managedObjectContext, dataController.persistentContainer.viewContext)
+                    .environmentObject(Icons())
+                    .environment(appUIState)
+                    .onOpenURL(perform: handleURL)
+            }
         }
         .onChange(of: scenePhase) {
             debug(.default, "APPLICATION PHASE: \(scenePhase)")
             if scenePhase == .active {
-                appServices.deviceManager.didBecomeActive()
+                // device data manager subscribes to this subject and updates pump manager's BLE heartbeat preference
+                appServices.appCoordinator?.sendAppBecomeActiveEvent()
             }
         }
     }
@@ -78,6 +81,61 @@ import Swinject
             userDefaults.set(true, forKey: IAPSconfig.newVersion)
             debug(.default, "Running new version: \(version)")
             return
+        }
+    }
+}
+
+private struct StartupGate<Content: View>: View {
+    let start: () async throws -> Void
+    @ViewBuilder var content: () -> Content
+
+    @State private var ready = false
+    @State private var error: String?
+
+    var body: some View {
+        ZStack {
+            if let error {
+                ZStack {
+                    Text(error)
+                }
+            } else if ready {
+                content()
+            } else {
+                LaunchPlaceholder()
+            }
+        }
+        .task {
+            do {
+                try await start()
+                ready = true
+            } catch {
+                self.error = error.localizedDescription
+            }
+        }
+    }
+}
+
+private struct LaunchPlaceholder: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private let logoSize: CGFloat = 116
+
+    private var selectedIconPreview: String {
+        let icon = UIApplication.shared.alternateIconName.flatMap(Icon_.init(rawValue:)) ?? .primary
+        return icon.preview
+    }
+
+    var body: some View {
+        ZStack {
+            (colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark)
+                .ignoresSafeArea()
+
+            Image(selectedIconPreview)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: logoSize, height: logoSize)
+                .clipShape(RoundedRectangle(cornerRadius: logoSize * 0.225, style: .continuous))
+                .shadow(color: .black.opacity(0.20), radius: 18, x: 0, y: 10)
         }
     }
 }
