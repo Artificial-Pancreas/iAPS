@@ -256,7 +256,7 @@ extension OpenFoodFactsProduct: Codable {
             String.self,
             forKey: .servingQuantity
         ) {
-            servingQuantity = Decimal(from: string)
+            servingQuantity = string.toDecimal
         } else {
             servingQuantity = nil
         }

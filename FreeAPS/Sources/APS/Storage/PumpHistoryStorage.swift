@@ -12,7 +12,6 @@ protocol PumpHistoryStorage: Sendable {
     // from UI
     func storeEvents(_ events: [PumpHistoryEvent]) async
 
-    func recent() async -> [PumpHistoryEvent]
     func deleteInsulin(at date: Date) async
 }
 
@@ -36,7 +35,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
 
     // this is called on app start
     func start() async {
-        appCoordinator.setPumpHistory(await recent())
+        let history = await storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) ?? []
+        appCoordinator.setPumpHistory(history)
     }
 
     private var concentration: (concentration: Double, increment: Double) {
@@ -207,13 +207,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                 .filter { $0.timestamp.addingTimeInterval(.hours(24)) >= now }
                 .sorted { $0.timestamp > $1.timestamp }
         }
-        // oldest -> newest
-        self.appCoordinator.setPumpHistory(uniqEvents.reversed())
-    }
-
-    /// oldest -> newest
-    func recent() async -> [PumpHistoryEvent] {
-        await storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)?.reversed() ?? []
+        // newest -> oldest
+        self.appCoordinator.setPumpHistory(uniqEvents)
     }
 
     func deleteInsulin(at date: Date) async {
@@ -223,8 +218,8 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
                     $0.timestamp == date
                 }
             if let deleted {
-                // oldest -> newest
-                self.appCoordinator.setPumpHistory(updatedValues.reversed())
+                // newest -> oldest
+                self.appCoordinator.setPumpHistory(updatedValues)
                 self.appCoordinator.sendPumpHistoryDeleted(deleted)
             }
         }

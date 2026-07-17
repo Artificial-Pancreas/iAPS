@@ -12,7 +12,7 @@ extension ISFEditor {
         var isfSchedule: InsulinSensitivities {
             get async {
                 await storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self)
-                    ?? InsulinSensitivities(from: OpenAPS.defaults(for: OpenAPS.Settings.insulinSensitivities))
+                    ?? (try? InsulinSensitivities.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.insulinSensitivities)))
                     ?? InsulinSensitivities(
                         units: .mmolL,
                         userPrefferedUnits: .mmolL,
@@ -28,7 +28,7 @@ extension ISFEditor {
         var autosense: Autosens {
             get async {
                 await storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self)
-                    ?? Autosens(from: OpenAPS.defaults(for: OpenAPS.Settings.autosense))
+                    ?? (try? Autosens.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.autosense)))
                     ?? Autosens(ratio: 1, newisf: nil, timestamp: nil)
             }
         }

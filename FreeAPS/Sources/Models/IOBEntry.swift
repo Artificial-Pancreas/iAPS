@@ -1,6 +1,6 @@
 import Foundation
 
-struct IOBEntry: JSON, Equatable {
+struct IOBEntry: Codable, Equatable {
     let iob: Decimal
     let activity: Decimal
     let basaliob: Decimal
@@ -26,7 +26,7 @@ struct IOBEntry: JSON, Equatable {
         let rate: Decimal
         let timestamp: Date
         let started_at: Date
-        let date: UInt64
+        let date: Decimal?
         let duration: Decimal
     }
 }
@@ -47,7 +47,7 @@ extension IOBEntry {
 
         let decoder = JSONDecoder()
 
-        decoder.dateDecodingStrategy = .customISO8601
+        decoder.dateDecodingStrategy = .iso8601withOptionalFractionalSeconds
 
         do {
             let iobEntries = try decoder.decode([IOBEntry].self, from: iobData)

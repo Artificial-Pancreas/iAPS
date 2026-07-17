@@ -90,23 +90,9 @@ extension Home {
             }
         }
 
-        func pumpHistory(hours: Int) async -> [PumpHistoryEvent] {
+        func carbs(hours: Int) -> [CarbsEntry] {
             let now = Date()
-            return appCoordinator.pumpHistory.value.filter {
-                $0.timestamp.addingTimeInterval(.hours(hours)) > now
-            }
-        }
-
-        func tempTargets(hours: Int) async -> [TempTarget] {
-            let now = Date()
-            return await tempTargetsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(.hours(hours)) > now
-            }
-        }
-
-        func carbs(hours: Int) async -> [CarbsEntry] {
-            let now = Date()
-            return await carbsStorage.recent().filter {
+            return appCoordinator.carbHistory.value.filter {
                 $0.createdAt.addingTimeInterval(.hours(hours)) > now && $0.carbs > 0
             }
         }

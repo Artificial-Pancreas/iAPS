@@ -1568,6 +1568,7 @@ extension BaseDeviceDataManager {
             isBolusing: isBolusing,
             supportedBasalRates: pumpManager.supportedBasalRates,
             supportedBolusVolumes: pumpManager.supportedBolusVolumes,
+            model: KnownPlugins.pumpModel(pumpManager),
             timestamp: Date.now
         )
     }

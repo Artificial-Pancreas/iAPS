@@ -1,15 +1,6 @@
 extension OpenAPS {
     enum Bundle {
-        static let common = "bundle/common.js"
-        static let iob = "bundle/iob.js"
-        static let meal = "bundle/meal.js"
-        static let autotunePrep = "bundle/autotune-prep.js"
-        static let autotuneCore = "bundle/autotune-core.js"
-        static let getLastGlucose = "bundle/glucose-get-last.js"
-        static let basalSetTemp = "bundle/basal-set-temp.js"
-        static let determineBasal = "bundle/determine-basal.js"
-        static let autosens = "bundle/autosens.js"
-        static let profile = "bundle/profile.js"
+        static let oref0 = "bundle/oref0-bridge.js"
     }
 
     enum Test {
@@ -30,11 +21,6 @@ extension OpenAPS {
 
     enum Middleware {
         static let determineBasal = "middleware/determine_basal.js"
-    }
-
-    enum AutoISF {
-        static let getLastGlucose = "autoisf/glucose-get-last-autoisf.js"
-        static let autoisf = "autoisf/autoisf.js"
     }
 
     enum Settings {

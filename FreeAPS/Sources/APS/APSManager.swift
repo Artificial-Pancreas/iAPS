@@ -326,7 +326,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         guard let autosens = await storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
               (autosens.timestamp ?? .distantPast).addingTimeInterval(.minutes(30)) > Date()
         else {
-            return await openAPS.autosense() != nil
+            return (try? await openAPS.autosens()) != nil
         }
 
         return false
@@ -377,7 +377,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             _ = await autosens()
             _ = await dailyAutotune()
             let override = await self.override
-            let suggestion = await openAPS.determineBasal(
+            let suggestion = try? await openAPS.determineBasal(
                 currentTemp: temp,
                 clock: now,
                 temporaryCarbs: temporaryCarbs,
@@ -399,8 +399,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private func updateIOB(pumpHistory: [PumpHistoryEvent]) async {
         await updateIobTaskSerializer.run {
-            let sync = await openAPS.iobSync(pumpHistory: pumpHistory)
-            guard let iobEntries = IOBEntry.parseArrayFromJSON(from: sync) else { return }
+            let iobEntries = try? await openAPS.iobSync(pumpHistory: pumpHistory, clock: Date.now)
+            guard let iobEntries else { return }
 
             _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
 
@@ -410,13 +410,14 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     func makeProfiles() async -> Bool {
         let settings = await settingsManager.settings
-        let tunedProfile = await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
+        let tunedProfile = try? await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
 
         if let basalProfile = tunedProfile?.basalProfile {
+            // TODO: what is this for?
             appCoordinator.sendBasalProfile(basalProfile)
         }
 
-        return true // tunedProfile != nil
+        return tunedProfile != nil
     }
 
     func enactBolus(amount: Double, isSMB: Bool) async {
@@ -516,7 +517,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     }
 
     func autotune() async -> Autotune? {
-        await openAPS.autotune()
+        try? await openAPS.autotune()
     }
 
     func enactAnnouncement(_ announcement: Announcement) async {

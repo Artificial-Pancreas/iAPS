@@ -34,6 +34,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
             await me.setupGlucose()
         }
 
+        // TODO: why subscribe to this?
         observe(appCoordinator.pumpHistory.dropFirst()) { me, _ in
             await me.setupGlucose()
         }

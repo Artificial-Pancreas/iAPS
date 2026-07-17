@@ -49,7 +49,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let loopCompleted = PassthroughSubject<LoopOutcome, Never>()
 
-    // current pump history, oldest -> newest
+    // current pump history, newest -> oldest
     let pumpHistory = CurrentValueSubject<[PumpHistoryEvent], Never>([])
 
     let pumpHistoryDeletions = PassthroughSubject<[PumpHistoryEvent], Never>()
@@ -72,7 +72,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let carbDeletions = PassthroughSubject<[CarbsEntry], Never>()
 
-    // current temp targets, oldest -> newest
+    // current temp targets, newest -> oldest
     let tempTargets = CurrentValueSubject<[TempTarget], Never>([])
 
     let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
@@ -219,7 +219,7 @@ final class AppCoordinator: @unchecked Sendable {
         suggested.send(value)
     }
 
-    /// MUST BE oldest -> newest
+    /// MUST BE newest -> oldest
     func setPumpHistory(_ value: [PumpHistoryEvent]) {
         pumpHistory.send(value)
     }
@@ -237,7 +237,7 @@ final class AppCoordinator: @unchecked Sendable {
         carbDeletions.send(value)
     }
 
-    /// MUST BE oldest -> newest
+    /// MUST BE newest -> oldest
     func setTempTargets(_ value: [TempTarget]) {
         tempTargets.send(value)
     }

@@ -71,9 +71,9 @@ extension DataTable {
             let settings = await settingsManager.settings
             let pumpSettings = await settingsManager.pumpSettings
             let preferences = await settingsManager.preferences
-            let pumpHistory = await pumpHistoryStorage.recent()
-            let carbHistory = await carbsStorage.recent()
-            let recentTempTargets = await tempTargetsStorage.recent()
+            let pumpHistory = appCoordinator.pumpHistory.value
+            let carbHistory = appCoordinator.carbHistory.value
+            let recentTempTargets = appCoordinator.tempTargets.value
 
             self.units = settings.units
             maxBolus = pumpSettings.maxBolus
@@ -126,16 +126,19 @@ extension DataTable {
                 .chunks(ofCount: 2)
                 .compactMap { chunk -> Treatment? in
                     let chunk = Array(chunk)
-                    guard chunk.count == 2, chunk[0].type == .tempBasal,
-                          chunk[1].type == .tempBasalDuration else { return nil }
+                    guard chunk.count == 2 else { return nil }
+                    let durationEntry = chunk[0]
+                    let tempBasalEntry = chunk[1]
+                    guard tempBasalEntry.type == .tempBasal,
+                          durationEntry.type == .tempBasalDuration else { return nil }
                     return Treatment(
                         units: units,
                         type: .tempBasal,
-                        date: chunk[0].timestamp,
-                        creationDate: chunk[0].timestamp,
-                        amount: chunk[0].rate ?? 0,
+                        date: tempBasalEntry.timestamp,
+                        creationDate: tempBasalEntry.timestamp,
+                        amount: tempBasalEntry.rate ?? 0,
                         secondAmount: nil,
-                        duration: chunk[1].durationMin ?? 0
+                        duration: durationEntry.durationMin ?? 0
                     )
                 }
 
@@ -319,7 +322,7 @@ extension DataTable {
             treatment = mealItem
             let string = (mealItem.amountText.components(separatedBy: " ").first ?? "0")
                 .replacingOccurrences(of: ",", with: ".")
-            meal.carbs = Decimal(string: string) ?? 0
+            meal.carbs = string.toDecimal ?? 0
             oldCarbs = meal.carbs
             meal.fat = (complex?.fat ?? 0) as Decimal
             meal.protein = (complex?.protein ?? 0) as Decimal

@@ -162,8 +162,10 @@ extension Bolus {
             loopDate = lastLoopDate ?? .distantPast
         }
 
+        // TODO: what is this function doing?
         private func fetchRecentIOB() async -> Decimal {
             guard iob == 0 else { return 0 }
+            // TODO: use latest suggestion instead?
             guard let recent = await coreDataStorage.recentReason() else { return 0 }
             let timeDifference = (recent.date ?? .distantPast).timeIntervalSinceNow
             if timeDifference <= 0, timeDifference > TimeInterval.minutes(-30) {
@@ -299,7 +301,7 @@ extension Bolus {
         }
 
         private func fetchPumpHistory() async {
-            history = await pumpHistoryStorage.recent()
+            history = appCoordinator.pumpHistory.value
         }
 
         func add() {

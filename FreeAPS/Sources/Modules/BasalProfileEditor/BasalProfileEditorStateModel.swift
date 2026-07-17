@@ -99,13 +99,13 @@ extension BasalProfileEditor {
 
         private func retrieveProfile() async -> [BasalProfileEntry] {
             await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
+                ?? (try? [BasalProfileEntry].decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile)))
                 ?? []
         }
 
         private func updateSupportedBasalRates(_ pumpStatus: PumpDisplayStatus?) async {
             let newRateValues = pumpStatus?.supportedBasalRates.map { Decimal($0) } ??
-                stride(from: 5.0, to: 1001.0, by: 5.0).map { ($0.decimal ?? .zero) / 100 }
+                stride(from: 5.0, to: 1001.0, by: 5.0).map { Decimal($0) / 100 }
             if newRateValues != rateValues {
                 rateValues = newRateValues
                 items = await retrieveProfile().map { value in

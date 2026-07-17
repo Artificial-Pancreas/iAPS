@@ -10,7 +10,7 @@ extension CREditor {
 
         let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
-        let rateValues = stride(from: 1.0, to: 501.0, by: 1.0).map { ($0.decimal ?? .zero) / 10 }
+        let rateValues = stride(from: 1.0, to: 501.0, by: 1.0).map { Decimal($0) / 10 }
 
         var canAdd: Bool {
             guard let lastItem = items.last else { return true }
@@ -67,7 +67,7 @@ extension CREditor {
 
         private func retrieveProfile() async -> CarbRatios {
             await storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self)
-                ?? CarbRatios(from: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios))
+                ?? (try? CarbRatios.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios)))
                 ?? CarbRatios(units: .grams, schedule: [])
         }
 

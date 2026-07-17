@@ -175,6 +175,14 @@ enum KnownPlugins {
         default: return nil
         }
     }
+
+    static func pumpModel(_ pumpManager: PumpManager) -> String? {
+        switch pumpManager.pluginIdentifier {
+        case MinimedPumpManager.pluginIdentifier:
+            return (pumpManager as? MinimedPumpManager)?.state.pumpModel.rawValue
+        default: return nil
+        }
+    }
 }
 
 struct GlucoseSourceInfo {

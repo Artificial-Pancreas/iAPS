@@ -144,11 +144,11 @@ extension Home {
             pumpSettings = await settingsManager.pumpSettings
             preferences = await settingsManager.preferences
             basalProfile = await provider.basalProfile()
-            pumpHistory = await provider.pumpHistory(hours: filteredHours)
+            pumpHistory = appCoordinator.pumpHistory.value.reversed()
 
             cgmSensorDays = appCoordinator.cgmInfo.value?.sensorDays
 
-            data.tempTargets = await provider.tempTargets(hours: filteredHours)
+            tempTargetsUpdated(appCoordinator.tempTargets.value)
 
             await readFromSettings(fetchedSettings)
             readFromPreferences()
@@ -160,7 +160,7 @@ extension Home {
             await setupSuspensions()
 
             await setupBasalProfile(basalProfile)
-            await setupCarbs()
+            setupCarbs(appCoordinator.carbHistory.value)
             await setupAnnouncements()
 
             setupLoopStatsBackground()
@@ -213,7 +213,7 @@ extension Home {
             }
 
             observeUI(appCoordinator.tempTargets) { me, tempTargets in
-                await me.tempTargetsUpdated(tempTargets)
+                me.tempTargetsUpdated(tempTargets)
             }
 
             observeUI(appCoordinator.carbHistory) { me, carbHistory in
@@ -442,8 +442,8 @@ extension Home {
             data.basalProfile = basalProfile
         }
 
-        private func setupCarbs() async {
-            data.carbs = await provider.carbs(hours: filteredHours)
+        private func setupCarbs(_ carbHistory: [CarbsEntry]) {
+            data.carbs = carbHistory.filter { $0.carbs > 0 }
             data.maxCarbsValue = data.carbs.compactMap(\.carbs).max() ?? 1
         }
 
@@ -745,7 +745,7 @@ extension Home.StateModel {
     }
 
     private func pumpHistoryDidUpdate(_ pumpHistory: [PumpHistoryEvent]) async {
-        self.pumpHistory = pumpHistory
+        self.pumpHistory = pumpHistory.reversed() // pump history is expected to be reversed, oldest -> newest
         await setupBasals()
         await setupBoluses()
         await setupSuspensions()
@@ -757,17 +757,21 @@ extension Home.StateModel {
         await setupBasalProfile(basalProfile)
     }
 
-    private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
+    private func tempTargetsUpdated(_ tempTargets: [TempTarget]) {
+        // TODO: refactor the code to assume the standard newest->oldest ordering instead
+        // chart + current-detection expect oldest -> newest
+        let tempTargets = Array(tempTargets.reversed())
+
         let now = Date()
+
         data.tempTargets = tempTargets.filter {
             $0.createdAt.addingTimeInterval(.hours(hours)) > now
         }
         updateCurrentTempTarget(tempTargets)
     }
 
-    private func carbsUpdated(_: [CarbsEntry]) async {
-        // TODO: use the provided values instead of re-reading
-        await setupCarbs()
+    private func carbsUpdated(_ carbsHistory: [CarbsEntry]) async {
+        setupCarbs(carbsHistory)
         await setupAnnouncements()
         setupMeals()
     }

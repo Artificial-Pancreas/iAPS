@@ -450,6 +450,18 @@
 		F22A7A8C2FF948FB0019BDC5 /* NightscoutAPIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */; };
 		F22A7A932FF94FC70019BDC5 /* MetricKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */; };
 		F22A8859300058D60019BDC5 /* UIBindingOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A8858300058D30019BDC5 /* UIBindingOwner.swift */; };
+		F23C83E030099D7D0026B83F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C83DF30099D790026B83F /* Profile.swift */; };
+		F23C876030099DD20026B83F /* GlucoseEntry0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */; };
+		F23C876330099E020026B83F /* AutoIsfInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876230099E000026B83F /* AutoIsfInput.swift */; };
+		F23C876530099E140026B83F /* AutosensInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876430099E110026B83F /* AutosensInput.swift */; };
+		F23C876730099E3F0026B83F /* AutotuneInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876630099E3D0026B83F /* AutotuneInput.swift */; };
+		F23C876A30099E580026B83F /* DetermineBasalInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876930099E570026B83F /* DetermineBasalInput.swift */; };
+		F23C876C30099EB00026B83F /* IobInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876B30099EAE0026B83F /* IobInput.swift */; };
+		F23C876E30099EF80026B83F /* MealInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876D30099EF60026B83F /* MealInput.swift */; };
+		F23C877030099F0B0026B83F /* MiddlewareInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876F30099F080026B83F /* MiddlewareInput.swift */; };
+		F23C877230099F210026B83F /* PrepareProfileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C877130099F1E0026B83F /* PrepareProfileInput.swift */; };
+		F23C877430099F3C0026B83F /* RecentCarbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C877330099F3A0026B83F /* RecentCarbs.swift */; };
+		F23C877630099F8E0026B83F /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C877530099F890026B83F /* Bool+Extensions.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
@@ -1197,6 +1209,18 @@
 		F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPIProvider.swift; sourceTree = "<group>"; };
 		F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitService.swift; sourceTree = "<group>"; };
 		F22A8858300058D30019BDC5 /* UIBindingOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBindingOwner.swift; sourceTree = "<group>"; };
+		F23C83DF30099D790026B83F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseEntry0.swift; sourceTree = "<group>"; };
+		F23C876230099E000026B83F /* AutoIsfInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoIsfInput.swift; sourceTree = "<group>"; };
+		F23C876430099E110026B83F /* AutosensInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutosensInput.swift; sourceTree = "<group>"; };
+		F23C876630099E3D0026B83F /* AutotuneInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutotuneInput.swift; sourceTree = "<group>"; };
+		F23C876930099E570026B83F /* DetermineBasalInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineBasalInput.swift; sourceTree = "<group>"; };
+		F23C876B30099EAE0026B83F /* IobInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IobInput.swift; sourceTree = "<group>"; };
+		F23C876D30099EF60026B83F /* MealInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealInput.swift; sourceTree = "<group>"; };
+		F23C876F30099F080026B83F /* MiddlewareInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddlewareInput.swift; sourceTree = "<group>"; };
+		F23C877130099F1E0026B83F /* PrepareProfileInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareProfileInput.swift; sourceTree = "<group>"; };
+		F23C877330099F3A0026B83F /* RecentCarbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCarbs.swift; sourceTree = "<group>"; };
+		F23C877530099F890026B83F /* Bool+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
@@ -2212,6 +2236,7 @@
 		388E5A5925B6F0250019842D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F23C876130099DF10026B83F /* oref0 */,
 				F292C6952FDDC0D700D09D88 /* Snapshots */,
 				CE82E02628E869DF00473A9C /* AlertEntry.swift */,
 				385CEAC025F2EA52002D6D5B /* Announcement.swift */,
@@ -2273,6 +2298,7 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				F23C877530099F890026B83F /* Bool+Extensions.swift */,
 				FEB27EA52E07D90F0047CB66 /* NSUserDefaults.swift */,
 				190141352CDB9D4600ABD925 /* Token.swift */,
 				F2C29E282FEAB38300E8630A /* BackgroundTasks.swift */,
@@ -2980,6 +3006,24 @@
 			path = Diagnostics;
 			sourceTree = "<group>";
 		};
+		F23C876130099DF10026B83F /* oref0 */ = {
+			isa = PBXGroup;
+			children = (
+				F23C876230099E000026B83F /* AutoIsfInput.swift */,
+				F23C876430099E110026B83F /* AutosensInput.swift */,
+				F23C876630099E3D0026B83F /* AutotuneInput.swift */,
+				F23C876930099E570026B83F /* DetermineBasalInput.swift */,
+				F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */,
+				F23C876B30099EAE0026B83F /* IobInput.swift */,
+				F23C876D30099EF60026B83F /* MealInput.swift */,
+				F23C876F30099F080026B83F /* MiddlewareInput.swift */,
+				F23C877130099F1E0026B83F /* PrepareProfileInput.swift */,
+				F23C83DF30099D790026B83F /* Profile.swift */,
+				F23C877330099F3A0026B83F /* RecentCarbs.swift */,
+			);
+			path = oref0;
+			sourceTree = "<group>";
+		};
 		F25D82882F61A867007AE22C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -3568,6 +3612,7 @@
 				F2E8D15F2F0965F90097F482 /* FoodItemInfoPopup.swift in Sources */,
 				38DF1786276A73D400B3528F /* TagCloudView.swift in Sources */,
 				383420D925FFEB3F002D46C1 /* Popup.swift in Sources */,
+				F23C876730099E3F0026B83F /* AutotuneInput.swift in Sources */,
 				3811DE3025C9D49500A708ED /* HomeStateModel.swift in Sources */,
 				38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */,
 				19F95FF529F10FCF00314DDC /* StatProvider.swift in Sources */,
@@ -3614,6 +3659,7 @@
 				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */,
+				F23C877630099F8E0026B83F /* Bool+Extensions.swift in Sources */,
 				19CE0E592DD9F30D0050FC89 /* Configuration.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
 				CE94598229E9E3D30047C9C6 /* WatchConfigProvider.swift in Sources */,
@@ -3637,6 +3683,7 @@
 				F2C29E2B2FEAD27D00E8630A /* OverridePresetsSnapshot.swift in Sources */,
 				F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */,
 				F25D82872F619799007AE22C /* Types.swift in Sources */,
+				F23C876C30099EB00026B83F /* IobInput.swift in Sources */,
 				1920BF5D2B9DF53200E861FE /* BolusShortcut.swift in Sources */,
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				F29E5E392EE4726A00D2CBC0 /* ClaudeProtocol.swift in Sources */,
@@ -3652,6 +3699,7 @@
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
 				F25D828E2F61AA7A007AE22C /* SectionInfoPopup.swift in Sources */,
 				3811DEAF25C9D88300A708ED /* KeyValueStorage.swift in Sources */,
+				F23C877230099F210026B83F /* PrepareProfileInput.swift in Sources */,
 				F2C29E292FEAB38B00E8630A /* BackgroundTasks.swift in Sources */,
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
 				388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */,
@@ -3738,8 +3786,10 @@
 				BDFD165A2AE40438007F0DDA /* AlternativeBolusCalcRootView.swift in Sources */,
 				38E98A2525F52C9300C0CED0 /* IssueReporter.swift in Sources */,
 				190EBCC429FF136900BA767D /* UIUXDataFlow.swift in Sources */,
+				F23C83E030099D7D0026B83F /* Profile.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
 				F2159A5B2BA7939C00A0B716 /* ContactPicture.swift in Sources */,
+				F23C876A30099E580026B83F /* DetermineBasalInput.swift in Sources */,
 				3811DE4325C9D4A100A708ED /* SettingsProvider.swift in Sources */,
 				F299DD202FD7AED70048B96A /* BarcodeCaptureEngine.swift in Sources */,
 				45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */,
@@ -3810,10 +3860,12 @@
 				38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */,
 				38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */,
 				F2FA68862EE9061D00476D7B /* FoodAnalysisService.swift in Sources */,
+				F23C876530099E140026B83F /* AutosensInput.swift in Sources */,
 				F90692D1274B99B60037068D /* HealthKitProvider.swift in Sources */,
 				F2FA68882EE90B0F00476D7B /* AIPrompts.swift in Sources */,
 				F2E8D1572F0963530097F482 /* FoodItemRow.swift in Sources */,
 				19F95FF729F10FEE00314DDC /* StatStateModel.swift in Sources */,
+				F23C876330099E020026B83F /* AutoIsfInput.swift in Sources */,
 				F299DCFC2FD7918C0048B96A /* LoopKit+Extensions.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,
 				F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */,
@@ -3844,6 +3896,7 @@
 				F22A7A822FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift in Sources */,
 				198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
+				F23C877430099F3C0026B83F /* RecentCarbs.swift in Sources */,
 				195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */,
 				F2941FA52E787FCC00A9DD5D /* AppGroupCGMSettingsViewController.swift in Sources */,
 				E00EEC0327368630002FF094 /* ServiceAssembly.swift in Sources */,
@@ -3889,6 +3942,7 @@
 				CE7CA3562A064973004BE681 /* StateIntentRequest.swift in Sources */,
 				F21957B12EF48B8E003C9F09 /* Debug.swift in Sources */,
 				E4984C5262A90469788754BB /* PreferencesEditorProvider.swift in Sources */,
+				F23C877030099F0B0026B83F /* MiddlewareInput.swift in Sources */,
 				DD399FB31EACB9343C944C4C /* PreferencesEditorStateModel.swift in Sources */,
 				F2159A4E2BA60AC000A0B716 /* ContactTrickProvider.swift in Sources */,
 				19E1F7EA29D082ED005C8D20 /* IconConfigProvider.swift in Sources */,
@@ -3902,8 +3956,10 @@
 				38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */,
 				CE7CA34F2A064973004BE681 /* BaseIntentsRequest.swift in Sources */,
 				A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */,
+				F23C876E30099EF80026B83F /* MealInput.swift in Sources */,
 				F2C29E472FEBFFBB00E8630A /* DataMigrations.swift in Sources */,
 				33E198D3039045D98C3DC5D4 /* AddCarbsStateModel.swift in Sources */,
+				F23C876030099DD20026B83F /* GlucoseEntry0.swift in Sources */,
 				28089E07169488CF6DCC2A31 /* AddCarbsRootView.swift in Sources */,
 				D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */,
 				F292C6972FDDC0F300D09D88 /* ReadingsSnapshot.swift in Sources */,

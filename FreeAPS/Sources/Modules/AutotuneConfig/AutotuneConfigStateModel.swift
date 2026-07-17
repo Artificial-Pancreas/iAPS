@@ -81,7 +81,12 @@ extension AutotuneConfig {
                             rate: basal.rate.roundBolusIncrements(increment: self.increment)
                         )
                     }
-                    tuned.basalProfile = basal
+                    tuned = Autotune(
+                        createdAt: tuned.createdAt,
+                        basalProfile: basal,
+                        sensitivity: tuned.sensitivity,
+                        carbRatio: tuned.carbRatio
+                    )
                     self.autotune = tuned
                 }
 
@@ -140,7 +145,7 @@ extension AutotuneConfig {
 
         private func retrieveProfile() async -> [BasalProfileEntry] {
             await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
+                ?? (try? [BasalProfileEntry].decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile)))
                 ?? []
         }
 
