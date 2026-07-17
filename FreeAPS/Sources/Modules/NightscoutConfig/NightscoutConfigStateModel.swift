@@ -17,6 +17,7 @@ extension NightscoutConfig {
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var basalProfileStorage: BasalProfileStorage!
         @Injected() private var isfScheduleStorage: IsfScheduleStorage!
+        @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -290,7 +291,7 @@ extension NightscoutConfig {
 
                 // IS THERE A PUMP?
                 guard pumpInfo != nil else {
-                    await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                    await crScheduleStorage.updateCrSchedule(carbratiosProfile)
                     await basalProfileStorage.updateBasalProfile(basals)
                     await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
                     await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
@@ -312,7 +313,7 @@ extension NightscoutConfig {
                     } else {
                         await self.basalProfileStorage.updateBasalProfile(basals)
                     }
-                    await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
+                    await crScheduleStorage.updateCrSchedule(carbratiosProfile)
                     await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
                     await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
                     debug(.service, "Settings have been imported and the Basals saved to pump!")

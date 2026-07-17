@@ -95,5 +95,14 @@ final class StorageAssembly: Assembly {
                 appCoordinator: appCoordinator
             )
         }
+        container.register(CarbRatioScheduleStorage.self) { r in
+            let storage = r.resolve(FileStorage.self)!
+            let appCoordinator = r.resolve(AppCoordinator.self)!
+
+            return BaseCarbRatioScheduleStorage(
+                storage: storage,
+                appCoordinator: appCoordinator
+            )
+        }
     }
 }

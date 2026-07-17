@@ -81,6 +81,8 @@ final class AppCoordinator: @unchecked Sendable {
 
     let isfSchedule = CurrentValueSubject<InsulinSensitivities, Never>(InsulinSensitivities.initial)
 
+    let crSchedule = CurrentValueSubject<CarbRatios, Never>(CarbRatios.initial)
+
     let autotune = CurrentValueSubject<Profile?, Never>(nil)
 
     let profile = CurrentValueSubject<Profile?, Never>(nil)
@@ -275,6 +277,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setIsfSchedule(_ value: InsulinSensitivities) {
         isfSchedule.send(value)
+    }
+
+    func setCrSchedule(_ value: CarbRatios) {
+        crSchedule.send(value)
     }
 
     func setAutotune(_ value: Profile?) {

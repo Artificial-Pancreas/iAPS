@@ -2,7 +2,7 @@ import SwiftUI
 
 extension CREditor {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() private var storage: FileStorage!
+        @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
 
         @Published var items: [Item] = []
         @Published var autotune: Autotune?
@@ -20,7 +20,7 @@ extension CREditor {
         override func subscribe() async {
             let settings = await settingsManager.settings
             onlyAutotuneBasals = settings.onlyAutotuneBasals
-            let profile = await retrieveProfile()
+            let profile = appCoordinator.crSchedule.value
             items = profile.schedule.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: value.ratio) ?? 0
@@ -65,14 +65,8 @@ extension CREditor {
             }
         }
 
-        private func retrieveProfile() async -> CarbRatios {
-            await storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self)
-                ?? (try? CarbRatios.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios)))
-                ?? CarbRatios(units: .grams, schedule: [])
-        }
-
         private func saveProfile(_ profile: CarbRatios) async {
-            await storage.save(profile, as: OpenAPS.Settings.carbRatios)
+            await crScheduleStorage.updateCrSchedule(profile)
         }
 
         private static let dateFormatter = {
@@ -80,7 +74,6 @@ extension CREditor {
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateFormat = "HH:mm:ss"
             return formatter
-
         }()
     }
 }

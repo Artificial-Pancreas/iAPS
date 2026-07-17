@@ -546,6 +546,7 @@
 		F2D4AAC9300A6481000105A7 /* BasalProfileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */; };
 		F2D4AACB300A6D80000105A7 /* AutotuneStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */; };
 		F2D4B1C9300AE108000105A7 /* IsfScheduleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1C8300AE108000105A7 /* IsfScheduleStorage.swift */; };
+		F2D4B1CB300AE66B000105A7 /* CarbRatioScheduleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1CA300AE66B000105A7 /* CarbRatioScheduleStorage.swift */; };
 		F2DCBC522F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */; };
 		F2DCBC562F0B30A2005D713E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */; };
 		F2DE0B903004142B00EF9230 /* NightscoutCollectionSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */; };
@@ -1307,6 +1308,7 @@
 		F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalProfileStorage.swift; sourceTree = "<group>"; };
 		F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutotuneStorage.swift; sourceTree = "<group>"; };
 		F2D4B1C8300AE108000105A7 /* IsfScheduleStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsfScheduleStorage.swift; sourceTree = "<group>"; };
+		F2D4B1CA300AE66B000105A7 /* CarbRatioScheduleStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbRatioScheduleStorage.swift; sourceTree = "<group>"; };
 		F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualNutritionOverrideEditor.swift; sourceTree = "<group>"; };
 		F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCollectionSync.swift; sourceTree = "<group>"; };
@@ -1981,6 +1983,7 @@
 				3811DE9C25C9D88300A708ED /* KeyValueStorage.swift */,
 				F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */,
 				F2D4B1C8300AE108000105A7 /* IsfScheduleStorage.swift */,
+				F2D4B1CA300AE66B000105A7 /* CarbRatioScheduleStorage.swift */,
 				F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */,
 				3811DE9925C9D88300A708ED /* Cache */,
 				38E44529274E40F100EC9A94 /* Disk */,
@@ -3786,6 +3789,7 @@
 				F2C73D622EB6602D00B700AB /* MainChartConfigDataFlow.swift in Sources */,
 				3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */,
 				F2ED20F12FE2174500E33CBC /* LoopOutcome.swift in Sources */,
+				F2D4B1CB300AE66B000105A7 /* CarbRatioScheduleStorage.swift in Sources */,
 				6B1A8D2E2B156EEF00E76752 /* LiveActivityBridge.swift in Sources */,
 				F25D82832F61950B007AE22C /* FoodSearchBar.swift in Sources */,
 				38F37828261260DC009DB701 /* Color+Extensions.swift in Sources */,

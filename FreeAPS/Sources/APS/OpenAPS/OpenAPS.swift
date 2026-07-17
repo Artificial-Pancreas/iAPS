@@ -242,7 +242,7 @@ actor OpenAPS: Sendable {
         let bgTargets = try await bgTargetsHistory()
         let basalProfile = appCoordinator.basalProfile.value
         let isf = appCoordinator.isfSchedule.value
-        let cr = try await readCrSchedule()
+        let cr = appCoordinator.crSchedule.value
         let tempTargets = appCoordinator.tempTargets.value
         let model = appCoordinator.pumpStatus.value?.model ?? "722"
         let autotune = getAutotune(useAutotune: useAutotune)
@@ -354,10 +354,6 @@ actor OpenAPS: Sendable {
 
     private func bgTargetsHistory() async throws -> BGTargets {
         try await loadFileFromStorage(name: Settings.bgTargets, as: BGTargets.self)
-    }
-
-    private func readCrSchedule() async throws -> CarbRatios {
-        try await loadFileFromStorage(name: Settings.carbRatios, as: CarbRatios.self)
     }
 
     private func getAutotune(useAutotune: Bool) -> Autotune? {

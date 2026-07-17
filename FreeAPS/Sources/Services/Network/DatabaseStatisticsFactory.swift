@@ -274,7 +274,7 @@ extension DatabaseStatisticsFactory {
 
         guard let targets = await storage.retrieveFile(OpenAPS.Settings.bgTargets, as: BGTargets.self) else { return nil }
 
-        guard let carbRatios = await storage.retrieveFile(OpenAPS.Settings.carbRatios, as: CarbRatios.self) else { return nil }
+        let carbRatios = appCoordinator.crSchedule.value
 
         let basalProfile = appCoordinator.basalProfile.value
 
