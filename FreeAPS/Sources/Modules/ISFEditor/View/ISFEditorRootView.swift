@@ -9,19 +9,19 @@ extension ISFEditor {
 
         @Environment(AppUIState.self) private var appUIState
 
-        private var dateFormatter: DateFormatter {
+        private static let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.timeStyle = .short
             return formatter
-        }
+        }()
 
-        private var rateFormatter: NumberFormatter {
+        private static let rateFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             return formatter
-        }
+        }()
 
         init(resolver: Resolver) {
             self.resolver = resolver
@@ -30,39 +30,44 @@ extension ISFEditor {
 
         var body: some View {
             Form {
-                if let autotune = state.autotune, !appUIState.settings.onlyAutotuneBasals {
-                    Section(header: Text("Autotune")) {
+                if let autotune = state.autotune, let createdAt = autotune.createdAt, !appUIState.settings.onlyAutotuneBasals {
+                    Section {
                         HStack {
                             Text("Calculated Sensitivity")
                             Spacer()
                             if state.units == .mmolL {
-                                Text(rateFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
+                                Text(Self.rateFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
                             } else {
-                                Text(rateFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
+                                Text(Self.rateFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
                             }
                             Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }
                     }
+                    header: {
+                        Text("Autotune")
+                    }
+                    footer: {
+                        Text(Self.dateFormatter.string(from: createdAt))
+                    }
                 }
-                // TODO: was newISF meant to be used/displayed here?
-                if let /* newISF */ _ = state.autosensISF {
+                if let sensitivityRatio = appUIState.suggestion?.sensitivityRatio, let isf = appUIState.suggestion?.isf {
                     Section(
                         header: !appUIState.preferences.useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
                     ) {
-                        let ratio = state.suggestion?.sensitivityRatio ?? 0
-                        let isf = state.sensitivity
+//                        let ratio = state.suggestion?.sensitivityRatio ?? 0
+//                        let isf = state.sensitivity
                         HStack {
                             Text("Sensitivity Ratio")
                             Spacer()
                             Text(
-                                rateFormatter.string(from: ratio as NSNumber) ?? "1"
+                                Self.rateFormatter.string(from: sensitivityRatio as NSNumber) ?? "1"
                             )
                         }
                         HStack {
                             Text("Calculated Sensitivity")
                             Spacer()
                             Text(
-                                rateFormatter.string(from: isf as? NSNumber ?? 0) ?? ""
+                                Self.rateFormatter.string(from: isf as NSNumber) ?? ""
                             )
                             Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }
@@ -108,7 +113,7 @@ extension ISFEditor {
                             ForEach(0 ..< state.rateValues.count, id: \.self) { i in
                                 Text(
                                     (
-                                        self.rateFormatter
+                                        Self.rateFormatter
                                             .string(from: state.rateValues[i] as NSNumber) ?? ""
                                     ) + " \(state.units.rawValue)/U"
                                 ).tag(i)
@@ -120,7 +125,7 @@ extension ISFEditor {
                         Picker(selection: $state.items[index].timeIndex, label: EmptyView()) {
                             ForEach(0 ..< state.timeValues.count, id: \.self) { i in
                                 Text(
-                                    self.dateFormatter
+                                    Self.dateFormatter
                                         .string(from: Date(
                                             timeIntervalSince1970: state
                                                 .timeValues[i]
@@ -142,12 +147,12 @@ extension ISFEditor {
                         HStack {
                             Text("Rate").foregroundColor(.secondary)
                             Text(
-                                "\(rateFormatter.string(from: state.rateValues[item.rateIndex] as NSNumber) ?? "0") \(state.units.rawValue)/U"
+                                "\(Self.rateFormatter.string(from: state.rateValues[item.rateIndex] as NSNumber) ?? "0") \(state.units.rawValue)/U"
                             )
                             Spacer()
                             Text("starts at").foregroundColor(.secondary)
                             Text(
-                                "\(dateFormatter.string(from: Date(timeIntervalSince1970: state.timeValues[item.timeIndex])))"
+                                "\(Self.dateFormatter.string(from: Date(timeIntervalSince1970: state.timeValues[item.timeIndex])))"
                             )
                         }
                     }

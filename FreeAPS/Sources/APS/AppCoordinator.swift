@@ -77,7 +77,15 @@ final class AppCoordinator: @unchecked Sendable {
 
     let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
 
-    let basalProfileUpdates = PassthroughSubject<[BasalProfileEntry], Never>()
+    let basalProfile = CurrentValueSubject<[BasalProfileEntry], Never>([])
+
+    let autotune = CurrentValueSubject<Profile?, Never>(nil)
+
+    let profile = CurrentValueSubject<Profile?, Never>(nil)
+
+    let pumpProfile = CurrentValueSubject<Profile?, Never>(nil)
+
+    let autosens = CurrentValueSubject<Autosens?, Never>(nil)
 
     let lastLoopDate = CurrentValueSubject<Date?, Never>(nil)
 
@@ -259,8 +267,24 @@ final class AppCoordinator: @unchecked Sendable {
         glucoseAlarm.send(value)
     }
 
-    func sendBasalProfile(_ value: [BasalProfileEntry]) {
-        basalProfileUpdates.send(value)
+    func setBasalProfile(_ value: [BasalProfileEntry]) {
+        basalProfile.send(value)
+    }
+
+    func setAutotune(_ value: Profile?) {
+        autotune.send(value)
+    }
+
+    func setProfile(_ value: Profile?) {
+        profile.send(value)
+    }
+
+    func setPumpProfile(_ value: Profile?) {
+        pumpProfile.send(value)
+    }
+
+    func setAutosens(_ value: Autosens?) {
+        autosens.send(value)
     }
 
     func sendBolusFailure() {

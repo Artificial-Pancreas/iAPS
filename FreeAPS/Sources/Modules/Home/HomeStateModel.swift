@@ -26,7 +26,6 @@ extension Home {
 
         private var preferences: Preferences!
         private var pumpSettings: PumpSettings!
-        private var basalProfile: [BasalProfileEntry]!
         private var pumpHistory: [PumpHistoryEvent]!
         private var cgmSensorDays: Double?
 
@@ -143,7 +142,10 @@ extension Home {
             settings = fetchedSettings
             pumpSettings = await settingsManager.pumpSettings
             preferences = await settingsManager.preferences
-            basalProfile = await provider.basalProfile()
+
+            basalProfileUpdated(appCoordinator.basalProfile.value)
+            autotuneUpdated(appCoordinator.autotune.value)
+
             pumpHistory = appCoordinator.pumpHistory.value.reversed()
 
             cgmSensorDays = appCoordinator.cgmInfo.value?.sensorDays
@@ -154,12 +156,11 @@ extension Home {
             readFromPreferences()
             readFromPumpSettings()
 
-            await setupBasals()
-            await setupBoluses()
+            setupBasals()
+            setupBoluses()
             await setupActivity()
-            await setupSuspensions()
+            setupSuspensions()
 
-            await setupBasalProfile(basalProfile)
             setupCarbs(appCoordinator.carbHistory.value)
             await setupAnnouncements()
 
@@ -208,8 +209,12 @@ extension Home {
                 await me.pumpHistoryDidUpdate(pumpHistory)
             }
 
-            observe(appCoordinator.basalProfileUpdates) { me, basalProfile in
-                await me.basalProfileUpdated(basalProfile)
+            observeUI(appCoordinator.basalProfile) { me, basalProfile in
+                me.basalProfileUpdated(basalProfile)
+            }
+
+            observeUI(appCoordinator.autotune) { me, autotune in
+                me.autotuneUpdated(autotune)
             }
 
             observeUI(appCoordinator.tempTargets) { me, tempTargets in
@@ -382,7 +387,7 @@ extension Home {
             }
         }
 
-        private func setupBasals() async {
+        private func setupBasals() {
             data.tempBasals = pumpHistory.filter {
                 $0.type == .tempBasal || $0.type == .tempBasalDuration
             }
@@ -404,14 +409,14 @@ extension Home {
             tempRate = lastRate
         }
 
-        private func setupBoluses() async {
+        private func setupBoluses() {
             data.boluses = pumpHistory.filter {
                 $0.type == .bolus
             }
             data.maxBolusValue = data.boluses.compactMap(\.amount).max() ?? 1
         }
 
-        private func setupSuspensions() async {
+        private func setupSuspensions() {
             data.suspensions = pumpHistory.filter {
                 $0.type == .pumpSuspend || $0.type == .pumpResume
             }
@@ -435,11 +440,6 @@ extension Home {
             data.maxBasal = pumpSettings.maxBasal
             data.maxBolus = pumpSettings.maxBolus
             data.insulinDIA = pumpSettings.insulinActionCurve
-        }
-
-        private func setupBasalProfile(_ basalProfile: [BasalProfileEntry]) async {
-            data.autotunedBasalProfile = await provider.autotunedBasalProfile()
-            data.basalProfile = basalProfile
         }
 
         private func setupCarbs(_ carbHistory: [CarbsEntry]) {
@@ -746,15 +746,20 @@ extension Home.StateModel {
 
     private func pumpHistoryDidUpdate(_ pumpHistory: [PumpHistoryEvent]) async {
         self.pumpHistory = pumpHistory.reversed() // pump history is expected to be reversed, oldest -> newest
-        await setupBasals()
-        await setupBoluses()
-        await setupSuspensions()
+        setupBasals()
+        setupBoluses()
+        setupSuspensions()
         await setupAnnouncements()
         await setupActivity()
     }
 
-    private func basalProfileUpdated(_ basalProfile: [BasalProfileEntry]) async {
-        await setupBasalProfile(basalProfile)
+    private func basalProfileUpdated(_ basalProfile: [BasalProfileEntry]) {
+        data.basalProfile = basalProfile
+        data.autotunedBasalProfile = appCoordinator.autotune.value?.basalProfile ?? basalProfile
+    }
+
+    private func autotuneUpdated(_ autotune: Profile?) {
+        data.autotunedBasalProfile = autotune?.basalProfile ?? appCoordinator.basalProfile.value
     }
 
     private func tempTargetsUpdated(_ tempTargets: [TempTarget]) {

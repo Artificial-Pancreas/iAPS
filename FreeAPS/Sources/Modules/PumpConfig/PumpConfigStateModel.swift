@@ -6,7 +6,6 @@ extension PumpConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var deviceManager: DeviceDataManager!
         @Injected() private var alertHistoryStorage: AlertHistoryStorage!
-        @Injected() private var storage: FileStorage!
 
         private let coreDataStorage = CoreDataStorage()
 
@@ -17,7 +16,8 @@ extension PumpConfig {
         private(set) var initialSettings: PumpInitialSettings = .default
 
         override func subscribe() async {
-            let basalProfile = await fetchBasalProfile()
+            let basalProfile = appCoordinator.basalProfile.value
+
             let concentration = await readConcentration()
             let basalSchedule = BasalRateSchedule(
                 dailyItems: basalProfile.map {
@@ -58,11 +58,6 @@ extension PumpConfig {
 
         func ack() {
             alertHistoryStorage.forceNotification()
-        }
-
-        private func fetchBasalProfile() async -> [BasalProfileEntry] {
-            await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
-                ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
         }
     }
 }

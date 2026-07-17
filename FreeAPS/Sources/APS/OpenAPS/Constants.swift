@@ -7,18 +7,6 @@ extension OpenAPS {
         static let test = "test/test.js"
     }
 
-    enum Prepare {
-        static let iob = "prepare/iob.js"
-        static let meal = "prepare/meal.js"
-        static let autotunePrep = "prepare/autotune-prep.js"
-        static let autotuneCore = "prepare/autotune-core.js"
-        static let determineBasal = "prepare/determine-basal.js"
-        static let autosens = "prepare/autosens.js"
-        static let profile = "prepare/profile.js"
-        static let log = "prepare/log.js"
-        static let string = "prepare/middleware.js"
-    }
-
     enum Middleware {
         static let determineBasal = "middleware/determine_basal.js"
     }
@@ -26,9 +14,6 @@ extension OpenAPS {
     enum Settings {
         static let preferences = "preferences.json"
         static let autotune = "settings/autotune.json"
-        static let autosense = "settings/autosense.json"
-        static let profile = "settings/profile.json"
-        static let pumpProfile = "settings/pumpprofile.json"
         static let settings = "settings/settings.json"
         static let bgTargets = "settings/bg_targets.json"
         static let insulinSensitivities = "settings/insulin_sensitivities.json"
@@ -66,13 +51,6 @@ extension OpenAPS {
         static let recentPumphistory = "upload/recent-pumphistory.json"
         static let recentSuggested = "monitor/recent-suggested.json"
         static let recentEnacted = "monitor/recent-enacted.json"
-    }
-
-    enum Function {
-        static let freeaps = "freeaps"
-        static let generate = "generate"
-        static let tempBasalFunctions = "tempBasalFunctions"
-        static let exportDefaults = "exportDefaults"
     }
 
     enum Nightscout {

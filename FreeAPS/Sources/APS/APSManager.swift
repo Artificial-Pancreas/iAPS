@@ -10,7 +10,7 @@ protocol APSManager: Sendable {
     func autotune() async -> Autotune?
     func enactBolus(amount: Double, isSMB: Bool) async
     func enactTempBasal(rate: Double, duration: TimeInterval) async
-    func makeProfiles() async -> Bool
+    func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile)
     func determineBasal(temporaryCarbs: CarbsEntry?) async throws -> Suggestion
     func cancelBolus() async
     func enactAnnouncement(_ announcement: Announcement) async
@@ -69,6 +69,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private let deviceDataManager: DeviceDataManager
     private let nightscout: NightscoutManager
     private let settingsManager: SettingsManager
+    private let autotuneStorage: AutotuneStorage
     private let openAPS: OpenAPS
 
     private let overrideStorage: OverrideStorage
@@ -107,6 +108,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         deviceDataManager: DeviceDataManager,
         nightscout: NightscoutManager,
         settingsManager: SettingsManager,
+        autotuneStorage: AutotuneStorage,
         openAPS: OpenAPS,
         overrideStorage: OverrideStorage
     ) {
@@ -120,6 +122,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         self.deviceDataManager = deviceDataManager
         self.nightscout = nightscout
         self.settingsManager = settingsManager
+        self.autotuneStorage = autotuneStorage
         self.openAPS = openAPS
         self.overrideStorage = overrideStorage
     }
@@ -127,8 +130,11 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     // this is called at the app start
     func start() async {
         let lastSuggested = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-
         appCoordinator.setLatestSuggestion(lastSuggested)
+
+        if let profiles = try? await makeProfiles() {
+            _ = await autosens(profile: profiles.profile)
+        }
 
         if let lastOutcome = await storage.retrieve(OpenAPS.Enact.outcome, as: LoopOutcome.self) {
             appCoordinator.restorePersistedLoopOutcome(lastOutcome)
@@ -313,23 +319,20 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             return APSError.invalidPumpState(message: "Pump suspended")
         }
 
-        // TODO: do we need this check here? pump will return an error, and reservoir might be inaccurate...
-//        let reservoir = await storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self) ?? 100
-//        guard reservoir >= 0 else {
-//            return APSError.invalidPumpState(message: "Reservoir is empty")
-//        }
-
         return nil
     }
 
-    private func autosens() async -> Bool {
-        guard let autosens = await storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
-              (autosens.timestamp ?? .distantPast).addingTimeInterval(.minutes(30)) > Date()
-        else {
-            return (try? await openAPS.autosens()) != nil
+    private func autosens(
+        profile: Profile
+    ) async -> Autosens? {
+        if let autosens = appCoordinator.autosens.value,
+           (autosens.timestamp ?? .distantPast).addingTimeInterval(.minutes(30)) > Date()
+        {
+            return autosens
         }
-
-        return false
+        let autosens = try? await openAPS.autosens(profile: profile)
+        appCoordinator.setAutosens(autosens)
+        return autosens
     }
 
     func determineBasal(
@@ -373,11 +376,13 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 }
             }
 
-            _ = await makeProfiles()
-            _ = await autosens()
+            let profiles = try await makeProfiles()
+            let autosens = await autosens(profile: profiles.profile)
             _ = await dailyAutotune()
             let override = await self.override
             let suggestion = try? await openAPS.determineBasal(
+                profile: profiles.profile,
+                autosens: autosens,
                 currentTemp: temp,
                 clock: now,
                 temporaryCarbs: temporaryCarbs,
@@ -399,7 +404,14 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private func updateIOB(pumpHistory: [PumpHistoryEvent]) async {
         await updateIobTaskSerializer.run {
-            let iobEntries = try? await openAPS.iobSync(pumpHistory: pumpHistory, clock: Date.now)
+            guard let profile = appCoordinator.profile.value else { return }
+            let autosens = appCoordinator.autosens.value
+            let iobEntries = try? await openAPS.iobSync(
+                profile: profile,
+                autosens: autosens,
+                pumpHistory: pumpHistory,
+                clock: Date.now
+            )
             guard let iobEntries else { return }
 
             _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
@@ -408,16 +420,12 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
     }
 
-    func makeProfiles() async -> Bool {
-        let settings = await settingsManager.settings
-        let tunedProfile = try? await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
-
-        if let basalProfile = tunedProfile?.basalProfile {
-            // TODO: what is this for?
-            appCoordinator.sendBasalProfile(basalProfile)
-        }
-
-        return tunedProfile != nil
+    func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile) {
+        let settings = appCoordinator.settings.value
+        let profiles = try await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
+        appCoordinator.setProfile(profiles.profile)
+        appCoordinator.setPumpProfile(profiles.pumpProfile)
+        return profiles
     }
 
     func enactBolus(amount: Double, isSMB: Bool) async {
@@ -517,7 +525,17 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     }
 
     func autotune() async -> Autotune? {
-        try? await openAPS.autotune()
+        guard let profiles = try? await makeProfiles() else { return nil }
+        let autotune = try? await openAPS.autotune(
+            profile: profiles.profile,
+            pumpProfile: profiles.pumpProfile,
+            previousAutotune: appCoordinator.autotune.value
+        )
+        guard let autotune else { return nil }
+
+        await autotuneStorage.updateAutotune(autotune)
+
+        return Autotune.from(profile: autotune)
     }
 
     func enactAnnouncement(_ announcement: Announcement) async {

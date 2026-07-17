@@ -8,12 +8,7 @@ extension ISFEditor {
         let uiBindings = UIBindings()
 
         @Published var items: [Item] = []
-        private(set) var autosensISF: Decimal?
-        private(set) var autosensRatio: Decimal = 0
-
-        @Published var suggestion: Suggestion?
         @Published var autotune: Autotune?
-        @Published var sensitivity: Decimal?
 
         let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
@@ -38,10 +33,6 @@ extension ISFEditor {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() async {
-            suggestion = appCoordinator.suggested.value
-
-            await fetchSensitivity()
-
             let isfSchedule = await provider.isfSchedule
             units = isfSchedule.units
             items = isfSchedule.sensitivities.map { value in
@@ -49,36 +40,7 @@ extension ISFEditor {
                 let rateIndex = rateValues.firstIndex(of: value.sensitivity) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
-            autotune = await provider.autotune
-
-            let autosens = await provider.autosense
-            if let newISF = autosens.newisf {
-                switch units {
-                case .mgdL:
-                    autosensISF = newISF
-                case .mmolL:
-                    autosensISF = newISF * GlucoseUnits.exchangeRate
-                }
-            }
-
-            autosensRatio = autosens.ratio
-
-            observeUI(appCoordinator.suggested) { me, suggestion in
-                await me.suggestionUpdated(suggestion)
-            }
-        }
-
-        private func suggestionUpdated(_ suggestion: Suggestion?) async {
-            self.suggestion = suggestion
-            await fetchSensitivity()
-        }
-
-        private func fetchSensitivity() async {
-            if let suggestion = await coreDataStorage.fetchReason() {
-                sensitivity = suggestion.isf ?? 15
-            } else {
-                sensitivity = nil
-            }
+            autotune = appCoordinator.autotune.value.map { Autotune.from(profile: $0) }
         }
 
         func add() {

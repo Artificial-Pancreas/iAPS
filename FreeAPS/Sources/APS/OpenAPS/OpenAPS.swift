@@ -35,6 +35,8 @@ actor OpenAPS: Sendable {
     }
 
     func determineBasal(
+        profile: Profile,
+        autosens: Autosens?,
         currentTemp: TempBasal,
         clock: Date = Date(),
         temporaryCarbs: CarbsEntry?,
@@ -51,13 +53,11 @@ actor OpenAPS: Sendable {
         let carbs = appCoordinator.carbHistory.value
         let glucose = await readGlucoseHistory()
         let preferences = appCoordinator.preferences.value
-        let basalProfile = try await readBasalSchedule()
+        let basalProfile = appCoordinator.basalProfile.value
         let settings = appCoordinator.settings.value
-        let autosens = try await readAutosens()
         let reservoir = readReservoir()
-        let storedProfile = try await readProfile()
 
-        var profile = storedProfile
+        var profile = profile
         print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
         now = Date.now
@@ -67,7 +67,7 @@ actor OpenAPS: Sendable {
         now = Date.now
         let meal = try await self.meal(
             pumphistory: pumpHistory,
-            profile: storedProfile,
+            profile: profile,
             basalProfile: basalProfile,
             clock: clock,
             carbs: carbs,
@@ -76,7 +76,7 @@ actor OpenAPS: Sendable {
         )
         let iob = try await self.iob(
             pumpHistory: pumpHistory,
-            profile: storedProfile,
+            profile: profile,
             clock: clock,
             autosens: autosens
         )
@@ -179,13 +179,14 @@ actor OpenAPS: Sendable {
         return suggestion
     }
 
-    func autosens() async throws -> Autosens {
+    func autosens(
+        profile: Profile
+    ) async throws -> Autosens {
         debug(.openAPS, "Start autosens")
         let pumpHistory = appCoordinator.pumpHistory.value
         let carbs = appCoordinator.carbHistory.value
         let glucose = await readGlucoseHistory()
-        let profile = try await readProfile()
-        let basalProfile = try await readBasalSchedule()
+        let basalProfile = appCoordinator.basalProfile.value
         let tempTargets = appCoordinator.tempTargets.value
 
         let autosensResult = try await autosens(
@@ -200,19 +201,20 @@ actor OpenAPS: Sendable {
         debug(.openAPS, "AUTOSENS: \(autosensResult)")
         var autosens = autosensResult
         autosens.timestamp = Date()
-        await storage.save(autosens, as: Settings.autosense)
         return autosens
     }
 
-    func autotune(categorizeUamAsBasal: Bool = false, tuneInsulinCurve: Bool = false) async throws -> Autotune? {
+    func autotune(
+        profile: Profile,
+        pumpProfile: Profile,
+        previousAutotune: Profile?,
+        categorizeUamAsBasal: Bool = false,
+        tuneInsulinCurve: Bool = false
+    ) async throws -> Profile? {
         debug(.openAPS, "Start autotune")
         let pumpHistory = appCoordinator.pumpHistory.value
         let carbs = appCoordinator.carbHistory.value
         let glucose = await readGlucoseHistory()
-        let profile = try await readProfile()
-        let pumpProfile = try await readPumpProfile()
-
-        let previousAutotune = try await self.readAutotuneAsProfile(useAutotune: true)
 
         let autotuneResult = try await self.autotuneFull(
             pumphistory: pumpHistory,
@@ -227,13 +229,10 @@ actor OpenAPS: Sendable {
 
         debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult.rawJSON())")
 
-        let autotune = Autotune.from(profile: autotuneResult)
-
-        await storage.save(autotuneResult, as: Settings.autotune)
-        return autotune
+        return autotuneResult
     }
 
-    func makeProfiles(useAutotune: Bool, settings: FreeAPSSettings) async throws -> Autotune? {
+    func makeProfiles(useAutotune: Bool, settings: FreeAPSSettings) async throws -> (profile: Profile, pumpProfile: Profile) {
         debug(.openAPS, "Start makeProfiles")
         let start = Date.now
         var now = Date.now
@@ -241,12 +240,12 @@ actor OpenAPS: Sendable {
         let preferences = appCoordinator.preferences.value
         let pumpSettings = appCoordinator.pumpSettings.value
         let bgTargets = try await bgTargetsHistory()
-        let basalProfile = try await readBasalSchedule()
+        let basalProfile = appCoordinator.basalProfile.value
         let isf = try await readIsfSchedule()
         let cr = try await readCrSchedule()
         let tempTargets = appCoordinator.tempTargets.value
         let model = appCoordinator.pumpStatus.value?.model ?? "722"
-        let autotune = try await readAutotune(useAutotune: useAutotune)
+        let autotune = getAutotune(useAutotune: useAutotune)
 
         print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
@@ -278,35 +277,38 @@ actor OpenAPS: Sendable {
             dynamicVariables: dynamicVariables,
             settings: settings
         )
-        let profile = try await makeProfile(
-            preferences: preferences,
-            pumpSettings: pumpSettings,
-            bgTargets: bgTargets,
-            basalProfile: basalProfile,
-            isf: isf,
-            carbRatio: cr,
-            tempTargets: tempTargets,
-            model: model,
-            autotune: autotune,
-            freeaps: settings,
-            dynamicVariables: dynamicVariables,
-            settings: settings
-        )
+
+        let profile: Profile
+        if autotune == nil {
+            profile = pumpProfile
+        } else {
+            profile = try await makeProfile(
+                preferences: preferences,
+                pumpSettings: pumpSettings,
+                bgTargets: bgTargets,
+                basalProfile: basalProfile,
+                isf: isf,
+                carbRatio: cr,
+                tempTargets: tempTargets,
+                model: model,
+                autotune: autotune,
+                freeaps: settings,
+                dynamicVariables: dynamicVariables,
+                settings: settings
+            )
+        }
 
         print(
             "MakeProfiles: Time for profile and pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
 
         now = Date.now
-        await storage.save(pumpProfile, as: Settings.pumpProfile)
-        await storage.save(profile, as: Settings.profile)
 
         print(
             "MakeProfiles: Time for save files \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
 
-        let tunedProfile = Autotune.from(profile: profile)
-        return tunedProfile
+        return (profile: profile, pumpProfile: pumpProfile)
     }
 
     // MARK: - Private
@@ -340,14 +342,6 @@ actor OpenAPS: Sendable {
         }
     }
 
-    private func readBasalSchedule() async throws -> [BasalProfileEntry] {
-        try await loadFileFromStorage(name: Settings.basalProfile, as: [BasalProfileEntry].self)
-    }
-
-    private func readAutosens() async throws -> Autosens? {
-        try await loadFileFromStorageOpt(name: Settings.autosense, as: Autosens.self)
-    }
-
     private func readReservoir() -> Decimal {
         let reservoir: Decimal
         switch appCoordinator.pumpStatus.value?.reservoir {
@@ -356,14 +350,6 @@ actor OpenAPS: Sendable {
         case nil: reservoir = 100.0
         }
         return reservoir
-    }
-
-    private func readProfile() async throws -> Profile {
-        try await loadFileFromStorage(name: Settings.profile, as: Profile.self)
-    }
-
-    private func readPumpProfile() async throws -> Profile {
-        try await loadFileFromStorage(name: Settings.pumpProfile, as: Profile.self)
     }
 
     private func bgTargetsHistory() async throws -> BGTargets {
@@ -378,12 +364,8 @@ actor OpenAPS: Sendable {
         try await loadFileFromStorage(name: Settings.carbRatios, as: CarbRatios.self)
     }
 
-    private func readAutotune(useAutotune: Bool) async throws -> Autotune? {
-        useAutotune ? try await loadFileFromStorageOpt(name: Settings.autotune, as: Autotune.self) : nil
-    }
-
-    private func readAutotuneAsProfile(useAutotune: Bool) async throws -> Profile? {
-        useAutotune ? try await loadFileFromStorageOpt(name: Settings.autotune, as: Profile.self) : nil
+    private func getAutotune(useAutotune: Bool) -> Autotune? {
+        useAutotune ? appCoordinator.autotune.value.map { Autotune.from(profile: $0) } : nil
     }
 
     private func reasons(
@@ -500,7 +482,7 @@ actor OpenAPS: Sendable {
         if targetGlucose != nil, let override = override, override.enabled {
             var orString = ", Override: "
             if override.percentage != 100 {
-                orString += (formatter.string(from: override.percentage as NSNumber) ?? "")
+                orString += (Self.formatter.string(from: override.percentage as NSNumber) ?? "")
             }
             if override.smbIsOff {
                 orString += ". SMBs off"
@@ -605,12 +587,12 @@ actor OpenAPS: Sendable {
         )
     }
 
-    private var formatter: NumberFormatter {
+    private static let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         return formatter
-    }
+    }()
 
     private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
         let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
@@ -1009,13 +991,12 @@ actor OpenAPS: Sendable {
     }
 
     func iobSync(
+        profile: Profile,
+        autosens: Autosens?,
         pumpHistory: [PumpHistoryEvent],
         clock: Date,
     ) async throws -> [IOBEntry] {
-        let autosens = try await readAutosens()
-        let profile = try await readProfile()
-
-        return try await scriptExecutor.invoke(
+        try await scriptExecutor.invoke(
             function: "iob",
             with: IobInput(
                 pump_history: pumpHistory, // TODO: ensure it's newest -> oldest

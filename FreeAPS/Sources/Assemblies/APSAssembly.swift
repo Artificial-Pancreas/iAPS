@@ -42,6 +42,7 @@ final class APSAssembly: Assembly {
                 deviceDataManager: r.resolve(DeviceDataManager.self)!,
                 nightscout: r.resolve(NightscoutManager.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
+                autotuneStorage: r.resolve(AutotuneStorage.self)!,
                 openAPS: r.resolve(OpenAPS.self)!,
                 overrideStorage: r.resolve(OverrideStorage.self)!
             )

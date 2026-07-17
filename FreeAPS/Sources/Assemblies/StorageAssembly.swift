@@ -68,5 +68,23 @@ final class StorageAssembly: Assembly {
         container.register(Keychain.self) { _ in BaseKeychain() }
         container.register(Token.self) { r in Token(resolver: r) }
         container.register(AlertHistoryStorage.self) { r in BaseAlertHistoryStorage(resolver: r) }
+        container.register(BasalProfileStorage.self) { r in
+            let storage = r.resolve(FileStorage.self)!
+            let appCoordinator = r.resolve(AppCoordinator.self)!
+
+            return BaseBasalProfileStorage(
+                storage: storage,
+                appCoordinator: appCoordinator
+            )
+        }
+        container.register(AutotuneStorage.self) { r in
+            let storage = r.resolve(FileStorage.self)!
+            let appCoordinator = r.resolve(AppCoordinator.self)!
+
+            return BaseAutotuneStorage(
+                storage: storage,
+                appCoordinator: appCoordinator
+            )
+        }
     }
 }

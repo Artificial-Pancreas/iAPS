@@ -179,6 +179,7 @@ struct MainChartView: View {
             ping(data.$tempBasals),
             ping(data.$suspensions),
             ping(data.$maxBasal),
+            ping(data.$basalProfile),
             ping(data.$autotunedBasalProfile),
             ping(data.$glucose),
             ping(data.$activity),

@@ -277,8 +277,7 @@ extension DatabaseStatisticsFactory {
 
         guard let carbRatios = await storage.retrieveFile(OpenAPS.Settings.carbRatios, as: CarbRatios.self) else { return nil }
 
-        guard let basalProfile = await storage.retrieveFile(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-        else { return nil }
+        let basalProfile = appCoordinator.basalProfile.value
 
         let sens = sensitivities.sensitivities.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(

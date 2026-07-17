@@ -27,7 +27,7 @@ extension CREditor {
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
 
-            autotune = await retrieveAutotune()
+            autotune = appCoordinator.autotune.value.map { Autotune.from(profile: $0) }
         }
 
         func add() {
@@ -73,10 +73,6 @@ extension CREditor {
 
         private func saveProfile(_ profile: CarbRatios) async {
             await storage.save(profile, as: OpenAPS.Settings.carbRatios)
-        }
-
-        private func retrieveAutotune() async -> Autotune? {
-            await storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
         }
 
         private static let dateFormatter = {

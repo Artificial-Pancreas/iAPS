@@ -15,6 +15,7 @@ extension NightscoutConfig {
         @Injected() private var coreDataManager: CoreDataManager!
         @Injected() private var apsManager: APSManager!
         @Injected() private var deviceManager: DeviceDataManager!
+        @Injected() private var basalProfileStorage: BasalProfileStorage!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -289,7 +290,7 @@ extension NightscoutConfig {
                 // IS THERE A PUMP?
                 guard pumpInfo != nil else {
                     await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                    await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                    await basalProfileStorage.updateBasalProfile(basals)
                     await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
                     await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
                     let error =
@@ -306,9 +307,9 @@ extension NightscoutConfig {
                         items: basals,
                         concentration: concentration
                     ) {
-                        await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
+                        await self.basalProfileStorage.updateBasalProfile(adjustedBasals)
                     } else {
-                        await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                        await self.basalProfileStorage.updateBasalProfile(basals)
                     }
                     await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
                     await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)

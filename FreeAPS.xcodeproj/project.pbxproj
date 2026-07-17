@@ -543,6 +543,8 @@
 		F2C73D662EB6604500B700AB /* MainChartConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */; };
 		F2C73D682EB8022C00B700AB /* CalculatedGeometries.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */; };
 		F2CBFF252F96E64A004CB668 /* LiveActivityBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBFF242F96E64A004CB668 /* LiveActivityBanner.swift */; };
+		F2D4AAC9300A6481000105A7 /* BasalProfileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */; };
+		F2D4AACB300A6D80000105A7 /* AutotuneStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */; };
 		F2DCBC522F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */; };
 		F2DCBC562F0B30A2005D713E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */; };
 		F2DE0B903004142B00EF9230 /* NightscoutCollectionSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */; };
@@ -1301,6 +1303,8 @@
 		F2C73D652EB6604500B700AB /* MainChartConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChartConfigStateModel.swift; sourceTree = "<group>"; };
 		F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatedGeometries.swift; sourceTree = "<group>"; };
 		F2CBFF242F96E64A004CB668 /* LiveActivityBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityBanner.swift; sourceTree = "<group>"; };
+		F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalProfileStorage.swift; sourceTree = "<group>"; };
+		F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutotuneStorage.swift; sourceTree = "<group>"; };
 		F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualNutritionOverrideEditor.swift; sourceTree = "<group>"; };
 		F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCollectionSync.swift; sourceTree = "<group>"; };
@@ -1973,6 +1977,8 @@
 			children = (
 				383948D525CD4D8900E91849 /* FileStorage.swift */,
 				3811DE9C25C9D88300A708ED /* KeyValueStorage.swift */,
+				F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */,
+				F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */,
 				3811DE9925C9D88300A708ED /* Cache */,
 				38E44529274E40F100EC9A94 /* Disk */,
 				3811DE9D25C9D88300A708ED /* Keychain */,
@@ -3601,6 +3607,7 @@
 				19E1F7EF29D08EBA005C8D20 /* IconConfigRootWiew.swift in Sources */,
 				382C134B25F14E3700715CE1 /* BGTargets.swift in Sources */,
 				19493A3B2C5997AD00EC83A7 /* Database.swift in Sources */,
+				F2D4AACB300A6D80000105A7 /* AutotuneStorage.swift in Sources */,
 				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
 				F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */,
 				F292C6A72FDDCD2D00D09D88 /* ReasonsSnapshot.swift in Sources */,
@@ -3750,6 +3757,7 @@
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				F2E8D1512F0961CC0097F482 /* FoodTagCloudView.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
+				F2D4AAC9300A6481000105A7 /* BasalProfileStorage.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
 				38FCF3D625E8FDF40078B0D1 /* MD5.swift in Sources */,
 				3871F39C25ED892B0013ECB5 /* TempTarget.swift in Sources */,

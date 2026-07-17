@@ -25,18 +25,5 @@ extension ISFEditor {
             await storage.save(profile, as: OpenAPS.Settings.insulinSensitivities)
         }
 
-        var autosense: Autosens {
-            get async {
-                await storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self)
-                    ?? (try? Autosens.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.autosense)))
-                    ?? Autosens(ratio: 1, newisf: nil, timestamp: nil)
-            }
-        }
-
-        var autotune: Autotune? {
-            get async {
-                await storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
-            }
-        }
     }
 }

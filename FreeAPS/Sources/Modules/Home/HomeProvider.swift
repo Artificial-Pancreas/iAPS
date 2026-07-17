@@ -104,19 +104,5 @@ extension Home {
             }
         }
 
-        func autotunedBasalProfile() async -> [BasalProfileEntry] {
-            if let profile = await storage.retrieve(OpenAPS.Settings.profile, as: Autotune.self)?.basalProfile {
-                return profile
-            }
-            if let profile = await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile {
-                return profile
-            }
-            return [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
-        }
-
-        func basalProfile() async -> [BasalProfileEntry] {
-            await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
-                ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
-        }
     }
 }
