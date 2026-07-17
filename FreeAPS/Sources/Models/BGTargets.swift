@@ -7,6 +7,14 @@ struct BGTargets: JSON {
 }
 
 extension BGTargets {
+    static let initial = BGTargets(
+        units: .mmolL,
+        userPrefferedUnits: .mmolL,
+        targets: [BGTargetEntry(low: 5.5, high: 5.5, start: "00:00:00", offset: 0)]
+    )
+}
+
+extension BGTargets {
     private enum CodingKeys: String, CodingKey {
         case units
         case userPrefferedUnits = "user_preferred_units"

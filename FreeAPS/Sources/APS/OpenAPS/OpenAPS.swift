@@ -239,7 +239,7 @@ actor OpenAPS: Sendable {
 
         let preferences = appCoordinator.preferences.value
         let pumpSettings = appCoordinator.pumpSettings.value
-        let bgTargets = try await bgTargetsHistory()
+        let bgTargets = appCoordinator.bgTargetsSchedule.value
         let basalProfile = appCoordinator.basalProfile.value
         let isf = appCoordinator.isfSchedule.value
         let cr = appCoordinator.crSchedule.value
@@ -350,10 +350,6 @@ actor OpenAPS: Sendable {
         case nil: reservoir = 100.0
         }
         return reservoir
-    }
-
-    private func bgTargetsHistory() async throws -> BGTargets {
-        try await loadFileFromStorage(name: Settings.bgTargets, as: BGTargets.self)
     }
 
     private func getAutotune(useAutotune: Bool) -> Autotune? {
@@ -1189,31 +1185,6 @@ actor OpenAPS: Sendable {
             ),
             as: Profile.self
         )
-    }
-
-    private func loadFileFromStorage<T: Decodable>(name: String, as _: T.Type) async throws -> T {
-        let raw = await storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
-
-        do {
-            return try T.decodeFrom(json: raw)
-        } catch {
-            print("failed to decode \(name)")
-            throw error
-        }
-    }
-
-    private func loadFileFromStorageOpt<T: Decodable>(name: String, as _: T.Type) async throws -> T? {
-        let raw = await storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
-
-        if raw == "" {
-            return nil
-        }
-        do {
-            return try T.decodeFrom(json: raw)
-        } catch {
-            print("failed to decode \(name)")
-            throw error
-        }
     }
 
     private func middlewareScript(name: String) async throws -> Script? {

@@ -83,6 +83,8 @@ final class AppCoordinator: @unchecked Sendable {
 
     let crSchedule = CurrentValueSubject<CarbRatios, Never>(CarbRatios.initial)
 
+    let bgTargetsSchedule = CurrentValueSubject<BGTargets, Never>(BGTargets.initial)
+
     let autotune = CurrentValueSubject<Profile?, Never>(nil)
 
     let profile = CurrentValueSubject<Profile?, Never>(nil)
@@ -281,6 +283,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setCrSchedule(_ value: CarbRatios) {
         crSchedule.send(value)
+    }
+
+    func setBgTargetsSchedule(_ value: BGTargets) {
+        bgTargetsSchedule.send(value)
     }
 
     func setAutotune(_ value: Profile?) {

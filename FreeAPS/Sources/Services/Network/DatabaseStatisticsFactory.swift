@@ -272,7 +272,7 @@ extension DatabaseStatisticsFactory {
     func buildProfile() async -> NightscoutProfileStore? {
         let sensitivities = appCoordinator.isfSchedule.value
 
-        guard let targets = await storage.retrieveFile(OpenAPS.Settings.bgTargets, as: BGTargets.self) else { return nil }
+        let targets = appCoordinator.bgTargetsSchedule.value
 
         let carbRatios = appCoordinator.crSchedule.value
 

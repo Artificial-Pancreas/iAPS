@@ -30,6 +30,7 @@ import Swinject
         try await startService(resolver.resolve(AutotuneStorage.self))
         try await startService(resolver.resolve(IsfScheduleStorage.self))
         try await startService(resolver.resolve(CarbRatioScheduleStorage.self))
+        try await startService(resolver.resolve(BgTargetsScheduleStorage.self))
         try await startService(resolver.resolve(MetricKitService.self))
 
         _ = resolver.resolve(BluetoothStateManager.self)!

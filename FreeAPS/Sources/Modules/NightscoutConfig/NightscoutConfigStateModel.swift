@@ -11,13 +11,13 @@ extension NightscoutConfig {
         @Injected() private var keychain: Keychain!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
-        @Injected() private var storage: FileStorage!
         @Injected() private var coreDataManager: CoreDataManager!
         @Injected() private var apsManager: APSManager!
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var basalProfileStorage: BasalProfileStorage!
         @Injected() private var isfScheduleStorage: IsfScheduleStorage!
         @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
+        @Injected() private var bgTargetsScheduleStorage: BgTargetsScheduleStorage!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -294,7 +294,7 @@ extension NightscoutConfig {
                     await crScheduleStorage.updateCrSchedule(carbratiosProfile)
                     await basalProfileStorage.updateBasalProfile(basals)
                     await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
-                    await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                    await bgTargetsScheduleStorage.updateBgTargetsSchedule(targetsProfile)
                     let error =
                         "Settings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
                     debug(.service, error)
@@ -315,7 +315,7 @@ extension NightscoutConfig {
                     }
                     await crScheduleStorage.updateCrSchedule(carbratiosProfile)
                     await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
-                    await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                    await bgTargetsScheduleStorage.updateBgTargetsSchedule(targetsProfile)
                     debug(.service, "Settings have been imported and the Basals saved to pump!")
                     // DIA. Save if changed.
                     let dia = fetchedProfile.dia

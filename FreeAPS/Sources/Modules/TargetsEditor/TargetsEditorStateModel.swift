@@ -2,7 +2,7 @@ import SwiftUI
 
 extension TargetsEditor {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() private var storage: FileStorage!
+        @Injected() private var bgTargetsScheduleStorage: BgTargetsScheduleStorage!
 
         @Published var items: [Item] = []
 
@@ -25,7 +25,7 @@ extension TargetsEditor {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() async {
-            let profile = await retrieveProfile()
+            let profile = appCoordinator.bgTargetsSchedule.value
             units = profile.units
             items = profile.targets.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
@@ -64,7 +64,7 @@ extension TargetsEditor {
                 }
                 let settings = await settingsManager.settings
                 let profile = BGTargets(units: units, userPrefferedUnits: settings.units, targets: targets)
-                await saveProfile(profile)
+                await bgTargetsScheduleStorage.updateBgTargetsSchedule(profile)
             }
         }
 
@@ -84,16 +84,6 @@ extension TargetsEditor {
                     self.units = settings.units
                 }
             }
-        }
-
-        private func retrieveProfile() async -> BGTargets {
-            await storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
-                ?? (try? BGTargets.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.bgTargets)))
-                ?? BGTargets(units: .mmolL, userPrefferedUnits: .mmolL, targets: [])
-        }
-
-        private func saveProfile(_ profile: BGTargets) async {
-            await storage.save(profile, as: OpenAPS.Settings.bgTargets)
         }
     }
 }

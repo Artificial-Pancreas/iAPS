@@ -104,5 +104,14 @@ final class StorageAssembly: Assembly {
                 appCoordinator: appCoordinator
             )
         }
+        container.register(BgTargetsScheduleStorage.self) { r in
+            let storage = r.resolve(FileStorage.self)!
+            let appCoordinator = r.resolve(AppCoordinator.self)!
+
+            return BaseBgTargetsScheduleStorage(
+                storage: storage,
+                appCoordinator: appCoordinator
+            )
+        }
     }
 }
