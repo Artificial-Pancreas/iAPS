@@ -20,4 +20,4 @@
 "NSHealthShareUsageDescription" = "Додаток Health використовується для зберігання глюкози в крові, інсуліну та вуглеводів";
 
 /* Privacy - Contacts Usage Description */
-"NSContactsUsageDescription" = "To enable the Contact Image feature: get live updates from iAPS to your Apple Watch Contact complication";
+"NSContactsUsageDescription" = "Щоб увімкнути функцію «Зображення контакту», отримуйте поточні оновлення від iAPS для вашого Apple Watch Contact";
