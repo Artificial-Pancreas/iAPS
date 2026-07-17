@@ -241,7 +241,7 @@ actor OpenAPS: Sendable {
         let pumpSettings = appCoordinator.pumpSettings.value
         let bgTargets = try await bgTargetsHistory()
         let basalProfile = appCoordinator.basalProfile.value
-        let isf = try await readIsfSchedule()
+        let isf = appCoordinator.isfSchedule.value
         let cr = try await readCrSchedule()
         let tempTargets = appCoordinator.tempTargets.value
         let model = appCoordinator.pumpStatus.value?.model ?? "722"
@@ -354,10 +354,6 @@ actor OpenAPS: Sendable {
 
     private func bgTargetsHistory() async throws -> BGTargets {
         try await loadFileFromStorage(name: Settings.bgTargets, as: BGTargets.self)
-    }
-
-    private func readIsfSchedule() async throws -> InsulinSensitivities {
-        try await loadFileFromStorage(name: Settings.insulinSensitivities, as: InsulinSensitivities.self)
     }
 
     private func readCrSchedule() async throws -> CarbRatios {

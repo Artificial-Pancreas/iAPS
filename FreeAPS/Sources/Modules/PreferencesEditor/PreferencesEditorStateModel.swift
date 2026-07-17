@@ -4,6 +4,7 @@ import SwiftUI
 extension PreferencesEditor {
     final class StateModel: BaseStateModel<Provider>, PreferencesSettable {
         @Injected() private var storage: FileStorage!
+        @Injected() private var isfScheduleStorage: IsfScheduleStorage!
 
         private(set) var preferences = Preferences()
 
@@ -463,13 +464,7 @@ extension PreferencesEditor {
         }
 
         private func saveISF() async {
-            let profile = await storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self)
-                ?? (try? InsulinSensitivities.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.insulinSensitivities)))
-                ?? InsulinSensitivities(
-                    units: .mmolL,
-                    userPrefferedUnits: .mmolL,
-                    sensitivities: []
-                )
+            let profile = appCoordinator.isfSchedule.value
             let units = await settingsManager.settings.units
             guard units != profile.units else { return }
 
@@ -492,7 +487,7 @@ extension PreferencesEditor {
 
             let newProfile = InsulinSensitivities(units: units, userPrefferedUnits: units, sensitivities: sensitivities)
 
-            await storage.save(newProfile, as: OpenAPS.Settings.insulinSensitivities)
+            await isfScheduleStorage.updateIsfSchedule(newProfile)
         }
     }
 }

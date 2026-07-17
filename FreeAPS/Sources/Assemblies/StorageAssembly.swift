@@ -86,5 +86,14 @@ final class StorageAssembly: Assembly {
                 appCoordinator: appCoordinator
             )
         }
+        container.register(IsfScheduleStorage.self) { r in
+            let storage = r.resolve(FileStorage.self)!
+            let appCoordinator = r.resolve(AppCoordinator.self)!
+
+            return BaseIsfScheduleStorage(
+                storage: storage,
+                appCoordinator: appCoordinator
+            )
+        }
     }
 }

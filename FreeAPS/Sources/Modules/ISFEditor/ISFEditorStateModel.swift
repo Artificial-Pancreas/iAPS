@@ -3,7 +3,7 @@ import Swinject
 
 extension ISFEditor {
     final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
-        @Injected() private var storage: FileStorage!
+        @Injected() private var isfScheduleStorage: IsfScheduleStorage!
         private let coreDataStorage = CoreDataStorage()
         let uiBindings = UIBindings()
 
@@ -33,7 +33,7 @@ extension ISFEditor {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() async {
-            let isfSchedule = await provider.isfSchedule
+            let isfSchedule = appCoordinator.isfSchedule.value
             units = isfSchedule.units
             items = isfSchedule.sensitivities.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
@@ -56,7 +56,7 @@ extension ISFEditor {
             items.append(newItem)
         }
 
-        private let formatter = {
+        private static let formatter = {
             let formatter = DateFormatter()
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateFormat = "HH:mm:ss"
@@ -72,14 +72,14 @@ extension ISFEditor {
                     let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                     let minutes = Int(date.timeIntervalSince1970 / 60)
                     let rate = self.rateValues[item.rateIndex]
-                    return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: formatter.string(from: date))
+                    return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: Self.formatter.string(from: date))
                 }
                 let profile = InsulinSensitivities(
                     units: units,
                     userPrefferedUnits: settings.units,
                     sensitivities: sensitivities
                 )
-                await provider.saveProfile(profile)
+                await isfScheduleStorage.updateIsfSchedule(profile)
             }
         }
 

@@ -545,6 +545,7 @@
 		F2CBFF252F96E64A004CB668 /* LiveActivityBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBFF242F96E64A004CB668 /* LiveActivityBanner.swift */; };
 		F2D4AAC9300A6481000105A7 /* BasalProfileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */; };
 		F2D4AACB300A6D80000105A7 /* AutotuneStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */; };
+		F2D4B1C9300AE108000105A7 /* IsfScheduleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1C8300AE108000105A7 /* IsfScheduleStorage.swift */; };
 		F2DCBC522F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */; };
 		F2DCBC562F0B30A2005D713E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */; };
 		F2DE0B903004142B00EF9230 /* NightscoutCollectionSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */; };
@@ -1305,6 +1306,7 @@
 		F2CBFF242F96E64A004CB668 /* LiveActivityBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityBanner.swift; sourceTree = "<group>"; };
 		F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalProfileStorage.swift; sourceTree = "<group>"; };
 		F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutotuneStorage.swift; sourceTree = "<group>"; };
+		F2D4B1C8300AE108000105A7 /* IsfScheduleStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsfScheduleStorage.swift; sourceTree = "<group>"; };
 		F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualNutritionOverrideEditor.swift; sourceTree = "<group>"; };
 		F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCollectionSync.swift; sourceTree = "<group>"; };
@@ -1978,6 +1980,7 @@
 				383948D525CD4D8900E91849 /* FileStorage.swift */,
 				3811DE9C25C9D88300A708ED /* KeyValueStorage.swift */,
 				F2D4AAC8300A6479000105A7 /* BasalProfileStorage.swift */,
+				F2D4B1C8300AE108000105A7 /* IsfScheduleStorage.swift */,
 				F2D4AACA300A6D80000105A7 /* AutotuneStorage.swift */,
 				3811DE9925C9D88300A708ED /* Cache */,
 				38E44529274E40F100EC9A94 /* Disk */,
@@ -3646,6 +3649,7 @@
 				3811DEB125C9D88300A708ED /* Keychain.swift in Sources */,
 				382C133725F13A1E00715CE1 /* InsulinSensitivities.swift in Sources */,
 				F2DE0B903004142B00EF9230 /* NightscoutCollectionSync.swift in Sources */,
+				F2D4B1C9300AE108000105A7 /* IsfScheduleStorage.swift in Sources */,
 				F2DE0B913004142B00EF9230 /* NightscoutUploadContext.swift in Sources */,
 				F2DE0B923004142B00EF9230 /* NightscoutStatusUploaders.swift in Sources */,
 				F2DE0B933004142B00EF9230 /* NightscoutConversions.swift in Sources */,

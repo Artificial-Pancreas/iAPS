@@ -103,6 +103,5 @@ extension Home {
                 $0.createdAt.addingTimeInterval(.hours(hours)) > now
             }
         }
-
     }
 }

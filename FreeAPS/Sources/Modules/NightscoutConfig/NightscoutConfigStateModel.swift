@@ -16,6 +16,7 @@ extension NightscoutConfig {
         @Injected() private var apsManager: APSManager!
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var basalProfileStorage: BasalProfileStorage!
+        @Injected() private var isfScheduleStorage: IsfScheduleStorage!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -291,7 +292,7 @@ extension NightscoutConfig {
                 guard pumpInfo != nil else {
                     await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
                     await basalProfileStorage.updateBasalProfile(basals)
-                    await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                    await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
                     await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
                     let error =
                         "Settings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
@@ -312,7 +313,7 @@ extension NightscoutConfig {
                         await self.basalProfileStorage.updateBasalProfile(basals)
                     }
                     await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                    await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
+                    await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
                     await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
                     debug(.service, "Settings have been imported and the Basals saved to pump!")
                     // DIA. Save if changed.

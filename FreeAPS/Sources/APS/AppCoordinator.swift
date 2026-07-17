@@ -79,6 +79,8 @@ final class AppCoordinator: @unchecked Sendable {
 
     let basalProfile = CurrentValueSubject<[BasalProfileEntry], Never>([])
 
+    let isfSchedule = CurrentValueSubject<InsulinSensitivities, Never>(InsulinSensitivities.initial)
+
     let autotune = CurrentValueSubject<Profile?, Never>(nil)
 
     let profile = CurrentValueSubject<Profile?, Never>(nil)
@@ -269,6 +271,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setBasalProfile(_ value: [BasalProfileEntry]) {
         basalProfile.send(value)
+    }
+
+    func setIsfSchedule(_ value: InsulinSensitivities) {
+        isfSchedule.send(value)
     }
 
     func setAutotune(_ value: Profile?) {
