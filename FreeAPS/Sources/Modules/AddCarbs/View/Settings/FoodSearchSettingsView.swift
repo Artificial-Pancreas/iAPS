@@ -12,6 +12,7 @@ struct FoodSearchSettingsView: View {
     @State private var claudeKey: String = ""
     @State private var openAIKey: String = ""
     @State private var googleGeminiKey: String = ""
+    @State private var usdaKey: String = ""
 
     @State private var photoLibraryAuthStatus: PHAuthorizationStatus = .notDetermined
 
@@ -19,6 +20,7 @@ struct FoodSearchSettingsView: View {
     @State private var showClaudeKey: Bool = false
     @State private var showOpenAIKey: Bool = false
     @State private var showGoogleGeminiKey: Bool = false
+    @State private var showUSDAKey: Bool = false
 
     @State private var imageSearchProvider: ImageSearchProvider = .defaultProvider
     @State private var aiTextProvider: AITextProvider = .defaultProvider
@@ -215,6 +217,21 @@ struct FoodSearchSettingsView: View {
                         .pickerStyle(.navigationLink)
                     }
                     .padding(.vertical, 4)
+                }
+
+                Section(
+                    header: Text("USDA Food Database"),
+                    footer: Text(
+                        "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests."
+                    )
+                ) {
+                    APIKeyRow(
+                        label: "USDA FoodData API Key",
+                        hint: "Get a free key at fdc.nal.usda.gov/api-key-signup.",
+                        placeholder: "Optional — uses DEMO_KEY if empty",
+                        text: $usdaKey,
+                        isVisible: $showUSDAKey
+                    )
                 }
 
                 if state.ai {
@@ -442,6 +459,7 @@ struct FoodSearchSettingsView: View {
         claudeKey = ConfigurableFoodAnalysisService.shared.getAPIKey(for: .claude) ?? ""
         openAIKey = ConfigurableFoodAnalysisService.shared.getAPIKey(for: .openAI) ?? ""
         googleGeminiKey = ConfigurableFoodAnalysisService.shared.getAPIKey(for: .gemini) ?? ""
+        usdaKey = UserDefaults.standard.usdaAPIKey
 
         preferredLanguage = UserDefaults.standard.userPreferredLanguageForAI ?? ""
         preferredRegion = UserDefaults.standard.userPreferredRegionForAI ?? ""
@@ -463,6 +481,7 @@ struct FoodSearchSettingsView: View {
         aiService.setAPIKey(claudeKey, for: .claude)
         aiService.setAPIKey(openAIKey, for: .openAI)
         aiService.setAPIKey(googleGeminiKey, for: .gemini)
+        UserDefaults.standard.usdaAPIKey = usdaKey
 
         UserDefaults.standard.userPreferredLanguageForAI = preferredLanguage.isEmpty ? nil : preferredLanguage
         UserDefaults.standard.userPreferredRegionForAI = preferredRegion.isEmpty ? nil : preferredRegion

@@ -82,7 +82,17 @@ jobs:
           fi
 
       - name: Select Xcode version
-        run: "sudo xcode-select --switch /Applications/Xcode_26.1.1.app/Contents/Developer"
+        run: |
+          echo "Available Xcode versions:"
+          ls -d /Applications/Xcode*.app
+          XCODE=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+          if [ -z "$XCODE" ]; then
+            echo "::error::Xcode 26.x NOT found on this runner"
+            exit 1
+          fi
+          echo "Selecting $XCODE"
+          sudo xcode-select --switch "$XCODE/Contents/Developer"
+          xcodebuild -version
       
       - name: Checkout Repo for syncing
         if: |

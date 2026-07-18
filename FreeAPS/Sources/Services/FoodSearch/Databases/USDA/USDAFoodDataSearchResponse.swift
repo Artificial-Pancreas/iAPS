@@ -1,109 +1,67 @@
 import Foundation
 
-/// USDA Nutrient identification codes
-/// Based on USDA FoodData Central nutrient database
-enum USDANutrientCode: Int {
-    // MARK: Carbohydrates
+// MARK: - USDA Nutrient Codes
 
-    /// Carbohydrate, by difference (most common)
+enum USDANutrientCode: Int {
+    // MARK: Macronutrients
+
     case carbohydrateByDifference = 205
-    /// Carbohydrate, by summation
     case carbohydrateBySummation = 1005
-    /// Carbohydrate, other
     case carbohydrateOther = 1050
 
-    // MARK: Protein
-
-    /// Protein (most common)
     case protein = 203
-    /// Protein, crude
     case proteinCrude = 1003
 
-    // MARK: Fat
-
-    /// Total lipid (fat) (most common)
     case totalLipidFat = 204
-    /// Total lipid, crude
     case totalLipidCrude = 1004
 
-    // MARK: Fiber
-
-    /// Fiber, total dietary (most common)
     case fiberTotalDietary = 291
-    /// Fiber, crude
     case fiberCrude = 1079
 
-    // MARK: Sugars
-
-    /// Sugars, total including NLEA (most common)
     case sugarsTotalIncludingNLEA = 269
-    /// Sugars, total
     case sugarsTotal = 1010
-    /// Sugars, added
     case sugarsAdded = 1063
 
-    // MARK: Energy/Calories
-
-    /// Energy (kcal) (most common)
     case energyKcal = 208
-    /// Energy, gross
     case energyGross = 1008
-    /// Energy, metabolizable
     case energyMetabolizable = 1062
 
-    /// Category of the nutrient for easier grouping
-    var category: NutrientCategory {
-        switch self {
-        case .carbohydrateByDifference,
-             .carbohydrateBySummation,
-             .carbohydrateOther:
-            return .carbohydrate
-        case .protein,
-             .proteinCrude:
-            return .protein
-        case .totalLipidCrude,
-             .totalLipidFat:
-            return .fat
-        case .fiberCrude,
-             .fiberTotalDietary:
-            return .fiber
-        case .sugarsAdded,
-             .sugarsTotal,
-             .sugarsTotalIncludingNLEA:
-            return .sugar
-        case .energyGross,
-             .energyKcal,
-             .energyMetabolizable:
-            return .energy
-        }
-    }
+    // MARK: Vitamins
 
-    /// Priority within its category (lower is higher priority)
-    var priority: Int {
-        switch self {
-        // Primary values (most common/preferred)
-        case .carbohydrateByDifference,
-             .energyKcal,
-             .fiberTotalDietary,
-             .protein,
-             .sugarsTotalIncludingNLEA,
-             .totalLipidFat:
-            return 1
-        // Secondary values (summation/alternative)
-        case .carbohydrateBySummation,
-             .energyGross,
-             .fiberCrude,
-             .proteinCrude,
-             .sugarsTotal,
-             .totalLipidCrude:
-            return 2
-        // Tertiary values (other/less common)
-        case .carbohydrateOther,
-             .energyMetabolizable,
-             .sugarsAdded:
-            return 3
-        }
-    }
+    case vitaminA_RAE = 320
+    case vitaminA_IU = 318
+
+    case vitaminC = 401
+    case vitaminD = 328
+    case vitaminE = 323
+    case vitaminK = 430
+
+    case thiamin = 404
+    case riboflavin = 405
+    case niacin = 406
+    case pantothenicAcid = 410
+    case vitaminB6 = 415
+
+    case folateTotal = 417
+    case folateDFE = 435
+
+    case vitaminB12 = 418
+
+    // MARK: Minerals
+
+    case calcium = 301
+    case iron = 303
+    case magnesium = 304
+    case phosphorus = 305
+    case potassium = 306
+    case sodium = 307
+    case zinc = 309
+    case copper = 312
+    case iodine = 314
+    case manganese = 315
+    case selenium = 317
+
+    // MARK: Categories
 
     enum NutrientCategory {
         case carbohydrate
@@ -112,81 +70,228 @@ enum USDANutrientCode: Int {
         case fiber
         case sugar
         case energy
+        case vitamin
+        case mineral
+    }
+
+    var category: NutrientCategory {
+        switch self {
+        case .carbohydrateByDifference,
+             .carbohydrateBySummation,
+             .carbohydrateOther:
+            return .carbohydrate
+
+        case .protein,
+             .proteinCrude:
+            return .protein
+
+        case .totalLipidCrude,
+             .totalLipidFat:
+            return .fat
+
+        case .fiberCrude,
+             .fiberTotalDietary:
+            return .fiber
+
+        case .sugarsAdded,
+             .sugarsTotal,
+             .sugarsTotalIncludingNLEA:
+            return .sugar
+
+        case .energyGross,
+             .energyKcal,
+             .energyMetabolizable:
+            return .energy
+
+        case .folateDFE,
+             .folateTotal,
+             .niacin,
+             .pantothenicAcid,
+             .riboflavin,
+             .thiamin,
+             .vitaminA_IU,
+             .vitaminA_RAE,
+             .vitaminB6,
+             .vitaminB12,
+             .vitaminC,
+             .vitaminD,
+             .vitaminE,
+             .vitaminK:
+            return .vitamin
+
+        default:
+            return .mineral
+        }
+    }
+
+    var microNutrient: MicroNutrient? {
+        switch self {
+        case .vitaminA_IU,
+             .vitaminA_RAE:
+            return .vitaminA
+
+        case .vitaminC:
+            return .vitaminC
+
+        case .vitaminD:
+            return .vitaminD
+
+        case .vitaminE:
+            return .vitaminE
+
+        case .vitaminK:
+            return .vitaminK
+
+        case .thiamin:
+            return .vitaminB1
+
+        case .riboflavin:
+            return .vitaminB2
+
+        case .niacin:
+            return .vitaminB3
+
+        case .pantothenicAcid:
+            return .vitaminB5
+
+        case .vitaminB6:
+            return .vitaminB6
+
+        case .folateDFE,
+             .folateTotal:
+            return .vitaminB9
+
+        case .vitaminB12:
+            return .vitaminB12
+
+        case .calcium:
+            return .calcium
+
+        case .iron:
+            return .iron
+
+        case .magnesium:
+            return .magnesium
+
+        case .phosphorus:
+            return .phosphorus
+
+        case .potassium:
+            return .potassium
+
+        case .zinc:
+            return .zinc
+
+        case .copper:
+            return .copper
+
+        case .manganese:
+            return .manganese
+
+        case .selenium:
+            return .selenium
+
+        case .iodine:
+            return .iodine
+
+        // sodium -> salt conversion
+        case .sodium:
+            return .salt
+
+        default:
+            return nil
+        }
     }
 }
 
-/// Root response from USDA FoodData Central search API
+// MARK: - Search Response
+
 struct USDASearchResponse: Codable {
     let foods: [USDAFood]
-    let totalHits: Int?
-    let currentPage: Int?
-    let totalPages: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case foods
-        case totalHits
-        case currentPage
-        case totalPages
-    }
 }
 
-/// USDA Food item from search results
+// MARK: - Food
+
 struct USDAFood: Codable {
     let fdcId: Int
     let description: String
-    let dataType: String?
-    let brandOwner: String?
-    let brandName: String?
-    let ingredients: String?
     let foodNutrients: [USDAFoodNutrient]?
-    let servingSize: Double?
-    let servingSizeUnit: String?
-    let householdServingFullText: String?
-
-    enum CodingKeys: String, CodingKey {
-        case fdcId
-        case description
-        case dataType
-        case brandOwner
-        case brandName
-        case ingredients
-        case foodNutrients
-        case servingSize
-        case servingSizeUnit
-        case householdServingFullText
-    }
 }
 
-/// Nutrient information from USDA food item
+// MARK: - Nutrient
+
 struct USDAFoodNutrient: Codable {
     let nutrientId: Int?
     let nutrientNumber: String?
     let nutrientName: String?
+
     let value: Double?
     let unitName: String?
 
-    enum CodingKeys: String, CodingKey {
-        case nutrientId
-        case nutrientNumber
-        case nutrientName
-        case value
-        case unitName
-    }
-
-    /// Get the nutrient number as an integer, handling both String and Int formats
     var nutrientNumberAsInt: Int? {
-        if let nutrientId = nutrientId {
+        if let nutrientId {
             return nutrientId
         }
-        if let nutrientNumber = nutrientNumber, let intValue = Int(nutrientNumber) {
-            return intValue
+
+        if let nutrientNumber,
+           let value = Int(nutrientNumber)
+        {
+            return value
         }
+
         return nil
     }
 
-    /// Get the nutrient as a typed enum value
     var nutrientCode: USDANutrientCode? {
-        guard let number = nutrientNumberAsInt else { return nil }
+        guard let number = nutrientNumberAsInt else {
+            return nil
+        }
+
         return USDANutrientCode(rawValue: number)
+    }
+}
+
+// MARK: - Normalization
+
+extension USDAFoodNutrient {
+    func normalizedValue(
+        for micro: MicroNutrient
+    ) -> Decimal? {
+        guard let value else {
+            return nil
+        }
+
+        let decimal = Decimal(value)
+
+        switch unitName?.lowercased() {
+        case "g":
+            return micro.normalized(
+                value: decimal,
+                from: .g
+            )
+
+        case "mg":
+            return micro.normalized(
+                value: decimal,
+                from: .mg
+            )
+
+        case "mcg",
+             "ug",
+             "µg":
+            return micro.normalized(
+                value: decimal,
+                from: .ug
+            )
+
+        case "iu":
+            return micro.normalized(
+                value: decimal,
+                from: .iu
+            )
+
+        default:
+            return decimal
+        }
     }
 }

@@ -51,6 +51,23 @@ extension ManualTempBasal {
             .navigationTitle("Manual Temp Basal")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+            .alert(
+                Text("Max Basal Exceeded"),
+                isPresented: $state.maxBasalExceeded
+            ) {
+                Button("OK") { state.maxBasalExceeded = false }
+            } message: {
+                Text(
+                    String(
+                        format: NSLocalizedString(
+                            "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.",
+                            comment: "Alert message when manual temp basal rate exceeds Max Basal"
+                        ),
+                        Double(state.rate),
+                        Double(state.settingsManager.pumpSettings.maxBasal)
+                    )
+                )
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         }
 
         if contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            let readings = coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+            let readings = coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
             let glucoseValues = glucoseText(readings)
 
             let suggestion: Suggestion? = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)

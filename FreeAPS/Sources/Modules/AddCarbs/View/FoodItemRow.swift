@@ -18,6 +18,23 @@ struct FoodItemRow: View {
         savedFoodIds.contains(foodItem.id)
     }
 
+    private var topMicronutrients: [MicronutrientValue] {
+        foodItem.micronutrient
+            .filter { (foodItem.micronutrientInThisPortion($0.substance) ?? 0) > 0 }
+            .sorted { $0.name < $1.name }
+            .prefix(3)
+            .map { $0 }
+    }
+
+    private func formatted(_ value: Decimal) -> String {
+        let number = NSDecimalNumber(decimal: value)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 0
+        return formatter.string(from: number) ?? "\(number)"
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // Main Row Content
@@ -52,10 +69,15 @@ struct FoodItemRow: View {
 
                         if case .per100 = foodItem.nutrition {
                             if let servingSize = foodItem.standardServingSize {
-                                Text("\(Double(foodItem.portionSizeOrMultiplier / servingSize), specifier: "%.1f")× serving")
-                                    .font(.caption)
-                                    .foregroundColor(.primary)
-                                    .opacity(0.7)
+                                Text(
+                                    String(
+                                        format: NSLocalizedString("%.1f× serving", comment: "Portion size multiplier"),
+                                        Double(foodItem.portionSizeOrMultiplier / servingSize)
+                                    )
+                                )
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                                .opacity(0.7)
                             }
                         }
                     }
@@ -76,19 +98,22 @@ struct FoodItemRow: View {
                     Button {
                         showPortionAdjuster = true
                     } label: {
-                        Label("Edit Portion", systemImage: "slider.horizontal.3")
+                        Label(
+                            NSLocalizedString("Edit Portion", comment: "Label for editing food portion"),
+                            systemImage: "slider.horizontal.3"
+                        )
                     }
                 }
 
                 if foodItem.source != .database {
                     if isSaved {
-                        Label("Saved", systemImage: "checkmark.circle.fill")
+                        Label(NSLocalizedString("Saved", comment: "Label for saved food"), systemImage: "checkmark.circle.fill")
                             .foregroundColor(.secondary)
                     } else if let onPersist = onPersist {
                         Button {
                             onPersist(foodItem)
                         } label: {
-                            Label("Save", systemImage: "square.and.arrow.down")
+                            Label(NSLocalizedString("Save", comment: "Button to save food"), systemImage: "square.and.arrow.down")
                         }
                     }
                 }
@@ -97,7 +122,10 @@ struct FoodItemRow: View {
                     Button(role: .destructive) {
                         onDelete()
                     } label: {
-                        Label("Remove from meal", systemImage: "trash")
+                        Label(
+                            NSLocalizedString("Remove from meal", comment: "Button to remove food from current meal"),
+                            systemImage: "trash"
+                        )
                     }
                 }
             }
@@ -118,6 +146,19 @@ struct FoodItemRow: View {
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
+
+            if !topMicronutrients.isEmpty {
+                HStack(spacing: 6) {
+                    ForEach(topMicronutrients) { micronutrient in
+                        MicronutrientBadge(
+                            micronutrient: micronutrient,
+                            amount: foodItem.micronutrientInThisPortion(micronutrient.substance)
+                        )
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
+            }
         }
         .padding(.top, isFirst ? 8 : 0)
         .padding(.bottom, isLast ? 8 : 0)
@@ -127,7 +168,7 @@ struct FoodItemRow: View {
                 Button {
                     onDelete?()
                 } label: {
-                    Label("Delete", systemImage: "trash")
+                    Label(NSLocalizedString("Delete", comment: "Button to delete food from database"), systemImage: "trash")
                 }
                 .tint(.red)
             }
@@ -137,7 +178,10 @@ struct FoodItemRow: View {
                 Button {
                     showPortionAdjuster = true
                 } label: {
-                    Label("Edit Portion", systemImage: "slider.horizontal.3")
+                    Label(
+                        NSLocalizedString("Edit Portion", comment: "Label for editing food portion"),
+                        systemImage: "slider.horizontal.3"
+                    )
                 }
                 .tint(.orange)
             }
@@ -164,6 +208,20 @@ struct FoodItemRow: View {
             FoodItemInfoPopup(foodItem: foodItem)
                 .presentationDetents([.height(foodItem.preferredInfoSheetHeight()), .large])
                 .presentationDragIndicator(.visible)
+        }
+    }
+
+    private func micronutrientAmountInThisPortion(_ micronutrient: MicronutrientValue) -> Decimal {
+        switch foodItem.nutrition {
+        case .per100:
+            let amountPer100 = micronutrient.amountPer100 > 0
+                ? micronutrient.amountPer100
+                : micronutrient.amount
+
+            return amountPer100 * foodItem.portionSizeOrMultiplier / 100
+
+        case .perServing:
+            return micronutrient.amount * foodItem.portionSizeOrMultiplier
         }
     }
 }

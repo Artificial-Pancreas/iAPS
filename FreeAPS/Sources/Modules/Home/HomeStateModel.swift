@@ -84,6 +84,8 @@ extension Home {
         @Published var profileButton: Bool = true
         @Published var mealData = MealData()
         @Published var ai: Bool = false
+        @Published var individual = Individual.default
+        @Published var selectedMealInterval: DateFilter = .today
 
         // Chart data
         var data = ChartModel(
@@ -223,6 +225,9 @@ extension Home {
             displayExpiration = settingsManager.settings.displayExpiration
             displaySAGE = settingsManager.settings.displaySAGE
             ai = settingsManager.settings.ai
+            individual.sex = Sex.savedSettings(settingsManager.settings.sexSetting)
+            individual
+                .age = Int((settingsManager.settings.birthDate.timeIntervalSinceNow.hours / (365 * 24)).rounded(.towardZero))
 
             updateSensorDays()
 
@@ -429,7 +434,7 @@ extension Home {
                 guard let self = self else { return }
                 self.data.isManual = self.provider.manualGlucose(hours: self.filteredHours)
                 self.data.glucose = self.provider.filteredGlucose(hours: self.filteredHours)
-                self.readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today)
+                self.readings = CoreDataStorage().fetchGlucose(interval: DateFilter.today.startDate)
                 self.recentGlucose = self.data.glucose.last
                 if self.data.glucose.count >= 2 {
                     self.glucoseDelta =
@@ -498,7 +503,7 @@ extension Home {
         private func setupActivity() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.data.activity = CoreDataStorage().fetchInsulinData(interval: DateFilter().day)
+                self.data.activity = CoreDataStorage().fetchInsulinData(interval: DateFilter.day.startDate)
             }
         }
 
@@ -549,9 +554,10 @@ extension Home {
         }
 
         private func setupLoopStats() {
-            let loopStats = CoreDataStorage().fetchLoopStats(interval: DateFilter().today)
+            let loopStats = CoreDataStorage().fetchLoopStats(interval: DateFilter.today.startDate)
             let loops = loopStats.compactMap({ each in each.loopStatus }).count
-            let readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today).compactMap({ each in each.glucose }).count
+            let readings = CoreDataStorage().fetchGlucose(interval: DateFilter.today.startDate)
+                .compactMap({ each in each.glucose }).count
             let percentage = min(readings != 0 ? (Double(loops) / Double(readings) * 100) : 0, 100)
             // First loop date
             let time = (loopStats.last?.start ?? Date.now).addingTimeInterval(-5.minutes.timeInterval)
@@ -644,11 +650,11 @@ extension Home {
                     self.carbData = data.map(\.cob).reduce(0, +)
                     self.iobs = data.map(\.iob).reduce(0, +)
                     neg = data.filter({ $0.iob < 0 }).count * 5
-                    let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
+                    let tdds = CoreDataStorage().fetchTDD(interval: DateFilter.tenDays.startDate)
                     let yesterday = (tdds.first(where: {
                         ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
                     })?.tdd ?? 0) as Decimal
-                    let oneDaysAgo = CoreDataStorage().fetchTDD(interval: DateFilter().today).last
+                    let oneDaysAgo = CoreDataStorage().fetchTDD(interval: DateFilter.today.startDate).last
                     tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
                     tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
                     tdd2DaysAgo = (tdds.first(where: {
@@ -668,48 +674,59 @@ extension Home {
             }
         }
 
-        private func setupMeals() {
+        func setupMeals() {
+            print("Meal Flow: update mealData")
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                let data = self.provider.fetchedMeals
-                self.mealData.carbs = self.carbCount(data)
-                self.mealData.fat = self.fatCount(data)
-                self.mealData.protein = self.proteinCount(data)
-                self.mealData.kcal = self.kcalCount()
-                self.mealData.servings = self.servingsCount(data)
+
+                let meals = self.provider.fetchedMeals(selectedMealInterval.startDate)
+
+                self.mealData = MealData(
+                    carbs: sum(\.carbs, in: meals),
+                    fat: sum(\.fat, in: meals),
+                    protein: sum(\.protein, in: meals),
+                    fiber: sum(\.fiber, in: meals),
+                    kcal: 0,
+                    servings: meals.count,
+                    micronutrients: self.microCount(meals),
+                    intervalDays: DateFilter.interval(meals)
+                )
+
+                self.mealData.kcal =
+                    4 * (self.mealData.carbs + self.mealData.protein) +
+                    9 * self.mealData.fat
+
+                debugPrintMealData()
             }
         }
 
-        private func carbCount(_ fetchedMeals: [Carbohydrates]) -> Decimal {
-            fetchedMeals
-                .compactMap(\.carbs)
-                .map({ x in
-                    x as Decimal
-                }).reduce(0, +)
+        private func sum(
+            _ keyPath: KeyPath<Meals, NSDecimalNumber?>,
+            in meals: [Meals]
+        ) -> Decimal {
+            meals
+                .compactMap { $0[keyPath: keyPath] as Decimal? }
+                .reduce(0, +)
         }
 
-        private func fatCount(_ fetchedMeals: [Carbohydrates]) -> Decimal {
-            fetchedMeals
-                .compactMap(\.fat)
-                .map({ x in
-                    x as Decimal
-                }).reduce(0, +)
+        private func microCount(_ meals: [Meals]) -> [MicroNutrient: Decimal] {
+            meals.reduce(into: [:]) { result, meal in
+                for (nutrient, amount) in meal.micronutrientTotals {
+                    result[nutrient, default: 0] += amount
+                }
+            }
         }
 
-        private func proteinCount(_ fetchedMeals: [Carbohydrates]) -> Decimal {
-            fetchedMeals
-                .compactMap(\.protein)
-                .map({ x in
-                    x as Decimal
-                }).reduce(0, +)
-        }
+        private func debugPrintMealData() {
+            print("Meal Flow Carbs: \(mealData.carbs)")
+            print("Meal Flow Protein: \(mealData.protein)")
+            print("Meal Flow Fat: \(mealData.fat)")
 
-        private func servingsCount(_ fetchedMeals: [Carbohydrates]) -> Int {
-            fetchedMeals.count
-        }
-
-        private func kcalCount() -> Decimal {
-            4 * (mealData.carbs + mealData.protein) + mealData.fat * 9
+            for item in mealData.micronutrients {
+                print(
+                    "Meal Flow Micro \(item.key.rawValue) \(item.value)"
+                )
+            }
         }
 
         func openCGM() {
@@ -816,6 +833,8 @@ extension Home.StateModel:
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton
         ai = settingsManager.settings.ai
+        individual.sex = Sex.savedSettings(settingsManager.settings.sexSetting)
+        individual.age = Int((settingsManager.settings.birthDate.timeIntervalSinceNow.hours / (365 * 24)).rounded(.towardZero))
         updateSensorDays()
 
         setupGlucose()

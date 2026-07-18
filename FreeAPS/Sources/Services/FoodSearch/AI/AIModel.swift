@@ -80,6 +80,7 @@ struct AnalysiedFoodItem: Identifiable {
     let fiberPer100: Decimal?
     let proteinPer100: Decimal?
     let sugarsPer100: Decimal?
+    let micronutrient: [MicronutrientValue]
 
     let assessmentNotes: String?
 }
@@ -87,6 +88,7 @@ struct AnalysiedFoodItem: Identifiable {
 extension AnalysiedFoodItem: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let dynamicContainer = try decoder.container(keyedBy: DynamicCodingKey.self)
 
         let name = try container.decodeTrimmedIfPresent(forKey: .name) ?? "Food item"
         let standardName = try container.decodeTrimmedIfPresent(forKey: .standardName)
@@ -105,6 +107,31 @@ extension AnalysiedFoodItem: Decodable {
         let fiberPer100 = try container.decodeNumberIfPresent(forKey: .fiberPer100)
         let proteinPer100 = try container.decodeNumberIfPresent(forKey: .proteinPer100)
         let sugarsPer100 = try container.decodeNumberIfPresent(forKey: .sugarsPer100)
+        var micronutrient: [MicronutrientValue] = []
+
+        // To Do: refactor
+        for nutrient in MicroNutrient.allCases {
+            if var key = DynamicCodingKey(stringValue: nutrient.codingKey) {
+                if let per100 = try dynamicContainer.decodeNumberIfPresent(forKey: key) {
+                    var amount: Decimal
+
+                    if let portion = portionEstimateSize, portion > 0 {
+                        amount = per100 / 100 * portion
+                    } else {
+                        amount = per100
+                    }
+
+                    micronutrient.append(
+                        MicronutrientValue(
+                            substance: nutrient,
+                            amount: amount,
+                            amountPer100: per100
+                        )
+                    )
+                }
+            }
+        }
+
         let assessmentNotes = try container.decodeTrimmedIfPresent(forKey: .assessmentNotes)
 
         self.name = name
@@ -125,6 +152,7 @@ extension AnalysiedFoodItem: Decodable {
         self.proteinPer100 = proteinPer100
         self.sugarsPer100 = sugarsPer100
         self.assessmentNotes = assessmentNotes
+        self.micronutrient = micronutrient
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -147,6 +175,12 @@ extension AnalysiedFoodItem: Decodable {
         case sugarsPer100 = "sugars_per_100"
 
         case assessmentNotes = "assessment_notes"
+    }
+
+    private static var micronutrientFields: [(String, Any)] {
+        MicroNutrient.allCases.map {
+            ($0.codingKey, "decimal, \($0.displayName) per 100g/ml")
+        }
     }
 }
 
@@ -179,7 +213,7 @@ extension AnalysiedFoodItem {
     }
 
     static var schemaVisual: [(String, Any)] {
-        let fields = self.fields + [
+        let macroFields = fields + [
             (.visualCues, "visual elements analyzed; (language)"),
             (.preparationMethod, "cooking details observed; (language)"),
             (
@@ -187,9 +221,8 @@ extension AnalysiedFoodItem {
                 "explain how you calculated this specific portion size, what visual references you used for measurement; (language)"
             )
         ]
-        return fields.map { key, value in
-            (key.rawValue, value)
-        }
+        return macroFields.map { ($0.0.rawValue, $0.1) }
+            + micronutrientFields
     }
 
     static var schemaText: [(String, Any)] {
@@ -201,7 +234,7 @@ extension AnalysiedFoodItem {
         ]
         return fields.map { key, value in
             (key.rawValue, value)
-        }
+        } + micronutrientFields
     }
 }
 

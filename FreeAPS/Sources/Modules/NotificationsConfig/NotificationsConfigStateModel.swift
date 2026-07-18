@@ -12,6 +12,10 @@ extension NotificationsConfig {
         @Published var useLiveActivity = false
         @Published var liveActivityChart = false
         @Published var liveActivityChartShowPredictions = true
+        @Published var liveActivityWatchChart = false
+        @Published var liveActivityWatchPredictions = true
+        @Published var liveActivityWatchDelta = true
+        @Published var liveActivityWatchEventual = true
 
         @Published var hypoSound: String = "New/Anticipalte.caf"
         @Published var hyperSound: String = "New/Anticipalte.caf"
@@ -44,6 +48,11 @@ extension NotificationsConfig {
             subscribeSetting(\.liveActivityChart, on: $liveActivityChart) { liveActivityChart = $0 }
             subscribeSetting(\.liveActivityChartShowPredictions, on: $liveActivityChartShowPredictions) {
                 liveActivityChartShowPredictions = $0 }
+            subscribeSetting(\.liveActivityWatchChart, on: $liveActivityWatchChart) { liveActivityWatchChart = $0 }
+            subscribeSetting(\.liveActivityWatchPredictions, on: $liveActivityWatchPredictions) {
+                liveActivityWatchPredictions = $0 }
+            subscribeSetting(\.liveActivityWatchDelta, on: $liveActivityWatchDelta) { liveActivityWatchDelta = $0 }
+            subscribeSetting(\.liveActivityWatchEventual, on: $liveActivityWatchEventual) { liveActivityWatchEventual = $0 }
             subscribeSetting(\.lowAlert, on: $lowAlert) { lowAlert = $0 }
             subscribeSetting(\.highAlert, on: $highAlert) { highAlert = $0 }
             subscribeSetting(\.ascendingAlert, on: $ascendingAlert) { ascendingAlert = $0 }
