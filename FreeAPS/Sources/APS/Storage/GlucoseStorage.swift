@@ -8,23 +8,31 @@ import Swinject
 protocol GlucoseStorage: Sendable {
     /// returns nil when no new records were recorded
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]?
+
     func removeGlucose(ids: [String]) async
-    /// retrieves raw glucose from storage - no smoothing (oldest->newest)
-    func retrieveRaw() async -> [BloodGlucose]
-    /// retrieves glucose from storage (oldest->newest)
+
+    /// retrieves glucose from storage in oldest->newest order (opposite of retrieveFiltered!)
     /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
     func retrieve() async -> [BloodGlucose]
-    /// retrieves glucose from storage in newest->oldest order (opposite of retrieve/retrieveRaw!) (oref0 wants this order)
+
+    /// retrieves glucose from storage in newest->oldest order (opposite of retrieve!) (oref0 wants this order)
     /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
     /// filters records by frequency - at most "1 per minute" or "1 per 5 minutes" (according to settings.allowOneMinuteGlucose)
     func retrieveFiltered() async -> [BloodGlucose]
+
     func latestDate() async -> Date?
+
+    /// clears the in-memory cache, forcing a re-read from storage
+    func resetCache() async
 }
 
 actor BaseGlucoseStorage: GlucoseStorage, AppService {
     private let storage: FileStorage
     private let settingsManager: SettingsManager
     private let appCoordinator: AppCoordinator
+
+    // newest -> oldest
+    private var cachedGlucose: [BloodGlucose] = []
 
     private enum Config {
         static let filterTimeFiveMinutes: TimeInterval = 4.5 * 60
@@ -43,9 +51,10 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
     // this is called at the start of the app
     func start() async {
-        // file is stored newest -> oldest, retrieveRaw reverses it, we reverse again to get back to newest -> oldest
+        cachedGlucose = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? []
         await pushAlarm()
-        appCoordinator.setGlucoseHistory(await retrieveRaw().reversed())
+        // newest -> oldest
+        appCoordinator.setGlucoseHistory(cachedGlucose)
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]? {
@@ -89,6 +98,8 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
         guard didModify, let newRecords else { return nil }
 
+        cachedGlucose = stored
+
         // Only log once
         debug(
             .deviceManager,
@@ -111,6 +122,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
             ids.contains($0.id)
         }
         if let deleted {
+            cachedGlucose = bgInStorage
             // push alarm must happen before setGlucoseHistory
             await pushAlarm()
             // newest -> oldest
@@ -120,22 +132,19 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
     }
 
     func latestDate() async -> Date? {
-        guard let events = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
-              let recent = events.first
-        else {
-            return nil
-        }
-        return recent.dateString
+        // file is stored newest -> oldest, so the first record is the most recent
+        cachedGlucose.first?.dateString
     }
 
-    func retrieveRaw() async -> [BloodGlucose] {
-        // file is stored newest->oldest, so we reverse it
-        await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
+    func resetCache() async {
+        cachedGlucose = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? []
+        await pushAlarm()
+        appCoordinator.setGlucoseHistory(cachedGlucose)
     }
 
     func retrieve() async -> [BloodGlucose] {
         // file is stored newest->oldest, so we reverse it
-        var retrieved = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
+        var retrieved: [BloodGlucose] = cachedGlucose.reversed()
         guard !retrieved.isEmpty else {
             return []
         }
@@ -167,7 +176,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
     }
 
     private func getAlarm() async -> GlucoseAlarm? {
-        guard let glucose = await retrieveRaw().last, glucose.dateString.addingTimeInterval(.minutes(20)) > Date(),
+        guard let glucose = cachedGlucose.first, glucose.dateString.addingTimeInterval(.minutes(20)) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 
         let settings = await settingsManager.settings

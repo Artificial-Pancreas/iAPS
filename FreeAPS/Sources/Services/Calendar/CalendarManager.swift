@@ -249,11 +249,11 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
     }()
 
     func setupGlucose() async {
-        let glucose = await glucoseStorage.retrieveRaw()
-        let recentGlucose = glucose.last
+        let glucose = appCoordinator.glucoseHistory.value
+        let recentGlucose = glucose.first
         let glucoseDelta: Int?
         if glucose.count >= 2 {
-            glucoseDelta = (recentGlucose?.glucose ?? 0) - (glucose[glucose.count - 2].glucose ?? 0)
+            glucoseDelta = (recentGlucose?.glucose ?? 0) - (glucose[1].glucose ?? 0)
         } else {
             glucoseDelta = nil
         }

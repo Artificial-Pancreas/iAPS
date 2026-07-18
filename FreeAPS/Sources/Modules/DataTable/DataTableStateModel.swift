@@ -177,7 +177,7 @@ extension DataTable {
         }
 
         private func setupGlucose() async {
-            glucose = await glucoseStorage.retrieveRaw().sorted { $0.date > $1.date }.map(Glucose.init)
+            glucose = appCoordinator.glucoseHistory.value.map(Glucose.init)
         }
 
         func deleteCarbs(_ treatment: Treatment, storage: Meals?) {

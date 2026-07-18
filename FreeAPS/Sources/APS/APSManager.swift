@@ -340,8 +340,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     ) async throws -> Suggestion {
         debug(.apsManager, "Start determine basal")
         do {
-            guard let glucose = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
-                  glucose.isNotEmpty
+            guard appCoordinator.glucoseHistory.value.isNotEmpty
             else {
                 debug(.apsManager, "Not enough glucose data")
                 throw APSError.glucoseError(message: "Not enough glucose data")

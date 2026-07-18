@@ -4,6 +4,7 @@ import Swinject
 extension ConfigEditor {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var storage: FileStorage!
+        @Injected() private var glucoseStorage: GlucoseStorage!
 
         let file: String
         @Published var configText = ""
@@ -26,6 +27,9 @@ extension ConfigEditor {
                 await persist(configText, as: file)
                 if file == OpenAPS.FreeAPS.settings || file == OpenAPS.Settings.preferences || file == OpenAPS.Settings.settings {
                     await settingsManager.resetCachedSettings()
+                }
+                if file == OpenAPS.Monitor.glucose {
+                    await glucoseStorage.resetCache()
                 }
             }
         }
