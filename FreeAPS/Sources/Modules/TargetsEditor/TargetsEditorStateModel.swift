@@ -64,7 +64,7 @@ extension TargetsEditor {
                     return BGTargetEntry(low: low, high: high, start: formatter.string(from: date), offset: minutes)
                 }
                 let settings = await settingsManager.settings
-                let profile = BGTargets(units: units, userPrefferedUnits: settings.units, targets: targets)
+                let profile = BGTargets(units: units, userPreferredUnits: settings.units, targets: targets)
                 await bgTargetsScheduleStorage.updateBgTargetsSchedule(profile)
             }
         }

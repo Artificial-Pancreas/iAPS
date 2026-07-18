@@ -456,7 +456,7 @@ extension PreferencesEditor {
                 }
             }
 
-            let newProfile = BGTargets(units: units, userPrefferedUnits: units, targets: targets)
+            let newProfile = BGTargets(units: units, userPreferredUnits: units, targets: targets)
 
             await bgTargetsScheduleStorage.updateBgTargetsSchedule(newProfile)
         }
@@ -483,7 +483,7 @@ extension PreferencesEditor {
                 }
             }
 
-            let newProfile = InsulinSensitivities(units: units, userPrefferedUnits: units, sensitivities: sensitivities)
+            let newProfile = InsulinSensitivities(units: units, userPreferredUnits: units, sensitivities: sensitivities)
 
             await isfScheduleStorage.updateIsfSchedule(newProfile)
         }

@@ -77,7 +77,7 @@ extension ISFEditor {
                 }
                 let profile = InsulinSensitivities(
                     units: units,
-                    userPrefferedUnits: settings.units,
+                    userPreferredUnits: settings.units,
                     sensitivities: sensitivities
                 )
                 await isfScheduleStorage.updateIsfSchedule(profile)

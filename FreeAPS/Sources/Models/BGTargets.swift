@@ -2,14 +2,14 @@ import Foundation
 
 struct BGTargets: JSON {
     let units: GlucoseUnits
-    let userPrefferedUnits: GlucoseUnits
+    let userPreferredUnits: GlucoseUnits
     let targets: [BGTargetEntry]
 }
 
 extension BGTargets {
     static let initial = BGTargets(
         units: .mmolL,
-        userPrefferedUnits: .mmolL,
+        userPreferredUnits: .mmolL,
         targets: [BGTargetEntry(low: 5.5, high: 5.5, start: "00:00:00", offset: 0)]
     )
 }
@@ -17,7 +17,7 @@ extension BGTargets {
 extension BGTargets {
     private enum CodingKeys: String, CodingKey {
         case units
-        case userPrefferedUnits = "user_preferred_units"
+        case userPreferredUnits = "user_preferred_units"
         case targets
     }
 }

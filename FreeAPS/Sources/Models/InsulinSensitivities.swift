@@ -2,14 +2,14 @@ import Foundation
 
 struct InsulinSensitivities: JSON {
     let units: GlucoseUnits
-    let userPrefferedUnits: GlucoseUnits
+    let userPreferredUnits: GlucoseUnits
     let sensitivities: [InsulinSensitivityEntry]
 }
 
 extension InsulinSensitivities {
     static let initial = InsulinSensitivities(
         units: .mmolL,
-        userPrefferedUnits: .mmolL,
+        userPreferredUnits: .mmolL,
         sensitivities: [InsulinSensitivityEntry(sensitivity: 3.0, offset: 0, start: "00:00:00")]
     )
 }
@@ -17,7 +17,7 @@ extension InsulinSensitivities {
 extension InsulinSensitivities {
     private enum CodingKeys: String, CodingKey {
         case units
-        case userPrefferedUnits = "user_preferred_units"
+        case userPreferredUnits = "user_preferred_units"
         case sensitivities
     }
 }
