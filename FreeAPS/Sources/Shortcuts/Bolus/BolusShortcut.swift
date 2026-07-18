@@ -41,8 +41,8 @@ struct BolusIntent: AppIntent {
         }
         let bolusAmountString = amount.formatted()
 
-        let bolusIntentRequest = BolusIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let bolusIntentRequest = BolusIntentRequest()
 
         if confirmBeforeApplying {
             let glucoseString = await bolusIntentRequest.currentGlucose() // Fetch current glucose

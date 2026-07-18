@@ -29,8 +29,8 @@ struct ApplyTempPresetIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        let intent = TempPresetsIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intent = TempPresetsIntentRequest()
 
         let presetToApply: TempPreset
         if let preset = preset {

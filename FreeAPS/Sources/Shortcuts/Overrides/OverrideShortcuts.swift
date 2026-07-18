@@ -49,8 +49,8 @@ struct ApplyOverrideIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        let intentRequest = OverrideIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = OverrideIntentRequest()
 
         let presetToApply: OverrideEntity
         if let preset = preset {
@@ -88,8 +88,8 @@ struct CancelOverrideIntent: AppIntent {
     static let description = IntentDescription("Cancel active override.")
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        let intentRequest = OverrideIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = OverrideIntentRequest()
 
         await intentRequest.cancelOverride()
         return .result(
@@ -100,16 +100,16 @@ struct CancelOverrideIntent: AppIntent {
 
 struct OverrideQuery: EntityQuery {
     @MainActor func entities(for identifiers: [OverrideEntity.ID]) async throws -> [OverrideEntity] {
-        let intentRequest = OverrideIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = OverrideIntentRequest()
 
         let presets = await intentRequest.fetchIDs(identifiers)
         return presets
     }
 
     @MainActor func suggestedEntities() async throws -> [OverrideEntity] {
-        let intentRequest = OverrideIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = OverrideIntentRequest()
 
         return try await intentRequest.fetchPresets()
     }

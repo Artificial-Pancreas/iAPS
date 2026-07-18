@@ -44,8 +44,8 @@ struct ModeIntent: AppIntent {
             )
         }
 
-        let intentRequest = ModeIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = ModeIntentRequest()
 
         let confirmation = try intentRequest.setMode(modeToApply)
 

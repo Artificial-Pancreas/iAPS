@@ -44,8 +44,8 @@ struct ApplyMealPresetIntent: AppIntent {
     @MainActor func perform() async throws -> some ProvidesDialog {
         let presetToApply: MealPresetEntity
 
-        let intentRequest = MealPresetIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = MealPresetIntentRequest()
 
         if let preset = preset {
             presetToApply = preset
@@ -79,16 +79,16 @@ struct ApplyMealPresetIntent: AppIntent {
 
 struct MealPresetQuery: EntityQuery {
     @MainActor func entities(for identifiers: [MealPresetEntity.ID]) async throws -> [MealPresetEntity] {
-        let intentRequest = MealPresetIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = MealPresetIntentRequest()
 
         let presets = await intentRequest.fetchIDs(identifiers)
         return presets
     }
 
     @MainActor func suggestedEntities() async throws -> [MealPresetEntity] {
-        let intentRequest = MealPresetIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = MealPresetIntentRequest()
 
         let presets = await intentRequest.fetchPresets()
         return presets
