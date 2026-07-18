@@ -216,7 +216,7 @@ actor OpenAPS: Sendable {
         let carbs = appCoordinator.carbHistory.value
         let glucose = await readGlucoseHistory()
 
-        let autotuneResult = try await self.autotuneFull(
+        var autotuneResult = try await self.autotuneFull(
             pumphistory: pumpHistory,
             profile: profile,
             glucose: glucose,
@@ -226,7 +226,7 @@ actor OpenAPS: Sendable {
             tuneInsulinCurve: tuneInsulinCurve,
             previousAutotuneResult: previousAutotune ?? profile,
         )
-
+        autotuneResult.createdAt = Date.now
         debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult.rawJSON())")
 
         return autotuneResult
@@ -352,8 +352,8 @@ actor OpenAPS: Sendable {
         return reservoir
     }
 
-    private func getAutotune(useAutotune: Bool) -> Autotune? {
-        useAutotune ? appCoordinator.autotune.value.map { Autotune.from(profile: $0) } : nil
+    private func getAutotune(useAutotune: Bool) -> Profile? {
+        useAutotune ? appCoordinator.autotune.value : nil
     }
 
     private func reasons(
@@ -1107,7 +1107,7 @@ actor OpenAPS: Sendable {
         carbRatio: CarbRatios,
         tempTargets: [TempTarget],
         model: String,
-        autotune: Autotune?,
+        autotune: Profile?,
         freeaps: FreeAPSSettings,
         dynamicVariables: DynamicVariables,
         settings: FreeAPSSettings // TODO: two FreeAPSSettings

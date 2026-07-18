@@ -14,7 +14,7 @@ extension AutotuneConfig {
 
         @Published var useAutotune = false
         @Published var onlyAutotuneBasals = false
-        @Published var autotune: Autotune?
+        @Published var autotune: Profile?
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
         @Published var increment: Double = 0.1
@@ -34,7 +34,7 @@ extension AutotuneConfig {
         override func subscribe() async {
             let settings = await settingsManager.settings
             let preferences = await settingsManager.preferences
-            autotune = appCoordinator.autotune.value.map { Autotune.from(profile: $0) }
+            autotune = appCoordinator.autotune.value
             units = settings.units
             useAutotune = settings.useAutotune
             publishedDate = lastAutotuneDate
@@ -75,7 +75,8 @@ extension AutotuneConfig {
             Task {
                 self.autotune = await runAutotune()
 
-                if var tuned = self.autotune {
+                if var tuned = self.autotune
+                {
                     let basal = tuned.basalProfile.map { basal in
                         BasalProfileEntry(
                             start: basal.start,
@@ -83,12 +84,7 @@ extension AutotuneConfig {
                             rate: basal.rate.roundBolusIncrements(increment: self.increment)
                         )
                     }
-                    tuned = Autotune(
-                        createdAt: tuned.createdAt,
-                        basalProfile: basal,
-                        sensitivity: tuned.sensitivity,
-                        carbRatio: tuned.carbRatio
-                    )
+                    tuned.basalProfile = basal
                     self.autotune = tuned
                 }
 
@@ -145,7 +141,7 @@ extension AutotuneConfig {
             await autotuneStorage.updateAutotune(nil)
         }
 
-        private func runAutotune() async -> Autotune? {
+        private func runAutotune() async -> Profile? {
             await apsManager.autotune()
         }
     }

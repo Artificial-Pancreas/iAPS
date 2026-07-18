@@ -9,7 +9,7 @@ struct PrepareProfileInput: Codable {
     let carb_ratio: CarbRatios
     let temp_targets: [TempTarget]
     let model: String
-    let autotune: Autotune?
+    let autotune: Profile?
     let freeaps: FreeAPSSettings
     let dynamic_variables: DynamicVariables
     let settings: FreeAPSSettings

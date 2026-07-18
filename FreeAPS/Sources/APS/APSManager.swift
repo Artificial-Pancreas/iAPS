@@ -7,7 +7,7 @@ import SwiftDate
 import Swinject
 
 protocol APSManager: Sendable {
-    func autotune() async -> Autotune?
+    func autotune() async -> Profile?
     func enactBolus(amount: Double, isSMB: Bool) async
     func enactTempBasal(rate: Double, duration: TimeInterval) async
     func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile)
@@ -523,7 +523,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         return await autotune() != nil
     }
 
-    func autotune() async -> Autotune? {
+    func autotune() async -> Profile? {
         guard let profiles = try? await makeProfiles() else { return nil }
         let autotune = try? await openAPS.autotune(
             profile: profiles.profile,
@@ -534,7 +534,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
         await autotuneStorage.updateAutotune(autotune)
 
-        return Autotune.from(profile: autotune)
+        return autotune
     }
 
     func enactAnnouncement(_ announcement: Announcement) async {

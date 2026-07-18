@@ -36,9 +36,9 @@ extension ISFEditor {
                             Text("Calculated Sensitivity")
                             Spacer()
                             if state.units == .mmolL {
-                                Text(Self.rateFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
+                                Text(Self.rateFormatter.string(from: autotune.sens.asMmolL as NSNumber) ?? "0")
                             } else {
-                                Text(Self.rateFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
+                                Text(Self.rateFormatter.string(from: autotune.sens as NSNumber) ?? "0")
                             }
                             Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                         }
@@ -52,10 +52,8 @@ extension ISFEditor {
                 }
                 if let sensitivityRatio = appUIState.suggestion?.sensitivityRatio, let isf = appUIState.suggestion?.isf {
                     Section(
-                        header: !appUIState.preferences.useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
+                        header: !appUIState.preferences.useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity / AutoISF")
                     ) {
-//                        let ratio = state.suggestion?.sensitivityRatio ?? 0
-//                        let isf = state.sensitivity
                         HStack {
                             Text("Sensitivity Ratio")
                             Spacer()

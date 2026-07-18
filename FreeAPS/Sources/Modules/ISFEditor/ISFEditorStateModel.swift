@@ -8,7 +8,7 @@ extension ISFEditor {
         let uiBindings = UIBindings()
 
         @Published var items: [Item] = []
-        @Published var autotune: Autotune?
+        @Published var autotune: Profile?
 
         let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
@@ -40,7 +40,7 @@ extension ISFEditor {
                 let rateIndex = rateValues.firstIndex(of: value.sensitivity) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
-            autotune = appCoordinator.autotune.value.map { Autotune.from(profile: $0) }
+            autotune = appCoordinator.autotune.value
         }
 
         func add() {

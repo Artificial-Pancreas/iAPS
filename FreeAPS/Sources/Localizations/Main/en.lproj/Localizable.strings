@@ -1905,6 +1905,9 @@ Enact a temp Basal or a temp target */
 /* Insulin sensitivity config header */
 "Dynamic Sensitivity" = "Dynamic Sensitivity";
 
+/* Insulin sensitivity config header */
+"Dynamic Sensitivity / AutoISF" = "Dynamic Sensitivity / AutoISF";
+
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
 

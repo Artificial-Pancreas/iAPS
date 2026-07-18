@@ -73,6 +73,8 @@ struct Profile: Codable {
     var weightPercentage: Double = 0
     var type: String?
     var mw: String? // middleware return string
+
+    var createdAt: Date? // for autotune
 }
 
 extension Profile {
@@ -149,5 +151,6 @@ extension Profile {
         case weightPercentage
         case type
         case mw
+        case createdAt = "created_at"
     }
 }

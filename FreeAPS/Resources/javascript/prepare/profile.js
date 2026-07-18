@@ -11,7 +11,7 @@ const oref0_profile = require('oref0/profile/index.js')
 *     carb_ratio: CarbRatios
 *     temp_targets: [TempTarget]
 *     model: String
-*     autotune: Autotune?
+*     autotune: Profile?
 *     freeaps: FreeAPSSettings
 *     dynamic_variables: DynamicVariables
 *     settings: FreeAPSSettings

@@ -5,7 +5,7 @@ extension CREditor {
         @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
 
         @Published var items: [Item] = []
-        @Published var autotune: Autotune?
+        @Published var autotune: Profile?
         @Published var onlyAutotuneBasals: Bool = false
 
         let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
@@ -27,7 +27,7 @@ extension CREditor {
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
 
-            autotune = appCoordinator.autotune.value.map { Autotune.from(profile: $0) }
+            autotune = appCoordinator.autotune.value
         }
 
         func add() {
