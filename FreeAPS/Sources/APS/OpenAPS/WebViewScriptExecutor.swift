@@ -56,42 +56,53 @@ final class WebViewScriptExecutor: Sendable {
         with input: I,
         as _: T.Type
     ) async throws -> T {
-        try await Task { @MainActor in
-            guard let webView else {
-                debug(.openAPS, "Javascript function (\(function)) failed: WebView has not been initialized yet")
-                throw NSError(
-                    domain: "WebViewScriptExecutor", code: 2,
-                    userInfo: [NSLocalizedDescriptionKey: "WebView not initialized yet"]
-                )
-            }
+        let resultString = try await evaluate(function: function, with: input)
 
-            let resultString: String
-            do {
-                resultString =
-                    try await Signpost.measure("js", poi: true, function) {
-                        try await webView.callAsyncJavaScriptShim(
-                            "iaps.invoke(\"\(function)\", input)",
-                            argument: input,
-                        )
-                    }
-            } catch {
-                debug(.openAPS, "Javascript function (\(function)) failed with error: \(error)")
+        let data = Data(resultString.utf8) // cache, will be used twice below
+        if let scriptError = try? JSONCoding.decoder.decode(ScriptError.self, from: data) {
+            throw scriptError
+        }
+
+        do {
+            let result = try T.decodeFrom(jsonData: data)
+            return result
+        } catch {
+            debug(.openAPS, "failed to decode result of \(function): \(error.localizedDescription)")
+            throw error
+        }
+    }
+
+    private func evaluate<I: Encodable & Sendable>(
+        function: String,
+        with input: I,
+        attempts: Int = 0
+    ) async throws -> String {
+        let maxAttempts = 2
+        do {
+            return try await Task { @MainActor in
+                guard let webView else {
+                    throw NSError(
+                        domain: "WebViewScriptExecutor", code: 2,
+                        userInfo: [NSLocalizedDescriptionKey: "WebView not initialized yet"]
+                    )
+                }
+
+                return try await Signpost.measure("js", poi: true, function) {
+                    try await webView.callAsyncJavaScriptShim(
+                        "iaps.invoke(\"\(function)\", input)",
+                        argument: input,
+                    )
+                }
+            }.value
+        } catch {
+            debug(.openAPS, "Javascript function (\(function)) attempt \(attempts + 1) failed with error: \(error)")
+            await createWebView()
+            if attempts < maxAttempts {
+                return try await evaluate(function: function, with: input, attempts: attempts + 1)
+            } else {
                 throw error
             }
-
-            let data = Data(resultString.utf8) // cache, will be used twice below
-            if let scriptError = try? JSONCoding.decoder.decode(ScriptError.self, from: data) {
-                throw scriptError
-            }
-
-            do {
-                let result = try T.decodeFrom(jsonData: data)
-                return result
-            } catch {
-                debug(.openAPS, "failed to decode result of \(function): \(error.localizedDescription)")
-                throw error
-            }
-        }.value
+        }
     }
 
     // Handle messages from JavaScript (e.g., console.log)
