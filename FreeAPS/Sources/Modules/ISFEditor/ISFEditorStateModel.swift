@@ -41,6 +41,7 @@ extension ISFEditor {
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
             autotune = appCoordinator.autotune.value
+            validate()
         }
 
         func add() {
@@ -87,14 +88,10 @@ extension ISFEditor {
             let uniq = Array(Set(items))
             let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
             sorted.first?.timeIndex = 0
-            DispatchQueue.main.async {
-                self.items = sorted
+            items = sorted
+            if items.isEmpty {
+                units = appCoordinator.settings.value.units
             }
-
-            // TODO: what is this for?
-//            if self.items.isEmpty {
-//                self.units = self.settingsManager.settings.units
-//            }
         }
     }
 }

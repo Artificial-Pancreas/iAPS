@@ -33,6 +33,7 @@ extension TargetsEditor {
                 let highIndex = rateValues.firstIndex(of: value.high) ?? 0
                 return Item(lowIndex: lowIndex, highIndex: highIndex, timeIndex: timeIndex)
             }
+            validate()
         }
 
         func add() {
@@ -69,20 +70,18 @@ extension TargetsEditor {
         }
 
         func validate() {
-            Task {
-                let uniq = Array(Set(self.items))
-                let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
-                    .map { item -> Item in
-                        Item(lowIndex: item.lowIndex, highIndex: item.highIndex, timeIndex: item.timeIndex)
-                    }
-                sorted.first?.timeIndex = 0
-
-                self.items = sorted
-
-                if self.items.isEmpty {
-                    let settings = await settingsManager.settings
-                    self.units = settings.units
+            let uniq = Array(Set(items))
+            let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
+                .map { item -> Item in
+                    Item(lowIndex: item.lowIndex, highIndex: item.highIndex, timeIndex: item.timeIndex)
                 }
+            sorted.first?.timeIndex = 0
+
+            items = sorted
+
+            if items.isEmpty {
+                let settings = appCoordinator.settings.value
+                units = settings.units
             }
         }
     }

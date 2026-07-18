@@ -158,6 +158,14 @@ extension Settings {
                             }
 
                             Group {
+                                Text("ISF Schedule")
+                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
+                                Text("CR Schedule")
+                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
+                                Text("BG Targets")
+                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
+                            }
+                            Group {
 //                                Text("Pump profile")
 //                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
 //                                Text("Profile")

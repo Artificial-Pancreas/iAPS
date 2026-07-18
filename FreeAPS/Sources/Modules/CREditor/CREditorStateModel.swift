@@ -18,7 +18,7 @@ extension CREditor {
         }
 
         override func subscribe() async {
-            let settings = await settingsManager.settings
+            let settings = appCoordinator.settings.value
             onlyAutotuneBasals = settings.onlyAutotuneBasals
             let profile = appCoordinator.crSchedule.value
             items = profile.schedule.map { value in
@@ -28,6 +28,7 @@ extension CREditor {
             }
 
             autotune = appCoordinator.autotune.value
+            validate()
         }
 
         func add() {
@@ -60,9 +61,7 @@ extension CREditor {
             let uniq = Array(Set(items))
             let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
             sorted.first?.timeIndex = 0
-            DispatchQueue.main.async {
-                self.items = sorted
-            }
+            items = sorted
         }
 
         private func saveProfile(_ profile: CarbRatios) async {

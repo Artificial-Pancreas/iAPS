@@ -33,9 +33,10 @@ extension BasalProfileEditor {
         }()
 
         override func subscribe() async {
-            await updateSupportedBasalRates(appCoordinator.pumpStatus.value)
+            updateSupportedBasalRates(appCoordinator.pumpStatus.value)
+            validate()
             calcTotal()
-            allowDilution = await settingsManager.settings.allowDilution
+            allowDilution = appCoordinator.settings.value.allowDilution
             observeUI(appCoordinator.pumpStatus) { me, pumpStatus in
                 await me.updateSupportedBasalRates(pumpStatus)
             }
@@ -98,7 +99,7 @@ extension BasalProfileEditor {
             items = sorted
         }
 
-        private func updateSupportedBasalRates(_ pumpStatus: PumpDisplayStatus?) async {
+        private func updateSupportedBasalRates(_ pumpStatus: PumpDisplayStatus?) {
             let newRateValues = pumpStatus?.supportedBasalRates.map { Decimal($0) } ??
                 stride(from: 5.0, to: 1001.0, by: 5.0).map { Decimal($0) / 100 }
             if newRateValues != rateValues {
