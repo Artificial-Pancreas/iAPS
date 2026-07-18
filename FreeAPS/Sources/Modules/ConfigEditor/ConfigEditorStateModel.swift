@@ -31,7 +31,7 @@ extension ConfigEditor {
         }
 
         private func load(file: String) async -> RawJSON {
-            await storage.retrieveRaw(file) ?? OpenAPS.defaults(for: file)
+            await storage.retrieveRaw(file) ?? ""
         }
 
         private func persist(_ value: RawJSON, as file: String) async {

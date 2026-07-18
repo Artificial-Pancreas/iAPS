@@ -27,8 +27,7 @@ actor BaseBasalProfileStorage: BasalProfileStorage, AppService {
     var basalProfile: [BasalProfileEntry] {
         get async {
             await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-                ?? (try? [BasalProfileEntry].decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile)))
-                ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
+                ?? [BasalProfileEntry].initial
         }
     }
 

@@ -1198,12 +1198,4 @@ actor OpenAPS: Sendable {
 
         return nil
     }
-
-    static func defaults(for file: String) -> String {
-        let prefix = file.hasSuffix(".json") ? "json/defaults" : "javascript"
-        guard let url = Foundation.Bundle.main.url(forResource: "\(prefix)/\(file)", withExtension: "") else {
-            return ""
-        }
-        return (try? String(contentsOf: url)) ?? ""
-    }
 }

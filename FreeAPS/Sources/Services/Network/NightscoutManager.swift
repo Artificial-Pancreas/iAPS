@@ -184,7 +184,7 @@ actor BaseNightscoutManager: NightscoutManager {
               let ns = nightscoutAPI
         else { return }
 
-        let uploadedProfile = await storage.retrieveFile(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self)
+        let uploadedProfile = await storage.retrieve(OpenAPS.Nightscout.uploadedProfile, as: NightscoutProfileStore.self)
         // UPLOAD Profiles WHEN CHANGED
         if uploadedProfile?.store["default"] != ps || force {
             do {

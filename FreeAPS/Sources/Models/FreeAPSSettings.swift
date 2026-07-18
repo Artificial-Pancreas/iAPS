@@ -50,7 +50,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var insulinActivityLabels: Bool = true
     var chartGlucosePeaks: Bool = false
     var showPredictionsLegend: Bool = true
-    var maxCarbs: Decimal = 1000
+    var maxCarbs: Decimal = 200
     var displayFatAndProteinOnWatch: Bool = false
     var confirmBolusFaster: Bool = false
     var onlyAutotuneBasals: Bool = false
@@ -67,7 +67,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var liveActivityWatchDelta: Bool = true
     var liveActivityWatchEventual: Bool = true
     var useTargetButton: Bool = false
-    var alwaysUseColors: Bool = false
+    var alwaysUseColors: Bool = true
     var timeSettings: Bool = true
     var disable15MinTrend: Bool = false
     var hidePredictions: Bool = false
@@ -86,11 +86,11 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var descendingAlert: Bool = true
     var carbsRequiredAlert: Bool = true
     //
-    var profilesOrTempTargets: Bool = false
+    var profilesOrTempTargets: Bool = true
     var allowBolusShortcut: Bool = false
     var allowedRemoteBolusAmount: Decimal = 0.0
-    var eventualBG: Bool = false
-    var minumimPrediction: Bool = false
+    var eventualBG: Bool = true
+    var minumimPrediction: Bool = true
     var minimumSMB: Decimal = 0.3
     var useInsulinBars: Bool = false
     var skipGlucoseChart: Bool = false

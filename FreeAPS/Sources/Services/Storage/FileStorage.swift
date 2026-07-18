@@ -57,16 +57,11 @@ protocol FileStorage: Sendable {
 
     func remove(_ name: String) async
     func rename(_ name: String, to newName: String) async
-    func retrieveFile<Value: Decodable & Sendable>(_ name: String, as type: Value.Type) async -> Value?
 
     func urlFor(file: String) async -> URL?
 }
 
 actor BaseFileStorage: FileStorage, Injectable {
-//    nonisolated let unownedExecutor: UnownedSerialExecutor =
-//        DispatchQueue(label: "BaseFileStorage.io", qos: .utility)
-//            .asUnownedSerialExecutor()
-
     func save<Value: Encodable & Sendable>(_ value: Value, as name: String) {
         Signpost.measure("file.save", name) {
             if let value = value as? String, let data = value.data(using: .utf8) {
@@ -91,15 +86,6 @@ actor BaseFileStorage: FileStorage, Injectable {
             }
             return String(data: data, encoding: .utf8)
         }
-    }
-
-    func retrieveFile<Value: Decodable & Sendable>(_ name: String, as type: Value.Type) -> Value? {
-        if let loaded = retrieve(name, as: type) {
-            return loaded
-        }
-        let file = retrieveRaw(name) ?? OpenAPS.defaults(for: name)
-        save(file, as: name)
-        return retrieve(name, as: type)
     }
 
     @discardableResult func append<Value: JSON>(_ newValue: Value, to name: String) async -> [Value]? {

@@ -37,7 +37,6 @@ actor BaseSettingsManager: SettingsManager, AppService {
                 return cachedSettings
             }
             let retrievedSettings = await storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
-                ?? (try? FreeAPSSettings.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.FreeAPS.settings)))
                 ?? FreeAPSSettings()
             cachedSettings = retrievedSettings
             return retrievedSettings
@@ -50,7 +49,6 @@ actor BaseSettingsManager: SettingsManager, AppService {
                 return cachedPreferences
             }
             let retrievedPreferences = await storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
-                ?? (try? Preferences.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.preferences)))
                 ?? Preferences()
             cachedPreferences = retrievedPreferences
             return retrievedPreferences
@@ -63,7 +61,6 @@ actor BaseSettingsManager: SettingsManager, AppService {
                 return cachedPumpSettings
             }
             let retrievedPumpSettings = await storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
-                ?? (try? PumpSettings.decodeFrom(json: OpenAPS.defaults(for: OpenAPS.Settings.settings)))
                 ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
             cachedPumpSettings = retrievedPumpSettings
             return retrievedPumpSettings
