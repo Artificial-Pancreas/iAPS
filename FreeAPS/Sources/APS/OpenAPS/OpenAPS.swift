@@ -16,6 +16,9 @@ actor OpenAPS: Sendable {
 
     private let scriptExecutor = WebViewScriptExecutor()
 
+    private static let filterIntervalFiveMinutes: TimeInterval = .minutes(4.5)
+    private static let filterIntervalOneMinute: TimeInterval = .minutes(0.8)
+
     init(
         storage: FileStorage,
         glucoseStorage: GlucoseStorage,
@@ -328,18 +331,25 @@ actor OpenAPS: Sendable {
     }
 
     private func readGlucoseHistory() async -> [GlucoseEntry0] {
-        let glucose = await glucoseStorage.retrieveFiltered()
-        return glucose.map { g in
-            GlucoseEntry0(
-                date: nil,
-                displayTime: nil,
-                dateString: g.dateString.ISO8601Format(),
-                sgv: g.sgv,
-                glucose: g.glucose,
-                type: g.type,
-                noise: g.noise,
-            )
-        }
+        // newest->oldest
+        let retrieved = appCoordinator.glucoseHistorySmoothed.value
+        let settings = await settingsManager.settings
+
+        let minInterval = settings.allowOneMinuteGlucose ? Self.filterIntervalOneMinute : Self.filterIntervalFiveMinutes
+
+        return FrequentGlucoseFiltering
+            .filterFrequentGlucose(retrieved, interval: minInterval)
+            .map { g in
+                GlucoseEntry0(
+                    date: nil,
+                    displayTime: nil,
+                    dateString: g.dateString.ISO8601Format(),
+                    sgv: g.sgv,
+                    glucose: g.glucose,
+                    type: g.type,
+                    noise: g.noise,
+                )
+            }
     }
 
     private func readReservoir() -> Decimal {

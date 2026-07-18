@@ -42,7 +42,7 @@ extension DataTable {
             maxBolus = pumpSettings.maxBolus
 
             await setupTreatments()
-            await setupGlucose()
+            setupGlucose(appCoordinator.glucoseHistoryRaw.value)
 
             observeUI(appCoordinator.settings, dropInitial: true) { me, _ in
                 await me.setupTreatments()
@@ -62,8 +62,8 @@ extension DataTable {
             observeUI(appCoordinator.carbHistory, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observeUI(appCoordinator.glucoseHistory, dropInitial: true) { me, _ in
-                await me.setupGlucose()
+            observeUI(appCoordinator.glucoseHistoryRaw, dropInitial: true) { me, glucoseHistory in
+                me.setupGlucose(glucoseHistory)
             }
         }
 
@@ -176,8 +176,8 @@ extension DataTable {
             insulinToday = totalDailyDose.insulinToday(pumpHistory, increment: Double(increments))
         }
 
-        private func setupGlucose() async {
-            glucose = appCoordinator.glucoseHistory.value.map(Glucose.init)
+        private func setupGlucose(_ glucoseHistory: [BloodGlucose]) {
+            glucose = glucoseHistory.map(Glucose.init)
         }
 
         func deleteCarbs(_ treatment: Treatment, storage: Meals?) {

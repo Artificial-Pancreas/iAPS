@@ -42,7 +42,7 @@ extension Calibrations {
                     glucose = newCalibration.asMgdL
                 }
 
-                guard let lastGlucose = appCoordinator.glucoseHistory.value.first,
+                guard let lastGlucose = appCoordinator.glucoseHistoryRaw.value.first,
                       lastGlucose.dateString.addingTimeInterval(60 * 4.5) > Date(),
                       let uncalibrated = lastGlucose.uncalibrated
                 else {

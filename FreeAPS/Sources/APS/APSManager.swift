@@ -340,7 +340,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     ) async throws -> Suggestion {
         debug(.apsManager, "Start determine basal")
         do {
-            guard appCoordinator.glucoseHistory.value.isNotEmpty
+            guard appCoordinator.glucoseHistoryRaw.value.isNotEmpty
             else {
                 debug(.apsManager, "Not enough glucose data")
                 throw APSError.glucoseError(message: "Not enough glucose data")

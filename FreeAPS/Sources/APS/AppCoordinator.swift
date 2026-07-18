@@ -55,7 +55,11 @@ final class AppCoordinator: @unchecked Sendable {
     let pumpHistoryDeletions = PassthroughSubject<[PumpHistoryEvent], Never>()
 
     // newest -> oldest
-    let glucoseHistory = CurrentValueSubject<[BloodGlucose], Never>([])
+    let glucoseHistoryRaw = CurrentValueSubject<[BloodGlucose], Never>([])
+
+    // newest -> oldest
+    // when smoothing is disabled, this is equal to glucoseHistoryRaw
+    let glucoseHistorySmoothed = CurrentValueSubject<[BloodGlucose], Never>([])
 
     let glucoseDeletions = PassthroughSubject<[BloodGlucose], Never>()
 
@@ -257,8 +261,9 @@ final class AppCoordinator: @unchecked Sendable {
     }
 
     /// MUST BE newest -> oldest
-    func setGlucoseHistory(_ value: [BloodGlucose]) {
-        glucoseHistory.send(value)
+    func setGlucoseHistory(raw: [BloodGlucose], smoothed: [BloodGlucose]) {
+        glucoseHistoryRaw.send(raw)
+        glucoseHistorySmoothed.send(smoothed)
     }
 
     func sendNewGlucoseRecords(_ value: [BloodGlucose]) {

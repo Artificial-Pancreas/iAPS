@@ -184,7 +184,7 @@ extension Home {
                 await me.cgmCensorDaysUpdated(sensorDays)
             }
 
-            observeUI(appCoordinator.glucoseHistory) { me, glucose in
+            observeUI(appCoordinator.glucoseHistoryRaw) { me, glucose in
                 // TODO: use the provided value inside the function, currently it re-reads from the storage
                 await me.glucoseDidUpdate(glucose)
             }
@@ -371,8 +371,8 @@ extension Home {
         }
 
         private func setupGlucose() async {
-            data.isManual = await provider.manualGlucose(hours: filteredHours)
-            data.glucose = await provider.filteredGlucose(hours: filteredHours)
+            data.isManual = provider.manualGlucose(hours: filteredHours)
+            data.glucose = provider.smoothedGlucose(hours: filteredHours)
             readings = await coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate)
             recentGlucose = data.glucose.last
             if data.glucose.count >= 2 {

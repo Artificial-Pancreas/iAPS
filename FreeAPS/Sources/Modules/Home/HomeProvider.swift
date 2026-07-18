@@ -74,17 +74,18 @@ extension Home {
             appCoordinator.sendHeartbeat()
         }
 
-        func filteredGlucose(hours: Int) async -> [BloodGlucose] {
+        func smoothedGlucose(hours: Int) -> [BloodGlucose] {
             let now = Date()
-            // .retrieve() will read glucose from storage and apply smoothing if needed
-            return await glucoseStorage.retrieve().filter {
+            // reverse to oldest->newest order
+            return appCoordinator.glucoseHistorySmoothed.value.reversed().filter {
                 $0.dateString.addingTimeInterval(.hours(hours)) > now
             }
         }
 
-        func manualGlucose(hours: Int) async -> [BloodGlucose] {
+        func manualGlucose(hours: Int) -> [BloodGlucose] {
             let now = Date()
-            return await glucoseStorage.retrieve().filter {
+            // reverse to oldest->newest order
+            return appCoordinator.glucoseHistorySmoothed.value.reversed().filter {
                 $0.type == GlucoseType.manual.rawValue &&
                     $0.dateString.addingTimeInterval(.hours(hours)) > now
             }

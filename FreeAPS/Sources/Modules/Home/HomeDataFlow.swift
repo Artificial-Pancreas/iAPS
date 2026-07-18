@@ -7,7 +7,7 @@ enum Home {
 
 protocol HomeProvider: Provider {
     func heartbeatNow() async
-    func filteredGlucose(hours: Int) async -> [BloodGlucose]
+    func smoothedGlucose(hours: Int) async -> [BloodGlucose]
     func carbs(hours: Int) -> [CarbsEntry]
     func announcement(_ hours: Int) async -> [Announcement]
     func overrides() async -> [OverrideSnapshot]

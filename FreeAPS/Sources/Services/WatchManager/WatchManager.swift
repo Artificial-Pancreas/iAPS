@@ -71,7 +71,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             session.activate()
         }
 
-        observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
+        observe(appCoordinator.glucoseHistoryRaw.dropFirst()) { me, _ in
             await me.configureState()
         }
         observe(appCoordinator.preferences.dropFirst()) { me, preferences in
