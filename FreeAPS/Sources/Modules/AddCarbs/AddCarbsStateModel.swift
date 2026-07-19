@@ -4,11 +4,12 @@ import SwiftUI
 
 extension AddCarbs {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var storage: FileStorage!
-        @Injected() var carbsStorage: CarbsStorage!
-        @Injected() var apsManager: APSManager!
-        @Injected() var nightscoutManager: NightscoutManager!
+        @Injected() private var storage: FileStorage!
+        @Injected() private var carbsStorage: CarbsStorage!
+        @Injected() private var apsManager: APSManager!
+        @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var overrideStorage: OverrideStorage!
+        @Injected() private var overrideManager: OverrideManager!
 
         private let coreDataStorage = CoreDataStorage()
 
@@ -266,28 +267,16 @@ extension AddCarbs {
             }
         }
 
-        private func hypo() async {
-            // Cancel any eventual Other Override already active
-            if let activeOveride = await overrideStorage.fetchLatestOverride().first {
-                let presetName = await overrideStorage.isPresetName()
-                // Is the Override a Preset?
-                if let preset = presetName {
-                    if let duration = await overrideStorage.cancelProfile() {
-                        // Update in Nightscout
-                        await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
-                    }
-                } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                    if let duration = await overrideStorage.cancelProfile() {
-                        await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
-                    }
-                } else {
-                    let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
-                        .formatted() + " %" : "Custom"
-                    if let duration = await overrideStorage.cancelProfile() {
-                        await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                    }
-                }
+        func runDetermineBasal() {
+            Task {
+                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
             }
+        }
+
+        private func hypo() async {
+            // Cancel any override that is already active
+            // TODO: we are cancelling an override, but below we might not start a hypo override. Is this intended?
+            await overrideManager.cancelActiveOverride()
 
             guard let profileID = id, profileID != "None" else {
                 return

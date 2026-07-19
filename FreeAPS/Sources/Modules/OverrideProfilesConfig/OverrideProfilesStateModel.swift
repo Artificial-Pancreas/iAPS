@@ -45,6 +45,7 @@ extension OverrideProfilesConfig {
         @Injected() private var ns: NightscoutManager!
 
         @Injected() private var overrideStorage: OverrideStorage!
+        @Injected() private var overrideManager: OverrideManager!
 
         var units: GlucoseUnits = .mmolL
 
@@ -61,24 +62,10 @@ extension OverrideProfilesConfig {
 
         func saveSettings() {
             Task {
-                // Is other override already active?
-                let last = await overrideStorage.fetchLatestOverride().last
-
                 percentage.round()
 
-                // for the ns.uploadOverride at the end:
-                var editInNightscout: (name: String, duration: Double, date: Date)?
-                // Is other already active?
-                if let active = last, active.enabled {
-                    let presetName = await overrideStorage.isPresetName()
-                    if let duration = await overrideStorage.cancelProfile() {
-                        let name = presetName ?? (
-                            active.percentage.formatted() != "100" ? active.percentage
-                                .formatted() + " %" : active.isPreset ? "📉" : "Custom"
-                        )
-                        editInNightscout = (name: name, duration: duration, date: last?.date ?? Date.now)
-                    }
-                }
+                await overrideManager.cancelActiveOverride()
+
                 // Save
                 let overrideId = self.isPreset ? id : UUID().uuidString
                 let savedAt = await overrideStorage.storeOverride(currentDraft(id: overrideId))
@@ -88,9 +75,6 @@ extension OverrideProfilesConfig {
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
-                if let editInNightscout {
-                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date)
-                }
                 await ns.uploadOverride(self.percentage.formatted(), Double(duration), savedAt)
             }
         }
@@ -148,26 +132,11 @@ extension OverrideProfilesConfig {
                 let profileArray = await overrideStorage.fetchProfiles()
                 guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
 
-                // Is there already an active override?
-                let last = await overrideStorage.fetchLatestOverride().last
-                let lastPreset = await overrideStorage.isPresetName()
+                await overrideManager.cancelActiveOverride()
 
-                // for the ns.uploadOverride at the end:
-                var editInNightscout: (name: String, duration: Double, date: Date)?
-                if let alreadyActive = last, alreadyActive.enabled, let duration = await overrideStorage.cancelProfile() {
-                    editInNightscout = (
-                        name: (last?.isPreset ?? false) ? (lastPreset ?? "📉") : "Custom",
-                        duration: duration,
-                        date: alreadyActive.date ?? Date.now
-                    )
-                }
-                // New Override properties
                 let savedAt = await overrideStorage.activateProfile(profile, id: id_, defaultMaxIOB: defaultmaxIOB)
 
-                if let editInNightscout {
-                    await ns.uploadOverride(editInNightscout.name, editInNightscout.duration, editInNightscout.date)
-                }
-                // Uploads new Override to NS
+                // uploads the new override to NS
                 await ns.uploadOverride(
                     profile.name ?? "",
                     Double(truncating: (profile.duration ?? 0) as NSDecimalNumber),
@@ -285,12 +254,7 @@ extension OverrideProfilesConfig {
         func cancelProfile() {
             Task {
                 resetToDefaults()
-                let duration_ = await overrideStorage.cancelProfile()
-                let last_ = await overrideStorage.fetchLatestOverride().last
-                let name = await overrideStorage.isPresetName()
-                if let last = last_, let duration = duration_ {
-                    await ns.uploadOverride(name ?? "", duration, last.date ?? Date.now)
-                }
+                await overrideManager.cancelActiveOverride()
             }
         }
 

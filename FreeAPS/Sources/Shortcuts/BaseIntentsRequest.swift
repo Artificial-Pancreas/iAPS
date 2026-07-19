@@ -11,6 +11,7 @@ class BaseIntentsRequest: Injectable {
     @Injected() var apsManager: APSManager!
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var overrideStorage: OverrideStorage!
+    @Injected() var overrideManager: OverrideManager!
 
     let coreDataStorage = CoreDataStorage()
 

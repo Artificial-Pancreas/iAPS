@@ -26,6 +26,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
 
     private let overrideStorage: OverrideStorage
     private let coreDataStorage = CoreDataStorage()
+    private let overrideManager: OverrideManager
 
     private var settings: FreeAPSSettings!
     private var preferences: Preferences!
@@ -43,6 +44,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         nightscout: NightscoutManager,
         appCoordinator: AppCoordinator,
         overrideStorage: OverrideStorage,
+        overrideManager: OverrideManager,
         session: WCSession = .default
     ) {
         self.settingsManager = settingsManager
@@ -54,6 +56,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.nightscout = nightscout
         self.appCoordinator = appCoordinator
         self.overrideStorage = overrideStorage
+        self.overrideManager = overrideManager
 
         self.session = session
         self.delegate = WatchSessionDelegate()
@@ -576,15 +579,9 @@ private extension BaseWatchManager {
             if var preset = await overrideStorage.fetchProfiles().first(where: { $0.id == overrideID }) {
                 preset.date = Date.now
 
-                // Cancel eventual current active override first
-                if let activeOveride = await overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
-                    let name = await overrideStorage.isPresetName()
+                // Cancel an active override first, if any
+                await overrideManager.cancelActiveOverride()
 
-                    if let duration = await overrideStorage.cancelProfile() {
-                        let nsString = name ?? activeOveride.percentage.formatted()
-                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date())
-                    }
-                }
                 // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
                 await overrideStorage.overrideFromPreset(preset)
                 await nightscout.uploadOverride(
@@ -595,17 +592,12 @@ private extension BaseWatchManager {
                 await configureState()
                 return .confirmed
             } else if overrideID == "cancel" {
-                if let activeOveride = await overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
-                    let presetName = await overrideStorage.isPresetName()
-                    let nsString = presetName ?? activeOveride.percentage.formatted()
-
-                    if let duration = await overrideStorage.cancelProfile() {
-                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                        await configureState()
-                        return .confirmed
-                    }
+                if await overrideManager.cancelActiveOverride() {
+                    await configureState()
+                    return .confirmed
+                } else {
+                    return .denied
                 }
-                return .denied
             }
         }
 

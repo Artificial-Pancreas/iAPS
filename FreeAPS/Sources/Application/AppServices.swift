@@ -46,6 +46,8 @@ import Swinject
         try await startService(resolver.resolve(TempTargetsStorage.self))
         try await startService(resolver.resolve(CalibrationService.self))
 
+        try await startService(resolver.resolve(OverrideManager.self)!)
+
         try await startService(resolver.resolve(APSManager.self)!)
 
         try await startService(resolver.resolve(DeviceDataManager.self))

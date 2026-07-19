@@ -195,17 +195,9 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         guard let overridePreset = await overrideStorage.fetchProfilePreset(preset.name ?? "") else {
             return nil
         }
-        let lastActiveOveride = await overrideStorage.fetchLatestOverride().first
-        let isActive = lastActiveOveride?.enabled ?? false
-
         // Cancel the eventual current active override first
-        if isActive {
-            let presetName = await overrideStorage.isPresetName()
-            if let duration = await overrideStorage.cancelProfile(), let last = lastActiveOveride {
-                let nsString = presetName ?? last.percentage.formatted()
-                await nightscoutManager.uploadOverride(nsString, duration, last.date ?? Date())
-            }
-        }
+        await overrideManager.cancelActiveOverride()
+
         await overrideStorage.overrideFromPreset(overridePreset)
         let currentActiveOveride = await overrideStorage.fetchLatestOverride().first
         await nightscoutManager.uploadOverride(
@@ -217,26 +209,6 @@ final class OverrideIntentRequest: BaseIntentsRequest {
     }
 
     func cancelOverride() async {
-        // Is there even a saved Override?
-        if let activeOveride = await overrideStorage.fetchLatestOverride().first {
-            let presetName = await overrideStorage.isPresetName()
-            // Is the Override a Preset?
-            if let preset = presetName {
-                if let duration = await overrideStorage.cancelProfile() {
-                    // Update in Nightscout
-                    await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
-                }
-            } else if activeOveride.isPreset {
-                if let duration = await overrideStorage.cancelProfile() {
-                    await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
-                }
-            } else {
-                let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
-                    .formatted() + " %" : "Custom"
-                if let duration = await overrideStorage.cancelProfile() {
-                    await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                }
-            }
-        }
+        await overrideManager.cancelActiveOverride()
     }
 }

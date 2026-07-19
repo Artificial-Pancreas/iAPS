@@ -19,6 +19,12 @@ final class APSAssembly: Assembly {
                 appCoordinator: r.resolve(AppCoordinator.self)!
             )
         }
+        container.register(OverrideManager.self) { r in
+            BaseOverrideManager(
+                overrideStorage: r.resolve(OverrideStorage.self)!,
+                nightscoutManager: r.resolve(NightscoutManager.self)!
+            )
+        }
         container.register(OpenAPS.self) { r in
             OpenAPS(
                 storage: r.resolve(FileStorage.self)!,
@@ -44,7 +50,8 @@ final class APSAssembly: Assembly {
                 settingsManager: r.resolve(SettingsManager.self)!,
                 autotuneStorage: r.resolve(AutotuneStorage.self)!,
                 openAPS: r.resolve(OpenAPS.self)!,
-                overrideStorage: r.resolve(OverrideStorage.self)!
+                overrideStorage: r.resolve(OverrideStorage.self)!,
+                overrideManager: r.resolve(OverrideManager.self)!
             )
         }
         container.register(FetchTreatmentsManager.self) { r in

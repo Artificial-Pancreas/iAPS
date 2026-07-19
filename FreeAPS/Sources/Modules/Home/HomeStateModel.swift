@@ -10,9 +10,9 @@ import UIKit
 extension Home {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner, UIBindingOwner {
         @Injected() private var apsManager: APSManager!
-        @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var storage: TempTargetsStorage!
         @Injected() private var deviceManager: DeviceDataManager!
+        @Injected() private var overrideManager: OverrideManager!
         @Injected() private var appUIState: AppUIState!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -330,27 +330,7 @@ extension Home {
 
         func cancelProfile() {
             Task {
-                // Is there a saved Override?
-                if let activeOveride = await overrideStorage.fetchLatestOverride().first {
-                    let presetName = await overrideStorage.isPresetName()
-                    // Is the Override a Preset?
-                    if let preset = presetName {
-                        if let duration = await overrideStorage.cancelProfile() {
-                            // Update in Nightscout
-                            await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
-                        }
-                    } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                        if let duration = await overrideStorage.cancelProfile() {
-                            await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
-                        }
-                    } else {
-                        let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
-                            .formatted() + " %" : "Custom"
-                        if let duration = await overrideStorage.cancelProfile() {
-                            await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                        }
-                    }
-                }
+                await overrideManager.cancelActiveOverride()
                 await setupOverrideHistory()
             }
         }
