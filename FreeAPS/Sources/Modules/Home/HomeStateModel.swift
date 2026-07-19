@@ -184,7 +184,7 @@ extension Home {
                 await me.cgmCensorDaysUpdated(sensorDays)
             }
 
-            observeUI(appCoordinator.glucoseHistoryRaw) { me, glucose in
+            observeUI(appCoordinator.glucoseRaw) { me, glucose in
                 // TODO: use the provided value inside the function, currently it re-reads from the storage
                 await me.glucoseDidUpdate(glucose)
             }

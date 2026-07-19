@@ -75,7 +75,7 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         observe(appCoordinator.settings) { me, settings in
             await me.settingsUpdated(settings)
         }
-        observe(appCoordinator.glucoseHistoryRaw.dropFirst()) { me, _ in
+        observe(appCoordinator.glucoseRaw.dropFirst()) { me, _ in
             await me.sendGlucoseNotification()
         }
         observe(appCoordinator.loopCompleted) { me, loopOutcome in
@@ -254,7 +254,7 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
     private func sendGlucoseNotification() async {
         await addAppBadge(glucose: nil)
 
-        let glucose = Array(appCoordinator.glucoseHistoryRaw.value.reversed())
+        let glucose = Array(appCoordinator.glucoseRaw.value.reversed())
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
 
         await addAppBadge(glucose: lastGlucose.glucose)

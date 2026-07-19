@@ -283,7 +283,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         loopDate = timestamp
 
         let hoursAgo3 = Date.now.subtractingTimeInterval(.hours(3))
-        let glucose = appCoordinator.glucoseHistoryRaw.value.filter { $0.dateString >= hoursAgo3 }
+        let glucose = appCoordinator.glucoseRaw.value.filter { $0.dateString >= hoursAgo3 }
         guard let content = Self.buildContentState(
             settings: settings,
             suggestion: theSuggestion,

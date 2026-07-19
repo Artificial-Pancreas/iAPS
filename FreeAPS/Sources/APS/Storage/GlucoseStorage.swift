@@ -24,8 +24,8 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
     // newest -> oldest
     private var cachedGlucose: [BloodGlucose] = []
 
-    let lifetime: CancelBag = CancelBag()
-    
+    let lifetime = CancelBag()
+
     init(
         storage: FileStorage,
         appCoordinator: AppCoordinator
@@ -37,8 +37,11 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
     // this is called at the start of the app
     func start() async {
         setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
-        
-        observe(appCoordinator.settings.map { ($0.smoothGlucose, $0.allowOneMinuteGlucose) }.removeDuplicates(by: { $0 == $1 }).dropFirst()) { me, _ in
+
+        observe(
+            appCoordinator.settings.map { ($0.smoothGlucose, $0.allowOneMinuteGlucose) }.removeDuplicates(by: { $0 == $1 })
+                .dropFirst()
+        ) { me, _ in
             await me.updateAppCoordinator() // recompute smoothed / filtered glucose
         }
     }

@@ -42,7 +42,7 @@ final class NightscoutUploads: AppService, Sendable {
             retention: .hours(24),
             deletionWindow: .hours(8),
             context: context,
-            source: \.glucoseHistoryRaw,
+            source: \.glucoseRaw,
             isEnabled: { $0.cgmStatus.value?.shouldUploadGlucose == true },
             records: { $0 }
         )

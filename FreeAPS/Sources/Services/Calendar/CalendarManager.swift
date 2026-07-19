@@ -30,7 +30,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
 
     // this is called at the start of the app
     func start() async {
-        observe(appCoordinator.glucoseHistoryRaw.dropFirst()) { me, _ in
+        observe(appCoordinator.glucoseRaw.dropFirst()) { me, _ in
             await me.setupGlucose()
         }
 
@@ -249,7 +249,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
     }()
 
     func setupGlucose() async {
-        let glucose = appCoordinator.glucoseHistoryRaw.value
+        let glucose = appCoordinator.glucoseRaw.value
         let recentGlucose = glucose.first
         let glucoseDelta: Int?
         if glucose.count >= 2 {

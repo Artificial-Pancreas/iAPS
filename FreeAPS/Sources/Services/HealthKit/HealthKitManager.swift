@@ -93,7 +93,7 @@ actor BaseHealthKitManager: HealthKitManager, Injectable, LifetimeOwner, AppServ
             collection(
                 name: "glucose",
                 snapshotFile: OpenAPS.HealthKit.syncedGlucose,
-                source: \.glucoseHistoryRaw,
+                source: \.glucoseRaw,
                 records: { HealthKitGlucose.from($0) }
             ),
             collection(

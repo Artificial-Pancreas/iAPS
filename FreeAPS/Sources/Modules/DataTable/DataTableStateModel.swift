@@ -42,7 +42,7 @@ extension DataTable {
             maxBolus = pumpSettings.maxBolus
 
             await setupTreatments()
-            setupGlucose(appCoordinator.glucoseHistoryRaw.value)
+            setupGlucose(appCoordinator.glucoseRaw.value)
 
             observeUI(appCoordinator.settings, dropInitial: true) { me, _ in
                 await me.setupTreatments()
@@ -62,7 +62,7 @@ extension DataTable {
             observeUI(appCoordinator.carbHistory, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observeUI(appCoordinator.glucoseHistoryRaw, dropInitial: true) { me, glucoseHistory in
+            observeUI(appCoordinator.glucoseRaw, dropInitial: true) { me, glucoseHistory in
                 me.setupGlucose(glucoseHistory)
             }
         }

@@ -58,14 +58,14 @@ final class AppCoordinator: @unchecked Sendable {
     let pumpHistoryDeletions = PassthroughSubject<[PumpHistoryEvent], Never>()
 
     // newest -> oldest
-    let glucoseHistoryRaw = CurrentValueSubject<[BloodGlucose], Never>([])
+    let glucoseRaw = CurrentValueSubject<[BloodGlucose], Never>([])
 
     // newest -> oldest
-    // when smoothing is disabled, this is equal to glucoseHistoryRaw
-    let glucoseHistorySmoothed = CurrentValueSubject<[BloodGlucose], Never>([])
+    // when smoothing is disabled, this is equal to glucoseRaw
+    let glucoseSmoothed = CurrentValueSubject<[BloodGlucose], Never>([])
 
     // newest -> oldest
-    // this contains the glucose from glucoseHistorySmoothed filtered by frequency (5min/1min, according to settings)
+    // this contains the glucose from glucoseSmoothed filtered by frequency (5min/1min, according to settings)
     // this is consumed by OpenAPS, passed to oref0
     let glucoseFrequencyFiltered = CurrentValueSubject<[BloodGlucose], Never>([])
 
@@ -270,8 +270,8 @@ final class AppCoordinator: @unchecked Sendable {
 
     /// MUST BE newest -> oldest
     func setGlucoseHistory(raw: [BloodGlucose], smoothed: [BloodGlucose], frequencyFiltered: [BloodGlucose]) {
-        glucoseHistoryRaw.send(raw)
-        glucoseHistorySmoothed.send(smoothed)
+        glucoseRaw.send(raw)
+        glucoseSmoothed.send(smoothed)
         glucoseFrequencyFiltered.send(frequencyFiltered)
     }
 

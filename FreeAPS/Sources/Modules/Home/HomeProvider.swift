@@ -77,7 +77,7 @@ extension Home {
         func smoothedGlucose(hours: Int) -> [BloodGlucose] {
             let now = Date()
             // reverse to oldest->newest order
-            return appCoordinator.glucoseHistorySmoothed.value.reversed().filter {
+            return appCoordinator.glucoseSmoothed.value.reversed().filter {
                 $0.dateString.addingTimeInterval(.hours(hours)) > now
             }
         }
@@ -85,7 +85,7 @@ extension Home {
         func manualGlucose(hours: Int) -> [BloodGlucose] {
             let now = Date()
             // reverse to oldest->newest order
-            return appCoordinator.glucoseHistorySmoothed.value.reversed().filter {
+            return appCoordinator.glucoseSmoothed.value.reversed().filter {
                 $0.type == GlucoseType.manual.rawValue &&
                     $0.dateString.addingTimeInterval(.hours(hours)) > now
             }
