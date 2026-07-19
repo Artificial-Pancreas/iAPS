@@ -8,6 +8,9 @@ import UIKit
 // TODO: values flow across isolation domains via these subjects, so Output types should be Sendable (Combine won't enforce this).
 // * `Error` is not Sendable; we need to either replace it with something that is Sendable, or accepted as is - since those values are effectively immutable.
 
+// WARN: Sometimes, when a field is added/removed in this class, and after an INCREMENTAL build - the app crashes at runtime.
+// A full rebuild completely fixes the issue in such cases (Product / Clean Build Folder).
+// TODO: investigate this
 final class AppCoordinator: @unchecked Sendable {
     // initial values will not be observed by tha app, SettingsManager sets the real values in its start(), and the app won't render before it's finished
     let settings = CurrentValueSubject<FreeAPSSettings, Never>(FreeAPSSettings())
