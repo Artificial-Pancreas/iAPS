@@ -29,7 +29,6 @@ final class APSAssembly: Assembly {
             OpenAPS(
                 storage: r.resolve(FileStorage.self)!,
                 glucoseStorage: r.resolve(GlucoseStorage.self)!,
-                nightscout: r.resolve(NightscoutManager.self)!,
                 pumpStorage: r.resolve(PumpHistoryStorage.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,

@@ -74,7 +74,7 @@ extension OverrideProfilesConfig {
                     updateAutoISF(overrideId)
                 }
 
-                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
+                let duration = self.duration == 0 ? 2880 : self.duration
                 await ns.uploadOverride(self.percentage.formatted(), Double(duration), savedAt)
             }
         }
@@ -134,91 +134,91 @@ extension OverrideProfilesConfig {
 
                 await overrideManager.cancelActiveOverride()
 
-                let savedAt = await overrideStorage.activateProfile(profile, id: id_, defaultMaxIOB: defaultmaxIOB)
+                let saved = await overrideStorage.activateProfile(profile, id: id_, defaultMaxIOB: defaultmaxIOB)
 
                 // uploads the new override to NS
                 await ns.uploadOverride(
                     profile.name ?? "",
-                    Double(truncating: (profile.duration ?? 0) as NSDecimalNumber),
-                    savedAt
+                    Double(profile.duration ?? 0),
+                    saved.date ?? Date()
                 )
             }
         }
 
         func savedSettings(edit: Bool, identifier: String?) {
             Task {
-                let overrideArray = await overrideStorage.fetchLatestOverride().first
+                let latestOverride = await overrideStorage.fetchLatestOverride()
 
-                if !edit, overrideArray == nil {
+                if !edit, latestOverride == nil {
                     resetToDefaults()
                     return
                 }
 
-                if !edit, !(overrideArray?.enabled ?? false) {
+                if !edit, !(latestOverride?.enabled ?? false) {
                     resetToDefaults()
                     return
                 }
-                var presetArray: OverridePresetsSnapshot?
+                var editedPreset: OverridePresetsSnapshot?
                 if edit {
-                    presetArray = await overrideStorage.fetchPreset(id: identifier ?? "No, I'm sorry.")
-                    profileName = presetArray?.name ?? ""
+                    editedPreset = await overrideStorage.fetchPreset(id: identifier ?? "No, I'm sorry.")
+                    profileName = editedPreset?.name ?? ""
                 }
 
                 // TODO: force unwraps
-                percentage = !edit ? overrideArray!.percentage : presetArray?.percentage ?? 100
-                _indefinite = !edit ? overrideArray!.indefinite : presetArray?.indefinite ?? true
-                duration = !edit ? (overrideArray!.duration ?? 0) as Decimal : (presetArray?.duration ?? 0) as Decimal
-                smbIsOff = !edit ? overrideArray!.smbIsOff : presetArray?.smbIsOff ?? false
-                advancedSettings = !edit ? overrideArray!.advancedSettings : presetArray?.advancedSettings ?? false
-                isfAndCr = !edit ? overrideArray!.isfAndCr : presetArray?.isfAndCr ?? true
-                smbIsAlwaysOff = !edit ? overrideArray!.smbIsAlwaysOff : presetArray?.smbIsAlwaysOff ?? false
-                overrideMaxIOB = !edit ? overrideArray!.overrideMaxIOB : presetArray?.overrideMaxIOB ?? false
-                overrideAutoISF = !edit ? overrideArray!.overrideAutoISF : presetArray?.overrideAutoISF ?? false
-                endWIthNewCarbs = !edit ? overrideArray!.endWIthNewCarbs : presetArray?.endWIthNewCarbs ?? false
-                glucoseOverrideThresholdActive = !edit ? overrideArray!.glucoseOverrideThresholdActive : presetArray?
+                percentage = !edit ? latestOverride!.percentage : editedPreset?.percentage ?? 100
+                _indefinite = !edit ? latestOverride!.indefinite : editedPreset?.indefinite ?? true
+                duration = !edit ? (latestOverride!.duration ?? 0) as Decimal : (editedPreset?.duration ?? 0) as Decimal
+                smbIsOff = !edit ? latestOverride!.smbIsOff : editedPreset?.smbIsOff ?? false
+                advancedSettings = !edit ? latestOverride!.advancedSettings : editedPreset?.advancedSettings ?? false
+                isfAndCr = !edit ? latestOverride!.isfAndCr : editedPreset?.isfAndCr ?? true
+                smbIsAlwaysOff = !edit ? latestOverride!.smbIsAlwaysOff : editedPreset?.smbIsAlwaysOff ?? false
+                overrideMaxIOB = !edit ? latestOverride!.overrideMaxIOB : editedPreset?.overrideMaxIOB ?? false
+                overrideAutoISF = !edit ? latestOverride!.overrideAutoISF : editedPreset?.overrideAutoISF ?? false
+                endWIthNewCarbs = !edit ? latestOverride!.endWIthNewCarbs : editedPreset?.endWIthNewCarbs ?? false
+                glucoseOverrideThresholdActive = !edit ? latestOverride!.glucoseOverrideThresholdActive : editedPreset?
                     .glucoseOverrideThresholdActive ?? false
-                glucoseOverrideThresholdActiveDown = !edit ? overrideArray!.glucoseOverrideThresholdActiveDown : presetArray?
+                glucoseOverrideThresholdActiveDown = !edit ? latestOverride!.glucoseOverrideThresholdActiveDown : editedPreset?
                     .glucoseOverrideThresholdActiveDown ?? false
 
                 if glucoseOverrideThresholdActive {
-                    glucoseOverrideThreshold = !edit ? (overrideArray?.glucoseOverrideThreshold ?? 100) as Decimal :
-                        (presetArray?.glucoseOverrideThreshold ?? 100) as Decimal
+                    glucoseOverrideThreshold = !edit ? (latestOverride?.glucoseOverrideThreshold ?? 100) as Decimal :
+                        (editedPreset?.glucoseOverrideThreshold ?? 100) as Decimal
                 }
 
                 if glucoseOverrideThresholdActiveDown {
-                    glucoseOverrideThresholdDown = !edit ? (overrideArray?.glucoseOverrideThresholdDown ?? 100) as Decimal :
-                        (presetArray?.glucoseOverrideThresholdDown ?? 100) as Decimal
+                    glucoseOverrideThresholdDown = !edit ? (latestOverride?.glucoseOverrideThresholdDown ?? 100) as Decimal :
+                        (editedPreset?.glucoseOverrideThresholdDown ?? 100) as Decimal
                 }
 
-                isf = !edit ? overrideArray!.isf : presetArray?.isf ?? true
-                cr = !edit ? overrideArray!.cr : presetArray?.cr ?? true
-                basal = !edit ? overrideArray!.basal : presetArray?.basal ?? true
+                isf = !edit ? latestOverride!.isf : editedPreset?.isf ?? true
+                cr = !edit ? latestOverride!.cr : editedPreset?.cr ?? true
+                basal = !edit ? latestOverride!.basal : editedPreset?.basal ?? true
 
                 if smbIsAlwaysOff {
-                    start = !edit ? (overrideArray!.start ?? 0) as Decimal : (presetArray?.start ?? 0) as Decimal
-                    end = !edit ? (overrideArray!.end ?? 0) as Decimal : (presetArray?.end ?? 0) as Decimal
+                    start = !edit ? (latestOverride!.start ?? 0) as Decimal : (editedPreset?.start ?? 0) as Decimal
+                    end = !edit ? (latestOverride!.end ?? 0) as Decimal : (editedPreset?.end ?? 0) as Decimal
                 }
 
-                if !edit, (overrideArray!.smbMinutes as Decimal?) != nil {
-                    smbMinutes = (overrideArray!.smbMinutes ?? defaultSmbMinutes) as Decimal
+                if !edit, (latestOverride!.smbMinutes as Decimal?) != nil {
+                    smbMinutes = (latestOverride!.smbMinutes ?? defaultSmbMinutes) as Decimal
                 } else if edit {
-                    smbMinutes = (presetArray?.smbMinutes ?? defaultSmbMinutes) as Decimal
+                    smbMinutes = (latestOverride?.smbMinutes ?? defaultSmbMinutes) as Decimal
                 }
 
-                if !edit, (overrideArray!.uamMinutes as Decimal?) != nil {
-                    uamMinutes = (overrideArray!.uamMinutes ?? defaultUamMinutes) as Decimal
+                if !edit, (latestOverride!.uamMinutes as Decimal?) != nil {
+                    uamMinutes = (latestOverride!.uamMinutes ?? defaultUamMinutes) as Decimal
                 } else if edit {
-                    uamMinutes = (presetArray?.uamMinutes ?? defaultUamMinutes) as Decimal
+                    uamMinutes = (latestOverride?.uamMinutes ?? defaultUamMinutes) as Decimal
                 }
 
-                if !edit, let maxIOB_ = overrideArray!.maxIOB as Decimal? {
+                if !edit, let maxIOB_ = latestOverride!.maxIOB as Decimal? {
                     maxIOB = maxIOB_ as Decimal
-                } else if edit, let maxIOB_ = presetArray?.maxIOB as Decimal? {
+                } else if edit, let maxIOB_ = editedPreset?.maxIOB as Decimal? {
                     maxIOB = maxIOB_ as Decimal
                 }
 
-                let aisf = !edit && (overrideArray?.enabled ?? false) ? await overrideStorage
-                    .fetchAutoISFsetting(id: overrideArray?.id ?? "No, I'm very sorry.") : edit ? await overrideStorage
+                let aisf = !edit && (latestOverride?.enabled ?? false) ? await overrideStorage
+                    .fetchAutoISFsetting(id: latestOverride?.id ?? "No, I'm very sorry.") : edit ? await overrideStorage
                     .fetchAutoISFsetting(id: identifier ?? "No, I'm very sorry.") : nil
 
                 if let fetched = aisf {
@@ -228,20 +228,20 @@ extension OverrideProfilesConfig {
                 }
 
                 if !edit {
-                    override_target = (Double(overrideArray!.target ?? 0) > 6.0)
+                    override_target = (Double(latestOverride!.target ?? 0) > 6.0)
                 } else {
-                    override_target = (Double(presetArray?.target ?? 0) > 6.0)
+                    override_target = (Double(editedPreset?.target ?? 0) > 6.0)
                 }
-                let overrideTarget = !edit ? (overrideArray!.target ?? 0) as Decimal : (presetArray?.target ?? 0) as Decimal
+                let overrideTarget = !edit ? (latestOverride!.target ?? 0) as Decimal : (editedPreset?.target ?? 0) as Decimal
                 if override_target {
                     target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
                 }
 
                 var newDuration = Double(duration)
                 if isEnabled {
-                    let duration = !edit ? overrideArray!.duration ?? 0 : presetArray?.duration ?? 0
+                    let duration = !edit ? latestOverride!.duration ?? 0 : editedPreset?.duration ?? 0
                     let addedMinutes = Int(duration as Decimal)
-                    let date = !edit ? overrideArray!.date ?? Date() : presetArray?.date ?? Date()
+                    let date = !edit ? latestOverride!.date ?? Date() : editedPreset?.date ?? Date()
                     if date.addingTimeInterval(.minutes(addedMinutes)) < Date(), !_indefinite {
                         isEnabled = false
                     }

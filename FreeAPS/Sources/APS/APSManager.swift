@@ -93,7 +93,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private var override: OverrideSnapshot? {
         get async {
-            guard let last = await overrideStorage.fetchLatestOverrideSnapshot(), last.enabled else { return nil }
+            guard let last = await overrideStorage.fetchLatestOverride(), last.enabled else { return nil }
             return last
         }
     }
@@ -424,6 +424,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile) {
         let settings = appCoordinator.settings.value
+        await overrideManager.autoCancelOverrideIfNeeded()
         let profiles = try await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
         appCoordinator.setProfile(profiles.profile)
         appCoordinator.setPumpProfile(profiles.pumpProfile)
@@ -704,12 +705,11 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
             let preset = await overrideStorage.fetchPreset(name)
             guard let id = preset.id, let preset = preset.preset else { return }
-            await overrideStorage.overrideFromPreset(preset, id)
-            let currentActiveOveride = await overrideStorage.fetchLatestOverride().first
+            let saved = await overrideStorage.overrideFromPreset(preset, id)
             await nightscout.uploadOverride(
                 name,
                 Double(preset.duration ?? 0),
-                currentActiveOveride?.date ?? Date.now
+                saved.date ?? Date.now
             )
             await announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")

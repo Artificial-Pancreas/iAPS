@@ -188,7 +188,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
 
         var overrides: [OverridePresets_] = []
         for preset in await overrideStorage.fetchProfiles() {
-            let untilDate = await overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
+            let untilDate = await overrideStorage.fetchLatestOverride().flatMap { currentOverride -> Date? in
                 guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
 
                 let duration = Double(currentOverride.duration ?? 0)
@@ -210,7 +210,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.state.overrides = overrides
         // Is there an active override but no preset?
         let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
-        if let last = await overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
+        if let last = await overrideStorage.fetchLatestOverride(), last.enabled, currentButNoOverrideNotPreset == nil {
             let duration = Double(last.duration ?? 0)
             let overrideDate: Date = last.date ?? Date.now
             let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
@@ -230,10 +230,10 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.state.eventualBG = eBG.map { "⇢ " + $0 }
         self.state.eventualBGRaw = eBG
 
-        let overrideArray = await overrideStorage.fetchLatestOverride()
+        let activeOverride = await overrideStorage.fetchCurrentActiveOverride()
 
-        if overrideArray.first?.enabled ?? false {
-            let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
+        if let activeOverride {
+            let percentString = "\(activeOverride.percentage.formatted(.number)) %"
             self.state.override = percentString
         } else {
             self.state.override = "100 %"
@@ -583,11 +583,11 @@ private extension BaseWatchManager {
                 await overrideManager.cancelActiveOverride()
 
                 // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
-                await overrideStorage.overrideFromPreset(preset)
+                let saved = await overrideStorage.overrideFromPreset(preset)
                 await nightscout.uploadOverride(
                     preset.name ?? "",
                     Double(preset.duration ?? 0),
-                    overrideStorage.fetchLatestOverride().first?.date ?? Date.now
+                    saved.date ?? Date.now
                 )
                 await configureState()
                 return .confirmed

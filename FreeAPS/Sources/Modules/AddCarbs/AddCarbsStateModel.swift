@@ -282,6 +282,7 @@ extension AddCarbs {
                 return
             }
             // Enable New Override
+            let saved: OverrideSnapshot?
             if profileID == "Hypo Treatment" {
                 // transient, non-persisted override preset
                 let override = OverridePresetsSnapshot(
@@ -295,15 +296,19 @@ extension AddCarbs {
                     target: 117,
                 )
 
-                await overrideStorage.overrideFromPreset(override, profileID)
-                // Upload to Nightscout
-                await nightscoutManager.uploadOverride(
-                    "📉",
-                    Double(45),
-                    override.date ?? Date.now
-                )
+                saved = await overrideStorage.overrideFromPreset(override, profileID)
             } else {
-                await overrideStorage.activatePreset(profileID)
+                saved = await overrideStorage.activatePreset(profileID)
+            }
+
+            if let saved {
+                // Upload to Nightscout
+                let overrideName = await overrideStorage.getPresetName(for: saved)
+                await nightscoutManager.uploadOverride(
+                    overrideName ?? "📉",
+                    Double(saved.duration ?? 0),
+                    saved.date ?? Date.now
+                )
             }
         }
 

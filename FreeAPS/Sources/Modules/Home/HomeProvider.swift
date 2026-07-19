@@ -46,7 +46,7 @@ extension Home {
         }
 
         func latestOverride() async -> OverrideSnapshot? {
-            await overrideStorage.fetchLatestOverride().first
+            await overrideStorage.fetchCurrentActiveOverride()
         }
 
         func overrideHistory() async -> [OverrideHistorySnapshot] {

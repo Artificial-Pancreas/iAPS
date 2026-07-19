@@ -31,20 +31,17 @@ final class OverrideStorage: Sendable {
         return request
     }
 
-    func fetchLatestOverride() async -> [OverrideSnapshot] {
-        await coredataContext.perform {
-            let request = self.latestOverrideRequest()
-            let overrideArray = try? self.coredataContext.fetch(request)
-            return (overrideArray ?? []).map { OverrideSnapshot.create(from: $0) }
-        }
-    }
-
-    func fetchLatestOverrideSnapshot() async -> OverrideSnapshot? {
+    func fetchLatestOverride() async -> OverrideSnapshot? {
         await coredataContext.perform {
             let request = self.latestOverrideRequest()
             let override = try? self.coredataContext.fetch(request).first
             return override.map { OverrideSnapshot.create(from: $0) }
         }
+    }
+
+    func fetchCurrentActiveOverride() async -> OverrideSnapshot? {
+        guard let override = await fetchLatestOverride(), override.enabled else { return nil }
+        return override
     }
 
     func fetchPreset(id: String) async -> OverridePresetsSnapshot? {
@@ -127,17 +124,6 @@ final class OverrideStorage: Sendable {
         appCoordinator.overridesDidChange()
     }
 
-    func fetchNumberOfOverrides(numbers: Int) async -> [OverrideSnapshot] {
-        await coredataContext.perform {
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = numbers
-            let overrideArray = (try? self.coredataContext.fetch(requestOverrides)) ?? []
-            return overrideArray.map { OverrideSnapshot.create(from: $0) }
-        }
-    }
-
     func fetchOverrideHistory(interval: NSDate) async -> [OverrideHistorySnapshot] {
         await coredataContext.perform {
             let requestOverrides = OverrideHistory.fetchRequest() as NSFetchRequest<OverrideHistory>
@@ -152,7 +138,7 @@ final class OverrideStorage: Sendable {
     }
 
     func cancelProfile() async -> Double? {
-        let scheduled = await fetchLatestOverride().first
+        let scheduled = await fetchLatestOverride()
         let duration: Double? = await coredataContext.perform {
             var duration: Double?
 
@@ -177,8 +163,8 @@ final class OverrideStorage: Sendable {
         return duration
     }
 
-    func overrideFromPreset(_ preset: OverridePresetsSnapshot) async {
-        await coredataContext.perform {
+    func overrideFromPreset(_ preset: OverridePresetsSnapshot) async -> OverrideSnapshot {
+        let saved = await coredataContext.perform {
             let save = Override(context: self.coredataContext)
             save.date = Date.now
             save.id = preset.id
@@ -208,11 +194,13 @@ final class OverrideStorage: Sendable {
             save.glucoseOverrideThresholdActiveDown = preset.glucoseOverrideThresholdActiveDown
             save.glucoseOverrideThresholdDown = preset.glucoseOverrideThresholdDown as? NSDecimalNumber
             try? self.coredataContext.save()
+            return OverrideSnapshot.create(from: save)
         }
         appCoordinator.overridesDidChange()
+        return saved
     }
 
-    func activatePreset(_ id: String) async {
+    func activatePreset(_ id: String) async -> OverrideSnapshot? {
         let overridePreset = await coredataContext.perform {
             var presetsArray = [OverridePresets]()
             let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
@@ -223,9 +211,8 @@ final class OverrideStorage: Sendable {
 
             return presetsArray.first.map { OverridePresetsSnapshot.create(from: $0) }
         }
-        if let overridePreset {
-            await overrideFromPreset(overridePreset)
-        }
+        guard let overridePreset else { return nil }
+        return await overrideFromPreset(overridePreset)
     }
 
     func fetchProfilePreset(_ name: String) async -> OverridePresetsSnapshot? {
@@ -286,26 +273,17 @@ final class OverrideStorage: Sendable {
         }
     }
 
-    // TODO: confusing name
-    func isPresetName() async -> String? {
+    func getPresetName(for override: OverrideSnapshot) async -> String? {
         await coredataContext.perform {
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = 1
-            let overrideArray = (try? self.coredataContext.fetch(requestOverrides)) ?? []
-
-            guard let or = overrideArray.first, let id = or.id else { return nil }
+            guard let overrideId = override.id else { return nil }
             let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
             requestPresets.predicate = NSPredicate(
-                format: "id == %@", id
+                format: "id == %@", overrideId
             )
-            let presetsArray = (try? self.coredataContext.fetch(requestPresets)) ?? []
+            requestPresets.fetchLimit = 1
+            guard let presetsArray = try? self.coredataContext.fetch(requestPresets) else { return nil }
 
-            guard let presets = presetsArray.first, let presetName = presets.name else {
-                return nil
-            }
-            return presetName
+            return presetsArray.first?.name
         }
     }
 
@@ -431,8 +409,8 @@ final class OverrideStorage: Sendable {
     /// activates an override from a preset selected in the override editor
     /// (unlike `overrideFromPreset`, gates the advanced fields and falls back to defaults)
     /// - Returns: the activation date, for the Nightscout upload
-    func activateProfile(_ profile: OverridePresetsSnapshot, id: String, defaultMaxIOB: Decimal) async -> Date {
-        let savedAt: Date = await coredataContext.perform {
+    func activateProfile(_ profile: OverridePresetsSnapshot, id: String, defaultMaxIOB: Decimal) async -> OverrideSnapshot {
+        let saved = await coredataContext.perform {
             let saveOverride = Override(context: self.coredataContext)
             saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
             saveOverride.indefinite = profile.indefinite
@@ -482,14 +460,14 @@ final class OverrideStorage: Sendable {
             }
 
             try? self.coredataContext.save()
-            return saveOverride.date ?? Date()
+            return OverrideSnapshot.create(from: saveOverride)
         }
         appCoordinator.overridesDidChange()
-        return savedAt
+        return saved
     }
 
-    func overrideFromPreset(_ preset: OverridePresetsSnapshot, _ id: String) async {
-        await coredataContext.perform {
+    func overrideFromPreset(_ preset: OverridePresetsSnapshot, _ id: String) async -> OverrideSnapshot {
+        let saved = await coredataContext.perform {
             let save = Override(context: self.coredataContext)
             save.date = Date.now
             save.id = id
@@ -521,7 +499,9 @@ final class OverrideStorage: Sendable {
                 save.target = preset.target as? NSDecimalNumber
             } else { save.target = 6 }
             try? self.coredataContext.save()
+            return OverrideSnapshot.create(from: save)
         }
         appCoordinator.overridesDidChange()
+        return saved
     }
 }
