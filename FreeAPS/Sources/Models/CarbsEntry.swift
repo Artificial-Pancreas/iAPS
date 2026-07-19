@@ -29,6 +29,13 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     }
 
     private static let localSources: Set<String> = [manual, watch, remote, shortcut]
+}
+
+extension CarbsEntry {
+    var isEmpty: Bool {
+        carbs == 0 && fat == 0 && protein == 0 &&
+            fiber == 0 && micronutrient?.allSatisfy { $0.amount == 0 } ?? true
+    }
 
     var isLocallyEntered: Bool {
         guard let enteredBy else { return false }

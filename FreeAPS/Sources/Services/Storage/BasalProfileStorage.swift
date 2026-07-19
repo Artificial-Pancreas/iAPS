@@ -5,6 +5,8 @@ import Swinject
 protocol BasalProfileStorage: AnyObject, Sendable {
     var basalProfile: [BasalProfileEntry] { get async }
     func updateBasalProfile(_ profile: [BasalProfileEntry]) async
+
+    func resetCache() async
 }
 
 actor BaseBasalProfileStorage: BasalProfileStorage, AppService {
@@ -21,6 +23,10 @@ actor BaseBasalProfileStorage: BasalProfileStorage, AppService {
 
     // this is called on app start, before anything is rendered
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
         appCoordinator.setBasalProfile(await self.basalProfile)
     }
 

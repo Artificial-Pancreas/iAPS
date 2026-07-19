@@ -133,13 +133,11 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     private func configureState() async {
         let suggestion = appCoordinator.latestLoopOutcome.value?.suggestion
 
-        let reasons = await coreDataStorage.fetchReason()
-
-        if let reason = reasons {
-            self.state.isf = (reason.isf ?? 15) as Decimal
-            self.state.target = (reason.target ?? 100) as Decimal
-            self.state.carbRatio = (reason.cr ?? 30) as Decimal
-            self.state.minPredBG = (reason.minPredBG ?? 0) as Decimal
+        if let suggestion {
+            self.state.isf = (suggestion.iaps?.isf ?? 15)
+            self.state.target = (suggestion.targetBG ?? 100)
+            self.state.carbRatio = (suggestion.iaps?.cr ?? 30)
+            self.state.minPredBG = (suggestion.iaps?.minPredBG ?? 0)
         }
 
         self.state.eventualGlucose = Decimal(suggestion?.eventualBG ?? 0)

@@ -29,7 +29,6 @@ extension Home {
         private var pumpHistory: [PumpHistoryEvent]!
         private var cgmSensorDays: Double?
 
-        @Published var dynamicVariables: DynamicVariables?
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
@@ -63,15 +62,9 @@ extension Home {
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []
-        @Published var carbData: Decimal = 0
-        @Published var iobs: Decimal = 0
-        @Published var neg: Int = 0
-        @Published var tddChange: Decimal = 0
-        @Published var tddAverage: Decimal = 0
-        @Published var tddYesterday: Decimal = 0
-        @Published var tdd2DaysAgo: Decimal = 0
-        @Published var tdd3DaysAgo: Decimal = 0
-        @Published var tddActualAverage: Decimal = 0
+        @Published var showIOBChart: Bool = false
+        @Published var showCOBChart: Bool = false
+        @Published var insulinStatistics: InsulinStatistics = .empty
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var maxIOB: Decimal = 0
@@ -170,7 +163,6 @@ extension Home {
 
             data.suggestion = appCoordinator.suggested.value
             enactedSuggestion = appCoordinator.latestLoopOutcome.value?.enactedSuggestion
-            dynamicVariables = await provider.dynamicVariables
 
             carbsRequired = data.suggestion?.carbsReq
 
@@ -360,7 +352,7 @@ extension Home {
                     NSDecimalNumber(
                         decimal:
                         (recentGlucose?.unfiltered ?? 0) -
-                            (data.glucose[data.glucose.count - 2].unfiltered ?? 0)
+                            data.glucose[data.glucose.count - 2].unfiltered
                     ).intValue
             } else {
                 glucoseDelta = nil
@@ -541,30 +533,55 @@ extension Home {
         private func setupData() async {
             if let data = await provider.reasons() {
                 iobData = data
-                carbData = data.map(\.cob).reduce(0, +)
-                iobs = data.map(\.iob).reduce(0, +)
-                neg = data.filter({ $0.iob < 0 }).count * 5
-                let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
-                let yesterday = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= Date().subtractingTimeInterval(.hours(24))
-                })?.tdd ?? 0) as Decimal
-                let oneDaysAgo = tdds.last
-                tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
-                tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
-                tdd2DaysAgo = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .subtractingTimeInterval(.hours(24))
-                })?.tdd ?? 0) as Decimal
-                tdd3DaysAgo = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .subtractingTimeInterval(.days(2))
-                })?.tdd ?? 0) as Decimal
+                showIOBChart = data.isNotEmpty
+                showCOBChart = data.contains { $0.cob > 0 }
+                insulinStatistics = await makeInsulinStatistics(reasons: data)
+            }
+        }
 
-                if let tdds_ = await provider.dynamicVariables {
-                    tddAverage = ((tdds.first?.tdd ?? 0) as Decimal) - tdds_.average_total_data
-                    tddActualAverage = tdds_.average_total_data
+        private func makeInsulinStatistics(reasons: [IOBData]) async -> InsulinStatistics {
+            let minutesWithNegativeIOB = reasons.filter { $0.iob < 0 }.count * 5
+
+            let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
+
+            // Time-adjusted average daily TDD over the last ten days (one sample per 24h window,
+            // walking newest -> oldest). Recomputed here rather than shared with the oref0
+            // dynamic-variables path, which reads a different (pre-loop) TDD snapshot.
+            var time = tdds.first?.timestamp ?? .distantPast
+            var dailySamples: [Decimal] = [(tdds.first?.tdd ?? 0) as Decimal]
+            for event in tdds {
+                if (event.timestamp ?? .distantFuture) <= time.subtractingTimeInterval(.hours(24)) {
+                    dailySamples.append((event.tdd ?? 0) as Decimal)
+                    time = event.timestamp ?? .distantPast
                 }
             }
+            let actualAverage = dailySamples.reduce(0, +) / Decimal(dailySamples.count)
+
+            let latestTDD = (tdds.first?.tdd ?? 0) as Decimal
+            let yesterdayTDD = (tdds.first(where: {
+                ($0.timestamp ?? .distantFuture) <= Date().subtractingTimeInterval(.hours(24))
+            })?.tdd ?? 0) as Decimal
+
+            let todayStart = DateFilter.today.startDate as Date
+            let oneDayAgo = tdds.last(where: { ($0.timestamp ?? .distantPast) >= todayStart })
+            let tdd2DaysAgo = (tdds.first(where: {
+                ($0.timestamp ?? .distantFuture) <= (oneDayAgo?.timestamp ?? .distantPast)
+                    .subtractingTimeInterval(.hours(24))
+            })?.tdd ?? 0) as Decimal
+            let tdd3DaysAgo = (tdds.first(where: {
+                ($0.timestamp ?? .distantFuture) <= (oneDayAgo?.timestamp ?? .distantPast)
+                    .subtractingTimeInterval(.days(2))
+            })?.tdd ?? 0) as Decimal
+
+            return InsulinStatistics(
+                minutesWithNegativeIOB: minutesWithNegativeIOB,
+                tddChange: latestTDD - yesterdayTDD,
+                tddAverage: latestTDD - actualAverage,
+                tddYesterday: (oneDayAgo?.tdd ?? 0) as Decimal,
+                tdd2DaysAgo: tdd2DaysAgo,
+                tdd3DaysAgo: tdd3DaysAgo,
+                tddActualAverage: actualAverage
+            )
         }
 
         func setupMeals() {

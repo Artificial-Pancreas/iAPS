@@ -5,6 +5,8 @@ import Swinject
 protocol AutotuneStorage: AnyObject, Sendable {
     var autotune: Profile? { get async }
     func updateAutotune(_ autotune: Profile?) async
+
+    func resetCache() async
 }
 
 actor BaseAutotuneStorage: AutotuneStorage, AppService {
@@ -21,6 +23,10 @@ actor BaseAutotuneStorage: AutotuneStorage, AppService {
 
     // this is called on app start, before anything is rendered
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
         appCoordinator.setAutotune(await self.autotune)
     }
 

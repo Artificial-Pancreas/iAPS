@@ -13,6 +13,8 @@ protocol PumpHistoryStorage: Sendable {
     func storeEvents(_ events: [PumpHistoryEvent]) async
 
     func deleteInsulin(at date: Date) async
+
+    func resetCache() async
 }
 
 actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
@@ -35,6 +37,11 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
 
     // this is called on app start
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
+        // newest -> oldest
         let history = await storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) ?? []
         appCoordinator.setPumpHistory(history)
     }

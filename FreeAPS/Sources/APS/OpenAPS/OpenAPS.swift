@@ -10,9 +10,6 @@ actor OpenAPS: Sendable {
     private let settingsManager: SettingsManager
     private let appCoordinator: AppCoordinator
 
-    private let coreDataStorage = CoreDataStorage()
-    private let overrideStorage: OverrideStorage
-
     private let scriptExecutor = WebViewScriptExecutor()
 
     init(
@@ -20,15 +17,13 @@ actor OpenAPS: Sendable {
         glucoseStorage: GlucoseStorage,
         pumpStorage: PumpHistoryStorage,
         settingsManager: SettingsManager,
-        appCoordinator: AppCoordinator,
-        overrideStorage: OverrideStorage
+        appCoordinator: AppCoordinator
     ) {
         self.storage = storage
         self.glucoseStorage = glucoseStorage
         self.pumpStorage = pumpStorage
         self.settingsManager = settingsManager
         self.appCoordinator = appCoordinator
-        self.overrideStorage = overrideStorage
     }
 
     func determineBasal(
@@ -37,7 +32,9 @@ actor OpenAPS: Sendable {
         currentTemp: TempBasal,
         clock: Date = Date(),
         temporaryCarbs: CarbsEntry?,
-        override: OverrideSnapshot?
+        override: OverrideSnapshot?,
+        aisfOverride: Auto_ISFSnapshot?,
+        tdd: InsulinDistributionSnapshot? // TODO: this one is only here to put into the "reasons"
     ) async throws -> Suggestion {
         // For debugging
         let start = Date.now
@@ -52,14 +49,11 @@ actor OpenAPS: Sendable {
         let preferences = appCoordinator.preferences.value
         let basalProfile = appCoordinator.basalProfile.value
         let settings = appCoordinator.settings.value
+        let pumpSettings = appCoordinator.pumpSettings.value
         let reservoir = readReservoir()
 
         var profile = profile
         print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
-
-        now = Date.now
-        let tdd = await coreDataStorage.fetchInsulinDistribution()
-        print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
         now = Date.now
         let meal = try await self.meal(
@@ -100,11 +94,12 @@ actor OpenAPS: Sendable {
 
         now = Date.now
         // Auto ISF Layer
-        let notDisabled = await notDisabled(override: override, settings: settings)
-        let aisfEnabled = await aisfEnabled(override: override)
-        if (settings.autoisfEffective && notDisabled) ||
+        let aisfNotDisabled = aisfNotDisabled(override: override, aisfOverride: aisfOverride)
+        let aisfEnabled = aisfEnabled(override: override, aisfOverride: aisfOverride)
+        let aisfActive = (settings.autoisfEffective && aisfNotDisabled) ||
             (aisfEnabled && !settings.isNighttime)
-        {
+
+        if aisfActive {
             now = Date.now
             profile = try await autosisf(
                 glucose: glucose,
@@ -149,7 +144,7 @@ actor OpenAPS: Sendable {
             if settings.ketoProtect, iob < 0,
                let rate = suggestion.rate, rate <= 0,
                iob < -basal, (suggestion.units ?? 0) <= 0,
-               let basalRate = await aisfBasal(settings, basal, oref0Suggestion: suggestion)
+               let basalRate = aisfBasal(settings: settings, pumpSettings: pumpSettings, basal, oref0Suggestion: suggestion)
             {
                 suggestion = basalRate
             }
@@ -159,16 +154,16 @@ actor OpenAPS: Sendable {
         if let newSuggestion = overrideBasal(alteredProfile: profile, oref0Suggestion: suggestion) {
             suggestion = newSuggestion
         }
-        // Add reasons, when needed
-        suggestion.reason = await reasons(
-            reason: suggestion.reason,
-            suggestion: suggestion,
+        // Add reasons and other fields, when needed
+        updateSuggestion(
+            suggestion: &suggestion,
             preferences: preferences,
             profile: profile,
             currentTemp: currentTemp,
             tdd: tdd,
             settings: settings,
-            override: override
+            override: override,
+            aisfActive: aisfActive
         )
         // Update time
         suggestion.timestamp = suggestion.deliverAt ?? clock
@@ -229,10 +224,12 @@ actor OpenAPS: Sendable {
         return autotuneResult
     }
 
-    func makeProfiles(useAutotune: Bool, settings: FreeAPSSettings) async throws -> (profile: Profile, pumpProfile: Profile) {
+    func makeProfiles(
+        dynamicVariables: DynamicVariables,
+        useAutotune: Bool,
+        settings: FreeAPSSettings
+    ) async throws -> (profile: Profile, pumpProfile: Profile) {
         debug(.openAPS, "Start makeProfiles")
-        let start = Date.now
-        var now = Date.now
 
         let preferences = appCoordinator.preferences.value
         let pumpSettings = appCoordinator.pumpSettings.value
@@ -244,22 +241,7 @@ actor OpenAPS: Sendable {
         let model = appCoordinator.pumpStatus.value?.model ?? "722"
         let autotune = getAutotune(useAutotune: useAutotune)
 
-        print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
-
-        now = Date.now
-
-        let tdd = await self.tdd(preferencesData: preferences)
-        let dynamicVariables = await self.dynamicVariables(preferences)
-
-        print(
-            "Time for tdd and DynamicVariables \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-        )
-
-        if let insulin = tdd, insulin.hours > 0 {
-            await coreDataStorage.saveTDD(insulin)
-        }
-
-        now = Date.now
+        let start = Date.now
         let pumpProfile = try await makeProfile(
             preferences: preferences,
             pumpSettings: pumpSettings,
@@ -296,13 +278,7 @@ actor OpenAPS: Sendable {
         }
 
         print(
-            "MakeProfiles: Time for profile and pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-        )
-
-        now = Date.now
-
-        print(
-            "MakeProfiles: Time for save files \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+            "MakeProfiles: Time for profile and pumpProfile \(-1 * start.timeIntervalSinceNow) seconds"
         )
 
         return (profile: profile, pumpProfile: pumpProfile)
@@ -310,17 +286,17 @@ actor OpenAPS: Sendable {
 
     // MARK: - Private
 
-    private func aisfEnabled(override: OverrideSnapshot?) async -> Bool {
-        guard let current = override, current.enabled else { return false }
-        guard current.overrideAutoISF, let settings = await overrideStorage.fetchAutoISFsetting(id: current.id ?? ""),
-              settings.autoisf else { return false }
+    private func aisfEnabled(override: OverrideSnapshot?, aisfOverride: Auto_ISFSnapshot?) -> Bool {
+        guard let override, override.enabled else { return false }
+        guard override.overrideAutoISF, let aisfOverride, aisfOverride.autoisf
+        else { return false }
         return true
     }
 
-    private func notDisabled(override: OverrideSnapshot?, settings: FreeAPSSettings) async -> Bool {
-        guard let current = override, current.enabled else { return true }
-        guard current.overrideAutoISF, let settings = await overrideStorage.fetchAutoISFsetting(id: current.id ?? ""),
-              !settings.autoisf else { return true }
+    private func aisfNotDisabled(override: OverrideSnapshot?, aisfOverride: Auto_ISFSnapshot?) -> Bool {
+        guard let override, override.enabled else { return true }
+        guard override.overrideAutoISF, let aisfOverride, !aisfOverride.autoisf
+        else { return true }
         return false
     }
 
@@ -353,20 +329,22 @@ actor OpenAPS: Sendable {
         useAutotune ? appCoordinator.autotune.value : nil
     }
 
-    private func reasons(
-        reason: String,
-        suggestion: Suggestion,
+    private func updateSuggestion(
+        suggestion: inout Suggestion,
         preferences: Preferences,
         profile: Profile,
         currentTemp _: TempBasal,
         tdd: InsulinDistributionSnapshot?,
         settings: FreeAPSSettings,
-        override: OverrideSnapshot?
-    ) async -> String {
-        var reasonString = reason
+        override: OverrideSnapshot?,
+        aisfActive: Bool
+    ) {
+        var reasonString = suggestion.reason
         let startIndex = reasonString.startIndex
         var aisf = false
         var totalDailyDose: Decimal?
+
+        let parsedReason = parseReason(suggestion.reason)
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {
@@ -380,11 +358,7 @@ actor OpenAPS: Sendable {
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
             // Auto ISF
-            let notDisabled = await notDisabled(override: override, settings: settings)
-            let aisfEnabled = await aisfEnabled(override: override)
-            if (settings.autoisfEffective && notDisabled) ||
-                (aisfEnabled && !settings.isNighttime)
-            {
+            if aisfActive {
                 let reasons = profile.autoISFReasons ?? ""
                 // if Auto ISF is not active...
                 if !profile.iaps.autoisf
@@ -433,20 +407,18 @@ actor OpenAPS: Sendable {
                 }
             }
 
-            let parsedReason = parseReason(reason)
-
             // Include ISF before eventual adjustment
-            if let old = profile.oldISF,
-               let new = parsedReason["ISF"]?.toDecimal,
-               let oldISF = trimmedIsEqual(string: "\(old)", decimal: new)
+            if let old = profile.oldISF, let oldISF = "\(old)".toDecimal,
+               let newISF = parsedReason["ISF"]?.toDecimal,
+               oldISF != newISF
             {
                 reasonString = reasonString.replacingOccurrences(of: "ISF:", with: "ISF: \(oldISF) →")
             }
 
             // Include CR before eventual adjustment
-            if let old = profile.oldCR,
-               let new = parsedReason["CR"]?.toDecimal,
-               let oldCR = trimmedIsEqual(string: "\(old)", decimal: new)
+            if let old = profile.oldCR, let oldCR = "\(old)".toDecimal,
+               let newCR = parsedReason["CR"]?.toDecimal,
+               oldCR != newCR
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
@@ -463,8 +435,8 @@ actor OpenAPS: Sendable {
         }
 
         // Display either Target or Override (where target is included).
-        let targetGlucose = suggestion.targetBG
-        if targetGlucose != nil, let override = override, override.enabled {
+
+        if let targetGlucose = suggestion.targetBG, let override = override, override.enabled {
             var orString = ", Override: "
             if override.percentage != 100 {
                 orString += (Self.formatter.string(from: override.percentage as NSNumber) ?? "")
@@ -472,19 +444,19 @@ actor OpenAPS: Sendable {
             if override.smbIsOff {
                 orString += ". SMBs off"
             }
-            orString += ". Target \(targetGlucose ?? 0)"
+            orString += ". Target \(targetGlucose)"
 
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: orString, at: index)
             }
-        } else if let target = targetGlucose {
+        } else if let target = suggestion.targetBG {
             if let index = reasonString.firstIndex(of: ";") {
                 reasonString.insert(contentsOf: ", Target: \(target)", at: index)
             }
         }
 
         // SMB Delivery ratio
-        if targetGlucose != nil, profile.smbDeliveryRatio != 0.5
+        if profile.smbDeliveryRatio != 0.5
         {
             let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
             reasonString.insert(contentsOf: ", SMB Ratio: \(profile.smbDeliveryRatio)", at: index)
@@ -503,62 +475,19 @@ actor OpenAPS: Sendable {
             reasonString.insert(contentsOf: "\n\nAuto ISF { \(profile.autoISFString ?? "") }", at: index)
         }
 
-        // TODO: parsed second time?
-        let parsedReason = parseReason(reason)
+        suggestion.reason = reasonString
 
-        // Save Suggestion to CoreData
-        if let isf = parsedReason["ISF"]?.toDecimal,
-           let minPredBG = parsedReason["minPredBG"]?.toDecimal,
-           let cr = parsedReason["CR"]?.toDecimal,
-           let iob = suggestion.iob, let cob = suggestion.cob, let target = targetGlucose
-        {
-            var aisfReasons: String?
-            if aisf {
-                // Save AISF output
-                aisfReasons = "\(profile.autoISFReasons ?? "")"
-            }
-
-            let rateToSave: Decimal? = suggestion.rate ?? parsedReason["maxSafeBasal"]?.toDecimal
-
-            let mmolToSave = profile.outUnits == .mmolL
-
-            let overrideToSave = override?.enabled ?? false
-
-            let tddToSave = totalDailyDose
-
-            await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
-                let saveSuggestion = Reasons(context: context)
-                saveSuggestion.isf = isf as NSDecimalNumber
-                saveSuggestion.cr = cr as NSDecimalNumber
-                saveSuggestion.tdd = tddToSave as NSDecimalNumber?
-                saveSuggestion.iob = iob as NSDecimalNumber
-                saveSuggestion.cob = cob as NSDecimalNumber
-                saveSuggestion.target = target as NSDecimalNumber
-                saveSuggestion.minPredBG = minPredBG as NSDecimalNumber
-                saveSuggestion.eventualBG = Decimal(suggestion.eventualBG ?? 100) as NSDecimalNumber
-                saveSuggestion.insulinReq = (suggestion.insulinReq ?? 0) as NSDecimalNumber
-                saveSuggestion.smb = (suggestion.units ?? 0) as NSDecimalNumber
-                saveSuggestion.reasons = aisfReasons
-                saveSuggestion.glucose = (suggestion.bg ?? 0) as NSDecimalNumber
-                saveSuggestion.ratio = (suggestion.sensitivityRatio ?? 1) as NSDecimalNumber
-
-                saveSuggestion.override = overrideToSave
-
-                saveSuggestion.date = Date.now
-
-                if let r = rateToSave {
-                    saveSuggestion.rate = r as NSDecimalNumber
-                }
-
-                saveSuggestion.mmol = mmolToSave
-
-                try? context.save()
-            }
-
-        } else {
-            debug(.dynamic, "Couldn't save suggestion to CoreData")
-        }
-        return reasonString
+        let aisfReasons: String? = aisf ? "\(profile.autoISFReasons ?? "")" : nil
+        suggestion.iaps = SuggestionExtraFields(
+            aisfReasons: aisfReasons,
+            maxSafeBasal: parsedReason["maxSafeBasal"]?.toDecimal,
+            units: profile.outUnits,
+            overrideActive: override?.enabled ?? false,
+            totalDailyDose: totalDailyDose,
+            isf: parsedReason["ISF"]?.toDecimal,
+            cr: parsedReason["CR"]?.toDecimal,
+            minPredBG: parsedReason["minPredBG"]?.toDecimal
+        )
     }
 
     private func autoisfDisabledByNighttime(settings: FreeAPSSettings) -> Bool {
@@ -578,14 +507,6 @@ actor OpenAPS: Sendable {
         formatter.maximumFractionDigits = 0
         return formatter
     }()
-
-    private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
-        let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
-        let new = "\(decimal)"
-        guard old != new else { return nil }
-
-        return old
-    }
 
     private func overrideBasal(
         alteredProfile: Profile,
@@ -623,10 +544,11 @@ actor OpenAPS: Sendable {
 
     /// If iob is less than one hour of negative insulin and keto protection active, then enact a small keto protection basal rate
     private func aisfBasal(
-        _ settings: FreeAPSSettings,
+        settings: FreeAPSSettings,
+        pumpSettings: PumpSettings,
         _ basal: Decimal,
         oref0Suggestion: Suggestion
-    ) async -> Suggestion? {
+    ) -> Suggestion? {
         guard settings.closedLoop else {
             return nil
         }
@@ -634,8 +556,6 @@ actor OpenAPS: Sendable {
         guard basal > 0 else {
             return nil
         }
-
-        let pumpSettings = await settingsManager.pumpSettings
 
         var rate = basal
         var factor: Decimal = 1
@@ -658,7 +578,7 @@ actor OpenAPS: Sendable {
 
         var reasonString = oref0Suggestion.reason
         let endIndex = reasonString.endIndex
-        let insertedResons: String = reasonString + "\n\nKeto Protection Basal Rate Set: \(rate) U/h"
+        let insertedResons = reasonString + "\n\nKeto Protection Basal Rate Set: \(rate) U/h"
         debug(.openAPS, "Auto ISF Keto Protection: Basal rate \(rate) U/h set for 30 minutes.")
         reasonString.insert(contentsOf: insertedResons, at: endIndex)
         returnSuggestion.reason = reasonString
@@ -677,204 +597,6 @@ actor OpenAPS: Sendable {
                         parts[1].trimmingCharacters(in: .whitespaces)
                 }
             }
-    }
-
-    private func tdd(preferencesData: Preferences?) async -> (bolus: Decimal, basal: Decimal, hours: Double)? {
-        let preferences = preferencesData
-        let pumpData = appCoordinator.pumpHistory.value
-
-        let tdd = TotalDailyDose().totalDailyDose(pumpData, increment: Double(preferences?.bolusIncrement ?? 0.1))
-        return tdd
-    }
-
-    func dynamicVariables(_ preferences: Preferences?) async -> DynamicVariables {
-        let start = Date.now
-        var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
-        let wp = preferences?.weightPercentage ?? 1
-        let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30)
-        let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30)
-
-        var now = Date.now
-        // TDD
-        let uniqueEvents = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
-        print(
-            "dynamicVariables: Time to fetch TDD \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-        )
-
-        // Temp Targets using slider
-        now = Date.now
-        let sliderArray = await coreDataStorage.fetchTempTargetsSlider()
-        print(
-            "dynamicVariables: Time for fetchTempTargetsSlider \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-        )
-
-        // Overrides
-        now = Date.now
-        let activeOverride = await overrideStorage.fetchCurrentActiveOverride()
-        print(
-            "dynamicVariables: Time for fetchCurrentActiveOverride \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-        )
-
-        // Temp Target
-        now = Date.now
-        let tempTargetsArray = await coreDataStorage.fetchTempTargets()
-        print(
-            "dynamicVariables: Time for fetchTempTargets \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-        )
-
-        // Time adjusted average
-        var time = uniqueEvents.first?.timestamp ?? .distantPast
-        var data_ = [tddData(date: time, tdd: (uniqueEvents.first?.tdd ?? 0) as Decimal)]
-
-        for a in uniqueEvents {
-            if a.timestamp ?? .distantFuture <= time.subtractingTimeInterval(.hours(24)) {
-                let b = tddData(
-                    date: a.timestamp ?? .distantFuture,
-                    tdd: (a.tdd ?? 0) as Decimal
-                )
-                data_.append(b)
-                time = a.timestamp ?? .distantPast
-            }
-        }
-        let total = data_.map(\.tdd).reduce(0, +)
-        let indeces = data_.count
-
-        // Only fetch once. Use same (previous) fetch
-        let twoHoursArray = uniqueEvents
-            .filter({ ($0.timestamp ?? Date()) >= Date.now.subtractingTimeInterval(.hours(2)) })
-        var nrOfIndeces = twoHoursArray.count
-        let totalAmount = twoHoursArray.compactMap({ each in each.tdd ?? 0 }).reduce(0, +)
-
-        var temptargetActive = tempTargetsArray.first?.active ?? false
-        let isPercentageEnabled = sliderArray.first?.enabled ?? false
-
-        var overridePercentage = Decimal(activeOverride?.percentage ?? 100)
-        var unlimited = activeOverride?.indefinite ?? true
-        var disableSMBs = activeOverride?.smbIsOff ?? false
-        let overrideMaxIOB = activeOverride?.overrideMaxIOB ?? false
-        let maxIOB = activeOverride?.maxIOB ?? (preferences?.maxIOB ?? 0)
-
-        var name = ""
-        if let activeOverride, activeOverride.isPreset,
-           let overridePreset = await overrideStorage.getPresetName(for: activeOverride)
-        {
-            name = overridePreset
-        }
-
-        if nrOfIndeces == 0 {
-            nrOfIndeces = 1
-        }
-
-        let average2hours = totalAmount / Decimal(nrOfIndeces)
-        let average14 = total / Decimal(indeces)
-        let weighted_average = wp * average2hours + (1 - wp) * average14
-
-        var duration: Decimal = 0
-        var overrideTarget: Decimal = 0
-
-        if activeOverride == nil {
-            unlimited = true
-            overridePercentage = 100
-            duration = 0
-            overrideTarget = 0
-            disableSMBs = false
-        }
-
-        if temptargetActive {
-            var duration_ = 0
-            var hbt = Double(hbt_)
-            var dd = 0.0
-
-            if temptargetActive {
-                duration_ = Int(truncating: tempTargetsArray.first?.duration as? NSNumber ?? 0)
-                hbt = tempTargetsArray.first?.hbt ?? Double(hbt_)
-                let startDate = tempTargetsArray.first?.startDate ?? Date()
-                let durationPlusStart = startDate.addingTimeInterval(.minutes(duration_))
-                dd = durationPlusStart.timeIntervalSinceNow.minutes
-
-                if dd > 0.1 {
-                    hbt_ = Decimal(hbt)
-                    temptargetActive = true
-                } else {
-                    temptargetActive = false
-                }
-            }
-        }
-
-        // Auto ISF
-        var autoISFsettings: AutoISFsettings
-        if let activeOverride, activeOverride.overrideAutoISF,
-           let fetched = await overrideStorage.fetchAutoISFsetting(id: activeOverride.id ?? "Not This One")
-        {
-            autoISFsettings = AutoISFsettings(
-                autoisf: fetched.autoisf,
-                autocr: fetched.autocr,
-                smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
-                smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
-                smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
-                autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
-                higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
-                lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
-                postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
-                enableBGacceleration: fetched.enableBGacceleration,
-                bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
-                bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
-                iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
-                autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
-                autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
-                use_B30: fetched.use_B30,
-                iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
-                b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
-                b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
-                b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
-                b30factor: (fetched.b30factor ?? 5) as Decimal,
-                b30_duration: (fetched.b30_duration ?? 30) as Decimal,
-                ketoProtect: fetched.ketoProtect,
-                variableKetoProtect: fetched.variableKetoProtect,
-                ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
-                ketoProtectAbsolut: fetched.ketoProtectAbsolut,
-                ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
-                id: fetched.id ?? "",
-                nightTime: fetched.nightTime?.value ?? .default
-            )
-        } else {
-            autoISFsettings = AutoISFsettings()
-        }
-
-        let averages = DynamicVariables(
-            average_total_data: average14,
-            weightedAverage: weighted_average,
-            weigthPercentage: wp,
-            past2hoursAverage: average2hours,
-            date: Date(),
-            isEnabled: temptargetActive,
-            presetActive: isPercentageEnabled,
-            overridePercentage: overridePercentage,
-            useOverride: activeOverride != nil,
-            duration: duration,
-            unlimited: unlimited,
-            hbt: hbt_,
-            overrideTarget: overrideTarget,
-            smbIsOff: disableSMBs,
-            advancedSettings: activeOverride?.advancedSettings ?? false,
-            isfAndCr: activeOverride?.isfAndCr ?? false,
-            isf: activeOverride?.isf ?? true,
-            cr: activeOverride?.cr ?? true,
-            basal: activeOverride?.basal ?? true,
-            smbIsAlwaysOff: activeOverride?.smbIsAlwaysOff ?? false,
-            start: (activeOverride?.start ?? 0) as Decimal,
-            end: (activeOverride?.end ?? 0) as Decimal,
-            smbMinutes: activeOverride?.smbMinutes ?? smbMinutes,
-            uamMinutes: activeOverride?.uamMinutes ?? uamMinutes,
-            maxIOB: maxIOB as Decimal,
-            overrideMaxIOB: overrideMaxIOB,
-            preset: name,
-            autoISFoverrides: autoISFsettings,
-            aisfOverridden: activeOverride?.overrideAutoISF ?? false
-        )
-
-        await storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
-        return averages
     }
 
     private func iob(

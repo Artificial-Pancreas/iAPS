@@ -202,13 +202,13 @@ extension OverrideProfilesConfig {
                 if !edit, (latestOverride!.smbMinutes as Decimal?) != nil {
                     smbMinutes = (latestOverride!.smbMinutes ?? defaultSmbMinutes) as Decimal
                 } else if edit {
-                    smbMinutes = (latestOverride?.smbMinutes ?? defaultSmbMinutes) as Decimal
+                    smbMinutes = (editedPreset?.smbMinutes ?? defaultSmbMinutes) as Decimal
                 }
 
                 if !edit, (latestOverride!.uamMinutes as Decimal?) != nil {
                     uamMinutes = (latestOverride!.uamMinutes ?? defaultUamMinutes) as Decimal
                 } else if edit {
-                    uamMinutes = (latestOverride?.uamMinutes ?? defaultUamMinutes) as Decimal
+                    uamMinutes = (editedPreset?.uamMinutes ?? defaultUamMinutes) as Decimal
                 }
 
                 if !edit, let maxIOB_ = latestOverride!.maxIOB as Decimal? {

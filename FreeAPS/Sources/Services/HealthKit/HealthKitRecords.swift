@@ -79,8 +79,8 @@ struct HealthKitGlucose: JSON, HealthKitRecord {
 
     static func from(_ entries: [BloodGlucose]) -> [HealthKitGlucose] {
         entries.compactMap { entry in
-            // a missing reading is not a reading of zero
-            guard let glucose = entry.glucose, glucose > 0 else { return nil }
+            let glucose = entry.glucose
+            guard glucose > 0 else { return nil }
             return HealthKitGlucose(id: entry.id, date: entry.dateString, glucose: glucose)
         }
     }

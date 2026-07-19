@@ -91,11 +91,11 @@ final class AppCoordinator: @unchecked Sendable {
 
     let basalProfile = CurrentValueSubject<[BasalProfileEntry], Never>([])
 
-    let isfSchedule = CurrentValueSubject<InsulinSensitivities, Never>(InsulinSensitivities.initial)
+    let isfSchedule = CurrentValueSubject<InsulinSensitivities, Never>(.initial)
 
-    let crSchedule = CurrentValueSubject<CarbRatios, Never>(CarbRatios.initial)
+    let crSchedule = CurrentValueSubject<CarbRatios, Never>(.initial)
 
-    let bgTargetsSchedule = CurrentValueSubject<BGTargets, Never>(BGTargets.initial)
+    let bgTargetsSchedule = CurrentValueSubject<BGTargets, Never>(.initial)
 
     let autotune = CurrentValueSubject<Profile?, Never>(nil)
 

@@ -186,10 +186,10 @@ extension Settings {
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                             }
 
-                            Group {
-                                Text("Dynamic Variables")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dynamicVariables), from: self)
-                            }
+//                            Group {
+//                                Text("Dynamic Variables")
+//                                    .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dynamicVariables), from: self)
+//                            }
 
                             Group {
                                 Text("Target presets")

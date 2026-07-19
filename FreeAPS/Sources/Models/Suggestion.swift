@@ -24,6 +24,19 @@ struct Suggestion: JSON, Equatable {
     var deviation: Decimal?
     var isf: Decimal?
     var cr: Decimal?
+    // added by iAPS after oref0 returns
+    var iaps: SuggestionExtraFields?
+}
+
+struct SuggestionExtraFields: JSON, Equatable {
+    let aisfReasons: String?
+    let maxSafeBasal: Decimal?
+    let units: GlucoseUnits?
+    let overrideActive: Bool
+    let totalDailyDose: Decimal?
+    let isf: Decimal?
+    let cr: Decimal?
+    let minPredBG: Decimal?
 }
 
 struct Predictions: JSON, Equatable {
@@ -58,6 +71,7 @@ extension Suggestion {
         case deviation
         case isf = "ISF"
         case cr = "CR"
+        case iaps
     }
 }
 

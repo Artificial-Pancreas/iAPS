@@ -26,6 +26,9 @@ final class CoreDataManager: LifetimeOwner, AppService {
         observe(appCoordinator.loopCompleted) { me, loopOutcome in
             await withBackgroundTask("core data - save loop outcome") {
                 await me.loopCompleted(loopOutcome)
+                if let suggestion = loopOutcome.suggestion {
+                    await me.saveSuggestion(suggestion)
+                }
             }
         }
     }
@@ -37,15 +40,47 @@ final class CoreDataManager: LifetimeOwner, AppService {
         }
 
         // Save to CoreData also. TO DO: Remove the JSON saving after some testing.
-        let lastLoopIob = (suggestion.iob ?? 0) as NSDecimalNumber
-        let lastLoopCob = (suggestion.cob ?? 0) as NSDecimalNumber
+        let lastLoopIob = (suggestion.iob ?? 0)
+        let lastLoopCob = (suggestion.cob ?? 0)
         let lastLoopTimestamp = suggestion.timestamp
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { coredataContext in
             let saveLastLoop = LastLoop(context: coredataContext)
-            saveLastLoop.iob = lastLoopIob
-            saveLastLoop.cob = lastLoopCob
+            saveLastLoop.iob = lastLoopIob as NSDecimalNumber
+            saveLastLoop.cob = lastLoopCob as NSDecimalNumber
             saveLastLoop.timestamp = lastLoopTimestamp
             try? coredataContext.save()
+        }
+    }
+
+    private func saveSuggestion(_ suggestion: Suggestion) async {
+        guard let iaps = suggestion.iaps else { return }
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let saveSuggestion = Reasons(context: context)
+            saveSuggestion.isf = iaps.isf as NSDecimalNumber?
+            saveSuggestion.cr = iaps.cr as NSDecimalNumber?
+            saveSuggestion.tdd = iaps.totalDailyDose as NSDecimalNumber?
+            saveSuggestion.iob = suggestion.iob as NSDecimalNumber?
+            saveSuggestion.cob = suggestion.cob as NSDecimalNumber?
+            saveSuggestion.target = suggestion.targetBG as NSDecimalNumber?
+            saveSuggestion.minPredBG = iaps.minPredBG as NSDecimalNumber?
+            saveSuggestion.eventualBG = suggestion.eventualBG.map { Decimal($0) as NSDecimalNumber }
+            saveSuggestion.insulinReq = (suggestion.insulinReq ?? 0) as NSDecimalNumber
+            saveSuggestion.smb = (suggestion.units ?? 0) as NSDecimalNumber
+            saveSuggestion.reasons = suggestion.iaps?.aisfReasons
+            saveSuggestion.glucose = (suggestion.bg ?? 0) as NSDecimalNumber
+            saveSuggestion.ratio = (suggestion.sensitivityRatio ?? 1) as NSDecimalNumber
+
+            saveSuggestion.override = suggestion.iaps?.overrideActive ?? false
+
+            saveSuggestion.date = Date.now
+
+            if let rate = suggestion.rate ?? suggestion.iaps?.maxSafeBasal {
+                saveSuggestion.rate = rate as NSDecimalNumber
+            }
+
+            saveSuggestion.mmol = suggestion.iaps?.units == .mmolL
+
+            try? context.save()
         }
     }
 
@@ -67,8 +102,8 @@ final class CoreDataManager: LifetimeOwner, AppService {
                 var existingDates = existing.compactMap(\.date)
 
                 for bg in bloodGlucose {
-                    guard let glucose = bg.glucose,
-                          !existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 })
+                    let glucose = bg.glucose
+                    guard !existingDates.contains(where: { abs($0.timeIntervalSince(bg.dateString)) <= 45 })
                     else {
                         continue
                     }

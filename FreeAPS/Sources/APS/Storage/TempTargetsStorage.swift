@@ -8,6 +8,8 @@ protocol TempTargetsStorage: Sendable {
     func storePresets(_ targets: [TempTarget]) async
     func presets() async -> [TempTarget]
     func current() async -> TempTarget?
+
+    func resetCache() async
 }
 
 actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
@@ -24,6 +26,10 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
 
     // this is called on app start
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
         // newest->oldest
         let history = await storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self) ?? []
         appCoordinator.setTempTargets(history)

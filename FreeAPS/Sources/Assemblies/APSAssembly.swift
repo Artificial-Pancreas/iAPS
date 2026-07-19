@@ -25,14 +25,20 @@ final class APSAssembly: Assembly {
                 nightscoutManager: r.resolve(NightscoutManager.self)!
             )
         }
+        container.register(DynamicStateManager.self) { r in
+            BaseDynamicStateManager(
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                overrideStorage: r.resolve(OverrideStorage.self)!,
+                nightscoutManager: r.resolve(NightscoutManager.self)!
+            )
+        }
         container.register(OpenAPS.self) { r in
             OpenAPS(
                 storage: r.resolve(FileStorage.self)!,
                 glucoseStorage: r.resolve(GlucoseStorage.self)!,
                 pumpStorage: r.resolve(PumpHistoryStorage.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
-                appCoordinator: r.resolve(AppCoordinator.self)!,
-                overrideStorage: r.resolve(OverrideStorage.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!
             )
         }
         container.register(APSManager.self) { r in
@@ -50,7 +56,8 @@ final class APSAssembly: Assembly {
                 autotuneStorage: r.resolve(AutotuneStorage.self)!,
                 openAPS: r.resolve(OpenAPS.self)!,
                 overrideStorage: r.resolve(OverrideStorage.self)!,
-                overrideManager: r.resolve(OverrideManager.self)!
+                overrideManager: r.resolve(OverrideManager.self)!,
+                dynamicStateManager: r.resolve(DynamicStateManager.self)!
             )
         }
         container.register(FetchTreatmentsManager.self) { r in

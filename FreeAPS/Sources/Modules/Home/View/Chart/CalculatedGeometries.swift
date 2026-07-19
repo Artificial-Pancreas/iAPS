@@ -160,7 +160,7 @@ private final class GeometriesBuilder {
         // Start with measured glucose points
         var tmpLookupGlucoseDots: [(date: Date, glucose: Int)] =
             glucose.map { g in
-                (date: g.dateString, glucose: g.glucose ?? 22)
+                (date: g.dateString, glucose: g.glucose)
             }
 
         // Append predicted points after the latest glucose:
@@ -454,7 +454,8 @@ private final class GeometriesBuilder {
         let peakMargin = ChartConfig.peakMargin
 
         return peaks.compactMap { peak -> GlucosePeak? in
-            guard let glucose = peak.bg.glucose, glucose != 0 else { return nil }
+            let glucose = peak.bg.glucose
+            guard glucose != 0 else { return nil }
             let point = glucoseToCoordinate(peak.bg)
 
             let value = Double(glucose) *
@@ -1010,14 +1011,14 @@ private final class GeometriesBuilder {
 
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970)
-        let y = glucoseToYCoordinate(glucoseEntry.glucose ?? 0)
+        let y = glucoseToYCoordinate(glucoseEntry.glucose)
 
         return CGPoint(x: x, y: y)
     }
 
     private func unSmoothedGlucoseToCoordinate(_ glucoseEntry: BloodGlucose) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970)
-        let glucoseValue: Decimal = glucoseEntry.unfiltered ?? Decimal(glucoseEntry.glucose ?? 0)
+        let glucoseValue: Decimal = glucoseEntry.unfiltered
         let y = glucoseToYCoordinate(Int(glucoseValue))
 
         return CGPoint(x: x, y: y)

@@ -48,6 +48,8 @@ import Swinject
 
         try await startService(resolver.resolve(OverrideManager.self)!)
 
+        try await startService(resolver.resolve(DynamicStateManager.self)!)
+
         try await startService(resolver.resolve(APSManager.self)!)
 
         try await startService(resolver.resolve(DeviceDataManager.self))

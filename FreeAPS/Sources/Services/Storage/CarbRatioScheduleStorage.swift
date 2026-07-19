@@ -5,6 +5,8 @@ import Swinject
 protocol CarbRatioScheduleStorage: AnyObject, Sendable {
     var crSchedule: CarbRatios { get async }
     func updateCrSchedule(_ schedule: CarbRatios) async
+
+    func resetCache() async
 }
 
 actor BaseCarbRatioScheduleStorage: CarbRatioScheduleStorage, AppService {
@@ -21,6 +23,10 @@ actor BaseCarbRatioScheduleStorage: CarbRatioScheduleStorage, AppService {
 
     // this is called on app start, before anything is rendered
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
         appCoordinator.setCrSchedule(await self.crSchedule)
     }
 

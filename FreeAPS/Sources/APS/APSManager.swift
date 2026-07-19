@@ -70,6 +70,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private let nightscout: NightscoutManager
     private let settingsManager: SettingsManager
     private let autotuneStorage: AutotuneStorage
+    private let dynamicStateManager: DynamicStateManager
     private let openAPS: OpenAPS
 
     private let overrideStorage: OverrideStorage
@@ -112,7 +113,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         autotuneStorage: AutotuneStorage,
         openAPS: OpenAPS,
         overrideStorage: OverrideStorage,
-        overrideManager: OverrideManager
+        overrideManager: OverrideManager,
+        dynamicStateManager: DynamicStateManager
     ) {
         self.appCoordinator = appCoordinator
         self.storage = storage
@@ -128,6 +130,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         self.openAPS = openAPS
         self.overrideStorage = overrideStorage
         self.overrideManager = overrideManager
+        self.dynamicStateManager = dynamicStateManager
     }
 
     // this is called at the app start
@@ -382,13 +385,23 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             let autosens = await autosens(profile: profiles.profile)
             _ = await dailyAutotune()
             let override = await self.override
+            let aisfOverride: Auto_ISFSnapshot?
+            if let override, override.overrideAutoISF, let id = override.id {
+                aisfOverride = await overrideStorage.fetchAutoISFsetting(id: id)
+            } else {
+                aisfOverride = nil
+            }
+            let tdd = await coreDataStorage.fetchInsulinDistribution()
+
             let suggestion = try? await openAPS.determineBasal(
                 profile: profiles.profile,
                 autosens: autosens,
                 currentTemp: temp,
                 clock: now,
                 temporaryCarbs: temporaryCarbs,
-                override: override
+                override: override,
+                aisfOverride: aisfOverride,
+                tdd: tdd // TODO: this one is only used to pass through into "reasons"
             )
             guard let suggestion else {
                 throw APSError.apsError(message: "Determine basal failed")
@@ -425,7 +438,12 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile) {
         let settings = appCoordinator.settings.value
         await overrideManager.autoCancelOverrideIfNeeded()
-        let profiles = try await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
+        let dynamicVariables = await dynamicStateManager.dynamicVariables()
+        let profiles = try await openAPS.makeProfiles(
+            dynamicVariables: dynamicVariables,
+            useAutotune: settings.useAutotune,
+            settings: settings
+        )
         appCoordinator.setProfile(profiles.profile)
         appCoordinator.setPumpProfile(profiles.pumpProfile)
         return profiles

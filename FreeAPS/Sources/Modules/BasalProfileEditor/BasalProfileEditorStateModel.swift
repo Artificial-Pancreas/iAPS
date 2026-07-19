@@ -38,7 +38,7 @@ extension BasalProfileEditor {
             calcTotal()
             allowDilution = appCoordinator.settings.value.allowDilution
             observeUI(appCoordinator.pumpStatus) { me, pumpStatus in
-                await me.updateSupportedBasalRates(pumpStatus)
+                me.updateSupportedBasalRates(pumpStatus)
             }
         }
 

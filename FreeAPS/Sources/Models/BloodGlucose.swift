@@ -49,11 +49,11 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
         direction = try container.decodeIfPresent(Direction.self, forKey: .direction)
         date = try container.decode(Decimal.self, forKey: .date)
         dateString = try container.decode(Date.self, forKey: .dateString)
-        unfiltered = try container.decodeIfPresent(Decimal.self, forKey: .unfiltered)
-        uncalibrated = try container.decodeIfPresent(Decimal.self, forKey: .uncalibrated)
+        unfiltered = try container.decodeIfPresent(Decimal.self, forKey: .unfiltered) ?? Decimal(sgv)
+        uncalibrated = try container.decodeIfPresent(Decimal.self, forKey: .uncalibrated) ?? Decimal(sgv)
         filtered = try container.decodeIfPresent(Decimal.self, forKey: .filtered)
         noise = try container.decodeIfPresent(Int.self, forKey: .noise)
-        glucose = try container.decodeIfPresent(Int.self, forKey: .glucose)
+        glucose = try container.decodeIfPresent(Int.self, forKey: .glucose) ?? sgv
         type = try container.decodeIfPresent(String.self, forKey: .type)
         activationDate = try container.decodeIfPresent(Date.self, forKey: .activationDate)
         sessionStartDate = try container.decodeIfPresent(Date.self, forKey: .sessionStartDate)
@@ -63,15 +63,15 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
 
     init(
         _id: String = UUID().uuidString,
-        sgv: Int? = nil,
+        sgv: Int,
         direction: Direction? = nil,
         date: Decimal,
         dateString: Date,
-        unfiltered: Decimal? = nil,
-        uncalibrated: Decimal? = nil,
+        unfiltered: Decimal,
+        uncalibrated: Decimal,
         filtered: Decimal? = nil,
         noise: Int? = nil,
-        glucose: Int? = nil,
+        glucose: Int,
         type: String? = nil,
         activationDate: Date? = nil,
         sessionStartDate: Date? = nil,
@@ -100,16 +100,18 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
         _id
     }
 
-    var sgv: Int?
+    // TODO: do we have too many fields for glucose? (sgv == glucose?)
+
+    var sgv: Int
     var direction: Direction?
     let date: Decimal
     let dateString: Date
     /// raw, un-smoothed value
-    var unfiltered: Decimal?
-    let uncalibrated: Decimal?
+    var unfiltered: Decimal
+    let uncalibrated: Decimal
     let filtered: Decimal?
     let noise: Int?
-    var glucose: Int?
+    var glucose: Int
     let type: String?
     // TODO: unused, always nil?
     var activationDate: Date? = nil
@@ -118,7 +120,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
     var transmitterID: String? = nil
     var device: String? = nil
 
-    var isStateValid: Bool { sgv ?? 0 >= 39 && noise ?? 1 != 4 }
+    var isStateValid: Bool { sgv >= 39 && noise ?? 1 != 4 }
 
     static func == (lhs: BloodGlucose, rhs: BloodGlucose) -> Bool {
         lhs.dateString == rhs.dateString
@@ -165,7 +167,7 @@ extension Double {
 extension BloodGlucose: SavitzkyGolaySmoothable {
     var value: Double {
         get {
-            Double(glucose ?? 0)
+            Double(glucose)
         }
         set {
             glucose = Int(newValue)
@@ -205,7 +207,7 @@ extension BloodGlucose {
     }
 
     var toNightscoutEntry: GlucoseEntry? {
-        guard let glucose = (unfiltered.map { Double($0) } ?? sgv.map { Double($0) }) else { return nil }
+        let glucose = Double(unfiltered)
 
         let glucoseType: GlucoseEntry.GlucoseType
         let isCalibration: Bool

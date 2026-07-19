@@ -125,8 +125,10 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
     }
 
     private func getAlarm() -> GlucoseAlarm? {
-        guard let glucose = cachedGlucose.first, glucose.dateString.addingTimeInterval(.minutes(20)) > Date(),
-              let glucoseValue = glucose.glucose else { return nil }
+        guard let glucose = cachedGlucose.first, glucose.dateString.addingTimeInterval(.minutes(20)) > Date()
+        else { return nil }
+
+        let glucoseValue = glucose.glucose
 
         let settings = appCoordinator.settings.value
 

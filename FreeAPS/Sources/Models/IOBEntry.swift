@@ -40,21 +40,3 @@ struct IOBEntryShort: Equatable, Comparable {
         rhs.time < lhs.time
     }
 }
-
-extension IOBEntry {
-    static func parseArrayFromJSON(from iob: RawJSON) -> [IOBEntry]? {
-        guard let iobData = iob.data(using: .utf8) else { return nil }
-
-        let decoder = JSONDecoder()
-
-        decoder.dateDecodingStrategy = .iso8601withOptionalFractionalSeconds
-
-        do {
-            let iobEntries = try decoder.decode([IOBEntry].self, from: iobData)
-            return iobEntries
-        } catch {
-            print("Error decoding IOBEntry array: \(error)\n\(iob)")
-            return nil
-        }
-    }
-}

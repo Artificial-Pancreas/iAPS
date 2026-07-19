@@ -38,7 +38,7 @@
 		192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */; };
 		193339772E05BC8400E80EF5 /* DynamicHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193339762E05BC7700E80EF5 /* DynamicHistoryView.swift */; };
 		19336DA62F97B0A5003D57C3 /* NightTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19336DA52F97B096003D57C3 /* NightTime.swift */; };
-		1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Dynamic structs.swift */; };
+		1935364028496F7D001E0B16 /* DynamicVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* DynamicVariables.swift */; };
 		19389E552D69393900636E49 /* TemporaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19389E542D69393900636E49 /* TemporaryData.swift */; };
 		193CA2DA2E1E72B200DF9998 /* WebViewScriptExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193CA2D92E1E72A500DF9998 /* WebViewScriptExecutor.swift */; };
 		193CA2DC2E1E743500DF9998 /* FunctionScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193CA2DB2E1E742C00DF9998 /* FunctionScript.swift */; };
@@ -548,6 +548,8 @@
 		F2D4B1CB300AE66B000105A7 /* CarbRatioScheduleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1CA300AE66B000105A7 /* CarbRatioScheduleStorage.swift */; };
 		F2D4B1CD300AEA2F000105A7 /* BgTargetsScheduleStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1CC300AEA2F000105A7 /* BgTargetsScheduleStorage.swift */; };
 		F2D4B1CF300D29D3000105A7 /* OverrideManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1CE300D29CE000105A7 /* OverrideManager.swift */; };
+		F2D4B1D1300D635A000105A7 /* DynamicStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1D0300D6353000105A7 /* DynamicStateManager.swift */; };
+		F2D4B1D3300D6568000105A7 /* InsulinStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D4B1D2300D655D000105A7 /* InsulinStatistics.swift */; };
 		F2DCBC522F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */; };
 		F2DCBC562F0B30A2005D713E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */; };
 		F2DE0B903004142B00EF9230 /* NightscoutCollectionSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */; };
@@ -717,7 +719,7 @@
 		192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsShortcuts.swift; sourceTree = "<group>"; };
 		193339762E05BC7700E80EF5 /* DynamicHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHistoryView.swift; sourceTree = "<group>"; };
 		19336DA52F97B096003D57C3 /* NightTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightTime.swift; sourceTree = "<group>"; };
-		1935363F28496F7D001E0B16 /* Dynamic structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dynamic structs.swift"; sourceTree = "<group>"; };
+		1935363F28496F7D001E0B16 /* DynamicVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicVariables.swift; sourceTree = "<group>"; };
 		19389E542D69393900636E49 /* TemporaryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryData.swift; sourceTree = "<group>"; };
 		193CA2D92E1E72A500DF9998 /* WebViewScriptExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptExecutor.swift; sourceTree = "<group>"; };
 		193CA2DB2E1E742C00DF9998 /* FunctionScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionScript.swift; sourceTree = "<group>"; };
@@ -1311,6 +1313,8 @@
 		F2D4B1CA300AE66B000105A7 /* CarbRatioScheduleStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbRatioScheduleStorage.swift; sourceTree = "<group>"; };
 		F2D4B1CC300AEA2F000105A7 /* BgTargetsScheduleStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgTargetsScheduleStorage.swift; sourceTree = "<group>"; };
 		F2D4B1CE300D29CE000105A7 /* OverrideManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideManager.swift; sourceTree = "<group>"; };
+		F2D4B1D0300D6353000105A7 /* DynamicStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicStateManager.swift; sourceTree = "<group>"; };
+		F2D4B1D2300D655D000105A7 /* InsulinStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinStatistics.swift; sourceTree = "<group>"; };
 		F2DCBC512F0B2DEB005D713E /* ManualNutritionOverrideEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualNutritionOverrideEditor.swift; sourceTree = "<group>"; };
 		F2DCBC552F0B30A2005D713E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		F2DE0B8A3004142B00EF9230 /* NightscoutCollectionSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCollectionSync.swift; sourceTree = "<group>"; };
@@ -2068,6 +2072,7 @@
 				38A43597262E0E4900E80935 /* FetchAnnouncementsManager.swift */,
 				38192E06261BA9960094D973 /* FetchTreatmentsManager.swift */,
 				F2D4B1CE300D29CE000105A7 /* OverrideManager.swift */,
+				F2D4B1D0300D6353000105A7 /* DynamicStateManager.swift */,
 				3856933F270B57A00002C50D /* CGM */,
 				38A504F625DDA0E200C5B9E8 /* Extensions */,
 				388E5A5825B6F0070019842D /* OpenAPS */,
@@ -2271,7 +2276,8 @@
 				F2159A532BA6207F00A0B716 /* ContactTrickEntry.swift */,
 				3811DF0125CA9FEA00A708ED /* Credentials.swift */,
 				19493A3C2C59987700EC83A7 /* DatabaseModels.swift */,
-				1935363F28496F7D001E0B16 /* Dynamic structs.swift */,
+				1935363F28496F7D001E0B16 /* DynamicVariables.swift */,
+				F2D4B1D2300D655D000105A7 /* InsulinStatistics.swift */,
 				191B609C2FB925420062BB0B /* EditedMeal.swift */,
 				F270F68C2BAE374C00F6D8DD /* FontTracking.swift */,
 				F2159A512BA60F7A00A0B716 /* FontWeight.swift */,
@@ -3577,6 +3583,7 @@
 				3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */,
 				F2DE0B9A30044AF700EF9230 /* HealthKitRecords.swift in Sources */,
 				F2DE0B9B30044AF700EF9230 /* HealthKitSink.swift in Sources */,
+				F2D4B1D3300D6568000105A7 /* InsulinStatistics.swift in Sources */,
 				F2DE0B9C30044AF700EF9230 /* HealthKitCollectionSync.swift in Sources */,
 				F2E8D14D2F09616A0097F482 /* TimePickerSheet.swift in Sources */,
 				3811DEEB25CA063400A708ED /* Persisted.swift in Sources */,
@@ -3705,6 +3712,7 @@
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				F29E5E392EE4726A00D2CBC0 /* ClaudeProtocol.swift in Sources */,
 				E00EEC0627368630002FF094 /* UIAssembly.swift in Sources */,
+				F2D4B1D1300D635A000105A7 /* DynamicStateManager.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */,
 				F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */,
@@ -3824,7 +3832,7 @@
 				F2EE83C32E739AF200D7177E /* CalendarShareProvider.swift in Sources */,
 				19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */,
 				F25EBF012FC3428D009D275F /* WatchMessages.swift in Sources */,
-				1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */,
+				1935364028496F7D001E0B16 /* DynamicVariables.swift in Sources */,
 				F2159A522BA60F7A00A0B716 /* FontWeight.swift in Sources */,
 				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,
 				F22A7A802FF167410019BDC5 /* DataSync.swift in Sources */,

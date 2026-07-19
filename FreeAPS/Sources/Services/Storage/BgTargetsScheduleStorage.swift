@@ -5,6 +5,8 @@ import Swinject
 protocol BgTargetsScheduleStorage: AnyObject, Sendable {
     var bgTargetsSchedule: BGTargets { get async }
     func updateBgTargetsSchedule(_ schedule: BGTargets) async
+
+    func resetCache() async
 }
 
 actor BaseBgTargetsScheduleStorage: BgTargetsScheduleStorage, AppService {
@@ -21,6 +23,10 @@ actor BaseBgTargetsScheduleStorage: BgTargetsScheduleStorage, AppService {
 
     // this is called on app start, before anything is rendered
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
         appCoordinator.setBgTargetsSchedule(await self.bgTargetsSchedule)
     }
 

@@ -5,6 +5,8 @@ import Swinject
 protocol IsfScheduleStorage: AnyObject, Sendable {
     var isfSchedule: InsulinSensitivities { get async }
     func updateIsfSchedule(_ schedule: InsulinSensitivities) async
+
+    func resetCache() async
 }
 
 actor BaseIsfScheduleStorage: IsfScheduleStorage, AppService {
@@ -21,6 +23,10 @@ actor BaseIsfScheduleStorage: IsfScheduleStorage, AppService {
 
     // this is called on app start, before anything is rendered
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
         appCoordinator.setIsfSchedule(await self.isfSchedule)
     }
 

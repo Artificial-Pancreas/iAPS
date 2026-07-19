@@ -155,6 +155,9 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var ai: Bool = true
     var mealViewMicronutrients: Bool = false
     var nightTime = NightTimeConfiguration.default
+}
+
+extension FreeAPSSettings {
     var autoisfEffective: Bool {
         autoisf && !isNighttime
     }

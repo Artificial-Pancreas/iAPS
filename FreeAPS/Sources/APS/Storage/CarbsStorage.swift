@@ -6,6 +6,8 @@ protocol CarbsStorage: Sendable {
     func storeCarbs(_ carbs: [CarbsEntry]) async
     func syncDate() async -> Date
     func deleteCarbsAndFPUs(at date: Date) async
+
+    func resetCache() async
 }
 
 actor BaseCarbsStorage: CarbsStorage, AppService {
@@ -25,6 +27,10 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
 
     // this is called on app start
     func start() async {
+        await resetCache()
+    }
+
+    func resetCache() async {
         // newest -> oldest
         let carbs = await storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
         appCoordinator.setCarbHistory(carbs)

@@ -36,7 +36,7 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
 
-        static let dynamicVariables = "monitor/dynamicVariables.json"
+//        static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
     }

@@ -255,7 +255,8 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         await addAppBadge(glucose: nil)
 
         let glucose = Array(appCoordinator.glucoseRaw.value.reversed())
-        guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { return }
+        guard let lastGlucose = glucose.last else { return }
+        let glucoseValue = lastGlucose.glucose
 
         await addAppBadge(glucose: lastGlucose.glucose)
 
@@ -291,7 +292,7 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
                 alert = self.settings.descendingAlert
             }
 
-            let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
+            let delta = glucose.count >= 2 ? glucoseValue - glucose[glucose.count - 2].glucose : nil
             let body = self.glucoseText(glucoseValue: glucoseValue, delta: delta, direction: lastGlucose.direction) + self
                 .infoBody()
 

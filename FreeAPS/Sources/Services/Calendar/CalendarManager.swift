@@ -107,7 +107,8 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
 
         deleteAllEvents(in: calendar)
 
-        guard let glucose = glucose, let glucoseValue = glucose.glucose else { return }
+        guard let glucose = glucose else { return }
+        let glucoseValue = glucose.glucose
 
         // create an event now
         let event = EKEvent(eventStore: eventStore)
@@ -118,10 +119,10 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
 
         // Latest Loop data (from CoreData)
         var freshLoop: Double = 20
-        var lastLoop: ReasonsSnapshot?
-        if displeyCOBandIOB || displayEmojis, let recentLoop = await coreDataStorage.fetchReason() {
+        var lastLoop: Suggestion?
+        if displeyCOBandIOB || displayEmojis, let recentLoop = appCoordinator.latestLoopOutcome.value?.suggestion {
             lastLoop = recentLoop
-            freshLoop = -1 * (recentLoop.date ?? .distantPast).timeIntervalSinceNow.minutes
+            freshLoop = -1 * (recentLoop.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
         }
 
         var glucoseIcon = "🟢"
@@ -253,7 +254,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
         let recentGlucose = glucose.first
         let glucoseDelta: Int?
         if glucose.count >= 2 {
-            glucoseDelta = (recentGlucose?.glucose ?? 0) - (glucose[1].glucose ?? 0)
+            glucoseDelta = (recentGlucose?.glucose ?? 0) - glucose[1].glucose
         } else {
             glucoseDelta = nil
         }
