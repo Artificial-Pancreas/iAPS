@@ -16,9 +16,6 @@ actor OpenAPS: Sendable {
 
     private let scriptExecutor = WebViewScriptExecutor()
 
-    private static let filterIntervalFiveMinutes: TimeInterval = .minutes(4.5)
-    private static let filterIntervalOneMinute: TimeInterval = .minutes(0.8)
-
     init(
         storage: FileStorage,
         glucoseStorage: GlucoseStorage,
@@ -54,7 +51,7 @@ actor OpenAPS: Sendable {
 
         let pumpHistory = appCoordinator.pumpHistory.value
         let carbs = appCoordinator.carbHistory.value
-        let glucose = await readGlucoseHistory()
+        let glucose = readGlucoseHistory()
         let preferences = appCoordinator.preferences.value
         let basalProfile = appCoordinator.basalProfile.value
         let settings = appCoordinator.settings.value
@@ -188,7 +185,7 @@ actor OpenAPS: Sendable {
         debug(.openAPS, "Start autosens")
         let pumpHistory = appCoordinator.pumpHistory.value
         let carbs = appCoordinator.carbHistory.value
-        let glucose = await readGlucoseHistory()
+        let glucose = readGlucoseHistory()
         let basalProfile = appCoordinator.basalProfile.value
         let tempTargets = appCoordinator.tempTargets.value
 
@@ -217,7 +214,7 @@ actor OpenAPS: Sendable {
         debug(.openAPS, "Start autotune")
         let pumpHistory = appCoordinator.pumpHistory.value
         let carbs = appCoordinator.carbHistory.value
-        let glucose = await readGlucoseHistory()
+        let glucose = readGlucoseHistory()
 
         var autotuneResult = try await self.autotuneFull(
             pumphistory: pumpHistory,
@@ -330,26 +327,19 @@ actor OpenAPS: Sendable {
         return false
     }
 
-    private func readGlucoseHistory() async -> [GlucoseEntry0] {
+    private func readGlucoseHistory() -> [GlucoseEntry0] {
         // newest->oldest
-        let retrieved = appCoordinator.glucoseHistorySmoothed.value
-        let settings = await settingsManager.settings
-
-        let minInterval = settings.allowOneMinuteGlucose ? Self.filterIntervalOneMinute : Self.filterIntervalFiveMinutes
-
-        return FrequentGlucoseFiltering
-            .filterFrequentGlucose(retrieved, interval: minInterval)
-            .map { g in
-                GlucoseEntry0(
-                    date: nil,
-                    displayTime: nil,
-                    dateString: g.dateString.ISO8601Format(),
-                    sgv: g.sgv,
-                    glucose: g.glucose,
-                    type: g.type,
-                    noise: g.noise,
-                )
-            }
+        appCoordinator.glucoseFrequencyFiltered.value.map { g in
+            GlucoseEntry0(
+                date: nil,
+                displayTime: nil,
+                dateString: g.dateString.ISO8601Format(),
+                sgv: g.sgv,
+                glucose: g.glucose,
+                type: g.type,
+                noise: g.noise,
+            )
+        }
     }
 
     private func readReservoir() -> Decimal {

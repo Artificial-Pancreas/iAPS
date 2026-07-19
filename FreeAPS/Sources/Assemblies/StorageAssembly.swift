@@ -18,12 +18,10 @@ final class StorageAssembly: Assembly {
         }
         container.register(GlucoseStorage.self) { r in
             let storage = r.resolve(FileStorage.self)!
-            let settingsManager = r.resolve(SettingsManager.self)!
             let appCoordinator = r.resolve(AppCoordinator.self)!
 
             return BaseGlucoseStorage(
                 storage: storage,
-                settingsManager: settingsManager,
                 appCoordinator: appCoordinator
             )
         }

@@ -17,29 +17,30 @@ protocol GlucoseStorage: Sendable {
     func resetCache() async
 }
 
-actor BaseGlucoseStorage: GlucoseStorage, AppService {
+actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
     private let storage: FileStorage
-    private let settingsManager: SettingsManager
     private let appCoordinator: AppCoordinator
 
     // newest -> oldest
     private var cachedGlucose: [BloodGlucose] = []
 
+    let lifetime: CancelBag = CancelBag()
+    
     init(
         storage: FileStorage,
-        settingsManager: SettingsManager,
         appCoordinator: AppCoordinator
     ) {
         self.storage = storage
-        self.settingsManager = settingsManager
         self.appCoordinator = appCoordinator
     }
 
     // this is called at the start of the app
     func start() async {
-        cachedGlucose = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? []
-        await pushAlarm()
-        updateAppCoordinator()
+        setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
+        
+        observe(appCoordinator.settings.map { ($0.smoothGlucose, $0.allowOneMinuteGlucose) }.removeDuplicates(by: { $0 == $1 }).dropFirst()) { me, _ in
+            await me.updateAppCoordinator() // recompute smoothed / filtered glucose
+        }
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]? {
@@ -83,19 +84,14 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
         guard didModify, let newRecords else { return nil }
 
-        cachedGlucose = stored
+        setCachedGlucose(stored)
+        appCoordinator.sendNewGlucoseRecords(newRecords)
 
         // Only log once
         debug(
             .deviceManager,
             "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(String(describing: glucose.last?.glucose)) mg/Dl, date: \(String(describing: glucose.last?.dateString))."
         )
-
-        // push alarm must happen before setGlucoseHistory
-        await pushAlarm()
-
-        updateAppCoordinator()
-        appCoordinator.sendNewGlucoseRecords(newRecords)
 
         return stored
     }
@@ -106,10 +102,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
             ids.contains($0.id)
         }
         if let deleted {
-            cachedGlucose = bgInStorage
-            // push alarm must happen before setGlucoseHistory
-            await pushAlarm()
-            updateAppCoordinator()
+            setCachedGlucose(bgInStorage)
             appCoordinator.sendGlucoseDeleted(deleted)
         }
     }
@@ -120,20 +113,19 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
     }
 
     func resetCache() async {
-        cachedGlucose = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? []
-        await pushAlarm()
+        setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
+    }
+
+    private func setCachedGlucose(_ glucose: [BloodGlucose]) {
+        cachedGlucose = glucose
         updateAppCoordinator()
     }
 
-    private func pushAlarm() async {
-        appCoordinator.setGlucoseAlarm(await getAlarm())
-    }
-
-    private func getAlarm() async -> GlucoseAlarm? {
+    private func getAlarm() -> GlucoseAlarm? {
         guard let glucose = cachedGlucose.first, glucose.dateString.addingTimeInterval(.minutes(20)) > Date(),
               let glucoseValue = glucose.glucose else { return nil }
 
-        let settings = await settingsManager.settings
+        let settings = appCoordinator.settings.value
 
         if Decimal(glucoseValue) <= settings.lowGlucose {
             return .low
@@ -159,22 +151,32 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
         return nil
     }
 
+    private static let filterIntervalFiveMinutes: TimeInterval = .minutes(4.5)
+    private static let filterIntervalOneMinute: TimeInterval = .minutes(0.8)
+    private static let numberOfSavitzkyGolayPasses = 3
+
     private func updateAppCoordinator() {
         var smoothed: [BloodGlucose] = cachedGlucose
         if appCoordinator.settings.value.smoothGlucose {
             if smoothed.isNotEmpty {
                 // reverse to oldest->newest
                 smoothed.reverse()
-                // smooth with 3 repeats
-                for _ in 1 ... 3 {
+                for _ in 1 ... Self.numberOfSavitzkyGolayPasses {
                     smoothed.smoothSavitzkyGolayQuaDratic(withFilterWidth: 3)
                 }
                 // reverse back to newest->oldest
                 smoothed.reverse()
             }
         }
+
+        let minInterval = appCoordinator.settings.value.allowOneMinuteGlucose ? Self.filterIntervalOneMinute : Self
+            .filterIntervalFiveMinutes
+        let frequencyFiltered = FrequentGlucoseFiltering.filterFrequentGlucose(smoothed, interval: minInterval)
+
+        // push alarm must happen before setGlucoseHistory
+        appCoordinator.setGlucoseAlarm(getAlarm())
         // newest -> oldest
-        appCoordinator.setGlucoseHistory(raw: cachedGlucose, smoothed: smoothed)
+        appCoordinator.setGlucoseHistory(raw: cachedGlucose, smoothed: smoothed, frequencyFiltered: frequencyFiltered)
     }
 }
 
