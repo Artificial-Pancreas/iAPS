@@ -32,3 +32,23 @@ struct AutoISFsettings: JSON, Codable, Sendable, Equatable {
     var id: String = UUID().uuidString
     var nightTime = NightTimeConfiguration.default
 }
+
+extension AutoISFsettings {
+    var ketoProtectSettings: KetoProtectSettings {
+        KetoProtectSettings(
+            ketoProtect: ketoProtect,
+            variableKetoProtect: variableKetoProtect,
+            ketoProtectBasalPercent: ketoProtectBasalPercent,
+            ketoProtectAbsolut: ketoProtectAbsolut,
+            ketoProtectBasalAbsolut: ketoProtectBasalAbsolut
+        )
+    }
+}
+
+struct KetoProtectSettings {
+    let ketoProtect: Bool
+    let variableKetoProtect: Bool
+    let ketoProtectBasalPercent: Decimal
+    let ketoProtectAbsolut: Bool
+    let ketoProtectBasalAbsolut: Decimal
+}

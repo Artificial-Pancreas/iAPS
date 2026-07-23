@@ -28,8 +28,7 @@ final class APSAssembly: Assembly {
         container.register(DynamicStateManager.self) { r in
             BaseDynamicStateManager(
                 appCoordinator: r.resolve(AppCoordinator.self)!,
-                overrideStorage: r.resolve(OverrideStorage.self)!,
-                nightscoutManager: r.resolve(NightscoutManager.self)!
+                overrideStorage: r.resolve(OverrideStorage.self)!
             )
         }
         container.register(OpenAPS.self) { r in

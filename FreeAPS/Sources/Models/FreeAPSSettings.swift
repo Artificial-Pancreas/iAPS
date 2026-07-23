@@ -176,6 +176,16 @@ extension FreeAPSSettings {
         return (start > end && (now >= start || now < end)) ||
             (start <= end && now >= start && now < end)
     }
+
+    var ketoProtectSettings: KetoProtectSettings {
+        KetoProtectSettings(
+            ketoProtect: ketoProtect,
+            variableKetoProtect: variableKetoProtect,
+            ketoProtectBasalPercent: ketoProtectBasalPercent,
+            ketoProtectAbsolut: ketoProtectAbsolut,
+            ketoProtectBasalAbsolut: ketoProtectBasalAbsolut
+        )
+    }
 }
 
 extension FreeAPSSettings: Decodable {

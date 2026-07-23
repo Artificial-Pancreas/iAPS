@@ -230,6 +230,7 @@ final class CoreDataStorage: Sendable {
         }
     }
 
+    // TODO: no longer used
     func fetchReason() async -> ReasonsSnapshot? {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
@@ -255,6 +256,7 @@ final class CoreDataStorage: Sendable {
     }
 
     // TODO: duplicate of fetchReason() ?
+    // TODO: no longer used
     func recentReason() async -> ReasonsSnapshot? {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>

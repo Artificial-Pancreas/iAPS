@@ -120,7 +120,7 @@ actor OpenAPS: Sendable {
 
         now = Date.now
         // The OpenAPS layer
-        let suggested = try await determineBasal(
+        var suggestion = try await determineBasal(
             glucose: glucose,
             currentTemp: currentTemp,
             iob: iob,
@@ -135,24 +135,32 @@ actor OpenAPS: Sendable {
         print(
             "Time for Determine Basal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
-        debug(.openAPS, "SUGGESTED: \(suggested.rawJSON())")
+        debug(.openAPS, "SUGGESTED: \(suggestion.rawJSON())")
 
         // Update Suggestion, when applicable (middleware / dynamic ISF / Auto ISF)
-        var suggestion = suggested
-        now = Date.now
 
-        // Auto ISF
-        if aisfActive, settings.ketoProtect {
-            // If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate
-            let basal = Decimal(alteredProfile.currentBasal)
-            if let iob = suggestion.iob,
-               iob < -basal,
-               let rate = suggestion.rate,
-               rate <= 0,
-               (suggestion.units ?? 0) <= 0,
-               let basalRate = aisfBasal(settings: settings, pumpSettings: pumpSettings, basal, oref0Suggestion: suggestion)
-            {
-                suggestion = basalRate
+        // Auto ISF - keto protect
+        if aisfActive {
+            let ketoSettings = effectiveKetoSettings(settings: settings, override: override)
+
+            if ketoSettings.ketoProtect {
+                // If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate
+                let basal = Decimal(alteredProfile.currentBasal)
+                if let iob = suggestion.iob,
+                   iob < -basal,
+                   let rate = suggestion.rate,
+                   rate <= 0,
+                   (suggestion.units ?? 0) <= 0,
+                   let suggestionWithKetoProtect = aisfBasal(
+                       ketoProtectSettings: ketoSettings,
+                       settings: settings,
+                       pumpSettings: pumpSettings,
+                       basal: basal,
+                       oref0Suggestion: suggestion
+                   )
+                {
+                    suggestion = suggestionWithKetoProtect
+                }
             }
         }
 
@@ -296,6 +304,13 @@ actor OpenAPS: Sendable {
     private func aisfOverrideSetting(override: OverrideSnapshot?) -> Bool? {
         guard let override, override.overrideAutoISF, let aisfOverride = override.aisf else { return nil }
         return aisfOverride.autoisf
+    }
+
+    private func effectiveKetoSettings(settings: FreeAPSSettings, override: OverrideSnapshot?) -> KetoProtectSettings {
+        if let override, override.overrideAutoISF, let aisf = override.aisf {
+            return aisf.ketoProtectSettings
+        }
+        return settings.ketoProtectSettings
     }
 
     private func readGlucoseHistory() -> [GlucoseEntry0] {
@@ -539,9 +554,10 @@ actor OpenAPS: Sendable {
 
     /// If iob is less than one hour of negative insulin and keto protection active, then enact a small keto protection basal rate
     private func aisfBasal(
+        ketoProtectSettings: KetoProtectSettings,
         settings: FreeAPSSettings,
         pumpSettings: PumpSettings,
-        _ basal: Decimal,
+        basal: Decimal,
         oref0Suggestion: Suggestion
     ) -> Suggestion? {
         guard settings.closedLoop else {
@@ -555,16 +571,16 @@ actor OpenAPS: Sendable {
         var rate = basal
         var factor: Decimal = 1
 
-        if settings.variableKetoProtect {
+        if ketoProtectSettings.variableKetoProtect {
             factor = min(
-                Swift.max(settings.ketoProtectBasalPercent, 5),
+                Swift.max(ketoProtectSettings.ketoProtectBasalPercent, 5),
                 50 // protectBasal as percentage can be between 5 and 50%
             )
             rate *= (factor / 100)
         }
-        if settings.ketoProtectAbsolut {
+        if ketoProtectSettings.ketoProtectAbsolut {
             // Protect Basal as absolute rate can be between 0 and 2 U/hr, but never more than max basal setting
-            rate = min(Swift.max(settings.ketoProtectBasalAbsolut, 0), 2)
+            rate = min(Swift.max(ketoProtectSettings.ketoProtectBasalAbsolut, 0), 2)
         }
 
         var returnSuggestion = oref0Suggestion
