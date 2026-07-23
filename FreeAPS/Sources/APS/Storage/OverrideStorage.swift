@@ -62,13 +62,28 @@ final class OverrideStorage: Sendable {
 
     func fetchOverrideHistory(interval: NSDate) async -> [OverrideHistorySnapshot] {
         await coredataContext.perform {
-            let requestOverrides = OverrideHistory.fetchRequest() as NSFetchRequest<OverrideHistory>
             let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+
+            // overrides that started within the window.
+            let requestOverrides = OverrideHistory.fetchRequest() as NSFetchRequest<OverrideHistory>
             requestOverrides.sortDescriptors = [sortOverride]
             requestOverrides.predicate = NSPredicate(
                 format: "date > %@", interval
             )
-            let overrideArray = (try? self.coredataContext.fetch(requestOverrides)) ?? []
+            var overrideArray = (try? self.coredataContext.fetch(requestOverrides)) ?? []
+
+            // plus the most recent override that started before the window but may still overlap it
+            let precedingRequest = OverrideHistory.fetchRequest() as NSFetchRequest<OverrideHistory>
+            precedingRequest.sortDescriptors = [sortOverride]
+            precedingRequest.predicate = NSPredicate(format: "date <= %@", interval)
+            precedingRequest.fetchLimit = 1
+            if let preceding = (try? self.coredataContext.fetch(precedingRequest))?.first,
+               let start = preceding.date,
+               start.addingTimeInterval(.minutes(preceding.duration)) > (interval as Date)
+            {
+                overrideArray.append(preceding)
+            }
+
             return overrideArray.map { OverrideHistorySnapshot.create(from: $0) }
         }
     }
