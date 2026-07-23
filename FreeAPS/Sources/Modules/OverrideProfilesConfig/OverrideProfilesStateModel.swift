@@ -46,6 +46,13 @@ extension OverrideProfilesConfig {
             if let activeOverride = await overrideStorage.fetchCurrentActiveOverride() {
                 isOverrideActive = true
                 form = OverrideForm(from: activeOverride.toOverridePreset, context: context)
+
+                // The active override stores its original duration; show the remaining time instead.
+                if !activeOverride.indefinite, let start = activeOverride.date, let originalDuration = activeOverride.duration {
+                    let ends = start.addingTimeInterval(.minutes(originalDuration))
+                    let remaining = Date().distance(to: ends).minutes
+                    form.duration = remaining > 0 ? Decimal(remaining) : 0
+                }
             } else {
                 isOverrideActive = false
                 form = OverrideForm.defaults(context: context)
