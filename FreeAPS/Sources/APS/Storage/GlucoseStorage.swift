@@ -13,8 +13,7 @@ protocol GlucoseStorage: Sendable {
 
     func latestDate() async -> Date?
 
-    /// clears the in-memory cache, forcing a re-read from storage
-    func resetCache() async
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
@@ -115,7 +114,13 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
         cachedGlucose.first?.dateString
     }
 
-    func resetCache() async {
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Monitor.glucose, decodingInto: [BloodGlucose].self)
+        await resetCache()
+    }
+
+    /// clears the in-memory cache, forcing a re-read from storage
+    private func resetCache() async {
         setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
     }
 

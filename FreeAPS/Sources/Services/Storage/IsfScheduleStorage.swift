@@ -6,7 +6,7 @@ protocol IsfScheduleStorage: AnyObject, Sendable {
     var isfSchedule: InsulinSensitivities { get async }
     func updateIsfSchedule(_ schedule: InsulinSensitivities) async
 
-    func resetCache() async
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BaseIsfScheduleStorage: IsfScheduleStorage, AppService {
@@ -26,7 +26,7 @@ actor BaseIsfScheduleStorage: IsfScheduleStorage, AppService {
         await resetCache()
     }
 
-    func resetCache() async {
+    private func resetCache() async {
         appCoordinator.setIsfSchedule(await self.isfSchedule)
     }
 
@@ -40,5 +40,10 @@ actor BaseIsfScheduleStorage: IsfScheduleStorage, AppService {
     func updateIsfSchedule(_ schedule: InsulinSensitivities) async {
         await self.storage.save(schedule, as: OpenAPS.Settings.insulinSensitivities)
         appCoordinator.setIsfSchedule(schedule)
+    }
+
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.insulinSensitivities, decodingInto: InsulinSensitivities.self)
+        await resetCache()
     }
 }

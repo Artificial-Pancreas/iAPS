@@ -3895,3 +3895,10 @@ Enact a temp Basal or a temp target */
 "For 12 hours" = "For 12 hours";
 
 "For 20 hours" = "For 20 hours";
+
+/* Config editor save error */
+"Couldn't save" = "Couldn't save";
+
+"“%@” was not saved.\n\n%@" = "“%@” was not saved.\n\n%@";
+
+"The text isn’t valid JSON." = "The text isn’t valid JSON.";

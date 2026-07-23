@@ -6,7 +6,7 @@ protocol CarbRatioScheduleStorage: AnyObject, Sendable {
     var crSchedule: CarbRatios { get async }
     func updateCrSchedule(_ schedule: CarbRatios) async
 
-    func resetCache() async
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BaseCarbRatioScheduleStorage: CarbRatioScheduleStorage, AppService {
@@ -26,7 +26,7 @@ actor BaseCarbRatioScheduleStorage: CarbRatioScheduleStorage, AppService {
         await resetCache()
     }
 
-    func resetCache() async {
+    private func resetCache() async {
         appCoordinator.setCrSchedule(await self.crSchedule)
     }
 
@@ -40,5 +40,10 @@ actor BaseCarbRatioScheduleStorage: CarbRatioScheduleStorage, AppService {
     func updateCrSchedule(_ schedule: CarbRatios) async {
         await self.storage.save(schedule, as: OpenAPS.Settings.carbRatios)
         appCoordinator.setCrSchedule(schedule)
+    }
+
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.carbRatios, decodingInto: CarbRatios.self)
+        await resetCache()
     }
 }

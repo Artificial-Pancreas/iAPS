@@ -37,6 +37,18 @@ extension ConfigEditor {
                     .navigationBarItems(
                         trailing: Button("Save", action: state.save)
                     )
+                    .alert(
+                        "Couldn't save",
+                        isPresented: Binding(
+                            get: { state.saveError != nil },
+                            set: { if !$0 { state.saveError = nil } }
+                        ),
+                        presenting: state.saveError
+                    ) { _ in
+                        Button("OK", role: .cancel) {}
+                    } message: { error in
+                        Text(error)
+                    }
                     .sheet(isPresented: $showShareSheet) {
                         if let url = state.urlForFile {
                             ShareSheet(activityItems: [url])

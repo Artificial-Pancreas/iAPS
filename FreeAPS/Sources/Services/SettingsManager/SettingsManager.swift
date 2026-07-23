@@ -13,13 +13,10 @@ protocol SettingsManager: AnyObject, Sendable {
     func updatePumpSettings(_ settings: PumpSettings) async
     func updatePreferences(_ settings: Preferences) async
 
-    /// forces a re-read from files
-    func resetCachedSettings() async
+    func saveRawSettings(_ raw: RawJSON) async throws
+    func saveRawPreferences(_ raw: RawJSON) async throws
+    func saveRawPumpSettings(_ raw: RawJSON) async throws
 }
-
-// protocol SettingsObserver {
-//    func settingsDidChange(_: FreeAPSSettings)
-// }
 
 extension InsulinType: @retroactive @unchecked Sendable {}
 
@@ -80,7 +77,23 @@ actor BaseSettingsManager: SettingsManager, AppService {
         await updateAppCoordinator()
     }
 
-    func resetCachedSettings() async {
+    func saveRawSettings(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.FreeAPS.settings, decodingInto: FreeAPSSettings.self)
+        await resetCachedSettings()
+    }
+
+    func saveRawPreferences(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.preferences, decodingInto: Preferences.self)
+        await resetCachedSettings()
+    }
+
+    func saveRawPumpSettings(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.settings, decodingInto: PumpSettings.self)
+        await resetCachedSettings()
+    }
+
+    /// forces a re-read from files
+    private func resetCachedSettings() async {
         cachedSettings = nil
         cachedPreferences = nil
         cachedPumpSettings = nil

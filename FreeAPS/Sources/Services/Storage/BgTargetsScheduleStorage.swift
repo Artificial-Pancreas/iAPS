@@ -6,7 +6,7 @@ protocol BgTargetsScheduleStorage: AnyObject, Sendable {
     var bgTargetsSchedule: BGTargets { get async }
     func updateBgTargetsSchedule(_ schedule: BGTargets) async
 
-    func resetCache() async
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BaseBgTargetsScheduleStorage: BgTargetsScheduleStorage, AppService {
@@ -26,7 +26,7 @@ actor BaseBgTargetsScheduleStorage: BgTargetsScheduleStorage, AppService {
         await resetCache()
     }
 
-    func resetCache() async {
+    private func resetCache() async {
         appCoordinator.setBgTargetsSchedule(await self.bgTargetsSchedule)
     }
 
@@ -40,5 +40,10 @@ actor BaseBgTargetsScheduleStorage: BgTargetsScheduleStorage, AppService {
     func updateBgTargetsSchedule(_ schedule: BGTargets) async {
         await self.storage.save(schedule, as: OpenAPS.Settings.bgTargets)
         appCoordinator.setBgTargetsSchedule(schedule)
+    }
+
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.bgTargets, decodingInto: BGTargets.self)
+        await resetCache()
     }
 }

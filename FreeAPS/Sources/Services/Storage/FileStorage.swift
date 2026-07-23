@@ -2,6 +2,9 @@ import Foundation
 
 protocol FileStorage: Sendable {
     func save<Value: Encodable & Sendable>(_ value: Value, as name: String) async
+    /// validates that `raw` decodes into `Value`, then saves the raw string
+    /// throws the decoding error without writing anything if `raw` can't be decoded into `Value`.
+    func save<Value: Decodable & Sendable>(raw: RawJSON, as name: String, decodingInto type: Value.Type) async throws
     func retrieve<Value: Decodable & Sendable>(_ name: String, as type: Value.Type) async -> Value?
     func retrieveRaw(_ name: String) async -> String?
     @discardableResult func append<Value: JSON>(_ newValue: Value, to name: String) async -> [Value]?
@@ -71,6 +74,12 @@ actor BaseFileStorage: FileStorage, Injectable {
                 try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
             }
         }
+    }
+
+    func save<Value: Decodable & Sendable>(raw: RawJSON, as name: String, decodingInto _: Value.Type) throws {
+        // validate first - nothing is written if the raw text can't be decoded into the expected model
+        _ = try Value.decodeFrom(json: raw)
+        save(raw, as: name)
     }
 
     func retrieve<Value: Decodable & Sendable>(_ name: String, as type: Value.Type) -> Value? {

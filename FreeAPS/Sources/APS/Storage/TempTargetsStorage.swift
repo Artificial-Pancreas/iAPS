@@ -9,7 +9,7 @@ protocol TempTargetsStorage: Sendable {
     func presets() async -> [TempTarget]
     func current() async -> TempTarget?
 
-    func resetCache() async
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
@@ -29,7 +29,12 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
         await resetCache()
     }
 
-    func resetCache() async {
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.tempTargets, decodingInto: [TempTarget].self)
+        await resetCache()
+    }
+
+    private func resetCache() async {
         // newest->oldest
         let history = await storage.retrieve(OpenAPS.Settings.tempTargets, as: [TempTarget].self) ?? []
         appCoordinator.setTempTargets(history)

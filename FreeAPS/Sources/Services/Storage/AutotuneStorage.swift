@@ -6,7 +6,7 @@ protocol AutotuneStorage: AnyObject, Sendable {
     var autotune: Profile? { get async }
     func updateAutotune(_ autotune: Profile?) async
 
-    func resetCache() async
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BaseAutotuneStorage: AutotuneStorage, AppService {
@@ -26,7 +26,7 @@ actor BaseAutotuneStorage: AutotuneStorage, AppService {
         await resetCache()
     }
 
-    func resetCache() async {
+    private func resetCache() async {
         appCoordinator.setAutotune(await self.autotune)
     }
 
@@ -43,5 +43,10 @@ actor BaseAutotuneStorage: AutotuneStorage, AppService {
             await self.storage.remove(OpenAPS.Settings.autotune)
         }
         appCoordinator.setAutotune(autotune)
+    }
+
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.autotune, decodingInto: Profile.self)
+        await resetCache()
     }
 }

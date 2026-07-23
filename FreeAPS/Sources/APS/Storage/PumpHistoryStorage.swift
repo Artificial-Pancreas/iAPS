@@ -14,7 +14,7 @@ protocol PumpHistoryStorage: Sendable {
 
     func deleteInsulin(at date: Date) async
 
-    func resetCache() async
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
@@ -40,7 +40,12 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
         await resetCache()
     }
 
-    func resetCache() async {
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Monitor.pumpHistory, decodingInto: [PumpHistoryEvent].self)
+        await resetCache()
+    }
+
+    private func resetCache() async {
         // newest -> oldest
         let history = await storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) ?? []
         appCoordinator.setPumpHistory(history)
