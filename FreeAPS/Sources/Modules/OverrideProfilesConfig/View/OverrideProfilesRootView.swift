@@ -157,7 +157,7 @@ extension OverrideProfilesConfig {
         }
 
         private func startAlertString() -> String {
-            let seconds = TimeInterval(truncating: NSDecimalNumber(decimal: state.form.duration)) * 60
+            let seconds = TimeInterval.minutes(state.form.duration)
             return (formatter.string(from: state.form.percentage as NSNumber) ?? "100") + "%, " +
                 (
                     state.form.duration > 0 && !state.form._indefinite ? (
@@ -203,7 +203,7 @@ extension OverrideProfilesConfig {
             let percent = preset.percentage / 100
             let perpetual = preset.indefinite
             let durationString = perpetual ? "" : dateFormatter
-                .string(from: TimeInterval(truncating: (preset.duration ?? 0) as NSNumber) * 60) ?? ""
+                .string(from: TimeInterval.minutes(preset.duration ?? 0)) ?? ""
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? LocalizedStringKey("🕝 SMBs") : ""
             let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs" : ""
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber) ?? "")" : ""
