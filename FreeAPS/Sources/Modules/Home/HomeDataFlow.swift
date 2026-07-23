@@ -10,5 +10,5 @@ protocol HomeProvider: Provider {
     func smoothedGlucose(hours: Int) async -> [BloodGlucose]
     func carbs(hours: Int) -> [CarbsEntry]
     func announcement(_ hours: Int) async -> [Announcement]
-    func overrides() async -> [OverrideSnapshot]
+//    func overrides() async -> [OverrideSnapshot]
 }

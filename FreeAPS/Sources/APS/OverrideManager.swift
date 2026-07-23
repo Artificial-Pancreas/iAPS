@@ -29,7 +29,7 @@ actor BaseOverrideManager: OverrideManager, LifetimeOwner, AppService {
             return false
         }
         let presetName = await getOverrideName(for: activeOveride)
-        guard let duration = await overrideStorage.cancelProfile() else {
+        guard let duration = await overrideStorage.cancelActiveOverride() else {
             return false
         }
         await nightscoutManager.uploadOverride(presetName, duration, activeOveride.date ?? Date.now)

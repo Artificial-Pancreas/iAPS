@@ -1,4 +1,3 @@
-import CoreData
 import SwiftUI
 import Swinject
 
@@ -7,39 +6,21 @@ extension OverrideProfilesConfig {
         let resolver: Resolver
 
         @StateObject var state: StateModel
-        @State private var isEditing = false
+
         @State private var showAlert = false
-        @State private var showingDetail = false
-        @State private var alertSring = ""
-        @State var isSheetPresented: Bool = false
-        @State var isEditingPreset: Bool = false
-        @State var presetToEdit: OverridePresets?
+        @State private var alertString = ""
 
-        @Environment(\.managedObjectContext) var moc
+        /// The preset currently being edited in its own sheet (isolated from the main form).
+        @State private var presetToEdit: OverridePresetsSnapshot?
 
-        @FetchRequest(
-            entity: OverridePresets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
-                format: "name != %@", "Empty" as String
-            )
-        ) var fetchedProfiles: FetchedResults<OverridePresets>
-
-        @FetchRequest(
-            entity: Auto_ISF.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var fetchedSettings: FetchedResults<Auto_ISF>
+        /// "Save as Profile" name entry.
+        @State private var showingNewPresetName = false
+        @State private var newPresetName = ""
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
-            return formatter
-        }
-
-        private var insulinFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 1
             return formatter
         }
 
@@ -51,13 +32,6 @@ extension OverrideProfilesConfig {
                 formatter.maximumFractionDigits = 1
             }
             formatter.roundingMode = .halfUp
-            return formatter
-        }
-
-        private var higherPrecisionFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
             return formatter
         }
 
@@ -86,615 +60,142 @@ extension OverrideProfilesConfig {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: state.hideModal))
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                .onAppear {
-                    state.savedSettings(edit: false, identifier: nil)
-                }
                 .alert(
                     "Start Profile",
                     isPresented: $showAlert,
-                    actions: { alertViewBuilder() }, message: { Text(alertSring) }
+                    actions: { alertViewBuilder() }, message: { Text(alertString) }
                 )
-                .sheet(isPresented: $isSheetPresented) { newPreset }
-                .sheet(isPresented: $isEditingPreset) { edit }
+                .sheet(isPresented: $showingNewPresetName) { newPresetSheet }
+                .sheet(item: $presetToEdit) { preset in
+                    PresetEditorView(
+                        preset: preset,
+                        context: state.context,
+                        onSave: { name, emoji, form in
+                            state.updatePreset(id: preset.id, name: name, emoji: emoji, form: form)
+                            presetToEdit = nil
+                        },
+                        onCancel: { presetToEdit = nil }
+                    )
+                }
         }
 
         var overridesView: some View {
             Form {
-                if !isEditingPreset {
-                    Section {
-                        ForEach(fetchedProfiles.uniqued(on: \.id)) { preset in
-                            profilesView(for: preset)
-                                .swipeActions(edge: .leading) {
-                                    Button {
-                                        presetToEdit = preset
-                                        state.savedSettings(edit: true, identifier: presetToEdit?.id)
-                                        isEditingPreset.toggle()
-                                    } label: {
-                                        Label("Edit", systemImage: "pencil.line")
-                                    }
+                Section {
+                    ForEach(state.profiles, id: \.id) { preset in
+                        profilesView(for: preset)
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    presetToEdit = preset
+                                } label: {
+                                    Label("Edit", systemImage: "pencil.line")
                                 }
-                        }
-                        .onDelete(perform: removeProfile)
+                            }
                     }
+                    .onDelete(perform: state.deleteProfile)
                 }
 
-                // Insulin Slider
-                Section {
-                    VStack {
-                        Spacer()
-                        Text(
-                            (formatter.string(from: state.percentage as NSNumber) ?? "")
-                                + " %"
-                        )
-                        .foregroundColor(
-                            state
-                                .percentage >= 130 ? .red :
-                                (isEditing ? .orange : .blue)
-                        )
-                        .font(.largeTitle)
-                        let max: Double = state.extended_overrides ? 400 : 200
-                        Slider(
-                            value: $state.percentage,
-                            in: 10 ... max,
-                            step: 1,
-                            onEditingChanged: { editing in
-                                isEditing = editing
-                            }
-                        ).accentColor(state.percentage >= 130 ? .red : .blue)
-                        Spacer()
-                    }
-                }
-                header: { Text("Insulin") }
-                footer: {
-                    Text(
-                        "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage."
-                    )
-                }
-
-                // Duration
-                Section {
-                    Toggle(isOn: $state._indefinite) {
-                        Text("Enable indefinitely")
-                    }
-                    if !state._indefinite {
-                        HStack {
-                            Text("Duration")
-                            DecimalTextField("0", value: $state.duration, formatter: formatter, liveEditing: true)
-                            Text("minutes").foregroundColor(.secondary)
-                        }
-                    }
-                } header: { Text("Duration") }
-
-                // Target
-                Section {
-                    HStack {
-                        Toggle(isOn: $state.override_target) {
-                            Text("Override Profile Target")
-                        }
-                    }
-                    if state.override_target {
-                        HStack {
-                            Text("Target Glucose")
-                            DecimalTextField("0", value: $state.target, formatter: glucoseFormatter, liveEditing: true)
-                            Text(state.units.rawValue).foregroundColor(.secondary)
-                        }
-                    }
-                } header: { Text("Target") }
-
-                // Advanced Settings
-                Section {
-                    HStack {
-                        Toggle(isOn: $state.advancedSettings) {
-                            Text("More options")
-                        }
-                    }
-
-                    if state.advancedSettings {
-                        HStack {
-                            Toggle(isOn: $state.smbIsOff) {
-                                Text("Disable SMBs")
-                            }
-                        }
-                        if state.smbIsOff {
-                            HStack {
-                                Toggle(isOn: $state.smbIsAlwaysOff) {
-                                    Text("Schedule when SMBs are Off")
-                                }.disabled(!state.smbIsOff)
-                            }
-                            if state.smbIsAlwaysOff {
-                                HStack {
-                                    Text("First Hour SMBs are Off (24 hours)")
-                                    DecimalTextField("0", value: $state.start, formatter: formatter, liveEditing: true)
-                                    Text("hour").foregroundColor(.secondary)
-                                }
-                                HStack {
-                                    Text("Last Hour SMBs are Off (24 hours)")
-                                    DecimalTextField("0", value: $state.end, formatter: formatter, liveEditing: true)
-                                    Text("hour").foregroundColor(.secondary)
-                                }
-                            }
-                        }
-
-                        HStack {
-                            Toggle(isOn: $state.isfAndCr) {
-                                Text("Change ISF and CR and Basal")
-                            }
-                        }
-
-                        if !state.isfAndCr {
-                            HStack {
-                                Toggle(isOn: $state.isf) {
-                                    Text("Change ISF")
-                                }
-                            }
-                            HStack {
-                                Toggle(isOn: $state.cr) {
-                                    Text("Change CR")
-                                }
-                            }
-                            HStack {
-                                Toggle(isOn: $state.basal) {
-                                    Text("Change Basal")
-                                }
-                            }
-                        }
-                        HStack {
-                            Text("SMB Minutes")
-                            DecimalTextField(
-                                "0",
-                                value: $state.smbMinutes,
-                                formatter: formatter,
-                                liveEditing: true
-                            )
-                            Text("minutes").foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("UAM SMB Minutes")
-                            DecimalTextField(
-                                "0",
-                                value: $state.uamMinutes,
-                                formatter: formatter,
-                                liveEditing: true
-                            )
-                            Text("minutes").foregroundColor(.secondary)
-                        }
-
-                        HStack {
-                            Toggle(isOn: $state.overrideMaxIOB) {
-                                Text("Override Max IOB")
-                            }
-                        }
-
-                        if state.overrideMaxIOB {
-                            HStack {
-                                Text("Max IOB")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.maxIOB,
-                                    formatter: insulinFormatter,
-                                    liveEditing: true
-                                )
-                                Text("U").foregroundColor(.secondary)
-                            }
-                        }
-
-                        // Blank Divider()
-                        HStack {}
-
-                        HStack {
-                            Toggle(isOn: $state.endWIthNewCarbs) {
-                                Text("End the Override with next Meal")
-                            }
-                        }
-
-                        HStack {
-                            Toggle(isOn: $state.glucoseOverrideThresholdActive) {
-                                Text("End the Override when Glucose is Trending Up")
-                            }
-                        }
-
-                        if state.glucoseOverrideThresholdActive {
-                            HStack {
-                                Text("And when Glucose is higher than")
-                                BGTextField(
-                                    "0",
-                                    mgdlValue: $state.glucoseOverrideThreshold,
-                                    units: $state.units,
-                                    isDisabled: false,
-                                    liveEditing: true
-                                )
-                            }
-                        }
-
-                        HStack {
-                            Toggle(isOn: $state.glucoseOverrideThresholdActiveDown) {
-                                Text("End the Override when Glucose is Lower ...")
-                            }
-                        }
-
-                        if state.glucoseOverrideThresholdActiveDown {
-                            HStack {
-                                Text("... than")
-                                BGTextField(
-                                    "0",
-                                    mgdlValue: $state.glucoseOverrideThresholdDown,
-                                    units: $state.units,
-                                    isDisabled: false,
-                                    liveEditing: true
-                                )
-                            }
-                        }
-                    }
-                } header: { Text("Advanced Settings") }
-
-                // Auto ISF
-                Section {
-                    Toggle(isOn: $state.overrideAutoISF) {
-                        Text("Override Auto ISF")
-                    }
-
-                    if state.overrideAutoISF {
-                        Toggle(isOn: $state.autoISFsettings.autoisf) {
-                            Text("Enable Auto ISF")
-                        }
-
-                        if state.autoISFsettings.autoisf {
-                            Toggle(isOn: $state.autoISFsettings.enableBGacceleration) {
-                                Text("Enable BG acceleration")
-                            }
-
-                            Toggle(isOn: $state.autoISFsettings.autocr) {
-                                Text("Enable Auto CR")
-                            }
-
-                            HStack {
-                                Text("Auto ISF Min")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.autoisf_min,
-                                    formatter: insulinFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("Auto ISF Max")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.autoisf_max,
-                                    formatter: insulinFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("SMB Delivery Ratio Minimum")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.smbDeliveryRatioMin,
-                                    formatter: insulinFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("SMB Delivery Ratio Maximum")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.smbDeliveryRatioMax,
-                                    formatter: insulinFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("SMB Delivery Ratio BG Range")
-                                BGTextField(
-                                    "0",
-                                    mgdlValue: $state.autoISFsettings.smbDeliveryRatioBGrange,
-                                    units: $state.units,
-                                    isDisabled: false,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("Duration Weight")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.autoISFhourlyChange,
-                                    formatter: insulinFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("ISF weight for higher BG")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.higherISFrangeWeight,
-                                    formatter: higherPrecisionFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("ISF weight for lower BG")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.lowerISFrangeWeight,
-                                    formatter: higherPrecisionFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("ISF weight for postprandial BG rise")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.postMealISFweight,
-                                    formatter: promilleFormatter, liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("ISF weight while BG accelerates")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.bgAccelISFweight,
-                                    formatter: higherPrecisionFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("ISF weight while BG decelerates")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.bgBrakeISFweight,
-                                    formatter: higherPrecisionFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            HStack {
-                                Text("Max IOB Threshold Percent")
-                                DecimalTextField(
-                                    "0",
-                                    value: $state.autoISFsettings.iobThresholdPercent,
-                                    formatter: insulinFormatter,
-                                    liveEditing: true
-                                )
-                            }
-
-                            Toggle(isOn: $state.autoISFsettings.use_B30) {
-                                Text("Activate B30")
-                            }
-
-                            if state.autoISFsettings.use_B30 {
-                                HStack {
-                                    Text("Minimum Start Bolus size")
-                                    DecimalTextField(
-                                        "0",
-                                        value: $state.autoISFsettings.iTime_Start_Bolus,
-                                        formatter: insulinFormatter,
-                                        liveEditing: true
-                                    )
-                                }
-
-                                HStack {
-                                    Text("Target Level for B30 to be enacted")
-                                    BGTextField(
-                                        "0",
-                                        mgdlValue: $state.autoISFsettings.b30targetLevel,
-                                        units: $state.units,
-                                        isDisabled: false,
-                                        liveEditing: true
-                                    )
-                                }
-
-                                HStack {
-                                    Text("Upper BG limit")
-                                    BGTextField(
-                                        "0",
-                                        mgdlValue: $state.autoISFsettings.b30upperLimit,
-                                        units: $state.units,
-                                        isDisabled: false,
-                                        liveEditing: true
-                                    )
-                                }
-
-                                HStack {
-                                    Text("Upper Delta limit")
-                                    BGTextField(
-                                        "0",
-                                        mgdlValue: $state.autoISFsettings.b30upperdelta,
-                                        units: $state.units,
-                                        isDisabled: false,
-                                        liveEditing: true
-                                    )
-                                }
-
-                                HStack {
-                                    Text("B30 Basal rate increase factor")
-                                    DecimalTextField(
-                                        "0",
-                                        value: $state.autoISFsettings.b30factor,
-                                        formatter: insulinFormatter,
-                                        liveEditing: true
-                                    )
-                                }
-
-                                HStack {
-                                    Text("Duration of increased B30 basal rate")
-                                    DecimalTextField(
-                                        "0",
-                                        value: $state.autoISFsettings.b30_duration,
-                                        formatter: insulinFormatter,
-                                        liveEditing: true
-                                    )
-                                }
-                            }
-
-                            Toggle(isOn: $state.autoISFsettings.ketoProtect) {
-                                Text("Enable Keto Protection")
-                            }
-
-                            if state.autoISFsettings.ketoProtect {
-                                Toggle(isOn: $state.autoISFsettings.variableKetoProtect) {
-                                    Text("Variable Keto Protection")
-                                }
-
-                                if state.autoISFsettings.variableKetoProtect {
-                                    HStack {
-                                        Text("Safety TBR in %")
-                                        DecimalTextField(
-                                            "0",
-                                            value: $state.autoISFsettings.ketoProtectBasalPercent,
-                                            formatter: insulinFormatter,
-                                            liveEditing: true
-                                        )
-                                    }
-                                } else {
-                                    Toggle(isOn: $state.autoISFsettings.ketoProtectAbsolut) {
-                                        Text("Enable Keto protection with pre-defined TBR")
-                                    }
-                                    if state.autoISFsettings.ketoProtectAbsolut {
-                                        HStack {
-                                            Text("Absolute Safety TBR")
-                                            DecimalTextField(
-                                                "0",
-                                                value: $state.autoISFsettings.ketoProtectBasalAbsolut,
-                                                formatter: higherPrecisionFormatter,
-                                                liveEditing: true
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } header: { Text("Auto ISF") }
-
-                if isEditingPreset {
-                    Section {
-                        HStack {
-                            Text("Name").foregroundStyle(.secondary)
-                            TextField("Name", text: $state.profileName)
-                                .multilineTextAlignment(.trailing)
-                        }
-                    } header: { Text("Profile Name") }
-                }
+                OverrideSettingsForm(form: $state.form, context: state.context)
 
                 // Buttons
                 Section {
                     HStack {
-                        if !isEditingPreset {
-                            Button("Start") {
-                                showAlert.toggle()
-                                let duration = TimeInterval(state.duration * 60)
-                                alertSring = (formatter.string(from: state.percentage as NSNumber) ?? "100") + "%, " +
-                                    (
-                                        state.duration > 0 && !state._indefinite ? (
-                                            dateFormatter
-                                                .string(from: duration) ?? ""
-                                        ) :
-                                            NSLocalizedString(" infinite duration.", comment: "")
-                                    ) +
-                                    (
-                                        (state.target == 0 || !state.override_target) ? "" :
-                                            (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
-                                    )
-                                    +
-                                    (
-                                        state
-                                            .smbIsOff ?
-                                            NSLocalizedString(
-                                                " SMBs are disabled either by schedule or during the entire duration.",
-                                                comment: ""
-                                            ) : ""
-                                    )
-                                    +
-                                    "\n\n"
-                                    +
-                                    NSLocalizedString(
-                                        "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.",
-                                        comment: ""
-                                    )
-                            }
-                            .disabled(unChanged())
-                            .buttonStyle(BorderlessButtonStyle())
-                            .font(.callout)
-                            .controlSize(.mini)
+                        Button("Start") {
+                            alertString = startAlertString()
+                            showAlert.toggle()
                         }
+                        .disabled(unChanged())
+                        .buttonStyle(BorderlessButtonStyle())
+                        .font(.callout)
+                        .controlSize(.mini)
 
                         Button {
-                            if !isEditingPreset {
-                                isSheetPresented = true
-                            } else if let editThis = presetToEdit {
-                                save(editThis)
-                                isEditingPreset.toggle()
-                            }
+                            newPresetName = ""
+                            showingNewPresetName = true
                         }
-                        label: { Text(isEditingPreset ? LocalizedStringKey("Save") : LocalizedStringKey("Save as Profile")) }
+                        label: { Text("Save as Profile") }
                             .tint(.orange)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .buttonStyle(BorderlessButtonStyle())
                             .controlSize(.mini)
-                            .disabled(isEditingPreset ? false : unChanged())
+                            .disabled(unChanged())
+                    }
 
-                        if state.isEnabled, !isEditingPreset {
-                            Section {
-                                Button("Cancel Profile Override") {
-                                    state.cancelProfile()
-                                    state.hideModal()
-                                }
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .buttonStyle(BorderlessButtonStyle())
-                                .disabled(!state.isEnabled)
-                                .tint(.red)
-                            } footer: { Text("").padding(.bottom, 150) }
+                    if state.isOverrideActive {
+                        Button("Cancel Profile Override") {
+                            state.cancelActiveOverride()
+                            state.hideModal()
                         }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .buttonStyle(BorderlessButtonStyle())
+                        .tint(.red)
                     }
                 }
             }
         }
 
-        var newPreset: some View {
+        var newPresetSheet: some View {
             Form {
                 Section {
-                    TextField("Name", text: $state.profileName)
+                    TextField("Name", text: $newPresetName)
                 } header: { Text("Profile Name").foregroundStyle(.primary) }
 
                 Section {
                     Button("Save") {
-                        state.savePreset()
-                        isSheetPresented = false
+                        state.saveAsNewPreset(name: newPresetName)
+                        showingNewPresetName = false
                     }
                     .disabled(
-                        state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
-                            .isNotEmpty
+                        newPresetName.isEmpty || state.profiles.contains(where: { $0.name == newPresetName })
                     )
 
                     Button("Cancel") {
-                        isSheetPresented = false
+                        showingNewPresetName = false
                     }
                 }
             }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
+        private func startAlertString() -> String {
+            let seconds = TimeInterval(truncating: NSDecimalNumber(decimal: state.form.duration)) * 60
+            return (formatter.string(from: state.form.percentage as NSNumber) ?? "100") + "%, " +
+                (
+                    state.form.duration > 0 && !state.form._indefinite ? (
+                        dateFormatter.string(from: seconds) ?? ""
+                    ) :
+                        NSLocalizedString(" infinite duration.", comment: "")
+                ) +
+                (
+                    (state.form.target == 0 || !state.form.override_target) ? "" :
+                        (" Target: " + state.form.target.formatted() + " " + state.units.rawValue + ".")
+                )
+                +
+                (
+                    state.form.smbIsOff ?
+                        NSLocalizedString(
+                            " SMBs are disabled either by schedule or during the entire duration.",
+                            comment: ""
+                        ) : ""
+                )
+                +
+                "\n\n"
+                +
+                NSLocalizedString(
+                    "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.",
+                    comment: ""
+                )
+        }
+
         @ViewBuilder private func alertViewBuilder() -> some View {
-            Button("Cancel", role: .cancel) { state.isEnabled = false }
+            Button("Cancel", role: .cancel) {}
             Button("Start Profile", role: .destructive) {
-                if state._indefinite { state.duration = 0 }
-                state.isEnabled.toggle()
-                state.saveSettings()
+                state.startOverride()
                 state.hideModal()
             }
         }
 
         // The Profile presets
-        @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
+        @ViewBuilder private func profilesView(for preset: OverridePresetsSnapshot) -> some View {
             // Values as String
             let targetRaw = ((preset.target ?? 0) as NSDecimalNumber) as Decimal
             let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
@@ -713,7 +214,7 @@ extension OverrideProfilesConfig {
             let dash2 = (basalString != "" && isfString + dash + crString != "") ? ", " : ""
             let isfAndCRstring = isfString + dash + crString + dash2 + basalString != "" ? "[" + isfString + dash + crString +
                 dash2 + basalString + "]" : "[None]"
-            let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
+            let autoisfSettings = preset.aisf
 
             if name != "" {
                 VStack(alignment: .leading, spacing: 1) {
@@ -731,8 +232,8 @@ extension OverrideProfilesConfig {
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
                         durationString != "" ? Text(durationString).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF {
-                            bool(bool: aisf.autoisf, setting: state.currentSettings.autoisf, label: "Auto ISF")
-                            bool(bool: aisf.autocr, setting: state.currentSettings.autocr, label: "Auto CR")
+                            bool(bool: aisf.autoisf, setting: state.currentAutoIsfSettings.autoisf, label: "Auto ISF")
+                            bool(bool: aisf.autocr, setting: state.currentAutoIsfSettings.autocr, label: "Auto CR")
                         }
 
                         if preset.glucoseOverrideThresholdActive || preset.glucoseOverrideThresholdActiveDown {
@@ -762,7 +263,7 @@ extension OverrideProfilesConfig {
 
                     // All of the Auto ISF Settings (Bool and Decimal optionals)
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
-                        let standard = state.currentSettings
+                        let standard = state.currentAutoIsfSettings
                         HStack {
                             bool(bool: aisf.enableBGacceleration, setting: standard.enableBGacceleration, label: "Accel")
                                 .frame(maxHeight: 30)
@@ -782,12 +283,11 @@ extension OverrideProfilesConfig {
                                 label: "SMB IOB: "
                             )
 
-                            if ((aisf.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
-                                .smbDeliveryRatioMin || ((aisf.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
-                                .smbDeliveryRatioMax
+                            if aisf.smbDeliveryRatioMin != standard.smbDeliveryRatioMin ||
+                                aisf.smbDeliveryRatioMax != standard.smbDeliveryRatioMax
                             {
                                 Text(
-                                    "SMB ratio: \(aisf.smbDeliveryRatioMin ?? 0.5)-\(aisf.smbDeliveryRatioMax ?? 0.5)"
+                                    "SMB ratio: \(aisf.smbDeliveryRatioMin as NSNumber)-\(aisf.smbDeliveryRatioMax as NSNumber)"
                                 )
                             }
                             glucose(
@@ -832,36 +332,32 @@ extension OverrideProfilesConfig {
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    state.selectProfile(id_: preset.id ?? "")
+                    state.activateOverrideFromPreset(preset)
                     state.hideModal()
                 }
                 .dynamicTypeSize(...DynamicTypeSize.large)
             }
         }
 
-        private var edit: some View {
-            overridesView.dynamicTypeSize(...DynamicTypeSize.xxLarge)
-        }
-
         private func unChanged() -> Bool {
-            let percentUnchanged = state.percentage == 100
-            let targetUnchanged = !state.override_target || state.target == 0
-            let smbUnchanged = !state.smbIsOff
-            let maxIOBUnchanged = !state.advancedSettings || !state.overrideMaxIOB || state.maxIOB == 0
-            let smbMinutesUnchanged = state.smbMinutes == state.defaultSmbMinutes
-            let uamMinutesUnchanged = state.uamMinutes == state.defaultUamMinutes
-            let autoISFUnchanged = !state.overrideAutoISF
-            let glucoseOverrideUnchanged = !state.glucoseOverrideThresholdActive
+            let percentUnchanged = state.form.percentage == 100
+            let targetUnchanged = !state.form.override_target || state.form.target == 0
+            let smbUnchanged = !state.form.smbIsOff
+            let maxIOBUnchanged = !state.form.advancedSettings || !state.form.overrideMaxIOB || state.form.maxIOB == 0
+            let smbMinutesUnchanged = state.form.smbMinutes == state.defaultSmbMinutes
+            let uamMinutesUnchanged = state.form.uamMinutes == state.defaultUamMinutes
+            let autoISFUnchanged = !state.form.overrideAutoISF
+            let glucoseOverrideUnchanged = !state.form.glucoseOverrideThresholdActive
 
             return percentUnchanged && targetUnchanged && smbUnchanged && maxIOBUnchanged && smbMinutesUnchanged &&
                 uamMinutesUnchanged && autoISFUnchanged && glucoseOverrideUnchanged
         }
 
-        private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            guard let dec = decimal as? Decimal, round(dec) != round(setting) else { return nil }
+        private func decimal(decimal: Decimal?, setting: Decimal, label: String) -> Text? {
+            guard let dec = decimal, round(dec) != round(setting) else { return nil }
 
             guard label != "pp: " else {
-                return Text(label + (promilleFormatter.string(from: decimal ?? 0) ?? ""))
+                return Text(label + (promilleFormatter.string(from: (decimal ?? 0) as NSDecimalNumber) ?? ""))
             }
 
             return Text(label + "\(dec)")
@@ -876,14 +372,14 @@ extension OverrideProfilesConfig {
             return nil
         }
 
-        private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal as? Decimal, dec != setting {
+        private func percentage(decimal: Decimal?, setting: Decimal, label: String) -> Text? {
+            if let dec = decimal, dec != setting {
                 return Text(label + "\(dec)%")
             }
             return nil
         }
 
-        private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+        private func glucose(decimal: Decimal?, setting: Decimal, label: String) -> Text? {
             if let nsDecimal = decimal {
                 let dec = nsDecimal as Decimal
                 if round(dec) != round(setting) {
@@ -898,82 +394,58 @@ extension OverrideProfilesConfig {
         private func round(_ decimal: Decimal) -> Decimal {
             decimal.rounded(to: 2)
         }
+    }
 
-        private func removeProfile(at offsets: IndexSet) {
-            for index in offsets {
-                let preset = fetchedProfiles[index]
-                moc.delete(preset)
-            }
-            do {
-                try moc.save()
-            } catch {
-                debug(.apsManager, "Couldn't profile preset at \(offsets).")
-            }
+    /// Edits a saved preset in its own sheet, with its own `OverrideForm` buffer and name.
+    /// Completely isolated from the main override form, so opening it never disturbs a
+    /// custom/active override the user was editing.
+    struct PresetEditorView: View {
+        let preset: OverridePresetsSnapshot
+        let context: OverrideForm.Context
+        let onSave: (_ name: String, _ emoji: String?, _ form: OverrideForm) -> Void
+        let onCancel: () -> Void
+
+        @State private var form: OverrideForm
+        @State private var name: String
+
+        init(
+            preset: OverridePresetsSnapshot,
+            context: OverrideForm.Context,
+            onSave: @escaping (String, String?, OverrideForm) -> Void,
+            onCancel: @escaping () -> Void
+        ) {
+            self.preset = preset
+            self.context = context
+            self.onSave = onSave
+            self.onCancel = onCancel
+            _form = State(initialValue: OverrideForm(from: preset, context: context))
+            _name = State(initialValue: preset.name ?? "")
         }
 
-        private func save(_ preset: OverridePresets) {
-            let saveOverride = preset
+        var body: some View {
+            NavigationView {
+                Form {
+                    Section {
+                        HStack {
+                            Text("Name").foregroundStyle(.secondary)
+                            TextField("Name", text: $name)
+                                .multilineTextAlignment(.trailing)
+                        }
+                    } header: { Text("Profile Name") }
 
-            saveOverride.duration = state.duration as NSDecimalNumber
-            saveOverride.indefinite = state._indefinite
-            saveOverride.percentage = state.percentage.rounded()
-            saveOverride.smbIsOff = state.smbIsOff
-            saveOverride.name = state.profileName
-            saveOverride.emoji = state.emoji
-            saveOverride.overrideAutoISF = state.overrideAutoISF
-            if state.override_target {
-                saveOverride.target = (
-                    state.units == .mmolL
-                        ? state.target.asMgdL
-                        : state.target
-                ) as NSDecimalNumber
-            } else { saveOverride.target = 6 }
-
-            saveOverride.advancedSettings = state.advancedSettings
-            saveOverride.endWIthNewCarbs = state.endWIthNewCarbs
-            saveOverride.isfAndCr = state.isfAndCr
-            if !state.isfAndCr {
-                saveOverride.isf = state.isf
-                saveOverride.cr = state.cr
-                saveOverride.basal = state.basal
-            }
-
-            if state.smbIsAlwaysOff {
-                saveOverride.smbIsAlwaysOff = true
-                saveOverride.start = state.start as NSDecimalNumber
-                saveOverride.end = state.end as NSDecimalNumber
-            } else { saveOverride.smbIsAlwaysOff = false }
-
-            if !state.smbIsAlwaysOff {
-                saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
-                saveOverride.uamMinutes = state.uamMinutes as NSDecimalNumber
-            }
-            saveOverride.overrideMaxIOB = state.overrideMaxIOB
-            if state.overrideMaxIOB {
-                saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
-            }
-
-            saveOverride.glucoseOverrideThresholdActive = state.glucoseOverrideThresholdActive
-            if state.glucoseOverrideThresholdActive {
-                saveOverride.glucoseOverrideThreshold = state.glucoseOverrideThreshold as NSDecimalNumber
-            }
-
-            saveOverride.glucoseOverrideThresholdActiveDown = state.glucoseOverrideThresholdActiveDown
-            if state.glucoseOverrideThresholdActiveDown {
-                saveOverride.glucoseOverrideThresholdDown = state.glucoseOverrideThresholdDown as NSDecimalNumber
-            }
-
-            saveOverride.date = Date.now
-
-            if state.overrideAutoISF {
-                state.updateAutoISF(preset.id)
-            }
-
-            do {
-                try moc.save()
-            } catch {
-                debug(.apsManager, "Failed to save \(moc.updatedObjects)")
+                    OverrideSettingsForm(form: $form, context: context)
+                }
+                .navigationBarTitle("Edit Profile", displayMode: .inline)
+                .navigationBarItems(
+                    leading: Button("Cancel", action: onCancel),
+                    trailing: Button("Save") { onSave(name, preset.emoji, form) }
+                        .disabled(name.isEmpty)
+                )
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             }
         }
     }
 }
+
+// `.sheet(item:)` requires Identifiable; the snapshot already carries a stable `id`.
+extension OverridePresetsSnapshot: Identifiable {}

@@ -395,7 +395,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
     }
 
     private func convertOverridePresets() async -> [MigratedOverridePresets] {
-        let presets = await overrideStorage.fetchProfiles()
+        let presets = await overrideStorage.fetchOverridePresets()
         return presets.map { item -> MigratedOverridePresets in
             MigratedOverridePresets(
                 advancedSettings: item.advancedSettings,
@@ -404,7 +404,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
                 duration: (item.duration ?? 0) as Decimal,
                 emoji: item.emoji ?? "",
                 end: (item.end ?? 0) as Decimal,
-                id: item.id ?? "",
+                id: item.id,
                 indefininite: item.indefinite,
                 isf: item.isf,
                 isndAndCr: item.isfAndCr, basal: item.basal,

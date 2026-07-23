@@ -162,6 +162,7 @@ extension FreeAPSSettings {
         autoisf && !isNighttime
     }
 
+    // TODO: the name is a little misleading - this returns true when "disable aisf during nighttime" is "on", AND now is nighttime
     var isNighttime: Bool {
         guard nightTime.enabled else { return false }
 

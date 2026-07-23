@@ -29,24 +29,10 @@ extension Home {
             overrideStorage = resolver.resolve(OverrideStorage.self)!
         }
 
-//        var dynamicVariables: DynamicVariables? {
-//            get async {
-//                await storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
-//            }
-//        }
-
         func fetchedMeals(_ interval: NSDate) async -> [MealsSnapshot] {
             await coreDateStorage.fetchMealData(
                 interval: interval
             )
-        }
-
-        func overrides() async -> [OverrideSnapshot] {
-            await overrideStorage.fetchOverrides(interval: DateFilter.day.startDate)
-        }
-
-        func latestOverride() async -> OverrideSnapshot? {
-            await overrideStorage.fetchCurrentActiveOverride()
         }
 
         func overrideHistory() async -> [OverrideHistorySnapshot] {

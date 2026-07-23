@@ -147,40 +147,40 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
 
         // Auto ISF
         var autoISFsettings: AutoISFsettings
-        if let activeOverride, activeOverride.overrideAutoISF,
-           let fetched = await overrideStorage.fetchAutoISFsetting(id: activeOverride.id ?? "Not This One")
+        if let activeOverride, activeOverride.overrideAutoISF, let fetched = activeOverride.aisf
         {
-            autoISFsettings = AutoISFsettings(
-                autoisf: fetched.autoisf,
-                autocr: fetched.autocr,
-                smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
-                smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
-                smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
-                autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
-                higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
-                lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
-                postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
-                enableBGacceleration: fetched.enableBGacceleration,
-                bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
-                bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
-                iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
-                autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
-                autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
-                use_B30: fetched.use_B30,
-                iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
-                b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
-                b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
-                b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
-                b30factor: (fetched.b30factor ?? 5) as Decimal,
-                b30_duration: (fetched.b30_duration ?? 30) as Decimal,
-                ketoProtect: fetched.ketoProtect,
-                variableKetoProtect: fetched.variableKetoProtect,
-                ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
-                ketoProtectAbsolut: fetched.ketoProtectAbsolut,
-                ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
-                id: fetched.id ?? "",
-                nightTime: fetched.nightTime?.value ?? .default
-            )
+            autoISFsettings = fetched
+//            AutoISFsettings(
+//                autoisf: fetched.autoisf,
+//                autocr: fetched.autocr,
+//                smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange) as Decimal,
+//                smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
+//                smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
+//                autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
+//                higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
+//                lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
+//                postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
+//                enableBGacceleration: fetched.enableBGacceleration,
+//                bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
+//                bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
+//                iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
+//                autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
+//                autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
+//                use_B30: fetched.use_B30,
+//                iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
+//                b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
+//                b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
+//                b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
+//                b30factor: (fetched.b30factor ?? 5) as Decimal,
+//                b30_duration: (fetched.b30_duration ?? 30) as Decimal,
+//                ketoProtect: fetched.ketoProtect,
+//                variableKetoProtect: fetched.variableKetoProtect,
+//                ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
+//                ketoProtectAbsolut: fetched.ketoProtectAbsolut,
+//                ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
+//                id: fetched.id ?? "",
+//                nightTime: fetched.nightTime
+//            )
         } else {
             autoISFsettings = AutoISFsettings()
         }

@@ -26,6 +26,7 @@ actor OpenAPS: Sendable {
         self.appCoordinator = appCoordinator
     }
 
+    /// override - current active (enabled=true) override
     func determineBasal(
         profile: Profile,
         autosens: Autosens?,
@@ -33,7 +34,6 @@ actor OpenAPS: Sendable {
         clock: Date = Date(),
         temporaryCarbs: CarbsEntry?,
         override: OverrideSnapshot?,
-        aisfOverride: Auto_ISFSnapshot?,
         tdd: InsulinDistributionSnapshot? // TODO: this one is only here to put into the "reasons"
     ) async throws -> Suggestion {
         // For debugging
@@ -92,12 +92,16 @@ actor OpenAPS: Sendable {
             reservoir: reservoir
         )
 
-        now = Date.now
         // Auto ISF Layer
-        let aisfNotDisabled = aisfNotDisabled(override: override, aisfOverride: aisfOverride)
-        let aisfEnabled = aisfEnabled(override: override, aisfOverride: aisfOverride)
-        let aisfActive = (settings.autoisfEffective && aisfNotDisabled) ||
-            (aisfEnabled && !settings.isNighttime)
+        let aisfOverride = aisfOverrideSetting(override: override)
+        var aisfDisabledByNightTime = false
+        var aisfActive = ((settings.autoisf && aisfOverride ?? true) || (aisfOverride ?? false))
+        if aisfActive {
+            if settings.isNighttime {
+                aisfDisabledByNightTime = true
+                aisfActive = false
+            }
+        }
 
         if aisfActive {
             now = Date.now
@@ -138,12 +142,14 @@ actor OpenAPS: Sendable {
         now = Date.now
 
         // Auto ISF
-        if settings.autoisfEffective, let iob = suggestion.iob {
+        if aisfActive, settings.ketoProtect {
             // If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate
             let basal = Decimal(alteredProfile.currentBasal)
-            if settings.ketoProtect, iob < 0,
-               let rate = suggestion.rate, rate <= 0,
-               iob < -basal, (suggestion.units ?? 0) <= 0,
+            if let iob = suggestion.iob,
+               iob < -basal,
+               let rate = suggestion.rate,
+               rate <= 0,
+               (suggestion.units ?? 0) <= 0,
                let basalRate = aisfBasal(settings: settings, pumpSettings: pumpSettings, basal, oref0Suggestion: suggestion)
             {
                 suggestion = basalRate
@@ -163,7 +169,8 @@ actor OpenAPS: Sendable {
             tdd: tdd,
             settings: settings,
             override: override,
-            aisfActive: aisfActive
+            aisfActive: aisfActive,
+            aisfDisabledByNightTime: aisfDisabledByNightTime
         )
         // Update time
         suggestion.timestamp = suggestion.deliverAt ?? clock
@@ -286,18 +293,9 @@ actor OpenAPS: Sendable {
 
     // MARK: - Private
 
-    private func aisfEnabled(override: OverrideSnapshot?, aisfOverride: Auto_ISFSnapshot?) -> Bool {
-        guard let override, override.enabled else { return false }
-        guard override.overrideAutoISF, let aisfOverride, aisfOverride.autoisf
-        else { return false }
-        return true
-    }
-
-    private func aisfNotDisabled(override: OverrideSnapshot?, aisfOverride: Auto_ISFSnapshot?) -> Bool {
-        guard let override, override.enabled else { return true }
-        guard override.overrideAutoISF, let aisfOverride, !aisfOverride.autoisf
-        else { return true }
-        return false
+    private func aisfOverrideSetting(override: OverrideSnapshot?) -> Bool? {
+        guard let override, override.overrideAutoISF, let aisfOverride = override.aisf else { return nil }
+        return aisfOverride.autoisf
     }
 
     private func readGlucoseHistory() -> [GlucoseEntry0] {
@@ -337,7 +335,8 @@ actor OpenAPS: Sendable {
         tdd: InsulinDistributionSnapshot?,
         settings: FreeAPSSettings,
         override: OverrideSnapshot?,
-        aisfActive: Bool
+        aisfActive: Bool,
+        aisfDisabledByNightTime: Bool
     ) {
         var reasonString = suggestion.reason
         let startIndex = reasonString.startIndex
@@ -390,7 +389,7 @@ actor OpenAPS: Sendable {
 
                     insertedResons += tddString + ", "
 
-                    if autoisfDisabledByNighttime(settings: settings) {
+                    if aisfDisabledByNightTime {
                         debugAutoISF(settings: settings)
                         insertedResons += "Auto ISF disabled during nighttime" + ", "
                     }
@@ -399,7 +398,7 @@ actor OpenAPS: Sendable {
                 } else {
                     // Autosens
                     var comment = ""
-                    if autoisfDisabledByNighttime(settings: settings) {
+                    if aisfDisabledByNightTime {
                         debugAutoISF(settings: settings)
                         comment = "Auto ISF disabled during nighttime" + ", "
                     }
@@ -488,10 +487,6 @@ actor OpenAPS: Sendable {
             cr: parsedReason["CR"]?.toDecimal,
             minPredBG: parsedReason["minPredBG"]?.toDecimal
         )
-    }
-
-    private func autoisfDisabledByNighttime(settings: FreeAPSSettings) -> Bool {
-        settings.autoisf && settings.isNighttime
     }
 
     private func debugAutoISF(settings: FreeAPSSettings) {

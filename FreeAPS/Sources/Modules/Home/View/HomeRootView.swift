@@ -356,7 +356,7 @@ extension Home {
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
                 Button("Cancel Profile Override", role: .destructive) {
-                    state.cancelProfile()
+                    state.cancelActiveOverride()
                     triggerUpdate.toggle()
                 }
             }

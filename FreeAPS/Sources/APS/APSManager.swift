@@ -92,13 +92,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
     }
 
-    private var override: OverrideSnapshot? {
-        get async {
-            guard let last = await overrideStorage.fetchLatestOverride(), last.enabled else { return nil }
-            return last
-        }
-    }
-
     init(
         appCoordinator: AppCoordinator,
         storage: FileStorage,
@@ -384,13 +377,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             let profiles = try await makeProfiles()
             let autosens = await autosens(profile: profiles.profile)
             _ = await dailyAutotune()
-            let override = await self.override
-            let aisfOverride: Auto_ISFSnapshot?
-            if let override, override.overrideAutoISF, let id = override.id {
-                aisfOverride = await overrideStorage.fetchAutoISFsetting(id: id)
-            } else {
-                aisfOverride = nil
-            }
+            let override = await overrideStorage.fetchCurrentActiveOverride()
             let tdd = await coreDataStorage.fetchInsulinDistribution()
 
             let suggestion = try? await openAPS.determineBasal(
@@ -400,7 +387,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 clock: now,
                 temporaryCarbs: temporaryCarbs,
                 override: override,
-                aisfOverride: aisfOverride,
                 tdd: tdd // TODO: this one is only used to pass through into "reasons"
             )
             guard let suggestion else {
@@ -721,9 +707,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             }
 
             // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
-            let preset = await overrideStorage.fetchPreset(name)
-            guard let id = preset.id, let preset = preset.preset else { return }
-            let saved = await overrideStorage.overrideFromPreset(preset, id)
+            guard let preset = await overrideStorage.fetchOverridePreset(name: name) else { return }
+            guard let saved = await overrideStorage.activateOverrideFromPreset(preset: preset, fromSavedPreset: true)
+            else { return }
             await nightscout.uploadOverride(
                 name,
                 Double(preset.duration ?? 0),

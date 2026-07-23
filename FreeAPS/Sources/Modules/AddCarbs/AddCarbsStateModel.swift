@@ -286,19 +286,22 @@ extension AddCarbs {
             if profileID == "Hypo Treatment" {
                 // transient, non-persisted override preset
                 let override = OverridePresetsSnapshot(
-                    date: Date.now,
+                    id: profileID,
                     name: "📉",
-                    advancedSettings: true,
-                    duration: 45,
-                    indefinite: false,
                     percentage: 90,
-                    smbIsOff: true,
+                    indefinite: false,
+                    duration: 45,
                     target: 117,
+                    advancedSettings: true,
+                    smbIsOff: true,
+                    date: Date.now,
                 )
 
-                saved = await overrideStorage.overrideFromPreset(override, profileID)
+                // the preset does not exist, so `fromSavedPreset: true` is a lie, but when determining the present name - this case is handled and the override name is set to the hypo emoji
+                // TODO: instead, the preset name should become part of the override entity, so that we don't need to fetch and reconstruct it every time later on
+                saved = await overrideStorage.activateOverrideFromPreset(preset: override, fromSavedPreset: true)
             } else {
-                saved = await overrideStorage.activatePreset(profileID)
+                saved = await overrideStorage.activateOverrideFromPreset(presetId: profileID)
             }
 
             if let saved {

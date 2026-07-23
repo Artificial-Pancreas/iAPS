@@ -320,7 +320,7 @@ extension Home {
             }
         }
 
-        func cancelProfile() {
+        func cancelActiveOverride() {
             Task {
                 await overrideManager.cancelActiveOverride()
                 await setupOverrideHistory()
@@ -421,20 +421,20 @@ extension Home {
 
         private func setupOverrideHistory() async {
             overrideHistory = await provider.overrideHistory()
-            let latestOverride = await provider.latestOverride()
+            let latestOverride = await overrideStorage.fetchCurrentActiveOverride()
             self.latestOverride = latestOverride
             data.latestOverride = latestOverride
             data.overrideHistory = overrideHistory
 
-            if let latestOverride, latestOverride.enabled, let id = latestOverride.id {
+            if let latestOverride {
                 if latestOverride.isPreset {
                     // a nameless preset counts as not found (mimics the old `name != ""` fetch predicate)
-                    let preset = await overrideStorage.fetchPreset(id: id)
+                    let preset = await overrideStorage.fetchOverridePreset(id: latestOverride.id)
                     overridePreset = (preset?.name?.isEmpty ?? true) ? nil : preset
                 } else {
                     overridePreset = nil
                 }
-                overrideAutoISF = await overrideStorage.fetchAutoISFsetting(id: id)?.autoisf
+                overrideAutoISF = latestOverride.overrideAutoISF ? latestOverride.aisf?.autoisf : nil
             } else {
                 overridePreset = nil
                 overrideAutoISF = nil

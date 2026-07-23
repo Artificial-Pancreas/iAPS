@@ -185,9 +185,10 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             }
 
         var overrides: [OverridePresets_] = []
-        for preset in await overrideStorage.fetchProfiles() {
-            let untilDate = await overrideStorage.fetchLatestOverride().flatMap { currentOverride -> Date? in
-                guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
+        let currentOverride = await overrideStorage.fetchCurrentActiveOverride()
+        for preset in await overrideStorage.fetchOverridePresets() {
+            let untilDate = currentOverride.flatMap { currentOverride -> Date? in
+                guard currentOverride.id == preset.id else { return nil }
 
                 let duration = Double(currentOverride.duration ?? 0)
                 let overrideDate: Date = currentOverride.date ?? Date.now
@@ -199,7 +200,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             overrides.append(
                 OverridePresets_(
                     name: preset.name ?? "",
-                    id: preset.id ?? "",
+                    id: preset.id,
                     until: untilDate,
                     description: self.description(preset)
                 )
@@ -208,14 +209,14 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.state.overrides = overrides
         // Is there an active override but no preset?
         let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
-        if let last = await overrideStorage.fetchLatestOverride(), last.enabled, currentButNoOverrideNotPreset == nil {
+        if let last = await overrideStorage.fetchCurrentActiveOverride(), currentButNoOverrideNotPreset == nil {
             let duration = Double(last.duration ?? 0)
             let overrideDate: Date = last.date ?? Date.now
             let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
             let date = date_ > Date.now ? date_ : nil
 
             self.state.overrides
-                .append(OverridePresets_(name: "custom", id: last.id ?? "", until: date, description: self.description(last)))
+                .append(OverridePresets_(name: "custom", id: last.id, until: date, description: self.description(last)))
         }
 
         self.state.bolusAfterCarbs = !settings.skipBolusScreenAfterCarbs
@@ -574,14 +575,13 @@ private extension BaseWatchManager {
         }
 
         if let overrideID = message.override {
-            if var preset = await overrideStorage.fetchProfiles().first(where: { $0.id == overrideID }) {
-                preset.date = Date.now
-
+            if var preset = await overrideStorage.fetchOverridePreset(id: overrideID) {
                 // Cancel an active override first, if any
                 await overrideManager.cancelActiveOverride()
 
                 // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
-                let saved = await overrideStorage.overrideFromPreset(preset)
+                guard let saved = await overrideStorage.activateOverrideFromPreset(preset: preset, fromSavedPreset: true)
+                else { return .denied }
                 await nightscout.uploadOverride(
                     preset.name ?? "",
                     Double(preset.duration ?? 0),

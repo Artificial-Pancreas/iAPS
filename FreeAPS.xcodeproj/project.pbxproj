@@ -483,6 +483,8 @@
 		F25EBF012FC3428D009D275F /* WatchMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25EBF002FC34289009D275F /* WatchMessages.swift */; };
 		F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F270F68C2BAE374C00F6D8DD /* FontTracking.swift */; };
 		F281B4A22ECF9087007185A9 /* LabelPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B4A12ECF9087007185A9 /* LabelPlacement.swift */; };
+		F28A7E6D30119D2A00A0A415 /* OverrideSettingsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28A7E6C30119D2300A0A415 /* OverrideSettingsForm.swift */; };
+		F28A7E713011A5FC00A0A415 /* OverrideForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28A7E703011A5E800A0A415 /* OverrideForm.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
 		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
@@ -530,7 +532,6 @@
 		F2C29E292FEAB38B00E8630A /* BackgroundTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C29E282FEAB38300E8630A /* BackgroundTasks.swift */; };
 		F2C29E2B2FEAD27D00E8630A /* OverridePresetsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C29E2A2FEAD27900E8630A /* OverridePresetsSnapshot.swift */; };
 		F2C29E2D2FEADCC700E8630A /* OverrideHistorySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C29E2C2FEADCC100E8630A /* OverrideHistorySnapshot.swift */; };
-		F2C29E2F2FEADD6600E8630A /* Auto_ISFSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C29E2E2FEADD6000E8630A /* Auto_ISFSnapshot.swift */; };
 		F2C29E472FEBFFBB00E8630A /* DataMigrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C29E462FEBFFB700E8630A /* DataMigrations.swift */; };
 		F2C2EEA92F5CCD7E00A0AA7C /* USDAFoodDataSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */; };
 		F2C2EEAB2F5CCEFE00A0AA7C /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */; };
@@ -1249,6 +1250,8 @@
 		F25EBF002FC34289009D275F /* WatchMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchMessages.swift; sourceTree = "<group>"; };
 		F270F68C2BAE374C00F6D8DD /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		F281B4A12ECF9087007185A9 /* LabelPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPlacement.swift; sourceTree = "<group>"; };
+		F28A7E6C30119D2300A0A415 /* OverrideSettingsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideSettingsForm.swift; sourceTree = "<group>"; };
+		F28A7E703011A5E800A0A415 /* OverrideForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideForm.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
 		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
@@ -1295,7 +1298,6 @@
 		F2C29E282FEAB38300E8630A /* BackgroundTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTasks.swift; sourceTree = "<group>"; };
 		F2C29E2A2FEAD27900E8630A /* OverridePresetsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverridePresetsSnapshot.swift; sourceTree = "<group>"; };
 		F2C29E2C2FEADCC100E8630A /* OverrideHistorySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideHistorySnapshot.swift; sourceTree = "<group>"; };
-		F2C29E2E2FEADD6000E8630A /* Auto_ISFSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auto_ISFSnapshot.swift; sourceTree = "<group>"; };
 		F2C29E462FEBFFB700E8630A /* DataMigrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMigrations.swift; sourceTree = "<group>"; };
 		F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USDAFoodDataSearchResponse.swift; sourceTree = "<group>"; };
 		F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
@@ -1679,6 +1681,7 @@
 				19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */,
 				19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */,
 				19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */,
+				F28A7E703011A5E800A0A415 /* OverrideForm.swift */,
 				19DC677D29CA672500FD9EC4 /* View */,
 			);
 			path = OverrideProfilesConfig;
@@ -1688,6 +1691,7 @@
 			isa = PBXGroup;
 			children = (
 				19DC678429CA67A400FD9EC4 /* OverrideProfilesRootView.swift */,
+				F28A7E6C30119D2300A0A415 /* OverrideSettingsForm.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3081,7 +3085,6 @@
 				F299DD212FD84D780048B96A /* OverrideSnapshot.swift */,
 				F2C29E2A2FEAD27900E8630A /* OverridePresetsSnapshot.swift */,
 				F2C29E2C2FEADCC100E8630A /* OverrideHistorySnapshot.swift */,
-				F2C29E2E2FEADD6000E8630A /* Auto_ISFSnapshot.swift */,
 				F292C6AA2FDDCFA700D09D88 /* PresetsSnapshot.swift */,
 				F2FC8B2E2FDDD18100D389EC /* ProfilesSnapshot.swift */,
 				F292C6962FDDC0EF00D09D88 /* ReadingsSnapshot.swift */,
@@ -3740,7 +3743,6 @@
 				E00EEC0727368630002FF094 /* APSAssembly.swift in Sources */,
 				F2C2EEAF2F5CD35C00A0AA7C /* AIAnalysisResult+Convert.swift in Sources */,
 				F2FC8B2F2FDDD18400D389EC /* ProfilesSnapshot.swift in Sources */,
-				F2C29E2F2FEADD6600E8630A /* Auto_ISFSnapshot.swift in Sources */,
 				F22A8859300058D60019BDC5 /* UIBindingOwner.swift in Sources */,
 				38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */,
 				F25EBEFB2FC2122D009D275F /* TimeInterval+Extensions.swift in Sources */,
@@ -3913,6 +3915,7 @@
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
 				F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */,
 				F25EBEFF2FC2312A009D275F /* LifetimeOwner.swift in Sources */,
+				F28A7E713011A5FC00A0A415 /* OverrideForm.swift in Sources */,
 				F2FEE7042D2DB1A000A91BB2 /* BGTextField.swift in Sources */,
 				F292C6A52FDDCC9C00D09D88 /* InsulinDistributionSnapshot.swift in Sources */,
 				19C3C7442E97AE7B0000BE4D /* ModernCameraView.swift in Sources */,
@@ -3921,6 +3924,7 @@
 				19C3C7492E97AE7B0000BE4D /* FoodSearchView.swift in Sources */,
 				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
+				F28A7E6D30119D2A00A0A415 /* OverrideSettingsForm.swift in Sources */,
 				F22A7A822FF1ECBF0019BDC5 /* NightscoutTreatmentSync.swift in Sources */,
 				198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
