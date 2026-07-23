@@ -44,6 +44,7 @@ extension MealsSnapshot {
         (carbs ?? 0) <= 0 &&
             (fat ?? 0) <= 0 &&
             (protein ?? 0) <= 0 &&
+            (fiber ?? 0) <= 0 &&
             micronutrient.allSatisfy { ($0.amount ?? 0) <= 0 }
     }
 
