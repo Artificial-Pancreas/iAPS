@@ -544,18 +544,8 @@ extension Home {
 
             let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
 
-            // Time-adjusted average daily TDD over the last ten days (one sample per 24h window,
-            // walking newest -> oldest). Recomputed here rather than shared with the oref0
-            // dynamic-variables path, which reads a different (pre-loop) TDD snapshot.
-            var time = tdds.first?.timestamp ?? .distantPast
-            var dailySamples: [Decimal] = [(tdds.first?.tdd ?? 0) as Decimal]
-            for event in tdds {
-                if (event.timestamp ?? .distantFuture) <= time.subtractingTimeInterval(.hours(24)) {
-                    dailySamples.append((event.tdd ?? 0) as Decimal)
-                    time = event.timestamp ?? .distantPast
-                }
-            }
-            let actualAverage = dailySamples.reduce(0, +) / Decimal(dailySamples.count)
+            // Time-adjusted average daily TDD over the last ten days. The walk is shared with the dynamic-variables path; this one is post-loop.
+            let actualAverage = tdds.averageDailyTDD
 
             let latestTDD = (tdds.first?.tdd ?? 0) as Decimal
             let yesterdayTDD = (tdds.first(where: {

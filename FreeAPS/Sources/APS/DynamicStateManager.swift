@@ -68,23 +68,6 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
             "dynamicVariables: Time for fetchTempTargets \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
 
-        // Time adjusted average
-        var time = uniqueEvents.first?.timestamp ?? .distantPast
-        var data_ = [tddData(date: time, tdd: (uniqueEvents.first?.tdd ?? 0) as Decimal)]
-
-        for a in uniqueEvents {
-            if a.timestamp ?? .distantFuture <= time.subtractingTimeInterval(.hours(24)) {
-                let b = tddData(
-                    date: a.timestamp ?? .distantFuture,
-                    tdd: (a.tdd ?? 0) as Decimal
-                )
-                data_.append(b)
-                time = a.timestamp ?? .distantPast
-            }
-        }
-        let total = data_.map(\.tdd).reduce(0, +)
-        let indeces = data_.count
-
         let twoHoursArray = uniqueEvents
             .filter({ ($0.timestamp ?? Date()) >= Date.now.subtractingTimeInterval(.hours(2)) })
         var nrOfIndeces = twoHoursArray.count
@@ -111,7 +94,7 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
         }
 
         let average2hours = totalAmount / Decimal(nrOfIndeces)
-        let average14 = total / Decimal(indeces)
+        let average14 = uniqueEvents.averageDailyTDD
         let weighted_average = wp * average2hours + (1 - wp) * average14
 
         var duration: Decimal = 0
