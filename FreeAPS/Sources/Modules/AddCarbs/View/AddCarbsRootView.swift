@@ -189,9 +189,7 @@ extension AddCarbs {
             Button("Discard", role: .destructive) {
                 state.hideModal()
                 if editMode {
-                    Task {
-                        _ = try? await state.apsManager.determineBasal(temporaryCarbs: nil)
-                    }
+                    state.runDetermineBasal()
                 }
             }
             Button("Cancel", role: .cancel) {}
@@ -1092,9 +1090,7 @@ extension AddCarbs {
             // Otherwise, just dismiss
             state.hideModal()
             if editMode {
-                Task {
-                    _ = try? await state.apsManager.determineBasal(temporaryCarbs: nil)
-                }
+                state.runDetermineBasal()
             }
         }
 

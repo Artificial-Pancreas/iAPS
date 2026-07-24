@@ -46,7 +46,6 @@ extension Bolus {
         @Published var recentGlucose: BloodGlucose?
         @Published var target: Decimal = 100
         @Published var cob: Decimal = 0
-        @Published var iob: Decimal = 0
 
         @Published var currentBG: Decimal = 0
         @Published var manualGlucose: Decimal = 0
@@ -78,7 +77,6 @@ extension Bolus {
         @Published var now = Date.now
         @Published var bolus: Decimal = 0
         @Published var carbToStore: CarbsEntry? = nil
-        @Published var history: [PumpHistoryEvent]?
         @Published var disable15MinTrend: Bool = false
         @Published var minBolus: Decimal = 0.05
 
@@ -90,25 +88,26 @@ extension Bolus {
 
         let bolusIncrement: Decimal = 0.05
         let loopReminder: CGFloat = 4
-        let oldGlucose: TimeInterval = -15
+        private let oldGlucoseThreshold: TimeInterval = .minutes(15)
 
         /// When IOB module fail
         private var recentIOB: Decimal = 0
 
-        private var loopFormatter: NumberFormatter {
+        private static let loopFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             return formatter
-        }
+        }()
 
         override func subscribe() async {
-            let settings = await settingsManager.settings
-            let preferences = await settingsManager.preferences
+            let settings = appCoordinator.settings.value
+            let preferences = appCoordinator.preferences.value
+            let pumpSettings = appCoordinator.pumpSettings.value
             units = settings.units
             minimumPrediction = settings.minumimPrediction
             threshold = preferences.threshold_setting
-            maxBolus = await retrievePumpSettings().maxBolus
+            maxBolus = pumpSettings.maxBolus
             fraction = settings.overrideFactor
             useCalc = settings.useCalc
             fattyMeals = settings.fattyMeals
@@ -118,16 +117,14 @@ extension Bolus {
             closedLoop = settings.closedLoop
             loopDate = appCoordinator.lastLoopDate.value ?? .distantPast
             disable15MinTrend = settings.disable15MinTrend
-            // TODO: listen to changes
-            // before refactoring recent IOB was fetched from core data every time the calculation was run
-            recentIOB = await fetchRecentIOB()
+            recentIOB = appCoordinator.iobTicks.value?.first?.iob ?? 0
 
             await updateMinBolus(appCoordinator.pumpStatus.value)
 
-            // TODO: use AppUIState instead
             observe(appCoordinator.lastLoopDate) { me, lastLoopDate in
                 await me.lastLoopDateUpdated(lastLoopDate)
             }
+            // autoclose the view. TODO: should we use just a timer instead?
             observe(appCoordinator.suggested) { me, suggestion in
                 await me.suggestionDidUpdate(suggestion)
             }
@@ -142,43 +139,16 @@ extension Bolus {
                 Decimal(concentration.concentration)
         }
 
-        private func suggestionDidUpdate(_ suggestion: Suggestion?) async {
-            guard !waitForSuggestion, let suggestion else {
-                // we requested the suggestion
-                return
-            }
-//           self.waitForSuggestion = false
-//           setupInsulinRequired()
-            loopDate = suggestion.deliverAt ?? .distantPast
-
-            if abs(now.timeIntervalSinceNow / 60) > loopReminder * 1.5 {
+        private func suggestionDidUpdate(_: Suggestion?) async {
+            if Date.now >= now.addingTimeInterval(.minutes(loopReminder * 1.5)) {
                 hideModal()
                 notActive()
-                debug(.apsManager, "Force Closing Bolus View", printToConsole: true)
+                debug(.apsManager, "Force Closing Bolus View")
             }
         }
 
         private func lastLoopDateUpdated(_ lastLoopDate: Date?) {
             loopDate = lastLoopDate ?? .distantPast
-        }
-
-        private func fetchRecentIOB() async -> Decimal {
-            guard iob == 0 else { return 0 }
-            guard let recent = await coreDataStorage.recentReason() else { return 0 }
-            let timeDifference = (recent.date ?? .distantPast).timeIntervalSinceNow
-            if timeDifference <= 0, timeDifference > TimeInterval.minutes(-30) {
-                let recent = ((recent.iob ?? 0) as Decimal)
-                let pumpHistory = history?
-                    .filter({ $0.timestamp.timeIntervalSinceNow > timeDifference && $0.type == .bolus })
-                    .compactMap(\.amount).reduce(0, +) ?? 0
-                return recent + pumpHistory
-            } else if let history = history {
-                let total = history
-                    .filter({ $0.timestamp.timeIntervalSinceNow > TimeInterval.minutes(-360) && $0.type == .bolus })
-                    .compactMap(\.amount).reduce(0, +)
-                return max(total, 0)
-            }
-            return 0
         }
 
         func start() {
@@ -195,7 +165,6 @@ extension Bolus {
                         self.insulinRecommended = 0
                     }
                     loopDate = self.suggestion?.deliverAt ?? .distantPast
-                    await fetchPumpHistory()
 
                     self.waitForSuggestion = false
                 }
@@ -204,19 +173,18 @@ extension Bolus {
         }
 
         func getDeltaBG() {
-            Task {
-                let glucose = await fetchGlucose()
-                guard let lastGlucose = glucose.first else { return }
-                guard (lastGlucose.date ?? .distantPast).timeIntervalSinceNow.minutes > oldGlucose else {
-                    currentBG = 0
-                    print("BG time ago: \((lastGlucose.date ?? .distantPast).timeIntervalSinceNow.minutes)")
-                    return
-                }
-                currentBG = Decimal(lastGlucose.glucose) * conversion
-                guard glucose.count >= 4 else { return }
-                deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
-                    (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
+            let twoHoursAgo = DateFilter.twoHours.startDate as Date
+            let glucose = appCoordinator.glucoseRaw.value.filter { $0.dateString >= twoHoursAgo }
+            guard let lastGlucose = glucose.first else { return }
+            guard lastGlucose.dateString >= Date.now.subtractingTimeInterval(oldGlucoseThreshold) else {
+                currentBG = 0
+                print("BG time ago: \(lastGlucose.dateString.timeIntervalSinceNow.minutes) minutes")
+                return
             }
+            currentBG = Decimal(lastGlucose.glucose) * conversion
+            guard glucose.count >= 4 else { return }
+            deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
+                (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
         }
 
         func calculateInsulin() {
@@ -250,7 +218,7 @@ extension Bolus {
 
             // determine how much the calculator reduces/ increases the bolus because of IOB
             // If failed recent suggestion use recent IOB value
-            iobInsulinReduction = (-1) * max(iob, recentIOB)
+            iobInsulinReduction = -recentIOB
 
             // adding everything together
             // add a calc for the case that no fifteenMinInsulin is available
@@ -298,10 +266,6 @@ extension Bolus {
             return temporaryCarbs
         }
 
-        private func fetchPumpHistory() async {
-            history = await pumpHistoryStorage.recent()
-        }
-
         func add() {
             Task {
                 guard amount > 0 else {
@@ -309,7 +273,7 @@ extension Bolus {
                     return
                 }
 
-                let pumpSettings = await retrievePumpSettings()
+                let pumpSettings = appCoordinator.pumpSettings.value
                 let maxAmount = Double(min(amount, pumpSettings.maxBolus))
 
                 do {
@@ -323,14 +287,8 @@ extension Bolus {
             }
         }
 
-        private var empty: Bool {
-            guard let carbToStore else { return true }
-            return (carbToStore.carbs) == 0 && carbToStore.fat == 0 && carbToStore.protein == 0 &&
-                carbToStore.fiber == 0 && ((carbToStore.micronutrient?.first(where: { $0.amount != 0 })) == nil)
-        }
-
         func save() {
-            guard let carbToStore, !empty else { return }
+            guard let carbToStore, !carbToStore.isEmpty else { return }
             Task {
                 await coreDataStorage.updateLatestMeal(to: true)
                 await carbsStorage.storeCarbs([carbToStore])
@@ -347,7 +305,7 @@ extension Bolus {
                         carbs: (recent.carbs ?? 0) as Decimal,
                         fat: (recent.fat ?? 0) as Decimal,
                         protein: (recent.protein ?? 0) as Decimal,
-                        fiber: (recent.protein ?? 0) as Decimal,
+                        fiber: (recent.fiber ?? 0) as Decimal,
                         note: recent.note,
                         enteredBy: CarbsEntry.manual,
                         isFPU: false,
@@ -355,7 +313,7 @@ extension Bolus {
                     )
                 }
 
-                guard let carbToStore, !empty else { return }
+                guard let carbToStore, !carbToStore.isEmpty else { return }
 
                 await carbsStorage.storeCarbs([carbToStore])
                 await coreDataStorage.saveMeal([carbToStore], now: Date.now, savedToFile: true)
@@ -363,31 +321,30 @@ extension Bolus {
         }
 
         func setupInsulinRequired() {
-            Task {
-                let conversion: Decimal = units == .mmolL ? 0.0555 : 1
+            let conversion: Decimal = units == .mmolL ? 0.0555 : 1
 
-                if let suggestion = self.suggestion {
-                    self.insulinRequired = suggestion.insulinReq ?? 0
-                    self.evBG = Decimal(suggestion.eventualBG ?? 0) * conversion
-                    self.iob = suggestion.iob ?? 0
-                    self.cob = suggestion.cob ?? 0
-                }
-                // Unwrap. We can't have NaN values.
-                if let reasons = await coreDataStorage.fetchReason(), let target = reasons.target, let isf = reasons.isf,
-                   let carbRatio = reasons.cr, let minPredBG = reasons.minPredBG
+            if let suggestion = self.suggestion {
+                insulinRequired = suggestion.insulinReq ?? 0
+                evBG = Decimal(suggestion.eventualBG ?? 0) * conversion
+                recentIOB = suggestion.iob ?? 0
+                cob = suggestion.cob ?? 0
+
+                if let target = suggestion.targetBG,
+                   let isf = suggestion.iaps?.isf,
+                   let carbRatio = suggestion.iaps?.cr,
+                   let minPredBG = suggestion.iaps?.minPredBG
                 {
-                    self.target = target as Decimal
-                    self.isf = isf as Decimal
-                    self.carbRatio = carbRatio as Decimal
-
-                    self.minPredBG = minPredBG as Decimal
+                    self.target = target
+                    self.isf = isf
+                    self.carbRatio = carbRatio
+                    self.minPredBG = minPredBG
                 }
+            }
 
-                if self.useCalc {
-                    self.getDeltaBG()
-                    self.calculateInsulin()
-                    self.prepareData()
-                }
+            if useCalc {
+                getDeltaBG()
+                calculateInsulin()
+                prepareData()
             }
         }
 
@@ -503,7 +460,7 @@ extension Bolus {
             guard abs(now.timeIntervalSinceNow / 60) > loopReminder else { return nil }
             let minAgo = abs(loopDate.timeIntervalSinceNow / 60)
 
-            let stringAgo = loopFormatter.string(from: minAgo as NSNumber) ?? ""
+            let stringAgo = Self.loopFormatter.string(from: minAgo as NSNumber) ?? ""
             return "Last loop \(stringAgo) minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run"
         }
 
@@ -528,14 +485,6 @@ extension Bolus {
                     isFPU: false,
                     micronutrient: recent.micronutrientValues
                 )
-
-                // To Do: remove debug
-                print("Meal Flow 2: retrieving from CoreData")
-                if let a = carbToStore, let b = a.micronutrient {
-                    for c in b {
-                        print("Meal Flow 2: Micros: " + c.name + " " + c.formattedAmount)
-                    }
-                }
             }
         }
 
@@ -543,10 +492,6 @@ extension Bolus {
             Task {
                 _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
             }
-        }
-
-        private func retrievePumpSettings() async -> PumpSettings {
-            await settingsManager.pumpSettings
         }
 
         private func fetchGlucose() async -> [ReadingsSnapshot] {

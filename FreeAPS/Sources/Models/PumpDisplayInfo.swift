@@ -28,6 +28,7 @@ struct PumpDisplayStatus: Equatable, Sendable {
     let isBolusing: Bool
     let supportedBasalRates: [Double]
     let supportedBolusVolumes: [Double]
+    let model: String? // only for medtronic pumps, oref0 uses this value to enable 0.025U basal rate granularity for pumps that support it
 
     let timestamp: Date
 }
@@ -54,14 +55,12 @@ extension ReservoirReading {
         }
     }
 
-    private static let parsingLocale = Locale(identifier: "en_US_POSIX")
-
     init?(from: RawValue?) {
         guard let from else { return nil }
         if from["aboveThreshold"] as? Bool == true {
             self = .aboveThreshold
         } else if let unitsString = from["units"] as? String {
-            if let units = Decimal(string: unitsString, locale: Self.parsingLocale) {
+            if let units = unitsString.toDecimal {
                 self = .units(units)
             } else {
                 return nil

@@ -8,44 +8,41 @@ import Swinject
 protocol GlucoseStorage: Sendable {
     /// returns nil when no new records were recorded
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]?
+
     func removeGlucose(ids: [String]) async
-    /// retrieves raw glucose from storage - no smoothing (oldest->newest)
-    func retrieveRaw() async -> [BloodGlucose]
-    /// retrieves glucose from storage (oldest->newest)
-    /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
-    func retrieve() async -> [BloodGlucose]
-    /// retrieves glucose from storage in newest->oldest order (opposite of retrieve/retrieveRaw!) (oref0 wants this order)
-    /// if glucose smoothing is enabled in settings - applies the smoothing algorithm
-    /// filters records by frequency - at most "1 per minute" or "1 per 5 minutes" (according to settings.allowOneMinuteGlucose)
-    func retrieveFiltered() async -> [BloodGlucose]
+
     func latestDate() async -> Date?
+
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
-actor BaseGlucoseStorage: GlucoseStorage, AppService {
+actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
     private let storage: FileStorage
-    private let settingsManager: SettingsManager
     private let appCoordinator: AppCoordinator
 
-    private enum Config {
-        static let filterTimeFiveMinutes: TimeInterval = 4.5 * 60
-        static let filterTimeOneMinute: TimeInterval = 0.8 * 60
-    }
+    // newest -> oldest
+    private var cachedGlucose: [BloodGlucose] = []
+
+    let lifetime = CancelBag()
 
     init(
         storage: FileStorage,
-        settingsManager: SettingsManager,
         appCoordinator: AppCoordinator
     ) {
         self.storage = storage
-        self.settingsManager = settingsManager
         self.appCoordinator = appCoordinator
     }
 
     // this is called at the start of the app
     func start() async {
-        // file is stored newest -> oldest, retrieveRaw reverses it, we reverse again to get back to newest -> oldest
-        await pushAlarm()
-        appCoordinator.setGlucoseHistory(await retrieveRaw().reversed())
+        setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
+
+        observe(
+            appCoordinator.settings.map { ($0.smoothGlucose, $0.allowOneMinuteGlucose) }.removeDuplicates(by: { $0 == $1 })
+                .dropFirst()
+        ) { me, _ in
+            await me.updateAppCoordinator() // recompute smoothed / filtered glucose
+        }
     }
 
     func storeGlucose(_ glucose: [BloodGlucose]) async -> [BloodGlucose]? {
@@ -89,18 +86,14 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
         guard didModify, let newRecords else { return nil }
 
+        setCachedGlucose(stored)
+        appCoordinator.sendNewGlucoseRecords(newRecords)
+
         // Only log once
         debug(
             .deviceManager,
             "storeGlucose \(newRecords.count) new entries. Latest Glucose: \(String(describing: glucose.last?.glucose)) mg/Dl, date: \(String(describing: glucose.last?.dateString))."
         )
-
-        // push alarm must happen before setGlucoseHistory
-        await pushAlarm()
-
-        // newest -> oldest
-        appCoordinator.setGlucoseHistory(stored)
-        appCoordinator.sendNewGlucoseRecords(newRecords)
 
         return stored
     }
@@ -111,66 +104,38 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
             ids.contains($0.id)
         }
         if let deleted {
-            // push alarm must happen before setGlucoseHistory
-            await pushAlarm()
-            // newest -> oldest
-            appCoordinator.setGlucoseHistory(bgInStorage)
+            setCachedGlucose(bgInStorage)
             appCoordinator.sendGlucoseDeleted(deleted)
         }
     }
 
     func latestDate() async -> Date? {
-        guard let events = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
-              let recent = events.first
-        else {
-            return nil
-        }
-        return recent.dateString
+        // file is stored newest -> oldest, so the first record is the most recent
+        cachedGlucose.first?.dateString
     }
 
-    func retrieveRaw() async -> [BloodGlucose] {
-        // file is stored newest->oldest, so we reverse it
-        await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Monitor.glucose, decodingInto: [BloodGlucose].self)
+        await resetCache()
     }
 
-    func retrieve() async -> [BloodGlucose] {
-        // file is stored newest->oldest, so we reverse it
-        var retrieved = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.reversed() ?? []
-        guard !retrieved.isEmpty else {
-            return []
-        }
-        let settings = await settingsManager.settings
-        if settings.smoothGlucose {
-            // smooth with 3 repeats
-            for _ in 1 ... 3 {
-                retrieved.smoothSavitzkyGolayQuaDratic(withFilterWidth: 3)
-            }
-        }
-        return retrieved
+    /// clears the in-memory cache, forcing a re-read from storage
+    private func resetCache() async {
+        setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
     }
 
-    /// this function returns blood glucose in newest->oldest order (opposite of retrieve())
-    /// it is used by oref0 which wants this order
-    func retrieveFiltered() async -> [BloodGlucose] {
-        let retrieved = await retrieve() // smoothed already
-        let settings = await settingsManager.settings
-
-        let minInterval = settings.allowOneMinuteGlucose ? Config.filterTimeOneMinute : Config
-            .filterTimeFiveMinutes
-
-        // sorting newest->oldest happens inside filterFrequentGlucose
-        return FrequentGlucoseFiltering.filterFrequentGlucose(retrieved, interval: minInterval)
+    private func setCachedGlucose(_ glucose: [BloodGlucose]) {
+        cachedGlucose = glucose
+        updateAppCoordinator()
     }
 
-    private func pushAlarm() async {
-        appCoordinator.setGlucoseAlarm(await getAlarm())
-    }
+    private func getAlarm() -> GlucoseAlarm? {
+        guard let glucose = cachedGlucose.first, glucose.dateString.addingTimeInterval(.minutes(20)) > Date()
+        else { return nil }
 
-    private func getAlarm() async -> GlucoseAlarm? {
-        guard let glucose = await retrieveRaw().last, glucose.dateString.addingTimeInterval(.minutes(20)) > Date(),
-              let glucoseValue = glucose.glucose else { return nil }
+        let glucoseValue = glucose.glucose
 
-        let settings = await settingsManager.settings
+        let settings = appCoordinator.settings.value
 
         if Decimal(glucoseValue) <= settings.lowGlucose {
             return .low
@@ -195,19 +160,46 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService {
 
         return nil
     }
+
+    private static let filterIntervalFiveMinutes: TimeInterval = .minutes(4.5)
+    private static let filterIntervalOneMinute: TimeInterval = .minutes(0.8)
+    private static let numberOfSavitzkyGolayPasses = 3
+
+    private func updateAppCoordinator() {
+        var smoothed: [BloodGlucose] = cachedGlucose
+        if appCoordinator.settings.value.smoothGlucose {
+            if smoothed.isNotEmpty {
+                // reverse to oldest->newest
+                smoothed.reverse()
+                for _ in 1 ... Self.numberOfSavitzkyGolayPasses {
+                    smoothed.smoothSavitzkyGolayQuaDratic(withFilterWidth: 3)
+                }
+                // reverse back to newest->oldest
+                smoothed.reverse()
+            }
+        }
+
+        let minInterval = appCoordinator.settings.value.allowOneMinuteGlucose ? Self.filterIntervalOneMinute : Self
+            .filterIntervalFiveMinutes
+        let frequencyFiltered = FrequentGlucoseFiltering.filterFrequentGlucose(smoothed, interval: minInterval)
+
+        // push alarm must happen before setGlucoseHistory
+        appCoordinator.setGlucoseAlarm(getAlarm())
+        // newest -> oldest
+        appCoordinator.setGlucoseHistory(raw: cachedGlucose, smoothed: smoothed, frequencyFiltered: frequencyFiltered)
+    }
 }
 
 enum FrequentGlucoseFiltering {
+    /// glucose must be newest -> oldest
     static func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
-        // glucose is oldest-to-newest from retrieve; re-sort newest-to-oldest for filtering
-        let sorted = glucose.sorted { $0.date > $1.date }
-        guard let latest = sorted.first else { return [] }
+        guard let latest = glucose.first else { return [] }
 
         var lastDate = latest.dateString
         // always keep the latest
         var filtered: [BloodGlucose] = [latest]
 
-        for entry in sorted.dropFirst() {
+        for entry in glucose.dropFirst() {
             if lastDate.timeIntervalSince(entry.dateString) >= interval {
                 filtered.append(entry)
                 lastDate = entry.dateString

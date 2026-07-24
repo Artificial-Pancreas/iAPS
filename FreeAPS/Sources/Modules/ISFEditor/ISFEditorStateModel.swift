@@ -3,17 +3,12 @@ import Swinject
 
 extension ISFEditor {
     final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
-        @Injected() private var storage: FileStorage!
+        @Injected() private var isfScheduleStorage: IsfScheduleStorage!
         private let coreDataStorage = CoreDataStorage()
         let uiBindings = UIBindings()
 
         @Published var items: [Item] = []
-        private(set) var autosensISF: Decimal?
-        private(set) var autosensRatio: Decimal = 0
-
-        @Published var suggestion: Suggestion?
-        @Published var autotune: Autotune?
-        @Published var sensitivity: Decimal?
+        @Published var autotune: Profile?
 
         let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
@@ -26,7 +21,7 @@ extension ISFEditor {
             case .mgdL:
                 return stride(from: 9, to: 540.01, by: 1.0).map { Decimal($0) }
             case .mmolL:
-                return stride(from: 1.0, to: 301.0, by: 1.0).map { ($0.decimal ?? .zero) / 10 }
+                return stride(from: 1.0, to: 301.0, by: 1.0).map { Decimal($0) / 10 }
             }
         }
 
@@ -38,47 +33,15 @@ extension ISFEditor {
         private(set) var units: GlucoseUnits = .mmolL
 
         override func subscribe() async {
-            suggestion = appCoordinator.suggested.value
-
-            await fetchSensitivity()
-
-            let isfSchedule = await provider.isfSchedule
+            let isfSchedule = appCoordinator.isfSchedule.value
             units = isfSchedule.units
             items = isfSchedule.sensitivities.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: value.sensitivity) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
-            autotune = await provider.autotune
-
-            let autosens = await provider.autosense
-            if let newISF = autosens.newisf {
-                switch units {
-                case .mgdL:
-                    autosensISF = newISF
-                case .mmolL:
-                    autosensISF = newISF * GlucoseUnits.exchangeRate
-                }
-            }
-
-            autosensRatio = autosens.ratio
-
-            observeUI(appCoordinator.suggested) { me, suggestion in
-                await me.suggestionUpdated(suggestion)
-            }
-        }
-
-        private func suggestionUpdated(_ suggestion: Suggestion?) async {
-            self.suggestion = suggestion
-            await fetchSensitivity()
-        }
-
-        private func fetchSensitivity() async {
-            if let suggestion = await coreDataStorage.fetchReason() {
-                sensitivity = suggestion.isf ?? 15
-            } else {
-                sensitivity = nil
-            }
+            autotune = appCoordinator.autotune.value
+            validate()
         }
 
         func add() {
@@ -94,7 +57,7 @@ extension ISFEditor {
             items.append(newItem)
         }
 
-        private let formatter = {
+        private static let formatter = {
             let formatter = DateFormatter()
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateFormat = "HH:mm:ss"
@@ -110,14 +73,14 @@ extension ISFEditor {
                     let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                     let minutes = Int(date.timeIntervalSince1970 / 60)
                     let rate = self.rateValues[item.rateIndex]
-                    return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: formatter.string(from: date))
+                    return InsulinSensitivityEntry(sensitivity: rate, offset: minutes, start: Self.formatter.string(from: date))
                 }
                 let profile = InsulinSensitivities(
                     units: units,
-                    userPrefferedUnits: settings.units,
+                    userPreferredUnits: settings.units,
                     sensitivities: sensitivities
                 )
-                await provider.saveProfile(profile)
+                await isfScheduleStorage.updateIsfSchedule(profile)
             }
         }
 
@@ -125,14 +88,10 @@ extension ISFEditor {
             let uniq = Array(Set(items))
             let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
             sorted.first?.timeIndex = 0
-            DispatchQueue.main.async {
-                self.items = sorted
+            items = sorted
+            if items.isEmpty {
+                units = appCoordinator.settings.value.units
             }
-
-            // TODO: what is this for?
-//            if self.items.isEmpty {
-//                self.units = self.settingsManager.settings.units
-//            }
         }
     }
 }

@@ -29,24 +29,10 @@ extension Home {
             overrideStorage = resolver.resolve(OverrideStorage.self)!
         }
 
-        var dynamicVariables: DynamicVariables? {
-            get async {
-                await storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
-            }
-        }
-
         func fetchedMeals(_ interval: NSDate) async -> [MealsSnapshot] {
             await coreDateStorage.fetchMealData(
                 interval: interval
             )
-        }
-
-        func overrides() async -> [OverrideSnapshot] {
-            await overrideStorage.fetchOverrides(interval: DateFilter.day.startDate)
-        }
-
-        func latestOverride() async -> OverrideSnapshot? {
-            await overrideStorage.fetchLatestOverride().first
         }
 
         func overrideHistory() async -> [OverrideHistorySnapshot] {
@@ -74,39 +60,26 @@ extension Home {
             appCoordinator.sendHeartbeat()
         }
 
-        func filteredGlucose(hours: Int) async -> [BloodGlucose] {
+        func smoothedGlucose(hours: Int) -> [BloodGlucose] {
             let now = Date()
-            // .retrieve() will read glucose from storage and apply smoothing if needed
-            return await glucoseStorage.retrieve().filter {
+            // reverse to oldest->newest order
+            return appCoordinator.glucoseSmoothed.value.reversed().filter {
                 $0.dateString.addingTimeInterval(.hours(hours)) > now
             }
         }
 
-        func manualGlucose(hours: Int) async -> [BloodGlucose] {
+        func manualGlucose(hours: Int) -> [BloodGlucose] {
             let now = Date()
-            return await glucoseStorage.retrieve().filter {
+            // reverse to oldest->newest order
+            return appCoordinator.glucoseSmoothed.value.reversed().filter {
                 $0.type == GlucoseType.manual.rawValue &&
                     $0.dateString.addingTimeInterval(.hours(hours)) > now
             }
         }
 
-        func pumpHistory(hours: Int) async -> [PumpHistoryEvent] {
+        func carbs(hours: Int) -> [CarbsEntry] {
             let now = Date()
-            return appCoordinator.pumpHistory.value.filter {
-                $0.timestamp.addingTimeInterval(.hours(hours)) > now
-            }
-        }
-
-        func tempTargets(hours: Int) async -> [TempTarget] {
-            let now = Date()
-            return await tempTargetsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(.hours(hours)) > now
-            }
-        }
-
-        func carbs(hours: Int) async -> [CarbsEntry] {
-            let now = Date()
-            return await carbsStorage.recent().filter {
+            return appCoordinator.carbHistory.value.filter {
                 $0.createdAt.addingTimeInterval(.hours(hours)) > now && $0.carbs > 0
             }
         }
@@ -116,21 +89,6 @@ extension Home {
             return await announcementStorage.validate().filter {
                 $0.createdAt.addingTimeInterval(.hours(hours)) > now
             }
-        }
-
-        func autotunedBasalProfile() async -> [BasalProfileEntry] {
-            if let profile = await storage.retrieve(OpenAPS.Settings.profile, as: Autotune.self)?.basalProfile {
-                return profile
-            }
-            if let profile = await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile {
-                return profile
-            }
-            return [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
-        }
-
-        func basalProfile() async -> [BasalProfileEntry] {
-            await storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)?.basalProfile
-                ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
         }
     }
 }

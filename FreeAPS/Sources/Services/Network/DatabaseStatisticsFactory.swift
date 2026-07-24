@@ -270,15 +270,13 @@ extension DatabaseStatisticsFactory {
     }
 
     func buildProfile() async -> NightscoutProfileStore? {
-        guard let sensitivities = await storage.retrieveFile(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self)
-        else { return nil }
+        let sensitivities = appCoordinator.isfSchedule.value
 
-        guard let targets = await storage.retrieveFile(OpenAPS.Settings.bgTargets, as: BGTargets.self) else { return nil }
+        let targets = appCoordinator.bgTargetsSchedule.value
 
-        guard let carbRatios = await storage.retrieveFile(OpenAPS.Settings.carbRatios, as: CarbRatios.self) else { return nil }
+        let carbRatios = appCoordinator.crSchedule.value
 
-        guard let basalProfile = await storage.retrieveFile(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-        else { return nil }
+        let basalProfile = appCoordinator.basalProfile.value
 
         let sens = sensitivities.sensitivities.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(

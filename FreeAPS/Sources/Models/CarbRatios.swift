@@ -5,6 +5,10 @@ struct CarbRatios: JSON {
     let schedule: [CarbRatioEntry]
 }
 
+extension CarbRatios {
+    static let initial = CarbRatios(units: .grams, schedule: [CarbRatioEntry(start: "00:00:00", offset: 0, ratio: 10)])
+}
+
 struct CarbRatioEntry: JSON {
     let start: String
     let offset: Int
@@ -27,7 +31,7 @@ extension CarbRatioEntry {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let start = try container.decode(String.self, forKey: .start)
         let offset = try container.decode(Int.self, forKey: .offset)
-        let ratio = try container.decode(Double.self, forKey: .ratio).decimal ?? .zero
+        let ratio = try container.decode(Decimal.self, forKey: .ratio)
 
         self = CarbRatioEntry(start: start, offset: offset, ratio: ratio)
     }

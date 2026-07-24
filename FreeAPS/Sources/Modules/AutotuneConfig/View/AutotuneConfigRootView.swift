@@ -137,7 +137,7 @@ extension AutotuneConfig {
             }
         }
 
-        private func carbAndSensitivitySection(_ autotune: Autotune) -> some View {
+        private func carbAndSensitivitySection(_ autotune: Profile) -> some View {
             Section {
                 HStack {
                     Text("Carb ratio")
@@ -149,16 +149,16 @@ extension AutotuneConfig {
                     Text("Sensitivity")
                     Spacer()
                     if state.units == .mmolL {
-                        Text(isfFormatter.string(from: autotune.sensitivity.asMmolL as NSNumber) ?? "0")
+                        Text(isfFormatter.string(from: autotune.sens.asMmolL as NSNumber) ?? "0")
                     } else {
-                        Text(isfFormatter.string(from: autotune.sensitivity as NSNumber) ?? "0")
+                        Text(isfFormatter.string(from: autotune.sens as NSNumber) ?? "0")
                     }
                     Text(state.units.rawValue + "/U").foregroundColor(.secondary)
                 }
             }
         }
 
-        @ViewBuilder private func basalProfileSection(_ autotune: Autotune) -> some View {
+        @ViewBuilder private func basalProfileSection(_ autotune: Profile) -> some View {
             Section(header: Text("Basal profile")) {
                 Grid {
                     ForEach(0 ..< autotune.basalProfile.count, id: \.self) { index in
@@ -190,7 +190,7 @@ extension AutotuneConfig {
             }
         }
 
-        @ViewBuilder private func basalProfileRow(for autotune: Autotune, index: Int) -> some View {
+        @ViewBuilder private func basalProfileRow(for autotune: Profile, index: Int) -> some View {
             GridRow {
                 if let date = timeFormatter.date(from: autotune.basalProfile[index].start) {
                     Text(outputTimeFormatter.string(from: date))

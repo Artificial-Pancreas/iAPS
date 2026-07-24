@@ -36,7 +36,6 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
     // this is called at the start of the app
     func start() async {
         contacts = await storage.retrieve(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self)
-            ?? [ContactTrickEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick))
             ?? []
 
         knownIds = contacts.compactMap(\.contactId)

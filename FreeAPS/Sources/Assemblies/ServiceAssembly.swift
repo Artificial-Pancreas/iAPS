@@ -75,7 +75,8 @@ final class ServiceAssembly: Assembly {
                 garmin: garmin,
                 nightscout: nightscout,
                 appCoordinator: appCoordinator,
-                overrideStorage: r.resolve(OverrideStorage.self)!
+                overrideStorage: r.resolve(OverrideStorage.self)!,
+                overrideManager: r.resolve(OverrideManager.self)!
             )
         }
         container.register(GarminManager.self) { r in

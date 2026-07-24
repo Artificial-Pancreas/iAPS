@@ -86,8 +86,8 @@ struct AddCarbPresentIntent: AppIntent {
             )
         }
 
-        let carbRequest = CarbPresetIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let carbRequest = CarbPresetIntentRequest()
 
         let finalQuantityCarbsDisplay = try await carbRequest.addCarbs(
             quantityCarbs,

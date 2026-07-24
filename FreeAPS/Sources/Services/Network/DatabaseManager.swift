@@ -121,7 +121,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         let profileName = await self.profileName
 
         if let profile, let ps = profile.store[profile.defaultProfile] {
-            let uploadedProfile = await storage.retrieveFile(
+            let uploadedProfile = await storage.retrieve(
                 OpenAPS.Nightscout.uploadedProfileToDatabase,
                 as: DatabaseProfileStore.self
             )
@@ -133,9 +133,9 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             }
         }
 
-        let tempTargets = await storage.retrieveFile(OpenAPS.FreeAPS.tempTargetsPresets, as: [TempTarget].self)
+        let tempTargets = await storage.retrieve(OpenAPS.FreeAPS.tempTargetsPresets, as: [TempTarget].self)
 
-        let uploadedPreferences = await storage.retrieveFile(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self)
+        let uploadedPreferences = await storage.retrieve(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self)
         // UPLOAD PREFERENCES WHEN CHANGED
         if uploadedPreferences != preferences || force {
             let prefs = DatabasePreferences(preferences: preferences, profile: profileName)
@@ -176,7 +176,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
 
         let mealPresets = await mealPresetDatabaseUpload(profile: profileName)
         if !mealPresets.presets.isEmpty {
-            let uploadedMealPresets = await storage.retrieveFile(OpenAPS.Nightscout.uploadedMealPresets, as: DatabaseMeal.self)
+            let uploadedMealPresets = await storage.retrieve(OpenAPS.Nightscout.uploadedMealPresets, as: DatabaseMeal.self)
             // Upload Meal Presets when needed
             if uploadedMealPresets != mealPresets || force {
                 await uploadMealPresets(mealPresets)
@@ -187,7 +187,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
 
         let overridePresets = await overridePresetDatabaseUpload(profile: profileName)
         if !overridePresets.presets.isEmpty {
-            let uploadedOverridePresets = await storage.retrieveFile(
+            let uploadedOverridePresets = await storage.retrieve(
                 OpenAPS.Nightscout.uploadedOverridePresets,
                 as: DatabaseOverride.self
             )
@@ -395,7 +395,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
     }
 
     private func convertOverridePresets() async -> [MigratedOverridePresets] {
-        let presets = await overrideStorage.fetchProfiles()
+        let presets = await overrideStorage.fetchOverridePresets()
         return presets.map { item -> MigratedOverridePresets in
             MigratedOverridePresets(
                 advancedSettings: item.advancedSettings,
@@ -404,7 +404,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
                 duration: (item.duration ?? 0) as Decimal,
                 emoji: item.emoji ?? "",
                 end: (item.end ?? 0) as Decimal,
-                id: item.id ?? "",
+                id: item.id,
                 indefininite: item.indefinite,
                 isf: item.isf,
                 isndAndCr: item.isfAndCr, basal: item.basal,

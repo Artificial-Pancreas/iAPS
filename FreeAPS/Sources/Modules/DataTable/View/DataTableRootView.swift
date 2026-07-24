@@ -493,16 +493,16 @@ extension DataTable {
 
         @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             HStack {
-                Text(item.glucose.glucose.map {
+                Text(
                     (
                         isManual.type == GlucoseType.manual.rawValue ?
                             manualGlucoseFormatter :
                             glucoseFormatter
                     )
                     .string(from: Double(
-                        state.units == .mmolL ? $0.asMmolL : Decimal($0)
+                        state.units == .mmolL ? item.glucose.glucose.asMmolL : Decimal(item.glucose.glucose)
                     ) as NSNumber)!
-                } ?? "--")
+                )
                 if isManual.type == GlucoseType.manual.rawValue {
                     Image(systemName: "drop.fill").symbolRenderingMode(.monochrome).foregroundStyle(.red)
                 } else {

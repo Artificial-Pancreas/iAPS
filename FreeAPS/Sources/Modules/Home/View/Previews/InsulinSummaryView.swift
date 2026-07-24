@@ -2,13 +2,7 @@ import CoreData
 import SwiftUI
 
 struct InsulinSummaryView: View {
-    let neg: Int
-    let tddChange: Decimal
-    let tddAverage: Decimal
-    let tddYesterday: Decimal
-    let tdd2DaysAgo: Decimal
-    let tdd3DaysAgo: Decimal
-    let tddActualAverage: Decimal
+    let stats: InsulinStatistics
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -45,19 +39,19 @@ struct InsulinSummaryView: View {
             BolusSummary(
                 variable: NSLocalizedString("Time with negative insulin", comment: ""),
                 formula: NSLocalizedString(" min", comment: ""),
-                insulin: Decimal(neg),
+                insulin: Decimal(stats.minutesWithNegativeIOB),
                 color: .red
             ),
             BolusSummary(
                 variable: NSLocalizedString("Insulin compared to yesterday", comment: ""),
                 formula: NSLocalizedString(" U", comment: ""),
-                insulin: tddChange,
+                insulin: stats.tddChange,
                 color: Color(.insulin)
             ),
             BolusSummary(
                 variable: NSLocalizedString("Insulin compared to average", comment: ""),
                 formula: NSLocalizedString(" U", comment: ""),
-                insulin: tddAverage,
+                insulin: stats.tddAverage,
                 color: Color(.insulin)
             ),
             BolusSummary(
@@ -69,7 +63,7 @@ struct InsulinSummaryView: View {
             BolusSummary(
                 variable: NSLocalizedString("Average Insulin 10 days", comment: ""),
                 formula: NSLocalizedString(" U", comment: ""),
-                insulin: tddActualAverage,
+                insulin: stats.tddActualAverage,
                 color: .secondary
             ),
             BolusSummary(
@@ -81,19 +75,19 @@ struct InsulinSummaryView: View {
             BolusSummary(
                 variable: NSLocalizedString("TDD yesterday", comment: ""),
                 formula: NSLocalizedString(" U", comment: ""),
-                insulin: tddYesterday,
+                insulin: stats.tddYesterday,
                 color: .secondary
             ),
             BolusSummary(
                 variable: NSLocalizedString("TDD 2 days ago", comment: ""),
                 formula: NSLocalizedString(" U", comment: ""),
-                insulin: tdd2DaysAgo,
+                insulin: stats.tdd2DaysAgo,
                 color: .secondary
             ),
             BolusSummary(
                 variable: NSLocalizedString("TDD 3 days ago", comment: ""),
                 formula: NSLocalizedString(" U", comment: ""),
-                insulin: tdd3DaysAgo,
+                insulin: stats.tdd3DaysAgo,
                 color: .secondary
             )
         ]
@@ -122,11 +116,12 @@ struct InsulinSummaryView: View {
     }
 
     private func isTDD(_ insulin: Decimal) -> Bool {
-        insulin == tddYesterday || insulin == tdd2DaysAgo || insulin == tdd3DaysAgo || insulin == tddActualAverage
+        insulin == stats.tddYesterday || insulin == stats.tdd2DaysAgo || insulin == stats.tdd3DaysAgo || insulin == stats
+            .tddActualAverage
     }
 
     private func useData(_ data: [BolusSummary]) -> [BolusSummary] {
-        if neg == 0 {
+        if stats.minutesWithNegativeIOB == 0 {
             return data.dropFirst().map({ a -> BolusSummary in a })
         }
         return data

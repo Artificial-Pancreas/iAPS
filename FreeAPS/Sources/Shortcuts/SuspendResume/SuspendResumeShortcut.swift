@@ -45,8 +45,8 @@ struct SuspendResumeIntent: AppIntent {
             )
         }
 
-        let intentRequest = SuspendResumeIntentRequest()
         try await BaseIntentsRequest.awaitStartup()
+        let intentRequest = SuspendResumeIntentRequest()
 
         let confirmation = try intentRequest.setMode(modeToApply)
         return .result(

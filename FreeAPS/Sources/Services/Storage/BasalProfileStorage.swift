@@ -1,0 +1,49 @@
+import Foundation
+import LoopKit
+import Swinject
+
+protocol BasalProfileStorage: AnyObject, Sendable {
+    var basalProfile: [BasalProfileEntry] { get async }
+    func updateBasalProfile(_ profile: [BasalProfileEntry]) async
+
+    func saveRawJSON(_ raw: RawJSON) async throws
+}
+
+actor BaseBasalProfileStorage: BasalProfileStorage, AppService {
+    private let storage: FileStorage
+    private let appCoordinator: AppCoordinator
+
+    init(
+        storage: FileStorage,
+        appCoordinator: AppCoordinator
+    ) {
+        self.storage = storage
+        self.appCoordinator = appCoordinator
+    }
+
+    // this is called on app start, before anything is rendered
+    func start() async {
+        await resetCache()
+    }
+
+    private func resetCache() async {
+        appCoordinator.setBasalProfile(await self.basalProfile)
+    }
+
+    var basalProfile: [BasalProfileEntry] {
+        get async {
+            await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
+                ?? [BasalProfileEntry].initial
+        }
+    }
+
+    func updateBasalProfile(_ schedule: [BasalProfileEntry]) async {
+        await self.storage.save(schedule, as: OpenAPS.Settings.basalProfile)
+        appCoordinator.setBasalProfile(schedule)
+    }
+
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.basalProfile, decodingInto: [BasalProfileEntry].self)
+        await resetCache()
+    }
+}

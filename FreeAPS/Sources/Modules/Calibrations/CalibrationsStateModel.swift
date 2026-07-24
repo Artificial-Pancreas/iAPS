@@ -42,13 +42,14 @@ extension Calibrations {
                     glucose = newCalibration.asMgdL
                 }
 
-                guard let lastGlucose = await glucoseStorage.retrieveRaw().last,
-                      lastGlucose.dateString.addingTimeInterval(60 * 4.5) > Date(),
-                      let uncalibrated = lastGlucose.uncalibrated
+                guard let lastGlucose = appCoordinator.glucoseRaw.value.first,
+                      lastGlucose.dateString.addingTimeInterval(60 * 4.5) > Date()
                 else {
                     info(.service, "Glucose is stale for calibration")
                     return
                 }
+
+                let uncalibrated = lastGlucose.uncalibrated
 
                 let calibration = Calibration(x: Double(uncalibrated), y: Double(glucose))
 

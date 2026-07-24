@@ -348,7 +348,7 @@ private extension KeyedDecodingContainer {
         // Try String and convert
         if let stringVal = try? decode(String.self, forKey: key) {
             let trimmed = stringVal.trimmingCharacters(in: .whitespacesAndNewlines)
-            if let parsed = Decimal(from: trimmed) {
+            if let parsed = trimmed.toDecimal {
                 return ensuringNonNegative ? max(0, parsed) : parsed
             }
             throw DecodingError.dataCorruptedError(
@@ -382,7 +382,7 @@ private extension KeyedDecodingContainer {
         }
         if let stringVal = try? decode(String.self, forKey: key) {
             let trimmed = stringVal.trimmingCharacters(in: .whitespacesAndNewlines)
-            if let parsed = Decimal(from: trimmed) {
+            if let parsed = trimmed.toDecimal {
                 return ensuringNonNegative ? max(0, parsed) : parsed
             }
             return nil

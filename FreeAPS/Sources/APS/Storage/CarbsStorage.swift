@@ -5,8 +5,9 @@ import Swinject
 protocol CarbsStorage: Sendable {
     func storeCarbs(_ carbs: [CarbsEntry]) async
     func syncDate() async -> Date
-    func recent() async -> [CarbsEntry]
     func deleteCarbsAndFPUs(at date: Date) async
+
+    func saveRawJSON(_ raw: RawJSON) async throws
 }
 
 actor BaseCarbsStorage: CarbsStorage, AppService {
@@ -26,7 +27,18 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
 
     // this is called on app start
     func start() async {
-        appCoordinator.setCarbHistory(await recent().reversed())
+        await resetCache()
+    }
+
+    func saveRawJSON(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Monitor.carbHistory, decodingInto: [CarbsEntry].self)
+        await resetCache()
+    }
+
+    private func resetCache() async {
+        // newest -> oldest
+        let carbs = await storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
+        appCoordinator.setCarbHistory(carbs)
     }
 
     func storeCarbs(_ entries: [CarbsEntry]) async {
@@ -140,11 +152,6 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
 
     func syncDate() -> Date {
         Date().subtractingTimeInterval(.hours(24))
-    }
-
-    /// oldest -> newest
-    func recent() async -> [CarbsEntry] {
-        await storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
 
     func deleteCarbsAndFPUs(at date: Date) async {

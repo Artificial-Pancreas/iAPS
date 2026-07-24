@@ -14,6 +14,6 @@ extension LosslessStringConvertible {
     var string: String { .init(self) }
 }
 
-extension FloatingPoint where Self: LosslessStringConvertible {
-    var decimal: Decimal? { Decimal(string: string) }
-}
+// extension FloatingPoint where Self: LosslessStringConvertible {
+//    var decimal: Decimal? { Decimal(string: string) }
+// }

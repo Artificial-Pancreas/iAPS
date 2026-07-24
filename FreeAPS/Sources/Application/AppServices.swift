@@ -26,6 +26,11 @@ import Swinject
         }
 
         try await startService(resolver.resolve(SettingsManager.self))
+        try await startService(resolver.resolve(BasalProfileStorage.self))
+        try await startService(resolver.resolve(AutotuneStorage.self))
+        try await startService(resolver.resolve(IsfScheduleStorage.self))
+        try await startService(resolver.resolve(CarbRatioScheduleStorage.self))
+        try await startService(resolver.resolve(BgTargetsScheduleStorage.self))
         try await startService(resolver.resolve(MetricKitService.self))
 
         _ = resolver.resolve(BluetoothStateManager.self)!
@@ -40,6 +45,10 @@ import Swinject
         try await startService(resolver.resolve(CarbsStorage.self))
         try await startService(resolver.resolve(TempTargetsStorage.self))
         try await startService(resolver.resolve(CalibrationService.self))
+
+        try await startService(resolver.resolve(OverrideManager.self)!)
+
+        try await startService(resolver.resolve(DynamicStateManager.self)!)
 
         try await startService(resolver.resolve(APSManager.self)!)
 

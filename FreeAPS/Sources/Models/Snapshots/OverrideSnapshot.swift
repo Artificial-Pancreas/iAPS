@@ -4,6 +4,7 @@ import Foundation
 // a snapshot (DTO) of a CoreData Override entity
 // entities are not safe to send across actor/thread boundaries (not Sendable), this snapshot is
 struct OverrideSnapshot: Sendable, Equatable {
+    let id: String
     let advancedSettings: Bool
     let basal: Bool
     let cr: Bool
@@ -16,7 +17,6 @@ struct OverrideSnapshot: Sendable, Equatable {
     let glucoseOverrideThresholdActive: Bool
     let glucoseOverrideThresholdActiveDown: Bool
     let glucoseOverrideThresholdDown: Decimal?
-    let id: String?
     let indefinite: Bool
     let isf: Bool
     let isfAndCr: Bool
@@ -31,11 +31,15 @@ struct OverrideSnapshot: Sendable, Equatable {
     let start: Decimal?
     let target: Decimal?
     let uamMinutes: Decimal?
+
+    let aisf: AutoISFsettings?
 }
 
 extension OverrideSnapshot {
-    static func create(from override: Override) -> OverrideSnapshot {
-        OverrideSnapshot(
+    static func create(from override: Override, aisf: AutoISFsettings?) -> OverrideSnapshot? {
+        guard let id = override.id else { return nil }
+        return OverrideSnapshot(
+            id: id,
             advancedSettings: override.advancedSettings,
             basal: override.basal,
             cr: override.cr,
@@ -48,7 +52,6 @@ extension OverrideSnapshot {
             glucoseOverrideThresholdActive: override.glucoseOverrideThresholdActive,
             glucoseOverrideThresholdActiveDown: override.glucoseOverrideThresholdActiveDown,
             glucoseOverrideThresholdDown: override.glucoseOverrideThresholdDown?.decimalValue,
-            id: override.id,
             indefinite: override.indefinite,
             isf: override.isf,
             isfAndCr: override.isfAndCr,
@@ -62,39 +65,43 @@ extension OverrideSnapshot {
             smbMinutes: override.smbMinutes?.decimalValue,
             start: override.start?.decimalValue,
             target: override.target?.decimalValue,
-            uamMinutes: override.uamMinutes?.decimalValue
+            uamMinutes: override.uamMinutes?.decimalValue,
+            aisf: aisf
         )
     }
 }
 
-// holds the data to be saved as an Override entity into core data (to be passed into the OverrideStorage)
-// (instead of creating entities ad-hoc outsite the OverrideStorage)
-struct OverrideDraft: Sendable {
-    let id: String
-    let name: String?
-    let emoji: String?
-    let isPreset: Bool
-    let duration: Decimal
-    let indefinite: Bool
-    let percentage: Double
-    let smbIsOff: Bool
-    let overrideAutoISF: Bool
-    let target: Decimal
-    let advancedSettings: Bool
-    let isfAndCr: Bool
-    let isf: Bool
-    let cr: Bool
-    let basal: Bool
-    let smbIsAlwaysOff: Bool
-    let start: Decimal
-    let end: Decimal
-    let smbMinutes: Decimal
-    let uamMinutes: Decimal
-    let maxIOB: Decimal
-    let overrideMaxIOB: Bool
-    let endWIthNewCarbs: Bool
-    let glucoseOverrideThresholdActive: Bool
-    let glucoseOverrideThreshold: Decimal
-    let glucoseOverrideThresholdActiveDown: Bool
-    let glucoseOverrideThresholdDown: Decimal
+extension OverrideSnapshot {
+    var toOverridePreset: OverridePresetsSnapshot {
+        OverridePresetsSnapshot(
+            id: id,
+            name: nil,
+            emoji: nil,
+            percentage: percentage,
+            indefinite: indefinite,
+            duration: duration,
+            target: target,
+            basal: basal,
+            cr: cr,
+            isf: isf,
+            isfAndCr: isfAndCr,
+            advancedSettings: advancedSettings,
+            endWIthNewCarbs: endWIthNewCarbs,
+            glucoseOverrideThreshold: glucoseOverrideThreshold,
+            glucoseOverrideThresholdActive: glucoseOverrideThresholdActive,
+            glucoseOverrideThresholdActiveDown: glucoseOverrideThresholdActiveDown,
+            glucoseOverrideThresholdDown: glucoseOverrideThresholdDown,
+            overrideMaxIOB: overrideMaxIOB,
+            maxIOB: maxIOB,
+            smbIsAlwaysOff: smbIsAlwaysOff,
+            smbIsOff: smbIsOff,
+            start: start,
+            end: end,
+            smbMinutes: smbMinutes,
+            uamMinutes: uamMinutes,
+            overrideAutoISF: overrideAutoISF,
+            date: date,
+            aisf: aisf
+        )
+    }
 }

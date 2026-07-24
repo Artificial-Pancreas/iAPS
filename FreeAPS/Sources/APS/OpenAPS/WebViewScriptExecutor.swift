@@ -1,32 +1,11 @@
 import WebKit
 
+struct ScriptError: Decodable, Error {
+    let script_error: String
+}
+
 final class WebViewScriptExecutor: Sendable {
     @MainActor private var webView: WKWebView?
-    @MainActor private var continuations = [String: CheckedContinuation<RawJSON, Error>]()
-
-    private let scripts = [
-        FunctionScript(name: OpenAPS.Bundle.autosens, function: "freeaps_autosens"),
-        FunctionScript(name: OpenAPS.Bundle.autotuneCore, function: "freeaps_autotuneCore"),
-        FunctionScript(name: OpenAPS.Bundle.autotunePrep, function: "freeaps_autotunePrep"),
-        FunctionScript(name: OpenAPS.Bundle.basalSetTemp, function: "freeaps_basalSetTemp"),
-        FunctionScript(name: OpenAPS.Bundle.determineBasal, function: "freeaps_determineBasal"),
-        FunctionScript(name: OpenAPS.Bundle.getLastGlucose, function: "freeaps_glucoseGetLast"),
-        FunctionScript(name: OpenAPS.Bundle.iob, function: "freeaps_iob"),
-        FunctionScript(name: OpenAPS.Bundle.meal, function: "freeaps_meal"),
-        FunctionScript(name: OpenAPS.Bundle.profile, function: "freeaps_profile"),
-        FunctionScript(name: OpenAPS.Prepare.autosens, function: "generate", variable: "iaps_autosens"),
-        FunctionScript(name: OpenAPS.Prepare.autotuneCore, function: "generate", variable: "iaps_autotuneCore"),
-        FunctionScript(name: OpenAPS.Prepare.autotunePrep, function: "generate", variable: "iaps_autotunePrep"),
-        FunctionScript(name: OpenAPS.Prepare.determineBasal, function: "generate", variable: "iaps_determineBasal"),
-        FunctionScript(name: OpenAPS.Prepare.iob, function: "generate", variable: "iaps_iob"),
-        FunctionScript(name: OpenAPS.Prepare.meal, function: "generate", variable: "iaps_meal"),
-        FunctionScript(name: OpenAPS.Prepare.profile, function: "generate", variable: "iaps_profile"),
-        FunctionScript(name: OpenAPS.Prepare.string, function: "generate", variable: "iaps_middleware"),
-        FunctionScript(name: OpenAPS.AutoISF.autoisf, for: [
-            Script(name: OpenAPS.AutoISF.getLastGlucose),
-            Script(name: OpenAPS.AutoISF.autoisf)
-        ], function: "generate", variable: "iaps_autoisf")
-    ]
 
     nonisolated init(frame _: CGRect = .zero) {
         Task {
@@ -40,7 +19,6 @@ final class WebViewScriptExecutor: Sendable {
             let messageHandler = JSMessageBridge()
             messageHandler.executor = self
             contentController.add(messageHandler, name: "consoleLog")
-            contentController.add(messageHandler, name: "jsBridge")
             contentController.add(messageHandler, name: "scriptError")
 
             let config = WKWebViewConfiguration()
@@ -49,7 +27,8 @@ final class WebViewScriptExecutor: Sendable {
             let webView = WKWebView(frame: .zero, configuration: config)
 
             injectConsoleLogHandler(webView: webView)
-            loadScripts(webView: webView)
+
+            includeScript(webView: webView, script: Script(name: OpenAPS.Bundle.oref0))
 
             self.webView = webView
         }
@@ -68,121 +47,58 @@ final class WebViewScriptExecutor: Sendable {
         webView.evaluateJavaScript(consoleScript, completionHandler: nil)
     }
 
-    private func script(for name: String) -> FunctionScript? {
-        scripts.first(where: { $0.name == name })
-    }
-
-    private func loadScripts(webView: WKWebView) {
-        for script in scripts {
-            includeScript(webView: webView, script: script)
-        }
-
-        includeScript(webView: webView, script: Script(name: OpenAPS.Prepare.log))
-    }
-
-    private func includeScript(webView: WKWebView, script: FunctionScript) {
-        includeScript(webView: webView, script: Script(name: "Script", body: script.body))
-    }
-
     private func includeScript(webView: WKWebView, script: Script) {
         webView.evaluateJavaScript(script.body)
     }
 
-    func call(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
-        if let script = script(for: name) {
-            return await Signpost.measure("js", poi: true, name) {
-                await callFunctionAsync(function: script, with: arguments, withBody: body)
-            }
-        } else {
-            print("No script found for \"\(name)\"")
-            return ""
+    func invoke<I: Encodable & Sendable, T: Decodable & Sendable>(
+        function: String,
+        with input: I,
+        as _: T.Type
+    ) async throws -> T {
+        let resultString = try await evaluate(function: function, with: input)
+
+        let data = Data(resultString.utf8) // cache, will be used twice below
+        if let scriptError = try? JSONCoding.decoder.decode(ScriptError.self, from: data) {
+            throw scriptError
         }
-    }
-
-    private func callFunctionAsync(
-        function: FunctionScript,
-        with arguments: [JSON],
-        withBody body: String = ""
-    ) async -> RawJSON {
-        await callFunctionAsync(function: function.variable, with: arguments, withBody: body)
-    }
-
-    private func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
-        let joined = arguments.map(\.rawJSON).joined(separator: ",")
-
-        let script = """
-        \(body)
-
-        return JSON.stringify(\(function)(\(joined)) ?? "", null, 4);
-        """
 
         do {
-            let result = try await evaluateFunction(body: script)
+            let result = try T.decodeFrom(jsonData: data)
             return result
         } catch {
-            print(error)
-            return ""
+            debug(.openAPS, "failed to decode result of \(function): \(error.localizedDescription)")
+            throw error
         }
     }
 
-    private func evaluateFunction(body: String, attempts: Int = 0) async throws -> RawJSON {
+    private func evaluate<I: Encodable & Sendable>(
+        function: String,
+        with input: I,
+        attempts: Int = 0
+    ) async throws -> String {
         let maxAttempts = 2
-        let requestId = UUID().uuidString
-
-        let script = """
-        (function () {
-            (async function () {
-                try {
-                    var result = await (function() {
-                        \(body)
-                    })();
-                    window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", value: result });
-                } catch (e) {
-                    window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", error: e.toString() });
-                }
-            })();
-            return "";
-        })();
-        """
-
-        let timeoutTask = Task { @MainActor in
-            try? await Task.sleep(for: .seconds(15))
-            guard !Task.isCancelled else { return }
-            if let timedOut = continuations.removeValue(forKey: requestId) {
-                timedOut.resume(throwing: NSError(
-                    domain: "WebViewScriptExecutor", code: 408,
-                    userInfo: [NSLocalizedDescriptionKey: "Timed out after 15 seconds"]
-                ))
-            }
-        }
-        defer { timeoutTask.cancel() }
-
         do {
-            return try await withCheckedThrowingContinuation { continuation in
-                Task { @MainActor in
-                    guard let webView else {
-                        continuation.resume(throwing: NSError(
-                            domain: "WebViewScriptExecutor", code: 2,
-                            userInfo: [NSLocalizedDescriptionKey: "WebView not initialized yet"]
-                        ))
-                        return
-                    }
-                    continuations[requestId] = continuation
-
-                    do {
-                        try await webView.evaluateJavaScript(script)
-                    } catch {
-                        if let continuation = continuations.removeValue(forKey: requestId) {
-                            continuation.resume(throwing: error)
-                        }
-                    }
+            return try await Task { @MainActor in
+                guard let webView else {
+                    throw NSError(
+                        domain: "WebViewScriptExecutor", code: 2,
+                        userInfo: [NSLocalizedDescriptionKey: "WebView not initialized yet"]
+                    )
                 }
-            }
+
+                return try await Signpost.measure("js", poi: true, function) {
+                    try await webView.callAsyncJavaScriptShim(
+                        "iaps.invoke(\"\(function)\", input)",
+                        argument: input,
+                    )
+                }
+            }.value
         } catch {
-            print("Javascript function (\(requestId)) attempt \(attempts + 1) failed with error: \(error)")
+            debug(.openAPS, "Javascript function (\(function)) attempt \(attempts + 1) failed with error: \(error)")
+            await createWebView()
             if attempts < maxAttempts {
-                await createWebView()
-                return try await evaluateFunction(body: body, attempts: attempts + 1)
+                return try await evaluate(function: function, with: input, attempts: attempts + 1)
             } else {
                 throw error
             }
@@ -199,28 +115,6 @@ final class WebViewScriptExecutor: Sendable {
         if message.name == "scriptError", let logMessage = message.body as? String {
             warning(.openAPS, "JavaScript Error: \(logMessage)")
         }
-        // Handle responses from evaluateFunction via jsBridge
-        if message.name == "jsBridge",
-           let body = message.body as? [String: Any],
-           let id = body["id"] as? String,
-           let continuation = continuations.removeValue(forKey: id)
-        {
-            if let value = body["value"] as? RawJSON {
-                continuation.resume(returning: value)
-            } else if let error = body["error"] as? String {
-                continuation.resume(throwing: NSError(
-                    domain: "WebViewScriptExecutor",
-                    code: 500,
-                    userInfo: [NSLocalizedDescriptionKey: error]
-                ))
-            } else {
-                continuation.resume(throwing: NSError(
-                    domain: "WebViewScriptExecutor",
-                    code: 500,
-                    userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
-                ))
-            }
-        }
     }
 }
 
@@ -229,5 +123,53 @@ final class WebViewScriptExecutor: Sendable {
 
     func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
         executor?.didReceive(message)
+    }
+}
+
+public extension WKWebView {
+    @MainActor @preconcurrency func callAsyncJavaScriptShim<I: Encodable>(
+        _ functionBody: String,
+        argument: I,
+    ) async throws -> String {
+        #if targetEnvironment(simulator)
+            // callAsyncJavaScript crashes in the simulator: // https://developer.apple.com/forums/thread/779012
+
+            let argJSON = argument.rawJSON()
+            let wrapped = """
+              ((input) => \(functionBody))(\(argJSON))
+            """
+
+            return try await withCheckedThrowingContinuation { cont in
+                self.evaluateJavaScript(wrapped) { value, error in
+                    if let error = error {
+                        debug(.openAPS, "JS function invocation failed: \(error.localizedDescription)")
+                        cont.resume(throwing: error)
+                    } else if let string = value as? String {
+                        cont.resume(returning: string)
+                    } else {
+                        debug(.openAPS, "JS function invocation failed: invalid return value")
+                        cont.resume(throwing: ScriptError(script_error: "invalid return value"))
+                    }
+                }
+            }
+
+        #else
+            let wrapped = """
+              return \(functionBody)
+            """
+
+            let result = try await callAsyncJavaScript(
+                wrapped,
+                arguments: ["input": argument.toJSONObject()],
+                in: nil,
+                contentWorld: .page
+            )
+
+            guard let string = result as? String else {
+                throw ScriptError(script_error: "invalid return value")
+            }
+            return string
+
+        #endif
     }
 }

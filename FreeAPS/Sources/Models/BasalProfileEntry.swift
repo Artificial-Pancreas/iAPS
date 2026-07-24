@@ -7,6 +7,10 @@ struct BasalProfileEntry: JSON, Equatable {
     let rate: Decimal
 }
 
+extension [BasalProfileEntry] {
+    static let initial: [BasalProfileEntry] = [BasalProfileEntry(start: "00:00:00", minutes: 0, rate: 1)]
+}
+
 extension BasalProfileEntry {
     private enum CodingKeys: String, CodingKey {
         case start

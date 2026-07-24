@@ -68,8 +68,7 @@ enum PeakPicker {
 
         // Normalize: non-nil, oldest → latest
         let asc: [(bg: BloodGlucose, v: Double)] = data.compactMap { g in
-            guard let v = g.glucose else { return nil }
-            return (g, Double(v))
+            (g, Double(g.glucose))
         }
 
         let n = asc.count

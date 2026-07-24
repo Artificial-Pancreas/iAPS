@@ -92,7 +92,7 @@ extension LiveActivityAttributes.ContentState {
         let preparedReadings: LiveActivityAttributes.ValueSeries? = {
             guard let readings else { return nil }
             let validReadings = readings.compactMap { reading -> (Date, Int16)? in
-                guard let glucose = reading.sgv else { return nil }
+                let glucose = reading.sgv
                 return (reading.dateString, Int16(glucose))
             }
 
@@ -283,7 +283,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         loopDate = timestamp
 
         let hoursAgo3 = Date.now.subtractingTimeInterval(.hours(3))
-        let glucose = appCoordinator.glucoseHistory.value.filter { $0.dateString >= hoursAgo3 }
+        let glucose = appCoordinator.glucoseRaw.value.filter { $0.dateString >= hoursAgo3 }
         guard let content = Self.buildContentState(
             settings: settings,
             suggestion: theSuggestion,

@@ -28,7 +28,7 @@ struct NigtscoutTreatment: JSON {
     static let local = "iAPS"
     static let trio = "Trio"
 
-    static let empty = NigtscoutTreatment(from: "{}")!
+//    static let empty = NigtscoutTreatment(from: "{}")!
 }
 
 extension NigtscoutTreatment {

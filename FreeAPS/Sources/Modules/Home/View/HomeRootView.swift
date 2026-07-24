@@ -356,7 +356,7 @@ extension Home {
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
                 Button("Cancel Profile Override", role: .destructive) {
-                    state.cancelProfile()
+                    state.cancelActiveOverride()
                     triggerUpdate.toggle()
                 }
             }
@@ -510,15 +510,7 @@ extension Home {
             addBackground()
                 .frame(minHeight: 280)
                 .overlay {
-                    InsulinSummaryView(
-                        neg: state.neg,
-                        tddChange: state.tddChange,
-                        tddAverage: state.tddAverage,
-                        tddYesterday: state.tddYesterday,
-                        tdd2DaysAgo: state.tdd2DaysAgo,
-                        tdd3DaysAgo: state.tdd3DaysAgo,
-                        tddActualAverage: state.tddActualAverage
-                    )
+                    InsulinSummaryView(stats: state.insulinStatistics)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -646,9 +638,9 @@ extension Home {
 
         var glucosePreview: some View {
             let data = state.data.glucose
-            let minimum = data.compactMap(\.glucose).min() ?? 0
+            let minimum = data.map(\.glucose).min() ?? 0
             let minimumRange = Double(minimum) * 0.8
-            let maximum = Double(data.compactMap(\.glucose).max() ?? 0) * 1.1
+            let maximum = Double(data.map(\.glucose).max() ?? 0) * 1.1
 
             let high = state.data.highGlucose
             let low = state.data.lowGlucose
@@ -657,10 +649,10 @@ extension Home {
             return Chart(data) {
                 PointMark(
                     x: .value("Time", $0.dateString),
-                    y: .value("Glucose", Double($0.glucose ?? 0) * (state.data.units == .mmolL ? 0.0555 : 1.0))
+                    y: .value("Glucose", Double($0.glucose) * (state.data.units == .mmolL ? 0.0555 : 1.0))
                 )
                 .foregroundStyle(
-                    (($0.glucose ?? 0) > veryHigh || Decimal($0.glucose ?? 0) < low) ? Color(.red) : Decimal($0.glucose ?? 0) >
+                    ($0.glucose > veryHigh || Decimal($0.glucose) < low) ? Color(.red) : Decimal($0.glucose) >
                         high ? Color(.yellow) : Color(.darkGreen)
                 )
                 .symbolSize(5)
@@ -1088,12 +1080,12 @@ extension Home {
                             loopPreview.padding(.vertical, 15)
 
                             // COB Chart
-                            if state.carbData > 0 {
+                            if state.showCOBChart {
                                 activeCOBView.padding(.bottom, 15)
                             }
 
                             // IOB Chart
-                            if !state.iobData.isEmpty {
+                            if state.showIOBChart {
                                 activeIOBView.padding(.bottom, 15)
                             }
 
@@ -1108,7 +1100,7 @@ extension Home {
                                 let yThreshold: CGFloat = -550
                                 Color.clear
                                     .onChange(of: scrollPosition) {
-                                        if scrollPosition < yThreshold, state.iobs > 0 || state.carbData > 0,
+                                        if scrollPosition < yThreshold, state.showIOBChart || state.showCOBChart,
                                            !state.skipGlucoseChart
                                         {
                                             withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }

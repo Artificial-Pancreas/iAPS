@@ -8,6 +8,9 @@ import UIKit
 // TODO: values flow across isolation domains via these subjects, so Output types should be Sendable (Combine won't enforce this).
 // * `Error` is not Sendable; we need to either replace it with something that is Sendable, or accepted as is - since those values are effectively immutable.
 
+// WARN: Sometimes, when a field is added/removed in this class, and after an INCREMENTAL build - the app crashes at runtime.
+// A full rebuild completely fixes the issue in such cases (Product / Clean Build Folder).
+// TODO: investigate this
 final class AppCoordinator: @unchecked Sendable {
     // initial values will not be observed by tha app, SettingsManager sets the real values in its start(), and the app won't render before it's finished
     let settings = CurrentValueSubject<FreeAPSSettings, Never>(FreeAPSSettings())
@@ -49,13 +52,22 @@ final class AppCoordinator: @unchecked Sendable {
 
     let loopCompleted = PassthroughSubject<LoopOutcome, Never>()
 
-    // current pump history, oldest -> newest
+    // current pump history, newest -> oldest
     let pumpHistory = CurrentValueSubject<[PumpHistoryEvent], Never>([])
 
     let pumpHistoryDeletions = PassthroughSubject<[PumpHistoryEvent], Never>()
 
     // newest -> oldest
-    let glucoseHistory = CurrentValueSubject<[BloodGlucose], Never>([])
+    let glucoseRaw = CurrentValueSubject<[BloodGlucose], Never>([])
+
+    // newest -> oldest
+    // when smoothing is disabled, this is equal to glucoseRaw
+    let glucoseSmoothed = CurrentValueSubject<[BloodGlucose], Never>([])
+
+    // newest -> oldest
+    // this contains the glucose from glucoseSmoothed filtered by frequency (5min/1min, according to settings)
+    // this is consumed by OpenAPS, passed to oref0
+    let glucoseFrequencyFiltered = CurrentValueSubject<[BloodGlucose], Never>([])
 
     let glucoseDeletions = PassthroughSubject<[BloodGlucose], Never>()
 
@@ -72,12 +84,26 @@ final class AppCoordinator: @unchecked Sendable {
 
     let carbDeletions = PassthroughSubject<[CarbsEntry], Never>()
 
-    // current temp targets, oldest -> newest
+    // current temp targets, newest -> oldest
     let tempTargets = CurrentValueSubject<[TempTarget], Never>([])
 
     let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
 
-    let basalProfileUpdates = PassthroughSubject<[BasalProfileEntry], Never>()
+    let basalProfile = CurrentValueSubject<[BasalProfileEntry], Never>([])
+
+    let isfSchedule = CurrentValueSubject<InsulinSensitivities, Never>(.initial)
+
+    let crSchedule = CurrentValueSubject<CarbRatios, Never>(.initial)
+
+    let bgTargetsSchedule = CurrentValueSubject<BGTargets, Never>(.initial)
+
+    let autotune = CurrentValueSubject<Profile?, Never>(nil)
+
+    let profile = CurrentValueSubject<Profile?, Never>(nil)
+
+    let pumpProfile = CurrentValueSubject<Profile?, Never>(nil)
+
+    let autosens = CurrentValueSubject<Autosens?, Never>(nil)
 
     let lastLoopDate = CurrentValueSubject<Date?, Never>(nil)
 
@@ -219,7 +245,7 @@ final class AppCoordinator: @unchecked Sendable {
         suggested.send(value)
     }
 
-    /// MUST BE oldest -> newest
+    /// MUST BE newest -> oldest
     func setPumpHistory(_ value: [PumpHistoryEvent]) {
         pumpHistory.send(value)
     }
@@ -237,14 +263,16 @@ final class AppCoordinator: @unchecked Sendable {
         carbDeletions.send(value)
     }
 
-    /// MUST BE oldest -> newest
+    /// MUST BE newest -> oldest
     func setTempTargets(_ value: [TempTarget]) {
         tempTargets.send(value)
     }
 
     /// MUST BE newest -> oldest
-    func setGlucoseHistory(_ value: [BloodGlucose]) {
-        glucoseHistory.send(value)
+    func setGlucoseHistory(raw: [BloodGlucose], smoothed: [BloodGlucose], frequencyFiltered: [BloodGlucose]) {
+        glucoseRaw.send(raw)
+        glucoseSmoothed.send(smoothed)
+        glucoseFrequencyFiltered.send(frequencyFiltered)
     }
 
     func sendNewGlucoseRecords(_ value: [BloodGlucose]) {
@@ -259,8 +287,36 @@ final class AppCoordinator: @unchecked Sendable {
         glucoseAlarm.send(value)
     }
 
-    func sendBasalProfile(_ value: [BasalProfileEntry]) {
-        basalProfileUpdates.send(value)
+    func setBasalProfile(_ value: [BasalProfileEntry]) {
+        basalProfile.send(value)
+    }
+
+    func setIsfSchedule(_ value: InsulinSensitivities) {
+        isfSchedule.send(value)
+    }
+
+    func setCrSchedule(_ value: CarbRatios) {
+        crSchedule.send(value)
+    }
+
+    func setBgTargetsSchedule(_ value: BGTargets) {
+        bgTargetsSchedule.send(value)
+    }
+
+    func setAutotune(_ value: Profile?) {
+        autotune.send(value)
+    }
+
+    func setProfile(_ value: Profile?) {
+        profile.send(value)
+    }
+
+    func setPumpProfile(_ value: Profile?) {
+        pumpProfile.send(value)
+    }
+
+    func setAutosens(_ value: Autosens?) {
+        autosens.send(value)
     }
 
     func sendBolusFailure() {

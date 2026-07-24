@@ -23,9 +23,4 @@ enum ISFEditor {
     }
 }
 
-protocol ISFEditorProvider: Provider {
-    var isfSchedule: InsulinSensitivities { get async }
-    func saveProfile(_ profile: InsulinSensitivities) async
-    var autosense: Autosens { get async }
-    var autotune: Autotune? { get async }
-}
+protocol ISFEditorProvider: Provider {}

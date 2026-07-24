@@ -1,9 +1,12 @@
 import Foundation
 
 protocol FileStorage: Sendable {
-    func save<Value: JSON>(_ value: Value, as name: String) async
-    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) async -> Value?
-    func retrieveRaw(_ name: String) async -> RawJSON?
+    func save<Value: Encodable & Sendable>(_ value: Value, as name: String) async
+    /// validates that `raw` decodes into `Value`, then saves the raw string
+    /// throws the decoding error without writing anything if `raw` can't be decoded into `Value`.
+    func save<Value: Decodable & Sendable>(raw: RawJSON, as name: String, decodingInto type: Value.Type) async throws
+    func retrieve<Value: Decodable & Sendable>(_ name: String, as type: Value.Type) async -> Value?
+    func retrieveRaw(_ name: String) async -> String?
     @discardableResult func append<Value: JSON>(_ newValue: Value, to name: String) async -> [Value]?
     @discardableResult func append<Value: JSON>(_ newValues: [Value], to name: String) async -> [Value]?
     @discardableResult func append<Value: JSON, T: Equatable & Sendable>(
@@ -57,19 +60,15 @@ protocol FileStorage: Sendable {
 
     func remove(_ name: String) async
     func rename(_ name: String, to newName: String) async
-    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) async -> Value?
 
     func urlFor(file: String) async -> URL?
 }
 
 actor BaseFileStorage: FileStorage, Injectable {
-//    nonisolated let unownedExecutor: UnownedSerialExecutor =
-//        DispatchQueue(label: "BaseFileStorage.io", qos: .utility)
-//            .asUnownedSerialExecutor()
-
-    func save<Value: JSON>(_ value: Value, as name: String) {
+    func save<Value: Encodable & Sendable>(_ value: Value, as name: String) {
         Signpost.measure("file.save", name) {
-            if let value = value as? RawJSON, let data = value.data(using: .utf8) {
+            if let value = value as? String, let data = value.data(using: .utf8) {
+                // important - save strings without JSON encoding
                 try? Disk.save(data, to: .documents, as: name)
             } else {
                 try? Disk.save(value, to: .documents, as: name, encoder: JSONCoding.encoder)
@@ -77,28 +76,25 @@ actor BaseFileStorage: FileStorage, Injectable {
         }
     }
 
-    func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
+    func save<Value: Decodable & Sendable>(raw: RawJSON, as name: String, decodingInto _: Value.Type) throws {
+        // validate first - nothing is written if the raw text can't be decoded into the expected model
+        _ = try Value.decodeFrom(json: raw)
+        save(raw, as: name)
+    }
+
+    func retrieve<Value: Decodable & Sendable>(_ name: String, as type: Value.Type) -> Value? {
         Signpost.measure("file.read", name) {
             try? Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
         }
     }
 
-    func retrieveRaw(_ name: String) -> RawJSON? {
+    func retrieveRaw(_ name: String) -> String? {
         Signpost.measure("file.read", name) {
             guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
                 return nil
             }
             return String(data: data, encoding: .utf8)
         }
-    }
-
-    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
-        if let loaded = retrieve(name, as: type) {
-            return loaded
-        }
-        let file = retrieveRaw(name) ?? OpenAPS.defaults(for: name)
-        save(file, as: name)
-        return retrieve(name, as: type)
     }
 
     @discardableResult func append<Value: JSON>(_ newValue: Value, to name: String) async -> [Value]? {

@@ -62,9 +62,6 @@ extension BasalProfileEditor {
                 trailing: !saveNewConcentration ? EditButton() : nil
             )
             .environment(\.editMode, $editMode)
-            .onAppear {
-                state.validate()
-            }
         }
 
         private func pickers(for index: Int) -> some View {

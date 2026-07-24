@@ -55,9 +55,11 @@ struct StateBGQuery: EntityQuery {
 
 final class StateIntentRequest: BaseIntentsRequest {
     func getLastBG() async throws -> (dateGlucose: Date, glucose: String, trend: String, delta: String) {
-        let glucose = await glucoseStorage.retrieve()
-        guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { throw StateIntentError.NoBG }
-        let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
+        // newest->oldest
+        let glucose = appCoordinator.glucoseRaw.value
+        guard let lastGlucose = glucose.first else { throw StateIntentError.NoBG }
+        let glucoseValue = lastGlucose.glucose
+        let delta = glucose.count >= 2 ? glucoseValue - glucose[1].glucose : nil
 
         let settings = await settingsManager.settings
         let units = settings.units

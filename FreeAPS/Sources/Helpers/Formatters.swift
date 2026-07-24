@@ -31,7 +31,7 @@ extension FormatStyle where Self == Date.ISO8601FormatStyle {
 }
 
 extension JSONDecoder.DateDecodingStrategy {
-    static let customISO8601 = custom {
+    static let iso8601withOptionalFractionalSeconds = custom {
         let container = try $0.singleValueContainer()
         let string = try container.decode(String.self)
         if let date = (try? Date(string, strategy: .iso8601WithFractionalSeconds)) ?? (try? Date(string, strategy: .iso8601)) {
@@ -42,7 +42,7 @@ extension JSONDecoder.DateDecodingStrategy {
 }
 
 extension JSONEncoder.DateEncodingStrategy {
-    static let customISO8601 = custom {
+    static let iso8601withOptionalFractionalSeconds = custom {
         var container = $1.singleValueContainer()
         try container.encode($0.formatted(.iso8601WithFractionalSeconds))
     }

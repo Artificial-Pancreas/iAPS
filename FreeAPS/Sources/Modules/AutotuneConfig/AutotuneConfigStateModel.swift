@@ -7,12 +7,14 @@ extension AutotuneConfig {
         @Injected() var deviceManager: DeviceDataManager!
         @Injected() var apsManager: APSManager!
         @Injected() private var storage: FileStorage!
+        @Injected() private var basalProfileStorage: BasalProfileStorage!
+        @Injected() private var autotuneStorage: AutotuneStorage!
 
         private let coreDataStorage = CoreDataStorage()
 
         @Published var useAutotune = false
         @Published var onlyAutotuneBasals = false
-        @Published var autotune: Autotune?
+        @Published var autotune: Profile?
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
         @Published var increment: Double = 0.1
@@ -32,14 +34,14 @@ extension AutotuneConfig {
         override func subscribe() async {
             let settings = await settingsManager.settings
             let preferences = await settingsManager.preferences
-            autotune = await storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+            autotune = appCoordinator.autotune.value
             units = settings.units
             useAutotune = settings.useAutotune
             publishedDate = lastAutotuneDate
             increment = Double(preferences.bolusIncrement)
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { self.onlyAutotuneBasals = $0 }
 
-            currentProfile = await retrieveProfile()
+            currentProfile = appCoordinator.basalProfile.value
             calcTotal()
 
             $useAutotune
@@ -57,7 +59,7 @@ extension AutotuneConfig {
                     updated.useAutotune = use
                     return updated
                 }
-                _ = await self.apsManager.makeProfiles()
+                _ = try? await self.apsManager.makeProfiles()
             }
         }
 
@@ -73,7 +75,8 @@ extension AutotuneConfig {
             Task {
                 self.autotune = await runAutotune()
 
-                if var tuned = self.autotune {
+                if var tuned = self.autotune
+                {
                     let basal = tuned.basalProfile.map { basal in
                         BasalProfileEntry(
                             start: basal.start,
@@ -85,7 +88,7 @@ extension AutotuneConfig {
                     self.autotune = tuned
                 }
 
-                _ = await self.apsManager.makeProfiles()
+                _ = try? await self.apsManager.makeProfiles()
 
                 self.lastAutotuneDate = Date()
                 self.running.toggle()
@@ -96,7 +99,7 @@ extension AutotuneConfig {
             Task {
                 await deleteAutotune()
                 autotune = nil
-                _ = await apsManager.makeProfiles()
+                _ = try? await apsManager.makeProfiles()
             }
         }
 
@@ -121,10 +124,10 @@ extension AutotuneConfig {
                             items: basals,
                             concentration: concentration
                         ) {
-                            await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
+                            await self.basalProfileStorage.updateBasalProfile(adjustedBasals)
                         } else {
                             // no pump configured
-                            await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                            await self.basalProfileStorage.updateBasalProfile(basals)
                         }
                         debug(.service, "Basals have been replaced with Autotuned Basals by user.")
                     } catch {
@@ -135,16 +138,10 @@ extension AutotuneConfig {
         }
 
         private func deleteAutotune() async {
-            await storage.remove(OpenAPS.Settings.autotune)
+            await autotuneStorage.updateAutotune(nil)
         }
 
-        private func retrieveProfile() async -> [BasalProfileEntry] {
-            await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
-                ?? []
-        }
-
-        private func runAutotune() async -> Autotune? {
+        private func runAutotune() async -> Profile? {
             await apsManager.autotune()
         }
     }

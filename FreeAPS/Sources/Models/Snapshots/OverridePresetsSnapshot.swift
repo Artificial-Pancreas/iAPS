@@ -4,62 +4,77 @@ import Foundation
 // a snapshot (DTO) of a CoreData OverridePresets entity
 // entities are not safe to send across actor/thread boundaries (not Sendable), this snapshot is
 struct OverridePresetsSnapshot: Sendable {
-    let id: String?
-    var date: Date?
-    let end: Decimal?
+    let id: String
+
     let name: String?
     let emoji: String?
-    let advancedSettings: Bool
+
+    let percentage: Double
+
+    let indefinite: Bool
+    let duration: Decimal?
+
+    let target: Decimal?
+
     let basal: Bool
     let cr: Bool
-    let duration: Decimal?
+    let isf: Bool
+    let isfAndCr: Bool
+
+    let advancedSettings: Bool
+
     let endWIthNewCarbs: Bool
     let glucoseOverrideThreshold: Decimal?
     let glucoseOverrideThresholdActive: Bool
     let glucoseOverrideThresholdActiveDown: Bool
     let glucoseOverrideThresholdDown: Decimal?
-    let indefinite: Bool
-    let isf: Bool
-    let isfAndCr: Bool
-    let maxIOB: Decimal?
-    let overrideAutoISF: Bool
+
     let overrideMaxIOB: Bool
-    let percentage: Double
+    let maxIOB: Decimal?
+
     let smbIsAlwaysOff: Bool
     let smbIsOff: Bool
-    let smbMinutes: Decimal?
     let start: Decimal?
-    let target: Decimal?
+    let end: Decimal?
+
+    let smbMinutes: Decimal?
     let uamMinutes: Decimal?
 
+    let overrideAutoISF: Bool
+
+    let date: Date?
+
+    let aisf: AutoISFsettings?
+
     init(
-        id: String? = nil,
-        date: Date? = nil,
-        end: Decimal? = nil,
+        id: String,
         name: String? = nil,
         emoji: String? = nil,
-        advancedSettings: Bool,
+        percentage: Double = 100,
+        indefinite: Bool = false,
+        duration: Decimal? = nil,
+        target: Decimal? = nil,
         basal: Bool = false,
         cr: Bool = false,
-        duration: Decimal? = nil,
+        isf: Bool = false,
+        isfAndCr: Bool = false,
+        advancedSettings: Bool,
         endWIthNewCarbs: Bool = false,
         glucoseOverrideThreshold: Decimal? = nil,
         glucoseOverrideThresholdActive: Bool = false,
         glucoseOverrideThresholdActiveDown: Bool = false,
         glucoseOverrideThresholdDown: Decimal? = nil,
-        indefinite: Bool = false,
-        isf: Bool = false,
-        isfAndCr: Bool = false,
-        maxIOB: Decimal? = nil,
-        overrideAutoISF: Bool = false,
         overrideMaxIOB: Bool = false,
-        percentage: Double = 100,
+        maxIOB: Decimal? = nil,
         smbIsAlwaysOff: Bool = false,
         smbIsOff: Bool = false,
-        smbMinutes: Decimal? = nil,
         start: Decimal? = nil,
-        target: Decimal? = nil,
+        end: Decimal? = nil,
+        smbMinutes: Decimal? = nil,
         uamMinutes: Decimal? = nil,
+        overrideAutoISF: Bool = false,
+        date: Date? = nil,
+        aisf: AutoISFsettings? = nil
     ) {
         self.advancedSettings = advancedSettings
         self.basal = basal
@@ -88,39 +103,42 @@ struct OverridePresetsSnapshot: Sendable {
         self.start = start
         self.target = target
         self.uamMinutes = uamMinutes
+        self.aisf = aisf
     }
 }
 
 extension OverridePresetsSnapshot {
-    static func create(from record: OverridePresets) -> OverridePresetsSnapshot {
-        OverridePresetsSnapshot(
-            id: record.id,
-            date: record.date,
-            end: record.end?.decimalValue,
+    static func create(from record: OverridePresets, aisf: AutoISFsettings?) -> OverridePresetsSnapshot? {
+        guard let id = record.id else { return nil }
+        return OverridePresetsSnapshot(
+            id: id,
             name: record.name,
             emoji: record.emoji,
-            advancedSettings: record.advancedSettings,
+            percentage: record.percentage,
+            indefinite: record.indefinite,
+            duration: record.duration?.decimalValue,
+            target: record.target?.decimalValue,
             basal: record.basal,
             cr: record.cr,
-            duration: record.duration?.decimalValue,
+            isf: record.isf,
+            isfAndCr: record.isfAndCr,
+            advancedSettings: record.advancedSettings,
             endWIthNewCarbs: record.endWIthNewCarbs,
             glucoseOverrideThreshold: record.glucoseOverrideThreshold?.decimalValue,
             glucoseOverrideThresholdActive: record.glucoseOverrideThresholdActive,
             glucoseOverrideThresholdActiveDown: record.glucoseOverrideThresholdActiveDown,
             glucoseOverrideThresholdDown: record.glucoseOverrideThresholdDown?.decimalValue,
-            indefinite: record.indefinite,
-            isf: record.isf,
-            isfAndCr: record.isfAndCr,
-            maxIOB: record.maxIOB?.decimalValue,
-            overrideAutoISF: record.overrideAutoISF,
             overrideMaxIOB: record.overrideMaxIOB,
-            percentage: record.percentage,
+            maxIOB: record.maxIOB?.decimalValue,
             smbIsAlwaysOff: record.smbIsAlwaysOff,
             smbIsOff: record.smbIsOff,
-            smbMinutes: record.smbMinutes?.decimalValue,
             start: record.start?.decimalValue,
-            target: record.target?.decimalValue,
-            uamMinutes: record.uamMinutes?.decimalValue
+            end: record.end?.decimalValue,
+            smbMinutes: record.smbMinutes?.decimalValue,
+            uamMinutes: record.uamMinutes?.decimalValue,
+            overrideAutoISF: record.overrideAutoISF,
+            date: record.date,
+            aisf: aisf
         )
     }
 }

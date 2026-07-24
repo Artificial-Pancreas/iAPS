@@ -5,6 +5,7 @@ extension BasalProfileEditor {
     final class StateModel: BaseStateModel<Provider>, UIBindingOwner {
         @Injected() private var storage: FileStorage!
         @Injected() private var deviceManager: DeviceDataManager!
+        @Injected() private var basalProfileStorage: BasalProfileStorage!
 
         private let coreDataStorage = CoreDataStorage()
         let uiBindings = UIBindings()
@@ -32,11 +33,12 @@ extension BasalProfileEditor {
         }()
 
         override func subscribe() async {
-            await updateSupportedBasalRates(appCoordinator.pumpStatus.value)
+            updateSupportedBasalRates(appCoordinator.pumpStatus.value)
+            validate()
             calcTotal()
-            allowDilution = await settingsManager.settings.allowDilution
+            allowDilution = appCoordinator.settings.value.allowDilution
             observeUI(appCoordinator.pumpStatus) { me, pumpStatus in
-                await me.updateSupportedBasalRates(pumpStatus)
+                me.updateSupportedBasalRates(pumpStatus)
             }
         }
 
@@ -97,18 +99,12 @@ extension BasalProfileEditor {
             items = sorted
         }
 
-        private func retrieveProfile() async -> [BasalProfileEntry] {
-            await storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
-                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
-                ?? []
-        }
-
-        private func updateSupportedBasalRates(_ pumpStatus: PumpDisplayStatus?) async {
+        private func updateSupportedBasalRates(_ pumpStatus: PumpDisplayStatus?) {
             let newRateValues = pumpStatus?.supportedBasalRates.map { Decimal($0) } ??
-                stride(from: 5.0, to: 1001.0, by: 5.0).map { ($0.decimal ?? .zero) / 100 }
+                stride(from: 5.0, to: 1001.0, by: 5.0).map { Decimal($0) / 100 }
             if newRateValues != rateValues {
                 rateValues = newRateValues
-                items = await retrieveProfile().map { value in
+                items = appCoordinator.basalProfile.value.map { value in
                     let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
                     let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
                     return Item(rateIndex: rateIndex, timeIndex: timeIndex)
@@ -124,10 +120,10 @@ extension BasalProfileEditor {
             let concentration = await readConcentration()
 
             if let adjustedProfile = try await deviceManager.syncBasalRateSchedule(items: profile, concentration: concentration) {
-                await storage.save(adjustedProfile, as: OpenAPS.Settings.basalProfile)
+                await basalProfileStorage.updateBasalProfile(adjustedProfile)
             } else {
                 // no pump configured
-                await storage.save(profile, as: OpenAPS.Settings.basalProfile)
+                await basalProfileStorage.updateBasalProfile(profile)
             }
         }
     }

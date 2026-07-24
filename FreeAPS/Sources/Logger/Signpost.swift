@@ -57,8 +57,8 @@ enum Signpost {
     static func measure<T>(
         _ name: StaticString,
         poi: Bool = false,
-        _ message: @autoclosure () -> String = "",
-        _ body: () async throws -> T
+        _ message: @autoclosure @Sendable() -> String = "",
+        _ body: @Sendable() async throws -> T
     ) async rethrows -> T {
         let span = begin(name, poi: poi, message())
         defer { span.end() }

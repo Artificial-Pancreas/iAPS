@@ -143,8 +143,8 @@ extension Settings {
                                     .navigationLink(to: .configEditor(file: OpenAPS.Settings.preferences), from: self)
                                 Text("Pump Settings")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Settings.settings), from: self)
-                                Text("Autosense")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
+//                                Text("Autosense")
+//                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                                 Text("Pump History")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
                                 Text("Basal profile")
@@ -158,10 +158,18 @@ extension Settings {
                             }
 
                             Group {
-                                Text("Pump profile")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
-                                Text("Profile")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
+                                Text("ISF Schedule")
+                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
+                                Text("CR Schedule")
+                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
+                                Text("BG Targets")
+                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
+                            }
+                            Group {
+//                                Text("Pump profile")
+//                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
+//                                Text("Profile")
+//                                    .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
                                 Text("Carbs")
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
                                 Text("Loop")
@@ -178,10 +186,10 @@ extension Settings {
                                     .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                             }
 
-                            Group {
-                                Text("Dynamic Variables")
-                                    .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dynamicVariables), from: self)
-                            }
+//                            Group {
+//                                Text("Dynamic Variables")
+//                                    .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dynamicVariables), from: self)
+//                            }
 
                             Group {
                                 Text("Target presets")

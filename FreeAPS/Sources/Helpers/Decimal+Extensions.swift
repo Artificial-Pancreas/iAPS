@@ -27,3 +27,10 @@ extension Decimal {
         return result
     }
 }
+
+private let decimalDecodingLocale = Locale(identifier: "en_US_POSIX")
+extension String {
+    var toDecimal: Decimal? {
+        Decimal(string: self, locale: decimalDecodingLocale)
+    }
+}

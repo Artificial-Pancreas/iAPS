@@ -10,9 +10,9 @@ import UIKit
 extension Home {
     final class StateModel: BaseStateModel<Provider>, LifetimeOwner, UIBindingOwner {
         @Injected() private var apsManager: APSManager!
-        @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var storage: TempTargetsStorage!
         @Injected() private var deviceManager: DeviceDataManager!
+        @Injected() private var overrideManager: OverrideManager!
         @Injected() private var appUIState: AppUIState!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -26,11 +26,9 @@ extension Home {
 
         private var preferences: Preferences!
         private var pumpSettings: PumpSettings!
-        private var basalProfile: [BasalProfileEntry]!
         private var pumpHistory: [PumpHistoryEvent]!
         private var cgmSensorDays: Double?
 
-        @Published var dynamicVariables: DynamicVariables?
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
@@ -64,15 +62,9 @@ extension Home {
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []
-        @Published var carbData: Decimal = 0
-        @Published var iobs: Decimal = 0
-        @Published var neg: Int = 0
-        @Published var tddChange: Decimal = 0
-        @Published var tddAverage: Decimal = 0
-        @Published var tddYesterday: Decimal = 0
-        @Published var tdd2DaysAgo: Decimal = 0
-        @Published var tdd3DaysAgo: Decimal = 0
-        @Published var tddActualAverage: Decimal = 0
+        @Published var showIOBChart: Bool = false
+        @Published var showCOBChart: Bool = false
+        @Published var insulinStatistics: InsulinStatistics = .empty
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var maxIOB: Decimal = 0
@@ -143,24 +135,26 @@ extension Home {
             settings = fetchedSettings
             pumpSettings = await settingsManager.pumpSettings
             preferences = await settingsManager.preferences
-            basalProfile = await provider.basalProfile()
-            pumpHistory = await provider.pumpHistory(hours: filteredHours)
+
+            basalProfileUpdated(appCoordinator.basalProfile.value)
+            autotuneUpdated(appCoordinator.autotune.value)
+
+            pumpHistory = appCoordinator.pumpHistory.value.reversed()
 
             cgmSensorDays = appCoordinator.cgmInfo.value?.sensorDays
 
-            data.tempTargets = await provider.tempTargets(hours: filteredHours)
+            tempTargetsUpdated(appCoordinator.tempTargets.value)
 
             await readFromSettings(fetchedSettings)
             readFromPreferences()
             readFromPumpSettings()
 
-            await setupBasals()
-            await setupBoluses()
+            setupBasals()
+            setupBoluses()
             await setupActivity()
-            await setupSuspensions()
+            setupSuspensions()
 
-            await setupBasalProfile(basalProfile)
-            await setupCarbs()
+            setupCarbs(appCoordinator.carbHistory.value)
             await setupAnnouncements()
 
             setupLoopStatsBackground()
@@ -169,7 +163,6 @@ extension Home {
 
             data.suggestion = appCoordinator.suggested.value
             enactedSuggestion = appCoordinator.latestLoopOutcome.value?.enactedSuggestion
-            dynamicVariables = await provider.dynamicVariables
 
             carbsRequired = data.suggestion?.carbsReq
 
@@ -183,7 +176,7 @@ extension Home {
                 await me.cgmCensorDaysUpdated(sensorDays)
             }
 
-            observeUI(appCoordinator.glucoseHistory) { me, glucose in
+            observeUI(appCoordinator.glucoseRaw) { me, glucose in
                 // TODO: use the provided value inside the function, currently it re-reads from the storage
                 await me.glucoseDidUpdate(glucose)
             }
@@ -208,12 +201,16 @@ extension Home {
                 await me.pumpHistoryDidUpdate(pumpHistory)
             }
 
-            observe(appCoordinator.basalProfileUpdates) { me, basalProfile in
-                await me.basalProfileUpdated(basalProfile)
+            observeUI(appCoordinator.basalProfile) { me, basalProfile in
+                me.basalProfileUpdated(basalProfile)
+            }
+
+            observeUI(appCoordinator.autotune) { me, autotune in
+                me.autotuneUpdated(autotune)
             }
 
             observeUI(appCoordinator.tempTargets) { me, tempTargets in
-                await me.tempTargetsUpdated(tempTargets)
+                me.tempTargetsUpdated(tempTargets)
             }
 
             observeUI(appCoordinator.carbHistory) { me, carbHistory in
@@ -323,29 +320,9 @@ extension Home {
             }
         }
 
-        func cancelProfile() {
+        func cancelActiveOverride() {
             Task {
-                // Is there a saved Override?
-                if let activeOveride = await overrideStorage.fetchLatestOverride().first {
-                    let presetName = await overrideStorage.isPresetName()
-                    // Is the Override a Preset?
-                    if let preset = presetName {
-                        if let duration = await overrideStorage.cancelProfile() {
-                            // Update in Nightscout
-                            await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
-                        }
-                    } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                        if let duration = await overrideStorage.cancelProfile() {
-                            await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
-                        }
-                    } else {
-                        let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
-                            .formatted() + " %" : "Custom"
-                        if let duration = await overrideStorage.cancelProfile() {
-                            await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                        }
-                    }
-                }
+                await overrideManager.cancelActiveOverride()
                 await setupOverrideHistory()
             }
         }
@@ -366,8 +343,8 @@ extension Home {
         }
 
         private func setupGlucose() async {
-            data.isManual = await provider.manualGlucose(hours: filteredHours)
-            data.glucose = await provider.filteredGlucose(hours: filteredHours)
+            data.isManual = provider.manualGlucose(hours: filteredHours)
+            data.glucose = provider.smoothedGlucose(hours: filteredHours)
             readings = await coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate)
             recentGlucose = data.glucose.last
             if data.glucose.count >= 2 {
@@ -375,14 +352,14 @@ extension Home {
                     NSDecimalNumber(
                         decimal:
                         (recentGlucose?.unfiltered ?? 0) -
-                            (data.glucose[data.glucose.count - 2].unfiltered ?? 0)
+                            data.glucose[data.glucose.count - 2].unfiltered
                     ).intValue
             } else {
                 glucoseDelta = nil
             }
         }
 
-        private func setupBasals() async {
+        private func setupBasals() {
             data.tempBasals = pumpHistory.filter {
                 $0.type == .tempBasal || $0.type == .tempBasalDuration
             }
@@ -404,14 +381,14 @@ extension Home {
             tempRate = lastRate
         }
 
-        private func setupBoluses() async {
+        private func setupBoluses() {
             data.boluses = pumpHistory.filter {
                 $0.type == .bolus
             }
             data.maxBolusValue = data.boluses.compactMap(\.amount).max() ?? 1
         }
 
-        private func setupSuspensions() async {
+        private func setupSuspensions() {
             data.suspensions = pumpHistory.filter {
                 $0.type == .pumpSuspend || $0.type == .pumpResume
             }
@@ -437,32 +414,27 @@ extension Home {
             data.insulinDIA = pumpSettings.insulinActionCurve
         }
 
-        private func setupBasalProfile(_ basalProfile: [BasalProfileEntry]) async {
-            data.autotunedBasalProfile = await provider.autotunedBasalProfile()
-            data.basalProfile = basalProfile
-        }
-
-        private func setupCarbs() async {
-            data.carbs = await provider.carbs(hours: filteredHours)
+        private func setupCarbs(_ carbHistory: [CarbsEntry]) {
+            data.carbs = carbHistory.filter { $0.carbs > 0 }
             data.maxCarbsValue = data.carbs.compactMap(\.carbs).max() ?? 1
         }
 
         private func setupOverrideHistory() async {
             overrideHistory = await provider.overrideHistory()
-            let latestOverride = await provider.latestOverride()
+            let latestOverride = await overrideStorage.fetchCurrentActiveOverride()
             self.latestOverride = latestOverride
             data.latestOverride = latestOverride
             data.overrideHistory = overrideHistory
 
-            if let latestOverride, latestOverride.enabled, let id = latestOverride.id {
+            if let latestOverride {
                 if latestOverride.isPreset {
                     // a nameless preset counts as not found (mimics the old `name != ""` fetch predicate)
-                    let preset = await overrideStorage.fetchPreset(id: id)
+                    let preset = await overrideStorage.fetchOverridePreset(id: latestOverride.id)
                     overridePreset = (preset?.name?.isEmpty ?? true) ? nil : preset
                 } else {
                     overridePreset = nil
                 }
-                overrideAutoISF = await overrideStorage.fetchAutoISFsetting(id: id)?.autoisf
+                overrideAutoISF = latestOverride.overrideAutoISF ? latestOverride.aisf?.autoisf : nil
             } else {
                 overridePreset = nil
                 overrideAutoISF = nil
@@ -561,30 +533,45 @@ extension Home {
         private func setupData() async {
             if let data = await provider.reasons() {
                 iobData = data
-                carbData = data.map(\.cob).reduce(0, +)
-                iobs = data.map(\.iob).reduce(0, +)
-                neg = data.filter({ $0.iob < 0 }).count * 5
-                let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
-                let yesterday = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= Date().subtractingTimeInterval(.hours(24))
-                })?.tdd ?? 0) as Decimal
-                let oneDaysAgo = tdds.last
-                tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
-                tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
-                tdd2DaysAgo = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .subtractingTimeInterval(.hours(24))
-                })?.tdd ?? 0) as Decimal
-                tdd3DaysAgo = (tdds.first(where: {
-                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                        .subtractingTimeInterval(.days(2))
-                })?.tdd ?? 0) as Decimal
-
-                if let tdds_ = await provider.dynamicVariables {
-                    tddAverage = ((tdds.first?.tdd ?? 0) as Decimal) - tdds_.average_total_data
-                    tddActualAverage = tdds_.average_total_data
-                }
+                showIOBChart = data.isNotEmpty
+                showCOBChart = data.contains { $0.cob > 0 }
+                insulinStatistics = await makeInsulinStatistics(reasons: data)
             }
+        }
+
+        private func makeInsulinStatistics(reasons: [IOBData]) async -> InsulinStatistics {
+            let minutesWithNegativeIOB = reasons.filter { $0.iob < 0 }.count * 5
+
+            let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
+
+            // Time-adjusted average daily TDD over the last ten days. The walk is shared with the dynamic-variables path; this one is post-loop.
+            let actualAverage = tdds.averageDailyTDD
+
+            let latestTDD = (tdds.first?.tdd ?? 0) as Decimal
+            let yesterdayTDD = (tdds.first(where: {
+                ($0.timestamp ?? .distantFuture) <= Date().subtractingTimeInterval(.hours(24))
+            })?.tdd ?? 0) as Decimal
+
+            let todayStart = DateFilter.today.startDate as Date
+            let oneDayAgo = tdds.last(where: { ($0.timestamp ?? .distantPast) >= todayStart })
+            let tdd2DaysAgo = (tdds.first(where: {
+                ($0.timestamp ?? .distantFuture) <= (oneDayAgo?.timestamp ?? .distantPast)
+                    .subtractingTimeInterval(.hours(24))
+            })?.tdd ?? 0) as Decimal
+            let tdd3DaysAgo = (tdds.first(where: {
+                ($0.timestamp ?? .distantFuture) <= (oneDayAgo?.timestamp ?? .distantPast)
+                    .subtractingTimeInterval(.days(2))
+            })?.tdd ?? 0) as Decimal
+
+            return InsulinStatistics(
+                minutesWithNegativeIOB: minutesWithNegativeIOB,
+                tddChange: latestTDD - yesterdayTDD,
+                tddAverage: latestTDD - actualAverage,
+                tddYesterday: (oneDayAgo?.tdd ?? 0) as Decimal,
+                tdd2DaysAgo: tdd2DaysAgo,
+                tdd3DaysAgo: tdd3DaysAgo,
+                tddActualAverage: actualAverage
+            )
         }
 
         func setupMeals() {
@@ -745,29 +732,38 @@ extension Home.StateModel {
     }
 
     private func pumpHistoryDidUpdate(_ pumpHistory: [PumpHistoryEvent]) async {
-        self.pumpHistory = pumpHistory
-        await setupBasals()
-        await setupBoluses()
-        await setupSuspensions()
+        self.pumpHistory = pumpHistory.reversed() // pump history is expected to be reversed, oldest -> newest
+        setupBasals()
+        setupBoluses()
+        setupSuspensions()
         await setupAnnouncements()
         await setupActivity()
     }
 
-    private func basalProfileUpdated(_ basalProfile: [BasalProfileEntry]) async {
-        await setupBasalProfile(basalProfile)
+    private func basalProfileUpdated(_ basalProfile: [BasalProfileEntry]) {
+        data.basalProfile = basalProfile
+        data.autotunedBasalProfile = appCoordinator.autotune.value?.basalProfile ?? basalProfile
     }
 
-    private func tempTargetsUpdated(_ tempTargets: [TempTarget]) async {
+    private func autotuneUpdated(_ autotune: Profile?) {
+        data.autotunedBasalProfile = autotune?.basalProfile ?? appCoordinator.basalProfile.value
+    }
+
+    private func tempTargetsUpdated(_ tempTargets: [TempTarget]) {
+        // TODO: refactor the code to assume the standard newest->oldest ordering instead
+        // chart + current-detection expect oldest -> newest
+        let tempTargets = Array(tempTargets.reversed())
+
         let now = Date()
+
         data.tempTargets = tempTargets.filter {
             $0.createdAt.addingTimeInterval(.hours(hours)) > now
         }
         updateCurrentTempTarget(tempTargets)
     }
 
-    private func carbsUpdated(_: [CarbsEntry]) async {
-        // TODO: use the provided values instead of re-reading
-        await setupCarbs()
+    private func carbsUpdated(_ carbsHistory: [CarbsEntry]) async {
+        setupCarbs(carbsHistory)
         await setupAnnouncements()
         setupMeals()
     }

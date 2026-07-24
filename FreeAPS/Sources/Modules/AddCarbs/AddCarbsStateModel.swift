@@ -4,11 +4,12 @@ import SwiftUI
 
 extension AddCarbs {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var storage: FileStorage!
-        @Injected() var carbsStorage: CarbsStorage!
-        @Injected() var apsManager: APSManager!
-        @Injected() var nightscoutManager: NightscoutManager!
+        @Injected() private var storage: FileStorage!
+        @Injected() private var carbsStorage: CarbsStorage!
+        @Injected() private var apsManager: APSManager!
+        @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var overrideStorage: OverrideStorage!
+        @Injected() private var overrideManager: OverrideManager!
 
         private let coreDataStorage = CoreDataStorage()
 
@@ -266,55 +267,51 @@ extension AddCarbs {
             }
         }
 
-        private func hypo() async {
-            // Cancel any eventual Other Override already active
-            if let activeOveride = await overrideStorage.fetchLatestOverride().first {
-                let presetName = await overrideStorage.isPresetName()
-                // Is the Override a Preset?
-                if let preset = presetName {
-                    if let duration = await overrideStorage.cancelProfile() {
-                        // Update in Nightscout
-                        await nightscoutManager.uploadOverride(preset, duration, activeOveride.date ?? Date.now)
-                    }
-                } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                    if let duration = await overrideStorage.cancelProfile() {
-                        await nightscoutManager.uploadOverride("📉", duration, activeOveride.date ?? Date.now)
-                    }
-                } else {
-                    let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
-                        .formatted() + " %" : "Custom"
-                    if let duration = await overrideStorage.cancelProfile() {
-                        await nightscoutManager.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                    }
-                }
+        func runDetermineBasal() {
+            Task {
+                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
             }
+        }
+
+        private func hypo() async {
+            // Cancel any override that is already active
+            // TODO: we are cancelling an override, but below we might not start a hypo override. Is this intended?
+            await overrideManager.cancelActiveOverride()
 
             guard let profileID = id, profileID != "None" else {
                 return
             }
             // Enable New Override
+            let saved: OverrideSnapshot?
             if profileID == "Hypo Treatment" {
                 // transient, non-persisted override preset
                 let override = OverridePresetsSnapshot(
-                    date: Date.now,
+                    id: profileID,
                     name: "📉",
-                    advancedSettings: true,
-                    duration: 45,
-                    indefinite: false,
                     percentage: 90,
-                    smbIsOff: true,
+                    indefinite: false,
+                    duration: 45,
                     target: 117,
+                    advancedSettings: true,
+                    smbIsOff: true,
+                    date: Date.now,
                 )
 
-                await overrideStorage.overrideFromPreset(override, profileID)
-                // Upload to Nightscout
-                await nightscoutManager.uploadOverride(
-                    "📉",
-                    Double(45),
-                    override.date ?? Date.now
-                )
+                // the preset does not exist, so `fromSavedPreset: true` is a lie, but when determining the present name - this case is handled and the override name is set to the hypo emoji
+                // TODO: instead, the preset name should become part of the override entity, so that we don't need to fetch and reconstruct it every time later on
+                saved = await overrideStorage.activateOverrideFromPreset(preset: override, fromSavedPreset: true)
             } else {
-                await overrideStorage.activatePreset(profileID)
+                saved = await overrideStorage.activateOverrideFromPreset(presetId: profileID)
+            }
+
+            if let saved {
+                // Upload to Nightscout
+                let overrideName = await overrideStorage.getPresetName(for: saved)
+                await nightscoutManager.uploadOverride(
+                    overrideName ?? "📉",
+                    Double(saved.duration ?? 0),
+                    saved.date ?? Date.now
+                )
             }
         }
 

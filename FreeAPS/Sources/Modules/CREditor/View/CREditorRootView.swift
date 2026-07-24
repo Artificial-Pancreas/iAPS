@@ -60,9 +60,6 @@ extension CREditor {
                 trailing: EditButton()
             )
             .environment(\.editMode, $editMode)
-            .onAppear {
-                state.validate()
-            }
         }
 
         private func pickers(for index: Int) -> some View {

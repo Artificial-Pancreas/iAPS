@@ -1,48 +1,19 @@
 extension OpenAPS {
     enum Bundle {
-        static let common = "bundle/common.js"
-        static let iob = "bundle/iob.js"
-        static let meal = "bundle/meal.js"
-        static let autotunePrep = "bundle/autotune-prep.js"
-        static let autotuneCore = "bundle/autotune-core.js"
-        static let getLastGlucose = "bundle/glucose-get-last.js"
-        static let basalSetTemp = "bundle/basal-set-temp.js"
-        static let determineBasal = "bundle/determine-basal.js"
-        static let autosens = "bundle/autosens.js"
-        static let profile = "bundle/profile.js"
+        static let oref0 = "bundle/oref0-bridge.js"
     }
 
     enum Test {
         static let test = "test/test.js"
     }
 
-    enum Prepare {
-        static let iob = "prepare/iob.js"
-        static let meal = "prepare/meal.js"
-        static let autotunePrep = "prepare/autotune-prep.js"
-        static let autotuneCore = "prepare/autotune-core.js"
-        static let determineBasal = "prepare/determine-basal.js"
-        static let autosens = "prepare/autosens.js"
-        static let profile = "prepare/profile.js"
-        static let log = "prepare/log.js"
-        static let string = "prepare/middleware.js"
-    }
-
     enum Middleware {
         static let determineBasal = "middleware/determine_basal.js"
-    }
-
-    enum AutoISF {
-        static let getLastGlucose = "autoisf/glucose-get-last-autoisf.js"
-        static let autoisf = "autoisf/autoisf.js"
     }
 
     enum Settings {
         static let preferences = "preferences.json"
         static let autotune = "settings/autotune.json"
-        static let autosense = "settings/autosense.json"
-        static let profile = "settings/profile.json"
-        static let pumpProfile = "settings/pumpprofile.json"
         static let settings = "settings/settings.json"
         static let bgTargets = "settings/bg_targets.json"
         static let insulinSensitivities = "settings/insulin_sensitivities.json"
@@ -65,7 +36,7 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
 
-        static let dynamicVariables = "monitor/dynamicVariables.json"
+//        static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
     }
@@ -80,13 +51,6 @@ extension OpenAPS {
         static let recentPumphistory = "upload/recent-pumphistory.json"
         static let recentSuggested = "monitor/recent-suggested.json"
         static let recentEnacted = "monitor/recent-enacted.json"
-    }
-
-    enum Function {
-        static let freeaps = "freeaps"
-        static let generate = "generate"
-        static let tempBasalFunctions = "tempBasalFunctions"
-        static let exportDefaults = "exportDefaults"
     }
 
     enum Nightscout {

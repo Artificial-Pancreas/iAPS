@@ -1,5 +1,24 @@
-function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
-    clock = new Date();
+const getLastGlucose = require('./glucose-get-last-autoisf')
+const { round, floor } = require('../common/utils')
+
+/*
+*   {
+*     glucose: [GlucoseEntry0],
+*     iob: [IOBEntry],
+*     profile: Profile,
+*     autosens: Autosens?,
+*     pump_history: [PumpHistoryEvent],
+*     clock: Date
+*   }
+* */
+module.exports = (iaps_input) =>  {
+    const iob = iaps_input.iob
+    const profile = iaps_input.profile
+    const autosens = iaps_input.autosens
+    const glucose = iaps_input.glucose
+    const clock = new Date(Date.parse(iaps_input.clock));
+    const pumpHistory = iaps_input.pump_history
+
     const autosens_data = autosens ? autosens : null;
     const dynamicVariables = profile.dynamicVariables || {} ;
 
@@ -8,7 +27,7 @@ function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
         let overrides = profile.iaps;
         for (let setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
-              if (setting != "id") {
+              if (setting !== "id") {
                   overrides[setting] = dynamicVariables.autoISFoverrides[setting];
               }
           }
@@ -30,6 +49,7 @@ function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
     return profile
 }
 
+// TODO: these are global variables, should be scoped
 let autoISFMessages = []
 let autoISFReasons = []
 
@@ -411,18 +431,6 @@ function convert_bg(value, profile) {
     else {
         return Math.round(value);
     }
-}
-    
-function round(value, digits) {
-    if (! digits) { digits = 0; }
-    const scale = Math.pow(10, digits);
-    return Math.round(value * scale) / scale;
-}
-
-function floor(value, digits) {
-    if (! digits) { digits = 0; }
-    const scale = Math.pow(10, digits);
-    return Math.floor(value * scale) / scale;
 }
 
 function exercising(profile, dynamicVariables) {

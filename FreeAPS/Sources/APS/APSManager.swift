@@ -7,10 +7,10 @@ import SwiftDate
 import Swinject
 
 protocol APSManager: Sendable {
-    func autotune() async -> Autotune?
+    func autotune() async -> Profile?
     func enactBolus(amount: Double, isSMB: Bool) async
     func enactTempBasal(rate: Double, duration: TimeInterval) async
-    func makeProfiles() async -> Bool
+    func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile)
     func determineBasal(temporaryCarbs: CarbsEntry?) async throws -> Suggestion
     func cancelBolus() async
     func enactAnnouncement(_ announcement: Announcement) async
@@ -69,9 +69,12 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private let deviceDataManager: DeviceDataManager
     private let nightscout: NightscoutManager
     private let settingsManager: SettingsManager
+    private let autotuneStorage: AutotuneStorage
+    private let dynamicStateManager: DynamicStateManager
     private let openAPS: OpenAPS
 
     private let overrideStorage: OverrideStorage
+    private let overrideManager: OverrideManager
 
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
@@ -89,13 +92,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
     }
 
-    private var override: OverrideSnapshot? {
-        get async {
-            guard let last = await overrideStorage.fetchLatestOverrideSnapshot(), last.enabled else { return nil }
-            return last
-        }
-    }
-
     init(
         appCoordinator: AppCoordinator,
         storage: FileStorage,
@@ -107,8 +103,11 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         deviceDataManager: DeviceDataManager,
         nightscout: NightscoutManager,
         settingsManager: SettingsManager,
+        autotuneStorage: AutotuneStorage,
         openAPS: OpenAPS,
-        overrideStorage: OverrideStorage
+        overrideStorage: OverrideStorage,
+        overrideManager: OverrideManager,
+        dynamicStateManager: DynamicStateManager
     ) {
         self.appCoordinator = appCoordinator
         self.storage = storage
@@ -120,15 +119,21 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         self.deviceDataManager = deviceDataManager
         self.nightscout = nightscout
         self.settingsManager = settingsManager
+        self.autotuneStorage = autotuneStorage
         self.openAPS = openAPS
         self.overrideStorage = overrideStorage
+        self.overrideManager = overrideManager
+        self.dynamicStateManager = dynamicStateManager
     }
 
     // this is called at the app start
     func start() async {
         let lastSuggested = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-
         appCoordinator.setLatestSuggestion(lastSuggested)
+
+        if let profiles = try? await makeProfiles() {
+            _ = await autosens(profile: profiles.profile)
+        }
 
         if let lastOutcome = await storage.retrieve(OpenAPS.Enact.outcome, as: LoopOutcome.self) {
             appCoordinator.restorePersistedLoopOutcome(lastOutcome)
@@ -313,23 +318,20 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             return APSError.invalidPumpState(message: "Pump suspended")
         }
 
-        // TODO: do we need this check here? pump will return an error, and reservoir might be inaccurate...
-//        let reservoir = await storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self) ?? 100
-//        guard reservoir >= 0 else {
-//            return APSError.invalidPumpState(message: "Reservoir is empty")
-//        }
-
         return nil
     }
 
-    private func autosens() async -> Bool {
-        guard let autosens = await storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
-              (autosens.timestamp ?? .distantPast).addingTimeInterval(.minutes(30)) > Date()
-        else {
-            return await openAPS.autosense() != nil
+    private func autosens(
+        profile: Profile
+    ) async -> Autosens? {
+        if let autosens = appCoordinator.autosens.value,
+           (autosens.timestamp ?? .distantPast).addingTimeInterval(.minutes(30)) > Date()
+        {
+            return autosens
         }
-
-        return false
+        let autosens = try? await openAPS.autosens(profile: profile)
+        appCoordinator.setAutosens(autosens)
+        return autosens
     }
 
     func determineBasal(
@@ -337,8 +339,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     ) async throws -> Suggestion {
         debug(.apsManager, "Start determine basal")
         do {
-            guard let glucose = await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self),
-                  glucose.isNotEmpty
+            guard appCoordinator.glucoseRaw.value.isNotEmpty
             else {
                 debug(.apsManager, "Not enough glucose data")
                 throw APSError.glucoseError(message: "Not enough glucose data")
@@ -373,15 +374,20 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 }
             }
 
-            _ = await makeProfiles()
-            _ = await autosens()
+            let profiles = try await makeProfiles()
+            let autosens = await autosens(profile: profiles.profile)
             _ = await dailyAutotune()
-            let override = await self.override
-            let suggestion = await openAPS.determineBasal(
+            let override = await overrideStorage.fetchCurrentActiveOverride()
+            let tdd = await coreDataStorage.fetchInsulinDistribution()
+
+            let suggestion = try? await openAPS.determineBasal(
+                profile: profiles.profile,
+                autosens: autosens,
                 currentTemp: temp,
                 clock: now,
                 temporaryCarbs: temporaryCarbs,
-                override: override
+                override: override,
+                tdd: tdd // TODO: this one is only used to pass through into "reasons"
             )
             guard let suggestion else {
                 throw APSError.apsError(message: "Determine basal failed")
@@ -399,8 +405,15 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private func updateIOB(pumpHistory: [PumpHistoryEvent]) async {
         await updateIobTaskSerializer.run {
-            let sync = await openAPS.iobSync(pumpHistory: pumpHistory)
-            guard let iobEntries = IOBEntry.parseArrayFromJSON(from: sync) else { return }
+            guard let profile = appCoordinator.profile.value else { return }
+            let autosens = appCoordinator.autosens.value
+            let iobEntries = try? await openAPS.iobSync(
+                profile: profile,
+                autosens: autosens,
+                pumpHistory: pumpHistory,
+                clock: Date.now
+            )
+            guard let iobEntries else { return }
 
             _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
 
@@ -408,15 +421,18 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         }
     }
 
-    func makeProfiles() async -> Bool {
-        let settings = await settingsManager.settings
-        let tunedProfile = await openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
-
-        if let basalProfile = tunedProfile?.basalProfile {
-            appCoordinator.sendBasalProfile(basalProfile)
-        }
-
-        return true // tunedProfile != nil
+    func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile) {
+        let settings = appCoordinator.settings.value
+        await overrideManager.autoCancelOverrideIfNeeded()
+        let dynamicVariables = await dynamicStateManager.dynamicVariables()
+        let profiles = try await openAPS.makeProfiles(
+            dynamicVariables: dynamicVariables,
+            useAutotune: settings.useAutotune,
+            settings: settings
+        )
+        appCoordinator.setProfile(profiles.profile)
+        appCoordinator.setPumpProfile(profiles.pumpProfile)
+        return profiles
     }
 
     func enactBolus(amount: Double, isSMB: Bool) async {
@@ -515,8 +531,18 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         return await autotune() != nil
     }
 
-    func autotune() async -> Autotune? {
-        await openAPS.autotune()
+    func autotune() async -> Profile? {
+        guard let profiles = try? await makeProfiles() else { return nil }
+        let autotune = try? await openAPS.autotune(
+            profile: profiles.profile,
+            pumpProfile: profiles.pumpProfile,
+            previousAutotune: appCoordinator.autotune.value
+        )
+        guard let autotune else { return nil }
+
+        await autotuneStorage.updateAutotune(autotune)
+
+        return autotune
     }
 
     func enactAnnouncement(_ announcement: Announcement) async {
@@ -665,42 +691,29 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             )
         case let .override(name):
             guard !name.isEmpty else { return }
-            let lastActiveOveride = await overrideStorage.fetchLatestOverride().first
-            let isActive = lastActiveOveride?.enabled ?? false
 
-            // Command to Cancel Active Override
-            if name.lowercased() == "cancel", isActive {
-                if let activeOveride = lastActiveOveride {
-                    let presetName = await overrideStorage.isPresetName()
-                    let nsString = presetName ?? activeOveride.percentage.formatted()
+            // Cancel eventual current active override first
+            let currentOverrideCancelled = await overrideManager.cancelActiveOverride()
 
-                    if let duration = await overrideStorage.cancelProfile() {
-                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                    }
+            if name.lowercased() == "cancel" {
+                if currentOverrideCancelled {
+                    debug(.apsManager, "ative override canceled by announcement")
                     await announcementsStorage.storeAnnouncements([announcement], enacted: true)
-                    debug(.apsManager, "Override Canceled by Announcement succeeded.")
+                } else {
+                    debug(.apsManager, "active override not canceled by Announcement - not active override")
                 }
+                // nothing more to do here
                 return
             }
 
-            // Cancel eventual current active override first
-            if isActive {
-                if let duration = await overrideStorage.cancelProfile(), let last = lastActiveOveride {
-                    let presetName = await overrideStorage.isPresetName()
-                    let nsString = presetName ?? last.percentage.formatted()
-                    await nightscout.uploadOverride(nsString, duration, last.date ?? Date())
-                }
-            }
-
             // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
-            let preset = await overrideStorage.fetchPreset(name)
-            guard let id = preset.id, let preset = preset.preset else { return }
-            await overrideStorage.overrideFromPreset(preset, id)
-            let currentActiveOveride = await overrideStorage.fetchLatestOverride().first
+            guard let preset = await overrideStorage.fetchOverridePreset(name: name) else { return }
+            guard let saved = await overrideStorage.activateOverrideFromPreset(preset: preset, fromSavedPreset: true)
+            else { return }
             await nightscout.uploadOverride(
                 name,
                 Double(preset.duration ?? 0),
-                currentActiveOveride?.date ?? Date.now
+                saved.date ?? Date.now
             )
             await announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")

@@ -11,10 +11,13 @@ extension NightscoutConfig {
         @Injected() private var keychain: Keychain!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var glucoseStorage: GlucoseStorage!
-        @Injected() private var storage: FileStorage!
         @Injected() private var coreDataManager: CoreDataManager!
         @Injected() private var apsManager: APSManager!
         @Injected() private var deviceManager: DeviceDataManager!
+        @Injected() private var basalProfileStorage: BasalProfileStorage!
+        @Injected() private var isfScheduleStorage: IsfScheduleStorage!
+        @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
+        @Injected() private var bgTargetsScheduleStorage: BgTargetsScheduleStorage!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -266,7 +269,7 @@ extension NightscoutConfig {
 
                 let sensitivitiesProfile = InsulinSensitivities(
                     units: self.units,
-                    userPrefferedUnits: self.units,
+                    userPreferredUnits: self.units,
                     sensitivities: sensitivities
                 )
 
@@ -282,16 +285,16 @@ extension NightscoutConfig {
 
                 let targetsProfile = BGTargets(
                     units: self.units,
-                    userPrefferedUnits: self.units,
+                    userPreferredUnits: self.units,
                     targets: targets
                 )
 
                 // IS THERE A PUMP?
                 guard pumpInfo != nil else {
-                    await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                    await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
-                    await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
-                    await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                    await crScheduleStorage.updateCrSchedule(carbratiosProfile)
+                    await basalProfileStorage.updateBasalProfile(basals)
+                    await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
+                    await bgTargetsScheduleStorage.updateBgTargetsSchedule(targetsProfile)
                     let error =
                         "Settings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings"
                     debug(.service, error)
@@ -306,13 +309,13 @@ extension NightscoutConfig {
                         items: basals,
                         concentration: concentration
                     ) {
-                        await self.storage.save(adjustedBasals, as: OpenAPS.Settings.basalProfile)
+                        await self.basalProfileStorage.updateBasalProfile(adjustedBasals)
                     } else {
-                        await self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
+                        await self.basalProfileStorage.updateBasalProfile(basals)
                     }
-                    await self.storage.save(carbratiosProfile, as: OpenAPS.Settings.carbRatios)
-                    await self.storage.save(sensitivitiesProfile, as: OpenAPS.Settings.insulinSensitivities)
-                    await self.storage.save(targetsProfile, as: OpenAPS.Settings.bgTargets)
+                    await crScheduleStorage.updateCrSchedule(carbratiosProfile)
+                    await isfScheduleStorage.updateIsfSchedule(sensitivitiesProfile)
+                    await bgTargetsScheduleStorage.updateBgTargetsSchedule(targetsProfile)
                     debug(.service, "Settings have been imported and the Basals saved to pump!")
                     // DIA. Save if changed.
                     let dia = fetchedProfile.dia
@@ -403,8 +406,8 @@ extension NightscoutConfig {
                         direction: nil,
                         date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
                         dateString: date,
-                        unfiltered: nil,
-                        uncalibrated: nil,
+                        unfiltered: Decimal(reading.glucose),
+                        uncalibrated: Decimal(reading.glucose),
                         filtered: nil,
                         noise: nil,
                         glucose: Int(reading.glucose),

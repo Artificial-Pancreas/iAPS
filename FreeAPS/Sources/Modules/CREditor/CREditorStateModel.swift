@@ -2,15 +2,15 @@ import SwiftUI
 
 extension CREditor {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() private var storage: FileStorage!
+        @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
 
         @Published var items: [Item] = []
-        @Published var autotune: Autotune?
+        @Published var autotune: Profile?
         @Published var onlyAutotuneBasals: Bool = false
 
         let timeValues = stride(from: 0.0, to: TimeInterval.hours(24), by: TimeInterval.minutes(30)).map { $0 }
 
-        let rateValues = stride(from: 1.0, to: 501.0, by: 1.0).map { ($0.decimal ?? .zero) / 10 }
+        let rateValues = stride(from: 1.0, to: 501.0, by: 1.0).map { Decimal($0) / 10 }
 
         var canAdd: Bool {
             guard let lastItem = items.last else { return true }
@@ -18,16 +18,17 @@ extension CREditor {
         }
 
         override func subscribe() async {
-            let settings = await settingsManager.settings
+            let settings = appCoordinator.settings.value
             onlyAutotuneBasals = settings.onlyAutotuneBasals
-            let profile = await retrieveProfile()
+            let profile = appCoordinator.crSchedule.value
             items = profile.schedule.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.offset * 60)) ?? 0
                 let rateIndex = rateValues.firstIndex(of: value.ratio) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
 
-            autotune = await retrieveAutotune()
+            autotune = appCoordinator.autotune.value
+            validate()
         }
 
         func add() {
@@ -60,23 +61,11 @@ extension CREditor {
             let uniq = Array(Set(items))
             let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
             sorted.first?.timeIndex = 0
-            DispatchQueue.main.async {
-                self.items = sorted
-            }
-        }
-
-        private func retrieveProfile() async -> CarbRatios {
-            await storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self)
-                ?? CarbRatios(from: OpenAPS.defaults(for: OpenAPS.Settings.carbRatios))
-                ?? CarbRatios(units: .grams, schedule: [])
+            items = sorted
         }
 
         private func saveProfile(_ profile: CarbRatios) async {
-            await storage.save(profile, as: OpenAPS.Settings.carbRatios)
-        }
-
-        private func retrieveAutotune() async -> Autotune? {
-            await storage.retrieve(OpenAPS.Settings.autotune, as: Autotune.self)
+            await crScheduleStorage.updateCrSchedule(profile)
         }
 
         private static let dateFormatter = {
@@ -84,7 +73,6 @@ extension CREditor {
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateFormat = "HH:mm:ss"
             return formatter
-
         }()
     }
 }

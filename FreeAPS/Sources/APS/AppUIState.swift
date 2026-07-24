@@ -26,6 +26,7 @@ import Observation
     private(set) var latestIOB: Decimal?
     private(set) var latestCOB: Decimal?
     private(set) var glucoseAlarm: GlucoseAlarm?
+    private(set) var suggestion: Suggestion?
 
     private(set) var lightMode = LightMode.auto
     private(set) var liveActivitiesSystemEnabled: Bool = false
@@ -67,5 +68,6 @@ import Observation
         observeUI(appCoordinator.settings, map: { $0.lightMode }) { me, value in me.lightMode = value }
         observeUI(appCoordinator.iobTicks, map: { $0?.first?.iob }) { me, value in me.latestIOB = value }
         observeUI(appCoordinator.suggested, map: { $0?.cob }) { me, value in me.latestCOB = value }
+        observeUI(appCoordinator.suggested) { me, value in me.suggestion = value }
     }
 }

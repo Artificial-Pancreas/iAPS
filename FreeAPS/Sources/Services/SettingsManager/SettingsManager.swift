@@ -13,13 +13,10 @@ protocol SettingsManager: AnyObject, Sendable {
     func updatePumpSettings(_ settings: PumpSettings) async
     func updatePreferences(_ settings: Preferences) async
 
-    /// forces a re-read from files
-    func resetCachedSettings() async
+    func saveRawSettings(_ raw: RawJSON) async throws
+    func saveRawPreferences(_ raw: RawJSON) async throws
+    func saveRawPumpSettings(_ raw: RawJSON) async throws
 }
-
-// protocol SettingsObserver {
-//    func settingsDidChange(_: FreeAPSSettings)
-// }
 
 extension InsulinType: @retroactive @unchecked Sendable {}
 
@@ -37,7 +34,6 @@ actor BaseSettingsManager: SettingsManager, AppService {
                 return cachedSettings
             }
             let retrievedSettings = await storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
-                ?? FreeAPSSettings(from: OpenAPS.defaults(for: OpenAPS.FreeAPS.settings))
                 ?? FreeAPSSettings()
             cachedSettings = retrievedSettings
             return retrievedSettings
@@ -50,7 +46,6 @@ actor BaseSettingsManager: SettingsManager, AppService {
                 return cachedPreferences
             }
             let retrievedPreferences = await storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
-                ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
                 ?? Preferences()
             cachedPreferences = retrievedPreferences
             return retrievedPreferences
@@ -63,7 +58,6 @@ actor BaseSettingsManager: SettingsManager, AppService {
                 return cachedPumpSettings
             }
             let retrievedPumpSettings = await storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
-                ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
                 ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 4)
             cachedPumpSettings = retrievedPumpSettings
             return retrievedPumpSettings
@@ -83,7 +77,23 @@ actor BaseSettingsManager: SettingsManager, AppService {
         await updateAppCoordinator()
     }
 
-    func resetCachedSettings() async {
+    func saveRawSettings(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.FreeAPS.settings, decodingInto: FreeAPSSettings.self)
+        await resetCachedSettings()
+    }
+
+    func saveRawPreferences(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.preferences, decodingInto: Preferences.self)
+        await resetCachedSettings()
+    }
+
+    func saveRawPumpSettings(_ raw: RawJSON) async throws {
+        try await storage.save(raw: raw, as: OpenAPS.Settings.settings, decodingInto: PumpSettings.self)
+        await resetCachedSettings()
+    }
+
+    /// forces a re-read from files
+    private func resetCachedSettings() async {
         cachedSettings = nil
         cachedPreferences = nil
         cachedPumpSettings = nil

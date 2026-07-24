@@ -3,7 +3,8 @@ import SwiftUI
 
 extension PreferencesEditor {
     final class StateModel: BaseStateModel<Provider>, PreferencesSettable {
-        @Injected() private var storage: FileStorage!
+        @Injected() private var isfScheduleStorage: IsfScheduleStorage!
+        @Injected() private var bgTargetsScheduleStorage: BgTargetsScheduleStorage!
 
         private(set) var preferences = Preferences()
 
@@ -433,11 +434,8 @@ extension PreferencesEditor {
         }
 
         private func saveTargets() async {
-            let profile = await storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
-                ?? BGTargets(from: OpenAPS.defaults(for: OpenAPS.Settings.bgTargets))
-                ?? BGTargets(units: .mmolL, userPrefferedUnits: .mmolL, targets: [])
-
-            let units = await settingsManager.settings.units
+            let profile = appCoordinator.bgTargetsSchedule.value
+            let units = appCoordinator.settings.value.units
             guard units != profile.units else { return }
 
             let targets = profile.targets.map { target -> BGTargetEntry in
@@ -458,19 +456,14 @@ extension PreferencesEditor {
                 }
             }
 
-            let newProfile = BGTargets(units: units, userPrefferedUnits: units, targets: targets)
-            await storage.save(newProfile, as: OpenAPS.Settings.bgTargets)
+            let newProfile = BGTargets(units: units, userPreferredUnits: units, targets: targets)
+
+            await bgTargetsScheduleStorage.updateBgTargetsSchedule(newProfile)
         }
 
         private func saveISF() async {
-            let profile = await storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self)
-                ?? InsulinSensitivities(from: OpenAPS.defaults(for: OpenAPS.Settings.insulinSensitivities))
-                ?? InsulinSensitivities(
-                    units: .mmolL,
-                    userPrefferedUnits: .mmolL,
-                    sensitivities: []
-                )
-            let units = await settingsManager.settings.units
+            let profile = appCoordinator.isfSchedule.value
+            let units = appCoordinator.settings.value.units
             guard units != profile.units else { return }
 
             let sensitivities = profile.sensitivities.map { item -> InsulinSensitivityEntry in
@@ -490,9 +483,9 @@ extension PreferencesEditor {
                 }
             }
 
-            let newProfile = InsulinSensitivities(units: units, userPrefferedUnits: units, sensitivities: sensitivities)
+            let newProfile = InsulinSensitivities(units: units, userPreferredUnits: units, sensitivities: sensitivities)
 
-            await storage.save(newProfile, as: OpenAPS.Settings.insulinSensitivities)
+            await isfScheduleStorage.updateIsfSchedule(newProfile)
         }
     }
 }

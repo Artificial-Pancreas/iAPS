@@ -1,6 +1,6 @@
 import Foundation
 
-struct AutoISFsettings: JSON, Codable, Sendable {
+struct AutoISFsettings: JSON, Codable, Sendable, Equatable {
     var autoisf: Bool = false
     var autocr: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -31,4 +31,24 @@ struct AutoISFsettings: JSON, Codable, Sendable {
     var ketoProtectBasalAbsolut: Decimal = 0
     var id: String = UUID().uuidString
     var nightTime = NightTimeConfiguration.default
+}
+
+extension AutoISFsettings {
+    var ketoProtectSettings: KetoProtectSettings {
+        KetoProtectSettings(
+            ketoProtect: ketoProtect,
+            variableKetoProtect: variableKetoProtect,
+            ketoProtectBasalPercent: ketoProtectBasalPercent,
+            ketoProtectAbsolut: ketoProtectAbsolut,
+            ketoProtectBasalAbsolut: ketoProtectBasalAbsolut
+        )
+    }
+}
+
+struct KetoProtectSettings {
+    let ketoProtect: Bool
+    let variableKetoProtect: Bool
+    let ketoProtectBasalPercent: Decimal
+    let ketoProtectAbsolut: Bool
+    let ketoProtectBasalAbsolut: Decimal
 }

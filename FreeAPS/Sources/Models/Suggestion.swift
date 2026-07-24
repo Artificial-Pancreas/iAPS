@@ -19,6 +19,24 @@ struct Suggestion: JSON, Equatable {
     var timestamp: Date?
     var recieved: Bool?
     var targetBG: Decimal?
+    var error: String?
+    var bgi: Decimal?
+    var deviation: Decimal?
+    var isf: Decimal?
+    var cr: Decimal?
+    // added by iAPS after oref0 returns
+    var iaps: SuggestionExtraFields?
+}
+
+struct SuggestionExtraFields: JSON, Equatable {
+    let aisfReasons: String?
+    let maxSafeBasal: Decimal?
+    let units: GlucoseUnits?
+    let overrideActive: Bool
+    let totalDailyDose: Decimal?
+    let isf: Decimal?
+    let cr: Decimal?
+    let minPredBG: Decimal?
 }
 
 struct Predictions: JSON, Equatable {
@@ -48,6 +66,12 @@ extension Suggestion {
         case timestamp
         case recieved
         case targetBG = "target_bg"
+        case error
+        case bgi = "BGI"
+        case deviation
+        case isf = "ISF"
+        case cr = "CR"
+        case iaps
     }
 }
 

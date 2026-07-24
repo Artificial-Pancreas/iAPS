@@ -26,6 +26,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
 
     private let overrideStorage: OverrideStorage
     private let coreDataStorage = CoreDataStorage()
+    private let overrideManager: OverrideManager
 
     private var settings: FreeAPSSettings!
     private var preferences: Preferences!
@@ -43,6 +44,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         nightscout: NightscoutManager,
         appCoordinator: AppCoordinator,
         overrideStorage: OverrideStorage,
+        overrideManager: OverrideManager,
         session: WCSession = .default
     ) {
         self.settingsManager = settingsManager
@@ -54,6 +56,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.nightscout = nightscout
         self.appCoordinator = appCoordinator
         self.overrideStorage = overrideStorage
+        self.overrideManager = overrideManager
 
         self.session = session
         self.delegate = WatchSessionDelegate()
@@ -71,7 +74,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             session.activate()
         }
 
-        observe(appCoordinator.glucoseHistory.dropFirst()) { me, _ in
+        observe(appCoordinator.glucoseRaw.dropFirst()) { me, _ in
             await me.configureState()
         }
         observe(appCoordinator.preferences.dropFirst()) { me, preferences in
@@ -130,13 +133,11 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     private func configureState() async {
         let suggestion = appCoordinator.latestLoopOutcome.value?.suggestion
 
-        let reasons = await coreDataStorage.fetchReason()
-
-        if let reason = reasons {
-            self.state.isf = (reason.isf ?? 15) as Decimal
-            self.state.target = (reason.target ?? 100) as Decimal
-            self.state.carbRatio = (reason.cr ?? 30) as Decimal
-            self.state.minPredBG = (reason.minPredBG ?? 0) as Decimal
+        if let suggestion {
+            self.state.isf = (suggestion.iaps?.isf ?? 15)
+            self.state.target = (suggestion.targetBG ?? 100)
+            self.state.carbRatio = (suggestion.iaps?.cr ?? 30)
+            self.state.minPredBG = (suggestion.iaps?.minPredBG ?? 0)
         }
 
         self.state.eventualGlucose = Decimal(suggestion?.eventualBG ?? 0)
@@ -184,9 +185,10 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             }
 
         var overrides: [OverridePresets_] = []
-        for preset in await overrideStorage.fetchProfiles() {
-            let untilDate = await overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
-                guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
+        let currentOverride = await overrideStorage.fetchCurrentActiveOverride()
+        for preset in await overrideStorage.fetchOverridePresets() {
+            let untilDate = currentOverride.flatMap { currentOverride -> Date? in
+                guard currentOverride.id == preset.id else { return nil }
 
                 let duration = Double(currentOverride.duration ?? 0)
                 let overrideDate: Date = currentOverride.date ?? Date.now
@@ -198,7 +200,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             overrides.append(
                 OverridePresets_(
                     name: preset.name ?? "",
-                    id: preset.id ?? "",
+                    id: preset.id,
                     until: untilDate,
                     description: self.description(preset)
                 )
@@ -207,14 +209,14 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.state.overrides = overrides
         // Is there an active override but no preset?
         let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
-        if let last = await overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
+        if let last = await overrideStorage.fetchCurrentActiveOverride(), currentButNoOverrideNotPreset == nil {
             let duration = Double(last.duration ?? 0)
             let overrideDate: Date = last.date ?? Date.now
             let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
             let date = date_ > Date.now ? date_ : nil
 
             self.state.overrides
-                .append(OverridePresets_(name: "custom", id: last.id ?? "", until: date, description: self.description(last)))
+                .append(OverridePresets_(name: "custom", id: last.id, until: date, description: self.description(last)))
         }
 
         self.state.bolusAfterCarbs = !settings.skipBolusScreenAfterCarbs
@@ -227,10 +229,10 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.state.eventualBG = eBG.map { "⇢ " + $0 }
         self.state.eventualBGRaw = eBG
 
-        let overrideArray = await overrideStorage.fetchLatestOverride()
+        let activeOverride = await overrideStorage.fetchCurrentActiveOverride()
 
-        if overrideArray.first?.enabled ?? false {
-            let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
+        if let activeOverride {
+            let percentString = "\(activeOverride.percentage.formatted(.number)) %"
             self.state.override = percentString
         } else {
             self.state.override = "100 %"
@@ -573,39 +575,27 @@ private extension BaseWatchManager {
         }
 
         if let overrideID = message.override {
-            if var preset = await overrideStorage.fetchProfiles().first(where: { $0.id == overrideID }) {
-                preset.date = Date.now
+            if var preset = await overrideStorage.fetchOverridePreset(id: overrideID) {
+                // Cancel an active override first, if any
+                await overrideManager.cancelActiveOverride()
 
-                // Cancel eventual current active override first
-                if let activeOveride = await overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
-                    let name = await overrideStorage.isPresetName()
-
-                    if let duration = await overrideStorage.cancelProfile() {
-                        let nsString = name ?? activeOveride.percentage.formatted()
-                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date())
-                    }
-                }
                 // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
-                await overrideStorage.overrideFromPreset(preset)
+                guard let saved = await overrideStorage.activateOverrideFromPreset(preset: preset, fromSavedPreset: true)
+                else { return .denied }
                 await nightscout.uploadOverride(
                     preset.name ?? "",
                     Double(preset.duration ?? 0),
-                    overrideStorage.fetchLatestOverride().first?.date ?? Date.now
+                    saved.date ?? Date.now
                 )
                 await configureState()
                 return .confirmed
             } else if overrideID == "cancel" {
-                if let activeOveride = await overrideStorage.fetchLatestOverride().first, activeOveride.enabled {
-                    let presetName = await overrideStorage.isPresetName()
-                    let nsString = presetName ?? activeOveride.percentage.formatted()
-
-                    if let duration = await overrideStorage.cancelProfile() {
-                        await nightscout.uploadOverride(nsString, duration, activeOveride.date ?? Date.now)
-                        await configureState()
-                        return .confirmed
-                    }
+                if await overrideManager.cancelActiveOverride() {
+                    await configureState()
+                    return .confirmed
+                } else {
+                    return .denied
                 }
-                return .denied
             }
         }
 
