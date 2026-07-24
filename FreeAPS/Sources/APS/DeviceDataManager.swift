@@ -578,6 +578,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             self.pumpManager = newPumpManager
         }
         pumpName.send(pumpManager.localizedTitle)
+        // OmnipodKit notifies state on every podState change, but only emits
+        // status updates when PumpManagerStatus/highlight changes. Pod expiry
+        // lives on podState, so refresh home-header fields here as well.
+        refreshPodDerivedState(from: pumpManager)
     }
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
@@ -635,12 +639,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             manualTempBasal.send(false)
         }
 
-        let endTime = KnownPlugins.pumpExpirationDate(pumpManager)
-        pumpExpiresAtDate.send(endTime)
-
-        if let startTime = KnownPlugins.pumpActivationDate(pumpManager) {
-            storage.save(startTime, as: OpenAPS.Monitor.podAge)
-        }
+        refreshPodDerivedState(from: pumpManager)
 
         pumpManagerStatus.value = status
         if status.deliveryIsUncertain != oldStatus.deliveryIsUncertain {
@@ -1009,12 +1008,22 @@ private extension BaseDeviceDataManager {
             pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
             pumpManagerStatus.value = pumpManager.status
             pumpName.send(pumpManager.localizedTitle)
-            pumpExpiresAtDate.send(KnownPlugins.pumpExpirationDate(pumpManager))
+            refreshPodDerivedState(from: pumpManager)
         } else {
             pumpDisplayState.value = nil
             pumpManagerStatus.value = nil
             pumpExpiresAtDate.send(nil)
             pumpName.send("")
+        }
+    }
+
+    /// Keeps home-header pod fields in sync with pump manager state.
+    /// OmnipodKit may update `podState` (incl. `expiresAt`) without a status change.
+    func refreshPodDerivedState(from pumpManager: PumpManager) {
+        pumpExpiresAtDate.send(KnownPlugins.pumpExpirationDate(pumpManager))
+
+        if let startTime = KnownPlugins.pumpActivationDate(pumpManager) {
+            storage.save(startTime, as: OpenAPS.Monitor.podAge)
         }
     }
 }
