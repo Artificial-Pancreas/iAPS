@@ -1028,8 +1028,11 @@ private extension BaseDeviceDataManager {
 
         if let reservoir = KnownPlugins.pumpReservoir(pumpManager) {
             storage.save(reservoir, as: OpenAPS.Monitor.reservoir)
-            broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
-                $0.pumpReservoirDidChange(reservoir)
+            // setupPump / didUpdateState can run off processQueue; Broadcaster requires it.
+            processQueue.safeSync {
+                broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
+                    $0.pumpReservoirDidChange(reservoir)
+                }
             }
         }
     }
