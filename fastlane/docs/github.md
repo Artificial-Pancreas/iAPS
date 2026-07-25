@@ -35,9 +35,9 @@ Follow these steps to fork the repository:
     * Go to Settings -> Secrets and variables -> Actions and make sure the Variables tab is open
 4. Tap on "Create new organization variable" or "Create new repository variable", then add the name below and enter the value *true*. Unlike secrets these variables are visible and can be edited.
     * `ENABLE_NUKE_CERTS`
-5.  Under the **Variables** tab, set the following two variables:
-    * `APP_IDENTIFIER`: This defaults to `ru.artpancreas.#{TEAMID}.FreeAPS` if you don't set it.
-    * `BUILD_GROUP`: This variable is typically left blank unless you're labeling a distribution or build shared by multiple users.
+5.  **Optional: most people should skip this step.** Neither of the following is needed for a normal build. Only add them if you specifically need the behaviour described:
+    * `APP_IDENTIFIER` (secret *or* variable) - the app's bundle identifier. **Leave it unset** (do not create the secret/variable) unless you are deliberately building with a non-default bundle id (for example a second, separate app). If you don't set it, the build automatically uses `ru.artpancreas.<your team id>.FreeAPS`, with your team id filled in for you - you do **not** need to create anything or type that value anywhere (in particular, do not paste `<your team id>` or `#{TEAMID}` literally, and do not include the extra symbols: `<>`, `${}`, etc; it is just a placeholder for your team id). If you *do* need a custom value, add it as a **secret** named `APP_IDENTIFIER` (preferred, because the bundle id contains your team id, which is best kept private); a repository **variable** of the same name is still supported as a fallback.
+    * `BUILD_GROUP` (variable) - leave it unset unless you're labeling a distribution or build shared by multiple users.
       
 ---
 
