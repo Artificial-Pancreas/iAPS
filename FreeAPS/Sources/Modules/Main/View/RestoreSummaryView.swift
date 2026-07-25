@@ -22,6 +22,12 @@ struct RestoreSummaryView: View {
 
     private var router: Router { resolver.resolve(Router.self)! }
 
+    /// Annotated: a bare ternary of literals is a String, which `navigationTitle` takes verbatim
+    /// (no translation).
+    private var screenTitle: LocalizedStringKey {
+        isNewUser ? "Set up your settings" : "Review your settings"
+    }
+
     var body: some View {
         NavigationView {
             List {
@@ -48,7 +54,7 @@ struct RestoreSummaryView: View {
                 } header: { Text("Extra Features") }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle(isNewUser ? "Set up your settings" : "Review your settings")
+            .navigationTitle(screenTitle)
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 Button(action: onNext) {

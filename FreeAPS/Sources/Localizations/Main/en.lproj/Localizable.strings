@@ -3956,6 +3956,28 @@ Enact a temp Basal or a temp target */
 
 "Finish setup" = "Finish setup";
 
+/* Sharing — unit abbreviations for the optional weight/height fields.
+   "kg" kilograms, "lb" pounds, "cm" centimetres, "ft" feet, "in" inches,
+   "ft/in" the feet-and-inches picker option. */
+"kg" = "kg";
+
+"lb" = "lb";
+
+"cm" = "cm";
+
+"ft" = "ft";
+
+"in" = "in";
+
+"ft/in" = "ft/in";
+
+/* Developer settings — re-arm the first-launch onboarding so it replays */
+"Replay onboarding (new install)" = "Replay onboarding (new install)";
+
+"Replay onboarding (as upgrade)" = "Replay onboarding (as upgrade)";
+
+"Reset" = "Reset";
+
 "Cancel temp" = "Cancel temp";
 
 "No " = "No ";

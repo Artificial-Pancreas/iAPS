@@ -70,7 +70,9 @@ struct RecoveryTokenAccountView: View {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 copied = true
             } label: {
-                Label(copied ? "Copied" : "Copy", systemImage: copied ? "checkmark" : "doc.on.doc")
+                // Annotated: a bare ternary of literals is a String and would bypass translation.
+                let copyTitle: LocalizedStringKey = copied ? "Copied" : "Copy"
+                Label(copyTitle, systemImage: copied ? "checkmark" : "doc.on.doc")
                     .font(.subheadline)
             }
 
@@ -246,8 +248,11 @@ struct RecoveryTokenAccountView: View {
     }
 
     private var doneBar: some View {
-        Button(action: onDone) {
-            Text(model.linked ? "Done" : "Finish without an account")
+        // Annotated: a bare ternary of literals is a String and would bypass translation.
+        let title: LocalizedStringKey = model.linked ? "Done" : "Finish without an account"
+
+        return Button(action: onDone) {
+            Text(title)
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()

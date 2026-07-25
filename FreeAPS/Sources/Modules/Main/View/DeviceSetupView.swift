@@ -63,7 +63,11 @@ struct DeviceSetupView: View {
 
     /// "Setup" (accent, a to-do) until the device is paired, then "Review" + green check.
     private func deviceRow(_ title: LocalizedStringKey, _ screen: Screen, configured: Bool) -> some View {
-        NavigationLink {
+        // Annotated: a bare `cond ? "a" : "b"` is a String, so it would hit Text's verbatim
+        // initialiser and ship untranslated.
+        let action: LocalizedStringKey = configured ? "Review" : "Setup"
+
+        return NavigationLink {
             router.view(for: screen)
                 .navigationBarTitleDisplayMode(.inline)
         } label: {
@@ -75,7 +79,7 @@ struct DeviceSetupView: View {
                         .foregroundStyle(.green)
                         .font(.subheadline)
                 }
-                Text(configured ? "Review" : "Setup")
+                Text(action)
                     .font(.subheadline)
                     .foregroundStyle(configured ? Color.secondary : Color.accentColor)
             }
