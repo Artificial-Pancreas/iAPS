@@ -100,8 +100,16 @@ enum KnownPlugins {
         case MedtrumPumpManager.pluginIdentifier:
             return (pumpManager as? MedtrumPumpManager)?.state.patchActivatedAt
         case OmniPumpManager.pluginIdentifier:
-            return (pumpManager as? OmniPumpManager)?.state.podState?.activatedAt
-        default: return nil
+            if let activatedAt = (pumpManager as? OmniPumpManager)?.state.podState?.activatedAt {
+                return activatedAt
+            }
+            // Plugin dual-load can make `as? OmniPumpManager` fail; read serializable state instead.
+            return omniPodState(from: pumpManager)?["activatedAt"] as? Date
+        default:
+            if pumpManager.pluginIdentifier.hasPrefix("Omni") {
+                return omniPodState(from: pumpManager)?["activatedAt"] as? Date
+            }
+            return nil
         }
     }
 
@@ -110,23 +118,50 @@ enum KnownPlugins {
         case MedtrumPumpManager.pluginIdentifier:
             return (pumpManager as? MedtrumPumpManager)?.state.patchExpiresAt
         case OmniPumpManager.pluginIdentifier:
-            return (pumpManager as? OmniPumpManager)?.state.podState?.expiresAt
-        default: return nil
+            if let expiresAt = (pumpManager as? OmniPumpManager)?.state.podState?.expiresAt {
+                return expiresAt
+            }
+            // Plugin dual-load can make `as? OmniPumpManager` fail; read serializable state instead.
+            return omniPodState(from: pumpManager)?["expiresAt"] as? Date
+        default:
+            if pumpManager.pluginIdentifier.hasPrefix("Omni") {
+                return omniPodState(from: pumpManager)?["expiresAt"] as? Date
+            }
+            return nil
         }
     }
 
     static func pumpReservoir(_ pumpManager: PumpManager) -> Decimal? {
         switch pumpManager.pluginIdentifier {
         case OmniPumpManager.pluginIdentifier:
-            let reservoirVal = (pumpManager as? OmniPumpManager)?.state.podState?.lastInsulinMeasurements?
-                .reservoirLevel ?? 0xDEAD_BEEF
-            let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
-            return Decimal(reservoir)
+            if let omni = pumpManager as? OmniPumpManager {
+                let reservoirVal = omni.state.podState?.lastInsulinMeasurements?.reservoirLevel ?? 0xDEAD_BEEF
+                let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : reservoirVal
+                return Decimal(reservoir)
+            }
+            return omniReservoir(from: pumpManager)
         case MedtrumPumpManager.pluginIdentifier:
             guard let reservoir = (pumpManager as? MedtrumPumpManager)?.state.reservoir else { return nil }
             return Decimal(reservoir)
-        default: return nil
+        default:
+            if pumpManager.pluginIdentifier.hasPrefix("Omni") {
+                return omniReservoir(from: pumpManager)
+            }
+            return nil
         }
+    }
+
+    /// OmnipodKit may be loaded from the plugin bundle while FreeAPS also imports the module.
+    /// Prefer typed access when the cast works; otherwise parse `rawState`.
+    private static func omniPodState(from pumpManager: PumpManager) -> [String: Any]? {
+        pumpManager.rawState["podState"] as? [String: Any]
+    }
+
+    private static func omniReservoir(from pumpManager: PumpManager) -> Decimal? {
+        let measurements = omniPodState(from: pumpManager)?["lastInsulinMeasurements"] as? [String: Any]
+        let reservoirVal = (measurements?["reservoirLevel"] as? Double) ?? 0xDEAD_BEEF
+        let reservoir = Decimal(reservoirVal) > 50.0 ? 0xDEAD_BEEF : Decimal(reservoirVal)
+        return reservoir
     }
 
     static func cgmInfo(for cgmManager: CGMManager) -> GlucoseSourceInfo? {

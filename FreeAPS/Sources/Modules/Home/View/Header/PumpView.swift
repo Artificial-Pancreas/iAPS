@@ -43,6 +43,10 @@ struct PumpView: View {
     ) var concentration: FetchedResults<InsulinConcentration>
 
     var body: some View {
+        // Prefer published expiry, but fall back to live pump-manager state so the
+        // home header cannot stick on "No Pod" when Omnipod settings already show a pod.
+        let resolvedExpiresAt = expiresAtDate
+            ?? state.deviceDataManager.pumpManager.flatMap(KnownPlugins.pumpExpirationDate)
         let nano = state.pumpName.contains("Medtrum")
         // let sim = state.pumpName.contains("Simulator") // Just For Testing
         HStack(spacing: 5) {
@@ -53,7 +57,7 @@ struct PumpView: View {
                 Text("Re-connect pump!").font(.statusFont).foregroundStyle(.red)
                     .offset(y: -4)
             } else {
-                if let date = expiresAtDate {
+                if let date = resolvedExpiresAt {
                     // Insulin amount (U)
                     if let insulin = reservoir {
                         // 120 % due to being non rectangular. +10 because of bottom inserter.
@@ -162,7 +166,7 @@ struct PumpView: View {
                                 if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                                     ClockOffset(mdtPump: true)
                                 }
-                            }.offset(y: expiresAtDate == nil ? -4 : 0)
+                            }.offset(y: resolvedExpiresAt == nil ? -4 : 0)
                     } else {
                         HStack(spacing: 0) {
                             Text(
@@ -199,7 +203,7 @@ struct PumpView: View {
                 }
             }
         }
-        .offset(x: (nano && expiresAtDate != nil) ? 5 : 0, y: (nano && expiresAtDate != nil) ? 10 : 5)
+        .offset(x: (nano && resolvedExpiresAt != nil) ? 5 : 0, y: (nano && resolvedExpiresAt != nil) ? 10 : 5)
     }
 
     private func remainingTime(time: TimeInterval) -> some View {

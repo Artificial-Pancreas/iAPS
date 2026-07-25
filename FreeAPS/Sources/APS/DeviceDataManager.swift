@@ -1025,6 +1025,13 @@ private extension BaseDeviceDataManager {
         if let startTime = KnownPlugins.pumpActivationDate(pumpManager) {
             storage.save(startTime, as: OpenAPS.Monitor.podAge)
         }
+
+        if let reservoir = KnownPlugins.pumpReservoir(pumpManager) {
+            storage.save(reservoir, as: OpenAPS.Monitor.reservoir)
+            broadcaster.notify(PumpReservoirObserver.self, on: processQueue) {
+                $0.pumpReservoirDidChange(reservoir)
+            }
+        }
     }
 }
 
