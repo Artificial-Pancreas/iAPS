@@ -108,6 +108,7 @@ extension OpenAPS {
         static let uploadedMealPresets = "upload/uploaded-meal-presets.json"
         static let uploadedOverridePresets = "upload/uploaded-override-presets.json"
         static let uploadedContactTrick = "upload/uploaded-contact-trick.json"
+        static let uploadedAISettings = "upload/uploaded-ai-settings.json"
     }
 
     enum FreeAPS {

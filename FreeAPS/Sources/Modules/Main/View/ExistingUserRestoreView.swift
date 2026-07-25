@@ -361,12 +361,14 @@ extension ExistingUserRestoreView {
                         self.saveConcentration(concentration, increment: preferences.bolusIncrement)
                     }
 
-                    // Sequenced best-effort tail — Contact Trick, then the profile schedules —
-                    // finishing with complete(). Each `then` weakly captures self so the chain
-                    // never retains it past the flow advancing.
+                    // Sequenced best-effort tail — Contact Trick, AI settings, then the profile
+                    // schedules — finishing with complete(). Each `then` weakly captures self so
+                    // the chain never retains it past the flow advancing.
                     self.restoreContactTrick(using: database) { [weak self] in
-                        self?.restoreProfileSchedules(using: database, units: settings.units) { [weak self] in
-                            self?.complete()
+                        self?.restoreAISettings(using: database) { [weak self] in
+                            self?.restoreProfileSchedules(using: database, units: settings.units) { [weak self] in
+                                self?.complete()
+                            }
                         }
                     }
                 }
@@ -403,6 +405,43 @@ extension ExistingUserRestoreView {
                     receiveValue: { [weak self] payload in
                         guard let self, !payload.contacts.isEmpty else { return }
                         self.storage.save(payload.contacts, as: OpenAPS.Settings.contactTrick)
+                    }
+                )
+                .store(in: &lifetime)
+        }
+
+        /// Best-effort, silent restore of the AI food-search settings, which live in UserDefaults
+        /// rather than in any settings file. Each field is applied only if the backup carried it,
+        /// so a partial or older payload leaves the rest at their defaults.
+        ///
+        /// The provider API keys are deliberately not backed up and so aren't restored — the user
+        /// re-enters them in Food Search Settings. We're not putting people's billable Claude /
+        /// OpenAI / Gemini credentials on a backup server.
+        private func restoreAISettings(using database: Database, then: @escaping () -> Void) {
+            database.fetchAISettings("default")
+                .receive(on: DispatchQueue.main)
+                .sink(
+                    receiveCompletion: { _ in then() },
+                    receiveValue: { payload in
+                        guard let ai = payload.settings else { return }
+                        let d = UserDefaults.standard
+
+                        if let v = ai.textSearchProvider, let p = TextSearchProvider(rawValue: v) { d.textSearchProvider = p }
+                        if let v = ai.barcodeSearchProvider, let p = BarcodeSearchProvider(rawValue: v) {
+                            d.barcodeSearchProvider = p
+                        }
+                        if let v = ai.aiImageProvider, let p = ImageSearchProvider(rawValue: v) { d.aiImageProvider = p }
+                        if let v = ai.aiTextProvider, let p = AITextProvider(rawValue: v) { d.aiTextProvider = p }
+                        if let v = ai.nutritionAuthority, let p = NutritionAuthority(rawValue: v) {
+                            d.userPreferredNutritionAuthorityForAI = p
+                        }
+                        if let v = ai.preferredLanguage { d.userPreferredLanguageForAI = v }
+                        if let v = ai.preferredRegion { d.userPreferredRegionForAI = v }
+                        if let v = ai.sendSmallerImages { d.shouldSendSmallerImagesToAI = v }
+                        if let v = ai.aiTextSearchByDefault { d.aiTextSearchByDefault = v }
+                        if let v = ai.aiAddImageCommentByDefault { d.aiAddImageCommentByDefault = v }
+                        if let v = ai.aiSavePhotosToLibrary { d.aiSavePhotosToLibrary = v }
+                        if let v = ai.aiProgressAnimation { d.aiProgressAnimation = v }
                     }
                 )
                 .store(in: &lifetime)

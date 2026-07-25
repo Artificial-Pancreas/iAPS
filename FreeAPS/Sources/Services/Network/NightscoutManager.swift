@@ -626,6 +626,22 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
+    private func uploadAISettingsToDatabase(_ upload: AISettingsDatabase, token: String) {
+        processQueue.async {
+            Database(token: token).uploadAISettings(upload)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "AI settings uploaded to database.")
+                        self.storage.save(upload, as: OpenAPS.Nightscout.uploadedAISettings)
+                    case let .failure(error):
+                        debug(.nightscout, "AI settings failed to upload to database " + error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
     func uploadStatus() {
         let iob = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
         var suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -1048,6 +1064,24 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } else {
                     uploadContactTrickToDatabase(contacts, token: token, name: name)
                 }
+            }
+        }
+
+        // Upload AI settings when needed. Unlike the sections above there's no "is it empty"
+        // guard: these are plain UserDefaults values that always read back as something (a
+        // provider choice, a toggle), so the unchanged-check is the only thing that needs to
+        // suppress a repeat upload.
+        if isStatsUploadEnabled || force {
+            let aiSettings = Database(token: token).aiSettingsDatabaseUpload(profile: name, token: token)
+            if let uploaded = storage.retrieveFile(
+                OpenAPS.Nightscout.uploadedAISettings,
+                as: AISettingsDatabase.self
+            ),
+                aiSettings.rawJSON.sorted() == uploaded.rawJSON.sorted(), !force
+            {
+                NSLog("AI settings unchanged")
+            } else {
+                uploadAISettingsToDatabase(aiSettings, token: token)
             }
         }
     }

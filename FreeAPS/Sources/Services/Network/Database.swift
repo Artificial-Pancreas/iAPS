@@ -75,6 +75,7 @@ class Database {
         static let uploadMealPresetsPath = "/api/v1/upload/meal-presets"
         static let uploadOverridePresetsPath = "/api/v1/upload/override-presets"
         static let uploadContactTrickPath = "/api/v1/upload/contact-trick"
+        static let uploadAISettingsPath = "/api/v1/upload/ai-settings"
         static let versionPath = "/api/v1/version_check"
         static let accountTokenPath = "/api/v1/account/token"
         static let accountLinkPath = "/api/v1/account/link"
@@ -88,6 +89,7 @@ class Database {
         static let downloadMealPresetsPath = "/api/v1/download/meal-presets"
         static let downloadOverridePresetsPath = "/api/v1/download/override-presets"
         static let downloadContactTrickPath = "/api/v1/download/contact-trick"
+        static let downloadAISettingsPath = "/api/v1/download/ai-settings"
         static let downloadDeletePath = "/api/v1/download/delete"
 
         static let retryCount = 2
@@ -472,6 +474,26 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
+    func fetchAISettings(_ name: String) -> AnyPublisher<AISettingsDatabase, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.downloadAISettingsPath
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["token": token, "profile": name])
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: AISettingsDatabase.self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
     func uploadSettingsToDatabase(_ profile: NightscoutProfileStore) -> AnyPublisher<Void, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
@@ -657,15 +679,47 @@ extension Database {
                 carbs: (item.carbs ?? 0) as Decimal,
                 dish: item.dish ?? "",
                 fat: (item.fat ?? 0) as Decimal,
-                protein: (item.protein ?? 0) as Decimal
+                protein: (item.protein ?? 0) as Decimal,
+                fiber: item.fiber?.decimalValue,
+                sugars: item.sugars?.decimalValue,
+                glycemicIndex: item.glycemicIndex?.decimalValue,
+                portionSize: item.portionSize?.decimalValue,
+                per100: item.per100,
+                mealUnits: item.mealUnits,
+                standardName: item.standardName,
+                standardServing: item.standardServing,
+                standardServingSize: item.standardServingSize?.decimalValue,
+                imageURL: item.imageURL,
+                tags: item.tags,
+                foodID: item.foodID?.uuidString,
+                // Read the stored entries directly rather than via micronutrientValuesTyped(),
+                // which rescales by portion and drops substances it doesn't recognise — fine for
+                // display, lossy for a backup.
+                micronutrients: (item.micronutrient ?? []).compactMap { entry in
+                    guard let name = entry.micronutrient.name else { return nil }
+                    return MigratedMicronutrient(
+                        name: name,
+                        type: entry.micronutrient.type,
+                        unit: entry.micronutrient.unit,
+                        amount: entry.amount?.decimalValue,
+                        per100: entry.per100
+                    )
+                }
             )
         })
     }
 
     private func migrateOverridePresets() -> [MigratedOverridePresets] {
-        let presets = OverrideStorage().fetchProfiles()
+        let storage = OverrideStorage()
+        let presets = storage.fetchProfiles()
         return presets.map({ item -> MigratedOverridePresets in
-            MigratedOverridePresets(
+            // The Auto ISF block lives in its own entity keyed by the preset's id, so it has to be
+            // looked up per preset rather than read off the preset itself.
+            let autoISF = item.id
+                .flatMap { storage.fetchAutoISFsetting(id: $0) }
+                .map { MigratedAutoISF($0) }
+
+            return MigratedOverridePresets(
                 advancedSettings: item.advancedSettings,
                 cr: item.cr,
                 date: item.date ?? Date(),
@@ -685,10 +739,54 @@ extension Database {
                 smbMinutes: (item.smbMinutes ?? 0) as Decimal,
                 start: (item.start ?? 0) as Decimal,
                 target: (item.target ?? 0) as Decimal,
-                uamMinutes: (item.uamMinutes ?? 0) as Decimal
+                uamMinutes: (item.uamMinutes ?? 0) as Decimal,
+                autoISF: autoISF
             )
 
         })
+    }
+
+    /// Snapshot the AI settings out of UserDefaults. The provider API keys are intentionally not
+    /// read here — see `MigratedAISettings`.
+    private func migrateAISettings() -> MigratedAISettings {
+        let d = UserDefaults.standard
+        return MigratedAISettings(
+            textSearchProvider: d.textSearchProvider.rawValue,
+            barcodeSearchProvider: d.barcodeSearchProvider.rawValue,
+            aiImageProvider: d.aiImageProvider.rawValue,
+            aiTextProvider: d.aiTextProvider.rawValue,
+            preferredLanguage: d.userPreferredLanguageForAI,
+            preferredRegion: d.userPreferredRegionForAI,
+            nutritionAuthority: d.userPreferredNutritionAuthorityForAI.rawValue,
+            sendSmallerImages: d.shouldSendSmallerImagesToAI,
+            aiTextSearchByDefault: d.aiTextSearchByDefault,
+            aiAddImageCommentByDefault: d.aiAddImageCommentByDefault,
+            aiSavePhotosToLibrary: d.aiSavePhotosToLibrary,
+            aiProgressAnimation: d.aiProgressAnimation
+        )
+    }
+
+    func aiSettingsDatabaseUpload(profile: String, token: String) -> AISettingsDatabase {
+        AISettingsDatabase(settings: migrateAISettings(), enteredBy: token, profile: profile)
+    }
+
+    func uploadAISettings(_ payload: AISettingsDatabase) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.uploadAISettingsPath
+
+        var request = URLRequest(url: components.url!)
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONCoding.encoder.encode(payload)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
     }
 
     func mealPresetDatabaseUpload(profile: String, token: String) -> MealDatabase {
