@@ -2,6 +2,7 @@ import Combine
 import CoreData
 import Foundation
 import LoopKit
+import OmniBLE
 import LoopKitUI
 import SwiftDate
 import SwiftUI
@@ -1105,6 +1106,10 @@ final class BaseAPSManager: APSManager, Injectable {
             let branch = branch()
             let copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
             let pump_ = pumpManager?.localizedTitle ?? ""
+            let omniBLE = pumpManager as? OmniBLEPumpManager
+            let podBLE = omniBLE?.deviceBLEName
+            let podFirmware = omniBLE?.state.podState?.firmwareVersion
+            let podBLEFirmware = omniBLE?.state.podState?.bleFirmwareVersion
 //            let cgm = settings.cgm
             let file = OpenAPS.Monitor.statistics
             var iPa: Decimal = 75
@@ -1287,6 +1292,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 AdjustmentFactor: af,
                 Pump: pump_,
                 CGM: KnownPlugins.cgmIdForStatistics(for: deviceDataManager.cgmManager) ?? "",
+                PodBLE: podBLE,
+                PodFirmware: podFirmware,
+                PodBLEFirmware: podBLEFirmware,
                 insulinType: insulin_type.rawValue,
                 peakActivityTime: iPa,
                 Carbs_24h: carbTotal,
