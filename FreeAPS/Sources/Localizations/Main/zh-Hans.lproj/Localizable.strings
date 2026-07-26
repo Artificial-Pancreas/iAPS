@@ -465,6 +465,15 @@ Enact a temp Basal or a temp target */
 "Pump config" = "泵配置";
 
 /*  */
+"Incomplete pump setup" = "Incomplete pump setup";
+
+/*  */
+"The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list)." = "The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list).";
+
+/*  */
+"Remove pump" = "Remove pump";
+
+/*  */
 "Delivery limits" = "输注限制";
 
 /*  */

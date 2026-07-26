@@ -1004,6 +1004,13 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
 extension BaseDeviceDataManager: AlertIssuer {
     func issueAlert(_ alert: Alert) {
+        // Device alerts (pod faults, expiry, occlusion, CGM alarms) otherwise
+        // never reach the log files — only the alert-history UI storage.
+        debug(
+            .deviceManager,
+            "Device alert [\(alert.identifier.managerIdentifier)/\(alert.identifier.alertIdentifier)]: " +
+                "\(alert.backgroundContent.title) — \(alert.backgroundContent.body)"
+        )
         let entry = AlertEntry(from: alert)
         Task { [alertHistoryStorage] in
             await alertHistoryStorage.storeAlert(entry)
@@ -1026,11 +1033,11 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     func deviceManager(
         _: LoopKit.DeviceManager,
         logEventForDeviceIdentifier deviceIdentifier: String?,
-        type _: LoopKit.DeviceLogEntryType,
+        type: LoopKit.DeviceLogEntryType,
         message: String,
         completion: ((Error?) -> Void)?
     ) {
-        debug(.deviceManager, "device Manager for \(String(describing: deviceIdentifier)) : \(message)")
+        debug(.deviceManager, "Device \(deviceIdentifier ?? "?") [\(type.rawValue)]: \(message)")
         completion?(nil)
     }
 }
