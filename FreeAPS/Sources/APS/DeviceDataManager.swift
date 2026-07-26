@@ -763,11 +763,11 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     func deviceManager(
         _: LoopKit.DeviceManager,
         logEventForDeviceIdentifier deviceIdentifier: String?,
-        type _: LoopKit.DeviceLogEntryType,
+        type: LoopKit.DeviceLogEntryType,
         message: String,
         completion: ((Error?) -> Void)?
     ) {
-        debug(.deviceManager, "device Manager for \(String(describing: deviceIdentifier)) : \(message)")
+        debug(.deviceManager, "Device \(deviceIdentifier ?? "?") [\(type.rawValue)]: \(message)")
         completion?(nil)
     }
 }
