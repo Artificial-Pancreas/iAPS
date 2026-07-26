@@ -75,23 +75,21 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func saveInsulinData(iobEntries: [IOBEntry]) async -> Decimal? {
-        guard let firstDate = iobEntries.compactMap(\.time).min() else { return nil }
-        let iob = iobEntries[0].iob
+    @discardableResult func saveInsulinData(iobEntries: [IOBEntry]) async -> [IOBEntryShort] {
+        guard let firstDate = iobEntries.compactMap(\.time).min() else { return [] }
 
-        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+        return await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let deleteRequest = InsulinActivity.fetchRequest()
             deleteRequest.predicate = NSPredicate(
                 format: "date >= %@ OR date < %@",
                 firstDate.addingTimeInterval(-60) as NSDate, // delete previous "future" entries
                 firstDate.addingTimeInterval(-86400) as NSDate // delete entries older than 1 day
             )
-            do {
-                let recordsToDelete = try context.fetch(deleteRequest)
+            if let recordsToDelete = try? context.fetch(deleteRequest) {
                 for record in recordsToDelete {
                     context.delete(record)
                 }
-            } catch { return }
+            }
 
             for iobEntry in iobEntries {
                 let record = InsulinActivity(context: context)
@@ -100,8 +98,21 @@ final class CoreDataStorage: Sendable {
                 record.activity = NSDecimalNumber(decimal: iobEntry.activity)
             }
             try? context.save()
+
+            let windowRequest = InsulinActivity.fetchRequest()
+            windowRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+            windowRequest.predicate = NSPredicate(
+                format: "date > %@",
+                Date.now.subtractingTimeInterval(.hours(24)) as NSDate
+            )
+            let saved = (try? context.fetch(windowRequest)) ?? []
+            return saved.compactMap { tick -> IOBEntryShort? in
+                guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
+                    return nil
+                }
+                return IOBEntryShort(time: date, iob: iob as Decimal, activity: activity as Decimal)
+            }
         }
-        return iob
     }
 
     func fetchLoopStats(interval: NSDate) async -> [LoopStatRecordSnapshot] {

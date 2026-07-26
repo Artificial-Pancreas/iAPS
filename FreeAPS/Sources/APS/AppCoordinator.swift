@@ -75,6 +75,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     let iobTicks = CurrentValueSubject<[IOBEntry]?, Never>(nil)
 
+    /// Rolling ~24h of stored IOB/activity samples (from `InsulinActivity` store
+    let insulinActivity = CurrentValueSubject<[IOBEntryShort], Never>([])
+
     let suggested = CurrentValueSubject<Suggestion?, Never>(nil)
 
     let newGlucoseRecords = PassthroughSubject<[BloodGlucose], Never>()
@@ -239,6 +242,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func setIobTicks(_ value: [IOBEntry]?) {
         iobTicks.send(value)
+    }
+
+    func setInsulinActivity(_ value: [IOBEntryShort]) {
+        insulinActivity.send(value)
     }
 
     func setLatestSuggestion(_ value: Suggestion?) {
