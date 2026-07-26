@@ -9,7 +9,7 @@ class DispatchTimer {
 
     init(
         timeInterval: TimeInterval,
-        queue: DispatchQueue = DispatchQueue.markedQueue(label: "DispatchTimer.queue", qos: .userInteractive)
+        queue: DispatchQueue
     ) {
         self.timeInterval = timeInterval
         self.queue = queue

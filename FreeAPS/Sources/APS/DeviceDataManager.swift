@@ -102,7 +102,11 @@ private enum ConfigOverrides {
 final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     // .userInitiated to match the QoS of the pump managers' session threads and avoid priority inversions.
     // (pump managers can block on the delegate, for example OmnipodKit's store(doses:) semaphore)
-    private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue", qos: .userInitiated)
+    private let processQueue = DispatchQueue(
+        label: "BaseDeviceDataManager.processQueue",
+        qos: .userInitiated,
+        autoreleaseFrequency: .workItem
+    )
 
     private let pumpHistoryStorage: PumpHistoryStorage
     private let alertHistoryStorage: AlertHistoryStorage
@@ -424,6 +428,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     }
 
     private func updatePumpData(completion: @escaping @Sendable() -> Void) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
         guard let pumpManager = pumpManager else {
             debug(.deviceManager, "Pump is not set, skip updating")
             completion()
@@ -436,17 +441,9 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         }
 
         debug(.deviceManager, "Start updating the pump data")
-        processQueue.safeSync {
-            pumpManager.ensureCurrentPumpData { _ in
-                debug(.deviceManager, "Pump data updated.")
-                // directly in loop() function
-                //        guard !loopInProgress else {
-                //            warning(.deviceManager, "Loop already in progress. Skip recommendation.")
-                //            return
-                //        }
-
-                completion()
-            }
+        pumpManager.ensureCurrentPumpData { _ in
+            debug(.deviceManager, "Pump data updated.")
+            completion()
         }
     }
 
@@ -658,15 +655,15 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     // MARK: loop
 
     private func heartbeat(forceRecommendLoop: Bool) {
-        processQueue.safeSync {
-            fetchNewDataFromCgm { readingResult in
-                self.processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: forceRecommendLoop)
-            }
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        fetchNewDataFromCgm { readingResult in
+            self.processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: forceRecommendLoop)
         }
     }
 
     private func processCGMReadingResultAndLoop(readingResult: CGMReadingResult, forceRecommendLoop: Bool) {
-        processQueue.safeSync {
+        // hop onto the process queue instead of blocking the calling thread
+        processQueue.async {
             self.processCGMReadingResult(readingResult: readingResult) { bloodGlucose in
                 self.processReceivedBloodGlucose(bloodGlucose: bloodGlucose, forceRecommendLoop: forceRecommendLoop)
             }
@@ -686,9 +683,13 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
                     return
                 }
                 await appCoordinator.startLoopPendingBackgroundTask()
-                self.processQueue.safeSync {
-                    self.updatePumpData {
-                        self.appCoordinator.sendRecommendsLoop()
+
+                await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+                    self.processQueue.async {
+                        self.updatePumpData {
+                            self.appCoordinator.sendRecommendsLoop()
+                            continuation.resume()
+                        }
                     }
                 }
             }
