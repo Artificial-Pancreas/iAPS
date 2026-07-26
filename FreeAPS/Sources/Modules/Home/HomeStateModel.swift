@@ -151,7 +151,6 @@ extension Home {
 
             setupBasals()
             setupBoluses()
-            await setupActivity()
             setupSuspensions()
 
             setupCarbs(appCoordinator.carbHistory.value)
@@ -203,6 +202,10 @@ extension Home {
 
             observeUI(appCoordinator.basalProfile) { me, basalProfile in
                 me.basalProfileUpdated(basalProfile)
+            }
+
+            observeUI(appCoordinator.insulinActivity) { me, activity in
+                me.data.activity = activity
             }
 
             observeUI(appCoordinator.autotune) { me, autotune in
@@ -398,10 +401,6 @@ extension Home {
 
             // TODO: should we read this from the pump manager instead?
             pumpSuspended = tbr == nil && last?.type == .pumpSuspend
-        }
-
-        private func setupActivity() async {
-            data.activity = await coreDataStorage.fetchInsulinData(interval: DateFilter.day.startDate)
         }
 
         private func setupCob() {
@@ -667,7 +666,6 @@ extension Home.StateModel {
         await setupOverrideHistory()
         setupLoopStatsBackground()
         await setupData()
-        await setupActivity()
         setupCob()
     }
 
@@ -737,7 +735,6 @@ extension Home.StateModel {
         setupBoluses()
         setupSuspensions()
         await setupAnnouncements()
-        await setupActivity()
     }
 
     private func basalProfileUpdated(_ basalProfile: [BasalProfileEntry]) {

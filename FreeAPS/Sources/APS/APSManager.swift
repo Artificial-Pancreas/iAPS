@@ -131,6 +131,10 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         let lastSuggested = await storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         appCoordinator.setLatestSuggestion(lastSuggested)
 
+        appCoordinator.setInsulinActivity(
+            await coreDataStorage.fetchInsulinData(interval: DateFilter.day.startDate)
+        )
+
         if let profiles = try? await makeProfiles() {
             _ = await autosens(profile: profiles.profile)
         }
@@ -415,9 +419,10 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             )
             guard let iobEntries else { return }
 
-            _ = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
+            let history = await coreDataStorage.saveInsulinData(iobEntries: iobEntries)
 
             appCoordinator.setIobTicks(iobEntries)
+            appCoordinator.setInsulinActivity(history)
         }
     }
 
