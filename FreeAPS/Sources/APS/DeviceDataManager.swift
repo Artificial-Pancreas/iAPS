@@ -185,6 +185,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         setupCGM()
 
         appCoordinator.heartbeat
+            .receive(on: processQueue)
             .sink { [weak self] _ in
                 self?.heartbeat(forceRecommendLoop: true)
             }
