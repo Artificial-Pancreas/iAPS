@@ -110,6 +110,8 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var profileButton: Bool = true
     var showInsulinActivity: Bool = false
     var showCobChart: Bool = false
+    // failed loops / device errors / missed readings on the main chart
+    var showLoopEvents: Bool = true
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
@@ -377,6 +379,10 @@ extension FreeAPSSettings: Decodable {
 
         if let showCobChart = try? container.decode(Bool.self, forKey: .showCobChart) {
             settings.showCobChart = showCobChart
+        }
+
+        if let showLoopEvents = try? container.decode(Bool.self, forKey: .showLoopEvents) {
+            settings.showLoopEvents = showLoopEvents
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(

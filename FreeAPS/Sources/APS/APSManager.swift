@@ -75,6 +75,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private let overrideStorage: OverrideStorage
     private let overrideManager: OverrideManager
+    private let loopEventsStorage: LoopEventsStorage
 
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
@@ -107,7 +108,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         openAPS: OpenAPS,
         overrideStorage: OverrideStorage,
         overrideManager: OverrideManager,
-        dynamicStateManager: DynamicStateManager
+        dynamicStateManager: DynamicStateManager,
+        loopEventsStorage: LoopEventsStorage
     ) {
         self.appCoordinator = appCoordinator
         self.storage = storage
@@ -124,6 +126,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         self.overrideStorage = overrideStorage
         self.overrideManager = overrideManager
         self.dynamicStateManager = dynamicStateManager
+        self.loopEventsStorage = loopEventsStorage
     }
 
     // this is called at the app start
@@ -222,7 +225,11 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 let suggestion = try await determineBasal(temporaryCarbs: nil)
                 loopOutcome = await enactSuggestion(suggestion, closedLoop: settings.closedLoop)
             } catch {
-                loopOutcome = .failed(error: error.localizedDescription, timestamp: Date.now)
+                let now = Date.now
+                if let event = LoopEvent.failure(error, timestamp: now) {
+                    await loopEventsStorage.storeEvent(event)
+                }
+                loopOutcome = .failed(error: error.localizedDescription, timestamp: now)
             }
 
             loopStatRecord.end = Date()
@@ -301,6 +308,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             return .enacted(suggestion, timestamp: now)
         } catch {
             let now = Date.now
+            if let event = LoopEvent.failure(error, timestamp: now) {
+                await loopEventsStorage.storeEvent(event)
+            }
             suggestion.timestamp = now
             suggestion.recieved = false
             return .enactFailed(suggestion, error: error.localizedDescription, timestamp: now)
@@ -444,6 +454,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         await withBackgroundTask("enact bolus") {
             if let error = await verifyStatus() {
                 processError(error)
+                if let event = LoopEvent.failure(error) {
+                    await loopEventsStorage.storeEvent(event)
+                }
                 appCoordinator.sendBolusFailure()
                 return
             }
@@ -489,12 +502,19 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         await withBackgroundTask("enact temp basal") {
             if let error = await verifyStatus() {
                 processError(error)
+                if let event = LoopEvent.failure(error) {
+                    await loopEventsStorage.storeEvent(event)
+                }
                 return
             }
 
             // unable to do temp basal during manual temp basal 😁
             if appCoordinator.manualTempBasal.value {
-                processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
+                let error = APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp")
+                processError(error)
+                if let event = LoopEvent.failure(error) {
+                    await loopEventsStorage.storeEvent(event)
+                }
                 return
             }
 

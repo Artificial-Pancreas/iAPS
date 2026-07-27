@@ -482,6 +482,9 @@
 		F281B4A22ECF9087007185A9 /* LabelPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F281B4A12ECF9087007185A9 /* LabelPlacement.swift */; };
 		F28A7E6D30119D2A00A0A415 /* OverrideSettingsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28A7E6C30119D2300A0A415 /* OverrideSettingsForm.swift */; };
 		F28A7E713011A5FC00A0A415 /* OverrideForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28A7E703011A5E800A0A415 /* OverrideForm.swift */; };
+		F28B06A83016DC9100A59FA7 /* LoopEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06A73016DC9100A59FA7 /* LoopEvent.swift */; };
+		F28B06AA3016DCB500A59FA7 /* GlucoseGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */; };
+		F28B06AC3016DCF500A59FA7 /* LoopEventsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
 		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
@@ -1246,6 +1249,9 @@
 		F281B4A12ECF9087007185A9 /* LabelPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPlacement.swift; sourceTree = "<group>"; };
 		F28A7E6C30119D2300A0A415 /* OverrideSettingsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideSettingsForm.swift; sourceTree = "<group>"; };
 		F28A7E703011A5E800A0A415 /* OverrideForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideForm.swift; sourceTree = "<group>"; };
+		F28B06A73016DC9100A59FA7 /* LoopEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopEvent.swift; sourceTree = "<group>"; };
+		F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseGap.swift; sourceTree = "<group>"; };
+		F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopEventsStorage.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
 		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
@@ -2283,6 +2289,8 @@
 				1967DFBD29D052C200759F30 /* Icons.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
 				38887CCD25F5725200944304 /* IOBEntry.swift */,
+				F28B06A73016DC9100A59FA7 /* LoopEvent.swift */,
+				F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */,
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
 				F2ED20F02FE2174200E33CBC /* LoopOutcome.swift */,
 				19012CDB291D2CB900FB8210 /* LoopStats.swift */,
@@ -2370,6 +2378,7 @@
 				F29FC35C2E7F670000DC04FE /* CoreDataManager.swift */,
 				198CED9C2B2E62940073032D /* OverrideStorage.swift */,
 				1982F7DA2BA6509D00EAFADE /* PumpStorage.swift */,
+				F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -3762,6 +3771,7 @@
 				190EBCCB29FF13CB00BA767D /* UIUXRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
 				19FFF08C2FCB3457009DBC48 /* NutrientProgressBars.swift in Sources */,
+				F28B06AA3016DCB500A59FA7 /* GlucoseGap.swift in Sources */,
 				F292C1D12F5F0BF800B08D81 /* OptionalDecimalTextField.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				F2E8D1512F0961CC0097F482 /* FoodTagCloudView.swift in Sources */,
@@ -4035,6 +4045,7 @@
 				F292C6992FDDC6E000D09D88 /* LoopStatRecordSnapshot.swift in Sources */,
 				F25D82952F61AC28007AE22C /* TagChip.swift in Sources */,
 				38E44534274E411700EC9A94 /* Disk+InternalHelpers.swift in Sources */,
+				F28B06A83016DC9100A59FA7 /* LoopEvent.swift in Sources */,
 				F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */,
 				F2E8D15B2F0964860097F482 /* FoodItemImage.swift in Sources */,
 				191B609F2FB936CB0062BB0B /* MicroData.swift in Sources */,
@@ -4083,6 +4094,7 @@
 				CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */,
 				CE7CA3502A064973004BE681 /* CancelTempPresetIntent.swift in Sources */,
 				F292C6A92FDDCEEC00D09D88 /* VNrSnapshot.swift in Sources */,
+				F28B06AC3016DCF500A59FA7 /* LoopEventsStorage.swift in Sources */,
 				F2FA68842EE905F100476D7B /* AITypes.swift in Sources */,
 				6B1F539F9FF75646D1606066 /* SnoozeDataFlow.swift in Sources */,
 				6FFAE524D1D9C262F2407CAE /* SnoozeProvider.swift in Sources */,

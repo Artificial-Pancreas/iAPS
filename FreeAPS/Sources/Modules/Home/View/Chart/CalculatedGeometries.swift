@@ -12,6 +12,7 @@ struct CalculatedGeometries {
     let cobZeroPointY: CGFloat?
     let manualGlucoseDots: [CGRect]
     let announcementDots: [AnnouncementDot]
+    let loopEventDots: [LoopEventDot]
     let manualGlucoseDotsCenter: [CGRect]
     let unSmoothedGlucoseDots: [CGRect]
     let predictionDotsIOB: [CGRect]
@@ -256,6 +257,8 @@ private final class GeometriesBuilder {
         let announcementDots = calculateAnnouncementDots()
 //        let announcementPath = makeAnnouncementPath(announcementDots: announcementDots)
 
+        let loopEventDots = data.showLoopEvents ? calculateLoopEventDots() : []
+
         let unSmoothedGlucoseDots = calculateUnSmoothedGlucoseDots()
 
         let bolusDots = calculateBolusDots()
@@ -297,6 +300,7 @@ private final class GeometriesBuilder {
             cobZeroPointY: cobZeroPointY,
             manualGlucoseDots: manualGlucoseDots,
             announcementDots: announcementDots,
+            loopEventDots: loopEventDots,
             manualGlucoseDotsCenter: manualGlucoseDotsCenter,
             unSmoothedGlucoseDots: unSmoothedGlucoseDots,
             predictionDotsIOB: predictionDotsIOB,
@@ -563,6 +567,74 @@ private final class GeometriesBuilder {
             return AnnouncementDot(rect: rect, value: 10, note: note)
         }
         return dots
+    }
+
+    /// Loop failures / device problems are drawn as symbols in a dedicated lane.
+    /// Symbols that would overlap are merged into a single one.
+    /// The events band sits under the glucose area: in the gap above the activity/COB chart when one of
+    /// them is shown, otherwise just above the bottom of the chart.
+    private var loopEventsLaneY: CGFloat {
+        let hasSecondaryChart = data.showInsulinActivity || data.showCobChart
+        // the same bottom padding the glucose y-coordinates are built on
+        let glucoseAreaBottom = fullSize.height - (
+            hasSecondaryChart ? ChartConfig.mainChartBottomPaddingWithActivity : ChartConfig.bottomPadding
+        )
+        return hasSecondaryChart ?
+            glucoseAreaBottom + ChartConfig.activityChartTopGap / 2 :
+            glucoseAreaBottom - ChartConfig.loopEventsLaneHeight
+    }
+
+    private func calculateLoopEventDots() -> [LoopEventDot] {
+        let laneY = loopEventsLaneY
+
+        let gapDots = data.glucoseGaps.map { gap -> LoopEventDot in
+            let startX = timeToXCoordinate(gap.start.timeIntervalSince1970)
+            let endX = timeToXCoordinate(gap.end.timeIntervalSince1970)
+            return LoopEventDot(
+                center: CGPoint(x: (startX + endX) / 2, y: laneY),
+                type: .missedReadings,
+                events: [gap.loopEvent],
+                barRect: CGRect(
+                    x: startX,
+                    y: laneY - 1.5,
+                    width: max(endX - startX, 3),
+                    height: 3
+                )
+            )
+        }
+
+        // oldest -> newest, so that clustering walks the lane from left to right
+        let events = data.loopEvents.sorted { $0.timestamp < $1.timestamp }
+
+        var clusters: [[LoopEvent]] = []
+        var lastX: CGFloat?
+
+        for event in events {
+            let x = timeToXCoordinate(event.timestamp.timeIntervalSince1970)
+            if let lastX, x - lastX < ChartConfig.loopEventClusterDistance, clusters.isNotEmpty {
+                clusters[clusters.count - 1].append(event)
+            } else {
+                clusters.append([event])
+                lastX = x
+            }
+        }
+
+        let eventDots = clusters.compactMap { cluster -> LoopEventDot? in
+            guard let first = cluster.first else { return nil }
+            // the most important type wins the symbol
+            let type = cluster.max(by: { $0.type.severity < $1.type.severity })?.type ?? first.type
+            return LoopEventDot(
+                center: CGPoint(
+                    x: timeToXCoordinate(first.timestamp.timeIntervalSince1970),
+                    y: laneY
+                ),
+                type: type,
+                events: cluster.reversed(), // newest -> oldest
+                barRect: nil
+            )
+        }
+
+        return gapDots + eventDots
     }
 
     private func makeAnnouncementPath(announcementDots: [AnnouncementDot]) -> Path {

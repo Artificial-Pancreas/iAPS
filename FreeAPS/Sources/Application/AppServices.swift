@@ -31,6 +31,8 @@ import Swinject
         try await startService(resolver.resolve(IsfScheduleStorage.self))
         try await startService(resolver.resolve(CarbRatioScheduleStorage.self))
         try await startService(resolver.resolve(BgTargetsScheduleStorage.self))
+        // must be before MetricKit (a crash event, if any, replaces the app start event)
+        try await startService(resolver.resolve(LoopEventsStorage.self))
         try await startService(resolver.resolve(MetricKitService.self))
 
         _ = resolver.resolve(BluetoothStateManager.self)!

@@ -575,7 +575,7 @@ private extension BaseWatchManager {
         }
 
         if let overrideID = message.override {
-            if var preset = await overrideStorage.fetchOverridePreset(id: overrideID) {
+            if let preset = await overrideStorage.fetchOverridePreset(id: overrideID) {
                 // Cancel an active override first, if any
                 await overrideManager.cancelActiveOverride()
 

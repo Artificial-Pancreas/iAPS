@@ -48,6 +48,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     let alertNotAckUpdates = CurrentValueSubject<Bool, Never>(false)
 
+    // loop failures and device problems, newest -> oldest
+    let loopEvents = CurrentValueSubject<[LoopEvent], Never>([])
+
     let latestLoopOutcome = CurrentValueSubject<LoopOutcome?, Never>(nil)
 
     let loopCompleted = PassthroughSubject<LoopOutcome, Never>()
@@ -70,6 +73,9 @@ final class AppCoordinator: @unchecked Sendable {
     let glucoseFrequencyFiltered = CurrentValueSubject<[BloodGlucose], Never>([])
 
     let glucoseDeletions = PassthroughSubject<[BloodGlucose], Never>()
+
+    // periods without readings, derived from the glucose history, newest -> oldest
+    let glucoseGaps = CurrentValueSubject<[GlucoseGap], Never>([])
 
     let glucoseAlarm = CurrentValueSubject<GlucoseAlarm?, Never>(nil)
 
@@ -197,6 +203,11 @@ final class AppCoordinator: @unchecked Sendable {
         deviceErrors.send(value)
     }
 
+    /// MUST BE newest -> oldest
+    func setLoopEvents(_ value: [LoopEvent]) {
+        loopEvents.send(value)
+    }
+
     func sendPumpNotification(_ value: AlertEntry) {
         pumpNotifications.send(value)
     }
@@ -280,6 +291,11 @@ final class AppCoordinator: @unchecked Sendable {
         glucoseRaw.send(raw)
         glucoseSmoothed.send(smoothed)
         glucoseFrequencyFiltered.send(frequencyFiltered)
+    }
+
+    /// MUST BE newest -> oldest
+    func setGlucoseGaps(_ value: [GlucoseGap]) {
+        glucoseGaps.send(value)
     }
 
     func sendNewGlucoseRecords(_ value: [BloodGlucose]) {

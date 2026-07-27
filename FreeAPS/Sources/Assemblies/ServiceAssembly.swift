@@ -8,7 +8,10 @@ final class ServiceAssembly: Assembly {
         container.register(DataMigrations.self) { _ in DataMigrations() }
 
         container.register(MetricKitService.self) { r in
-            MetricKitService(storage: r.resolve(FileStorage.self)!)
+            MetricKitService(
+                storage: r.resolve(FileStorage.self)!,
+                loopEventsStorage: r.resolve(LoopEventsStorage.self)!
+            )
         }
 
         container.register(AppCoordinator.self) { _ in AppCoordinator() }

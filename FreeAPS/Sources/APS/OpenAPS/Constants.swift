@@ -38,6 +38,7 @@ extension OpenAPS {
 
 //        static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
+        static let loopEvents = "monitor/loopevents.json"
         static let statistics = "monitor/statistics.json"
     }
 
