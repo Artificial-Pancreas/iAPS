@@ -122,6 +122,8 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     let pumpExpiresAtDate = CurrentValueSubject<Date?, Never>(nil)
     let pumpName = CurrentValueSubject<String, Never>("Pump")
 
+    @Protected private var lastSavedPumpActivationDate: Date? = nil
+
     // MARK: - CGM
 
     @PersistedProperty(key: "CGMManagerState") var rawCGMManager: CGMManager.RawValue?
@@ -586,6 +588,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             self.pumpManager = newPumpManager
         }
         pumpName.send(pumpManager.localizedTitle)
+        refreshPumpExpirationInfo(from: pumpManager)
     }
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
@@ -643,12 +646,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             manualTempBasal.send(false)
         }
 
-        let endTime = KnownPlugins.pumpExpirationDate(pumpManager)
-        pumpExpiresAtDate.send(endTime)
-
-        if let startTime = KnownPlugins.pumpActivationDate(pumpManager) {
-            storage.save(startTime, as: OpenAPS.Monitor.podAge)
-        }
+        refreshPumpExpirationInfo(from: pumpManager)
 
         pumpManagerStatus.value = status
         if status.deliveryIsUncertain != oldStatus.deliveryIsUncertain {
@@ -1030,6 +1028,20 @@ private extension BaseDeviceDataManager {
             pumpManagerStatus.value = nil
             pumpExpiresAtDate.send(nil)
             pumpName.send("")
+        }
+    }
+
+    // Not guaranteed to be on `processQueue` - some pump managers call `pumpManagerDidUpdateState`
+    // directly - so this must not touch anything that requires it (e.g. `broadcaster`).
+    private func refreshPumpExpirationInfo(from pumpManager: PumpManager) {
+        let expiresAt = KnownPlugins.pumpExpirationDate(pumpManager)
+        if pumpExpiresAtDate.value != expiresAt {
+            pumpExpiresAtDate.send(expiresAt)
+        }
+
+        if let activatedAt = KnownPlugins.pumpActivationDate(pumpManager), lastSavedPumpActivationDate != activatedAt {
+            lastSavedPumpActivationDate = activatedAt
+            storage.save(activatedAt, as: OpenAPS.Monitor.podAge)
         }
     }
 }
