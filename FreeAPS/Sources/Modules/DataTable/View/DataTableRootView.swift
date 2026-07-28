@@ -254,6 +254,16 @@ extension DataTable {
                 Text(dateFormatter.string(from: item.timestamp))
                     .foregroundStyle(.secondary)
             }
+            .swipeActions {
+                if item.type.canBeDismissed {
+                    Button(
+                        "Delete",
+                        systemImage: "trash.fill",
+                        role: .destructive,
+                        action: { state.deleteLoopEvent(item) }
+                    ).tint(.red)
+                }
+            }
         }
 
         var addGlucoseView: some View {

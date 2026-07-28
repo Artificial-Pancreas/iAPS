@@ -168,6 +168,7 @@ extension LoopEventType {
     }
 
     var color: Color { status.color }
+    var canBeDismissed: Bool { self == .appStart }
 }
 
 extension LoopEventType.Status {

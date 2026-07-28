@@ -12,6 +12,7 @@ extension DataTable {
         @Injected() private var tempTargetsStorage: TempTargetsStorage!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var overrideStorage: OverrideStorage!
+        @Injected() private var loopEventsStorage: LoopEventsStorage!
 
         private let coreDataStorage = CoreDataStorage()
         private let totalDailyDose = TotalDailyDose()
@@ -209,6 +210,13 @@ extension DataTable {
             loopEvents = (appCoordinator.loopEvents.value + gaps)
                 .filter { $0.timestamp > cutoff }
                 .sorted { $0.timestamp > $1.timestamp }
+        }
+
+        func deleteLoopEvent(_ event: LoopEvent) {
+            guard event.type.canBeDismissed else { return }
+            Task {
+                await loopEventsStorage.removeEvent(id: event.id)
+            }
         }
 
         func deleteCarbs(_ treatment: Treatment, storage: Meals?) {

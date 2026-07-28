@@ -4,6 +4,7 @@ import Swinject
 protocol LoopEventsStorage: Sendable {
     func storeEvent(_ event: LoopEvent) async
     func recordCrash(_ event: LoopEvent) async
+    func removeEvent(id: String) async
 }
 
 actor BaseLoopEventsStorage: LoopEventsStorage, AppService {
@@ -70,7 +71,7 @@ actor BaseLoopEventsStorage: LoopEventsStorage, AppService {
         await storeEvent(event)
     }
 
-    private func removeEvent(id: String) async {
+    func removeEvent(id: String) async {
         let (modified, updatedValues) = await storage
             .maybeModify(file: OpenAPS.Monitor.loopEvents, as: LoopEvent.self) { inStorage in
                 guard inStorage.contains(where: { $0.id == id }) else {
