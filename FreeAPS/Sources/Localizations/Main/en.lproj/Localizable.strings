@@ -3902,3 +3902,90 @@ Enact a temp Basal or a temp target */
 "“%@” was not saved.\n\n%@" = "“%@” was not saved.\n\n%@";
 
 "The text isn’t valid JSON." = "The text isn’t valid JSON.";
+
+/* Loop events - titles */
+"Pump busy" = "Pump busy";
+
+"Pump not configured" = "Pump not configured";
+
+"Pump communication failed" = "Pump communication failed";
+
+"Glucose data problem" = "Glucose data problem";
+
+"Recommendation failed" = "Recommendation failed";
+
+"Manual temp basal" = "Manual temp basal";
+
+"Not enacted (bolus view)" = "Not enacted (bolus view)";
+
+"Loop failed" = "Loop failed";
+
+"Pump error" = "Pump error";
+
+"Pump configuration error" = "Pump configuration error";
+
+"Pump device error" = "Pump device error";
+
+"CGM error" = "CGM error";
+
+"Delivery uncertain" = "Delivery uncertain";
+
+"Delivery confirmed" = "Delivery confirmed";
+
+"App started" = "App started";
+
+"App crashed" = "App crashed";
+
+"Skipped loops" = "Skipped loops";
+
+"Event" = "Event";
+
+/* Loop events - details */
+"The pump did not confirm the last command" = "The pump did not confirm the last command";
+
+"The pump state is known again" = "The pump state is known again";
+
+"The app was restarted by iOS" = "The app was restarted by iOS";
+
+/* Loop events - failed pump commands */"Temp basal" = "Temp basal";
+
+"for %d min" = "for %d min";
+
+"automatic" = "automatic";
+
+"manual" = "manual";
+
+"Cancel bolus" = "Cancel bolus";
+
+"Suspend delivery" = "Suspend delivery";
+
+"Resume delivery" = "Resume delivery";
+
+"Sync basal profile" = "Sync basal profile";
+
+"Sync delivery limits" = "Sync delivery limits";
+
+/* Loop events - skipped loops */
+"1 skipped loop" = "1 skipped loop";
+
+"%d skipped loops" = "%d skipped loops";
+
+"%@, no readings for %@" = "%@, no readings for %@";
+
+"ongoing" = "ongoing";
+
+/* Loop events - history */
+"Events" = "Events";
+
+"Last 24 hours" = "Last 24 hours";
+
+"No failed loops or device errors." = "No failed loops or device errors.";
+
+/* Loop events - main chart settings */
+"Failed loops and device errors" = "Failed loops and device errors";
+
+"Hidden" = "Hidden";
+
+"Above the glucose" = "Above the glucose";
+
+"Below the glucose" = "Below the glucose";
