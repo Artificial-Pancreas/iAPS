@@ -12,9 +12,7 @@ class ChartModel: ObservableObject {
     @Published var announcement: [Announcement]
     /// newest -> oldest
     @Published var loopEvents: [LoopEvent]
-    /// periods without CGM readings
-    @Published var glucoseGaps: [GlucoseGap]
-    @Published var showLoopEvents: Bool
+    @Published var loopEventsPlacement: LoopEventsPlacement
     @Published var hours: Int
     @Published var maxBasal: Decimal
     @Published var autotunedBasalProfile: [BasalProfileEntry]
@@ -64,8 +62,7 @@ class ChartModel: ObservableObject {
         suspensions: [PumpHistoryEvent],
         announcement: [Announcement],
         loopEvents: [LoopEvent],
-        glucoseGaps: [GlucoseGap],
-        showLoopEvents: Bool,
+        loopEventsPlacement: LoopEventsPlacement,
         hours: Int,
         maxBasal: Decimal,
         autotunedBasalProfile: [BasalProfileEntry],
@@ -114,8 +111,7 @@ class ChartModel: ObservableObject {
         self.suspensions = suspensions
         self.announcement = announcement
         self.loopEvents = loopEvents
-        self.glucoseGaps = glucoseGaps
-        self.showLoopEvents = showLoopEvents
+        self.loopEventsPlacement = loopEventsPlacement
         self.hours = hours
         self.maxBasal = maxBasal
         self.autotunedBasalProfile = autotunedBasalProfile

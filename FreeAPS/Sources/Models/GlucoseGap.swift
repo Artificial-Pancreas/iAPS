@@ -26,9 +26,9 @@ struct GlucoseGap: Identifiable, Equatable, Hashable, Sendable {
             String(format: NSLocalizedString("%d skipped loops", comment: "Skipped loop cycles"), skippedLoops)
 
         let text = String(
-            format: NSLocalizedString("No readings for %@ (%@)", comment: "CGM gap"),
-            durationText,
-            loopsText
+            format: NSLocalizedString("%@, no readings for %@", comment: "CGM gap"),
+            loopsText,
+            durationText
         )
         guard ongoing else { return text }
         return text + ", " + NSLocalizedString("ongoing", comment: "CGM gap is still growing")
@@ -40,7 +40,7 @@ extension GlucoseGap {
         LoopEvent(
             id: "gap-\(start.timeIntervalSince1970)",
             timestamp: start,
-            type: .missedReadings,
+            type: .skippedLoops,
             message: summary
         )
     }

@@ -92,8 +92,7 @@ extension Home {
             suspensions: [],
             announcement: [],
             loopEvents: [],
-            glucoseGaps: [],
-            showLoopEvents: true,
+            loopEventsPlacement: .top,
             hours: 24,
             maxBasal: 4,
             autotunedBasalProfile: [],
@@ -159,7 +158,6 @@ extension Home {
             setupCarbs(appCoordinator.carbHistory.value)
             await setupAnnouncements()
             data.loopEvents = appCoordinator.loopEvents.value
-            data.glucoseGaps = appCoordinator.glucoseGaps.value
 
             setupLoopStatsBackground()
             setupCob()
@@ -227,10 +225,6 @@ extension Home {
 
             observeUI(appCoordinator.loopEvents) { me, loopEvents in
                 me.data.loopEvents = loopEvents
-            }
-
-            observeUI(appCoordinator.glucoseGaps) { me, glucoseGaps in
-                me.data.glucoseGaps = glucoseGaps
             }
 
             observeUI(appCoordinator.latestLoopOutcome) { me, loopOutcome in
@@ -700,7 +694,7 @@ extension Home.StateModel {
         data.insulinActivityLabels = settings.insulinActivityLabels
         data.yGridLabels = settings.yGridLabels
         data.showPredictionsLegend = settings.showPredictionsLegend
-        data.showLoopEvents = settings.showLoopEvents
+        data.loopEventsPlacement = settings.loopEventsPlacement
         useTargetButton = settings.useTargetButton
 
         alwaysUseColors = settings.alwaysUseColors

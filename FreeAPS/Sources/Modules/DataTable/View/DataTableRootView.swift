@@ -203,8 +203,8 @@ extension DataTable {
         /// a period without readings
         @ViewBuilder private func glucoseGapView(_ gap: GlucoseGap) -> some View {
             HStack {
-                Image(systemName: LoopEventType.missedReadings.symbol)
-                    .foregroundStyle(LoopEventType.missedReadings.color)
+                Image(systemName: LoopEventType.skippedLoops.symbol)
+                    .foregroundStyle(LoopEventType.skippedLoops.color)
                 Text(gap.summary)
                     .font(.caption)
                     .foregroundStyle(.secondary)

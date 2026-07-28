@@ -12,7 +12,7 @@ extension MainChartConfig {
         @Published var insulinActivityLabels: Bool = true
         @Published var chartGlucosePeaks: Bool = false
         @Published var showPredictionsLegend: Bool = true
-        @Published var showLoopEvents: Bool = true
+        @Published var loopEventsPlacement: LoopEventsPlacement = .top
         @Published var useFPUconversion: Bool = true
         @Published var hours: Decimal = 6
         @Published var alwaysUseColors: Bool = false
@@ -44,7 +44,7 @@ extension MainChartConfig {
             subscribeSetting(\.insulinActivityLabels, on: $insulinActivityLabels) { self.insulinActivityLabels = $0 }
             subscribeSetting(\.chartGlucosePeaks, on: $chartGlucosePeaks) { self.chartGlucosePeaks = $0 }
             subscribeSetting(\.showPredictionsLegend, on: $showPredictionsLegend) { self.showPredictionsLegend = $0 }
-            subscribeSetting(\.showLoopEvents, on: $showLoopEvents) { self.showLoopEvents = $0 }
+            subscribeSetting(\.loopEventsPlacement, on: $loopEventsPlacement) { self.loopEventsPlacement = $0 }
             subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { self.skipGlucoseChart = $0 }
             subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { self.alwaysUseColors = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { self.useFPUconversion = $0 }

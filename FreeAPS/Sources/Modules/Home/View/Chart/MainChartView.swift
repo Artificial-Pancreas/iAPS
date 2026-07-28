@@ -28,8 +28,6 @@ struct LoopEventDot: Identifiable {
     let center: CGPoint
     let type: LoopEventType
     let events: [LoopEvent]
-    /// for a missed-readings event: the x range of the gap, so it can be drawn as a bar
-    let barRect: CGRect?
 
     var count: Int { events.count }
 
@@ -94,7 +92,8 @@ enum ChartConfig {
     static let peakMargin: CGFloat = 6
     static let peakCornerRadius: CGFloat = 2
     static let insulinCarbLabelMargin: CGFloat = 2
-    // loop events lane: sits under the glucose area, above the activity/COB chart
+    // loop events lane: sits between the basal area and the top of the glucose area
+    static let loopEventsLaneY: CGFloat = basalHeight + 22
     static let loopEventsLaneHeight: CGFloat = 16
     static let loopEventSize: CGFloat = 13
     /// symbols closer than this are merged into one
@@ -205,8 +204,7 @@ struct MainChartView: View {
             ping(data.$isManual),
             ping(data.$announcement),
             ping(data.$loopEvents),
-            ping(data.$glucoseGaps),
-            ping(data.$showLoopEvents),
+            ping(data.$loopEventsPlacement),
             ping(data.$boluses),
             ping(data.$carbs),
             ping(data.$tempTargets),
@@ -528,7 +526,7 @@ struct MainChartCanvas: View {
                     manualGlucoseView
                     manualGlucoseCenterView
                     announcementView
-                    if data.showLoopEvents {
+                    if data.loopEventsPlacement != .hidden {
                         loopEventsView
                     }
                     if !data.hidePredictions {
@@ -881,28 +879,12 @@ struct MainChartCanvas: View {
 
     private var loopEventsView: some View {
         ZStack {
-            // the extent of the missed-readings periods
-            Path { path in
-                for dot in geom.loopEventDots {
-                    if let barRect = dot.barRect {
-                        path.addRoundedRect(in: barRect, cornerSize: CGSize(width: 1.5, height: 1.5))
-                    }
-                }
-            }
-            .fill(LoopEventType.missedReadings.color.opacity(0.7))
-
             ForEach(geom.loopEventDots) { dot in
-                // the chip keeps the glyph off the grid lines and glucose dots behind it
-                Circle()
-                    .fill(Color(.systemBackground))
-                    .overlay(
-                        Circle().stroke(dot.type.color, lineWidth: 1)
-                    )
-                    .overlay(
-                        Image(systemName: dot.type.symbol)
-                            .font(.system(size: ChartConfig.loopEventSize * 0.62, weight: .bold))
-                            .foregroundStyle(dot.type.color)
-                    )
+                Image(systemName: dot.type.symbol)
+                    .font(.system(size: ChartConfig.loopEventSize, weight: .bold))
+                    .foregroundStyle(dot.type.color)
+                    .shadow(color: Color(.systemBackground), radius: 1)
+                    .shadow(color: Color(.systemBackground), radius: 1)
                     .frame(width: ChartConfig.loopEventsLaneHeight, height: ChartConfig.loopEventsLaneHeight)
                     .overlay(alignment: .bottomTrailing) {
                         if dot.count > 1 {

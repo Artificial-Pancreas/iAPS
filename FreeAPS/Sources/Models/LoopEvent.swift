@@ -49,7 +49,7 @@ enum LoopEventType: String, Codable, Sendable, CaseIterable {
     case appStart
     case appCrashed
 
-    case missedReadings
+    case skippedLoops
     case other
 
     init(from decoder: Decoder) throws {
@@ -71,7 +71,7 @@ extension LoopEventType {
              .pumpNotConfigured: return 70
         case .algorithm,
              .loopFailed: return 60
-        case .missedReadings: return 50
+        case .skippedLoops: return 50
         case .cgmError,
              .glucoseData: return 40
         case .pumpBusy,
@@ -103,7 +103,7 @@ extension LoopEventType {
         case .deliveryResolved: return NSLocalizedString("Delivery confirmed", comment: "Loop event")
         case .appStart: return NSLocalizedString("App started", comment: "Loop event")
         case .appCrashed: return NSLocalizedString("App crashed", comment: "Loop event")
-        case .missedReadings: return NSLocalizedString("Missed readings", comment: "Loop event")
+        case .skippedLoops: return NSLocalizedString("Skipped loops", comment: "Loop event")
         case .other: return NSLocalizedString("Event", comment: "Loop event")
         }
     }
@@ -127,7 +127,7 @@ extension LoopEventType {
         case .deliveryResolved: return "checkmark.diamond.fill"
         case .appStart: return "power"
         case .appCrashed: return "bolt.trianglebadge.exclamationmark.fill"
-        case .missedReadings: return "ellipsis"
+        case .skippedLoops: return "circle.dotted"
         case .other: return "circle.fill"
         }
     }
@@ -151,9 +151,9 @@ extension LoopEventType {
              .cgmError,
              .glucoseData,
              .loopFailed,
-             .missedReadings,
              .pumpConfiguration,
-             .pumpNotConfigured:
+             .pumpNotConfigured,
+             .skippedLoops:
             return .warning
         case .appStart,
              .bolusView,
