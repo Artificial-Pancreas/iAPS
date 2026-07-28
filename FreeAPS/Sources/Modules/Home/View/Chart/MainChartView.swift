@@ -185,6 +185,16 @@ struct MainChartView: View {
             .eraseToAnyPublisher()
     }
 
+    private func ping<T, Projection: Equatable>(
+        _ p: Published<T>.Publisher,
+        by projection: @escaping (T) -> Projection
+    ) -> AnyPublisher<Void, Never> {
+        p.map(projection)
+            .removeDuplicates()
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
     private func subscribeToUpdates() {
         guard updatesCancellable == nil else { return }
         let debouncedPublishers: [AnyPublisher<Void, Never>] = [
@@ -198,7 +208,9 @@ struct MainChartView: View {
             ping(data.$maxBasal),
             ping(data.$basalProfile),
             ping(data.$autotunedBasalProfile),
-            ping(data.$glucose),
+            ping(data.$glucose, by: { $0.map { [$0.dateString.timeIntervalSince1970, Double($0.glucose)] } }),
+            ping(data.$rawGlucose, by: { $0.map { [$0.dateString.timeIntervalSince1970, Double($0.glucose)] } }),
+            ping(data.$smooth),
             ping(data.$activity),
             ping(data.$cob),
             ping(data.$isManual),

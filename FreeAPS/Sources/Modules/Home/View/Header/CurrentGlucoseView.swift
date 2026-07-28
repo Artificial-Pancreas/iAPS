@@ -113,9 +113,10 @@ struct CurrentGlucoseView: View {
                 }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
+                    let value = Decimal(recent.glucose)
                     let string =
                         formatter
-                            .string(from: Double(units == .mmolL ? recent.unfiltered.asMmolL : recent.unfiltered) as NSNumber) ??
+                            .string(from: Double(units == .mmolL ? value.asMmolL : value) as NSNumber) ??
                             ""
 
                     glucoseText(string).asAny()

@@ -402,15 +402,11 @@ extension NightscoutConfig {
                     }
                     return BloodGlucose(
                         _id: id,
-                        sgv: Int(reading.glucose),
+                        glucose: Int(reading.glucose),
                         direction: nil,
                         date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
                         dateString: date,
-                        unfiltered: Decimal(reading.glucose),
-                        uncalibrated: Decimal(reading.glucose),
-                        filtered: nil,
                         noise: nil,
-                        glucose: Int(reading.glucose),
                         type: "sgv",
                         activationDate: nil,
                         sessionStartDate: nil,

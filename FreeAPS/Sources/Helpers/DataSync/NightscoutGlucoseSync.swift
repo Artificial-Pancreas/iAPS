@@ -7,8 +7,7 @@ struct GlucoseSyncID: Hashable, Sendable {
 
 struct GlucoseSyncSignature: Hashable, Sendable {
     let dateString: Date
-    let glucose: Int?
-    let sgv: Int?
+    let glucose: Int
     let direction: BloodGlucose.Direction?
     let type: String?
 }
@@ -24,7 +23,6 @@ extension BloodGlucose: SyncRecord {
         GlucoseSyncSignature(
             dateString: dateString.truncatedToSecond,
             glucose: glucose,
-            sgv: sgv,
             direction: direction,
             type: type
         )

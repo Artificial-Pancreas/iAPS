@@ -314,13 +314,16 @@ actor OpenAPS: Sendable {
     }
 
     private func readGlucoseHistory() -> [GlucoseEntry0] {
+        // frequency-filtered is derived from the smoothed glucose
+        // with smoothing enabled it contains smoothed values,
+        // otherwise they it contains raw (unsmoothed) values
         // newest->oldest
         appCoordinator.glucoseFrequencyFiltered.value.map { g in
             GlucoseEntry0(
                 date: nil,
                 displayTime: nil,
                 dateString: g.dateString.ISO8601Format(),
-                sgv: g.sgv,
+                sgv: g.glucose,
                 glucose: g.glucose,
                 type: g.type,
                 noise: g.noise,

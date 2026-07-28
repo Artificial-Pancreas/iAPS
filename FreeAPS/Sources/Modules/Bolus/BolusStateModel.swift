@@ -406,12 +406,9 @@ extension Bolus {
 
                 let saveToJSON = BloodGlucose(
                     _id: id,
-                    sgv: Int(glucose),
+                    glucose: Int(glucose),
                     date: Decimal(now.timeIntervalSince1970) * 1000,
                     dateString: now,
-                    unfiltered: glucose,
-                    uncalibrated: glucose,
-                    glucose: Int(glucose),
                     type: GlucoseType.manual.rawValue
                 )
                 _ = await glucoseStorage.storeGlucose([saveToJSON])
