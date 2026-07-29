@@ -2712,7 +2712,20 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimental";
     
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Smooth Glucose Value";
+"Smoothing" = "Smoothing";
+"Algorithm" = "Algorithm";
+"Passes" = "Passes";
+
+/* Glucose smoothing algorithm */
+"No smoothing" = "No smoothing";
+"Savitzky-Golay" = "Savitzky-Golay";
+
+/* Glucose smoothing algorithm description */
+"Glucose is used exactly as the CGM reports it." = "Glucose is used exactly as the CGM reports it.";
+"The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a 30 minute window around each reading." = "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a 30 minute window around each reading.";
+
+/* Glucose smoothing algorithm options description */
+"Each extra pass widens the window the curve is fitted over: a little less noise, but sharp peaks and dips are flattened more." = "Each extra pass widens the window the curve is fitted over: a little less noise, but sharp peaks and dips are flattened more.";
 
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 

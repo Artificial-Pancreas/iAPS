@@ -1,172 +1,132 @@
 import Foundation
 
-/// Savitzky Golay coefficients
-private let coefficients = [
-    [-3.0, 12.0, 17.0, 12.0, -3.0],
-    [-2.0, 3.0, 6.0, 7.0, 6.0, 3.0, -2.0],
-    [-21.0, 14.0, 39.0, 54.0, 59.0, 54.0, 39.0, 14.0, -21.0],
-    [-36.0, 9.0, 44.0, 69.0, 84.0, 89.0, 84.0, 69.0, 44.0, 9.0, -36.0]
-]
+/// Savitzky-Golay smoothing: a local least-squares quadratic evaluated at each sample.
+///
+/// Both the abscissa and the window are real time rather than sample indices, so missed readings and
+/// jittery timestamps do not distort the fit, and the response is the same on a 1-minute CGM as on a
+/// 5-minute one.
+///
+/// see also https://github.com/JohanDegraeve/xdripswift/wiki/Libre-value-smoothing
+struct SavitzkyGolayFilter: GlucoseSmoother {
+    /// Half the window's width, in time: ~7 readings at a 5-minute cadence, ~31 at a 1-minute one.
+    let halfWidth: TimeInterval
 
-/// an array with elements of a type that conforms to Smoothable, can be filtered using  the Savitzky Golay algorithm
-protocol SavitzkyGolaySmoothable {
-    /// value to be smoothed
-    var value: Double { get set }
-}
+    let passes: Int
 
-/// local help class
-private class IsSmoothable: SavitzkyGolaySmoothable {
-    var value: Double = 0.0
+    let maximumGap: TimeInterval
 
-    init(withValue value: Double = 0.0) {
-        self.value = value
+    init(
+        halfWidth: TimeInterval = .minutes(15),
+        passes: Int = 3,
+        maximumGap: TimeInterval = .minutes(15)
+    ) {
+        self.halfWidth = max(halfWidth, 1)
+        self.passes = max(passes, 1)
+        self.maximumGap = maximumGap
     }
-}
 
-extension Array where Element: SavitzkyGolaySmoothable {
-    /// - apply Savitzky Golay filter
-    /// - before applying the filter, the array will be prepended and append with a number of elements equal to the filterwidth, filterWidth default 5. Allowed values are 5, 4, 3, 2. If any other value is assigned, then 5 will be used
-    /// - ...continue with 5 here in the explanation ...
-    /// - for the 5 last elements and 5 first elements, a regression is done. This regression is done used to give values to the 5 prepended and appended values. Which means it's as if we draw a line through the first 5 and 5 last original values, and use this line to give values to the 5 prepended and appended values
-    /// - the 5 prepended and appended values are then used in the filter algorithm, which means we can also filter the original 5 first and last elements
-    /// see also example https://github.com/JohanDegraeve/xdripswift/wiki/Libre-value-smoothing
-    mutating func smoothSavitzkyGolayQuaDratic(withFilterWidth filterWidth: Int = 5) {
-        // filterWidthToUse is the value of filterWidth to use in the algorithm. By default filterWidthToUse = parameter value filterWidth
-        var filterWidthToUse = filterWidth
+    private static let minimumWindowSamples = 4
 
-        /// allowed values are 0, 1, 2 or 3. It's the index in coefficients
-        var coefficientsRowToUse = 3
+    func smooth(_ samples: [GlucoseSample]) -> [Double] {
+        var values = samples.map(\.value)
+        guard values.count >= Self.minimumWindowSamples else { return values }
 
-        // calculate coefficientsRowToUse based on filterWdith
-        switch filterWidth {
-        case 5:
-            coefficientsRowToUse = 3
+        let times = samples.map(\.date.timeIntervalSinceReferenceDate)
 
-        case 4:
-            coefficientsRowToUse = 2
+        let windows = Self.windows(times: times, halfWidth: halfWidth)
 
-        case 3:
-            coefficientsRowToUse = 1
+        for _ in 0 ..< passes {
+            values = Self.onePass(values, times: times, windows: windows, halfWidth: halfWidth)
+        }
+        return values
+    }
 
-        case 2:
-            coefficientsRowToUse = 0
+    private struct Window {
+        let range: Range<Int>
+        let centre: TimeInterval
+    }
 
-        default:
-            // invalid filterWidth was given in parameterList, use default value
-            coefficientsRowToUse = 3
+    /// Slid inwards near either end, so every sample gets a full window evaluated off-centre rather
+    /// than a truncated one-sided one.
+    private static func windows(times: [TimeInterval], halfWidth: TimeInterval) -> [Window] {
+        let count = times.count
+        let first = times[0]
+        let last = times[count - 1]
 
-            filterWidthToUse = 5
+        // Shorter than one full window: every sample is fitted to all of them.
+        guard last - first > 2 * halfWidth else {
+            let window = Window(range: 0 ..< count, centre: (first + last) / 2)
+            return Array(repeating: window, count: count)
         }
 
-        // using 5 here in the comments as value for filterWidthToUse
+        var windows: [Window] = []
+        windows.reserveCapacity(count)
 
-        // the amount of elements must be at least 5. If that's not the case then don't apply any smoothing
-        guard count >= filterWidthToUse else { return }
+        var start = 0
+        var end = 0
 
-        // create a new array, to which we will prepend and append 5 elements so that we can do also smoothing for the 5 last and 5 first values of the input array (which is self)
-        // the 5 elements will be estimated by doing linear regression of the first 5 and last 5 elements of the original input array respectively
-        // this is only a temporary array, but it will hold the elements of the original array, those elements will get a new value when doing the smoothing
-        var tempArray = [SavitzkyGolaySmoothable]()
-        for element in self {
-            tempArray.append(element)
+        for index in 0 ..< count {
+            let centre = min(max(times[index], first + halfWidth), last - halfWidth)
+            while start < count, times[start] < centre - halfWidth { start += 1 }
+            while end < count, times[end] <= centre + halfWidth { end += 1 }
+            windows.append(Window(range: start ..< end, centre: centre))
         }
 
-        // now prepend and append with 5 elements, each with a default value 0.0
-        for _ in 0 ..< filterWidthToUse {
-            tempArray.insert(IsSmoothable(), at: 0)
-            tempArray.append(IsSmoothable())
-        }
+        return windows
+    }
 
-        // so now we have tempArray, of length size of original array + 2 * 5
-        // the first 5 and the last 5 elements are of type IsSmoothable with value 0
+    /// With a real-time abscissa the odd moments no longer vanish, so `y = a + b·x + c·x²` needs the
+    /// full 3x3 normal equations. `x` is scaled to roughly [-1, 1] to keep the fourth moment sane.
+    private static func onePass(
+        _ values: [Double],
+        times: [TimeInterval],
+        windows: [Window],
+        halfWidth: TimeInterval
+    ) -> [Double] {
+        var smoothed = values
 
-        // - indicesArray is a help array needed for the function linearRegressionCreator
-        // - this will be the first parameter in the call to the linearRegression function, in fact it's an array of IsSmoothable with length = length of tempArray
-        // - we give each IsSmoothable the value of the index, meaning from 0 up to (length of tempArray) - 1
-        // - in fact it's not really smoothable, it's just because we use isSmoothable in function linearRegressionCreator
-        var indicesArray = [SavitzkyGolaySmoothable]()
-        for index in 0 ..< (count + (filterWidthToUse * 2)) {
-            indicesArray.append(IsSmoothable(withValue: Double(index)))
-        }
+        for (index, window) in windows.enumerated() {
+            guard window.range.count >= minimumWindowSamples else { continue }
 
-        /// - this is a piece of code that we will execute two times, once for the firs 5 elements, then for the last 5, so we put it in a closure variable
-        /// - it calculates the regression function (which is nothing else but doing y = intercept + slope*x) for range defined by predictorRange in tempArray. It will be used for the 5 first and 5 last real values, ie the 5 first and 5 last real glucose values
-        /// - then executes the regression for every element in the range defined by targetRange, again in tempArray
-        let doRegression = { (predictorRange: Range<Int>, targetRange: Range<Int>) in
+            var s0 = 0.0, s1 = 0.0, s2 = 0.0, s3 = 0.0, s4 = 0.0
+            var t0 = 0.0, t1 = 0.0, t2 = 0.0
 
-            // calculate the linearRegression function
-            let linearRegression = linearRegressionCreator(indicesArray[predictorRange], tempArray[predictorRange])
-
-            // ready to do the linear regression for the targetRange in tempArray
-            for index in targetRange {
-                tempArray[index].value = linearRegression(indicesArray[index].value)
-            }
-        }
-
-        // now do the regression for the 5 first elements
-        doRegression(filterWidthToUse ..< (filterWidthToUse * 2), 0 ..< filterWidthToUse)
-
-        // now do the regression for the 5 last elements
-        doRegression(
-            (tempArray.count - filterWidthToUse * 2) ..< (tempArray.count - filterWidthToUse),
-            (tempArray.count - filterWidthToUse) ..< tempArray.count
-        )
-
-        // now start filtering
-
-        // initialize array that will hold the resulting filtered values
-        var filteredValues = [Double]()
-
-        // calculate divider
-        let divider = coefficients[coefficientsRowToUse].reduce(0, { x, y in
-            x + y
-        })
-
-        // filter each original value
-        for _ in 0 ..< count {
-            // add a new element to filteredValues, start value is 0.0
-            // this new value will be the last element, so we access it with index filteredValues.count - 1
-            filteredValues.append(0.0)
-
-            // iterate through the coefficients
-            for (index, coefficient) in coefficients[coefficientsRowToUse].enumerated() {
-                filteredValues[filteredValues.count - 1] = filteredValues[filteredValues.count - 1] + coefficient *
-                    tempArray[index + filteredValues.count - 1].value
+            for sample in window.range {
+                let x = (times[sample] - window.centre) / halfWidth
+                let y = values[sample]
+                let x2 = x * x
+                s0 += 1
+                s1 += x
+                s2 += x2
+                s3 += x2 * x
+                s4 += x2 * x2
+                t0 += y
+                t1 += x * y
+                t2 += x2 * y
             }
 
-            filteredValues[filteredValues.count - 1] = filteredValues[filteredValues.count - 1] / divider
+            // Adjugate of the symmetric moment matrix [[s0, s1, s2], [s1, s2, s3], [s2, s3, s4]].
+            let a00 = s2 * s4 - s3 * s3
+            let a01 = s2 * s3 - s1 * s4
+            let a02 = s1 * s3 - s2 * s2
+            let a11 = s0 * s4 - s2 * s2
+            let a12 = s1 * s2 - s0 * s3
+            let a22 = s0 * s2 - s1 * s1
+
+            let determinant = s0 * a00 + s1 * a01 + s2 * a02
+
+            // Singular only for near-coincident timestamps; `s0³` makes the bound sample-count free.
+            guard determinant > 1E-9 * s0 * s0 * s0 else { continue }
+
+            let a = (a00 * t0 + a01 * t1 + a02 * t2) / determinant
+            let b = (a01 * t0 + a11 * t1 + a12 * t2) / determinant
+            let c = (a02 * t0 + a12 * t1 + a22 * t2) / determinant
+
+            // Zero away from the ends, where the window is centred on the sample.
+            let x = (times[index] - window.centre) / halfWidth
+            smoothed[index] = a + b * x + c * x * x
         }
 
-        // now assign the new values to the original objects
-        for (index, _) in enumerated() {
-            self[index].value = filteredValues[index]
-        }
+        return smoothed
     }
-}
-
-/// source https://github.com/raywenderlich/swift-algorithm-club/tree/master/Linear%20Regression
-private func multiply(
-    _ a: ArraySlice<SavitzkyGolaySmoothable>,
-    _ b: ArraySlice<SavitzkyGolaySmoothable>
-) -> ArraySlice<SavitzkyGolaySmoothable> {
-    zip(a, b).map({ IsSmoothable(withValue: $0.value * $1.value) })[0 ..< a.count]
-}
-
-/// source https://github.com/raywenderlich/swift-algorithm-club/tree/master/Linear%20Regression
-private func average(_ input: ArraySlice<SavitzkyGolaySmoothable>) -> Double {
-    (input.reduce(IsSmoothable(), { (x: SavitzkyGolaySmoothable, y: SavitzkyGolaySmoothable) in
-        IsSmoothable(withValue: x.value + y.value) })).value / Double(input.count)
-}
-
-/// source https://github.com/raywenderlich/swift-algorithm-club/tree/master/Linear%20Regression
-private func linearRegressionCreator(
-    _ xs: ArraySlice<SavitzkyGolaySmoothable>,
-    _ ys: ArraySlice<SavitzkyGolaySmoothable>
-) -> (Double) -> Double {
-    let sum1 = average(multiply(ys, xs)) - average(xs) * average(ys)
-    let sum2 = average(multiply(xs, xs)) - pow(average(xs), 2)
-    let slope = sum1 / sum2
-    let intercept = average(ys) - slope * average(xs)
-
-    return { x in intercept + slope * x }
 }

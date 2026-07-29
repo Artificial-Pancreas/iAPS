@@ -503,6 +503,7 @@
 		F28B06B6301B77EA00A59FA7 /* LoopStatRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */; };
 		F28B06B8301BBDC400A59FA7 /* GapDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B7301BBDC400A59FA7 /* GapDetection.swift */; };
 		F28B06BA301BBEA400A59FA7 /* LoopGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B9301BBEA400A59FA7 /* LoopGap.swift */; };
+		F28B06AE3018FEFB00A59FA7 /* GlucoseSmoothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
 		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
@@ -1292,6 +1293,7 @@
 		F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStatRecordStorage.swift; sourceTree = "<group>"; };
 		F28B06B7301BBDC400A59FA7 /* GapDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GapDetection.swift; sourceTree = "<group>"; };
 		F28B06B9301BBEA400A59FA7 /* LoopGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopGap.swift; sourceTree = "<group>"; };
+		F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseSmoothing.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
 		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
@@ -2407,6 +2409,7 @@
 				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 				CC1A00022A000002000A708ED /* BuildExpirationManager.swift */,
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
+				F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
 				056EB47D2B4C8B3D00CDE36E /* SystemSoundsManager.swift */,
 				F25EBEF82FC210F8009D275F /* Date+Extensions.swift */,
@@ -4050,6 +4053,7 @@
 				CE7CA3542A064973004BE681 /* TempPresetsIntentRequest.swift in Sources */,
 				F292C6AB2FDDCFAA00D09D88 /* PresetsSnapshot.swift in Sources */,
 				F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */,
+				F28B06AE3018FEFB00A59FA7 /* GlucoseSmoothing.swift in Sources */,
 				5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */,
 				E13B7DAB2A435F57066AF02E /* TargetsEditorStateModel.swift in Sources */,
 				F29FC35D2E7F670000DC04FE /* CoreDataManager.swift in Sources */,

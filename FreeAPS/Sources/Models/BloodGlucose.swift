@@ -178,17 +178,6 @@ extension Double {
     }
 }
 
-extension BloodGlucose: SavitzkyGolaySmoothable {
-    var value: Double {
-        get {
-            Double(glucose)
-        }
-        set {
-            glucose = Int(newValue)
-        }
-    }
-}
-
 extension BloodGlucose {
     static func from(nightscout entry: GlucoseEntry) -> BloodGlucose? {
         guard let id = entry.id else { return nil }

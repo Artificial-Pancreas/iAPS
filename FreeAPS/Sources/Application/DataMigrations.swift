@@ -26,6 +26,8 @@ import Foundation
                 throw DataMigrationsError.migrationStepFailed(from: updateFrom, to: updateFrom + 1, error: error)
             }
         }
+
+        await runDataNormalizations()
     }
 
     private func upgradeData(from: Int) async throws {
@@ -35,6 +37,11 @@ import Foundation
         default:
             throw DataMigrationStepError.missingMigration
         }
+    }
+
+    /// Data normalizations run on every app start, after the versioned migrations (downgrade-safe).
+    private func runDataNormalizations() async {
+        try? await normalizeGlucoseSmoothingSettings()
     }
 
     // -------------
@@ -50,10 +57,44 @@ import Foundation
         )
     }
 
+    /// the `smoothGlucose` on/off flag became `glucoseSmoothing`
+    private func normalizeGlucoseSmoothingSettings() async throws {
+        try await updateJSONObject(inFile: OpenAPS.FreeAPS.settings) { dict in
+            guard dict["glucoseSmoothing"] == nil else {
+                return false
+            }
+            guard let smoothGlucose = dict["smoothGlucose"] as? Bool, smoothGlucose else {
+                return false
+            }
+
+            dict["glucoseSmoothing"] = [
+                "algorithm": GlucoseSmoothingAlgorithm.savitzkyGolay.rawValue,
+                "savitzkyGolay": ["passes": SavitzkyGolayPasses.three.rawValue]
+            ] as [String: Any]
+            return true
+        }
+    }
+
     // -------------
 
     /// Renames a top-level JSON key in `file`, preserving its value.
     private func renameField(from oldKey: String, to newKey: String, inFile file: String) async throws {
+        try await updateJSONObject(inFile: file) { dict in
+            guard dict[newKey] == nil, let value = dict[oldKey] else {
+                debug(.service, "file \(file) is already correct: field \(newKey) exists, field \(oldKey) does not exist")
+                return false
+            }
+
+            dict[newKey] = value
+            dict.removeValue(forKey: oldKey)
+            debug(.service, "renaming field \(oldKey) -> \(newKey) in \(file)")
+            return true
+        }
+    }
+
+    /// Reads `file` as a top-level JSON object and writes it back, unless `transform` returns `false`
+    /// to say there was nothing to do. A missing or non-object file is not an error - there is nothing to migrate.
+    private func updateJSONObject(inFile file: String, transform: (inout [String: Any]) -> Bool) async throws {
         let storage = BaseFileStorage()
         guard let raw = await storage.retrieveRaw(file),
               let data = raw.data(using: .utf8),
@@ -63,14 +104,7 @@ import Foundation
             return
         }
 
-        guard dict[newKey] == nil, let value = dict[oldKey] else {
-            debug(.service, "file \(file) is already correct: field \(newKey) exists, field \(oldKey) does not exist")
-            return
-        }
-
-        dict[newKey] = value
-        dict.removeValue(forKey: oldKey)
-        debug(.service, "renaming field \(oldKey) -> \(newKey) in \(file)")
+        guard transform(&dict) else { return }
 
         let out = try JSONSerialization.data(withJSONObject: dict)
         guard let str = String(data: out, encoding: .utf8)

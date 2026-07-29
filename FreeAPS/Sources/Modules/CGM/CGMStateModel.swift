@@ -13,11 +13,10 @@ extension CGM {
         @Published var cgmSettingsPresented: Bool = false
         @Published private(set) var cgmIdentifierToSetUp: String? = nil
 
-        @Published var smoothGlucose = false
+        @Setting(\.glucoseSmoothing) var glucoseSmoothing = GlucoseSmoothingSettings()
         @Published var sensorDays: Double = 10
 
         override func subscribe() async {
-            subscribeSetting(\.smoothGlucose, on: $smoothGlucose) { self.smoothGlucose = $0 }
             subscribeSetting(\.sensorDays, on: $sensorDays) { self.sensorDays = $0 }
         }
 

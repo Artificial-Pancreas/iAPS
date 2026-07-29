@@ -31,7 +31,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var minuteInterval: Int = 30
     var delay: Int = 60
     var useAppleHealth: Bool = false
-    var smoothGlucose: Bool = false
+    var glucoseSmoothing = GlucoseSmoothingSettings()
     var displayOnWatch: AwConfig = .BGTarget
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
@@ -425,8 +425,8 @@ extension FreeAPSSettings: Decodable {
             settings.animatedBackground = animatedBackground
         }
 
-        if let smoothGlucose = try? container.decode(Bool.self, forKey: .smoothGlucose) {
-            settings.smoothGlucose = smoothGlucose
+        if let glucoseSmoothing = try? container.decode(GlucoseSmoothingSettings.self, forKey: .glucoseSmoothing) {
+            settings.glucoseSmoothing = glucoseSmoothing
         }
 
         if let low = try? container.decode(Decimal.self, forKey: .low) {
@@ -932,4 +932,81 @@ struct UploadSchedule: JSON, Equatable {
 struct UploadNetworkSchedule: JSON, Equatable {
     var interval: UploadScheduleInterval = .always
     var alwaysWhileCharging: Bool = false
+}
+
+struct GlucoseSmoothingSettings: JSON, Equatable {
+    var algorithm: GlucoseSmoothingAlgorithm = .off
+    var savitzkyGolay = SavitzkyGolaySettings()
+
+    var isEnabled: Bool { algorithm != .off }
+}
+
+extension GlucoseSmoothingSettings {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init()
+
+        algorithm = try container.decodeIfPresent(GlucoseSmoothingAlgorithm.self, forKey: .algorithm) ?? algorithm
+        savitzkyGolay = try container.decodeIfPresent(SavitzkyGolaySettings.self, forKey: .savitzkyGolay) ?? savitzkyGolay
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case algorithm
+        case savitzkyGolay
+    }
+}
+
+enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
+    case off
+    case savitzkyGolay
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .off: return NSLocalizedString("No smoothing", comment: "Glucose smoothing algorithm")
+        case .savitzkyGolay: return NSLocalizedString("Savitzky-Golay", comment: "Glucose smoothing algorithm")
+        }
+    }
+
+    var settingsDescription: String {
+        switch self {
+        case .off:
+            return NSLocalizedString(
+                "Glucose is used exactly as the CGM reports it.",
+                comment: "Glucose smoothing algorithm description"
+            )
+        case .savitzkyGolay:
+            return NSLocalizedString(
+                "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a 30 minute window around each reading.",
+                comment: "Glucose smoothing algorithm description"
+            )
+        }
+    }
+
+    var optionsDescription: String? {
+        switch self {
+        case .off:
+            return nil
+        case .savitzkyGolay:
+            return NSLocalizedString(
+                "Each extra pass widens the window the curve is fitted over: a little less noise, but sharp peaks and dips are flattened more.",
+                comment: "Glucose smoothing algorithm options description"
+            )
+        }
+    }
+}
+
+struct SavitzkyGolaySettings: JSON, Equatable {
+    var passes: SavitzkyGolayPasses = .three
+}
+
+enum SavitzkyGolayPasses: Int, JSON, Identifiable, CaseIterable {
+    case one = 1
+    case two = 2
+    case three = 3
+
+    var id: Int { rawValue }
+
+    var displayName: String { "\(rawValue)" }
 }
