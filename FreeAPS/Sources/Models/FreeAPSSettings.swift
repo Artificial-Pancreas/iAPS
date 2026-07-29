@@ -937,6 +937,7 @@ struct UploadNetworkSchedule: JSON, Equatable {
 struct GlucoseSmoothingSettings: JSON, Equatable {
     var algorithm: GlucoseSmoothingAlgorithm = .off
     var savitzkyGolay = SavitzkyGolaySettings()
+    var kalman = KalmanSettings()
 
     var isEnabled: Bool { algorithm != .off }
 }
@@ -948,17 +949,20 @@ extension GlucoseSmoothingSettings {
 
         algorithm = try container.decodeIfPresent(GlucoseSmoothingAlgorithm.self, forKey: .algorithm) ?? algorithm
         savitzkyGolay = try container.decodeIfPresent(SavitzkyGolaySettings.self, forKey: .savitzkyGolay) ?? savitzkyGolay
+        kalman = try container.decodeIfPresent(KalmanSettings.self, forKey: .kalman) ?? kalman
     }
 
     private enum CodingKeys: String, CodingKey {
         case algorithm
         case savitzkyGolay
+        case kalman
     }
 }
 
 enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
     case off
     case savitzkyGolay
+    case kalman
 
     var id: String { rawValue }
 
@@ -966,6 +970,7 @@ enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
         switch self {
         case .off: return NSLocalizedString("No smoothing", comment: "Glucose smoothing algorithm")
         case .savitzkyGolay: return NSLocalizedString("Savitzky-Golay", comment: "Glucose smoothing algorithm")
+        case .kalman: return NSLocalizedString("Kalman filter", comment: "Glucose smoothing algorithm")
         }
     }
 
@@ -981,6 +986,11 @@ enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
                 "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a 30 minute window around each reading.",
                 comment: "Glucose smoothing algorithm description"
             )
+        case .kalman:
+            return NSLocalizedString(
+                "Tracks glucose and how fast it is changing, along with how sure it is of each. Ignores single readings that disagree with the trend, but follows genuine fast rises and falls. Same design as AndroidAPS.",
+                comment: "Glucose smoothing algorithm description"
+            )
         }
     }
 
@@ -991,6 +1001,11 @@ enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
         case .savitzkyGolay:
             return NSLocalizedString(
                 "Each extra pass widens the window the curve is fitted over: a little less noise, but sharp peaks and dips are flattened more.",
+                comment: "Glucose smoothing algorithm options description"
+            )
+        case .kalman:
+            return NSLocalizedString(
+                "How readily the filter gives up its own trend to follow the readings. Calmer is smoother, but the newest reading lags further behind a sharp turn.",
                 comment: "Glucose smoothing algorithm options description"
             )
         }
@@ -1009,4 +1024,33 @@ enum SavitzkyGolayPasses: Int, JSON, Identifiable, CaseIterable {
     var id: Int { rawValue }
 
     var displayName: String { "\(rawValue)" }
+}
+
+struct KalmanSettings: JSON, Equatable {
+    var responsiveness: KalmanResponsiveness = .balanced
+}
+
+enum KalmanResponsiveness: String, JSON, Identifiable, CaseIterable {
+    case calm
+    case balanced
+    case responsive
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .calm: return NSLocalizedString("Calm", comment: "Kalman responsiveness")
+        case .balanced: return NSLocalizedString("Balanced", comment: "Kalman responsiveness")
+        case .responsive: return NSLocalizedString("Responsive", comment: "Kalman responsiveness")
+        }
+    }
+
+    /// Multiplier on the filter's process noise. `balanced` corresponds to AndroidAPS tuning.
+    var processNoiseScale: Double {
+        switch self {
+        case .calm: return 0.7
+        case .balanced: return 1
+        case .responsive: return 1.5
+        }
+    }
 }

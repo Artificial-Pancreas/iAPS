@@ -33,11 +33,22 @@ extension CGM {
                     }
                 }
 
-                if selected == .savitzkyGolay {
+                switch selected {
+                case .off:
+                    EmptyView()
+                case .savitzkyGolay:
                     settingRow(description: selected.optionsDescription) {
                         Picker("Passes", selection: $state.glucoseSmoothing.savitzkyGolay.passes) {
                             ForEach(SavitzkyGolayPasses.allCases) { passes in
                                 Text(passes.displayName).tag(passes)
+                            }
+                        }
+                    }
+                case .kalman:
+                    settingRow(description: selected.optionsDescription) {
+                        Picker("Responsiveness", selection: $state.glucoseSmoothing.kalman.responsiveness) {
+                            ForEach(KalmanResponsiveness.allCases) { responsiveness in
+                                Text(responsiveness.displayName).tag(responsiveness)
                             }
                         }
                     }

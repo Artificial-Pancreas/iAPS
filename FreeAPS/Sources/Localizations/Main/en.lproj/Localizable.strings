@@ -2715,17 +2715,26 @@ Enact a temp Basal or a temp target */
 "Smoothing" = "Smoothing";
 "Algorithm" = "Algorithm";
 "Passes" = "Passes";
+"Responsiveness" = "Responsiveness";
 
 /* Glucose smoothing algorithm */
 "No smoothing" = "No smoothing";
 "Savitzky-Golay" = "Savitzky-Golay";
+"Kalman filter" = "Kalman filter";
+
+/* Kalman responsiveness */
+"Calm" = "Calm";
+"Balanced" = "Balanced";
+"Responsive" = "Responsive";
 
 /* Glucose smoothing algorithm description */
 "Glucose is used exactly as the CGM reports it." = "Glucose is used exactly as the CGM reports it.";
 "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a 30 minute window around each reading." = "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a 30 minute window around each reading.";
+"Tracks glucose and how fast it is changing, along with how sure it is of each. Ignores single readings that disagree with the trend, but follows genuine fast rises and falls. Same design as AndroidAPS." = "Tracks glucose and how fast it is changing, along with how sure it is of each. Ignores single readings that disagree with the trend, but follows genuine fast rises and falls. Same design as AndroidAPS.";
 
 /* Glucose smoothing algorithm options description */
 "Each extra pass widens the window the curve is fitted over: a little less noise, but sharp peaks and dips are flattened more." = "Each extra pass widens the window the curve is fitted over: a little less noise, but sharp peaks and dips are flattened more.";
+"How readily the filter gives up its own trend to follow the readings. Calmer is smoother, but the newest reading lags further behind a sharp turn." = "How readily the filter gives up its own trend to follow the readings. Calmer is smoother, but the newest reading lags further behind a sharp turn.";
 
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 

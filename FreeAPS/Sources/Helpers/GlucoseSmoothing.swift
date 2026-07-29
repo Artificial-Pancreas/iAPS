@@ -3,6 +3,7 @@ import Foundation
 struct GlucoseSample: Sendable, Equatable {
     let date: Date
     let value: Double
+    let sessionStart: Date?
 }
 
 protocol GlucoseSmoother: Sendable {
@@ -10,7 +11,7 @@ protocol GlucoseSmoother: Sendable {
     var maximumGap: TimeInterval { get }
 
     /// smooth one gap-free segment.
-    /// - Parameter samples: **oldest -> newest**, no gap larger than `maximumGap`.
+    /// - Parameter samples: **oldest -> newest**, no gap larger than `maximumGap`, all from one CGM session.
     func smooth(_ samples: [GlucoseSample]) -> [Double]
 }
 
@@ -23,7 +24,9 @@ enum GlucoseSmoothing {
 
         // algorithms work oldest -> newest
         var result = Array(glucose.reversed())
-        let samples = result.map { GlucoseSample(date: $0.dateString, value: Double($0.glucose)) }
+        let samples = result.map {
+            GlucoseSample(date: $0.dateString, value: Double($0.glucose), sessionStart: $0.sessionStartDate)
+        }
 
         for segment in segments(of: samples, maximumGap: smoother.maximumGap) {
             let smoothed = smoother.smooth(Array(samples[segment]))
@@ -42,7 +45,8 @@ enum GlucoseSmoothing {
         return result.reversed()
     }
 
-    /// Splits `samples` (oldest -> newest) into runs no more than `maximumGap` apart.
+    /// Splits `samples` (oldest -> newest) into runs no more than `maximumGap` apart and belonging to
+    /// one CGM session.
     static func segments(of samples: [GlucoseSample], maximumGap: TimeInterval) -> [Range<Int>] {
         guard samples.isNotEmpty else { return [] }
 
@@ -51,7 +55,7 @@ enum GlucoseSmoothing {
 
         for index in 1 ..< samples.count {
             let gap = samples[index].date.timeIntervalSince(samples[index - 1].date)
-            if gap > maximumGap {
+            if gap > maximumGap || isNewSession(from: samples[index - 1], to: samples[index]) {
                 segments.append(start ..< index)
                 start = index
             }
@@ -59,6 +63,10 @@ enum GlucoseSmoothing {
         segments.append(start ..< samples.count)
 
         return segments
+    }
+
+    private static func isNewSession(from previous: GlucoseSample, to next: GlucoseSample) -> Bool {
+        !BloodGlucose.isSameSession(previous.sessionStart, next.sessionStart)
     }
 }
 
@@ -69,6 +77,8 @@ extension GlucoseSmoothingSettings {
             return nil
         case .savitzkyGolay:
             return SavitzkyGolayFilter(passes: savitzkyGolay.passes.rawValue)
+        case .kalman:
+            return KalmanFilter(responsiveness: kalman.responsiveness.processNoiseScale)
         }
     }
 }
