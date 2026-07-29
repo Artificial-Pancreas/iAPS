@@ -2,10 +2,10 @@
 "NFCReaderUsageDescription" = "NFC is used to scan Libre sensors.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met de insuline pomp en de continue glucose meter";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth is used to communicate with insulin pump and continuous glucose monitor devices";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met de insuline pomp en de continue glucose meter";
 
 /* Privacy - Face ID Usage Description */
 "NSFaceIDUsageDescription" = "For authorized acces to bolus";
@@ -17,7 +17,7 @@
 "NSHealthUpdateUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Health App is used to store blood glucose, insulin and carbohydrates";
+"NSHealthShareUsageDescription" = "Apple Gezondheid wordt gebruikt om bloedglucose, insuline en koolhydraten op te slaan";
 
 /* Privacy - Contacts Usage Description */
-"NSContactsUsageDescription" = "To enable the Contact Image feature: get live updates from iAPS to your Apple Watch Contact complication";
+"NSContactsUsageDescription" = "Om de functie Contact Afbeelding in te schakelen: ontvang live updates van iAPS tot jouw Apple Watch Contact complicatie";
