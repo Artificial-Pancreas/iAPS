@@ -259,7 +259,7 @@ extension DataTable {
                     Button(
                         "Delete",
                         systemImage: "trash.fill",
-                        role: .destructive,
+                        role: .none,
                         action: { state.deleteLoopEvent(item) }
                     ).tint(.red)
                 }
