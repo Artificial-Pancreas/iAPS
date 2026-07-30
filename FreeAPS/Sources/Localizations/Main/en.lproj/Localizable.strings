@@ -3760,6 +3760,8 @@ Enact a temp Basal or a temp target */
 
 "Existing User" = "Existing User";
 
+"Skip setup — configure everything myself" = "Skip setup — configure everything myself";
+
 "Migrate my settings from a previous install" = "Migrate my settings from a previous install";
 
 "Stuck? Help is here" = "Stuck? Help is here";

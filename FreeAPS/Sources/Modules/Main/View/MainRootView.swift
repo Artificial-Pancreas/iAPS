@@ -97,6 +97,16 @@ extension Main {
                     onNewUser: {
                         restoreToken = ""
                         step = .sharing
+                    },
+                    onSkip: {
+                        // Leave onboarding entirely — same flag flip as the end of the
+                        // flow (RecoveryTokenAccountView.onDone). Deliberately does NOT
+                        // touch `firstRun`, so the legacy settings-import screen still
+                        // appears for those who relied on it. Sharing/backup can be
+                        // enabled later from the Sharing screen.
+                        showUpgradeNotice = false
+                        hasSeenWelcome = true
+                        hasSeenSharingSetup = true
                     }
                 )
             case .existingRestore:

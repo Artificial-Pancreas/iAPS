@@ -9,6 +9,8 @@ struct WelcomeView: View {
     let onExistingUser: () -> Void
     /// Launch the New-User setup wizard.
     let onNewUser: () -> Void
+    /// Leave onboarding entirely and go straight to the app (configure by hand).
+    let onSkip: () -> Void
 
     private let docsURL = URL(string: "https://iapsdocs.org")!
     private let discordURL = URL(string: "https://discord.com/invite/ptkk2Y264Z")!
@@ -53,6 +55,14 @@ struct WelcomeView: View {
                     )
                 }
                 .padding(.horizontal)
+
+                Button(action: onSkip) {
+                    Text("Skip setup — configure everything myself")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .underline()
+                }
+                .buttonStyle(.plain)
             }
 
             Spacer()
