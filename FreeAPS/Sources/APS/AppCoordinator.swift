@@ -55,6 +55,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     let loopCompleted = PassthroughSubject<LoopOutcome, Never>()
 
+    // periods without loop cycles, derived from the recorded loop cycles, newest -> oldest
+    let loopGaps = CurrentValueSubject<[LoopGap], Never>([])
+
     // current pump history, newest -> oldest
     let pumpHistory = CurrentValueSubject<[PumpHistoryEvent], Never>([])
 
@@ -296,6 +299,11 @@ final class AppCoordinator: @unchecked Sendable {
     /// MUST BE newest -> oldest
     func setGlucoseGaps(_ value: [GlucoseGap]) {
         glucoseGaps.send(value)
+    }
+
+    /// MUST BE newest -> oldest
+    func setLoopGaps(_ value: [LoopGap]) {
+        loopGaps.send(value)
     }
 
     func sendNewGlucoseRecords(_ value: [BloodGlucose]) {

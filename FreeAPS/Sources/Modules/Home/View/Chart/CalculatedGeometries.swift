@@ -590,6 +590,22 @@ private final class GeometriesBuilder {
     private func calculateLoopEventDots() -> [LoopEventDot] {
         let laneY = loopEventsLaneY
 
+        let gapDots = data.loopGaps.map { gap -> LoopEventDot in
+            let startX = timeToXCoordinate(gap.start.timeIntervalSince1970)
+            let endX = timeToXCoordinate(gap.end.timeIntervalSince1970)
+            return LoopEventDot(
+                center: CGPoint(x: (startX + endX) / 2, y: laneY),
+                type: .skippedLoops,
+                events: [gap.loopEvent],
+                barRect: CGRect(
+                    x: startX,
+                    y: laneY - 1.5,
+                    width: max(endX - startX, 3),
+                    height: 3
+                )
+            )
+        }
+
         // oldest -> newest, so that clustering walks the lane from left to right
         let events = data.loopEvents.sorted { $0.timestamp < $1.timestamp }
 
@@ -606,7 +622,7 @@ private final class GeometriesBuilder {
             }
         }
 
-        return clusters.compactMap { cluster -> LoopEventDot? in
+        let eventDots = clusters.compactMap { cluster -> LoopEventDot? in
             guard let first = cluster.first else { return nil }
             // the most important type wins the symbol
             let type = cluster.max(by: { $0.type.severity < $1.type.severity })?.type ?? first.type
@@ -616,9 +632,12 @@ private final class GeometriesBuilder {
                     y: laneY
                 ),
                 type: type,
-                events: cluster.reversed() // newest -> oldest
+                events: cluster.reversed(), // newest -> oldest
+                barRect: nil
             )
         }
+
+        return gapDots + eventDots
     }
 
     private func makeAnnouncementPath(announcementDots: [AnnouncementDot]) -> Path {

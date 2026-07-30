@@ -12,6 +12,7 @@ class ChartModel: ObservableObject {
     @Published var announcement: [Announcement]
     /// newest -> oldest
     @Published var loopEvents: [LoopEvent]
+    @Published var loopGaps: [LoopGap]
     @Published var loopEventsPlacement: LoopEventsPlacement
     @Published var hours: Int
     @Published var maxBasal: Decimal
@@ -62,6 +63,7 @@ class ChartModel: ObservableObject {
         suspensions: [PumpHistoryEvent],
         announcement: [Announcement],
         loopEvents: [LoopEvent],
+        loopGaps: [LoopGap],
         loopEventsPlacement: LoopEventsPlacement,
         hours: Int,
         maxBasal: Decimal,
@@ -111,6 +113,7 @@ class ChartModel: ObservableObject {
         self.suspensions = suspensions
         self.announcement = announcement
         self.loopEvents = loopEvents
+        self.loopGaps = loopGaps
         self.loopEventsPlacement = loopEventsPlacement
         self.hours = hours
         self.maxBasal = maxBasal

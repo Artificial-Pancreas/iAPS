@@ -92,6 +92,7 @@ extension Home {
             suspensions: [],
             announcement: [],
             loopEvents: [],
+            loopGaps: [],
             loopEventsPlacement: .top,
             hours: 24,
             maxBasal: 4,
@@ -158,6 +159,7 @@ extension Home {
             setupCarbs(appCoordinator.carbHistory.value)
             await setupAnnouncements()
             data.loopEvents = appCoordinator.loopEvents.value
+            data.loopGaps = appCoordinator.loopGaps.value
 
             setupLoopStatsBackground()
             setupCob()
@@ -225,6 +227,10 @@ extension Home {
 
             observeUI(appCoordinator.loopEvents) { me, loopEvents in
                 me.data.loopEvents = loopEvents
+            }
+
+            observeUI(appCoordinator.loopGaps) { me, loopGaps in
+                me.data.loopGaps = loopGaps
             }
 
             observeUI(appCoordinator.latestLoopOutcome) { me, loopOutcome in

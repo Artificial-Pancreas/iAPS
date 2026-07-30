@@ -486,6 +486,8 @@
 		F28B06AA3016DCB500A59FA7 /* GlucoseGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */; };
 		F28B06AC3016DCF500A59FA7 /* LoopEventsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */; };
 		F28B06B6301B77EA00A59FA7 /* LoopStatRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */; };
+		F28B06B8301BBDC400A59FA7 /* GapDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B7301BBDC400A59FA7 /* GapDetection.swift */; };
+		F28B06BA301BBEA400A59FA7 /* LoopGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B9301BBEA400A59FA7 /* LoopGap.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
 		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
@@ -1254,6 +1256,8 @@
 		F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseGap.swift; sourceTree = "<group>"; };
 		F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopEventsStorage.swift; sourceTree = "<group>"; };
 		F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStatRecordStorage.swift; sourceTree = "<group>"; };
+		F28B06B7301BBDC400A59FA7 /* GapDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GapDetection.swift; sourceTree = "<group>"; };
+		F28B06B9301BBEA400A59FA7 /* LoopGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopGap.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
 		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
@@ -2296,6 +2300,7 @@
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
 				F2ED20F02FE2174200E33CBC /* LoopOutcome.swift */,
 				19012CDB291D2CB900FB8210 /* LoopStats.swift */,
+				F28B06B9301BBEA400A59FA7 /* LoopGap.swift */,
 				19914CDB2EDDC08F00DC2051 /* MealData.swift */,
 				190E311D2EE8312300C4D70A /* MealMode.swift */,
 				191B609E2FB936C00062BB0B /* MicroData.swift */,
@@ -2362,6 +2367,7 @@
 				F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */,
 				F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */,
 				F2DE0B9530042E7D00EF9230 /* ProtectedData.swift */,
+				F28B06B7301BBDC400A59FA7 /* GapDetection.swift */,
 				F22A7A7E2FF167080019BDC5 /* DataSync */,
 			);
 			path = Helpers;
@@ -3597,6 +3603,7 @@
 				F2941FA32E787F9F00A9DD5D /* AppGroupCGM+UI.swift in Sources */,
 				F2EE83C52E739B0100D7177E /* CalendarShareStateModel.swift in Sources */,
 				196809E22D46E7B300BA566F /* OpenClosedShortcuts.swift in Sources */,
+				F28B06B8301BBDC400A59FA7 /* GapDetection.swift in Sources */,
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
 				19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */,
@@ -4067,6 +4074,7 @@
 				19F95FFA29F1102A00314DDC /* StatRootView.swift in Sources */,
 				0D9A5E34A899219C5C4CDFAF /* DataTableStateModel.swift in Sources */,
 				6BCF84DD2B16843A003AD46E /* LiveActitiyShared.swift in Sources */,
+				F28B06BA301BBEA400A59FA7 /* LoopGap.swift in Sources */,
 				195D80B92AF697F700D25097 /* DynamicProvider.swift in Sources */,
 				D6D02515BBFBE64FEBE89856 /* DataTableRootView.swift in Sources */,
 				F20E9A932FCD0D5500FCACBD /* PumpDisplayInfo.swift in Sources */,

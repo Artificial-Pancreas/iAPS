@@ -69,14 +69,15 @@ extension DataTable {
             }
             observeUI(appCoordinator.glucoseRaw, dropInitial: true) { me, glucoseHistory in
                 me.setupGlucose(glucoseHistory)
-                me.setupLoopEvents()
             }
             // the gaps are published right after the glucose history they were derived from
             observeUI(appCoordinator.glucoseGaps, dropInitial: true) { me, _ in
                 me.setupGlucose(me.appCoordinator.glucoseRaw.value)
-                me.setupLoopEvents()
             }
             observeUI(appCoordinator.loopEvents, dropInitial: true) { me, _ in
+                me.setupLoopEvents()
+            }
+            observeUI(appCoordinator.loopGaps, dropInitial: true) { me, _ in
                 me.setupLoopEvents()
             }
         }
@@ -205,7 +206,7 @@ extension DataTable {
 
         private func setupLoopEvents() {
             let cutoff = Date.now.subtractingTimeInterval(.hours(24))
-            let gaps = appCoordinator.glucoseGaps.value.map(\.loopEvent)
+            let gaps = appCoordinator.loopGaps.value.map(\.loopEvent)
 
             loopEvents = (appCoordinator.loopEvents.value + gaps)
                 .filter { $0.timestamp > cutoff }

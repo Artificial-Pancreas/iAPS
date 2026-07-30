@@ -3970,7 +3970,9 @@ Enact a temp Basal or a temp target */
 
 "%d skipped loops" = "%d skipped loops";
 
-"%@, no readings for %@" = "%@, no readings for %@";
+"%@, no loop for %@" = "%@, no loop for %@";
+
+"No readings for %@" = "No readings for %@";
 
 "ongoing" = "ongoing";
 
