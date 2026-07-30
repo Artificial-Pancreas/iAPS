@@ -485,6 +485,7 @@
 		F28B06A83016DC9100A59FA7 /* LoopEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06A73016DC9100A59FA7 /* LoopEvent.swift */; };
 		F28B06AA3016DCB500A59FA7 /* GlucoseGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */; };
 		F28B06AC3016DCF500A59FA7 /* LoopEventsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */; };
+		F28B06B6301B77EA00A59FA7 /* LoopStatRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
 		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
@@ -1252,6 +1253,7 @@
 		F28B06A73016DC9100A59FA7 /* LoopEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopEvent.swift; sourceTree = "<group>"; };
 		F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseGap.swift; sourceTree = "<group>"; };
 		F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopEventsStorage.swift; sourceTree = "<group>"; };
+		F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStatRecordStorage.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
 		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
@@ -2379,6 +2381,7 @@
 				198CED9C2B2E62940073032D /* OverrideStorage.swift */,
 				1982F7DA2BA6509D00EAFADE /* PumpStorage.swift */,
 				F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */,
+				F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -3730,6 +3733,7 @@
 				38FE826D25CC8461001FF17A /* NightscoutAPI.swift in Sources */,
 				388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */,
 				F292C69D2FDDC8BA00D09D88 /* TempTargetsSliderSnapshot.swift in Sources */,
+				F28B06B6301B77EA00A59FA7 /* LoopStatRecordStorage.swift in Sources */,
 				F25D82932F61AC00007AE22C /* CollapsibleTagsSection.swift in Sources */,
 				3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */,
 				3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */,

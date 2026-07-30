@@ -58,7 +58,8 @@ final class APSAssembly: Assembly {
                 overrideStorage: r.resolve(OverrideStorage.self)!,
                 overrideManager: r.resolve(OverrideManager.self)!,
                 dynamicStateManager: r.resolve(DynamicStateManager.self)!,
-                loopEventsStorage: r.resolve(LoopEventsStorage.self)!
+                loopEventsStorage: r.resolve(LoopEventsStorage.self)!,
+                loopStatRecordStorage: r.resolve(LoopStatRecordStorage.self)!
             )
         }
         container.register(FetchTreatmentsManager.self) { r in

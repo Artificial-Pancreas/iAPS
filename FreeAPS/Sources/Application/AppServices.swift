@@ -39,6 +39,7 @@ import Swinject
 
         try await startService(resolver.resolve(CoreDataManager.self))
         try await startService(resolver.resolve(DatabaseManager.self))
+        try await startService(resolver.resolve(LoopStatRecordStorage.self))
 
         try await startService(resolver.resolve(NightscoutAPIProvider.self))
         try await startService(resolver.resolve(NightscoutUploads.self))
