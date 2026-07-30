@@ -505,6 +505,7 @@
 		F28B06BA301BBEA400A59FA7 /* LoopGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B9301BBEA400A59FA7 /* LoopGap.swift */; };
 		F28B06AE3018FEFB00A59FA7 /* GlucoseSmoothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */; };
 		F28B06B03018FF1100A59FA7 /* KalmanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AF3018FF0700A59FA7 /* KalmanFilter.swift */; };
+		F28B06B2301B6E4900A59FA7 /* ExponentialFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B1301B6E4900A59FA7 /* ExponentialFilter.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
 		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
@@ -1296,6 +1297,7 @@
 		F28B06B9301BBEA400A59FA7 /* LoopGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopGap.swift; sourceTree = "<group>"; };
 		F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseSmoothing.swift; sourceTree = "<group>"; };
 		F28B06AF3018FF0700A59FA7 /* KalmanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilter.swift; sourceTree = "<group>"; };
+		F28B06B1301B6E4900A59FA7 /* ExponentialFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialFilter.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
 		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
@@ -2414,6 +2416,7 @@
 				F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
 				F28B06AF3018FF0700A59FA7 /* KalmanFilter.swift */,
+				F28B06B1301B6E4900A59FA7 /* ExponentialFilter.swift */,
 				056EB47D2B4C8B3D00CDE36E /* SystemSoundsManager.swift */,
 				F25EBEF82FC210F8009D275F /* Date+Extensions.swift */,
 				F25EBEFA2FC21228009D275F /* TimeInterval+Extensions.swift */,
@@ -3796,6 +3799,7 @@
 				F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */,
 				F25D82872F619799007AE22C /* Types.swift in Sources */,
 				F23C876C30099EB00026B83F /* IobInput.swift in Sources */,
+				F28B06B2301B6E4900A59FA7 /* ExponentialFilter.swift in Sources */,
 				1920BF5D2B9DF53200E861FE /* BolusShortcut.swift in Sources */,
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				F29E5E392EE4726A00D2CBC0 /* ClaudeProtocol.swift in Sources */,

@@ -79,6 +79,8 @@ extension GlucoseSmoothingSettings {
             return SavitzkyGolayFilter(passes: savitzkyGolay.passes.rawValue)
         case .kalman:
             return KalmanFilter(responsiveness: kalman.responsiveness.processNoiseScale)
+        case .exponential:
+            return ExponentialFilter()
         }
     }
 }

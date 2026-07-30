@@ -34,7 +34,8 @@ extension CGM {
                 }
 
                 switch selected {
-                case .off:
+                case .exponential,
+                     .off:
                     EmptyView()
                 case .savitzkyGolay:
                     settingRow(description: selected.optionsDescription) {

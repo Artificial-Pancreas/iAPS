@@ -963,6 +963,7 @@ enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
     case off
     case savitzkyGolay
     case kalman
+    case exponential
 
     var id: String { rawValue }
 
@@ -971,6 +972,7 @@ enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
         case .off: return NSLocalizedString("No smoothing", comment: "Glucose smoothing algorithm")
         case .savitzkyGolay: return NSLocalizedString("Savitzky-Golay", comment: "Glucose smoothing algorithm")
         case .kalman: return NSLocalizedString("Kalman filter", comment: "Glucose smoothing algorithm")
+        case .exponential: return NSLocalizedString("Exponential", comment: "Glucose smoothing algorithm")
         }
     }
 
@@ -991,12 +993,18 @@ enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
                 "Tracks glucose and how fast it is changing, along with how sure it is of each. Ignores single readings that disagree with the trend, but follows genuine fast rises and falls. Same design as AndroidAPS.",
                 comment: "Glucose smoothing algorithm description"
             )
+        case .exponential:
+            return NSLocalizedString(
+                "The AndroidAPS algorithm: each reading is blended into a running average, half of it weighted towards the current trend. The simplest option, and the only one that never revises an earlier reading - so older values on the chart lag behind the raw ones.",
+                comment: "Glucose smoothing algorithm description"
+            )
         }
     }
 
     var optionsDescription: String? {
         switch self {
-        case .off:
+        case .exponential,
+             .off:
             return nil
         case .savitzkyGolay:
             return NSLocalizedString(
