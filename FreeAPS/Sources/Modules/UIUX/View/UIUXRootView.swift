@@ -35,9 +35,11 @@ extension UIUX {
                 } header: { Text("Home View Button Panel ") }
 
                 Section {
+                    Toggle("Human Body Theme", isOn: $state.bodyTheme)
                     Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
-                    Toggle("Display Glucose Delta", isOn: $state.displayDelta)
+                    if !state.bodyTheme { Toggle("Display Glucose Delta", isOn: $state.displayDelta)
+                    }
                     Toggle("Hide Concentration Badge", isOn: $state.hideInsulinBadge)
                     Toggle("Display Sensor Age", isOn: $state.displaySAGE)
                     Toggle("Display Sensor Time Remaining", isOn: $state.displayExpiration)
@@ -48,6 +50,14 @@ extension UIUX {
                     ._onBindingChange($state.displayExpiration) { enabled in
                         if enabled { state.displaySAGE = false }
                     }
+
+                // INSERTED: Theme preview section to make the new view visible in the app
+                Section {
+                    FemaleBodyThemeView()
+                        .frame(height: 300)
+                        .listRowInsets(EdgeInsets())
+                } header: { Text("Theme Preview") }
+                    .onAppear { /* no-op to ensure section composes */ }
 
                 Section {
                     HStack {

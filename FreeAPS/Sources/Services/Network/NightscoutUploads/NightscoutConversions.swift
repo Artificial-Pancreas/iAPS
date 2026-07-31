@@ -253,7 +253,7 @@ actor CgmStateRecorder {
     }
 
     /// records a new sensor start if the status carries one; returns whether the log changed
-    func noteStatus(_ cgmStatus: CgmDisplayStatus?) async -> Bool {
+    func noteStatus(_ cgmStatus: CGMDisplayStatus?) async -> Bool {
         guard let sessionStartDate = cgmStatus?.sessionStartDate,
               abs(sessionStartDate.timeIntervalSince(lastSeenStart ?? .distantPast)) > 60
         else { return false }

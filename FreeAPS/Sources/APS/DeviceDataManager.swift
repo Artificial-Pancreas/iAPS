@@ -1324,7 +1324,7 @@ private extension BaseDeviceDataManager {
             pumpIsCgm = false
         }
 
-        let info = CgmDisplayInfo(
+        let info = CGMDisplayInfo(
             identifier: cgmManager.pluginIdentifier,
             identifierForStatistics: KnownPlugins.cgmIdForStatistics(for: cgmManager),
             name: cgmManager.localizedTitle,
@@ -1347,7 +1347,7 @@ private extension BaseDeviceDataManager {
             return
         }
 
-        let status = CgmDisplayStatus(
+        let status = CGMDisplayStatus(
             statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
             sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
             shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM

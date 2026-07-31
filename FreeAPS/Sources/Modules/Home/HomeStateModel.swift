@@ -79,6 +79,9 @@ extension Home {
         @Published var ai: Bool = false
         @Published var individual = Individual.default
         @Published var selectedMealInterval: DateFilter = .today
+        @Published var bodyTheme = true
+        @Published var hideInsulinBadge = false
+        @Published var shape: FreeAPSSettings.MannequinType = .male
 
         // Chart data
         var data = ChartModel(
@@ -319,7 +322,8 @@ extension Home {
 
         private func updateSensorDays() {
             guard let settings else { return }
-            sensorDays = cgmSensorDays ?? settings.sensorDays
+            let days = cgmSensorDays ?? settings.sensorDays
+            sensorDays = days > 100 ? days / 86400 : days
         }
 
         func addCarbs() {
@@ -718,8 +722,9 @@ extension Home.StateModel {
         data.screenHours = hours
         displayExpiration = settings.displayExpiration
         displaySAGE = settings.displaySAGE
+        hideInsulinBadge = settings.hideInsulinBadge
         ai = settings.ai
-        individual.sex = Sex.savedSettings(settings.sexSetting)
+        individual.sex = individual.sex.savedSettings(settings.sexSetting)
         individual.age = Int((settings.birthDate.timeIntervalSinceNow.hours / (365 * 24)).rounded(.towardZero))
 
         allowManualTemp = !settings.closedLoop
@@ -730,6 +735,8 @@ extension Home.StateModel {
 
         carbButton = settings.carbButton
         profileButton = settings.profileButton
+        bodyTheme = settings.bodyTheme
+        shape = settings.activeMannequin
 
         await setupGlucose()
     }

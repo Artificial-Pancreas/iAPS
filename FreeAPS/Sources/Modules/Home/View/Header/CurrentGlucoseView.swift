@@ -157,15 +157,15 @@ struct CurrentGlucoseView: View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
                 let sensorAge: TimeInterval = -date.timeIntervalSinceNow
-                let expiration = sensordays - sensorAge
                 let secondsOfDay = 8.64E4
-                let colour = colorScheme == .light ? Color.black : Color.white
-                let lineColour: Color = sensorAge >= sensordays - secondsOfDay * 1 ? Color.red
-                    .opacity(0.9) : sensorAge >= sensordays - secondsOfDay * 2 ? Color
-                    .orange : Color.white
+                let expiration = sensordays * secondsOfDay - sensorAge
+                let colour = Color.black // colorScheme == .light ? Color.black : Color.white
+                let lineColour: Color = sensorAge >= sensordays * secondsOfDay - secondsOfDay * 1 ? Color.red
+                    .opacity(0.9) : sensorAge >= sensordays * secondsOfDay - secondsOfDay * 2 ? Color
+                    .orange : (colorScheme == .dark ? Color.white.opacity(0.5) : Color.black.opacity(0.05))
                 let minutesAndHours = (displayExpiration && expiration < 1 * 8.64E4) || (displaySAGE && sensorAge < 1 * 8.64E4)
 
-                Sage(amount: sensorAge, expiration: expiration, lineColour: lineColour, sensordays: sensordays)
+                Sage(amount: sensorAge, expiration: expiration, lineColour: lineColour, sensordays: sensordays * secondsOfDay)
                     .frame(width: 36, height: 36)
                     .overlay {
                         HStack {

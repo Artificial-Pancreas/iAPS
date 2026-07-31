@@ -187,11 +187,9 @@ struct Sage: View {
     let lineColour: Color
     let sensordays: TimeInterval
     var body: some View {
-        let fill = max(expiration / amount, 0.15)
+        let fill = max(expiration / max(sensordays, 1), 0.15)
         let colour: Color = (expiration < 0.5 * 8.64E4) ? .red
-            .opacity(0.9) : (expiration < 2 * 8.64E4) ? .orange.opacity(0.8) : colorScheme == .light ? Color.white : Color
-            .black // Color.white
-            .opacity(0.9)
+            .opacity(0.9) : (expiration < 2 * 8.64E4) ? .orange.opacity(0.8) : Color.white.opacity(0.9)
         let scheme = colorScheme == .light ? Color(.systemGray5) : Color(.systemGray2)
 
         Circle()
@@ -206,7 +204,7 @@ struct Sage: View {
                                     location: fill
                                 ),
                                 Gradient.Stop(
-                                    color: colorScheme == .light ? Color.white : Color.black, // Color.white.opacity(0.9),
+                                    color: lineColour,
                                     location: fill
                                 )
                             ]),
