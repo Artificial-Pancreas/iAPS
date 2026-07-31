@@ -111,7 +111,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var showInsulinActivity: Bool = false
     var showCobChart: Bool = false
     // failed loops / device errors / missed readings on the main chart
-    var loopEventsPlacement: LoopEventsPlacement = .top
+    var loopEventsPlacement: LoopEventsPlacement = .hidden
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
