@@ -6,7 +6,6 @@ import Swinject
 extension Bolus {
     struct DefaultBolusCalcRootView: BaseView {
         let resolver: Resolver
-        let waitForSuggestion: Bool
         let fetch: Bool
 
         @EnvironmentObject var state: StateModel
@@ -53,14 +52,12 @@ extension Bolus {
 
         init(
             resolver: Resolver,
-            waitForSuggestion: Bool,
             fetch: Bool,
 //            state: StateModel,
             meal: FetchedResults<Meals>,
             mealEntries: any View
         ) {
             self.resolver = resolver
-            self.waitForSuggestion = waitForSuggestion
             self.fetch = fetch
 //            self.state = state
             self.meal = meal
@@ -214,13 +211,6 @@ extension Bolus {
             .interactiveDismissDisabled()
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear {
-                state.viewActive()
-                state.waitForCarbs = fetch
-                state.waitForSuggestionInitial = waitForSuggestion
-                state.waitForSuggestion = waitForSuggestion
-                state.start()
-            }
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(

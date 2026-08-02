@@ -46,34 +46,36 @@ extension Bolus {
         }
 
         var body: some View {
+            calculator
+                .onAppear {
+                    state.viewActive()
+                    state.waitForCarbs = fetch
+                    state.waitForSuggestionInitial = waitForSuggestion
+                    state.waitForSuggestion = waitForSuggestion
+                    state.start()
+                }
+                .onDisappear {
+                    state.notActive()
+                }
+        }
+
+        @ViewBuilder private var calculator: some View {
             if state.useCalc {
                 if state.eventualBG {
                     DefaultBolusCalcRootView(
                         resolver: resolver,
-                        waitForSuggestion: waitForSuggestion,
                         fetch: fetch,
                         meal: meal,
                         mealEntries: mealEntries
                     )
-                    .onDisappear {
-                        if state.eventualBG {
-                            state.notActive()
-                        }
-                    }
                     .environmentObject(state)
                 } else {
                     AlternativeBolusCalcRootView(
                         resolver: resolver,
-                        waitForSuggestion: waitForSuggestion,
                         fetch: fetch,
                         meal: meal,
                         mealEntries: mealEntries
                     )
-                    .onDisappear {
-                        if !state.eventualBG {
-                            state.notActive()
-                        }
-                    }
                     .environmentObject(state)
                 }
             } else {
@@ -125,11 +127,6 @@ extension Bolus {
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
-                }
-            }
-            .onDisappear {
-                if !state.useCalc {
-                    state.notActive()
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
