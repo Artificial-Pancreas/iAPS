@@ -71,7 +71,6 @@ extension LoopEventType {
              .pumpNotConfigured: return 70
         case .algorithm,
              .loopFailed: return 60
-        case .skippedLoops: return 50
         case .cgmError,
              .glucoseData: return 40
         case .pumpBusy,
@@ -81,6 +80,7 @@ extension LoopEventType {
         case .appStart,
              .deliveryResolved,
              .other: return 10
+        case .skippedLoops: return 5
         }
     }
 

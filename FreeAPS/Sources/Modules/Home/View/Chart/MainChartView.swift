@@ -28,8 +28,6 @@ struct LoopEventDot: Identifiable {
     let center: CGPoint
     let type: LoopEventType
     let events: [LoopEvent]
-    /// for a skipped-loops event: the x range of the gap, so it can be drawn as a bar
-    let barRect: CGRect?
 
     var count: Int { events.count }
 
@@ -883,10 +881,8 @@ struct MainChartCanvas: View {
     private var loopEventsView: some View {
         ZStack {
             Path { path in
-                for dot in geom.loopEventDots {
-                    if let barRect = dot.barRect {
-                        path.addRoundedRect(in: barRect, cornerSize: CGSize(width: 1.5, height: 1.5))
-                    }
+                for barRect in geom.loopGapBars {
+                    path.addRoundedRect(in: barRect, cornerSize: CGSize(width: 1.5, height: 1.5))
                 }
             }
             .fill(LoopEventType.skippedLoops.color.opacity(0.7))
