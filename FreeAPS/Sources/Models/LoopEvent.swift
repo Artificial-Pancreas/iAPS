@@ -177,7 +177,7 @@ extension LoopEventType.Status {
         case .critical:
             return Self.dynamic(light: (0.702, 0.149, 0.118), dark: (1.000, 0.420, 0.420))
         case .warning:
-            return Self.dynamic(light: (0.941, 0.635, 0.008), dark: (1.000, 0.690, 0.125))
+            return Self.dynamic(light: (0.740, 0.460, 0.000), dark: (1.000, 0.690, 0.125))
         case .informational:
             return Self.dynamic(light: (0.475, 0.475, 0.498), dark: (0.620, 0.620, 0.643))
         case .good:

@@ -892,22 +892,25 @@ struct MainChartCanvas: View {
             .fill(LoopEventType.skippedLoops.color.opacity(0.7))
 
             ForEach(geom.loopEventDots) { dot in
-                Image(systemName: dot.type.symbol)
-                    .font(.system(size: ChartConfig.loopEventSize, weight: .bold))
-                    .foregroundStyle(dot.type.color)
-                    .shadow(color: Color(.systemBackground), radius: 1)
-                    .shadow(color: Color(.systemBackground), radius: 1)
-                    .frame(width: ChartConfig.loopEventsLaneHeight, height: ChartConfig.loopEventsLaneHeight)
-                    .overlay(alignment: .bottomTrailing) {
-                        if dot.count > 1 {
-                            // a count is a value, so it wears ink rather than the status colour
-                            Text("\(dot.count)")
-                                .font(.system(size: ChartConfig.loopEventSize * 0.55, weight: .bold))
-                                .foregroundStyle(Color.primary)
-                                .offset(x: 7, y: 3)
-                        }
+                ZStack {
+                    Image(systemName: dot.type.symbol)
+                        .font(.system(size: ChartConfig.loopEventSize + 1.5, weight: .black))
+                        .foregroundStyle(Color(.systemBackground))
+                    Image(systemName: dot.type.symbol)
+                        .font(.system(size: ChartConfig.loopEventSize, weight: .bold))
+                        .foregroundStyle(dot.type.color)
+                }
+                .frame(width: ChartConfig.loopEventsLaneHeight, height: ChartConfig.loopEventsLaneHeight)
+                .overlay(alignment: .bottomTrailing) {
+                    if dot.count > 1 {
+                        // a count is a value, so it wears ink rather than the status colour
+                        Text("\(dot.count)")
+                            .font(.system(size: ChartConfig.loopEventSize * 0.55, weight: .bold))
+                            .foregroundStyle(Color.primary)
+                            .offset(x: 7, y: 3)
                     }
-                    .position(dot.center)
+                }
+                .position(dot.center)
             }
         }
     }
