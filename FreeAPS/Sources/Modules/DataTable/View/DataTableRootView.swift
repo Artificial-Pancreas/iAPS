@@ -86,8 +86,8 @@ extension DataTable {
         var body: some View {
             VStack {
                 Picker("Mode", selection: $state.mode) {
-                    ForEach(Mode.allCases.indexed(), id: \.1) { index, item in
-                        Text(item.name).tag(index)
+                    ForEach(Mode.allCases) { item in
+                        Text(item.name).tag(item)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
@@ -98,6 +98,7 @@ extension DataTable {
                     case .treatments:
                         treatmentsList
                     case .glucose: glucoseList
+                    case .events: eventsList
                     }
                 }
             }
@@ -182,14 +183,85 @@ extension DataTable {
                     Spacer()
                     Text("Time").foregroundStyle(.secondary)
                 }
-                if !state.glucose.isEmpty {
-                    ForEach(state.glucose) { item in
-                        glucoseView(item, isManual: item.glucose)
+                if !state.glucoseRows.isEmpty {
+                    ForEach(state.glucoseRows) { row in
+                        switch row {
+                        case let .reading(item):
+                            glucoseView(item, isManual: item.glucose)
+                        case let .gap(gap):
+                            glucoseGapView(gap)
+                        }
                     }
                 } else {
                     HStack {
                         Text("No data.")
                     }
+                }
+            }
+        }
+
+        /// a period without readings
+        @ViewBuilder private func glucoseGapView(_ gap: GlucoseGap) -> some View {
+            HStack {
+                Image(systemName: LoopEventType.glucoseData.symbol)
+                    .foregroundStyle(LoopEventType.glucoseData.color)
+                Text(gap.summary)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Text(dateFormatter.string(from: gap.end))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+
+        private var eventsList: some View {
+            List {
+                HStack {
+                    Text("Last 24 hours").foregroundStyle(.secondary)
+                    Spacer()
+                    Text("Time").foregroundStyle(.secondary)
+                }
+                if !state.loopEvents.isEmpty {
+                    ForEach(state.loopEvents) { item in
+                        loopEventView(item)
+                    }
+                } else {
+                    HStack {
+                        Text("No failed loops or device errors.")
+                    }
+                }
+            }
+        }
+
+        @ViewBuilder private func loopEventView(_ item: LoopEvent) -> some View {
+            HStack(alignment: .top) {
+                Image(systemName: item.type.symbol)
+                    .foregroundStyle(item.type.color)
+                    .frame(width: 22)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(item.type.title)
+                    if let message = item.message, message != item.type.title {
+                        Text(message)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
+                Spacer()
+
+                Text(dateFormatter.string(from: item.timestamp))
+                    .foregroundStyle(.secondary)
+            }
+            .swipeActions {
+                if item.type.canBeDismissed {
+                    Button(
+                        "Delete",
+                        systemImage: "trash.fill",
+                        role: .destructive,
+                        action: { state.deleteLoopEvent(item) }
+                    ).tint(.red)
                 }
             }
         }

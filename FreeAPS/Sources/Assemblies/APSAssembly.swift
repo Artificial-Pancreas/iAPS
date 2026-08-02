@@ -16,7 +16,8 @@ final class APSAssembly: Assembly {
                 bluetoothProvider: r.resolve(BluetoothStateManager.self)!,
                 calibrationService: r.resolve(CalibrationService.self)!,
                 router: r.resolve(Router.self)!,
-                appCoordinator: r.resolve(AppCoordinator.self)!
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                loopEventsStorage: r.resolve(LoopEventsStorage.self)!
             )
         }
         container.register(OverrideManager.self) { r in
@@ -56,7 +57,9 @@ final class APSAssembly: Assembly {
                 openAPS: r.resolve(OpenAPS.self)!,
                 overrideStorage: r.resolve(OverrideStorage.self)!,
                 overrideManager: r.resolve(OverrideManager.self)!,
-                dynamicStateManager: r.resolve(DynamicStateManager.self)!
+                dynamicStateManager: r.resolve(DynamicStateManager.self)!,
+                loopEventsStorage: r.resolve(LoopEventsStorage.self)!,
+                loopStatRecordStorage: r.resolve(LoopStatRecordStorage.self)!
             )
         }
         container.register(FetchTreatmentsManager.self) { r in

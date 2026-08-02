@@ -10,6 +10,10 @@ class ChartModel: ObservableObject {
     @Published var boluses: [PumpHistoryEvent]
     @Published var suspensions: [PumpHistoryEvent]
     @Published var announcement: [Announcement]
+    /// newest -> oldest
+    @Published var loopEvents: [LoopEvent]
+    @Published var loopGaps: [LoopGap]
+    @Published var loopEventsPlacement: LoopEventsPlacement
     @Published var hours: Int
     @Published var maxBasal: Decimal
     @Published var autotunedBasalProfile: [BasalProfileEntry]
@@ -58,6 +62,9 @@ class ChartModel: ObservableObject {
         boluses: [PumpHistoryEvent],
         suspensions: [PumpHistoryEvent],
         announcement: [Announcement],
+        loopEvents: [LoopEvent],
+        loopGaps: [LoopGap],
+        loopEventsPlacement: LoopEventsPlacement,
         hours: Int,
         maxBasal: Decimal,
         autotunedBasalProfile: [BasalProfileEntry],
@@ -105,6 +112,9 @@ class ChartModel: ObservableObject {
         self.boluses = boluses
         self.suspensions = suspensions
         self.announcement = announcement
+        self.loopEvents = loopEvents
+        self.loopGaps = loopGaps
+        self.loopEventsPlacement = loopEventsPlacement
         self.hours = hours
         self.maxBasal = maxBasal
         self.autotunedBasalProfile = autotunedBasalProfile

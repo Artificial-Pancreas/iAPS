@@ -110,6 +110,8 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var profileButton: Bool = true
     var showInsulinActivity: Bool = false
     var showCobChart: Bool = false
+    // failed loops / device errors / missed readings on the main chart
+    var loopEventsPlacement: LoopEventsPlacement = .hidden
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
@@ -377,6 +379,10 @@ extension FreeAPSSettings: Decodable {
 
         if let showCobChart = try? container.decode(Bool.self, forKey: .showCobChart) {
             settings.showCobChart = showCobChart
+        }
+
+        if let loopEventsPlacement = try? container.decode(LoopEventsPlacement.self, forKey: .loopEventsPlacement) {
+            settings.loopEventsPlacement = loopEventsPlacement
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(
@@ -803,6 +809,22 @@ enum LightMode: String, JSON, Identifiable, CaseIterable {
     case auto = "Auto"
 
     var id: LightMode { self }
+}
+
+enum LoopEventsPlacement: String, JSON, Identifiable, CaseIterable {
+    case hidden
+    case top
+    case bottom
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .hidden: return NSLocalizedString("Hidden", comment: "Loop events placement")
+        case .top: return NSLocalizedString("Above the glucose", comment: "Loop events placement")
+        case .bottom: return NSLocalizedString("Below the glucose", comment: "Loop events placement")
+        }
+    }
 }
 
 enum UploadScheduleInterval: String, JSON, Identifiable, CaseIterable {

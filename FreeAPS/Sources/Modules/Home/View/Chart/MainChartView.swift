@@ -23,6 +23,17 @@ struct AnnouncementDot {
     let note: String
 }
 
+/// a loop event (or a cluster of nearby loop events) drawn as a symbol in the events lane
+struct LoopEventDot: Identifiable {
+    let center: CGPoint
+    let type: LoopEventType
+    let events: [LoopEvent]
+
+    var count: Int { events.count }
+
+    var id: String { events.first?.id ?? type.rawValue }
+}
+
 struct OverrideStruct {
     let start: Date
     let end: Date
@@ -81,6 +92,12 @@ enum ChartConfig {
     static let peakMargin: CGFloat = 6
     static let peakCornerRadius: CGFloat = 2
     static let insulinCarbLabelMargin: CGFloat = 2
+    // loop events lane: sits between the basal area and the top of the glucose area
+    static let loopEventsLaneY: CGFloat = basalHeight + 22
+    static let loopEventsLaneHeight: CGFloat = 16
+    static let loopEventSize: CGFloat = 13
+    /// symbols closer than this are merged into one
+    static let loopEventClusterDistance: CGFloat = loopEventsLaneHeight + 3
 }
 
 struct MainChartView: View {
@@ -186,6 +203,9 @@ struct MainChartView: View {
             ping(data.$cob),
             ping(data.$isManual),
             ping(data.$announcement),
+            ping(data.$loopEvents),
+            ping(data.$loopGaps),
+            ping(data.$loopEventsPlacement),
             ping(data.$boluses),
             ping(data.$carbs),
             ping(data.$tempTargets),
@@ -507,6 +527,9 @@ struct MainChartCanvas: View {
                     manualGlucoseView
                     manualGlucoseCenterView
                     announcementView
+                    if data.loopEventsPlacement != .hidden {
+                        loopEventsView
+                    }
                     if !data.hidePredictions {
                         predictionsView
                     }
@@ -851,6 +874,39 @@ struct MainChartCanvas: View {
                 Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
                     .offset(x: 0, y: -15)
                     .position(position).asAny()
+            }
+        }
+    }
+
+    private var loopEventsView: some View {
+        ZStack {
+            Path { path in
+                for barRect in geom.loopGapBars {
+                    path.addRoundedRect(in: barRect, cornerSize: CGSize(width: 1.5, height: 1.5))
+                }
+            }
+            .fill(LoopEventType.skippedLoops.color.opacity(0.7))
+
+            ForEach(geom.loopEventDots) { dot in
+                ZStack {
+                    Image(systemName: dot.type.symbol)
+                        .font(.system(size: ChartConfig.loopEventSize + 1.5, weight: .black))
+                        .foregroundStyle(Color(.systemBackground))
+                    Image(systemName: dot.type.symbol)
+                        .font(.system(size: ChartConfig.loopEventSize, weight: .bold))
+                        .foregroundStyle(dot.type.color)
+                }
+                .frame(width: ChartConfig.loopEventsLaneHeight, height: ChartConfig.loopEventsLaneHeight)
+                .overlay(alignment: .bottomTrailing) {
+                    if dot.count > 1 {
+                        // a count is a value, so it wears ink rather than the status colour
+                        Text("\(dot.count)")
+                            .font(.system(size: ChartConfig.loopEventSize * 0.55, weight: .bold))
+                            .foregroundStyle(Color.primary)
+                            .offset(x: 7, y: 3)
+                    }
+                }
+                .position(dot.center)
             }
         }
     }

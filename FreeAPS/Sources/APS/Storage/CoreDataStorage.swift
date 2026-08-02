@@ -128,6 +128,15 @@ final class CoreDataStorage: Sendable {
         }
     }
 
+    func fetchLoopStarts(interval: NSDate) async -> [Date] {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let request = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+            request.sortDescriptors = [NSSortDescriptor(key: "start", ascending: true)]
+            request.predicate = NSPredicate(format: "start > %@", interval)
+            return ((try? context.fetch(request)) ?? []).compactMap(\.start)
+        }
+    }
+
     func fetchTDD(interval: NSDate) async -> [TDDSnapshot] {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>

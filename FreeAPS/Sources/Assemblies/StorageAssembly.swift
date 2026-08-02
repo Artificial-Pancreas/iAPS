@@ -51,6 +51,15 @@ final class StorageAssembly: Assembly {
                 storage: storage
             )
         }
+        container.register(LoopEventsStorage.self) { r in
+            let storage = r.resolve(FileStorage.self)!
+            let appCoordinator = r.resolve(AppCoordinator.self)!
+
+            return BaseLoopEventsStorage(
+                storage: storage,
+                appCoordinator: appCoordinator
+            )
+        }
         container.register(OverrideStorage.self) { r in
             OverrideStorage(appCoordinator: r.resolve(AppCoordinator.self)!)
         }

@@ -118,6 +118,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     private let calibrationService: CalibrationService
     private let router: Router
     private let appCoordinator: AppCoordinator
+    private let loopEventsStorage: LoopEventsStorage
 
     private let lifetime = Lifetime()
 
@@ -222,7 +223,8 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         bluetoothProvider: BluetoothStateManager,
         calibrationService: CalibrationService,
         router: Router,
-        appCoordinator: AppCoordinator
+        appCoordinator: AppCoordinator,
+        loopEventsStorage: LoopEventsStorage
     ) {
         self.pumpHistoryStorage = pumpHistoryStorage
         self.alertHistoryStorage = alertHistoryStorage
@@ -234,6 +236,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         self.calibrationService = calibrationService
         self.router = router
         self.appCoordinator = appCoordinator
+        self.loopEventsStorage = loopEventsStorage
 
         // TODO: does this belong here?
         UIDevice.current.isBatteryMonitoringEnabled = true
@@ -504,6 +507,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
             )
 //            errorSubject.send(error)
             appCoordinator.sendDeviceError(error)
+            recordLoopEvent(type: .cgmError, message: error.localizedDescription)
             completion([])
         }
         updatePumpManagerBLEHeartbeatPreference()
@@ -696,6 +700,20 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         }
     }
 
+    private func recordLoopEvent(type: LoopEventType, message: String?) {
+        Task { [loopEventsStorage] in
+            await loopEventsStorage.storeEvent(LoopEvent(type: type, message: message))
+        }
+    }
+
+    /// records a pump command that the pump refused or didn't answer.
+    private func recordCommandFailure(_ command: PumpCommand, error: Error) {
+        recordLoopEvent(
+            type: LoopEventType(pumpManagerError: error) ?? .pumpCommunication,
+            message: command.description + ": " + error.localizedDescription
+        )
+    }
+
     private func fetchNewDataFromCgm(_ completion: @escaping (CGMReadingResult) -> Void) {
         guard let cgmManager = cgmManager else {
             completion(.noData)
@@ -884,6 +902,24 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
         if status.deliveryIsUncertain != oldStatus.deliveryIsUncertain {
             debug(.deviceManager, "delivery is uncertain: \(status)")
+            if status.deliveryIsUncertain {
+                appCoordinator.sendDeliveryUncertain()
+                recordLoopEvent(
+                    type: .deliveryUncertain,
+                    message: NSLocalizedString(
+                        "The pump did not confirm the last command",
+                        comment: "Delivery uncertain loop event"
+                    )
+                )
+            } else {
+                recordLoopEvent(
+                    type: .deliveryResolved,
+                    message: NSLocalizedString(
+                        "The pump state is known again",
+                        comment: "Delivery uncertain resolved loop event"
+                    )
+                )
+            }
         }
     }
 
@@ -905,6 +941,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "error: \(error.localizedDescription), reason: \(String(describing: error.failureReason))")
         appCoordinator.sendDeviceError(error)
+        recordLoopEvent(
+            type: LoopEventType(pumpManagerError: error) ?? .pumpError,
+            message: error.localizedDescription
+        )
     }
 
     private struct PumpEventCompletion: @unchecked Sendable {
@@ -1364,6 +1404,10 @@ extension BaseDeviceDataManager {
                         .apsManager,
                         "Temp basal failed: \(unitsPerHour) (adjusted: \(unitsPerHourAdjustedForConcentrationAndRounded)) for: \(duration) - \(error.localizedDescription)"
                     )
+                    self.recordCommandFailure(
+                        .tempBasal(unitsPerHour: unitsPerHour, duration: duration),
+                        error: error
+                    )
                     continuation.resume(throwing: APSError.pumpError(error))
                 } else {
                     debug(
@@ -1399,6 +1443,7 @@ extension BaseDeviceDataManager {
                         .apsManager,
                         "bolus failed: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded)) - \(error.localizedDescription)"
                     )
+                    self.recordCommandFailure(.bolus(units: units, automatic: automatic), error: error)
                     continuation.resume(throwing: APSError.pumpError(error))
                 } else {
                     debug(.apsManager, "bolus started: \(units) (adjusted: \(unitsAdjustedForConcentrationAndRounded))")
@@ -1424,6 +1469,7 @@ extension BaseDeviceDataManager {
                     continuation.resume()
                 case let .failure(error):
                     debug(.apsManager, "Cancel Bolus failed")
+                    self.recordCommandFailure(.cancelBolus, error: error)
                     continuation.resume(throwing: APSError.pumpError(error))
                 }
             }
@@ -1437,6 +1483,7 @@ extension BaseDeviceDataManager {
         return try await withCheckedThrowingContinuation { continuation in
             pump.suspendDelivery { error in
                 if let error = error {
+                    self.recordCommandFailure(.suspendDelivery, error: error)
                     continuation.resume(throwing: APSError.pumpError(error))
                 } else {
                     continuation.resume()
@@ -1452,6 +1499,7 @@ extension BaseDeviceDataManager {
         return try await withCheckedThrowingContinuation { continuation in
             pump.resumeDelivery { error in
                 if let error = error {
+                    self.recordCommandFailure(.resumeDelivery, error: error)
                     continuation.resume(throwing: APSError.pumpError(error))
                 } else {
                     continuation.resume()
@@ -1519,6 +1567,7 @@ extension BaseDeviceDataManager {
                         .map { BasalProfileEntry(startTime: $0.startTime, rate: $0.value * concentration) }
                     continuation.resume(returning: adjustedBasals)
                 case let .failure(error):
+                    self.recordCommandFailure(.syncBasalSchedule, error: error)
                     continuation.resume(throwing: error)
                 }
             }
@@ -1545,6 +1594,7 @@ extension BaseDeviceDataManager {
 
                     continuation.resume(returning: settings)
                 case let .failure(error):
+                    self.recordCommandFailure(.syncDeliveryLimits, error: error)
                     continuation.resume(throwing: error)
                 }
             }
@@ -1604,4 +1654,42 @@ private final class SendableVar<T>: @unchecked Sendable {
     private var value_: T
     init(_ value: T) { value_ = value }
     var value: T { get { value_ } set { value_ = newValue } }
+}
+
+/// used to describe what failed in a recorded `LoopEvent`
+private enum PumpCommand {
+    case bolus(units: Decimal, automatic: Bool)
+    case tempBasal(unitsPerHour: Decimal, duration: TimeInterval)
+    case cancelBolus
+    case suspendDelivery
+    case resumeDelivery
+    case syncBasalSchedule
+    case syncDeliveryLimits
+
+    var description: String {
+        switch self {
+        case let .bolus(units, automatic):
+            let kind = automatic ?
+                NSLocalizedString("automatic", comment: "Automatic bolus") :
+                NSLocalizedString("manual", comment: "Manual bolus")
+            return NSLocalizedString("Bolus", comment: "Pump command") + " \(units) U (\(kind))"
+        case let .tempBasal(unitsPerHour, duration):
+            return NSLocalizedString("Temp basal", comment: "Pump command") +
+                " \(unitsPerHour) U/hr " +
+                String(
+                    format: NSLocalizedString("for %d min", comment: "Temp basal duration"),
+                    Int(duration / 60)
+                )
+        case .cancelBolus:
+            return NSLocalizedString("Cancel bolus", comment: "Pump command")
+        case .suspendDelivery:
+            return NSLocalizedString("Suspend delivery", comment: "Pump command")
+        case .resumeDelivery:
+            return NSLocalizedString("Resume delivery", comment: "Pump command")
+        case .syncBasalSchedule:
+            return NSLocalizedString("Sync basal profile", comment: "Pump command")
+        case .syncDeliveryLimits:
+            return NSLocalizedString("Sync delivery limits", comment: "Pump command")
+        }
+    }
 }

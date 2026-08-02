@@ -128,6 +128,9 @@ extension OverrideProfilesConfig {
 
         func deleteProfile(at offsets: IndexSet) {
             let idsToDelete = Array(offsets).map { index in profiles[index].id }
+            // We should remove the item from the list synchronously for the `role: .destructive` swipe actions to work correctly
+            // If the deletion from storage fails for some reason - the next fetch will restore the correct state.
+            profiles.remove(atOffsets: offsets)
             Task {
                 await overrideStorage.deleteOverridePresets(ids: idsToDelete)
                 await fetchOverridePresets()

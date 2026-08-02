@@ -12,6 +12,7 @@ extension DataTable {
         @Injected() private var tempTargetsStorage: TempTargetsStorage!
         @Injected() private var glucoseStorage: GlucoseStorage!
         @Injected() private var overrideStorage: OverrideStorage!
+        @Injected() private var loopEventsStorage: LoopEventsStorage!
 
         private let coreDataStorage = CoreDataStorage()
         private let totalDailyDose = TotalDailyDose()
@@ -20,6 +21,9 @@ extension DataTable {
         @Published var mode: Mode = .treatments
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
+        /// the readings interleaved with the periods of missed readings
+        @Published var glucoseRows: [GlucoseRow] = []
+        @Published var loopEvents: [LoopEvent] = []
         @Published var manualGlucose: Decimal = 0
         @Published var maxBolus: Decimal = 0
         @Published var externalInsulinAmount: Decimal = 0
@@ -43,6 +47,7 @@ extension DataTable {
 
             await setupTreatments()
             setupGlucose(appCoordinator.glucoseRaw.value)
+            setupLoopEvents()
 
             observeUI(appCoordinator.settings, dropInitial: true) { me, _ in
                 await me.setupTreatments()
@@ -64,6 +69,16 @@ extension DataTable {
             }
             observeUI(appCoordinator.glucoseRaw, dropInitial: true) { me, glucoseHistory in
                 me.setupGlucose(glucoseHistory)
+            }
+            // the gaps are published right after the glucose history they were derived from
+            observeUI(appCoordinator.glucoseGaps, dropInitial: true) { me, _ in
+                me.setupGlucose(me.appCoordinator.glucoseRaw.value)
+            }
+            observeUI(appCoordinator.loopEvents, dropInitial: true) { me, _ in
+                me.setupLoopEvents()
+            }
+            observeUI(appCoordinator.loopGaps, dropInitial: true) { me, _ in
+                me.setupLoopEvents()
             }
         }
 
@@ -178,6 +193,33 @@ extension DataTable {
 
         private func setupGlucose(_ glucoseHistory: [BloodGlucose]) {
             glucose = glucoseHistory.map(Glucose.init)
+
+            // the list is newest -> oldest, so a gap goes right above the reading that it started after
+            let gaps = appCoordinator.glucoseGaps.value
+            glucoseRows = glucose.flatMap { reading -> [GlucoseRow] in
+                guard let gap = gaps.first(where: { $0.start == reading.glucose.dateString }) else {
+                    return [.reading(reading)]
+                }
+                return [.gap(gap), .reading(reading)]
+            }
+        }
+
+        private func setupLoopEvents() {
+            let cutoff = Date.now.subtractingTimeInterval(.hours(24))
+            let gaps = appCoordinator.loopGaps.value.map(\.loopEvent)
+
+            loopEvents = (appCoordinator.loopEvents.value + gaps)
+                .filter { $0.timestamp > cutoff }
+                .sorted { $0.timestamp > $1.timestamp }
+        }
+
+        func deleteLoopEvent(_ event: LoopEvent) {
+            guard event.type.canBeDismissed else { return }
+            // the swipe action is .destructive, so we must remove the item from the list synchronously
+            loopEvents.removeAll { $0.id == event.id }
+            Task {
+                await loopEventsStorage.removeEvent(id: event.id)
+            }
         }
 
         func deleteCarbs(_ treatment: Treatment, storage: Meals?) {

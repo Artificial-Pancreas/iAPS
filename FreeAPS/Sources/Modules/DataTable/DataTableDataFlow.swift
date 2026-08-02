@@ -7,6 +7,7 @@ enum DataTable {
     enum Mode: String, Hashable, Identifiable, CaseIterable {
         case treatments
         case glucose
+        case events
 
         var id: String { rawValue }
 
@@ -16,6 +17,8 @@ enum DataTable {
                 return NSLocalizedString("Treatments", comment: "History Mode")
             case .glucose:
                 return NSLocalizedString("Glucose", comment: "History Mode")
+            case .events:
+                return NSLocalizedString("Events", comment: "History Mode")
             }
         }
     }
@@ -193,6 +196,21 @@ enum DataTable {
             }
             return numberFormatter
                 .string(from: duration as NSNumber)! + NSLocalizedString(" min", comment: "Minutes abbreviation")
+        }
+    }
+
+    /// newest -> oldest, the glucose list with the periods of missed readings
+    enum GlucoseRow: Identifiable {
+        case reading(Glucose)
+        case gap(GlucoseGap)
+
+        var id: String {
+            switch self {
+            case let .reading(glucose):
+                return glucose.id
+            case let .gap(gap):
+                return "gap-\(gap.start.timeIntervalSince1970)"
+            }
         }
     }
 

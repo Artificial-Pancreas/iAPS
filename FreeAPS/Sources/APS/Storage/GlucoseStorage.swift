@@ -38,10 +38,17 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
         setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
 
         observe(
-            appCoordinator.settings.map { ($0.smoothGlucose, $0.allowOneMinuteGlucose) }.removeDuplicates(by: { $0 == $1 })
+            appCoordinator.settings
+                .map { ($0.smoothGlucose, $0.allowOneMinuteGlucose, $0.allowOneMinuteLoop) }
+                .removeDuplicates(by: { $0 == $1 })
                 .dropFirst()
         ) { me, _ in
-            await me.updateAppCoordinator() // recompute smoothed / filtered glucose
+            await me.updateAppCoordinator() // recompute smoothed / filtered glucose and the gaps
+        }
+
+        // an ongoing gap keeps growing while no readings arrive, and nothing else republishes it
+        observe(appCoordinator.appBecomeActiveEvents) { me, _ in
+            await me.publishGlucoseGaps()
         }
     }
 
@@ -187,6 +194,20 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
         appCoordinator.setGlucoseAlarm(getAlarm())
         // newest -> oldest
         appCoordinator.setGlucoseHistory(raw: cachedGlucose, smoothed: smoothed, frequencyFiltered: frequencyFiltered)
+
+        publishGlucoseGaps()
+    }
+
+    private func publishGlucoseGaps() {
+        // detect() returns oldest -> newest
+        let gaps: [GlucoseGap] = GlucoseGap.detect(
+            in: cachedGlucose,
+            allowOneMinuteLoop: appCoordinator.settings.value.allowOneMinuteLoop
+        ).reversed()
+
+        guard gaps != appCoordinator.glucoseGaps.value else { return }
+
+        appCoordinator.setGlucoseGaps(gaps)
     }
 }
 

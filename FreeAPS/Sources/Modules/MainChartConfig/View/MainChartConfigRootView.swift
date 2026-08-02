@@ -201,6 +201,14 @@ extension MainChartConfig {
                     if !state.hidePredictions {
                         Toggle("Predictions legend", isOn: $state.showPredictionsLegend)
                     }
+                    Picker(
+                        selection: $state.loopEventsPlacement,
+                        label: Text("Failed loops and device errors")
+                    ) {
+                        ForEach(LoopEventsPlacement.allCases) { item in
+                            Text(item.displayName).tag(item)
+                        }
+                    }
                 }
 
                 Section {
