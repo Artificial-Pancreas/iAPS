@@ -593,16 +593,18 @@ private final class GeometriesBuilder {
         let gapDots = data.loopGaps.map { gap -> LoopEventDot in
             let startX = timeToXCoordinate(gap.start.timeIntervalSince1970)
             let endX = timeToXCoordinate(gap.end.timeIntervalSince1970)
+            let isLongGap = gap.end.timeIntervalSince(gap.start) > .minutes(11)
+            let barRect = isLongGap ? CGRect(
+                x: startX,
+                y: laneY - 1.5,
+                width: max(endX - startX, 3),
+                height: 3
+            ) : nil
             return LoopEventDot(
                 center: CGPoint(x: (startX + endX) / 2, y: laneY),
                 type: .skippedLoops,
                 events: [gap.loopEvent],
-                barRect: CGRect(
-                    x: startX,
-                    y: laneY - 1.5,
-                    width: max(endX - startX, 3),
-                    height: 3
-                )
+                barRect: barRect
             )
         }
 
