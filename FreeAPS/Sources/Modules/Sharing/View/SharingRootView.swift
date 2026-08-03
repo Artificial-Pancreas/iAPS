@@ -10,16 +10,13 @@ public enum Sex: String, CaseIterable, Identifiable {
 }
 
 extension Sex {
-    static func savedSettings(_ sexSetting: Int) -> Sex {
+    func savedSettings(_ sexSetting: Int) -> Sex {
         switch sexSetting {
-        case 0:
-            return .woman
-        case 1:
-            return .man
-        case 2:
-            return .other
-        default:
-            return .secret
+        case 0: return .woman
+        case 1: return .man
+        case 2: return .other
+        case 3: return .secret
+        default: return .woman
         }
     }
 
@@ -65,7 +62,7 @@ extension Sharing {
                     if state.uploadStats {
                         Picker("Sex", selection: $state.sex) {
                             ForEach(Sex.allCases) { sex in
-                                Text(NSLocalizedString(sex.rawValue, comment: "")).tag(Optional(sex.rawValue))
+                                Text(NSLocalizedString(sex.rawValue, comment: "")).tag(sex)
                             }
                         }.onChange(of: state.sex) {
                             state.sexSetting = state.sex.saveSetting()
@@ -133,9 +130,6 @@ extension Sharing {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear {
-                state.sex = Sex.savedSettings(state.sexSetting)
-            }
             .navigationBarTitle("Share and Backup")
         }
     }
