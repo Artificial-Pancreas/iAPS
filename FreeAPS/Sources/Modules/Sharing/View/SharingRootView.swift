@@ -10,7 +10,7 @@ public enum Sex: String, CaseIterable, Identifiable {
 }
 
 extension Sex {
-    func savedSettings(_ sexSetting: Int) -> Sex {
+    static func savedSettings(_ sexSetting: Int) -> Sex {
         switch sexSetting {
         case 0: return .woman
         case 1: return .man

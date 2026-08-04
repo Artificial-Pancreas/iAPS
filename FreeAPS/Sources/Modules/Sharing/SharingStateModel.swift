@@ -17,7 +17,7 @@ extension Sharing {
             subscribeSetting(\.birthDate, on: $birthDate) { self.birthDate = $0 }
             subscribeSetting(\.sexSetting, on: $sexSetting) { self.sexSetting = $0 }
 
-            sex = sex.savedSettings(sexSetting)
+            sex = Sex.savedSettings(sexSetting)
 
             identifier = userToken.getIdentifier()
         }
