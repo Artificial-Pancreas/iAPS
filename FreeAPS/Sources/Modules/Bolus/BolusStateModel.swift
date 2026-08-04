@@ -100,6 +100,14 @@ extension Bolus {
             return formatter
         }()
 
+        override init(resolver: Resolver) {
+            super.init(resolver: resolver)
+            let settings = appCoordinator.settings.value
+            // need to initialize these before subscribe()
+            useCalc = settings.useCalc
+            eventualBG = settings.eventualBG
+        }
+
         override func subscribe() async {
             let settings = appCoordinator.settings.value
             let preferences = appCoordinator.preferences.value
