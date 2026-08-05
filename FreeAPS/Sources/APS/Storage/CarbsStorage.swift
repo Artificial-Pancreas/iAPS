@@ -156,7 +156,7 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
 
     func deleteCarbsAndFPUs(at date: Date) async {
         let (allValues, deleted) = await storage.delete(file: OpenAPS.Monitor.carbHistory, as: CarbsEntry.self) {
-            $0.createdAt.isSameInstant(as: date)
+            $0.createdAt == date
         }
         // newest -> oldest
         if let deleted {

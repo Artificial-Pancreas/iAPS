@@ -227,7 +227,7 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
         await serializer.run {
             let (updatedValues, deleted: deleted) = await storage
                 .delete(file: OpenAPS.Monitor.pumpHistory, as: PumpHistoryEvent.self) {
-                    $0.timestamp.isSameInstant(as: date)
+                    $0.timestamp == date
                 }
             if let deleted {
                 // newest -> oldest
