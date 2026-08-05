@@ -45,9 +45,15 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
         let file = OpenAPS.Monitor.carbHistory
         var uniqEvents: [CarbsEntry] = []
 
+        let entries = entries.map { entry -> CarbsEntry in
+            var entry = entry
+            entry.createdAt = entry.createdAt.truncatedToSecond
+            return entry
+        }
+
         let fat = entries.last?.fat ?? 0
         let protein = entries.last?.protein ?? 0
-        let creationDate = entries.last?.createdAt ?? Date.now
+        let creationDate = entries.last?.createdAt ?? Date.now.truncatedToSecond
 
         let settings = await settingsManager.settings
 

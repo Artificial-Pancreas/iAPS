@@ -34,7 +34,7 @@ struct PumpHistoryEvent: JSON, Equatable {
     ) {
         self.id = id
         self.type = type
-        self.timestamp = timestamp
+        self.timestamp = timestamp.truncatedToSecond
         self.amount = amount
         self.duration = duration
         self.durationMin = durationMin
