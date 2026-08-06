@@ -768,11 +768,11 @@ extension Home {
         }
 
         var timeSetting: some View {
-            let hourLabel = NSLocalizedString("\(state.hours) hours", comment: "") + "   "
+            let hourLabel = "\(state.hours) " + NSLocalizedString("hours", comment: "") + "   "
 
             return Menu(hourLabel) {
                 ForEach([3, 6, 9, 12, 24], id: \.self) { value in
-                    let label = NSLocalizedString("\(value) hours", comment: "")
+                    let label = "\(value) " + NSLocalizedString("hours", comment: "")
                     Button(label, action: { state.hours = value })
                 }
 
