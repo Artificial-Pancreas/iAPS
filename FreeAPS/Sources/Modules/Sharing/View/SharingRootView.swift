@@ -7,9 +7,7 @@ public enum Sex: String, CaseIterable, Identifiable {
     case other = "Other"
     case secret = "Secret"
     public var id: Self { self }
-}
 
-extension Sex {
     func savedSettings(_ sexSetting: Int) -> Sex {
         switch sexSetting {
         case 0: return .woman
