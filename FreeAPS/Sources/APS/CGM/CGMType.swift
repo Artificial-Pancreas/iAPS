@@ -8,6 +8,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     case dexcomG5
     case dexcomG6
     case dexcomG7
+    case eversense
     case simulator
     case libreTransmitter
     case glucoseDirect
@@ -27,6 +28,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return "Dexcom G6"
         case .dexcomG7:
             return "Dexcom G7"
+        case .eversense:
+            return "Eversense CGM"
         case .simulator:
             return NSLocalizedString("Glucose Simulator", comment: "Glucose Simulator CGM type")
         case .libreTransmitter:
@@ -39,7 +42,9 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     var appURL: URL? {
         switch self {
         case .enlite,
-             .nightscout:
+             .eversense,
+             .nightscout,
+             .simulator:
             return nil
         case .xdrip:
             return URL(string: "xdripswift://")!
@@ -51,8 +56,6 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return URL(string: "dexcomg6://")!
         case .dexcomG7:
             return URL(string: "dexcomg7://")!
-        case .simulator:
-            return nil
         case .libreTransmitter:
             return URL(string: "freeaps-x://libre-transmitter")!
         }
@@ -82,7 +85,9 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
         case .dexcomG6:
             return NSLocalizedString("Dexcom G6 app", comment: "Dexcom G6 app")
         case .dexcomG7:
-            return NSLocalizedString("Dexcom G7 app", comment: "Dexcom G76 app")
+            return NSLocalizedString("Dexcom G7 app", comment: "Dexcom G7 app")
+        case .eversense:
+            return NSLocalizedString("Eversense E3/365 CGM", comment: "Eversense E3/365 CGM")
         case .simulator:
             return NSLocalizedString("Simple simulator", comment: "Simple simulator")
         case .libreTransmitter:
@@ -111,6 +116,9 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return 14.5 * secondsOfDay
         case .enlite:
             return 6 * secondsOfDay
+        case .eversense:
+            // Use the Eversense 365 by default
+            return 365 * secondsOfDay
         default:
             return 10 * secondsOfDay
         }
@@ -132,6 +140,7 @@ extension CGMType {
         case .dexcomG7: return "G7CGMManager"
         case .simulator: return "MockCGMManager"
         case .libreTransmitter: return "LibreTransmitterManager"
+        case .eversense: return "EversenseCGM"
         case .glucoseDirect: return "GlucoseDirectCGM" // if available
         case .xdrip: return "xDripCGM" // if available
         case .enlite: return "EnliteCGM" // if available

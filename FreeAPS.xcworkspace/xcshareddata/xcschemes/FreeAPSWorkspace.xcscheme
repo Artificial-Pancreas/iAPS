@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "2610"
-   wasCreatedForAppExtension = "YES"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "NO"
@@ -215,6 +214,20 @@
                BuildableName = "LibreDemoPlugin.loopplugin"
                BlueprintName = "LibreDemoPlugin"
                ReferencedContainer = "container:LibreTransmitter/LibreTransmitter.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3E6696E52E927EB900AAE4F1"
+               BuildableName = "EversenseKitPlugin.loopplugin"
+               BlueprintName = "EversenseKitPlugin"
+               ReferencedContainer = "container:EversenseKit/EversenseKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
