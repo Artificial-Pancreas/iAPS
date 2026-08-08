@@ -305,26 +305,12 @@ extension Bolus {
 
         func saveMeal() {
             Task {
-                if let recent = await coreDataStorage.recentMeal() {
-                    carbToStore = CarbsEntry(
-                        id: recent.id,
-                        createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(.seconds(5)),
-                        actualDate: recent.actualDate,
-                        carbs: (recent.carbs ?? 0) as Decimal,
-                        fat: (recent.fat ?? 0) as Decimal,
-                        protein: (recent.protein ?? 0) as Decimal,
-                        fiber: (recent.fiber ?? 0) as Decimal,
-                        note: recent.note,
-                        enteredBy: CarbsEntry.manual,
-                        isFPU: false,
-                        micronutrient: recent.micronutrientValues
-                    )
+                if carbToStore == nil {
+                    await setupBolusData()
                 }
 
-                guard let carbToStore, !carbToStore.isEmpty else { return }
-
-                await carbsStorage.storeCarbs([carbToStore])
-                await coreDataStorage.saveMeal([carbToStore], now: Date.now, savedToFile: true)
+                // meal is already in CoreData (saved by AddCarbs), `save()` only marks it as saved to file
+                save()
             }
         }
 
