@@ -1,5 +1,5 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC is used to scan Libre sensors.";
+"NFCReaderUsageDescription" = "NFC được sử dụng để quét các cảm biến Libre.";
 
 /* Privacy - Bluetooth Always Usage Description */
 "NSBluetoothAlwaysUsageDescription" = "Bluetooth được sử dụng để liên lạc với máy bơm insulin và các thiết bị theo dõi đường huyết";
@@ -8,7 +8,7 @@
 "NSBluetoothPeripheralUsageDescription" = "Bluetooth được sử dụng để liên lạc với máy bơm insulin và các thiết bị theo dõi đường huyết";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "For authorized acces to bolus";
+"NSFaceIDUsageDescription" = "Được cấp quyền truy cập vào bolus";
 
 /* Privacy - Calendars Usage Description */
 "NSCalendarsUsageDescription" = "Lịch được sử dụng để tạo ra một sự kiện đường huyết mới.";
