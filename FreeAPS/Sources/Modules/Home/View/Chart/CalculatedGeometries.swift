@@ -99,6 +99,8 @@ private final class GeometriesBuilder {
     private let fullSize: CGSize
     private let data: ChartModel
     private let glucose: [BloodGlucose]
+    /// only drawn while smoothing is on
+    private let rawGlucose: [BloodGlucose]
     private let boluses: [PumpHistoryEvent]
     private let realCarbs: [CarbsEntry]
     private let fpus: [CarbsEntry]
@@ -138,6 +140,9 @@ private final class GeometriesBuilder {
 
         // these need to be sorted by date ascending (for the incremental matching against glucose values)
         glucose = data.glucose.sorted {
+            $0.dateString < $1.dateString
+        }
+        rawGlucose = data.rawGlucose.sorted {
             $0.dateString < $1.dateString
         }
         boluses = data.boluses.sorted {
@@ -658,8 +663,8 @@ private final class GeometriesBuilder {
     }
 
     private func calculateUnSmoothedGlucoseDots() -> [CGRect] {
-        glucose.map { value -> CGRect in
-            let position = unSmoothedGlucoseToCoordinate(value)
+        rawGlucose.map { value -> CGRect in
+            let position = glucoseToCoordinate(value)
             return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
         }
     }
@@ -1096,14 +1101,6 @@ private final class GeometriesBuilder {
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970)
         let y = glucoseToYCoordinate(glucoseEntry.glucose)
-
-        return CGPoint(x: x, y: y)
-    }
-
-    private func unSmoothedGlucoseToCoordinate(_ glucoseEntry: BloodGlucose) -> CGPoint {
-        let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970)
-        let glucoseValue: Decimal = glucoseEntry.unfiltered
-        let y = glucoseToYCoordinate(Int(glucoseValue))
 
         return CGPoint(x: x, y: y)
     }

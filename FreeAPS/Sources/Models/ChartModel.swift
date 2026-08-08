@@ -2,7 +2,10 @@ import Foundation
 
 class ChartModel: ObservableObject {
     @Published var suggestion: Suggestion?
+    /// smoothed values when smoothing is enabled, raw ones otherwise
     @Published var glucose: [BloodGlucose]
+    /// raw readings, drawn on top of `glucose` when smoothing is on
+    @Published var rawGlucose: [BloodGlucose]
     @Published var activity: [IOBEntryShort]
     @Published var cob: [IOBData] // we already have IOBData in storage and it contains COB values
     @Published var isManual: [BloodGlucose]
@@ -55,6 +58,7 @@ class ChartModel: ObservableObject {
     init(
         suggestion: Suggestion?,
         glucose: [BloodGlucose],
+        rawGlucose: [BloodGlucose],
         activity: [IOBEntryShort],
         cob: [IOBData],
         isManual: [BloodGlucose],
@@ -105,6 +109,7 @@ class ChartModel: ObservableObject {
     ) {
         self.suggestion = suggestion
         self.glucose = glucose
+        self.rawGlucose = rawGlucose
         self.activity = activity
         self.cob = cob
         self.isManual = isManual

@@ -23,9 +23,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
         case direction
         case date
         case dateString
-        case unfiltered
         case uncalibrated
-        case filtered
         case noise
         case glucose
         case type
@@ -39,21 +37,21 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         _id = try container.decode(String.self, forKey: ._id)
 
-        do {
-            sgv = try container.decode(Int.self, forKey: .sgv)
-        } catch {
-            // The nightscout API returns a double instead of an int
-            sgv = Int(try container.decode(Double.self, forKey: .sgv))
+        guard let value = Self.decodeValue(from: container, forKey: .glucose)
+            ?? Self.decodeValue(from: container, forKey: .sgv)
+        else {
+            throw DecodingError.keyNotFound(
+                CodingKeys.glucose,
+                .init(codingPath: container.codingPath, debugDescription: "neither `glucose` nor `sgv` present")
+            )
         }
+        glucose = value
 
         direction = try container.decodeIfPresent(Direction.self, forKey: .direction)
         date = try container.decode(Decimal.self, forKey: .date)
         dateString = try container.decode(Date.self, forKey: .dateString)
-        unfiltered = try container.decodeIfPresent(Decimal.self, forKey: .unfiltered) ?? Decimal(sgv)
-        uncalibrated = try container.decodeIfPresent(Decimal.self, forKey: .uncalibrated) ?? Decimal(sgv)
-        filtered = try container.decodeIfPresent(Decimal.self, forKey: .filtered)
+        uncalibrated = try container.decodeIfPresent(Decimal.self, forKey: .uncalibrated) ?? Decimal(value)
         noise = try container.decodeIfPresent(Int.self, forKey: .noise)
-        glucose = try container.decodeIfPresent(Int.self, forKey: .glucose) ?? sgv
         type = try container.decodeIfPresent(String.self, forKey: .type)
         activationDate = try container.decodeIfPresent(Date.self, forKey: .activationDate)
         sessionStartDate = try container.decodeIfPresent(Date.self, forKey: .sessionStartDate)
@@ -61,17 +59,39 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
         device = try container.decodeIfPresent(String.self, forKey: .device)
     }
 
+    private static func decodeValue(
+        from container: KeyedDecodingContainer<CodingKeys>,
+        forKey key: CodingKeys
+    ) -> Int? {
+        if let int = try? container.decodeIfPresent(Int.self, forKey: key) { return int }
+        if let double = try? container.decodeIfPresent(Double.self, forKey: key) { return Int(double) }
+        return nil
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(_id, forKey: ._id)
+        try container.encode(glucose, forKey: .glucose)
+        try container.encodeIfPresent(direction, forKey: .direction)
+        try container.encode(date, forKey: .date)
+        try container.encode(dateString, forKey: .dateString)
+        try container.encode(uncalibrated, forKey: .uncalibrated)
+        try container.encodeIfPresent(noise, forKey: .noise)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(activationDate, forKey: .activationDate)
+        try container.encodeIfPresent(sessionStartDate, forKey: .sessionStartDate)
+        try container.encodeIfPresent(transmitterID, forKey: .transmitterID)
+        try container.encodeIfPresent(device, forKey: .device)
+    }
+
     init(
         _id: String = UUID().uuidString,
-        sgv: Int,
+        glucose: Int,
         direction: Direction? = nil,
         date: Decimal,
         dateString: Date,
-        unfiltered: Decimal,
-        uncalibrated: Decimal,
-        filtered: Decimal? = nil,
+        uncalibrated: Decimal? = nil,
         noise: Int? = nil,
-        glucose: Int,
         type: String? = nil,
         activationDate: Date? = nil,
         sessionStartDate: Date? = nil,
@@ -79,15 +99,12 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
         device: String? = nil,
     ) {
         self._id = _id
-        self.sgv = sgv
+        self.glucose = glucose
         self.direction = direction
         self.date = date
         self.dateString = dateString
-        self.unfiltered = unfiltered
-        self.uncalibrated = uncalibrated
-        self.filtered = filtered
+        self.uncalibrated = uncalibrated ?? Decimal(glucose)
         self.noise = noise
-        self.glucose = glucose
         self.type = type
         self.activationDate = activationDate
         self.sessionStartDate = sessionStartDate
@@ -100,18 +117,15 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
         _id
     }
 
-    // TODO: do we have too many fields for glucose? (sgv == glucose?)
-
-    var sgv: Int
+    /// one glucose value of this reading, mg/dL.
+    /// different streams in AppCoordinator contain different blood glucose values (raw vs smoothed)
+    var glucose: Int
     var direction: Direction?
     let date: Decimal
     let dateString: Date
-    /// raw, un-smoothed value
-    var unfiltered: Decimal
+    /// raw value before calibration was applied
     let uncalibrated: Decimal
-    let filtered: Decimal?
     let noise: Int?
-    var glucose: Int
     let type: String?
     // TODO: unused, always nil?
     var activationDate: Date? = nil
@@ -120,7 +134,7 @@ struct BloodGlucose: JSON, Identifiable, Hashable, Codable, Sendable {
     var transmitterID: String? = nil
     var device: String? = nil
 
-    var isStateValid: Bool { sgv >= 39 && noise ?? 1 != 4 }
+    var isStateValid: Bool { glucose >= 39 && noise ?? 1 != 4 }
 
     static func == (lhs: BloodGlucose, rhs: BloodGlucose) -> Bool {
         lhs.dateString == rhs.dateString
@@ -171,7 +185,6 @@ extension BloodGlucose: SavitzkyGolaySmoothable {
         }
         set {
             glucose = Int(newValue)
-            sgv = Int(newValue)
         }
     }
 }
@@ -181,7 +194,6 @@ extension BloodGlucose {
         guard let id = entry.id else { return nil }
         let direction = (entry.trend?.direction).flatMap { BloodGlucose.Direction(rawValue: $0) }
         let glucose = Int(entry.glucose.rounded())
-        let glucoseDecimal = Decimal(entry.glucose.rounded())
         let type: String?
         switch entry.glucoseType {
         case .sensor: type = "sgv"
@@ -189,15 +201,11 @@ extension BloodGlucose {
         }
         return BloodGlucose(
             _id: id,
-            sgv: glucose,
+            glucose: glucose,
             direction: direction,
             date: Decimal(entry.date.timeIntervalSince1970 * 1000),
             dateString: entry.date,
-            unfiltered: glucoseDecimal,
-            uncalibrated: glucoseDecimal,
-            filtered: nil,
             noise: nil,
-            glucose: glucose,
             type: type,
             activationDate: nil,
             sessionStartDate: nil,
@@ -207,7 +215,7 @@ extension BloodGlucose {
     }
 
     var toNightscoutEntry: GlucoseEntry? {
-        let glucose = Double(unfiltered)
+        let glucose = Double(self.glucose)
 
         let glucoseType: GlucoseEntry.GlucoseType
         let isCalibration: Bool

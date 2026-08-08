@@ -68,6 +68,14 @@ extension Home {
             }
         }
 
+        func rawGlucose(hours: Int) -> [BloodGlucose] {
+            let now = Date()
+            // reverse to oldest->newest order
+            return appCoordinator.glucoseRaw.value.reversed().filter {
+                $0.dateString.addingTimeInterval(.hours(hours)) > now
+            }
+        }
+
         func manualGlucose(hours: Int) -> [BloodGlucose] {
             let now = Date()
             // reverse to oldest->newest order

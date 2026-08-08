@@ -92,8 +92,7 @@ extension LiveActivityAttributes.ContentState {
         let preparedReadings: LiveActivityAttributes.ValueSeries? = {
             guard let readings else { return nil }
             let validReadings = readings.compactMap { reading -> (Date, Int16)? in
-                let glucose = reading.sgv
-                return (reading.dateString, Int16(glucose))
+                (reading.dateString, Int16(reading.glucose))
             }
 
             let dates = validReadings.map(\.0)
