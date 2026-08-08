@@ -1986,10 +1986,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "External Insulin" = "Externe insuline";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Handmatige tijdelijke basaal";
+"Manual Basal" = "Handmatig basaal";
 
 /* Current Manual Temp basal */
-" -  Manual Basal ⚠️" = " -  Handmatige tijdelijke basaal ⚠️";
+" -  Manual Basal ⚠️" = " -  Handmatige basaal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
 "U/day" = "E/dag";
