@@ -29,7 +29,7 @@ if ENV['BUILD_GROUP']
   File.write('../ConfigOverride.xcconfig', "COPYRIGHT_NOTICE = #{ENV['BUILD_GROUP']}\n", mode: 'a')
 end
 
-if #{APP_IDENTIFIER} != "ru.artpancreas.#{TEAMID}.FreeAPS"
+if APP_IDENTIFIER != "ru.artpancreas.#{TEAMID}.FreeAPS"
   File.write('../ConfigOverride.xcconfig', "BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}\n", mode: 'a')
 end
 
@@ -78,6 +78,34 @@ platform :ios do
         "#{APP_IDENTIFIER}.LiveActivity"
       ]
     )
+
+    # Fail fast if the App Group is not assigned to the bundle identifiers.
+    # match downloads/creates profiles but does not validate their entitlements, so a
+    # missing App Group otherwise only surfaces ~10 min later in `gym` as a cryptic
+    # "Provisioning profile ... doesn't support the ... App Group" xcodebuild error.
+    app_group_id = "group.com.#{TEAMID}.loopkit.LoopGroup"
+    [
+      "#{APP_IDENTIFIER}",
+      "#{APP_IDENTIFIER}.watchkitapp",
+      "#{APP_IDENTIFIER}.watchkitapp.watchkitextension"
+    ].each do |id|
+      profile_path = ENV["sigh_#{id}_appstore_profile-path"]
+      if profile_path.nil? || !File.exist?(profile_path)
+        UI.user_error!("Could not locate the provisioning profile for #{id} to verify its App Group. Re-run '3. Create Certificates' and try again.")
+      end
+      groups = FastlaneCore::ProvisioningProfile.parse(profile_path)
+        .fetch("Entitlements", {})
+        .fetch("com.apple.security.application-groups", [])
+      unless groups.include?(app_group_id)
+        UI.user_error!(
+          "The provisioning profile for #{id} does not include the App Group #{app_group_id}. " \
+          "Assign it in the Apple Developer portal (Identifiers -> #{id} -> App Groups -> Configure -> select \"Loop App Group\"), " \
+          "then run the build again: assigning the App Group invalidates the old profile, so it is normally regenerated automatically. " \
+          "If the build still fails with this error, delete AppStore_#{id}.mobileprovision from your Match-Secrets repo to force a fresh profile, then build again. " \
+          "See the \"Add App Group to Bundle Identifiers\" section in fastlane/testflight.md."
+        )
+      end
+    end
 
     previous_build_number = latest_testflight_build_number(
       app_identifier: "#{APP_IDENTIFIER}",

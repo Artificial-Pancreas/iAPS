@@ -2,19 +2,22 @@
 "NFCReaderUsageDescription" = "NFC được sử dụng để quét các cảm biến Libre.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth được sử dụng để liên lạc với máy bơm insulin và các thiết bị theo dõi đường huyết liên tục/CGM.";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth được sử dụng để liên lạc với máy bơm insulin và các thiết bị theo dõi đường huyết";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth được sử dụng để liên lạc với máy bơm insulin và các thiết bị theo dõi đường huyết liên tục/CGM.";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth được sử dụng để liên lạc với máy bơm insulin và các thiết bị theo dõi đường huyết";
 
 /* Privacy - Face ID Usage Description */
 "NSFaceIDUsageDescription" = "Được cấp quyền truy cập vào bolus";
 
 /* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "Lịch \nCalendar được sử dụng để tạo ra một sự kiện glucose mới.";
+"NSCalendarsUsageDescription" = "Lịch được sử dụng để tạo ra một sự kiện đường huyết mới.";
 
 /* Privacy - Health Update Usage Description */
-"NSHealthUpdateUsageDescription" = "Ứng dụng sức khỏe \nHealth được sử dụng để lưu trữ đường huyết, insulin và carbohydrate";
+"NSHealthUpdateUsageDescription" = "Ứng dụng sức khỏe được sử dụng để lưu trữ đường huyết, insulin và carbohydrates";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Ứng dụng sức khỏe \nHealth được sử dụng để lưu trữ đường huyết, insulin và carbohydrate";
+"NSHealthShareUsageDescription" = "Ứng dụng sức khỏe được sử dụng để lưu trữ đường huyết, insulin và carbohydrates";
+
+/* Privacy - Contacts Usage Description */
+"NSContactsUsageDescription" = "Để bật tính năng Ảnh liên hệ: nhận các cập nhật theo thời gian thực từ iAPS trên Danh bạ của Apple Watch";

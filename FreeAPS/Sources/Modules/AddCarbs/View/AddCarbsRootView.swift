@@ -88,7 +88,7 @@ extension AddCarbs {
                 }
                 .sheet(isPresented: $isPromptPresented) { editView }
                 .confirmationDialog(
-                    "Discard Meal?",
+                    NSLocalizedString("Discard Meal?", comment: "Discard Meal"),
                     isPresented: $showCancelConfirmation,
                     titleVisibility: .visible,
                     actions: cancelDialogActions,
@@ -328,10 +328,10 @@ extension AddCarbs {
                 return "Fiber"
 
             case (false, true):
-                return "\(microCount) micros"
+                return String(format: NSLocalizedString("%d micros", comment: "Micros count"), microCount)
 
             case (true, true):
-                return "Fiber • \(microCount)"
+                return String(format: NSLocalizedString("Fiber • %d", comment: "Fiber and micros count"), microCount)
             }
         }
 
