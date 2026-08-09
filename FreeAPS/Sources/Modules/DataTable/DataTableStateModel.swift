@@ -215,6 +215,7 @@ extension DataTable {
 
         func deleteLoopEvent(_ event: LoopEvent) {
             guard event.type.canBeDismissed else { return }
+            // the swipe action is .destructive, so we must remove the item from the list synchronously
             loopEvents.removeAll { $0.id == event.id }
             Task {
                 await loopEventsStorage.removeEvent(id: event.id)

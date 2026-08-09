@@ -6,7 +6,6 @@ import Swinject
 extension Bolus {
     struct AlternativeBolusCalcRootView: BaseView {
         let resolver: Resolver
-        let waitForSuggestion: Bool
         let fetch: Bool
         @EnvironmentObject var state: StateModel
         @State private var showInfo = false
@@ -29,14 +28,12 @@ extension Bolus {
 
         init(
             resolver: Resolver,
-            waitForSuggestion: Bool,
             fetch: Bool,
 //            state: StateModel,
             meal: FetchedResults<Meals>,
             mealEntries: any View
         ) {
             self.resolver = resolver
-            self.waitForSuggestion = waitForSuggestion
             self.fetch = fetch
 //            self.state = state
             self.meal = meal
@@ -270,14 +267,6 @@ extension Bolus {
                 }
                 label: { Text("Cancel") }
             )
-            .onAppear {
-                state.viewActive()
-                state.waitForCarbs = fetch
-                state.waitForSuggestionInitial = waitForSuggestion
-                state.waitForSuggestion = waitForSuggestion
-                state.calculateInsulin()
-                state.start()
-            }
             .popup(isPresented: showInfo, alignment: .bottom, direction: .center, type: .default) {
                 illustrationView()
             }

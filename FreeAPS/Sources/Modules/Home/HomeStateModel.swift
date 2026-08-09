@@ -724,7 +724,7 @@ extension Home.StateModel {
         displaySAGE = settings.displaySAGE
         hideInsulinBadge = settings.hideInsulinBadge
         ai = settings.ai
-        individual.sex = individual.sex.savedSettings(settings.sexSetting)
+        individual.sex = Sex.savedSettings(settings.sexSetting)
         individual.age = Int((settings.birthDate.timeIntervalSinceNow.hours / (365 * 24)).rounded(.towardZero))
 
         allowManualTemp = !settings.closedLoop

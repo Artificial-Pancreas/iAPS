@@ -13,6 +13,7 @@ struct CalculatedGeometries {
     let manualGlucoseDots: [CGRect]
     let announcementDots: [AnnouncementDot]
     let loopEventDots: [LoopEventDot]
+    let loopGapBars: [CGRect]
     let manualGlucoseDotsCenter: [CGRect]
     let unSmoothedGlucoseDots: [CGRect]
     let predictionDotsIOB: [CGRect]
@@ -257,7 +258,9 @@ private final class GeometriesBuilder {
         let announcementDots = calculateAnnouncementDots()
 //        let announcementPath = makeAnnouncementPath(announcementDots: announcementDots)
 
-        let loopEventDots = data.loopEventsPlacement == .hidden ? [] : calculateLoopEventDots()
+        let (loopEventDots, loopGapBars): ([LoopEventDot], [CGRect]) = data.loopEventsPlacement == .hidden ?
+            ([], []) :
+            calculateLoopEventDots()
 
         let unSmoothedGlucoseDots = calculateUnSmoothedGlucoseDots()
 
@@ -301,6 +304,7 @@ private final class GeometriesBuilder {
             manualGlucoseDots: manualGlucoseDots,
             announcementDots: announcementDots,
             loopEventDots: loopEventDots,
+            loopGapBars: loopGapBars,
             manualGlucoseDotsCenter: manualGlucoseDotsCenter,
             unSmoothedGlucoseDots: unSmoothedGlucoseDots,
             predictionDotsIOB: predictionDotsIOB,
@@ -587,57 +591,62 @@ private final class GeometriesBuilder {
             glucoseAreaBottom - ChartConfig.loopEventsLaneHeight
     }
 
-    private func calculateLoopEventDots() -> [LoopEventDot] {
+    private func calculateLoopEventDots() -> (dots: [LoopEventDot], gapBars: [CGRect]) {
         let laneY = loopEventsLaneY
 
-        let gapDots = data.loopGaps.map { gap -> LoopEventDot in
+        let gapBars = data.loopGaps.compactMap { gap -> CGRect? in
+            guard gap.end.timeIntervalSince(gap.start) > .minutes(11) else { return nil }
             let startX = timeToXCoordinate(gap.start.timeIntervalSince1970)
             let endX = timeToXCoordinate(gap.end.timeIntervalSince1970)
-            return LoopEventDot(
-                center: CGPoint(x: (startX + endX) / 2, y: laneY),
-                type: .skippedLoops,
-                events: [gap.loopEvent],
-                barRect: CGRect(
-                    x: startX,
-                    y: laneY - 1.5,
-                    width: max(endX - startX, 3),
-                    height: 3
-                )
+            return CGRect(
+                x: startX,
+                y: laneY - 1.5,
+                width: max(endX - startX, 3),
+                height: 3
             )
         }
 
-        // oldest -> newest, so that clustering walks the lane from left to right
-        let events = data.loopEvents.sorted { $0.timestamp < $1.timestamp }
+        let gapEvents = data.loopGaps.map { gap in
+            (
+                event: gap.loopEvent,
+                x: (
+                    timeToXCoordinate(gap.start.timeIntervalSince1970) +
+                        timeToXCoordinate(gap.end.timeIntervalSince1970)
+                ) / 2
+            )
+        }
 
-        var clusters: [[LoopEvent]] = []
+        let events = data.loopEvents.map {
+            (event: $0, x: timeToXCoordinate($0.timestamp.timeIntervalSince1970))
+        }
+
+        let allEvents = (events + gapEvents).sorted { $0.x < $1.x }
+
+        var clusters: [[(event: LoopEvent, x: CGFloat)]] = []
         var lastX: CGFloat?
 
-        for event in events {
-            let x = timeToXCoordinate(event.timestamp.timeIntervalSince1970)
-            if let lastX, x - lastX < ChartConfig.loopEventClusterDistance, clusters.isNotEmpty {
+        for event in allEvents {
+            if let lastX, event.x - lastX < ChartConfig.loopEventClusterDistance, clusters.isNotEmpty {
                 clusters[clusters.count - 1].append(event)
             } else {
                 clusters.append([event])
-                lastX = x
+                lastX = event.x
             }
         }
 
-        let eventDots = clusters.compactMap { cluster -> LoopEventDot? in
+        let dots = clusters.compactMap { cluster -> LoopEventDot? in
             guard let first = cluster.first else { return nil }
             // the most important type wins the symbol
-            let type = cluster.max(by: { $0.type.severity < $1.type.severity })?.type ?? first.type
+            let type = cluster.max(by: { $0.event.type.severity < $1.event.type.severity })?.event.type ?? first.event.type
             return LoopEventDot(
-                center: CGPoint(
-                    x: timeToXCoordinate(first.timestamp.timeIntervalSince1970),
-                    y: laneY
-                ),
+                center: CGPoint(x: first.x, y: laneY),
                 type: type,
-                events: cluster.reversed(), // newest -> oldest
-                barRect: nil
+                // newest -> oldest
+                events: cluster.map(\.event).sorted { $0.timestamp > $1.timestamp }
             )
         }
 
-        return gapDots + eventDots
+        return (dots, gapBars)
     }
 
     private func makeAnnouncementPath(announcementDots: [AnnouncementDot]) -> Path {

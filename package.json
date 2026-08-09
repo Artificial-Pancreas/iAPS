@@ -3,7 +3,7 @@
         "build": "webpack --config ./scripts/webpack.config.js"
     },
     "devDependencies": {
-        "webpack-cli": "^6.0.1",
-        "terser-webpack-plugin": "^5.3.14"
+        "webpack-cli": "^7.2.2",
+        "terser-webpack-plugin": "^5.6.1"
     }
 }

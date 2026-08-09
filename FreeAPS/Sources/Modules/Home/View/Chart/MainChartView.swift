@@ -28,8 +28,6 @@ struct LoopEventDot: Identifiable {
     let center: CGPoint
     let type: LoopEventType
     let events: [LoopEvent]
-    /// for a skipped-loops event: the x range of the gap, so it can be drawn as a bar
-    let barRect: CGRect?
 
     var count: Int { events.count }
 
@@ -883,31 +881,32 @@ struct MainChartCanvas: View {
     private var loopEventsView: some View {
         ZStack {
             Path { path in
-                for dot in geom.loopEventDots {
-                    if let barRect = dot.barRect {
-                        path.addRoundedRect(in: barRect, cornerSize: CGSize(width: 1.5, height: 1.5))
-                    }
+                for barRect in geom.loopGapBars {
+                    path.addRoundedRect(in: barRect, cornerSize: CGSize(width: 1.5, height: 1.5))
                 }
             }
             .fill(LoopEventType.skippedLoops.color.opacity(0.7))
 
             ForEach(geom.loopEventDots) { dot in
-                Image(systemName: dot.type.symbol)
-                    .font(.system(size: ChartConfig.loopEventSize, weight: .bold))
-                    .foregroundStyle(dot.type.color)
-                    .shadow(color: Color(.systemBackground), radius: 1)
-                    .shadow(color: Color(.systemBackground), radius: 1)
-                    .frame(width: ChartConfig.loopEventsLaneHeight, height: ChartConfig.loopEventsLaneHeight)
-                    .overlay(alignment: .bottomTrailing) {
-                        if dot.count > 1 {
-                            // a count is a value, so it wears ink rather than the status colour
-                            Text("\(dot.count)")
-                                .font(.system(size: ChartConfig.loopEventSize * 0.55, weight: .bold))
-                                .foregroundStyle(Color.primary)
-                                .offset(x: 7, y: 3)
-                        }
+                ZStack {
+                    Image(systemName: dot.type.symbol)
+                        .font(.system(size: ChartConfig.loopEventSize + 1.5, weight: .black))
+                        .foregroundStyle(Color(.systemBackground))
+                    Image(systemName: dot.type.symbol)
+                        .font(.system(size: ChartConfig.loopEventSize, weight: .bold))
+                        .foregroundStyle(dot.type.color)
+                }
+                .frame(width: ChartConfig.loopEventsLaneHeight, height: ChartConfig.loopEventsLaneHeight)
+                .overlay(alignment: .bottomTrailing) {
+                    if dot.count > 1 {
+                        // a count is a value, so it wears ink rather than the status colour
+                        Text("\(dot.count)")
+                            .font(.system(size: ChartConfig.loopEventSize * 0.55, weight: .bold))
+                            .foregroundStyle(Color.primary)
+                            .offset(x: 7, y: 3)
                     }
-                    .position(dot.center)
+                }
+                .position(dot.center)
             }
         }
     }
