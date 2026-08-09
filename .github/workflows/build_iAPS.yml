@@ -73,12 +73,19 @@ jobs:
       contents: write
     steps:
       - name: Set special variables
+        env:
+          # APP_IDENTIFIER may be set as a secret (preferred, since it embeds the team id)
+          # or as a repository variable (fallback). The secret wins when both are set.
+          APP_IDENTIFIER_SECRET: ${{ secrets.APP_IDENTIFIER }}
+          APP_IDENTIFIER_VAR: ${{ vars.APP_IDENTIFIER }}
+          BUILD_GROUP_VAR: ${{ vars.BUILD_GROUP }}
         run: |
-          if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
-            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          APP_ID="${APP_IDENTIFIER_SECRET:-$APP_IDENTIFIER_VAR}"
+          if [ -n "$APP_ID" ]; then
+            echo "APP_IDENTIFIER=$APP_ID" >> "$GITHUB_ENV"
           fi
-          if [ ! -z ${{ vars.BUILD_GROUP }}  ]; then
-            echo "BUILD_GROUP=${{ vars.BUILD_GROUP }}" >> $GITHUB_ENV
+          if [ -n "$BUILD_GROUP_VAR" ]; then
+            echo "BUILD_GROUP=$BUILD_GROUP_VAR" >> "$GITHUB_ENV"
           fi
 
       - name: Select Xcode version
@@ -169,7 +176,10 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       
       # Upload to TestFlight
+      # Set repository variable SKIP_TESTFLIGHT_UPLOAD=true to build & archive without
+      # publishing to TestFlight (when testing).
       - name: Fastlane upload to TestFlight
+        if: ${{ vars.SKIP_TESTFLIGHT_UPLOAD != 'true' }}
         run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane release
         env:
           TEAMID: ${{ secrets.TEAMID }}

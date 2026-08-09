@@ -5,6 +5,13 @@ import SwiftUI
 struct LoopsView: View {
     @Binding var loopStatistics: (Int, Int, Double, String)
 
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
     var body: some View {
         VStack {
             // Data
@@ -81,7 +88,11 @@ struct LoopsView: View {
                     )
                 )
                 .annotation(position: .overlay) {
-                    Text(percentage.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " %")
+                    let value = percentage >= 20 ?
+                        (formatter.string(from: percentage as NSNumber) ?? "") + " %"
+                        : ""
+
+                    Text(value)
                         .font(.loopFont)
                         .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                 }

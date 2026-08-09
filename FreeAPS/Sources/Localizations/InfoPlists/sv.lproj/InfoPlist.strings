@@ -5,7 +5,7 @@
 "NSBluetoothAlwaysUsageDescription" = "Bluetooth används för att kommunicera med pump och kontinuerlig glukosmätare";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth används för att kommunicera med insulinpumpen och kontinuerliga glukosmätare";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth används för att kommunicera med pump och kontinuerlig glukosmätare";
 
 /* Privacy - Face ID Usage Description */
 "NSFaceIDUsageDescription" = "För auktoriserad åtkomst till bolus";
@@ -17,4 +17,7 @@
 "NSHealthUpdateUsageDescription" = "Appen Hälsa används för att lagra blodsockervärden, insulin samt kolhydrater";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Appen Hälsa används för att lagra blodsockervärden, insulin och kolhydrater.";
+"NSHealthShareUsageDescription" = "Appen Hälsa används för att lagra blodsockervärden, insulin samt kolhydrater";
+
+/* Privacy - Contacts Usage Description */
+"NSContactsUsageDescription" = "För att aktivera Kontaktbild: få live-uppdateringar från iAPS till din Apple Watch kontaktbildskomplikation";
