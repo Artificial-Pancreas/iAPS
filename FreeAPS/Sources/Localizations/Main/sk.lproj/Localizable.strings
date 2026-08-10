@@ -465,13 +465,13 @@ Enact a temp Basal or a temp target */
 "Pump config" = "Nastavenia pumpy";
 
 /*  */
-"Incomplete pump setup" = "Incomplete pump setup";
+"Incomplete pump setup" = "Nedokončené nastavenie pumpy";
 
 /*  */
-"The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list)." = "The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list).";
+"The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list)." = "Predchádzajúce nastavenie pre %@ sa nedokončilo úplne alebo správne. Odstráňte ho a reštartujte iAPS pred opätovným pridaním pumpy (inak sa vaše zariadenie RileyLink nemusí zobraziť v zozname zariadení)";
 
 /*  */
-"Remove pump" = "Remove pump";
+"Remove pump" = "Odstrániť pumpu";
 
 /*  */
 "Delivery limits" = "Obmedzenia dávkovania";
@@ -1305,36 +1305,36 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Meals" = "Jedlá";
 
 
-"Micronutrient" = "Micronutrient";
+"Micronutrient" = "Mikroživina";
 
-"Micronutrients" = "Micronutrients";
+"Micronutrients" = "Mikroživiny";
 
-"Vitamin A" = "Vitamin A";
-"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
-"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
-"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
-"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
-"Vitamin B6" = "Vitamin B6";
-"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
-"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
-"Vitamin B12" = "Vitamin B12";
-"Vitamin C" = "Vitamin C";
-"Vitamin D" = "Vitamin D";
-"Vitamin E" = "Vitamin E";
-"Vitamin K" = "Vitamin K";
-"Calcium" = "Calcium";
-"Iron" = "Iron";
-"Magnesium" = "Magnesium";
-"Potassium" = "Potassium";
-"Zinc" = "Zinc";
-"Phosphorus" = "Phosphorus";
-"Copper" = "Copper";
-"Manganese" = "Manganese";
-"Selenium" = "Selenium";
-"Iodine" = "Iodine";
-"Salt" = "Salt";
+"Vitamin A" = "Vitamín A";
+"Vitamin B1 (Thiamine)" = "Vitamín B1 (tiamín)";
+"Vitamin B2 (Riboflavin)" = "Vitamín B2 (riboflavín)";
+"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacín)";
+"Vitamin B5 (Pantothenic Acid)" = "Vitamín B5 (kyselina pantoténová)";
+"Vitamin B6" = "Vitamín B6";
+"Vitamin B7 (Biotin)" = "Vitamín B7 (biotín)";
+"Vitamin B9 (Folate)" = "Vitamín B9 (folát)";
+"Vitamin B12" = "Vitamín B12";
+"Vitamin C" = "Vitamín C";
+"Vitamin D" = "Vitamín D";
+"Vitamin E" = "Vitamín E";
+"Vitamin K" = "Vitamín K";
+"Calcium" = "Vápnik";
+"Iron" = "Železo";
+"Magnesium" = "Magnézium";
+"Potassium" = "Draslík";
+"Zinc" = "Zinok";
+"Phosphorus" = "Fosfor";
+"Copper" = "Meď";
+"Manganese" = "Mangán";
+"Selenium" = "Selén";
+"Iodine" = "Jód";
+"Salt" = "Soľ";
 
-"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Povoliť položky mikroživín a vlákniny v zobrazení jedla";
 
 // --------- AI ---------
 /* */
@@ -1396,9 +1396,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Photo Analysis" = "Analýza fotografií";
 
-"Photo (+ comment)" = "Photo (+ comment)";
+"Photo (+ comment)" = "Fotografia (+ komentár)";
 
-"Library (+ comment)" = "Library (+ comment)";
+"Library (+ comment)" = "Knižnica (+ komentár)";
 
 "Barcode Scanner" = "Skener čiarových kódov";
 
@@ -1506,15 +1506,15 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Get an API key at console.anthropic.com." = "Získajte API kľúč na console.anthropic.com.";
 
 
-"USDA Food Database" = "USDA Food Database";
+"USDA Food Database" = "Databáza potravín USDA";
 
-"USDA FoodData API Key" = "USDA FoodData API Key";
+"USDA FoodData API Key" = "API kľúč USDA FoodData";
 
-"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Get a free key at fdc.nal.usda.gov/api-key-signup.";
+"Get a free key at fdc.nal.usda.gov/api-key-signup." = "Získajte bezplatný kľúč na fdc.nal.usda.gov/api-key-signup .";
 
-"Optional — uses DEMO_KEY if empty" = "Optional — uses DEMO_KEY if empty";
+"Optional — uses DEMO_KEY if empty" = "Voliteľné — ak je pole prázdne, použije sa DEMO_KEY";
 
-"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests.";
+"Leave empty to use the default DEMO_KEY, which is rate-limited. A free personal API key allows more requests." = "Ponechajte prázdne, ak chcete použiť predvolený DEMO_KEY, ktorý má obmedzený počet požiadaviek. Bezplatný osobný API kľúč umožňuje viac požiadaviek.";
 
 "Provider for Barcode Scanning" = "Poskytovateľ pre skenovanie čiarových kódov";
 
@@ -1608,10 +1608,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Display more macro nutrients */
 
 /* Additional nutrient */
-"more nutrient" = "more nutrient";
+"more nutrient" = "ďalšia živina";
 
 /* Additional nutrients */
-"more nutrients" = "more nutrients";
+"more nutrients" = "ďalšie živiny";
 
 
 /* */
@@ -1696,7 +1696,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 
 
-"Take Photo" = "Take Photo";
+"Take Photo" = "Odfotiť";
 
 
 
@@ -1807,11 +1807,11 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "Carbs" = "Sacharidy";
 
-"Discard" = "Discard";
+"Discard" = "Zahodiť";
 
-"Do you want to discard this meal?" = "Do you want to discard this meal?";
+"Do you want to discard this meal?" = "Chcete zahodiť toto jedlo?";
 
-"Set Time" = "Set Time";
+"Set Time" = "Nastaviť čas";
 
 // --------- End of AI ---------
 
@@ -2835,19 +2835,19 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamické ISF je vypnuté, ak je Auto ISF zapnuté";
 
 /* */
-"Nighttime" = "Nighttime";
+"Nighttime" = "Nočný čas";
 
 /* */
-"Disable during nighttime" = "Disable during nighttime";
+"Disable during nighttime" = "Zakázať počas noci";
 
 /* */
-"Disables Auto ISF during nighttime, or any other period selected." = "Disables Auto ISF during nighttime, or any other period selected.";
+"Disables Auto ISF during nighttime, or any other period selected." = "Zakáže Auto ISF počas noci alebo akéhokoľvek iného zvoleného obdobia.";
 
 /* */
-"To" = "To";
+"To" = "Do";
 
 /* */
-"From" = "From";
+"From" = "Od";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Predvolená hodnota: 1,2 Horná hranica nastavenia ISF";
@@ -3500,7 +3500,7 @@ Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 "Light / Dark Mode" = "Svetlý / tmavý režim";
 
 /* Debug option */
-"Neglect Carbs in oref0" = "Neglect Carbs in oref0";
+"Neglect Carbs in oref0" = "Ignorovať sacharidy v oref0";
 
 /* Debug option */
 "Hide Predictions" = "Skryť predpovede";
@@ -3524,16 +3524,16 @@ Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 "Show Predictions" = "Zobraziť predikcie";
 
 /* Watch Smart Stack: Show Chart widget */
-"Watch: Show Chart" = "Watch: Show Chart";
+"Watch: Show Chart" = "Hodinky: zobraziť graf";
 
 /* Watch Smart Stack: Show delta */
-"Watch: Show Delta" = "Watch: Show Delta";
+"Watch: Show Delta" = "Hodinky: zobraziť deltu";
 
 /* Watch Smart Stack: Show eventual glucose on chart widget */
-"Watch: Show Eventual" = "Watch: Show Eventual";
+"Watch: Show Eventual" = "Hodinky: zobraziť predpokladanú glykémiu";
 
 /* Watch Smart Stack: Show predictions on chart widget */
-"Watch: Show Predictions" = "Watch: Show Predictions";
+"Watch: Show Predictions" = "Hodinky: zobraziť predikcie";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";
@@ -3693,137 +3693,137 @@ Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 /* name of complete meals when saving */
 
 /* Alert title when manual temp basal rate exceeds Max Basal setting */
-"Max Basal Exceeded" = "Max Basal Exceeded";
+"Max Basal Exceeded" = "Max Basal prekročený";
 
 /* Alert message when manual temp basal rate exceeds Max Basal setting. Args: entered rate, configured max basal */
-"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr.";
+"The rate %.2f U/hr exceeds your Max Basal setting of %.2f U/hr." = "Hodnota %.2f U/h prekračuje vaše nastavenie Max Basal %.2f U/h.";
 
 /* --- Build expiration alert (TestFlight 90-day lifetime) --- */
 "OK" = "OK";
 
 "More Info" = "Viac informácií";
 
-"Build Expires Soon!" = "Build Expires Soon!";
+"Build Expires Soon!" = "Platnosť aplikácie čoskoro vyprší!";
 
-"Build Expiring in %d Day" = "Build Expiring in %d Day";
+"Build Expiring in %d Day" = "Aplikácia exspiruje o %d deň";
 
-"Build Expiring in %d Days" = "Build Expiring in %d Days";
+"Build Expiring in %d Days" = "Aplikácia exspiruje o %d dni";
 
-"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hour. After expiration the app will not launch until you rebuild." = "Platnosť iAPS vyprší o %d hodinu. Po vypršaní platnosti sa aplikácia nespustí, kým nevytvoríte novú zostavu.";
 
-"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild.";
+"Your iAPS build expires in %d hours. After expiration the app will not launch until you rebuild." = "Platnosť iAPS vyprší o %d hodín. Po vypršaní platnosti sa aplikácia nespustí, kým nevytvoríte novú zostavu.";
 
-"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days." = "Platnosť iAPS vyprší %1$@ (zostáva %2$d deň). Zostavy TestFlight je potrebné obnovovať každých 90 dní.";
 
-"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.";
+"Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Platnosť iAPS vyprší %1$@ (zostávajú %2$d dni). Zostavy TestFlight je potrebné obnovovať každých 90 dní.";
 
-"Cancel temp" = "Cancel temp";
+"Cancel temp" = "Zrušiť dočasné";
 
-"No " = "No ";
-"%.1f× serving" = "%.1f× serving";
-"Edit Portion" = "Edit Portion";
-"Remove from meal" = "Remove from meal";
-"Discard Meal?" = "Discard Meal?";
-"Discard Meal" = "Discard Meal";
-"Nutrient" = "Nutrient";
-"Add Micronutrient" = "Add Micronutrient";
-"Added" = "Added";
-"%d micros" = "%d micros";
-"Fiber • %d" = "Fiber • %d";
+"No " = "Nie ";
+"%.1f× serving" = "%.1f× porcia";
+"Edit Portion" = "Upraviť porciu";
+"Remove from meal" = "Odstrániť z jedla";
+"Discard Meal?" = "Zahodiť jedlo?";
+"Discard Meal" = "Zahodiť jedlo";
+"Nutrient" = "Živina";
+"Add Micronutrient" = "Pridať mikroživinu";
+"Added" = "Pridané";
+"%d micros" = "%d mikroživín";
+"Fiber • %d" = "Vláknina • %d";
 
 "Target Glucose" = "Cieľová glykémia";
-"AI is still thinking…" = "AI is still thinking…";
-"AI service error (code: %d)" = "AI service error (code: %d)";
+"AI is still thinking…" = "AI stále premýšľa…";
+"AI service error (code: %d)" = "Chyba AI služby (kód: %d)";
 "APS" = "APS";
-"Absolute Safety TBR" = "Absolute Safety TBR";
-"Additional details for AI..." = "Additional details for AI...";
-"An image is available in your clipboard" = "An image is available in your clipboard";
-"Analysis Failed" = "Analysis Failed";
-"Analyzing food with AI…" = "Analyzing food with AI…";
+"Absolute Safety TBR" = "Absolútny bezpečnostný TBR";
+"Additional details for AI..." = "Ďalšie podrobnosti pre AI...";
+"An image is available in your clipboard" = "V schránke je k dispozícii obrázok";
+"Analysis Failed" = "Analýza zlyhala";
+"Analyzing food with AI…" = "Analyzuje sa jedlo pomocou AI…";
 "Autosens Maximum" = "Autosens Maximum";
 "Autosens Minimum" = "Autosens Minimum";
-"Barcode scan" = "Barcode scan";
-"Barcode scanning failed: %@" = "Barcode scanning failed: %@";
-"Basal Shortcuts are disabled because iAPS is in cLosed loop mode" = "Basal Shortcuts are disabled because iAPS is in cLosed loop mode";
+"Barcode scan" = "Skenovanie čiarového kódu";
+"Barcode scanning failed: %@" = "Skenovanie čiarového kódu zlyhalo: %@";
+"Basal Shortcuts are disabled because iAPS is in cLosed loop mode" = "Skratky bazálu sú vypnuté, pretože iAPS je v režime uzavretej slučky";
 "COB" = "COB";
-"Camera in use by another app" = "Camera in use by another app";
-"Capture a new photo with your camera" = "Capture a new photo with your camera";
+"Camera in use by another app" = "Kameru používa iná aplikácia";
+"Capture a new photo with your camera" = "Nasnímajte novú fotografiu pomocou fotoaparátu";
 "DIA" = "DIA";
-"Delete preset \"\(preset.displayName)\"" = "Delete preset \"\\(preset.displayName)\"";
-"Dexcom G7 app" = "Dexcom G7 app";
-"Enter a tag name (e.g., breakfast, snack, low-carb)" = "Enter a tag name (e.g., breakfast, snack, low-carb)";
-"Factor" = "Factor";
-"Factors" = "Factors";
-"Failed to create analysis request" = "Failed to create analysis request";
-"Failed to decode response: %@" = "Failed to decode response: %@";
-"Failed to parse AI analysis results" = "Failed to parse AI analysis results";
-"Failed to process image for analysis" = "Failed to process image for analysis";
-"Finished in" = "Finished in";
-"First Hour SMBs are Off (24 hours)" = "First Hour SMBs are Off (24 hours)";
+"Delete preset \"\(preset.displayName)\"" = "Odstrániť predvoľbu \"(preset.displayName)\"";
+"Dexcom G7 app" = "Aplikácia Dexcom G7";
+"Enter a tag name (e.g., breakfast, snack, low-carb)" = "Zadajte názov štítku (napr. raňajky, desiata, nízkosacharidové)";
+"Factor" = "Faktor";
+"Factors" = "Faktory";
+"Failed to create analysis request" = "Nepodarilo sa vytvoriť požiadavku na analýzu";
+"Failed to decode response: %@" = "Nepodarilo sa dekódovať odpoveď: %@";
+"Failed to parse AI analysis results" = "Nepodarilo sa spracovať výsledky analýzy AI";
+"Failed to process image for analysis" = "Nepodarilo sa spracovať obrázok na analýzu";
+"Finished in" = "Dokončené za";
+"First Hour SMBs are Off (24 hours)" = "Prvá hodina počas ktorej budú SMB vypnuté (24 hodín)";
 "HbA1C" = "HbA1C";
-"Header" = "Header";
+"Header" = "Hlavička";
 "IOB" = "IOB";
-"Invalid API URL" = "Invalid API URL";
-"Invalid API response" = "Invalid API response";
-"Invalid CGM reading (HIGH)." = "Invalid CGM reading (HIGH).";
-"Invalid barcode format" = "Invalid barcode format";
-"Invalid response from AI service" = "Invalid response from AI service";
-"Last Hour SMBs are Off (24 hours)" = "Last Hour SMBs are Off (24 hours)";
-"Latest reading:" = "Latest reading:";
-"Loop" = "Loop";
-"Manual Adjustments" = "Manual Adjustments";
-"Manual entry" = "Manual entry";
-"Max Basal exceeded!" = "Max Basal exceeded!";
-"Micronutrients" = "Micronutrients";
-"Network error: %@" = "Network error: %@";
+"Invalid API URL" = "Neplatná adresa API";
+"Invalid API response" = "Neplatná API odpoveď";
+"Invalid CGM reading (HIGH)." = "Neplatná hodnota CGM (VYSOKÁ).";
+"Invalid barcode format" = "Neplatný formát čiarového kódu";
+"Invalid response from AI service" = "Neplatná odpoveď zo služby AI";
+"Last Hour SMBs are Off (24 hours)" = "Posledná hodina počas ktorej budú SMB vypnuté (24 hodín)";
+"Latest reading:" = "Posledná hodnota:";
+"Loop" = "Slučka";
+"Manual Adjustments" = "Manuálne úpravy";
+"Manual entry" = "Manuálne zadanie";
+"Max Basal exceeded!" = "Maximálny bazál prekročený!";
+"Micronutrients" = "Mikroživiny";
+"Network error: %@" = "Chyba siete: %@";
 "Nightscout" = "Nightscout";
-"No Patch" = "No Patch";
+"No Patch" = "Žiadna náplasť";
 "No Pod" = "Žiaden Pod";
-"No data received" = "No data received";
-"No foods found" = "No foods found";
-"No images found" = "No images found";
-"No readings" = "No readings";
-"No suggestion found" = "No suggestion found";
-"Old" = "Old";
-"Online database search" = "Online database search";
-"Open Settings" = "Open Settings";
-"Open \(latestReadingFrom.displayName)" = "Open \\(latestReadingFrom.displayName)";
+"No data received" = "Neboli prijaté žiadne údaje";
+"No foods found" = "Nenašli sa žiadne potraviny";
+"No images found" = "Nenašli sa žiadne obrázky";
+"No readings" = "Žiadne hodnoty";
+"No suggestion found" = "Nenašiel sa žiadny návrh";
+"Old" = "Staré";
+"Online database search" = "Vyhľadávanie v online databáze";
+"Open Settings" = "Otvoriť nastavenia";
+"Open \(latestReadingFrom.displayName)" = "Otvoriť \\(latestReadingFrom.displayName)";
 "OpenAPS" = "OpenAPS";
-"Pinch to zoom • Drag to reposition" = "Pinch to zoom • Drag to reposition";
-"Position the barcode within the frame" = "Position the barcode within the frame";
-"Profile Name" = "Profile Name";
-"Reading from \(appName)" = "Reading from \\(appName)";
-"Reading from:" = "Reading from:";
-"Removed from meal" = "Removed from meal";
-"SMBs and High Temps Disabled." = "SMBs and High Temps Disabled.";
-"Saving image..." = "Saving image...";
-"Searching for images..." = "Searching for images...";
-"Searching..." = "Searching...";
-"Select and edit a photo from your library" = "Select and edit a photo from your library";
-"Server error (%d)" = "Server error (%d)";
-"Shared App Group CGM" = "Shared App Group CGM";
-"The Loop Mode" = "The Loop Mode";
-"The Meal" = "The Meal";
-"The scanned barcode is not valid" = "The scanned barcode is not valid";
+"Pinch to zoom • Drag to reposition" = "Priblížte stiahnutím prstov • Posúvajte potiahnutím";
+"Position the barcode within the frame" = "Umiestnite čiarový kód do rámčeka";
+"Profile Name" = "Názov profilu";
+"Reading from \(appName)" = "Hodnota z \\(appName)";
+"Reading from:" = "Hodnota z:";
+"Removed from meal" = "Odstránené z jedla";
+"SMBs and High Temps Disabled." = "SMB a vysoký dočasný cieľ sú vypnuté.";
+"Saving image..." = "Ukladá sa obrázok...";
+"Searching for images..." = "Vyhľadávajú sa obrázky...";
+"Searching..." = "Vyhľadávanie...";
+"Select and edit a photo from your library" = "Vyberte a upravte fotografiu z knižnice";
+"Server error (%d)" = "Chyba servera (%d)";
+"Shared App Group CGM" = "Zdroj zdieľanej skupiny aplikácie";
+"The Loop Mode" = "Režim slučky";
+"The Meal" = "Jedlo";
+"The scanned barcode is not valid" = "Naskenovaný čiarový kód nie je platný";
 "Toggles" = "Prepínače";
-"Too many requests. Please try again later." = "Too many requests. Please try again later.";
+"Too many requests. Please try again later." = "Príliš veľa požiadaviek. Skúste to znova neskôr.";
 "Trend" = "Vývoj";
 "UAM" = "UAM";
-"Undo" = "Undo";
-"Upload Previous Day's Log" = "Upload Previous Day's Log";
-"Use Clipboard Image" = "Use Clipboard Image";
-"Use Image" = "Use Image";
-"Use Now" = "Use Now";
+"Undo" = "Späť";
+"Upload Previous Day's Log" = "Nahrať záznam z predchádzajúceho dňa";
+"Use Clipboard Image" = "Použiť obrázok zo schránky";
+"Use Image" = "Použiť obrázok";
+"Use Now" = "Použiť teraz";
 "\(Int(progress.percent.rounded())) %" = "\\(Int(progress.percent.rounded())) %";
-"\(imageURLs.count) images" = "\\(imageURLs.count) images";
+"\(imageURLs.count) images" = "\\(imageURLs.count) obrázky";
 "\(lastLoopMinutesAgo) " = "\\(lastLoopMinutesAgo) ";
-"\(state.hours) hours" = "\\(state.hours) hours";
-"\(state.percentage.formatted(.number)) % Insulin" = "\\(state.percentage.formatted(.number)) % Insulin";
-"\(value) hours" = "\\(value) hours";
-"has been added to iAPS" = "has been added to iAPS";
+"\(state.hours) hours" = "\\(state.hours) hodín";
+"\(state.percentage.formatted(.number)) % Insulin" = "\\(state.percentage.formatted(.number)) % inzulín";
+"\(value) hours" = "\\(value) hodín";
+"has been added to iAPS" = "bol pridaný do iAPS";
 "hour" = "hodina";
 "iAPS" = "iAPS";
-"iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS needs camera access to scan barcodes. Please enable it in Settings.";
-"too small temp basal amount" = "too small temp basal amount";
-"⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!";
-" Target Glucose" = " Target Glucose";
+"iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS potrebuje prístup ku kamere na skenovanie čiarových kódov. Povoľte ho v Nastaveniach.";
+"too small temp basal amount" = "príliš malá hodnota dočasnej bazálnej dávky";
+"⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Upozornenie! Zadané množstvo inzulínu je väčšie ako nastavenie Max Bolus!";
+" Target Glucose" = " Cieľová glykémia";
