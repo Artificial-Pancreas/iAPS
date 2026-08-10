@@ -2672,22 +2672,22 @@ Enact a temp Basal or a temp target */
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "När den är aktiverad laddas föregående dags loggfil upp automatiskt efter midnatt. Loggar används bla. för att ge en flerdagarsanalys på open-iaps.app. Av som standard.";
 
 /* --- Sharing screen redesign (Online Backup + Demographics) --- */
-"Online Backup and Statistics" = "Online Backup and Statistics";
-"If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default." = "If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default.";
-"Demographics" = "Demographics";
-"Height" = "Height";
-"Prefer not to say" = "Prefer not to say";
+"Online Backup and Statistics" = "Online-säkerhetskopiering och statistik";
+"If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default." = "Om du aktiverar online-säkerhetskopiering och statistik laddas en daglig säkerhetskopiering av dina inställningar och statistik upp till open-iaps.app — så att du kan återställa dem på en ny telefon och bidra till statistik.\n\nAllt laddas upp anonymt. Det finns inget namn, e-post eller något som binder data till dig — bara en slumpmässig återställningstoken lagras på din telefon. Av som standard.";
+"Demographics" = "Demografi";
+"Height" = "Längd";
+"Prefer not to say" = "Vill inte svara";
 "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous.";
 "Why are these required for log upload?" = "Why are these required for log upload?";
-"Why we ask about sex" = "Why we ask about sex";
-"Got it" = "Got it";
+"Why we ask about sex" = "Varför vi frågar om kön";
+"Got it" = "Förstått";
 "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous." = "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous.";
 "Enable Uploads" = "Enable Uploads";
 "Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Set your sex to Woman or Man and a valid birth date above to enable daily log upload.";
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default.";
 "Daily Log upload turned off" = "Daily Log upload turned off";
 "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on.";
-"Copied" = "Copied";
+"Copied" = "Kopierad";
 "Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Write this token down somewhere safe. It is the only way to restore your settings on a new phone.";
 
 /* ——————————Contact Image ————————*/
@@ -3734,7 +3734,7 @@ Enact a temp Basal or a temp target */
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Ditt iAPS-app löper ut %1$@ (%2$d dagar kvar). Testbyggen måste förnyas var 90:e dag.";
 
 /* --- First-launch Welcome + post-upgrade notice (onboarding) --- */
-"Welcome to iAPS" = "Welcome to iAPS";
+"Welcome to iAPS" = "Välkommen till iAPS";
 
 "Let's get you set up." = "Let's get you set up.";
 
@@ -3743,7 +3743,7 @@ Enact a temp Basal or a temp target */
 
 "iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is not approved by any health authority. You run this system at your own risk.";
 
-"New User" = "New User";
+"New User" = "Ny användare";
 
 "Set up iAPS for the first time" = "Set up iAPS for the first time";
 
@@ -3759,7 +3759,7 @@ Enact a temp Basal or a temp target */
 
 "Discord support" = "Discord support";
 
-"iAPS updated" = "iAPS updated";
+"iAPS updated" = "iAPS uppdaterad";
 
 "You're now running version %@." = "You're now running version %@.";
 
@@ -3782,9 +3782,9 @@ Enact a temp Basal or a temp target */
 
 "Restore my settings" = "Restore my settings";
 
-"Restoring…" = "Restoring…";
+"Restoring…" = "Återställer…";
 
-"Settings restored" = "Settings restored";
+"Settings restored" = "Inställningar återställda";
 
 "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.";
 
@@ -3794,7 +3794,7 @@ Enact a temp Basal or a temp target */
 
 "Skip and set up fresh" = "Skip and set up fresh";
 
-"Enter your recovery token." = "Enter your recovery token.";
+"Enter your recovery token." = "Ange din återställningsnyckel.";
 
 "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.";
 
@@ -3830,36 +3830,36 @@ Enact a temp Basal or a temp target */
 "Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
 
 /* Restore by account login */
-"Account login" = "Account login";
+"Account login" = "Kontoinloggning";
 
 "Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
 
-"Email" = "Email";
+"Email" = "E-post";
 
 "Password" = "Lösenord";
 
-"Authentication code" = "Authentication code";
+"Authentication code" = "Autentiseringskod";
 
-"Logging in…" = "Logging in…";
+"Logging in…" = "Loggar in…";
 
-"Log in & restore" = "Log in & restore";
+"Log in & restore" = "Logga in och återställ";
 
-"Enter your email and password." = "Enter your email and password.";
+"Enter your email and password." = "Ange din e-postadress och ditt lösenord.";
 
-"Enter the code from your authenticator app." = "Enter the code from your authenticator app.";
+"Enter the code from your authenticator app." = "Ange koden från autentiseringsappen.";
 
-"That code didn't match. Please try again." = "That code didn't match. Please try again.";
+"That code didn't match. Please try again." = "Den koden matchade inte. Försök igen.";
 
-"Email or password is incorrect." = "Email or password is incorrect.";
+"Email or password is incorrect." = "E-postadress eller lösenord är felaktigt.";
 
 "No backup is linked to this account yet." = "No backup is linked to this account yet.";
 
 "Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
 
 /* Recovery token & account (final onboarding step) */
-"Save your recovery token" = "Save your recovery token";
+"Save your recovery token" = "Spara din återställningsnyckel";
 
-"Copy" = "Copy";
+"Copy" = "Kopiera";
 
 "Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
 
@@ -3877,13 +3877,13 @@ Enact a temp Basal or a temp target */
 
 "Link this device" = "Link this device";
 
-"Linking…" = "Linking…";
+"Linking…" = "Länkar…";
 
 "Create account" = "Create account";
 
-"Creating…" = "Creating…";
+"Creating…" = "Skapar…";
 
-"Device linked" = "Device linked";
+"Device linked" = "Enhet länkad";
 
 "This device is now attached to %@. You can restore it by logging in." = "This device is now attached to %@. You can restore it by logging in.";
 
@@ -3909,20 +3909,20 @@ Enact a temp Basal or a temp target */
 "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.";
 
 /* Restore setup summary */
-"Review your settings" = "Review your settings";
+"Review your settings" = "Granska dina inställningar";
 
 "Set up your settings" = "Set up your settings";
 
-"Review" = "Review";
+"Review" = "Granska";
 
 "Setup" = "Setup";
 
-"Next Step" = "Next Step";
+"Next Step" = "Nästa steg";
 
 /* Restore CoreData status */
 "Restoring your data" = "Restoring your data";
 
-"Restored data" = "Restored data";
+"Restored data" = "Återställ data";
 
 "Meal, override and temp-target presets from your backup." = "Meal, override and temp-target presets from your backup.";
 
@@ -3930,9 +3930,9 @@ Enact a temp Basal or a temp target */
 
 "Temp Target Presets" = "Temp Target Presets";
 
-"No Data" = "No Data";
+"No Data" = "Inga data";
 
-"%d restored" = "%d restored";
+"%d restored" = "%d återställd";
 
 "Saved %d of %d" = "Saved %d of %d";
 
@@ -3941,7 +3941,7 @@ Enact a temp Basal or a temp target */
 
 "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.";
 
-"Closed Loop" = "Closed Loop";
+"Closed Loop" = "Sluten loop";
 
 "Let iAPS automate insulin dosing" = "Let iAPS automate insulin dosing";
 
@@ -3967,7 +3967,7 @@ Enact a temp Basal or a temp target */
 
 "Replay onboarding (as upgrade)" = "Replay onboarding (as upgrade)";
 
-"Reset" = "Reset";
+"Reset" = "Återställ";
 
 "Cancel temp" = "Avbryt temporär basal";
 
