@@ -2,6 +2,7 @@ import CGMBLEKit
 import EversenseKit
 import Foundation
 import G7SensorKit
+import LibreLoop
 import LibreTransmitter
 import LoopKit
 import MedtrumKit
@@ -23,14 +24,18 @@ enum KnownPlugins {
         }
     }
 
+    private static let secondsOfDay = 8.64E4
+
     static func cgmExpirationByPluginIdentifier(_ cgmManager: CGMManager?) -> TimeInterval? {
         guard let cgmManager else { return nil }
-        let secondsOfDay = 8.64E4
 
         return switch cgmManager.pluginIdentifier {
         case G6CGMManager.pluginIdentifier: 10 * secondsOfDay
         case G7CGMManager.pluginIdentifier: 10.5 * secondsOfDay
         case LibreTransmitterManagerV3.pluginIdentifier: libreExpirationSeconds
+        case LibreLoopCGMManager.pluginIdentifier:
+            (cgmManager as? LibreLoopCGMManager)?.state.wearDurationMinutes.map { TimeInterval($0) * 60 }
+                ?? LibreLoopSensorLifecycle.activeDuration
         case MinimedPumpManager.pluginIdentifier: 6 * secondsOfDay
         case EversenseCGMManager
             .pluginIdentifier: (((cgmManager as? EversenseCGMManager)?.state.is365 ?? false) ? 365 : 180) * secondsOfDay
@@ -55,6 +60,8 @@ enum KnownPlugins {
             return (cgmManager as? G7CGMManager)?.sensorFinishesWarmupAt
         case LibreTransmitterManagerV3.pluginIdentifier:
             return (cgmManager as? LibreTransmitterManagerV3)?.sensorInfoObservable.activatedAt
+        case LibreLoopCGMManager.pluginIdentifier:
+            return (cgmManager as? LibreLoopCGMManager)?.state.activatedAt
         case EversenseCGMManager.pluginIdentifier:
             return (cgmManager as? EversenseCGMManager)?.state.activatedAt
         default:
@@ -78,14 +85,15 @@ enum KnownPlugins {
         guard let cgmManager else { return nil }
 
         switch cgmManager.pluginIdentifier {
-        case G5CGMManager.pluginIdentifier: return CGMType.dexcomG5.rawValue
-        case G6CGMManager.pluginIdentifier: return CGMType.dexcomG6.rawValue
-        case G7CGMManager.pluginIdentifier: return CGMType.dexcomG7.rawValue
-        case EversenseCGMManager.pluginIdentifier: return CGMType.eversense.rawValue
-        case LibreTransmitterManagerV3.pluginIdentifier: return CGMType.libreTransmitter.rawValue
-        case NightscoutRemoteCGM.pluginIdentifier: return CGMType.nightscout.rawValue
-        case MockCGMManager.pluginIdentifier: return CGMType.simulator.rawValue
-        case MinimedPumpManager.pluginIdentifier: return CGMType.enlite.rawValue
+        case G5CGMManager.pluginIdentifier: return "dexcomG5"
+        case G6CGMManager.pluginIdentifier: return "dexcomG6"
+        case G7CGMManager.pluginIdentifier: return "dexcomG7"
+        case EversenseCGMManager.pluginIdentifier: return "eversense"
+        case LibreTransmitterManagerV3.pluginIdentifier: return "libreTransmitter"
+        case LibreLoopCGMManager.pluginIdentifier: return "libre3"
+        case NightscoutRemoteCGM.pluginIdentifier: return "nightscout"
+        case MockCGMManager.pluginIdentifier: return "simulator"
+        case MinimedPumpManager.pluginIdentifier: return "enlite"
         case AppGroupCGM.pluginIdentifier:
             guard let cgmManager = cgmManager as? AppGroupCGM else {
                 return nil
