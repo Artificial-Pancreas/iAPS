@@ -3780,42 +3780,42 @@ Enact a temp Basal or a temp target */
 
 "Find this on your old phone under iAPS → Settings → Sharing." = "Find this on your old phone under iAPS → Settings → Sharing.";
 
-"Restore my settings" = "Restore my settings";
+"Restore my settings" = "Återskapa mina inställningar";
 
 "Restoring…" = "Återställer…";
 
 "Settings restored" = "Inställningar återställda";
 
-"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.";
+"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Dina OpenAPS-inställningar och appinställningar återställdes från din säkerhetskopia. Du kommer att ställa in säkerhetskopiering online för den här enheten i nästa steg.";
 
-"Restore didn't complete" = "Restore didn't complete";
+"Restore didn't complete" = "Återställningen slutfördes inte";
 
 "Try again" = "Försök igen";
 
-"Skip and set up fresh" = "Skip and set up fresh";
+"Skip and set up fresh" = "Hoppa över och konfigurera ny";
 
 "Enter your recovery token." = "Ange din återställningsnyckel.";
 
 "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.";
 
 /* Profile-schedule review (restore) */
-"Review your therapy settings" = "Review your therapy settings";
+"Review your therapy settings" = "Granska dina inställningar";
 
 "These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump.";
 
-"Check these before applying" = "Check these before applying";
+"Check these before applying" = "Kontrollera dessa innan du tillämpar";
 
-"Basal rates" = "Basal rates";
+"Basal rates" = "Basaldoser";
 
-"Insulin sensitivity (ISF)" = "Insulin sensitivity (ISF)";
+"Insulin sensitivity (ISF)" = "Insulinkänslighet (ISF)";
 
-"Carb ratios" = "Carb ratios";
+"Carb ratios" = "Kolhydratkvoter";
 
-"Glucose targets" = "Glucose targets";
+"Glucose targets" = "Målglukos";
 
-"Apply these settings" = "Apply these settings";
+"Apply these settings" = "Tillämpa dessa inställningar";
 
-"Applying…" = "Applying…";
+"Applying…" = "Tillämpar…";
 
 "Continue without restoring schedules" = "Continue without restoring schedules";
 
@@ -3869,9 +3869,9 @@ Enact a temp Basal or a temp target */
 
 "Link to an existing account" = "Link to an existing account";
 
-"Create an account" = "Create an account";
+"Create an account" = "Skapa ett konto";
 
-"Confirm password" = "Confirm password";
+"Confirm password" = "Bekräfta lösenord";
 
 "Verify & link" = "Verify & link";
 
