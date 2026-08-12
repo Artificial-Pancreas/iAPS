@@ -3934,18 +3934,18 @@ Enact a temp Basal or a temp target */
 
 "%d restored" = "%d återställd";
 
-"Saved %d of %d" = "Saved %d of %d";
+"Saved %d of %d" = "Sparat %d av %d";
 
 /* Setup complete */
-"Setup complete" = "Setup complete";
+"Setup complete" = "Installationen är slutförd";
 
-"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.";
+"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Dina inställningar är på plats. Ställ in sluten loop när du är redo för iAPS att justera insulin automatiskt – du kan alltid ändra detta senare i dina inställningar.";
 
 "Closed Loop" = "Sluten loop";
 
-"Let iAPS automate insulin dosing" = "Let iAPS automate insulin dosing";
+"Let iAPS automate insulin dosing" = "Låt iAPS automatisera insulindosering";
 
-"Finish setup" = "Finish setup";
+"Finish setup" = "Slutför inställning";
 
 /* Sharing — unit abbreviations for the optional weight/height fields.
    "kg" kilograms, "lb" pounds, "cm" centimetres, "ft" feet, "in" inches,
@@ -3963,9 +3963,9 @@ Enact a temp Basal or a temp target */
 "ft/in" = "ft/in";
 
 /* Developer settings — re-arm the first-launch onboarding so it replays */
-"Replay onboarding (new install)" = "Replay onboarding (new install)";
+"Replay onboarding (new install)" = "Gör om onboarding (ny installation)";
 
-"Replay onboarding (as upgrade)" = "Replay onboarding (as upgrade)";
+"Replay onboarding (as upgrade)" = "Gör om onboarding (uppgradering)";
 
 "Reset" = "Återställ";
 
