@@ -2677,7 +2677,7 @@ Enact a temp Basal or a temp target */
 "Demographics" = "Demografi";
 "Height" = "Längd";
 "Prefer not to say" = "Vill inte svara";
-"Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous.";
+"Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Ditt kön och din ålder kan förbättra analys av statistik och loggar.\n\nVikt och höjd är rent statistiska: de hjälper oss att förstå normalfördelningen, inget mer.\n\nVii har inget sätt att verifiera vad du anger, och ingen önskan – så vi ber er helt enkelt att vara ärliga, för att hålla analysen och statistiken meningsfull.\n\nSom med allt här är dessa data anonyma.";
 "Why are these required for log upload?" = "Varför behövs dessa för att ladda upp logg?";
 "Why we ask about sex" = "Varför vi frågar om kön";
 "Got it" = "Förstått";
@@ -2686,9 +2686,9 @@ Enact a temp Basal or a temp target */
 "Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Ange in ditt kön till Kvinna eller Man och ett giltigt födelsedatum ovan för att aktivera daglig logguppladdning.";
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "När den är aktiverad laddas föregående dags loggfil upp automatiskt efter midnatt. Loggar används bla. för att ge en flerdagarsanalys på open-iaps.app. Av som standard.";
 "Daily Log upload turned off" = "Daglig logguppladdning avstängd";
-"Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on.";
+"Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Daglig uppladdning av loggar behöver veta ditt biologiska kön (kvinna eller man) och ett giltigt födelsedatum. Uppdatera dina inställningar för att aktivera den.";
 "Copied" = "Kopierad";
-"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Write this token down somewhere safe. It is the only way to restore your settings on a new phone.";
+"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Skriv ner denna återställningsnyckel någonstans säkert. Du behöver den för att återställa dina inställningar på en ny telefon.";
 
 /* ——————————Contact Image ————————*/
 
@@ -3736,18 +3736,18 @@ Enact a temp Basal or a temp target */
 /* --- First-launch Welcome + post-upgrade notice (onboarding) --- */
 "Welcome to iAPS" = "Välkommen till iAPS";
 
-"Let's get you set up." = "Let's get you set up.";
+"Let's get you set up." = "Lås oss nu göra dig redo.";
 
 /* Welcome screen disclaimer (phase 1) */
-"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm.";
+"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS är ett artificiellt bukspottkörtelsystem med öppen källkod, baserat på OpenAPS.";
 
-"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is not approved by any health authority. You run this system at your own risk.";
+"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS är inte godkänd av någon hälsomyndighet. Du använder detta system på egen risk.";
 
 "New User" = "Ny användare";
 
 "Set up iAPS for the first time" = "Ställ in iAPS för första gången";
 
-"Existing User" = "Existing User";
+"Existing User" = "Befintlig användare";
 
 "Skip setup — configure everything myself" = "Hoppa över — konfigurera allt själv";
 
@@ -3757,28 +3757,28 @@ Enact a temp Basal or a temp target */
 
 "Documentation" = "Dokumentation";
 
-"Discord support" = "Discord support";
+"Discord support" = "Discord-stöd";
 
 "iAPS updated" = "iAPS uppdaterad";
 
 "You're now running version %@." = "Du kör nu version %@.";
 
-"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
+"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Uppdateringar kan ibland återställa vissa adv dina inställningar, även om detta är sällsynt. Om du märker något konstigt — exempelvis öppen loop eller Max IOB på 0 — rekommenderar vi att du noga kontrollerar dina inställningar först.";
 
 "Review Settings" = "Granska dina inställningar";
 
-"Continue to Home" = "Continue to Home";
+"Continue to Home" = "Fortsätt till hemsidan";
 
 /* Existing-user restore (onboarding) */
-"Restore my settings from a previous install" = "Restore my settings from a previous install";
+"Restore my settings from a previous install" = "Återskapa mina inställningar från en tidigare installation";
 
-"Restore your settings" = "Restore your settings";
+"Restore your settings" = "Återskapa mina inställningar";
 
-"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup.";
+"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Ange din återställningsnyckel från din tidigare iAPS-installation för att återskapa dina inställningar från din säkerhetskopiering.";
 
-"Recovery token" = "Recovery token";
+"Recovery token" = "Återställningsnyckel";
 
-"Find this on your old phone under iAPS → Settings → Sharing." = "Find this on your old phone under iAPS → Settings → Sharing.";
+"Find this on your old phone under iAPS → Settings → Sharing." = "Hitta detta på din gamla telefon under iAPS → Inställningar → Delning.";
 
 "Restore my settings" = "Återskapa mina inställningar";
 
@@ -3796,12 +3796,12 @@ Enact a temp Basal or a temp target */
 
 "Enter your recovery token." = "Ange din återställningsnyckel.";
 
-"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.";
+"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "Vi kunde inte hitta en säkerhetskopia för den nyckeln, eller så kunde servern inte nås. Kontrollera din nyckel och din anslutning, försök sedan igen.";
 
 /* Profile-schedule review (restore) */
 "Review your therapy settings" = "Granska dina inställningar";
 
-"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump.";
+"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "Dessa inställningar för basal, insulinkänslighet, insulinkvot och målvärden kom från din säkerhetskopia. Granska dem och godkänn. Pumpens basal kommer att synkroniseras när du ställer in pumpen.";
 
 "Check these before applying" = "Kontrollera dessa innan du tillämpar";
 
@@ -3817,22 +3817,22 @@ Enact a temp Basal or a temp target */
 
 "Applying…" = "Tillämpar…";
 
-"Continue without restoring schedules" = "Continue without restoring schedules";
+"Continue without restoring schedules" = "Fortsätt utan att återskapa schemalagda inställningar";
 
 "1 segment" = "1 segment";
 
-"%d segments" = "%d segments";
+"%d segments" = "%d segment";
 
-"Carb ratio schedule contains a non-positive value." = "Carb ratio schedule contains a non-positive value.";
+"Carb ratio schedule contains a non-positive value." = "Schemalagda insulinkvoter innehåller ett icke-positivt värde.";
 
-"Total basal across the day is zero or negative." = "Total basal across the day is zero or negative.";
+"Total basal across the day is zero or negative." = "Totalt basalinsulin under dagen är noll eller negativ.";
 
-"Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
+"Insulin sensitivity schedule contains a non-positive value." = "Schemalagd insulinkänslighet innehåller ett icke-positivt värde.";
 
 /* Restore by account login */
 "Account login" = "Kontoinloggning";
 
-"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Logga in på ditt online-säkerhetskopieringskonto för att återskapa dina inställningar.";
 
 "Email" = "E-post";
 
@@ -3852,83 +3852,83 @@ Enact a temp Basal or a temp target */
 
 "Email or password is incorrect." = "E-postadress eller lösenord är felaktigt.";
 
-"No backup is linked to this account yet." = "No backup is linked to this account yet.";
+"No backup is linked to this account yet." = "Ingen säkerhetskopia är kopplad till detta konto ännu.";
 
-"Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
+"Couldn't reach the server. Check your connection and try again." = "Det gick inte att nå servern. Kontrollera din anslutning och försök igen.";
 
 /* Recovery token & account (final onboarding step) */
 "Save your recovery token" = "Spara din återställningsnyckel";
 
 "Copy" = "Kopiera";
 
-"Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
+"Record this somewhere safe. It's how you restore your settings on a new phone." = "Spara in detta någonstans säkert. Det behövs för att återskapa dina inställningar på en ny telefon.";
 
-"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices.";
+"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "Du behöver inte ett konto — din återställningsnyckel ovan säkerhetskopierar och återställer dina inställningar. Ett konto låter dig återställa med e-post och lösenord istället för med nyckel, och för att hantera dina enheter.";
 
-"Optional: attach this device to an account" = "Optional: attach this device to an account";
+"Optional: attach this device to an account" = "Valfritt: länka denna enhet till ett konto";
 
-"Link to an existing account" = "Link to an existing account";
+"Link to an existing account" = "Länka till ett befintligt konto";
 
 "Create an account" = "Skapa ett konto";
 
 "Confirm password" = "Bekräfta lösenord";
 
-"Verify & link" = "Verify & link";
+"Verify & link" = "Verifiera och länka";
 
-"Link this device" = "Link this device";
+"Link this device" = "Länka denna enhet";
 
 "Linking…" = "Länkar…";
 
-"Create account" = "Create account";
+"Create account" = "Skapa konto";
 
 "Creating…" = "Skapar…";
 
 "Device linked" = "Enhet länkad";
 
-"This device is now attached to %@. You can restore it by logging in." = "This device is now attached to %@. You can restore it by logging in.";
+"This device is now attached to %@. You can restore it by logging in." = "Denna enhet är nu ansluten till %@. Du kan återställa den genom att logga in.";
 
-"Finish without an account" = "Finish without an account";
+"Finish without an account" = "Slutför utan konto";
 
-"This device is already linked to another account." = "This device is already linked to another account.";
+"This device is already linked to another account." = "Denna enhet är redan länkad till ett annat konto.";
 
-"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.";
+"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "Den här enheten har inte avslutat sin första säkerhetskopia ännu. Se till att Online Backup är på, försök sedan igen om ett ögonblick.";
 
-"This device's recovery token looks invalid." = "This device's recovery token looks invalid.";
+"This device's recovery token looks invalid." = "Denna enhets återställningsnyckel ser ogiltig ut.";
 
-"An account with that email already exists. Try linking instead." = "An account with that email already exists. Try linking instead.";
+"An account with that email already exists. Try linking instead." = "Ett konto med den e-postadressen finns redan. Försök att länka istället.";
 
-"That email doesn't look right." = "That email doesn't look right.";
+"That email doesn't look right." = "Den e-postadressen ser inte rätt ut.";
 
-"Please choose a stronger password (at least 8 characters)." = "Please choose a stronger password (at least 8 characters).";
+"Please choose a stronger password (at least 8 characters)." = "Välj ett starkare lösenord (minst 8 tecken).";
 
-"Passwords don't match." = "Passwords don't match.";
+"Passwords don't match." = "Lösenorden matchar inte.";
 
 /* Device setup */
-"Set up your devices" = "Set up your devices";
+"Set up your devices" = "Ställ in dina enheter";
 
-"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.";
+"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Para ihop pumpen och CGM: en så att iAPS kan läsa glukos och leverera insulin. Du kan också ställa in dessa senare i Inställningar.";
 
 /* Restore setup summary */
 "Review your settings" = "Granska dina inställningar";
 
-"Set up your settings" = "Set up your settings";
+"Set up your settings" = "Ange dina inställningar";
 
 "Review" = "Granska";
 
-"Setup" = "Setup";
+"Setup" = "Inställning";
 
 "Next Step" = "Nästa steg";
 
 /* Restore CoreData status */
-"Restoring your data" = "Restoring your data";
+"Restoring your data" = "Återskapar dina data";
 
 "Restored data" = "Återställ data";
 
-"Meal, override and temp-target presets from your backup." = "Meal, override and temp-target presets from your backup.";
+"Meal, override and temp-target presets from your backup." = "Förinställningar för måltider, undantag och tillfälliga målvärden från din säkerhetskopia.";
 
 "Override Presets" = "Override förinställningar";
 
-"Temp Target Presets" = "Temp Target Presets";
+"Temp Target Presets" = "Tillfälliga målvärden";
 
 "No Data" = "Inga data";
 
