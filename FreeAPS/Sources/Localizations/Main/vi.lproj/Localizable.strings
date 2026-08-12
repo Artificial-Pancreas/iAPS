@@ -2676,18 +2676,18 @@ Enact a temp Basal or a temp target */
 "If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default." = "Nếu bạn bật Sao lưu và thống kê trực tuyến, bản sao lưu hàng ngày của các cài đặt và dữ liệu thống kê của bạn sẽ được tải lên open-iaps.app. Điều này cho phép bạn khôi phục dữ liệu trên điện thoại mới và đóng góp vào thống kê cộng đồng.\n\nTất cả dữ liệu được tải lên ẩn danh. Không có tên, email hoặc bất kỳ thông tin nào liên kết dữ liệu với bạn — chỉ có một mã khôi phục ngẫu nhiên được lưu trên điện thoại của bạn. Tắt theo mặc định.";
 "Demographics" = "Đồ họa minh họa";
 "Height" = "Chiều cao";
-"Prefer not to say" = "Prefer not to say";
-"Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous.";
-"Why are these required for log upload?" = "Why are these required for log upload?";
-"Why we ask about sex" = "Why we ask about sex";
-"Got it" = "Got it";
-"Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous." = "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous.";
-"Enable Uploads" = "Enable Uploads";
+"Prefer not to say" = "Không muốn trả lời";
+"Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Giới tính và tuổi của bạn cũng giúp ích cho việc phân tích dữ liệu của chính bạn — chúng giúp phân biệt những dao động bình thường, có thể dự đoán được với một xu hướng thực sự đáng lưu ý và cần có hành động.\n\nCân nặng và chiều cao chỉ được sử dụng cho mục đích thống kê: chúng giúp chúng tôi hiểu rõ hơn về phân bố của cộng đồng, không có mục đích nào khác.\n\nĐây là hệ thống dựa trên sự trung thực — chúng tôi không có cách nào và cũng không muốn xác minh những thông tin bạn nhập. Vì vậy, chúng tôi chỉ mong bạn cung cấp thông tin một cách trung thực để cả việc phân tích và các số liệu thống kê đều có ý nghĩa.\n\nCũng như mọi dữ liệu khác tại đây, thông tin này được ẩn danh.";
+"Why are these required for log upload?" = "Tại sao những thông tin này lại cần thiết để tải lên?";
+"Why we ask about sex" = "Tại sao chúng tôi hỏi về giới tính";
+"Got it" = "Đã hiểu";
+"Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous." = "Độ nhạy insulin chịu ảnh hưởng bởi hormone sinh dục — estrogen và progesterone so với testosterone — chứ không phải bởi bản dạng giới. Hãy chọn kiểu hormone mà cơ thể bạn hiện đang có. Với hầu hết mọi người, đó đơn giản là giới tính của họ; nếu bạn đang sử dụng liệu pháp hormone, hãy chọn giới tính tương ứng với loại hormone bạn đang sử dụng.\n\nThông tin này giúp cải thiện việc phân tích dữ liệu của chính bạn và vẫn được giữ ẩn danh.";
+"Enable Uploads" = "Kích hoạt Tải lên";
 "Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Set your sex to Woman or Man and a valid birth date above to enable daily log upload.";
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default.";
 "Daily Log upload turned off" = "Daily Log upload turned off";
 "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on.";
-"Copied" = "Copied";
+"Copied" = "Đã sao chép";
 "Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Write this token down somewhere safe. It is the only way to restore your settings on a new phone.";
 
 /* ——————————Contact Image ————————*/
@@ -3783,9 +3783,9 @@ Enact a temp Basal or a temp target */
 
 "Restore my settings" = "Restore my settings";
 
-"Restoring…" = "Restoring…";
+"Restoring…" = "Đang khôi phục…";
 
-"Settings restored" = "Settings restored";
+"Settings restored" = "Đã khôi phục cài đặt";
 
 "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.";
 
@@ -3806,23 +3806,23 @@ Enact a temp Basal or a temp target */
 
 "Check these before applying" = "Check these before applying";
 
-"Basal rates" = "Basal rates";
+"Basal rates" = "Tỷ lệ liều nền";
 
-"Insulin sensitivity (ISF)" = "Insulin sensitivity (ISF)";
+"Insulin sensitivity (ISF)" = "Độ nhạy Insulin (ISF)";
 
-"Carb ratios" = "Carb ratios";
+"Carb ratios" = "Tỷ lệ Carb";
 
-"Glucose targets" = "Glucose targets";
+"Glucose targets" = "Đường huyết mục tiêu";
 
 "Apply these settings" = "Apply these settings";
 
-"Applying…" = "Applying…";
+"Applying…" = "Đang áp dụng…";
 
 "Continue without restoring schedules" = "Continue without restoring schedules";
 
-"1 segment" = "1 segment";
+"1 segment" = "1 phân đoạn";
 
-"%d segments" = "%d segments";
+"%d segments" = "%d phân đoạn";
 
 "Carb ratio schedule contains a non-positive value." = "Carb ratio schedule contains a non-positive value.";
 
@@ -3860,7 +3860,7 @@ Enact a temp Basal or a temp target */
 /* Recovery token & account (final onboarding step) */
 "Save your recovery token" = "Save your recovery token";
 
-"Copy" = "Copy";
+"Copy" = "Sao chép";
 
 "Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
 
@@ -3916,9 +3916,9 @@ Enact a temp Basal or a temp target */
 
 "Review" = "Review";
 
-"Setup" = "Setup";
+"Setup" = "Cài đặt";
 
-"Next Step" = "Next Step";
+"Next Step" = "Tiếp theo";
 
 /* Restore CoreData status */
 "Restoring your data" = "Restoring your data";
@@ -3931,22 +3931,22 @@ Enact a temp Basal or a temp target */
 
 "Temp Target Presets" = "Temp Target Presets";
 
-"No Data" = "No Data";
+"No Data" = "Không có dữ liệu";
 
 "%d restored" = "%d restored";
 
 "Saved %d of %d" = "Saved %d of %d";
 
 /* Setup complete */
-"Setup complete" = "Setup complete";
+"Setup complete" = "Cài đặt hoàn tất";
 
 "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.";
 
-"Closed Loop" = "Closed Loop";
+"Closed Loop" = "Vòng lặp kín";
 
 "Let iAPS automate insulin dosing" = "Let iAPS automate insulin dosing";
 
-"Finish setup" = "Finish setup";
+"Finish setup" = "Hoàn tất cài đặt";
 
 /* Sharing — unit abbreviations for the optional weight/height fields.
    "kg" kilograms, "lb" pounds, "cm" centimetres, "ft" feet, "in" inches,
@@ -3968,7 +3968,7 @@ Enact a temp Basal or a temp target */
 
 "Replay onboarding (as upgrade)" = "Replay onboarding (as upgrade)";
 
-"Reset" = "Reset";
+"Reset" = "Đặt lại";
 
 "Cancel temp" = "Hủy liều nền tạm";
 
