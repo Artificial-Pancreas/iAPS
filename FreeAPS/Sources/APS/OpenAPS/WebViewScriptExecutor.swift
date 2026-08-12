@@ -1,3 +1,4 @@
+import UIKit
 import WebKit
 
 @MainActor class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
@@ -31,6 +32,41 @@ import WebKit
         super.init()
 
         webView = createWebView()
+        ensureAttachedToWindow()
+    }
+
+    deinit {
+        let view = self.webView
+        DispatchQueue.main.async {
+            view?.removeFromSuperview()
+        }
+    }
+
+    private func ensureAttachedToWindow() {
+        guard webView.superview == nil else { return }
+
+        var window: UIWindow?
+        if let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+        {
+            window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
+        }
+        if window == nil {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
+            }
+        }
+
+        if let window = window {
+            window.addSubview(webView)
+            debug(.openAPS, "WebView successfully attached to window for background protection")
+        } else {
+            // If we still can't find it, we can schedule a retry
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.ensureAttachedToWindow()
+            }
+        }
     }
 
     private func createWebView() -> WKWebView {
@@ -119,6 +155,8 @@ import WebKit
     }
 
     private func evaluateFunction(body: String, attempts: Int = 0) async throws -> RawJSON {
+        ensureAttachedToWindow()
+
         let maxAttempts = 2
         let requestId = UUID().uuidString
 
@@ -153,7 +191,9 @@ import WebKit
             print("Javascript function (\(requestId)) attempt \(attempts + 1) failed with error: \(error)")
             continuationStreams.removeValue(forKey: requestId)
             if attempts < maxAttempts {
+                webView?.removeFromSuperview()
                 webView = createWebView()
+                ensureAttachedToWindow()
                 return try await evaluateFunction(body: body, attempts: attempts + 1)
             } else {
                 throw error

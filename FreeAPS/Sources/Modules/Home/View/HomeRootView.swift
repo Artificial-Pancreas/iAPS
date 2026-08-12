@@ -1325,6 +1325,5 @@ extension Home {
                 }
             }
         }
-
     }
 }

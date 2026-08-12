@@ -84,13 +84,15 @@ struct RecoveryTokenAccountView: View {
     }
 
     private var disclaimer: some View {
-        Text("You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices.")
-            .font(.footnote)
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(RoundedRectangle(cornerRadius: 12).fill(Color(.tertiarySystemBackground)))
+        Text(
+            "You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices."
+        )
+        .font(.footnote)
+        .foregroundStyle(.secondary)
+        .multilineTextAlignment(.center)
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(RoundedRectangle(cornerRadius: 12).fill(Color(.tertiarySystemBackground)))
     }
 
     // MARK: - Account
@@ -256,7 +258,10 @@ struct RecoveryTokenAccountView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 14).fill(model.linked ? Color.accentColor : Color(.secondarySystemBackground)))
+                .background(
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(model.linked ? Color.accentColor : Color(.secondarySystemBackground))
+                )
                 .foregroundStyle(model.linked ? Color.white : Color.primary)
         }
         .buttonStyle(.plain)
@@ -340,11 +345,17 @@ extension RecoveryTokenAccountView {
                     case .tokenTaken:
                         self.message = NSLocalizedString("This device is already linked to another account.", comment: "")
                     case .tokenNotFound:
-                        self.message = NSLocalizedString("This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.", comment: "")
+                        self.message = NSLocalizedString(
+                            "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.",
+                            comment: ""
+                        )
                     case .invalidToken:
                         self.message = NSLocalizedString("This device's recovery token looks invalid.", comment: "")
                     case .unreachable:
-                        self.message = NSLocalizedString("Couldn't reach the server. Check your connection and try again.", comment: "")
+                        self.message = NSLocalizedString(
+                            "Couldn't reach the server. Check your connection and try again.",
+                            comment: ""
+                        )
                     }
                 },
                 receiveValue: { [weak self] in
@@ -382,17 +393,29 @@ extension RecoveryTokenAccountView {
                     self.messageIsError = true
                     switch error {
                     case .emailTaken:
-                        self.message = NSLocalizedString("An account with that email already exists. Try linking instead.", comment: "")
+                        self.message = NSLocalizedString(
+                            "An account with that email already exists. Try linking instead.",
+                            comment: ""
+                        )
                     case .invalidEmail:
                         self.message = NSLocalizedString("That email doesn't look right.", comment: "")
                     case .weakPassword:
-                        self.message = NSLocalizedString("Please choose a stronger password (at least 8 characters).", comment: "")
+                        self.message = NSLocalizedString(
+                            "Please choose a stronger password (at least 8 characters).",
+                            comment: ""
+                        )
                     case .tokenInvalid:
-                        self.message = NSLocalizedString("This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.", comment: "")
+                        self.message = NSLocalizedString(
+                            "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.",
+                            comment: ""
+                        )
                     case let .message(text):
                         self.message = text
                     case .unreachable:
-                        self.message = NSLocalizedString("Couldn't reach the server. Check your connection and try again.", comment: "")
+                        self.message = NSLocalizedString(
+                            "Couldn't reach the server. Check your connection and try again.",
+                            comment: ""
+                        )
                     }
                 },
                 receiveValue: { [weak self] in

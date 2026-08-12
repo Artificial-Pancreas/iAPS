@@ -109,7 +109,7 @@ extension Sharing {
         /// Auto-revoke Daily Log upload the moment the demographics stop qualifying,
         /// and tell the user why. Manual opt-out stays silent.
         private func enforceLogGate() {
-            if state.uploadLogs && !state.demographicsQualifyForLogs {
+            if state.uploadLogs, !state.demographicsQualifyForLogs {
                 state.uploadLogs = false
                 logsRevoked = true
             }
@@ -118,6 +118,7 @@ extension Sharing {
         var body: some View {
             Form {
                 // MARK: Master toggle
+
                 Section {
                     Toggle("Online Backup and Statistics", isOn: $state.uploadStats)
                 } footer: {
