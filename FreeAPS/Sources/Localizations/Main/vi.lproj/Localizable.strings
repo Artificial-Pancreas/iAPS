@@ -3898,7 +3898,7 @@ Enact a temp Basal or a temp target */
 
 "An account with that email already exists. Try linking instead." = "Tài khoản với email này đã tồn tại. Hãy thử liên kết thay thế.";
 
-"That email doesn't look right." = "That email doesn't look right.";
+"That email doesn't look right." = "Email này không hợp lệ.";
 
 "Please choose a stronger password (at least 8 characters)." = "Vui lòng chọn mật khẩu mạnh hơn (ít nhất 8 ký tự).";
 
@@ -3923,28 +3923,28 @@ Enact a temp Basal or a temp target */
 /* Restore CoreData status */
 "Restoring your data" = "Đang khôi phục dữ liệu của bạn";
 
-"Restored data" = "Restored data";
+"Restored data" = "Dữ liệu đã được khôi phục";
 
-"Meal, override and temp-target presets from your backup." = "Meal, override and temp-target presets from your backup.";
+"Meal, override and temp-target presets from your backup." = "Các cài đặt sẵn bữa ăn, ghi đè và mục tiêu tạm thời từ bản sao lưu của bạn.";
 
 "Override Presets" = "Cài đặt chồng liều";
 
-"Temp Target Presets" = "Temp Target Presets";
+"Temp Target Presets" = "Các cài đặt sẵn cho mục tiêu tạm thời";
 
 "No Data" = "Không có dữ liệu";
 
-"%d restored" = "%d restored";
+"%d restored" = "Đã khôi phục %d";
 
-"Saved %d of %d" = "Saved %d of %d";
+"Saved %d of %d" = "Đã lưu %d trên tổng số %d";
 
 /* Setup complete */
 "Setup complete" = "Cài đặt hoàn tất";
 
-"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.";
+"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Cài đặt của bạn đã được thiết lập. Bật Vòng lặp kín khi bạn sẵn sàng để iAPS tự động điều chỉnh insulin — bạn luôn có thể thay đổi tùy chọn này sau trong Cài đặt.";
 
 "Closed Loop" = "Vòng lặp kín";
 
-"Let iAPS automate insulin dosing" = "Let iAPS automate insulin dosing";
+"Let iAPS automate insulin dosing" = "Cho phép iAPS tự động điều chỉnh liều insulin";
 
 "Finish setup" = "Hoàn tất cài đặt";
 
