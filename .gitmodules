@@ -41,11 +41,11 @@
 [submodule "EversenseKit"]
 	path = EversenseKit
 	url = https://github.com/Artificial-Pancreas/EversenseKit
-[submodule "LibreCRKit"]
-	path = LibreCRKit
-	url = https://github.com/yurique/LibreCRKit.git
+submodule "LibreCRKit"]	
+	path = LibreCRKit	
+	url = https://github.com/Artificial-Pancreas/LibreCRKit.git	
 	branch = iaps-loop-dev
-[submodule "LibreLoop"]
-	path = LibreLoop
-	url = https://github.com/yurique/LibreLoop.git
+[submodule "LibreLoop"]	
+	path = LibreLoop	
+	url = https://github.com/Artificial-Pancreas/LibreLoop.git	
 	branch = iaps-loop-dev
