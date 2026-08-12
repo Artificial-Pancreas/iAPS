@@ -3754,57 +3754,57 @@ Enact a temp Basal or a temp target */
 
 "Migrate my settings from a previous install" = "Di chuyển cài đặt từ bản cài đặt trước";
 
-"Stuck? Help is here" = "Stuck? Help is here";
+"Stuck? Help is here" = "Bị mắc kẹt? Trợ giúp ở đây";
 
-"Documentation" = "Documentation";
+"Documentation" = "Tài liệu";
 
-"Discord support" = "Discord support";
+"Discord support" = "Hỗ trợ Discord";
 
-"iAPS updated" = "iAPS updated";
+"iAPS updated" = "iAPS đã được cập nhật";
 
-"You're now running version %@." = "You're now running version %@.";
+"You're now running version %@." = "Bạn đang sử dụng phiên bản %@.";
 
-"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
+"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Các bản cập nhật đôi khi có thể đặt lại một số cài đặt. Mặc dù hiếm khi xảy ra, nếu bạn nhận thấy bất kỳ điều gì bất thường — chẳng hạn như Vòng lặp kín bị tắt hoặc IOB tối đa bằng 0 — chúng tôi khuyên bạn nên kiểm tra cài đặt trước tiên.";
 
-"Review Settings" = "Review Settings";
+"Review Settings" = "Xem lại cài đặt";
 
-"Continue to Home" = "Continue to Home";
+"Continue to Home" = "Tiếp tục đến Trang chủ";
 
 /* Existing-user restore (onboarding) */
-"Restore my settings from a previous install" = "Restore my settings from a previous install";
+"Restore my settings from a previous install" = "Khôi phục cài đặt từ bản cài đặt trước";
 
-"Restore your settings" = "Restore your settings";
+"Restore your settings" = "Khôi phục cài đặt của bạn";
 
-"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup.";
+"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Nhập mã token khôi phục từ bản cài đặt iAPS trước đây để khôi phục tùy chọn OpenAPS và cài đặt ứng dụng từ bản sao lưu trực tuyến.";
 
-"Recovery token" = "Recovery token";
+"Recovery token" = "Mã token khôi phục";
 
-"Find this on your old phone under iAPS → Settings → Sharing." = "Find this on your old phone under iAPS → Settings → Sharing.";
+"Find this on your old phone under iAPS → Settings → Sharing." = "Tìm mã này trên điện thoại cũ theo đường dẫn iAPS → Cài đặt → Chia sẻ.";
 
-"Restore my settings" = "Restore my settings";
+"Restore my settings" = "Khôi phục cài đặt của tôi";
 
 "Restoring…" = "Đang khôi phục…";
 
 "Settings restored" = "Đã khôi phục cài đặt";
 
-"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.";
+"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Các tùy chọn OpenAPS và cài đặt ứng dụng của bạn đã được khôi phục từ bản sao lưu. Ở bước tiếp theo, bạn sẽ thiết lập sao lưu trực tuyến cho thiết bị này.";
 
-"Restore didn't complete" = "Restore didn't complete";
+"Restore didn't complete" = "Không hoàn thành khôi phục";
 
 "Try again" = "Thử lại";
 
-"Skip and set up fresh" = "Skip and set up fresh";
+"Skip and set up fresh" = "Bỏ qua và thiết lập mới";
 
-"Enter your recovery token." = "Enter your recovery token.";
+"Enter your recovery token." = "Nhập mã token khôi phục của bạn.";
 
-"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.";
+"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "Không tìm thấy bản sao lưu cho mã token đó hoặc không thể kết nối đến máy chủ. Hãy kiểm tra mã token và kết nối mạng, sau đó thử lại.";
 
 /* Profile-schedule review (restore) */
-"Review your therapy settings" = "Review your therapy settings";
+"Review your therapy settings" = "Kiểm tra lại cài đặt điều trị của bạn";
 
-"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump.";
+"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "Các lịch liều nền, ISF, tỷ lệ carbohydrate và mục tiêu này được khôi phục từ bản sao lưu của bạn. Hãy kiểm tra lại, sau đó áp dụng. Liều nền của bơm insulin sẽ được đồng bộ khi bạn thiết lập bơm.";
 
-"Check these before applying" = "Check these before applying";
+"Check these before applying" = "Kiểm tra các cài đặt này trước khi áp dụng";
 
 "Basal rates" = "Tỷ lệ liều nền";
 
@@ -3814,24 +3814,24 @@ Enact a temp Basal or a temp target */
 
 "Glucose targets" = "Đường huyết mục tiêu";
 
-"Apply these settings" = "Apply these settings";
+"Apply these settings" = "Áp dụng các cài đặt này";
 
 "Applying…" = "Đang áp dụng…";
 
-"Continue without restoring schedules" = "Continue without restoring schedules";
+"Continue without restoring schedules" = "Tiếp tục mà không khôi phục các lịch";
 
 "1 segment" = "1 phân đoạn";
 
 "%d segments" = "%d phân đoạn";
 
-"Carb ratio schedule contains a non-positive value." = "Carb ratio schedule contains a non-positive value.";
+"Carb ratio schedule contains a non-positive value." = "Các tỷ lệ carb chứa giá trị không dương.";
 
-"Total basal across the day is zero or negative." = "Total basal across the day is zero or negative.";
+"Total basal across the day is zero or negative." = "Tổng liều nền trong ngày bằng 0 hoặc âm.";
 
-"Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
+"Insulin sensitivity schedule contains a non-positive value." = "Các độ nhạy insulin (ISF) chứa giá trị không dương.";
 
 /* Restore by account login */
-"Account login" = "Account login";
+"Account login" = "Đăng nhập tài khoản";
 
 "Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
 
@@ -3964,9 +3964,9 @@ Enact a temp Basal or a temp target */
 "ft/in" = "ft/in";
 
 /* Developer settings — re-arm the first-launch onboarding so it replays */
-"Replay onboarding (new install)" = "Replay onboarding (new install)";
+"Replay onboarding (new install)" = "Xem lại quy trình thiết lập ban đầu (cài đặt mới)";
 
-"Replay onboarding (as upgrade)" = "Replay onboarding (as upgrade)";
+"Replay onboarding (as upgrade)" = "Xem lại quy trình thiết lập ban đầu (nâng cấp)";
 
 "Reset" = "Đặt lại";
 
