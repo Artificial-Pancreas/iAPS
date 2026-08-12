@@ -2,6 +2,9 @@ import UIKit
 import WebKit
 
 @MainActor class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
+    static let defaultTimeout: Duration = .seconds(30)
+    private static let maxAttachAttempts = 10
+
     private var webView: WKWebView!
     private var continuationStreams = [String: AsyncThrowingStream<RawJSON, Error>.Continuation]()
     private var scripts = [
@@ -35,38 +38,32 @@ import WebKit
         ensureAttachedToWindow()
     }
 
-    deinit {
-        let view = self.webView
-        DispatchQueue.main.async {
-            view?.removeFromSuperview()
+    private func ensureAttachedToWindow(attempt: Int = 0) {
+        guard let webView, webView.superview == nil else { return }
+
+        guard let window = Self.hostWindow() else {
+            guard attempt < Self.maxAttachAttempts else {
+                debug(.openAPS, "WebView has no window to attach to; retrying on next JS call")
+                return
+            }
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(1))
+                self.ensureAttachedToWindow(attempt: attempt + 1)
+            }
+            return
         }
+
+        webView.isUserInteractionEnabled = false
+        window.addSubview(webView)
+        debug(.openAPS, "WebView attached to window for background protection")
     }
 
-    private func ensureAttachedToWindow() {
-        guard webView.superview == nil else { return }
-
-        var window: UIWindow?
-        if let windowScene = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
-        {
-            window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
-        }
-        if window == nil {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
-            }
-        }
-
-        if let window = window {
-            window.addSubview(webView)
-            debug(.openAPS, "WebView successfully attached to window for background protection")
-        } else {
-            // If we still can't find it, we can schedule a retry
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.ensureAttachedToWindow()
-            }
-        }
+    private static func hostWindow() -> UIWindow? {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+            ?? scenes.compactMap { $0 as? UIWindowScene }.first
+        guard let windowScene else { return nil }
+        return windowScene.windows.first(where: \.isKeyWindow) ?? windowScene.windows.first
     }
 
     private func createWebView() -> WKWebView {
@@ -119,7 +116,11 @@ import WebKit
         webView.evaluateJavaScript(script.body)
     }
 
-    func call(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+    func call(
+        name: String,
+        with arguments: [JSON],
+        withBody body: String = ""
+    ) async -> RawJSON {
         if let script = script(for: name) {
             return await callFunctionAsync(function: script, with: arguments, withBody: body)
         } else {
@@ -136,7 +137,11 @@ import WebKit
         await callFunctionAsync(function: function.variable, with: arguments, withBody: body)
     }
 
-    private func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+    private func callFunctionAsync(
+        function: String,
+        with arguments: [JSON],
+        withBody body: String = ""
+    ) async -> RawJSON {
         let joined = arguments.map(\.rawJSON).joined(separator: ",")
 
         let script = """
@@ -146,15 +151,19 @@ import WebKit
         """
 
         do {
-            let result = try await evaluateFunction(body: script)
+            let result = try await evaluateFunction(name: function, body: script)
             return result
         } catch {
-            print(error)
+            warning(.openAPS, "Javascript function (\(function)) failed: \(error.localizedDescription)")
             return ""
         }
     }
 
-    private func evaluateFunction(body: String, attempts: Int = 0) async throws -> RawJSON {
+    private func evaluateFunction(
+        name: String,
+        body: String,
+        attempts: Int = 0
+    ) async throws -> RawJSON {
         ensureAttachedToWindow()
 
         let maxAttempts = 2
@@ -181,20 +190,30 @@ import WebKit
         }
 
         do {
-            try await webView.evaluateJavaScript(script)
+            return try await withTimeout("js.\(name)", Self.defaultTimeout) { [self] in
+                try await Task { @MainActor in
+                    try await webView.evaluateJavaScript(script)
 
-            for try await value in stream {
-                return value
+                    for try await value in stream {
+                        return value
+                    }
+                    throw NSError(
+                        domain: "WebViewScriptExecutor", code: 2,
+                        userInfo: [NSLocalizedDescriptionKey: "No result emitted"]
+                    )
+                }.value
             }
-            throw NSError(domain: "WebViewScriptExecutor", code: 2, userInfo: [NSLocalizedDescriptionKey: "No result emitted"])
         } catch {
-            print("Javascript function (\(requestId)) attempt \(attempts + 1) failed with error: \(error)")
+            warning(
+                .openAPS,
+                "Javascript function (\(name), \(requestId)) attempt \(attempts + 1) failed with error: \(error)"
+            )
             continuationStreams.removeValue(forKey: requestId)
             if attempts < maxAttempts {
                 webView?.removeFromSuperview()
                 webView = createWebView()
                 ensureAttachedToWindow()
-                return try await evaluateFunction(body: body, attempts: attempts + 1)
+                return try await evaluateFunction(name: name, body: body, attempts: attempts + 1)
             } else {
                 throw error
             }
