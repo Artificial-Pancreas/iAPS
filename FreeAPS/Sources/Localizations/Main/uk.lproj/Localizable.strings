@@ -3824,95 +3824,95 @@ Enact a temp Basal or a temp target */
 
 "1 segment" = "1 сегмент";
 
-"%d segments" = "%d segments";
+"%d segments" = "%d сегментів";
 
-"Carb ratio schedule contains a non-positive value." = "Carb ratio schedule contains a non-positive value.";
+"Carb ratio schedule contains a non-positive value." = "Графік вуглеводного співвідношення містить недодатне значення.";
 
-"Total basal across the day is zero or negative." = "Total basal across the day is zero or negative.";
+"Total basal across the day is zero or negative." = "Загальний базальний рівень протягом дня дорівнює нулю або є від'ємним.";
 
-"Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
+"Insulin sensitivity schedule contains a non-positive value." = "Графік чутливості до інсуліну містить непозитивне значення.";
 
 /* Restore by account login */
-"Account login" = "Account login";
+"Account login" = "Вхід до Облікового запису";
 
-"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Увійдіть у свій обліковий запис онлайн-резервного копіювання, щоб відновити налаштування OpenAPS і програм.";
 
-"Email" = "Email";
+"Email" = "Електронна пошта";
 
 "Password" = "Пароль";
 
-"Authentication code" = "Authentication code";
+"Authentication code" = "Код автентифікації";
 
-"Logging in…" = "Logging in…";
+"Logging in…" = "Вхід…";
 
-"Log in & restore" = "Log in & restore";
+"Log in & restore" = "Увійти та відновити";
 
-"Enter your email and password." = "Enter your email and password.";
+"Enter your email and password." = "Введіть свою електронну адресу та пароль.";
 
-"Enter the code from your authenticator app." = "Enter the code from your authenticator app.";
+"Enter the code from your authenticator app." = "Введіть код із вашого застосунку для автентифікації.";
 
-"That code didn't match. Please try again." = "That code didn't match. Please try again.";
+"That code didn't match. Please try again." = "Код не збігається. Спробуйте ще раз.";
 
-"Email or password is incorrect." = "Email or password is incorrect.";
+"Email or password is incorrect." = "Електронна пошта або пароль невірні.";
 
-"No backup is linked to this account yet." = "No backup is linked to this account yet.";
+"No backup is linked to this account yet." = "Резервна копія ще не пов’язана з цим обліковим записом.";
 
-"Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
+"Couldn't reach the server. Check your connection and try again." = "Не вдалося зв’язатися із сервером. Перевірте з’єднання та спробуйте ще раз.";
 
 /* Recovery token & account (final onboarding step) */
-"Save your recovery token" = "Save your recovery token";
+"Save your recovery token" = "Збережіть свій токен відновлення";
 
-"Copy" = "Copy";
+"Copy" = "Копіювати";
 
-"Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
+"Record this somewhere safe. It's how you restore your settings on a new phone." = "Запишіть це в безпечному місці. Ось як ви відновлюєте налаштування на новому телефоні.";
 
-"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices.";
+"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "Вам не потрібен обліковий запис — ваш маркер відновлення вже створює резервну копію та відновлює ваші налаштування. Обліковий запис дає змогу відновлювати дані за допомогою електронної пошти та пароля замість маркера та керувати своїми пристроями.";
 
-"Optional: attach this device to an account" = "Optional: attach this device to an account";
+"Optional: attach this device to an account" = "Додатково: прив’яжіть цей пристрій до облікового запису";
 
-"Link to an existing account" = "Link to an existing account";
+"Link to an existing account" = "Посилання на існуючий обліковий запис";
 
-"Create an account" = "Create an account";
+"Create an account" = "Створити обліковий запис";
 
-"Confirm password" = "Confirm password";
+"Confirm password" = "Підтвердити пароль";
 
-"Verify & link" = "Verify & link";
+"Verify & link" = "Перевірити та зв'язати";
 
-"Link this device" = "Link this device";
+"Link this device" = "Підключити цей пристрій";
 
-"Linking…" = "Linking…";
+"Linking…" = "Зв’язування…";
 
-"Create account" = "Create account";
+"Create account" = "Створити обліковий запис";
 
-"Creating…" = "Creating…";
+"Creating…" = "Створення…";
 
-"Device linked" = "Device linked";
+"Device linked" = "Пристрій підключено";
 
-"This device is now attached to %@. You can restore it by logging in." = "This device is now attached to %@. You can restore it by logging in.";
+"This device is now attached to %@. You can restore it by logging in." = "Цей пристрій тепер підключено до %@. Ви можете відновити його, увійшовши в систему.";
 
-"Finish without an account" = "Finish without an account";
+"Finish without an account" = "Завершити без облікового запису";
 
-"This device is already linked to another account." = "This device is already linked to another account.";
+"This device is already linked to another account." = "Цей пристрій уже підключено до іншого облікового запису.";
 
-"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.";
+"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "На цьому пристрої ще не завершено перше резервне копіювання. Переконайтеся, що онлайн-резервне копіювання ввімкнено, а потім повторіть спробу через мить.";
 
-"This device's recovery token looks invalid." = "This device's recovery token looks invalid.";
+"This device's recovery token looks invalid." = "Токен відновлення цього пристрою виглядає недійсним.";
 
-"An account with that email already exists. Try linking instead." = "An account with that email already exists. Try linking instead.";
+"An account with that email already exists. Try linking instead." = "Обліковий запис із цією електронною адресою вже існує. Спробуйте натомість його прив’язати.";
 
-"That email doesn't look right." = "That email doesn't look right.";
+"That email doesn't look right." = "Цей електронний лист виглядає неправильним.";
 
-"Please choose a stronger password (at least 8 characters)." = "Please choose a stronger password (at least 8 characters).";
+"Please choose a stronger password (at least 8 characters)." = "Будь ласка, оберіть надійніший пароль (принаймні 8 символів).";
 
-"Passwords don't match." = "Passwords don't match.";
+"Passwords don't match." = "Паролі не збігаються.";
 
 /* Device setup */
-"Set up your devices" = "Set up your devices";
+"Set up your devices" = "Налаштуйте свої пристрої";
 
-"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.";
+"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "З’єднайте насос і CGM, щоб iAPS міг зчитувати глюкозу та вводити інсулін. Ви також можете налаштувати їх пізніше в налаштуваннях.";
 
 /* Restore setup summary */
-"Review your settings" = "Review your settings";
+"Review your settings" = "Перегляньте свої налаштування";
 
 "Set up your settings" = "Налаштуйте свої параметри";
 
