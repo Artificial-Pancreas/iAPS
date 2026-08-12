@@ -3833,95 +3833,95 @@ Enact a temp Basal or a temp target */
 /* Restore by account login */
 "Account login" = "Đăng nhập tài khoản";
 
-"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Đăng nhập vào tài khoản sao lưu trực tuyến để khôi phục tùy chọn OpenAPS và cài đặt ứng dụng của bạn.";
 
 "Email" = "Email";
 
 "Password" = "Mật khẩu";
 
-"Authentication code" = "Authentication code";
+"Authentication code" = "Mã xác thực";
 
-"Logging in…" = "Logging in…";
+"Logging in…" = "Đang đăng nhập…";
 
-"Log in & restore" = "Log in & restore";
+"Log in & restore" = "Đăng nhập & khôi phục";
 
-"Enter your email and password." = "Enter your email and password.";
+"Enter your email and password." = "Nhập email và mật khẩu của bạn.";
 
-"Enter the code from your authenticator app." = "Enter the code from your authenticator app.";
+"Enter the code from your authenticator app." = "Nhập mã từ ứng dụng xác thực của bạn.";
 
-"That code didn't match. Please try again." = "That code didn't match. Please try again.";
+"That code didn't match. Please try again." = "Mã này không đúng. Vui lòng thử lại.";
 
-"Email or password is incorrect." = "Email or password is incorrect.";
+"Email or password is incorrect." = "Email và mật khẩu không chính xác.";
 
-"No backup is linked to this account yet." = "No backup is linked to this account yet.";
+"No backup is linked to this account yet." = "Chưa có bản sao lưu nào được liên kết với tài khoản này.";
 
-"Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
+"Couldn't reach the server. Check your connection and try again." = "Không thể kết nối đến máy chủ. Hãy kiểm tra kết nối mạng và thử lại.";
 
 /* Recovery token & account (final onboarding step) */
-"Save your recovery token" = "Save your recovery token";
+"Save your recovery token" = "Lưu mã token khôi phục của bạn";
 
 "Copy" = "Sao chép";
 
-"Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
+"Record this somewhere safe. It's how you restore your settings on a new phone." = "Hãy lưu lại mã này ở nơi an toàn. Đây là cách để khôi phục cài đặt của bạn trên điện thoại mới.";
 
-"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices.";
+"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "Bạn không cần tài khoản — mã token khôi phục ở trên đã cho phép sao lưu và khôi phục cài đặt của bạn. Tài khoản chỉ giúp bạn khôi phục bằng email và mật khẩu thay vì mã token, đồng thời quản lý các thiết bị của bạn.";
 
-"Optional: attach this device to an account" = "Optional: attach this device to an account";
+"Optional: attach this device to an account" = "Tùy chọn: liên kết thiết bị này với tài khoản";
 
-"Link to an existing account" = "Link to an existing account";
+"Link to an existing account" = "Liên kết với tài khoản hiện có";
 
-"Create an account" = "Create an account";
+"Create an account" = "Tạo một tài khoản";
 
-"Confirm password" = "Confirm password";
+"Confirm password" = "Xác nhận mật khẩu";
 
-"Verify & link" = "Verify & link";
+"Verify & link" = "Xác minh & liên kết";
 
-"Link this device" = "Link this device";
+"Link this device" = "Liên kết thiết bị này";
 
-"Linking…" = "Linking…";
+"Linking…" = "Đang liên kết…";
 
-"Create account" = "Create account";
+"Create account" = "Tạo tài khoản";
 
-"Creating…" = "Creating…";
+"Creating…" = "Đang tạo…";
 
-"Device linked" = "Device linked";
+"Device linked" = "Thiết bị đã được liên kết";
 
-"This device is now attached to %@. You can restore it by logging in." = "This device is now attached to %@. You can restore it by logging in.";
+"This device is now attached to %@. You can restore it by logging in." = "Thiết bị này hiện đã được liên kết với %@. Bạn có thể khôi phục bằng cách đăng nhập.";
 
-"Finish without an account" = "Finish without an account";
+"Finish without an account" = "Hoàn thành mà không cần tài khoản";
 
-"This device is already linked to another account." = "This device is already linked to another account.";
+"This device is already linked to another account." = "Thiết bị này đã được liên kết với một tài khoản khác.";
 
-"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.";
+"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "Thiết bị này chưa hoàn tất bản sao lưu đầu tiên. Hãy đảm bảo Sao lưu trực tuyến đang được bật, sau đó thử lại sau ít phút.";
 
-"This device's recovery token looks invalid." = "This device's recovery token looks invalid.";
+"This device's recovery token looks invalid." = "Mã token khôi phục của thiết bị này không hợp lệ.";
 
-"An account with that email already exists. Try linking instead." = "An account with that email already exists. Try linking instead.";
+"An account with that email already exists. Try linking instead." = "Tài khoản với email này đã tồn tại. Hãy thử liên kết thay thế.";
 
 "That email doesn't look right." = "That email doesn't look right.";
 
-"Please choose a stronger password (at least 8 characters)." = "Please choose a stronger password (at least 8 characters).";
+"Please choose a stronger password (at least 8 characters)." = "Vui lòng chọn mật khẩu mạnh hơn (ít nhất 8 ký tự).";
 
-"Passwords don't match." = "Passwords don't match.";
+"Passwords don't match." = "Mật khẩu không khớp.";
 
 /* Device setup */
-"Set up your devices" = "Set up your devices";
+"Set up your devices" = "Thiết lập thiết bị của bạn";
 
-"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.";
+"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Ghép nối bơm insulin và CGM để iAPS có thể đọc dữ liệu đường huyết và cung cấp insulin. Bạn cũng có thể thiết lập các thiết bị này sau trong Cài đặt.";
 
 /* Restore setup summary */
-"Review your settings" = "Review your settings";
+"Review your settings" = "Xem lại các cài đặt của bạn";
 
-"Set up your settings" = "Set up your settings";
+"Set up your settings" = "Thiết lập cài đặt của bạn";
 
-"Review" = "Review";
+"Review" = "Xem lại";
 
 "Setup" = "Cài đặt";
 
 "Next Step" = "Tiếp theo";
 
 /* Restore CoreData status */
-"Restoring your data" = "Restoring your data";
+"Restoring your data" = "Đang khôi phục dữ liệu của bạn";
 
 "Restored data" = "Restored data";
 
