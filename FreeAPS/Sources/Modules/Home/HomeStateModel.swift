@@ -87,6 +87,7 @@ extension Home {
         var data = ChartModel(
             suggestion: nil,
             glucose: [],
+            rawGlucose: [],
             activity: [],
             cob: [],
             isManual: [],
@@ -183,9 +184,11 @@ extension Home {
                 await me.cgmCensorDaysUpdated(sensorDays)
             }
 
-            observeUI(appCoordinator.glucoseRaw) { me, glucose in
-                // TODO: use the provided value inside the function, currently it re-reads from the storage
-                await me.glucoseDidUpdate(glucose)
+            observeUI(
+                appCoordinator.glucoseSmoothed,
+                map: { $0.map { [$0.dateString.timeIntervalSince1970, Double($0.glucose)] } }
+            ) { me, _ in
+                await me.glucoseDidUpdate()
             }
 
             observeUI(appCoordinator.suggested) { me, suggestion in
@@ -363,17 +366,17 @@ extension Home {
         }
 
         private func setupGlucose() async {
+            let rawGlucose = provider.rawGlucose(hours: filteredHours)
+
             data.isManual = provider.manualGlucose(hours: filteredHours)
+            // the chart draws the smoothed series + raw values on top
             data.glucose = provider.smoothedGlucose(hours: filteredHours)
+            data.rawGlucose = rawGlucose
             readings = await coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate)
-            recentGlucose = data.glucose.last
-            if data.glucose.count >= 2 {
-                glucoseDelta =
-                    NSDecimalNumber(
-                        decimal:
-                        (recentGlucose?.unfiltered ?? 0) -
-                            data.glucose[data.glucose.count - 2].unfiltered
-                    ).intValue
+
+            recentGlucose = rawGlucose.last
+            if rawGlucose.count >= 2 {
+                glucoseDelta = rawGlucose[rawGlucose.count - 1].glucose - rawGlucose[rawGlucose.count - 2].glucose
             } else {
                 glucoseDelta = nil
             }
@@ -671,7 +674,7 @@ extension Home {
 }
 
 extension Home.StateModel {
-    private func glucoseDidUpdate(_: [BloodGlucose]) async {
+    private func glucoseDidUpdate() async {
         await setupGlucose()
         setupLoopStatsBackground()
     }

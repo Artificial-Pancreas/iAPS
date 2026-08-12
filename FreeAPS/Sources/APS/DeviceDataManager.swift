@@ -480,15 +480,12 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
                 let dateRoundedTo1Second = newGlucoseSample.date.truncatedToSecond
                 return BloodGlucose(
                     _id: UUID().uuidString,
-                    sgv: value,
+                    glucose: value,
                     direction: .init(trendType: newGlucoseSample.trend),
                     date: Decimal(Int(dateRoundedTo1Second.timeIntervalSince1970 * 1000)),
                     dateString: dateRoundedTo1Second,
-                    unfiltered: Decimal(value),
                     uncalibrated: Decimal(uncalibrated),
-                    filtered: nil,
                     noise: nil,
-                    glucose: value,
                     type: "sgv",
                     sessionStartDate: sessionStart,
                 )
