@@ -2683,12 +2683,12 @@ Enact a temp Basal or a temp target */
 "Got it" = "Đã hiểu";
 "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous." = "Độ nhạy insulin chịu ảnh hưởng bởi hormone sinh dục — estrogen và progesterone so với testosterone — chứ không phải bởi bản dạng giới. Hãy chọn kiểu hormone mà cơ thể bạn hiện đang có. Với hầu hết mọi người, đó đơn giản là giới tính của họ; nếu bạn đang sử dụng liệu pháp hormone, hãy chọn giới tính tương ứng với loại hormone bạn đang sử dụng.\n\nThông tin này giúp cải thiện việc phân tích dữ liệu của chính bạn và vẫn được giữ ẩn danh.";
 "Enable Uploads" = "Kích hoạt Tải lên";
-"Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Set your sex to Woman or Man and a valid birth date above to enable daily log upload.";
-"When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default.";
-"Daily Log upload turned off" = "Daily Log upload turned off";
-"Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on.";
+"Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Để bật tải nhật ký hằng ngày lên, hãy đặt Giới tính thành Nữ hoặc Nam và nhập ngày sinh hợp lệ ở trên.";
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "Khi được bật, tệp nhật ký của ngày trước đó sẽ tự động được tải lên sau nửa đêm. Nhật ký được sử dụng để phân tích dữ liệu nhiều ngày trên open-iaps.app. Mặc định: Tắt.";
+"Daily Log upload turned off" = "Đã tắt tải nhật ký hằng ngày";
+"Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Tải nhật ký hằng ngày yêu cầu Giới tính được đặt thành Nữ hoặc Nam và ngày sinh hợp lệ. Hãy cập nhật thông tin cá nhân để bật lại tính năng này.";
 "Copied" = "Đã sao chép";
-"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Write this token down somewhere safe. It is the only way to restore your settings on a new phone.";
+"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Hãy ghi lại mã token này và lưu giữ ở nơi an toàn. Đây là cách duy nhất để khôi phục cài đặt của bạn trên điện thoại mới.";
 
 /* ——————————Contact Image ————————*/
 
@@ -3735,24 +3735,24 @@ Enact a temp Basal or a temp target */
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Bản dựng iAPS của bạn sẽ hết hạn vào %1$@ (còn %2$d ngày). Các bản dựng TestFlight phải được gia hạn sau 90 ngày.";
 
 /* --- First-launch Welcome + post-upgrade notice (onboarding) --- */
-"Welcome to iAPS" = "Welcome to iAPS";
+"Welcome to iAPS" = "Chào mừng bạn đến với iAPS";
 
-"Let's get you set up." = "Let's get you set up.";
+"Let's get you set up." = "Hãy bắt đầu thiết lập.";
 
 /* Welcome screen disclaimer (phase 1) */
-"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm.";
+"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS là một hệ thống tuyến tụy nhân tạo mã nguồn mở, dựa trên thuật toán OpenAPS.";
 
-"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is not approved by any health authority. You run this system at your own risk.";
+"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS chưa được bất kỳ cơ quan y tế nào phê duyệt. Bạn tự chịu trách nhiệm về rủi ro khi sử dụng hệ thống này.";
 
-"New User" = "New User";
+"New User" = "Người dùng mới";
 
-"Set up iAPS for the first time" = "Set up iAPS for the first time";
+"Set up iAPS for the first time" = "Thiết lập iAPS lần đầu";
 
-"Existing User" = "Existing User";
+"Existing User" = "Đã có tài khoản";
 
-"Skip setup — configure everything myself" = "Skip setup — configure everything myself";
+"Skip setup — configure everything myself" = "Bỏ qua thiết lập — tự cấu hình mọi thứ";
 
-"Migrate my settings from a previous install" = "Migrate my settings from a previous install";
+"Migrate my settings from a previous install" = "Di chuyển cài đặt từ bản cài đặt trước";
 
 "Stuck? Help is here" = "Stuck? Help is here";
 
