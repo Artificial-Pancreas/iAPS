@@ -421,6 +421,7 @@
 		F20E9A932FCD0D5500FCACBD /* PumpDisplayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A922FCD0D5300FCACBD /* PumpDisplayInfo.swift */; };
 		F20E9A952FCD0D7100FCACBD /* CgmDisplayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A942FCD0D6B00FCACBD /* CgmDisplayInfo.swift */; };
 		F20E9A972FD1F6A600FCACBD /* TaskIDBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */; };
+		F2A11C0230200A0100EF9230 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A11C0130200A0100EF9230 /* Timeout.swift */; };
 		F20E9A992FD4CC4700FCACBD /* AppUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A982FD4CC3E00FCACBD /* AppUIState.swift */; };
 		F20E9A9A2FD59B5000FCACBD /* LifetimeOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25EBEFE2FC2312A009D275F /* LifetimeOwner.swift */; };
 		F21580A52E47B4FF003BC827 /* PeakPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21580A42E47B4FE003BC827 /* PeakPicker.swift */; };
@@ -1190,6 +1191,7 @@
 		F20E9A922FCD0D5300FCACBD /* PumpDisplayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpDisplayInfo.swift; sourceTree = "<group>"; };
 		F20E9A942FCD0D6B00FCACBD /* CgmDisplayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CgmDisplayInfo.swift; sourceTree = "<group>"; };
 		F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIDBox.swift; sourceTree = "<group>"; };
+		F2A11C0130200A0100EF9230 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		F20E9A982FD4CC3E00FCACBD /* AppUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUIState.swift; sourceTree = "<group>"; };
 		F21580A42E47B4FE003BC827 /* PeakPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakPicker.swift; sourceTree = "<group>"; };
 		F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickDataFlow.swift; sourceTree = "<group>"; };
@@ -2364,6 +2366,7 @@
 				F25EBEFE2FC2312A009D275F /* LifetimeOwner.swift */,
 				F22A8858300058D30019BDC5 /* UIBindingOwner.swift */,
 				F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */,
+				F2A11C0130200A0100EF9230 /* Timeout.swift */,
 				F299DCFB2FD791800048B96A /* LoopKit+Extensions.swift */,
 				F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */,
 				F2DE0B9530042E7D00EF9230 /* ProtectedData.swift */,
@@ -4093,6 +4096,7 @@
 				B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */,
 				320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */,
 				F20E9A972FD1F6A600FCACBD /* TaskIDBox.swift in Sources */,
+				F2A11C0230200A0100EF9230 /* Timeout.swift in Sources */,
 				19E1F7E829D082D0005C8D20 /* IconConfigDataFlow.swift in Sources */,
 				E25073BC86C11C3D6A42F5AC /* CalibrationsStateModel.swift in Sources */,
 				19DB781D2D332F73007BBB54 /* AutoISFsettings.swift in Sources */,

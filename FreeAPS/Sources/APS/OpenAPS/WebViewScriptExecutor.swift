@@ -6,6 +6,9 @@ struct ScriptError: Decodable, Error {
 }
 
 final class WebViewScriptExecutor: Sendable {
+    static let defaultTimeout: Duration = .seconds(30)
+    private static let maxAttachAttempts = 5
+
     @MainActor private var webView: WKWebView?
 
     nonisolated init(frame _: CGRect = .zero) {
@@ -14,15 +17,18 @@ final class WebViewScriptExecutor: Sendable {
         }
     }
 
-    deinit {
-        let view = MainActor.assumeIsolated { self.webView }
-        DispatchQueue.main.async {
-            view?.removeFromSuperview()
-        }
+    /** This is not currently used in the app - we keep the WebViewScriptExecutor instance forever.
+      * If at some point we need to create/destroy instances of WebViewScriptExecutor dynamically (tests, previews, etc),
+      * the owner will be responsible for calling this function.
+     */
+    @MainActor func shutdown() {
+        webView?.removeFromSuperview()
     }
 
     private func createWebView() async {
         await MainActor.run {
+            self.webView?.removeFromSuperview()
+
             let contentController = WKUserContentController()
             let messageHandler = JSMessageBridge()
             messageHandler.executor = self
@@ -43,33 +49,32 @@ final class WebViewScriptExecutor: Sendable {
         }
     }
 
-    @MainActor private func ensureAttachedToWindow() {
+    @MainActor private func ensureAttachedToWindow(attempt: Int = 0) {
         guard let webView, webView.superview == nil else { return }
 
-        var window: UIWindow?
-        if let windowScene = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
-        {
-            window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
-        }
-        if window == nil {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
+        guard let window = Self.hostWindow() else {
+            guard attempt < Self.maxAttachAttempts else {
+                debug(.openAPS, "WebView has no window to attach to; retrying on next JS call")
+                return
             }
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(1))
+                self.ensureAttachedToWindow(attempt: attempt + 1)
+            }
+            return
         }
 
-        if let window = window {
-            window.addSubview(webView)
-            debug(.openAPS, "WebView successfully attached to window for background protection")
-        } else {
-            // If we still can't find it, we can schedule a retry
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                Task { @MainActor in
-                    self.ensureAttachedToWindow()
-                }
-            }
-        }
+        webView.isUserInteractionEnabled = false
+        window.addSubview(webView)
+        debug(.openAPS, "WebView attached to window for background protection")
+    }
+
+    @MainActor private static func hostWindow() -> UIWindow? {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+            ?? scenes.compactMap { $0 as? UIWindowScene }.first
+        guard let windowScene else { return nil }
+        return windowScene.windows.first(where: \.isKeyWindow) ?? windowScene.windows.first
     }
 
     private func injectConsoleLogHandler(webView: WKWebView) {
@@ -117,27 +122,26 @@ final class WebViewScriptExecutor: Sendable {
     ) async throws -> String {
         let maxAttempts = 2
         do {
-            return try await Task { @MainActor in
-                self.ensureAttachedToWindow()
-                guard let webView else {
-                    throw NSError(
-                        domain: "WebViewScriptExecutor", code: 2,
-                        userInfo: [NSLocalizedDescriptionKey: "WebView not initialized yet"]
-                    )
-                }
+            return try await withTimeout("js.\(function)", Self.defaultTimeout) { [self] in
+                try await Task { @MainActor in
+                    self.ensureAttachedToWindow()
+                    guard let webView = self.webView else {
+                        throw NSError(
+                            domain: "WebViewScriptExecutor", code: 2,
+                            userInfo: [NSLocalizedDescriptionKey: "WebView not initialized yet"]
+                        )
+                    }
 
-                return try await Signpost.measure("js", poi: true, function) {
-                    try await webView.callAsyncJavaScriptShim(
-                        "iaps.invoke(\"\(function)\", input)",
-                        argument: input,
-                    )
-                }
-            }.value
+                    return try await Signpost.measure("js", poi: true, function) {
+                        try await webView.callAsyncJavaScriptShim(
+                            "iaps.invoke(\"\(function)\", input)",
+                            argument: input,
+                        )
+                    }
+                }.value
+            }
         } catch {
             debug(.openAPS, "Javascript function (\(function)) attempt \(attempts + 1) failed with error: \(error)")
-            await MainActor.run {
-                self.webView?.removeFromSuperview()
-            }
             await createWebView()
             if attempts < maxAttempts {
                 return try await evaluate(function: function, with: input, attempts: attempts + 1)
