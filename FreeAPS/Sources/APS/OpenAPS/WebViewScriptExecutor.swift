@@ -1,3 +1,4 @@
+import UIKit
 import WebKit
 
 struct ScriptError: Decodable, Error {
@@ -10,6 +11,13 @@ final class WebViewScriptExecutor: Sendable {
     nonisolated init(frame _: CGRect = .zero) {
         Task {
             await self.createWebView()
+        }
+    }
+
+    deinit {
+        let view = MainActor.assumeIsolated { self.webView }
+        DispatchQueue.main.async {
+            view?.removeFromSuperview()
         }
     }
 
@@ -31,6 +39,36 @@ final class WebViewScriptExecutor: Sendable {
             includeScript(webView: webView, script: Script(name: OpenAPS.Bundle.oref0))
 
             self.webView = webView
+            self.ensureAttachedToWindow()
+        }
+    }
+
+    @MainActor private func ensureAttachedToWindow() {
+        guard let webView, webView.superview == nil else { return }
+
+        var window: UIWindow?
+        if let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+        {
+            window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
+        }
+        if window == nil {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first
+            }
+        }
+
+        if let window = window {
+            window.addSubview(webView)
+            debug(.openAPS, "WebView successfully attached to window for background protection")
+        } else {
+            // If we still can't find it, we can schedule a retry
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                Task { @MainActor in
+                    self.ensureAttachedToWindow()
+                }
+            }
         }
     }
 
@@ -80,6 +118,7 @@ final class WebViewScriptExecutor: Sendable {
         let maxAttempts = 2
         do {
             return try await Task { @MainActor in
+                self.ensureAttachedToWindow()
                 guard let webView else {
                     throw NSError(
                         domain: "WebViewScriptExecutor", code: 2,
@@ -96,6 +135,9 @@ final class WebViewScriptExecutor: Sendable {
             }.value
         } catch {
             debug(.openAPS, "Javascript function (\(function)) attempt \(attempts + 1) failed with error: \(error)")
+            await MainActor.run {
+                self.webView?.removeFromSuperview()
+            }
             await createWebView()
             if attempts < maxAttempts {
                 return try await evaluate(function: function, with: input, attempts: attempts + 1)
