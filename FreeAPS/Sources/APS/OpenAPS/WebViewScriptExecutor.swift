@@ -4,9 +4,15 @@ import WebKit
 @MainActor class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
     static let defaultTimeout: Duration = .seconds(30)
     private static let maxAttachAttempts = 10
+    private static let readyMessageID = "__iaps_ready__"
 
     private var webView: WKWebView!
     private var continuationStreams = [String: AsyncThrowingStream<RawJSON, Error>.Continuation]()
+
+    /// True once the current WebView has loaded its document and every user script has run.
+    private var isReady = false
+    private var readyWaiters = [CheckedContinuation<Void, Error>]()
+    private var webViewGeneration = 0
     private var scripts = [
         FunctionScript(name: OpenAPS.Bundle.autosens, function: "freeaps_autosens"),
         FunctionScript(name: OpenAPS.Bundle.autotuneCore, function: "freeaps_autotuneCore"),
@@ -34,8 +40,38 @@ import WebKit
     init(frame _: CGRect = .zero) {
         super.init()
 
+        replaceWebView()
+    }
+
+    /// Tear down the current WebView and stand up a fresh one.
+    /// Anything waiting on the is failed rather.
+    private func replaceWebView() {
+        webView?.removeFromSuperview()
+        failReadyWaiters(
+            NSError(
+                domain: "WebViewScriptExecutor", code: 3,
+                userInfo: [NSLocalizedDescriptionKey: "WebView replaced before it became ready"]
+            )
+        )
+        isReady = false
+        webViewGeneration &+= 1
         webView = createWebView()
         ensureAttachedToWindow()
+    }
+
+    private func failReadyWaiters(_ error: Error) {
+        let waiters = readyWaiters
+        readyWaiters.removeAll()
+        for waiter in waiters {
+            waiter.resume(throwing: error)
+        }
+    }
+
+    private func awaitReady() async throws {
+        if isReady { return }
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            readyWaiters.append(continuation)
+        }
     }
 
     private func ensureAttachedToWindow(attempt: Int = 0) {
@@ -72,18 +108,37 @@ import WebKit
         contentController.add(self, name: "jsBridge")
         contentController.add(self, name: "scriptError")
 
+        // Register the oref bundles as user scripts.
+        // WebKit re-applies user scripts on every document load.
+        for source in userScriptSources() {
+            contentController.addUserScript(WKUserScript(
+                source: source,
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: true
+            ))
+        }
+        contentController.addUserScript(WKUserScript(
+            source: """
+            window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(Self.readyMessageID)", value: "" });
+            """,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        ))
+
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
 
         let webView = WKWebView(frame: .zero, configuration: config)
+        webView.navigationDelegate = self
 
-        injectConsoleLogHandler(webView: webView)
-        loadScripts(webView: webView)
+        // User scripts only run as part of a document load.
+        // This is also what makes webViewWebContentProcessDidTerminate reliable.
+        webView.loadHTMLString("<html><body></body></html>", baseURL: nil)
 
         return webView
     }
 
-    private func injectConsoleLogHandler(webView: WKWebView) {
+    private func userScriptSources() -> [String] {
         let consoleScript = """
         var _consoleLog = function (message) {
             window.webkit.messageHandlers.consoleLog.postMessage(message.join(" "));
@@ -93,27 +148,11 @@ import WebKit
         });
 
         """
-        webView.evaluateJavaScript(consoleScript, completionHandler: nil)
+        return [consoleScript] + scripts.map(\.body) + [Script(name: OpenAPS.Prepare.log).body]
     }
 
     private func script(for name: String) -> FunctionScript? {
         scripts.filter { $0.name == name }.first
-    }
-
-    private func loadScripts(webView: WKWebView) {
-        for script in scripts {
-            includeScript(webView: webView, script: script)
-        }
-
-        includeScript(webView: webView, script: Script(name: OpenAPS.Prepare.log))
-    }
-
-    private func includeScript(webView: WKWebView, script: FunctionScript) {
-        includeScript(webView: webView, script: Script(name: "Script", body: script.body))
-    }
-
-    private func includeScript(webView: WKWebView, script: Script) {
-        webView.evaluateJavaScript(script.body)
     }
 
     func call(
@@ -168,6 +207,7 @@ import WebKit
 
         let maxAttempts = 2
         let requestId = UUID().uuidString
+        let generation = webViewGeneration
 
         let script = """
         (function () {
@@ -192,6 +232,8 @@ import WebKit
         do {
             return try await withTimeout("js.\(name)", Self.defaultTimeout) { [self] in
                 try await Task { @MainActor in
+                    try await awaitReady()
+
                     try await webView.evaluateJavaScript(script)
 
                     for try await value in stream {
@@ -210,9 +252,10 @@ import WebKit
             )
             continuationStreams.removeValue(forKey: requestId)
             if attempts < maxAttempts {
-                webView?.removeFromSuperview()
-                webView = createWebView()
-                ensureAttachedToWindow()
+                // Skip if the terminate delegate (or another failing call) already rebuilt the WebView.
+                if webViewGeneration == generation {
+                    replaceWebView()
+                }
                 return try await evaluateFunction(name: name, body: body, attempts: attempts + 1)
             } else {
                 throw error
@@ -229,6 +272,20 @@ import WebKit
         }
         if message.name == "scriptError", let logMessage = message.body as? String {
             warning(.openAPS, "JavaScript Error: \(logMessage)")
+        }
+        // The documentEnd user script fired: the document (re)loaded and every oref
+        // bundle has been injected, so queued calls may proceed.
+        if message.name == "jsBridge",
+           let body = message.body as? [String: Any],
+           body["id"] as? String == Self.readyMessageID
+        {
+            isReady = true
+            let waiters = readyWaiters
+            readyWaiters.removeAll()
+            for waiter in waiters {
+                waiter.resume()
+            }
+            return
         }
         // Handle responses from evaluateFunction via jsBridge
         if message.name == "jsBridge",
@@ -253,5 +310,37 @@ import WebKit
                 ))
             }
         }
+    }
+}
+
+extension WebViewScriptExecutor: WKNavigationDelegate {
+    /// The WebContent (JS) process died — jetsam under memory pressure, a crash, or iOS
+    /// reclaiming it in the background. Every in-flight call would otherwise wait for a
+    /// reply that can no longer arrive, so fail them all now; their retry path picks up
+    /// the rebuilt WebView. Unlike a suspended process this one WebKit tells us about,
+    /// which is why it is worth handling separately from the watchdog.
+    func webViewWebContentProcessDidTerminate(_ terminatedWebView: WKWebView) {
+        guard terminatedWebView === webView else { return }
+
+        let pending = continuationStreams
+        continuationStreams.removeAll()
+        warning(
+            .openAPS,
+            "WebContent process terminated by iOS - failing \(pending.count) in-flight JS call(s) and rebuilding the WebView"
+        )
+        let error = NSError(
+            domain: "WebViewScriptExecutor", code: 510,
+            userInfo: [NSLocalizedDescriptionKey: "WebContent process terminated"]
+        )
+        for (_, continuation) in pending {
+            continuation.finish(throwing: error)
+        }
+        replaceWebView()
+    }
+
+    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError error: Error) {
+        // The blank document that carries the user scripts failed to load, so nothing
+        // was injected and awaitReady() will time out. Log it or it is invisible.
+        warning(.openAPS, "WebView document load failed: \(error.localizedDescription)")
     }
 }
