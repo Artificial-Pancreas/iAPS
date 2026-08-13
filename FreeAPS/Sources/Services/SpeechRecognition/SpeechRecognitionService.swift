@@ -95,34 +95,51 @@ enum SpeechRecognitionState: Equatable {
         transcript = ""
         state = .requesting
 
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-        } catch {
-            state = .error(NSLocalizedString("Failed to set up audio session: ", comment: "") + error.localizedDescription)
-            return
-        }
+        DispatchQueue.global().async { [weak self] in
+            guard let strongSelf = self else { return }
+            let audioSession = AVAudioSession.sharedInstance()
+            do {
+                try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+                try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+            } catch {
+                Task { @MainActor in
+                    strongSelf
+                        .state = .error(
+                            NSLocalizedString("Failed to set up audio session: ", comment: "") + error
+                                .localizedDescription
+                        )
+                }
+                return
+            }
 
-        let inputNode = audioEngine.inputNode
-        inputNode.removeTap(onBus: 0)
+            weak var weakSelf = strongSelf
+            Task { @MainActor in
+                guard let strongSelf = weakSelf else { return }
+                let inputNode = strongSelf.audioEngine.inputNode
+                inputNode.removeTap(onBus: 0)
 
-        // Pass nil format — AVAudioEngine will use the input node's native format
-        // and handle any necessary conversion. This is the recommended approach
-        // for speech recognition and works on both real devices and the Simulator.
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { [weak self] buffer, _ in
-            self?.recognitionRequest?.append(buffer)
-        }
+                // Pass nil format — AVAudioEngine will use the input node's native format
+                // and handle any necessary conversion. This is the recommended approach
+                // for speech recognition and works on both real devices and the Simulator.
+                inputNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { [weak strongSelf] buffer, _ in
+                    strongSelf?.recognitionRequest?.append(buffer)
+                }
 
-        startNewRecognitionTask()
+                strongSelf.startNewRecognitionTask()
 
-        do {
-            audioEngine.prepare()
-            try audioEngine.start()
-            state = .listening
-        } catch {
-            state = .error(NSLocalizedString("Failed to start audio recording: ", comment: "") + error.localizedDescription)
-            cleanupAudio()
+                do {
+                    strongSelf.audioEngine.prepare()
+                    try strongSelf.audioEngine.start()
+                    strongSelf.state = .listening
+                } catch {
+                    strongSelf
+                        .state = .error(
+                            NSLocalizedString("Failed to start audio recording: ", comment: "") + error
+                                .localizedDescription
+                        )
+                    strongSelf.cleanupAudio()
+                }
+            }
         }
     }
 
@@ -138,7 +155,9 @@ enum SpeechRecognitionState: Equatable {
 
         audioEngine.inputNode.removeTap(onBus: 0)
 
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        DispatchQueue.global().async {
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        }
     }
 
     func cancel() {
@@ -232,6 +251,8 @@ enum SpeechRecognitionState: Equatable {
         recognitionTask?.cancel()
         recognitionTask = nil
         recognitionRequest = nil
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        DispatchQueue.global().async {
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        }
     }
 }

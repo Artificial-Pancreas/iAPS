@@ -425,7 +425,6 @@
 		F20E9A932FCD0D5500FCACBD /* PumpDisplayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A922FCD0D5300FCACBD /* PumpDisplayInfo.swift */; };
 		F20E9A952FCD0D7100FCACBD /* CGMDisplayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A942FCD0D6B00FCACBD /* CGMDisplayInfo.swift */; };
 		F20E9A972FD1F6A600FCACBD /* TaskIDBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */; };
-		F2A11C0230200A0100EF9230 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A11C0130200A0100EF9230 /* Timeout.swift */; };
 		F20E9A992FD4CC4700FCACBD /* AppUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20E9A982FD4CC3E00FCACBD /* AppUIState.swift */; };
 		F20E9A9A2FD59B5000FCACBD /* LifetimeOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25EBEFE2FC2312A009D275F /* LifetimeOwner.swift */; };
 		F21580A52E47B4FF003BC827 /* PeakPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21580A42E47B4FE003BC827 /* PeakPicker.swift */; };
@@ -523,6 +522,7 @@
 		F29E5E532EE493A400D2CBC0 /* ai in Resources */ = {isa = PBXBuildFile; fileRef = F29E5E522EE4939A00D2CBC0 /* ai */; };
 		F29FC35D2E7F670000DC04FE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29FC35C2E7F670000DC04FE /* CoreDataManager.swift */; };
 		F29FC35F2E7F6EF800DC04FE /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29FC35E2E7F6EF800DC04FE /* DateExtensions.swift */; };
+		F2A11C0230200A0100EF9230 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A11C0130200A0100EF9230 /* Timeout.swift */; };
 		F2A4B7922E64985F000E0E85 /* PluiginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7912E64985F000E0E85 /* PluiginManager.swift */; };
 		F2A4B7C32E6C8CA7000E0E85 /* CGMManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */; };
 		F2A4B7C62E6C9180000E0E85 /* BloodGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */; };
@@ -1199,7 +1199,6 @@
 		F20E9A922FCD0D5300FCACBD /* PumpDisplayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpDisplayInfo.swift; sourceTree = "<group>"; };
 		F20E9A942FCD0D6B00FCACBD /* CGMDisplayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDisplayInfo.swift; sourceTree = "<group>"; };
 		F20E9A962FD1F69E00FCACBD /* TaskIDBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIDBox.swift; sourceTree = "<group>"; };
-		F2A11C0130200A0100EF9230 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		F20E9A982FD4CC3E00FCACBD /* AppUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUIState.swift; sourceTree = "<group>"; };
 		F21580A42E47B4FE003BC827 /* PeakPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakPicker.swift; sourceTree = "<group>"; };
 		F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickDataFlow.swift; sourceTree = "<group>"; };
@@ -1298,6 +1297,7 @@
 		F29E5E522EE4939A00D2CBC0 /* ai */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ai; sourceTree = "<group>"; };
 		F29FC35C2E7F670000DC04FE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F29FC35E2E7F6EF800DC04FE /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		F2A11C0130200A0100EF9230 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		F2A4B7912E64985F000E0E85 /* PluiginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluiginManager.swift; sourceTree = "<group>"; };
 		F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerExtensions.swift; sourceTree = "<group>"; };
 		F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucoseManager.swift; sourceTree = "<group>"; };
@@ -4478,7 +4478,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
@@ -4530,7 +4530,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
@@ -4583,7 +4583,7 @@
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FreeAPSWatch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = iAPS;
@@ -4627,7 +4627,7 @@
 				CODE_SIGN_ENTITLEMENTS = "FreeAPSWatch WatchKit Extension/FreeAPSWatch WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = $APP_BUILD_NUMBER;
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FreeAPSWatch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = iAPS;
@@ -4660,7 +4660,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4681,7 +4681,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4706,7 +4706,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -4740,7 +4740,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5RLXQ74459;
+				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
