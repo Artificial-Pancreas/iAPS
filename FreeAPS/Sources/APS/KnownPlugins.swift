@@ -13,7 +13,8 @@ import OmnipodKit
 
 enum KnownPlugins {
     static func allowCalibrations(for cgmManager: CGMManager) -> Bool {
-        cgmManager.pluginIdentifier == LibreTransmitterManagerV3.pluginIdentifier
+        cgmManager.pluginIdentifier == LibreTransmitterManagerV3.pluginIdentifier ||
+            cgmManager.pluginIdentifier == LibreLoopCGMManager.pluginIdentifier
     }
 
     static func glucoseUploadingAvailable(for cgmManager: CGMManager) -> Bool {
