@@ -118,6 +118,13 @@ import WebKit
         }
     }
 
+    /// How long to wait for the JS bridge to reply before declaring the call wedged.
+    /// Healthy calls complete in 1–2 s; the margin covers autotune-sized work on old
+    /// hardware. Without this, a suspended WebContent process leaves the loop hanging
+    /// forever — field logs show silent multi-hour gaps that resolve the moment the
+    /// app is foregrounded (the reply arrives when iOS resumes the WebContent process).
+    private let watchdogTimeout: TimeInterval = 90
+
     private func evaluateFunction(body: String, attempts: Int = 0) async throws -> RawJSON {
         let maxAttempts = 2
         let requestId = UUID().uuidString
@@ -145,12 +152,44 @@ import WebKit
         do {
             try await webView.evaluateJavaScript(script)
 
-            for try await value in stream {
-                return value
+            // Race the bridge reply against a watchdog. If the WebContent process is
+            // suspended (or silently killed) mid-call, the reply never comes and never
+            // errors — the timeout is the only way the loop learns something is wrong.
+            let timeout = watchdogTimeout
+            return try await withThrowingTaskGroup(of: RawJSON.self) { group in
+                group.addTask {
+                    for try await value in stream {
+                        return value
+                    }
+                    throw NSError(
+                        domain: "WebViewScriptExecutor",
+                        code: 2,
+                        userInfo: [NSLocalizedDescriptionKey: "No result emitted"]
+                    )
+                }
+                group.addTask {
+                    try await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
+                    throw NSError(
+                        domain: "WebViewScriptExecutor",
+                        code: 408,
+                        userInfo: [
+                            NSLocalizedDescriptionKey: "JS call did not reply within \(Int(timeout)) s — WebContent process suspended or wedged"
+                        ]
+                    )
+                }
+                guard let first = try await group.next() else {
+                    throw NSError(
+                        domain: "WebViewScriptExecutor",
+                        code: 2,
+                        userInfo: [NSLocalizedDescriptionKey: "No result emitted"]
+                    )
+                }
+                group.cancelAll()
+                return first
             }
-            throw NSError(domain: "WebViewScriptExecutor", code: 2, userInfo: [NSLocalizedDescriptionKey: "No result emitted"])
         } catch {
-            print("Javascript function (\(requestId)) attempt \(attempts + 1) failed with error: \(error)")
+            // warning() (not print) so wedge recoveries show up in the device log
+            warning(.openAPS, "Javascript function (\(requestId)) attempt \(attempts + 1) failed: \(error.localizedDescription)")
             continuationStreams.removeValue(forKey: requestId)
             if attempts < maxAttempts {
                 webView = createWebView()
