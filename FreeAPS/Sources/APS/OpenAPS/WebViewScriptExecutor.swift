@@ -43,6 +43,7 @@ import WebKit
         config.userContentController = contentController
 
         let webView = WKWebView(frame: .zero, configuration: config)
+        webView.navigationDelegate = self
 
         injectConsoleLogHandler(webView: webView)
         loadScripts(webView: webView)
@@ -194,5 +195,29 @@ import WebKit
                 ))
             }
         }
+    }
+}
+
+extension WebViewScriptExecutor: WKNavigationDelegate {
+    /// The WebContent (JS) process died — jetsam under memory pressure, a crash, or iOS
+    /// reclaiming it in the background. Every in-flight call would otherwise wait forever
+    /// for a reply that can no longer arrive, and the injected oref bundles are gone, so
+    /// fail all pending calls now (their retry path rebuilds and retries) and replace the
+    /// WebView with a fresh one.
+    func webViewWebContentProcessDidTerminate(_: WKWebView) {
+        let pending = continuationStreams
+        continuationStreams.removeAll()
+        warning(
+            .openAPS,
+            "WebContent process terminated by iOS — failing \(pending.count) in-flight JS call(s) and rebuilding the WebView"
+        )
+        for (_, continuation) in pending {
+            continuation.finish(throwing: NSError(
+                domain: "WebViewScriptExecutor",
+                code: 510,
+                userInfo: [NSLocalizedDescriptionKey: "WebContent process terminated"]
+            ))
+        }
+        webView = createWebView()
     }
 }
