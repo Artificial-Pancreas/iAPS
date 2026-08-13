@@ -87,8 +87,7 @@ struct WelcomeView: View {
         .interactiveDismissDisabled()
     }
 
-    @ViewBuilder
-    private func choiceCard(
+    @ViewBuilder private func choiceCard(
         title: LocalizedStringKey,
         subtitle: LocalizedStringKey,
         systemImage: String,

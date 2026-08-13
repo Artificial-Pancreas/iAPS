@@ -29,7 +29,9 @@ struct DeviceSetupView: View {
                 } header: {
                     Text("Devices")
                 } footer: {
-                    Text("Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.")
+                    Text(
+                        "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings."
+                    )
                 }
             }
             .listStyle(.insetGrouped)
