@@ -53,7 +53,7 @@ extension UIUX {
 
                 // INSERTED: Theme preview section to make the new view visible in the app
                 Section {
-                    FemaleBodyThemeView()
+                    FemaleBodyThemeView(sexSetting: state.sexSetting)
                         .frame(height: 300)
                         .listRowInsets(EdgeInsets())
                 } header: { Text("Theme Preview") }

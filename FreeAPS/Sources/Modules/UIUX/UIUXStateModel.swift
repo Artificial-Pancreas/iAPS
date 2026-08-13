@@ -21,6 +21,7 @@ extension UIUX {
         @Published var ai: Bool = true
         @Published var mealViewMicronutrients: Bool = true
         @Published var bodyTheme: Bool = true
+        @Published var sexSetting: Int = 0
 
         var units: GlucoseUnits = .mmolL
 
@@ -45,6 +46,7 @@ extension UIUX {
             subscribeSetting(\.ai, on: $ai) { self.ai = $0 }
             subscribeSetting(\.mealViewMicronutrients, on: $mealViewMicronutrients) { self.mealViewMicronutrients = $0 }
             subscribeSetting(\.bodyTheme, on: $bodyTheme) { self.bodyTheme = $0 }
+            subscribeSetting(\.sexSetting, on: $sexSetting) { self.sexSetting = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
