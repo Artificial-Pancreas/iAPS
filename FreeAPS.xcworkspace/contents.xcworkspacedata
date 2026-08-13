@@ -17,10 +17,10 @@
       location = "group:LibreTransmitter/LibreTransmitter.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:LibreLoop/LibreLoop.xcodeproj">
+      location = "group:LibreCRKit">
    </FileRef>
    <FileRef
-      location = "group:LibreCRKit">
+      location = "group:LibreLoop/LibreLoop.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:G7SensorKit/G7SensorKit.xcodeproj">
