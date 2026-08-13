@@ -23,11 +23,13 @@ struct SetupCompleteView: View {
                     .foregroundStyle(.green)
                 Text("Setup complete")
                     .font(.largeTitle).bold()
-                Text("Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
+                Text(
+                    "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings."
+                )
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
             }
 
             Toggle(isOn: $closedLoop) {

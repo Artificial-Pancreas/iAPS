@@ -24,19 +24,24 @@ struct UpgradeNoticeView: View {
                 Text("iAPS updated")
                     .font(.largeTitle).bold()
                 Text(String(
-                    format: NSLocalizedString("You're now running version %@.", comment: "Upgrade notice subtitle, %@ is the version number"),
+                    format: NSLocalizedString(
+                        "You're now running version %@.",
+                        comment: "Upgrade notice subtitle, %@ is the version number"
+                    ),
                     version
                 ))
-                .font(.headline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
             }
 
-            Text("Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.")
-                .font(.subheadline)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
-                .padding(.horizontal)
+            Text(
+                "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first."
+            )
+            .font(.subheadline)
+            .multilineTextAlignment(.center)
+            .foregroundStyle(.secondary)
+            .padding(.horizontal)
 
             Spacer()
 
