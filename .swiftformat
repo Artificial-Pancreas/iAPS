@@ -12,3 +12,6 @@
 --exclude NightscoutRemoteCGM/
 --exclude MedtrumKit/
 --exclude OmnipodKit/
+--exclude LibreCRKit/
+--exclude LibreLoop/
+--exclude EversenseKit/
