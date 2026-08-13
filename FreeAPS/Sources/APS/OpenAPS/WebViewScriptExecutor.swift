@@ -43,8 +43,9 @@ import WebKit
         replaceWebView()
     }
 
-    /// Tear down the current WebView and stand up a fresh one.
-    /// Anything waiting on the is failed rather.
+    /// Tear down the current WebView and stand up a fresh one. Anything waiting on the
+    /// outgoing view is failed rather than left parked, so a replacement can never
+    /// strand a continuation.
     private func replaceWebView() {
         webView?.removeFromSuperview()
         failReadyWaiters(
@@ -250,12 +251,14 @@ import WebKit
                 .openAPS,
                 "Javascript function (\(name), \(requestId)) attempt \(attempts + 1) failed with error: \(error)"
             )
-            continuationStreams.removeValue(forKey: requestId)
+            continuationStreams.removeValue(forKey: requestId)?.finish(throwing: error)
+            // Rebuild even when giving up: otherwise the next JS call in this cycle
+            // inherits the wedged WebView and burns its own timeout rediscovering it.
+            // Skipped if the terminate delegate (or another failing call) already did it.
+            if webViewGeneration == generation {
+                replaceWebView()
+            }
             if attempts < maxAttempts {
-                // Skip if the terminate delegate (or another failing call) already rebuilt the WebView.
-                if webViewGeneration == generation {
-                    replaceWebView()
-                }
                 return try await evaluateFunction(name: name, body: body, attempts: attempts + 1)
             } else {
                 throw error
@@ -277,7 +280,10 @@ import WebKit
         // bundle has been injected, so queued calls may proceed.
         if message.name == "jsBridge",
            let body = message.body as? [String: Any],
-           body["id"] as? String == Self.readyMessageID
+           body["id"] as? String == Self.readyMessageID,
+           // A replaced WebView's in-flight ready message must not mark its successor
+           // ready before that one has injected anything.
+           message.webView === webView
         {
             isReady = true
             let waiters = readyWaiters
