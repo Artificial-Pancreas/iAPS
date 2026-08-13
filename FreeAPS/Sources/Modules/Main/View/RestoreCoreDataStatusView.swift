@@ -105,8 +105,7 @@ struct RestoreCoreDataStatusView: View {
         }
     }
 
-    @ViewBuilder
-    private func statusLabel(_ outcome: PresetOutcome) -> some View {
+    @ViewBuilder private func statusLabel(_ outcome: PresetOutcome) -> some View {
         switch outcome.status {
         case .success:
             Label(
