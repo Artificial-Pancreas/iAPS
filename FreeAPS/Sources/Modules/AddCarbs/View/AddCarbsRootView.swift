@@ -763,6 +763,10 @@ extension AddCarbs {
             case .presets:
                 foodSearchState.showingFoodSearch = true
                 foodSearchState.showSavedFoods = true
+            case .voice:
+                if state.ai {
+                    showFoodSearch(.voiceInput)
+                }
             default:
                 break
             }
