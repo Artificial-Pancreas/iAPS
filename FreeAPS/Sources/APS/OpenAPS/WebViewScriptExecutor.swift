@@ -33,24 +33,48 @@ import WebKit
         webView = createWebView()
     }
 
+    /// True once the current WebView has loaded its document and every user script
+    /// (console hook + oref bundles) has been injected. Calls wait on this instead of
+    /// racing the initial page load.
+    private var isReady = false
+    private var readyWaiters: [CheckedContinuation<Void, Never>] = []
+
     private func createWebView() -> WKWebView {
         let contentController = WKUserContentController()
         contentController.add(self, name: "consoleLog")
         contentController.add(self, name: "jsBridge")
         contentController.add(self, name: "scriptError")
 
+        // Inject everything as WKUserScripts rather than one-shot evaluateJavaScript
+        // calls: user scripts are re-applied by WebKit on every document load, so the
+        // oref bundles survive a WebContent-process relaunch instead of vanishing.
+        for source in userScriptSources() {
+            contentController.addUserScript(WKUserScript(
+                source: source,
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: true
+            ))
+        }
+        // Posted after the atDocumentStart scripts have run — flips isReady below.
+        contentController.addUserScript(WKUserScript(
+            source: "window.webkit.messageHandlers.jsBridge.postMessage({ id: \"__ready__\", value: \"\" });",
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        ))
+
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
 
         let webView = WKWebView(frame: .zero, configuration: config)
 
-        injectConsoleLogHandler(webView: webView)
-        loadScripts(webView: webView)
+        // User scripts only run as part of a document load — give the view one.
+        isReady = false
+        webView.loadHTMLString("<html><body></body></html>", baseURL: nil)
 
         return webView
     }
 
-    private func injectConsoleLogHandler(webView: WKWebView) {
+    private func userScriptSources() -> [String] {
         let consoleScript = """
         var _consoleLog = function (message) {
             window.webkit.messageHandlers.consoleLog.postMessage(message.join(" "));
@@ -60,27 +84,18 @@ import WebKit
         });
 
         """
-        webView.evaluateJavaScript(consoleScript, completionHandler: nil)
+        return [consoleScript] + scripts.map(\.body) + [Script(name: OpenAPS.Prepare.log).body]
+    }
+
+    private func awaitReady() async {
+        if isReady { return }
+        await withCheckedContinuation { continuation in
+            readyWaiters.append(continuation)
+        }
     }
 
     private func script(for name: String) -> FunctionScript? {
         scripts.filter { $0.name == name }.first
-    }
-
-    private func loadScripts(webView: WKWebView) {
-        for script in scripts {
-            includeScript(webView: webView, script: script)
-        }
-
-        includeScript(webView: webView, script: Script(name: OpenAPS.Prepare.log))
-    }
-
-    private func includeScript(webView: WKWebView, script: FunctionScript) {
-        includeScript(webView: webView, script: Script(name: "Script", body: script.body))
-    }
-
-    private func includeScript(webView: WKWebView, script: Script) {
-        webView.evaluateJavaScript(script.body)
     }
 
     func call(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
@@ -143,6 +158,7 @@ import WebKit
         }
 
         do {
+            await awaitReady()
             try await webView.evaluateJavaScript(script)
 
             for try await value in stream {
@@ -170,6 +186,19 @@ import WebKit
         }
         if message.name == "scriptError", let logMessage = message.body as? String {
             warning(.openAPS, "JavaScript Error: \(logMessage)")
+        }
+        // The __ready__ user script fired: the document (re)loaded and all bundles are injected
+        if message.name == "jsBridge",
+           let body = message.body as? [String: Any],
+           body["id"] as? String == "__ready__"
+        {
+            isReady = true
+            let waiters = readyWaiters
+            readyWaiters.removeAll()
+            for waiter in waiters {
+                waiter.resume()
+            }
+            return
         }
         // Handle responses from evaluateFunction via jsBridge
         if message.name == "jsBridge",
