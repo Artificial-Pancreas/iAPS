@@ -70,6 +70,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F21AB8F7302BBE0E00AB1F35"
+               BuildableName = "LoopAlgorithm.framework"
+               BlueprintName = "LoopAlgorithm"
+               ReferencedContainer = "container:Shims/LoopAlgorithm/LoopAlgorithm.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "89D2047121CC7BD7001238CC"
                BuildableName = "MockKit.framework"
                BlueprintName = "MockKit"
@@ -280,10 +294,38 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B2EABFEC645A3969B0B548ED"
+               BuildableName = "LibreLoopPlugin.loopplugin"
+               BlueprintName = "LibreLoopPlugin"
+               ReferencedContainer = "container:LibreLoop/LibreLoop.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "388E595725AD948C0019842D"
                BuildableName = "FreeAPS.app"
                BlueprintName = "FreeAPS"
                ReferencedContainer = "container:FreeAPS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LibreCRKit"
+               BuildableName = "LibreCRKit"
+               BlueprintName = "LibreCRKit"
+               ReferencedContainer = "container:LibreCRKit">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
