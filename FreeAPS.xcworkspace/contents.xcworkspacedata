@@ -5,6 +5,9 @@
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Shims/LoopAlgorithm/LoopAlgorithm.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:RileyLinkKit/RileyLinkKit.xcodeproj">
    </FileRef>
    <FileRef
@@ -12,6 +15,12 @@
    </FileRef>
    <FileRef
       location = "group:LibreTransmitter/LibreTransmitter.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LibreCRKit">
+   </FileRef>
+   <FileRef
+      location = "group:LibreLoop/LibreLoop.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:G7SensorKit/G7SensorKit.xcodeproj">
