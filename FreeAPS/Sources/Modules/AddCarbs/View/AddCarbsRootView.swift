@@ -755,18 +755,14 @@ extension AddCarbs {
 
             switch mode {
             case .image:
-                if state.ai {
-                    showFoodSearch(.camera)
-                }
+                showFoodSearch(.camera)
             case .barcode:
                 showFoodSearch(.barcodeScanner)
             case .presets:
                 foodSearchState.showingFoodSearch = true
                 foodSearchState.showSavedFoods = true
             case .voice:
-                if state.ai {
-                    showFoodSearch(.voiceInput)
-                }
+                showFoodSearch(.voiceInput)
             default:
                 break
             }
