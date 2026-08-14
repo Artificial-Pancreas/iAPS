@@ -83,6 +83,8 @@ Distributing and building TestFlight apps also requires a paid membership.
       * 1
       * 2 (European)
       * 2 Plus (European)
+      * 3
+      * 3 Plus
   * **Eversense**
       * E3 (90 & 180 days)
       * 365
