@@ -14,6 +14,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
     private let storage: FileStorage
     private let database: Database
     private let reachabilityManager: ReachabilityManager
+    private let contactTrickManager: ContactTrickManager
     private let appCoordinator: AppCoordinator
 
     private let coreDataStorage = CoreDataStorage()
@@ -39,16 +40,25 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         reachabilityManager.isReachable
     }
 
+    private var isLogUploadEnabled: Bool {
+        // Logs are uninterpretable without the settings/profile they ran under,
+        // so they only upload when full Backup is also enabled.
+        let settings = appCoordinator.settings.value
+        return settings.uploadStats && settings.uploadLogs
+    }
+
     init(
         storage: FileStorage,
         database: Database,
         reachabilityManager: ReachabilityManager,
+        contactTrickManager: ContactTrickManager,
         appCoordinator: AppCoordinator,
         overrideStorage: OverrideStorage
     ) {
         self.storage = storage
         self.database = database
         self.reachabilityManager = reachabilityManager
+        self.contactTrickManager = contactTrickManager
         self.appCoordinator = appCoordinator
         self.overrideStorage = overrideStorage
         pendingLogDate = UserDefaults.standard.string(forKey: pendingLogDateKey)
@@ -198,6 +208,34 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
                 debug(.nightscout, "Override Presets unchanged")
             }
         }
+
+        // Upload Contact Trick (display config) when needed
+        let contacts = await contactTrickManager.currentContacts
+        let uploadedContacts = await storage.retrieve(
+            OpenAPS.Nightscout.uploadedContactTrick,
+            as: [ContactTrickEntry].self
+        )
+        if uploadedContacts != contacts || force {
+            await uploadContactTrick(contacts, profile: profileName)
+        } else {
+            debug(.nightscout, "Contact Trick unchanged")
+        }
+
+        // Upload AI settings when needed. Unlike the sections above there's no "is it empty"
+        // guard: these are plain UserDefaults values that always read back as something (a
+        // provider choice, a toggle), so the unchanged-check is the only thing that needs to
+        // suppress a repeat upload.
+        let aiSettings = convertAISettings()
+        let uploadedAiSettings = await storage.retrieve(
+            OpenAPS.Nightscout.uploadedAISettings,
+            as: MigratedAISettings.self
+        )
+        if aiSettings != uploadedAiSettings || force
+        {
+            await uploadAISettings(aiSettings, profile: profileName)
+        } else {
+            debug(.nightscout, "AI settings unchanged")
+        }
     }
 
     private func uploadMealPresets(_ presets: DatabaseMeal) async {
@@ -219,6 +257,26 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
             await saveToCoreData(presets.profile)
         } catch {
             debug(.nightscout, "Override presets failed to upload to database: \(error.localizedDescription)")
+        }
+    }
+
+    private func uploadContactTrick(_ contacts: [ContactTrickEntry], profile: String?) async {
+        do {
+            try await database.uploadContactTrick(contacts: contacts, profile: profile ?? "default")
+            debug(.nightscout, "Contact Trick uploaded to database.")
+            await self.storage.save(contacts, as: OpenAPS.Nightscout.uploadedContactTrick)
+        } catch {
+            debug(.nightscout, "Contact Trick failed to upload to database: \(error.localizedDescription)")
+        }
+    }
+
+    private func uploadAISettings(_ settings: MigratedAISettings, profile: String?) async {
+        do {
+            try await database.uploadAISettings(settings: settings, profile: profile)
+            debug(.nightscout, "AI settings uploaded to database.")
+            await self.storage.save(settings, as: OpenAPS.Nightscout.uploadedAISettings)
+        } catch {
+            debug(.nightscout, "AI settings failed to upload to database: \(error.localizedDescription)")
         }
     }
 
@@ -284,8 +342,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
     }
 
     private func handleLogRotation(logDate: Date) async {
-        let settings = appCoordinator.settings.value
-        guard settings.uploadLogs else { return }
+        guard isLogUploadEnabled else { return }
 
         let dateString = Self.dateFmt.string(from: logDate)
 
@@ -306,8 +363,7 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
     }
 
     func retryPendingLogUpload() async {
-        let settings = appCoordinator.settings.value
-        guard settings.uploadLogs,
+        guard isLogUploadEnabled,
               let pendingLogDate = pendingLogDate,
               isNetworkReachable else { return }
 
@@ -384,42 +440,92 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
 
     private func convertMealPresets() async -> [MigratedMeals] {
         let meals = await coreDataStorage.fetchMealPresets()
-        return meals.map { item -> MigratedMeals in
+        return meals.map({ item -> MigratedMeals in
             MigratedMeals(
-                carbs: (item.carbs ?? 0) as Decimal,
+                carbs: item.carbs ?? 0,
                 dish: item.dish ?? "",
-                fat: (item.fat ?? 0) as Decimal,
-                protein: (item.protein ?? 0) as Decimal
+                fat: item.fat ?? 0,
+                protein: item.protein ?? 0,
+                fiber: item.fiber,
+                sugars: item.sugars,
+                glycemicIndex: item.glycemicIndex,
+                portionSize: item.portionSize,
+                per100: item.per100,
+                mealUnits: item.mealUnits,
+                standardName: item.standardName,
+                standardServing: item.standardServing,
+                standardServingSize: item.standardServingSize,
+                imageURL: item.imageURL,
+                tags: item.tags,
+                foodID: item.foodID?.uuidString,
+                // Read the stored entries directly rather than via micronutrientValuesTyped(),
+                // which rescales by portion and drops substances it doesn't recognise — fine for
+                // display, lossy for a backup.
+                micronutrients: (item.micronutrient ?? []).compactMap { entry -> MigratedMicronutrient? in
+                    guard let name = entry.micronutrient.name else { return nil }
+                    return MigratedMicronutrient(
+                        name: name,
+                        type: entry.micronutrient.type,
+                        unit: entry.micronutrient.unit,
+                        amount: entry.amount,
+                        per100: entry.per100
+                    )
+                }
             )
-        }
+        })
     }
 
     private func convertOverridePresets() async -> [MigratedOverridePresets] {
         let presets = await overrideStorage.fetchOverridePresets()
         return presets.map { item -> MigratedOverridePresets in
-            MigratedOverridePresets(
+            // The Auto ISF block lives in its own entity keyed by the preset's id, so it has to be
+            // looked up per preset rather than read off the preset itself.
+            let autoISF = item.aisf.map { MigratedAutoISF($0) }
+
+            return MigratedOverridePresets(
                 advancedSettings: item.advancedSettings,
                 cr: item.cr,
                 date: item.date ?? Date(),
-                duration: (item.duration ?? 0) as Decimal,
+                duration: item.duration ?? 0,
                 emoji: item.emoji ?? "",
-                end: (item.end ?? 0) as Decimal,
+                end: item.end ?? 0,
                 id: item.id,
                 indefininite: item.indefinite,
                 isf: item.isf,
                 isndAndCr: item.isfAndCr, basal: item.basal,
-                maxIOB: (item.maxIOB ?? 0) as Decimal,
+                maxIOB: item.maxIOB ?? 0,
                 name: item.name ?? "",
                 overrideMaxIOB: item.overrideMaxIOB,
                 percentage: item.percentage,
                 smbAlwaysOff: item.smbIsAlwaysOff,
                 smbIsOff: item.smbIsOff,
-                smbMinutes: (item.smbMinutes ?? 0) as Decimal,
-                start: (item.start ?? 0) as Decimal,
-                target: (item.target ?? 0) as Decimal,
-                uamMinutes: (item.uamMinutes ?? 0) as Decimal
+                smbMinutes: item.smbMinutes ?? 0,
+                start: item.start ?? 0,
+                target: item.target ?? 0,
+                uamMinutes: item.uamMinutes ?? 0,
+                autoISF: autoISF
             )
         }
+    }
+
+    /// Snapshot the AI settings out of UserDefaults. The provider API keys are intentionally not
+    /// read here — see `MigratedAISettings`.
+    private func convertAISettings() -> MigratedAISettings {
+        let d = UserDefaults.standard
+        return MigratedAISettings(
+            textSearchProvider: d.textSearchProvider.rawValue,
+            barcodeSearchProvider: d.barcodeSearchProvider.rawValue,
+            aiImageProvider: d.aiImageProvider.rawValue,
+            aiTextProvider: d.aiTextProvider.rawValue,
+            preferredLanguage: d.userPreferredLanguageForAI,
+            preferredRegion: d.userPreferredRegionForAI,
+            nutritionAuthority: d.userPreferredNutritionAuthorityForAI.rawValue,
+            sendSmallerImages: d.shouldSendSmallerImagesToAI,
+            aiTextSearchByDefault: d.aiTextSearchByDefault,
+            aiAddImageCommentByDefault: d.aiAddImageCommentByDefault,
+            aiSavePhotosToLibrary: d.aiSavePhotosToLibrary,
+            aiProgressAnimation: d.aiProgressAnimation
+        )
     }
 
     private func saveToCoreData(_ name: String) async {

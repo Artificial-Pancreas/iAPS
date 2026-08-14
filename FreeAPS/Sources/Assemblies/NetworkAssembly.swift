@@ -34,12 +34,17 @@ final class NetworkAssembly: Assembly {
                 overrideStorage: r.resolve(OverrideStorage.self)!
             )
         }
-        container.register(Database.self) { r in Database(resolver: r) }
+        container.register(Database.self) { r in
+            Database(
+                userToken: r.resolve(UserToken.self)!
+            )
+        }
         container.register(DatabaseManager.self) { r in
             BaseDatabaseManager(
                 storage: r.resolve(FileStorage.self)!,
                 database: r.resolve(Database.self)!,
                 reachabilityManager: r.resolve(ReachabilityManager.self)!,
+                contactTrickManager: r.resolve(ContactTrickManager.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
                 overrideStorage: r.resolve(OverrideStorage.self)!
             )

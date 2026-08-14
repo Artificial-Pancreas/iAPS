@@ -2,10 +2,10 @@ import Foundation
 import Swinject
 
 final class Database: Sendable {
-    private let userToken: Token
+    private let userToken: UserToken
 
-    init(resolver: Resolver) {
-        userToken = resolver.resolve(Token.self)!
+    init(userToken: UserToken) {
+        self.userToken = userToken
     }
 
     private enum Config {
@@ -17,7 +17,12 @@ final class Database: Sendable {
         static let uploadTempTargetsPath = "/api/v1/upload/temp-targets"
         static let uploadMealPresetsPath = "/api/v1/upload/meal-presets"
         static let uploadOverridePresetsPath = "/api/v1/upload/override-presets"
+        static let uploadContactTrickPath = "/api/v1/upload/contact-trick"
+        static let uploadAISettingsPath = "/api/v1/upload/ai-settings"
         static let versionPath = "/api/v1/version_check"
+        static let accountTokenPath = "/api/v1/account/token"
+        static let accountLinkPath = "/api/v1/account/link"
+        static let accountRegisterPath = "/api/v1/account/register"
         static let downloadListPath = "/api/v1/download/list"
         static let downloadPreferencesPath = "/api/v1/download/preferences"
         static let downloadSettingsPath = "/api/v1/download/settings"
@@ -26,6 +31,8 @@ final class Database: Sendable {
         static let downloadTempTargetsPath = "/api/v1/download/temp-targets"
         static let downloadMealPresetsPath = "/api/v1/download/meal-presets"
         static let downloadOverridePresetsPath = "/api/v1/download/override-presets"
+        static let downloadContactTrickPath = "/api/v1/download/contact-trick"
+        static let downloadAISettingsPath = "/api/v1/download/ai-settings"
         static let downloadDeletePath = "/api/v1/download/delete"
         static let downloadRestorePath = "/api/v1/download/restore"
         static let uploadLogsPath = "/api/v1/upload/logs"
@@ -40,6 +47,66 @@ final class Database: Sendable {
 }
 
 extension Database {
+    /// Restore-by-login: exchange account credentials (+ a 2FA code when the account has it
+    /// enabled) for the newest recovery token. No retry — login attempts shouldn't be replayed.
+    func fetchAccountToken(email: String, password: String, code: String?) async throws -> String {
+        var payload: [String: String] = ["email": email, "password": password]
+        if let code, !code.isEmpty { payload["code"] = code }
+
+        do {
+            let response = try await sendPostRequest(
+                Config.accountTokenPath,
+                payload: payload,
+                as: AccountTokenResponse.self
+            )
+            return response.token
+        } catch {
+            throw Self.mapAccountError(error)
+        }
+    }
+
+    /// Link this device's recovery token to an existing account (credentials + 2FA when enabled).
+    /// Multi-token: the token is added, nothing is disabled — but it becomes the account's newest
+    /// device, so restore-by-login will hand it back. No retry.
+    func linkAccount(email: String, password: String, code: String?) async throws {
+        var payload: [String: String] = ["email": email, "password": password, "token": userToken.getIdentifier()]
+        if let code, !code.isEmpty { payload["code"] = code }
+
+        do {
+            try await sendPostRequest(
+                Config.accountLinkPath,
+                payload: payload
+            )
+        } catch {
+            throw Self.mapLinkError(error)
+        }
+    }
+
+    /// Create an account and link this device's token to it. `passwordConfirmation` is required —
+    /// the server reuses the web registration's rules, which confirm the password (it's needed
+    /// later to restore, so a typo check is worth it). No retry.
+    func registerAccount(
+        email: String,
+        password: String,
+        passwordConfirmation: String
+    ) async throws {
+        let payload: [String: String] = [
+            "email": email,
+            "password": password,
+            "password_confirmation": passwordConfirmation,
+            "token": userToken.getIdentifier()
+        ]
+
+        do {
+            try await sendPostRequest(
+                Config.accountRegisterPath,
+                payload: payload
+            )
+        } catch {
+            throw Self.mapRegisterError(error)
+        }
+    }
+
     func fetchPreferences(_ name: String) async throws -> Preferences {
         try await sendPostRequest(
             Config.downloadPreferencesPath,
@@ -92,6 +159,28 @@ extension Database {
             payload: ["token": userToken.getIdentifier(), "profile": name],
             as: PumpSettings.self
         )
+    }
+
+    /// Best-effort fetch of the saved pump settings to restore — DIA / max bolus / max basal
+    /// plus the insulin concentration (U100 = 1.0, U200 = 2.0, …), which the web side merges
+    /// into the same pump-settings row. `settings` is nil unless the core three are all present;
+    /// `concentration` is nil when the backup never recorded one. No separate endpoint.
+    func fetchPumpConfig(_ name: String) async throws -> PumpRestoreConfig {
+        let payload = ["token": userToken.getIdentifier(), "profile": name]
+
+        let blob = try await sendPostRequest(
+            Config.downloadPumpSettingsPath,
+            payload: payload,
+            as: RestoredPumpBlob.self,
+            allowsConstrainedNetworkAccess: true
+        )
+        let settings: PumpSettings?
+        if let dia = blob.insulinActionCurve, let maxBolus = blob.maxBolus, let maxBasal = blob.maxBasal {
+            settings = PumpSettings(insulinActionCurve: dia, maxBolus: maxBolus, maxBasal: maxBasal)
+        } else {
+            settings = nil
+        }
+        return PumpRestoreConfig(settings: settings, concentration: blob.concentration)
     }
 
     func fetchTempTargets(_ name: String) async throws -> DatabaseTempTargets {
@@ -205,6 +294,28 @@ extension Database {
         let enteredBy: String
     }
 
+    func fetchContactTrick(_ name: String) async throws -> DatabaseContactTrick {
+        let payload = ["token": userToken.getIdentifier(), "profile": name]
+
+        return try await sendPostRequest(
+            Config.downloadContactTrickPath,
+            payload: payload,
+            as: DatabaseContactTrick.self,
+            allowsConstrainedNetworkAccess: true
+        )
+    }
+
+    func fetchAISettings(_ name: String) async throws -> AISettingsDatabase {
+        let payload = ["token": userToken.getIdentifier(), "profile": name]
+
+        return try await sendPostRequest(
+            Config.downloadAISettingsPath,
+            payload: payload,
+            as: AISettingsDatabase.self,
+            allowsConstrainedNetworkAccess: true
+        )
+    }
+
     func uploadSettings(_ settings: DatabaseSettings) async throws {
         let payload = SettingsPayload(
             settings: settings.settings,
@@ -292,6 +403,45 @@ extension Database {
         try await sendPostRequest(
             Config.uploadOverridePresetsPath,
             payload: payload
+        )
+    }
+
+    private struct DatabaseContactTrickPayload: JSON {
+        var report = "contactTrick"
+        let contacts: [ContactTrickEntry]
+        let profile: String?
+    }
+
+    func uploadContactTrick(
+        contacts: [ContactTrickEntry],
+        profile: String?
+    ) async throws {
+        try await sendPostRequest(
+            Config.uploadContactTrickPath,
+            payload: DatabaseContactTrickPayload(
+                contacts: contacts, profile: profile
+            )
+        )
+    }
+
+    struct AISettingsDatabasePayload: JSON {
+        var report = "aiSettings"
+        let settings: MigratedAISettings?
+        let enteredBy: String
+        let profile: String?
+    }
+
+    func uploadAISettings(
+        settings: MigratedAISettings?,
+        profile: String?
+    ) async throws {
+        try await sendPostRequest(
+            Config.uploadAISettingsPath,
+            payload: AISettingsDatabasePayload(
+                settings: settings,
+                enteredBy: userToken.getIdentifier(),
+                profile: profile
+            )
         )
     }
 
@@ -384,5 +534,58 @@ extension Database {
     ) async throws {
         let request = makeRequest(path, payload: req)
         _ = try await service.runAsync(request, retries: Config.retryCount)
+    }
+}
+
+extension Database {
+    /// The server's `{ "error": …, "message": … }` body, carried on the thrown NetworkError.
+    private static func serverErrorBody(_ error: Error) -> [String: Any]? {
+        guard let netError = error as? NetworkError,
+              case let .badStatusCode(_, body) = netError,
+              let body, let data = body.data(using: .utf8),
+              let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else {
+            return nil
+        }
+        return object
+    }
+
+    /// Translate the server's `error` code into a typed login case; anything unrecognized (or an
+    /// unreachable server) is treated as unreachable.
+    private static func mapAccountError(_ error: Error) -> AccountLoginError {
+        switch serverErrorBody(error)?["error"] as? String {
+        case "two_factor_required": return .twoFactorRequired
+        case "invalid_two_factor": return .invalidTwoFactor
+        case "invalid_credentials": return .invalidCredentials
+        case "no_device": return .noDevice
+        default: return .unreachable
+        }
+    }
+
+    private static func mapLinkError(_ error: Error) -> AccountLinkError {
+        switch serverErrorBody(error)?["error"] as? String {
+        case "two_factor_required": return .twoFactorRequired
+        case "invalid_two_factor": return .invalidTwoFactor
+        case "invalid_credentials": return .invalidCredentials
+        case "token_not_found": return .tokenNotFound
+        case "token_taken": return .tokenTaken
+        case "invalid_token": return .invalidToken
+        default: return .unreachable
+        }
+    }
+
+    private static func mapRegisterError(_ error: Error) -> AccountRegisterError {
+        guard let body = serverErrorBody(error), let code = body["error"] as? String else {
+            return .unreachable
+        }
+        switch code {
+        case "email_taken": return .emailTaken
+        case "invalid_email": return .invalidEmail
+        case "weak_password": return .weakPassword
+        case "token_invalid": return .tokenInvalid
+        default:
+            if let message = body["message"] as? String { return .message(message) }
+            return .unreachable
+        }
     }
 }
