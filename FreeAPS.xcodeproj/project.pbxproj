@@ -187,7 +187,6 @@
 		383948DA25CD64D500E91849 /* Glucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383948D925CD64D500E91849 /* Glucose.swift */; };
 		384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803325C385E60086DB71 /* JavaScriptWorker.swift */; };
 		384E803825C388640086DB71 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E803725C388640086DB71 /* Script.swift */; };
-		38569347270B5DFB0002C50D /* CGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38569344270B5DFA0002C50D /* CGMType.swift */; };
 		38569349270B5DFB0002C50D /* AppGroupSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38569346270B5DFB0002C50D /* AppGroupSource.swift */; };
 		38569353270B5E350002C50D /* CGMRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38569352270B5E350002C50D /* CGMRootView.swift */; };
 		385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */; };
@@ -463,6 +462,16 @@
 		F23C877430099F3C0026B83F /* RecentCarbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C877330099F3A0026B83F /* RecentCarbs.swift */; };
 		F23C877630099F8E0026B83F /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C877530099F890026B83F /* Bool+Extensions.swift */; };
 		F242D36A2F2E634A00B9180F /* PersistedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F242D3692F2E634A00B9180F /* PersistedProperty.swift */; };
+		F24CF32F302E98DE003A55E1 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF32E302E98DE003A55E1 /* WelcomeView.swift */; };
+		F24CF330302E98DE003A55E1 /* ExistingUserRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF328302E98DE003A55E1 /* ExistingUserRestoreView.swift */; };
+		F24CF331302E98DE003A55E1 /* RestoreCoreDataStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF32A302E98DE003A55E1 /* RestoreCoreDataStatusView.swift */; };
+		F24CF332302E98DE003A55E1 /* DeviceSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF327302E98DE003A55E1 /* DeviceSetupView.swift */; };
+		F24CF333302E98DE003A55E1 /* RecoveryTokenAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF329302E98DE003A55E1 /* RecoveryTokenAccountView.swift */; };
+		F24CF334302E98DE003A55E1 /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF32C302E98DE003A55E1 /* SetupCompleteView.swift */; };
+		F24CF335302E98DE003A55E1 /* RestoreSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF32B302E98DE003A55E1 /* RestoreSummaryView.swift */; };
+		F24CF336302E98DE003A55E1 /* UpgradeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF32D302E98DE003A55E1 /* UpgradeNoticeView.swift */; };
+		F24CF338302EA886003A55E1 /* ProfileScheduleDecomposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF337302EA886003A55E1 /* ProfileScheduleDecomposition.swift */; };
+		F24CF33A302EC09D003A55E1 /* PresetMicronutrientSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24CF339302EC09D003A55E1 /* PresetMicronutrientSnapshot.swift */; };
 		F24EB2962EE5B8F300C981A2 /* AIFoodAnalysisError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */; };
 		F25284692F01C7BC0084D094 /* ImageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25284682F01C7BC0084D094 /* ImageSelectorView.swift */; };
 		F252846D2F01C81F0084D094 /* FoodImageStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F252846C2F01C81F0084D094 /* FoodImageStorageManager.swift */; };
@@ -528,6 +537,7 @@
 		F2A4B7C62E6C9180000E0E85 /* BloodGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */; };
 		F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */; };
 		F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */; };
+		F2AA10022E5E0B1400F8F43C /* LoopAlgorithm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2AA10012E5E0B1400F8F43C /* LoopAlgorithm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F2ACC0332EF87CC800C86FBC /* FoodItemDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */; };
 		F2ACC0352EF87CD200C86FBC /* FoodItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */; };
 		F2ACC0672EF88E0A00C86FBC /* SearchResultsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */; };
@@ -646,6 +656,7 @@
 			files = (
 				CE51DD1D2A01970900F163F7 /* ConnectIQ 2.xcframework in Embed Frameworks */,
 				F226D4F22E5E0B1400F8F43C /* LoopKit.framework in Embed Frameworks */,
+				F2AA10022E5E0B1400F8F43C /* LoopAlgorithm.framework in Embed Frameworks */,
 				F226D4F42E5E0B1400F8F43C /* LoopKitUI.framework in Embed Frameworks */,
 				CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */,
 				CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */,
@@ -946,7 +957,6 @@
 		383948D925CD64D500E91849 /* Glucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glucose.swift; sourceTree = "<group>"; };
 		384E803325C385E60086DB71 /* JavaScriptWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWorker.swift; sourceTree = "<group>"; };
 		384E803725C388640086DB71 /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
-		38569344270B5DFA0002C50D /* CGMType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMType.swift; sourceTree = "<group>"; };
 		38569346270B5DFB0002C50D /* AppGroupSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGroupSource.swift; sourceTree = "<group>"; };
 		38569352270B5E350002C50D /* CGMRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMRootView.swift; sourceTree = "<group>"; };
 		385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutStatus.swift; sourceTree = "<group>"; };
@@ -1238,6 +1248,16 @@
 		F23C877330099F3A0026B83F /* RecentCarbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCarbs.swift; sourceTree = "<group>"; };
 		F23C877530099F890026B83F /* Bool+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
 		F242D3692F2E634A00B9180F /* PersistedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProperty.swift; sourceTree = "<group>"; };
+		F24CF327302E98DE003A55E1 /* DeviceSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSetupView.swift; sourceTree = "<group>"; };
+		F24CF328302E98DE003A55E1 /* ExistingUserRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingUserRestoreView.swift; sourceTree = "<group>"; };
+		F24CF329302E98DE003A55E1 /* RecoveryTokenAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryTokenAccountView.swift; sourceTree = "<group>"; };
+		F24CF32A302E98DE003A55E1 /* RestoreCoreDataStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreCoreDataStatusView.swift; sourceTree = "<group>"; };
+		F24CF32B302E98DE003A55E1 /* RestoreSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreSummaryView.swift; sourceTree = "<group>"; };
+		F24CF32C302E98DE003A55E1 /* SetupCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteView.swift; sourceTree = "<group>"; };
+		F24CF32D302E98DE003A55E1 /* UpgradeNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeNoticeView.swift; sourceTree = "<group>"; };
+		F24CF32E302E98DE003A55E1 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		F24CF337302EA886003A55E1 /* ProfileScheduleDecomposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScheduleDecomposition.swift; sourceTree = "<group>"; };
+		F24CF339302EC09D003A55E1 /* PresetMicronutrientSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetMicronutrientSnapshot.swift; sourceTree = "<group>"; };
 		F24EB2952EE5B8F300C981A2 /* AIFoodAnalysisError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFoodAnalysisError.swift; sourceTree = "<group>"; };
 		F25284682F01C7BC0084D094 /* ImageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorView.swift; sourceTree = "<group>"; };
 		F252846C2F01C81F0084D094 /* FoodImageStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodImageStorageManager.swift; sourceTree = "<group>"; };
@@ -1303,6 +1323,7 @@
 		F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucoseManager.swift; sourceTree = "<group>"; };
 		F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
 		F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		F2AA10012E5E0B1400F8F43C /* LoopAlgorithm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopAlgorithm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemDetailed.swift; sourceTree = "<group>"; };
 		F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemGroup.swift; sourceTree = "<group>"; };
 		F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsState.swift; sourceTree = "<group>"; };
@@ -1908,6 +1929,14 @@
 			isa = PBXGroup;
 			children = (
 				3811DE2025C9D48300A708ED /* MainRootView.swift */,
+				F24CF327302E98DE003A55E1 /* DeviceSetupView.swift */,
+				F24CF328302E98DE003A55E1 /* ExistingUserRestoreView.swift */,
+				F24CF329302E98DE003A55E1 /* RecoveryTokenAccountView.swift */,
+				F24CF32A302E98DE003A55E1 /* RestoreCoreDataStatusView.swift */,
+				F24CF32B302E98DE003A55E1 /* RestoreSummaryView.swift */,
+				F24CF32C302E98DE003A55E1 /* SetupCompleteView.swift */,
+				F24CF32D302E98DE003A55E1 /* UpgradeNoticeView.swift */,
+				F24CF32E302E98DE003A55E1 /* WelcomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2121,6 +2150,7 @@
 				F226D4F82E5E109100F8F43C /* LibreTransmitter.framework */,
 				F226D4F92E5E109100F8F43C /* LibreTransmitterUI.framework */,
 				F226D4EF2E5E0B1400F8F43C /* LoopKit.framework */,
+				F2AA10012E5E0B1400F8F43C /* LoopAlgorithm.framework */,
 				F226D4F02E5E0B1400F8F43C /* LoopKitUI.framework */,
 				CE51DD1B2A01970800F163F7 /* ConnectIQ 2.xcframework */,
 				CE94597929E9DF7B0047C9C6 /* ConnectIQ.framework */,
@@ -2183,7 +2213,6 @@
 			isa = PBXGroup;
 			children = (
 				F2941F9F2E787F3000A9DD5D /* AppGroupCGM */,
-				38569344270B5DFA0002C50D /* CGMType.swift */,
 				3862CC03273D150600BF832C /* Calibrations */,
 				F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */,
 			);
@@ -2338,6 +2367,9 @@
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
+				F20E9A922FCD0D5300FCACBD /* PumpDisplayInfo.swift */,
+				F20E9A942FCD0D6B00FCACBD /* CgmDisplayInfo.swift */,
+				F24CF337302EA886003A55E1 /* ProfileScheduleDecomposition.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3115,6 +3147,7 @@
 				F292C6982FDDC6DC00D09D88 /* LoopStatRecordSnapshot.swift */,
 				F292C6A02FDDCA9E00D09D88 /* MealsSnapshot.swift */,
 				F2FC8B322FDDD74000D389EC /* MicronutrientSnapshot.swift */,
+				F24CF339302EC09D003A55E1 /* PresetMicronutrientSnapshot.swift */,
 				F299DD212FD84D780048B96A /* OverrideSnapshot.swift */,
 				F2C29E2A2FEAD27900E8630A /* OverridePresetsSnapshot.swift */,
 				F2C29E2C2FEADCC100E8630A /* OverrideHistorySnapshot.swift */,
@@ -3628,6 +3661,7 @@
 				F2EE83C52E739B0100D7177E /* CalendarShareStateModel.swift in Sources */,
 				196809E22D46E7B300BA566F /* OpenClosedShortcuts.swift in Sources */,
 				F28B06B8301BBDC400A59FA7 /* GapDetection.swift in Sources */,
+				F24CF33A302EC09D003A55E1 /* PresetMicronutrientSnapshot.swift in Sources */,
 				388E5A6025B6F2310019842D /* Autosens.swift in Sources */,
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
 				19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */,
@@ -3661,6 +3695,7 @@
 				F2D4AACB300A6D80000105A7 /* AutotuneStorage.swift in Sources */,
 				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
 				F2EE83C12E739AE500D7177E /* CalendarShareDataFlow.swift in Sources */,
+				F24CF338302EA886003A55E1 /* ProfileScheduleDecomposition.swift in Sources */,
 				F292C6A72FDDCD2D00D09D88 /* ReasonsSnapshot.swift in Sources */,
 				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
 				3894873A2614928B004DF424 /* DispatchTimer.swift in Sources */,
@@ -3770,7 +3805,6 @@
 				3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */,
 				3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */,
 				CE1856F52ADC4858007E39C7 /* AddCarbPresetIntent.swift in Sources */,
-				38569347270B5DFB0002C50D /* CGMType.swift in Sources */,
 				3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */,
 				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
@@ -3793,6 +3827,14 @@
 				19F191E02BE4F98F00F6297E /* SharingStateModel.swift in Sources */,
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
 				3871F39F25ED895A0013ECB5 /* Decimal+Extensions.swift in Sources */,
+				F24CF32F302E98DE003A55E1 /* WelcomeView.swift in Sources */,
+				F24CF330302E98DE003A55E1 /* ExistingUserRestoreView.swift in Sources */,
+				F24CF331302E98DE003A55E1 /* RestoreCoreDataStatusView.swift in Sources */,
+				F24CF332302E98DE003A55E1 /* DeviceSetupView.swift in Sources */,
+				F24CF333302E98DE003A55E1 /* RecoveryTokenAccountView.swift in Sources */,
+				F24CF334302E98DE003A55E1 /* SetupCompleteView.swift in Sources */,
+				F24CF335302E98DE003A55E1 /* RestoreSummaryView.swift in Sources */,
+				F24CF336302E98DE003A55E1 /* UpgradeNoticeView.swift in Sources */,
 				3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */,
 				38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */,
 				38EA05DA261F6E7C0064E39B /* SimpleLogReporter.swift in Sources */,

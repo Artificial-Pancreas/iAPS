@@ -20,7 +20,7 @@ struct PresetsSnapshot: Sendable {
     let standardServingSize: Decimal?
     let imageURL: String?
     let tags: String?
-//    let micronutrient: Set<PresetMicronutrient>?
+    let micronutrient: [PresetMicronutrientSnapshot]?
 }
 
 extension PresetsSnapshot {
@@ -42,6 +42,7 @@ extension PresetsSnapshot {
             standardServingSize: record.standardServingSize?.decimalValue,
             imageURL: record.imageURL,
             tags: record.tags,
+            micronutrient: (record.micronutrient.map { Array($0) })?.map { PresetMicronutrientSnapshot.create(from: $0) }
         )
     }
 }

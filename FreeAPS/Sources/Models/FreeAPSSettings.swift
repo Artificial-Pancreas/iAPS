@@ -95,7 +95,13 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var useInsulinBars: Bool = false
     var skipGlucoseChart: Bool = false
     var birthDate = Date.distantPast
-    var sexSetting: Int = 0
+    var sexSetting: Int = 3
+    // Demographics — weight stored canonically in kg, height in cm (0 = unset).
+    // Display unit is a separate preference; default metric.
+    var weight: Decimal = 0
+    var height: Decimal = 0
+    var weightInLb: Bool = false
+    var heightInFtIn: Bool = false
     var displayDelta: Bool = false
     var profileID: String = "Hypo Treatment"
     var allowDilution: Bool = false
@@ -615,6 +621,22 @@ extension FreeAPSSettings: Decodable {
 
         if let sexSetting = try? container.decode(Int.self, forKey: .sexSetting) {
             settings.sexSetting = sexSetting
+        }
+
+        if let weight = try? container.decode(Decimal.self, forKey: .weight) {
+            settings.weight = weight
+        }
+
+        if let height = try? container.decode(Decimal.self, forKey: .height) {
+            settings.height = height
+        }
+
+        if let weightInLb = try? container.decode(Bool.self, forKey: .weightInLb) {
+            settings.weightInLb = weightInLb
+        }
+
+        if let heightInFtIn = try? container.decode(Bool.self, forKey: .heightInFtIn) {
+            settings.heightInFtIn = heightInFtIn
         }
 
         if let displayDelta = try? container.decode(Bool.self, forKey: .displayDelta) {
