@@ -12,7 +12,6 @@ public enum Sex: String, CaseIterable, Identifiable {
     var hasHormonalSignal: Bool {
         self == .woman || self == .man
     }
-}
 
     static func savedSettings(_ sexSetting: Int) -> Sex {
         switch sexSetting {
