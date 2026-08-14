@@ -89,7 +89,7 @@ enum SpeechRecognitionState: Equatable {
             return
         }
 
-        cleanupAudio()
+        cleanupAudio(deactivateSession: false)
 
         finalizedSegments = []
         transcript = ""
@@ -112,32 +112,31 @@ enum SpeechRecognitionState: Equatable {
                 return
             }
 
-            weak var weakSelf = strongSelf
-            Task { @MainActor in
-                guard let strongSelf = weakSelf else { return }
-                let inputNode = strongSelf.audioEngine.inputNode
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                let inputNode = self.audioEngine.inputNode
                 inputNode.removeTap(onBus: 0)
 
                 // Pass nil format — AVAudioEngine will use the input node's native format
                 // and handle any necessary conversion. This is the recommended approach
                 // for speech recognition and works on both real devices and the Simulator.
-                inputNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { [weak strongSelf] buffer, _ in
-                    strongSelf?.recognitionRequest?.append(buffer)
+                inputNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { [weak self] buffer, _ in
+                    self?.recognitionRequest?.append(buffer)
                 }
 
-                strongSelf.startNewRecognitionTask()
+                self.startNewRecognitionTask()
 
                 do {
-                    strongSelf.audioEngine.prepare()
-                    try strongSelf.audioEngine.start()
-                    strongSelf.state = .listening
+                    self.audioEngine.prepare()
+                    try self.audioEngine.start()
+                    self.state = .listening
                 } catch {
-                    strongSelf
+                    self
                         .state = .error(
                             NSLocalizedString("Failed to start audio recording: ", comment: "") + error
                                 .localizedDescription
                         )
-                    strongSelf.cleanupAudio()
+                    self.cleanupAudio()
                 }
             }
         }
@@ -242,7 +241,7 @@ enum SpeechRecognitionState: Equatable {
         }
     }
 
-    private func cleanupAudio() {
+    private func cleanupAudio(deactivateSession: Bool = true) {
         if audioEngine.isRunning {
             audioEngine.stop()
         }
@@ -251,8 +250,10 @@ enum SpeechRecognitionState: Equatable {
         recognitionTask?.cancel()
         recognitionTask = nil
         recognitionRequest = nil
-        DispatchQueue.global().async {
-            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        if deactivateSession {
+            DispatchQueue.global().async {
+                try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            }
         }
     }
 }
