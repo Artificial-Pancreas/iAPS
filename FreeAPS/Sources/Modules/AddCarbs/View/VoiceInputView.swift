@@ -37,7 +37,7 @@ struct VoiceInputView: View {
         .task {
             await requestPermissionsAndStart()
         }
-        .onChange(of: speechService.state) { newState in
+        .onChange(of: speechService.state) { _, newState in
             if case let .finished(text) = newState {
                 guard !hasCompleted else { return }
                 hasCompleted = true
