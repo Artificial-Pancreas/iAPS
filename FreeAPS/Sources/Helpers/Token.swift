@@ -1,7 +1,11 @@
 import Foundation
 import Swinject
 
-final class Token: Sendable {
+protocol UserToken: Sendable {
+    func getIdentifier() -> String
+}
+
+final class PersistedUserToken: UserToken {
     private let keychain: Keychain
 
     init(resolver: Resolver) {
@@ -15,5 +19,17 @@ final class Token: Sendable {
             return newIdentifier
         }
         return identifier
+    }
+}
+
+final class StaticUserToken: UserToken {
+    private let identifier: String
+
+    init(_ identifier: String) {
+        self.identifier = identifier
+    }
+
+    func getIdentifier() -> String {
+        identifier
     }
 }

@@ -561,6 +561,20 @@ final class CoreDataStorage: Sendable {
         }
     }
 
+    func saveConcentration(_ concentration: Double, increment: Decimal) async {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let row = InsulinConcentration(context: context)
+            row.concentration = concentration
+            row.incrementSetting = Double(increment)
+            row.date = Date.now
+            do {
+                try context.save()
+            } catch {
+                debug(.service, "insulin concentration couldn't be saved to CoreData: \(error.localizedDescription)")
+            }
+        }
+    }
+
     func insulinConcentration() async -> (concentration: Double, increment: Double) {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let requestConc = InsulinConcentration.fetchRequest() as NSFetchRequest<InsulinConcentration>
