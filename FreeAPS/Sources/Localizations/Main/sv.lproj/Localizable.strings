@@ -3820,6 +3820,9 @@ Enact a temp Basal or a temp target */
 "has been added to iAPS" = "har lagts till iAPS";
 "hour" = "timme";
 "iAPS" = "iAPS";
+"Processing…" = "Bearbetar…";
+"Listening…" = "Lyssnar…";
+"Describe what you ate…" = "Beskriv vad du ska äta…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS behöver kameraåtkomst för att skanna streckkoder. Aktivera kameraåtkomst i Inställningar.";
 "too small temp basal amount" = "för litet basalbelopp";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Varning! Det angivna insulinbeloppet är större än din max-bolus-inställning!";
