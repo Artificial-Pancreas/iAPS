@@ -23,11 +23,11 @@ struct IOBEntry: Codable, Equatable {
     }
 
     struct LastTemp: JSON, Equatable {
-        let rate: Decimal
-        let timestamp: Date
-        let started_at: Date
-        let date: Decimal?
-        let duration: Decimal
+        let rate: Decimal?
+        let timestamp: Date?
+        let started_at: Date?
+        let date: Decimal
+        let duration: Decimal?
     }
 }
 
