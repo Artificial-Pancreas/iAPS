@@ -4078,6 +4078,9 @@ Enact a temp Basal or a temp target */
 "has been added to iAPS" = "було додано до iAPS";
 "hour" = "годин";
 "iAPS" = "iAPS";
+"Processing…" = "Processing…";
+"Listening…" = "Listening…";
+"Describe what you ate…" = "Describe what you ate…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS потрібен доступ до камери для сканування штрих-кодів. Увімкніть його в Налаштуваннях.";
 "too small temp basal amount" = "занадто мала тимчасова базальна доза";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Увага! Введена кількість інсуліну перевищує налаштування Максимального Болюсу!";
