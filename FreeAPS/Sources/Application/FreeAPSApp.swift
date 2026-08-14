@@ -39,6 +39,7 @@ import Swinject
         )
         isNewVersion()
         AppearanceManager.setupGlobalAppearance()
+        MemoryMetricsService.shared.start()
     }
 
     var body: some Scene {

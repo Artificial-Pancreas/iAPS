@@ -1301,7 +1301,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 ),
                 id: getIdentifier(),
                 dob: settings.birthDate,
-                sex: settings.sexSetting
+                sex: settings.sexSetting,
+                Memory: MemoryMetricsService.shared.snapshot(full: true)
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
@@ -1309,7 +1310,8 @@ final class BaseAPSManager: APSManager, Injectable {
             let json = BareMinimum(
                 id: getIdentifier(),
                 created_at: Date.now,
-                Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch()
+                Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch(),
+                Memory: MemoryMetricsService.shared.snapshot(full: false)
             )
             nightscout.uploadVersion(json: json)
         }
