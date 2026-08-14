@@ -4086,6 +4086,9 @@ Enact a temp Basal or a temp target */
 "has been added to iAPS" = "has been added to iAPS";
 "hour" = "hour";
 "iAPS" = "iAPS";
+"Processing…" = "Processing…";
+"Listening…" = "Listening…";
+"Describe what you ate…" = "Describe what you ate…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS needs camera access to scan barcodes. Please enable it in Settings.";
 "too small temp basal amount" = "too small temp basal amount";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!";

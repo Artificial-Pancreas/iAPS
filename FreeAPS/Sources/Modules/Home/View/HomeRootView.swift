@@ -320,6 +320,10 @@ extension Home {
                                         state.showModal(for: .addCarbs(editMode: false, override: false, mode: .image)) }
                                     label: { Label("AI Image Analysis", systemImage: "photo.badge.magnifyingglass")
                                     }
+                                    Button {
+                                        state.showModal(for: .addCarbs(editMode: false, override: false, mode: .voice)) }
+                                    label: { Label("Voice Input", systemImage: "mic.fill")
+                                    }
                                 }
                                 Button {
                                     state.showModal(for: .addCarbs(editMode: false, override: false, mode: .meal)) }
