@@ -4076,6 +4076,9 @@ Enact a temp Basal or a temp target */
 "has been added to iAPS" = "đã được thêm vào iAPS";
 "hour" = "hours";
 "iAPS" = "iAPS";
+"Processing…" = "Processing…";
+"Listening…" = "Listening…";
+"Describe what you ate…" = "Describe what you ate…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS cần quyền truy cập camera để quét mã vạch. Vui lòng bật quyền camera trong Cài đặt.";
 "too small temp basal amount" = "lượng liều nền tạm thời quá nhỏ";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Cảnh báo! Lượng insulin đã nhập lớn hơn giới hạn liều Bolus tối đa của bạn!";
