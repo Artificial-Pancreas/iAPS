@@ -132,5 +132,9 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>iAPS will save food photos to your photo library.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>iAPS uses the microphone to record your meal description for AI nutrition analysis.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>iAPS uses speech recognition to convert your spoken meal description to text for nutrition analysis.</string>
 </dict>
 </plist>
