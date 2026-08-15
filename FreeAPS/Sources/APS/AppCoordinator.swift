@@ -147,15 +147,21 @@ final class AppCoordinator: @unchecked Sendable {
     // --------------
 
     func setSettings(_ value: FreeAPSSettings) {
-        settings.send(value)
+        DispatchQueue.main.async {
+            self.settings.send(value)
+        }
     }
 
     func setPreferences(_ value: Preferences) {
-        preferences.send(value)
+        DispatchQueue.main.async {
+            self.preferences.send(value)
+        }
     }
 
     func setPumpSettings(_ value: PumpSettings) {
-        pumpSettings.send(value)
+        DispatchQueue.main.async {
+            self.pumpSettings.send(value)
+        }
     }
 
     func setIsLooping(_ value: Bool) {

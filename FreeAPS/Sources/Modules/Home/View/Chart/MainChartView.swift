@@ -161,21 +161,24 @@ struct MainChartView: View {
 
     private func update(fullSize: CGSize) {
         let started = Date.now
+        let currentData = data
 
-        let geom = CalculatedGeometries.make(fullSize: fullSize, data: data)
+        calculationQueue.async {
+            let geom = CalculatedGeometries.make(fullSize: fullSize, data: currentData)
 
-        let ended = Date.now
-        debug(
-            .service,
-            "main chart update: \(ended.timeIntervalSince(started) * 1000) milliseconds"
-        )
+            let ended = Date.now
+            debug(
+                .service,
+                "main chart update: \(ended.timeIntervalSince(started) * 1000) milliseconds"
+            )
 
-        DispatchQueue.main.async {
-            if self.shouldScrollAfterUpdate {
-                triggerScroll()
-                self.shouldScrollAfterUpdate = false
+            DispatchQueue.main.async {
+                if self.shouldScrollAfterUpdate {
+                    self.triggerScroll()
+                    self.shouldScrollAfterUpdate = false
+                }
+                self.geom = geom
             }
-            self.geom = geom
         }
     }
 
@@ -252,7 +255,7 @@ struct MainChartView: View {
 
         updatesCancellable =
             Publishers.MergeMany([debouncedUpdates, immediateUpdates])
-                .receive(on: calculationQueue)
+                .receive(on: DispatchQueue.main)
                 .sink { _ in
                     update(fullSize: latestSize)
                 }
