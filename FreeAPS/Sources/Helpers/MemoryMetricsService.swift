@@ -15,11 +15,13 @@ import os
 struct MemoryStats: JSON, Equatable {
     /// Physical footprint of the app process right now, MB.
     var footprint_mb: Int?
-    /// Peak footprint over the last MetricKit reporting day, MB (any version).
+    /// Peak footprint over the last MetricKit reporting day, MB (any release).
     var peak_mb: Int?
-    /// Incident counters, bucketed by the build number they occurred under, so a
+    /// Incident counters, bucketed by the release they occurred under, so a
     /// release-over-release comparison never smears events across an upgrade.
-    /// Keys are build numbers ("274"); the newest 6 buckets are retained.
+    /// Keys are "version(build)" composites ("8.3.5(274)") — build number alone is
+    /// ambiguous because plain Xcode builds don't increment it, and version alone
+    /// can't separate two builds of the same release. The newest 6 buckets are retained.
     var counters: [String: MemoryVersionCounters]?
     /// Physical RAM of the device, MB. Full statistics only.
     var ram_mb: Int?
@@ -31,8 +33,6 @@ struct MemoryStats: JSON, Equatable {
 /// runs and only ever grow, so the latest uploaded value IS the build's total —
 /// no server-side diffing needed for per-version numbers.
 struct MemoryVersionCounters: JSON, Equatable {
-    /// Marketing version ("8.3.5") for display; the dictionary key is the build number.
-    var version: String?
     /// Highest MetricKit daily peak recorded while this build ran, MB.
     var peak_mb: Int?
     /// UIKit memory-pressure warnings received.
@@ -49,8 +49,7 @@ struct MemoryVersionCounters: JSON, Equatable {
     /// One wedged loop cycle can add up to 3 (initial attempt + retries).
     var js_timeouts: Int
 
-    init(version: String?) {
-        self.version = version
+    init() {
         peak_mb = nil
         pressure_warnings = 0
         jetsam_exits = 0
@@ -105,9 +104,9 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     }
 
     /// Static so call sites (WebViewScriptExecutor) don't need the singleton started first.
-    /// Files the event under the currently running build.
+    /// Files the event under the currently running release.
     static func increment(_ counter: Counter) {
-        mutateBucket(build: currentBuild(), version: currentVersion()) { bucket in
+        mutateBucket(key: currentBucketKey()) { bucket in
             switch counter {
             case .pressureWarnings: bucket.pressure_warnings += 1
             case .jetsamExits: bucket.jetsam_exits += 1
@@ -140,10 +139,14 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
 
     func didReceive(_ payloads: [MXMetricPayload]) {
         for payload in payloads {
-            // The payload names the build it describes; use it so a day's counts that
+            // The payload names the release it describes; use it so a day's counts that
             // arrive after an upgrade still land on the build they happened under.
-            let build = payload.metaData?.applicationBuildVersion ?? Self.currentBuild()
-            let version = payload.latestApplicationVersion
+            let key: String
+            if let build = payload.metaData?.applicationBuildVersion {
+                key = Self.bucketKey(version: payload.latestApplicationVersion, build: build)
+            } else {
+                key = Self.currentBucketKey()
+            }
 
             if let exits = payload.applicationExitMetrics {
                 let fg = exits.foregroundExitData
@@ -152,7 +155,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
                 let pressure = bg.cumulativeMemoryPressureExitCount
                 let watchdog = fg.cumulativeAppWatchdogExitCount + bg.cumulativeAppWatchdogExitCount
                 if jetsam + pressure + watchdog > 0 {
-                    Self.mutateBucket(build: build, version: version) { bucket in
+                    Self.mutateBucket(key: key) { bucket in
                         bucket.jetsam_exits += jetsam
                         bucket.pressure_exits += pressure
                         bucket.watchdog_exits += watchdog
@@ -162,7 +165,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
             if let memory = payload.memoryMetrics {
                 let mb = Int(memory.peakMemoryUsage.converted(to: .megabytes).value.rounded())
                 UserDefaults.standard.set(mb, forKey: Self.latestPeakKey)
-                Self.mutateBucket(build: build, version: version) { bucket in
+                Self.mutateBucket(key: key) { bucket in
                     bucket.peak_mb = max(bucket.peak_mb ?? 0, mb)
                 }
             }
@@ -172,30 +175,21 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     // MARK: - Bucket storage
 
     private static func mutateBucket(
-        build: String,
-        version: String?,
+        key: String,
         _ change: (inout MemoryVersionCounters) -> Void
     ) {
         lock.lock()
         defer { lock.unlock() }
 
         var map = loadMap()
-        var bucket = map[build] ?? MemoryVersionCounters(version: version)
-        if bucket.version == nil {
-            bucket.version = version
-        }
+        var bucket = map[key] ?? MemoryVersionCounters()
         change(&bucket)
-        map[build] = bucket
+        map[key] = bucket
 
-        // Prune oldest buckets (numeric build order, string fallback) beyond the cap.
+        // Prune oldest buckets (release order: version tuple, then build) beyond the cap.
         if map.count > maxBuckets {
             let sorted = map.keys.sorted {
-                switch (Int($0), Int($1)) {
-                case let (.some(a), .some(b)): return a < b
-                case (.some, .none): return true
-                case (.none, .some): return false
-                case (.none, .none): return $0 < $1
-                }
+                releaseOrder($0).lexicographicallyPrecedes(releaseOrder($1))
             }
             for key in sorted.prefix(map.count - maxBuckets) {
                 map.removeValue(forKey: key)
@@ -216,12 +210,21 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
         return map
     }
 
-    private static func currentBuild() -> String {
-        Bundle.main.buildVersionNumber ?? "0"
+    /// "8.3.5(274)" — version alone collides across builds of one release, build alone
+    /// collides across releases (plain Xcode builds don't increment it).
+    private static func bucketKey(version: String?, build: String) -> String {
+        "\(version ?? "?")(\(build))"
     }
 
-    private static func currentVersion() -> String? {
-        Bundle.main.releaseVersionNumber
+    private static func currentBucketKey() -> String {
+        bucketKey(version: Bundle.main.releaseVersionNumber, build: Bundle.main.buildVersionNumber ?? "0")
+    }
+
+    /// Sortable release order for pruning: version numbers first, build number last.
+    /// Unparseable keys sort oldest (pruned first).
+    private static func releaseOrder(_ key: String) -> [Int] {
+        let parts = key.split(whereSeparator: { !$0.isNumber }).compactMap { Int($0) }
+        return parts.isEmpty ? [-1] : parts
     }
 
     // MARK: - Gauges
