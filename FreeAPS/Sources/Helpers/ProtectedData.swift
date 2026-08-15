@@ -1,13 +1,13 @@
 import UIKit
 
-enum ProtectedData {
+@MainActor enum ProtectedData {
     static var isAvailable: Bool {
         get async {
-            await MainActor.run { UIApplication.shared.isProtectedDataAvailable }
+            UIApplication.shared.isProtectedDataAvailable
         }
     }
 
-    static let didBecomeAvailable = UIApplication.protectedDataDidBecomeAvailableNotification
+    nonisolated static let didBecomeAvailable = UIApplication.protectedDataDidBecomeAvailableNotification
 
     private static let probeName = "protection.test"
 

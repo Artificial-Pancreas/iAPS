@@ -37,10 +37,18 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
     func start() async {
         setCachedGlucose(await storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? [])
 
+        // both transforms must be explicitly @Sendable: plain closure literals formed here would be
+        // inferred isolated to this actor, and Combine runs them synchronously on whatever executor
+        // sends into the subject (SettingsManager's). Same fix as in BaseStateModel.
+        let extract: @Sendable(FreeAPSSettings) -> (Bool, Bool, Bool) = {
+            ($0.smoothGlucose, $0.allowOneMinuteGlucose, $0.allowOneMinuteLoop)
+        }
+        let isDuplicate: @Sendable((Bool, Bool, Bool), (Bool, Bool, Bool)) -> Bool = { $0 == $1 }
+
         observe(
             appCoordinator.settings
-                .map { ($0.smoothGlucose, $0.allowOneMinuteGlucose, $0.allowOneMinuteLoop) }
-                .removeDuplicates(by: { $0 == $1 })
+                .map(extract)
+                .removeDuplicates(by: isDuplicate)
                 .dropFirst()
         ) { me, _ in
             await me.updateAppCoordinator() // recompute smoothed / filtered glucose and the gaps

@@ -1,3 +1,4 @@
+import CoreData
 import SwiftUI
 
 struct AutoISFHistoryView: View {
