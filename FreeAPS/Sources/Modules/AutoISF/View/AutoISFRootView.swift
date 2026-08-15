@@ -1,3 +1,4 @@
+import CoreData
 import LoopKit
 import SwiftUI
 import Swinject

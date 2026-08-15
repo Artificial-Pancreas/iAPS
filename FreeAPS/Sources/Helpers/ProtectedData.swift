@@ -1,9 +1,9 @@
 import UIKit
 
-enum ProtectedData {
+@MainActor enum ProtectedData {
     static var isAvailable: Bool {
         get async {
-            await MainActor.run { UIApplication.shared.isProtectedDataAvailable }
+            UIApplication.shared.isProtectedDataAvailable
         }
     }
 

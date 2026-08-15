@@ -187,7 +187,7 @@ extension RestoreCoreDataStatusView {
 
         private func saveMealPresets(_ presets: [MigratedMeals]) async -> Int {
             guard !presets.isEmpty else { return 0 }
-            return await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            return await CoreDataStack.shared.persistentContainer.performBackgroundTask { @Sendable context in
                 var saved = 0
                 for meal in presets {
                     let row = Presets(context: context)
