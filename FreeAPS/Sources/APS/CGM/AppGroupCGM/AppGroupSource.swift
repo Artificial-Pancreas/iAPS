@@ -30,7 +30,9 @@ final class AppGroupSource {
             _heartBeatDelegate = newValue
             if newValue == nil {
                 debug(.nightscout, "AppGroupSource - stopping heartbeat")
-                HeartBeatManager.shared.disconnectBluetoothTransmitter()
+                Task { @MainActor in
+                    HeartBeatManager.shared.disconnectBluetoothTransmitter()
+                }
             }
         }
         get {
@@ -59,10 +61,14 @@ final class AppGroupSource {
         previouslySeenSharedData = sharedData
 
         // make sure HeartBeatManager is setup, it will be firing our timer on BT activity
-        deviceAddress = HeartBeatManager.shared.checkCGMBluetoothTransmitter(
-            sharedUserDefaults: sharedDefaults,
-            heartbeat: _heartBeatDelegate
-        )
+        deviceAddress = sharedDefaults.string(forKey: "cgmTransmitterDeviceAddress")
+        let delegate = _heartBeatDelegate
+        Task { @MainActor in
+            _ = HeartBeatManager.shared.checkCGMBluetoothTransmitter(
+                sharedUserDefaults: sharedDefaults,
+                heartbeat: delegate
+            )
+        }
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {
             return .noData
