@@ -95,8 +95,12 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
             map: map,
             didSet: didSet
         )
+        // the transform must be explicitly @Sendable: a plain closure literal formed here would be
+        // inferred @MainActor (this method is main-isolated) and would trap when the settings
+        // subject sends from SettingsManager's executor, before the `receive(on:)` hop below
+        let extract: @Sendable(FreeAPSSettings) -> T = { $0[keyPath: keyPath] }
         appCoordinator.settings
-            .map { $0[keyPath: keyPath] }
+            .map(extract)
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak model] value in
@@ -179,9 +183,13 @@ extension BaseStateModel: SettingsBindable {}
         let keyPath = settingsKeyPath
         let settings = model.appCoordinator.settings
         cache = settings.value[keyPath: keyPath]
+        // the transform must be explicitly @Sendable: a plain closure literal formed here would be
+        // inferred @MainActor (this method is main-isolated) and would trap when the settings
+        // subject sends from SettingsManager's executor, before the `receive(on:)` hop below
+        let extract: @Sendable(FreeAPSSettings) -> Value = { $0[keyPath: keyPath] }
         // the model owns the wrapper, so both captures must be weak to avoid a cycle
         subscription = settings
-            .map { $0[keyPath: keyPath] }
+            .map(extract)
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self, weak model] value in

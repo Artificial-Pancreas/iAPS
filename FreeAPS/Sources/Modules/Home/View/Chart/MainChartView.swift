@@ -159,27 +159,11 @@ struct MainChartView: View {
         scrollTrigger &+= 1
     }
 
-    private func update(fullSize: CGSize) {
-        let started = Date.now
-        let currentData = data
-
-        calculationQueue.async {
-            let geom = CalculatedGeometries.make(fullSize: fullSize, data: currentData)
-
-            let ended = Date.now
-            debug(
-                .service,
-                "main chart update: \(ended.timeIntervalSince(started) * 1000) milliseconds"
-            )
-
-            DispatchQueue.main.async {
-                if self.shouldScrollAfterUpdate {
-                    self.triggerScroll()
-                    self.shouldScrollAfterUpdate = false
-                }
-                self.geom = geom
-            }
-        }
+    /// what the geometry calculation needs, sampled on the main thread
+    private struct UpdateInput {
+        let size: CGSize
+        let data: ChartModel
+        let started: Date
     }
 
     private func ping<T: Equatable>(_ p: Published<T>.Publisher) -> AnyPublisher<Void, Never> {
@@ -253,11 +237,32 @@ struct MainChartView: View {
             Publishers.MergeMany(immediatePublishers)
                 .eraseToAnyPublisher()
 
+        // capture-free, so being @Sendable costs nothing here and `ChartModel` never has to be
+        // Sendable: it arrives as the publisher's output rather than as a capture. A plain closure
+        // literal would be inferred main-isolated and then run on `calculationQueue`.
+        let computeGeometry: @Sendable(UpdateInput) -> CalculatedGeometries = { input in
+            let geom = CalculatedGeometries.make(fullSize: input.size, data: input.data)
+            debug(
+                .service,
+                "main chart update: \(Date.now.timeIntervalSince(input.started) * 1000) milliseconds"
+            )
+            return geom
+        }
+
         updatesCancellable =
             Publishers.MergeMany([debouncedUpdates, immediateUpdates])
                 .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    update(fullSize: latestSize)
+                // sampling the @State reads belongs on main
+                .map { _ in UpdateInput(size: latestSize, data: data, started: .now) }
+                .receive(on: calculationQueue)
+                .map(computeGeometry)
+                .receive(on: DispatchQueue.main)
+                .sink { geom in
+                    if shouldScrollAfterUpdate {
+                        triggerScroll()
+                        shouldScrollAfterUpdate = false
+                    }
+                    self.geom = geom
                 }
     }
 

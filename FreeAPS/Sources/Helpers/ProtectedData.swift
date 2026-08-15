@@ -7,7 +7,7 @@ import UIKit
         }
     }
 
-    static let didBecomeAvailable = UIApplication.protectedDataDidBecomeAvailableNotification
+    nonisolated static let didBecomeAvailable = UIApplication.protectedDataDidBecomeAvailableNotification
 
     private static let probeName = "protection.test"
 
