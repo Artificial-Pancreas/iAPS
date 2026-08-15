@@ -15,46 +15,77 @@ import os
 struct MemoryStats: JSON, Equatable {
     /// Physical footprint of the app process right now, MB.
     var footprint_mb: Int?
-    /// Peak footprint over the last MetricKit reporting day, MB.
+    /// Peak footprint over the last MetricKit reporting day, MB (any version).
     var peak_mb: Int?
-    /// UIKit memory-pressure warnings received, cumulative since install.
-    var pressure_warnings: Int?
-    /// OS kills for exceeding the app's own memory limit (jetsam), fg+bg, cumulative.
-    var jetsam_exits: Int?
-    /// OS kills of the backgrounded app to relieve system-wide memory pressure, cumulative.
-    var pressure_exits: Int?
-    /// Watchdog kills (unresponsive main thread), cumulative.
-    var watchdog_exits: Int?
-    /// WebContent (oref JS) process deaths detected by WebViewScriptExecutor, cumulative.
-    var webcontent_terminations: Int?
-    /// JS call attempts that hit the WebViewScriptExecutor watchdog timeout, cumulative.
-    /// One wedged loop cycle can add up to 3 (initial attempt + retries).
-    var js_timeouts: Int?
+    /// Incident counters, bucketed by the build number they occurred under, so a
+    /// release-over-release comparison never smears events across an upgrade.
+    /// Keys are build numbers ("274"); the newest 6 buckets are retained.
+    var counters: [String: MemoryVersionCounters]?
     /// Physical RAM of the device, MB. Full statistics only.
     var ram_mb: Int?
     /// Memory iOS will still allow this app right now, MB. Full statistics only.
     var available_mb: Int?
 }
 
+/// One build's worth of incident counts. Counters start at zero when that build first
+/// runs and only ever grow, so the latest uploaded value IS the build's total —
+/// no server-side diffing needed for per-version numbers.
+struct MemoryVersionCounters: JSON, Equatable {
+    /// Marketing version ("8.3.5") for display; the dictionary key is the build number.
+    var version: String?
+    /// Highest MetricKit daily peak recorded while this build ran, MB.
+    var peak_mb: Int?
+    /// UIKit memory-pressure warnings received.
+    var pressure_warnings: Int
+    /// OS kills for exceeding the app's own memory limit (jetsam), fg+bg.
+    var jetsam_exits: Int
+    /// OS kills of the backgrounded app to relieve system-wide memory pressure.
+    var pressure_exits: Int
+    /// Watchdog kills (unresponsive main thread).
+    var watchdog_exits: Int
+    /// WebContent (oref JS) process deaths detected by WebViewScriptExecutor.
+    var webcontent_terminations: Int
+    /// JS call attempts that hit the WebViewScriptExecutor watchdog timeout.
+    /// One wedged loop cycle can add up to 3 (initial attempt + retries).
+    var js_timeouts: Int
+
+    init(version: String?) {
+        self.version = version
+        peak_mb = nil
+        pressure_warnings = 0
+        jetsam_exits = 0
+        pressure_exits = 0
+        watchdog_exits = 0
+        webcontent_terminations = 0
+        js_timeouts = 0
+    }
+}
+
 /// Collects the numbers behind `MemoryStats`.
 ///
 /// MetricKit delivers its payloads at most once a day, covering the previous day, and
 /// only on a real device — on the simulator the MetricKit-derived fields simply stay nil.
-/// The exit counts are accumulated into monotonic totals; the server diffs successive
-/// uploads to get per-interval rates, which keeps this class free of upload-state
-/// bookkeeping (an upload that never happens loses nothing).
+/// Because that delivery is late, MetricKit counts are filed into the bucket named by the
+/// payload's own build metadata, not the build that happens to be running — an upgrade
+/// therefore never swallows the previous build's last day of kills.
 final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     static let shared = MemoryMetricsService()
 
-    enum Keys {
-        static let pressureWarnings = "MemoryMetrics_pressureWarnings"
-        static let jetsamExits = "MemoryMetrics_jetsamExits"
-        static let pressureExits = "MemoryMetrics_pressureExits"
-        static let watchdogExits = "MemoryMetrics_watchdogExits"
-        static let peakFootprintMB = "MemoryMetrics_peakFootprintMB"
-        static let webContentTerminations = "MemoryMetrics_webContentTerminations"
-        static let jsTimeouts = "MemoryMetrics_jsTimeouts"
+    enum Counter {
+        case pressureWarnings
+        case jetsamExits
+        case pressureExits
+        case watchdogExits
+        case webContentTerminations
+        case jsTimeouts
     }
+
+    private static let storageKey = "MemoryMetrics_versionCounters"
+    private static let latestPeakKey = "MemoryMetrics_peakFootprintMB"
+    /// Old buckets freeze once their build stops running and the server has already
+    /// ingested their totals, so retaining a handful bounds the payload without loss.
+    private static let maxBuckets = 6
+    private static let lock = NSLock()
 
     override private init() {
         super.init()
@@ -69,27 +100,34 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
             object: nil,
             queue: nil
         ) { _ in
-            Self.increment(Keys.pressureWarnings)
+            MemoryMetricsService.increment(.pressureWarnings)
         }
     }
 
     /// Static so call sites (WebViewScriptExecutor) don't need the singleton started first.
-    static func increment(_ key: String) {
-        let defaults = UserDefaults.standard
-        defaults.set(defaults.integer(forKey: key) + 1, forKey: key)
+    /// Files the event under the currently running build.
+    static func increment(_ counter: Counter) {
+        mutateBucket(build: currentBuild(), version: currentVersion()) { bucket in
+            switch counter {
+            case .pressureWarnings: bucket.pressure_warnings += 1
+            case .jetsamExits: bucket.jetsam_exits += 1
+            case .pressureExits: bucket.pressure_exits += 1
+            case .watchdogExits: bucket.watchdog_exits += 1
+            case .webContentTerminations: bucket.webcontent_terminations += 1
+            case .jsTimeouts: bucket.js_timeouts += 1
+            }
+        }
     }
 
     func snapshot(full: Bool) -> MemoryStats {
-        let defaults = UserDefaults.standard
+        Self.lock.lock()
+        let counters = Self.loadMap()
+        Self.lock.unlock()
+
         var stats = MemoryStats(
             footprint_mb: Self.currentFootprintMB(),
-            peak_mb: defaults.object(forKey: Keys.peakFootprintMB) as? Int,
-            pressure_warnings: defaults.integer(forKey: Keys.pressureWarnings),
-            jetsam_exits: defaults.integer(forKey: Keys.jetsamExits),
-            pressure_exits: defaults.integer(forKey: Keys.pressureExits),
-            watchdog_exits: defaults.integer(forKey: Keys.watchdogExits),
-            webcontent_terminations: defaults.integer(forKey: Keys.webContentTerminations),
-            js_timeouts: defaults.integer(forKey: Keys.jsTimeouts)
+            peak_mb: UserDefaults.standard.object(forKey: Self.latestPeakKey) as? Int,
+            counters: counters.isEmpty ? nil : counters
         )
         if full {
             stats.ram_mb = Int(ProcessInfo.processInfo.physicalMemory / 1_048_576)
@@ -102,35 +140,91 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
 
     func didReceive(_ payloads: [MXMetricPayload]) {
         for payload in payloads {
+            // The payload names the build it describes; use it so a day's counts that
+            // arrive after an upgrade still land on the build they happened under.
+            let build = payload.metaData?.applicationBuildVersion ?? Self.currentBuild()
+            let version = payload.latestApplicationVersion
+
             if let exits = payload.applicationExitMetrics {
                 let fg = exits.foregroundExitData
                 let bg = exits.backgroundExitData
-                add(
-                    fg.cumulativeMemoryResourceLimitExitCount + bg.cumulativeMemoryResourceLimitExitCount,
-                    to: Keys.jetsamExits
-                )
-                add(bg.cumulativeMemoryPressureExitCount, to: Keys.pressureExits)
-                add(
-                    fg.cumulativeAppWatchdogExitCount + bg.cumulativeAppWatchdogExitCount,
-                    to: Keys.watchdogExits
-                )
+                let jetsam = fg.cumulativeMemoryResourceLimitExitCount + bg.cumulativeMemoryResourceLimitExitCount
+                let pressure = bg.cumulativeMemoryPressureExitCount
+                let watchdog = fg.cumulativeAppWatchdogExitCount + bg.cumulativeAppWatchdogExitCount
+                if jetsam + pressure + watchdog > 0 {
+                    Self.mutateBucket(build: build, version: version) { bucket in
+                        bucket.jetsam_exits += jetsam
+                        bucket.pressure_exits += pressure
+                        bucket.watchdog_exits += watchdog
+                    }
+                }
             }
             if let memory = payload.memoryMetrics {
                 let mb = Int(memory.peakMemoryUsage.converted(to: .megabytes).value.rounded())
-                UserDefaults.standard.set(mb, forKey: Keys.peakFootprintMB)
+                UserDefaults.standard.set(mb, forKey: Self.latestPeakKey)
+                Self.mutateBucket(build: build, version: version) { bucket in
+                    bucket.peak_mb = max(bucket.peak_mb ?? 0, mb)
+                }
             }
         }
     }
 
-    // MARK: - Internals
+    // MARK: - Bucket storage
 
-    /// Each MetricKit payload's counts cover only that payload's day, so summing
-    /// successive payloads yields a correct running total.
-    private func add(_ count: Int, to key: String) {
-        guard count > 0 else { return }
-        let defaults = UserDefaults.standard
-        defaults.set(defaults.integer(forKey: key) + count, forKey: key)
+    private static func mutateBucket(
+        build: String,
+        version: String?,
+        _ change: (inout MemoryVersionCounters) -> Void
+    ) {
+        lock.lock()
+        defer { lock.unlock() }
+
+        var map = loadMap()
+        var bucket = map[build] ?? MemoryVersionCounters(version: version)
+        if bucket.version == nil {
+            bucket.version = version
+        }
+        change(&bucket)
+        map[build] = bucket
+
+        // Prune oldest buckets (numeric build order, string fallback) beyond the cap.
+        if map.count > maxBuckets {
+            let sorted = map.keys.sorted {
+                switch (Int($0), Int($1)) {
+                case let (.some(a), .some(b)): return a < b
+                case (.some, .none): return true
+                case (.none, .some): return false
+                case (.none, .none): return $0 < $1
+                }
+            }
+            for key in sorted.prefix(map.count - maxBuckets) {
+                map.removeValue(forKey: key)
+            }
+        }
+
+        if let data = try? JSONCoding.encoder.encode(map) {
+            UserDefaults.standard.set(data, forKey: storageKey)
+        }
     }
+
+    private static func loadMap() -> [String: MemoryVersionCounters] {
+        guard let data = UserDefaults.standard.data(forKey: storageKey),
+              let map = try? JSONCoding.decoder.decode([String: MemoryVersionCounters].self, from: data)
+        else {
+            return [:]
+        }
+        return map
+    }
+
+    private static func currentBuild() -> String {
+        Bundle.main.buildVersionNumber ?? "0"
+    }
+
+    private static func currentVersion() -> String? {
+        Bundle.main.releaseVersionNumber
+    }
+
+    // MARK: - Gauges
 
     private static func currentFootprintMB() -> Int? {
         var info = task_vm_info_data_t()

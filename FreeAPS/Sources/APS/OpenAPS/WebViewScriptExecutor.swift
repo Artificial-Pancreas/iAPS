@@ -252,7 +252,7 @@ import WebKit
                 "Javascript function (\(name), \(requestId)) attempt \(attempts + 1) failed with error: \(error)"
             )
             if error is TimeoutError {
-                MemoryMetricsService.increment(MemoryMetricsService.Keys.jsTimeouts)
+                MemoryMetricsService.increment(.jsTimeouts)
             }
             continuationStreams.removeValue(forKey: requestId)?.finish(throwing: error)
             // Rebuild even when giving up: otherwise the next JS call in this cycle
@@ -331,7 +331,7 @@ extension WebViewScriptExecutor: WKNavigationDelegate {
     func webViewWebContentProcessDidTerminate(_ terminatedWebView: WKWebView) {
         guard terminatedWebView === webView else { return }
 
-        MemoryMetricsService.increment(MemoryMetricsService.Keys.webContentTerminations)
+        MemoryMetricsService.increment(.webContentTerminations)
 
         let pending = continuationStreams
         continuationStreams.removeAll()
