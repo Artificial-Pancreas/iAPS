@@ -2671,6 +2671,25 @@ Enact a temp Basal or a temp target */
 /* */
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Khi bật, tệp log của ngày hôm trước sẽ được tự động tải lên sau nửa đêm. Các log chỉ được dùng để cung cấp tính năng phân tích nhiều ngày trên open-iaps.app. Mặc định là tắt.";
 
+/* --- Sharing screen redesign (Online Backup + Demographics) --- */
+"Online Backup and Statistics" = "Sao lưu và thống kê trực tuyến";
+"If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default." = "Nếu bạn bật Sao lưu và thống kê trực tuyến, bản sao lưu hàng ngày của các cài đặt và dữ liệu thống kê của bạn sẽ được tải lên open-iaps.app. Điều này cho phép bạn khôi phục dữ liệu trên điện thoại mới và đóng góp vào thống kê cộng đồng.\n\nTất cả dữ liệu được tải lên ẩn danh. Không có tên, email hoặc bất kỳ thông tin nào liên kết dữ liệu với bạn — chỉ có một mã khôi phục ngẫu nhiên được lưu trên điện thoại của bạn. Tắt theo mặc định.";
+"Demographics" = "Đồ họa minh họa";
+"Height" = "Chiều cao";
+"Prefer not to say" = "Không muốn trả lời";
+"Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Giới tính và tuổi của bạn cũng giúp ích cho việc phân tích dữ liệu của chính bạn — chúng giúp phân biệt những dao động bình thường, có thể dự đoán được với một xu hướng thực sự đáng lưu ý và cần có hành động.\n\nCân nặng và chiều cao chỉ được sử dụng cho mục đích thống kê: chúng giúp chúng tôi hiểu rõ hơn về phân bố của cộng đồng, không có mục đích nào khác.\n\nĐây là hệ thống dựa trên sự trung thực — chúng tôi không có cách nào và cũng không muốn xác minh những thông tin bạn nhập. Vì vậy, chúng tôi chỉ mong bạn cung cấp thông tin một cách trung thực để cả việc phân tích và các số liệu thống kê đều có ý nghĩa.\n\nCũng như mọi dữ liệu khác tại đây, thông tin này được ẩn danh.";
+"Why are these required for log upload?" = "Tại sao những thông tin này lại cần thiết để tải lên?";
+"Why we ask about sex" = "Tại sao chúng tôi hỏi về giới tính";
+"Got it" = "Đã hiểu";
+"Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous." = "Độ nhạy insulin chịu ảnh hưởng bởi hormone sinh dục — estrogen và progesterone so với testosterone — chứ không phải bởi bản dạng giới. Hãy chọn kiểu hormone mà cơ thể bạn hiện đang có. Với hầu hết mọi người, đó đơn giản là giới tính của họ; nếu bạn đang sử dụng liệu pháp hormone, hãy chọn giới tính tương ứng với loại hormone bạn đang sử dụng.\n\nThông tin này giúp cải thiện việc phân tích dữ liệu của chính bạn và vẫn được giữ ẩn danh.";
+"Enable Uploads" = "Kích hoạt Tải lên";
+"Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Để bật tải nhật ký hằng ngày lên, hãy đặt Giới tính thành Nữ hoặc Nam và nhập ngày sinh hợp lệ ở trên.";
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "Khi được bật, tệp nhật ký của ngày trước đó sẽ tự động được tải lên sau nửa đêm. Nhật ký được sử dụng để phân tích dữ liệu nhiều ngày trên open-iaps.app. Mặc định: Tắt.";
+"Daily Log upload turned off" = "Đã tắt tải nhật ký hằng ngày";
+"Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Tải nhật ký hằng ngày yêu cầu Giới tính được đặt thành Nữ hoặc Nam và ngày sinh hợp lệ. Hãy cập nhật thông tin cá nhân để bật lại tính năng này.";
+"Copied" = "Đã sao chép";
+"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Hãy ghi lại mã token này và lưu giữ ở nơi an toàn. Đây là cách duy nhất để khôi phục cài đặt của bạn trên điện thoại mới.";
+
 /* ——————————Contact Image ————————*/
 
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -3715,6 +3734,242 @@ Enact a temp Basal or a temp target */
 
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Bản dựng iAPS của bạn sẽ hết hạn vào %1$@ (còn %2$d ngày). Các bản dựng TestFlight phải được gia hạn sau 90 ngày.";
 
+/* --- First-launch Welcome + post-upgrade notice (onboarding) --- */
+"Welcome to iAPS" = "Chào mừng bạn đến với iAPS";
+
+"Let's get you set up." = "Hãy bắt đầu thiết lập.";
+
+/* Welcome screen disclaimer (phase 1) */
+"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS là một hệ thống tuyến tụy nhân tạo mã nguồn mở, dựa trên thuật toán OpenAPS.";
+
+"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS chưa được bất kỳ cơ quan y tế nào phê duyệt. Bạn tự chịu trách nhiệm về rủi ro khi sử dụng hệ thống này.";
+
+"New User" = "Người dùng mới";
+
+"Set up iAPS for the first time" = "Thiết lập iAPS lần đầu";
+
+"Existing User" = "Đã có tài khoản";
+
+"Skip setup — configure everything myself" = "Bỏ qua thiết lập — tự cấu hình mọi thứ";
+
+"Migrate my settings from a previous install" = "Di chuyển cài đặt từ bản cài đặt trước";
+
+"Stuck? Help is here" = "Bị mắc kẹt? Trợ giúp ở đây";
+
+"Documentation" = "Tài liệu";
+
+"Discord support" = "Hỗ trợ Discord";
+
+"iAPS updated" = "iAPS đã được cập nhật";
+
+"You're now running version %@." = "Bạn đang sử dụng phiên bản %@.";
+
+"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Các bản cập nhật đôi khi có thể đặt lại một số cài đặt. Mặc dù hiếm khi xảy ra, nếu bạn nhận thấy bất kỳ điều gì bất thường — chẳng hạn như Vòng lặp kín bị tắt hoặc IOB tối đa bằng 0 — chúng tôi khuyên bạn nên kiểm tra cài đặt trước tiên.";
+
+"Review Settings" = "Xem lại cài đặt";
+
+"Continue to Home" = "Tiếp tục đến Trang chủ";
+
+/* Existing-user restore (onboarding) */
+"Restore my settings from a previous install" = "Khôi phục cài đặt từ bản cài đặt trước";
+
+"Restore your settings" = "Khôi phục cài đặt của bạn";
+
+"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Nhập mã token khôi phục từ bản cài đặt iAPS trước đây để khôi phục tùy chọn OpenAPS và cài đặt ứng dụng từ bản sao lưu trực tuyến.";
+
+"Recovery token" = "Mã token khôi phục";
+
+"Find this on your old phone under iAPS → Settings → Sharing." = "Tìm mã này trên điện thoại cũ theo đường dẫn iAPS → Cài đặt → Chia sẻ.";
+
+"Restore my settings" = "Khôi phục cài đặt của tôi";
+
+"Restoring…" = "Đang khôi phục…";
+
+"Settings restored" = "Đã khôi phục cài đặt";
+
+"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Các tùy chọn OpenAPS và cài đặt ứng dụng của bạn đã được khôi phục từ bản sao lưu. Ở bước tiếp theo, bạn sẽ thiết lập sao lưu trực tuyến cho thiết bị này.";
+
+"Restore didn't complete" = "Không hoàn thành khôi phục";
+
+"Try again" = "Thử lại";
+
+"Skip and set up fresh" = "Bỏ qua và thiết lập mới";
+
+"Enter your recovery token." = "Nhập mã token khôi phục của bạn.";
+
+"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "Không tìm thấy bản sao lưu cho mã token đó hoặc không thể kết nối đến máy chủ. Hãy kiểm tra mã token và kết nối mạng, sau đó thử lại.";
+
+/* Profile-schedule review (restore) */
+"Review your therapy settings" = "Kiểm tra lại cài đặt điều trị của bạn";
+
+"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "Các lịch liều nền, ISF, tỷ lệ carbohydrate và mục tiêu này được khôi phục từ bản sao lưu của bạn. Hãy kiểm tra lại, sau đó áp dụng. Liều nền của bơm insulin sẽ được đồng bộ khi bạn thiết lập bơm.";
+
+"Check these before applying" = "Kiểm tra các cài đặt này trước khi áp dụng";
+
+"Basal rates" = "Tỷ lệ liều nền";
+
+"Insulin sensitivity (ISF)" = "Độ nhạy Insulin (ISF)";
+
+"Carb ratios" = "Tỷ lệ Carb";
+
+"Glucose targets" = "Đường huyết mục tiêu";
+
+"Apply these settings" = "Áp dụng các cài đặt này";
+
+"Applying…" = "Đang áp dụng…";
+
+"Continue without restoring schedules" = "Tiếp tục mà không khôi phục các lịch";
+
+"1 segment" = "1 phân đoạn";
+
+"%d segments" = "%d phân đoạn";
+
+"Carb ratio schedule contains a non-positive value." = "Các tỷ lệ carb chứa giá trị không dương.";
+
+"Total basal across the day is zero or negative." = "Tổng liều nền trong ngày bằng 0 hoặc âm.";
+
+"Insulin sensitivity schedule contains a non-positive value." = "Các độ nhạy insulin (ISF) chứa giá trị không dương.";
+
+/* Restore by account login */
+"Account login" = "Đăng nhập tài khoản";
+
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Đăng nhập vào tài khoản sao lưu trực tuyến để khôi phục tùy chọn OpenAPS và cài đặt ứng dụng của bạn.";
+
+"Email" = "Email";
+
+"Password" = "Mật khẩu";
+
+"Authentication code" = "Mã xác thực";
+
+"Logging in…" = "Đang đăng nhập…";
+
+"Log in & restore" = "Đăng nhập & khôi phục";
+
+"Enter your email and password." = "Nhập email và mật khẩu của bạn.";
+
+"Enter the code from your authenticator app." = "Nhập mã từ ứng dụng xác thực của bạn.";
+
+"That code didn't match. Please try again." = "Mã này không đúng. Vui lòng thử lại.";
+
+"Email or password is incorrect." = "Email và mật khẩu không chính xác.";
+
+"No backup is linked to this account yet." = "Chưa có bản sao lưu nào được liên kết với tài khoản này.";
+
+"Couldn't reach the server. Check your connection and try again." = "Không thể kết nối đến máy chủ. Hãy kiểm tra kết nối mạng và thử lại.";
+
+/* Recovery token & account (final onboarding step) */
+"Save your recovery token" = "Lưu mã token khôi phục của bạn";
+
+"Copy" = "Sao chép";
+
+"Record this somewhere safe. It's how you restore your settings on a new phone." = "Hãy lưu lại mã này ở nơi an toàn. Đây là cách để khôi phục cài đặt của bạn trên điện thoại mới.";
+
+"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "Bạn không cần tài khoản — mã token khôi phục ở trên đã cho phép sao lưu và khôi phục cài đặt của bạn. Tài khoản chỉ giúp bạn khôi phục bằng email và mật khẩu thay vì mã token, đồng thời quản lý các thiết bị của bạn.";
+
+"Optional: attach this device to an account" = "Tùy chọn: liên kết thiết bị này với tài khoản";
+
+"Link to an existing account" = "Liên kết với tài khoản hiện có";
+
+"Create an account" = "Tạo một tài khoản";
+
+"Confirm password" = "Xác nhận mật khẩu";
+
+"Verify & link" = "Xác minh & liên kết";
+
+"Link this device" = "Liên kết thiết bị này";
+
+"Linking…" = "Đang liên kết…";
+
+"Create account" = "Tạo tài khoản";
+
+"Creating…" = "Đang tạo…";
+
+"Device linked" = "Thiết bị đã được liên kết";
+
+"This device is now attached to %@. You can restore it by logging in." = "Thiết bị này hiện đã được liên kết với %@. Bạn có thể khôi phục bằng cách đăng nhập.";
+
+"Finish without an account" = "Hoàn thành mà không cần tài khoản";
+
+"This device is already linked to another account." = "Thiết bị này đã được liên kết với một tài khoản khác.";
+
+"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "Thiết bị này chưa hoàn tất bản sao lưu đầu tiên. Hãy đảm bảo Sao lưu trực tuyến đang được bật, sau đó thử lại sau ít phút.";
+
+"This device's recovery token looks invalid." = "Mã token khôi phục của thiết bị này không hợp lệ.";
+
+"An account with that email already exists. Try linking instead." = "Tài khoản với email này đã tồn tại. Hãy thử liên kết thay thế.";
+
+"That email doesn't look right." = "Email này không hợp lệ.";
+
+"Please choose a stronger password (at least 8 characters)." = "Vui lòng chọn mật khẩu mạnh hơn (ít nhất 8 ký tự).";
+
+"Passwords don't match." = "Mật khẩu không khớp.";
+
+/* Device setup */
+"Set up your devices" = "Thiết lập thiết bị của bạn";
+
+"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Ghép nối bơm insulin và CGM để iAPS có thể đọc dữ liệu đường huyết và cung cấp insulin. Bạn cũng có thể thiết lập các thiết bị này sau trong Cài đặt.";
+
+/* Restore setup summary */
+"Review your settings" = "Xem lại các cài đặt của bạn";
+
+"Set up your settings" = "Thiết lập cài đặt của bạn";
+
+"Review" = "Xem lại";
+
+"Setup" = "Cài đặt";
+
+"Next Step" = "Tiếp theo";
+
+/* Restore CoreData status */
+"Restoring your data" = "Đang khôi phục dữ liệu của bạn";
+
+"Restored data" = "Dữ liệu đã được khôi phục";
+
+"Meal, override and temp-target presets from your backup." = "Các cài đặt sẵn bữa ăn, ghi đè và mục tiêu tạm thời từ bản sao lưu của bạn.";
+
+"Override Presets" = "Cài đặt chồng liều";
+
+"Temp Target Presets" = "Các cài đặt sẵn cho mục tiêu tạm thời";
+
+"No Data" = "Không có dữ liệu";
+
+"%d restored" = "Đã khôi phục %d";
+
+"Saved %d of %d" = "Đã lưu %d trên tổng số %d";
+
+/* Setup complete */
+"Setup complete" = "Cài đặt hoàn tất";
+
+"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Cài đặt của bạn đã được thiết lập. Bật Vòng lặp kín khi bạn sẵn sàng để iAPS tự động điều chỉnh insulin — bạn luôn có thể thay đổi tùy chọn này sau trong Cài đặt.";
+
+"Closed Loop" = "Vòng lặp kín";
+
+"Let iAPS automate insulin dosing" = "Cho phép iAPS tự động điều chỉnh liều insulin";
+
+"Finish setup" = "Hoàn tất cài đặt";
+
+/* Sharing — unit abbreviations for the optional weight/height fields.
+   "kg" kilograms, "lb" pounds, "cm" centimetres, "ft" feet, "in" inches,
+   "ft/in" the feet-and-inches picker option. */
+"kg" = "kg";
+
+"lb" = "lb";
+
+"cm" = "cm";
+
+"ft" = "ft";
+
+"in" = "in";
+
+"ft/in" = "ft/in";
+
+/* Developer settings — re-arm the first-launch onboarding so it replays */
+"Replay onboarding (new install)" = "Xem lại quy trình thiết lập ban đầu (cài đặt mới)";
+
+"Replay onboarding (as upgrade)" = "Xem lại quy trình thiết lập ban đầu (nâng cấp)";
+
+"Reset" = "Đặt lại";
+
 "Cancel temp" = "Hủy liều nền tạm";
 
 "No " = "Không ";
@@ -3821,6 +4076,9 @@ Enact a temp Basal or a temp target */
 "has been added to iAPS" = "đã được thêm vào iAPS";
 "hour" = "hours";
 "iAPS" = "iAPS";
+"Processing…" = "Processing…";
+"Listening…" = "Listening…";
+"Describe what you ate…" = "Describe what you ate…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS cần quyền truy cập camera để quét mã vạch. Vui lòng bật quyền camera trong Cài đặt.";
 "too small temp basal amount" = "lượng liều nền tạm thời quá nhỏ";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Cảnh báo! Lượng insulin đã nhập lớn hơn giới hạn liều Bolus tối đa của bạn!";
