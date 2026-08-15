@@ -304,7 +304,7 @@ struct ChartBackground: ViewModifier {
     }
 }
 
-private let navigationCache = LRUCache<Screen.ID, AnyView>(capacity: 10)
+@MainActor private let navigationCache = LRUCache<Screen.ID, AnyView>(capacity: 10)
 
 struct NavigationLazyView: View {
     let build: () -> AnyView

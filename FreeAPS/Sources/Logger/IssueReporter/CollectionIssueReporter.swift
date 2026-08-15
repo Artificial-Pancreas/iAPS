@@ -6,7 +6,7 @@ protocol GroupedIssueReporter: IssueReporter {
     func remove(reporter: IssueReporter)
 }
 
-final class CollectionIssueReporter: GroupedIssueReporter {
+final class CollectionIssueReporter: GroupedIssueReporter, @unchecked Sendable {
     private let reportersLock = NSRecursiveLock(label: "CollectionIssueReporter.reportersLock")
     private var reporters: [IssueReporter] = []
 

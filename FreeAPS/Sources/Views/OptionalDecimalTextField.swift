@@ -145,7 +145,7 @@ public struct OptionalDecimalTextField: UIViewRepresentable {
 
     fileprivate static let allowedCharacters = CharacterSet(charactersIn: "0123456789,.")
 
-    public final class Coordinator: NSObject {
+    @MainActor public final class Coordinator: NSObject {
         var parent: OptionalDecimalTextField
         var textField: UITextField?
         let maxLength: Int?

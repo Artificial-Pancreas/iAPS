@@ -41,18 +41,17 @@ final class AppGroupSource {
     }
 
     func fetch() -> CGMReadingResult {
-        guard let suiteName = Bundle.main.appGroupSuiteName,
-              let sharedDefaults = UserDefaults(suiteName: suiteName)
-        else {
+        guard let suiteName = Bundle.main.appGroupSuiteName else {
             return .noData
         }
 
-        return fetchLastBGs(60, sharedDefaults)
+        return fetchLastBGs(60, suiteName: suiteName)
     }
 
     private var previouslySeenSharedData: Data?
 
-    private func fetchLastBGs(_ count: Int, _ sharedDefaults: UserDefaults) -> CGMReadingResult {
+    private func fetchLastBGs(_ count: Int, suiteName: String) -> CGMReadingResult {
+        guard let sharedDefaults = UserDefaults(suiteName: suiteName) else { return .noData }
         guard let sharedData = sharedDefaults.data(forKey: "latestReadings"),
               previouslySeenSharedData != sharedData // don't do anything if nothing changed since the last heartbeat
         else {
@@ -64,8 +63,9 @@ final class AppGroupSource {
         deviceAddress = sharedDefaults.string(forKey: "cgmTransmitterDeviceAddress")
         let delegate = _heartBeatDelegate
         Task { @MainActor in
+            guard let defaults = UserDefaults(suiteName: suiteName) else { return }
             _ = HeartBeatManager.shared.checkCGMBluetoothTransmitter(
-                sharedUserDefaults: sharedDefaults,
+                sharedUserDefaults: defaults,
                 heartbeat: delegate
             )
         }
