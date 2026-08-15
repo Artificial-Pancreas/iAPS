@@ -18,6 +18,9 @@ import Swinject
     func started() async throws { try await startup?.value }
 
     private func performStartup(resolver: Resolver) async throws {
+        // Nothing below may run while our own files are unreadable.
+        await ProtectedData.waitUntilFilesAreReadable()
+
         try await startService(resolver.resolve(DataMigrations.self))
 
         let appCoordinator = resolver.resolve(AppCoordinator.self)!
