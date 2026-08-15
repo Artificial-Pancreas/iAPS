@@ -37,7 +37,6 @@ import Swinject
             .default,
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
-        isNewVersion()
         AppearanceManager.setupGlobalAppearance()
     }
 
@@ -70,7 +69,15 @@ import Swinject
         }
     }
 
-    private func isNewVersion() {
+    fileprivate static func runVersionCheckOnce() {
+        guard !didRunVersionCheck else { return }
+        didRunVersionCheck = true
+        isNewVersion()
+    }
+
+    private static var didRunVersionCheck = false
+
+    private static func isNewVersion() {
         let userDefaults = UserDefaults.standard
         var version = userDefaults.string(forKey: IAPSconfig.version) ?? ""
         userDefaults.set(false, forKey: IAPSconfig.inBolusView)
@@ -117,6 +124,7 @@ private struct StartupGate<Content: View>: View {
         .task {
             do {
                 try await start()
+                FreeAPSApp.runVersionCheckOnce()
                 ready = true
             } catch {
                 self.error = error.localizedDescription
