@@ -62,51 +62,68 @@ import UIKit
     }
 }
 
+final class AppLauncher: ObservableObject {
+    static let shared = AppLauncher()
+
+    @Published private(set) var services: AppServices?
+
+    private var isBuilding = false
+
+    private init() {}
+
+    func startIfNeeded() {
+        guard services == nil else { return }
+        guard !isBuilding else {
+            warning(.default, "AppServices construction re-entered - ignoring the nested request")
+            return
+        }
+        guard ProtectedDataGate.isAvailable() else {
+            debug(.default, "Launch deferred: protected data is not available (no unlock since boot)")
+            return
+        }
+
+        isBuilding = true
+        defer { isBuilding = false }
+
+        FreeAPSApp.runVersionCheckOnce()
+        services = AppServices(assembler: FreeAPSApp.assembler)
+    }
+}
+
 /// Holds the launch until the app can actually read its own files.
 private struct LaunchGateView: View {
-    @State private var isProtectedDataAvailable = ProtectedDataGate.isAvailable()
+    @StateObject private var launcher = AppLauncher.shared
 
     var body: some View {
         Group {
-            if isProtectedDataAvailable {
-                LaunchedAppView()
+            // if everything is ready - render the app
+            if let appServices = launcher.services {
+                LaunchedAppView(appServices: appServices)
             } else {
                 WaitingForUnlockView()
             }
         }
         .onAppear {
-            if !isProtectedDataAvailable {
-                debug(.default, "Launch deferred: protected data is not available (no unlock since boot)")
-            }
-        }
-        .onReceive(
-            Foundation.NotificationCenter.default.publisher(for: UIApplication.protectedDataDidBecomeAvailableNotification)
-        ) { _ in
-            resumeLaunchIfPossible()
+            launcher.startIfNeeded()
         }
         .onReceive(
             Foundation.NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
         ) { _ in
-            resumeLaunchIfPossible()
+            launcher.startIfNeeded()
         }
-    }
-
-    private func resumeLaunchIfPossible() {
-        guard !isProtectedDataAvailable, ProtectedDataGate.isAvailable() else { return }
-        debug(.default, "Protected data became available, resuming launch")
-        isProtectedDataAvailable = true
     }
 }
 
 /// The real app - reached only once `ProtectedDataGate` confirms our files are readable.
 private struct LaunchedAppView: View {
+    let appServices: AppServices
+
     @Environment(\.scenePhase) private var scenePhase
 
     @StateObject private var dataController = CoreDataStack.shared
-    @StateObject private var appServices = AppServices(assembler: FreeAPSApp.assembler)
 
-    init() {
-        FreeAPSApp.runVersionCheckOnce()
+    init(appServices: AppServices) {
+        self.appServices = appServices
     }
 
     var body: some View {
