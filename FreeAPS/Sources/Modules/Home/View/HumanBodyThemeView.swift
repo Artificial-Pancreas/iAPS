@@ -62,82 +62,82 @@ struct FemaleMannequinTorsoShape: Shape {
         let minY = rect.minY
 
         // Start at neck top left
-        p.move(to: CGPoint(x: minX + 0.45 * w, y: minY + 0.12 * h))
+        p.move(to: CGPoint(x: minX + 0.46 * w, y: minY + 0.12 * h))
 
         // Top of neck flat line
-        p.addLine(to: CGPoint(x: minX + 0.55 * w, y: minY + 0.12 * h))
+        p.addLine(to: CGPoint(x: minX + 0.54 * w, y: minY + 0.12 * h))
 
-        // Right neck/shoulder
+        // Right neck/shoulder (elegant downward slope)
         p.addCurve(
-            to: CGPoint(x: minX + 0.80 * w, y: minY + 0.18 * h),
-            control1: CGPoint(x: minX + 0.62 * w, y: minY + 0.12 * h),
-            control2: CGPoint(x: minX + 0.72 * w, y: minY + 0.14 * h)
+            to: CGPoint(x: minX + 0.74 * w, y: minY + 0.18 * h),
+            control1: CGPoint(x: minX + 0.58 * w, y: minY + 0.12 * h),
+            control2: CGPoint(x: minX + 0.68 * w, y: minY + 0.14 * h)
         )
 
-        // Outer right shoulder to armhole
+        // Outer right shoulder to underarm/chest (slender and smooth)
         p.addCurve(
-            to: CGPoint(x: minX + 0.74 * w, y: minY + 0.35 * h),
-            control1: CGPoint(x: minX + 0.82 * w, y: minY + 0.24 * h),
-            control2: CGPoint(x: minX + 0.78 * w, y: minY + 0.30 * h)
+            to: CGPoint(x: minX + 0.70 * w, y: minY + 0.35 * h),
+            control1: CGPoint(x: minX + 0.76 * w, y: minY + 0.24 * h),
+            control2: CGPoint(x: minX + 0.73 * w, y: minY + 0.30 * h)
         )
 
-        // Bust curve (bulges out slightly for pronounced form)
+        // Waist curve (continuous, elegant concave taper inward to a beautiful defined waist)
         p.addCurve(
-            to: CGPoint(x: minX + 0.77 * w, y: minY + 0.45 * h),
-            control1: CGPoint(x: minX + 0.72 * w, y: minY + 0.37 * h),
-            control2: CGPoint(x: minX + 0.78 * w, y: minY + 0.41 * h)
+            to: CGPoint(x: minX + 0.60 * w, y: minY + 0.65 * h),
+            control1: CGPoint(x: minX + 0.67 * w, y: minY + 0.45 * h),
+            control2: CGPoint(x: minX + 0.61 * w, y: minY + 0.55 * h)
         )
 
-        // Waist curve (narrower hourglass contour, matched to male height 0.65)
+        // Hip peak right (gorgeous flare, wider than shoulders)
         p.addCurve(
-            to: CGPoint(x: minX + 0.65 * w, y: minY + 0.65 * h),
-            control1: CGPoint(x: minX + 0.76 * w, y: minY + 0.49 * h),
-            control2: CGPoint(x: minX + 0.63 * w, y: minY + 0.58 * h)
+            to: CGPoint(x: minX + 0.76 * w, y: minY + 0.82 * h),
+            control1: CGPoint(x: minX + 0.59 * w, y: minY + 0.72 * h),
+            control2: CGPoint(x: minX + 0.76 * w, y: minY + 0.77 * h)
         )
 
-        // Hip curve right (wider)
+        // Lower hip taper (gracefully curves back inward at the bottom)
         p.addCurve(
-            to: CGPoint(x: minX + 0.77 * w, y: minY + 0.95 * h),
-            control1: CGPoint(x: minX + 0.67 * w, y: minY + 0.72 * h),
-            control2: CGPoint(x: minX + 0.76 * w, y: minY + 0.85 * h)
+            to: CGPoint(x: minX + 0.68 * w, y: minY + 0.95 * h),
+            control1: CGPoint(x: minX + 0.76 * w, y: minY + 0.87 * h),
+            control2: CGPoint(x: minX + 0.71 * w, y: minY + 0.92 * h)
         )
 
-        // Bottom flat line
-        p.addLine(to: CGPoint(x: minX + 0.23 * w, y: minY + 0.95 * h))
+        // Bottom flat line (slender)
+        p.addLine(to: CGPoint(x: minX + 0.32 * w, y: minY + 0.95 * h))
 
-        // Hip curve left
+        // Left lower hip taper (curving outward to peak)
         p.addCurve(
-            to: CGPoint(x: minX + 0.35 * w, y: minY + 0.65 * h),
-            control1: CGPoint(x: minX + 0.24 * w, y: minY + 0.85 * h),
-            control2: CGPoint(x: minX + 0.33 * w, y: minY + 0.72 * h)
+            to: CGPoint(x: minX + 0.24 * w, y: minY + 0.82 * h),
+            control1: CGPoint(x: minX + 0.29 * w, y: minY + 0.92 * h),
+            control2: CGPoint(x: minX + 0.24 * w, y: minY + 0.87 * h)
         )
 
-        // Waist left
+        // Left waist sweep (continuous inward)
         p.addCurve(
-            to: CGPoint(x: minX + 0.23 * w, y: minY + 0.45 * h),
-            control1: CGPoint(x: minX + 0.37 * w, y: minY + 0.58 * h),
-            control2: CGPoint(x: minX + 0.24 * w, y: minY + 0.49 * h)
+            to: CGPoint(x: minX + 0.40 * w, y: minY + 0.65 * h),
+            control1: CGPoint(x: minX + 0.24 * w, y: minY + 0.77 * h),
+            control2: CGPoint(x: minX + 0.41 * w, y: minY + 0.72 * h)
         )
 
-        // Bust left
+        // Left underarm sweep (continuous concave taper outward)
         p.addCurve(
-            to: CGPoint(x: minX + 0.26 * w, y: minY + 0.35 * h),
-            control1: CGPoint(x: minX + 0.22 * w, y: minY + 0.41 * h),
-            control2: CGPoint(x: minX + 0.28 * w, y: minY + 0.37 * h)
+            to: CGPoint(x: minX + 0.30 * w, y: minY + 0.35 * h),
+            control1: CGPoint(x: minX + 0.39 * w, y: minY + 0.55 * h),
+            control2: CGPoint(x: minX + 0.33 * w, y: minY + 0.45 * h)
         )
 
         // Armhole / shoulder left
         p.addCurve(
-            to: CGPoint(x: minX + 0.20 * w, y: minY + 0.18 * h),
-            control1: CGPoint(x: minX + 0.22 * w, y: minY + 0.30 * h),
-            control2: CGPoint(x: minX + 0.18 * w, y: minY + 0.24 * h)
+            to: CGPoint(x: minX + 0.26 * w, y: minY + 0.18 * h),
+            control1: CGPoint(x: minX + 0.27 * w, y: minY + 0.30 * h),
+            control2: CGPoint(x: minX + 0.24 * w, y: minY + 0.24 * h)
         )
 
-        // Shoulder to neck
+        // Shoulder to neck (sloped collar)
         p.addCurve(
-            to: CGPoint(x: minX + 0.45 * w, y: minY + 0.12 * h),
-            control1: CGPoint(x: minX + 0.28 * w, y: minY + 0.14 * h),
-            control2: CGPoint(x: minX + 0.38 * w, y: minY + 0.12 * h)
+            to: CGPoint(x: minX + 0.46 * w, y: minY + 0.12 * h),
+            control1: CGPoint(x: minX + 0.32 * w, y: minY + 0.14 * h),
+            control2: CGPoint(x: minX + 0.42 * w, y: minY + 0.12 * h)
         )
 
         p.closeSubpath()
@@ -211,40 +211,42 @@ struct FemaleMannequinArmShape: Shape {
         let w = rect.width
         let h = rect.height
         if isRight {
-            path.move(to: CGPoint(x: w * 0.78, y: h * 0.18))
+            // Shifted inward by 0.06*w to fit perfectly against the elegant sloped shoulder
+            path.move(to: CGPoint(x: w * 0.72, y: h * 0.18))
             path.addCurve(
-                to: CGPoint(x: w * 0.88, y: h * 0.45),
-                control1: CGPoint(x: w * 0.84, y: h * 0.25),
-                control2: CGPoint(x: w * 0.88, y: h * 0.35)
+                to: CGPoint(x: w * 0.82, y: h * 0.45),
+                control1: CGPoint(x: w * 0.78, y: h * 0.25),
+                control2: CGPoint(x: w * 0.82, y: h * 0.35)
             )
             path.addCurve(
-                to: CGPoint(x: w * 0.85, y: h * 0.85),
-                control1: CGPoint(x: w * 0.88, y: h * 0.65),
-                control2: CGPoint(x: w * 0.86, y: h * 0.75)
+                to: CGPoint(x: w * 0.79, y: h * 0.85),
+                control1: CGPoint(x: w * 0.82, y: h * 0.65),
+                control2: CGPoint(x: w * 0.80, y: h * 0.75)
             )
-            path.addLine(to: CGPoint(x: w * 0.80, y: h * 0.85))
+            path.addLine(to: CGPoint(x: w * 0.74, y: h * 0.85))
             path.addCurve(
-                to: CGPoint(x: w * 0.72, y: h * 0.32),
-                control1: CGPoint(x: w * 0.78, y: h * 0.65),
-                control2: CGPoint(x: w * 0.75, y: h * 0.45)
+                to: CGPoint(x: w * 0.66, y: h * 0.32),
+                control1: CGPoint(x: w * 0.72, y: h * 0.65),
+                control2: CGPoint(x: w * 0.69, y: h * 0.45)
             )
         } else {
-            path.move(to: CGPoint(x: w * 0.22, y: h * 0.18))
+            // Shifted inward by 0.06*w to fit perfectly against the elegant sloped shoulder
+            path.move(to: CGPoint(x: w * 0.28, y: h * 0.18))
             path.addCurve(
-                to: CGPoint(x: w * 0.12, y: h * 0.45),
-                control1: CGPoint(x: w * 0.16, y: h * 0.25),
-                control2: CGPoint(x: w * 0.12, y: h * 0.35)
+                to: CGPoint(x: w * 0.18, y: h * 0.45),
+                control1: CGPoint(x: w * 0.22, y: h * 0.25),
+                control2: CGPoint(x: w * 0.18, y: h * 0.35)
             )
             path.addCurve(
-                to: CGPoint(x: w * 0.15, y: h * 0.85),
-                control1: CGPoint(x: w * 0.12, y: h * 0.65),
-                control2: CGPoint(x: w * 0.14, y: h * 0.75)
+                to: CGPoint(x: w * 0.21, y: h * 0.85),
+                control1: CGPoint(x: w * 0.18, y: h * 0.65),
+                control2: CGPoint(x: w * 0.20, y: h * 0.75)
             )
-            path.addLine(to: CGPoint(x: w * 0.20, y: h * 0.85))
+            path.addLine(to: CGPoint(x: w * 0.26, y: h * 0.85))
             path.addCurve(
-                to: CGPoint(x: w * 0.28, y: h * 0.32),
-                control1: CGPoint(x: w * 0.22, y: h * 0.65),
-                control2: CGPoint(x: w * 0.25, y: h * 0.45)
+                to: CGPoint(x: w * 0.34, y: h * 0.32),
+                control1: CGPoint(x: w * 0.28, y: h * 0.65),
+                control2: CGPoint(x: w * 0.31, y: h * 0.45)
             )
         }
         path.closeSubpath()
@@ -316,11 +318,11 @@ struct HumanBodyThemeView: View {
     }
 
     private var waistLeftX: CGFloat {
-        shape == .male ? 0.32 : 0.35
+        shape == .male ? 0.32 : 0.40
     }
 
     private var waistRightX: CGFloat {
-        shape == .male ? 0.68 : 0.65
+        shape == .male ? 0.68 : 0.60
     }
 
     private static let remainingTimeFormatter: DateComponentsFormatter = {
@@ -466,6 +468,10 @@ struct HumanBodyThemeView: View {
 
             // --- 2. TORSO ---
             Group {
+                // Torso Solid Background (Prevents arms from shining through the transparent lower abdomen)
+                torso
+                    .fill(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white.opacity(0.5))
+
                 // Torso Base with Shadows (Masked to Chest)
                 torso
                     .fill(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white.opacity(0.5))
@@ -640,7 +646,7 @@ struct HumanBodyThemeView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke((latestIOB ?? 0) < 0 ? Color.red.opacity(0.2) : Color.insulin.opacity(0.2), lineWidth: 1)
             )
-            .offset(x: -bW * 0.61, y: 40)
+            .offset(x: -bW * (shape == .female ? 0.55 : 0.61), y: 40)
 
             let pumpExpiration = pumpInfo?.expiresAt.map { max(0, $0.timeIntervalSince(timerDate)) }
             HStack(spacing: 2) {
@@ -650,7 +656,10 @@ struct HumanBodyThemeView: View {
                 }
                 pumpIllustration.scaleEffect(0.75)
             }
-            .offset(x: -bW * (pumpExpiration != nil ? 0.52 : 0.48), y: -bH * 0.12)
+            .offset(
+                x: -bW * (shape == .female ? (pumpExpiration != nil ? 0.46 : 0.42) : (pumpExpiration != nil ? 0.52 : 0.48)),
+                y: -bH * 0.12
+            )
 
             let cgmDate = appUIState.cgmStatus?.sessionStartDate ?? recentGlucose?.sessionStartDate
             let cgmExpiration = cgmDate.map { max(0, (sensorDays * 86400) - timerDate.timeIntervalSince($0)) }
@@ -672,7 +681,10 @@ struct HumanBodyThemeView: View {
                     .foregroundColor(expiration < 86400 ? .red : .secondary)
                 }
             }
-            .offset(x: bW * (cgmExpiration != nil ? 0.52 : 0.48), y: -bH * 0.12 + 3)
+            .offset(
+                x: bW * (shape == .female ? (cgmExpiration != nil ? 0.46 : 0.42) : (cgmExpiration != nil ? 0.52 : 0.48)),
+                y: -bH * 0.12 + 3
+            )
         }
     }
 

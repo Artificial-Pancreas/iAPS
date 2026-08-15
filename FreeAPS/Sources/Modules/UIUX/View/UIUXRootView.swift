@@ -36,6 +36,16 @@ extension UIUX {
 
                 Section {
                     Toggle("Human Body Theme", isOn: $state.bodyTheme)
+                    if state.bodyTheme {
+                        Picker("Theme Gender", selection: $state.sexSetting) {
+                            Text("Woman").tag(0)
+                            Text("Man").tag(1)
+                        }
+                        .pickerStyle(.segmented)
+                        FemaleBodyThemeView(sexSetting: state.sexSetting)
+                            .frame(height: 240)
+                            .listRowInsets(EdgeInsets())
+                    }
                     Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
                     if !state.bodyTheme { Toggle("Display Glucose Delta", isOn: $state.displayDelta)
@@ -50,14 +60,6 @@ extension UIUX {
                     ._onBindingChange($state.displayExpiration) { enabled in
                         if enabled { state.displaySAGE = false }
                     }
-
-                // INSERTED: Theme preview section to make the new view visible in the app
-                Section {
-                    FemaleBodyThemeView(sexSetting: state.sexSetting)
-                        .frame(height: 300)
-                        .listRowInsets(EdgeInsets())
-                } header: { Text("Theme Preview") }
-                    .onAppear { /* no-op to ensure section composes */ }
 
                 Section {
                     HStack {
