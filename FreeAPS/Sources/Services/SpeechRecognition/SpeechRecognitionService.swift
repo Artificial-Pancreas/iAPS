@@ -109,50 +109,54 @@ enum SpeechRecognitionState: Equatable {
         transcript = ""
         state = .requesting
 
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-        } catch {
-            state = .error(
-                NSLocalizedString("Failed to set up audio session: ", comment: "") + error
-                    .localizedDescription
-            )
-            return
-        }
-
-        startNewRecognitionTask()
-
-        guard let request = recognitionRequest else { return }
-
-        let inputNode = audioEngine.inputNode
-        inputNode.removeTap(onBus: 0)
-
-        let inputFormat = inputNode.outputFormat(forBus: 0)
-        guard let recordingFormat = AVAudioFormat(
-            commonFormat: .pcmFormatFloat32,
-            sampleRate: inputFormat.sampleRate,
-            channels: 1,
-            interleaved: false
-        ) else { return }
-
-        let lock = audioLock
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { @Sendable buffer, _ in
-            lock.withLock {
-                request.append(buffer)
+        Task {
+            let audioSession = AVAudioSession.sharedInstance()
+            do {
+                try await Task.detached(priority: .userInitiated) {
+                    try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+                    try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+                }.value
+            } catch {
+                state = .error(
+                    NSLocalizedString("Failed to set up audio session: ", comment: "") + error
+                        .localizedDescription
+                )
+                return
             }
-        }
 
-        do {
-            audioEngine.prepare()
-            try audioEngine.start()
-            state = .listening
-        } catch {
-            state = .error(
-                NSLocalizedString("Failed to start audio recording: ", comment: "") + error
-                    .localizedDescription
-            )
-            cleanupAudio()
+            startNewRecognitionTask()
+
+            guard let request = recognitionRequest else { return }
+
+            let inputNode = audioEngine.inputNode
+            inputNode.removeTap(onBus: 0)
+
+            let inputFormat = inputNode.outputFormat(forBus: 0)
+            guard let recordingFormat = AVAudioFormat(
+                commonFormat: .pcmFormatFloat32,
+                sampleRate: inputFormat.sampleRate,
+                channels: 1,
+                interleaved: false
+            ) else { return }
+
+            let lock = audioLock
+            inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { @Sendable buffer, _ in
+                lock.withLock {
+                    request.append(buffer)
+                }
+            }
+
+            do {
+                audioEngine.prepare()
+                try audioEngine.start()
+                state = .listening
+            } catch {
+                state = .error(
+                    NSLocalizedString("Failed to start audio recording: ", comment: "") + error
+                        .localizedDescription
+                )
+                cleanupAudio()
+            }
         }
     }
 
@@ -170,7 +174,9 @@ enum SpeechRecognitionState: Equatable {
         recognitionTask = nil
         recognitionRequest = nil
 
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        Task.detached(priority: .background) {
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        }
     }
 
     func cancel() {
@@ -270,7 +276,9 @@ enum SpeechRecognitionState: Equatable {
         recognitionTask = nil
         recognitionRequest = nil
         if deactivateSession {
-            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            Task.detached(priority: .background) {
+                try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            }
         }
     }
 }
