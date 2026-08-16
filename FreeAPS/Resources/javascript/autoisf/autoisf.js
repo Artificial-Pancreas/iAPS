@@ -16,6 +16,7 @@ module.exports = (iaps_input) =>  {
     const profile = iaps_input.profile
     const autosens = iaps_input.autosens
     const glucose = iaps_input.glucose
+    const glucoseFast = iaps_input.glucose_fast
     const clock = new Date(Date.parse(iaps_input.clock));
     const pumpHistory = iaps_input.pump_history
 
@@ -43,7 +44,7 @@ module.exports = (iaps_input) =>  {
     }
 
     // Auto ISF
-    const glucose_status = getLastGlucose(glucose);
+    const glucose_status = getLastGlucose(glucose, glucoseFast);
     aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, clock, pumpHistory);
     
     return profile
@@ -81,7 +82,7 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
     }
     
     // Auto ISF ratio
-    const ratio = aisf_ratio(profile, glucose_status, currentTime, autosens_data, 100,  dynamicVariables);
+    const ratio = aisf_ratio(profile, glucose_status, currentTime, autosens_data, 99,  dynamicVariables);
     profile.old_isf = convert_bg(profile.sens, profile);
     profile.aisf = round(ratio, 2);
     
