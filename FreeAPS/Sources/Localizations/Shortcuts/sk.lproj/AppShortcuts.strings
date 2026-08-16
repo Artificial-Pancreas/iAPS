@@ -23,7 +23,7 @@
 "Activates an ${applicationName} Override Preset" = "Aktivuје upravený režim ${applicationName}";
 
 /* iAPS Cancel Override shortcut */
-"Cancel ${applicationName} Override" = "Cancel ${applicationName} Override";
+"Cancel ${applicationName} Override" = "Zrušiť ${applicationName} prepísanie";
 
 /* iAPS Cancel Override shortcut description */
 "Cancels an active ${applicationName} override" = "Zrušiť aktívne ${applicationName} prepísanie";
@@ -35,10 +35,10 @@
 "${applicationName} Enacts a bolus" = "${applicationName} podať bolus";
 
 /* iAPS Meal Preset shortcut */
-"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+"${applicationName} Meal Presets" = "Predvoľbý jedál ${applicationName}";
 
 /* iAPS Meal Preset shortcut description */
-"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";
+"Uses an ${applicationName} Meal Preset" = "Používa predvoľbu jedla ${applicationName}";
 
 /* iAPS Loop Mode shortcut */
 "${applicationName} Loop Mode" = "Režim slučky ${applicationName}";
@@ -53,7 +53,7 @@
 "Enacts an ${applicationName} Temp Basal" = "Aktivuje dočasný bazál ${applicationName}";
 
 /* iAPS Suspend/Resume shortcut */
-"${applicationName} Pump" = "${applicationName} Pump";
+"${applicationName} Pump" = "${applicationName} pumpa";
 
 /* iAPS Suspend/Resume  shortcut description */
-"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Suspends/Resumes your ${applicationName} pump or cancels a temp basal";
+"Suspends/Resumes your ${applicationName} pump or cancels a temp basal" = "Pozastaví/obnoví vašu pumpu ${applicationName} alebo zruší dočasnú bazálnu dávku";

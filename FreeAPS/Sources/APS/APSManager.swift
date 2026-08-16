@@ -130,6 +130,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         self.dynamicStateManager = dynamicStateManager
         self.loopEventsStorage = loopEventsStorage
         self.loopStatRecordStorage = loopStatRecordStorage
+        debug(.apsManager, "BaseAPSManager created: \(ObjectIdentifier(self))")
     }
 
     // this is called at the app start
