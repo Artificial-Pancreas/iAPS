@@ -140,6 +140,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var lowerISFrangeWeight: Decimal = 0
     var postMealISFweight: Decimal = 0
     var enableBGacceleration: Bool = true
+    var autoisfOneMinuteReadings: Bool = false
     var bgAccelISFweight: Decimal = 0
     var bgBrakeISFweight: Decimal = 0.10
     var iobThresholdPercent: Decimal = 100
@@ -682,6 +683,10 @@ extension FreeAPSSettings: Decodable {
 
         if let enableBGacceleration = try? container.decode(Bool.self, forKey: .enableBGacceleration) {
             settings.enableBGacceleration = enableBGacceleration
+        }
+
+        if let autoisfOneMinuteReadings = try? container.decode(Bool.self, forKey: .autoisfOneMinuteReadings) {
+            settings.autoisfOneMinuteReadings = autoisfOneMinuteReadings
         }
 
         if let use_B30 = try? container.decode(Bool.self, forKey: .use_B30) {

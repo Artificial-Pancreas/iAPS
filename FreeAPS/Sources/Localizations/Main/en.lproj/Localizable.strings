@@ -3153,6 +3153,12 @@ Enact a temp Basal or a temp target */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
 
 /* */
+"Use 1-minute readings" = "Use 1-minute readings";
+
+/* */
+"Lets Auto ISF read the 1-minute glucose stream from your CGM instead of the 5-minute one. Only Auto ISF is affected." = "Lets Auto ISF read the 1-minute glucose stream from your CGM instead of the 5-minute one. Only Auto ISF is affected.";
+
+/* */
 "Override Auto ISF" = "Override Auto ISF";
 
 /* */

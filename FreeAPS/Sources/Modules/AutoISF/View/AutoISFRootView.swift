@@ -81,6 +81,21 @@ extension AutoISF {
                                     }
                             }.disabled(isPresented)
                         }
+
+                        if state.oneMinuteReadingsAvailable {
+                            HStack {
+                                Toggle(isOn: $state.autoisfOneMinuteReadings) {
+                                    Text("Use 1-minute readings")
+                                        .onTapGesture {
+                                            info(
+                                                header: "Use 1-minute readings",
+                                                body: "Lets Auto ISF read the 1-minute glucose stream from your CGM instead of the 5-minute one. Only Auto ISF is affected.",
+                                                useGraphics: nil
+                                            )
+                                        }
+                                }.disabled(isPresented)
+                            }
+                        }
                     } header: { Text("Toggles") }
 
                     Section {

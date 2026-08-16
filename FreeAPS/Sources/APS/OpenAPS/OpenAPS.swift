@@ -107,6 +107,7 @@ actor OpenAPS: Sendable {
             now = Date.now
             profile = try await autosisf(
                 glucose: glucose,
+                glucoseFast: readAutoISFFastGlucose(settings: settings),
                 iob: iob,
                 profile: alteredProfile,
                 autosens: autosens,
@@ -318,7 +319,17 @@ actor OpenAPS: Sendable {
         // with smoothing enabled it contains smoothed values,
         // otherwise they it contains raw (unsmoothed) values
         // newest->oldest
-        appCoordinator.glucoseFrequencyFiltered.value.map { g in
+        glucoseEntries(from: appCoordinator.glucoseFrequencyFiltered.value)
+    }
+
+    private func readAutoISFFastGlucose(settings: FreeAPSSettings) -> [GlucoseEntry0]? {
+        guard settings.autoisfOneMinuteReadings else { return nil }
+        return glucoseEntries(from: appCoordinator.glucoseSmoothed.value)
+    }
+
+    /// - Parameter glucose: newest -> oldest
+    private func glucoseEntries(from glucose: [BloodGlucose]) -> [GlucoseEntry0] {
+        glucose.map { g in
             GlucoseEntry0(
                 date: Int(g.dateString.timeIntervalSince1970 * 1000),
                 displayTime: nil,
@@ -820,6 +831,7 @@ actor OpenAPS: Sendable {
 
     private func autosisf(
         glucose: [GlucoseEntry0],
+        glucoseFast: [GlucoseEntry0]?,
         iob: [IOBEntry],
         profile: Profile,
         autosens: Autosens?,
@@ -830,6 +842,7 @@ actor OpenAPS: Sendable {
             function: "autoisf",
             with: AutoIsfInput(
                 glucose: glucose,
+                glucose_fast: glucoseFast,
                 iob: iob,
                 profile: profile,
                 autosens: autosens,
