@@ -1,7 +1,7 @@
 import SwiftUI
 import Swinject
 
-public enum Sex: String, CaseIterable, Identifiable {
+public enum Sex: String, CaseIterable, Identifiable, Sendable {
     case woman = "Woman"
     case man = "Man"
     case other = "Other"

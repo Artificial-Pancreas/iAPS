@@ -67,10 +67,12 @@ protocol DeviceDataManager: Sendable {
 
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
 
-private let staticCGMManagers: [CGMManagerDescriptor] = [
-    CGMManagerDescriptor(identifier: MockCGMManager.pluginIdentifier, localizedTitle: MockCGMManager.localizedTitle),
-    CGMManagerDescriptor(identifier: AppGroupCGM.pluginIdentifier, localizedTitle: AppGroupCGM.localizedTitle)
-]
+private var staticCGMManagers: [CGMManagerDescriptor] {
+    [
+        CGMManagerDescriptor(identifier: MockCGMManager.pluginIdentifier, localizedTitle: MockCGMManager.localizedTitle),
+        CGMManagerDescriptor(identifier: AppGroupCGM.pluginIdentifier, localizedTitle: AppGroupCGM.localizedTitle)
+    ]
+}
 
 private let staticCGMManagersByIdentifier: [String: CGMManager.Type] = [
     MockCGMManager.pluginIdentifier: MockCGMManager.self,
@@ -81,9 +83,11 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
     MockPumpManager.pluginIdentifier: MockPumpManager.self
 ]
 
-private let availableStaticPumpManagers: [PumpManagerDescriptor] = [
-    PumpManagerDescriptor(identifier: MockPumpManager.pluginIdentifier, localizedTitle: MockPumpManager.localizedTitle)
-]
+private var availableStaticPumpManagers: [PumpManagerDescriptor] {
+    [
+        PumpManagerDescriptor(identifier: MockPumpManager.pluginIdentifier, localizedTitle: MockPumpManager.localizedTitle)
+    ]
+}
 
 extension WeakSynchronizedSet: @retroactive @unchecked Sendable {}
 

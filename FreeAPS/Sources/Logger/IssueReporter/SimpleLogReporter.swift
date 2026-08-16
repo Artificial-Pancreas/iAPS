@@ -1,7 +1,7 @@
 import Foundation
 import SwiftDate
 
-final class SimpleLogReporter: IssueReporter {
+final class SimpleLogReporter: IssueReporter, @unchecked Sendable {
     private let fileManager = FileManager.default
 
     private var dateFormatter: DateFormatter {

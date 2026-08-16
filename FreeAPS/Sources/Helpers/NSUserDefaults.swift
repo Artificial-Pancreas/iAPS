@@ -1,7 +1,7 @@
 import Foundation
 // import SwiftUI // Import SwiftUI if you are using the SwiftUI App lifecycle or @AppStorage
 
-class AppSettings {
+final class AppSettings: Sendable {
     static let shared = AppSettings() // Singleton instance for easy access
 
     private init() {

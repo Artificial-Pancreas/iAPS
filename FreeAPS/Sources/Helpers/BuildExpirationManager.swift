@@ -5,10 +5,9 @@ import Foundation
 /// Alert cadence (matching Loop's behaviour):
 ///   ≤ 20 days remaining  → show at most once every 2 days
 ///   <  24 hours remaining → show at most once per hour
-final class BuildExpirationManager {
+final class BuildExpirationManager: Sendable {
     static let shared = BuildExpirationManager()
 
-    private let defaults = UserDefaults.standard
     private static let lastAlertKey = "iaps.buildExpirationLastAlertDate"
     private static let lifespanDays = 90
     private static let warningDays = 20
@@ -33,12 +32,12 @@ final class BuildExpirationManager {
         let days = daysRemaining
         guard days >= 0, days <= Self.warningDays else { return false }
         let minInterval: TimeInterval = hoursRemaining < 24 ? 3600 : 2 * 86400
-        let last = defaults.object(forKey: Self.lastAlertKey) as? Date ?? .distantPast
+        let last = UserDefaults.standard.object(forKey: Self.lastAlertKey) as? Date ?? .distantPast
         return Date().timeIntervalSince(last) >= minInterval
     }
 
     func markAlertShown() {
-        defaults.set(Date(), forKey: Self.lastAlertKey)
+        UserDefaults.standard.set(Date(), forKey: Self.lastAlertKey)
     }
 
     // MARK: - Alert content
