@@ -31,6 +31,7 @@ import UIKit
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
         AppearanceManager.setupGlobalAppearance()
+        MemoryMetricsService.shared.start()
     }
 
     var body: some Scene {
