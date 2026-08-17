@@ -140,6 +140,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        debug(.apsManager, "BaseAPSManager created: \(ObjectIdentifier(self))")
         openAPS = OpenAPS(
             storage: storage,
             glucoseStorage: glucoseStorage,
