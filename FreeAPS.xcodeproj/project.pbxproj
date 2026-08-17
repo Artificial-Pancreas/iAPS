@@ -536,6 +536,7 @@
 		F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */; };
 		F2A4B7CF2E6F92B0000E0E85 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */; };
 		F2AA10022E5E0B1400F8F43C /* LoopAlgorithm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2AA10012E5E0B1400F8F43C /* LoopAlgorithm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F2ABE33F3033B37E001FE592 /* MemoryMetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ABE33E3033B37E001FE592 /* MemoryMetricsService.swift */; };
 		F2ACC0332EF87CC800C86FBC /* FoodItemDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */; };
 		F2ACC0352EF87CD200C86FBC /* FoodItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */; };
 		F2ACC0672EF88E0A00C86FBC /* SearchResultsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */; };
@@ -1320,6 +1321,7 @@
 		F2A4B7CA2E6CDF8F000E0E85 /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
 		F2A4B7CE2E6F92B0000E0E85 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		F2AA10012E5E0B1400F8F43C /* LoopAlgorithm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopAlgorithm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2ABE33E3033B37E001FE592 /* MemoryMetricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMetricsService.swift; sourceTree = "<group>"; };
 		F2ACC0322EF87CC800C86FBC /* FoodItemDetailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemDetailed.swift; sourceTree = "<group>"; };
 		F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemGroup.swift; sourceTree = "<group>"; };
 		F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsState.swift; sourceTree = "<group>"; };
@@ -2406,6 +2408,7 @@
 				F2C29E232FE6E7DA00E8630A /* TaskSerializer.swift */,
 				F2DE0B9530042E7D00EF9230 /* ProtectedData.swift */,
 				F28B06B7301BBDC400A59FA7 /* GapDetection.swift */,
+				F2ABE33E3033B37E001FE592 /* MemoryMetricsService.swift */,
 				F22A7A7E2FF167080019BDC5 /* DataSync */,
 			);
 			path = Helpers;
@@ -3669,6 +3672,7 @@
 				38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */,
 				F90692CF274B999A0037068D /* HealthKitDataFlow.swift in Sources */,
 				F29E5E352EE4711D00D2CBC0 /* OpenAIProtocol.swift in Sources */,
+				F2ABE33F3033B37E001FE592 /* MemoryMetricsService.swift in Sources */,
 				CE7CA3552A064973004BE681 /* ListStateIntent.swift in Sources */,
 				F2FC8B332FDDD74300D389EC /* MicronutrientSnapshot.swift in Sources */,
 				190141362CDB9D4B00ABD925 /* Token.swift in Sources */,

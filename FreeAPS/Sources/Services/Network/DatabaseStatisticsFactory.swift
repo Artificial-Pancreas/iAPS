@@ -35,7 +35,9 @@ extension DatabaseStatisticsFactory {
     func buildVersion() -> DatabaseStatisticsVersion {
         DatabaseStatisticsVersion(
             created_at: Date.now,
-            Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch()
+            Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown",
+            Branch: branch(),
+            Memory: MemoryMetricsService.snapshot(full: false)
         )
     }
 
@@ -265,7 +267,8 @@ extension DatabaseStatisticsFactory {
                 Variance: variance
             ),
             dob: settings.birthDate,
-            sex: settings.sexSetting
+            sex: settings.sexSetting,
+            Memory: MemoryMetricsService.snapshot(full: true)
         )
     }
 

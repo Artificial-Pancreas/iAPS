@@ -108,6 +108,8 @@ final class WebViewScriptExecutor: Sendable {
     @MainActor fileprivate func webContentProcessDidTerminate(_ terminatedWebView: WKWebView) {
         guard terminatedWebView === webView else { return }
 
+        MemoryMetricsService.increment(.webContentTerminations)
+
         // callAsyncJavaScript normally fails in-flight calls itself when the process
         // dies, and the watchdog covers it when it does not. Rebuilding here means the
         // retry lands on a live process instead of rediscovering the dead one — and it
@@ -207,6 +209,9 @@ final class WebViewScriptExecutor: Sendable {
             }
         } catch {
             warning(.openAPS, "Javascript function (\(function)) attempt \(attempts + 1) failed with error: \(error)")
+            if error is TimeoutError {
+                MemoryMetricsService.increment(.jsTimeouts)
+            }
             await recreateWebView(ifGeneration: generation)
             if attempts < maxAttempts {
                 return try await evaluate(function: function, with: input, attempts: attempts + 1)
