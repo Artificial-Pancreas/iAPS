@@ -1,4 +1,3 @@
-import AsyncAlgorithms
 import CoreData
 import Foundation
 import LoopKit
@@ -150,12 +149,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             appCoordinator.restorePersistedLoopOutcome(lastOutcome)
         }
 
-        // because of backfill, the recommendation might trigger before the backfill is received
-        // debounce for 1 second to give the CGM a chance to send in the backfill
-        observe(
-            appCoordinator.recommendsLoop.sendableValues.debounce(for: .seconds(1))
-        ) { me, _ in
-            await me.loop()
+        observe(appCoordinator.recommendsLoop) { me, _ in
+            await me.loopAfterBackfill()
         }
 
         observe(appCoordinator.deviceErrors) { me, error in
@@ -174,6 +169,14 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 await me.updateIOB(pumpHistory: pumpHistory)
             }
         }
+    }
+
+    private func loopAfterBackfill() async {
+        if !GapDetection.isComplete(appCoordinator.glucoseRaw.value.lazy.map(\.dateString)) {
+            debug(.apsManager, "waiting for a possible CGM backfill before looping")
+            try? await Task.sleep(for: .seconds(1))
+        }
+        await loop()
     }
 
     private func manualTempBasalUpdated(_ manualBasal: Bool) async {
