@@ -145,6 +145,7 @@ private struct LaunchedAppView: View {
             .environmentObject(appServices)
             .onChange(of: scenePhase) {
                 debug(.default, "APPLICATION PHASE: \(scenePhase)")
+                FootprintLog.log("app \(scenePhase)")
                 if scenePhase == .active {
                     appServices.deviceManager.didBecomeActive()
                 }
