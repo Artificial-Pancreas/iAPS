@@ -22,9 +22,20 @@ extension CGM {
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
+        private func libre2Section() -> some View {
+            Section {
+                Toggle("1-minute readings", isOn: $state.allowOneMinuteGlucose)
+            }
+            header: { Text("Libre") }
+            footer: {
+                Text("Read the sensor every minute instead of every 5 minutes.")
+            }
+        }
+
         var body: some View {
             let cgmInfo = appUIState.cgmInfo
             let cgmStatus = appUIState.cgmStatus
+            let isLibre2 = cgmInfo.map { KnownPlugins.isLibre2Cgm(pluginIdentifier: $0.identifier) } ?? false
             NavigationView {
                 Form {
                     if let cgmInfo = cgmInfo, cgmInfo.isOnboarded, !cgmInfo.pumpIsCgm
@@ -85,7 +96,7 @@ extension CGM {
                         }
                     }
 
-                    if let cgmInfo = cgmInfo, cgmInfo.isOnboarded
+                    if let cgmInfo, cgmInfo.isOnboarded
                     {
                         if cgmInfo.allowCalibrations
                         {
@@ -107,6 +118,10 @@ extension CGM {
                                     "When using \(cgmInfo.name) iAPS doesn't know the type of sensor used or the sensor life-span."
                                 )
                             }
+                        }
+
+                        if isLibre2 {
+                            libre2Section()
                         }
 
                         Section(header: Text("Experimental")) {

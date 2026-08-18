@@ -41,7 +41,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
         // inferred isolated to this actor, and Combine runs them synchronously on whatever executor
         // sends into the subject (SettingsManager's). Same fix as in BaseStateModel.
         let extract: @Sendable(FreeAPSSettings) -> (Bool, Bool, Bool) = {
-            ($0.smoothGlucose, $0.allowOneMinuteGlucose, $0.allowOneMinuteLoop)
+            ($0.smoothGlucose, $0.orefOneMinuteGlucose, $0.allowOneMinuteLoop)
         }
         let isDuplicate: @Sendable((Bool, Bool, Bool), (Bool, Bool, Bool)) -> Bool = { $0 == $1 }
 
@@ -194,7 +194,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
             }
         }
 
-        let minInterval = appCoordinator.settings.value.allowOneMinuteGlucose ? Self.filterIntervalOneMinute : Self
+        let minInterval = appCoordinator.settings.value.orefOneMinuteGlucose ? Self.filterIntervalOneMinute : Self
             .filterIntervalFiveMinutes
         let frequencyFiltered = FrequentGlucoseFiltering.filterFrequentGlucose(smoothed, interval: minInterval)
 
