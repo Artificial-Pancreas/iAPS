@@ -93,6 +93,12 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     /// Call once at app start.
     func start() {
         MXMetricManager.shared.add(self)
+        // Materialise the running build's bucket immediately (zero-filled), so
+        // "this build ran and recorded no incidents" is an explicit row rather than
+        // an absence — otherwise a bucket only appears on the first incident or
+        // MetricKit payload, and a clean build is indistinguishable from one that
+        // never ran.
+        Self.mutateBucket(key: Self.currentBucketKey()) { _ in }
         // Foundation-qualified: the app defines its own NotificationCenter protocol for DI.
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didReceiveMemoryWarningNotification,
