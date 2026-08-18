@@ -11,82 +11,82 @@ public struct FemaleMannequinTorsoShape: Shape {
         let minY = rect.minY
 
         // Start at neck top left
-        p.move(to: CGPoint(x: minX + 0.46 * w, y: minY + 0.12 * h))
+        p.move(to: CGPoint(x: minX + 0.44 * w, y: minY + 0.12 * h))
 
         // Top of neck flat line
-        p.addLine(to: CGPoint(x: minX + 0.54 * w, y: minY + 0.12 * h))
+        p.addLine(to: CGPoint(x: minX + 0.56 * w, y: minY + 0.12 * h))
 
-        // Right neck/shoulder (elegant downward slope)
+        // Right neck/shoulder (elegant, gentle slope)
         p.addCurve(
-            to: CGPoint(x: minX + 0.74 * w, y: minY + 0.18 * h),
-            control1: CGPoint(x: minX + 0.58 * w, y: minY + 0.12 * h),
-            control2: CGPoint(x: minX + 0.68 * w, y: minY + 0.14 * h)
+            to: CGPoint(x: minX + 0.65 * w, y: minY + 0.20 * h),
+            control1: CGPoint(x: minX + 0.59 * w, y: minY + 0.12 * h),
+            control2: CGPoint(x: minX + 0.62 * w, y: minY + 0.15 * h)
         )
 
-        // Outer right shoulder to underarm/chest (slender and smooth)
+        // Outer right shoulder to underarm/chest (soft and smooth)
         p.addCurve(
-            to: CGPoint(x: minX + 0.70 * w, y: minY + 0.35 * h),
-            control1: CGPoint(x: minX + 0.76 * w, y: minY + 0.24 * h),
-            control2: CGPoint(x: minX + 0.73 * w, y: minY + 0.30 * h)
+            to: CGPoint(x: minX + 0.61 * w, y: minY + 0.35 * h),
+            control1: CGPoint(x: minX + 0.67 * w, y: minY + 0.24 * h),
+            control2: CGPoint(x: minX + 0.64 * w, y: minY + 0.30 * h)
         )
 
-        // Waist curve (continuous, elegant concave taper inward to a beautiful defined waist)
+        // Waist curve (continuous, gentle organic curve)
         p.addCurve(
-            to: CGPoint(x: minX + 0.60 * w, y: minY + 0.65 * h),
-            control1: CGPoint(x: minX + 0.67 * w, y: minY + 0.45 * h),
-            control2: CGPoint(x: minX + 0.61 * w, y: minY + 0.55 * h)
+            to: CGPoint(x: minX + 0.54 * w, y: minY + 0.62 * h),
+            control1: CGPoint(x: minX + 0.58 * w, y: minY + 0.45 * h),
+            control2: CGPoint(x: minX + 0.54 * w, y: minY + 0.54 * h)
         )
 
-        // Hip peak right (gorgeous flare, wider than shoulders)
+        // Hip peak right (slender hourglass, very soft flare)
         p.addCurve(
-            to: CGPoint(x: minX + 0.76 * w, y: minY + 0.82 * h),
-            control1: CGPoint(x: minX + 0.59 * w, y: minY + 0.72 * h),
-            control2: CGPoint(x: minX + 0.76 * w, y: minY + 0.77 * h)
+            to: CGPoint(x: minX + 0.63 * w, y: minY + 0.82 * h),
+            control1: CGPoint(x: minX + 0.54 * w, y: minY + 0.70 * h),
+            control2: CGPoint(x: minX + 0.63 * w, y: minY + 0.75 * h)
         )
 
         // Lower hip taper (gracefully curves back inward at the bottom)
         p.addCurve(
-            to: CGPoint(x: minX + 0.68 * w, y: minY + 0.95 * h),
-            control1: CGPoint(x: minX + 0.76 * w, y: minY + 0.87 * h),
-            control2: CGPoint(x: minX + 0.71 * w, y: minY + 0.92 * h)
+            to: CGPoint(x: minX + 0.58 * w, y: minY + 0.95 * h),
+            control1: CGPoint(x: minX + 0.63 * w, y: minY + 0.88 * h),
+            control2: CGPoint(x: minX + 0.60 * w, y: minY + 0.92 * h)
         )
 
-        // Bottom flat line (slender)
-        p.addLine(to: CGPoint(x: minX + 0.32 * w, y: minY + 0.95 * h))
+        // Bottom flat line
+        p.addLine(to: CGPoint(x: minX + 0.42 * w, y: minY + 0.95 * h))
 
-        // Left lower hip taper (curving outward to peak)
+        // Left lower hip taper
         p.addCurve(
-            to: CGPoint(x: minX + 0.24 * w, y: minY + 0.82 * h),
-            control1: CGPoint(x: minX + 0.29 * w, y: minY + 0.92 * h),
-            control2: CGPoint(x: minX + 0.24 * w, y: minY + 0.87 * h)
+            to: CGPoint(x: minX + 0.37 * w, y: minY + 0.82 * h),
+            control1: CGPoint(x: minX + 0.40 * w, y: minY + 0.92 * h),
+            control2: CGPoint(x: minX + 0.37 * w, y: minY + 0.88 * h)
         )
 
-        // Left waist sweep (continuous inward)
+        // Left waist sweep
         p.addCurve(
-            to: CGPoint(x: minX + 0.40 * w, y: minY + 0.65 * h),
-            control1: CGPoint(x: minX + 0.24 * w, y: minY + 0.77 * h),
-            control2: CGPoint(x: minX + 0.41 * w, y: minY + 0.72 * h)
+            to: CGPoint(x: minX + 0.46 * w, y: minY + 0.62 * h),
+            control1: CGPoint(x: minX + 0.37 * w, y: minY + 0.75 * h),
+            control2: CGPoint(x: minX + 0.46 * w, y: minY + 0.70 * h)
         )
 
-        // Left underarm sweep (continuous concave taper outward)
+        // Left underarm sweep
         p.addCurve(
-            to: CGPoint(x: minX + 0.30 * w, y: minY + 0.35 * h),
-            control1: CGPoint(x: minX + 0.39 * w, y: minY + 0.55 * h),
-            control2: CGPoint(x: minX + 0.33 * w, y: minY + 0.45 * h)
+            to: CGPoint(x: minX + 0.39 * w, y: minY + 0.35 * h),
+            control1: CGPoint(x: minX + 0.46 * w, y: minY + 0.54 * h),
+            control2: CGPoint(x: minX + 0.42 * w, y: minY + 0.45 * h)
         )
 
-        // Armhole / shoulder left
+        // Left shoulder
         p.addCurve(
-            to: CGPoint(x: minX + 0.26 * w, y: minY + 0.18 * h),
-            control1: CGPoint(x: minX + 0.27 * w, y: minY + 0.30 * h),
-            control2: CGPoint(x: minX + 0.24 * w, y: minY + 0.24 * h)
+            to: CGPoint(x: minX + 0.35 * w, y: minY + 0.20 * h),
+            control1: CGPoint(x: minX + 0.36 * w, y: minY + 0.30 * h),
+            control2: CGPoint(x: minX + 0.33 * w, y: minY + 0.24 * h)
         )
 
-        // Shoulder to neck (sloped collar)
+        // Left shoulder to neck
         p.addCurve(
-            to: CGPoint(x: minX + 0.46 * w, y: minY + 0.12 * h),
-            control1: CGPoint(x: minX + 0.32 * w, y: minY + 0.14 * h),
-            control2: CGPoint(x: minX + 0.42 * w, y: minY + 0.12 * h)
+            to: CGPoint(x: minX + 0.44 * w, y: minY + 0.12 * h),
+            control1: CGPoint(x: minX + 0.38 * w, y: minY + 0.15 * h),
+            control2: CGPoint(x: minX + 0.41 * w, y: minY + 0.12 * h)
         )
 
         p.closeSubpath()
