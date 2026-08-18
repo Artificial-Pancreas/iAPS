@@ -1352,25 +1352,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func branch() -> String {
-        var branch = "Unknown"
-        if let branchFileURL = Bundle.main.url(forResource: "branch", withExtension: "txt"),
-           let branchFileContent = try? String(contentsOf: branchFileURL)
-        {
-            let lines = branchFileContent.components(separatedBy: .newlines)
-            for line in lines {
-                let components = line.components(separatedBy: "=")
-                if components.count == 2 {
-                    let key = components[0].trimmingCharacters(in: .whitespaces)
-                    let value = components[1].trimmingCharacters(in: .whitespaces)
-
-                    if key == "BRANCH" {
-                        branch = value
-                        break
-                    }
-                }
-            }
-        }
-        return branch
+        Bundle.main.gitBranch ?? "Unknown"
     }
 
     private func loopStats(loopStatRecord: LoopStats, error: Error?) {
