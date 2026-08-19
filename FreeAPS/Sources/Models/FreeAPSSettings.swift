@@ -160,7 +160,6 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     // 1-min loops
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
     var allowOneMinuteGlucose: Bool = false // allow receiving 1-minute readings from libre2
-    var orefOneMinuteGlucose: Bool = false // allow sending 1-minute readings to oref, even if loops are with 5-minute intervals
 
     var ai: Bool = true
     var mealViewMicronutrients: Bool = false
@@ -805,9 +804,6 @@ extension FreeAPSSettings: Decodable {
         }
         if let allowOneMinuteGlucose = try? container.decode(Bool.self, forKey: .allowOneMinuteGlucose) {
             settings.allowOneMinuteGlucose = allowOneMinuteGlucose
-        }
-        if let orefOneMinuteGlucose = try? container.decode(Bool.self, forKey: .orefOneMinuteGlucose) {
-            settings.orefOneMinuteGlucose = orefOneMinuteGlucose
         }
 
         if let ai = try? container.decode(Bool.self, forKey: .ai) {

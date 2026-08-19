@@ -40,10 +40,10 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
         // both transforms must be explicitly @Sendable: plain closure literals formed here would be
         // inferred isolated to this actor, and Combine runs them synchronously on whatever executor
         // sends into the subject (SettingsManager's). Same fix as in BaseStateModel.
-        let extract: @Sendable(FreeAPSSettings) -> (Bool, Bool, Bool) = {
-            ($0.smoothGlucose, $0.orefOneMinuteGlucose, $0.allowOneMinuteLoop)
+        let extract: @Sendable(FreeAPSSettings) -> (Bool, Bool) = {
+            ($0.smoothGlucose, $0.allowOneMinuteLoop)
         }
-        let isDuplicate: @Sendable((Bool, Bool, Bool), (Bool, Bool, Bool)) -> Bool = { $0 == $1 }
+        let isDuplicate: @Sendable((Bool, Bool), (Bool, Bool)) -> Bool = { $0 == $1 }
 
         observe(
             appCoordinator.settings
@@ -194,8 +194,7 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
             }
         }
 
-        let minInterval = appCoordinator.settings.value.orefOneMinuteGlucose ? Self.filterIntervalOneMinute : Self
-            .filterIntervalFiveMinutes
+        let minInterval = Self.filterIntervalFiveMinutes
         let frequencyFiltered = FrequentGlucoseFiltering.filterFrequentGlucose(smoothed, interval: minInterval)
 
         // push alarm must happen before setGlucoseHistory
