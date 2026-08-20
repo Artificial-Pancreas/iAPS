@@ -17,11 +17,11 @@ struct MemoryStats: JSON, Equatable {
     var footprint_mb: Int?
     /// Peak footprint over the last MetricKit reporting day, MB (any release).
     var peak_mb: Int?
-    /// Incident counters, bucketed by the release they occurred under, so a
+    /// Incident counters, bucketed by the build they occurred under, so a
     /// release-over-release comparison never smears events across an upgrade.
-    /// Keys are "version(build)" composites ("8.3.5(274)") — build number alone is
-    /// ambiguous because plain Xcode builds don't increment it, and version alone
-    /// can't separate two builds of the same release. The newest 6 buckets are retained.
+    /// Keys are "version(build)" composites ("8.3.5(274)"), unique per device; the
+    /// commit each bucket was built from is recorded inside the bucket (`branch`),
+    /// which is what aggregates across devices. The newest 6 buckets are retained.
     var counters: [String: MemoryVersionCounters]?
     /// Physical RAM of the device, MB. Full statistics only.
     var ram_mb: Int?
@@ -33,6 +33,13 @@ struct MemoryStats: JSON, Equatable {
 /// runs and only ever grow, so the latest uploaded value IS the build's total —
 /// no server-side diffing needed for per-version numbers.
 struct MemoryVersionCounters: JSON, Equatable {
+    /// "<branch> <sha>" the build came from (branch.txt), e.g. "dev 81a532e" — the
+    /// code identity that is comparable across devices. Build numbers are not: each
+    /// builder's Actions run counter differs and local Xcode builds stay at 1.
+    var branch: String?
+    /// When this bucket was created, i.e. when this build first ran on the device.
+    /// Lets the server turn counts into rates (incidents per day on that build).
+    var since: Date?
     /// Highest MetricKit daily peak recorded while this build ran, MB.
     var peak_mb: Int?
     /// UIKit memory-pressure warnings received.
@@ -50,6 +57,8 @@ struct MemoryVersionCounters: JSON, Equatable {
     var js_timeouts: Int
 
     init() {
+        branch = nil
+        since = nil
         peak_mb = nil
         pressure_warnings = 0
         jetsam_exits = 0
@@ -93,6 +102,12 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     /// Call once at app start.
     func start() {
         MXMetricManager.shared.add(self)
+        // Materialise the running build's bucket immediately (zero-filled), so
+        // "this build ran and recorded no incidents" is an explicit row rather than
+        // an absence — otherwise a bucket only appears on the first incident or
+        // MetricKit payload, and a clean build is indistinguishable from one that
+        // never ran.
+        Self.mutateCurrentBucket { _ in }
         // Foundation-qualified: the app defines its own NotificationCenter protocol for DI.
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didReceiveMemoryWarningNotification,
@@ -106,7 +121,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     /// Static so call sites (WebViewScriptExecutor) don't need the singleton started first.
     /// Files the event under the currently running release.
     static func increment(_ counter: Counter) {
-        mutateBucket(key: currentBucketKey()) { bucket in
+        mutateCurrentBucket { bucket in
             switch counter {
             case .pressureWarnings: bucket.pressure_warnings += 1
             case .jetsamExits: bucket.jetsam_exits += 1
@@ -139,14 +154,12 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
 
     func didReceive(_ payloads: [MXMetricPayload]) {
         for payload in payloads {
-            // The payload names the release it describes; use it so a day's counts that
-            // arrive after an upgrade still land on the build they happened under.
-            let key: String
-            if let build = payload.metaData?.applicationBuildVersion {
-                key = Self.bucketKey(version: payload.latestApplicationVersion, build: build)
-            } else {
-                key = Self.currentBucketKey()
-            }
+            // The payload names the build it describes; file under that build so a day's
+            // counts that arrive after an upgrade still land where they happened. MetricKit
+            // knows version + build number but not the commit, so this resolves to the
+            // bucket for that (version, build) — the newest one if several exist.
+            let target: (version: String, build: String)? = payload.metaData
+                .map { (payload.latestApplicationVersion, $0.applicationBuildVersion) }
 
             if let exits = payload.applicationExitMetrics {
                 let fg = exits.foregroundExitData
@@ -155,7 +168,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
                 let pressure = bg.cumulativeMemoryPressureExitCount
                 let watchdog = fg.cumulativeAppWatchdogExitCount + bg.cumulativeAppWatchdogExitCount
                 if jetsam + pressure + watchdog > 0 {
-                    Self.mutateBucket(key: key) { bucket in
+                    Self.mutateBucket(matching: target) { bucket in
                         bucket.jetsam_exits += jetsam
                         bucket.pressure_exits += pressure
                         bucket.watchdog_exits += watchdog
@@ -165,7 +178,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
             if let memory = payload.memoryMetrics {
                 let mb = Int(memory.peakMemoryUsage.converted(to: .megabytes).value.rounded())
                 UserDefaults.standard.set(mb, forKey: Self.latestPeakKey)
-                Self.mutateBucket(key: key) { bucket in
+                Self.mutateBucket(matching: target) { bucket in
                     bucket.peak_mb = max(bucket.peak_mb ?? 0, mb)
                 }
             }
@@ -174,28 +187,86 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
 
     // MARK: - Bucket storage
 
-    private static func mutateBucket(
-        key: String,
-        _ change: (inout MemoryVersionCounters) -> Void
-    ) {
+    /// Mutate the bucket for the build that is running right now, creating it if needed.
+    ///
+    /// The bucket key is "version(build)". That is unique for Actions builds (the run
+    /// counter increments) but a local Xcode build keeps build number 1 across commits,
+    /// so the key alone would merge different code into one bucket. Hence: if the key's
+    /// bucket exists but was created from a different commit, this build gets its own
+    /// bucket keyed "version(build) sha". A bucket that predates the `branch` field
+    /// (earlier instrumented builds) is adopted by the running commit.
+    private static func mutateCurrentBucket(_ change: (inout MemoryVersionCounters) -> Void) {
         lock.lock()
         defer { lock.unlock() }
 
         var map = loadMap()
+        let base = currentBucketKey()
+        let branch = Bundle.main.gitBranch
+        let key: String
+        if let existing = map[base], let owner = existing.branch, let branch, owner != branch {
+            // Same version + build number, different commit — a local rebuild.
+            let sha = branch.split(separator: " ").last.map(String.init) ?? branch
+            key = "\(base) \(sha)"
+        } else {
+            key = base
+        }
+        mutate(&map, key: key, branch: branch, change)
+        store(map)
+    }
+
+    /// Mutate the bucket for a (version, build) named by a MetricKit payload — the newest
+    /// bucket carrying that composite, or a fresh one if none exists. Falls back to the
+    /// running build when the payload has no metadata.
+    private static func mutateBucket(
+        matching target: (version: String, build: String)?,
+        _ change: (inout MemoryVersionCounters) -> Void
+    ) {
+        guard let target else {
+            mutateCurrentBucket(change)
+            return
+        }
+        lock.lock()
+        defer { lock.unlock() }
+
+        var map = loadMap()
+        let base = bucketKey(version: target.version, build: target.build)
+        let candidates = map.filter { $0.key == base || $0.key.hasPrefix(base + " ") }
+        let key = candidates.max { ($0.value.since ?? .distantPast) < ($1.value.since ?? .distantPast) }?.key ?? base
+        // A brand-new bucket for the running build can be stamped with the running commit;
+        // one for an older build cannot (we don't know it), the server resolves that from history.
+        let branch = base == currentBucketKey() ? Bundle.main.gitBranch : nil
+        mutate(&map, key: key, branch: branch, change)
+        store(map)
+    }
+
+    /// Caller holds `lock`.
+    private static func mutate(
+        _ map: inout [String: MemoryVersionCounters],
+        key: String,
+        branch: String?,
+        _ change: (inout MemoryVersionCounters) -> Void
+    ) {
         var bucket = map[key] ?? MemoryVersionCounters()
+        if bucket.since == nil { bucket.since = Date() }
+        if bucket.branch == nil { bucket.branch = branch }
         change(&bucket)
         map[key] = bucket
 
-        // Prune oldest buckets (release order: version tuple, then build) beyond the cap.
+        // Prune oldest buckets beyond the cap: version tuple, then build number, then age.
         if map.count > maxBuckets {
-            let sorted = map.keys.sorted {
-                releaseOrder($0).lexicographicallyPrecedes(releaseOrder($1))
+            let sorted = map.sorted { a, b in
+                let ra = releaseOrder(a.key), rb = releaseOrder(b.key)
+                if ra != rb { return ra.lexicographicallyPrecedes(rb) }
+                return (a.value.since ?? .distantPast) < (b.value.since ?? .distantPast)
             }
-            for key in sorted.prefix(map.count - maxBuckets) {
-                map.removeValue(forKey: key)
+            for entry in sorted.prefix(map.count - maxBuckets) {
+                map.removeValue(forKey: entry.key)
             }
         }
+    }
 
+    /// Caller holds `lock`.
+    private static func store(_ map: [String: MemoryVersionCounters]) {
         if let data = try? JSONCoding.encoder.encode(map) {
             UserDefaults.standard.set(data, forKey: storageKey)
         }
@@ -210,8 +281,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
         return map
     }
 
-    /// "8.3.5(274)" — version alone collides across builds of one release, build alone
-    /// collides across releases (plain Xcode builds don't increment it).
+    /// "8.3.5(274)" — version + build number, unique per device.
     private static func bucketKey(version: String?, build: String) -> String {
         "\(version ?? "?")(\(build))"
     }
@@ -221,9 +291,11 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     }
 
     /// Sortable release order for pruning: version numbers first, build number last.
+    /// Only the "version(build)" part is parsed — a sha suffix is not a number.
     /// Unparseable keys sort oldest (pruned first).
     private static func releaseOrder(_ key: String) -> [Int] {
-        let parts = key.split(whereSeparator: { !$0.isNumber }).compactMap { Int($0) }
+        let head = key.split(separator: " ").first.map(String.init) ?? key
+        let parts = head.split(whereSeparator: { !$0.isNumber }).compactMap { Int($0) }
         return parts.isEmpty ? [-1] : parts
     }
 
