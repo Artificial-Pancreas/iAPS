@@ -3,7 +3,7 @@ import Foundation
 import SwiftUI
 
 struct LoopsView: View {
-    let loopStatistics: (Int, Int, Double, String)
+    let loopStatistics: (loops: Int, readings: Int, percentage: Double, averageInterval: String)
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -14,10 +14,9 @@ struct LoopsView: View {
 
     var body: some View {
         VStack {
-            // Data
-            let loops = loopStatistics.0
-            let readings = loopStatistics.1
-            let percentage = loopStatistics.2
+            let loops = loopStatistics.loops
+            let readings = loopStatistics.readings
+            let percentage = loopStatistics.percentage
 
             Text(NSLocalizedString("Loops", comment: ""))
                 .padding(.bottom, 10).font(.previewHeadline)
@@ -26,7 +25,7 @@ struct LoopsView: View {
 
             HStack {
                 Text("Average Interval")
-                Text(loopStatistics.3)
+                Text(loopStatistics.averageInterval)
             }.font(.loopFont)
 
             HStack {
