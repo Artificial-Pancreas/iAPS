@@ -2689,7 +2689,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Daily Log upload turned off" = "Dagelijkse log upload uitgeschakeld";
 "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Voor het dagelijks uploaden van loggegevens moet je Vrouw of Man selecteren en een geldige geboortedatum invullen. Werk je persoonlijke gegevens bij om deze functie weer in te schakelen.";
 "Copied" = "Gekopieerd";
-"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Write this token down somewhere safe. It is the only way to restore your settings on a new phone.";
+"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Schrijf dit token ergens veilig op. Het is de enige manier om je instellingen op een nieuwe telefoon te herstellen.";
 
 /* ——————————Contact Image ————————*/
 
@@ -3740,34 +3740,34 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Je iAPS build verloopt op %1$@ (%2$d dagen resterend). TestFlight builds moeten elke 90 dagen worden vernieuwd.";
 
 /* --- First-launch Welcome + post-upgrade notice (onboarding) --- */
-"Welcome to iAPS" = "Welcome to iAPS";
+"Welcome to iAPS" = "Welkom bij iAPS";
 
-"Let's get you set up." = "Let's get you set up.";
+"Let's get you set up." = "Laten we je op weg helpen.";
 
 /* Welcome screen disclaimer (phase 1) */
-"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm.";
+"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS is een opensource kunstmatig alvleeskliersysteem dat is gebaseerd op het OpenAPS-algoritme.";
 
-"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is not approved by any health authority. You run this system at your own risk.";
+"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is niet goedgekeurd door een gezondheidsautoriteit. Je gebruikt dit systeem volledig op eigen risico.";
 
-"New User" = "New User";
+"New User" = "Nieuwe gebruiker";
 
-"Set up iAPS for the first time" = "Set up iAPS for the first time";
+"Set up iAPS for the first time" = "Stel iAPS voor de eerste keer in";
 
-"Existing User" = "Existing User";
+"Existing User" = "Bestaande gebruiker";
 
-"Skip setup — configure everything myself" = "Skip setup — configure everything myself";
+"Skip setup — configure everything myself" = "Setup overslaan — alles zelf configureren";
 
-"Migrate my settings from a previous install" = "Migrate my settings from a previous install";
+"Migrate my settings from a previous install" = "Migreer mijn instellingen van een eerdere installatie";
 
-"Stuck? Help is here" = "Stuck? Help is here";
+"Stuck? Help is here" = "Vastgelopen? Hulp kun je hier vinden";
 
-"Documentation" = "Documentation";
+"Documentation" = "Documentatie";
 
-"Discord support" = "Discord support";
+"Discord support" = "Discord ondersteuning";
 
-"iAPS updated" = "iAPS updated";
+"iAPS updated" = "iAPS is bijgewerkt";
 
-"You're now running version %@." = "You're now running version %@.";
+"You're now running version %@." = "Je gebruikt nu versie %@.";
 
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
 
