@@ -3769,32 +3769,32 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 
 "You're now running version %@." = "Je gebruikt nu versie %@.";
 
-"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
+"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates kunnen soms instellingen terugzetten. Dit gebeurt niet vaak. Merk je toch iets vreemds, bijvoorbeeld dat Closed Loop uitstaat of Max IOB op 0 staat? Controleer dan eerst je instellingen.";
 
-"Review Settings" = "Review Settings";
+"Review Settings" = "Instellingen beoordelen";
 
-"Continue to Home" = "Continue to Home";
+"Continue to Home" = "Doorgaan naar Home";
 
 /* Existing-user restore (onboarding) */
-"Restore my settings from a previous install" = "Restore my settings from a previous install";
+"Restore my settings from a previous install" = "Herstel mijn instellingen van een vorige installatie";
 
-"Restore your settings" = "Restore your settings";
+"Restore your settings" = "Instellingen herstellen";
 
-"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup.";
+"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Voer de herstelcode van je vorige iAPS-installatie in om je OpenAPS-voorkeuren en appinstellingen vanuit je online back-up te herstellen.";
 
-"Recovery token" = "Recovery token";
+"Recovery token" = "Herstelcode";
 
-"Find this on your old phone under iAPS → Settings → Sharing." = "Find this on your old phone under iAPS → Settings → Sharing.";
+"Find this on your old phone under iAPS → Settings → Sharing." = "Zoek dit op je oude telefoon onder iAPS → Instellingen → Delen.";
 
-"Restore my settings" = "Restore my settings";
+"Restore my settings" = "Instellingen herstellen";
 
-"Restoring…" = "Restoring…";
+"Restoring…" = "Aan het herstellen…";
 
-"Settings restored" = "Settings restored";
+"Settings restored" = "Instellingen hersteld";
 
-"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.";
+"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Je OpenAPS-voorkeuren en appinstellingen zijn hersteld vanuit je back-up. In de volgende stap stel je de online back-up voor dit apparaat in.";
 
-"Restore didn't complete" = "Restore didn't complete";
+"Restore didn't complete" = "Herstellen niet voltooid";
 
 "Try again" = "Probeer opnieuw";
 
