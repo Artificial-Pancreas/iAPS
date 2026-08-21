@@ -704,6 +704,7 @@ extension Home {
                             cgmInfo: appUIState.cgmInfo,
                             sensorDays: state.sensorDays,
                             timerDate: date,
+                            hideInsulinBadge: state.settings?.hideInsulinBadge == true,
                             setupPump: { state.setupPump = true },
                             openCGM: { state.openCGM() },
                             runLoop: { state.runLoop() },
