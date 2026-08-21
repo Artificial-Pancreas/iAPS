@@ -48,7 +48,12 @@ extension Home {
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
         @Published var readings: [ReadingsSnapshot] = []
-        @Published var loopStatistics: (Int, Int, Double, String) = (0, 0, 0, "")
+        @Published var loopStatistics: (loops: Int, readings: Int, percentage: Double, averageInterval: String) = (
+            loops: 0,
+            readings: 0,
+            percentage: 0,
+            averageInterval: ""
+        )
         @Published var standing: Bool = false
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
@@ -458,23 +463,41 @@ extension Home {
 
         private func setupLoopStatsBackground() {
             Task {
-                let loopStats = await self.coreDataStorage.fetchLoopStats(interval: DateFilter.today.startDate)
-                let readings = await self.coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate).compactMap(\.glucose)
-                    .count
+                let todayStart = DateFilter.today.startDate
+                let todayStartDate = DateFilter.today.startDate as Date
+                let allowOneMinuteLoop = appCoordinator.settings.value.allowOneMinuteLoop
+                let glucoseRaw = appCoordinator.glucoseRaw.value
+                let glucoseFrequencyFiltered = appCoordinator.glucoseFrequencyFiltered.value
+                let readings = appCoordinator.glucoseRaw.value.count { $0.dateString >= todayStartDate }
+                let loopStats = await self.coreDataStorage.fetchLoopStats(interval: todayStart)
 
                 let result = await Task.detached {
-                    let loops = loopStats.compactMap({ each in each.loopStatus }).count
-                    let percentage = min(readings != 0 ? (Double(loops) / Double(readings) * 100) : 0, 100)
-                    // First loop date
-                    let time = (loopStats.last?.start ?? Date.now).subtractingTimeInterval(.minutes(5))
+                    let expectedLoops = allowOneMinuteLoop ?
+                        glucoseRaw.count { $0.dateString >= todayStartDate } :
+                        glucoseFrequencyFiltered.count { $0.dateString >= todayStartDate }
 
-                    let average = -1 * (time.timeIntervalSinceNow / 60) / max(Double(loops), 1)
+                    let loops = loopStats.count { $0.loopStatus == "Success" }
+                    let percentage = expectedLoops == 0 ? 0.0 : min(Double(loops) / Double(expectedLoops) * 100, 100)
+
+                    let loopStarts = loopStats
+                        .compactMap(\.start)
+                        .sorted()
+
+                    let intervals = zip(loopStarts, loopStarts.dropFirst()).map { previous, next in
+                        next.timeIntervalSince(previous) / 60
+                    }
+
+                    let averageInterval = intervals.isEmpty
+                        ? nil
+                        : intervals.reduce(0, +) / Double(intervals.count)
 
                     return (
-                        loops,
-                        readings,
-                        percentage,
-                        average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min"
+                        loops: loops,
+                        readings: readings,
+                        percentage: percentage,
+                        averageInterval: averageInterval
+                            .map { $0.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min" } ??
+                            "-"
                     )
                 }.value
                 self.loopStatistics = result

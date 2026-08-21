@@ -71,7 +71,7 @@ final class AppCoordinator: @unchecked Sendable {
     let glucoseSmoothed = CurrentValueSubject<[BloodGlucose], Never>([])
 
     // newest -> oldest
-    // this contains the glucose from glucoseSmoothed filtered by frequency (5min/1min, according to settings)
+    // this contains the glucose from glucoseSmoothed filtered by 5min frequency
     // this is consumed by OpenAPS, passed to oref0
     let glucoseFrequencyFiltered = CurrentValueSubject<[BloodGlucose], Never>([])
 

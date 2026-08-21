@@ -185,6 +185,23 @@ enum KnownPlugins {
         }
     }
 
+    static func isOneMinuteReadingsEnabled(for cgmManager: CGMManager) -> Bool {
+        switch cgmManager.pluginIdentifier {
+        case LibreTransmitterManagerV3.pluginIdentifier: return LibreTransmitter.Features.allowOneMinuteReadings
+        case LibreLoopCGMManager.pluginIdentifier:
+            return (cgmManager as? LibreLoopCGMManager)?.state.experimentalMinuteByMinuteForwarding ?? false
+        default: return false
+        }
+    }
+
+    static func isLibre2Cgm(pluginIdentifier: String) -> Bool {
+        pluginIdentifier == LibreTransmitterManagerV3.pluginIdentifier
+    }
+
+    static func setupLibre2CgmInterval(everyMinute: Bool) {
+        LibreTransmitter.Features.allowOneMinuteReadings = everyMinute
+    }
+
     static func pumpModel(_ pumpManager: PumpManager) -> String? {
         switch pumpManager.pluginIdentifier {
         case MinimedPumpManager.pluginIdentifier:

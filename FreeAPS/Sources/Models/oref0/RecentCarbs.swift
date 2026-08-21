@@ -6,7 +6,7 @@ struct RecentCarbs: Codable, Sendable {
     var bwCarbs: Double
     var journalCarbs: Double
     var mealCOB: Double
-    var currentDeviation: Double
+    var currentDeviation: Double?
     var maxDeviation: Double
     var minDeviation: Double
     var slopeFromMaxDeviation: Double

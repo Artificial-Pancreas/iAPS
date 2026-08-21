@@ -14,6 +14,7 @@ extension CGM {
         @Published private(set) var cgmIdentifierToSetUp: String? = nil
 
         @Published var smoothGlucose = false
+        @Setting(\.allowOneMinuteGlucose) var allowOneMinuteGlucose = false
         @Published var sensorDays: Double = 10
 
         override func subscribe() async {
