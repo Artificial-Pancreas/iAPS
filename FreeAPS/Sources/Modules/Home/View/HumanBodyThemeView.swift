@@ -761,6 +761,7 @@ struct HumanBodyThemeView: View {
             .offset(y: bH * 0.30)
         }
         .frame(width: bW, height: bH)
+        .dynamicTypeSize(...DynamicTypeSize.medium)
     }
 
     private func equipmentView(bW: CGFloat, bH: CGFloat) -> some View {
