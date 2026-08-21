@@ -3798,182 +3798,182 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 
 "Try again" = "Probeer opnieuw";
 
-"Skip and set up fresh" = "Skip and set up fresh";
+"Skip and set up fresh" = "Overslaan en nieuw instellen";
 
-"Enter your recovery token." = "Enter your recovery token.";
+"Enter your recovery token." = "Voer je herstelcode in.";
 
-"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.";
+"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We konden geen back-up vinden voor deze herstelcode, of de server was niet bereikbaar. Controleer de herstelcode en je internetverbinding en probeer het opnieuw.";
 
 /* Profile-schedule review (restore) */
-"Review your therapy settings" = "Review your therapy settings";
+"Review your therapy settings" = "Controleer je therapieinstellingen";
 
-"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump.";
+"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "Deze schema’s voor basaal, ISF, koolhydraatratio en streefwaarden komen uit je back-up. Controleer ze en pas ze daarna toe. Het basaalschema van je pomp wordt gesynchroniseerd wanneer je de pomp instelt.";
 
-"Check these before applying" = "Check these before applying";
+"Check these before applying" = "Controleer voordat je deze toepast";
 
-"Basal rates" = "Basal rates";
+"Basal rates" = "Basaal waardes";
 
-"Insulin sensitivity (ISF)" = "Insulin sensitivity (ISF)";
+"Insulin sensitivity (ISF)" = "Insuline gevoeligheid (ISF)";
 
-"Carb ratios" = "Carb ratios";
+"Carb ratios" = "Koolhydraat ratio's";
 
-"Glucose targets" = "Glucose targets";
+"Glucose targets" = "Glucose streefwaarde";
 
-"Apply these settings" = "Apply these settings";
+"Apply these settings" = "Deze instellingen toepassen";
 
-"Applying…" = "Applying…";
+"Applying…" = "Toepassen…";
 
-"Continue without restoring schedules" = "Continue without restoring schedules";
+"Continue without restoring schedules" = "Doorgaan zonder terugzetten van schema's";
 
-"1 segment" = "1 segment";
+"1 segment" = "1 onderdeel";
 
-"%d segments" = "%d segments";
+"%d segments" = "%d onderdelen";
 
-"Carb ratio schedule contains a non-positive value." = "Carb ratio schedule contains a non-positive value.";
+"Carb ratio schedule contains a non-positive value." = "Koolhydraat ratio schema bevat een niet-positieve waarde.";
 
-"Total basal across the day is zero or negative." = "Total basal across the day is zero or negative.";
+"Total basal across the day is zero or negative." = "Totale basaal van de dag is nul of negatief.";
 
-"Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
+"Insulin sensitivity schedule contains a non-positive value." = "Insuline gevoeligheidsschema bevat een niet-positieve waarde.";
 
 /* Restore by account login */
 "Account login" = "Account login";
 
-"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in op je online backup account om je OpenAPS instellingen en app instellingen te herstellen.";
 
-"Email" = "Email";
+"Email" = "E-mailadres";
 
 "Password" = "Paswoord";
 
-"Authentication code" = "Authentication code";
+"Authentication code" = "Authenticatiecode";
 
-"Logging in…" = "Logging in…";
+"Logging in…" = "Inloggen…";
 
-"Log in & restore" = "Log in & restore";
+"Log in & restore" = "Log in en herstel";
 
-"Enter your email and password." = "Enter your email and password.";
+"Enter your email and password." = "Voer je e-mailadres en wachtwoord in.";
 
-"Enter the code from your authenticator app." = "Enter the code from your authenticator app.";
+"Enter the code from your authenticator app." = "Voer de code uit je authenticatie-app in.";
 
-"That code didn't match. Please try again." = "That code didn't match. Please try again.";
+"That code didn't match. Please try again." = "Deze code komt niet overeen. Probeer het opnieuw.";
 
-"Email or password is incorrect." = "Email or password is incorrect.";
+"Email or password is incorrect." = "E-mailadres of wachtwoord is onjuist.";
 
-"No backup is linked to this account yet." = "No backup is linked to this account yet.";
+"No backup is linked to this account yet." = "Er is nog geen back-up aan dit account gekoppeld.";
 
-"Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
+"Couldn't reach the server. Check your connection and try again." = "Kon de server niet bereiken. Controleer je verbinding en probeer opnieuw.";
 
 /* Recovery token & account (final onboarding step) */
-"Save your recovery token" = "Save your recovery token";
+"Save your recovery token" = "Voer je herstelcode in";
 
-"Copy" = "Copy";
+"Copy" = "Kopiëer";
 
-"Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
+"Record this somewhere safe. It's how you restore your settings on a new phone." = "Bewaar deze herstelcode op een veilige plek. Hiermee kun je je instellingen op een nieuwe telefoon herstellen.";
 
-"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices.";
+"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "Je hebt geen account nodig. Met de herstelcode hierboven kun je je instellingen al back-uppen en herstellen. Met een account kun je hiervoor je e-mailadres en wachtwoord gebruiken in plaats van de herstelcode. Ook kun je daarmee je apparaten beheren.";
 
-"Optional: attach this device to an account" = "Optional: attach this device to an account";
+"Optional: attach this device to an account" = "Optioneel: voeg dit apparaat toe aan een account";
 
-"Link to an existing account" = "Link to an existing account";
+"Link to an existing account" = "Koppelen aan een bestaand account";
 
-"Create an account" = "Create an account";
+"Create an account" = "Account aanmaken";
 
-"Confirm password" = "Confirm password";
+"Confirm password" = "Wachtwoord bevestigen";
 
-"Verify & link" = "Verify & link";
+"Verify & link" = "Verifiëren en koppelen";
 
-"Link this device" = "Link this device";
+"Link this device" = "Koppel dit apparaat";
 
-"Linking…" = "Linking…";
+"Linking…" = "Koppelen…";
 
-"Create account" = "Create account";
+"Create account" = "Account aanmaken";
 
-"Creating…" = "Creating…";
+"Creating…" = "Wordt aangemaakt…";
 
-"Device linked" = "Device linked";
+"Device linked" = "Apparaat gekoppeld";
 
-"This device is now attached to %@. You can restore it by logging in." = "This device is now attached to %@. You can restore it by logging in.";
+"This device is now attached to %@. You can restore it by logging in." = "Dit apparaat is nu gekoppeld aan %@. Je kunt het herstellen door in te loggen.";
 
-"Finish without an account" = "Finish without an account";
+"Finish without an account" = "Voltooien zonder account";
 
-"This device is already linked to another account." = "This device is already linked to another account.";
+"This device is already linked to another account." = "Dit apparaat is al aan een ander account gekoppeld.";
 
-"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.";
+"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "Dit apparaat is nog niet klaar met de eerste back-up. Zorg ervoor dat de Online Backup is ingeschakeld en probeer het straks opnieuw.";
 
-"This device's recovery token looks invalid." = "This device's recovery token looks invalid.";
+"This device's recovery token looks invalid." = "De herstelcode van dit apparaat lijkt ongeldig.";
 
-"An account with that email already exists. Try linking instead." = "An account with that email already exists. Try linking instead.";
+"An account with that email already exists. Try linking instead." = "Er bestaat al een account met dit e-mailadres. Probeer het bestaande account te koppelen.";
 
-"That email doesn't look right." = "That email doesn't look right.";
+"That email doesn't look right." = "Dit e-mailadres lijkt niet correct.";
 
-"Please choose a stronger password (at least 8 characters)." = "Please choose a stronger password (at least 8 characters).";
+"Please choose a stronger password (at least 8 characters)." = "Kies een sterker wachtwoord (ten minste 8 tekens).";
 
-"Passwords don't match." = "Passwords don't match.";
+"Passwords don't match." = "Wachtwoorden komen niet overeen.";
 
 /* Device setup */
-"Set up your devices" = "Set up your devices";
+"Set up your devices" = "Je apparaat instellen";
 
-"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.";
+"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Koppel je pomp en CGM zodat iAPS glucose kan lezen en insuline kan afleveren. Je kunt dit later ook instellen in Instellingen.";
 
 /* Restore setup summary */
-"Review your settings" = "Review your settings";
+"Review your settings" = "Controleer je instellingen";
 
-"Set up your settings" = "Set up your settings";
+"Set up your settings" = "Je instellingen instellen";
 
-"Review" = "Review";
+"Review" = "Beoordeling";
 
-"Setup" = "Setup";
+"Setup" = "Instellen";
 
-"Next Step" = "Next Step";
+"Next Step" = "Volgende stap";
 
 /* Restore CoreData status */
-"Restoring your data" = "Restoring your data";
+"Restoring your data" = "Je gegevens herstellen";
 
-"Restored data" = "Restored data";
+"Restored data" = "Herstelde gegevens";
 
-"Meal, override and temp-target presets from your backup." = "Meal, override and temp-target presets from your backup.";
+"Meal, override and temp-target presets from your backup." = "Voorinstellingen voor maaltijden, overrides en tijdelijke streefwaarden uit je back-up.";
 
 "Override Presets" = "Override Programma's";
 
-"Temp Target Presets" = "Temp Target Presets";
+"Temp Target Presets" = "Voorinstelingen tijdelijke doelen";
 
-"No Data" = "No Data";
+"No Data" = "Geen gegevens";
 
-"%d restored" = "%d restored";
+"%d restored" = "%d hersteld";
 
-"Saved %d of %d" = "Saved %d of %d";
+"Saved %d of %d" = "%d van %d opgeslagen";
 
 /* Setup complete */
-"Setup complete" = "Setup complete";
+"Setup complete" = "Installatie voltooid";
 
-"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.";
+"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Je instellingen zijn klaar. Activeer Closed Loop wanneer je klaar bent om insuline aan te passen – je kunt dit later altijd wijzigen in Instellingen.";
 
-"Closed Loop" = "Closed Loop";
+"Closed Loop" = "Actieve loop";
 
-"Let iAPS automate insulin dosing" = "Let iAPS automate insulin dosing";
+"Let iAPS automate insulin dosing" = "Laat iAPS de insuline dosering automatiseren";
 
-"Finish setup" = "Finish setup";
+"Finish setup" = "Installatie voltooien";
 
 /* Sharing — unit abbreviations for the optional weight/height fields.
    "kg" kilograms, "lb" pounds, "cm" centimetres, "ft" feet, "in" inches,
    "ft/in" the feet-and-inches picker option. */
 "kg" = "kg";
 
-"lb" = "lb";
+"lb" = "pond";
 
 "cm" = "cm";
 
 "ft" = "ft";
 
-"in" = "in";
+"in" = "inch";
 
-"ft/in" = "ft/in";
+"ft/in" = "ft/inch";
 
 /* Developer settings — re-arm the first-launch onboarding so it replays */
-"Replay onboarding (new install)" = "Replay onboarding (new install)";
+"Replay onboarding (new install)" = "Onboarding herhalen (nieuwe installatie)";
 
-"Replay onboarding (as upgrade)" = "Replay onboarding (as upgrade)";
+"Replay onboarding (as upgrade)" = "Onboarding herhalen (als upgrade)";
 
-"Reset" = "Reset";
+"Reset" = "Herstellen";
 
 "Cancel temp" = "Annuleer tijdelijk doel";
 
@@ -4081,9 +4081,9 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "has been added to iAPS" = "is toegevoegd aan iAPS";
 "hour" = "uur";
 "iAPS" = "iAPS";
-"Processing…" = "Processing…";
-"Listening…" = "Listening…";
-"Describe what you ate…" = "Describe what you ate…";
+"Processing…" = "Verwerken…";
+"Listening…" = "Luisteren naar…";
+"Describe what you ate…" = "Beschrijf wat je hebt gegeten…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS heeft toegang tot de camera nodig om barcodes te scannen. Activeer het in Instellingen.";
 "too small temp basal amount" = "te klein tijdelijk basaal";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Waarschuwing! De ingevoerde hoeveelheid insuline is groter dan je maximale bolus instelling!";
