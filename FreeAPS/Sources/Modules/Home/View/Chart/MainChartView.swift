@@ -58,6 +58,7 @@ enum ChartConfig {
     static let bottomPadding: CGFloat = 20
     static let legendBottomPadding: CGFloat = 8 // without insulin activity: additional legend padding
     static let activityChartHeight: CGFloat = 80
+    static let activityChartInset: CGFloat = 8
     static let activityChartTopGap: CGFloat = 20 // gap between main chart and activity chart, with legend inside
     static let mainChartBottomPaddingWithActivity: CGFloat = bottomPadding + activityChartHeight + activityChartTopGap
     static let legendBottomPaddingWithActivity: CGFloat = bottomPadding + activityChartHeight
@@ -295,6 +296,13 @@ struct MainChartCanvas: View {
         return formatter
     }()
 
+    private let activityFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
     private let glucoseFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -458,10 +466,10 @@ struct MainChartCanvas: View {
             }
 
             if data.showInsulinActivity, data.insulinActivityGridLines {
-                ForEach([(geom.peakActivity_1unit_y, 1), (geom.peakActivity_maxBolus_y, 2)], id: \.1) { yCoord, _ in
+                ForEach(geom.activityGridLines) { tick in
                     Path { path in
-                        path.move(to: CGPoint(x: 0, y: yCoord))
-                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: yCoord))
+                        path.move(to: CGPoint(x: 0, y: tick.y))
+                        path.addLine(to: CGPoint(x: geom.fullSize.width, y: tick.y))
                     }.stroke(Color.secondary, lineWidth: 0.15)
                 }
             }
@@ -489,21 +497,12 @@ struct MainChartCanvas: View {
     }
 
     private var activityLabelsView: some View {
-        ForEach(
-            [
-                (Decimal(1.0), geom.peakActivity_1unit, geom.peakActivity_1unit_y, 1),
-                (data.maxBolus, geom.peakActivity_maxBolus, geom.peakActivity_maxBolus_y, 2)
-            ],
-            id: \.2
-        ) { bolus, _, yCoord, _ in
-            let value = bolus
-
-            return HStack(spacing: 2) {
-                Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.bolusDotFont)
-                Text("U").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
+        ForEach(geom.activityTicks) { tick in
+            HStack(spacing: 2) {
+                Text(activityFormatter.string(from: tick.unitsPerHour as NSNumber) ?? "").font(.bolusDotFont)
+                Text("U/hr").font(.bolusDotFont.smallCaps())
             }.foregroundStyle(Color(.insulin).opacity(0.8))
-                .position(CGPoint(x: geom.fullSize.width - 12, y: yCoord))
-                .asAny()
+                .position(CGPoint(x: geom.fullSize.width - 24, y: tick.y))
         }
     }
 
