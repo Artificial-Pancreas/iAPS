@@ -15,7 +15,6 @@ extension Settings {
         @Setting(\.extended_overrides) var extended_overrides = false
         @Setting(\.noCarbs) var noCarbs = false
         @Setting(\.allowOneMinuteLoop) var allowOneMinuteLoop = false
-        @Setting(\.allowOneMinuteGlucose) var allowOneMinuteGlucose = false
 
         @Published var entities: [Cleared] = CoreDataStack.shared.persistentContainer.managedObjectModel.entities
             .compactMap(\.name).map {

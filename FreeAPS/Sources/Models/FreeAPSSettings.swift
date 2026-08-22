@@ -159,7 +159,6 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var ketoProtectBasalAbsolut: Decimal = 0
     // 1-min loops
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
-    var allowOneMinuteGlucose: Bool = false // allow receiving 1-minute readings from libre2
 
     var ai: Bool = true
     var mealViewMicronutrients: Bool = false
@@ -802,9 +801,6 @@ extension FreeAPSSettings: Decodable {
         // 1-minute loops
         if let allowOneMinuteLoop = try? container.decode(Bool.self, forKey: .allowOneMinuteLoop) {
             settings.allowOneMinuteLoop = allowOneMinuteLoop
-        }
-        if let allowOneMinuteGlucose = try? container.decode(Bool.self, forKey: .allowOneMinuteGlucose) {
-            settings.allowOneMinuteGlucose = allowOneMinuteGlucose
         }
 
         if let ai = try? container.decode(Bool.self, forKey: .ai) {
