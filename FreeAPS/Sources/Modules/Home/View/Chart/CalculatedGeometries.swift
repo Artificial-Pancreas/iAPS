@@ -2,6 +2,14 @@ import Foundation
 import SwiftDate
 import SwiftUI
 
+/// A y-axis tick of the insulin activity chart.
+struct ActivityTick: Identifiable {
+    let unitsPerHour: Decimal
+    let y: CGFloat
+
+    var id: Decimal { unitsPerHour }
+}
+
 struct CalculatedGeometries {
     let fullSize: CGSize
 
@@ -31,13 +39,10 @@ struct CalculatedGeometries {
     let carbsPath: Path
     let fpuDots: [DotInfo]
     let fpuPath: Path
-    let peakActivity_1unit: Double
-    let peakActivity_1unit_y: CGFloat
-    let peakActivity_maxBolus: Double
-    let peakActivity_maxBolus_y: CGFloat
-    let peakActivity_maxIOB: Double
-    let peakActivity_maxIOB_y: CGFloat
-    let maxActivityInData: Decimal?
+    /// labelled y-axis ticks of the insulin activity chart, values in U/hr
+    let activityTicks: [ActivityTick]
+    /// y-axis grid lines of the insulin activity chart, values in U/hr
+    let activityGridLines: [ActivityTick]
     let horizontalGrid: [(CGFloat, Int)]
     let glucoseLabels: [(CGFloat, Int)]
     let lowThresholdLine: (CGFloat, Int)?
@@ -114,13 +119,9 @@ private final class GeometriesBuilder {
     private let glucoseMinValue: Int
     private let glucoseMaxValue: Int
 
-    private let peakActivity_1unit: Double
-    private let peakActivity_maxBolus: Double
-    private let peakActivity_maxIOB: Double
-
-    private let maxActivityInData: Decimal?
-
+    /// U/min (as the activity values themselves)
     private let activityChartMin: Double
+    /// U/min (as the activity values themselves)
     private let activityChartMax: Double
 
     private let cobChartMin: Double
@@ -197,22 +198,11 @@ private final class GeometriesBuilder {
         oneSecondWidth = GeometriesBuilder.calculateOneSecondStep(fullSize, data)
         fullGlucoseWidth = GeometriesBuilder.calculateFullGlucoseWidth(fullSize, data)
 
-        peakActivity_1unit = GeometriesBuilder.peakInsulinActivity(forBolus: 1.0, data)
-        peakActivity_maxBolus = GeometriesBuilder.peakInsulinActivity(forBolus: Double(data.maxBolus), data)
-        peakActivity_maxIOB = GeometriesBuilder.peakInsulinActivity(forBolus: Double(data.maxIOB), data)
-
         let (glucoseMinValue, glucoseMaxValue) = data.glucoseMinMaxYValues()
         self.glucoseMinValue = glucoseMinValue
         self.glucoseMaxValue = glucoseMaxValue
 
-        maxActivityInData = data.maxActivityInData()
-
-        let (activityChartMin, activityChartMax) = GeometriesBuilder.calculateActivityChartMinMax(
-            peakActivity_1unit: peakActivity_1unit,
-            peakActivity_maxIOB: peakActivity_maxIOB,
-            peakActivity_maxBolus: peakActivity_maxBolus,
-            maxActivityInData: maxActivityInData
-        )
+        let (activityChartMin, activityChartMax) = GeometriesBuilder.calculateActivityChartMinMax(data)
         self.activityChartMin = activityChartMin
         self.activityChartMax = activityChartMax
 
@@ -237,9 +227,8 @@ private final class GeometriesBuilder {
 
         let activityZeroPointY = activityToCoordinate(date: Date(), activity: 0).y // only y-coordinate matters
 
-        let peakActivity_1unit_y = activityToYCoordinate(Decimal(peakActivity_1unit))
-        let peakActivity_maxBolus_y = activityToYCoordinate(Decimal(peakActivity_maxBolus))
-        let peakActivity_maxIOB_y = activityToYCoordinate(Decimal(peakActivity_maxIOB))
+        let activityTicks = calculateActivityTicks()
+        let activityGridLines = calculateActivityGridLines()
 
         let predictionDotsIOB = calculatePredictionDots(type: .iob)
         let predictionDotsCOB = calculatePredictionDots(type: .cob)
@@ -327,13 +316,8 @@ private final class GeometriesBuilder {
             carbsPath: carbsPath,
             fpuDots: fpuDots,
             fpuPath: fpuPath,
-            peakActivity_1unit: peakActivity_1unit,
-            peakActivity_1unit_y: peakActivity_1unit_y,
-            peakActivity_maxBolus: peakActivity_maxBolus,
-            peakActivity_maxBolus_y: peakActivity_maxBolus_y,
-            peakActivity_maxIOB: peakActivity_maxIOB,
-            peakActivity_maxIOB_y: peakActivity_maxIOB_y,
-            maxActivityInData: maxActivityInData,
+            activityTicks: activityTicks,
+            activityGridLines: activityGridLines,
             horizontalGrid: horizontalGrid,
             glucoseLabels: glucoseLabels,
             lowThresholdLine: lowThresholdLine,
@@ -1137,10 +1121,11 @@ private final class GeometriesBuilder {
     }
 
     private func activityToYCoordinate(_ activityValue: Decimal) -> CGFloat {
-        let bottomPadding = fullSize.height - ChartConfig.bottomPadding
-        let stepYFraction = ChartConfig.activityChartHeight / CGFloat(activityChartMax - activityChartMin)
+        let baseline = fullSize.height - ChartConfig.bottomPadding - ChartConfig.activityChartInset
+        let usableHeight = ChartConfig.activityChartHeight - 2 * ChartConfig.activityChartInset
+        let stepYFraction = usableHeight / CGFloat(activityChartMax - activityChartMin)
         let yOffset = CGFloat(activityChartMin) * stepYFraction
-        let y = bottomPadding - CGFloat(activityValue) * stepYFraction + yOffset
+        let y = baseline - CGFloat(activityValue) * stepYFraction + yOffset
         return y
     }
 
@@ -1156,89 +1141,69 @@ private final class GeometriesBuilder {
         return y
     }
 
-    private static func calculateActivityChartMinMax(
-        peakActivity_1unit: Double,
-        peakActivity_maxIOB: Double,
-        peakActivity_maxBolus: Double,
-        maxActivityInData: Decimal?
-    ) -> (Double, Double) {
-        let maxIOBPeakActivity = peakActivity_maxIOB * 0.5
-        let maxBolusPeakActivity = peakActivity_maxBolus * 1.1
-        let maxValue = max(
-            maxIOBPeakActivity,
-            maxBolusPeakActivity,
-            Double(maxActivityInData ?? Decimal(0)) * 1.05
-        )
-        return (
-            -peakActivity_1unit,
-            maxValue
-        )
+    /// Vertical range of the insulin activity chart, in U/min
+    private static func calculateActivityChartMinMax(_ data: ChartModel) -> (Double, Double) {
+        let maxInData = (Double(data.maxActivityInData() ?? 0) * 60).rounded(.up)
+        let minInData = (Double(data.minActivityInData() ?? 0) * 60).rounded(.down)
+        let scheduledBasalMax = Double(data.basalProfile.map(\.rate).max() ?? 0)
+
+        // no data (or nothing but zeroes) - a placeholder scale, so the chart still has an axis
+        let maxUnitsPerHour = maxInData > 0 ? maxInData : 1
+        var minUnitsPerHour = min(-scheduledBasalMax, minInData)
+
+        // never let the range collapse - `activityToYCoordinate` divides by it
+        if maxUnitsPerHour - minUnitsPerHour < 0.1 {
+            minUnitsPerHour = maxUnitsPerHour - 1
+        }
+
+        return (minUnitsPerHour / 60, maxUnitsPerHour / 60)
     }
 
-    // function to calculate the maximum insulin activity for a given bolus size
-    // used to scale the activity chart
-    private static func peakInsulinActivity(forBolus: Double, _ data: ChartModel) -> Double {
-        let peak = Double(data.insulinPeak)
-        let dia = Double(data.insulinDIA)
-        let end = dia * 60.0
+    private func calculateActivityTicks() -> [ActivityTick] {
+        let maxUnitsPerHour = activityChartMax * 60
+        let minUnitsPerHour = activityChartMin * 60
 
-        // Calculate tau
-        let peakOverEnd = peak / end
-        let tauNumerator = peak * (1.0 - peakOverEnd)
-        let tauDenominator = 1.0 - 2.0 * peakOverEnd
-        guard tauDenominator != 0 else {
-            return 0.1
+        var ticks: [ActivityTick] = []
+        if maxUnitsPerHour > 0.05 {
+            ticks.append(makeActivityTick(maxUnitsPerHour))
         }
-        let tau = tauNumerator / tauDenominator
+        if minUnitsPerHour < -0.05 {
+            ticks.append(makeActivityTick(minUnitsPerHour))
+        }
+        if maxUnitsPerHour - 1 > 0.05, 1 - minUnitsPerHour > 0.05 {
+            ticks.append(makeActivityTick(1))
+        }
 
-        // Calculate a
-        let a = 2.0 * tau / end
-
-        // Calculate S
-        let expNegEndOverTau = exp(-end / tau)
-        let S = 1.0 / (1.0 - a + (1.0 + a) * expNegEndOverTau)
-
-        // Calculate activity at peak time
-        let t = peak
-        let activity = forBolus * (S / pow(tau, 2)) * t * (1.0 - t / end) * exp(-t / tau)
-
-        return activity
+        return ticks
     }
 
-    // Inverse function to calculate the bolus size needed for a desired peak activity
-    // TODO: not tested
-    private func bolusForPeakActivity(desiredActivity: Double) -> Double {
-        let peak = Double(data.insulinPeak)
-        let dia = Double(data.insulinDIA)
-        let end = dia * 60.0
+    /// Grid lines of the insulin activity y-axis. Zero is left out - it has its own, thicker line.
+    private func calculateActivityGridLines() -> [ActivityTick] {
+        let maxUnitsPerHour = activityChartMax * 60
+        let minUnitsPerHour = activityChartMin * 60
 
-        // Calculate tau (same as original function)
-        let peakOverEnd = peak / end
-        let tauNumerator = peak * (1.0 - peakOverEnd)
-        let tauDenominator = 1.0 - 2.0 * peakOverEnd
-        guard tauDenominator != 0 else {
-            return 0.0
-        }
-        let tau = tauNumerator / tauDenominator
+        var values: [Double] = []
 
-        // Calculate a (same as original function)
-        let a = 2.0 * tau / end
-
-        // Calculate S (same as original function)
-        let expNegEndOverTau = exp(-end / tau)
-        let S = 1.0 / (1.0 - a + (1.0 + a) * expNegEndOverTau)
-
-        // Calculate the scaling factor at peak time
-        let t = peak
-        let scalingFactor = (S / pow(tau, 2)) * t * (1.0 - t / end) * exp(-t / tau)
-
-        // Guard against division by zero
-        guard scalingFactor != 0 else {
-            return 0.0
+        var step = minUnitsPerHour.rounded(.up)
+        while step <= maxUnitsPerHour {
+            values.append(step)
+            step += 1
         }
 
-        // Since activity = forBolus * scalingFactor, then forBolus = activity / scalingFactor
-        return desiredActivity / scalingFactor
+        values.append(contentsOf: [minUnitsPerHour, maxUnitsPerHour])
+
+        return values
+            .filter { abs($0) > 0.05 }
+            .reduce(into: [Double]()) { unique, value in
+                if !unique.contains(where: { abs($0 - value) < 0.05 }) {
+                    unique.append(value)
+                }
+            }
+            .map(makeActivityTick)
+    }
+
+    private func makeActivityTick(_ unitsPerHour: Double) -> ActivityTick {
+        ActivityTick(unitsPerHour: Decimal(unitsPerHour), y: activityToYCoordinate(Decimal(unitsPerHour / 60)))
     }
 
     private var previousLookupTime: TimeInterval?
@@ -1662,5 +1627,9 @@ private extension ChartModel {
 
     func maxActivityInData() -> Decimal? {
         activity.map { e in e.activity }.max()
+    }
+
+    func minActivityInData() -> Decimal? {
+        activity.map { e in e.activity }.min()
     }
 }
