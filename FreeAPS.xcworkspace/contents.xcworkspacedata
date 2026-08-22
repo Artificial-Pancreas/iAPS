@@ -55,10 +55,4 @@
    <FileRef
       location = "group:OmnipodKit/OmnipodKit.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:FemaleBodyThemeView.swift">
-   </FileRef>
-   <FileRef
-      location = "group:FemaleMannequinTorsoShape.swift">
-   </FileRef>
 </Workspace>
