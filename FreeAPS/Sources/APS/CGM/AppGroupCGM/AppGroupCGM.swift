@@ -56,7 +56,7 @@ public class AppGroupCGM: CGMManager {
         lockedState.value
     }
 
-    let appGroupSource = AppGroupSource()
+    nonisolated let appGroupSource = AppGroupSource()
 
     public init() {
         lockedState = Locked(AppGroupCGMState())

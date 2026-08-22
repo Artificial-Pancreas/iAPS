@@ -261,34 +261,3 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
         await createEvent(for: recentGlucose, delta: glucoseDelta)
     }
 }
-
-extension BloodGlucose.Direction {
-    var symbol: String {
-        switch self {
-        case .tripleUp:
-            return "↑↑↑"
-        case .doubleUp:
-            return "↑↑"
-        case .singleUp:
-            return "↑"
-        case .fortyFiveUp:
-            return "↗︎"
-        case .flat:
-            return "→"
-        case .fortyFiveDown:
-            return "↘︎"
-        case .singleDown:
-            return "↓"
-        case .doubleDown:
-            return "↓↓"
-        case .tripleDown:
-            return "↓↓↓"
-        case .none:
-            return "↔︎"
-        case .notComputable:
-            return "↔︎"
-        case .rateOutOfRange:
-            return "↔︎"
-        }
-    }
-}
