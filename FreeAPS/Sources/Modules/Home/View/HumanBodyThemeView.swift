@@ -402,6 +402,54 @@ struct HumanBodyThemeView: View {
         static let illustrationVerticalOffset: CGFloat = 5
         static let brandingVerticalOffset: CGFloat = 0.50
         static let brandingHorizontalOffset: CGFloat = 0.9
+
+        // Extended layout config constants
+        static let armFillHeightMultiplier: CGFloat = 0.32
+        static let armFillBottomSpacerRatio: CGFloat = 0.05
+        static let armStrokeWidth: CGFloat = 0.3
+        static let torsoStrokeWidth: CGFloat = 1.0
+        static let headVerticalOffsetRatio: CGFloat = -0.48
+        static let glucoseVerticalOffsetRatio: CGFloat = -0.10
+        static let cobVerticalOffsetRatio: CGFloat = 0.30
+        static let cobValueBoxPaddingHorizontal: CGFloat = 8
+        static let cobValueBoxPaddingVertical: CGFloat = 4
+        static let cgmScaleRatio: CGFloat = 0.75
+        static let pumpScaleRatio: CGFloat = 0.75
+        static let femaleCgmYOffsetRatio: CGFloat = -0.09
+        static let maleCgmYOffsetRatio: CGFloat = -0.12
+        static let cgmVerticalShiftOffset: CGFloat = 3
+        static let headLabelFontSize: CGFloat = 14
+        static let headBorderWidth: CGFloat = 1.0
+        static let headShadowBlur: CGFloat = 3.0
+        static let headShadowOffset: CGFloat = 2.0
+        static let headGlowBlur: CGFloat = 6.0
+        static let loopIndicatorLineOffset: CGFloat = 30
+        static let brandingFontSizeI: CGFloat = 12
+        static let brandingFontSizeAPS: CGFloat = 15
+        static let decimalSeparatorFontSize: CGFloat = 28
+        static let decimalSeparatorBaselineOffset: CGFloat = -5
+        static let decimalSeparatorOffsetComma: CGFloat = -2
+        static let directionSymbolFontSize: CGFloat = 16
+        static let equipmentValueBoxCornerRadius: CGFloat = 8
+        static let equipmentValueBoxStrokeWidth: CGFloat = 1.0
+        static let equipmentLabelFontSize: CGFloat = 8
+        static let expirationFontSize: CGFloat = 11
+
+        // Equipment position offsets (positive values, multiplied by -bW in offset calculations to shift left)
+        static let femaleIobCardXRatio: CGFloat = 0.41
+        static let maleIobCardXRatio: CGFloat = 0.47
+        static let iobCardYOffset: CGFloat = 54
+
+        static let femalePumpXRatioExp: CGFloat = 0.43
+        static let femalePumpXRatioNoExp: CGFloat = 0.39
+        static let malePumpXRatioExp: CGFloat = 0.48
+        static let malePumpXRatioNoExp: CGFloat = 0.44
+        static let pumpYOffsetRatio: CGFloat = -0.08
+
+        static let femaleCgmXRatioExp: CGFloat = 0.47
+        static let femaleCgmXRatioNoExp: CGFloat = 0.43
+        static let maleCgmXRatioExp: CGFloat = 0.52
+        static let maleCgmXRatioNoExp: CGFloat = 0.48
     }
 
     let shape: FreeAPSSettings.MannequinType
@@ -584,15 +632,21 @@ struct HumanBodyThemeView: View {
                     ))
                     .mask(VStack(spacing: 0) {
                         Spacer()
-                        Rectangle().frame(height: bH * 0.32 * iobFill)
-                        Spacer().frame(height: bH * 0.05)
+                        Rectangle().frame(height: bH * Config.armFillHeightMultiplier * iobFill)
+                        Spacer().frame(height: bH * Config.armFillBottomSpacerRatio)
                     }.frame(width: bW, height: bH))
 
                 // Arm Strokes
                 armLeft
-                    .stroke(colorScheme == .dark ? Color.white.opacity(0.15) : Color.black.opacity(0.2), lineWidth: 0.3)
+                    .stroke(
+                        colorScheme == .dark ? Color.white.opacity(0.15) : Color.black.opacity(0.2),
+                        lineWidth: Config.armStrokeWidth
+                    )
                 armRight
-                    .stroke(colorScheme == .dark ? Color.white.opacity(0.15) : Color.black.opacity(0.2), lineWidth: 0.3)
+                    .stroke(
+                        colorScheme == .dark ? Color.white.opacity(0.15) : Color.black.opacity(0.2),
+                        lineWidth: Config.armStrokeWidth
+                    )
             }
             .frame(width: bW, height: bH)
 
@@ -648,7 +702,7 @@ struct HumanBodyThemeView: View {
                     .mask(VStack(spacing: 0) {
                         Spacer()
                         Rectangle().frame(height: bH * (0.95 - waistY) * cobFill)
-                        Spacer().frame(height: bH * 0.05)
+                        Spacer().frame(height: bH * Config.armFillBottomSpacerRatio)
                     }.frame(width: bW, height: bH))
 
                 // Torso Stroke
@@ -659,7 +713,7 @@ struct HumanBodyThemeView: View {
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
-                        lineWidth: 1
+                        lineWidth: Config.torsoStrokeWidth
                     )
             }
             .frame(width: bW, height: bH)
@@ -680,27 +734,37 @@ struct HumanBodyThemeView: View {
                 .background(
                     Ellipse()
                         .fill(loopColor.opacity(colorScheme == .dark ? 0.15 : 0.4))
-                        .shadow(color: Color.white.opacity(0.5), radius: 3, x: -2, y: -2)
-                        .shadow(color: Color.black.opacity(0.3), radius: 3, x: 2, y: 2)
+                        .shadow(
+                            color: Color.white.opacity(0.5),
+                            radius: Config.headShadowBlur,
+                            x: -Config.headShadowOffset,
+                            y: -Config.headShadowOffset
+                        )
+                        .shadow(
+                            color: Color.black.opacity(0.3),
+                            radius: Config.headShadowBlur,
+                            x: Config.headShadowOffset,
+                            y: Config.headShadowOffset
+                        )
                 )
-                .overlay(Ellipse().stroke(Color.white.opacity(0.2), lineWidth: 1))
-                .shadow(color: loopColor.opacity(0.4), radius: 6)
+                .overlay(Ellipse().stroke(Color.white.opacity(0.2), lineWidth: Config.headBorderWidth))
+                .shadow(color: loopColor.opacity(0.4), radius: Config.headGlowBlur)
 
             if let lastLoopDate = appUIState.lastLoopDate {
                 let minutes = Int(timerDate.timeIntervalSince(lastLoopDate) / 60)
                 Text("\(minutes)")
-                    .font(.system(size: 14, weight: .black, design: .rounded))
+                    .font(.system(size: Config.headLabelFontSize, weight: .black, design: .rounded))
                     .foregroundColor(.white)
                     .shadow(radius: 1)
             }
         }
-        .offset(y: -bH * 0.48)
+        .offset(y: bH * Config.headVerticalOffsetRatio)
     }
 
     private func brandingView(bW: CGFloat, bH: CGFloat) -> some View {
         HStack(spacing: 0) {
-            Text("i").font(.system(size: 12, design: .rounded)).offset(y: 0.4)
-            Text("APS").font(.system(size: 15, design: .rounded))
+            Text("i").font(.system(size: Config.brandingFontSizeI, design: .rounded)).offset(y: 0.4)
+            Text("APS").font(.system(size: Config.brandingFontSizeAPS, design: .rounded))
         }
         .foregroundStyle(.secondary.opacity(0.7))
         .carvingOrRelief(carve: colorScheme == .light)
@@ -730,11 +794,13 @@ struct HumanBodyThemeView: View {
                                 .font(.glucoseBodyFont)
                                 .fontWeight(.black)
                             Text(NumberFormatter().decimalSeparator)
-                                .font(.system(size: 28)).baselineOffset(-5)
-                                .offset(x: NumberFormatter().decimalSeparator == "," ? -2 : 0)
+                                .font(.system(size: Config.decimalSeparatorFontSize))
+                                .baselineOffset(Config.decimalSeparatorBaselineOffset)
+                                .offset(x: NumberFormatter().decimalSeparator == "," ? Config.decimalSeparatorOffsetComma : 0)
                             Text(glucoseComponents[1])
-                                .font(.system(size: 28)).baselineOffset(-5)
-                                .offset(x: NumberFormatter().decimalSeparator == "," ? -2 : 0)
+                                .font(.system(size: Config.decimalSeparatorFontSize))
+                                .baselineOffset(Config.decimalSeparatorBaselineOffset)
+                                .offset(x: NumberFormatter().decimalSeparator == "," ? Config.decimalSeparatorOffsetComma : 0)
                         }
                         .foregroundStyle(statusColor)
                     } else {
@@ -746,19 +812,22 @@ struct HumanBodyThemeView: View {
 
                     HStack(spacing: 4) {
                         if let dir = recent
-                            .direction { Image(systemName: dir.sfSymbol).font(.system(size: 16, weight: .bold)) }
+                            .direction
+                        {
+                            Image(systemName: dir.sfSymbol)
+                                .font(.system(size: Config.directionSymbolFontSize, weight: .bold)) }
                     }.foregroundStyle(statusColor.opacity(0.8), .clear)
                 }
             }
-            .offset(y: -bH * 0.10)
+            .offset(y: bH * Config.glucoseVerticalOffsetRatio)
 
             VStack(spacing: 2) {
-                Text("COB").font(.system(size: 8, weight: .black)).foregroundColor(.secondary)
+                Text("COB").font(.system(size: Config.equipmentLabelFontSize, weight: .black)).foregroundColor(.secondary)
                 Text(Self.mmolLFormatter.string(from: (latestCOB ?? 0) as NSNumber) ?? "0")
                     .font(.system(size: Config.cobValueFontSize, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
             }
-            .offset(y: bH * 0.30)
+            .offset(y: bH * Config.cobVerticalOffsetRatio)
         }
         .frame(width: bW, height: bH)
         .dynamicTypeSize(...DynamicTypeSize.medium)
@@ -769,35 +838,43 @@ struct HumanBodyThemeView: View {
             let pumpExpiration = pumpInfo?.expiresAt.map { max(0, $0.timeIntervalSince(timerDate)) }
 
             VStack(spacing: 2) {
-                Text("IOB").font(.system(size: 8, weight: .black)).foregroundColor(.secondary)
+                Text("IOB").font(.system(size: Config.equipmentLabelFontSize, weight: .black)).foregroundColor(.secondary)
                 Text(Self.mmolLFormatter.string(from: (latestIOB ?? 0) as NSNumber) ?? "0")
                     .font(.system(size: Config.iobValueFontSize, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
             }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
+            .padding(.horizontal, Config.cobValueBoxPaddingHorizontal)
+            .padding(.vertical, Config.cobValueBoxPaddingVertical)
             .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke((latestIOB ?? 0) < 0 ? Color.red.opacity(0.2) : Color.insulin.opacity(0.2), lineWidth: 1)
+                RoundedRectangle(cornerRadius: Config.equipmentValueBoxCornerRadius)
+                    .stroke(
+                        (latestIOB ?? 0) < 0 ? Color.red.opacity(0.2) : Color.insulin.opacity(0.2),
+                        lineWidth: Config.equipmentValueBoxStrokeWidth
+                    )
             )
-            .offset(x: -bW * (shape == .female ? 0.41 : 0.47), y: 60)
+            .offset(x: -bW * (shape == .female ? Config.femaleIobCardXRatio : Config.maleIobCardXRatio), y: Config.iobCardYOffset)
 
             HStack(spacing: 2) {
                 if let expiration = pumpExpiration {
-                    Text("\(Int(expiration / 86400))d").font(.system(size: 11, weight: .bold, design: .rounded))
+                    Text("\(Int(expiration / 86400))d")
+                        .font(.system(size: Config.expirationFontSize, weight: .bold, design: .rounded))
                         .foregroundColor(expiration < 86400 ? .red : .secondary)
                 }
-                pumpIllustration.scaleEffect(0.75)
+                pumpIllustration.scaleEffect(Config.pumpScaleRatio)
             }
             .offset(
-                x: -bW * (shape == .female ? (pumpExpiration != nil ? 0.43 : 0.39) : (pumpExpiration != nil ? 0.46 : 0.42)),
-                y: -bH * 0.08
+                x: -bW *
+                    (
+                        shape == .female ? (pumpExpiration != nil ? Config.femalePumpXRatioExp : Config.femalePumpXRatioNoExp) :
+                            (pumpExpiration != nil ? Config.malePumpXRatioExp : Config.malePumpXRatioNoExp)
+                    ),
+                y: bH * Config.pumpYOffsetRatio
             )
 
             let cgmDate = appUIState.cgmStatus?.sessionStartDate ?? recentGlucose?.sessionStartDate
             let cgmExpiration = cgmDate.map { max(0, (sensorDays * 86400) - timerDate.timeIntervalSince($0)) }
             HStack(spacing: 2) {
-                cgmIllustration.scaleEffect(0.75)
+                cgmIllustration.scaleEffect(Config.cgmScaleRatio)
                 if let expiration = cgmExpiration {
                     let sensorAge = cgmDate.map { timerDate.timeIntervalSince($0) } ?? 0
                     let minutesAndHours = (displayExpiration && expiration < 1 * 8.64E4) ||
@@ -810,13 +887,18 @@ struct HumanBodyThemeView: View {
                             (Self.remainingTimeFormatterDays.string(from: timeToShow) ?? "")
                             .replacingOccurrences(of: ",", with: " ")
                     )
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .font(.system(size: Config.expirationFontSize, weight: .bold, design: .rounded))
                     .foregroundColor(expiration < 86400 ? .red : .secondary)
                 }
             }
             .offset(
-                x: bW * (shape == .female ? (cgmExpiration != nil ? 0.46 : 0.42) : (cgmExpiration != nil ? 0.52 : 0.48)),
-                y: -bH * 0.12 + 3
+                x: bW *
+                    (
+                        shape == .female ? (cgmExpiration != nil ? Config.femaleCgmXRatioExp : Config.femaleCgmXRatioNoExp) :
+                            (cgmExpiration != nil ? Config.maleCgmXRatioExp : Config.maleCgmXRatioNoExp)
+                    ),
+                y: bH * (shape == .female ? Config.femaleCgmYOffsetRatio : Config.maleCgmYOffsetRatio) + Config
+                    .cgmVerticalShiftOffset
             )
         }
     }
