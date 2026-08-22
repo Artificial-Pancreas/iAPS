@@ -16,7 +16,7 @@ enum PreferencesEditor {
         case insulinCurve(keypath: WritableKeyPath<Preferences, InsulinCurve>)
     }
 
-    class Field: Identifiable {
+    @MainActor class Field: Identifiable {
         var displayName: String
         var type: FieldType
         var infoText: String
@@ -96,7 +96,7 @@ enum PreferencesEditor {
 
 protocol PreferencesEditorProvider: Provider {}
 
-protocol PreferencesSettable: AnyObject {
+@MainActor protocol PreferencesSettable: AnyObject {
     func set<T>(_ keypath: WritableKeyPath<Preferences, T>, value: T)
     func get<T>(_ keypath: WritableKeyPath<Preferences, T>) -> T
 }

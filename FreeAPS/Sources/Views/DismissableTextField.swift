@@ -126,7 +126,7 @@ public struct DismissableTextField: UIViewRepresentable {
         Coordinator(self, maxLength: maxLength)
     }
 
-    public final class Coordinator: NSObject {
+    @MainActor public final class Coordinator: NSObject {
         var parent: DismissableTextField
         var textField: UITextField?
         let maxLength: Int?

@@ -6,6 +6,25 @@ import Swinject
 
 extension Home {
     struct RootView: BaseView {
+        private enum Config {
+            static let headerHeightBody: CGFloat = 210
+            static let headerHeightLegacy: CGFloat = 210
+            static let headerHeightScrolling: CGFloat = 140
+            static let infoPanelHeight: CGFloat = 26
+            static let infoPanelViewHeight: CGFloat = 30
+            static let buttonPanelHeight: CGFloat = 50
+            static let glucosePreviewHeight: CGFloat = 50
+            static let mainChartBottomPadding: CGFloat = 5
+            static let chartRatioLarge: CGFloat = 1.96
+            static let chartRatioSmall: CGFloat = 2.0
+            static let scrollThreshold: CGFloat = -550
+            static let summaryViewPadding: CGFloat = 15
+            static let previewChartHeight: CGFloat = 200
+            static let activeViewHeight: CGFloat = 190
+            static let insulinViewHeight: CGFloat = 280
+            static let loopPreviewHeight: CGFloat = 160
+        }
+
         let resolver: Resolver
 
         @StateObject var state: StateModel
@@ -91,6 +110,13 @@ extension Home {
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
+        var tempTargetString: String? {
+            guard let tempTarget = state.tempTarget else {
+                return nil
+            }
+            return tempTarget.displayName
+        }
+
         var glucoseView: some View {
             ForegroundTimelineView(interval: 5) { date in
                 CurrentGlucoseView(
@@ -158,11 +184,65 @@ extension Home {
             }
         }
 
-        var tempTargetString: String? {
-            guard let tempTarget = state.tempTarget else {
-                return nil
-            }
-            return tempTarget.displayName
+        var carbsAndInsulinView: some View {
+            HStack {
+                // A temporary ugly(?) workaround for displaying last real IOB and COB computation
+                let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
+                let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
+                // Carbs on Board
+                HStack {
+                    let substance = Double(appUIState.latestCOB ?? 0)
+                    let max = max(Double(state.maxCOB), 1)
+                    let fraction: Double = 1 - (substance / max)
+                    let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1))
+                    TestTube(
+                        opacity: opacity,
+                        amount: fill,
+                        colourOfSubstance: .loopYellow,
+                        materialOpacity: materialOpacity
+                    )
+                    .frame(width: 12, height: 38)
+                    .offset(y: -5)
+                    HStack(spacing: 0) {
+                        if let cob = appUIState.latestCOB {
+                            Text(Self.numberFormatter.string(from: cob as NSNumber) ?? "0")
+                                .font(.statusFont).bold()
+                            // Display last loop, unless very old
+                        } else {
+                            Text("?").font(.statusFont).bold()
+                        }
+                        Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
+                    }.offset(y: 5)
+                }
+                // Instead of Spacer
+                Text(" ")
+
+                // Insulin on Board
+                HStack {
+                    let substance = Double(appUIState.latestIOB ?? 0)
+                    let max = max(Double(state.maxIOB), 1)
+                    let fraction: Double = 1 - abs(substance) / max
+                    let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
+                    TestTube(
+                        opacity: opacity,
+                        amount: fill,
+                        colourOfSubstance: substance < 0 ? .red : .insulin,
+                        materialOpacity: materialOpacity
+                    )
+                    .frame(width: 12, height: 38)
+                    .offset(y: -5)
+                    HStack(spacing: 0) {
+                        if let iob = appUIState.latestIOB {
+                            Text(
+                                Self.iobFormatter.string(from: iob as NSNumber) ?? "0"
+                            ).font(.statusFont).bold()
+                        } else {
+                            Text("?").font(.statusFont).bold()
+                        }
+                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                    }.offset(y: 5)
+                }
+            }.offset(x: 5, y: 5)
         }
 
         var info: some View {
@@ -204,7 +284,7 @@ extension Home {
         }
 
         var infoPanel: some View {
-            info.frame(height: 26)
+            info.frame(height: Config.infoPanelHeight)
                 .background {
                     InfoPanelBackground(colorScheme: colorScheme)
                 }
@@ -219,14 +299,14 @@ extension Home {
                 }
                 MainChartView(data: state.data, triggerUpdate: $triggerUpdate)
             }
-            .padding(.bottom, 5)
+            .padding(.bottom, Config.mainChartBottomPadding)
             .modal(for: .dataTable, from: self)
         }
 
         @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
                 addHeaderBackground()
-                    .frame(height: 50 + geo.safeAreaInsets.bottom)
+                    .frame(height: Config.buttonPanelHeight + geo.safeAreaInsets.bottom)
                 let isOverride = state.latestOverride?.enabled ?? false
                 let isTarget = (state.tempTarget != nil)
                 VStack {
@@ -377,8 +457,8 @@ extension Home {
         }
 
         var chart: some View {
-            let ratio = 1.96
-            let ratio2 = 2.0
+            let ratio = Config.chartRatioLarge
+            let ratio2 = Config.chartRatioSmall
 
             return addColouredBackground().shadow(radius: 3, y: 3)
                 .overlay {
@@ -387,70 +467,9 @@ extension Home {
                 .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? ratio : ratio2))
         }
 
-        var carbsAndInsulinView: some View {
-            HStack {
-                // A temporary ugly(?) workaround for displaying last real IOB and COB computation
-                let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
-                let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
-                // Carbs on Board
-                HStack {
-                    let substance = Double(appUIState.latestCOB ?? 0)
-                    let max = max(Double(state.maxCOB), 1)
-                    let fraction: Double = 1 - (substance / max)
-                    let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1))
-                    TestTube(
-                        opacity: opacity,
-                        amount: fill,
-                        colourOfSubstance: .loopYellow,
-                        materialOpacity: materialOpacity
-                    )
-                    .frame(width: 12, height: 38)
-                    .offset(y: -5)
-                    HStack(spacing: 0) {
-                        if let cob = appUIState.latestCOB {
-                            Text(Self.numberFormatter.string(from: cob as NSNumber) ?? "0")
-                                .font(.statusFont).bold()
-                            // Display last loop, unless very old
-                        } else {
-                            Text("?").font(.statusFont).bold()
-                        }
-                        Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
-                    }.offset(y: 5)
-                }
-                // Instead of Spacer
-                Text(" ")
-
-                // Insulin on Board
-                HStack {
-                    let substance = Double(appUIState.latestIOB ?? 0)
-                    let max = max(Double(state.maxIOB), 1)
-                    let fraction: Double = 1 - abs(substance) / max
-                    let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
-                    TestTube(
-                        opacity: opacity,
-                        amount: fill,
-                        colourOfSubstance: substance < 0 ? .red : .insulin,
-                        materialOpacity: materialOpacity
-                    )
-                    .frame(width: 12, height: 38)
-                    .offset(y: -5)
-                    HStack(spacing: 0) {
-                        if let iob = appUIState.latestIOB {
-                            Text(
-                                Self.iobFormatter.string(from: iob as NSNumber) ?? "0"
-                            ).font(.statusFont).bold()
-                        } else {
-                            Text("?").font(.statusFont).bold()
-                        }
-                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                    }.offset(y: 5)
-                }
-            }.offset(x: 5, y: 5)
-        }
-
         var preview: some View {
             addBackground()
-                .frame(minHeight: 200)
+                .frame(minHeight: Config.previewChartHeight)
                 .overlay {
                     PreviewChart(
                         readings: state.readings,
@@ -475,7 +494,7 @@ extension Home {
 
         var infoPanelView: some View {
             addBackground()
-                .frame(height: 30)
+                .frame(height: Config.infoPanelViewHeight)
                 .overlay {
                     HStack {
                         info
@@ -488,7 +507,7 @@ extension Home {
 
         var activeIOBView: some View {
             addBackground()
-                .frame(minHeight: 190)
+                .frame(minHeight: Config.activeViewHeight)
                 .overlay {
                     ActiveIOBView(
                         data: state.iobData,
@@ -501,7 +520,7 @@ extension Home {
 
         var activeCOBView: some View {
             addBackground()
-                .frame(minHeight: 190)
+                .frame(minHeight: Config.activeViewHeight)
                 .overlay {
                     ActiveCOBView(data: state.iobData)
                 }
@@ -512,7 +531,7 @@ extension Home {
 
         var insulinView: some View {
             addBackground()
-                .frame(minHeight: 280)
+                .frame(minHeight: Config.insulinViewHeight)
                 .overlay {
                     InsulinSummaryView(stats: state.insulinStatistics)
                 }
@@ -535,7 +554,7 @@ extension Home {
 
         var loopPreview: some View {
             addBackground()
-                .frame(minHeight: 160)
+                .frame(minHeight: Config.loopPreviewHeight)
                 .overlay {
                     LoopsView(loopStatistics: state.loopStatistics)
                 }
@@ -592,52 +611,117 @@ extension Home {
         }
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
-            let height: CGFloat = displayGlucose ? 140 : 210
-            addHeaderBackground()
-                .frame(
-                    height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top : height + 10 + geo
-                        .safeAreaInsets.top
-                )
-                .overlay {
-                    VStack {
-                        ZStack {
-                            if !displayGlucose {
-                                glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
-                                loopView
-                                    .frame(
-                                        maxWidth: .infinity,
-                                        maxHeight: .infinity,
-                                        alignment: .topLeading
-                                    )
-                                    .padding(20)
-                                    .offset(x: 5, y: -10)
-                            }
-                            if displayGlucose {
-                                glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -10)
-                            } else {
-                                HStack {
-                                    carbsAndInsulinView
-                                        .frame(maxHeight: .infinity, alignment: .bottom)
-                                    // Spacer()
-                                    pumpView
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                }
-                                .dynamicTypeSize(...DynamicTypeSize.xLarge)
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, 5)
-                            }
-                        }
-
-                        if displayGlucose {
-                            glucosePreview
-                        } else {
-                            infoPanelView
-                        }
-
-                        Divider()
+            if state.bodyTheme {
+                let height: CGFloat = displayGlucose ? Config.headerHeightScrolling : Config.headerHeightBody
+                addHeaderBackground()
+                    .frame(
+                        height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top : height + 10 + geo
+                            .safeAreaInsets.top
+                    )
+                    .overlay {
+                        bodyThemeView
+                            .padding(.top, geo.safeAreaInsets.top)
                     }
-                    .padding(.top, geo.safeAreaInsets.top)
+            } else {
+                let height: CGFloat = displayGlucose ? Config.headerHeightScrolling : Config.headerHeightLegacy
+                addHeaderBackground()
+                    .frame(
+                        height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top : height + 10 + geo
+                            .safeAreaInsets.top
+                    )
+                    .overlay {
+                        laboratoryView
+                            .padding(.top, geo.safeAreaInsets.top)
+                    }
+            }
+        }
+
+        private var laboratoryView: some View {
+            VStack {
+                ZStack {
+                    if !displayGlucose {
+                        glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
+                        loopView
+                            .frame(
+                                maxWidth: .infinity,
+                                maxHeight: .infinity,
+                                alignment: .topLeading
+                            )
+                            .padding(20)
+                            .offset(x: 5, y: -10)
+                    }
+                    if displayGlucose {
+                        glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -10)
+                    } else {
+                        HStack {
+                            carbsAndInsulinView
+                                .frame(maxHeight: .infinity, alignment: .bottom)
+                            pumpView
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                        }
+                        .dynamicTypeSize(...DynamicTypeSize.xLarge)
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, 5)
+                    }
                 }
+
+                if displayGlucose {
+                    glucosePreview
+                } else {
+                    infoPanelView
+                }
+
+                Divider()
+            }
+        }
+
+        private var bodyThemeView: some View {
+            VStack /* (spacing: 0) */ {
+                ZStack {
+                    ForegroundTimelineView(interval: 5) { date in
+                        HumanBodyThemeView(
+                            shape: state.shape,
+                            recentGlucose: state.recentGlucose,
+                            glucoseDelta: state.glucoseDelta,
+                            units: state.data.units,
+                            suggestion: state.data.suggestion,
+                            enactedSuggestion: state.enactedSuggestion,
+                            closedLoop: state.closedLoop,
+                            latestCOB: appUIState.latestCOB,
+                            latestIOB: appUIState.latestIOB,
+                            maxCOB: state.maxCOB,
+                            maxIOB: state.maxIOB,
+                            lowGlucose: state.data.lowGlucose,
+                            highGlucose: state.data.highGlucose,
+                            alwaysUseColors: state.alwaysUseColors,
+                            displayDelta: state.displayDelta,
+                            displaySAGE: state.displaySAGE,
+                            displayExpiration: state.displayExpiration,
+                            pumpSuspended: state.pumpSuspended,
+                            minimised: displayGlucose,
+                            tempRate: state.tempRate,
+                            pumpInfo: appUIState.pumpInfo,
+                            cgmInfo: appUIState.cgmInfo,
+                            sensorDays: state.sensorDays,
+                            timerDate: date,
+                            hideInsulinBadge: state.settings?.hideInsulinBadge == true,
+                            setupPump: { state.setupPump = true },
+                            openCGM: { state.openCGM() },
+                            runLoop: { state.runLoop() },
+                            showStatusPopup: { state.isStatusPopupPresented.toggle() }
+                        )
+                    }
+                }
+                .frame(maxHeight: .infinity)
+
+                if displayGlucose {
+                    glucosePreview
+                } else {
+                    infoPanelView
+                }
+
+                Divider()
+            }
         }
 
         var glucosePreview: some View {
@@ -672,7 +756,7 @@ extension Home {
             .chartXScale(
                 domain: Date.now.subtractingTimeInterval(.hours(24)) ... Date.now
             )
-            .frame(height: 50)
+            .frame(height: Config.glucosePreviewHeight)
             .padding(.leading, 30)
             .padding(.trailing, 32)
             .padding(.top, 15)
@@ -1071,42 +1155,20 @@ extension Home {
                     headerView(geo)
                     ScrollView {
                         VStack {
-                            // Main Chart
-                            chart
-                            // Adjust hours visible (X-Axis) and ratio display
-                            timeSetting
-                                .overlay { isfView }
-                            // TIR Chart
-                            if !state.data.glucose.isEmpty {
-                                preview.padding(.top, 15)
-                            }
-                            // Loops Chart
-                            loopPreview.padding(.vertical, 15)
-
-                            // COB Chart
-                            if state.showCOBChart {
-                                activeCOBView.padding(.bottom, 15)
-                            }
-
-                            // IOB Chart
-                            if state.showIOBChart {
-                                activeIOBView.padding(.bottom, 15)
-                            }
-
-                            // Summary Views
-                            insulinView.padding(.bottom, 15)
-                            mealsView.padding(.bottom, 15)
+                            mainChartAndDetails
                         }
                         .background {
                             // Track vertical scroll
                             GeometryReader { proxy in
                                 let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
-                                let yThreshold: CGFloat = -550
+                                let yThreshold: CGFloat = Config.scrollThreshold
                                 Color.clear
                                     .onChange(of: scrollPosition) {
-                                        if scrollPosition < yThreshold, state.showIOBChart || state.showCOBChart,
-                                           !state.skipGlucoseChart
-                                        {
+                                        let isScrollingPastThreshold = scrollPosition < yThreshold
+                                        let isAnyChartVisible = state.showIOBChart || state.showCOBChart
+                                        let shouldNotSkipGlucoseChart = !state.skipGlucoseChart
+
+                                        if isScrollingPastThreshold, isAnyChartVisible, shouldNotSkipGlucoseChart {
                                             withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
                                         } else {
                                             withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
@@ -1179,6 +1241,34 @@ extension Home {
                             }
                     )
             }
+        }
+
+        @ViewBuilder private var mainChartAndDetails: some View {
+            // Main Chart
+            chart
+            // Adjust hours visible (X-Axis) and ratio display
+            timeSetting
+                .overlay { isfView }
+            // TIR Chart
+            if !state.data.glucose.isEmpty {
+                preview.padding(.top, Config.summaryViewPadding)
+            }
+            // Loops Chart
+            loopPreview.padding(.vertical, Config.summaryViewPadding)
+
+            // COB Chart
+            if state.showCOBChart {
+                activeCOBView.padding(.bottom, Config.summaryViewPadding)
+            }
+
+            // IOB Chart
+            if state.showIOBChart {
+                activeIOBView.padding(.bottom, Config.summaryViewPadding)
+            }
+
+            // Summary Views
+            insulinView.padding(.bottom, Config.summaryViewPadding)
+            mealsView.padding(.bottom, Config.summaryViewPadding)
         }
 
         private func checkBuildExpiration() {

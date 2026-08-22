@@ -40,8 +40,10 @@ extension Publisher where Output: Sendable, Failure == Never {
             let cancellable = sink { value in
                 continuation.yield(value)
             }
+            let box = CancelBag()
+            box.store(cancellable)
             continuation.onTermination = { _ in
-                cancellable.cancel()
+                box.cancelAll()
             }
         }
     }

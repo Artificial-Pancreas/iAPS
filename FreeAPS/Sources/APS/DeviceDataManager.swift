@@ -67,10 +67,12 @@ protocol DeviceDataManager: Sendable {
 
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
 
-private let staticCGMManagers: [CGMManagerDescriptor] = [
-    CGMManagerDescriptor(identifier: MockCGMManager.pluginIdentifier, localizedTitle: MockCGMManager.localizedTitle),
-    CGMManagerDescriptor(identifier: AppGroupCGM.pluginIdentifier, localizedTitle: AppGroupCGM.localizedTitle)
-]
+private var staticCGMManagers: [CGMManagerDescriptor] {
+    [
+        CGMManagerDescriptor(identifier: MockCGMManager.pluginIdentifier, localizedTitle: MockCGMManager.localizedTitle),
+        CGMManagerDescriptor(identifier: AppGroupCGM.pluginIdentifier, localizedTitle: AppGroupCGM.localizedTitle)
+    ]
+}
 
 private let staticCGMManagersByIdentifier: [String: CGMManager.Type] = [
     MockCGMManager.pluginIdentifier: MockCGMManager.self,
@@ -81,9 +83,11 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
     MockPumpManager.pluginIdentifier: MockPumpManager.self
 ]
 
-private let availableStaticPumpManagers: [PumpManagerDescriptor] = [
-    PumpManagerDescriptor(identifier: MockPumpManager.pluginIdentifier, localizedTitle: MockPumpManager.localizedTitle)
-]
+private var availableStaticPumpManagers: [PumpManagerDescriptor] {
+    [
+        PumpManagerDescriptor(identifier: MockPumpManager.pluginIdentifier, localizedTitle: MockPumpManager.localizedTitle)
+    ]
+}
 
 extension WeakSynchronizedSet: @retroactive @unchecked Sendable {}
 
@@ -1337,7 +1341,7 @@ private extension BaseDeviceDataManager {
             pumpIsCgm = false
         }
 
-        let info = CgmDisplayInfo(
+        let info = CGMDisplayInfo(
             identifier: cgmManager.pluginIdentifier,
             identifierForStatistics: KnownPlugins.cgmIdForStatistics(for: cgmManager),
             name: cgmManager.localizedTitle,
@@ -1360,7 +1364,7 @@ private extension BaseDeviceDataManager {
             return
         }
 
-        let status = CgmDisplayStatus(
+        let status = CGMDisplayStatus(
             statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
             sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
             shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM,

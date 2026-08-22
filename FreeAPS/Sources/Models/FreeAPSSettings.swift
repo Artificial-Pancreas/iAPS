@@ -164,6 +164,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var ai: Bool = true
     var mealViewMicronutrients: Bool = false
     var nightTime = NightTimeConfiguration.default
+    var bodyTheme: Bool = true
 }
 
 extension FreeAPSSettings {
@@ -822,6 +823,10 @@ extension FreeAPSSettings: Decodable {
             settings.nightTime = nightTime
         }
 
+        if let bodyTheme = try? container.decode(Bool.self, forKey: .bodyTheme) {
+            settings.bodyTheme = bodyTheme
+        }
+
         self = settings
     }
 }
@@ -913,4 +918,24 @@ struct UploadSchedule: JSON, Equatable {
 struct UploadNetworkSchedule: JSON, Equatable {
     var interval: UploadScheduleInterval = .always
     var alwaysWhileCharging: Bool = false
+}
+
+extension FreeAPSSettings {
+    enum MannequinType: String {
+        case none
+        case male
+        case female
+    }
+
+    var activeMannequin: MannequinType {
+        guard bodyTheme else { return .none }
+        switch sexSetting {
+        case Sex.man.saveSetting():
+            return .male
+        case Sex.woman.saveSetting():
+            return .female
+        default:
+            return .male
+        }
+    }
 }

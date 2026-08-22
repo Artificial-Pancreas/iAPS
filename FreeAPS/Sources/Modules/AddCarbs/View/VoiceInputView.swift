@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct VoiceInputView: View {
+@MainActor struct VoiceInputView: View {
     @StateObject private var speechService = SpeechRecognitionService()
     let onComplete: (String) -> Void
     let onCancel: () -> Void

@@ -256,3 +256,61 @@ extension BloodGlucose {
         return nil
     }
 }
+
+extension BloodGlucose.Direction {
+    var symbol: String {
+        switch self {
+        case .tripleUp:
+            return "↑↑↑"
+        case .doubleUp:
+            return "↑↑"
+        case .singleUp:
+            return "↑"
+        case .fortyFiveUp:
+            return "↗︎"
+        case .flat:
+            return "→"
+        case .fortyFiveDown:
+            return "↘︎"
+        case .singleDown:
+            return "↓"
+        case .doubleDown:
+            return "↓↓"
+        case .tripleDown:
+            return "↓↓↓"
+        case .none:
+            return "↔︎"
+        case .notComputable:
+            return "↔︎"
+        case .rateOutOfRange:
+            return "↔︎"
+        }
+    }
+
+    var sfSymbol: String {
+        switch self {
+        case .tripleUp:
+            return "chevron.up.circle.fill"
+        case .doubleUp:
+            return "chevron.up.circle.fill"
+        case .singleUp:
+            return "arrow.up.circle.fill"
+        case .fortyFiveUp:
+            return "arrow.up.right.circle.fill"
+        case .flat:
+            return "arrow.right.circle.fill"
+        case .fortyFiveDown:
+            return "arrow.down.right.circle.fill"
+        case .singleDown:
+            return "arrow.down.circle.fill"
+        case .doubleDown:
+            return "chevron.down.circle.fill"
+        case .tripleDown:
+            return "chevron.down.circle.fill"
+        case .none,
+             .notComputable,
+             .rateOutOfRange:
+            return "minus.circle.fill"
+        }
+    }
+}
