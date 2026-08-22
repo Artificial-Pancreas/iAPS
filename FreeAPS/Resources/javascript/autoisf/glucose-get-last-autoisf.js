@@ -2,7 +2,29 @@ const round = require('../common/utils').round
 const getDateFromEntry = require('../common/utils').getDateFromGlucoseEntry
 const EMPTY = require('./constants').EMPTY_LAST_GLUCOSE
 
-module.exports = (data) => {
+// Delta window bounds, kept in sync with AndroidAPS DeltaCalculator.kt
+const MIN_BG_VALUE = 39.0;
+const MIN_SHORT_DELTA_MINUTES = 2.5;
+const MAX_SHORT_DELTA_MINUTES = 17.5;
+const MIN_LAST_DELTA_MINUTES = 2.5;
+const MAX_LAST_DELTA_MINUTES = 7.5;
+const MIN_LONG_DELTA_MINUTES = 17.5;
+const MAX_LONG_DELTA_MINUTES = 42.5;
+
+/**
+ * @param data       readings the loop runs on, newest -> oldest
+ * @param fastData   optional readings at the CGM's native rate (1-minute), newest -> oldest.
+ *
+ * Only the parabola fit uses `fastData`, and this is deliberate rather than laziness. The fit
+ * measures acceleration over ~45 minutes, so five times the points in that window is simply a
+ * better-determined fit. Everything else in this file is either already time-normalised (the deltas)
+ * or counts readings rather than minutes (dura_ISF, cgmFlatMinutes) - feeding those a faster stream
+ * changes their meaning, so they stay on `data`.
+ *
+ * AndroidAPS splits the same two ways: `data` from the 5-minute bucketed table, `orig` from the raw
+ * readings table, with `use1MinuteRaw` switching only the fit.
+ */
+module.exports = (data, fastData) => {
     if (data.length === 0) return EMPTY
     var now = undefined;
     var now_date = undefined;
@@ -45,40 +67,51 @@ module.exports = (data) => {
             break;
         }
         // only use data from the same device as the most recent BG data point
-        if (item.glucose > 38 && item.device === now.device) {
+        if (item.glucose > MIN_BG_VALUE && item.device === now.device) {
             var then = item;
             const then_date = getDateFromEntry(then);
             var avgDel = 0;
             var minutesAgo;
             if (typeof then_date !== 'undefined' && typeof now_date !== 'undefined') {
-                minutesAgo = Math.round( (now_date - then_date) / (1000 * 60) );
+                // not rounded to whole minutes: at a 1-minute cadence rounding the divisor
+                // distorts avgDel by up to ~13% near the window bounds, and makes which side of
+                // 2.5 / 7.5 / 17.5 a reading falls on depend on timestamp jitter
+                minutesAgo = (now_date - then_date) / (1000 * 60);
                 // multiply by 5 to get the same units as delta, i.e. mg/dL/5m
                 change = now.glucose - then.glucose;
                 avgDel = change/minutesAgo * 5;
-                console.error("then minutesAgo = " + minutesAgo + " avgDelta = " + round(avgDel,2));
+                console.error("then minutesAgo = " + round(minutesAgo,2) + " avgDelta = " + round(avgDel,2));
             // } else { console.error("Error: date field not found: cannot calculate avgDel"); }
             } else {
                 console.error("Error: date field not found: cannot calculate avgdelta");
                 continue;
             }
             avgDeltas.push(avgDel)
-            // use the average of all data points in the last 2.5m for all further "now" calculations
-            if (0 < minutesAgo && minutesAgo < 2.5) {
-                now.glucose = ( now.glucose + then.glucose ) / 2;
-                //console.error(then.glucose, now.glucose);
+
+            // Readings newer than 2.5 minutes are ignored rather than folded into `now`.
+            //
+            // This used to run `now.glucose = (now.glucose + then.glucose) / 2` for each of them.
+            // At a 5-minute cadence that branch is unreachable, but on a 1-minute sensor it fires
+            // twice and compounds: the result is g0/4 + g1/4 + g2/2, which weights the oldest of the
+            // three highest. `now.glucose` is returned as `glucose_status.glucose` and drives bg_ISF,
+            // so that is not a harmless bit of pre-smoothing.
+            //
+            // AndroidAPS disabled the same line in its shared path years ago and dropped it from the
+            // Auto ISF path in 2025-09 (0951294520, "moved DeltaCalculator out of Glucose Status
+            // Calculator");
+
+            // lastDeltas are calculated from everything ~5 minutes ago
+            if (MIN_LAST_DELTA_MINUTES < minutesAgo && minutesAgo < MAX_LAST_DELTA_MINUTES) {
+                lastDeltas.push(avgDel);
+            }
             // shortDeltas are calculated from everything ~5-15 minutes ago
-            } else if (2.5 < minutesAgo && minutesAgo < 17.5) {
-                //console.error(minutesAgo, avgDel);
+            if (MIN_SHORT_DELTA_MINUTES < minutesAgo && minutesAgo < MAX_SHORT_DELTA_MINUTES) {
                 shortDeltas.push(avgDel);
-                // lastDeltas are calculated from everything ~5 minutes ago
-                if (2.5 < minutesAgo && minutesAgo < 7.5) {
-                    lastDeltas.push(avgDel);
-                }
-                //console.error(then.glucose, minutesAgo, avgDel, lastDeltas, shortDeltas);
+            }
             // longDeltas are calculated from everything ~20-40 minutes ago
-            } else if (17.5 < minutesAgo && minutesAgo < 42.5) {
+            if (MIN_LONG_DELTA_MINUTES < minutesAgo && minutesAgo < MAX_LONG_DELTA_MINUTES) {
                 longDeltas.push(avgDel);
-            } else {
+            } else if (minutesAgo > MAX_LONG_DELTA_MINUTES) {
                 break;
             }
         }
@@ -232,8 +265,13 @@ module.exports = (data) => {
     var a1 = 0;
     var a2 = 0;
 
+    // The fit runs on the fast stream when there is one. It needs its own count: `sizeRecords` is
+    // the length of `data`.
+    const fitData = (fastData && fastData.length > 3) ? fastData : data;
+    const fitRecords = fitData.length;
+
     const fsl_min_dur = 10                        // minutes duration required for FSL with SGV every minute
-    if (sizeRecords > 3) {
+    if (fitRecords > 3) {
         //double corrMin = 0.90;                  // go backwards until the correlation coefficient goes below
         var sy    = 0;                        // y
         var sx    = 0;                        // x
@@ -243,21 +281,23 @@ module.exports = (data) => {
         var sxy   = 0;                        // x*y
         var sx2y  = 0;                        // x^2*y
         //var corrMax = 0;
-        var iframe = data[0];
+        var iframe = fitData[0];
         var time_0 = getDateFromEntry(iframe);
         var tiLast = 0;
         //# for best numerical accurarcy time and bg must be of same order of magnitude
         var scaleTime = 300;                  //# in 5m; values are  0, 1, 2, 3, 4, ...
         var scaleBg   =  50;                  //# TIR range is now 1.4 - 3.6
 
-        for (var i = 0; i < sizeRecords; i++) {
-            var then = data[i];
+        for (var i = 0; i < fitRecords; i++) {
+            var then = fitData[i];
             var then_date = getDateFromEntry(then);
             // skip records older than 47.5 minutes
             var ti = (then_date - time_0) / 1000 / scaleTime;
             if (-ti *scaleTime > 47 * 60) {                        // skip records older than 47.5 minutes
                 break;
-            } else if (ti < tiLast - 7.5 * 60 / scaleTime) {       // stop scan if a CGM gap > 7.5 minutes is detected
+            // 11 minutes, not 7.5: at a 5-minute cadence one missing reading is a 10-minute gap, and
+            // aborting the fit for it threw away a usable window (AndroidAPS 9e154163d3).
+            } else if (ti < tiLast - 11.0 * 60 / scaleTime) {      // stop scan if a CGM gap > 11 minutes is detected
                 //if ( i<3) {                                       // history too short for fit
                 if (i<3 || -ti*scaleTime<fsl_min_dur*60) {          // history too short for fit & FSL safety
                     duraP = -tiLast * scaleTime / 60.0
@@ -300,7 +340,7 @@ module.exports = (data) => {
                 var sSquares = 0;
                 var sResidualSquares = 0;
                 for (var j = 0; j <= i; j++) {
-                    var before = data[j];
+                    var before = fitData[j];
                     var before_date = getDateFromEntry(before);
                     sSquares += Math.pow(before.glucose / scaleBg - yMean, 2);
                     var deltaT = (before_date - time_0) / 1000 / scaleTime;

@@ -20,6 +20,7 @@ struct Statistics: JSON, Equatable {
     var Statistics: Stats
     var dob: Date
     var sex: Int
+    var Memory: MemoryStats?
     var id: String?
 
     static func == (lhs: Statistics, rhs: Statistics) -> Bool {
@@ -52,6 +53,8 @@ extension Statistics {
         case Statistics
         case dob
         case sex
+        case Memory
+        case id
     }
 }
 

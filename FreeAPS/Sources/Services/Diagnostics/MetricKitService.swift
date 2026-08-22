@@ -1,5 +1,6 @@
 import Foundation
 import MetricKit
+import UIKit
 
 /// Subscribes to MetricKit and stores each daily payload (cumulative CPU time,
 /// foreground/background time, network transfer, exit reasons, ...) as a JSON file
@@ -22,12 +23,21 @@ final class MetricKitService: NSObject, MXMetricManagerSubscriber, AppServiceSyn
 
     func start() {
         MXMetricManager.shared.add(self)
+
+        Foundation.NotificationCenter.default.addObserver(
+            forName: UIApplication.didReceiveMemoryWarningNotification,
+            object: nil,
+            queue: nil
+        ) { _ in
+            MemoryMetricsService.increment(.pressureWarnings)
+        }
     }
 
     /// daily metrics (aggregates)
     func didReceive(_ payloads: [MXMetricPayload]) {
         for payload in payloads {
             save(payload.jsonRepresentation(), as: fileName("metrics", payload.timeStampBegin, payload.timeStampEnd))
+            MemoryMetricsService.processMetricPayload(payload)
             debug(.service, "MetricKit metrics payload: \(summary(payload))")
         }
     }

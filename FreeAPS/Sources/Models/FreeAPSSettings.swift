@@ -159,7 +159,8 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var ketoProtectBasalAbsolut: Decimal = 0
     // 1-min loops
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
-    var allowOneMinuteGlucose: Bool = false // allow sending 1-minute readings to oref, even if loops are with 5-minute intervals
+    var allowOneMinuteGlucose: Bool = false // allow receiving 1-minute readings from libre2
+
     var ai: Bool = true
     var mealViewMicronutrients: Bool = false
     var nightTime = NightTimeConfiguration.default

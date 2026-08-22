@@ -248,6 +248,9 @@ actor CgmStateRecorder {
     private let storage: FileStorage
     private var lastSeenStart: Date?
 
+    /// How far two reported session starts must be apart to count as different sensors.
+    private static let sessionTolerance: TimeInterval = .minutes(30)
+
     init(storage: FileStorage) {
         self.storage = storage
     }
@@ -255,7 +258,7 @@ actor CgmStateRecorder {
     /// records a new sensor start if the status carries one; returns whether the log changed
     func noteStatus(_ cgmStatus: CGMDisplayStatus?) async -> Bool {
         guard let sessionStartDate = cgmStatus?.sessionStartDate,
-              abs(sessionStartDate.timeIntervalSince(lastSeenStart ?? .distantPast)) > 60
+              abs(sessionStartDate.timeIntervalSince(lastSeenStart ?? .distantPast)) > Self.sessionTolerance
         else { return false }
         lastSeenStart = sessionStartDate
         return await recordSensorStartIfNeeded(sessionStartDate)
@@ -281,11 +284,12 @@ actor CgmStateRecorder {
             .maybeModify(file: OpenAPS.Monitor.cgmState, as: NigtscoutTreatment.self) { inStorage in
                 // For Dexcom, each glucose event contains the sessionStartDate (which contains the correct timestamp of the latest sensor start)
                 // We only need to send the "Sensor Start" event once per change.
-                // This guard ensures we send a new "Sensor Start" event to NS only if the previously sent event happened more than 60 seconds before this one.
+                // This guard ensures we send a new "Sensor Start" event to NS only if the previously sent event happened
+                // more than `sessionTolerance` before this one.
                 //
-                // As a side effect, if there is jitter in the sessionStartDate (+/- few milliseconds each time), we will flood NS with the duplicated Session Start events over time.
+                // Without it, sources that jitter the sessionStartDate flood NS with duplicate Session Start events.
                 // See: https://github.com/Artificial-Pancreas/iAPS/issues/1806
-                if inStorage.contains(where: { abs($0.createdAt.timeIntervalSince(sessionStartDate)) < 60 }) {
+                if inStorage.contains(where: { abs($0.createdAt.timeIntervalSince(sessionStartDate)) < Self.sessionTolerance }) {
                     return nil // do not modify
                 }
 

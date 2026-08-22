@@ -28,6 +28,25 @@ enum GapDetection {
         static let cadenceWindow = 10
     }
 
+    /// True when the most recent occurrences arrived at a steady cadence, with none missing in between
+    /// and the newest one still current.
+    /// dates MUST BE newest -> oldest
+    static func isComplete(
+        _ dates: some Collection<Date>,
+        now: Date = Date(),
+        readings: Int = 3
+    ) -> Bool {
+        let recent = Array(dates.prefix(readings))
+        guard recent.count == readings, let newest = recent.first else { return false }
+
+        let deltas = zip(recent, recent.dropFirst()).map { $0.timeIntervalSince($1) }
+        guard let shortest = deltas.min(), let cadence = nearestSupportedInterval(to: shortest) else { return false }
+
+        let threshold = cadence * Config.tolerance
+
+        return deltas.allSatisfy { $0 <= threshold } && now.timeIntervalSince(newest) <= threshold
+    }
+
     /// oldest -> newest
     static func detect(
         in dates: [Date],
@@ -87,7 +106,11 @@ enum GapDetection {
         let sorted = deltas.sorted()
         let median = sorted[sorted.count / 2]
 
-        return Config.supportedReadingIntervals.min { abs($0 - median) < abs($1 - median) }
+        return nearestSupportedInterval(to: median)
+    }
+
+    private static func nearestSupportedInterval(to delta: TimeInterval) -> TimeInterval? {
+        Config.supportedReadingIntervals.min { abs($0 - delta) < abs($1 - delta) }
     }
 }
 

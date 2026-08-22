@@ -328,6 +328,16 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
             }
             .store(in: lifetime)
 
+        appCoordinator.settings
+            .removeDuplicates(by: {
+                $0.allowOneMinuteGlucose == $1.allowOneMinuteGlucose
+            })
+            .receive(on: processQueue)
+            .sink { [weak self] settings in
+                self?.setupLibre(settings: settings)
+            }
+            .store(in: lifetime)
+
         appCoordinator.settings.map(\.units).removeDuplicates()
             .receive(on: DispatchQueue.main) // important to be on main because of MainActor.assumeIsolated below
             .sink { units in
@@ -432,6 +442,12 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         }
 
         return Manager.init(rawState: rawState)
+    }
+
+    private func setupLibre(settings: FreeAPSSettings) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        guard let cgmManager, KnownPlugins.isLibre2Cgm(pluginIdentifier: cgmManager.pluginIdentifier) else { return }
+        KnownPlugins.setupLibre2CgmInterval(everyMinute: settings.allowOneMinuteGlucose)
     }
 
     private func updatePumpData(completion: @escaping @Sendable() -> Void) {
@@ -1351,7 +1367,8 @@ private extension BaseDeviceDataManager {
         let status = CGMDisplayStatus(
             statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
             sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
-            shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM
+            shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM,
+            oneMinuteReadings: KnownPlugins.isOneMinuteReadingsEnabled(for: cgmManager)
         )
 
         appCoordinator.setCgmStatus(status)
@@ -1370,6 +1387,8 @@ private extension BaseDeviceDataManager {
                 addDisplayGlucoseUnitObserver(cgmManagerUI)
             }
         }
+
+        setupLibre(settings: appCoordinator.settings.value)
 
         dispatchCgmInfo()
         dispatchCgmStatus()

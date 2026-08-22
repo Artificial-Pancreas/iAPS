@@ -30,6 +30,9 @@ struct DatabaseStatisticsVersion: JSON, Equatable {
     var Build_Version: String
     var Branch: String
     var id: String?
+    /// App-behaviour memory telemetry only — never hardware-identifying fields.
+    /// See MemoryStats for the tier split.
+    var Memory: MemoryStats?
 }
 
 struct DatabasePreferences: JSON {

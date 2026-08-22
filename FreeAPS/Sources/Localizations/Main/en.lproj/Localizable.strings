@@ -2623,6 +2623,12 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
   
+
+/* Libre CGM settings */
+"Libre" = "Libre";
+"1-minute readings" = "1-minute readings";
+"Read the sensor every minute instead of every 5 minutes." = "Read the sensor every minute instead of every 5 minutes.";
+
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 
 /* Setting Title */
