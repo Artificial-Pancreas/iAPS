@@ -4088,3 +4088,7 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "too small temp basal amount" = "te klein tijdelijk basaal";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Waarschuwing! De ingevoerde hoeveelheid insuline is groter dan je maximale bolus instelling!";
 " Target Glucose" = " Doel glucosewaarde";
+
+/* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
+"Starting iAPS" = "Starting iAPS";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";

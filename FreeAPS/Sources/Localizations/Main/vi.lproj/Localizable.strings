@@ -4083,3 +4083,7 @@ Enact a temp Basal or a temp target */
 "too small temp basal amount" = "lượng liều nền tạm thời quá nhỏ";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Cảnh báo! Lượng insulin đã nhập lớn hơn giới hạn liều Bolus tối đa của bạn!";
 " Target Glucose" = " Đường huyết mục tiêu";
+
+/* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
+"Starting iAPS" = "Starting iAPS";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";
