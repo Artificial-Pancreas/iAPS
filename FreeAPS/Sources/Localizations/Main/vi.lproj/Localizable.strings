@@ -4085,5 +4085,5 @@ Enact a temp Basal or a temp target */
 " Target Glucose" = " Đường huyết mục tiêu";
 
 /* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
-"Starting iAPS" = "Starting iAPS";
-"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";
+"Starting iAPS" = "Đang khởi động iAPS";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS đang chờ quyền truy cập vào dữ liệu. Thông thường, quá trình này sẽ tự hoàn tất sau khi bạn mở khóa điện thoại lần đầu tiên sau khi khởi động lại.";
