@@ -126,7 +126,7 @@ module.exports = (iaps_input) => {
 
     /* For testing, replace with:
     return test(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock); */
-    return oref0_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, oref0_basalFunctions, microbolusAllowed, reservoir_data, clock.toISOString());
+    return oref0_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, oref0_basalFunctions, microbolusAllowed, reservoir_data, clock);
 }
 
 // The Dynamic ISF layer
