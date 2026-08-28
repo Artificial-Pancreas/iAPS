@@ -4090,5 +4090,5 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 " Target Glucose" = " Doel glucosewaarde";
 
 /* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
-"Starting iAPS" = "Starting iAPS";
-"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";
+"Starting iAPS" = "iAPS starten";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS wacht op toegang tot de gegevens. Normaal gesproken eindigt dit vannzelf nadat je je telefoon voor de eerste keer hebt ontgrendeld na een herstart.";
