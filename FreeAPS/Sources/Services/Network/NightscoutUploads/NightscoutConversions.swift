@@ -248,9 +248,6 @@ actor CgmStateRecorder {
     private let storage: FileStorage
     private var lastSeenStart: Date?
 
-    /// How far two reported session starts must be apart to count as different sensors.
-    private static let sessionTolerance: TimeInterval = .minutes(30)
-
     init(storage: FileStorage) {
         self.storage = storage
     }
@@ -258,7 +255,7 @@ actor CgmStateRecorder {
     /// records a new sensor start if the status carries one; returns whether the log changed
     func noteStatus(_ cgmStatus: CgmDisplayStatus?) async -> Bool {
         guard let sessionStartDate = cgmStatus?.sessionStartDate,
-              abs(sessionStartDate.timeIntervalSince(lastSeenStart ?? .distantPast)) > Self.sessionTolerance
+              abs(sessionStartDate.timeIntervalSince(lastSeenStart ?? .distantPast)) > BloodGlucose.sessionTolerance
         else { return false }
         lastSeenStart = sessionStartDate
         return await recordSensorStartIfNeeded(sessionStartDate)
@@ -289,7 +286,9 @@ actor CgmStateRecorder {
                 //
                 // Without it, sources that jitter the sessionStartDate flood NS with duplicate Session Start events.
                 // See: https://github.com/Artificial-Pancreas/iAPS/issues/1806
-                if inStorage.contains(where: { abs($0.createdAt.timeIntervalSince(sessionStartDate)) < Self.sessionTolerance }) {
+                if inStorage
+                    .contains(where: { abs($0.createdAt.timeIntervalSince(sessionStartDate)) < BloodGlucose.sessionTolerance })
+                {
                     return nil // do not modify
                 }
 

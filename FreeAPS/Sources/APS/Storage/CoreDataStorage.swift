@@ -17,6 +17,35 @@ final class CoreDataStorage: Sendable {
         }
     }
 
+    @discardableResult func updateGlucose(_ values: [String: Int]) async -> Int {
+        guard values.isNotEmpty else { return 0 }
+
+        return await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let request = Readings.fetchRequest() as NSFetchRequest<Readings>
+            request.predicate = NSPredicate(format: "id IN %@", Array(values.keys))
+
+            guard let readings = try? context.fetch(request) else { return 0 }
+
+            var updated = 0
+            for reading in readings {
+                guard let id = reading.id, let value = values[id], reading.glucose != Int16(value) else { continue }
+                reading.glucose = Int16(value)
+                updated += 1
+            }
+
+            guard updated > 0 else { return 0 }
+
+            do {
+                try context.save()
+            } catch {
+                debug(.service, "failed to update glucose in core data: \(error)")
+                return 0
+            }
+
+            return updated
+        }
+    }
+
     func fetchRecentGlucose() async -> ReadingsSnapshot? {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let requestReadings = Readings.fetchRequest() as NSFetchRequest<Readings>

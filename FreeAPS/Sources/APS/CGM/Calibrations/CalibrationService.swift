@@ -13,9 +13,129 @@ struct Calibration: JSON, Hashable, Identifiable {
     var id = UUID()
 }
 
+struct CalibrationOptions: Equatable, Sendable {
+    var robustFit: Bool = false
+    var relaxLimits: Bool = false
+}
+
+struct CalibrationFit: Equatable, Sendable {
+    var slope: Double = 1
+    var intercept: Double = 0
+    var fittedSlope: Double = 1
+    var fittedIntercept: Double = 0
+    /// false when there are too few points, or too little spread between them
+    var estimatedSlope: Bool = false
+    var robust: Bool = false
+    /// how far apart the calibration points sit, in mg/dL of raw sensor value
+    var spread: Double = 0
+    var count: Int = 0
+
+    var slopeIsLimited: Bool {
+        abs(slope - fittedSlope) > 1E-9
+    }
+
+    var interceptIsLimited: Bool {
+        abs(intercept - fittedIntercept) > 1E-9
+    }
+
+    var isLimited: Bool {
+        slopeIsLimited || interceptIsLimited
+    }
+
+    func calibrate(_ value: Double) -> Double {
+        (intercept + slope * value).clamped(CalibrationFitting.valueLimits)
+    }
+}
+
+enum CalibrationFitting {
+    static let valueLimits: ClosedRange<Double> = 0 ... 500
+
+    /// Below this much spread between the calibration points the slope is not estimated at all and
+    /// the correction is a pure offset.
+    static let minimumSpread: Double = 50
+
+    static let minimumRobustCount = 3
+
+    static func slopeLimits(relaxed: Bool) -> ClosedRange<Double> {
+        relaxed ? 0.5 ... 2.0 : 0.8 ... 1.25
+    }
+
+    static func interceptLimits(relaxed: Bool) -> ClosedRange<Double> {
+        relaxed ? -200 ... 200 : -100 ... 100
+    }
+
+    static func fit(_ calibrations: [Calibration], options: CalibrationOptions) -> CalibrationFit {
+        guard calibrations.isNotEmpty else { return CalibrationFit() }
+
+        let xs = calibrations.map(\.x)
+        let ys = calibrations.map(\.y)
+        let spread = (xs.max() ?? 0) - (xs.min() ?? 0)
+
+        let robust = options.robustFit && calibrations.count >= minimumRobustCount
+        let estimatedSlope = calibrations.count >= 2 && spread >= minimumSpread
+
+        let fittedSlope: Double
+        switch (estimatedSlope, robust) {
+        case (false, _): fittedSlope = 1
+        case (true, true): fittedSlope = theilSenSlope(xs, ys) ?? 1
+        case (true, false): fittedSlope = leastSquaresSlope(xs, ys) ?? 1
+        }
+
+        let slope = fittedSlope.clamped(slopeLimits(relaxed: options.relaxLimits))
+
+        let fittedIntercept = robust
+            ? median(zip(ys, xs).map { $0 - slope * $1 })
+            : average(ys) - slope * average(xs)
+
+        return CalibrationFit(
+            slope: slope,
+            intercept: fittedIntercept.clamped(interceptLimits(relaxed: options.relaxLimits)),
+            fittedSlope: fittedSlope,
+            fittedIntercept: fittedIntercept,
+            estimatedSlope: estimatedSlope,
+            robust: robust,
+            spread: spread,
+            count: calibrations.count
+        )
+    }
+
+    private static func leastSquaresSlope(_ xs: [Double], _ ys: [Double]) -> Double? {
+        let meanX = average(xs)
+        let variance = average(multiply(xs, xs)) - meanX * meanX
+        guard abs(variance) > 1E-9 else { return nil }
+        return (average(multiply(xs, ys)) - meanX * average(ys)) / variance
+    }
+
+    private static func theilSenSlope(_ xs: [Double], _ ys: [Double]) -> Double? {
+        var slopes: [Double] = []
+        for i in xs.indices {
+            for j in xs.index(after: i) ..< xs.endIndex where abs(xs[j] - xs[i]) > 1E-9 {
+                slopes.append((ys[j] - ys[i]) / (xs[j] - xs[i]))
+            }
+        }
+        return slopes.isEmpty ? nil : median(slopes)
+    }
+
+    private static func median(_ input: [Double]) -> Double {
+        guard input.isNotEmpty else { return 0 }
+        let sorted = input.sorted()
+        let middle = sorted.count / 2
+        return sorted.count.isMultiple(of: 2) ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle]
+    }
+
+    private static func average(_ input: [Double]) -> Double {
+        input.reduce(0, +) / Double(input.count)
+    }
+
+    private static func multiply(_ a: [Double], _ b: [Double]) -> [Double] {
+        zip(a, b).map(*)
+    }
+}
+
 protocol CalibrationService: Sendable {
     var slope: Double { get }
     var intercept: Double { get }
+    var fit: CalibrationFit { get }
     var calibrations: [Calibration] { get }
 
     func addCalibration(_ calibration: Calibration)
@@ -27,15 +147,6 @@ protocol CalibrationService: Sendable {
 }
 
 final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwner, Sendable, AppService {
-    private enum Config {
-        static let minSlope = 0.8
-        static let maxSlope = 1.25
-        static let minIntercept = -100.0
-        static let maxIntercept = 100.0
-        static let maxValue = 500.0
-        static let minValue = 0.0
-    }
-
     private let storage: FileStorage!
     private let appCoordinator: AppCoordinator!
 
@@ -69,38 +180,28 @@ final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwne
         Task { await storage.save(snapshot, as: OpenAPS.FreeAPS.calibrations) }
     }
 
-    var slope: Double { Self.slope(calibrations) }
-    var intercept: Double { Self.intercept(calibrations) }
-    func calibrate(value: Double) -> Double { Self.calibrate(value, calibrations) }
-
-    private static func slope(_ calibrations: [Calibration]) -> Double {
-        guard calibrations.count >= 2 else {
-            return 1
-        }
-
-        let xs = calibrations.map(\.x)
-        let ys = calibrations.map(\.y)
-        let sum1 = average(multiply(xs, ys)) - average(xs) * average(ys)
-        let sum2 = average(multiply(xs, xs)) - pow(average(xs), 2)
-        let slope = sum1 / sum2
-
-        return min(max(slope, Config.minSlope), Config.maxSlope)
+    private var options: CalibrationOptions {
+        let settings = appCoordinator.settings.value
+        return CalibrationOptions(
+            robustFit: settings.calibrationRobustFit,
+            relaxLimits: settings.calibrationRelaxLimits
+        )
     }
 
-    private static func intercept(_ calibrations: [Calibration]) -> Double {
-        guard calibrations.count >= 1 else {
-            return 0
-        }
-        let xs = calibrations.map(\.x)
-        let ys = calibrations.map(\.y)
-
-        let intercept = average(ys) - slope(calibrations) * average(xs)
-
-        return min(max(intercept, Config.minIntercept), Config.maxIntercept)
+    var fit: CalibrationFit {
+        CalibrationFitting.fit(calibrations, options: options)
     }
 
-    private static func calibrate(_ value: Double, _ calibrations: [Calibration]) -> Double {
-        linearRegression(calibrations, value)
+    var slope: Double {
+        fit.slope
+    }
+
+    var intercept: Double {
+        fit.intercept
+    }
+
+    func calibrate(value: Double) -> Double {
+        fit.calibrate(value)
     }
 
     func addCalibration(_ calibration: Calibration) {
@@ -116,18 +217,10 @@ final class BaseCalibrationService: CalibrationService, Injectable, LifetimeOwne
     }
 
     func removeLast() {
-        mutate { if !$0.isEmpty { $0.removeLast() } }
-    }
-
-    private static func average(_ input: [Double]) -> Double {
-        input.reduce(0, +) / Double(input.count)
-    }
-
-    private static func multiply(_ a: [Double], _ b: [Double]) -> [Double] {
-        zip(a, b).map(*)
-    }
-
-    private static func linearRegression(_ calibrations: [Calibration], _ x: Double) -> Double {
-        (intercept(calibrations) + slope(calibrations) * x).clamped(Config.minValue ... Config.maxValue)
+        mutate {
+            if !$0.isEmpty {
+                $0.removeLast()
+            }
+        }
     }
 }

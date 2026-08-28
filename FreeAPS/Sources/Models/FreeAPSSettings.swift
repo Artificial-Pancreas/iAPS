@@ -160,6 +160,9 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     // 1-min loops
     var allowOneMinuteLoop: Bool = false // allow running loops every minute
 
+    var calibrationRobustFit: Bool = false
+    var calibrationRelaxLimits: Bool = false
+
     var ai: Bool = true
     var mealViewMicronutrients: Bool = false
     var nightTime = NightTimeConfiguration.default
@@ -800,6 +803,14 @@ extension FreeAPSSettings: Decodable {
         // 1-minute loops
         if let allowOneMinuteLoop = try? container.decode(Bool.self, forKey: .allowOneMinuteLoop) {
             settings.allowOneMinuteLoop = allowOneMinuteLoop
+        }
+
+        if let calibrationRobustFit = try? container.decode(Bool.self, forKey: .calibrationRobustFit) {
+            settings.calibrationRobustFit = calibrationRobustFit
+        }
+
+        if let calibrationRelaxLimits = try? container.decode(Bool.self, forKey: .calibrationRelaxLimits) {
+            settings.calibrationRelaxLimits = calibrationRelaxLimits
         }
 
         if let ai = try? container.decode(Bool.self, forKey: .ai) {
