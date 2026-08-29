@@ -5,7 +5,6 @@ import Swinject
 extension Snooze {
     struct RootView: BaseView {
         let resolver: Resolver
-        @Injected() private var userNotificationsManager: UserNotificationsManager!
 
         @StateObject var state: StateModel
 
@@ -101,7 +100,7 @@ extension Snooze {
                     debug(.default, "will snooze for \(snoozeFor) until \(dateFormatter.string(from: untilDate))")
                     snoozeDescription = getSnoozeDescription()
                     Task {
-                        await userNotificationsManager.stopSound()
+                        await state.stopSound()
                     }
                     state.hideModal()
                 } label: {
