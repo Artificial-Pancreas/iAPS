@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="480" viewBox="0 0 820 480" role="img" aria-labelledby="title desc">
+<title id="title">Lag against delta noise, real readings</title>
+<desc id="desc">Scatter of each iAPS smoothing option: time lag of the newest value against how much oref's delta jumps between loop cycles, for 1-minute and 5-minute input.</desc>
+<style>
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #0f172a; }
+  .title { font-size: 21px; font-weight: 700; }
+  .subtitle { font-size: 13.5px; fill: #475569; }
+  .panel { font-size: 14px; font-weight: 700; }
+  .note { font-size: 12.5px; fill: #475569; }
+  .axis { font-size: 12.5px; font-weight: 600; fill: #475569; }
+  .tick { font-size: 12px; fill: #64748b; }
+  .legend { font-size: 12.5px; fill: #475569; }
+  .label { font-size: 12px; fill: #475569; }
+</style>
+<rect width="820" height="480" rx="10" fill="#fcfcfb"/>
+<text x="36.0" y="36.0" class="title" text-anchor="start" >Lag against delta noise, on two months of real readings</text>
+<text x="36.0" y="58.0" class="subtitle" text-anchor="start" >Each point is one setting, scored on the newest value the loop used. Down = calmer delta, left = less lag.</text>
+<text x="92.0" y="100.0" class="panel" text-anchor="start" >1-minute input (Libre 3 Plus as delivered)</text>
+<line x1="92" y1="380.0" x2="392" y2="380.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="84.0" y="384.0" class="tick" text-anchor="end" >0</text>
+<line x1="92" y1="312.5" x2="392" y2="312.5" stroke="#e2e8f0" stroke-width="1"/>
+<text x="84.0" y="316.5" class="tick" text-anchor="end" >2</text>
+<line x1="92" y1="245.0" x2="392" y2="245.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="84.0" y="249.0" class="tick" text-anchor="end" >4</text>
+<line x1="92" y1="177.5" x2="392" y2="177.5" stroke="#e2e8f0" stroke-width="1"/>
+<text x="84.0" y="181.5" class="tick" text-anchor="end" >6</text>
+<line x1="92" y1="110.0" x2="392" y2="110.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="84.0" y="114.0" class="tick" text-anchor="end" >8</text>
+<line x1="122.0" y1="380" x2="122.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="122.0" y="397.0" class="tick" text-anchor="middle" >0</text>
+<line x1="182.0" y1="380" x2="182.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="182.0" y="397.0" class="tick" text-anchor="middle" >1</text>
+<line x1="242.0" y1="380" x2="242.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="242.0" y="397.0" class="tick" text-anchor="middle" >2</text>
+<line x1="302.0" y1="380" x2="302.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="302.0" y="397.0" class="tick" text-anchor="middle" >3</text>
+<line x1="362.0" y1="380" x2="362.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="362.0" y="397.0" class="tick" text-anchor="middle" >4</text>
+<rect x="92" y="110" width="300" height="270" fill="none" stroke="#64748b" stroke-width="1"/>
+<text x="48.0" y="245.0" class="axis" text-anchor="middle" transform="rotate(-90 48 245.0)">delta jump (mg/dL/5 min, RMS)</text>
+<text x="242.0" y="416.0" class="axis" text-anchor="middle" >lag of the newest value (min)</text>
+<circle cx="122.0" cy="141.4" r="5" fill="#475569" stroke="#fcfcfb" stroke-width="2"/>
+<text x="131.0" y="145.4" class="label" text-anchor="start" >No smoothing</text>
+<circle cx="167.0" cy="244.3" r="5" fill="#2563eb" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="182.0" cy="250.9" r="5" fill="#2563eb" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="182.0" cy="255.8" r="5" fill="#2563eb" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="182.0" cy="247.5" r="5" fill="#7c3aed" stroke="#fcfcfb" stroke-width="2"/>
+<text x="191.0" y="241.5" class="label" text-anchor="start" >Kalman Responsive</text>
+<circle cx="197.0" cy="260.4" r="5" fill="#7c3aed" stroke="#fcfcfb" stroke-width="2"/>
+<text x="206.0" y="266.4" class="label" text-anchor="start" >Kalman Balanced</text>
+<circle cx="212.0" cy="271.2" r="5" fill="#7c3aed" stroke="#fcfcfb" stroke-width="2"/>
+<text x="221.0" y="285.2" class="label" text-anchor="start" >Kalman Calm</text>
+<circle cx="347.0" cy="263.3" r="5" fill="#d97706" stroke="#fcfcfb" stroke-width="2"/>
+<text x="347.0" y="283.3" class="label" text-anchor="middle" >Exponential</text>
+<text x="157.0" y="254.9" class="label" text-anchor="end" >SG 1/2/3</text>
+<line x1="92" y1="255.6" x2="392" y2="255.6" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="388.0" y="225.6" class="note" text-anchor="end" >hindsight reference</text>
+<text x="472.0" y="100.0" class="panel" text-anchor="start" >Same sensor, thinned to 5-minute input</text>
+<line x1="472" y1="380.0" x2="772" y2="380.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="464.0" y="384.0" class="tick" text-anchor="end" >0</text>
+<line x1="472" y1="312.5" x2="772" y2="312.5" stroke="#e2e8f0" stroke-width="1"/>
+<text x="464.0" y="316.5" class="tick" text-anchor="end" >2</text>
+<line x1="472" y1="245.0" x2="772" y2="245.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="464.0" y="249.0" class="tick" text-anchor="end" >4</text>
+<line x1="472" y1="177.5" x2="772" y2="177.5" stroke="#e2e8f0" stroke-width="1"/>
+<text x="464.0" y="181.5" class="tick" text-anchor="end" >6</text>
+<line x1="472" y1="110.0" x2="772" y2="110.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="464.0" y="114.0" class="tick" text-anchor="end" >8</text>
+<line x1="502.0" y1="380" x2="502.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="502.0" y="397.0" class="tick" text-anchor="middle" >0</text>
+<line x1="562.0" y1="380" x2="562.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="562.0" y="397.0" class="tick" text-anchor="middle" >1</text>
+<line x1="622.0" y1="380" x2="622.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="622.0" y="397.0" class="tick" text-anchor="middle" >2</text>
+<line x1="682.0" y1="380" x2="682.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="682.0" y="397.0" class="tick" text-anchor="middle" >3</text>
+<line x1="742.0" y1="380" x2="742.0" y2="384" stroke="#64748b" stroke-width="1"/>
+<text x="742.0" y="397.0" class="tick" text-anchor="middle" >4</text>
+<rect x="472" y="110" width="300" height="270" fill="none" stroke="#64748b" stroke-width="1"/>
+<text x="428.0" y="245.0" class="axis" text-anchor="middle" transform="rotate(-90 428 245.0)"></text>
+<text x="622.0" y="416.0" class="axis" text-anchor="middle" >lag of the newest value (min)</text>
+<circle cx="502.0" cy="137.0" r="5" fill="#475569" stroke="#fcfcfb" stroke-width="2"/>
+<text x="511.0" y="141.0" class="label" text-anchor="start" >No smoothing</text>
+<circle cx="532.0" cy="255.3" r="5" fill="#2563eb" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="532.0" cy="262.4" r="5" fill="#2563eb" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="547.0" cy="266.6" r="5" fill="#2563eb" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="577.0" cy="282.0" r="5" fill="#7c3aed" stroke="#fcfcfb" stroke-width="2"/>
+<text x="568.0" y="298.0" class="label" text-anchor="end" >Kalman Responsive</text>
+<circle cx="592.0" cy="294.3" r="5" fill="#7c3aed" stroke="#fcfcfb" stroke-width="2"/>
+<text x="601.0" y="298.3" class="label" text-anchor="start" >Kalman Balanced</text>
+<circle cx="622.0" cy="303.7" r="5" fill="#7c3aed" stroke="#fcfcfb" stroke-width="2"/>
+<text x="631.0" y="317.7" class="label" text-anchor="start" >Kalman Calm</text>
+<circle cx="682.0" cy="269.6" r="5" fill="#d97706" stroke="#fcfcfb" stroke-width="2"/>
+<text x="682.0" y="259.6" class="label" text-anchor="middle" >Exponential</text>
+<text x="522.0" y="266.4" class="label" text-anchor="end" >SG 1/2/3</text>
+<line x1="472" y1="255.5" x2="772" y2="255.5" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="768.0" y="225.5" class="note" text-anchor="end" >hindsight reference</text>
+<text x="36.0" y="430.0" class="note" text-anchor="start" >SG 1/2/3: Savitzky-Golay with 1, 2 and 3 passes, top to bottom.</text>
+<text x="36.0" y="446.0" class="note" text-anchor="start" >Lag: the time shift that best aligns the newest values with a centred hindsight reference.</text>
+<text x="36.0" y="462.0" class="note" text-anchor="start" >Delta jump: RMS change in oref's delta between loop cycles 5 minutes apart. Real glucose movement alone gives the dashed line.</text>
+</svg>
