@@ -257,6 +257,16 @@ extension BloodGlucose {
     }
 }
 
+extension BloodGlucose {
+    /// Two readings count as different sessions only when their starts differ by more than this.
+    static let sessionTolerance: TimeInterval = .minutes(30)
+
+    static func isSameSession(_ one: Date?, _ other: Date?) -> Bool {
+        guard let one, let other else { return true }
+        return abs(other.timeIntervalSince(one)) <= sessionTolerance
+    }
+}
+
 extension BloodGlucose.Direction {
     var symbol: String {
         switch self {
@@ -312,12 +322,5 @@ extension BloodGlucose.Direction {
              .rateOutOfRange:
             return "minus.circle.fill"
         }
-extension BloodGlucose {
-    /// Two readings count as different sessions only when their starts differ by more than this.
-    static let sessionTolerance: TimeInterval = .minutes(30)
-
-    static func isSameSession(_ one: Date?, _ other: Date?) -> Bool {
-        guard let one, let other else { return true }
-        return abs(other.timeIntervalSince(one)) <= sessionTolerance
     }
 }
