@@ -15,7 +15,10 @@ import OmnipodKit
 enum KnownPlugins {
     static func allowCalibrations(for cgmManager: CGMManager) -> Bool {
         cgmManager.pluginIdentifier == LibreTransmitterManagerV3.pluginIdentifier ||
-            cgmManager.pluginIdentifier == LibreLoopCGMManager.pluginIdentifier
+            cgmManager.pluginIdentifier == LibreLoopCGMManager.pluginIdentifier ||
+            cgmManager.pluginIdentifier == G6CGMManager.pluginIdentifier ||
+            cgmManager.pluginIdentifier == G7CGMManager.pluginIdentifier ||
+            cgmManager.pluginIdentifier == EversenseCGMManager.pluginIdentifier
     }
 
     static func glucoseUploadingAvailable(for cgmManager: CGMManager) -> Bool {

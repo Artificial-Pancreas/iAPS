@@ -14,11 +14,26 @@ protocol GlucoseStorage: Sendable {
     func latestDate() async -> Date?
 
     func saveRawJSON(_ raw: RawJSON) async throws
+
+    /// Recomputes the stored readings of the current sensor session from their raw values.
+    ///
+    /// - Parameter beforeRewrite: runs once the session has been established and immediately before
+    ///   the readings are rewritten
+    func recalibrateCurrentSession(
+        with calibrate: @escaping @Sendable(Double) -> Double,
+        beforeRewrite: (@Sendable() async -> Void)?
+    ) async -> RecalibrationOutcome
+}
+
+enum RecalibrationOutcome: Equatable, Sendable {
+    case updated(Int)
+    case noSensorSession
 }
 
 actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
+    private let coreDataStorage = CoreDataStorage()
 
     // newest -> oldest
     private var cachedGlucose: [BloodGlucose] = []
@@ -111,6 +126,54 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
         )
 
         return stored
+    }
+
+    func recalibrateCurrentSession(
+        with calibrate: @escaping @Sendable(Double) -> Double,
+        beforeRewrite: (@Sendable() async -> Void)? = nil
+    ) async -> RecalibrationOutcome {
+        guard let latest = cachedGlucose.first(where: { $0.type == GlucoseType.sgv.rawValue }),
+              let session = latest.sessionStartDate
+        else {
+            info(.service, "recalibrate: the latest sensor reading reports no session")
+            return .noSensorSession
+        }
+
+        await beforeRewrite?()
+
+        let (didModify, stored, data: changed) = await storage.maybeModifyWithData(
+            file: OpenAPS.Monitor.glucose,
+            as: BloodGlucose.self
+        ) { existing -> ([BloodGlucose], data: [BloodGlucose])? in
+            var result = existing
+            var changed: [BloodGlucose] = []
+
+            for index in result.indices {
+                let reading = result[index]
+                guard reading.type == GlucoseType.sgv.rawValue,
+                      reading.sessionStartDate != nil,
+                      BloodGlucose.isSameSession(reading.sessionStartDate, session)
+                else { continue }
+
+                let value = Int(calibrate(Double(reading.uncalibrated)))
+                guard value != reading.glucose else { continue }
+
+                result[index].glucose = value
+                changed.append(result[index])
+            }
+
+            return changed.isEmpty ? nil : (result, data: changed)
+        }
+
+        guard didModify, let changed, changed.isNotEmpty else { return .updated(0) }
+
+        setCachedGlucose(stored)
+
+        await coreDataStorage.updateGlucose(Dictionary(changed.map { ($0.id, $0.glucose) }) { _, last in last })
+
+        debug(.service, "recalibrate: \(changed.count) readings updated for session \(session)")
+
+        return .updated(changed.count)
     }
 
     func removeGlucose(ids: [String]) async {

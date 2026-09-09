@@ -256,3 +256,13 @@ extension BloodGlucose {
         return nil
     }
 }
+
+extension BloodGlucose {
+    /// Two readings count as different sessions only when their starts differ by more than this.
+    static let sessionTolerance: TimeInterval = .minutes(30)
+
+    static func isSameSession(_ one: Date?, _ other: Date?) -> Bool {
+        guard let one, let other else { return true }
+        return abs(other.timeIntervalSince(one)) <= sessionTolerance
+    }
+}
