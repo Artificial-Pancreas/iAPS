@@ -49,9 +49,9 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
     func subscribeSetting<T: Equatable>(
         _ keyPath: WritableKeyPath<FreeAPSSettings, T> & Sendable,
         on settingPublisher: some Publisher<T, Never>,
-        initial: @escaping @MainActor(T) -> Void,
+        initial: @escaping @MainActor @Sendable(T) -> Void,
         map: ((T) -> T)? = nil,
-        didSet: (@MainActor(T) async -> Void)? = nil
+        didSet: (@MainActor @Sendable(T) async -> Void)? = nil
     ) where T: Sendable {
         initial(appCoordinator.settings.value[keyPath: keyPath])
         settingPublisher
@@ -86,7 +86,7 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
         into model: Model,
         at modelKeyPath: ReferenceWritableKeyPath<Model, T>,
         map: ((T) -> T)? = nil,
-        didSet: (@MainActor(T) async -> Void)? = nil
+        didSet: (@MainActor @Sendable(T) async -> Void)? = nil
     ) {
         subscribeSetting(
             keyPath,

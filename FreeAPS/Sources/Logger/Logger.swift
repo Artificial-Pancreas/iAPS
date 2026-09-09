@@ -100,7 +100,7 @@ func check(
     }
 }
 
-final class Logger {
+struct Logger: Sendable {
     static let LoggerTestMode = false
 
     private static let baseReporter = {

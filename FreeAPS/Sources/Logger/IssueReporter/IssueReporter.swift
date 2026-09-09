@@ -1,6 +1,6 @@
 import Foundation
 
-protocol IssueReporter: AnyObject {
+protocol IssueReporter: Sendable, AnyObject {
     /// Call this method in `applicationDidFinishLaunching()`.
     func setup()
 

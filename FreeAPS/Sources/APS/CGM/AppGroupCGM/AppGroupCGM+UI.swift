@@ -3,15 +3,15 @@ import Foundation
 import HealthKit
 import LibreTransmitter
 import LoopKit
-import LoopKitUI
+@preconcurrency import LoopKitUI
 import Swinject
 
-extension AppGroupCGM: CGMManagerUI {
-    public static var onboardingImage: UIImage? {
+extension AppGroupCGM: @preconcurrency CGMManagerUI {
+    @MainActor public static var onboardingImage: UIImage? {
         nil
     }
 
-    public static func setupViewController(
+    @MainActor public static func setupViewController(
         bluetoothProvider _: LoopKit.BluetoothProvider,
         displayGlucosePreference _: DisplayGlucosePreference,
         colorPalette _: LoopKitUI.LoopUIColorPalette,
@@ -22,7 +22,7 @@ extension AppGroupCGM: CGMManagerUI {
         .createdAndOnboarded(AppGroupCGM())
     }
 
-    public func settingsViewController(
+    @MainActor public func settingsViewController(
         bluetoothProvider _: BluetoothProvider,
         displayGlucosePreference: DisplayGlucosePreference,
         colorPalette _: LoopUIColorPalette,
@@ -34,11 +34,11 @@ extension AppGroupCGM: CGMManagerUI {
         return nav
     }
 
-    public var smallImage: UIImage? {
+    @MainActor public var smallImage: UIImage? {
         nil
     }
 
-    public var cgmStatusHighlight: DeviceStatusHighlight? {
+    @MainActor public var cgmStatusHighlight: DeviceStatusHighlight? {
         if let appName = appGroupSource.latestReadingFrom?.displayName ?? appGroupSource.latestReadingFromOther {
             return AppGroupCGMStatusHighlight(
                 localizedMessage: NSLocalizedString("Reading from \(appName)", comment: "App Group CGM reading from ... status"),
@@ -53,11 +53,11 @@ extension AppGroupCGM: CGMManagerUI {
         )
     }
 
-    public var cgmStatusBadge: DeviceStatusBadge? {
+    @MainActor public var cgmStatusBadge: DeviceStatusBadge? {
         nil
     }
 
-    public var cgmLifecycleProgress: DeviceLifecycleProgress? {
+    @MainActor public var cgmLifecycleProgress: DeviceLifecycleProgress? {
         nil
     }
 }

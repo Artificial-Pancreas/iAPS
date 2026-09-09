@@ -1,10 +1,19 @@
 import CoreData
 import Foundation
 
-final class CoreDataStack: ObservableObject {
+final class CoreDataStack: ObservableObject, Sendable {
     static let shared = CoreDataStack()
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    let persistentContainer: NSPersistentContainer
+
+    private init() {
+        ValueTransformer.setValueTransformer(
+            NightTimeConfigurationTransformer(),
+            forName: NSValueTransformerName(
+                "NightTimeConfigurationTransformer"
+            )
+        )
+
         let container = NSPersistentContainer(name: "Core_Data")
 
         container.loadPersistentStores { _, error in
@@ -17,18 +26,9 @@ final class CoreDataStack: ObservableObject {
         }
 
         container.viewContext.automaticallyMergesChangesFromParent = true
-        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 
-        return container
-    }()
-
-    private init() {
-        ValueTransformer.setValueTransformer(
-            NightTimeConfigurationTransformer(),
-            forName: NSValueTransformerName(
-                "NightTimeConfigurationTransformer"
-            )
-        )
+        persistentContainer = container
     }
 
     func newBackgroundContext() -> NSManagedObjectContext {

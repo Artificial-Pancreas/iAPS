@@ -50,17 +50,15 @@ public enum KeychainItemAccessibility: Sendable {
     }
 }
 
-private let keychainItemAccessibilityLookup: [KeychainItemAccessibility: CFString] = {
-    var lookup: [KeychainItemAccessibility: CFString] = [
+private var keychainItemAccessibilityLookup: [KeychainItemAccessibility: CFString] {
+    [
         .afterFirstUnlock: kSecAttrAccessibleAfterFirstUnlock,
         .afterFirstUnlockThisDeviceOnly: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
         .whenPasscodeSetThisDeviceOnly: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
         .whenUnlocked: kSecAttrAccessibleWhenUnlocked,
         .whenUnlockedThisDeviceOnly: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
     ]
-
-    return lookup
-}()
+}
 
 extension KeychainItemAccessibility: KeychainAttrRepresentable {
     internal var keychainAttrValue: CFString {

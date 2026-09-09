@@ -686,7 +686,7 @@ enum NutrientProgressColor {
     }
 }
 
-struct Individual {
+struct Individual: Sendable {
     var age: Int
     var sex: Sex
 }

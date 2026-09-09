@@ -43,7 +43,7 @@ enum Screen: Identifiable, Hashable {
 }
 
 extension Screen {
-    @ViewBuilder func view(resolver: Resolver) -> some View {
+    @MainActor @ViewBuilder func view(resolver: Resolver) -> some View {
         switch self {
         case .loading:
             ProgressView()
@@ -120,7 +120,7 @@ extension Screen {
         }
     }
 
-    func modal(resolver: Resolver) -> Main.Modal {
+    @MainActor func modal(resolver: Resolver) -> Main.Modal {
         .init(screen: self, view: view(resolver: resolver).asAny())
     }
 }
