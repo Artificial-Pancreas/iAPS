@@ -784,14 +784,89 @@ Enact a temp Basal or a temp target */
 /* When adding capillary glucose meater reading */
 "Meter glucose" = "Meter glucose";
 
+/* Toggle: pair the calibration with a reading from a chosen time instead of the newest one */
+"Entered at a past time" = "Entered at a past time";
+
+/* The sensor value the calibration will be paired with */
+"Sensor reading" = "Sensor reading";
+
+/* Calibration lookup error */
+"No CGM readings are stored yet." = "No CGM readings are stored yet.";
+
+/* Calibration lookup error */
+"The latest CGM reading is more than 5 minutes old. Wait for a new reading, or enter the time the meter reading was taken." = "The latest CGM reading is more than 5 minutes old. Wait for a new reading, or enter the time the meter reading was taken.";
+
+/* Calibration lookup error */
+"There is no CGM reading stored for that time. Only the last 24 hours are available." = "There is no CGM reading stored for that time. Only the last 24 hours are available.";
+
+/* Calibration lookup error */
+"There is a gap in the CGM readings around that time." = "There is a gap in the CGM readings around that time.";
+
+/* Calibration lookup error */
+"That time belongs to a previous sensor session." = "That time belongs to a previous sensor session.";
+
+/* Calibration stability warning */
+"Glucose was moving quickly then. A calibration taken while the sensor is still catching up will skew the correction — prefer a flat reading." = "Glucose was moving quickly then. A calibration taken while the sensor is still catching up will skew the correction — prefer a flat reading.";
+
 /* */
 "Info" = "Info";
+
+/* Section header: how the correction is fitted to the calibrations */
+"Fit" = "Fit";
+
+/* Toggle: estimate the slope with the median of the pairwise slopes */
+"Robust fit" = "Robust fit";
+
+/* Explains the robust fit */
+"Takes the slope from the middle of the slopes through every pair of calibrations, instead of the line that best fits all of them at once. One calibration taken at a bad moment is then outvoted rather than dragging the whole correction with it. Needs at least three calibrations." = "Takes the slope from the middle of the slopes through every pair of calibrations, instead of the line that best fits all of them at once. One calibration taken at a bad moment is then outvoted rather than dragging the whole correction with it. Needs at least three calibrations.";
+
+/* Toggle: widen the limits placed on the fitted correction */
+"Allow a wider correction" = "Allow a wider correction";
+
+/* Explains the wider limits */
+"The slope is normally held between 0.80 and 1.25 and the offset within ±100 mg/dL, which is what stops a thin or badly timed set of calibrations from making the readings worse. This widens them to 0.50–2.00 and ±200 mg/dL. Turn it on only when the calibrations are ones you trust: several, taken at different glucose levels, with the glucose flat each time." = "The slope is normally held between 0.80 and 1.25 and the offset within ±100 mg/dL, which is what stops a thin or badly timed set of calibrations from making the readings worse. This widens them to 0.50–2.00 and ±200 mg/dL. Turn it on only when the calibrations are ones you trust: several, taken at different glucose levels, with the glucose flat each time.";
+
+/* Calibration limit */
+"The calibrations ask for more correction than is allowed: %@." = "The calibrations ask for more correction than is allowed: %@.";
+
+/* Calibration limit */
+"the slope of %@ was limited to %@" = "the slope of %@ was limited to %@";
+
+/* Calibration limit */
+"the offset of %@ was limited to %@" = "the offset of %@ was limited to %@";
+
+/* Calibration spread */
+"The calibrations only span %@ %@ of sensor value, too little to tell the slope from noise, so an offset alone is applied. Add one at a clearly different glucose level." = "The calibrations only span %@ %@ of sensor value, too little to tell the slope from noise, so an offset alone is applied. Add one at a clearly different glucose level.";
 
 /*v*/
 "Slope" = "Slope";
 
 /* */
 "Intercept" = "Intercept";
+
+/* Section header: the readings already saved on the phone */
+"Stored readings" = "Stored readings";
+
+/* Button: apply the current calibration to readings already stored */
+"Recalculate stored readings" = "Recalculate stored readings";
+
+/* Explains what recalculating the stored readings does */
+"Applies the current slope and intercept to the readings already stored for this sensor session (last 24 hours)." = "Applies the current slope and intercept to the readings already stored for this sensor session (last 24 hours).";
+
+/* Button: drop every calibration and undo it on the stored readings */
+"Remove All and reset history" = "Remove All and reset history";
+
+/* Explains what the reset button does to the stored readings */
+"\"Remove All and reset history\" also restores the stored readings of this sensor session to the sensor's raw, uncalibrated values." = "\"Remove All and reset history\" also restores the stored readings of this sensor session to the sensor's raw, uncalibrated values.";
+
+/* Calibration history result */
+"%d stored readings updated." = "%d stored readings updated.";
+
+/* Calibration history result */
+"No stored readings needed updating." = "No stored readings needed updating.";
+
+/* Calibration history result */
+"No readings from this sensor session found." = "No readings from this sensor session found.";
 
 /* */
 "Chart" = "Chart";
