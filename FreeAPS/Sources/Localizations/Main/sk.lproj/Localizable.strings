@@ -4085,3 +4085,7 @@ Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 "too small temp basal amount" = "príliš malá hodnota dočasnej bazálnej dávky";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Upozornenie! Zadané množstvo inzulínu je väčšie ako nastavenie Max Bolus!";
 " Target Glucose" = " Cieľová glykémia";
+
+/* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
+"Starting iAPS" = "Starting iAPS";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";

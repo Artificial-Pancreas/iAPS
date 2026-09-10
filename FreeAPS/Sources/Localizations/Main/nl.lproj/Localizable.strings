@@ -2673,23 +2673,23 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "When enabled, the previous day's log file is automatically uploaded after midnight. Logs are used only to provide the multi-day analysis feature on open-iaps.app. Off by default." = "Wanneer ingeschakeld, wordt het logbestand van de vorige dag na middernacht automatisch geüpload. Logboeken worden alleen gebruikt om de meerdaagse analysefunctie te bieden op open-iaps.app. Standaard uitgeschakeld.";
 
 /* --- Sharing screen redesign (Online Backup + Demographics) --- */
-"Online Backup and Statistics" = "Online Backup and Statistics";
-"If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default." = "If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default.";
-"Demographics" = "Demographics";
-"Height" = "Height";
-"Prefer not to say" = "Prefer not to say";
-"Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous.";
-"Why are these required for log upload?" = "Why are these required for log upload?";
-"Why we ask about sex" = "Why we ask about sex";
-"Got it" = "Got it";
-"Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous." = "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous.";
-"Enable Uploads" = "Enable Uploads";
-"Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Set your sex to Woman or Man and a valid birth date above to enable daily log upload.";
-"When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default.";
-"Daily Log upload turned off" = "Daily Log upload turned off";
-"Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on.";
-"Copied" = "Copied";
-"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Write this token down somewhere safe. It is the only way to restore your settings on a new phone.";
+"Online Backup and Statistics" = "Online backup en statistieken";
+"If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default." = "Als je Online back-up en statistieken inschakelt, wordt dagelijks een back-up van je instellingen en statistieken geüpload naar open-iaps.app. Zo kun je deze gegevens op een nieuwe telefoon herstellen en draag je bij aan de algemene gebruikersstatistieken.\n\nAlles wordt anoniem geüpload. Er worden geen naam, e-mailadres of andere persoonlijke gegevens opgeslagen. Alleen op je telefoon staat een willekeurige herstelcode. Deze functie staat standaard uit.";
+"Demographics" = "Persoonlijke gegevens";
+"Height" = "Lengte";
+"Prefer not to say" = "Zeg ik liever niet";
+"Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Je geslacht en leeftijd helpen ook bij je persoonlijke analyse. Hiermee kan beter onderscheid worden gemaakt tussen normale, verwachte schommelingen en een echte verandering waarop je mogelijk actie moet ondernemen.\n\nJe gewicht en lengte worden alleen voor statistieken gebruikt. Ze helpen ons inzicht te krijgen in de samenstelling van de gebruikersgroep, verder niets.\n\nWe kunnen en willen niet controleren wat je invult. Daarom vragen we je om eerlijk te zijn, zodat zowel je persoonlijke analyse als de algemene statistieken betrouwbaar en zinvol blijven.\n\nOok deze gegevens worden volledig anoniem verwerkt.";
+"Why are these required for log upload?" = "Waarom zijn deze vereist om te kunnen loggen?";
+"Why we ask about sex" = "Waarom we vragen naar je geslacht";
+"Got it" = "Begrepen";
+"Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous." = "De gevoeligheid voor insuline wordt beïnvloed door geslachtshormonen, zoals oestrogeen en progesteron tegenover testosteron, en niet door genderidentiteit.\n\nKies het hormonale patroon dat op dit moment bij jouw lichaam past. Voor de meeste mensen is dat gewoon hun biologische geslacht. Gebruik je hormoontherapie? Kies dan het geslacht dat past bij de hormonen die je gebruikt.\n\nDeze informatie helpt bij je persoonlijke analyse en blijft anoniem.";
+"Enable Uploads" = "Uploaden inschakelen";
+"Set your sex to Woman or Man and a valid birth date above to enable daily log upload." = "Selecteer Vrouw of Man en vul een geldige geboortedatum in om het dagelijks uploaden van loggegevens in te schakelen.";
+"When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default." = "Wanneer ingeschakeld, wordt het logbestand van de vorige dag na middernacht automatisch geüpload. Logboeken worden alleen gebruikt om de meerdaagse analysefunctie te bieden op open-iaps.app. Standaard uitgeschakeld.";
+"Daily Log upload turned off" = "Dagelijkse log upload uitgeschakeld";
+"Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on." = "Voor het dagelijks uploaden van loggegevens moet je Vrouw of Man selecteren en een geldige geboortedatum invullen. Werk je persoonlijke gegevens bij om deze functie weer in te schakelen.";
+"Copied" = "Gekopieerd";
+"Write this token down somewhere safe. It is the only way to restore your settings on a new phone." = "Schrijf dit token ergens veilig op. Het is de enige manier om je instellingen op een nieuwe telefoon te herstellen.";
 
 /* ——————————Contact Image ————————*/
 
@@ -3740,240 +3740,240 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days." = "Je iAPS build verloopt op %1$@ (%2$d dagen resterend). TestFlight builds moeten elke 90 dagen worden vernieuwd.";
 
 /* --- First-launch Welcome + post-upgrade notice (onboarding) --- */
-"Welcome to iAPS" = "Welcome to iAPS";
+"Welcome to iAPS" = "Welkom bij iAPS";
 
-"Let's get you set up." = "Let's get you set up.";
+"Let's get you set up." = "Laten we je op weg helpen.";
 
 /* Welcome screen disclaimer (phase 1) */
-"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm.";
+"iAPS is an open-source artificial pancreas system based on the OpenAPS algorithm." = "iAPS is een opensource kunstmatig alvleeskliersysteem dat is gebaseerd op het OpenAPS-algoritme.";
 
-"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is not approved by any health authority. You run this system at your own risk.";
+"iAPS is not approved by any health authority. You run this system at your own risk." = "iAPS is niet goedgekeurd door een gezondheidsautoriteit. Je gebruikt dit systeem volledig op eigen risico.";
 
-"New User" = "New User";
+"New User" = "Nieuwe gebruiker";
 
-"Set up iAPS for the first time" = "Set up iAPS for the first time";
+"Set up iAPS for the first time" = "Stel iAPS voor de eerste keer in";
 
-"Existing User" = "Existing User";
+"Existing User" = "Bestaande gebruiker";
 
-"Skip setup — configure everything myself" = "Skip setup — configure everything myself";
+"Skip setup — configure everything myself" = "Setup overslaan — alles zelf configureren";
 
-"Migrate my settings from a previous install" = "Migrate my settings from a previous install";
+"Migrate my settings from a previous install" = "Migreer mijn instellingen van een eerdere installatie";
 
-"Stuck? Help is here" = "Stuck? Help is here";
+"Stuck? Help is here" = "Vastgelopen? Hulp kun je hier vinden";
 
-"Documentation" = "Documentation";
+"Documentation" = "Documentatie";
 
-"Discord support" = "Discord support";
+"Discord support" = "Discord ondersteuning";
 
-"iAPS updated" = "iAPS updated";
+"iAPS updated" = "iAPS is bijgewerkt";
 
-"You're now running version %@." = "You're now running version %@.";
+"You're now running version %@." = "Je gebruikt nu versie %@.";
 
-"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
+"Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates kunnen soms instellingen terugzetten. Dit gebeurt niet vaak. Merk je toch iets vreemds, bijvoorbeeld dat Closed Loop uitstaat of Max IOB op 0 staat? Controleer dan eerst je instellingen.";
 
-"Review Settings" = "Review Settings";
+"Review Settings" = "Instellingen beoordelen";
 
-"Continue to Home" = "Continue to Home";
+"Continue to Home" = "Doorgaan naar Home";
 
 /* Existing-user restore (onboarding) */
-"Restore my settings from a previous install" = "Restore my settings from a previous install";
+"Restore my settings from a previous install" = "Herstel mijn instellingen van een vorige installatie";
 
-"Restore your settings" = "Restore your settings";
+"Restore your settings" = "Instellingen herstellen";
 
-"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup.";
+"Enter the recovery token from your previous iAPS install to restore your OpenAPS preferences and app settings from your online backup." = "Voer de herstelcode van je vorige iAPS-installatie in om je OpenAPS-voorkeuren en appinstellingen vanuit je online back-up te herstellen.";
 
-"Recovery token" = "Recovery token";
+"Recovery token" = "Herstelcode";
 
-"Find this on your old phone under iAPS → Settings → Sharing." = "Find this on your old phone under iAPS → Settings → Sharing.";
+"Find this on your old phone under iAPS → Settings → Sharing." = "Zoek dit op je oude telefoon onder iAPS → Instellingen → Delen.";
 
-"Restore my settings" = "Restore my settings";
+"Restore my settings" = "Instellingen herstellen";
 
-"Restoring…" = "Restoring…";
+"Restoring…" = "Aan het herstellen…";
 
-"Settings restored" = "Settings restored";
+"Settings restored" = "Instellingen hersteld";
 
-"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step.";
+"Your OpenAPS preferences and app settings were restored from your backup. You'll set up online backup for this device on the next step." = "Je OpenAPS-voorkeuren en appinstellingen zijn hersteld vanuit je back-up. In de volgende stap stel je de online back-up voor dit apparaat in.";
 
-"Restore didn't complete" = "Restore didn't complete";
+"Restore didn't complete" = "Herstellen niet voltooid";
 
 "Try again" = "Probeer opnieuw";
 
-"Skip and set up fresh" = "Skip and set up fresh";
+"Skip and set up fresh" = "Overslaan en nieuw instellen";
 
-"Enter your recovery token." = "Enter your recovery token.";
+"Enter your recovery token." = "Voer je herstelcode in.";
 
-"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again.";
+"We couldn't find a backup for that token, or the server was unreachable. Check the token and your connection, then try again." = "We konden geen back-up vinden voor deze herstelcode, of de server was niet bereikbaar. Controleer de herstelcode en je internetverbinding en probeer het opnieuw.";
 
 /* Profile-schedule review (restore) */
-"Review your therapy settings" = "Review your therapy settings";
+"Review your therapy settings" = "Controleer je therapieinstellingen";
 
-"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump.";
+"These basal, ISF, carb-ratio and target schedules came from your backup. Review them, then apply. Your pump's basal will sync when you set up the pump." = "Deze schema’s voor basaal, ISF, koolhydraatratio en streefwaarden komen uit je back-up. Controleer ze en pas ze daarna toe. Het basaalschema van je pomp wordt gesynchroniseerd wanneer je de pomp instelt.";
 
-"Check these before applying" = "Check these before applying";
+"Check these before applying" = "Controleer voordat je deze toepast";
 
-"Basal rates" = "Basal rates";
+"Basal rates" = "Basaal waardes";
 
-"Insulin sensitivity (ISF)" = "Insulin sensitivity (ISF)";
+"Insulin sensitivity (ISF)" = "Insuline gevoeligheid (ISF)";
 
-"Carb ratios" = "Carb ratios";
+"Carb ratios" = "Koolhydraat ratio's";
 
-"Glucose targets" = "Glucose targets";
+"Glucose targets" = "Glucose streefwaarde";
 
-"Apply these settings" = "Apply these settings";
+"Apply these settings" = "Deze instellingen toepassen";
 
-"Applying…" = "Applying…";
+"Applying…" = "Toepassen…";
 
-"Continue without restoring schedules" = "Continue without restoring schedules";
+"Continue without restoring schedules" = "Doorgaan zonder terugzetten van schema's";
 
-"1 segment" = "1 segment";
+"1 segment" = "1 onderdeel";
 
-"%d segments" = "%d segments";
+"%d segments" = "%d onderdelen";
 
-"Carb ratio schedule contains a non-positive value." = "Carb ratio schedule contains a non-positive value.";
+"Carb ratio schedule contains a non-positive value." = "Koolhydraat ratio schema bevat een niet-positieve waarde.";
 
-"Total basal across the day is zero or negative." = "Total basal across the day is zero or negative.";
+"Total basal across the day is zero or negative." = "Totale basaal van de dag is nul of negatief.";
 
-"Insulin sensitivity schedule contains a non-positive value." = "Insulin sensitivity schedule contains a non-positive value.";
+"Insulin sensitivity schedule contains a non-positive value." = "Insuline gevoeligheidsschema bevat een niet-positieve waarde.";
 
 /* Restore by account login */
 "Account login" = "Account login";
 
-"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in to your online backup account to restore your OpenAPS preferences and app settings.";
+"Log in to your online backup account to restore your OpenAPS preferences and app settings." = "Log in op je online backup account om je OpenAPS instellingen en app instellingen te herstellen.";
 
-"Email" = "Email";
+"Email" = "E-mailadres";
 
 "Password" = "Paswoord";
 
-"Authentication code" = "Authentication code";
+"Authentication code" = "Authenticatiecode";
 
-"Logging in…" = "Logging in…";
+"Logging in…" = "Inloggen…";
 
-"Log in & restore" = "Log in & restore";
+"Log in & restore" = "Log in en herstel";
 
-"Enter your email and password." = "Enter your email and password.";
+"Enter your email and password." = "Voer je e-mailadres en wachtwoord in.";
 
-"Enter the code from your authenticator app." = "Enter the code from your authenticator app.";
+"Enter the code from your authenticator app." = "Voer de code uit je authenticatie-app in.";
 
-"That code didn't match. Please try again." = "That code didn't match. Please try again.";
+"That code didn't match. Please try again." = "Deze code komt niet overeen. Probeer het opnieuw.";
 
-"Email or password is incorrect." = "Email or password is incorrect.";
+"Email or password is incorrect." = "E-mailadres of wachtwoord is onjuist.";
 
-"No backup is linked to this account yet." = "No backup is linked to this account yet.";
+"No backup is linked to this account yet." = "Er is nog geen back-up aan dit account gekoppeld.";
 
-"Couldn't reach the server. Check your connection and try again." = "Couldn't reach the server. Check your connection and try again.";
+"Couldn't reach the server. Check your connection and try again." = "Kon de server niet bereiken. Controleer je verbinding en probeer opnieuw.";
 
 /* Recovery token & account (final onboarding step) */
-"Save your recovery token" = "Save your recovery token";
+"Save your recovery token" = "Voer je herstelcode in";
 
-"Copy" = "Copy";
+"Copy" = "Kopiëer";
 
-"Record this somewhere safe. It's how you restore your settings on a new phone." = "Record this somewhere safe. It's how you restore your settings on a new phone.";
+"Record this somewhere safe. It's how you restore your settings on a new phone." = "Bewaar deze herstelcode op een veilige plek. Hiermee kun je je instellingen op een nieuwe telefoon herstellen.";
 
-"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices.";
+"You don't need an account — your recovery token above already backs up and restores your settings. An account just lets you restore with an email and password instead of the token, and manage your devices." = "Je hebt geen account nodig. Met de herstelcode hierboven kun je je instellingen al back-uppen en herstellen. Met een account kun je hiervoor je e-mailadres en wachtwoord gebruiken in plaats van de herstelcode. Ook kun je daarmee je apparaten beheren.";
 
-"Optional: attach this device to an account" = "Optional: attach this device to an account";
+"Optional: attach this device to an account" = "Optioneel: voeg dit apparaat toe aan een account";
 
-"Link to an existing account" = "Link to an existing account";
+"Link to an existing account" = "Koppelen aan een bestaand account";
 
-"Create an account" = "Create an account";
+"Create an account" = "Account aanmaken";
 
-"Confirm password" = "Confirm password";
+"Confirm password" = "Wachtwoord bevestigen";
 
-"Verify & link" = "Verify & link";
+"Verify & link" = "Verifiëren en koppelen";
 
-"Link this device" = "Link this device";
+"Link this device" = "Koppel dit apparaat";
 
-"Linking…" = "Linking…";
+"Linking…" = "Koppelen…";
 
-"Create account" = "Create account";
+"Create account" = "Account aanmaken";
 
-"Creating…" = "Creating…";
+"Creating…" = "Wordt aangemaakt…";
 
-"Device linked" = "Device linked";
+"Device linked" = "Apparaat gekoppeld";
 
-"This device is now attached to %@. You can restore it by logging in." = "This device is now attached to %@. You can restore it by logging in.";
+"This device is now attached to %@. You can restore it by logging in." = "Dit apparaat is nu gekoppeld aan %@. Je kunt het herstellen door in te loggen.";
 
-"Finish without an account" = "Finish without an account";
+"Finish without an account" = "Voltooien zonder account";
 
-"This device is already linked to another account." = "This device is already linked to another account.";
+"This device is already linked to another account." = "Dit apparaat is al aan een ander account gekoppeld.";
 
-"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment.";
+"This device hasn't finished its first backup yet. Make sure Online Backup is on, then try again in a moment." = "Dit apparaat is nog niet klaar met de eerste back-up. Zorg ervoor dat de Online Backup is ingeschakeld en probeer het straks opnieuw.";
 
-"This device's recovery token looks invalid." = "This device's recovery token looks invalid.";
+"This device's recovery token looks invalid." = "De herstelcode van dit apparaat lijkt ongeldig.";
 
-"An account with that email already exists. Try linking instead." = "An account with that email already exists. Try linking instead.";
+"An account with that email already exists. Try linking instead." = "Er bestaat al een account met dit e-mailadres. Probeer het bestaande account te koppelen.";
 
-"That email doesn't look right." = "That email doesn't look right.";
+"That email doesn't look right." = "Dit e-mailadres lijkt niet correct.";
 
-"Please choose a stronger password (at least 8 characters)." = "Please choose a stronger password (at least 8 characters).";
+"Please choose a stronger password (at least 8 characters)." = "Kies een sterker wachtwoord (ten minste 8 tekens).";
 
-"Passwords don't match." = "Passwords don't match.";
+"Passwords don't match." = "Wachtwoorden komen niet overeen.";
 
 /* Device setup */
-"Set up your devices" = "Set up your devices";
+"Set up your devices" = "Je apparaat instellen";
 
-"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings.";
+"Pair your pump and CGM so iAPS can read glucose and deliver insulin. You can also set these up later in Settings." = "Koppel je pomp en CGM zodat iAPS glucose kan lezen en insuline kan afleveren. Je kunt dit later ook instellen in Instellingen.";
 
 /* Restore setup summary */
-"Review your settings" = "Review your settings";
+"Review your settings" = "Controleer je instellingen";
 
-"Set up your settings" = "Set up your settings";
+"Set up your settings" = "Je instellingen instellen";
 
-"Review" = "Review";
+"Review" = "Beoordeling";
 
-"Setup" = "Setup";
+"Setup" = "Instellen";
 
-"Next Step" = "Next Step";
+"Next Step" = "Volgende stap";
 
 /* Restore CoreData status */
-"Restoring your data" = "Restoring your data";
+"Restoring your data" = "Je gegevens herstellen";
 
-"Restored data" = "Restored data";
+"Restored data" = "Herstelde gegevens";
 
-"Meal, override and temp-target presets from your backup." = "Meal, override and temp-target presets from your backup.";
+"Meal, override and temp-target presets from your backup." = "Voorinstellingen voor maaltijden, overrides en tijdelijke streefwaarden uit je back-up.";
 
 "Override Presets" = "Override Programma's";
 
-"Temp Target Presets" = "Temp Target Presets";
+"Temp Target Presets" = "Voorinstelingen tijdelijke doelen";
 
-"No Data" = "No Data";
+"No Data" = "Geen gegevens";
 
-"%d restored" = "%d restored";
+"%d restored" = "%d hersteld";
 
-"Saved %d of %d" = "Saved %d of %d";
+"Saved %d of %d" = "%d van %d opgeslagen";
 
 /* Setup complete */
-"Setup complete" = "Setup complete";
+"Setup complete" = "Installatie voltooid";
 
-"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings.";
+"Your settings are in place. Turn on Closed Loop whenever you're ready for iAPS to adjust insulin automatically — you can always change this later in Settings." = "Je instellingen zijn klaar. Activeer Closed Loop wanneer je klaar bent om insuline aan te passen – je kunt dit later altijd wijzigen in Instellingen.";
 
-"Closed Loop" = "Closed Loop";
+"Closed Loop" = "Actieve loop";
 
-"Let iAPS automate insulin dosing" = "Let iAPS automate insulin dosing";
+"Let iAPS automate insulin dosing" = "Laat iAPS de insuline dosering automatiseren";
 
-"Finish setup" = "Finish setup";
+"Finish setup" = "Installatie voltooien";
 
 /* Sharing — unit abbreviations for the optional weight/height fields.
    "kg" kilograms, "lb" pounds, "cm" centimetres, "ft" feet, "in" inches,
    "ft/in" the feet-and-inches picker option. */
 "kg" = "kg";
 
-"lb" = "lb";
+"lb" = "pond";
 
 "cm" = "cm";
 
 "ft" = "ft";
 
-"in" = "in";
+"in" = "inch";
 
-"ft/in" = "ft/in";
+"ft/in" = "ft/inch";
 
 /* Developer settings — re-arm the first-launch onboarding so it replays */
-"Replay onboarding (new install)" = "Replay onboarding (new install)";
+"Replay onboarding (new install)" = "Onboarding herhalen (nieuwe installatie)";
 
-"Replay onboarding (as upgrade)" = "Replay onboarding (as upgrade)";
+"Replay onboarding (as upgrade)" = "Onboarding herhalen (als upgrade)";
 
-"Reset" = "Reset";
+"Reset" = "Herstellen";
 
 "Cancel temp" = "Annuleer tijdelijk doel";
 
@@ -4081,10 +4081,14 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "has been added to iAPS" = "is toegevoegd aan iAPS";
 "hour" = "uur";
 "iAPS" = "iAPS";
-"Processing…" = "Processing…";
-"Listening…" = "Listening…";
-"Describe what you ate…" = "Describe what you ate…";
+"Processing…" = "Verwerken…";
+"Listening…" = "Luisteren naar…";
+"Describe what you ate…" = "Beschrijf wat je hebt gegeten…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS heeft toegang tot de camera nodig om barcodes te scannen. Activeer het in Instellingen.";
 "too small temp basal amount" = "te klein tijdelijk basaal";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Waarschuwing! De ingevoerde hoeveelheid insuline is groter dan je maximale bolus instelling!";
 " Target Glucose" = " Doel glucosewaarde";
+
+/* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
+"Starting iAPS" = "iAPS starten";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS wacht op toegang tot de gegevens. Normaal gesproken eindigt dit vannzelf nadat je je telefoon voor de eerste keer hebt ontgrendeld na een herstart.";

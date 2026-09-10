@@ -4082,3 +4082,7 @@ Enact a temp Basal or a temp target */
 "too small temp basal amount" = "för litet basalbelopp";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Varning! Det angivna insulinbeloppet är större än din max-bolus-inställning!";
 " Target Glucose" = " Målvärde";
+
+/* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
+"Starting iAPS" = "Startar iAPS";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS väntar på åtkomst till data. Normalt sker detta när du har låst upp telefonen för första gången efter en omstart.";
