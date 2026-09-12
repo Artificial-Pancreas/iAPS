@@ -517,7 +517,7 @@ extension BaseWatchManager: WCSessionDelegate {
                 if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
                     let name = storage.isPresetName()
 
-                    if let duration = storage.cancelProfile() {
+                    if let duration = storage.cancelProfile().duration {
                         let nsString = name != nil ? name! : activeOveride.percentage.formatted()
                         nightscout.editOverride(nsString, duration, activeOveride.date ?? Date())
                     }
@@ -537,7 +537,7 @@ extension BaseWatchManager: WCSessionDelegate {
                     let presetName = storage.isPresetName()
                     let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
 
-                    if let duration = storage.cancelProfile() {
+                    if let duration = storage.cancelProfile().duration {
                         nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
                         replyHandler(["confirmation": true])
                         configureState()

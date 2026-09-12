@@ -39,6 +39,8 @@ extension OverrideProfilesConfig {
         @Published var glucoseOverrideThresholdActiveDown: Bool = false
         @Published var glucoseOverrideThresholdDown: Decimal = 100
 
+        @Published var consecutivePresetID: String?
+
         @Published var currentSettings = AutoISFsettings()
 
         @Published var autoISFsettings = AutoISFsettings()
@@ -68,9 +70,9 @@ extension OverrideProfilesConfig {
 
             // Is other already active?
             if let active = last, active.enabled {
-                if let preset = OverrideStorage().isPresetName(), let duration = OverrideStorage().cancelProfile() {
+                if let preset = OverrideStorage().isPresetName(), let duration = OverrideStorage().cancelProfile().duration {
                     ns.editOverride(preset, duration, last?.date ?? Date.now)
-                } else if let duration = OverrideStorage().cancelProfile() {
+                } else if let duration = OverrideStorage().cancelProfile().duration {
                     let nsString = active.percentage.formatted() != "100" ? active.percentage
                         .formatted() + " %" : active.isPreset ? "📉" : "Custom"
                     ns.editOverride(nsString, duration, last?.date ?? Date.now)
@@ -127,6 +129,10 @@ extension OverrideProfilesConfig {
                     if glucoseOverrideThresholdActiveDown {
                         saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
                     }
+
+                    if let consecutiveOverride = consecutivePresetID {
+                        saveOverride.succeeding = consecutiveOverride
+                    }
                 }
 
                 if overrideAutoISF {
@@ -179,6 +185,10 @@ extension OverrideProfilesConfig {
                     saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
                 }
 
+                if let consecutiveOverride = consecutivePresetID {
+                    saveOverride.succeeding = consecutiveOverride
+                }
+
                 if smbIsAlwaysOff {
                     saveOverride.smbIsAlwaysOff = true
                     saveOverride.start = start as NSDecimalNumber
@@ -209,7 +219,7 @@ extension OverrideProfilesConfig {
             // Is there already an active override?
             let last = OverrideStorage().fetchLatestOverride().last
             let lastPreset = OverrideStorage().isPresetName()
-            if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
+            if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile().duration {
                 ns.editOverride(
                     (last?.isPreset ?? false) ? (lastPreset ?? "📉") : "Custom",
                     duration,
@@ -253,6 +263,8 @@ extension OverrideProfilesConfig {
                 saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB as NSDecimalNumber) as NSDecimalNumber
                 saveOverride.overrideMaxIOB = profile.overrideMaxIOB
                 saveOverride.endWIthNewCarbs = profile.endWIthNewCarbs
+
+                saveOverride.succeeding = profile.succeeding
             }
 
             if profile.glucoseOverrideThresholdActive {
@@ -305,6 +317,8 @@ extension OverrideProfilesConfig {
                 .glucoseOverrideThresholdActive ?? false
             glucoseOverrideThresholdActiveDown = !edit ? overrideArray!.glucoseOverrideThresholdActiveDown : presetArray?
                 .glucoseOverrideThresholdActiveDown ?? false
+
+            consecutivePresetID = !edit ? overrideArray!.succeeding : presetArray?.succeeding
 
             if glucoseOverrideThresholdActive {
                 glucoseOverrideThreshold = !edit ? (overrideArray?.glucoseOverrideThreshold ?? 100) as Decimal :
@@ -379,7 +393,7 @@ extension OverrideProfilesConfig {
         func cancelProfile() {
             defaults()
             let storage = OverrideStorage()
-            let duration_ = storage.cancelProfile()
+            let duration_ = storage.cancelProfile().duration
             let last_ = storage.fetchLatestOverride().last
             let name = storage.isPresetName()
             if let last = last_, let duration = duration_ {

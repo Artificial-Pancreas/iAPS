@@ -554,6 +554,15 @@ final class CoreDataStorage {
         let recent = conc.first
         return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
     }
+
+    func unchanged(meal: Meals) -> Bool {
+        let hasMicros = (meal.micronutrient as? Set<Micronutrient>)?.contains { ($0.amount?.decimalValue ?? 0) > 0 } ?? false
+
+        return (meal.carbs?.decimalValue ?? 0) <= 0 &&
+            (meal.fat?.decimalValue ?? 0) <= 0 &&
+            (meal.protein?.decimalValue ?? 0) <= 0 &&
+            !hasMicros
+    }
 }
 
 // public typealias PresetsCoreDataClassSet = NSSet
