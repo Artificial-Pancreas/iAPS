@@ -3971,7 +3971,7 @@ Enact a temp Basal or a temp target */
 
 "Cancel temp" = "Avbryt temporär basal";
 
-"No " = "Nej ";
+"No " = "Inga ";
 "%.1f× serving" = "%.1f× portion";
 "Edit Portion" = "Ändra portion";
 "Remove from meal" = "Ta bort från måltid";
