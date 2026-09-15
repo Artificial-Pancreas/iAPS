@@ -533,9 +533,9 @@ extension Home {
                 guard let self = self else { return }
                 self.data.latestOverride = self.provider.latestOverride()
 
-                if let or = self.data.latestOverride, let id = or.succeeding {
+                if let or = self.data.latestOverride, or.enabled, let id = or.succeeding {
                     self.data.consecutiveOverride = self.provider.consecutiveOverride(id)
-                }
+                } else { self.data.consecutiveOverride = nil }
 
                 self.data.overrideHistory = self.provider.overrideHistory()
             }
