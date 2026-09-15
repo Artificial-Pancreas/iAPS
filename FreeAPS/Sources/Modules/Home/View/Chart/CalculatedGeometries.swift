@@ -854,7 +854,7 @@ private final class GeometriesBuilder {
                 )
                 old.append(oneMore)
 
-                /// If a consecutove override is scheduled, append this lastly
+                /// If a consecutive override is scheduled, append this lastly
                 if let preset = data.consecutiveOverride {
                     let presetTargetRaw = preset.target ?? 0
                     let presetTarget = Int(truncating: presetTargetRaw) < 6 ? 6 : presetTargetRaw
