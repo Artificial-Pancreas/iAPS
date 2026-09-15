@@ -853,6 +853,35 @@ private final class GeometriesBuilder {
                     height: 6
                 )
                 old.append(oneMore)
+
+                /// If a consecutove override is scheduled, append this lastly
+                if let preset = data.consecutiveOverride {
+                    let presetTargetRaw = preset.target ?? 0
+                    let presetTarget = Int(truncating: presetTargetRaw) < 6 ? 6 : presetTargetRaw
+
+                    var presetDuration = Int(truncating: preset.duration ?? 0)
+
+                    /// When set to indefinite(0) use a 48 hour illustration
+                    if presetDuration == 0 {
+                        presetDuration = 2880
+                    }
+
+                    /// Use a 60s-gap in illustration, even though there isn't any real override gap
+                    let plusGap = plusNow.addingTimeInterval(1.minutes.timeInterval)
+                    let x1_Preset = timeToXCoordinate(plusGap.timeIntervalSince1970)
+
+                    let adding_x2_Preset = plusGap.addingTimeInterval(presetDuration.minutes.timeInterval)
+                    let x2_Preset = timeToXCoordinate(adding_x2_Preset.timeIntervalSince1970)
+
+                    let consecutive = CGRect(
+                        x: x1_Preset,
+                        y: glucoseToYCoordinate(Int(truncating: presetTarget)) - 3,
+                        width: x2_Preset - x1_Preset,
+                        height: 6
+                    )
+                    old.append(consecutive)
+                }
+
                 let path = Path { path in
                     path.addRects(old)
                 }

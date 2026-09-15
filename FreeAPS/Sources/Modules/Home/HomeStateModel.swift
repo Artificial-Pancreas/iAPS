@@ -112,6 +112,7 @@ extension Home {
             displayYgridLines: true,
             thresholdLines: true,
             latestOverride: nil,
+            consecutiveOverride: nil,
             overrideHistory: [],
             minimumSMB: 0,
             insulinDIA: 7,
@@ -531,6 +532,11 @@ extension Home {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.data.latestOverride = self.provider.latestOverride()
+
+                if let or = self.data.latestOverride, let id = or.succeeding {
+                    self.data.consecutiveOverride = self.provider.consecutiveOverride(id)
+                }
+
                 self.data.overrideHistory = self.provider.overrideHistory()
             }
         }

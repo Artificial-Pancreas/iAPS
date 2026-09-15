@@ -299,7 +299,8 @@ extension AddCarbs {
                     override.date ?? Date.now
                 )
             } else {
-                os.activatePreset(profileID)
+                let or = os.activatePreset(profileID)
+                debug(.default, "Hypo treatment preset \(or.name ?? "Unknown") activated")
             }
         }
 
