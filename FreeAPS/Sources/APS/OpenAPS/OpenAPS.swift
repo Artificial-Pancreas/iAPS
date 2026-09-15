@@ -896,10 +896,99 @@ final class OpenAPS {
 
             // Overrides
             now = Date.now
-            let overrideArray = os.fetchNumberOfOverrides(numbers: 2)
-            print(
-                "dynamicVariables: Time for fetchNumberOfOverrides \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-            )
+            var overrideArray = os.fetchNumberOfOverrides(numbers: 2)
+
+            // active or not?
+            var useOverride = overrideArray.first?.enabled ?? false
+            var unlimited = overrideArray.first?.indefinite ?? true
+            var duration: Decimal = 0
+            var overrideTarget: Decimal = 0
+
+            if useOverride {
+                duration = (overrideArray.first?.duration ?? 0) as Decimal
+                overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
+                let addedMinutes = Int(duration)
+                let date = overrideArray.first?.date ?? Date()
+                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !unlimited {
+                    useOverride = false
+
+                    let cancel = OverrideStorage().cancelProfile()
+
+                    // If we can cancel an exixsting active override
+                    if cancel.duration != nil {
+                        debug(.nightscout, "Override ended, duration: \(duration) minutes")
+                    }
+
+                    // If there is a succeeding override preset, start new override
+                    if let nextID = cancel.id, os.otherEndTogglesOff(override: overrideArray.first) {
+                        let succeeding = os.activatePreset(nextID)
+                        useOverride = true
+                        if let succeedingOverride = succeeding.override, let name = succeeding.name {
+                            overrideArray = [succeedingOverride]
+                            duration = (succeedingOverride.duration ?? 0) as Decimal
+                            overrideTarget = (succeedingOverride.target ?? 0) as Decimal
+                            unlimited = succeedingOverride.indefinite
+                            debug(.openAPS, "Succeeding Override \(name) now activated.")
+                        }
+                    }
+                }
+                // End with new Meal, when applicable
+                if useOverride, overrideArray.first?.advancedSettings ?? false, overrideArray.first?.endWIthNewCarbs ?? false,
+                   let recent = cd.recentMeal(), !cd.unchanged(meal: recent),
+                   (recent.actualDate ?? .distantPast) > (overrideArray.first?.date ?? .distantFuture)
+                {
+                    useOverride = false
+                    if OverrideStorage().cancelProfile().0 != nil, let carbs = recent.carbs {
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new carbs: \(carbs) g, duration: \(duration) minutes"
+                        )
+                    }
+                }
+
+                // End with new glucose trending up, when applicable
+                if useOverride, overrideArray.first?.glucoseOverrideThresholdActive ?? false, let g = cd.fetchRecentGlucose(),
+                   Decimal(g.glucose) > ((overrideArray.first?.glucoseOverrideThreshold ?? 100) as NSDecimalNumber) as Decimal,
+                   g.direction ?? BloodGlucose.Direction.fortyFiveDown.symbol == BloodGlucose.Direction.fortyFiveUp.symbol || g
+                   .direction ?? BloodGlucose
+                   .Direction.singleDown.symbol == BloodGlucose.Direction.singleUp.symbol || g.direction ?? BloodGlucose
+                   .Direction.doubleDown.symbol == BloodGlucose.Direction.doubleUp.symbol
+                {
+                    useOverride = false
+                    let storage = OverrideStorage()
+                    if let duration = storage.cancelProfile().0 {
+                        let last_ = storage.fetchLatestOverride().last
+                        let name = storage.isPresetName()
+                        if let last = last_ {
+                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        }
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
+                        )
+                    }
+                }
+
+                // End with new glucose when lower than setting, when applicable
+                if useOverride, overrideArray.first?.glucoseOverrideThresholdActiveDown ?? false, let g = cd.fetchRecentGlucose(),
+                   Decimal(g.glucose) <
+                   ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
+                {
+                    useOverride = false
+                    let storage = OverrideStorage()
+                    if let duration = OverrideStorage().cancelProfile().0 {
+                        let last_ = storage.fetchLatestOverride().last
+                        let name = storage.isPresetName()
+                        if let last = last_ {
+                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        }
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
+                        )
+                    }
+                }
+            }
 
             // Temp Target
             now = Date.now
@@ -934,9 +1023,8 @@ final class OpenAPS {
             var temptargetActive = tempTargetsArray.first?.active ?? false
             let isPercentageEnabled = sliderArray.first?.enabled ?? false
 
-            var useOverride = overrideArray.first?.enabled ?? false
             var overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
-            var unlimited = overrideArray.first?.indefinite ?? true
+
             var disableSMBs = overrideArray.first?.smbIsOff ?? false
             let overrideMaxIOB = overrideArray.first?.overrideMaxIOB ?? false
             let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0) as NSDecimalNumber
@@ -953,78 +1041,6 @@ final class OpenAPS {
             let average2hours = totalAmount / Decimal(nrOfIndeces)
             let average14 = total / Decimal(indeces)
             let weighted_average = wp * average2hours + (1 - wp) * average14
-
-            var duration: Decimal = 0
-            var overrideTarget: Decimal = 0
-
-            if useOverride {
-                duration = (overrideArray.first?.duration ?? 0) as Decimal
-                overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
-                let addedMinutes = Int(duration)
-                let date = overrideArray.first?.date ?? Date()
-                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !unlimited {
-                    useOverride = false
-                    if OverrideStorage().cancelProfile() != nil {
-                        debug(.nightscout, "Override ended, duration: \(duration) minutes")
-                    }
-                }
-                // End with new Meal, when applicable
-                if useOverride, overrideArray.first?.advancedSettings ?? false, overrideArray.first?.endWIthNewCarbs ?? false,
-                   let recent = cd.recentMeal(), !unchanged(meal: recent),
-                   (recent.actualDate ?? .distantPast) > (overrideArray.first?.date ?? .distantFuture)
-                {
-                    useOverride = false
-                    if OverrideStorage().cancelProfile() != nil {
-                        debug(
-                            .nightscout,
-                            "Override ended, because of new carbs: \(recent.carbs) g, duration: \(duration) minutes"
-                        )
-                    }
-                }
-
-                // End with new glucose trending up, when applicable
-                if useOverride, overrideArray.first?.glucoseOverrideThresholdActive ?? false, let g = cd.fetchRecentGlucose(),
-                   Decimal(g.glucose) > ((overrideArray.first?.glucoseOverrideThreshold ?? 100) as NSDecimalNumber) as Decimal,
-                   g.direction ?? BloodGlucose.Direction.fortyFiveDown.symbol == BloodGlucose.Direction.fortyFiveUp.symbol || g
-                   .direction ?? BloodGlucose
-                   .Direction.singleDown.symbol == BloodGlucose.Direction.singleUp.symbol || g.direction ?? BloodGlucose
-                   .Direction.doubleDown.symbol == BloodGlucose.Direction.doubleUp.symbol
-                {
-                    useOverride = false
-                    let storage = OverrideStorage()
-                    if let duration = storage.cancelProfile() {
-                        let last_ = storage.fetchLatestOverride().last
-                        let name = storage.isPresetName()
-                        if let last = last_ {
-                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
-                        }
-                        debug(
-                            .nightscout,
-                            "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
-                        )
-                    }
-                }
-
-                // End with new glucose when lower than setting, when applicable
-                if useOverride, overrideArray.first?.glucoseOverrideThresholdActiveDown ?? false, let g = cd.fetchRecentGlucose(),
-                   Decimal(g.glucose) <
-                   ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
-                {
-                    useOverride = false
-                    let storage = OverrideStorage()
-                    if let duration = OverrideStorage().cancelProfile() {
-                        let last_ = storage.fetchLatestOverride().last
-                        let name = storage.isPresetName()
-                        if let last = last_ {
-                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
-                        }
-                        debug(
-                            .nightscout,
-                            "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
-                        )
-                    }
-                }
-            }
 
             if !useOverride {
                 unlimited = true
@@ -1127,15 +1143,6 @@ final class OpenAPS {
             self.storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
             return averages
         }
-    }
-
-    private func unchanged(meal: Meals) -> Bool {
-        let hasMicros = (meal.micronutrient as? Set<Micronutrient>)?.contains { ($0.amount?.decimalValue ?? 0) > 0 } ?? false
-
-        return (meal.carbs?.decimalValue ?? 0) <= 0 &&
-            (meal.fat?.decimalValue ?? 0) <= 0 &&
-            (meal.protein?.decimalValue ?? 0) <= 0 &&
-            !hasMicros
     }
 
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {

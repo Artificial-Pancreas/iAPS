@@ -838,8 +838,9 @@ private final class GeometriesBuilder {
             var old = Array(rects)
             let duration = Double(truncating: last.duration ?? 0)
             // Looks better when target isn't == 0 in Home View Main Chart
-            let targetRaw = last.target ?? 0
-            let target = Int(truncating: targetRaw) < 6 ? 6 : targetRaw
+            let target = Int((last.target ?? 0).doubleValue.rounded())
+
+            print("Target: \(target) mg/dl")
 
             if duration > 0 {
                 let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970)
@@ -848,11 +849,38 @@ private final class GeometriesBuilder {
                 let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970)
                 let oneMore = CGRect(
                     x: x1,
-                    y: glucoseToYCoordinate(Int(truncating: target)) - 3,
+                    y: glucoseToYCoordinate(target) - 3,
                     width: x2 - x1,
                     height: 6
                 )
                 old.append(oneMore)
+
+                /// If a consecutive override is scheduled, append this lastly
+                if let preset = data.consecutiveOverride {
+                    let presetTarget = max(Int((preset.target ?? 0).doubleValue.rounded()), 6)
+                    var presetDuration = Int(truncating: preset.duration ?? 0)
+
+                    /// When set to indefinite(0) use a 48 hour illustration
+                    if presetDuration == 0 {
+                        presetDuration = 2880
+                    }
+
+                    /// Use a 60s-gap in illustration, even though there isn't any real override gap
+                    let plusGap = plusNow.addingTimeInterval(1.minutes.timeInterval)
+                    let x1_Preset = timeToXCoordinate(plusGap.timeIntervalSince1970)
+
+                    let adding_x2_Preset = plusGap.addingTimeInterval(presetDuration.minutes.timeInterval)
+                    let x2_Preset = timeToXCoordinate(adding_x2_Preset.timeIntervalSince1970)
+
+                    let consecutive = CGRect(
+                        x: x1_Preset,
+                        y: glucoseToYCoordinate(presetTarget) - 3,
+                        width: x2_Preset - x1_Preset,
+                        height: 6
+                    )
+                    old.append(consecutive)
+                }
+
                 let path = Path { path in
                     path.addRects(old)
                 }
@@ -862,7 +890,7 @@ private final class GeometriesBuilder {
                 let x2 = timeToXCoordinate(Date.now.timeIntervalSince1970)
                 let oneMore = CGRect(
                     x: x1,
-                    y: glucoseToYCoordinate(Int(truncating: target)) - 3,
+                    y: glucoseToYCoordinate(target) - 3,
                     width: x2 - x1 + additionalWidth,
                     height: 6
                 )
