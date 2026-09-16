@@ -127,6 +127,9 @@ public enum IAPSconfig {
     /// Set once the one-time Sharing setup step (welcome step 2 / first-upgrade prompt) is done.
     /// Defaults false so every existing user is walked through sharing once after upgrading.
     static let hasSeenSharingSetup = "iAPS.hasSeenSharingSetup"
+    /// Set the first time the Sharing screen is shown on a build that offers crash
+    /// reporting. Upgrading users who never saw the option get the Sharing step once more.
+    static let hasSeenCrashReportOption = "iAPS.hasSeenCrashReportOption"
     static let inBolusView = "iAPS.inBolusView"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
     /// Colors

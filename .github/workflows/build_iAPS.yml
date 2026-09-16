@@ -175,6 +175,42 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       
+      # Upload this build's symbol tables to open-iaps.app so opt-in crash reports from
+      # it can be read with function names (TestFlight builds are stripped). One small
+      # gzip per binary (nm output of the dSYM, keyed by its UUID); no user data. The
+      # site only keeps tables for commits on upstream main/dev. Never fails the build.
+      # Set repository variable UPLOAD_SYMBOLS=false to skip.
+      - name: Upload build symbols to open-iaps.app
+        if: ${{ vars.UPLOAD_SYMBOLS != 'false' }}
+        continue-on-error: true
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          set -u
+          sha=$(git rev-parse --short=7 HEAD)
+          version=$(sed -n 's/^APP_VERSION *= *//p' Config.xcconfig | tr -d '[:space:]')
+          tmp=$(mktemp -d)
+          shopt -s nullglob globstar
+          for z in artifacts/*.dSYM.zip; do unzip -q -o "$z" -d "$tmp"; done
+          n=0
+          for dsym in "$tmp"/**/*.dSYM; do
+            bin=$(ls "$dsym/Contents/Resources/DWARF/" 2>/dev/null | head -1)
+            [ -n "$bin" ] || continue
+            path="$dsym/Contents/Resources/DWARF/$bin"
+            uuid=$(dwarfdump --uuid "$path" | awk '/arm64/ {print $2; exit}')
+            [ -n "$uuid" ] || continue
+            nm -n --defined-only -arch arm64 "$path" | xcrun swift-demangle | gzip -6 > "$tmp/$bin.sym.gz"
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 120 -X POST \
+              https://submit.open-iaps.app/api/v1/upload/symbols \
+              -H "X-Binary-UUID: $uuid" -H "X-Binary-Name: $bin" \
+              -H "X-Branch: $BRANCH_NAME $sha" -H "X-App-Version: $version" -H "X-Build-Number: $BUILD_NUMBER" \
+              -H 'Content-Encoding: gzip' --data-binary @"$tmp/$bin.sym.gz" || echo "curl-failed")
+            echo "$bin $uuid -> $code"
+            n=$((n + 1))
+          done
+          echo "uploaded $n symbol table(s) for $BRANCH_NAME $sha ($version)"
+
       # Upload to TestFlight
       # Set repository variable SKIP_TESTFLIGHT_UPLOAD=true to build & archive without
       # publishing to TestFlight (when testing).

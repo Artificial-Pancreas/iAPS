@@ -26,6 +26,9 @@ import UIKit
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
     init() {
+        // Crash handlers first, so a crash anywhere in startup is captured. Whether a
+        // report ever leaves the phone is decided later, from the Sharing setting.
+        CrashReportService.shared.install()
         debug(
             .default,
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
@@ -62,6 +65,11 @@ import UIKit
             // installs go through WelcomeView instead, so don't flag them here.
             if hadPriorVersion {
                 userDefaults.set(true, forKey: IAPSconfig.showUpgradeNotice)
+                // Users upgrading from a build without crash reporting get the Sharing
+                // step once more after the notice, so they know the option exists.
+                if !userDefaults.bool(forKey: IAPSconfig.hasSeenCrashReportOption) {
+                    userDefaults.set(false, forKey: IAPSconfig.hasSeenSharingSetup)
+                }
                 // An upgrade is definitively an existing user, so skip the New-vs-Existing
                 // WelcomeView (its flag is new this version and would otherwise read false
                 // and pre-empt the upgrade notice). Fresh installs leave this false → Welcome.
@@ -98,6 +106,10 @@ final class AppLauncher: ObservableObject {
 
         FreeAPSApp.runVersionCheckOnce()
         services = AppServices(assembler: FreeAPSApp.assembler)
+
+        // Reports from a previous run, now that settings are readable.
+        let settings = FreeAPSApp.resolver.resolve(SettingsManager.self)?.settings
+        CrashReportService.shared.processPendingReports(enabled: settings?.uploadCrashReports ?? false)
     }
 }
 

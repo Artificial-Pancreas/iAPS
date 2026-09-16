@@ -46,6 +46,7 @@ extension Sharing {
         @State private var display: Bool = false
         @State private var copied: Bool = false
         @State private var showSexInfo: Bool = false
+        @State private var showCrashInfo: Bool = false
         @State private var logsRevoked: Bool = false
         // Local editing state for the feet/inches height entry (canonical store is cm).
         @State private var feet: Int = 0
@@ -135,6 +136,8 @@ extension Sharing {
                     recoveryTokenSection
                     personalStatsSection
                 }
+
+                crashReportsSection
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onChange(of: state.uploadStats) {
@@ -150,6 +153,16 @@ extension Sharing {
                 state.sex = Sex.savedSettings(state.sexSetting)
                 if state.heightInFtIn { seedFeetInches() }
                 enforceLogGate()
+                // Seeing this screen counts as having been offered crash reporting; the
+                // upgrade path re-shows Sharing once for users who predate the option.
+                UserDefaults.standard.set(true, forKey: IAPSconfig.hasSeenCrashReportOption)
+            }
+            .alert("What a crash report contains", isPresented: $showCrashInfo) {
+                Button("Got it", role: .cancel) {}
+            } message: {
+                Text(
+                    "When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin, settings or anything about you. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help."
+                )
             }
             .alert("Why we ask about sex", isPresented: $showSexInfo) {
                 Button("Got it", role: .cancel) {}
@@ -276,6 +289,28 @@ extension Sharing {
                         "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default."
                     )
                 }
+            }
+        }
+
+        // MARK: - Crash reports (independent of the other sharing toggles)
+
+        private var crashReportsSection: some View {
+            Section {
+                HStack {
+                    Toggle("Send crash reports", isOn: $state.uploadCrashReports)
+                    Button {
+                        showCrashInfo = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .buttonStyle(.borderless)
+                }
+            } header: {
+                Text("Crash Reports")
+            } footer: {
+                Text(
+                    "If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default."
+                )
             }
         }
 
