@@ -4076,10 +4076,14 @@ Enact a temp Basal or a temp target */
 "has been added to iAPS" = "đã được thêm vào iAPS";
 "hour" = "hours";
 "iAPS" = "iAPS";
-"Processing…" = "Processing…";
-"Listening…" = "Listening…";
-"Describe what you ate…" = "Describe what you ate…";
+"Processing…" = "Đang xử lý…";
+"Listening…" = "Đang nghe…";
+"Describe what you ate…" = "Mô tả những gì bạn đã ăn…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS cần quyền truy cập camera để quét mã vạch. Vui lòng bật quyền camera trong Cài đặt.";
 "too small temp basal amount" = "lượng liều nền tạm thời quá nhỏ";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Cảnh báo! Lượng insulin đã nhập lớn hơn giới hạn liều Bolus tối đa của bạn!";
 " Target Glucose" = " Đường huyết mục tiêu";
+
+/* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
+"Starting iAPS" = "Đang khởi động iAPS";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS đang chờ quyền truy cập vào dữ liệu. Thông thường, quá trình này sẽ tự hoàn tất sau khi bạn mở khóa điện thoại lần đầu tiên sau khi khởi động lại.";
