@@ -143,14 +143,6 @@
 		3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE1C25C9D48300A708ED /* MainProvider.swift */; };
 		3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE1D25C9D48300A708ED /* MainDataFlow.swift */; };
 		3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2025C9D48300A708ED /* MainRootView.swift */; };
-		CC10A00200000000000A708E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00100000000000A708E /* WelcomeView.swift */; };
-		CC10A00400000000000A708E /* UpgradeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00300000000000A708E /* UpgradeNoticeView.swift */; };
-		CC10A00600000000000A708E /* ExistingUserRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00500000000000A708E /* ExistingUserRestoreView.swift */; };
-		CC10A00C00000000000A708E /* RestoreSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00B00000000000A708E /* RestoreSummaryView.swift */; };
-		CC10A00E00000000000A708E /* RestoreCoreDataStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */; };
-		CC10A01000000000000A708E /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00F00000000000A708E /* SetupCompleteView.swift */; };
-		CC10A01200000000000A708E /* DeviceSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A01100000000000A708E /* DeviceSetupView.swift */; };
-		CC10A01400000000000A708E /* RecoveryTokenAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A01300000000000A708E /* RecoveryTokenAccountView.swift */; };
 		3811DE3025C9D49500A708ED /* HomeStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2825C9D49500A708ED /* HomeStateModel.swift */; };
 		3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2925C9D49500A708ED /* HomeProvider.swift */; };
 		3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */; };
@@ -214,7 +206,6 @@
 		3883581C25EE79BB00E024B2 /* DecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883581B25EE79BB00E024B2 /* DecimalTextField.swift */; };
 		3883583425EEB38000E024B2 /* PumpSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883583325EEB38000E024B2 /* PumpSettings.swift */; };
 		388358C825EEF6D200E024B2 /* BasalProfileEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */; };
-		CC10A008 /* ProfileScheduleDecomposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A007 /* ProfileScheduleDecomposition.swift */; };
 		38887CCE25F5725200944304 /* IOBEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38887CCD25F5725200944304 /* IOBEntry.swift */; };
 		388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E595B25AD948C0019842D /* FreeAPSApp.swift */; };
 		388E596C25AD95110019842D /* OpenAPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E596B25AD95110019842D /* OpenAPS.swift */; };
@@ -307,8 +298,6 @@
 		38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2025F52C9300C0CED0 /* CollectionIssueReporter.swift */; };
 		38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2225F52C9300C0CED0 /* Error+Extensions.swift */; };
 		38E98A2D25F52DC400C0CED0 /* NSLocking+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */; };
-		F2A11C1230200B0100EF9230 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A11C1130200B0100EF9230 /* Timeout.swift */; };
-		F2B33E0230220D0300EF9402 /* MemoryMetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B33E0130220D0300EF9401 /* MemoryMetricsService.swift */; };
 		38E98A3025F52FF700C0CED0 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A2F25F52FF700C0CED0 /* Config.swift */; };
 		38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E98A3625F5509500C0CED0 /* String+Extensions.swift */; };
 		38EA05DA261F6E7C0064E39B /* SimpleLogReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EA05D9261F6E7C0064E39B /* SimpleLogReporter.swift */; };
@@ -385,6 +374,15 @@
 		BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C4420C9A345D46D90D06C /* ManualTempBasalProvider.swift */; };
 		C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */; };
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
+		CC10A00200000000000A708E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00100000000000A708E /* WelcomeView.swift */; };
+		CC10A00400000000000A708E /* UpgradeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00300000000000A708E /* UpgradeNoticeView.swift */; };
+		CC10A00600000000000A708E /* ExistingUserRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00500000000000A708E /* ExistingUserRestoreView.swift */; };
+		CC10A008 /* ProfileScheduleDecomposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A007 /* ProfileScheduleDecomposition.swift */; };
+		CC10A00C00000000000A708E /* RestoreSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00B00000000000A708E /* RestoreSummaryView.swift */; };
+		CC10A00E00000000000A708E /* RestoreCoreDataStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */; };
+		CC10A01000000000000A708E /* SetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A00F00000000000A708E /* SetupCompleteView.swift */; };
+		CC10A01200000000000A708E /* DeviceSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A01100000000000A708E /* DeviceSetupView.swift */; };
+		CC10A01400000000000A708E /* RecoveryTokenAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC10A01300000000000A708E /* RecoveryTokenAccountView.swift */; };
 		CC1A00032A000002000A708ED /* BuildExpirationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1A00022A000002000A708ED /* BuildExpirationManager.swift */; };
 		CC6C406E2ACDD69E009B8058 /* RawFetchedProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6C406D2ACDD69E009B8058 /* RawFetchedProfile.swift */; };
 		CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */; };
@@ -495,6 +493,7 @@
 		F29E5E532EE493A400D2CBC0 /* ai in Resources */ = {isa = PBXBuildFile; fileRef = F29E5E522EE4939A00D2CBC0 /* ai */; };
 		F29FC35D2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29FC35C2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift */; };
 		F29FC35F2E7F6EF800DC04FE /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29FC35E2E7F6EF800DC04FE /* DateExtensions.swift */; };
+		F2A11C1230200B0100EF9230 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A11C1130200B0100EF9230 /* Timeout.swift */; };
 		F2A4B7922E64985F000E0E85 /* PluiginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7912E64985F000E0E85 /* PluiginManager.swift */; };
 		F2A4B7C32E6C8CA7000E0E85 /* CGMManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */; };
 		F2A4B7C62E6C9180000E0E85 /* BloodGlucoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */; };
@@ -504,6 +503,7 @@
 		F2ACC0352EF87CD200C86FBC /* FoodItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */; };
 		F2ACC0672EF88E0A00C86FBC /* SearchResultsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */; };
 		F2B06FCB2EEF49EC000EADA9 /* AIUsageStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B06FCA2EEF49EC000EADA9 /* AIUsageStatistics.swift */; };
+		F2B33E0230220D0300EF9402 /* MemoryMetricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B33E0130220D0300EF9401 /* MemoryMetricsService.swift */; };
 		F2C2EEA92F5CCD7E00A0AA7C /* USDAFoodDataSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */; };
 		F2C2EEAB2F5CCEFE00A0AA7C /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */; };
 		F2C2EEAD2F5CD2E400A0AA7C /* OpenFoodFactsProduct+Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C2EEAC2F5CD2E100A0AA7C /* OpenFoodFactsProduct+Convert.swift */; };
@@ -836,14 +836,6 @@
 		3811DE1C25C9D48300A708ED /* MainProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProvider.swift; sourceTree = "<group>"; };
 		3811DE1D25C9D48300A708ED /* MainDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainDataFlow.swift; sourceTree = "<group>"; };
 		3811DE2025C9D48300A708ED /* MainRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRootView.swift; sourceTree = "<group>"; };
-		CC10A00100000000000A708E /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		CC10A00300000000000A708E /* UpgradeNoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeNoticeView.swift; sourceTree = "<group>"; };
-		CC10A00500000000000A708E /* ExistingUserRestoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingUserRestoreView.swift; sourceTree = "<group>"; };
-		CC10A00B00000000000A708E /* RestoreSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSummaryView.swift; sourceTree = "<group>"; };
-		CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCoreDataStatusView.swift; sourceTree = "<group>"; };
-		CC10A00F00000000000A708E /* SetupCompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteView.swift; sourceTree = "<group>"; };
-		CC10A01100000000000A708E /* DeviceSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSetupView.swift; sourceTree = "<group>"; };
-		CC10A01300000000000A708E /* RecoveryTokenAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryTokenAccountView.swift; sourceTree = "<group>"; };
 		3811DE2825C9D49500A708ED /* HomeStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStateModel.swift; sourceTree = "<group>"; };
 		3811DE2925C9D49500A708ED /* HomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeProvider.swift; sourceTree = "<group>"; };
 		3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDataFlow.swift; sourceTree = "<group>"; };
@@ -913,7 +905,6 @@
 		3883581B25EE79BB00E024B2 /* DecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTextField.swift; sourceTree = "<group>"; };
 		3883583325EEB38000E024B2 /* PumpSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettings.swift; sourceTree = "<group>"; };
 		388358C725EEF6D200E024B2 /* BasalProfileEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalProfileEntry.swift; sourceTree = "<group>"; };
-		CC10A007 /* ProfileScheduleDecomposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScheduleDecomposition.swift; sourceTree = "<group>"; };
 		38887CCD25F5725200944304 /* IOBEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBEntry.swift; sourceTree = "<group>"; };
 		388E595825AD948C0019842D /* FreeAPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388E595B25AD948C0019842D /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
@@ -1005,8 +996,6 @@
 		38E98A2025F52C9300C0CED0 /* CollectionIssueReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionIssueReporter.swift; sourceTree = "<group>"; };
 		38E98A2225F52C9300C0CED0 /* Error+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
 		38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocking+Extensions.swift"; sourceTree = "<group>"; };
-		F2A11C1130200B0100EF9230 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
-		F2B33E0130220D0300EF9401 /* MemoryMetricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMetricsService.swift; sourceTree = "<group>"; };
 		38E98A2F25F52FF700C0CED0 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		38E98A3625F5509500C0CED0 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		38EA05D9261F6E7C0064E39B /* SimpleLogReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLogReporter.swift; sourceTree = "<group>"; };
@@ -1097,6 +1086,15 @@
 		C19984D62EFC0035A9E9644D /* BolusProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusProvider.swift; sourceTree = "<group>"; };
 		C377490C77661D75E8C50649 /* ManualTempBasalRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalRootView.swift; sourceTree = "<group>"; };
 		C8D1A7CA8C10C4403D4BBFA7 /* BolusDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusDataFlow.swift; sourceTree = "<group>"; };
+		CC10A00100000000000A708E /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		CC10A00300000000000A708E /* UpgradeNoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeNoticeView.swift; sourceTree = "<group>"; };
+		CC10A00500000000000A708E /* ExistingUserRestoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingUserRestoreView.swift; sourceTree = "<group>"; };
+		CC10A007 /* ProfileScheduleDecomposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScheduleDecomposition.swift; sourceTree = "<group>"; };
+		CC10A00B00000000000A708E /* RestoreSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSummaryView.swift; sourceTree = "<group>"; };
+		CC10A00D00000000000A708E /* RestoreCoreDataStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCoreDataStatusView.swift; sourceTree = "<group>"; };
+		CC10A00F00000000000A708E /* SetupCompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupCompleteView.swift; sourceTree = "<group>"; };
+		CC10A01100000000000A708E /* DeviceSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSetupView.swift; sourceTree = "<group>"; };
+		CC10A01300000000000A708E /* RecoveryTokenAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryTokenAccountView.swift; sourceTree = "<group>"; };
 		CC1A00022A000002000A708ED /* BuildExpirationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildExpirationManager.swift; sourceTree = "<group>"; };
 		CC6C406D2ACDD69E009B8058 /* RawFetchedProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawFetchedProfile.swift; sourceTree = "<group>"; };
 		CE1856F42ADC4858007E39C7 /* AddCarbPresetIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarbPresetIntent.swift; sourceTree = "<group>"; };
@@ -1211,6 +1209,7 @@
 		F29E5E522EE4939A00D2CBC0 /* ai */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ai; sourceTree = "<group>"; };
 		F29FC35C2E7F670000DC04FE /* CoreDataStorageGlucoseSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageGlucoseSaver.swift; sourceTree = "<group>"; };
 		F29FC35E2E7F6EF800DC04FE /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		F2A11C1130200B0100EF9230 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		F2A4B7912E64985F000E0E85 /* PluiginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluiginManager.swift; sourceTree = "<group>"; };
 		F2A4B7C22E6C8CA7000E0E85 /* CGMManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerExtensions.swift; sourceTree = "<group>"; };
 		F2A4B7C52E6C9180000E0E85 /* BloodGlucoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodGlucoseManager.swift; sourceTree = "<group>"; };
@@ -1220,6 +1219,7 @@
 		F2ACC0342EF87CD200C86FBC /* FoodItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemGroup.swift; sourceTree = "<group>"; };
 		F2ACC0662EF88E0A00C86FBC /* SearchResultsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsState.swift; sourceTree = "<group>"; };
 		F2B06FCA2EEF49EC000EADA9 /* AIUsageStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageStatistics.swift; sourceTree = "<group>"; };
+		F2B33E0130220D0300EF9401 /* MemoryMetricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMetricsService.swift; sourceTree = "<group>"; };
 		F2C2EEA82F5CCD7C00A0AA7C /* USDAFoodDataSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USDAFoodDataSearchResponse.swift; sourceTree = "<group>"; };
 		F2C2EEAA2F5CCEFB00A0AA7C /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
 		F2C2EEAC2F5CD2E100A0AA7C /* OpenFoodFactsProduct+Convert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenFoodFactsProduct+Convert.swift"; sourceTree = "<group>"; };
@@ -2034,10 +2034,10 @@
 		3833B51E260264AC003021B3 /* Chart */ = {
 			isa = PBXGroup;
 			children = (
-				38AAF8702600C1B0004AF583 /* MainChartView.swift */,
-				F21580A42E47B4FE003BC827 /* PeakPicker.swift */,
 				F2C73D672EB8022C00B700AB /* CalculatedGeometries.swift */,
 				F281B4A12ECF9087007185A9 /* LabelPlacement.swift */,
+				38AAF8702600C1B0004AF583 /* MainChartView.swift */,
+				F21580A42E47B4FE003BC827 /* PeakPicker.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -4218,7 +4218,7 @@
 					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
 				);
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4272,7 +4272,7 @@
 					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
 				);
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4332,6 +4332,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
@@ -4376,6 +4377,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
@@ -4450,7 +4452,7 @@
 				INFOPLIST_FILE = LiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiveActivity;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4484,7 +4486,7 @@
 				INFOPLIST_FILE = LiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiveActivity;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
