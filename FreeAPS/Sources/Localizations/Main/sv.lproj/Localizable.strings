@@ -2116,6 +2116,7 @@ Enact a temp Basal or a temp target */
 "Override Max IOB" = "Åsidosätt max IOB";
 
 /* */
+"When run to completion schedule a consecutive override preset:" = "When run to completion schedule a consecutive override preset:";
 
 /* */
 "Save as Profile" = "Spara som profil";
