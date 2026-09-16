@@ -59,7 +59,6 @@ class BarcodeScannerService: NSObject, ObservableObject {
     deinit {
         UIDevice.current.endGeneratingDeviceOrientationNotifications()
         Foundation.NotificationCenter.default.removeObserver(self)
-        stopScanning()
     }
 
     // MARK: - Notification Observers

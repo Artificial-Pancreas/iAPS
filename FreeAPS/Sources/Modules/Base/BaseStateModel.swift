@@ -2,7 +2,7 @@ import Combine
 import SwiftUI
 import Swinject
 
-protocol StateModel: ObservableObject {
+@MainActor protocol StateModel: ObservableObject {
     var resolver: Resolver { get }
 //    var isInitial: Bool { get set }
     func subscribe()
@@ -11,7 +11,7 @@ protocol StateModel: ObservableObject {
     func view(for screen: Screen) -> AnyView
 }
 
-class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.Provider {
+@MainActor class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.Provider {
     let router: Router
     let settingsManager: SettingsManager!
 

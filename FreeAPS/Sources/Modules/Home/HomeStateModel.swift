@@ -263,8 +263,8 @@ extension Home {
                 map: { $0 }
             )
 
-            timer.eventHandler = {
-                DispatchQueue.main.async { [weak self] in
+            timer.eventHandler = { [weak self] in
+                Task { @MainActor [weak self] in
                     self?.data.timerDate = Date()
                     self?.setupCurrentTempTarget()
                 }
@@ -618,14 +618,10 @@ extension Home {
         }
 
         private func setupIOB() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                Task {
-                    do {
-                        if let sync = try await self.provider.iob() {
-                            self.data.iob = sync
-                        }
-                    } catch { debug(.apsManager, "Error - Couldn't update foreground IOB value.") }
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                if let sync = await apsManager.iobSync() {
+                    data.iob = sync
                 }
             }
         }

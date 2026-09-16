@@ -136,7 +136,9 @@ private struct ActiveActivity {
              .ended,
              .stale:
             return true
-        case .active: break
+        case .active,
+             .pending:
+            break
         @unknown default:
             return true
         }
@@ -146,7 +148,7 @@ private struct ActiveActivity {
     }
 }
 
-final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
+@MainActor final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
@@ -154,7 +156,7 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
     private let coreDataStorage = CoreDataStorage()
 
     private let activityAuthorizationInfo = ActivityAuthorizationInfo()
-    @Published private(set) var systemEnabled: Bool
+    @Published private(set) var systemEnabled = ActivityAuthorizationInfo().areActivitiesEnabled
 
     private var settings: FreeAPSSettings {
         settingsManager.settings
@@ -168,10 +170,16 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
     private var suggestion: Suggestion?
     private var iob: Decimal?
 
-    init(resolver: Resolver) {
-        systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
-
+    nonisolated init(resolver: Resolver) {
         injectServices(resolver)
+
+        Task { @MainActor [weak self] in
+            self?.setup()
+        }
+    }
+
+    private func setup() {
+        systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(EnactedSuggestionObserver.self, observer: self)
         broadcaster.register(PumpHistoryObserver.self, observer: self)
@@ -179,17 +187,21 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didEnterBackgroundNotification,
             object: nil,
-            queue: nil
-        ) { _ in
-            self.forceActivityUpdate()
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.forceActivityUpdate()
+            }
         }
 
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didBecomeActiveNotification,
             object: nil,
-            queue: nil
-        ) { _ in
-            self.forceActivityUpdate()
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.forceActivityUpdate()
+            }
         }
 
         knownSettings = settings
@@ -198,7 +210,13 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
         monitorForLiveActivityAuthorizationChanges()
     }
 
-    func settingsDidChange(_ newSettings: FreeAPSSettings) {
+    nonisolated func settingsDidChange(_ newSettings: FreeAPSSettings) {
+        Task { @MainActor [weak self] in
+            self?.handleSettingsDidChange(newSettings)
+        }
+    }
+
+    @MainActor private func handleSettingsDidChange(_ newSettings: FreeAPSSettings) {
         if let knownSettings = self.knownSettings {
             if newSettings.useLiveActivity != knownSettings.useLiveActivity ||
                 newSettings.liveActivityChart != knownSettings.liveActivityChart ||
@@ -215,12 +233,11 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
     }
 
     private func monitorForLiveActivityAuthorizationChanges() {
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
             for await activityState in activityAuthorizationInfo.activityEnablementUpdates {
                 if activityState != systemEnabled {
-                    await MainActor.run {
-                        systemEnabled = activityState
-                    }
+                    systemEnabled = activityState
                 }
             }
         }
@@ -228,31 +245,22 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
 
     /// creates and tries to present a new activity update from the current Suggestion values if live activities are enabled in settings
     /// Ends existing live activities if live activities are not enabled in settings
-    private func forceActivityUpdate(force: Bool = false) {
+    @MainActor private func forceActivityUpdate(force: Bool = false) {
         // just before app resigns active, show a new activity
         // only do this if there is no current activity or the current activity is older than 1h
         if settings.useLiveActivity {
             if force || currentActivity?.needsRecreation() ?? true,
                let suggestion = storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
             {
-                suggestionDidUpdate(suggestion)
+                handleSuggestionDidUpdate(suggestion)
             }
         } else {
-            Task {
-                await self.endActivity()
-            }
+            Task { await endActivity() }
         }
     }
 
     /// attempts to present this live activity state, creating a new activity if none exists yet
     @MainActor private func pushUpdate(_ state: LiveActivityAttributes.ContentState) async {
-        // hide duplicate/unknown activities
-        for unknownActivity in Activity<LiveActivityAttributes>.activities
-            .filter({ self.currentActivity?.activity.id != $0.id })
-        {
-            await unknownActivity.end(nil, dismissalPolicy: .immediate)
-        }
-
         if let currentActivity {
             if currentActivity.needsRecreation(), UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
@@ -332,32 +340,37 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
     }
 
     /// ends all live activities immediateny
-    private func endActivity() async {
+    @MainActor private func endActivity() async {
         if let currentActivity {
             await currentActivity.activity.end(nil, dismissalPolicy: .immediate)
             self.currentActivity = nil
-        }
-
-        // end any other activities
-        for unknownActivity in Activity<LiveActivityAttributes>.activities {
-            await unknownActivity.end(nil, dismissalPolicy: .immediate)
         }
     }
 }
 
 extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, PumpHistoryObserver {
-    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+    nonisolated func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+        Task { @MainActor [weak self] in
+            self?.handlePumpHistoryDidUpdate()
+        }
+    }
+
+    @MainActor private func handlePumpHistoryDidUpdate() {
         iob = coreDataStorage.fetchInsulinData(interval: DateFilter.oneHour.startDate).first?.iob
     }
 
-    func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
+    nonisolated func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
+        Task { @MainActor [weak self] in
+            self?.handleEnactedSuggestionDidUpdate(suggestion)
+        }
+    }
+
+    @MainActor private func handleEnactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         let settings = self.settings
 
         guard settings.useLiveActivity else {
             if currentActivity != nil {
-                Task {
-                    await self.endActivity()
-                }
+                Task { await endActivity() }
             }
             return
         }
@@ -392,14 +405,18 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver, Pum
         }
     }
 
-    func suggestionDidUpdate(_ suggestion: Suggestion) {
+    nonisolated func suggestionDidUpdate(_ suggestion: Suggestion) {
+        Task { @MainActor [weak self] in
+            self?.handleSuggestionDidUpdate(suggestion)
+        }
+    }
+
+    @MainActor private func handleSuggestionDidUpdate(_ suggestion: Suggestion) {
         let settings = self.settings
 
         guard settings.useLiveActivity else {
             if currentActivity != nil {
-                Task {
-                    await self.endActivity()
-                }
+                Task { await endActivity() }
             }
             return
         }

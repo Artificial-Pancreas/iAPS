@@ -3,7 +3,7 @@ import Foundation
 import Intents
 
 struct OverrideEntity: AppEntity, Identifiable {
-    static var defaultQuery = OverrideQuery()
+    static let defaultQuery = OverrideQuery()
 
     var id: UUID
     var name: String
@@ -13,7 +13,7 @@ struct OverrideEntity: AppEntity, Identifiable {
         DisplayRepresentation(title: "\(name)")
     }
 
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Presets"
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Presets"
 }
 
 enum OverrideIntentError: Error {
@@ -23,16 +23,10 @@ enum OverrideIntentError: Error {
 
 struct ApplyOverrideIntent: AppIntent {
     // Title of the action in the Shortcuts app
-    static var title: LocalizedStringResource = "Activate an Override Preset"
+    static let title: LocalizedStringResource = "Activate an Override Preset"
 
     // Description of the action in the Shortcuts app
-    static var description = IntentDescription("Allow to activate an overrride preset.")
-
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
+    static let description = IntentDescription("Allow to activate an overrride preset.")
 
     @Parameter(title: "Preset") var preset: OverrideEntity?
 
@@ -61,7 +55,7 @@ struct ApplyOverrideIntent: AppIntent {
                 presetToApply = preset
             } else {
                 presetToApply = try await $preset.requestDisambiguation(
-                    among: intentRequest.fetchPresets(),
+                    among: try OverrideIntentRequest().fetchPresets(),
                     dialog: "Which override preset would you like to activate?"
                 )
             }
@@ -73,6 +67,7 @@ struct ApplyOverrideIntent: AppIntent {
                 )
             }
 
+            let intentRequest = OverrideIntentRequest()
             let preset = try intentRequest.findPreset(displayName)
             let finalOverrideApply = try intentRequest.enactPreset(preset)
             let isDone = finalOverrideApply != nil ? finalOverrideApply?.isPreset ?? false : false
@@ -90,18 +85,12 @@ struct ApplyOverrideIntent: AppIntent {
 }
 
 struct CancelOverrideIntent: AppIntent {
-    static var title: LocalizedStringResource = "Cancel active override"
-    static var description = IntentDescription("Cancel active override.")
-
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
+    static let title: LocalizedStringResource = "Cancel active override"
+    static let description = IntentDescription("Cancel active override.")
 
     @MainActor func perform() async throws -> some ProvidesDialog {
         do {
-            try intentRequest.cancelOverride()
+            try OverrideIntentRequest().cancelOverride()
             return .result(
                 dialog: IntentDialog(stringLiteral: "Override canceled")
             )
@@ -112,24 +101,18 @@ struct CancelOverrideIntent: AppIntent {
 }
 
 struct OverrideQuery: EntityQuery {
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
-
-    func entities(for identifiers: [OverrideEntity.ID]) async throws -> [OverrideEntity] {
-        let presets = intentRequest.fetchIDs(identifiers)
+    @MainActor func entities(for identifiers: [OverrideEntity.ID]) async throws -> [OverrideEntity] {
+        let presets = OverrideIntentRequest().fetchIDs(identifiers)
         return presets
     }
 
-    func suggestedEntities() async throws -> [OverrideEntity] {
-        let presets = try intentRequest.fetchPresets()
+    @MainActor func suggestedEntities() async throws -> [OverrideEntity] {
+        let presets = try OverrideIntentRequest().fetchPresets()
         return presets
     }
 }
 
-final class OverrideIntentRequest: BaseIntentsRequest {
+@MainActor final class OverrideIntentRequest: BaseIntentsRequest {
     func fetchPresets() throws -> ([OverrideEntity]) {
         let presets = overrideStorage.fetchProfiles().flatMap { preset -> [OverrideEntity] in
             let percentage = preset.percentage != 100 ? preset.percentage.formatted() : ""

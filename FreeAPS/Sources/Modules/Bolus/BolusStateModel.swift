@@ -406,7 +406,7 @@ extension Bolus {
                 glucose: Int(glucose),
                 type: GlucoseType.manual.rawValue
             )
-            provider.glucoseStorage.storeGlucose([saveToJSON])
+            _ = provider.glucoseStorage.storeGlucose([saveToJSON])
             debug(.default, "Manual Glucose saved to glucose.json")
             // Save to Health
             var saveToHealth = [BloodGlucose]()

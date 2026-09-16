@@ -75,13 +75,11 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
 
                 stored = newGlucoseData
 
-                DispatchQueue.main.async {
-                    self.broadcaster.notify(GlucoseObserver.self, on: .main) {
-                        $0.glucoseDidUpdate(newGlucoseData.reversed())
-                    }
-                    self.broadcaster.notify(NewGlucoseObserver.self, on: .main) {
-                        $0.newGlucoseStored(newRecords)
-                    }
+                self.broadcaster.notify(GlucoseObserver.self, on: .main) {
+                    $0.glucoseDidUpdate(newGlucoseData.reversed())
+                }
+                self.broadcaster.notify(NewGlucoseObserver.self, on: .main) {
+                    $0.newGlucoseStored(newRecords)
                 }
             }
 
@@ -156,10 +154,8 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 guard bgInStorage != filteredBG else { return }
                 storage.save(filteredBG, as: file)
 
-                DispatchQueue.main.async {
-                    self.broadcaster.notify(GlucoseObserver.self, on: .main) {
-                        $0.glucoseDidUpdate(filteredBG.reversed())
-                    }
+                self.broadcaster.notify(GlucoseObserver.self, on: .main) {
+                    $0.glucoseDidUpdate(filteredBG.reversed())
                 }
             }
         }

@@ -83,12 +83,10 @@ extension BasalProfileEditor {
         }
 
         func validate() {
-            DispatchQueue.main.async {
-                let uniq = Array(Set(self.items))
-                let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
-                sorted.first?.timeIndex = 0
-                self.items = sorted
-            }
+            let uniq = Array(Set(items))
+            let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
+            sorted.first?.timeIndex = 0
+            items = sorted
         }
     }
 }

@@ -3,8 +3,8 @@ import Foundation
 import Intents
 
 struct BolusIntent: AppIntent {
-    static var title: LocalizedStringResource = "Bolus"
-    static var description = IntentDescription("Allow to send a bolus command to iAPS.")
+    static let title: LocalizedStringResource = "Bolus"
+    static let description = IntentDescription("Allow to send a bolus command to iAPS.")
 
     @Parameter(
         title: "Amount",
@@ -61,7 +61,7 @@ struct BolusIntent: AppIntent {
     }
 }
 
-final class BolusIntentRequest: BaseIntentsRequest {
+@MainActor final class BolusIntentRequest: BaseIntentsRequest {
     func bolus(_ bolusAmount: Double) throws -> String {
         guard settingsManager.settings.allowBolusShortcut else {
             return NSLocalizedString("Bolus Shortcuts are disabled in iAPS settings", comment: "")

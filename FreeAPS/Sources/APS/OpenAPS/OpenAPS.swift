@@ -11,8 +11,6 @@ final class OpenAPS {
     private let nightscout: NightscoutManager
     private let pumpStorage: PumpHistoryStorage
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
-
     init(
         storage: FileStorage,
         glucoseStorage: GlucoseStorage,
@@ -624,6 +622,7 @@ final class OpenAPS {
         }
 
         // Save Suggestion to CoreData
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         coredataContext.perform { [self] in
             if let isf = readReason(reason: reason, variable: "ISF"),
                let minPredBG = readReason(reason: reason, variable: "minPredBG"),
@@ -870,7 +869,8 @@ final class OpenAPS {
     }
 
     func dynamicVariables(_ preferences: Preferences?, _: FreeAPSSettings?) async -> DynamicVariables {
-        coredataContext.performAndWait {
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        return coredataContext.performAndWait {
             let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
@@ -1155,7 +1155,7 @@ final class OpenAPS {
         ])
     }
 
-    func iobSync() async -> RawJSON {
+    @MainActor func iobSync() async -> RawJSON {
         let (
             autosens,
             profile,

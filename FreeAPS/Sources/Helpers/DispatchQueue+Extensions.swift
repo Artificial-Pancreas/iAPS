@@ -9,7 +9,7 @@ extension DispatchQueue {
         Thread.isMainThread && OperationQueue.main === OperationQueue.current
     }
 
-    static func safeMainSync<T>(_ block: () throws -> T) rethrows -> T {
+    static func safeMainSync<T: Sendable>(_ block: @Sendable() throws -> T) rethrows -> T {
         if isMain {
             return try block()
         } else {

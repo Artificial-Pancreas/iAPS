@@ -1,12 +1,8 @@
 import Foundation
+import os
 
 public enum SwiftNotificationCenter {
-    fileprivate static var observersDic = [String: Any]()
-
-    fileprivate static let notificationQueue = DispatchQueue(
-        label: "com.swift.notification.center.dispatch.queue",
-        attributes: .concurrent
-    )
+    fileprivate static let observers = OSAllocatedUnfairLock(initialState: [String: Any]())
 
     public static func register<T>(_ protocolType: T.Type, observer: T) {
         let key = "\(protocolType)"
@@ -40,7 +36,7 @@ public enum SwiftNotificationCenter {
 
 private extension SwiftNotificationCenter {
     static func safeSet(key: String, object: AnyObject) {
-        notificationQueue.async(flags: .barrier) {
+        observers.withLock { observersDic in
             if var set = observersDic[key] as? WeakObjectSet<AnyObject> {
                 set.add(object)
                 observersDic[key] = set
@@ -51,7 +47,7 @@ private extension SwiftNotificationCenter {
     }
 
     static func safeRemove(key: String, object: AnyObject) {
-        notificationQueue.async(flags: .barrier) {
+        observers.withLock { observersDic in
             if var set = observersDic[key] as? WeakObjectSet<AnyObject> {
                 set.remove(object)
                 observersDic[key] = set
@@ -60,16 +56,14 @@ private extension SwiftNotificationCenter {
     }
 
     static func safeRemove(key: String) {
-        notificationQueue.async(flags: .barrier) {
+        observers.withLock { observersDic in
             observersDic.removeValue(forKey: key)
         }
     }
 
     static func safeGetObjectSet(key: String) -> WeakObjectSet<AnyObject>? {
-        var objectSet: WeakObjectSet<AnyObject>?
-        notificationQueue.sync {
-            objectSet = observersDic[key] as? WeakObjectSet<AnyObject>
+        observers.withLock { observersDic in
+            observersDic[key] as? WeakObjectSet<AnyObject>
         }
-        return objectSet
     }
 }

@@ -2,7 +2,7 @@ import os.log
 import os.signpost
 import UIKit
 
-var LoggerTestMode = false
+let LoggerTestMode = false
 
 private let baseReporter = FreeAPSApp.resolver.resolve(GroupedIssueReporter.self)!
 private let router = FreeAPSApp.resolver.resolve(Router.self)!

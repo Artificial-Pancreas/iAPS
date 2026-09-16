@@ -1,8 +1,5 @@
 import Foundation
 
-/// allowed values are 0, 1, 2 or 3. It's the index in coefficients
-private var coefficientsRowToUse = 3
-
 /// Savitzky Golay coefficients
 private let coefficients = [
     [-3.0, 12.0, 17.0, 12.0, -3.0],
@@ -37,7 +34,8 @@ extension Array where Element: SavitzkyGolaySmoothable {
         // filterWidthToUse is the value of filterWidth to use in the algorithm. By default filterWidthToUse = parameter value filterWidth
         var filterWidthToUse = filterWidth
 
-        // calculate coefficientsRowToUse based on filterWdith
+        // calculate coefficientsRowToUse based on filterWidth
+        let coefficientsRowToUse: Int
         switch filterWidth {
         case 5:
             coefficientsRowToUse = 3

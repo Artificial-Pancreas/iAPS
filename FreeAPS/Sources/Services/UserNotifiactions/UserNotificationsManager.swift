@@ -1,6 +1,7 @@
 import AudioToolbox
 import Foundation
 import LoopKit
+import os
 import SwiftUI
 import Swinject
 import UIKit
@@ -351,21 +352,17 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: trigger)
 
         if deleteOld {
-            DispatchQueue.main.async {
-                self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
-                self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
-            }
+            center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+            center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.center.add(request) { error in
-                if let error = error {
-                    warning(.service, "Unable to addNotificationRequest", error: error)
-                    return
-                }
-
-                debug(.service, "Sending \(identifier) notification")
+        center.add(request) { error in
+            if let error = error {
+                warning(.service, "Unable to addNotificationRequest", error: error)
+                return
             }
+
+            debug(.service, "Sending \(identifier) notification")
         }
     }
 
@@ -373,7 +370,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         guard settingsManager.settings.useAlarmSound, snoozeUntilDate < Date() else { return }
         guard sound != "Silent" else { return }
 
-        Self.stopPlaying = false
+        Self.audioState.withLock { $0.stopPlaying = false }
         playSound(sound: sound)
     }
 
@@ -381,28 +378,38 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         guard settingsManager.settings.useAlarmSound else { return }
         guard sound != "Silent" else { return }
 
-        Self.stopPlaying = false
+        Self.audioState.withLock { $0.stopPlaying = false }
         playSound(sound: sound)
     }
 
-    static var soundID: UInt32 = 1336
-    private static var stopPlaying = false
+    private struct AudioPlaybackState {
+        var soundID: UInt32 = 1336
+        var stopPlaying = false
+    }
+
+    private static let audioState = OSAllocatedUnfairLock(initialState: AudioPlaybackState())
 
     private func playSound(times: Int = 1, sound: String) {
-        guard times > 0, !Self.stopPlaying else {
+        guard times > 0, !Self.audioState.withLock({ $0.stopPlaying }) else {
             return
         }
         let path = "/System/Library/Audio/UISounds/" + sound
         let soundURL = URL(string: path)
-        AudioServicesCreateSystemSoundID(soundURL! as CFURL, &Self.soundID)
+        let soundID = Self.audioState.withLock { state in
+            AudioServicesCreateSystemSoundID(soundURL! as CFURL, &state.soundID)
+            return state.soundID
+        }
 
-        AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(Self.soundID)) {
+        AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(soundID)) {
             self.playSound(times: times - 1, sound: sound)
         }
     }
 
     static func stopSound() {
-        stopPlaying = true
+        let soundID = audioState.withLock { state in
+            state.stopPlaying = true
+            return state.soundID
+        }
         AudioServicesDisposeSystemSoundID(soundID)
     }
 
@@ -451,10 +458,8 @@ extension BaseUserNotificationsManager: PumpNotificationObserver {
 
     func pumpRemoveNotification() {
         let identifier: Identifier = .pumpNotification
-        DispatchQueue.main.async {
-            self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
-            self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
-        }
+        center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+        center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
     }
 }
 

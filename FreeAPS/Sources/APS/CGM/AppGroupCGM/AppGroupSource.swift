@@ -23,21 +23,6 @@ final class AppGroupSource {
     private(set) var latestReadingDate: Date?
     private(set) var deviceAddress: String?
 
-    private var _heartBeatDelegate: AppGroupCGMHeartBeatDelegate?
-
-    var heartBeatDelegate: AppGroupCGMHeartBeatDelegate? {
-        set {
-            _heartBeatDelegate = newValue
-            if newValue == nil {
-                debug(.nightscout, "AppGroupSource - stopping heartbeat")
-                HeartBeatManager.shared.disconnectBluetoothTransmitter()
-            }
-        }
-        get {
-            _heartBeatDelegate
-        }
-    }
-
     func fetch() -> CGMReadingResult {
         guard let suiteName = Bundle.main.appGroupSuiteName,
               let sharedDefaults = UserDefaults(suiteName: suiteName)
@@ -60,8 +45,7 @@ final class AppGroupSource {
 
         // make sure HeartBeatManager is setup, it will be firing our timer on BT activity
         deviceAddress = HeartBeatManager.shared.checkCGMBluetoothTransmitter(
-            sharedUserDefaults: sharedDefaults,
-            heartbeat: _heartBeatDelegate
+            sharedUserDefaults: sharedDefaults
         )
         let decoded = try? JSONSerialization.jsonObject(with: sharedData, options: [])
         guard let sgvs = decoded as? [AnyObject] else {
@@ -141,10 +125,6 @@ final class AppGroupSource {
 //    func sourceInfo() -> [String: Any]? {
 //        [GlucoseSourceKey.description.rawValue: "Group ID: \(Bundle.main.appGroupSuiteName ?? "Not set"))"]
 //    }
-}
-
-protocol AppGroupCGMHeartBeatDelegate: AnyObject {
-    func heartbeat()
 }
 
 public extension Bundle {

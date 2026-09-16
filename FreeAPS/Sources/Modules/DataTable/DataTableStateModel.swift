@@ -47,109 +47,103 @@ extension DataTable {
 
         private func setupTreatments() {
             debug(.service, "setupTreatments() started")
-            processQueue.async {
-                let units = self.settingsManager.settings.units
-                let carbs = self.provider.carbs()
-                    .filter { !($0.isFPU ?? false) }
-                    .map {
-                        if let id = $0.id {
-                            return Treatment(
-                                units: units,
-                                type: .carbs,
-                                date: $0.actualDate ?? $0.createdAt,
-                                creationDate: $0.createdAt,
-                                amount: $0.carbs,
-                                id: id,
-                                note: $0.note
-                            )
-                        } else {
-                            return Treatment(
-                                units: units,
-                                type: .carbs,
-                                date: $0.actualDate ?? $0.createdAt,
-                                creationDate: $0.createdAt,
-                                amount: $0.carbs,
-                                note: $0.note
-                            )
-                        }
-                    }
+            let units = settingsManager.settings.units
+            let pumpHistory = provider.pumpHistory()
 
-                let boluses = self.provider.pumpHistory()
-                    .filter { $0.type == .bolus }
-                    .map {
-                        Treatment(
-                            units: units,
-                            type: .bolus,
-                            date: $0.timestamp,
-                            creationDate: $0.timestamp,
-                            amount: $0.amount,
-                            idPumpEvent: $0.id,
-                            isSMB: $0.isSMB,
-                            isExternal: $0.isExternal
-                        )
-                    }
-
-                let tempBasals = self.provider.pumpHistory()
-                    .filter { $0.type == .tempBasal || $0.type == .tempBasalDuration }
-                    .chunks(ofCount: 2)
-                    .compactMap { chunk -> Treatment? in
-                        let chunk = Array(chunk)
-                        guard chunk.count == 2, chunk[0].type == .tempBasal,
-                              chunk[1].type == .tempBasalDuration else { return nil }
+            let carbs = provider.carbs()
+                .filter { !($0.isFPU ?? false) }
+                .map {
+                    if let id = $0.id {
                         return Treatment(
                             units: units,
-                            type: .tempBasal,
-                            date: chunk[0].timestamp,
-                            creationDate: chunk[0].timestamp,
-                            amount: chunk[0].rate ?? 0,
-                            secondAmount: nil,
-                            duration: Decimal(chunk[1].durationMin ?? 0)
-                        )
-                    }
-
-                let tempTargets = self.provider.tempTargets()
-                    .map {
-                        Treatment(
-                            units: units,
-                            type: .tempTarget,
-                            date: $0.createdAt,
+                            type: .carbs,
+                            date: $0.actualDate ?? $0.createdAt,
                             creationDate: $0.createdAt,
-                            amount: $0.targetBottom ?? 0,
-                            secondAmount: $0.targetTop,
-                            duration: $0.duration
+                            amount: $0.carbs,
+                            id: id,
+                            note: $0.note
+                        )
+                    } else {
+                        return Treatment(
+                            units: units,
+                            type: .carbs,
+                            date: $0.actualDate ?? $0.createdAt,
+                            creationDate: $0.createdAt,
+                            amount: $0.carbs,
+                            note: $0.note
                         )
                     }
-
-                let suspend = self.provider.pumpHistory()
-                    .filter { $0.type == .pumpSuspend }
-                    .map {
-                        Treatment(units: units, type: .suspend, date: $0.timestamp, creationDate: $0.timestamp)
-                    }
-
-                let resume = self.provider.pumpHistory()
-                    .filter { $0.type == .pumpResume }
-                    .map {
-                        Treatment(units: units, type: .resume, date: $0.timestamp, creationDate: $0.timestamp)
-                    }
-
-                DispatchQueue.main.async {
-                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
-                        .flatMap { $0 }
-                        .sorted { $0.date > $1.date }
                 }
 
-                DispatchQueue.main.async {
-                    let increments = self.settingsManager.preferences.bolusIncrement
-                    self.tdd = TotalDailyDose().totalDailyDose(self.provider.pumpHistory(), increment: Double(increments))
-                    self.insulinToday = TotalDailyDose().insulinToday(self.provider.pumpHistory(), increment: Double(increments))
+            let boluses = pumpHistory
+                .filter { $0.type == .bolus }
+                .map {
+                    Treatment(
+                        units: units,
+                        type: .bolus,
+                        date: $0.timestamp,
+                        creationDate: $0.timestamp,
+                        amount: $0.amount,
+                        idPumpEvent: $0.id,
+                        isSMB: $0.isSMB,
+                        isExternal: $0.isExternal
+                    )
                 }
-            }
+
+            let tempBasals = pumpHistory
+                .filter { $0.type == .tempBasal || $0.type == .tempBasalDuration }
+                .chunks(ofCount: 2)
+                .compactMap { chunk -> Treatment? in
+                    let chunk = Array(chunk)
+                    guard chunk.count == 2, chunk[0].type == .tempBasal,
+                          chunk[1].type == .tempBasalDuration else { return nil }
+                    return Treatment(
+                        units: units,
+                        type: .tempBasal,
+                        date: chunk[0].timestamp,
+                        creationDate: chunk[0].timestamp,
+                        amount: chunk[0].rate ?? 0,
+                        secondAmount: nil,
+                        duration: Decimal(chunk[1].durationMin ?? 0)
+                    )
+                }
+
+            let tempTargets = provider.tempTargets()
+                .map {
+                    Treatment(
+                        units: units,
+                        type: .tempTarget,
+                        date: $0.createdAt,
+                        creationDate: $0.createdAt,
+                        amount: $0.targetBottom ?? 0,
+                        secondAmount: $0.targetTop,
+                        duration: $0.duration
+                    )
+                }
+
+            let suspend = pumpHistory
+                .filter { $0.type == .pumpSuspend }
+                .map {
+                    Treatment(units: units, type: .suspend, date: $0.timestamp, creationDate: $0.timestamp)
+                }
+
+            let resume = pumpHistory
+                .filter { $0.type == .pumpResume }
+                .map {
+                    Treatment(units: units, type: .resume, date: $0.timestamp, creationDate: $0.timestamp)
+                }
+
+            treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
+                .flatMap { $0 }
+                .sorted { $0.date > $1.date }
+
+            let increments = settingsManager.preferences.bolusIncrement
+            tdd = TotalDailyDose().totalDailyDose(pumpHistory, increment: Double(increments))
+            insulinToday = TotalDailyDose().insulinToday(pumpHistory, increment: Double(increments))
         }
 
         func setupGlucose() {
-            DispatchQueue.main.async {
-                self.glucose = self.provider.glucose().map(Glucose.init)
-            }
+            glucose = provider.glucose().map(Glucose.init)
         }
 
         func deleteCarbs(_ treatment: Treatment, storage: Meals?) {

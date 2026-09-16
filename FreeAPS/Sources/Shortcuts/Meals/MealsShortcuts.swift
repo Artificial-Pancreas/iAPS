@@ -3,13 +3,13 @@ import Foundation
 import Intents
 
 struct MealPresetEntity: AppEntity, Identifiable, Hashable {
-    static var defaultQuery = MealPresetQuery()
+    static let defaultQuery = MealPresetQuery()
     var id: String
     var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: "\(id)")
     }
 
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Meals"
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Meals"
 }
 
 enum MealPresetIntentError: Error {
@@ -18,13 +18,8 @@ enum MealPresetIntentError: Error {
 }
 
 struct ApplyMealPresetIntent: AppIntent {
-    static var title: LocalizedStringResource = "iAPS Meal Presets"
-    static var description = IntentDescription("Allow to use iAPS Meal Presets")
-    internal var intentRequest: MealPresetIntentRequest
-
-    init() {
-        intentRequest = MealPresetIntentRequest()
-    }
+    static let title: LocalizedStringResource = "iAPS Meal Presets"
+    static let description = IntentDescription("Allow to use iAPS Meal Presets")
 
     @Parameter(title: "Preset") var preset: MealPresetEntity?
 
@@ -53,7 +48,7 @@ struct ApplyMealPresetIntent: AppIntent {
                 presetToApply = preset
             } else {
                 presetToApply = try await $preset.requestDisambiguation(
-                    among: intentRequest.fetchPresets(),
+                    among: try MealPresetIntentRequest().fetchPresets(),
                     dialog: "Which meal preset would you like to use?"
                 )
             }
@@ -65,6 +60,7 @@ struct ApplyMealPresetIntent: AppIntent {
                 )
             }
 
+            let intentRequest = MealPresetIntentRequest()
             let preset = try intentRequest.findPreset(displayName)
             let finalOverrideApply = try intentRequest.enactPreset(preset)
             let isDone = finalOverrideApply != nil ? true : false
@@ -82,24 +78,18 @@ struct ApplyMealPresetIntent: AppIntent {
 }
 
 struct MealPresetQuery: EntityQuery {
-    internal var intentRequest: MealPresetIntentRequest
-
-    init() {
-        intentRequest = MealPresetIntentRequest()
-    }
-
-    func entities(for identifiers: [MealPresetEntity.ID]) async throws -> [MealPresetEntity] {
-        let presets = intentRequest.fetchIDs(identifiers)
+    @MainActor func entities(for identifiers: [MealPresetEntity.ID]) async throws -> [MealPresetEntity] {
+        let presets = MealPresetIntentRequest().fetchIDs(identifiers)
         return presets
     }
 
-    func suggestedEntities() async throws -> [MealPresetEntity] {
-        let presets = try intentRequest.fetchPresets()
+    @MainActor func suggestedEntities() async throws -> [MealPresetEntity] {
+        let presets = try MealPresetIntentRequest().fetchPresets()
         return presets
     }
 }
 
-final class MealPresetIntentRequest: BaseIntentsRequest {
+@MainActor final class MealPresetIntentRequest: BaseIntentsRequest {
     func fetchPresets() throws -> ([MealPresetEntity]) {
         let presets = coreDataStorage.fetchMealPresets()
             .compactMap { preset -> MealPresetEntity in

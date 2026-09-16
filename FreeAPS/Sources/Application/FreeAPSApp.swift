@@ -184,14 +184,8 @@ private struct WaitingForUnlockView: View {
 enum ProtectedDataGate {
     private static let probeName = "protection.test"
 
-    private static var didBecomeAvailable = false
-
     static func isAvailable() -> Bool {
-        if didBecomeAvailable {
-            return true
-        }
-        didBecomeAvailable = probe()
-        return didBecomeAvailable
+        probe()
     }
 
     private static func probe() -> Bool {

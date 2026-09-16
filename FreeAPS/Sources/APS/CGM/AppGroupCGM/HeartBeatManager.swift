@@ -24,8 +24,7 @@ class HeartBeatManager {
     /// - parameters:
     ///     - sharedData : shared User Defaults
     public func checkCGMBluetoothTransmitter(
-        sharedUserDefaults: UserDefaults,
-        heartbeat: AppGroupCGMHeartBeatDelegate?
+        sharedUserDefaults: UserDefaults
     ) -> String? {
         if !initialSetupDone {
             initialSetupDone = true
@@ -42,7 +41,7 @@ class HeartBeatManager {
                 .string(forKey: keyForcgmTransmitterDeviceAddress)
 
             // assign new bluetoothTransmitter. If return value is nil, and if it was not nil before, and if it was currently connected then it will disconnect automatically, because there's no other reference to it, hence deinit will be called
-            bluetoothTransmitter = setupBluetoothTransmitter(sharedData: sharedUserDefaults, heartbeat: heartbeat)
+            bluetoothTransmitter = setupBluetoothTransmitter(sharedData: sharedUserDefaults)
         } else {
             disconnectBluetoothTransmitter()
         }
@@ -56,8 +55,7 @@ class HeartBeatManager {
     }
 
     private func setupBluetoothTransmitter(
-        sharedData: UserDefaults,
-        heartbeat: AppGroupCGMHeartBeatDelegate?
+        sharedData: UserDefaults
     ) -> BluetoothTransmitter? {
         // if sharedUserDefaults.cgmTransmitterDeviceAddress is not nil then, create a new bluetoothTranmsitter instance
         if let cgmTransmitterDeviceAddress = sharedData.string(forKey: keyForcgmTransmitterDeviceAddress) {
@@ -72,23 +70,15 @@ class HeartBeatManager {
                     servicesCBUUID: cgmTransmitter_CBUUID_Service,
                     CBUUID_Receive: cgmTransmitter_CBUUID_Receive,
                     heartbeat: {
-                        if let heartbeatAvailable = heartbeat {
-                            var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
-                            backGroundFetchBGTaskID = UIApplication.shared
-                                .beginBackgroundTask(withName: "heartbeat-manager-delay") {
-                                    guard let bg = backGroundFetchBGTaskID else { return }
-                                    UIApplication.shared.endBackgroundTask(bg)
-                                    backGroundFetchBGTaskID = nil
-                                }
+                        let backGroundFetchBGTaskID = UIApplication.shared.beginBackgroundTask(
+                            withName: "heartbeat-manager-delay",
+                            expirationHandler: nil
+                        )
 
-                            // give xdrip a few seconds to read from sensor and put into shared data
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                heartbeatAvailable.heartbeat()
-                                if let backgroundTask = backGroundFetchBGTaskID {
-                                    UIApplication.shared.endBackgroundTask(backgroundTask)
-                                    backGroundFetchBGTaskID = .invalid
-                                }
-                            }
+                        // give xdrip a few seconds to read from sensor and put into shared data
+                        Task { @MainActor in
+                            try? await Task.sleep(for: .seconds(5))
+                            UIApplication.shared.endBackgroundTask(backGroundFetchBGTaskID)
                         }
                     }
                 )

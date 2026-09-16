@@ -21,7 +21,16 @@ final class BaseBroadcaster: Broadcaster {
     }
 
     func notify<T>(_ protocolType: T.Type, on queue: DispatchQueue, block: @escaping (T) -> Void) {
-        dispatchPrecondition(condition: .onQueue(queue))
-        SwiftNotificationCenter.notify(protocolType, block: block)
+        let notifyObservers = {
+            SwiftNotificationCenter.notify(protocolType, block: block)
+        }
+
+        if queue === DispatchQueue.main, Thread.isMainThread {
+            notifyObservers()
+        } else if queue.isCurrentQueue {
+            notifyObservers()
+        } else {
+            queue.async(execute: notifyObservers)
+        }
     }
 }

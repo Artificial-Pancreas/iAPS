@@ -1,7 +1,7 @@
 import CoreData
 import Foundation
 
-final class CarbPresetIntentRequest: BaseIntentsRequest {
+@MainActor final class CarbPresetIntentRequest: BaseIntentsRequest {
     func addCarbs(
         _ quantityCarbs: Double,
         _ quantityFat: Double,

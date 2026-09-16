@@ -442,9 +442,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     }
 
     func removePump() {
-        DispatchQueue.main.async {
-            self.pumpManager = nil
-        }
+        pumpManager = nil
     }
 
     struct UnknownCGMManagerIdentifierError: Error {}
@@ -658,9 +656,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' will deactivate")
 
-        DispatchQueue.main.async {
-            self.pumpManager = nil
-        }
+        self.pumpManager = nil
     }
 
     func pumpManager(_: PumpManager, didUpdatePumpRecordsBasalProfileStartEvents pumpRecordsBasalProfileStartEvents: Bool) {
@@ -791,13 +787,11 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     func cgmManagerWantsDeletion(_ manager: CGMManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "CGM Manager with identifier \(manager.pluginIdentifier) wants deletion")
-        DispatchQueue.main.async {
-            if let cgmManagerUI = self.cgmManager as? CGMManagerUI {
-                self.removeDisplayGlucoseUnitObserver(cgmManagerUI)
-            }
-            self.cgmManager = nil
-            self.displayGlucoseUnitObservers.cleanupDeallocatedElements()
+        if let cgmManagerUI = cgmManager as? CGMManagerUI {
+            removeDisplayGlucoseUnitObserver(cgmManagerUI)
         }
+        cgmManager = nil
+        displayGlucoseUnitObservers.cleanupDeallocatedElements()
     }
 
     func cgmManager(_: CGMManager, hasNew readingResult: CGMReadingResult) {
@@ -829,10 +823,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     }
 
     func cgmManager(_: CGMManager, didUpdate status: CGMManagerStatus) {
-        DispatchQueue.main.async {
-            if self.cgmHasValidSensorSession != status.hasValidSensorSession {
-                self.cgmHasValidSensorSession = status.hasValidSensorSession
-            }
+        if cgmHasValidSensorSession != status.hasValidSensorSession {
+            cgmHasValidSensorSession = status.hasValidSensorSession
         }
     }
 }
@@ -936,9 +928,7 @@ extension BaseDeviceDataManager: CGMManagerOnboardingDelegate {
         debug(.deviceManager, "CGM manager with identifier '\(cgmManager.pluginIdentifier)' onboarded")
 
         // TODO: [loopkit] is this correct?
-        DispatchQueue.main.async {
-            self.refreshDeviceData()
-        }
+        refreshDeviceData()
     }
 }
 
@@ -957,9 +947,7 @@ extension BaseDeviceDataManager: PumpManagerOnboardingDelegate {
         precondition(pumpManager.isOnboarded)
         debug(.deviceManager, "Pump manager with identifier '\(pumpManager.pluginIdentifier)' onboarded")
 
-        DispatchQueue.main.async {
-            self.refreshDeviceData()
-        }
+        refreshDeviceData()
     }
 
     func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {}

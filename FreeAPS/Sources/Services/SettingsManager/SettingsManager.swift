@@ -26,10 +26,8 @@ final class BaseSettingsManager: SettingsManager, Injectable {
                 if oldValue.units != settings.units {
                     updateDisplayGlucosePreference()
                 }
-                DispatchQueue.main.async {
-                    self.broadcaster.notify(SettingsObserver.self, on: .main) {
-                        $0.settingsDidChange(self.settings)
-                    }
+                broadcaster.notify(SettingsObserver.self, on: .main) {
+                    $0.settingsDidChange(self.settings)
                 }
             }
         }

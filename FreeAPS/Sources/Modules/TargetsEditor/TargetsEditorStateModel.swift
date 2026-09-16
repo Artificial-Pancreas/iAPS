@@ -64,18 +64,16 @@ extension TargetsEditor {
         }
 
         func validate() {
-            DispatchQueue.main.async {
-                let uniq = Array(Set(self.items))
-                let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
-                    .map { item -> Item in
-                        Item(lowIndex: item.lowIndex, highIndex: item.highIndex, timeIndex: item.timeIndex)
-                    }
-                sorted.first?.timeIndex = 0
-                self.items = sorted
-
-                if self.items.isEmpty {
-                    self.units = self.settingsManager.settings.units
+            let uniq = Array(Set(items))
+            let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
+                .map { item -> Item in
+                    Item(lowIndex: item.lowIndex, highIndex: item.highIndex, timeIndex: item.timeIndex)
                 }
+            sorted.first?.timeIndex = 0
+            items = sorted
+
+            if items.isEmpty {
+                units = settingsManager.settings.units
             }
         }
     }

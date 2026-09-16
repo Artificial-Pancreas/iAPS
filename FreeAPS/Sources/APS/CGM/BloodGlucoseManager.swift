@@ -30,12 +30,10 @@ final class BloodGlucoseManager {
         guard glucose.isNotEmpty else { return false }
 
         // start background time extension
-        var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
-        backGroundFetchBGTaskID = UIApplication.shared.beginBackgroundTask(withName: "save BG starting") {
-            guard let bg = backGroundFetchBGTaskID else { return }
-            UIApplication.shared.endBackgroundTask(bg)
-            backGroundFetchBGTaskID = .invalid
-        }
+        let backGroundFetchBGTaskID = UIApplication.shared.beginBackgroundTask(
+            withName: "save BG starting",
+            expirationHandler: nil
+        )
 
         let previousLatestBG = glucoseStorage.latestDate()
         let storedGlucose = glucoseStorage.storeGlucose(glucose)
@@ -53,10 +51,7 @@ final class BloodGlucoseManager {
         }
 
         // end of the BG tasks
-        if let backgroundTask = backGroundFetchBGTaskID {
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            backGroundFetchBGTaskID = .invalid
-        }
+        UIApplication.shared.endBackgroundTask(backGroundFetchBGTaskID)
 
         return newGlucoseStored
     }

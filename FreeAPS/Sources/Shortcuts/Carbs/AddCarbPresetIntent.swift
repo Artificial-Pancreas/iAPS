@@ -5,15 +5,12 @@ import Swinject
 
 struct AddCarbPresentIntent: AppIntent {
     // Title of the action in the Shortcuts app
-    static var title: LocalizedStringResource = "Add carbs"
+    static let title: LocalizedStringResource = "Add carbs"
 
     // Description of the action in the Shortcuts app
-    static var description = IntentDescription("Allow to add carbs in iAPS.")
-
-    internal var carbRequest: CarbPresetIntentRequest
+    static let description = IntentDescription("Allow to add carbs in iAPS.")
 
     init() {
-        carbRequest = CarbPresetIntentRequest()
         dateAdded = Date()
     }
 
@@ -89,7 +86,7 @@ struct AddCarbPresentIntent: AppIntent {
                 )
             }
 
-            let finalQuantityCarbsDisplay = try carbRequest.addCarbs(
+            let finalQuantityCarbsDisplay = try CarbPresetIntentRequest().addCarbs(
                 quantityCarbs,
                 fatQuantity,
                 proteinQuantity,

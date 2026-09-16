@@ -38,7 +38,7 @@ import SwiftUI
     @Published var analysisEta: TimeInterval?
     @Published var analysisModel: String?
 
-    nonisolated(unsafe) private var searchTask: Task<Void, Never>?
+    private var searchTask: Task<Void, Never>?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -288,9 +288,11 @@ import SwiftUI
             }
         }
 
-        searchTask = Task { @MainActor in
+        searchTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+
             let telemetry: @Sendable(String) -> Void = { [weak self] message in
-                Task { @MainActor [weak self] in
+                Task { @MainActor in
                     self?.handleTelemetry(message)
                 }
             }
