@@ -112,6 +112,7 @@ extension Home {
             displayYgridLines: true,
             thresholdLines: true,
             latestOverride: nil,
+            consecutiveOverride: nil,
             overrideHistory: [],
             minimumSMB: 0,
             insulinDIA: 7,
@@ -377,18 +378,18 @@ extension Home {
                 let presetName = os.isPresetName()
                 // Is the Override a Preset?
                 if let preset = presetName {
-                    if let duration = os.cancelProfile() {
+                    if let duration = os.cancelProfile().duration {
                         // Update in Nightscout
                         nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
                     }
                 } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                    if let duration = os.cancelProfile() {
+                    if let duration = os.cancelProfile().duration {
                         nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
                     }
                 } else {
                     let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                         .formatted() + " %" : "Custom"
-                    if let duration = os.cancelProfile() {
+                    if let duration = os.cancelProfile().duration {
                         nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
                     }
                 }
@@ -531,6 +532,11 @@ extension Home {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.data.latestOverride = self.provider.latestOverride()
+
+                if let or = self.data.latestOverride, or.enabled, let id = or.succeeding {
+                    self.data.consecutiveOverride = self.provider.consecutiveOverride(id)
+                } else { self.data.consecutiveOverride = nil }
+
                 self.data.overrideHistory = self.provider.overrideHistory()
             }
         }

@@ -721,7 +721,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     let presetName = storage.isPresetName()
                     let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
 
-                    if let duration = storage.cancelProfile() {
+                    if let duration = storage.cancelProfile().duration {
                         nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
                     }
                     announcementsStorage.storeAnnouncements([announcement], enacted: true)
@@ -732,7 +732,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
             // Cancel eventual current active override first
             if isActive {
-                if let duration = OverrideStorage().cancelProfile(), let last = lastActiveOveride {
+                if let duration = OverrideStorage().cancelProfile().duration, let last = lastActiveOveride {
                     let presetName = storage.isPresetName()
                     let nsString = presetName != nil ? presetName : last.percentage.formatted()
                     nightscout.editOverride(nsString!, duration, last.date ?? Date())

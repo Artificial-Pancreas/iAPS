@@ -1,7 +1,7 @@
 import Foundation
 import MetricKit
-import UIKit
 import os
+import UIKit
 
 /// Memory / process-pressure telemetry block attached to the statistics uploads.
 ///

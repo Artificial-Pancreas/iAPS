@@ -622,8 +622,11 @@ extension Home {
             HStack(spacing: 0) {
                 if let override = fetchedPercent.first {
                     if override.enabled {
+                        let consecutiveOverrideIllustration = (override.succeeding != nil) ?
+                            illustrateCombination(override: override) : nil
                         if override.isPreset {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
+
                             if let currentProfile = profile {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
@@ -634,26 +637,37 @@ extension Home {
                                     } else {
                                         Text(name).font(.statusFont).foregroundStyle(.secondary)
                                     }
+
+                                    consecutiveOverrideIllustration
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
                         } else if override.percentage != 100 {
                             Text((tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
                                 .foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         } else if override.smbIsOff, !override.smbIsAlwaysOff {
                             Text(NSLocalizedString("No ", comment: "No as in no SMBs")).font(.statusFont)
                                 .foregroundStyle(.secondary)
                             Image(systemName: "syringe")
                                 .font(.previewNormal).foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         } else if override.smbIsOff {
                             Image(systemName: "clock").font(.statusFont).foregroundStyle(.secondary)
                             Image(systemName: "syringe")
                                 .font(.previewNormal).foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         } else {
                             Text("Override").font(.statusFont).foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         }
                     }
                 }
             }
+        }
+
+        private func illustrateCombination(override _: Override) -> some View {
+            Image(systemName: "person.2.fill").symbolRenderingMode(.palette).foregroundStyle(.blue, .purple)
+                .padding(.horizontal, 2)
         }
 
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
