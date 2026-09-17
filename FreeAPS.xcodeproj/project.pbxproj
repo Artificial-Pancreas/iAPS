@@ -257,6 +257,7 @@
 		38E87401274F77E400975559 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E873FD274F761800975559 /* CoreNFC.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		38E87403274F78C000975559 /* libswiftCoreNFC.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E87402274F78C000975559 /* libswiftCoreNFC.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
 		38E87408274F9AD000975559 /* UserNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E87407274F9AD000975559 /* UserNotificationsManager.swift */; };
+		DA1E00010000000000000002 /* DeviceAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1E00010000000000000001 /* DeviceAlertManager.swift */; };
 		38E8752A27554D5700975559 /* FreeAPSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8752927554D5700975559 /* FreeAPSApp.swift */; };
 		38E8752C27554D5700975559 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8752B27554D5700975559 /* MainView.swift */; };
 		38E8752E27554D5700975559 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8752D27554D5700975559 /* NotificationController.swift */; };
@@ -1026,6 +1027,7 @@
 		38E873FD274F761800975559 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
 		38E87402274F78C000975559 /* libswiftCoreNFC.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftCoreNFC.tbd; path = usr/lib/swift/libswiftCoreNFC.tbd; sourceTree = SDKROOT; };
 		38E87407274F9AD000975559 /* UserNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationsManager.swift; sourceTree = "<group>"; };
+		DA1E00010000000000000001 /* DeviceAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAlertManager.swift; sourceTree = "<group>"; };
 		38E8751C27554D5500975559 /* FreeAPSWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeAPSWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38E8751E27554D5700975559 /* WatchAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WatchAssets.xcassets; sourceTree = "<group>"; };
 		38E8752927554D5700975559 /* FreeAPSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeAPSApp.swift; sourceTree = "<group>"; };
@@ -2493,6 +2495,7 @@
 		38E87406274F9AA500975559 /* UserNotifiactions */ = {
 			isa = PBXGroup;
 			children = (
+				DA1E00010000000000000001 /* DeviceAlertManager.swift */,
 				38E87407274F9AD000975559 /* UserNotificationsManager.swift */,
 			);
 			path = UserNotifiactions;
@@ -3858,6 +3861,7 @@
 				FEB27EA62E07D9310047CB66 /* NSUserDefaults.swift in Sources */,
 				3811DE5F25C9D4D500A708ED /* ProgressBar.swift in Sources */,
 				38E87408274F9AD000975559 /* UserNotificationsManager.swift in Sources */,
+				DA1E00010000000000000002 /* DeviceAlertManager.swift in Sources */,
 				CE82E02528E867BA00473A9C /* AlertStorage.swift in Sources */,
 				38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */,
 				F299DD222FD84D840048B96A /* OverrideSnapshot.swift in Sources */,
@@ -4517,7 +4521,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4569,7 +4573,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
