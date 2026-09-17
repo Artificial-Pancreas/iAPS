@@ -16,6 +16,13 @@ final class ServiceAssembly: Assembly {
 
         container.register(AppCoordinator.self) { _ in AppCoordinator() }
 
+        container.register(DeviceAlertManager.self) { r in
+            BaseDeviceAlertManager(
+                alertHistoryStorage: r.resolve(AlertHistoryStorage.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!
+            )
+        }
+
         // Foundation.NotificationCenter.default is provided to GarminManager below without resolving it;
         // if this ever needs to change - make sure to keep the GarminManager in-sync
         container.register(NotificationCenter.self) { _ in Foundation.NotificationCenter.default }
@@ -42,6 +49,7 @@ final class ServiceAssembly: Assembly {
                 storage: r.resolve(FileStorage.self)!
             )
         }
+        container.register(UserNotificationCenterDelegate.self) { _ in UserNotificationCenterDelegate() }
         container.register(UserNotificationsManager.self) { r in
             let settingsManager = r.resolve(SettingsManager.self)!
             let glucoseStorage = r.resolve(GlucoseStorage.self)!
@@ -49,6 +57,7 @@ final class ServiceAssembly: Assembly {
             let deviceDataManager = r.resolve(DeviceDataManager.self)!
             let router = r.resolve(Router.self)!
             let appCoordinator = r.resolve(AppCoordinator.self)!
+            let deviceAlertManager = r.resolve(DeviceAlertManager.self)!
 
             return BaseUserNotificationsManager(
                 settingsManager: settingsManager,
@@ -56,7 +65,9 @@ final class ServiceAssembly: Assembly {
                 apsManager: apsManager,
                 deviceDataManager: deviceDataManager,
                 router: router,
-                appCoordinator: appCoordinator
+                appCoordinator: appCoordinator,
+                deviceAlertManager: deviceAlertManager,
+                userNotificationCenterDelegate: r.resolve(UserNotificationCenterDelegate.self)!
             )
         }
         container.register(WatchManager.self) { r in

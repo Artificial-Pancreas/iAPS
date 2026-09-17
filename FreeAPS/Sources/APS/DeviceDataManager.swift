@@ -10,9 +10,12 @@ import MockKitUI
 import os.log
 import SwiftDate
 import Swinject
-import UserNotifications
 
 protocol DeviceDataManager: Sendable {
+    /// the user answered a device alert, tell the device
+    func acknowledgeDeviceAlert(_ identity: AlertIdentity, recordIdentifier: String?) async
+    func acknowledgeAllDeviceAlerts() async
+
     var availableCGMManagers: [CGMManagerDescriptor] { get }
     var availablePumpManagers: [PumpManagerDescriptor] { get }
 
@@ -109,7 +112,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     )
 
     private let pumpHistoryStorage: PumpHistoryStorage
-    private let alertHistoryStorage: AlertHistoryStorage
+    private let deviceAlertManager: DeviceAlertManager
     private let storage: FileStorage
     private let glucoseStorage: GlucoseStorage
     private let settingsManager: SettingsManager
@@ -215,7 +218,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 
     init(
         pumpHistoryStorage: PumpHistoryStorage,
-        alertHistoryStorage: AlertHistoryStorage,
+        deviceAlertManager: DeviceAlertManager,
         storage: FileStorage,
         glucoseStorage: GlucoseStorage,
         settingsManager: SettingsManager,
@@ -227,7 +230,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         loopEventsStorage: LoopEventsStorage
     ) {
         self.pumpHistoryStorage = pumpHistoryStorage
-        self.alertHistoryStorage = alertHistoryStorage
+        self.deviceAlertManager = deviceAlertManager
         self.storage = storage
         self.glucoseStorage = glucoseStorage
         self.settingsManager = settingsManager
@@ -247,6 +250,8 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
         let oldValue = self.cgmManager
+        // Read before the swap: afterwards there is no way back to the manager that is being replaced.
+        let oldIdentifier = oldValue?.pluginIdentifier
         cgmManagerLocked.mutate { $0 = cgmManager }
 
         oldValue?.cgmManagerDelegate = nil
@@ -256,12 +261,21 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 
         rawCGMManager = cgmManager?.rawValue
         UserDefaults.standard.clearLegacyCGMManagerRawValue()
+
+        // A pump doubling as the CGM is the pump setter's business: either the pump is still there
+        // (`removePumpAsCGM`) and its alerts must stay, or it is being removed too and
+        // `setPumpManager` retracts them once it is fully gone.
+        if !(oldValue is PumpManagerUI) {
+            retractAlertsOfRemovedDevice(oldIdentifier)
+        }
     }
 
     private func setPumpManager(_ pumpManager: PumpManagerUI?) {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
         let oldValue = self.pumpManager
+        // Read before the swap: afterwards there is no way back to the manager that is being replaced.
+        let oldIdentifier = oldValue?.pluginIdentifier
         pumpManagerLocked.mutate { $0 = pumpManager }
 
         oldValue?.pumpManagerDelegate = nil
@@ -276,6 +290,32 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 
         rawPumpManager = pumpManager?.rawValue
         UserDefaults.standard.clearLegacyPumpManagerRawValue()
+
+        // After `setCgmManager(nil)` above, so a pump that was also the CGM is seen as fully gone.
+        // `setCgmManager` leaves the retraction of a pump-as-CGM to us, so this runs exactly once.
+        retractAlertsOfRemovedDevice(oldIdentifier)
+    }
+
+    /// A removed or replaced device will never retract its own alerts, so nothing else ever would: a
+    /// pending record is kept forever, a fired repeating one is re-armed on every launch, and
+    /// acknowledging it finds no responder. Takes them all down at the source - through the alert
+    /// manager's queue, like every other mutation.
+    ///
+    /// Nothing happens while the identifier is still in use. A pump that doubles as the CGM goes
+    /// through both setters; only `setPumpManager` calls this for it, so removing it as a CGM
+    /// (`removePumpAsCGM`) never wipes the alerts of the pump that is still there.
+    private func retractAlertsOfRemovedDevice(_ managerIdentifier: String?) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+
+        guard let managerIdentifier,
+              managerIdentifier != pumpManager?.pluginIdentifier,
+              managerIdentifier != cgmManager?.pluginIdentifier
+        else {
+            return
+        }
+
+        warning(.deviceManager, "Device '\(managerIdentifier)' is gone - retracting its outstanding alerts")
+        deviceAlertManager.retractAllAlerts(managerIdentifier: managerIdentifier)
     }
 
     // this is called on app start
@@ -297,18 +337,6 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
             setupPump()
             setupCGM()
         }
-
-        appCoordinator.alertsUpdates
-            .receive(on: processQueue)
-            .sink { [weak self] alerts in
-                guard let self else { return }
-                alerts.forEach { alert in
-                    if alert.acknowledgedDate == nil {
-                        self.ackAlert(alert: alert)
-                    }
-                }
-            }
-            .store(in: lifetime)
 
         appCoordinator.heartbeat
             .receive(on: processQueue)
@@ -1042,28 +1070,11 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
 extension BaseDeviceDataManager: AlertIssuer {
     func issueAlert(_ alert: Alert) {
-        // Device alerts (pod faults, expiry, occlusion, CGM alarms) otherwise
-        // never reach the log files — only the alert-history UI storage.
-        debug(
-            .deviceManager,
-            "Device alert [\(alert.identifier.managerIdentifier)/\(alert.identifier.alertIdentifier)]: " +
-                "\(alert.backgroundContent.title) — \(alert.backgroundContent.body)"
-        )
-        let entry = AlertEntry(from: alert)
-        Task { [alertHistoryStorage] in
-            await alertHistoryStorage.storeAlert(entry)
-        }
+        deviceAlertManager.issueAlert(alert)
     }
 
     func retractAlert(identifier: Alert.Identifier) {
-        let managerIdentifier = identifier.managerIdentifier
-        let alertIdentifier = identifier.alertIdentifier
-        Task { [alertHistoryStorage] in
-            await alertHistoryStorage.deleteAlert(
-                managerIdentifier: managerIdentifier,
-                alertIdentifier: alertIdentifier
-            )
-        }
+        deviceAlertManager.retractAlert(identifier: identifier)
     }
 }
 
@@ -1131,63 +1142,114 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
 }
 
-// MARK: - AlertPresenter
+// MARK: - Device alert acknowledgement
 
 extension BaseDeviceDataManager {
-//    func alertDidUpdate(_ alerts: [AlertEntry]) {
-//        alerts.forEach { alert in
-//            if alert.acknowledgedDate == nil {
-//                ackAlert(alert: alert)
-//            }
-//        }
-//    }
+    /// Must only ever be reached from a real user gesture, never automatically when an alert arrives:
+    /// on a pod this is what stops the physical beeping.
+    func acknowledgeDeviceAlert(_ identity: AlertIdentity, recordIdentifier: String? = nil) async {
+        // Captured before the device is told, and never re-read afterwards: an Omnipod round trip takes
+        // seconds, and the device may re-issue the same alert while it is in flight. Only what the user
+        // could have seen when they answered is acknowledged - a record issued after this point keeps
+        // its badge, its notification and its card.
+        var recordIdentifiers = await deviceAlertManager.outstandingAlerts()
+            .filter { $0.identity == identity }
+            .map(\.storageIdentifier)
+        if let recordIdentifier, !recordIdentifiers.contains(recordIdentifier) {
+            // A notification delivered while the app was down has no `firedDate` yet, so it is not
+            // outstanding at this point - `alertWasAcknowledged` stamps it due first.
+            recordIdentifiers.append(recordIdentifier)
+        }
+        await acknowledgeDeviceAlert(
+            identity,
+            recordIdentifiers: recordIdentifiers,
+            recordIdentifier: recordIdentifier
+        )
+    }
 
-    private func ackAlert(alert: AlertEntry) {
-        let typeMessage: MessageType
-        let alertUp = alert.alertIdentifier.uppercased()
-        if alertUp.contains("FAULT") || alertUp.contains("ERROR") {
-            typeMessage = .errorPump
-        } else {
-            typeMessage = .warning
+    func acknowledgeAllDeviceAlerts() async {
+        // `outstandingAlerts()` also returns already-acknowledged repeating alerts; skip those so we
+        // don't re-send acknowledgements the device has already received (same gate as the badge).
+        let unacknowledged = await deviceAlertManager.outstandingAlerts().filter { $0.acknowledgedDate == nil }
+        // One device call per alert, carrying that alert's records: the same alert may have several
+        // outstanding issues, and each has to be stamped.
+        let byIdentity = Dictionary(grouping: unacknowledged, by: \.identity)
+        for (identity, alerts) in byIdentity {
+            await acknowledgeDeviceAlert(
+                identity,
+                recordIdentifiers: alerts.map(\.storageIdentifier),
+                recordIdentifier: nil
+            )
+        }
+    }
+
+    private func acknowledgeDeviceAlert(
+        _ identity: AlertIdentity,
+        recordIdentifiers: [String],
+        recordIdentifier: String?
+    ) async {
+        let error = await tellDeviceAlertWasAcknowledged(identity)
+        await deviceAlertManager.alertWasAcknowledged(
+            identity,
+            recordIdentifiers: recordIdentifiers,
+            recordIdentifier: recordIdentifier,
+            failure: error?.localizedDescription
+        )
+    }
+
+    private func tellDeviceAlertWasAcknowledged(_ identity: AlertIdentity) async -> Error? {
+        var alertResponder: AlertResponder?
+        if let pumpManager = pumpManager, identity.managerIdentifier == pumpManager.pluginIdentifier {
+            alertResponder = pumpManager
+        } else if let cgmManager = cgmManager, identity.managerIdentifier == cgmManager.pluginIdentifier {
+            alertResponder = cgmManager
         }
 
-        let messageCont = MessageContent(content: alert.contentBody ?? "Unknown", type: typeMessage)
+        guard let alertResponder else {
+            // The device is gone or replaced, so nothing can be told. Returning no error acknowledges
+            // the alert locally - the user has seen it, and there is nothing to come back to.
+            warning(
+                .deviceManager,
+                "No responder for alert [\(identity.managerIdentifier)/\(identity.alertIdentifier)], acknowledged locally"
+            )
+            return nil
+        }
 
-        processQueue.async {
-            // we cannot rely on completion callback to be always called, so...
-            // present the alert and acknowledge in the storage upfront
-            // and store the error in case the manager completes with error
-            // TODO: this has been fixed in the offending device manager, clean this up
-//            self.alertHistoryStorage.ackAlert(
-//                managerIdentifier: alert.managerIdentifier,
-//                alertIdentifier: alert.alertIdentifier,
-//                error: nil
-//            )
-            self.appCoordinator.sendAlertMessage(messageCont)
-
-            var alertResponder: AlertResponder?
-            if let pumpManager = self.pumpManager, alert.managerIdentifier == pumpManager.pluginIdentifier {
-                alertResponder = pumpManager
-            } else if let cgmManager = self.cgmManager, alert.managerIdentifier == cgmManager.pluginIdentifier {
-                alertResponder = cgmManager
-            }
-            alertResponder?.acknowledgeAlert(alertIdentifier: alert.alertIdentifier) { error in
-                if let error = error {
-                    debug(.deviceManager, "acknowledge failed with error \(error.localizedDescription)")
+        // protect against the completion being called more than once
+        let once = AcknowledgementOnce()
+        return await withCheckedContinuation { continuation in
+            once.arm(continuation)
+            alertResponder.acknowledgeAlert(alertIdentifier: identity.alertIdentifier) { error in
+                guard once.finish(error) else {
+                    warning(
+                        .deviceManager,
+                        "Duplicate acknowledgement completion for alert [\(identity.managerIdentifier)/\(identity.alertIdentifier)], ignored (error: \(error?.localizedDescription ?? "none"))"
+                    )
+                    return
                 }
-
-                self.alertHistoryStorage.ackAlert(
-                    managerIdentifier: alert.managerIdentifier,
-                    alertIdentifier: alert.alertIdentifier,
-                    error: error?.localizedDescription
-                )
             }
-
-//            self.broadcaster.notify(PumpNotificationObserver.self, on: self.processQueue) {
-//                $0.pumpNotification(alert: alert)
-//            }
-            self.appCoordinator.sendPumpNotification(alert)
         }
+    }
+}
+
+/// Resumes an acknowledgement continuation exactly once, whichever thread gets there first.
+private final class AcknowledgementOnce: @unchecked Sendable {
+    private let lock = NSLock(label: "acknowledgeDeviceAlert")
+    private var continuation: CheckedContinuation<Error?, Never>?
+
+    func arm(_ continuation: CheckedContinuation<Error?, Never>) {
+        lock.perform { self.continuation = continuation }
+    }
+
+    /// Returns `true` if this call resumed the continuation, `false` if a previous call already did.
+    func finish(_ error: Error?) -> Bool {
+        let continuation: CheckedContinuation<Error?, Never>? = lock.perform {
+            defer { self.continuation = nil }
+            return self.continuation
+        }
+        guard let continuation else { return false }
+        continuation.resume(returning: error)
+        return true
     }
 }
 
