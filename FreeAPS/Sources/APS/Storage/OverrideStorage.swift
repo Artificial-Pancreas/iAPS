@@ -134,9 +134,11 @@ final class OverrideStorage {
         cancelActiveOverrideInNightscout(nightscout, name: cancellationName)
 
         let activeOverride = overrideFromPreset(preset)
+        let duration = (activeOverride.indefinite || (activeOverride.duration ?? 0) == 0) ? 2880 : activeOverride.duration ?? 0
+
         nightscout.uploadOverride(
             uploadName ?? preset.name ?? "",
-            Double(truncating: activeOverride.duration ?? 0),
+            Double(truncating: duration),
             activeOverride.date ?? Date.now,
             consecutive: succeedingPreset(for: activeOverride)
         )
