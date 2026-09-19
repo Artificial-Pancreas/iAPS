@@ -870,7 +870,8 @@ final class OpenAPS {
     }
 
     func dynamicVariables(_ preferences: Preferences?, _: FreeAPSSettings?) async -> DynamicVariables {
-        coredataContext.performAndWait {
+        let result = coredataContext.performAndWait {
+            var nightscoutOverrideEdit: (profile: String, duration: Double, date: Date)?
             let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
@@ -938,11 +939,21 @@ final class OpenAPS {
                    (recent.actualDate ?? .distantPast) > (overrideArray.first?.date ?? .distantFuture)
                 {
                     useOverride = false
-                    if OverrideStorage().cancelProfile().0 != nil, let carbs = recent.carbs {
-                        debug(
-                            .nightscout,
-                            "Override ended, because of new carbs: \(carbs) g, duration: \(duration) minutes"
-                        )
+                    let activeOverride = overrideArray.first
+                    let presetName = os.isPresetName()
+                    if let duration = os.cancelProfile().duration, let activeOverride {
+                        let nsString = presetName ??
+                            (
+                                activeOverride.isPreset ? "📉" : activeOverride.percentage.formatted() != "100" ? activeOverride
+                                    .percentage.formatted() + " %" : "Custom"
+                            )
+                        nightscoutOverrideEdit = (nsString, duration, activeOverride.date ?? Date.now)
+                        if let carbs = recent.carbs {
+                            debug(
+                                .nightscout,
+                                "Override ended, because of new carbs: \(carbs) g, duration: \(duration) minutes"
+                            )
+                        }
                     }
                 }
 
@@ -955,13 +966,15 @@ final class OpenAPS {
                    .Direction.doubleDown.symbol == BloodGlucose.Direction.doubleUp.symbol
                 {
                     useOverride = false
-                    let storage = OverrideStorage()
-                    if let duration = storage.cancelProfile().0 {
-                        let last_ = storage.fetchLatestOverride().last
-                        let name = storage.isPresetName()
-                        if let last = last_ {
-                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
-                        }
+                    let activeOverride = overrideArray.first
+                    let presetName = os.isPresetName()
+                    if let duration = os.cancelProfile().duration, let activeOverride {
+                        let nsString = presetName ??
+                            (
+                                activeOverride.isPreset ? "📉" : activeOverride.percentage.formatted() != "100" ? activeOverride
+                                    .percentage.formatted() + " %" : "Custom"
+                            )
+                        nightscoutOverrideEdit = (nsString, duration, activeOverride.date ?? Date.now)
                         debug(
                             .nightscout,
                             "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
@@ -975,13 +988,15 @@ final class OpenAPS {
                    ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
                 {
                     useOverride = false
-                    let storage = OverrideStorage()
-                    if let duration = OverrideStorage().cancelProfile().0 {
-                        let last_ = storage.fetchLatestOverride().last
-                        let name = storage.isPresetName()
-                        if let last = last_ {
-                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
-                        }
+                    let activeOverride = overrideArray.first
+                    let presetName = os.isPresetName()
+                    if let duration = os.cancelProfile().duration, let activeOverride {
+                        let nsString = presetName ??
+                            (
+                                activeOverride.isPreset ? "📉" : activeOverride.percentage.formatted() != "100" ? activeOverride
+                                    .percentage.formatted() + " %" : "Custom"
+                            )
+                        nightscoutOverrideEdit = (nsString, duration, activeOverride.date ?? Date.now)
                         debug(
                             .nightscout,
                             "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
@@ -1141,8 +1156,18 @@ final class OpenAPS {
                 aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
             )
             self.storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
-            return averages
+            return (averages, nightscoutOverrideEdit)
         }
+
+        if let nightscoutOverrideEdit = result.1 {
+            nightscout.editOverride(
+                nightscoutOverrideEdit.profile,
+                nightscoutOverrideEdit.duration,
+                nightscoutOverrideEdit.date
+            )
+        }
+
+        return result.0
     }
 
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {

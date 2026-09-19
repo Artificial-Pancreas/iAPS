@@ -1174,8 +1174,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date) {
-        let duration = Int(duration_ == 0 ? 2880 : duration_)
+        let duration = editedOverrideDuration(duration_)
         let consecutiveDate = consecutiveOverrideDate(for: date)
+        let deleteTolerance: TimeInterval = 5 * 60
         let exercise =
             [NigtscoutExercise(
                 duration: duration,
@@ -1190,7 +1191,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         processQueue.async {
-            nightscout.deleteOverride(at: date)
+            nightscout.deleteOverride(around: date, tolerance: deleteTolerance)
                 .flatMap { _ -> AnyPublisher<Void, Swift.Error> in
                     guard let consecutiveDate else {
                         return Just(())
@@ -1198,7 +1199,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                             .eraseToAnyPublisher()
                     }
 
-                    return nightscout.deleteOverride(around: consecutiveDate)
+                    return nightscout.deleteOverride(around: consecutiveDate, tolerance: deleteTolerance)
                 }
                 .sink { completion in
                     switch completion {
@@ -1245,7 +1246,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         let duration = Int(truncating: override.duration ?? 0)
-        let normalizedDuration = duration == 0 ? 2880 : duration
+        let normalizedDuration = (duration == 0 || override.indefinite) ? 2880 : duration
         return date.addingTimeInterval(TimeInterval(normalizedDuration * 60))
     }
 
@@ -1287,6 +1288,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func overrideDuration(_ duration: NSDecimalNumber?) -> Int {
         Int(truncating: duration ?? 0) == 0 ? 2880 : Int(truncating: duration ?? 0)
+    }
+
+    private func editedOverrideDuration(_ duration: Double) -> Int {
+        max(1, Int(duration.rounded(.up)))
     }
 
     private func overrideExercise(profile: String?, duration: Int, createdAt: Date) -> NigtscoutExercise {

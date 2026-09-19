@@ -842,7 +842,7 @@ private final class GeometriesBuilder {
 
             print("Target: \(target) mg/dl")
 
-            if duration > 0 {
+            if duration > 0, !last.indefinite {
                 let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970)
                 let plusNow = (last.date ?? Date.now)
                     .addingTimeInterval(Int(truncating: latest?.duration ?? 0).minutes.timeInterval)
@@ -861,7 +861,7 @@ private final class GeometriesBuilder {
                     var presetDuration = Int(truncating: preset.duration ?? 0)
 
                     /// When set to indefinite(0) use a 48 hour illustration
-                    if presetDuration == 0 {
+                    if presetDuration == 0 || preset.indefinite {
                         presetDuration = 2880
                     }
 

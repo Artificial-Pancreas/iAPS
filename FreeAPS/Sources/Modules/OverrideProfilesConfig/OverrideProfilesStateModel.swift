@@ -142,6 +142,7 @@ extension OverrideProfilesConfig {
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
+
                 ns.uploadOverride(
                     self.percentage.formatted(),
                     Double(duration),

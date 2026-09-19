@@ -397,30 +397,7 @@ extension NightscoutAPI {
     }
 
     func deleteOverride(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
-            URLQueryItem(name: "find[Exercise][$exists]", value: "true"),
-            URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-        ]
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        deleteOverride(around: date, tolerance: 2)
     }
 
     func deleteOverride(around date: Date, tolerance: TimeInterval = 2) -> AnyPublisher<Void, Swift.Error> {
@@ -431,6 +408,7 @@ extension NightscoutAPI {
         components.path = Config.treatmentsPath
         components.queryItems = [
             URLQueryItem(name: "find[eventType]", value: EventType.nsExercise.rawValue),
+            URLQueryItem(name: "find[enteredBy]", value: NigtscoutExercise.local),
             URLQueryItem(
                 name: "find[created_at][$gte]",
                 value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-tolerance))
