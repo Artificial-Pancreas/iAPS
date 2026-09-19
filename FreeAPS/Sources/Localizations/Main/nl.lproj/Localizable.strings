@@ -2117,6 +2117,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Override Max IOB" = "Max IOB overschrijven";
 
 /* */
+"When run to completion schedule a consecutive override preset:" = "When run to completion schedule a consecutive override preset:";
 
 /* */
 "Save as Profile" = "Bewaar als profiel";
