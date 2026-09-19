@@ -87,6 +87,7 @@ extension OverrideProfilesConfig {
                 saveOverride.enabled = true
                 saveOverride.smbIsOff = self.smbIsOff
                 saveOverride.overrideAutoISF = self.overrideAutoISF
+                var consecutive: OverridePresets?
                 if self.isPreset {
                     saveOverride.isPreset = true
                     saveOverride.id = id
@@ -129,10 +130,11 @@ extension OverrideProfilesConfig {
                     if glucoseOverrideThresholdActiveDown {
                         saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
                     }
+                }
 
-                    if let consecutiveOverride = consecutivePresetID {
-                        saveOverride.succeeding = consecutiveOverride
-                    }
+                if let consecutiveOverride = consecutivePresetID {
+                    saveOverride.succeeding = consecutiveOverride
+                    consecutive = OverrideStorage().fetchPreset(id: consecutiveOverride)
                 }
 
                 if overrideAutoISF {
@@ -140,7 +142,13 @@ extension OverrideProfilesConfig {
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
-                ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
+
+                ns.uploadOverride(
+                    self.percentage.formatted(),
+                    Double(duration),
+                    saveOverride.date ?? Date.now,
+                    consecutive: consecutive
+                )
 
                 try? self.coredataContext.save()
             }
@@ -213,75 +221,10 @@ extension OverrideProfilesConfig {
             guard !id_.isEmpty else { return }
 
             // Double Check that preset actually still exist in databasa (shouldn't really be necessary)
-            let profileArray = OverrideStorage().fetchProfiles()
-            guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
+            let storage = OverrideStorage()
+            guard let profile = storage.fetchProfiles().first(where: { $0.id == id_ }) else { return }
 
-            // Is there already an active override?
-            let last = OverrideStorage().fetchLatestOverride().last
-            let lastPreset = OverrideStorage().isPresetName()
-            if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile().duration {
-                ns.editOverride(
-                    (last?.isPreset ?? false) ? (lastPreset ?? "📉") : "Custom",
-                    duration,
-                    alreadyActive.date ?? Date.now
-                )
-            }
-            // New Override properties
-            let saveOverride = Override(context: coredataContext)
-            saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
-            saveOverride.indefinite = profile.indefinite
-            saveOverride.percentage = profile.percentage
-            saveOverride.enabled = true
-            saveOverride.smbIsOff = profile.smbIsOff
-            saveOverride.isPreset = true
-            saveOverride.date = Date()
-            saveOverride.id = id_
-            saveOverride.advancedSettings = profile.advancedSettings
-            saveOverride.isfAndCr = profile.isfAndCr
-            saveOverride.overrideAutoISF = profile.overrideAutoISF
-
-            if let tar = profile.target, tar == 0 {
-                saveOverride.target = 6
-            } else {
-                saveOverride.target = profile.target
-            }
-
-            if profile.advancedSettings {
-                if !profile.isfAndCr {
-                    saveOverride.isf = profile.isf
-                    saveOverride.cr = profile.cr
-                    saveOverride.basal = profile.basal
-                }
-                if profile.smbIsAlwaysOff {
-                    saveOverride.smbIsAlwaysOff = true
-                    saveOverride.start = profile.start
-                    saveOverride.end = profile.end
-                } else { saveOverride.smbIsAlwaysOff = false }
-
-                saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
-                saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
-                saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB as NSDecimalNumber) as NSDecimalNumber
-                saveOverride.overrideMaxIOB = profile.overrideMaxIOB
-                saveOverride.endWIthNewCarbs = profile.endWIthNewCarbs
-
-                saveOverride.succeeding = profile.succeeding
-            }
-
-            if profile.glucoseOverrideThresholdActive {
-                saveOverride.glucoseOverrideThresholdActive = true
-                saveOverride.glucoseOverrideThreshold = (profile.glucoseOverrideThreshold ?? 100) as NSDecimalNumber
-            }
-
-            if profile.glucoseOverrideThresholdActiveDown {
-                saveOverride.glucoseOverrideThresholdActiveDown = true
-                saveOverride.glucoseOverrideThresholdDown = (profile.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber
-            }
-
-            // Saves
-            coredataContext.perform { try? self.coredataContext.save() }
-
-            // Uploads new Override to NS
-            ns.uploadOverride(profile.name ?? "", Double(truncating: saveOverride.duration ?? 0), saveOverride.date ?? Date())
+            storage.activatePresetAndUpload(profile, nightscout: ns, cancellationName: .custom)
         }
 
         func savedSettings(edit: Bool, identifier: String?) {
