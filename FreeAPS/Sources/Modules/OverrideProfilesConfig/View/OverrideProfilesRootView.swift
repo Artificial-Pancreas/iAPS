@@ -763,9 +763,16 @@ extension OverrideProfilesConfig {
                             Image("PreMealOverride").foregroundStyle(.green)
                         }
 
-                        Spacer()
-
                         if hasConsecutivePreset {
+                            if let succeeding = consecutiveProfiles.first(where: { $0.id == preset.succeeding }),
+                               let name = succeeding.name
+                            {
+                                Text("+")
+                                Text(name)
+                            }
+
+                            Spacer()
+
                             Image(systemName: "person.2.fill")
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.blue, .purple)
