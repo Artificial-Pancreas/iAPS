@@ -776,6 +776,8 @@ extension OverrideProfilesConfig {
                             Image(systemName: "person.2.fill")
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.blue, .purple)
+                        } else {
+                            Spacer()
                         }
                     }
                     HStack {
