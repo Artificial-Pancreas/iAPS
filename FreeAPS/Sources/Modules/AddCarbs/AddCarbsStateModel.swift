@@ -296,7 +296,7 @@ extension AddCarbs {
                 nightscoutManager.uploadOverride(
                     "📉",
                     Double(45),
-                    override.date ?? Date.now
+                    override.date ?? Date.now, consecutive: nil
                 )
             } else {
                 let or = os.activatePreset(profileID)

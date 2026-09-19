@@ -77,6 +77,13 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var consecutiveProfiles: [OverridePresets] {
+            fetchedProfiles.filter { preset in
+                guard let editingPresetID = presetToEdit?.id else { return true }
+                return preset.id != editingPresetID
+            }
+        }
+
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -329,7 +336,7 @@ extension OverrideProfilesConfig {
 
                         /// Consecutive override  option. Only available when the other end-toggles are disabled.
                         if !state.endWIthNewCarbs, !state.glucoseOverrideThresholdActive,
-                           !state.glucoseOverrideThresholdActiveDown, !fetchedProfiles.isEmpty
+                           !state.glucoseOverrideThresholdActiveDown, !consecutiveProfiles.isEmpty
                         {
                             VStack {
                                 Text("When run to completion schedule a consecutive override preset:")
@@ -338,7 +345,7 @@ extension OverrideProfilesConfig {
                                     if state.consecutivePresetID == nil {
                                         Text("No").tag(noneSelected)
                                     }
-                                    ForEach(fetchedProfiles, id: \.id) { preset in
+                                    ForEach(consecutiveProfiles, id: \.id) { preset in
                                         if let name = preset.name {
                                             Text(name).tag(preset.id)
                                         }
@@ -346,7 +353,13 @@ extension OverrideProfilesConfig {
                                     if state.consecutivePresetID != nil {
                                         Text("No").tag(noneSelected)
                                     }
-                                }.pickerStyle(.menu)
+                                }
+                                .pickerStyle(.menu)
+                                .onAppear {
+                                    if state.consecutivePresetID == presetToEdit?.id {
+                                        state.consecutivePresetID = nil
+                                    }
+                                }
                             }
                         }
                     }
@@ -998,7 +1011,7 @@ extension OverrideProfilesConfig {
                 saveOverride.glucoseOverrideThresholdDown = state.glucoseOverrideThresholdDown as NSDecimalNumber
             }
 
-            saveOverride.succeeding = state.consecutivePresetID
+            saveOverride.succeeding = state.consecutivePresetID == saveOverride.id ? nil : state.consecutivePresetID
 
             saveOverride.date = Date.now
 

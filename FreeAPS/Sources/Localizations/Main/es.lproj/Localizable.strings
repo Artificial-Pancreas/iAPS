@@ -2127,6 +2127,7 @@ Ajustes predeterminados:\n
 "Override Max IOB" = "Override Max IOB";
 
 /* */
+"When run to completion schedule a consecutive override preset:" = "When run to completion schedule a consecutive override preset:";
 
 /* */
 "Save as Profile" = "Guardar como perfil";

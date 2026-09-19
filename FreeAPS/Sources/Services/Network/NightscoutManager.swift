@@ -19,7 +19,7 @@ protocol NightscoutManager {
     func uploadPreferences(_ preferences: NightscoutPreferences)
     func uploadProfileAndSettings(_: Bool)
     func uploadPreviousDayLog()
-    func uploadOverride(_ profile: String, _ duration: Double, _ date: Date)
+    func uploadOverride(_ profile: String, _ duration: Double, _ date: Date, consecutive: OverridePresets?)
     func deleteAnnouncements()
     func deleteAllNSoverrrides()
     func deleteOverride()
@@ -1174,7 +1174,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date) {
-        let duration = Int(duration_ == 0 ? 2880 : duration_)
+        let duration = editedOverrideDuration(duration_)
+        let consecutiveDate = consecutiveOverrideDate(for: date)
+        let deleteTolerance: TimeInterval = 5 * 60
         let exercise =
             [NigtscoutExercise(
                 duration: duration,
@@ -1189,11 +1191,27 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         processQueue.async {
-            nightscout.deleteOverride(at: date)
+            nightscout.deleteOverride(around: date, tolerance: deleteTolerance)
+                .flatMap { _ -> AnyPublisher<Void, Swift.Error> in
+                    guard let consecutiveDate else {
+                        return Just(())
+                            .setFailureType(to: Swift.Error.self)
+                            .eraseToAnyPublisher()
+                    }
+
+                    return nightscout.deleteOverride(around: consecutiveDate, tolerance: deleteTolerance)
+                }
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        debug(.nightscout, "Old Override deleted in NS, date: \(date)")
+                        if let consecutiveDate {
+                            debug(
+                                .nightscout,
+                                "Old Override and consecutive Override deleted in NS, dates: \(date), \(consecutiveDate)"
+                            )
+                        } else {
+                            debug(.nightscout, "Old Override deleted in NS, date: \(date)")
+                        }
                         nightscout.uploadEcercises(exercise)
                             .sink { completion in
                                 switch completion {
@@ -1216,20 +1234,42 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date) {
+    private func consecutiveOverrideDate(for date: Date) -> Date? {
+        guard let override = overrideStorage.fetchNumberOfOverrides(numbers: 10)
+            .first(where: { override in
+                guard let overrideDate = override.date else { return false }
+                return override.succeeding != nil && abs(overrideDate.timeIntervalSince(date)) < 1
+            }),
+            override.succeeding != nil
+        else {
+            return nil
+        }
+
+        let duration = Int(truncating: override.duration ?? 0)
+        let normalizedDuration = (duration == 0 || override.indefinite) ? 2880 : duration
+        return date.addingTimeInterval(TimeInterval(normalizedDuration * 60))
+    }
+
+    func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date, consecutive: OverridePresets?) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
         }
         let duration = Int(duration_ == 0 ? 2880 : duration_)
 
-        let exercise =
-            [NigtscoutExercise(
-                duration: duration,
-                eventType: EventType.nsExercise,
-                createdAt: date,
-                enteredBy: NigtscoutTreatment.local,
-                notes: profile
-            )]
+        var exercise = [
+            overrideExercise(profile: profile, duration: duration, createdAt: date)
+        ]
+
+        if let consecutivePreset = consecutive {
+            let consecutiveDuration = overrideDuration(consecutivePreset.duration)
+            exercise.append(
+                overrideExercise(
+                    profile: consecutivePreset.name,
+                    duration: consecutiveDuration,
+                    createdAt: date.addingTimeInterval(TimeInterval(duration * 60))
+                )
+            )
+        }
 
         processQueue.async {
             nightscout.uploadEcercises(exercise)
@@ -1244,6 +1284,24 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
+    }
+
+    private func overrideDuration(_ duration: NSDecimalNumber?) -> Int {
+        Int(truncating: duration ?? 0) == 0 ? 2880 : Int(truncating: duration ?? 0)
+    }
+
+    private func editedOverrideDuration(_ duration: Double) -> Int {
+        max(1, Int(duration.rounded(.up)))
+    }
+
+    private func overrideExercise(profile: String?, duration: Int, createdAt: Date) -> NigtscoutExercise {
+        NigtscoutExercise(
+            duration: duration,
+            eventType: EventType.nsExercise,
+            createdAt: createdAt,
+            enteredBy: NigtscoutTreatment.local,
+            notes: profile
+        )
     }
 
     func deleteOverride() {
