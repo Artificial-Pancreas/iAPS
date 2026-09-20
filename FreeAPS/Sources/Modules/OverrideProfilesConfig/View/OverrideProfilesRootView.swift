@@ -769,7 +769,7 @@ extension OverrideProfilesConfig {
                             if let succeeding = consecutiveProfiles.first(where: { $0.id == preset.succeeding }),
                                let name = succeeding.name
                             {
-                                Text("+")
+                                Image(systemName: "plus").foregroundStyle(.blue)
                                 Spacer()
                                 Text(name)
                             }
