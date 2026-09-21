@@ -763,22 +763,21 @@ extension OverrideProfilesConfig {
                             Image("PreMealOverride").foregroundStyle(.green)
                         }
 
-                        Spacer()
-
                         if hasConsecutivePreset {
                             if let succeeding = consecutiveProfiles.first(where: { $0.id == preset.succeeding }),
                                let name = succeeding.name
                             {
                                 Image(systemName: "plus").foregroundStyle(.blue)
-                                Spacer()
+                                    .padding(.horizontal)
                                 Text(name)
                             }
 
                             Spacer()
-
                             Image(systemName: "person.2.fill")
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.blue, .purple)
+                        } else {
+                            Spacer()
                         }
                     }
                     HStack {
@@ -794,6 +793,11 @@ extension OverrideProfilesConfig {
 
                         if preset.glucoseOverrideThresholdActive || preset.glucoseOverrideThresholdActiveDown {
                             Image(systemName: "drop.fill").foregroundStyle(.red)
+                        }
+
+                        // Indicate a succeeding preset
+                        if hasConsecutivePreset {
+                            Text("...").foregroundStyle(.secondary)
                         }
                     }
                     .font(.caption)
