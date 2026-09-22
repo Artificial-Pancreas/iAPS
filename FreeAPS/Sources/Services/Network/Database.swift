@@ -740,7 +740,8 @@ extension Database {
                 start: (item.start ?? 0) as Decimal,
                 target: (item.target ?? 0) as Decimal,
                 uamMinutes: (item.uamMinutes ?? 0) as Decimal,
-                autoISF: autoISF
+                autoISF: autoISF,
+                succeeding: item.succeeding
             )
 
         })

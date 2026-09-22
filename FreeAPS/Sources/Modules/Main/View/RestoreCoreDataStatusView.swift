@@ -266,6 +266,8 @@ extension RestoreCoreDataStatusView {
                     if let backedUp = p.autoISF, !p.id.isEmpty {
                         saveAutoISF(backedUp.asSettings(id: p.id), context: context)
                     }
+                    
+                    o.succeeding = p.succeeding
                 }
                 do {
                     try context.save()
