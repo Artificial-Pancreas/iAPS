@@ -126,7 +126,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.microbolusAllowed = microbolusAllowed;
     inputs.dynamicVariables = dynamicVariables;
     
-    
     if (autotune_data) {
         if (autotune_data.basalprofile) { inputs.basals = autotune_data.basalprofile; }
         if (!freeaps.onlyAutotuneBasals) {

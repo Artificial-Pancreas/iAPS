@@ -15,6 +15,8 @@ extension OverrideProfilesConfig {
         @State var isEditingPreset: Bool = false
         @State var presetToEdit: OverridePresets?
 
+        let noneSelected: String? = nil
+
         @Environment(\.managedObjectContext) var moc
 
         @FetchRequest(
@@ -73,6 +75,13 @@ extension OverrideProfilesConfig {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 3
             return formatter
+        }
+
+        private var consecutiveProfiles: [OverridePresets] {
+            fetchedProfiles.filter { preset in
+                guard let editingPresetID = presetToEdit?.id else { return true }
+                return preset.id != editingPresetID
+            }
         }
 
         init(resolver: Resolver) {
@@ -322,6 +331,35 @@ extension OverrideProfilesConfig {
                                     isDisabled: false,
                                     liveEditing: true
                                 )
+                            }
+                        }
+
+                        /// Consecutive override  option. Only available when the other end-toggles are disabled.
+                        if !state.endWIthNewCarbs, !state.glucoseOverrideThresholdActive,
+                           !state.glucoseOverrideThresholdActiveDown, !consecutiveProfiles.isEmpty
+                        {
+                            VStack {
+                                Text("When run to completion schedule a consecutive override preset:")
+
+                                Picker("", selection: $state.consecutivePresetID) {
+                                    if state.consecutivePresetID == nil {
+                                        Text("No").tag(noneSelected)
+                                    }
+                                    ForEach(consecutiveProfiles, id: \.id) { preset in
+                                        if let name = preset.name {
+                                            Text(name).tag(preset.id)
+                                        }
+                                    }
+                                    if state.consecutivePresetID != nil {
+                                        Text("No").tag(noneSelected)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                .onAppear {
+                                    if state.consecutivePresetID == presetToEdit?.id {
+                                        state.consecutivePresetID = nil
+                                    }
+                                }
                             }
                         }
                     }
@@ -715,6 +753,8 @@ extension OverrideProfilesConfig {
                 dash2 + basalString + "]" : "[None]"
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
+            let hasConsecutivePreset = preset.succeeding != nil
+
             if name != "" {
                 VStack(alignment: .leading, spacing: 1) {
                     HStack {
@@ -722,7 +762,23 @@ extension OverrideProfilesConfig {
                         if preset.advancedSettings, preset.endWIthNewCarbs {
                             Image("PreMealOverride").foregroundStyle(.green)
                         }
-                        Spacer()
+
+                        if hasConsecutivePreset {
+                            if let succeeding = consecutiveProfiles.first(where: { $0.id == preset.succeeding }),
+                               let name = succeeding.name
+                            {
+                                Image(systemName: "plus").foregroundStyle(.blue)
+                                    .padding(.horizontal)
+                                Text(name)
+                            }
+
+                            Spacer()
+                            Image(systemName: "person.2.fill")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.blue, .purple)
+                        } else {
+                            Spacer()
+                        }
                     }
                     HStack {
                         percent != 1 ?
@@ -737,6 +793,11 @@ extension OverrideProfilesConfig {
 
                         if preset.glucoseOverrideThresholdActive || preset.glucoseOverrideThresholdActiveDown {
                             Image(systemName: "drop.fill").foregroundStyle(.red)
+                        }
+
+                        // Indicate a succeeding preset
+                        if hasConsecutivePreset {
+                            Text("...").foregroundStyle(.secondary)
                         }
                     }
                     .font(.caption)
@@ -852,9 +913,10 @@ extension OverrideProfilesConfig {
             let uamMinutesUnchanged = state.uamMinutes == state.defaultUamMinutes
             let autoISFUnchanged = !state.overrideAutoISF
             let glucoseOverrideUnchanged = !state.glucoseOverrideThresholdActive
+            let consecutiveOverrideUnChanged = state.consecutivePresetID == nil
 
             return percentUnchanged && targetUnchanged && smbUnchanged && maxIOBUnchanged && smbMinutesUnchanged &&
-                uamMinutesUnchanged && autoISFUnchanged && glucoseOverrideUnchanged
+                uamMinutesUnchanged && autoISFUnchanged && glucoseOverrideUnchanged && consecutiveOverrideUnChanged
         }
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
@@ -962,6 +1024,8 @@ extension OverrideProfilesConfig {
             if state.glucoseOverrideThresholdActiveDown {
                 saveOverride.glucoseOverrideThresholdDown = state.glucoseOverrideThresholdDown as NSDecimalNumber
             }
+
+            saveOverride.succeeding = state.consecutivePresetID == saveOverride.id ? nil : state.consecutivePresetID
 
             saveOverride.date = Date.now
 
