@@ -79,14 +79,6 @@ struct LoopsView: View {
                         topTrailingRadius: 4
                     )
                 )
-                .clipShape(
-                    UnevenRoundedRectangle(
-                        topLeadingRadius: 4,
-                        bottomLeadingRadius: 4,
-                        bottomTrailingRadius: 4,
-                        topTrailingRadius: 4
-                    )
-                )
                 .annotation(position: .overlay) {
                     let value = percentage >= 20 ?
                         (formatter.string(from: percentage as NSNumber) ?? "") + " %"

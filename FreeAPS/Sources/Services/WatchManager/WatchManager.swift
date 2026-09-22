@@ -513,22 +513,7 @@ extension BaseWatchManager: WCSessionDelegate {
             if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
                 preset.date = Date.now
 
-                // Cancel eventual current active override first
-                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
-                    let name = storage.isPresetName()
-
-                    if let duration = storage.cancelProfile() {
-                        let nsString = name != nil ? name! : activeOveride.percentage.formatted()
-                        nightscout.editOverride(nsString, duration, activeOveride.date ?? Date())
-                    }
-                }
-                // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
-                storage.overrideFromPreset(preset)
-                nightscout.uploadOverride(
-                    preset.name ?? "",
-                    Double(preset.duration ?? 0),
-                    storage.fetchLatestOverride().first?.date ?? Date.now
-                )
+                storage.activatePresetAndUpload(preset, nightscout: nightscout)
                 replyHandler(["confirmation": true])
                 configureState()
                 return
@@ -537,7 +522,7 @@ extension BaseWatchManager: WCSessionDelegate {
                     let presetName = storage.isPresetName()
                     let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
 
-                    if let duration = storage.cancelProfile() {
+                    if let duration = storage.cancelProfile().duration {
                         nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
                         replyHandler(["confirmation": true])
                         configureState()

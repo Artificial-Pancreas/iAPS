@@ -191,22 +191,12 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         guard let overridePreset = overrideStorage.fetchProfilePreset(preset.name ?? "") else {
             return nil
         }
-        let lastActiveOveride = overrideStorage.fetchLatestOverride().first
-        let isActive = lastActiveOveride?.enabled ?? false
 
-        // Cancel the eventual current active override first
-        if isActive {
-            let presetName = overrideStorage.isPresetName()
-            if let duration = overrideStorage.cancelProfile(), let last = lastActiveOveride {
-                // let presetName = overrideStorage.isPresetName()
-                let nsString = presetName != nil ? presetName : last.percentage.formatted()
-                nightscoutManager.editOverride(nsString!, duration, last.date ?? Date())
-            }
-        }
-        overrideStorage.overrideFromPreset(overridePreset)
-        let currentActiveOveride = overrideStorage.fetchLatestOverride().first
-        nightscoutManager.uploadOverride(preset.name ?? "", Double(preset.duration ?? 0), currentActiveOveride?.date ?? Date.now)
-        return currentActiveOveride
+        return overrideStorage.activatePresetAndUpload(
+            overridePreset,
+            nightscout: nightscoutManager,
+            uploadName: preset.name
+        )
     }
 
     func cancelOverride() throws {
@@ -215,18 +205,18 @@ final class OverrideIntentRequest: BaseIntentsRequest {
             let presetName = overrideStorage.isPresetName()
             // Is the Override a Preset?
             if let preset = presetName {
-                if let duration = overrideStorage.cancelProfile() {
+                if let duration = overrideStorage.cancelProfile().duration {
                     // Update in Nightscout
                     nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
                 }
             } else if activeOveride.isPreset {
-                if let duration = overrideStorage.cancelProfile() {
+                if let duration = overrideStorage.cancelProfile().duration {
                     nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
                 }
             } else {
                 let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                     .formatted() + " %" : "Custom"
-                if let duration = overrideStorage.cancelProfile() {
+                if let duration = overrideStorage.cancelProfile().duration {
                     nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
                 }
             }

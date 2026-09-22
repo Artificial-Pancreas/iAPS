@@ -228,6 +228,22 @@ struct FoodSearchBar: View {
                                     selection: $selectedPhotoItem,
                                     matching: .images
                                 )
+
+                            Button {
+                                UIApplication.shared.endEditing()
+                                state.foodSearchRoute = .voiceInput
+                                state.showingFoodSearch = true
+                            } label: {
+                                Image(systemName: "mic.fill")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.indigo)
+                                    .frame(width: 46, height: 46)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                            .fill(Color.indigo.opacity(0.12))
+                                    )
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
