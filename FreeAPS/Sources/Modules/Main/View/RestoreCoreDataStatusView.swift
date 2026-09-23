@@ -259,6 +259,15 @@ extension RestoreCoreDataStatusView {
                     o.start = p.start as NSDecimalNumber
                     o.target = p.target as NSDecimalNumber
                     o.uamMinutes = p.uamMinutes as NSDecimalNumber
+                    o.succeeding = p.succeeding
+
+                    // Absent from older backups; leave the entity defaults in place when so.
+                    if let v = p.endWIthNewCarbs { o.endWIthNewCarbs = v }
+                    if let v = p.overrideAutoISF { o.overrideAutoISF = v }
+                    if let v = p.glucoseOverrideThresholdActive { o.glucoseOverrideThresholdActive = v }
+                    if let v = p.glucoseOverrideThreshold { o.glucoseOverrideThreshold = v as NSDecimalNumber }
+                    if let v = p.glucoseOverrideThresholdActiveDown { o.glucoseOverrideThresholdActiveDown = v }
+                    if let v = p.glucoseOverrideThresholdDown { o.glucoseOverrideThresholdDown = v as NSDecimalNumber }
 
                     // The preset's Auto ISF block is a separate entity keyed by the preset id, so
                     // it has to be written as its own row. Absent from older backups and from
