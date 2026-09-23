@@ -20,6 +20,33 @@ struct RoundedBackground: ViewModifier {
     }
 }
 
+struct GlassEffectWhenAvailable: ViewModifier {
+    let glassType: GlassType
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *), glassType != .none {
+            let glass: Glass = { switch glassType {
+            case .identity: return .identity
+            case .clear: return .clear
+            default: return .regular
+            }
+            }()
+            content
+                .glassEffect(glass)
+        } else {
+            content
+                .background(.ultraThinMaterial)
+                .clipShape(Capsule())
+        }
+    }
+
+    enum GlassType {
+        case identity
+        case clear
+        case regular
+        case none
+    }
+}
+
 struct BoolTag: ViewModifier {
     let bool: Bool
     @Environment(\.colorScheme) var colorScheme
@@ -173,6 +200,7 @@ struct LoopEllipse: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 0.7)
+            .glassEffectWhenAvailable(.clear)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(colorScheme == .light ? .white : .black)
@@ -220,10 +248,13 @@ struct Sage: View {
 }
 
 struct TimeEllipse: View {
+    @Environment(\.colorScheme) var colorScheme
+
     let characters: Int
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(Color.gray).opacity(0.2)
+            .fill((colorScheme == .light && iOS26) ? .ultraThickMaterial : .ultraThinMaterial)
+            .glassEffectWhenAvailable(.regular)
             .frame(width: CGFloat(characters * 7), height: 25)
     }
 }
@@ -375,6 +406,11 @@ extension View {
         modifier(BoolTag(bool: bool))
     }
 
+    /// glassEffect and Glass available in iOS 26.0. Glass 0: .identity, 1: .clear, 2: .regular
+    func glassEffectWhenAvailable(_ glassType: GlassEffectWhenAvailable.GlassType = .regular) -> some View {
+        modifier(GlassEffectWhenAvailable(glassType: glassType))
+    }
+
     func addBackground() -> some View {
         ColouredRoundedBackground()
     }
@@ -411,6 +447,16 @@ extension View {
 
     func activeOverride(_ override: Bool) -> some View {
         modifier(ActiveOverride(override: override))
+    }
+
+    var iOS26: Bool {
+        guard #available(iOS 26.0, *) else { return false }
+        return true
+    }
+
+    var iOS27: Bool {
+        guard #available(iOS 27.0, *) else { return false }
+        return true
     }
 
     func asAny() -> AnyView { .init(self) }
