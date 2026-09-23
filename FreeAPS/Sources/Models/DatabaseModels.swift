@@ -237,6 +237,7 @@ struct MigratedOverridePresets: Codable {
     // Optional: absent from backups written before the Auto ISF block was carried, and absent for
     // presets that never had one.
     var autoISF: MigratedAutoISF?
+    var succeeding: String?
 }
 
 struct MealDatabase: JSON {
