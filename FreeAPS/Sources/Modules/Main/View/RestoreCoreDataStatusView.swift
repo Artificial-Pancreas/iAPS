@@ -275,6 +275,8 @@ extension RestoreCoreDataStatusView {
                     if let backedUp = p.autoISF, !p.id.isEmpty {
                         saveAutoISF(backedUp.asSettings(id: p.id), context: context)
                     }
+                    // Do we have a configured consecutive overrride preset available?
+                    o.succeeding = presets.contains { $0.id == p.succeeding } ? p.succeeding : nil
                 }
                 do {
                     try context.save()
