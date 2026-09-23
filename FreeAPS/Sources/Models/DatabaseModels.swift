@@ -238,6 +238,15 @@ struct MigratedOverridePresets: Codable {
     // presets that never had one.
     var autoISF: MigratedAutoISF?
     var succeeding: String?
+    // Optional: absent from backups written before these were carried. All six exist on the
+    // OverridePresets entity and are copied into the live override by overrideFromPreset, so a
+    // restore that drops them changes how the preset behaves.
+    var endWIthNewCarbs: Bool?
+    var overrideAutoISF: Bool?
+    var glucoseOverrideThresholdActive: Bool?
+    var glucoseOverrideThreshold: Decimal?
+    var glucoseOverrideThresholdActiveDown: Bool?
+    var glucoseOverrideThresholdDown: Decimal?
 }
 
 struct MealDatabase: JSON {
