@@ -35,6 +35,11 @@ struct DeviceSetupView: View {
                 }
             }
             .listStyle(.insetGrouped)
+            // On the List (the stack's root), not the NavigationView: the container stays in the
+            // hierarchy while a config screen is pushed, so its onAppear fires once and never
+            // again. The root is what gets covered and uncovered, so this re-runs on every pop
+            // back from a config screen and a freshly paired pump/CGM flips its row to done.
+            .onAppear(perform: refresh)
             .navigationTitle("Set up your devices")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
@@ -53,14 +58,14 @@ struct DeviceSetupView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .interactiveDismissDisabled()
-        // Fires on first appear and each time we pop back from a config screen, so a freshly
-        // paired pump/CGM flips its row to done.
-        .onAppear(perform: refresh)
     }
 
+    /// Paired means onboarded: the manager is assigned as soon as pairing STARTS (didCreate…), so
+    /// backing out of a half-finished pairing leaves it non-nil. Only a completed onboarding
+    /// should earn the check mark.
     private func refresh() {
-        pumpConfigured = deviceManager?.pumpManager != nil
-        cgmConfigured = deviceManager?.cgmManager != nil
+        pumpConfigured = deviceManager?.pumpManager?.isOnboarded == true
+        cgmConfigured = deviceManager?.cgmManager?.isOnboarded == true
     }
 
     /// "Setup" (accent, a to-do) until the device is paired, then "Review" + green check.
