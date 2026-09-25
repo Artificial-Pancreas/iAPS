@@ -34,8 +34,10 @@ struct GlassEffectWhenAvailable: ViewModifier {
                 .glassEffect(glass)
         } else {
             content
-                .background(.ultraThinMaterial)
-                .clipShape(Capsule())
+                .background {
+                    Capsule()
+                        .fill(.ultraThinMaterial)
+                }
         }
     }
 
