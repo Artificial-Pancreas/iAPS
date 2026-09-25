@@ -1088,8 +1088,8 @@ extension Home {
                     }
                     .background(
                         colorScheme == .light ?
-                        IAPSconfig.homeViewBackgroundLight :
-                        IAPSconfig.homeViewBackgrundDark
+                            IAPSconfig.homeViewBackgroundLight :
+                            IAPSconfig.homeViewBackgrundDark
                     )
                     .ignoresSafeArea(edges: .vertical)
                     .overlay {
