@@ -1087,18 +1087,17 @@ extension Home {
                         }
                     }
                     .background(
-                        colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
+                        colorScheme == .light ?
+                        IAPSconfig.homeViewBackgroundLight :
+                        IAPSconfig.homeViewBackgrundDark
                     )
                     .ignoresSafeArea(edges: .vertical)
                     .overlay {
                         if let progress = state.bolusProgress, let amount = state.bolusAmount {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(
-                                        colorScheme == .light ? IAPSconfig
-                                            .homeViewBackgroundLight : IAPSconfig
-                                            .homeViewBackgrundDark
-                                    )
+                                    .fill(.ultraThinMaterial)
+                                    .glassEffectWhenAvailable(.clear, in: RoundedRectangle(cornerRadius: 15))
                                     .frame(maxWidth: 320, maxHeight: 90)
                                 bolusProgressView(progress: progress, amount: amount)
                             }

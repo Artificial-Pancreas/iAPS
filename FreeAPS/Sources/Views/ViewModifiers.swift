@@ -24,20 +24,20 @@ struct GlassEffectWhenAvailable: ViewModifier {
     let glassType: GlassType
     func body(content: Content) -> some View {
         if #available(iOS 26.0, *), glassType != .none {
-            let glass: Glass = { switch glassType {
-            case .identity: return .identity
-            case .clear: return .clear
-            default: return .regular
+             let glass: Glass = { switch glassType {
+             case .identity: return .identity
+             case .clear: return .clear
+             default: return .regular
+             }
+             }()
+             content
+                 .glassEffect(glass)
+         } else {
+        content
+            .background {
+                Capsule()
+                    .fill(.ultraThinMaterial)
             }
-            }()
-            content
-                .glassEffect(glass)
-        } else {
-            content
-                .background {
-                    Capsule()
-                        .fill(.ultraThinMaterial)
-                }
         }
     }
 
