@@ -1209,7 +1209,7 @@ extension Home {
 
         private func carbTabItem() -> some View {
             tabBarButton { showAddCarbs(mode: .meal) } icon: {
-                ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
+                ZStack(alignment: .leading) {
                     tabBarSymbol("fork.knife", color: colorScheme == .dark ? .loopYellow : .orange)
                     carbRequirementBadge.offset(x: (state.carbsRequired ?? 0) > 99 ? -20 : -5, y: -25)
                 }
