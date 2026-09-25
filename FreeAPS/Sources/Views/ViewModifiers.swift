@@ -145,24 +145,13 @@ struct TestTube: View {
             .fill(
                 LinearGradient(
                     gradient: Gradient(stops: [
-                        Gradient.Stop(color: .white.opacity(opacity), location: amount),
+                        Gradient.Stop(color: .clear /* .white.opacity(opacity*/, location: amount),
                         Gradient.Stop(color: colourOfSubstance, location: amount)
                     ]),
                     startPoint: .top,
                     endPoint: .bottom
                 )
-            )
-            .overlay {
-                FrostedGlass(opacity: materialOpacity)
-            }
-            .shadow(
-                color: Color.black
-                    .opacity(
-                        colorScheme == .dark ? IAPSconfig.glassShadowOpacity : IAPSconfig.glassShadowOpacity / IAPSconfig
-                            .shadowFraction
-                    ),
-                radius: colorScheme == .dark ? 2.2 : 3
-            )
+            ).glassEffectWhenAvailable(.clear, in: UnevenRoundedRectangle.testTube)
     }
 }
 
@@ -411,6 +400,25 @@ extension View {
     /// glassEffect and Glass available in iOS 26.0. Glass 0: .identity, 1: .clear, 2: .regular
     func glassEffectWhenAvailable(_ glassType: GlassEffectWhenAvailable.GlassType = .regular) -> some View {
         modifier(GlassEffectWhenAvailable(glassType: glassType))
+    }
+
+    @ViewBuilder func glassEffectWhenAvailable<S: Shape>(
+        _ glassType: GlassEffectWhenAvailable.GlassType = .regular,
+        in shape: S
+    ) -> some View {
+        if #available(iOS 26.0, *), glassType != .none {
+            let glass: Glass = { switch glassType {
+            case .identity: return .identity
+            case .clear: return .clear
+            default: return .regular
+            }
+            }()
+            glassEffect(glass, in: shape)
+        } else {
+            background {
+                shape.fill(.ultraThinMaterial)
+            }
+        }
     }
 
     func addBackground() -> some View {
