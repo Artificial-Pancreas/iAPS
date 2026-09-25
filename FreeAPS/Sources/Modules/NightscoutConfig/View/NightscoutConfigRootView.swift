@@ -94,18 +94,6 @@ extension NightscoutConfig {
                     Text("iAPS will fetch announcements, carbs and temp targets from Nightscout")
                 }
 
-                if let cgmManager = state.deviceManager.cgmManager,
-                   KnownPlugins.glucoseUploadingAvailable(for: cgmManager),
-                   !cgmManager.shouldSyncToRemoteService,
-                   state.isUploadEnabled
-                {
-                    Section {
-                        HStack {
-                            Text("Glucose upload disabled in CGM settings").foregroundStyle(.red)
-                        }
-                    }
-                }
-
                 Section {
                     Button("Import settings from Nightscout") {
                         importAlert = Alert(

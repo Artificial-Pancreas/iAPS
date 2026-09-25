@@ -320,6 +320,10 @@ extension Home {
                                         state.showModal(for: .addCarbs(editMode: false, override: false, mode: .image)) }
                                     label: { Label("AI Image Analysis", systemImage: "photo.badge.magnifyingglass")
                                     }
+                                    Button {
+                                        state.showModal(for: .addCarbs(editMode: false, override: false, mode: .voice)) }
+                                    label: { Label("Voice Input", systemImage: "mic.fill")
+                                    }
                                 }
                                 Button {
                                     state.showModal(for: .addCarbs(editMode: false, override: false, mode: .meal)) }
@@ -618,8 +622,11 @@ extension Home {
             HStack(spacing: 0) {
                 if let override = fetchedPercent.first {
                     if override.enabled {
+                        let consecutiveOverrideIllustration = (override.succeeding != nil) ?
+                            illustrateCombination(override: override) : nil
                         if override.isPreset {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
+
                             if let currentProfile = profile {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
@@ -630,26 +637,39 @@ extension Home {
                                     } else {
                                         Text(name).font(.statusFont).foregroundStyle(.secondary)
                                     }
+
+                                    consecutiveOverrideIllustration
                                 }
                             } else { Text("📉") } // Hypo Treatment is not actually a preset
                         } else if override.percentage != 100 {
                             Text((tirFormatter.string(from: override.percentage as NSNumber) ?? "") + " %").font(.statusFont)
                                 .foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         } else if override.smbIsOff, !override.smbIsAlwaysOff {
                             Text(NSLocalizedString("No ", comment: "No as in no SMBs")).font(.statusFont)
                                 .foregroundStyle(.secondary)
                             Image(systemName: "syringe")
                                 .font(.previewNormal).foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         } else if override.smbIsOff {
                             Image(systemName: "clock").font(.statusFont).foregroundStyle(.secondary)
                             Image(systemName: "syringe")
                                 .font(.previewNormal).foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         } else {
                             Text("Override").font(.statusFont).foregroundStyle(.secondary)
+                            consecutiveOverrideIllustration
                         }
                     }
                 }
             }
+        }
+
+        private func illustrateCombination(override: Override) -> some View {
+            fetchedProfiles.first(where: { $0.id == override.succeeding }) != nil ?
+                Image(systemName: "person.2.fill").symbolRenderingMode(.palette).foregroundStyle(.blue, .purple)
+                .padding(.horizontal, 2) :
+                nil
         }
 
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
@@ -1159,10 +1179,7 @@ extension Home {
 
         var body: some View {
             GeometryReader { geo in
-                if onboarded.first?.firstRun ?? true, let openAPSSettings = state.openAPSSettings {
-                    /// If old iAPS user pre v5.7.1 OpenAPS settings will be reset, but can be restored in View below
-                    importResetSettingsView(settings: openAPSSettings)
-                } else {
+                Group {
                     VStack(spacing: 0) {
                         // Header View
                         headerView(geo)
@@ -1250,9 +1267,6 @@ extension Home {
                 }
             }
             .onAppear {
-                if onboarded.first?.firstRun ?? true {
-                    state.fetchPreferences()
-                }
                 checkBuildExpiration()
             }
             .alert(
@@ -1331,13 +1345,6 @@ extension Home {
                     Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
                 }
             }
-        }
-
-        private func importResetSettingsView(settings: Preferences) -> some View {
-            Restore.RootView(
-                resolver: resolver,
-                openAPS: settings
-            )
         }
     }
 }
