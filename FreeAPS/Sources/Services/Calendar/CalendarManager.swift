@@ -32,7 +32,19 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(PumpHistoryObserver.self, observer: self)
+        Foundation.NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(eventStoreChanged),
+            name: .EKEventStoreChanged,
+            object: nil
+        )
         setupGlucose()
+    }
+
+    /// The calendar database changed outside of this store (e.g. a calendar was added or
+    /// renamed in the Calendar app). Drop cached state so the next query sees fresh data.
+    @objc private func eventStoreChanged(_: Notification) {
+        eventStore.reset()
     }
 
     let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
