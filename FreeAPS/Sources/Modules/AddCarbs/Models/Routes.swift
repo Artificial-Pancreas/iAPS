@@ -7,12 +7,14 @@ enum FoodSearchRoute {
     case barcodeScanner
     case aiProgress
     case imageCommentInput(UIImage)
+    case voiceInput
 
     var fullScreenRoute: FoodSearchFullScreenRoute? {
         switch self {
         case .camera: .camera
         case .aiProgress: .aiProgress
         case .barcodeScanner: .barcodeScanner
+        case .voiceInput: .voiceInput
         case .imageCommentInput: nil
         }
     }
@@ -22,6 +24,7 @@ enum FoodSearchRoute {
         case .camera: nil
         case .aiProgress: nil
         case .barcodeScanner: nil
+        case .voiceInput: nil
         case let .imageCommentInput(image): .imageCommentInput(image)
         }
     }
@@ -31,6 +34,7 @@ enum FoodSearchFullScreenRoute: Identifiable {
     case camera
     case barcodeScanner
     case aiProgress
+    case voiceInput
 
     var id: FoodSearchFullScreenRoute { self }
 
@@ -39,6 +43,7 @@ enum FoodSearchFullScreenRoute: Identifiable {
         case .camera: .camera
         case .barcodeScanner: .barcodeScanner
         case .aiProgress: .aiProgress
+        case .voiceInput: .voiceInput
         }
     }
 }

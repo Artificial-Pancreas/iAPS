@@ -91,16 +91,11 @@ struct AutoISFHistoryView: View {
 
             Divider()
 
-            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max") ?
-                -21 : -9
-            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max") ?
-                -10 : 0
-            let proMaxInset: CGFloat =
-                (
-                    device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max" || device ==
-                        "iPhone 17 Pro Max"
-                ) ? 25 :
-                15
+            // Pro Max screens (raw machine identifiers: 15/16/17 Pro Max)
+            let isProMax = ["iPhone16,2", "iPhone17,2", "iPhone18,2"].contains(device)
+            let proMaxOffset_1: CGFloat = isProMax ? -21 : -9
+            let proMaxOffset_2: CGFloat = isProMax ? -10 : 0
+            let proMaxInset: CGFloat = isProMax ? 25 : 15
 
             // Subtitle with non-localized variable acronyms
             HStack(spacing: 10) {

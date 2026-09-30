@@ -63,6 +63,15 @@ struct FoodSearchView: View {
                         state.cancelSearchTask()
                     }
                 )
+            case .voiceInput:
+                VoiceInputView(
+                    onComplete: { transcript in
+                        state.startVoiceAnalysis(transcript: transcript)
+                    },
+                    onCancel: {
+                        state.foodSearchRoute = nil
+                    }
+                )
             }
         }
         .sheet(item: foodSearchSheetRoute) { route in

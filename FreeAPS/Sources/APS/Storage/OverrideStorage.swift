@@ -4,6 +4,11 @@ import Foundation
 import SwiftDate
 
 final class OverrideStorage {
+    enum OverrideCancellationName {
+        case percentage
+        case custom
+    }
+
     let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     func fetchOverrides(interval: NSDate) -> [Override] {
@@ -96,9 +101,10 @@ final class OverrideStorage {
         return overrideArray
     }
 
-    func cancelProfile() -> Double? {
+    func cancelProfile() -> (duration: Double?, id: String?) {
         let scheduled = fetchLatestOverride().first
         var duration: Double?
+        var succeeding: String?
         coredataContext.performAndWait { [self] in
             let profiles = Override(context: self.coredataContext)
             let history = OverrideHistory(context: self.coredataContext)
@@ -110,17 +116,86 @@ final class OverrideStorage {
                     history.target = 6
                 } else { history.target = Double(latest.target ?? 100) }
                 duration = history.duration
+                succeeding = latest.succeeding
             }
             profiles.enabled = false
             profiles.date = Date()
             try? self.coredataContext.save()
         }
-        return duration
+        return (duration, succeeding)
     }
 
-    func overrideFromPreset(_ preset: OverridePresets) {
+    @discardableResult func activatePresetAndUpload(
+        _ preset: OverridePresets,
+        nightscout: NightscoutManager,
+        uploadName: String? = nil,
+        cancellationName: OverrideCancellationName = .percentage
+    ) -> Override {
+        cancelActiveOverrideInNightscout(nightscout, name: cancellationName)
+
+        let activeOverride = overrideFromPreset(preset)
+        let duration = (activeOverride.indefinite || (activeOverride.duration ?? 0) == 0) ? 2880 : activeOverride.duration ?? 0
+
+        nightscout.uploadOverride(
+            uploadName ?? preset.name ?? "",
+            Double(truncating: duration),
+            activeOverride.date ?? Date.now,
+            consecutive: succeedingPreset(for: activeOverride)
+        )
+        return activeOverride
+    }
+
+    @discardableResult func activatePresetAndUpload(
+        named name: String,
+        nightscout: NightscoutManager,
+        uploadName: String? = nil,
+        cancellationName: OverrideCancellationName = .percentage
+    ) -> Override? {
+        let preset = fetchPreset(name)
+        guard let overridePreset = preset.preset else { return nil }
+
+        return activatePresetAndUpload(
+            overridePreset,
+            nightscout: nightscout,
+            uploadName: uploadName ?? name,
+            cancellationName: cancellationName
+        )
+    }
+
+    func cancelActiveOverrideInNightscout(
+        _ nightscout: NightscoutManager,
+        name cancellationName: OverrideCancellationName = .percentage
+    ) {
+        guard let activeOverride = fetchLatestOverride().first, activeOverride.enabled else {
+            return
+        }
+
+        let presetName = isPresetName()
+        let nsString: String
+        switch cancellationName {
+        case .percentage:
+            nsString = presetName ?? activeOverride.percentage.formatted()
+        case .custom:
+            nsString = activeOverride.isPreset ? (presetName ?? "📉") : "Custom"
+        }
+        if let duration = cancelProfile().duration {
+            nightscout.editOverride(nsString, duration, activeOverride.date ?? Date())
+        }
+    }
+
+    func succeedingPreset(for override: Override?) -> OverridePresets? {
+        guard let succeeding = override?.succeeding else { return nil }
+        return fetchPreset(id: succeeding)
+    }
+
+    func succeedingPreset(for preset: OverridePresets?) -> OverridePresets? {
+        guard let succeeding = preset?.succeeding else { return nil }
+        return fetchPreset(id: succeeding)
+    }
+
+    func overrideFromPreset(_ preset: OverridePresets) -> Override {
+        let save = Override(context: coredataContext)
         coredataContext.performAndWait {
-            let save = Override(context: coredataContext)
             save.date = Date.now
             save.id = preset.id
             save.end = preset.end
@@ -140,19 +215,27 @@ final class OverrideStorage {
             save.smbMinutes = preset.smbMinutes
             save.uamMinutes = preset.uamMinutes
             save.maxIOB = preset.maxIOB
-            save.target = preset.target
-            save.overrideMaxIOB = preset.overrideAutoISF
+            if (preset.target ?? 0) as Decimal > 6 {
+                save.target = preset.target
+            } else {
+                save.target = 6
+            }
+            save.overrideMaxIOB = preset.overrideMaxIOB
             save.overrideAutoISF = preset.overrideAutoISF
             save.endWIthNewCarbs = preset.endWIthNewCarbs
             save.glucoseOverrideThresholdActive = preset.glucoseOverrideThresholdActive
             save.glucoseOverrideThreshold = preset.glucoseOverrideThreshold
             save.glucoseOverrideThresholdActiveDown = preset.glucoseOverrideThresholdActiveDown
             save.glucoseOverrideThresholdDown = preset.glucoseOverrideThresholdDown
+            save.succeeding = preset.succeeding
             try? coredataContext.save()
         }
+        return save
     }
 
-    func activatePreset(_ id: String) {
+    func activatePreset(_ id: String) -> (override: Override?, name: String?) {
+        var override: Override?
+        var name: String?
         coredataContext.performAndWait {
             var presetsArray = [OverridePresets]()
             coredataContext.performAndWait {
@@ -165,9 +248,11 @@ final class OverrideStorage {
                 guard let overidePreset = presetsArray.first else {
                     return
                 }
-                overrideFromPreset(overidePreset)
+                override = overrideFromPreset(overidePreset)
+                name = overidePreset.name
             }
         }
+        return (override, name)
     }
 
     func fetchProfilePreset(_ name: String) -> OverridePresets? {
@@ -252,6 +337,7 @@ final class OverrideStorage {
             save.glucoseOverrideThreshold = override.glucoseOverrideThreshold
             save.glucoseOverrideThresholdActiveDown = override.glucoseOverrideThresholdActiveDown
             save.glucoseOverrideThresholdDown = override.glucoseOverrideThresholdDown
+            save.succeeding = override.succeeding
             try? coredataContext.save()
         }
     }
@@ -321,41 +407,13 @@ final class OverrideStorage {
         return (id, overridePreset)
     }
 
-    func overrideFromPreset(_ preset: OverridePresets, _ id: String) {
+    @discardableResult func overrideFromPreset(_ preset: OverridePresets, _ id: String) -> Override {
+        let save = overrideFromPreset(preset)
         coredataContext.performAndWait {
-            coredataContext.performAndWait {
-                let save = Override(context: coredataContext)
-                save.date = Date.now
-                save.id = id
-                save.end = preset.end
-                save.start = preset.start
-                save.advancedSettings = preset.advancedSettings
-                save.cr = preset.cr
-                save.duration = preset.duration
-                save.enabled = true
-                save.indefinite = preset.indefinite
-                save.isPreset = true
-                save.isf = preset.isf
-                save.basal = preset.basal
-                save.isfAndCr = preset.isfAndCr
-                save.percentage = preset.percentage
-                save.smbIsAlwaysOff = preset.smbIsAlwaysOff
-                save.smbIsOff = preset.smbIsOff
-                save.smbMinutes = preset.smbMinutes
-                save.uamMinutes = preset.uamMinutes
-                save.overrideMaxIOB = preset.overrideAutoISF
-                save.overrideAutoISF = preset.overrideAutoISF
-                save.endWIthNewCarbs = preset.endWIthNewCarbs
-                save.glucoseOverrideThresholdActive = preset.glucoseOverrideThresholdActive
-                save.glucoseOverrideThreshold = preset.glucoseOverrideThreshold
-                save.glucoseOverrideThresholdActiveDown = preset.glucoseOverrideThresholdActiveDown
-                save.glucoseOverrideThresholdDown = preset.glucoseOverrideThresholdDown
-                if (preset.target ?? 0) as Decimal > 6 {
-                    save.target = preset.target
-                } else { save.target = 6 }
-                try? coredataContext.save()
-            }
+            save.id = id
+            try? coredataContext.save()
         }
+        return save
     }
 
     func addToNotUploaded(_ add: Int16) {
@@ -413,6 +471,16 @@ final class OverrideStorage {
             return Int(latest.number)
         }
         return nil
+    }
+
+    /// Helper function
+    func otherEndTogglesOff(override: Override?) -> Bool {
+        guard let or = override else { return false }
+
+        return (
+            !or.endWIthNewCarbs && !or.glucoseOverrideThresholdActive &&
+                !or.glucoseOverrideThresholdActiveDown
+        )
     }
 
     // Currently not used.

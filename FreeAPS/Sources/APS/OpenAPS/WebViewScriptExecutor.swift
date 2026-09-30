@@ -251,6 +251,9 @@ import WebKit
                 .openAPS,
                 "Javascript function (\(name), \(requestId)) attempt \(attempts + 1) failed with error: \(error)"
             )
+            if error is TimeoutError {
+                MemoryMetricsService.increment(.jsTimeouts)
+            }
             continuationStreams.removeValue(forKey: requestId)?.finish(throwing: error)
             // Rebuild even when giving up: otherwise the next JS call in this cycle
             // inherits the wedged WebView and burns its own timeout rediscovering it.
@@ -327,6 +330,8 @@ extension WebViewScriptExecutor: WKNavigationDelegate {
     /// which is why it is worth handling separately from the watchdog.
     func webViewWebContentProcessDidTerminate(_ terminatedWebView: WKWebView) {
         guard terminatedWebView === webView else { return }
+
+        MemoryMetricsService.increment(.webContentTerminations)
 
         let pending = continuationStreams
         continuationStreams.removeAll()

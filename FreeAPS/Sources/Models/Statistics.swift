@@ -21,6 +21,7 @@ struct Statistics: JSON, Equatable {
     var id: String
     var dob: Date
     var sex: Int
+    var Memory: MemoryStats?
 
     init(
         created_at: Date,
@@ -42,7 +43,8 @@ struct Statistics: JSON, Equatable {
         Statistics: Stats,
         id: String,
         dob: Date,
-        sex: Int
+        sex: Int,
+        Memory: MemoryStats? = nil
     ) {
         self.created_at = created_at
         self.iPhone = iPhone
@@ -64,6 +66,7 @@ struct Statistics: JSON, Equatable {
         self.id = id
         self.dob = dob
         self.sex = sex
+        self.Memory = Memory
     }
 
     static func == (lhs: Statistics, rhs: Statistics) -> Bool {
@@ -97,6 +100,7 @@ extension Statistics {
         case id
         case dob
         case sex
+        case Memory
     }
 }
 

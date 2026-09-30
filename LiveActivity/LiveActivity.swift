@@ -698,34 +698,3 @@ struct SampleData {
     LiveActivityAttributes.ContentState.chart4
     LiveActivityAttributes.ContentState.chart5
 }
-
-private struct LiveActivityChartWrapper: View {
-    let context: ActivityViewContext<LiveActivityAttributes>
-
-    var body: some View {
-        if #available(iOS 18.0, *) {
-            LiveActivityChartWrapperIOS18(context: context)
-        } else {
-            LiveActivityChart(context: context, isWatch: false)
-        }
-    }
-}
-
-@available(iOS 18.0, *) private struct LiveActivityChartWrapperIOS18: View {
-    @Environment(\.activityFamily) private var activityFamily
-    let context: ActivityViewContext<LiveActivityAttributes>
-
-    var body: some View {
-        LiveActivityChart(context: context, isWatch: activityFamily == .small)
-    }
-}
-
-struct LoopActivity: View {
-    @Environment(\.colorScheme) var colorScheme
-    let stroke: Color
-    let compact: Bool
-    var body: some View {
-        Circle()
-            .stroke(stroke, lineWidth: compact ? 1.5 : 3)
-    }
-}
