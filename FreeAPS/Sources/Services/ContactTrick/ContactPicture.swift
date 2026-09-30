@@ -30,10 +30,20 @@ struct ContactPicture: View {
             Color(red: 40 / 256, green: 40 / 256, blue: 40 / 256)
         let fontWeight = contact.fontWeight.toUI()
 
-        UIGraphicsBeginImageContext(rect.size)
+        // Use an opaque context with a fixed, explicit background color so the exported
+        // PNG never carries transparency. Previously this context was non-opaque and no
+        // background was ever drawn, so the "background" seen by anything that consumed
+        // the image (Contacts framework, watch complication renderer) depended on how that
+        // consumer happened to flatten the alpha channel - which was inconsistent, especially
+        // when the image was generated/flattened outside an active foreground UI context.
+        UIGraphicsBeginImageContextWithOptions(rect.size, true, 1.0)
         if let context = UIGraphicsGetCurrentContext() {
             context.setShouldAntialias(true)
             context.setAllowsAntialiasing(true)
+
+            let backgroundColor: UIColor = contact.darkMode ? .black : .white
+            context.setFillColor(backgroundColor.cgColor)
+            context.fill(CGRect(x: 0, y: 0, width: width, height: height))
         }
 
         let ringWidth = Double(contact.ringWidth) / 100.0
