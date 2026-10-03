@@ -6,6 +6,7 @@ class MealMode: ObservableObject {
         case barcode
         case presets
         case meal
+        case voice
     }
 
     var mode: Mode = .meal

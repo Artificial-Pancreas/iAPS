@@ -19,7 +19,7 @@ protocol NightscoutManager {
     func uploadPreferences(_ preferences: NightscoutPreferences)
     func uploadProfileAndSettings(_: Bool)
     func uploadPreviousDayLog()
-    func uploadOverride(_ profile: String, _ duration: Double, _ date: Date)
+    func uploadOverride(_ profile: String, _ duration: Double, _ date: Date, consecutive: OverridePresets?)
     func deleteAnnouncements()
     func deleteAllNSoverrrides()
     func deleteOverride()
@@ -68,7 +68,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private var isLogUploadEnabled: Bool {
-        settingsManager.settings.uploadLogs
+        // Logs are uninterpretable without the settings/profile they ran under,
+        // so they only upload when full Backup is also enabled.
+        settingsManager.settings.uploadStats && settingsManager.settings.uploadLogs
     }
 
     private var isUploadGlucoseEnabled: Bool {
@@ -607,6 +609,39 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
+    private func uploadContactTrickToDatabase(_ contacts: [ContactTrickEntry], token: String, name: String?) {
+        let upload = DatabaseContactTrick(contacts: contacts, enteredBy: token, profile: name ?? "default")
+        processQueue.async {
+            Database(token: token).uploadContactTrick(upload)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Contact Trick uploaded to database.")
+                        self.storage.save(upload, as: OpenAPS.Nightscout.uploadedContactTrick)
+                    case let .failure(error):
+                        debug(.nightscout, "Contact Trick failed to upload to database " + error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
+    private func uploadAISettingsToDatabase(_ upload: AISettingsDatabase, token: String) {
+        processQueue.async {
+            Database(token: token).uploadAISettings(upload)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "AI settings uploaded to database.")
+                        self.storage.save(upload, as: OpenAPS.Nightscout.uploadedAISettings)
+                    case let .failure(error):
+                        debug(.nightscout, "AI settings failed to upload to database " + error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
     func uploadStatus() {
         let iob = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
         var suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -1012,6 +1047,43 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 }
             }
         }
+
+        // Upload Contact Trick (display config) when needed
+        if isStatsUploadEnabled || force {
+            if let contacts = storage.retrieveFile(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self),
+               !contacts.isEmpty
+            {
+                let payload = DatabaseContactTrick(contacts: contacts, enteredBy: token, profile: name)
+                if let uploaded = storage.retrieveFile(
+                    OpenAPS.Nightscout.uploadedContactTrick,
+                    as: DatabaseContactTrick.self
+                ),
+                    payload.rawJSON.sorted() == uploaded.rawJSON.sorted(), !force
+                {
+                    NSLog("Contact Trick unchanged")
+                } else {
+                    uploadContactTrickToDatabase(contacts, token: token, name: name)
+                }
+            }
+        }
+
+        // Upload AI settings when needed. Unlike the sections above there's no "is it empty"
+        // guard: these are plain UserDefaults values that always read back as something (a
+        // provider choice, a toggle), so the unchanged-check is the only thing that needs to
+        // suppress a repeat upload.
+        if isStatsUploadEnabled || force {
+            let aiSettings = Database(token: token).aiSettingsDatabaseUpload(profile: name, token: token)
+            if let uploaded = storage.retrieveFile(
+                OpenAPS.Nightscout.uploadedAISettings,
+                as: AISettingsDatabase.self
+            ),
+                aiSettings.rawJSON.sorted() == uploaded.rawJSON.sorted(), !force
+            {
+                NSLog("AI settings unchanged")
+            } else {
+                uploadAISettingsToDatabase(aiSettings, token: token)
+            }
+        }
     }
 
     private func getIdentifier() -> String {
@@ -1102,7 +1174,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date) {
-        let duration = Int(duration_ == 0 ? 2880 : duration_)
+        let duration = editedOverrideDuration(duration_)
+        let consecutiveDate = consecutiveOverrideDate(for: date)
+        let deleteTolerance: TimeInterval = 5 * 60
         let exercise =
             [NigtscoutExercise(
                 duration: duration,
@@ -1117,11 +1191,27 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         processQueue.async {
-            nightscout.deleteOverride(at: date)
+            nightscout.deleteOverride(around: date, tolerance: deleteTolerance)
+                .flatMap { _ -> AnyPublisher<Void, Swift.Error> in
+                    guard let consecutiveDate else {
+                        return Just(())
+                            .setFailureType(to: Swift.Error.self)
+                            .eraseToAnyPublisher()
+                    }
+
+                    return nightscout.deleteOverride(around: consecutiveDate, tolerance: deleteTolerance)
+                }
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        debug(.nightscout, "Old Override deleted in NS, date: \(date)")
+                        if let consecutiveDate {
+                            debug(
+                                .nightscout,
+                                "Old Override and consecutive Override deleted in NS, dates: \(date), \(consecutiveDate)"
+                            )
+                        } else {
+                            debug(.nightscout, "Old Override deleted in NS, date: \(date)")
+                        }
                         nightscout.uploadEcercises(exercise)
                             .sink { completion in
                                 switch completion {
@@ -1144,20 +1234,42 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
-    func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date) {
+    private func consecutiveOverrideDate(for date: Date) -> Date? {
+        guard let override = overrideStorage.fetchNumberOfOverrides(numbers: 10)
+            .first(where: { override in
+                guard let overrideDate = override.date else { return false }
+                return override.succeeding != nil && abs(overrideDate.timeIntervalSince(date)) < 1
+            }),
+            override.succeeding != nil
+        else {
+            return nil
+        }
+
+        let duration = Int(truncating: override.duration ?? 0)
+        let normalizedDuration = (duration == 0 || override.indefinite) ? 2880 : duration
+        return date.addingTimeInterval(TimeInterval(normalizedDuration * 60))
+    }
+
+    func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date, consecutive: OverridePresets?) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
         }
         let duration = Int(duration_ == 0 ? 2880 : duration_)
 
-        let exercise =
-            [NigtscoutExercise(
-                duration: duration,
-                eventType: EventType.nsExercise,
-                createdAt: date,
-                enteredBy: NigtscoutTreatment.local,
-                notes: profile
-            )]
+        var exercise = [
+            overrideExercise(profile: profile, duration: duration, createdAt: date)
+        ]
+
+        if let consecutivePreset = consecutive {
+            let consecutiveDuration = overrideDuration(consecutivePreset.duration)
+            exercise.append(
+                overrideExercise(
+                    profile: consecutivePreset.name,
+                    duration: consecutiveDuration,
+                    createdAt: date.addingTimeInterval(TimeInterval(duration * 60))
+                )
+            )
+        }
 
         processQueue.async {
             nightscout.uploadEcercises(exercise)
@@ -1172,6 +1284,24 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
+    }
+
+    private func overrideDuration(_ duration: NSDecimalNumber?) -> Int {
+        Int(truncating: duration ?? 0) == 0 ? 2880 : Int(truncating: duration ?? 0)
+    }
+
+    private func editedOverrideDuration(_ duration: Double) -> Int {
+        max(1, Int(duration.rounded(.up)))
+    }
+
+    private func overrideExercise(profile: String?, duration: Int, createdAt: Date) -> NigtscoutExercise {
+        NigtscoutExercise(
+            duration: duration,
+            eventType: EventType.nsExercise,
+            createdAt: createdAt,
+            enteredBy: NigtscoutTreatment.local,
+            notes: profile
+        )
     }
 
     func deleteOverride() {

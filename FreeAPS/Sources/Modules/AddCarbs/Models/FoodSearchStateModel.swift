@@ -74,6 +74,13 @@ import SwiftUI
         startAIAnalysis(analysisRequest: .image(image, comment))
     }
 
+    func startVoiceAnalysis(transcript: String) {
+        let trimmedTranscript = transcript.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedTranscript.isEmpty else { return }
+        foodSearchText = trimmedTranscript
+        startAIAnalysis(analysisRequest: .query(trimmedTranscript))
+    }
+
     func handleImageCaptured(image: UIImage, fromCamera: Bool) {
         if fromCamera, UserDefaults.standard.aiSavePhotosToLibrary {
             saveImageToLibrary(image)
@@ -304,6 +311,17 @@ import SwiftUI
                 foodSearchRoute = nil
             } catch is CancellationError {
                 // cancelled, already reset by cancelSearchTask()
+            } catch let error as URLError where error.code == .cancelled {
+                // cancelled by another search task
+            } catch let AIFoodAnalysisError.networkError(error) {
+                if let urlError = error as? URLError, urlError.code == .cancelled {
+                    // cancelled by another search task
+                } else {
+                    try? await Task.sleep(for: .seconds(1))
+                    self.analysisStart = nil
+                    self.analysisEnd = nil
+                    self.analysisError = error.localizedDescription
+                }
             } catch {
                 try? await Task.sleep(for: .seconds(1))
                 self.analysisStart = nil

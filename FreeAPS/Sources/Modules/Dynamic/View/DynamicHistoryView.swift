@@ -119,11 +119,9 @@ struct DynamicHistoryView: View {
                             (item.tdd ?? 0) != 0 ? (tddFormatter.string(from: (item.tdd ?? 0) as NSNumber) ?? "") : "--"
                         ]
 
-                        let proMaxInset: CGFloat =
-                            (
-                                device == "iPhone17,2" || device == "iPhone18,2" || device == "iPhone 15 Pro Max" || device ==
-                                    "iPhone 17 Pro Max"
-                            ) ? 25 : 15
+                        // Pro Max screens (raw machine identifiers: 15/16/17 Pro Max)
+                        let proMaxInset: CGFloat = ["iPhone16,2", "iPhone17,2", "iPhone18,2"]
+                            .contains(device) ? 25 : 15
 
                         Grid(horizontalSpacing: 0) {
                             GridRow {

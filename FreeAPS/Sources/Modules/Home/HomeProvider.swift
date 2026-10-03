@@ -37,6 +37,11 @@ extension Home {
             overrideStorage.fetchLatestOverride().first
         }
 
+        func consecutiveOverride(_ id: String) -> OverridePresets? {
+            guard let preset = overrideStorage.fetchPreset(id: id) else { return nil }
+            return preset
+        }
+
         func overrideHistory() -> [OverrideHistory] {
             overrideStorage.fetchOverrideHistory(interval: DateFilter.day.startDate)
         }
