@@ -17,7 +17,7 @@
       location = "group:LibreTransmitter/LibreTransmitter.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:LibreCRKit">
+      location = "group:RoundWhiteDiscKit">
    </FileRef>
    <FileRef
       location = "group:LibreLoop/LibreLoop.xcodeproj">
