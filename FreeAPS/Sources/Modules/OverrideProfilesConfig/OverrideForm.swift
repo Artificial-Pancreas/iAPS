@@ -27,6 +27,8 @@ extension OverrideProfilesConfig {
         var glucoseOverrideThresholdActiveDown: Bool = false
         var glucoseOverrideThresholdDown: Decimal = 90 // mgdL
         var autoISFsettings = AutoISFsettings()
+        /// id of the preset to start when this override runs to completion
+        var succeeding: String?
     }
 }
 
@@ -87,10 +89,32 @@ extension OverrideProfilesConfig.OverrideForm {
         maxIOB = preset.maxIOB ?? context.defaultMaxIOB
 
         autoISFsettings = preset.aisf ?? context.currentAutoIsfSettings
+        succeeding = preset.succeeding
 
+        // a target <= 6 mg/dL means "no target override" - keep the default, so toggling it on doesn't show 0.3 mmol/L
         override_target = Double(preset.target ?? 0) > 6.0
-        let mgdlTarget = preset.target ?? 0
-        target = context.units == .mmolL ? mgdlTarget.asMmolL : mgdlTarget
+        if override_target, let mgdlTarget = preset.target {
+            target = context.units == .mmolL ? mgdlTarget.asMmolL : mgdlTarget
+        }
+    }
+
+    /// A finite override needs a duration (0 isn't "indefinite": it would be ended at the next loop).
+    var hasValidDuration: Bool {
+        _indefinite || duration > 0
+    }
+
+    /// A succeeding preset only starts when the override runs to completion: it must be finite, with none of the
+    /// other end conditions.
+    var canHaveSucceeding: Bool {
+        !_indefinite &&
+            !(advancedSettings && (endWIthNewCarbs || glucoseOverrideThresholdActive || glucoseOverrideThresholdActiveDown))
+    }
+
+    /// The succeeding preset may have been deleted since.
+    mutating func dropDanglingSucceeding(candidates: [OverridePresetsSnapshot]) {
+        if let id = succeeding, !candidates.contains(where: { $0.id == id }) {
+            succeeding = nil
+        }
     }
 
     func snapshot(id: String, name: String?, emoji: String?, context: Context) -> OverridePresetsSnapshot {
@@ -121,6 +145,7 @@ extension OverrideProfilesConfig.OverrideForm {
             smbMinutes: smbMinutes,
             uamMinutes: uamMinutes,
             overrideAutoISF: overrideAutoISF,
+            succeeding: canHaveSucceeding && succeeding != id ? succeeding : nil,
             aisf: autoISFsettings
         )
     }

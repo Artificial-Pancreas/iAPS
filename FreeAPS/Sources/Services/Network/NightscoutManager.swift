@@ -11,6 +11,7 @@ protocol NightscoutManager: Sendable {
     func uploadOldGlucose(bloodGlucose: [BloodGlucose]) async -> AsyncStream<Double>
     func uploadProfileAndSettings(profile: NightscoutProfileStore?, force: Bool) async
     func uploadOverride(_ profile: String, _ duration: Double, _ date: Date) async
+    func deleteOverride(at date: Date) async
     func deleteAnnouncements() async
     func deleteAllNSoverrrides() async
     func fetchProfile() async throws -> [FetchedNightscoutProfileStore]
@@ -241,6 +242,10 @@ actor BaseNightscoutManager: NightscoutManager {
 
     func uploadOverride(_ profile: String, _ duration: Double, _ date: Date) async {
         await overridesUploader.uploadOverride(profile, duration, date)
+    }
+
+    func deleteOverride(at date: Date) async {
+        await overridesUploader.deleteOverride(at: date)
     }
 
     func deleteAllNSoverrrides() async {

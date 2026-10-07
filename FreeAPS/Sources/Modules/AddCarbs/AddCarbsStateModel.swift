@@ -7,7 +7,6 @@ extension AddCarbs {
         @Injected() private var storage: FileStorage!
         @Injected() private var carbsStorage: CarbsStorage!
         @Injected() private var apsManager: APSManager!
-        @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var overrideStorage: OverrideStorage!
         @Injected() private var overrideManager: OverrideManager!
 
@@ -282,7 +281,6 @@ extension AddCarbs {
                 return
             }
             // Enable New Override
-            let saved: OverrideSnapshot?
             if profileID == "Hypo Treatment" {
                 // transient, non-persisted override preset
                 let override = OverridePresetsSnapshot(
@@ -299,19 +297,9 @@ extension AddCarbs {
 
                 // the preset does not exist, so `fromSavedPreset: true` is a lie, but when determining the present name - this case is handled and the override name is set to the hypo emoji
                 // TODO: instead, the preset name should become part of the override entity, so that we don't need to fetch and reconstruct it every time later on
-                saved = await overrideStorage.activateOverrideFromPreset(preset: override, fromSavedPreset: true)
-            } else {
-                saved = await overrideStorage.activateOverrideFromPreset(presetId: profileID)
-            }
-
-            if let saved {
-                // Upload to Nightscout
-                let overrideName = await overrideStorage.getPresetName(for: saved)
-                await nightscoutManager.uploadOverride(
-                    overrideName ?? "📉",
-                    Double(saved.duration ?? 0),
-                    saved.date ?? Date.now
-                )
+                await overrideManager.activateOverride(preset: override, fromSavedPreset: true)
+            } else if let preset = await overrideStorage.fetchOverridePreset(id: profileID) {
+                await overrideManager.activateOverride(preset: preset, fromSavedPreset: true)
             }
         }
 

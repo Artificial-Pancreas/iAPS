@@ -503,7 +503,14 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
                 start: item.start ?? 0,
                 target: item.target ?? 0,
                 uamMinutes: item.uamMinutes ?? 0,
-                autoISF: autoISF
+                autoISF: autoISF,
+                succeeding: item.succeeding,
+                endWIthNewCarbs: item.endWIthNewCarbs,
+                overrideAutoISF: item.overrideAutoISF,
+                glucoseOverrideThresholdActive: item.glucoseOverrideThresholdActive,
+                glucoseOverrideThreshold: item.glucoseOverrideThreshold,
+                glucoseOverrideThresholdActiveDown: item.glucoseOverrideThresholdActiveDown,
+                glucoseOverrideThresholdDown: item.glucoseOverrideThresholdDown
             )
         }
     }

@@ -61,6 +61,16 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
         }
     }
 
+    /// Drop queued items that haven't been sent yet.
+    /// Not serialized with `sendPending` (it must not wait for the network): an item already picked up by an
+    /// in-flight send still gets sent.
+    func discard(_ keys: Set<Key>) async {
+        let uniqueBy = self.uniqueBy
+        await storage.modify(file: file, as: Item.self) { queued in
+            queued.filter { !keys.contains($0[keyPath: uniqueBy]) }
+        }
+    }
+
     /// Send queued items; remove the ones that succeed, keep failures for the next attempt.
     @discardableResult func sendPending() async -> (sent: Int, failed: Int) {
         await serializer.run {
@@ -78,25 +88,36 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
             }
         guard queued.isNotEmpty else { return (0, 0) }
 
-        var sentKeys: Set<Key> = []
+        // the sent revision of each key: an item replaced (same key) while its send was in flight stays queued
+        var sentRevisions: [Key: Data] = [:]
         var failedCount = 0
         for item in queued {
             do {
                 try await send(item)
-                sentKeys.insert(item[keyPath: uniqueBy])
+                sentRevisions[item[keyPath: uniqueBy]] = Self.revision(of: item)
             } catch {
                 failedCount += 1
                 debug(category, "outbox [\(file)]: send failed: \(error.localizedDescription)")
             }
         }
 
-        guard sentKeys.isNotEmpty else { return (0, failedCount) }
+        guard sentRevisions.isNotEmpty else { return (0, failedCount) }
         let uniqueBy = self.uniqueBy
-        let sentKeysSnapshot = sentKeys
+        let sent = sentRevisions
         await storage.modify(file: file, as: Item.self) { queued in
-            queued.filter { !sentKeysSnapshot.contains($0[keyPath: uniqueBy]) }
+            queued.filter { item in
+                guard let sentRevision = sent[item[keyPath: uniqueBy]] else { return true }
+                return Self.revision(of: item) != sentRevision
+            }
         }
-        debug(category, "outbox [\(file)]: sent \(sentKeys.count)")
-        return (sentKeys.count, failedCount)
+        debug(category, "outbox [\(file)]: sent \(sent.count)")
+        return (sent.count, failedCount)
+    }
+
+    /// (an item that can't be encoded acts as unchanged - removed by key, as before)
+    private static func revision(of item: Item) -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        return (try? encoder.encode(item)) ?? Data()
     }
 }
