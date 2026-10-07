@@ -665,9 +665,11 @@ extension Home {
             }
         }
 
-        private func illustrateCombination(override _: Override) -> some View {
-            Image(systemName: "person.2.fill").symbolRenderingMode(.palette).foregroundStyle(.blue, .purple)
-                .padding(.horizontal, 2)
+        private func illustrateCombination(override: Override) -> some View {
+            fetchedProfiles.first(where: { $0.id == override.succeeding }) != nil ?
+                Image(systemName: "person.2.fill").symbolRenderingMode(.palette).foregroundStyle(.blue, .purple)
+                .padding(.horizontal, 2) :
+                nil
         }
 
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
