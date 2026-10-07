@@ -322,10 +322,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LibreCRKit"
-               BuildableName = "LibreCRKit"
-               BlueprintName = "LibreCRKit"
-               ReferencedContainer = "container:LibreCRKit">
+               BlueprintIdentifier = "RoundWhiteDiscKit"
+               BuildableName = "RoundWhiteDiscKit"
+               BlueprintName = "RoundWhiteDiscKit"
+               ReferencedContainer = "container:RoundWhiteDiscKit">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
