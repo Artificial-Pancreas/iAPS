@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "clean_pancreas_dark_120X120.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
