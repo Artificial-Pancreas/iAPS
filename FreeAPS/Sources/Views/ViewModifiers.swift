@@ -1,44 +1,11 @@
 import Combine
 import SwiftUI
 
-struct RoundedBackground: ViewModifier {
-    private let color: Color
-
-    init(color: Color = Color("CapsuleColor")) {
-        self.color = color
-    }
-
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(
-                Rectangle()
-                    // RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill()
-                    .foregroundColor(color)
-            )
-    }
-}
-
 struct GlassEffectWhenAvailable: ViewModifier {
     let glassType: GlassType
+
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *), glassType != .none {
-            let glass: Glass = { switch glassType {
-            case .identity: return .identity
-            case .clear: return .clear
-            default: return .regular
-            }
-            }()
-            content
-                .glassEffect(glass)
-        } else {
-            content
-                .background {
-                    Capsule()
-                        .fill(.ultraThinMaterial)
-                }
-        }
+        content.glassEffectWhenAvailable(glassType, in: Capsule())
     }
 
     enum GlassType {
@@ -46,6 +13,24 @@ struct GlassEffectWhenAvailable: ViewModifier {
         case clear
         case regular
         case none
+    }
+}
+
+@available(iOS 27.1, *) struct ToolbarEdgeAwareButton<Icon: View>: View {
+    @Environment(\.toolbarVerticalEdge) private var toolbarVerticalEdge
+
+    let action: () -> Void
+    @ViewBuilder let icon: () -> Icon
+
+    var body: some View {
+        Button(action: action) {
+            icon()
+                .frame(
+                    width: toolbarVerticalEdge == nil ? 28 : 30,
+                    height: toolbarVerticalEdge == nil ? 28 : 30
+                )
+        }
+        .labelStyle(.iconOnly)
     }
 }
 
@@ -189,9 +174,10 @@ struct LoopEllipse: View {
     @Environment(\.colorScheme) var colorScheme
     let stroke: Color
     var body: some View {
-        RoundedRectangle(cornerRadius: 15)
+        let shape = RoundedRectangle(cornerRadius: 15)
+        shape
             .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 0.7)
-            .glassEffectWhenAvailable(.clear)
+            .glassEffectWhenAvailable(.clear, in: shape)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(colorScheme == .light ? .white : .black)
@@ -214,7 +200,7 @@ struct Sage: View {
         let scheme = colorScheme == .light ? Color(.systemGray5) : Color(.systemGray2)
 
         Circle()
-            .stroke(scheme, lineWidth: 5)
+            .stroke(scheme, lineWidth: 3)
             .background(
                 Circle()
                     .fill(
@@ -243,9 +229,10 @@ struct TimeEllipse: View {
 
     let characters: Int
     var body: some View {
-        RoundedRectangle(cornerRadius: 15)
+        let shape = RoundedRectangle(cornerRadius: 15)
+        shape
             .fill((colorScheme == .light && iOS26) ? .ultraThickMaterial : .ultraThinMaterial)
-            .glassEffectWhenAvailable(.regular)
+            .glassEffectWhenAvailable(.regular, in: shape)
             .frame(width: CGFloat(characters * 7), height: 25)
     }
 }
@@ -380,11 +367,27 @@ struct ClearButton: ViewModifier {
     }
 }
 
-extension View {
-    func roundedBackground() -> some View {
-        modifier(RoundedBackground())
+extension Shape {
+    @ViewBuilder func glassEffectWhenAvailable(
+        _ glassType: GlassEffectWhenAvailable.GlassType = .regular
+    ) -> some View {
+        if #available(iOS 26.0, *), glassType != .none {
+            let glass: Glass = { switch glassType {
+            case .identity: return .identity
+            case .clear: return .clear
+            default: return .regular
+            }
+            }()
+            glassEffect(glass, in: self)
+        } else {
+            background {
+                fill(.ultraThinMaterial)
+            }
+        }
     }
+}
 
+extension View {
     func addShadows() -> some View {
         modifier(AddShadow())
     }
