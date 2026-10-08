@@ -115,6 +115,8 @@ extension Home {
             return scene
         }
 
+        @Environment(\.scenePhase) private var scenePhase
+
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -279,15 +281,17 @@ extension Home {
             .modal(for: .dataTable, from: self)
         }
 
-        var chart: some View {
+        private func chart(_ geo: GeometryProxy) -> some View {
             let ratio = 1.96
             let ratio2 = 2.0
+            let availableHeight = geo.size.height + geo.safeAreaInsets.top + geo.safeAreaInsets.bottom
 
             return addColouredBackground().shadow(radius: 3, y: 3)
                 .overlay {
                     mainChart
                 }
-                .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? ratio : ratio2))
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: availableHeight / (fontSize < .extraExtraLarge ? ratio : ratio2))
         }
 
         var carbsAndInsulinView: some View {
@@ -547,7 +551,7 @@ extension Home {
         }
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
-            let height: CGFloat = displayGlucose ? 140 : 210
+            let height: CGFloat = (displayGlucose ? 140 : 210)
             addHeaderBackground()
                 .frame(
                     height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top : height + 10 + geo
@@ -1023,42 +1027,34 @@ extension Home {
             ActivityIndicator(isAnimating: .constant(true), style: .large)
         }
 
-        @Environment(\.scenePhase) private var scenePhase
-
-        @ViewBuilder private func mainContent(_ geo: GeometryProxy) -> some View {
+        private func mainContent(_ geo: GeometryProxy) -> some View {
             VStack(spacing: 0) {
-                // Header View
                 headerView(geo)
                 ScrollView {
                     VStack {
-                        // Main Chart
-                        chart
-                        // Adjust hours visible (X-Axis) and ratio display
+                        chart(geo)
                         timeSetting
                             .overlay { isfView }
-                        // TIR Chart
+
                         if !state.data.glucose.isEmpty {
                             preview.padding(.top, 15)
                         }
-                        // Loops Chart
+
                         loopPreview.padding(.vertical, 15)
 
-                        // COB Chart
                         if state.carbData > 0 {
                             activeCOBView.padding(.bottom, 15)
                         }
 
-                        // IOB Chart
                         if !state.iobData.isEmpty {
                             activeIOBView.padding(.bottom, 15)
                         }
 
-                        // Summary Views
                         insulinView.padding(.bottom, 15)
-                        mealsView.padding(.bottom, 120)
+                        mealsView.padding(.bottom, 15)
                     }
+                    .frame(maxWidth: .infinity)
                     .background {
-                        // Track vertical scroll
                         GeometryReader { proxy in
                             let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
                             let yThreshold: CGFloat = -550
@@ -1074,51 +1070,49 @@ extension Home {
                                 }
                         }
                     }
-                }.coordinateSpace(name: "HomeScrollView")
+                }
+                .frame(maxWidth: .infinity)
+                .coordinateSpace(name: "HomeScrollView")
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
 
         var body: some View {
             GeometryReader { geo in
-                Group {
-                    Group {
-                        VStack(spacing: 0) {
-                            mainContent(geo)
-                        }
-                    }
-                    .background(
-                        colorScheme == .light ?
-                            IAPSconfig.homeViewBackgroundLight :
-                            IAPSconfig.homeViewBackgrundDark
-                    )
-                    .ignoresSafeArea(edges: .vertical)
-                    .overlay {
-                        if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(.ultraThinMaterial)
-                                    .glassEffectWhenAvailable(.clear, in: RoundedRectangle(cornerRadius: 15))
-                                    .frame(maxWidth: 320, maxHeight: 90)
-                                bolusProgressView(progress: progress, amount: amount)
+                actionBarLayout(
+                    for: mainContent(geo)
+                        .background(
+                            colorScheme == .light ?
+                                IAPSconfig.homeViewBackgroundLight :
+                                IAPSconfig.homeViewBackgrundDark
+                        )
+                        .ignoresSafeArea(edges: .top)
+                        .overlay {
+                            if let progress = state.bolusProgress, let amount = state.bolusAmount {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(.ultraThinMaterial)
+                                        .glassEffectWhenAvailable(.clear, in: RoundedRectangle(cornerRadius: 15))
+                                        .frame(maxWidth: 320, maxHeight: 90)
+                                    bolusProgressView(progress: progress, amount: amount)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .offset(y: -100)
                             }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .offset(y: -100)
-                        }
-                    }
-                    .overlay {
-                        actionToolbar(geo)
-                    }
-                    .onChange(of: scenePhase) {
-                        switch scenePhase {
-                        case .active:
-                            state.startTimer()
-                            checkBuildExpiration()
-                        case .background,
-                             .inactive:
-                            state.stopTimer()
-                        default:
-                            break
-                        }
+                        },
+                    isOverride: fetchedPercent.first?.enabled ?? false,
+                    isTarget: state.tempTarget != nil
+                )
+                .onChange(of: scenePhase) {
+                    switch scenePhase {
+                    case .active:
+                        state.startTimer()
+                        checkBuildExpiration()
+                    case .background,
+                         .inactive:
+                        state.stopTimer()
+                    default:
+                        break
                     }
                 }
             }
@@ -1140,7 +1134,6 @@ extension Home {
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)
-
             .ignoresSafeArea(.keyboard)
             .sheet(isPresented: $displayAutoHistory) {
                 AutoISFHistoryView(units: state.data.units)
@@ -1204,13 +1197,54 @@ extension Home {
             }
         }
 
-        // tab Bar buttons
+        // Tab bar buttons
+        @ViewBuilder private func actionBarLayout<Content: View>(
+            for content: Content,
+            isOverride: Bool,
+            isTarget: Bool
+        ) -> some View {
+            if #available(iOS 27.1, *) {
+                ToolbarEdgeActionBarLayout(
+                    content: content,
+                    verticalBar: { verticalActionBar(isOverride: isOverride, isTarget: isTarget) },
+                    bottomBar: { bottomActionBar(isOverride: isOverride, isTarget: isTarget) }
+                )
+            } else {
+                content
+                    .safeAreaInset(edge: .bottom, spacing: 0) {
+                        bottomActionBar(isOverride: isOverride, isTarget: isTarget)
+                    }
+            }
+        }
+
+        private func verticalActionBar(isOverride: Bool, isTarget: Bool) -> some View {
+            VStack(spacing: 20) {
+                actionBarItems(isOverride: isOverride, isTarget: isTarget)
+            }
+            .labelStyle(.iconOnly)
+            .buttonStyle(.borderless)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 10)
+            .background(.bar, in: Capsule())
+        }
+
+        private func bottomActionBar(isOverride: Bool, isTarget: Bool) -> some View {
+            HStack(spacing: 40) {
+                actionBarItems(isOverride: isOverride, isTarget: isTarget)
+            }
+            .labelStyle(.iconOnly)
+            .buttonStyle(.borderless)
+            .frame(maxWidth: .infinity)
+            .padding(.top, 15)
+            .background(.bar)
+        }
 
         private func carbTabItem() -> some View {
             tabBarButton { showAddCarbs(mode: .meal) } icon: {
-                ZStack(alignment: .leading) {
+                ZStack(alignment: .topTrailing) {
                     tabBarSymbol("fork.knife", color: colorScheme == .dark ? .loopYellow : .orange)
-                    carbRequirementBadge.offset(x: (state.carbsRequired ?? 0) > 99 ? -20 : -5, y: -25)
+                    carbRequirementBadge
+                        .offset(x: (state.carbsRequired ?? 0) > 99 ? 10 : 5, y: -10)
                 }
             }
             .contextMenu {
@@ -1227,7 +1261,7 @@ extension Home {
         @ViewBuilder private var carbRequirementBadge: some View {
             if let carbsReq = state.carbsRequired {
                 Text(numberFormatter.string(from: carbsReq as NSNumber) ?? "")
-                    .font(.caption)
+                    .font(.caption2)
                     .foregroundStyle(.white)
                     .padding(4)
                     .background(Circle().fill(Color.red))
@@ -1250,6 +1284,11 @@ extension Home {
                     active: bolusInProgress
                 )
             }
+            .confirmationDialog("Bolus already in Progress", isPresented: $showBolusActiveAlert) {
+                Button("Bolus already in Progress!", role: .destructive) {
+                    showBolusActiveAlert = false
+                }
+            }
         }
 
         private func manualTempTabItem() -> some View {
@@ -1257,7 +1296,8 @@ extension Home {
                 Image("bolus1")
                     .renderingMode(.template)
                     .resizable()
-                    .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .center)
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
                     .foregroundStyle(.insulin)
             }
         }
@@ -1267,11 +1307,16 @@ extension Home {
                 isOverride ? showCancelAlert.toggle() : state.showModal(for: .overrideProfilesConfig)
             } icon: {
                 tabBarSymbol(
-                    isOverride ? "person.circle.fill" : "person",
+                    isOverride ? "person.fill" : "person",
                     color: .purple,
-                    size: isOverride ? 44 : 28,
                     active: isOverride
-                )
+                ).scaleEffect(isOverride ? 1.4 : 1.1)
+            }
+            .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
+                Button("Cancel Profile Override", role: .destructive) {
+                    state.cancelProfile()
+                    triggerUpdate.toggle()
+                }
             }
             .onLongPressGesture { state.showModal(for: .overrideProfilesConfig) }
         }
@@ -1280,7 +1325,12 @@ extension Home {
             tabBarButton {
                 isTarget ? showCancelTTAlert.toggle() : state.showModal(for: .addTempTarget)
             } icon: {
-                tabBarSymbol("target", color: isTarget ? .red : .loopGreen)
+                tabBarSymbol("target", color: .loopGreen, active: isTarget)
+            }
+            .confirmationDialog("Cancel Temporary Target", isPresented: $showCancelTTAlert) {
+                Button("Cancel Temporary Target", role: .destructive) {
+                    state.cancelTempTarget()
+                }
             }
             .onLongPressGesture { state.showModal(for: .addTempTarget) }
         }
@@ -1301,163 +1351,58 @@ extension Home {
             }
         }
 
-        private func tabBarButton<Icon: View>(
+        @ViewBuilder private func tabBarButton<Icon: View>(
             action: @escaping () -> Void,
-            @ViewBuilder icon: () -> Icon
+            @ViewBuilder icon: @escaping () -> Icon
         ) -> some View {
-            Button(action: action) {
-                tabBarIcon(content: icon)
+            if #available(iOS 27.1, *) {
+                ToolbarEdgeAwareButton(action: action, icon: icon)
+            } else {
+                Button(action: action) {
+                    icon()
+                }
+                .labelStyle(.iconOnly)
             }
-            .buttonStyle(.plain)
-            .frame(width: 44, height: 44)
         }
 
         /// Custom tabBar symbols. active: Bool indicating activated button.
-        private func tabBarSymbol(_ systemName: String, color: Color, size: CGFloat = 24, active: Bool = false) -> some View {
+        private func tabBarSymbol(_ systemName: String, color: Color, size: CGFloat = 22, active: Bool = false) -> some View {
             Image(systemName: systemName)
-                .symbolRenderingMode(.palette)
-                .font(.custom("Buttons", size: size))
-                .foregroundStyle(color, active ? .blue.opacity(0.2) : color)
-                .frame(width: 32, height: 32)
-        }
-
-        private func tabBarIcon<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-            content()
-                .frame(width: 44, height: 44)
-        }
-
-        @ViewBuilder private func actionToolbar(_ geo: GeometryProxy) -> some View {
-            let isOverride = fetchedPercent.first?.enabled ?? false
-            let isTarget = state.tempTarget != nil
-            let isTrailing = isIphoneDuoScreen(for: geo)
-
-            actionToolbar(isOverride: isOverride, isTarget: isTarget, isTrailing: isTrailing)
-                .padding(isTrailing ? .trailing : .horizontal, 12)
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: isTrailing ? .bottomTrailing : .bottom
-                )
-                .offset(x: isTrailing ? trailingActionToolbarOffset(for: geo) : 0)
+                .symbolRenderingMode(.hierarchical)
+                .font(.system(size: size, weight: .medium))
+                .foregroundStyle(active ? color : .secondary)
         }
 
         private func isIphoneDuoScreen(for geo: GeometryProxy) -> Bool {
             geo.size.width * 1.7 > geo.size.height
         }
 
-        private func trailingActionToolbarOffset(for geo: GeometryProxy) -> CGFloat {
-            max(0, geo.safeAreaInsets.trailing)
-        }
-
-        // Custom toolbar for home main buttons
-        private func actionToolbar(isOverride: Bool, isTarget: Bool, isTrailing: Bool) -> some View {
-            toolbarDialogs {
-                if isTrailing {
-                    toolbarRectangle {
-                        actionToolbarContent(isOverride: isOverride, isTarget: isTarget, isTrailing: true)
-                    }
-                } else {
-                    toolbarCapsule {
-                        actionToolbarContent(
-                            isOverride: isOverride,
-                            isTarget: isTarget,
-                            isTrailing: false,
-                            buttonGlassType: .clear
-                        )
-                    }
-                }
-            }
-        }
-
-        @ViewBuilder private func actionToolbarContent(
-            isOverride: Bool,
-            isTarget: Bool,
-            isTrailing: Bool,
-            buttonGlassType: GlassEffectWhenAvailable.GlassType? = nil
-        ) -> some View {
-            if isTrailing {
-                VStack(spacing: 6) {
-                    actionToolbarItems(isOverride: isOverride, isTarget: isTarget, buttonGlassType: buttonGlassType)
-                }
-            } else {
-                HStack(spacing: 10) {
-                    actionToolbarItems(isOverride: isOverride, isTarget: isTarget, buttonGlassType: buttonGlassType)
-                }
-            }
-        }
-
-        private func toolbarDialogs<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-            content()
-                .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
-                    Button("Cancel Profile Override", role: .destructive) {
-                        state.cancelProfile()
-                        triggerUpdate.toggle()
-                    }
-                }
-                .confirmationDialog("Cancel Temporary Target", isPresented: $showCancelTTAlert) {
-                    Button("Cancel Temporary Target", role: .destructive) {
-                        state.cancelTempTarget()
-                    }
-                }
-                .confirmationDialog("Bolus already in Progress", isPresented: $showBolusActiveAlert) {
-                    Button("Bolus already in Progress!", role: .destructive) {
-                        showBolusActiveAlert = false
-                    }
-                }
-        }
-
-        @ViewBuilder private func actionToolbarItems(
-            isOverride: Bool,
-            isTarget: Bool,
-            buttonGlassType: GlassEffectWhenAvailable.GlassType?
-        ) -> some View {
+        @ViewBuilder private func actionBarItems(isOverride: Bool, isTarget: Bool) -> some View {
             if state.carbButton {
-                actionToolbarButton(buttonGlassType) { carbTabItem() }
+                carbTabItem()
+                    .accessibilityLabel("Add Carbs")
             }
-            actionToolbarButton(buttonGlassType) { bolusTabItem() }
+
+            bolusTabItem()
+                .accessibilityLabel(state.bolusProgress == nil ? "Bolus" : "Bolus in Progress")
+
             if state.allowManualTemp {
-                actionToolbarButton(buttonGlassType) { manualTempTabItem() }
+                manualTempTabItem()
+                    .accessibilityLabel("Manual Temporary Basal")
             }
+
             if state.profileButton {
-                actionToolbarButton(buttonGlassType) { profileTabItem(isOverride: isOverride) }
+                profileTabItem(isOverride: isOverride)
+                    .accessibilityLabel(isOverride ? "Cancel Profile Override" : "Profile Override")
             }
+
             if state.useTargetButton {
-                actionToolbarButton(buttonGlassType) { tempTargetTabItem(isTarget: isTarget) }
+                tempTargetTabItem(isTarget: isTarget)
+                    .accessibilityLabel(isTarget ? "Cancel Temporary Target" : "Temporary Target")
             }
-            actionToolbarButton(buttonGlassType) { settingsTabItem() }
-        }
 
-        @ViewBuilder private func actionToolbarButton<Content: View>(
-            _ glassType: GlassEffectWhenAvailable.GlassType?,
-            @ViewBuilder content: () -> Content
-        ) -> some View {
-            if let glassType {
-                content().glassEffectWhenAvailable(glassType)
-            } else {
-                content()
-            }
-        }
-
-        private func toolbarCapsule<Content: View>(
-            _ glassType: GlassEffectWhenAvailable.GlassType = .none,
-            @ViewBuilder content: () -> Content
-        ) -> some View {
-            content()
-                .padding(8)
-                .glassEffectWhenAvailable(glassType)
-                .overlay {
-                    Capsule()
-                        .stroke(Color.secondary.opacity(0.18), lineWidth: 0.5)
-                }
-        }
-
-        private func toolbarRectangle<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-            content()
-                .padding(8)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 15, style: .continuous)
-                        .stroke(Color.secondary.opacity(0.18), lineWidth: 0.5)
-                }
+            settingsTabItem()
+                .accessibilityLabel("Settings")
         }
     }
 }
