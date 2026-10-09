@@ -53,6 +53,9 @@ This is also a common step for all "browser builds", do this step only once
 1. Click "Run Workflow", and tap the green button.
 1. Wait, and within a minute or two you should see a green checkmark indicating the workflow succeeded.
 
+> iAPS now needs the Time Sensitive Notifications capability. 
+> Re-run "2. Add Identifiers" after to enable it.
+
 ## Create App Group
 
 If you have already built iAPS (or Loop) via Xcode using this Apple ID, the "Loop App Group" likely already exists in your account. In that case skip ahead to [Add App Group to Bundle Identifiers](#add-app-group-to-bundle-identifiers) — **do not** skip past it. The App Group existing in your account is not the same as it being assigned to the iAPS bundle identifiers, and the identifiers created by "2. Add Identifiers" start out with no group assigned. Skipping that section is the most common cause of a build failing with `Provisioning profile ... doesn't support the ... LoopGroup App Group`.

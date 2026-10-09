@@ -107,6 +107,23 @@ platform :ios do
       end
     end
 
+    # Same reasoning for Time Sensitive Notifications: FreeAPS.entitlements asks for it, so a
+    # profile issued before the capability was added to the identifier fails in `gym` with an
+    # equally cryptic entitlement error ten minutes later.
+    main_profile_path = ENV["sigh_#{APP_IDENTIFIER}_appstore_profile-path"]
+    time_sensitive = FastlaneCore::ProvisioningProfile.parse(main_profile_path)
+      .fetch("Entitlements", {})
+      .fetch("com.apple.developer.usernotifications.time-sensitive", false)
+    unless time_sensitive
+      UI.user_error!(
+        "The provisioning profile for #{APP_IDENTIFIER} does not include Time Sensitive Notifications. " \
+        "Re-run '2. Add Identifiers' to enable the capability, then build again: enabling it invalidates " \
+        "the old profile, so it is normally regenerated automatically. " \
+        "If the build still fails with this error, delete AppStore_#{APP_IDENTIFIER}.mobileprovision from " \
+        "your Match-Secrets repo to force a fresh profile, then build again."
+      )
+    end
+
     previous_build_number = latest_testflight_build_number(
       app_identifier: "#{APP_IDENTIFIER}",
       api_key: api_key,
@@ -208,7 +225,12 @@ platform :ios do
     configure_bundle_id("FreeAPS", "#{APP_IDENTIFIER}", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING
+      Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING,
+      # Lets glucose alarms, carbs-required and loop-not-running notifications break through
+      # Focus and Do Not Disturb. Freely available - unlike critical alerts it needs no request
+      # to Apple - but the capability must be on the identifier before the entitlement in
+      # FreeAPS.entitlements will sign.
+      Spaceship::ConnectAPI::BundleIdCapability::Type::USERNOTIFICATIONS_TIMESENSITIVE
     ])
 
     configure_bundle_id("FreeAPSWatch WatchKit Extension", "#{APP_IDENTIFIER}.watchkitapp.watchkitextension", [

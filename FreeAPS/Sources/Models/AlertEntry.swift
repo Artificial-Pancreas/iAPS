@@ -3,49 +3,172 @@ import Foundation
 import LoopKit
 import UserNotifications
 
+struct AlertIdentity: Sendable, Hashable {
+    let managerIdentifier: String
+    let alertIdentifier: String
+
+    /// The `UNNotificationRequest` identifier for this alert
+    var notificationIdentifier: String {
+        "\(managerIdentifier).\(alertIdentifier)"
+    }
+}
+
 struct AlertEntry: JSON, Codable, Hashable, Sendable {
+    let syncIdentifier: UUID?
     let alertIdentifier: String
     var acknowledgedDate: Date?
     var primitiveInterruptionLevel: Decimal?
     let issuedDate: Date
+    var scheduledDate: Date?
+    var firedDate: Date?
+    var retractedDate: Date?
     let managerIdentifier: String
     let triggerType: Int16
     var triggerInterval: Decimal?
     let contentTitle: String?
     let contentBody: String?
+    let acknowledgeButtonLabel: String?
+    let backgroundContentTitle: String?
+    let backgroundContentBody: String?
+    let soundName: String?
+    let soundIsVibrate: Bool?
+    var notificationScheduled: Bool?
+    var notificationErrorMessage: String?
+    /// The device's error when it could not be told about an acknowledgement. History only: the record
+    /// is acknowledged all the same, so this is never a reason to present or re-send the alert.
     var errorMessage: String?
 
     static let manual = "iAPS"
 
+    static let minimumRepeatInterval: TimeInterval = 60
+
     static func == (lhs: AlertEntry, rhs: AlertEntry) -> Bool {
-        lhs.issuedDate == rhs.issuedDate
+        lhs.storageIdentifier == rhs.storageIdentifier
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(issuedDate)
+        hasher.combine(storageIdentifier)
     }
 
-    init(from alert: LoopKit.Alert) {
+    init(from alert: LoopKit.Alert, issuedDate: Date = Date()) {
+        syncIdentifier = UUID()
         alertIdentifier = alert.identifier.alertIdentifier
-        primitiveInterruptionLevel = alert.interruptionLevel.storedValue as? Decimal
-        issuedDate = Date()
+        primitiveInterruptionLevel = alert.interruptionLevel.storedValue.decimalValue
+        self.issuedDate = issuedDate
         managerIdentifier = alert.identifier.managerIdentifier
         triggerType = alert.trigger.storedType
-        triggerInterval = alert.trigger.storedInterval as? Decimal
+        triggerInterval = alert.trigger.storedInterval?.decimalValue
         contentTitle = alert.foregroundContent?.title
         contentBody = alert.foregroundContent?.body
+        acknowledgeButtonLabel = alert.foregroundContent?.acknowledgeActionButtonLabel
+        backgroundContentTitle = alert.backgroundContent.title
+        backgroundContentBody = alert.backgroundContent.body
+        notificationScheduled = false
+
+        switch alert.sound {
+        case .vibrate:
+            soundName = nil
+            soundIsVibrate = true
+        case let .sound(name):
+            soundName = name
+            soundIsVibrate = false
+        case nil:
+            soundName = nil
+            soundIsVibrate = nil
+        }
+
+        switch alert.trigger {
+        case .immediate:
+            scheduledDate = issuedDate
+            firedDate = issuedDate
+        case let .delayed(interval):
+            scheduledDate = issuedDate.addingTimeInterval(max(0, interval))
+            firedDate = interval > 0 ? nil : issuedDate
+        case let .repeating(repeatInterval):
+            let period = max(repeatInterval, Self.minimumRepeatInterval)
+            triggerInterval = Decimal(period)
+            scheduledDate = issuedDate.addingTimeInterval(period)
+            firedDate = nil
+        }
+    }
+
+    var identity: AlertIdentity {
+        AlertIdentity(managerIdentifier: managerIdentifier, alertIdentifier: alertIdentifier)
+    }
+
+    var storageIdentifier: String {
+        syncIdentifier?.uuidString ?? "\(managerIdentifier).\(alertIdentifier).\(issuedDate.timeIntervalSince1970)"
+    }
+
+    var notificationIdentifier: String {
+        identity.notificationIdentifier
+    }
+
+    var isPending: Bool {
+        syncIdentifier != nil && retractedDate == nil && firedDate == nil && scheduledDate != nil
+    }
+
+    var isPresentable: Bool {
+        retractedDate == nil && (firedDate != nil || syncIdentifier == nil)
+    }
+
+    var isRepeating: Bool {
+        triggerType == 2
+    }
+
+    /// A repeating alert keeps its system request until the issuer retracts it - acknowledging one
+    /// occurrence clears that notification, it does not end the alert - so this deliberately ignores
+    /// `acknowledgedDate`. Loop replays acknowledged, unretracted repeating alerts for the same reason.
+    var requiresNotificationRequest: Bool {
+        isPending || (isRepeating && firedDate != nil && retractedDate == nil)
+    }
+
+    /// The trigger's interval as stored. For a repeating alert issued by this build it is already
+    /// clamped to `minimumRepeatInterval`; records written before that clamp existed may be shorter,
+    /// so callers arming a repeating trigger still clamp on the way out.
+    var storedTriggerInterval: TimeInterval? {
+        triggerInterval.map(Double.init)
+    }
+
+    var hasForegroundContent: Bool {
+        contentTitle != nil || contentBody != nil
+    }
+
+    var interruptionLevel: Alert.InterruptionLevel {
+        primitiveInterruptionLevel
+            .map { NSDecimalNumber(decimal: $0) }
+            .flatMap(Alert.InterruptionLevel.init(storedValue:)) ?? .timeSensitive
+    }
+
+    /// Title and body joined, for the log line the alert would otherwise leave no trace in.
+    var summary: String {
+        [backgroundContentTitle, backgroundContentBody]
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
+            .joined(separator: " — ")
     }
 
     private enum CodingKeys: String, CodingKey {
+        case syncIdentifier
         case alertIdentifier
         case acknowledgedDate
         case primitiveInterruptionLevel
         case issuedDate
+        case scheduledDate
+        case firedDate
+        case retractedDate
         case managerIdentifier
         case triggerType
         case triggerInterval
         case contentTitle
         case contentBody
+        case acknowledgeButtonLabel
+        case backgroundContentTitle
+        case backgroundContentBody
+        case soundName
+        case soundIsVibrate
+        case notificationScheduled
+        case notificationErrorMessage
         case errorMessage
     }
 }

@@ -37,11 +37,6 @@ final class AppCoordinator: @unchecked Sendable {
 
     let manualTempBasal = CurrentValueSubject<Bool, Never>(false)
 
-    let pumpNotifications = PassthroughSubject<AlertEntry, Never>()
-
-    // TODO: this is never triggered?
-    let pumpNotificationsRemove = PassthroughSubject<Void, Never>()
-
     let deliveryUncertain = PassthroughSubject<Void, Never>()
 
     let deviceErrors = PassthroughSubject<Error, Never>()
@@ -99,8 +94,11 @@ final class AppCoordinator: @unchecked Sendable {
     // current temp targets, newest -> oldest
     let tempTargets = CurrentValueSubject<[TempTarget], Never>([])
 
-    let alertsUpdates = PassthroughSubject<[AlertEntry], Never>()
-
+    /// Latches once the UI is subscribed to `alertMessages`. `DeviceAlertManager` waits for it before
+    /// replaying alerts left outstanding by the previous run - a `CurrentValueSubject` rather than an
+    /// event because the two sides start in no fixed order, and a replay sent into a bus nobody is
+    /// listening to yet is simply lost.
+    let alertPresentationReady = CurrentValueSubject<Bool, Never>(false)
     let basalProfile = CurrentValueSubject<[BasalProfileEntry], Never>([])
 
     let isfSchedule = CurrentValueSubject<InsulinSensitivities, Never>(.initial)
@@ -131,7 +129,7 @@ final class AppCoordinator: @unchecked Sendable {
 
     let liveActivitiesSystemEnabled = CurrentValueSubject<Bool, Never>(false)
 
-    let alertMessages = PassthroughSubject<MessageContent, Never>()
+    let alertMessages = PassthroughSubject<AlertMessage, Never>()
 
     let appBecomeActiveEvents = PassthroughSubject<Void, Never>()
 
@@ -209,10 +207,6 @@ final class AppCoordinator: @unchecked Sendable {
     /// MUST BE newest -> oldest
     func setLoopEvents(_ value: [LoopEvent]) {
         loopEvents.send(value)
-    }
-
-    func sendPumpNotification(_ value: AlertEntry) {
-        pumpNotifications.send(value)
     }
 
     // make sure we have a running background task after the device data manager recommends the loop and before the actual loop starts
@@ -385,15 +379,19 @@ final class AppCoordinator: @unchecked Sendable {
     }
 
     func sendAlertMessage(_ value: MessageContent) {
-        alertMessages.send(value)
+        alertMessages.send(.show(value))
+    }
+
+    func sendAlertDismissalMessage(_ value: AlertIdentity) {
+        alertMessages.send(.dismiss(value))
     }
 
     func sendAppBecomeActiveEvent() {
         appBecomeActiveEvents.send(())
     }
 
-    func sendAlertUpdates(_ value: [AlertEntry]) {
-        alertsUpdates.send(value)
+    func setAlertPresentationReady() {
+        alertPresentationReady.send(true)
     }
 
     func sendNightscoutConfigChanged() {

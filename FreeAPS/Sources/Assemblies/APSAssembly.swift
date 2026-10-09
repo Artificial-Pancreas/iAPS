@@ -8,7 +8,7 @@ final class APSAssembly: Assembly {
         container.register(DeviceDataManager.self) { r in
             BaseDeviceDataManager(
                 pumpHistoryStorage: r.resolve(PumpHistoryStorage.self)!,
-                alertHistoryStorage: r.resolve(AlertHistoryStorage.self)!,
+                deviceAlertManager: r.resolve(DeviceAlertManager.self)!,
                 storage: r.resolve(FileStorage.self)!,
                 glucoseStorage: r.resolve(GlucoseStorage.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,

@@ -5,7 +5,6 @@ import SwiftUI
 extension PumpConfig {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var deviceManager: DeviceDataManager!
-        @Injected() private var alertHistoryStorage: AlertHistoryStorage!
 
         private let coreDataStorage = CoreDataStorage()
 
@@ -56,8 +55,9 @@ extension PumpConfig {
             }
         }
 
+        /// Acknowledges every outstanding alert.
         func ack() {
-            alertHistoryStorage.forceNotification()
+            Task { [deviceManager] in await deviceManager?.acknowledgeAllDeviceAlerts() }
         }
     }
 }
