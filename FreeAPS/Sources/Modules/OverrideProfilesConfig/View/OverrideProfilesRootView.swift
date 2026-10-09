@@ -70,6 +70,7 @@ extension OverrideProfilesConfig {
                     PresetEditorView(
                         preset: preset,
                         context: state.context,
+                        succeedingCandidates: state.profiles.filter { $0.id != preset.id },
                         onSave: { name, emoji, form in
                             state.updatePreset(id: preset.id, name: name, emoji: emoji, form: form)
                             presetToEdit = nil
@@ -95,7 +96,7 @@ extension OverrideProfilesConfig {
                     .onDelete(perform: state.deleteProfile)
                 }
 
-                OverrideSettingsForm(form: $state.form, context: state.context)
+                OverrideSettingsForm(form: $state.form, context: state.context, succeedingCandidates: state.profiles)
 
                 // Buttons
                 Section {
@@ -104,7 +105,7 @@ extension OverrideProfilesConfig {
                             alertString = startAlertString()
                             showAlert.toggle()
                         }
-                        .disabled(unChanged())
+                        .disabled(unChanged() || !state.form.hasValidDuration)
                         .buttonStyle(BorderlessButtonStyle())
                         .font(.callout)
                         .controlSize(.mini)
@@ -118,7 +119,7 @@ extension OverrideProfilesConfig {
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .buttonStyle(BorderlessButtonStyle())
                             .controlSize(.mini)
-                            .disabled(unChanged())
+                            .disabled(unChanged() || !state.form.hasValidDuration)
                     }
 
                     if state.isOverrideActive {
@@ -215,6 +216,7 @@ extension OverrideProfilesConfig {
             let isfAndCRstring = isfString + dash + crString + dash2 + basalString != "" ? "[" + isfString + dash + crString +
                 dash2 + basalString + "]" : "[None]"
             let autoisfSettings = preset.aisf
+            let succeedingName = preset.succeeding.flatMap { id in state.profiles.first(where: { $0.id == id })?.name }
 
             if name != "" {
                 VStack(alignment: .leading, spacing: 1) {
@@ -223,7 +225,17 @@ extension OverrideProfilesConfig {
                         if preset.advancedSettings, preset.endWIthNewCarbs {
                             Image("PreMealOverride").foregroundStyle(.green)
                         }
-                        Spacer()
+                        if let succeedingName {
+                            Image(systemName: "plus").foregroundStyle(.blue)
+                                .padding(.horizontal)
+                            Text(succeedingName)
+                            Spacer()
+                            Image(systemName: "person.2.fill")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.blue, .purple)
+                        } else {
+                            Spacer()
+                        }
                     }
                     HStack {
                         percent != 1 ?
@@ -348,9 +360,10 @@ extension OverrideProfilesConfig {
             let uamMinutesUnchanged = state.form.uamMinutes == state.defaultUamMinutes
             let autoISFUnchanged = !state.form.overrideAutoISF
             let glucoseOverrideUnchanged = !state.form.glucoseOverrideThresholdActive
+            let succeedingUnchanged = !state.form.canHaveSucceeding || state.form.succeeding == nil
 
             return percentUnchanged && targetUnchanged && smbUnchanged && maxIOBUnchanged && smbMinutesUnchanged &&
-                uamMinutesUnchanged && autoISFUnchanged && glucoseOverrideUnchanged
+                uamMinutesUnchanged && autoISFUnchanged && glucoseOverrideUnchanged && succeedingUnchanged
         }
 
         private func decimal(decimal: Decimal?, setting: Decimal, label: String) -> Text? {
@@ -402,6 +415,7 @@ extension OverrideProfilesConfig {
     struct PresetEditorView: View {
         let preset: OverridePresetsSnapshot
         let context: OverrideForm.Context
+        let succeedingCandidates: [OverridePresetsSnapshot]
         let onSave: (_ name: String, _ emoji: String?, _ form: OverrideForm) -> Void
         let onCancel: () -> Void
 
@@ -411,14 +425,18 @@ extension OverrideProfilesConfig {
         init(
             preset: OverridePresetsSnapshot,
             context: OverrideForm.Context,
+            succeedingCandidates: [OverridePresetsSnapshot],
             onSave: @escaping (String, String?, OverrideForm) -> Void,
             onCancel: @escaping () -> Void
         ) {
             self.preset = preset
             self.context = context
+            self.succeedingCandidates = succeedingCandidates
             self.onSave = onSave
             self.onCancel = onCancel
-            _form = State(initialValue: OverrideForm(from: preset, context: context))
+            var form = OverrideForm(from: preset, context: context)
+            form.dropDanglingSucceeding(candidates: succeedingCandidates)
+            _form = State(initialValue: form)
             _name = State(initialValue: preset.name ?? "")
         }
 
@@ -433,13 +451,13 @@ extension OverrideProfilesConfig {
                         }
                     } header: { Text("Profile Name") }
 
-                    OverrideSettingsForm(form: $form, context: context)
+                    OverrideSettingsForm(form: $form, context: context, succeedingCandidates: succeedingCandidates)
                 }
                 .navigationBarTitle("Edit Profile", displayMode: .inline)
                 .navigationBarItems(
                     leading: Button("Cancel", action: onCancel),
                     trailing: Button("Save") { onSave(name, preset.emoji, form) }
-                        .disabled(name.isEmpty)
+                        .disabled(name.isEmpty || !form.hasValidDuration)
                 )
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             }

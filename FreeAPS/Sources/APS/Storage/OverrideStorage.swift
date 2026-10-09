@@ -34,13 +34,18 @@ final class OverrideStorage: Sendable {
         fetchAutoIsf(id: id)?.toAutoISFsettings
     }
 
+    /// Must be called on the Core Data context's queue.
+    private func fetchActiveOverrideRecord() -> Override? {
+        let request = Override.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        request.fetchLimit = 1
+        guard let override = try? coredataContext.fetch(request).first, override.enabled else { return nil }
+        return override
+    }
+
     func fetchCurrentActiveOverride() async -> OverrideSnapshot? {
         await coredataContext.perform {
-            let request = Override.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            request.fetchLimit = 1
-            guard let override = try? self.coredataContext.fetch(request).first else { return nil }
-            guard override.enabled else { return nil }
+            guard let override = self.fetchActiveOverrideRecord() else { return nil }
             let aisf = self.fetchAutoIsfSettings(id: override.id)
             return OverrideSnapshot.create(from: override, aisf: aisf)
         }
@@ -88,51 +93,47 @@ final class OverrideStorage: Sendable {
         }
     }
 
-    func cancelActiveOverride() async -> Double? {
-        guard let latest = await fetchCurrentActiveOverride() else { return nil }
-
-        defer {
+    /// Cancels the active override.
+    /// With `expected`: only when it is still the active override (same id and start date). The check and the
+    /// cancellation happen in one `perform`, so concurrent callers can't both cancel it or cancel a newer override.
+    func cancelActiveOverride(expected: OverrideSnapshot? = nil) async -> OverrideCancellation? {
+        let cancellation = await coredataContext.perform { () -> OverrideCancellation? in
+            guard let record = self.fetchActiveOverrideRecord(),
+                  let active = OverrideSnapshot.create(from: record, aisf: self.fetchAutoIsfSettings(id: record.id))
+            else { return nil }
+            if let expected, !expected.isSameOverride(as: active) {
+                return nil
+            }
+            let cancellation = self.endOverride(active, at: Date())
+            try? self.coredataContext.save()
+            return cancellation
+        }
+        if cancellation != nil {
             appCoordinator.overridesDidChange()
         }
-
-        return await coredataContext.perform {
-            var duration: Double?
-
-            let tomb = Override(context: self.coredataContext)
-            let history = OverrideHistory(context: self.coredataContext)
-
-            let now = Date()
-            history.duration = now.timeIntervalSince(latest.date ?? now).minutes
-            history.date = latest.date ?? now
-            // Looks better in Home View Main Chart when target isn't == 0.
-            if latest.target ?? 100 < 6 {
-                history.target = 6
-            } else {
-                history.target = Double(latest.target ?? 100)
-            }
-            duration = history.duration
-
-            tomb.enabled = false
-            tomb.id = UUID().uuidString // all rows should have an ID
-            tomb.date = Date()
-            try? self.coredataContext.save()
-
-            return duration
-        }
+        return cancellation
     }
 
-    func activateOverrideFromPreset(presetId id: String) async -> OverrideSnapshot? {
-        let overridePreset = await coredataContext.perform { () -> OverridePresetsSnapshot? in
-            let requestPresets = OverridePresets.fetchRequest()
-            requestPresets.predicate = NSPredicate(
-                format: "id == %@", id
-            )
-            guard let preset = (try? self.coredataContext.fetch(requestPresets))?.first else { return nil }
-            let aisf = self.fetchAutoIsfSettings(id: preset.id)
-            return OverridePresetsSnapshot.create(from: preset, aisf: aisf)
+    /// Writes the history row and the disabled "tomb" row ending `override`. Doesn't save.
+    /// Must be called on the Core Data context's queue.
+    private func endOverride(_ override: OverrideSnapshot, at now: Date) -> OverrideCancellation {
+        let tomb = Override(context: coredataContext)
+        let history = OverrideHistory(context: coredataContext)
+
+        history.duration = now.timeIntervalSince(override.date ?? now).minutes
+        history.date = override.date ?? now
+        // Looks better in Home View Main Chart when target isn't == 0.
+        if override.target ?? 100 < 6 {
+            history.target = 6
+        } else {
+            history.target = Double(override.target ?? 100)
         }
-        guard let overridePreset else { return nil }
-        return await activateOverrideFromPreset(preset: overridePreset, fromSavedPreset: true)
+
+        tomb.enabled = false
+        tomb.id = UUID().uuidString // all rows should have an ID
+        tomb.date = now
+
+        return OverrideCancellation(override: override, duration: history.duration)
     }
 
     func fetchOverridePreset(name: String) async -> OverridePresetsSnapshot? {
@@ -235,6 +236,7 @@ final class OverrideStorage: Sendable {
         preset.start = draft.start.map { $0 as NSDecimalNumber }
         preset.target = draft.target.map { $0 as NSDecimalNumber }
         preset.uamMinutes = draft.uamMinutes.map { $0 as NSDecimalNumber }
+        preset.succeeding = draft.succeeding == draft.id ? nil : draft.succeeding
 
         if let aisf = draft.aisf {
             _ = createOrUpdateAutoISF(id: draft.id, autoISFsettings: aisf)
@@ -312,6 +314,13 @@ final class OverrideStorage: Sendable {
         }
     }
 
+    enum IfActive {
+        /// end the active override (returned as `replaced`) and activate the new one
+        case replace
+        /// `.replace` only when `expected` is still the active override (same id and start date), otherwise don't activate
+        case replaceIfStill(OverrideSnapshot)
+    }
+
     /// Activates an override.
     ///
     /// `fromSavedPreset` distinguishes the two entry points:
@@ -319,15 +328,26 @@ final class OverrideStorage: Sendable {
     ///   exists under `preset.id` (the new Override reuses that id), so it is only fetched.
     /// - `false`: a custom override built in the editor, carrying a fresh `id`. Its AISF
     ///   settings live only in `preset.aisf`, so they are persisted here.
+    ///
+    /// The active-override check, ending it and the activation happen in one `perform`.
     func activateOverrideFromPreset(
         preset: OverridePresetsSnapshot,
         fromSavedPreset: Bool,
-        defaultMaxIOB: Decimal? = nil
-    ) async -> OverrideSnapshot? {
-        defer {
-            appCoordinator.overridesDidChange()
-        }
-        return await coredataContext.perform {
+        defaultMaxIOB: Decimal? = nil,
+        ifActive: IfActive = .replace
+    ) async -> (activated: OverrideSnapshot, replaced: OverrideCancellation?)? {
+        let result = await coredataContext.perform { () -> (activated: OverrideSnapshot, replaced: OverrideCancellation?)? in
+            let now = Date()
+            var replaced: OverrideCancellation?
+            let active = self.fetchActiveOverrideRecord()
+                .flatMap { OverrideSnapshot.create(from: $0, aisf: self.fetchAutoIsfSettings(id: $0.id)) }
+            if case let .replaceIfStill(expected) = ifActive {
+                guard let active, expected.isSameOverride(as: active) else { return nil }
+            }
+            if let active {
+                replaced = self.endOverride(active, at: now)
+            }
+
             let saveOverride = Override(context: self.coredataContext)
             saveOverride.duration = (preset.duration ?? 0) as NSDecimalNumber
             saveOverride.indefinite = preset.indefinite
@@ -335,10 +355,12 @@ final class OverrideStorage: Sendable {
             saveOverride.enabled = true
             saveOverride.smbIsOff = preset.smbIsOff
             saveOverride.isPreset = fromSavedPreset
-            saveOverride.date = Date()
+            // the newest row is the active one: must sort after the tomb of a replaced override
+            saveOverride.date = replaced == nil ? now : now.addingTimeInterval(0.001)
             saveOverride.id = preset.id
             saveOverride.isfAndCr = preset.isfAndCr
             saveOverride.overrideAutoISF = preset.overrideAutoISF
+            saveOverride.succeeding = preset.succeeding == preset.id ? nil : preset.succeeding
 
             if let tar = preset.target, tar == 0 {
                 saveOverride.target = 6
@@ -385,9 +407,20 @@ final class OverrideStorage: Sendable {
 
             try? self.coredataContext.save()
 
-            return OverrideSnapshot.create(from: saveOverride, aisf: preset.aisf)
+            guard let activated = OverrideSnapshot.create(from: saveOverride, aisf: preset.aisf) else { return nil }
+            return (activated, replaced)
         }
+        if result != nil {
+            appCoordinator.overridesDidChange()
+        }
+        return result
     }
+}
+
+/// An ended override, with the minutes it ran.
+struct OverrideCancellation: Sendable {
+    let override: OverrideSnapshot
+    let duration: Double
 }
 
 private extension Auto_ISF {

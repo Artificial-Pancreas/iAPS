@@ -211,6 +211,7 @@ struct MainChartView: View {
             ping(data.$tempTargets),
             ping(data.$suggestion),
             ping(data.$latestOverride),
+            ping(data.$succeedingOverride),
             ping(data.$overrideHistory),
             ping(data.$lowGlucose),
             ping(data.$highGlucose),
